@@ -42,7 +42,7 @@ The `/connect` discovery identified 9 genuine connections. The source is current
 - [llm-context-is-composed-without-scoping](../notes/llm-context-is-composed-without-scoping.md) — **exemplifies**: Bounded Subagents with read-only access and recursion limits are a concrete instance of sub-agents as lexically scoped frames.
 - [the-chat-history-model-trades-context-efficiency-for-implementation-simplicity](../notes/the-chat-history-model-trades-context-efficiency-for-implementation.md) — **exemplifies**: Clipping and transcript reduction are the mature orchestration mechanisms the note predicts emerge beyond raw chat history.
 - [session-history-should-not-be-the-default-next-context](../notes/session-history-should-not-be-the-default-next-context.md) — **exemplifies**: Working memory vs. full transcript distinction is exactly the "store more than you load" principle.
-- [definitions/context-engineering](../notes/definitions/context-engineering.md) and [definitions/distillation](../notes/definitions/distillation.md) — **exemplifies**: The entire architecture instantiates context engineering (routing, loading, scoping, maintenance) and the bloat-reduction strategies are operational distillation.
+- [definitions/context-engineering](../notes/definitions/context-engineering.md) — **exemplifies**: The architecture instantiates routing, loading, scoping, and maintenance; its bloat-reduction strategies select and reshape stored history for bounded working context.
 
 **Sibling sources:** Meta-Harness (optimization loop), NLAH (natural-language control logic), Lopopolo (production convergence), Vtrivedy10 (parallel component taxonomy).
 

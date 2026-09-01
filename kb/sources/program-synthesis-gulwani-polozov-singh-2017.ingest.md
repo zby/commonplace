@@ -55,10 +55,10 @@ This 2017 survey is broad secondary synthesis, not a controlled comparison of sp
 
 ## Recommended Next Action
 
-Use [Task families and product families classify different things](../notes/task-families-and-product-families-classify-different-things.md) for the longitudinal task and interaction frame, [A software factory can produce another factory without acquiring its family-specific production knowledge](../notes/factory-construction-does-not-establish-knowledge-acquisition.md) for the construction-versus-acquisition boundary, and [Universal software factory needs a declared universality axis](../notes/universal-software-factory-needs-a-declared-universality-axis.md) for the terminology question.
+Use [Task families and product families classify different things](../notes/task-families-and-product-families-classify-different-things.md) for the longitudinal task and interaction frame, [Factory construction is not evidence of production-knowledge acquisition](../notes/factory-construction-does-not-establish-knowledge-acquisition.md) for the construction-versus-acquisition boundary, and [Universal software factory needs a declared universality axis](../notes/universal-software-factory-needs-a-declared-universality-axis.md) for the terminology question.
 
 Abstracted into:
 
 - [Task families and product families classify different things](../notes/task-families-and-product-families-classify-different-things.md) — uses specification ambiguity and interactive clarification to show why a task assessment declares permitted later evidence and interaction rather than treating the initial request as exhaustive
-- [A software factory can produce another factory without acquiring its family-specific production knowledge](../notes/factory-construction-does-not-establish-knowledge-acquisition.md) — uses the survey's specification/program-space boundary to separate construction from acquisition of the knowledge that frames construction
+- [Factory construction is not evidence of production-knowledge acquisition](../notes/factory-construction-does-not-establish-knowledge-acquisition.md) — uses the survey's specification/program-space boundary to separate construction from acquisition of the knowledge that frames construction
 - [Universal software factory needs a declared universality axis](../notes/universal-software-factory-needs-a-declared-universality-axis.md) — uses program-space expressivity and intent ambiguity to distinguish constructional universality from production-knowledge acquisition reach

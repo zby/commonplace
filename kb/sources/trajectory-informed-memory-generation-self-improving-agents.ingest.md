@@ -7,7 +7,7 @@ genre: scientific-paper
 snapshot_sha256: d7aba0e339835a7b9840cb7469be7d854d889455f996df7a7d62c2dbafb7204c
 ingested: "2026-03-13"
 type: kb/sources/types/ingest-report.md
-domains: [agent-memory, deploy-time-learning, trajectory-analysis, distillation]
+domains: [agent-memory, deploy-time-learning, trajectory-analysis, memory-generation]
 ---
 
 # Ingest: Trajectory-Informed Memory Generation for Self-Improving Agent Systems
@@ -38,13 +38,13 @@ The `/connect` discovery identified 8 genuine connections. The paper lands squar
 
 **Exemplifies deployment-time adaptation** ([retained system-definition artifacts enable persistent deployment-time adaptation](../notes/retained-artifacts-enable-persistent-deployment-time-adaptation.md)): Tips are durable, inspectable artifacts that persist across sessions and improve behavior without weight updates.
 
-**Exemplifies distillation** ([distillation](../notes/definitions/distillation.md)): Trajectory-to-tip extraction is distillation — compressing full execution traces into focused operational guidance. The subtask-level outperforming task-level is evidence that distillation granularity matters.
+**Enters the [discovery lifecycle](../notes/definitions/discovery-lifecycle.md) at conjecture:** Trajectory-to-tip extraction generalizes full execution traces into candidate operational guidance. The reported downstream comparison supplies bounded test evidence that subtask-level guidance transfers better than task-level guidance; authority does not follow from extraction alone.
 
 **Also exemplifies**: [learning-is-not-only-about-generality](../notes/learning-is-not-only-about-generality.md) (tips are low-reach accumulation), [constraining-during-deployment-is-continuous-learning](../notes/constraining-during-deployment-is-continuous-learning.md) (tips constrain future behavior), and [three-space-agent-memory-maps-to-tulving-taxonomy](../notes/three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy.md) (tips map cleanly to procedural/operational space — none are semantic or episodic).
 
 ## Extractable Value
 
-1. **Subtask granularity outperforms task granularity for tip transfer** — concrete evidence that finer-grained distillation transfers better because subtask patterns recur across tasks. Directly relevant to how we think about distillation granularity in notes and skills. [just-a-reference]
+1. **Subtask granularity outperforms task granularity for tip transfer** — concrete evidence that finer-grained trace-to-tip generalization transfers better because subtask patterns recur across tasks. This bears directly on the granularity of guidance abstracted from experience. [just-a-reference]
 
 2. **Three tip categories (strategy/recovery/optimization) as a taxonomy for operational knowledge** — this categorization by trajectory outcome (success/failure/inefficiency) could inform how we categorize lessons learned in workshop reviews or log entries. [quick-win]
 

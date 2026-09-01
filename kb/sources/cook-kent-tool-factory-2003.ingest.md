@@ -60,5 +60,5 @@ Use this source as the mechanism-level case for construction from supplied famil
 
 Abstracted into:
 
-- [A software factory can produce another factory without acquiring its family-specific production knowledge](../notes/factory-construction-does-not-establish-knowledge-acquisition.md) — uses the generated-designer and conditional self-bootstrap mechanism to separate construction from acquisition of the language-family knowledge supplied to it
+- [Factory construction is not evidence of production-knowledge acquisition](../notes/factory-construction-does-not-establish-knowledge-acquisition.md) — uses the generated-designer and conditional self-bootstrap mechanism to separate construction from acquisition of the language-family knowledge supplied to it
 - [A software factory is family-scoped lifecycle production machinery](../notes/a-software-factory-is-family-scoped-lifecycle-production-machinery.md) — places the tool bootstrap inside the broader family/template/configured-environment ontology

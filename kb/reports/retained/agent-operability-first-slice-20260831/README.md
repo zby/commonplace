@@ -1,9 +1,10 @@
 # First operability slice result — 2026-08-31
 
-This result compares the bounded implementation with the
-[pre-change baseline](./baseline-2026-08-31.md). It does not evaluate the
-audit's deferred upgrade, operation-packet, retrieval, receipt, or learning
-architecture.
+This result records the bounded first implementation slice selected from the
+retained [agent operability audit](../agent-operability-audit-2026-08-31.md)
+and compares it with the [pre-change baseline](./baseline-2026-08-31.md). It
+does not evaluate the audit's deferred upgrade, operation-packet, retrieval,
+receipt, or learning architecture.
 
 ## Compact validation
 

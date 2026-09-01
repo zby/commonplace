@@ -66,4 +66,4 @@ Use the versioned ontology reconstruction for the inherited term boundary and th
 Abstracted into:
 
 - [A software factory is family-scoped lifecycle production machinery](../notes/a-software-factory-is-family-scoped-lifecycle-production-machinery.md) — reconstructs the original schema, template, configured-factory, developer-role, family-scope, and family-member account without projecting later vocabulary backward
-- [A software factory can produce another factory without acquiring its family-specific production knowledge](../notes/factory-construction-does-not-establish-knowledge-acquisition.md) — uses the human-directed factory-building example to separate recursive construction from acquisition of the target family's production knowledge
+- [Factory construction is not evidence of production-knowledge acquisition](../notes/factory-construction-does-not-establish-knowledge-acquisition.md) — uses the human-directed factory-building example to separate recursive construction from acquisition of the target family's production knowledge
