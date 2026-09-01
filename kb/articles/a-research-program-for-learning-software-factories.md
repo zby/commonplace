@@ -1,11 +1,13 @@
 ---
-description: "Research program on whether a software factory configured to produce factories can construct and adopt a better successor by acquiring, holding, and revising project theory"
+description: "Research program on whether a software factory can learn from its production experience — acquiring, holding, and revising project theory — so that a later factory state passes a declared better-factory comparison against its predecessor"
 type: kb/articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
 source_notes:
   - kb/notes/a-software-factory-is-family-scoped-lifecycle-production-machinery.md
   - kb/notes/factory-construction-does-not-establish-knowledge-acquisition.md
+  - kb/notes/factory-learning-retains-experience-in-reusable-machinery.md
+  - kb/notes/commitment-not-derivation-creates-new-ground-truth.md
   - kb/notes/theory-mediation-can-coordinate-heterogeneous-factory-development.md
   - kb/notes/program-theory-sustains-search-under-delayed-feedback.md
   - kb/notes/project-theory-relates-new-demands-to-existing-organization.md
@@ -24,7 +26,7 @@ source_notes:
 
 > **Draft.** Comments and counterexamples are welcome through the repository's issue tracker.
 
-> **TL;DR.** If a software factory can construct and adopt a better successor, improvement can happen through changes to software-production machinery without training new models. This program tests whether LLM-based factories can do this by acquiring, holding, using, and revising project theories.
+> **TL;DR.** A software factory learns when its production experience causes retained changes to its machinery that later work depends on; it improves when a later factory state beats an earlier one under a declared comparison. This program tests whether LLM-based factories can learn this way without training new models, by acquiring, holding, using, and revising project theories.
 
 ## Better software factories
 
@@ -32,26 +34,39 @@ A [software factory](../notes/definitions/software-factory.md) is a configured p
 
 Prior work describes software factories configured to produce software factories as members of their declared family. In the [examples reviewed here](../notes/factory-construction-does-not-establish-knowledge-acquisition.md), people supply the production knowledge that determines the produced factory.
 
-The research target begins with a factory of this kind and gives it an explicit task: build a successor factory that is better than itself. The successor is the intended product of the task.
+The research target is a factory that learns from what it produces. A factory undergoes [factory-level learning](../notes/factory-learning-retains-experience-in-reusable-machinery.md) when production experience—failures, surprises, evaluations, corrections, delayed consequences—causes a retained change to its reusable production machinery, and later production or factory development depends on that change.
+
+In current agentic coding systems this learning is interleaved with operation rather than confined to a separate phase. A failed task can immediately cause a note to be written, a test added, a rule revised, a tool changed, and the task retried; [Compound Engineering's retention pathway](../agentic-systems/compound-engineering-plugin.md) works this way. Some of those changes already change the factory. There need be no phase in which an unchanged factory merely accumulates experience before improvement begins. The process is a loop, not a pipeline:
 
 ```text
-factory F configured to produce factories
-  -> construct candidate successor F'
-  -> evaluate F' under a fixed declared comparison
-  -> revise F' from the evaluation
+production and factory development under the current factory state
+  <-> experience from that work
+  <-> retained, organized state: project theory, indexes, tests, tools
+  -> later production and factory-development decisions
+```
+
+Improvement is judged in a second view that takes snapshots of this process. Fix two factory states and compare them:
+
+```text
+factory state F
+  -> intervening production, learning, and factory development
+  -> factory state F'
+  -> evaluate F' against F under a fixed declared comparison
   -> adopt F' only if the evidence supports improvement
   -> use F' in later production and factory development
 ```
 
-Comparative evaluation provides the evidence of improvement. Adoption and later use make F' the operative successor; intermediate revisions are part of its construction.
+The successor F' is a measurement boundary on a continuous process, not necessarily the product of one discrete construction step. It can be the factory state after a period of experience-responsive development, or after a single retained change. Adoption and later use make F' the operative successor.
 
 Under the declared comparison, F' must meet non-regression thresholds on the predecessor's prior scope—including an operative path for producing and improving further factories—and exceed a specified target on at least one relevant dimension of software production. This prevents a one-off gain that consumes the capacity for further improvement.
 
 The comparison is between [deployed systems rather than only model weights](../notes/the-deployed-system-not-the-model-is-the-unit-of-learning.md). The successor may improve through changes to any operative part of its production machinery.
 
+Passing the comparison does not by itself establish learning. The constructors reviewed above show that a capable builder can produce a better factory from supplied specifications, with people holding the production knowledge that matters. The learning claim requires the experience link: retained experience from the predecessor's own production must causally enter the changes the improvement depends on. [An experiment identifies only the contrast it actually runs](../notes/an-experiment-identifies-only-the-contrast-it-actually-runs.md), so the experiments below manipulate that link directly.
+
 ## Coherent modification requires held project theory
 
-The hard part is constructing a successor that changes software and reusable production machinery without silently destroying purposes and organization that immediate acceptance tests capture only partly.
+The hard part of experience-responsive development is changing software and reusable production machinery without silently destroying purposes and organization that immediate acceptance tests capture only partly.
 
 Peter Naur's [1985 essay *Programming as Theory Building*](../sources/programming-as-theory-building.ingest.md) argues that programmers do this by building and holding a project-specific theory: an understanding of how the program maps onto the activity it supports, why it is organized as it is, and how new demands relate to that organization.
 
@@ -61,9 +76,11 @@ The program treats this project-theory requirement as a functional hypothesis to
 
 This gives a useful distinction. A **retained theory** persists in a recoverable form. A **held theory** is a capability of the theory-bearing system: it recognizes when retained project theory is relevant to a novel demand and brings it to bear without the task author naming the project-specific connection. Modern learned interpreters make Naur's formerly human-only bearer question [empirically open](../notes/naur-equates-machine-execution-with-formulated-criteria.md).
 
-> Can an LLM-based software factory acquire and hold a project theory, revise it in response to evaluation and consequences, and use it to construct a better successor factory?
+> Can an LLM-based software factory acquire and hold a project theory, revise it in response to evaluation and consequences, and use it to make a later factory state better than its predecessor?
 
 Holding a theory guides search rather than guaranteeing a correct change in one step. The theory can be fallible—partial, provisional, or wrong—while still shaping what changes are considered, what must be preserved, how failures are interpreted, when to backtrack, and what should be revised. The bearer test is longitudinal: whether the system can [sustain coherent search under delayed feedback](../notes/program-theory-sustains-search-under-delayed-feedback.md).
+
+Fallibility has a structural source. Acquiring a theory from experience is not only reorganizing information the experience already contains: the theory commits to content the experience does not determine—a mechanism conjectured beyond the observed cases, and resolutions adopted because production needed some choice, not because that choice was judged better. [Commitment, not derivation, creates new ground truth](../notes/commitment-not-derivation-creates-new-ground-truth.md): once committed, such content cannot be recovered from the production record; it can only be revised. That is what makes theory revision a real event in the diagnostic path below rather than a recomputation, and it is why theory mediation is a substantive bet rather than a restatement of retrieval.
 
 ## Natural-language theory is the implementation bet
 
@@ -92,10 +109,10 @@ retained theory
 
 A direct probe tests whether the relevant theory is recoverable. An ordinary modification demand tests whether the system recognizes its relevance without a project-specific cue. A mechanism-specific hint then distinguishes failure to recognize relevance from failure to apply the theory. Withholding the theory or replacing it with a plausible but wrong alternative tests whether its content causally changes the modification rather than merely appearing in an explanation.
 
-A later experiment gives a factory the explicit task of building a successor factory. Candidate successors are evaluated under the fixed comparison against the predecessor's prior scope, the target improvement, and their ability to repeat the factory-development process. Evaluation must guide revision of the candidate; an accepted candidate must then be adopted and used in later production and factory development. Holding model weights fixed isolates the proposed non-weight route.
+A later experiment packages the interleaved process into one attributable episode: after a period of operation, a factory is given the explicit task of constructing a successor. Candidate successors are evaluated under the fixed comparison against the predecessor's prior scope, the target improvement, and their ability to repeat the factory-development process. Evaluation must guide revision of the candidate; an accepted candidate must then be adopted and used in later production and factory development. Two interventions carry the causal claims. Holding model weights fixed isolates the proposed non-weight route. Withholding or supplying the predecessor's retained production record and theory, with the task specification fixed, separates learning from construction: a successor that comes out equally good without the record was built from the specification, not from experience.
 
-The program uses two complementary testbeds. **Commonplace** supplies a live, long-horizon human–LLM process for studying theory-holding and revision; the [recorded revision episode](../notes/evidence/commonplace-revision-used-theory-guided-computational-search.md) illustrates part of the mechanism but is not a controlled better-factory result. A controlled software-project testbed can run the interventions that Commonplace cannot. Current Commonplace evidence is human-inclusive, so progress also means reducing how often the operator must name the relevant theory, choose the decisive branch, or supply another task-specific learning decision.
+The program uses two complementary testbeds. **Commonplace** supplies a live, long-horizon human–LLM process for studying theory-holding and revision; the [recorded revision episode](../notes/evidence/commonplace-revision-used-theory-guided-computational-search.md) illustrates part of the mechanism but is not a controlled better-factory result. Its learning is interleaved in exactly the sense above, which makes it realistic and also raises the evidence cost: attributing an improvement to retained experience requires recording, at production time, which retained state entered which decision—git history alone cannot reconstruct that. A controlled software-project testbed can run the interventions that Commonplace cannot. Current Commonplace evidence is human-inclusive, so progress also means reducing how often the operator must name the relevant theory, choose the decisive branch, or supply another task-specific learning decision.
 
-The theory-mediated approach loses support if changing or withholding project theory does not change construction decisions, if another learning mechanism performs better at comparable total cost, or if each new area still requires substantial human-built specialization. The bootstrap fits the Bitter Lesson only if it can [outgrow recurring human-supplied specialization](../notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md).
+The theory-mediated approach loses support if changing or withholding project theory does not change construction decisions, if another learning mechanism—including plain retention and retrieval of the raw production record—performs better at comparable total cost, or if each new area still requires substantial human-built specialization. The bootstrap fits the Bitter Lesson only if it can [outgrow recurring human-supplied specialization](../notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md).
 
-A successful transition would establish a bounded result: a software factory configured to produce factories can acquire and hold project theory strongly enough to construct, revise, and adopt a successor that passes the declared better-than comparison and becomes operative, without training a new model. Indefinite compounding and computational closure would remain open.
+A successful transition would establish a bounded result: a software factory can turn its own production experience into held project theory strongly enough that a later factory state passes the declared better-than comparison and becomes operative, without training a new model. Indefinite compounding and computational closure would remain open.
