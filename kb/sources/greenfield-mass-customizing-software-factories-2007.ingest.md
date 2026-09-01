@@ -46,7 +46,7 @@ Greenfield defines a software factory as a specialized development and runtime e
 
 This article is the KB's mature historical ontology anchor for software factories, extending the earlier [Greenfield and Short account](./greenfield-short-software-factories-oopsla-2003.ingest.md) with explicit factory-development and solution-development processes, lifecycle operation, specialization, composition, feedback-supported revision, and supply-chain partitioning. The [versioned ontology reconstruction](../notes/a-software-factory-is-family-scoped-lifecycle-production-machinery.md) preserves these additions without projecting them backward into the 2003 terminology.
 
-The source also supplies the organizational precursor for [factory-level continual learning](../notes/factory-learning-is-experience-responsive-retention-that-improves.md). Feedback flows from solution developers to factory developers, but human factory developers interpret it and decide how reusable production machinery changes. The account therefore establishes feedback-supported factory development, not a system-determined learning process.
+The source also supplies the organizational precursor for [factory-level learning](../notes/factory-learning-is-experience-responsive-retention-that-improves.md). Feedback flows from solution developers to factory developers, but human factory developers interpret it and decide how reusable production machinery changes. The account therefore establishes feedback-supported factory development, not a system-determined learning process.
 
 It compares with both [learning inside a fixed decomposition](../notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md) and [the hand-crafted-bootstrap boundary](../notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md): ordinary solution development operates inside the supplied family structure, while previously unanticipated variation can require people to revise the reusable machinery.
 
@@ -68,7 +68,7 @@ Its two feedback processes show how humans may improve a factory; they do not es
 
 ## Recommended Next Action
 
-Use the source as the mature ontology anchor and as the human-directed precursor to factory-level continual learning. A later experimental account should state which feedback remains external evidence and which factory-development decisions the computational learner itself determines.
+Use the source as the mature ontology anchor and as the human-directed precursor to factory-level learning. A later experimental account should state which feedback remains external evidence and which factory-development decisions the computational learner itself determines.
 
 Abstracted into:
 

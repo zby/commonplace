@@ -1,5 +1,5 @@
 ---
-description: "Compares mechanisms at the minimal factory-learning causal job while separating update mechanisms from the project-theory function needed for open-ended coherent modification"
+description: "Compares factory-learning mechanisms on their shared causal job — experience-responsive retention — while separating update mechanisms from the project-theory function needed for open-ended coherent modification"
 type: kb/types/note.md
 traits: [title-as-claim, has-comparison]
 tags: [foundations, learning-theory, self-improving-systems]
@@ -102,7 +102,7 @@ A theory-surface intervention tests whether making project theory explicit and a
 
 ## Scope
 
-- The note compares update mechanisms at the minimal factory-learning relation; system architecture and evaluator quality can dominate results.
+- The note compares update mechanisms at the shared retention relation; system architecture and evaluator quality can dominate results.
 - The program's scoped claim that open-ended coherent modification requires a project-theory function is a stronger adequacy condition, not part of the minimal retention condition.
 - Readability, addressability, exact execution, and parametric compression are properties with costs and benefits, not rankings.
 - Mixed mechanisms are the default serious alternative to any single update method.
