@@ -17,7 +17,7 @@ source_notes:
 
 # The Bitter Lesson does not require everything to live in weights
 
-> **Draft.** This article is circulating for comments; its claims, structure, and central thesis may still change. Counterexamples and disputed scaling assumptions are welcome through the repository's issue tracker.
+> **Draft.** This article is circulating for comments; its claims, structure, and central thesis may still change. Counterexamples and disputed scaling assumptions are welcome through [the repository's issue tracker](https://github.com/zby/commonplace/issues).
 
 The Bitter Lesson creates a serious problem for systems built from explicit
 theories, prompts, tests, schemas, and programs. Calling those artifacts a
