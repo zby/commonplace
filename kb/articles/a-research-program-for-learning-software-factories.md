@@ -6,7 +6,7 @@ byline: Zbigniew Lukasiak
 source_notes:
   - kb/notes/a-software-factory-is-family-scoped-lifecycle-production-machinery.md
   - kb/notes/factory-construction-does-not-establish-knowledge-acquisition.md
-  - kb/notes/factory-learning-retains-experience-in-reusable-machinery.md
+  - kb/notes/factory-learning-is-experience-responsive-retention-that-improves.md
   - kb/notes/a-better-factory-claim-compares-operative-states.md
   - kb/notes/commitment-not-derivation-creates-new-ground-truth.md
   - kb/notes/theory-and-capacity-building-make-the-same-kind-of-commitment.md
