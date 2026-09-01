@@ -85,9 +85,9 @@ A useful comparison holds constant, as far as possible:
 - acceptance conditions and later-use horizon; and
 - accounting for failures, abstentions, retries, and recovery.
 
-Information matching is especially important. A theory condition should not receive extra facts hidden in its theory artifact. A trajectory condition should not receive more worked examples. A direct optimizer should not be credited with human-designed target-specific reward shaping that other conditions must infer.
+Fact matching is especially important. A theory condition should not receive extra facts hidden in its theory artifact. A trajectory condition should not receive more worked examples. A direct optimizer should not be credited with human-designed target-specific reward shaping that other conditions must infer.
 
-The strongest comparisons intervene on the mechanism while preserving the information available to it. Theory can be withheld, flattened into an information-matched record, or made plausibly wrong. Trajectories can be shuffled or stripped of outcomes. Search policies can be replaced while keeping the candidate language fixed. The experiment identifies only the contrast it actually runs.
+The strongest comparisons intervene on the mechanism while preserving the information available to it. Theory can be withheld, flattened into a fact-matched record, or made plausibly wrong. Trajectories can be shuffled or stripped of outcomes. Search policies can be replaced while keeping the candidate language fixed. The experiment identifies only the contrast it actually runs.
 
 A theory-surface intervention tests whether making project theory explicit and addressable improves the path. It does not by itself establish that every successful alternative lacks theory: a policy or parametric learner may carry the relevant project-specific organization implicitly.
 
