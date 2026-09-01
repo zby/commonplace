@@ -8,6 +8,7 @@ source_notes:
   - kb/notes/factory-construction-does-not-establish-knowledge-acquisition.md
   - kb/notes/factory-learning-retains-experience-in-reusable-machinery.md
   - kb/notes/commitment-not-derivation-creates-new-ground-truth.md
+  - kb/notes/theory-and-capacity-building-make-the-same-kind-of-commitment.md
   - kb/notes/theory-mediation-can-coordinate-heterogeneous-factory-development.md
   - kb/notes/program-theory-sustains-search-under-delayed-feedback.md
   - kb/notes/project-theory-relates-new-demands-to-existing-organization.md
@@ -27,7 +28,7 @@ source_notes:
 
 > **Draft.** Comments and counterexamples are welcome through [the repository's issue tracker](https://github.com/zby/commonplace/issues).
 
-> **TL;DR.** A software factory learns when its production experience causes retained changes to its machinery that later work depends on; it improves when a later factory state beats an earlier one under a declared comparison. This program tests whether LLM-based factories can learn this way without training new models, by acquiring, holding, using, and revising project theories.
+> **TL;DR.** A software factory learns when its production experience causes retained changes to its machinery that later work depends on. This is a causal definition with no quality requirement: a factory can learn badly. Improvement is claimed separately, with an instrument outside the factory — a comparison, declared in advance, between a later factory state and an earlier one. This program tests whether LLM-based factories can learn this way without training new models, by acquiring, holding, using, and revising project theories.
 
 ## Better software factories
 
@@ -42,12 +43,17 @@ In current agentic coding systems this learning is interleaved with operation ra
 ```text
 production and factory development under the current factory state
   -> experience from that work
-  -> retained, organized state: project theory, indexes, tests, tools
+  -> retention: judging what the experience means, organizing it,
+     committing to conjectures (project theory, indexes, tests, tools)
   -> later production and factory-development decisions
   -> further experience, now under the changed factory state
 ```
 
-Improvement is judged in a second view that takes snapshots of this process. Fix two factory states and compare them:
+Retention in this loop is an act, not storage. The experience does not determine what to retain: the factory judges what a failure means and what is worth keeping, organizes the result so later work can find it, and commits to conjectures the evidence does not entail — [explanatory and constructive commitments of the same fallible kind](../notes/theory-and-capacity-building-make-the-same-kind-of-commitment.md). Judging here names an act, not a standard. The definition of factory-level learning places no quality requirement on it: a factory whose retained judgements are poor still learns in the defined sense — it learns badly, and can degenerate.
+
+The loop is the complete learning protocol. A particular factory may add internal controls on what it retains or adopts — heuristic self-evaluation, preregistered internal comparisons, up to a proof gate in the style of Schmidhuber's Gödel machine — but these are design choices of the factory, not parts of the definition, and a factory can choose them badly. Even a proof gate certifies only against the axioms it is given.
+
+The improvement claim therefore needs an instrument the loop does not supply. The program's instrument takes snapshots of the process. Fix two factory states and compare them:
 
 ```text
 factory state F
