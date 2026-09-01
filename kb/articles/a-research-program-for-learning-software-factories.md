@@ -54,7 +54,7 @@ production and factory development under the current factory state
 
 The factory judges what a failure means and what is worth keeping, organizes the result so later work can find it, and, where the experience leaves resolutions open, settles them with [explanatory and constructive commitments of the same fallible kind](../notes/theory-and-capacity-building-make-the-same-kind-of-commitment.md) — content the evidence does not entail.
 
-This is the complete occurrence condition for experience-responsive retention. A particular factory may add internal controls on what it retains or adopts — heuristic self-evaluation, preregistered internal comparisons, up to a proof gate in the style of Schmidhuber's Gödel machine — but these are design choices of the factory, not parts of the definition, and a factory can choose them badly. Even a proof gate certifies only against the axioms it is given.
+This is the complete occurrence condition for experience-responsive retention. A particular factory may add internal controls on what it retains or adopts — heuristic self-evaluation, preregistered internal comparisons, up to a proof gate in the style of Schmidhuber's Gödel machine — but these are design choices of the factory, not parts of the definition. Even a proof gate certifies only against the axioms it is given.
 
 Learning is retention that leaves the factory better, and the occurrence condition does not by itself establish improvement. The program's instrument is a measurement laid over snapshots of the process:
 
