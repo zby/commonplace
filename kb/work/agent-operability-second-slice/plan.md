@@ -142,21 +142,27 @@ next stage with what has become knowable.
 
 ### Stage 1 — establish the decision baseline
 
-- [ ] Create a disposable, controlled project through the source-checkout and
+- [x] Create a disposable, controlled project through the source-checkout and
   packaged-wheel initialization paths.
-- [ ] Measure the copied inputs, projected skills, hashing cost, and current
+- [x] Measure the copied inputs, projected skills, hashing cost, and current
   status output using the table in [baseline.md](./baseline.md).
-- [ ] Demonstrate what current package/project version fields can and cannot
+- [x] Demonstrate what current package/project version fields can and cannot
   distinguish.
-- [ ] Test candidate provenance designs against templates, projected skills,
+- [x] Test candidate provenance designs against templates, projected skills,
   offline comparison, legacy projects, and the six required project states.
 
 Stage output: a short evidence-backed design choice, or a returned finding that
 no examined design meets the intent. If the chosen record becomes load-bearing
 state, record the architectural decision before implementation.
 
+Completed 2026-09-01. [The Stage 1 design choice](./design-choice.md) selects a
+tracked content-addressed baseline and requires its load-bearing semantics to
+be recorded in an ADR before Stage 2 implementation.
+
 ### Stage 2 — make creation provenance-bearing
 
+- [ ] Promote the Stage 1 design choice into an ADR that fixes the record's
+  authority, tracked storage, producer, transitions, and recovery behavior.
 - [ ] Implement one versioned provenance record with a single producer and
   explicit consumers.
 - [ ] Produce it only after successful project creation without changing

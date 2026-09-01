@@ -87,6 +87,8 @@ Close this workshop when:
   stages, delegated decision rights, acceptance evidence, and return conditions
 - [baseline.md](./baseline.md) — current implementation map, unknowns, and
   measurement template
+- [design-choice.md](./design-choice.md) — Stage 1 evidence, rejected
+  alternatives, and the content-addressed baseline selected for ADR design
 
 ## Related work
 
