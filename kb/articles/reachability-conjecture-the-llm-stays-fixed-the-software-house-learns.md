@@ -33,7 +33,7 @@ changes is everything around it: the code the house runs on, and the notes
 that record what the software is for, why it is built the way it is, and
 what earlier changes taught. People write the first version of both, and the
 house revises them as requests and their consequences arrive. People still
-correct it at first. The claim is that each round needs less correction, until
+correct it at first. The bet is that each round needs less correction, until
 keeping that understanding current no longer depends on people.
 
 ## Claim
@@ -57,8 +57,7 @@ Open-ended change brings demands nobody analysed in advance and questions of
 fit that the available checks do not settle. Say a product built for one
 customer per deployment must now serve many tenants. The tenant identifier can
 enter the data model in several ways. All of them pass the existing tests, but
-only some preserve assumptions the rest of the code relies on without
-stating them.
+only some preserve the assumptions the rest of the code silently relies on.
 Choosing among them needs what the computer scientist Peter Naur called a
 program theory: the capacity to relate the software to the activity it
 supports, explain why it is organized as it is, and relate a new demand to
@@ -86,26 +85,25 @@ AI researcher Jürgen Schmidhuber's [Gödel
 machine](../notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md)
 is a proof-governed construction that rewrites its own code. It is not a
 software house: it has no users, and the only software it changes is itself.
-It shows the cost of automation through formulated criteria. An embedded
+It shows what automation costs when formulated criteria buy it. An embedded
 prover admits a rewrite only after proving, from the machine's axioms and
-utility formalization, that the rewrite raises utility. Everything the conjecture asks
+utility formalization, that the rewrite pays. Everything the conjecture asks
 the house to acquire is supplied there in advance as the formal acceptance
 basis: the theory of the system is the axioms, the objective is the utility
 function, the test is proof. Any of them may be rewritten, but only under a
 proof from the formalization then in force. So the initial formalization
-constrains every successor, transitively, and a demand nobody formalized
-cannot enter the test. The paper states the cost: the machine "must ignore those
+governs every successor by descent, and a demand nobody formalized cannot
+enter the test. The paper states the price: the machine "must ignore those
 self-improvements whose effectiveness it cannot prove"
 ([Schmidhuber](../sources/goedel-machines-schmidhuber.ingest.md), verbatim).
 
-Once no human holds an internal role, the conjectured house is closed in the
-same way. Every successor is admitted by the notes, software, and fixed LLM
-the prior state supplies, so the seed constrains every later state,
-transitively. The difference is
+Once no human is inside, the conjectured house is closed in the same way.
+Every successor is admitted by the notes, software, and fixed LLM the prior
+state supplies, so the seed governs the lineage by descent. The difference is
 the admission relation. The Gödel machine admits only what its current axioms
 derive. The house admits what a fallible gate accepts on production
 consequences, and a consequence can contradict the current theory where a
-proof cannot contradict its axioms. The house's cost is fallibility instead.
+proof cannot contradict its axioms. The house pays with fallibility instead.
 
 The conjecture assigns each component a role:
 
@@ -119,7 +117,7 @@ The conjecture assigns each component a role:
   the product, tools, context assembly, schedulers, validators and tests,
   version-control rollback, and retention rules.
 
-None of these holds the theory alone. A note nobody loads has no effect. A fixed
+None of these holds the theory alone. A note nobody loads is inert. A fixed
 LLM without enough project state reconstructs or guesses instead of carrying
 understanding from one change to the next. Software executes a decision
 without supplying the judgment that selected it. The composite has to exhibit
@@ -154,7 +152,7 @@ production evidence + fixed LLMs + present software and notes
   -> later production
 ```
 
-The first arrow omits two hard decisions. Semantic admission is deciding which
+The first arrow hides two hard decisions. Semantic admission is deciding which
 meaning-bearing changes may enter retained state. Credit assignment is
 deciding which earlier code, note, context route, test, objective boundary, or
 selection policy a later consequence counts for or against. [Governing a
@@ -197,7 +195,7 @@ context window, the automation obligation below requires the house to make
 it. Self-application is then a consequence of automation, not a separate
 requirement.
 
-## What training the house gains
+## What this training route could buy
 
 The alternative route is to train the model itself, by fine-tuning or
 retraining its weights on project experience. Neither route makes the whole
@@ -284,14 +282,14 @@ this boundary.
 The conjecture is existential: some current LLM, some arrangement of software
 and notes, some product scope. Two ways of saving the conjecture after a
 failure are ruled out in advance. The witness pins the model versions it
-admits before testing, so that success cannot come from a newer model. And it declares product scope, horizon, and
+admits before testing, so that a newer model cannot quietly do the work. And it declares product scope, horizon, and
 resource envelope before testing, so that the scope cannot shrink until fixed
 machinery suffices. Open-ended means the declared demand stream admits
 relevant novelty: one web application whose users keep asking for things
 nobody listed qualifies; a fixed set of fifty tasks does not. The stream also
 bounds what is reachable, since the closure is taken under the demands the
-house receives as well as its gate. Reachability alone is a weak claim, since
-a gate that admits anything makes every state reachable. The claim is that adequate
+house receives as well as its gate. Bare reachability is cheap: a gate that
+admits anything makes every state reachable. The claim is that adequate
 states are reached with usable probability inside the declared envelope.
 
 Software and notes are the trainable internal state. Products, demands, tool
