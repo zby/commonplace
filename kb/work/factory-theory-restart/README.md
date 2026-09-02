@@ -17,15 +17,14 @@ forces, and keep the testing machinery out until the theory stands on its own.
 - The theory layer does not need the learner-boundary machinery. Boundaries,
   attribution (the cheap-operator case), the relation-relative comparison, and
   the oracle problem belong to testing, not to the theory.
-- The program's term for the full system is **software factory system** — the
-  system that produces and changes software: production machinery plus
-  whatever fills its roles, with product scope a parameter from one
-  long-lived program to a declared family. Machinery revision (factory
-  development) and learning are deliberate later steps, not parts of the
-  definition. Family scoping is Greenfield's
-  codification of the demand space, not ontology. "Software factory" keeps Greenfield's meaning — the machinery,
-  human-operated in his account; reusing it with a shifted meaning would make
-  the import equivocal.
+- The program's term for the full system is **software factory system**: it
+  produces and changes software — machinery plus whatever fills its roles,
+  product scope a parameter from one long-lived program to a declared family.
+  Factory development and learning are later steps, not definitional; family
+  scoping is Greenfield's codification of the demand space, not ontology.
+  "Software factory" keeps Greenfield's meaning (the machinery,
+  human-operated in his account) — reusing it with a shifted meaning would
+  make the import equivocal.
 - Likely eventual shape: a theory note (or notes), then possibly a split of
   the article into a theory-formulation part and a testing part. Not committed
   yet; the derivation comes first.
@@ -38,15 +37,15 @@ forces, and keep the testing machinery out until the theory stands on its own.
   factories as the derivation's first data point: constructors designed people in as
   theory-holders, Greenfield's containment bet met Naur's residue at breadth,
   and the four theory carriers frame the program's bet.
-- [learning-derivation.md](./learning-derivation.md) — the second derivation:
-  holding a theory of a changing system is continually rebuilding it from
-  production experience, so learning returns as a conclusion the lean
-  definition left out.
 - [why-now.md](./why-now.md) — why factories can work now: LLMs lift the
   codification tax Naur's limit imposed, stated as a prediction with three
   discriminable readings of the current wave, the conjecture that full
   theory-holding machinery is not yet there, and the bridge to learning
   factories via the third carrier's cheap revision.
+- [learning-derivation.md](./learning-derivation.md) — the second derivation:
+  holding a theory of a changing system is continually rebuilding it from
+  production experience, so learning returns as a conclusion the lean
+  definition left out.
 
 **Closure:** closes when the derivation and whatever it forces are promoted to
 library artifacts (notes, and possibly restructured articles) or deliberately
