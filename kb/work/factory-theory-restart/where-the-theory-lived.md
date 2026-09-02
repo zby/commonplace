@@ -37,33 +37,50 @@ codification: the capture is lossy, the residue is exactly what modification
 needs — so the question becomes how often the residue is needed. At breadth,
 the answer is constantly.
 
-## How a factory differs from an IDE with libraries
+## How a software factory differs from an IDE with libraries
 
-If people hold the theory either way, what separates a factory from ordinary
-tooling — an IDE, libraries, a framework? Not the presence of humans. Two
-things.
+If people hold the theory either way, what separates a software factory from
+ordinary tooling? Take a concrete shelf: IntelliJ, the React library, the
+Rails framework, and — from the first wave — Microsoft's Web Service
+Software Factory, a guidance package that configured Visual Studio to
+generate and assemble service applications of one declared kind.
 
-The retained knowledge is family-scoped. An IDE and general-purpose libraries
-retain knowledge about programming in general; a factory's schemas, DSLs,
-templates, and guidance retain knowledge about producing members of one
-declared family. The declaration is what makes the reuse claim testable: the
-machinery is supposed to transfer across family members, not across all
-software. Without it, every shop with an IDE is a factory and the term says
-nothing.
+The swap test separates them. Move each to an unrelated shop. The IDE keeps
+its full value: it knows editing, debugging, refactoring — programming in
+general. The library keeps its value: a solution fragment any product can
+embed. The framework keeps most of its value: it decides an architecture,
+but for any web application whatsoever. The factory loses almost everything:
+its schema, generators, and guidance encode how to produce members of one
+declared family, and outside that family they are dead weight. Family-scoped
+retained knowledge is the first difference, and it is what makes the reuse
+claim testable: the machinery is supposed to transfer across family members,
+not across all software. Without the declared family, every shop with an IDE
+is a factory and the term says nothing.
 
-And the difference is a position on an axis, not a kind. The axis is how much
-of each member's production is determined by retained machinery rather than
-fresh human decision. An IDE sits near zero. Libraries move up it; a
-framework further — it already decides architecture. A factory is the high
-end: generate, assemble, configure, with people supplying the residue.
+The residue test gives the second difference. Ask how much of a new product
+the humans still write. With an IDE, nearly everything — the tool assists
+keystrokes and navigation. With libraries, less: fragments come ready, and
+the humans decide where they go and write what connects them. With a
+framework, less again: the skeleton is decided, and the humans fill declared
+slots. With a factory, a new family member is mostly generated, assembled,
+and configured, and the humans supply the residue. So the difference is a
+position on an axis — how much of each member's production is determined by
+retained machinery rather than fresh human decision — not a different kind
+of thing. The blurriness with frameworks is real and harmless.
 
-Read this way, the containment bet is a position on the same axis, and the
-program is its limit point: the one kind of knowledge Greenfield's
+Nor are they rivals: the layers stack. The first wave's factories literally
+configured the IDE — guidance packages inside Visual Studio — and generated
+code against libraries. A factory is what sits on top of an IDE and
+libraries when someone commits to a family.
+
+Read this way, the containment bet is a position on the residue axis, and
+the program is its limit point: the one kind of knowledge Greenfield's
 containment left in people — the theory — is the kind the program tries to
-move into retained machinery. A software factory system that holds its own theory in readable
-artifacts is not a different project from the software-factory vision; it is
-that vision completed. It also follows that the derivation covers the IDE
-shop: there the theory is simply all of it, carried entirely by people.
+move into retained machinery. A software factory system that holds its own
+theory in readable artifacts is not a different project from the
+software-factory vision; it is that vision completed. It also follows that
+the derivation covers the IDE shop: there the theory is simply all of it,
+carried entirely by people.
 
 ## The vision failed, and our reading of why
 
