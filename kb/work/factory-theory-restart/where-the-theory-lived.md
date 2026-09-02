@@ -43,6 +43,12 @@ over the pre-analyzed region. The family is part of Greenfield's method, not
 of the system's ontology — which is why the program's definition leaves
 product scope as a parameter.
 
+Together these moves expose the tradeoff: Greenfield gets generality only by
+widening the effective system boundary to include human developers, and
+automation only by narrowing the automated task to a pre-engineered product
+family. His architecture does not provide both within one computational
+boundary.
+
 ## How a software factory differs from an IDE with libraries
 
 If people hold the theory either way, what separates a software factory from
