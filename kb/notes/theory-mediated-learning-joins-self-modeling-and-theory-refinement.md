@@ -189,7 +189,7 @@ modification on one traceable path.
 
 Relevant Notes:
 
-- [A research program for learning software factories](../articles/a-research-program-for-learning-software-factories.md) — context: states the combined program and its proposed interventions
+- [A research program for learning software factories](../articles/the-reachability-conjecture-train-the-house-not-the-llm.md) — context: states the combined program and its proposed interventions
 - [Reflective system](./definitions/reflective-system.md) — grounds: supplies the causally connected self-representation relation inherited from computational reflection
 - [Theory-mediated self-improvement needs interpretation, retention, and independent read-back](./theory-mediated-self-improvement-needs-interpretation-and-retention.md) — grounds: states the causally co-indexed path the synthesis must realize
 - [Holding a program theory means sustaining coherent search under delayed feedback](./program-theory-sustains-search-under-delayed-feedback.md) — extends: applies the theory-guided mechanism to longitudinal software modification and recovery

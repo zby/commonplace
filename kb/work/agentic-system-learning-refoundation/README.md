@@ -6,7 +6,7 @@ material here remains historical input or unresolved protocol work and must be
 re-triaged before application to the current text.
 
 **What this holds.** Review material for
-[A research program for learning software factories](../../articles/a-research-program-for-learning-software-factories.md):
+[A research program for learning software factories](../../articles/the-reachability-conjecture-train-the-house-not-the-llm.md):
 
 - [faithfulness-audit-2026-08-31.md](./faithfulness-audit-2026-08-31.md) —
   historical audit of commit `cb5901c2`; its findings are not automatically

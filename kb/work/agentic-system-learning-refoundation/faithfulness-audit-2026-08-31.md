@@ -1,7 +1,7 @@
 # Faithfulness audit of the program article against its source notes
 
 2026-08-31. Audit of
-[A research program for learning software factories](../../articles/a-research-program-for-learning-software-factories.md)
+[A research program for learning software factories](../../articles/the-reachability-conjecture-train-the-house-not-the-llm.md)
 (draft as of commit `cb5901c2`) against its ~38 source notes. Method: three
 parallel survey agents, one per cluster (factory ontology; theory and Naur;
 evidence and warrant), each checking every note's claim against the article's

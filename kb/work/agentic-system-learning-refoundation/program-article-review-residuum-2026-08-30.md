@@ -1,6 +1,6 @@
 # Program-article review residuum — 2026-08-30
 
-This report records the deeper issues left deliberately unresolved by the focused review of [A research program for learning software factories](../../articles/a-research-program-for-learning-software-factories.md). The accompanying article patch takes only changes that are clearly precision fixes: it softens the historical claim about Naur, explains how the article's implementation-role table relates to the proposal-selection and residue decompositions, narrows the evidential reading of the Commonplace episode, and removes rhetoric that overstates closure of the reflective loop.
+This report records the deeper issues left deliberately unresolved by the focused review of [A research program for learning software factories](../../articles/the-reachability-conjecture-train-the-house-not-the-llm.md). The accompanying article patch takes only changes that are clearly precision fixes: it softens the historical claim about Naur, explains how the article's implementation-role table relates to the proposal-selection and residue decompositions, narrows the evidential reading of the Commonplace episode, and removes rhetoric that overstates closure of the reflective loop.
 
 The questions below are not defects that should be patched by wording alone. Each can change the research program's ontology, experiment design, or success criteria, so they should be resolved through dedicated investigation or explicit operator choice.
 

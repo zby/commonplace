@@ -1,7 +1,7 @@
 # Defending theory-guided search against the random-mutation baseline
 
 Working position paper, 2026-08-31. Posed by the operator during review of
-[A research program for learning software factories](../../articles/a-research-program-for-learning-software-factories.md).
+[A research program for learning software factories](../../articles/the-reachability-conjecture-train-the-house-not-the-llm.md).
 Deliberately not applied to the article yet.
 
 ## The problem

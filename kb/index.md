@@ -13,7 +13,7 @@ Two separate pressures keep the design modular. Different collections support di
 ## Threads worth following
 
 **Learning software factories.** The current
-[research program](./articles/a-research-program-for-learning-software-factories.md)
+[research program](./articles/the-reachability-conjecture-train-the-house-not-the-llm.md)
 asks whether a software factory can learn from its production experience —
 retained machinery changes that make a later factory state better than its
 predecessor — without training a new model. It tests whether an

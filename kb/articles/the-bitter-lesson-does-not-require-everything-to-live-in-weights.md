@@ -263,7 +263,7 @@ and research commitments.
 
 ## Tests that can change the strategy
 
-The [research program](./a-research-program-for-learning-software-factories.md#how-to-test-the-program)
+The [research program](./the-reachability-conjecture-train-the-house-not-the-llm.md#how-to-test-the-program)
 specifies the immediate theory-holding intervention and the later acquisition
 and successor-factory tests. For the Bitter Lesson strategy, those results must
 additionally show that more computation improves downstream search rather than

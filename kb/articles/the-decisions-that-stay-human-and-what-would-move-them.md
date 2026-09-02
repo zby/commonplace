@@ -49,7 +49,7 @@ horizon, and workload.
 
 The bearer and transfer questions meet at open-ended modification but do not
 collapse into one. The [bearer
-question](./a-research-program-for-learning-software-factories.md) asks
+question](./the-reachability-conjecture-train-the-house-not-the-llm.md) asks
 whether the composite can sustain coherent, theory-guided search and recovery. The transfer question asks whether
 the required premises, authority, correction, and continuity are sufficiently
 inside the declared boundary for the decision to move with warrant.
