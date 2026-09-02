@@ -5,6 +5,11 @@ software: the production machinery — tools, tests, schemas, guidance,
 retained knowledge — together with whatever fills its roles: people,
 codified assets, models. Its product scope is a parameter: one long-lived
 program at the narrow end, a declared family of products at the broad end.
+The compound names the complete producing system, not a special class of
+tooling.
+An IDE alone is production machinery, not a software factory system; the IDE
+together with the programmers and other project-specific role-fillers is the
+human-operated system at that end of the range.
 (The bare term "software factory" keeps Greenfield's meaning — the
 machinery, human-operated in his account, sitting at the family end of the
 scope; the history document explains the relation.)

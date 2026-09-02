@@ -5,16 +5,21 @@ not the holding. This document states the program's conjecture about what the
 holding machinery is. Unlike the two derivations, this is not derived; it is
 the program's constructive bet, stated so it can fail.
 
-**The conjecture.** The theory-holding function can be internalized in
-machinery as three parts working together:
+**The conjecture.** Reliable, economical theory holding across a long horizon
+requires three parts working together:
 
-- **Natural-language notes** carry the theory: informal, addressable,
-  revisable artifacts.
-- **An LLM interpreter** reads them and brings them to bear on the change at
-  hand — the lifted codification tax at work.
+- **Natural-language notes** cache selected results of theory building in
+  informal, addressable, revisable artifacts.
+- **An LLM interpreter** reconstructs the theory from those results and brings
+  it to bear on the change at hand — the lifted codification tax at work.
 - **A harness**: code that builds each prompt — which notes enter which
   context, when, in what order and framing — so the right theory activates
   on the demand it bears on, and that gates what gets retained back.
+
+The composite holds the theory; the notes alone do not. They spare it from
+repeating and reselecting the whole theory-building computation on every
+demand, preserve continuity among decisions, and give later learning an
+explicit surface to revise.
 
 Mapped to the holding requirements from the holding-gap conjecture: uncued
 relevance is harness routing; winning in context is prompt construction;
@@ -43,11 +48,21 @@ conjecture is wrong.
 
 ## Each part conjectured necessary
 
-Without notes, the theory lives in weights or nowhere — unaddressable and
-expensive to revise. Without the interpreter, notes are documentation.
-Without the harness, storage and exposure without activation — context
-stuffing, the current wave's gap. Ablating each part is therefore a
-designed experiment, not a thought experiment.
+Without notes, the theory must live in weights or be reconstructed from the
+primary record on each demand. Without the interpreter, notes are
+documentation. Without the harness, storage and exposure do not ensure
+activation — context stuffing, the current wave's gap. Ablating each part is
+therefore a designed experiment, not a thought experiment.
+
+**The competing reconstruction conjecture.** Dedicated theory notes are
+unnecessary: an LLM and harness can reconstruct the theory on demand from the
+current software, factory machinery, task, and raw production record. The
+system holds the theory as a reproducible capability rather than a retained
+representation; notes merely cache a computation that can be repeated. The
+conjecture succeeds if reconstruction preserves coherent change across novel
+demands at acceptable cost, and fails if retained theory notes provide a
+lasting advantage in capability, reliability, continuity, or total operating
+cost that additional reconstruction effort cannot recover.
 
 ## Status
 

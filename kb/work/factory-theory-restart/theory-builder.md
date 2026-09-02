@@ -43,7 +43,8 @@ software factory system, with its own machinery as the product at the narrow
 end of the scope parameter. The first derivation then applies to it: its
 harness changes must fit purposes and organization its checks capture only
 partly, so it must hold a theory of its own machinery. The learning
-derivation applies too: that theory must be rebuilt from its own operation.
+document applies too: when its operation exposes that the held theory no
+longer fits, the theory must be revised and the revision retained.
 
 ## The circle closes, and that is the check
 
@@ -58,7 +59,8 @@ wrong. That they compose is the arc's consistency check.
 
 Stated as the arc's conclusion: the two names describe one system. A
 software factory system that keeps changing coherently — at a scope that
-keeps admitting novelty — must build and rebuild theory: it is a theory
+keeps admitting novelty — must hold a theory — acquired by
+participation, revised when experience invalidates it: it is a theory
 builder for its own domain. A general theory builder — with domains that
 keep opening — must build and rebuild its own machinery: it is a software
 factory system with itself in scope. Neither description is complete

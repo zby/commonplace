@@ -93,5 +93,5 @@ can propose the edits from production experience. A software factory system
 on the third carrier is therefore the first on which the system's theory can
 be revised from its own production at the speed of production.
 
-Why a changing system's theory must be revised at all — and what revision
-costs on each carrier — is the next document's derivation.
+When a changing system's theory must be revised — and what revision costs
+on each realization — is the next document's derivation.

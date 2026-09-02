@@ -45,14 +45,14 @@ forces, and keep the testing machinery out until the theory stands on its own.
   theory-holding machinery is not yet there, and the bridge to learning
   factories via the third carrier's cheap revision.
 - [learning-derivation.md](./learning-derivation.md) — the second derivation:
-  holding a theory of a changing system is continually rebuilding it from
-  production experience, so learning returns as a conclusion the lean
-  definition left out.
+  Naur's guided-participation account explains acquisition, while theory
+  revision follows only when production experience exposes that the held
+  theory is no longer adequate.
 - [holding-conjecture.md](./holding-conjecture.md) — the constructive bet:
-  theory holding internalized as natural-language notes, an LLM interpreter,
-  and a harness — code that builds prompts so the right theory activates —
-  with codification returning aimed at logistics, and the documentation
-  objection faced.
+  theory holding internalized as natural-language notes caching prior theory
+  building, an LLM interpreter, and a harness that activates the right theory;
+  plus the competing conjecture that the LLM and harness can instead
+  reconstruct it from the primary record on demand.
 - [theory-builder.md](./theory-builder.md) — the reverse direction: a
   general theory builder of natural-language theories needs software to
   manipulate them, no closed harness fits a general builder (this document's
@@ -61,10 +61,11 @@ forces, and keep the testing machinery out until the theory stands on its own.
   conclusion is that the program's object is one system that is both factory
   and builder.
 - [bootstrap-conjecture.md](./bootstrap-conjecture.md) — the second
-  conjecture: the theoretical system is reached by bootstrapping — a
+  conjecture: the theoretical system can be reached by bootstrapping — a
   human-operated system internalizes its own holding through its own
   operation, with declining human theory-interventions as the progress
-  measure and two named failure modes.
+  measure, while supplied transfer and on-demand reconstruction remain
+  competing paths.
 
 **Closure:** closes when the derivations, the conjectures, and whatever they
 force are promoted to

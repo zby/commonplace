@@ -5,9 +5,9 @@ harness, with the theory-holding role machine-filled. No such system runs today 
 so the holding-gap conjecture diagnoses; the role is filled with people. So a
 second conjecture is needed, about how the theoretical system could come to
 exist at all. Like the holding conjecture it is a bet, not a derivation —
-though the learning derivation supplies its central premise.
+Naur's acquisition account supplies its model of guided participation.
 
-**The conjecture.** The system is reached by bootstrapping: a human-operated
+**The conjecture.** The system can be reached by bootstrapping: a human-operated
 software factory system internalizes its own theory-holding, step by step,
 through its own operation — seeding notes from what its people hold, building
 the harness against observed activation failures, and shifting the holding
@@ -16,14 +16,19 @@ document opens a second doorway: the same climb can start from a
 human-operated theory builder growing its harness. Both roads lead to the
 same coupled system, and the progress measure below applies to either.
 
-**Why the path must be a bootstrap.** The learning derivation says theory is
-built only from production experience. At the start, the only holders of
-that experience's meaning are the people. So the notes cannot be specified
-up front — writing the triple from a spec would supply a theory that is not
-of this system, the constructors' case — and the harness cannot be designed
-in advance of the activation failures it exists to fix. The system must
-climb using what it already holds: human theory first, machine holding
-grown out of it.
+**Why bootstrap is plausible.** Naur's positive acquisition account is guided
+participation: a new holder works on the program with people who already hold
+its theory. Here the people supervise theory-bearing changes while the notes
+cache selected results and the harness adapts to observed activation failures.
+The system climbs using what it already holds: human theory first, machine
+holding grown through shared operation.
+
+This is not the only path the program admits. A supplied theory package might
+transfer to the model-plus-harness reader where documentation failed for
+Naur's programmers, or the competing reconstruction path might rebuild an
+adequate theory from the primary record on demand. Generic harness machinery
+can also be supplied before local failures tune it. Bootstrap is the path
+conjectured for the case where those alternatives do not suffice.
 
 **What the bootstrap must sustain.** At every step the system keeps
 producing — the people still cover the residue — while some holding moves
@@ -39,6 +44,6 @@ decline: internalization is not happening, and the triple is decoration on
 a human-operated system. Or seeded notes that fail at machine reading: the
 theory transferred from heads to artifacts arrives as documentation — the
 Naur objection recurring at the transfer step — and no harness compensates.
-Either failure leaves the theoretical system unreachable by the only path
-this program sees to it; neither by itself refutes the holding conjecture,
-which concerns the destination, not the road.
+Either failure refutes this bootstrap path; neither by itself refutes the
+holding conjecture, which concerns the destination, or rules out supplied
+transfer or on-demand reconstruction as another road to it.
