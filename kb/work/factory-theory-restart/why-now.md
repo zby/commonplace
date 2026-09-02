@@ -28,7 +28,7 @@ formalizing the theory, not retaining it — and retention plus a reader is now
 a mechanism.
 
 That is the why-now. Stated honestly, it is a prediction rather than a
-result: it says a factory system can work at breadth now if the
+result: it says a software factory system can work at breadth now if the
 model-plus-artifacts bearer actually performs the theory function — which is the program's untested bet.
 
 ## What this predicts about the current wave
@@ -91,7 +91,7 @@ revise by expensive re-codification. Weights revise by retraining. Retained
 readable artifacts revise by editing — and the same model that reads them can
 propose the edits from production experience.
 
-A factory system on the third carrier is therefore not just one that can
+A software factory system on the third carrier is therefore not just one that can
 work; it is the first on which the system's theory can be revised from its
 own production at the speed of production. That is where learning factories
 begin, and it is the next document.
