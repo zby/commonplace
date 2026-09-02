@@ -17,6 +17,10 @@ forces, and keep the testing machinery out until the theory stands on its own.
 - The theory layer does not need the learner-boundary machinery. Boundaries,
   attribution (the cheap-operator case), the relation-relative comparison, and
   the oracle problem belong to testing, not to the theory.
+- The program's term for the full system is **factory system** — the
+  configured production environment for a declared family plus whatever fills
+  its roles. "Software factory" keeps Greenfield's human-constitutive meaning;
+  reusing it with a shifted meaning would make the import equivocal.
 - Likely eventual shape: a theory note (or notes), then possibly a split of
   the article into a theory-formulation part and a testing part. Not committed
   yet; the derivation comes first.
@@ -24,7 +28,7 @@ forces, and keep the testing machinery out until the theory stands on its own.
 **Documents:**
 
 - [naur-derivation.md](./naur-derivation.md) — the simple derivation: a
-  software factory needs a theory in Naur's meaning.
+  factory system needs a theory in Naur's meaning.
 - [where-the-theory-lived.md](./where-the-theory-lived.md) — the historical
   factories as the derivation's first data point: constructors designed people in as
   theory-holders, Greenfield's containment bet met Naur's residue at breadth,

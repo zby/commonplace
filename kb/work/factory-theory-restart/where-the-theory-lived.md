@@ -54,7 +54,7 @@ end: generate, assemble, configure, with people supplying the residue.
 Read this way, the containment bet is a position on the same axis, and the
 program is its limit point: the one kind of knowledge Greenfield's
 containment left in people — the theory — is the kind the program tries to
-move into retained machinery. A factory that holds its own theory in readable
+move into retained machinery. A factory system that holds its own theory in readable
 artifacts is not a different project from the software-factory vision; it is
 that vision completed. It also follows that the derivation covers the IDE
 shop: there the theory is simply all of it, carried entirely by people.
@@ -100,7 +100,7 @@ codification was adequate.
 
 ## The carriers
 
-Four ways of supplying the theory function a factory needs:
+Four ways of supplying the theory function a factory system needs:
 
 1. **Keep people.** What every historical factory did. Works; but the factory
    scales only as far as its theory-holders, and the theory leaves when they
@@ -118,7 +118,7 @@ Four ways of supplying the theory function a factory needs:
    implicitly, at the cost of addressability and cheap revision. The Bitter
    Lesson is its argument.
 
-The derivation says a factory needs the theory. The historical factories ran
+The derivation says a factory system needs the theory. The historical factories ran
 a blend of the first two carriers and stopped where the history above stops; the last two are the
 live alternatives. The program's bet is the third, run with weights fixed —
 which is what makes the third and fourth separable in an experiment.
@@ -136,8 +136,15 @@ program's definition parameterizes them: the roles stay, and who or what
 fills each — a person, a codified asset, a model reading retained artifacts,
 weights — becomes the open variable. Greenfield's factories are then one
 instantiation of the generalized definition, the all-human-plus-codified
-one, not the definition itself. In these documents "the factory" uses the
-generalized sense; "Greenfield's factories" names his instantiation.
+one, not the definition itself.
+
+The generalized definition carries its own term — **factory system**, defined
+in the derivation document — rather than reusing "software factory" with a
+shifted meaning. The general expectation today may already match the
+generalized sense, but Greenfield defined the words otherwise, and importing
+a term while quietly changing its meaning is how equivocation gets built.
+In these documents "software factory" keeps Greenfield's meaning; the
+program's claims are about factory systems.
 
 The generalization is the same move the program makes on Naur: take the
 theory function — mapping, organization-account, demand-relating — and not

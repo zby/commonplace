@@ -13,7 +13,7 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 - [curiosity-prompts](./curiosity-prompts/README.md) — completed Decapod prompt experiment whose exact report still needs relocation to a durable evidence surface before the workshop can close
 - [dialectical-sample](./dialectical-sample/README.md) — illustrative dialectical/evidential collection awaiting an explicit keep, archive, or delete disposition after serving its prototype-checking purpose
 - [error-catching](./error-catching/README.md) — systematizing error-detection techniques, their catch rates, activation gaps, and promotion paths into a durable scheme
-- [factory-theory-restart](./factory-theory-restart/README.md) — rebuilding the learning-software-factories theory from scratch, starting from the simple derivation that a factory needs a theory in Naur's meaning
+- [factory-theory-restart](./factory-theory-restart/README.md) — rebuilding the learning-software-factories theory from scratch, starting from the simple derivation that a factory system needs a theory in Naur's meaning
 - [hanoi-experiment](./hanoi-experiment/README.md) — OpenProse bookkeeping stress test with recorded results and remaining variations
 - [review-evidence-and-disposition-hardening](./review-evidence-and-disposition-hardening/README.md) — resolving or rejecting the code-grounded review findings about result delivery, evidence identity, acknowledgement, recovery, and review-system contracts
 - [skill-creator-distillation](./skill-creator-distillation/README.md) — comparing Codex and Claude skill creators as mixed-evidence distillation workflows and deciding what should be extracted

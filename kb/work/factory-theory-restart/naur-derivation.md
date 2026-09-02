@@ -1,9 +1,13 @@
-# A software factory needs a theory in Naur's meaning
+# A factory system needs a theory in Naur's meaning
 
-A software factory changes things all the time: the software it produces, and
-its own machinery for producing it.
+A **factory system** is a configured production environment for a declared
+family of software, together with whatever fills its roles — people, codified
+assets, models. (The literature's term "software factory" is deliberately not
+reused for it; the second document explains the relation.) A factory system
+changes things all the time: the software it produces, and its own machinery
+for producing it.
 
-Every change has to fit purposes and organization the factory already has.
+Every change has to fit purposes and organization the system already has.
 
 The checks a change runs against — tests, reviews, acceptance criteria —
 capture those purposes and that organization only partly.
@@ -25,11 +29,11 @@ whether a passing change fits.
 Those three capacities are what Naur (*Programming as Theory Building*, 1985)
 calls the theory of a program.
 
-So: a factory that keeps changing coherently must hold such a theory — of its
+So: a factory system that keeps changing coherently must hold such a theory — of its
 products, and of itself, since its own machinery changes under the same
 conditions: partial checks, delayed misfit.
 
-The function need not run at change time. A factory can let misfits land and
+The function need not run at change time. A factory system can let misfits land and
 repair them when they surface. But repair needs the same three capacities —
 to restore a design you must know what it should have been — applied later,
 against more accumulated structure, at higher cost. Deferral moves the
@@ -37,7 +41,7 @@ theory-need in time; it does not remove it.
 
 ## What the derivation assumes
 
-Checks are partial and the evidence of misfit is delayed. A factory whose
+Checks are partial and the evidence of misfit is delayed. A factory system whose
 checks fully captured its purposes and organization would not need the theory;
 the checks would carry the burden. The derivation runs wherever that ideal
 fails.
@@ -50,13 +54,13 @@ the declared family is broad enough that demands arrive which nobody
 pre-analyzed; relating those to the existing organization is what needs the
 theory. Breadth here means novelty of admissible demands, not member count: a family
 can be large yet fully enumerated, and the checks can still be complete.
-Whether a factory can pay for itself without admitting novelty is the
+Whether a factory system can pay for itself without admitting novelty is the
 historical question the next document takes up.
 
 ## What would refute it
 
-A factory that sustains coherent change over a long horizon, on a family
-that keeps admitting novel demands, with no project-specific state performing
+A factory system that sustains coherent change over a long horizon, on a
+family that keeps admitting novel demands, with no project-specific state performing
 the three functions beyond the raw production record and a general-purpose
 model. If that works, the derivation is wrong.
 
@@ -70,10 +74,11 @@ advance — raw record, general model, nothing organizing them.
   needs only that *something* performs the function. Whether it can be held
   outside human heads — and outside model weights, in retained artifacts an
   LLM reads — is the empirical question, not part of the derivation.
-- **A learner boundary.** Who counts as "the factory" — the humans, the
-  system, the composite — matters for attributing learning in a test. The
-  derivation holds for any of them. In particular, humans satisfy it: a
-  factory whose people hold the theory meets the derivation in full. The
+- **A learner boundary.** Which parts of the factory system count as the
+  learner — the humans, the technical machinery, the composite — matters for
+  attributing learning in a test. The derivation holds regardless. In
+  particular, humans satisfy it: a factory system whose people hold the
+  theory meets the derivation in full. The
   derivation poses no problem; the costs of each way of meeting it do.
 - **A definition of learning or a measurement instrument.** Those belong to
   testing the claim, not to deriving it.
