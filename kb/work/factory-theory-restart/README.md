@@ -38,12 +38,12 @@ forces, and keep the testing machinery out until the theory stands on its own.
 - [where-the-theory-lived.md](./where-the-theory-lived.md) — the historical
   factories as the derivation's first data point: constructors designed people in as
   theory-holders, Greenfield's containment bet met Naur's residue at breadth,
-  and the four theory carriers frame the program's bet.
+  and four combinable theory-holding architectures frame the program's bet.
 - [why-now.md](./why-now.md) — why factories can work now: LLMs move the
   codification burden from theory content to theory delivery, stated as a prediction with three
   discriminable readings of the current wave, the conjecture that full
   theory-holding machinery is not yet there, and the bridge to learning
-  factories via the third carrier's cheap revision.
+  factories via the retained-notes architecture's cheap explicit revision.
 - [learning-derivation.md](./learning-derivation.md) — the second derivation:
   Naur's guided-participation account explains acquisition, while theory
   revision follows only when production experience exposes that the held

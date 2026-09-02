@@ -127,30 +127,36 @@ established causal result. What would refute it: factories that scaled
 without theory-holders, or that failed where theory was held and the
 codification was adequate.
 
-## The carriers
+## Four theory-holding architectures
 
-Four ways of supplying the theory function a software factory system needs:
+Four idealized architectures for supplying the theory function a software
+factory system needs. They are not values on one axis: they combine who
+performs the function, where project-specific state is represented, and how
+that state is updated. Running systems can combine them.
 
-1. **Keep people.** What every historical factory did. Works; but the system
-   scales only as far as its theory-holders, and the theory leaves when they
-   do — Naur's account of program death.
-2. **Codify what can be anticipated.** Greenfield's actual strategy was a
-   blend of this with the first — containment, people kept for the remainder.
-   It captures the formalizable part and meets Naur's limit at breadth — and
-   it ran at industrial scale for a decade, so the limit is not hypothetical:
-   it is where the effort stopped.
-3. **Hold it in natural language, interpreted by a model.** Keep the theory
-   informal, as Naur requires, and change the bearer. Neither human-held nor
-   codified. This is why LLMs reopen a question the 2000s closed.
-4. **Train it into model weights.** Also newly available, and the standing
-   rival to the third: project-specific training carries the theory
-   implicitly, at the cost of addressability and cheap revision. The Bitter
-   Lesson is its argument.
+1. **Human-held theory.** What every historical factory used. Works; but the
+   system scales only as far as its theory-holders, and the theory leaves when
+   they do — Naur's account of program death.
+2. **Codified containment.** Greenfield's actual strategy combined codified
+   anticipated variation with human judgment kept for the remainder. It
+   captures the formalizable part and meets Naur's limit at breadth — and it
+   ran at industrial scale for a decade, so the limit is not hypothetical: it
+   is where the effort stopped.
+3. **Project-specific notes interpreted by a fixed-weight model.** Retain
+   selected theory-building results in natural language while general model
+   weights supply the interpreter. This is neither human-held nor a claim to
+   have expressed the theory as codified criteria.
+4. **Project-specific theory in model weights.** Training changes the weights
+   that supply the theory function. This is the standing machine-intensive
+   rival to the third, at the cost of addressability and cheap revision. The
+   Bitter Lesson is its argument.
 
 The derivation says a software factory system needs the theory. The historical factories ran
-a blend of the first two carriers and stopped where the history above stops; the last two are the
-live alternatives. The program's bet is the third, run with weights fixed —
-which is what makes the third and fourth separable in an experiment.
+a blend of the first two architectures and stopped where the history above
+stops; the last two are the live machine-intensive alternatives. Both use
+model weights. They differ in where project-specific, revisable state is
+retained: external notes under fixed weights, or the weights themselves. That
+is what makes the third and fourth separable in an experiment.
 
 ## The import names the system his account left unnamed
 
@@ -185,6 +191,7 @@ take the theory function — mapping, organization-account, demand-relating —
 and not his conclusion that only people can perform it. Naur binds theory to
 human heads; Greenfield's operating model fills the system's roles with
 human occupants and its retained knowledge with codified assets. The program's move, each time, is to keep the function and unbind
-the filler. That is why the bearer question is the empirical center, and why
-the carrier list is the representational-form axis applied to the theory
+the filler. That is why the bearer question is the empirical center.
+Representational form classifies the state used within each architecture; it
+does not classify the whole architecture or determine who performs the theory
 function.

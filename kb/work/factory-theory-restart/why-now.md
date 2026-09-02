@@ -9,7 +9,8 @@ check that Naur is absent from its literature.]
 The account in the previous documents explains the timing. Precisely: what
 could not work before was the vision at breadth. The first wave's factories
 worked wherever their theory-holders could carry them — as expert
-organizations always have. The carrier, not the concept, set the ceiling.
+organizations always have. Where project-specific theory lived and what
+could interpret it, not the concept, set the ceiling.
 
 ## What stalled the first wave
 
@@ -46,13 +47,13 @@ before:
    complete. The trivial case; no bearer news.
 2. **Hidden humans** — theory-holders still in the loop, relabeled. The first
    wave's containment with better tooling.
-3. **Genuine carrier change** — the model-plus-artifacts bearer performing
-   the theory function at breadth.
+3. **Genuine theory-holder change** — the model-plus-artifacts composite
+   performing the theory function at breadth.
 
 The discriminating observation is the one the derivation's refuter already
 runs on: what happens at novelty. If the new wave stalls where the old one
-did, the carrier did not change. If it scales through novel demands without
-human theory-holders, it did.
+did, the theory-holder allocation did not change. If it scales through novel
+demands without human theory-holders, it did.
 
 Discriminating the second reading from the third is where the learner
 boundary — deliberately absent from these theory documents — earns its keep:
@@ -66,8 +67,8 @@ judgment as of 2026-09; needs examples of where the current wave
 underdelivers.] The conjecture this workshop adds: they sit at the first two
 readings because the machinery for full theory holding does not yet exist.
 
-The carrier exists — models read informal artifacts. But holding is more
-than reading. A held theory is brought to bear on a novel demand without
+The reader exists — models read informal artifacts. But holding is more than
+reading. A held theory is brought to bear on a novel demand without
 anyone naming the connection; it wins against everything else in the
 context; it stays live across the long horizon of a family; and it is
 revised when its consequences arrive. Current machinery retains and exposes:
@@ -77,12 +78,12 @@ in the current wave curates, organizes, or revises theory artifacts as
 theory; they are treated as documentation, which is exactly what Naur said
 the theory is not.
 
-So the diagnosis is symmetric with the first wave's. That wave had the
-holding but not the carrier: people held theory that machinery could not
-carry. This wave has the carrier but not the holding: machinery can carry
-theory it does not yet reliably hold. The missing component is the machinery
-of holding — routing the right theory into the context at the right time,
-making it win there, keeping it revised.
+So the diagnosis is symmetric with the first wave's. That wave had human
+theory holding but no machinery that could use informal theory directly. This
+wave has machinery that can read informal artifacts but does not yet hold
+their theory reliably. The missing component is the machinery of holding —
+routing the right theory into the context at the right time, making it win
+there, keeping it revised.
 
 What would refute the conjecture: satisfactory factory performance at
 novelty from raw context scaling and retrieval alone. What would confirm it:
@@ -92,11 +93,11 @@ shape — notes, interpreter, harness — is the holding-conjecture document.
 
 ## The bridge to learning factories
 
-The third carrier has a property the others lack: cheap revision. Retained
-readable artifacts revise by editing — and the same model that reads them
-can propose the edits from production experience. A software factory system
-on the third carrier is therefore the first on which the system's theory can
-be revised from its own production at the speed of production.
+The retained-notes architecture combines machine use with cheap explicit
+revision. Readable artifacts revise by editing — and the same model that
+reads them can propose the edits from production experience. It is therefore
+the first candidate here for machinery whose project-specific theory can be
+revised from its own production at the speed of production.
 
 When a changing system's theory must be revised — and what revision costs
 on each realization — is the next document's derivation.
