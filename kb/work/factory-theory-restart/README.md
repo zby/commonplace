@@ -42,11 +42,8 @@ general system definition.
 ## Working order
 
 1. Treat [the theory](./theory.md) as the current formulation.
-2. Detailed test planning is postponed. [Testing notes](./testing-notes.md)
-   retain only the constraints already forced by the theory; they are not an
-   executable protocol.
-3. When work resumes, derive the missing protocol from the settled claims and
-   the alternatives they leave live.
+2. The plan is to test it through Commonplace itself. Test design is
+   postponed; the theory already fixes what any test must respect.
 
 Earlier committed drafts are not standing premises. Consult Git history only
 when a specific earlier argument becomes useful during reconstruction.
