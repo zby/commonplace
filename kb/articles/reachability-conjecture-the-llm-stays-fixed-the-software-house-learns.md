@@ -276,8 +276,8 @@ viability, not by whether it explains why the software is organized as it
 is.
 
 The simplest rival hypothesis is that obligations 2 and 3 need no further
-machinery: an LLM given a record of its failures will generate the theory.
-The conjecture predicts otherwise. A record influences later behaviour only through a
+machinery: an LLM given a record of its failures will generate the theory
+and then hold it. The conjecture predicts otherwise. A record influences later behaviour only through a
 consumption path: something must load it into the context of the right
 call, with enough force to change the decision, at the moment the decision
 is made. A failure log left in a directory is advice nobody reads. Turning
