@@ -37,18 +37,14 @@ by parts the house produced from its own experience.
 house](../notes/definitions/software-house.md) capable of open-ended coherent
 software change is practically reachable with LLMs available by 2026-09-02.
 
-The LLMs stay fixed: no new architecture, no further training, no waiting for
-a more capable model. What gets trained is the software house, through
-computationally produced and retained changes to two legible
-[representational forms](../notes/definitions/representational-form.md):
-executable software and persistent natural-language notes.
-
-A person may write the initial software and notes. Practical reachability
-means that, within a declared product scope, operating horizon, and resource
-envelope, computational training then discovers and maintains the decisive
-project-specific structures, until no human is needed in an internal
-production or theory-holding role. A system that people must keep redesigning
-by hand has not reached that point.
+The LLMs stay fixed. What gets trained is the house, through computationally
+produced and retained changes to two legible [representational
+forms](../notes/definitions/representational-form.md): executable software
+and persistent natural-language notes. *Practically reachable* means that,
+within a declared product scope, operating horizon, and resource envelope,
+that training discovers and maintains the decisive project-specific
+structures until no human is needed in an internal production or
+theory-holding role.
 
 ## Why the substrate could suffice
 
