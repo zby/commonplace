@@ -5,17 +5,23 @@ anyway, and its outcome is the derivation's first data point.
 
 ## The constructors kept people — by design
 
-Full automation was not the ambition. Greenfield's definition builds people
-in, as two named roles: solution developers use the machinery to build family
-members; factory developers harvest domain practice, build and revise the
-reusable machinery, and respond to variation the existing asset base did not
-anticipate. Automation is scoped inside this: model-driven development
-automates lifecycle tasks from model metadata but "is not the whole factory."
+Full automation was not the ambition. Greenfield's software factory is the
+machinery: a specialized development environment, its installable template,
+its schema, its reusable assets. Around it, his account places people in two
+named roles: solution developers use the machinery to build family members;
+factory developers harvest domain practice, build and revise the reusable
+machinery, and respond to variation the existing asset base did not
+anticipate. The factory is the software part of a bigger production system
+that includes the people — a system his account describes at length and
+never names. Automation is scoped inside the machinery: model-driven
+development automates lifecycle tasks from model metadata but "is not the
+whole factory."
 
 Look at where the second role sits. Responding to unanticipated variation by
 revising the reusable machinery is the theory function — Naur's third
 capacity, institutionalized as a job. Greenfield did not overlook the
-theory-holder; he designed the position. Our ingest records the consequence:
+theory-holder; he designed the position — outside the factory, inside the
+system. Our ingest records the consequence:
 feedback-supported revision remained "an open human process."
 
 ## Greenfield's bet was containment, not elimination
@@ -123,35 +129,32 @@ a blend of the first two carriers and stopped where the history above stops; the
 live alternatives. The program's bet is the third, run with weights fixed —
 which is what makes the third and fourth separable in an experiment.
 
-## The import is selective — and it modifies the definition
+## The import names the system his account left unnamed
 
-From the factory literature the program takes the definition's structure: a
-configured production environment holding reusable production knowledge for a
-declared family, with two development processes — building family members,
-and building the machinery that builds them. It does not take the
-methodology, and — this must be said plainly — it does not take the
-definition unchanged. Greenfield's definition fixes the role-fillers:
-solution developers and factory developers are people, constitutively. The
-program's definition parameterizes them: the roles stay, and who or what
-fills each — a person, a codified asset, a model reading retained artifacts,
-weights — becomes the open variable. Greenfield's factories are then one
-instantiation of the generalized definition, the all-human-plus-codified
-one, not the definition itself.
+From the factory literature the program takes Greenfield's factory
+definition nearly unchanged: the machinery — environment, template, schema,
+reusable assets. It does not take the methodology. And it adds a name his
+account lacks: the bigger production system — factory plus the people in the
+two development processes — which his account describes at length and never
+names. **Software factory system**, defined in the derivation document, names
+that whole, with the role-fillers parameterized: who or what fills each role
+— a person, a codified asset, a model reading retained artifacts, weights —
+becomes the open variable. Greenfield's operating model is then one
+instantiation of it: his factory machinery with human occupants in both
+roles.
 
-The generalized definition carries its own term — **software factory system**, defined
-in the derivation document — rather than reusing "software factory" with a
-shifted meaning. The general expectation today may already match the
-generalized sense, but Greenfield defined the words otherwise, and importing
-a term while quietly changing its meaning is how equivocation gets built.
-In these documents "software factory" keeps Greenfield's meaning; the
-program's claims are about software factory systems.
+Keeping the terms apart is deliberate. The general expectation today may
+already read "software factory" as the whole system, but Greenfield defined
+the words otherwise, and importing a term while quietly changing its meaning
+is how equivocation gets built. In these documents "software factory" keeps
+Greenfield's meaning — the machinery; the program's claims are about
+software factory systems.
 
-The generalization is the same move the program makes on Naur: take the
-theory function — mapping, organization-account, demand-relating — and not
-his conclusion that only people can perform it. Both originals bind a
-function to one filler: Naur binds theory to human heads, Greenfield binds
-the factory roles to human occupants and the retained knowledge to codified
-assets. The program's move, each time, is to keep the function and unbind
+The move on the role-fillers is the same move the program makes on Naur:
+take the theory function — mapping, organization-account, demand-relating —
+and not his conclusion that only people can perform it. Naur binds theory to
+human heads; Greenfield's operating model fills the system's roles with
+human occupants and its retained knowledge with codified assets. The program's move, each time, is to keep the function and unbind
 the filler. That is why the bearer question is the empirical center, and why
 the carrier list is the representational-form axis applied to the theory
 function.

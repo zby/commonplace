@@ -2,8 +2,9 @@
 
 A **software factory system** is a configured production environment for a declared
 family of software, together with whatever fills its roles — people, codified
-assets, models. (The bare term "software factory" is kept for Greenfield's
-human-constitutive sense; the second document explains the relation.) A software factory system
+assets, models. (The bare term "software factory" keeps Greenfield's meaning — the
+machinery, the software part of the larger whole; the second document
+explains the relation.) A software factory system
 changes things all the time: the software it produces, and its own machinery
 for producing it.
 

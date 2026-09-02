@@ -19,8 +19,9 @@ forces, and keep the testing machinery out until the theory stands on its own.
   the oracle problem belong to testing, not to the theory.
 - The program's term for the full system is **software factory system** — the
   configured production environment for a declared family plus whatever fills
-  its roles. "Software factory" keeps Greenfield's human-constitutive meaning;
-  reusing it with a shifted meaning would make the import equivocal.
+  its roles. "Software factory" keeps Greenfield's meaning — the machinery,
+  the software part of a bigger system his account leaves unnamed; reusing it
+  with a shifted meaning would make the import equivocal.
 - Likely eventual shape: a theory note (or notes), then possibly a split of
   the article into a theory-formulation part and a testing part. Not committed
   yet; the derivation comes first.
