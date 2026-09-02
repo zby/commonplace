@@ -1,12 +1,14 @@
 # A software factory system needs a theory in Naur's meaning
 
-A **software factory system** is a configured production environment for a declared
-family of software, together with whatever fills its roles — people, codified
-assets, models. (The bare term "software factory" keeps Greenfield's meaning — the
-machinery, human-operated in his account; the second document explains the
-relation.) A software factory system
-changes things all the time: the software it produces, and its own machinery
-for producing it.
+A **software factory system** is a system running two coupled kinds of work:
+it produces and changes software, and it builds and revises the machinery it
+produces with — tools, tests, schemas, guidance, retained knowledge.
+Whatever fills its roles — people, codified assets, models — is part of the
+system. Its product scope is a parameter: one long-lived program at the
+narrow end, a declared family of products at the broad end. (The bare term
+"software factory" keeps Greenfield's meaning — the machinery, human-operated
+in his account, sitting at the family end of the scope; the second document
+explains the relation.)
 
 Every change has to fit purposes and organization the system already has.
 
