@@ -48,6 +48,11 @@ forces, and keep the testing machinery out until the theory stands on its own.
   holding a theory of a changing system is continually rebuilding it from
   production experience, so learning returns as a conclusion the lean
   definition left out.
+- [holding-conjecture.md](./holding-conjecture.md) — the constructive bet:
+  theory holding internalized as natural-language notes, an LLM interpreter,
+  and a harness — code that builds prompts so the right theory activates —
+  with codification returning aimed at logistics, and the documentation
+  objection faced.
 
 **Closure:** closes when the derivation and whatever it forces are promoted to
 library artifacts (notes, and possibly restructured articles) or deliberately
