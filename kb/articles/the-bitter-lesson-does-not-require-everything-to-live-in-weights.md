@@ -263,7 +263,7 @@ and research commitments.
 
 ## Tests that can change the strategy
 
-The [research program](./the-reachability-conjecture-train-the-house-not-the-llm.md#obligations-of-a-constructive-witness)
+The [research program](./reachability-conjecture-the-llm-stays-fixed-the-software-house-learns.md#obligations-of-a-constructive-witness)
 lists what one construction must demonstrate: holding a program theory,
 acquiring one, acquiring a successor, and continuing without a human inside. For the Bitter Lesson strategy, those results must
 additionally show that more computation improves downstream search rather than

@@ -12,7 +12,7 @@ source_notes:
 # Reachability as closure under the seed's gate
 
 > **Draft supplement.** This is the full treatment behind three short
-> passages in [The reachability conjecture](./the-reachability-conjecture-train-the-house-not-the-llm.md):
+> passages in [The reachability conjecture](./reachability-conjecture-the-llm-stays-fixed-the-software-house-learns.md):
 > the Gödel-machine contrast, the closure sentences in the seed-engineering
 > paragraph, and the "bare reachability is cheap" sentences in the boundaries
 > section. It is intended to become a footnote to that article and is kept

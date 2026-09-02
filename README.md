@@ -84,7 +84,7 @@ src/commonplace/          Packaged operational engine
 **Learning software factories.** Can a software factory learn from its
 production experience — retained machinery changes that make a later factory
 state better than its predecessor — without training a new model?
-The [research program](./kb/articles/the-reachability-conjecture-train-the-house-not-the-llm.md)
+The [research program](./kb/articles/reachability-conjecture-the-llm-stays-fixed-the-software-house-learns.md)
 tests whether an LLM-based factory can acquire and hold project theory strongly
 enough to keep modification coherent across novel demands; retained
 natural-language theory is the addressable realization under test. Commonplace
