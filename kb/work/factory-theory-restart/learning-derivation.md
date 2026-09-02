@@ -15,8 +15,8 @@ production experience, for new holders in interaction with people who
 already hold it.
 
 **The object does not hold still.** Products change; in any long-lived
-setting the machinery changes; and at any scope that pays for itself, the
-demand stream keeps bringing novelty. A theory is a theory of its object.
+setting the machinery changes; and — the squeeze premise from the
+history document — a scope that pays for itself keeps bringing novelty. A theory is a theory of its object.
 When the object changes and the theory does not, the holder drifts into the
 position of the later group: equipped with an account of how things used to
 be organized, and why they no longer are.

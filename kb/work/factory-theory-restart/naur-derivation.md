@@ -58,19 +58,18 @@ checks fully captured its purposes and organization would not need the theory;
 the checks would carry the burden. The derivation runs wherever that ideal
 fails.
 
-Product scope controls whether it fails. Fix the scope narrowly enough —
-every admissible demand pre-analyzed, the variability enumerated — and the
-checks can be complete: a generator for such a scope works trivially, with
-no theory needed at change time. Scoping is itself a codification move: it
+Product scope controls whether it fails. Fix the scope so that every
+admissible demand is pre-analyzed, and the checks can be complete: a
+generator for such a scope works trivially, with no theory needed at change
+time. The operative sense of scope is novelty, not size — a scope can be
+large yet fully enumerated. Scoping is itself a codification move: it
 codifies the demand space rather than the knowledge, and it extends the
-reach of the fully automatic part only trivially — exactly over the
-pre-analyzed region, which is the region where no theory was needed. The
-derivation bites when the demand stream brings what nobody pre-analyzed;
-relating that to the existing organization is what needs the theory. The
-operative sense of scope is novelty, not size: a scope can be large yet
-fully enumerated, and the checks can still be complete. Whether a software
-factory system can pay for itself without admitting novelty is the
-historical question the next document takes up.
+fully automatic reach only trivially, exactly over the pre-analyzed region
+where no theory was needed. The derivation bites when the demand stream
+brings what nobody pre-analyzed; relating that to the existing organization
+is what needs the theory. Whether a software factory system can pay for
+itself without admitting novelty is the historical question the next
+document takes up.
 
 ## What would refute it
 
@@ -95,5 +94,6 @@ advance — raw record, general model, nothing organizing them.
   particular, humans satisfy it: a software factory system whose people hold the
   theory meets the derivation in full. The
   derivation poses no problem; the costs of each way of meeting it do.
-- **A definition of learning or a measurement instrument.** Those belong to
-  testing the claim, not to deriving it.
+- **A definition of learning or a measurement instrument.** Learning is
+  derived separately, in the fourth document; measuring it belongs to
+  testing.

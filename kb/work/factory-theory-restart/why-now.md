@@ -85,13 +85,11 @@ not. Building and testing that machinery is the program.
 
 ## The bridge to learning factories
 
-The third carrier has a property the others lack: cheap revision. People
-revise their theory by learning, but it leaves with them. Codified assets
-revise by expensive re-codification. Weights revise by retraining. Retained
-readable artifacts revise by editing — and the same model that reads them can
-propose the edits from production experience.
+The third carrier has a property the others lack: cheap revision. Retained
+readable artifacts revise by editing — and the same model that reads them
+can propose the edits from production experience. A software factory system
+on the third carrier is therefore the first on which the system's theory can
+be revised from its own production at the speed of production.
 
-A software factory system on the third carrier is therefore not just one that can
-work; it is the first on which the system's theory can be revised from its
-own production at the speed of production. That is where learning factories
-begin, and it is the next document.
+Why a changing system's theory must be revised at all — and what revision
+costs on each carrier — is the next document's derivation.

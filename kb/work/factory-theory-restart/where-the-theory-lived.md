@@ -37,12 +37,11 @@ codification: the capture is lossy, the residue is exactly what modification
 needs — so the question becomes how often the residue is needed. At breadth,
 the answer is constantly.
 
-The declared family itself belongs to the bet. Scoping is codification
-applied to the demand space: pre-analyze what may be asked, and within the
-analyzed region no theory is needed at change time. It extends the automated
-reach — but only trivially, over exactly the region pre-analysis covered.
-The family is part of Greenfield's method, not of the system's ontology,
-which is why the program's definition leaves product scope as a parameter.
+The declared family itself belongs to the bet: scoping, as the derivation
+notes, is codification applied to the demand space, buying automation only
+over the pre-analyzed region. The family is part of Greenfield's method, not
+of the system's ontology — which is why the program's definition leaves
+product scope as a parameter.
 
 ## How a software factory differs from an IDE with libraries
 
@@ -132,7 +131,7 @@ codification was adequate.
 
 Four ways of supplying the theory function a software factory system needs:
 
-1. **Keep people.** What every historical factory did. Works; but the factory
+1. **Keep people.** What every historical factory did. Works; but the system
    scales only as far as its theory-holders, and the theory leaves when they
    do — Naur's account of program death.
 2. **Codify what can be anticipated.** Greenfield's actual strategy was a
