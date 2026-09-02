@@ -28,7 +28,8 @@ capture is lossy and the residue is exactly what modification needs.
 The vision did not materialize at scale; the initiative faded within a decade.
 [GROUNDING TODO: our only source is the 2007 essay. Before this claim leaves
 kb/work it needs sources on the initiative's fate — later retrospectives, the
-end of the Microsoft factories effort, the MDD-adoption literature.]
+end of the Microsoft factories effort, the MDD-adoption literature — and on
+where the product-line successes sat on the family-breadth axis.]
 
 The standard post-mortems: codification cost more than it saved; the modeled
 assets went brittle under change; the expert bottleneck never went away; agile
@@ -38,6 +39,14 @@ codifying the theory would produce. Codification is expensive because the
 theory resists formulation. The assets go brittle because the theory keeps
 changing and the codified layer lags it. The bottleneck persists because the
 un-codified remainder is load-bearing and only theory-holders carry it.
+
+Family breadth gives the mechanism its squeeze. A factory pays off only when
+the declared family is broad enough to amortize building it; but breadth is
+what defeats codification, because a broad family admits demands nobody
+pre-analyzed, and those are the demands that need the theory. Narrow enough
+to codify is too narrow to pay; broad enough to pay is beyond codification.
+The generator-like successes sit on the narrow side — the degenerate case the
+derivation exempts — and the vision's economics required the broad side.
 
 Stated with its status: this is the program's explanatory conjecture — a
 retrodiction unifying the known failure modes under one mechanism — not an

@@ -32,12 +32,21 @@ and organization that its changes must fit.
 Checks are partial and the evidence of misfit is delayed. A factory whose
 checks fully captured its purposes and organization would not need the theory;
 the checks would carry the burden. The derivation runs wherever that ideal
-fails, which is everywhere software lives long enough to matter.
+fails.
+
+Family breadth controls whether it fails. Declare the product family narrowly
+enough — every admissible demand pre-analyzed, the variability enumerated —
+and the checks can be complete: a generator for such a family works
+trivially, with no theory needed at change time. The derivation bites when
+the declared family is broad enough that demands arrive which nobody
+pre-analyzed; relating those to the existing organization is what needs the
+theory. Practical families are broad, because a factory has to amortize its
+own construction.
 
 ## What would refute it
 
-A factory that sustains coherent change over a long horizon while nothing in
-it performs the three functions — for example, one running on retrieval over
+A factory that sustains coherent change over a long horizon, on a family of
+practical breadth, while nothing in it performs the three functions — for example, one running on retrieval over
 the raw production record alone. If that works, the derivation is wrong.
 
 ## What the derivation does not need
