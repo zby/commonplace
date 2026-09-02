@@ -38,6 +38,10 @@ forces, and keep the testing machinery out until the theory stands on its own.
   factories as the derivation's first data point: constructors designed people in as
   theory-holders, Greenfield's containment bet met Naur's residue at breadth,
   and the four theory carriers frame the program's bet.
+- [learning-derivation.md](./learning-derivation.md) — the second derivation:
+  holding a theory of a changing system is continually rebuilding it from
+  production experience, so learning returns as a conclusion the lean
+  definition left out.
 - [why-now.md](./why-now.md) — why factories can work now: LLMs lift the
   codification tax Naur's limit imposed, stated as a prediction with three
   discriminable readings of the current wave, the conjecture that full
