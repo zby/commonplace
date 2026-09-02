@@ -112,7 +112,9 @@ The conjecture assigns each component a role:
 - Natural-language notes supply the persistent project-specific state:
   purposes, commitments, explanations, evidence, and prior search. For
   example: "installs must be a single file, so the store is SQLite; do not add
-  a server dependency."
+  a server dependency." Architecture decision records are the existing
+  practice closest to this. The notes generalize them, and Naur's theory is
+  what a decision record tries to write down.
 - Executable software supplies exact behaviour and continuity. This includes
   the product, tools, context assembly, schedulers, validators and tests,
   version-control rollback, and retention rules.
@@ -183,10 +185,13 @@ decisive project-specific theory, whatever its form. A hand-written check that
 rejects every schema change carries the human's theory that the schema is
 settled, just as a note saying so would. A wholly hand-built end state would
 show that software and notes can carry theory, not that the house learned it.
-Because each successor is admitted by the prior state's gate, the states the
-house can occupy are the closure of the seed under that gate and the demand
-stream. Outgrowing the seed then means that the closure contains states
-holding an adequate theory and that the house reaches one of them.
+Because each successor is admitted by the prior state's gate, the house can
+only occupy states reachable from the seed by admitted steps: the closure of
+the seed under that gate and the demand stream. The gate is fallible and the
+LLM samples, so the steps are nondeterministic, but the set of reachable
+states is still fixed by the seed, the gate, and the demands. Outgrowing the
+seed then means that this set contains states holding an adequate theory and
+that the house reaches one of them.
 
 General production machinery such as git, the test runner, or the model client
 may stay fixed while it handles the declared scope. If the scope requires a
@@ -242,6 +247,30 @@ One construction must eventually demonstrate the whole progression:
 
 Computational training of the legible state is a condition on obligations 2
 and 3, not a further stage.
+
+## Nearest existing constructions
+
+No existing system is a witness, but several hold one piece, and placing
+them shows what the obligations exclude. The [Darwin Gödel
+Machine](../sources/darwin-godel-machine-open-ended-evolution-self-improving-agents.ingest.md)
+and the [Huxley-Gödel
+Machine](../sources/huxley-godel-machine-human-level-coding-agent-development.ingest.md)
+rewrite coding agents around frozen foundation models and admit a child on
+viability or on estimated lineage productivity.
+[HyperAgents](../agent-memory-systems/reviews/hyperagents.md) replays
+benchmark-selected patches into the code its next generation edits. All
+three train software with the model fixed. What they retain is code, not the
+reasons a later change must respect. [Dynamic
+Cheatsheet](../agent-memory-systems/reviews/dynamic-cheatsheet.md) retains
+the other form: a natural-language cheatsheet curated from solver traces and
+read back into later prompts, with no gate beyond the curator and no change
+to software. [Voyager](../agent-memory-systems/reviews/voyager.md) admits an
+executable skill when a critic reports success and replaces a skill rather
+than revising it. None of the five serves users. Their demand streams are
+benchmarks or a game environment, which the open-endedness rule excludes.
+Each answers part of obligation 1's question about the substrate, and none
+reaches obligations 2 and 3, because none holds a theory that experience
+could show to be inadequate.
 
 ## A consequence for general theory builders
 
