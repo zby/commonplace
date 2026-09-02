@@ -19,7 +19,7 @@ source_notes:
   - kb/sources/goedel-machines-schmidhuber.ingest.md
   - kb/sources/programming-as-theory-building.ingest.md
 ---
-# The reachability conjecture: train the house, not the LLM
+# The reachability conjecture: the LLM stays fixed, the software house learns
 
 > **Draft.** This article may change. Comments and counterexamples are welcome
 > on [the repository's GitHub Discussions page](https://github.com/zby/commonplace/discussions).
@@ -85,15 +85,24 @@ AI researcher Jürgen Schmidhuber's [Gödel
 machine](../notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md)
 is a proof-governed construction that can rewrite its own code. It is not a
 software house: it has no users, and the only software it changes is itself.
-An embedded prover admits a rewrite only after proving from the machine's
-prior axioms and utility formalization that the rewrite pays. The paper states
-that the machine "must ignore those self-improvements whose effectiveness it
-cannot prove"
+It shows what automation costs when it is bought with formulated criteria. An
+embedded prover admits a rewrite only after proving from the machine's axioms
+and utility formalization that the rewrite pays. Everything the conjecture
+asks the house to acquire is supplied there in advance as the formal
+acceptance basis: the theory of the system is the axioms, the objective is the
+utility function, the test is proof. Any of them may be rewritten, but only
+under a proof from the formalization then in force, so the initial one governs
+every successor by descent and a demand nobody formalized cannot enter its
+test. The paper states the price: the machine "must ignore those
+self-improvements whose effectiveness it cannot prove"
 ([Schmidhuber](../sources/goedel-machines-schmidhuber.ingest.md), verbatim).
-This route buys automated acceptance with formulated criteria: every rewrite
-remains governed by the prior formalization, so an unformalized demand cannot
-enter its test. The conjectured house instead uses fallible production
-consequences to revise informal theory in notes and software.
+The conjectured house is closed in the same way once no human is inside:
+every successor is admitted by the notes, software, and fixed LLM the prior
+state supplies, so the seed governs the lineage by descent. The difference is
+the admission relation. The Gödel machine admits only what the current axioms
+derive. The house admits what a fallible gate accepts on production
+consequences, and a consequence can contradict the current theory where a
+proof cannot contradict its axioms. The house pays with fallibility instead.
 
 The conjecture assigns each component a role:
 
@@ -172,6 +181,10 @@ decisive project-specific theory, whatever its form. A hand-written check that
 rejects every schema change carries the human's theory that the schema is
 settled, just as a note saying so would. A wholly hand-built end state would
 show that software and notes can carry theory, not that the house learned it.
+Because each successor is admitted by the prior state's gate, the states the
+house can occupy are the closure of the seed under that gate and the demand
+stream. Outgrowing the seed means that closure contains states holding an
+adequate theory and the house reaches one of them.
 
 General production machinery such as git, the test runner, or the model client
 may stay fixed while it handles the declared scope. If that scope requires a
@@ -182,21 +195,20 @@ requirement.
 
 ## What this training route could buy
 
-Training the house rather than the LLM does not make the whole system
-transparent. The fixed LLM remains distributed-parametric, and enough
-software and notes can [exceed practical
-inspection](../notes/opacity-is-a-scale-threshold.md). It does keep the learned
-project-specific state in localized units. The house can identify a changed
-claim or function, inspect its history, revise it selectively, and roll it back
-without retraining the model.
+The comparison is with training the model itself: fine-tuning or retraining
+its weights on project experience. Neither route makes the whole system
+transparent. The fixed LLM remains distributed-parametric, and enough software
+and notes can [exceed practical
+inspection](../notes/opacity-is-a-scale-threshold.md). The difference is where
+the learned project-specific state lives. Fine-tuning spreads it across
+weights, where a changed behaviour is hard to locate, inspect, or revert on
+its own. Training the house keeps it in localized units. The house can
+identify a changed claim or function, inspect its history, revise it
+selectively, and roll it back without retraining the model.
 
 This supplies a deployment-time learning surface. Production evidence can
 cause a retained change to a note, test, tool, or policy, and that change can
-affect the next round of work. Writability alone is not [continual
-learning](../notes/continual-learning-requires-governing-behaviour-changing-writes.md):
-the house must still assign evidence to the right target, validate the
-successor, authorize its use, and ensure that later production actually
-consumes it.
+affect the next round of work without a training run.
 
 A further payoff is possible rather than required by the reachability
 conjecture. When retained program theory captures structure that survives a
@@ -232,16 +244,38 @@ and 3, not a further stage.
 
 ## A consequence for general theory builders
 
-The same components could support a persistent automated system that builds,
-tests, and revises natural-language theories for external users across new
-domains. If new domains also require new schemas, validators, or context
-machinery, whoever repeatedly supplies those changes fills an internal role.
-An automated builder must bring that work inside and thereby meets the
-software-house [definition](../notes/definitions/software-house.md). A fixed
-harness that handled genuinely new domains would break this conditional link,
-not the reachability conjecture. [The decisions that stay human, and what
-would move them](./the-decisions-that-stay-human-and-what-would-move-them.md)
-develops this boundary.
+The same components appear when the target is a persistent automated system
+that builds, tests, and revises natural-language theories for external users
+across domains not fixed in advance, such as a knowledge base like this one
+operated without its maintainers. At present an LLM is the only generally
+available computational interpreter for semantic operations over theories of
+that breadth; symbolic systems perform such operations only over domains
+someone has already formalized. The corpus, exact state transitions,
+scheduling, checks, and rollback need software outside model interpretation:
+[code complements the weight–prompt pair with independently executed symbolic
+operations](../notes/code-complements-weight-prompt-with-symbolic-operations.md),
+and [symbolic scheduling avoids using an LLM for unreliable
+bookkeeping](../notes/scheduler-llm-separation-exploits-an-error-correction-asymmetry.md).
+
+We conjecture that such a builder is itself a software house. New domains
+bring new manipulation requirements as well as new content. A domain whose
+claims must be compared across versions of a source needs snapshot pins in the
+note schema and a validator for them, which the earlier domains never needed.
+A harness fixed in advance can anticipate only requirements someone has
+already formulated, and a genuinely new domain brings some that nobody has.
+So either the builder revises its own supporting software or a person does.
+Whoever repeatedly supplies those demand-specific changes fills an internal
+role in the complete builder, so an automated builder brings that role
+inside. It then persistently develops and evolves software in the service of
+its external users and meets the software-house
+[definition](../notes/definitions/software-house.md).
+
+This link is a conjecture, and the reachability conjecture does not depend on
+it. A fixed harness that sustained a general theory builder across genuinely
+new domains would refute the link without touching the forward argument. [The
+decisions that stay human, and what would move
+them](./the-decisions-that-stay-human-and-what-would-move-them.md) develops
+this boundary.
 
 ## Boundaries and epistemic status
 
@@ -252,7 +286,11 @@ model cannot quietly do the work. And it declares product scope, horizon, and
 resource envelope before testing, so that the scope cannot shrink until fixed
 machinery suffices. Open-ended means the declared demand stream admits
 relevant novelty: one web application whose users keep asking for things
-nobody listed qualifies; a fixed set of fifty tasks does not.
+nobody listed qualifies; a fixed set of fifty tasks does not. The stream also
+bounds what is reachable, since the closure is taken under the demands the
+house receives as well as its gate. Bare reachability is cheap: a gate that
+admits anything makes every state reachable. The claim is that adequate
+states are reached with usable probability inside the declared envelope.
 
 Software and notes are the trainable internal state; products, demands, tool
 outputs, and operating consequences are its evidence. Holding, acquisition,

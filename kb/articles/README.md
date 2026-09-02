@@ -16,9 +16,11 @@ Nothing published yet.
 
 Three drafts currently remain in the article frontier. The first states the research program the others develop; read it first if you are new to the series.
 
-- [The reachability conjecture: train the house, not the LLM](./the-reachability-conjecture-train-the-house-not-the-llm.md) — an automated software house capable of open-ended coherent change is reachable with fixed current LLMs by training the software and notes around them; why a program theory is needed and why the composite could hold one; the training path and its seed; and the four obligations a constructive witness must meet.
+- [The reachability conjecture: the LLM stays fixed, the software house learns](./the-reachability-conjecture-train-the-house-not-the-llm.md) — an automated software house capable of open-ended coherent change is reachable with fixed current LLMs by training the software and notes around them; why a program theory is needed and why the composite could hold one; the training path and its seed; and the four obligations a constructive witness must meet.
 - [The decisions that stay human, and what would move them](./the-decisions-that-stay-human-and-what-would-move-them.md) — the conditional selection argument that automatic transfer is easiest where premises, settled criteria, and defeating checks exist, what would have to grow for each residual class to move, and why structural computational closure is not evaluator quality.
 - [The Bitter Lesson does not require everything to live in weights](./the-bitter-lesson-does-not-require-everything-to-live-in-weights.md) — separates Sutton's 2019 search-and-learning claim from a weights-only extrapolation, and names credit assignment, evaluation, and decomposition revision as the open problems for learned artifacts.
+
+One supplement accompanies the first draft and is intended to become its footnote: [Reachability as closure under the seed's gate](./reachability-as-closure-under-the-seed-gate.md) — once no human is inside, the house's reachable states are the closure of the seed under its gate and demand stream, so it shares the Gödel machine's descent structure and differs only in the admission relation.
 
 Four former companion drafts were withdrawn after full review. Their titles
 remain as withdrawal notices, but none currently supplies a live article claim.
