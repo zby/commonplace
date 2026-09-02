@@ -47,6 +47,23 @@ is therefore a
 in which theory guides search and interpretation rather than serving as a
 complete generator of answers.
 
+Two differences separate theory-guided search from mutation with
+backtracking, once both are granted the same budget. The first is update
+bandwidth. Backtracking needs an address: which earlier commitment does a late
+failure indict, and what replaces it? Selection over undirected candidates
+extracts a few bits per trial, and the space of revert-point and alternative
+pairs grows combinatorially with sequence length. One surprising consequence
+read against a theory can indict a specific commitment and revise a whole
+region of that space at once. Where trials are few, slow, and expensive, that
+asymmetry is the regime argument for theory. The second is the failure
+signature. Undirected search fails isotropically: errors scatter across
+episodes. A wrong theory fails coherently, bending successive changes the same
+wrong way, as [broad negative transfer from a broad wrong
+theory](./theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md)
+predicts. A test that replaces the theory with a plausible wrong one therefore
+discriminates better than one that withholds it: directional failure shows the
+theory was steering.
+
 ## Warrant belongs to the path, not the first proposal
 
 For the decision at issue, decisive evidence is often delayed: a later demand,
@@ -142,8 +159,9 @@ recovery, or revise the theory.
 
 - What task distribution and horizon distinguish coherent modification from
   luck, memorization, or a permissive evaluator?
-- How can theory-guided search be separated empirically from generic search
-  when both eventually find an acceptable change?
+- How large must the wrong-theory effect be, and over how many episodes, to
+  separate directional failure from ordinary variance when both arms
+  eventually find an acceptable change?
 - How should delayed evidence receive credit when several changes and theory
   revisions intervene before the consequence appears?
 
@@ -161,4 +179,5 @@ Relevant Notes:
 - [Open-ended improvement must allocate search before decisive evaluation is available](./open-ended-improvement-allocates-search-before-evaluation.md) — grounds: establishes the prior allocation problem that makes program theory useful before the strongest evidence exists
 - [A failure explanation becomes search control only when it changes a later branch decision](./failure-explanation-changes-later-branch-decisions.md) — mechanism: makes outcome read-back operative by requiring retained failure interpretation to change a later branch choice
 - [A search controller is tested by what it brings to stronger evaluation](./a-search-controller-is-tested-by-what-it-brings-to-stronger-evaluation.md) — extends: supplies a matched downstream evaluation design for separating theory-guided routing from generic search without assuming exhaustive counterfactual search
+- [Theory-mediated learning may improve sample efficiency under shifts](./theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md) — extends: predicts the directional negative transfer that makes a wrong-theory arm the discriminating test
 - [The 2026-08-30 Commonplace revision used retained theory to guide computational search](./evidence/commonplace-revision-used-theory-guided-computational-search.md) — evidenced-by: records one human-inclusive case while preserving the missing ablation and longitudinal-track-record limits

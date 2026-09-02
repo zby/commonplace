@@ -7,7 +7,6 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 ## Active Workshops
 
 - [agent-operability-second-slice](./agent-operability-second-slice/README.md) — making installed-project provenance and scaffold skew inspectable, then exercising a non-mutating three-way upgrade plan while preserving compact status and keeping review state opt-in
-- [agentic-system-learning-refoundation](./agentic-system-learning-refoundation/README.md) — deferred revision material for the learning-software-factories program article: deeper research questions, a note-faithfulness audit, and a defense of weak theory-guided search against the random-mutation baseline
 - [cognitive-architecture-transfer-scan](./cognitive-architecture-transfer-scan/README.md) — breadth-first conjecture scan whose promising cross-architecture candidates still require deduplication, selective grounding, and extraction
 - [collection-aware-full-improvement-pass](./collection-aware-full-improvement-pass/README.md) — determining whether prose-improvement workflows should route by collection and artifact function rather than imposing the theory-note contract
 - [curiosity-prompts](./curiosity-prompts/README.md) — completed Decapod prompt experiment whose exact report still needs relocation to a durable evidence surface before the workshop can close
