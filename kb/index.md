@@ -12,15 +12,15 @@ Two separate pressures keep the design modular. Different collections support di
 
 ## Threads worth following
 
-**Learning software factories.** The current
+**The reachability conjecture.** The current
 [research program](./articles/the-reachability-conjecture-train-the-house-not-the-llm.md)
-asks whether a software factory can learn from its production experience —
-retained machinery changes that make a later factory state better than its
-predecessor — without training a new model. It tests whether an
-LLM-based factory can acquire and hold project theory strongly enough to keep
-modification coherent across novel demands; retained natural-language theory is
-the addressable realization under test. Commonplace is the live human-inclusive
-testbed; a controlled programming-agent comparison is planned. The [Naur
+conjectures that an automated software house capable of open-ended coherent
+change is reachable with the LLMs available today. The models stay fixed; the
+software and notes around them are trained, by the house itself, until they no
+longer depend on what people wrote. The test is whether that composite can
+hold, acquire, and revise a program theory well enough to keep modification
+coherent across novel demands. Commonplace is where the program plans to test
+it. The [Naur
 note](./notes/naur-equates-machine-execution-with-formulated-criteria.md)
 reopens the bearer question, while the [coherent-search
 note](./notes/program-theory-sustains-search-under-delayed-feedback.md)

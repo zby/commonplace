@@ -263,9 +263,9 @@ and research commitments.
 
 ## Tests that can change the strategy
 
-The [research program](./the-reachability-conjecture-train-the-house-not-the-llm.md#how-to-test-the-program)
-specifies the immediate theory-holding intervention and the later acquisition
-and successor-factory tests. For the Bitter Lesson strategy, those results must
+The [research program](./the-reachability-conjecture-train-the-house-not-the-llm.md#obligations-of-a-constructive-witness)
+lists what one construction must demonstrate: holding a program theory,
+acquiring one, acquiring a successor, and continuing without a human inside. For the Bitter Lesson strategy, those results must
 additionally show that more computation improves downstream search rather than
 candidate volume, that recurring human judgments become reusable selection
 machinery, and that the marginal human contribution falls without hidden losses

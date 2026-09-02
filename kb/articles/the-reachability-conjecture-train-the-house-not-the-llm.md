@@ -1,157 +1,233 @@
 ---
-description: "Research program on whether a software factory can learn from its production experience — acquiring, holding, and revising project theory — so that a later factory state passes a declared better-factory comparison against its predecessor"
+description: "Conjecture that an automated software house capable of open-ended coherent change is reachable with fixed current LLMs by training the surrounding software and notes; the program-theory argument, training path, and witness obligations"
 type: kb/articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
 source_notes:
-  - kb/notes/a-software-factory-is-family-scoped-lifecycle-production-machinery.md
-  - kb/notes/factory-construction-does-not-establish-knowledge-acquisition.md
-  - kb/notes/factory-learning-is-experience-responsive-retention-that-improves.md
-  - kb/notes/a-better-factory-claim-compares-operative-states.md
-  - kb/notes/commitment-not-derivation-creates-new-ground-truth.md
-  - kb/notes/theory-and-capacity-building-make-the-same-kind-of-commitment.md
-  - kb/notes/open-ended-theory-learning-and-factory-learning-close-the-same.md
-  - kb/notes/theory-mediation-can-coordinate-heterogeneous-factory-development.md
-  - kb/notes/program-theory-sustains-search-under-delayed-feedback.md
-  - kb/notes/project-theory-relates-new-demands-to-existing-organization.md
-  - kb/notes/the-deployed-system-not-the-model-is-the-unit-of-learning.md
-  - kb/notes/theory-mediated-self-improvement-needs-interpretation-and-retention.md
-  - kb/notes/knowledge-storage-does-not-imply-contextual-activation.md
-  - kb/notes/retained-theory-intervention-isolates-one-explicit-surface.md
-  - kb/notes/natural-language-project-state-specializes-search-heuristics.md
-  - kb/notes/an-experiment-identifies-only-the-contrast-it-actually-runs.md
   - kb/notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md
-  - kb/notes/evidence/commonplace-revision-used-theory-guided-computational-search.md
+  - kb/notes/code-complements-weight-prompt-with-symbolic-operations.md
+  - kb/notes/definitions/representational-form.md
+  - kb/notes/definitions/software-house.md
   - kb/notes/naur-equates-machine-execution-with-formulated-criteria.md
+  - kb/notes/program-theory-sustains-search-under-delayed-feedback.md
+  - kb/notes/scheduler-llm-separation-exploits-an-error-correction-asymmetry.md
+  - kb/notes/the-bitter-lesson-selects-production-methods-not-representational.md
   - kb/sources/programming-as-theory-building.ingest.md
 ---
-
-# A research program for learning software factories
+# The reachability conjecture: train the house, not the LLM
 
 > **Draft.** Comments and counterexamples are welcome through [the repository's issue tracker](https://github.com/zby/commonplace/issues).
 
-> **TL;DR.** A software factory learns when its production experience causes retained changes to its machinery that make later factory states better. This program tests whether LLM-based factories can learn this way without training new models, by acquiring, holding, using, and revising project theories.
+**TL;DR.** We define a software house as whatever keeps developing and changing some
+software for its users, over time, in response to what they ask for and what
+happens in use. The conjecture is that such a house can be built to run with
+no human in a production role, using only models that exist as of 2026-09-02,
+and handling requests nobody listed in advance. Getting there does
+not wait for a better model. The model stays fixed. People write the first
+version of the code and notes around it; from then on the house changes them
+itself, as it works, and the parts people wrote stop being what carries it.
 
-## Factories that learn
+## Claim
 
-A [software factory](../notes/definitions/software-factory.md) is a configured production environment containing reusable production knowledge for a declared family of software. Its machinery can include models, prompts, natural-language artifacts, code, tools, workflows, tests, and evaluators.
+**The reachability conjecture.** At least one automated [software
+house](../notes/definitions/software-house.md) capable of open-ended coherent
+software change is practically reachable with LLMs available by 2026-09-02.
 
-The software-factory literature already describes factories configured to produce factories as members of their declared family: Greenfield and Short's factory-building factory, Cook and Kent's Tool Factory, and Langlois and Exertier's MDSoFa, a self-described "software factory factory." In [these examples](../notes/factory-construction-does-not-establish-knowledge-acquisition.md), people supply the family definitions, modeling schemas, mappings, and expertise that determine the produced factory.
+The LLMs stay fixed: no new architecture, no further training, no waiting for
+a more capable model. What gets trained is the software house, through
+computationally produced and retained changes to two legible
+[representational forms](../notes/definitions/representational-form.md):
+executable software and persistent natural-language notes.
 
-The research target is a factory that learns from its own production. The definition has two layers. The causal layer is **experience-responsive retention**: production experience causes a retained change to the factory's reusable production machinery, and later production or factory development depends on that change. The experience can be of any kind—a failure, a surprise, a consequence arriving long after its cause. Retention is relative to a declared learner boundary. Draw the boundary around the operator and the system together, and an episode where the operator decides what to retain counts; draw it around the system alone, and the same change was made from outside. [Factory-level learning](../notes/factory-learning-is-experience-responsive-retention-that-improves.md) is retention that improves the factory. Improvement is objective-relative, so learning carries two indexes: the boundary, and the objective against which the retained change improved the factory.
+A person may write the initial software and notes. Practical reachability
+means that, within a declared product scope, operating horizon, and resource
+envelope, computational training then discovers and maintains the decisive
+project-specific structures, until no human is needed in an internal
+production or theory-holding role. A system that people must keep redesigning
+by hand has not reached that point.
 
-In current agentic coding systems this retention is interleaved with operation rather than confined to a separate phase. A failed task can immediately cause a note to be written, a test added, a rule revised, a tool changed, and the task retried; [Compound Engineering's retention pathway](../agentic-systems/compound-engineering-plugin.md) is built around this pattern. Some of those changes already change the factory. There need be no phase in which an unchanged factory merely accumulates experience before retention begins. The process is a loop, not a pipeline:
+## Why the substrate could suffice
+
+Open-ended change brings demands nobody analysed in advance, and questions of
+fit that the available checks do not settle. Say a product built for one
+customer per deployment must now serve many tenants. The tenant identifier can
+enter the data model in several ways; all of them pass the existing tests;
+only some preserve the assumptions the rest of the code silently relies on.
+Choosing among them needs what Naur called a program theory: the capacity to
+relate the software to the activity it supports, to explain why it is
+organized as it is, and to relate a new demand to that organization. [Holding
+a program theory means sustaining coherent search under delayed
+feedback](../notes/program-theory-sustains-search-under-delayed-feedback.md):
+the multi-tenant choice may not show its consequences until the next three
+demands arrive.
+
+[Naur's evidence](../sources/programming-as-theory-building.ingest.md) was a compiler whose original team could extend it cleanly
+while a second team, working from the same code and documentation, produced
+patches that fit badly. He concluded that the theory lives in people, because
+its judgments cannot be reduced to a finite set of formulated criteria. An LLM
+is still formal computation. What has changed is that a machine can now apply
+informal project-specific state — a paragraph explaining why the retry logic
+lives in the caller — without first translating it into a complete symbolic
+decision procedure. A computational house could therefore pass Naur's
+functional test while leaving intact his claim that the theory cannot be
+written as rules. It would refute only his unproved step from "not rules" to
+"only people". [The distinction is between formal execution and explicitly
+formulated
+criteria](../notes/naur-equates-machine-execution-with-formulated-criteria.md).
+
+The conjecture assigns each component a role:
+
+- Fixed current LLMs supply the general linguistic, programming, and reasoning
+  capacity that interprets project state and produces candidate changes.
+- Natural-language notes supply the persistent project-specific state:
+  purposes, commitments, explanations, evidence, and prior search. For
+  example: "installs must be a single file, so the store is SQLite; do not add
+  a server dependency."
+- Executable software supplies exact behaviour and continuity: the product
+  itself, tools, the script that assembles a prompt from the relevant notes,
+  schedulers, validators and tests, rollback through version control, and the
+  rules for what gets retained.
+
+None of these holds the theory alone. A note nobody loads is inert. A fixed
+LLM without enough project state reconstructs or guesses instead of carrying
+understanding from one change to the next. Software executes a decision
+without supplying the judgment that selected it. The composite has to exhibit
+the theory-holding capacity.
+
+## Training in legible forms
+
+Legible means inspectable and directly revisable. It says nothing about how
+easily the useful state can be designed: good notes and good tooling may have
+to be found through search, criticism, trials, production consequences, and
+retained correction, much as weights are found through gradient descent — and
+they stay readable once found.
+
+This is compatible with the Bitter Lesson because [the lesson selects how
+behavior-shaping structure is produced, not the form in which it is
+retained](../notes/the-bitter-lesson-selects-production-methods-not-representational.md).
+Learned software and notes do not lose merely because they are localized and
+legible. A hand-crafted seed is compatible only if [learning outgrows the
+task-specific knowledge the seed
+supplies](../notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md).
+Those two points answer the categorical objection; whether training over
+legible structures scales is what the program has to demonstrate.
+
+Current LLMs can produce both forms, and software can decide whether a
+proposed change becomes operative and feed later consequences into the next
+update. The conjectured training path:
 
 ```text
-production and factory development under the current factory state
-  -> experience from that work
-  -> retention (project theory, indexes, tests, tools):
-     judging what the experience means, organizing it,
-     committing where the experience leaves the resolution open
-  -> later production and factory-development decisions
-  -> further experience, now under the changed factory state
+production evidence + fixed LLMs + present software and notes
+  -> computational update of software and/or notes
+  -> retained successor software and notes
+  -> later production
 ```
 
-The factory judges what a failure means and what is worth keeping, organizes the result so later work can find it, and, where the experience leaves resolutions open, settles them with [explanatory and constructive commitments of the same fallible kind](../notes/theory-and-capacity-building-make-the-same-kind-of-commitment.md) — content the evidence does not entail.
+The update mechanism is open. It may produce the successor directly or
+separate proposal, evaluation, and selection. A successor theory may come from
+editing the prior notes, from discarding them and rebuilding from the
+evidence, or both.
 
-A particular factory may add internal controls on what it retains or adopts — heuristic self-evaluation, preregistered internal comparisons, up to a proof gate in the style of Jürgen Schmidhuber's Gödel machine, a self-rewriting program that accepts only provably beneficial changes — but these are design choices of the factory, not parts of the definition. Even a proof gate certifies only against the axioms it is given.
+Not every retained change is learning. A transition counts as learning when
+experience causes a retained change that affects later production. Fixing a
+bug changes the product. Adding a validator because that bug class recurred,
+so that the validator later blocks the same class, changes production — that
+is learning. A note written and never loaded by any context assembly changes
+neither.
 
-The learning surface spans the whole factory: [the deployed system, not the model alone, is the unit of learning](../notes/the-deployed-system-not-the-model-is-the-unit-of-learning.md), so a factory can learn through changes to any operative part of its production machinery, even with model weights fixed. How the program establishes that a later factory state is better is part of its test design, below.
+Hand-crafted tools, stores, interfaces, safety boundaries, and provisional
+notes may start the loop. They are seed engineering, not evidence that the
+house acquired anything. The training path must outgrow repeated human
+authorship of the decisive project-specific theory, in whichever form a person
+put it: a hand-written check that rejects every schema change encodes the
+human's theory that the schema is settled, just as a note saying so would.
+Machinery that implements a general production method — git, the test runner,
+the model client — may stay fixed for as long as the declared scope stays
+within what it handles. A house that is wholly hand-built at the end would
+show that software and notes can carry the theory; it would not show the
+training path.
 
-## Held project theory is the program's hypothesis for coherent modification
+Whether the production machinery must itself change within the declared scope
+is an empirical question the theory does not decide. If it must — say the
+relevant notes stop fitting the context window and the house needs a tag
+index to select them — then the automation obligation below already requires
+the house to make that change, and the forward argument applies to the
+machinery as it does to the product: coherent open-ended change to it needs a
+program theory of it. Self-application is a possible consequence of
+automation, not a separate requirement.
 
-A change can pass every immediate test and still damage the system, because acceptance tests capture a program's purposes and organization only partly. The damage usually surfaces as harder future development: the change does its job, but as a local special case cutting across the design, and later changes have to work around it. The hard part of the loop is making retained changes — to the software and to the factory's own machinery — without this kind of silent loss.
+## Obligations of a constructive witness
 
-Peter Naur's [1985 essay *Programming as Theory Building*](../sources/programming-as-theory-building.ingest.md) argues that programmers do this by building and holding a project-specific theory: an understanding of how the program maps onto the activity it supports, why it is organized as it is, and how new demands relate to that organization.
+One construction must eventually demonstrate the whole progression:
 
-Naur's compiler example makes the last capacity especially evident. The original group recognized that existing compiler facilities applied to novel modification requests. A later group, despite receiving the program and extensive documentation, proposed locally plausible additions that bypassed those facilities. Access to information was not enough; [the new demand had to be compared with the program's existing organization](../notes/project-theory-relates-new-demands-to-existing-organization.md).
+1. **Holding and application.** Given adequate project-specific state, the
+   composite uses a program theory across novel changes. The test is a change
+   that violates a recorded rationale without violating any stated rule: a
+   house that holds the theory adapts or declines; one that only paraphrases
+   makes the change and cites the note.
+2. **Initial acquisition.** From permitted records, interaction, and
+   participation in the work, it builds an adequate theory instead of receiving
+   the decisive theory from a human.
+3. **Successor acquisition.** When experience exposes an inadequacy — a
+   dependency change makes a recorded design reason false — it comes to hold an
+   adequate successor, by editing, rebuilding, or both.
+4. **Automated continuation.** It sustains these capacities across the declared
+   scope and horizon with no human in an internal role. Users may still supply
+   requirements, feedback, domain knowledge, and acceptance judgments.
 
-The research program treats the project-theory requirement as a functional hypothesis to be challenged experimentally, not as a necessity result established by Naur's cases.
+Computational training of the legible state is a condition on obligations 2
+and 3, not a further stage.
 
-The hypothesis needs a distinction. A **retained theory** persists in a recoverable form. A **held theory** is a capability of the theory-bearing system: it recognizes when retained project theory is relevant to a novel demand and brings it to bear without the task author naming the project-specific connection. Modern learned interpreters — models that read project artifacts and act on them — make Naur's formerly human-only bearer question [empirically open](../notes/naur-equates-machine-execution-with-formulated-criteria.md).
+## A consequence for general theory builders
 
-> Can an LLM-based software factory acquire and hold a project theory, revise it in response to evaluation and consequences, and use it to make a later factory state better than its predecessor?
+The same components appear when the target is a persistent automated system
+that builds, tests, and revises natural-language theories for external users
+across domains not fixed in advance — a knowledge base like this one, operated
+without its maintainers. At present an LLM is the only generally available
+computational interpreter for semantic operations over theories of that
+breadth. The corpus, exact state transitions, scheduling, checks, and rollback
+need software outside model interpretation: [code complements the
+weight–prompt pair with independently executed symbolic
+operations](../notes/code-complements-weight-prompt-with-symbolic-operations.md),
+and [symbolic scheduling avoids using an LLM for unreliable
+bookkeeping](../notes/scheduler-llm-separation-exploits-an-error-correction-asymmetry.md).
 
-Holding a theory guides search rather than guaranteeing a correct change in one step. The theory can be fallible—partial, provisional, or wrong—while still shaping what changes are considered, what must be preserved, how failures are interpreted, when to backtrack, and what should be revised. The bearer test is longitudinal: whether the system can [sustain coherent search under delayed feedback](../notes/program-theory-sustains-search-under-delayed-feedback.md).
+New domains bring new manipulation requirements as well as new content. A
+domain whose claims must be compared across versions of a source needs
+snapshot pins in the note schema and a validator for them, which the earlier
+domains never needed. If no fixed harness anticipates all such requirements,
+the builder must revise its own supporting software. Whoever repeatedly
+supplies those demand-specific changes fills an internal role in the complete
+builder, so an automated builder brings that role inside. It then persistently
+develops and evolves software in the service of its external users and meets
+the software-house [definition](../notes/definitions/software-house.md).
 
-Fallibility has a structural source: experience underdetermines what should be retained. Not every retained change resolves this. An index or a summary is derived organization, rearranging evidence the production record already contains and regenerable from it. Building a theory does more: it commits the factory to claims the experience never settled. The theory conjectures a mechanism — an account of why things worked or failed that reaches beyond the cases actually observed. And it settles choices production forced: work needed some answer, so one was picked, without evidence that it was better than the alternatives. Machinery changes that select a design among live alternatives [make the same kind of fallible commitment](../notes/theory-and-capacity-building-make-the-same-kind-of-commitment.md). The classification is per resolution, not per artifact: one retained test can bundle a derived reproduction of an observed failure with a constructive commitment about what later behavior must hold.
+The reachability claim does not depend on this link. It is a conjecture; a
+fixed harness that sustained a general theory builder across genuinely new
+domains would break it without touching the forward argument.
 
-[Commitment, not derivation, creates new ground truth](../notes/commitment-not-derivation-creates-new-ground-truth.md). Once made, a commitment cannot be re-derived from the production record: a later system might reach the same resolution, but by judging again, not by recomputing — and judgment, unlike recomputation, is non-deterministic, so it could settle differently. Nor does retaining a commitment make it true — it is only the current working account. Retracting a constructive commitment means restructuring what was built on it—refactoring at small scale, redesign at large—rather than revising an account. That is what makes theory revision a real event in the diagnostic path below rather than a recomputation or a rebuilt index. It is also why theory mediation—routing production and factory development through a held project theory—is a substantive bet rather than a restatement of retrieval.
+## Boundaries and epistemic status
 
-## Natural-language theory is the implementation bet
+The conjecture is existential: some current LLM, some arrangement of software
+and notes, some product scope. Two rescues are ruled out in advance. The
+witness pins the model versions it admits before testing, so that a newer
+model cannot quietly do the work. And it declares product scope, horizon, and
+resource envelope before testing, so that the scope cannot shrink until fixed
+machinery suffices. Open-ended means the declared demand stream admits
+relevant novelty: one web application whose users keep asking for things
+nobody listed qualifies; a fixed set of fifty tasks does not.
 
-Project theory may be carried in many forms. Natural language is the first tested realization. The working hypothesis behind that choice—not an established comparative result—is that an LLM can [use one account to coordinate changes across heterogeneous factory machinery](../notes/theory-mediation-can-coordinate-heterogeneous-factory-development.md) while the account remains addressable, inspectable, and revisable.
+Software and notes delimit the house's trainable internal state. Products,
+user demands, tool outputs, and operating consequences are its work and
+evidence.
 
-Natural language also makes the theory [directly manipulable in experiments](../notes/retained-theory-intervention-isolates-one-explicit-surface.md): the same project theory can be retained, withheld, surfaced, corrupted, or replaced while model weights remain fixed. That manipulability matters because of a known failure mode: knowledge can sit in weights or artifacts, and even appear in the live context, without affecting what the system does — [storage and exposure do not imply contextual activation](../notes/knowledge-storage-does-not-imply-contextual-activation.md). So whether a theory was used cannot be read off its presence; it has to be established by intervention, and the experiments below run exactly these interventions.
+The software-house definition requires none of holding, acquisition, training,
+learning, or automation. Those are properties of the target this program
+constructs.
 
-Such a theory may [specialize search heuristics already represented in the model](../notes/natural-language-project-state-specializes-search-heuristics.md): it can steer which candidate changes are generated, how failures are interpreted, and where search effort goes before decisive evidence is available. Other representations and direct or mixed learning methods are competing approaches and should be compared empirically.
-
-## How to test the program
-
-The test design has three parts: an instrument that measures improvement, two staged experiments that carry the causal claims, and two testbeds that host them.
-
-### Measuring improvement
-
-Retention does not by itself establish improvement. The program measures improvement with a comparison laid over snapshots of the process:
-
-```text
-declare the comparison while factory state F is current
-  -> intervening production and factory development
-  -> factory state F'
-  -> compare F' with F under the declared comparison
-```
-
-F' is a measurement boundary on a continuous process — the factory state after a period of development, or after a single retained change — and it is already operative when measured: the comparison judges a realized trajectory rather than performing adoption. A factory evaluated before installation is instead a candidate, which becomes the successor only when installed and depended on; the successor-factory experiment below uses that shape. Measuring a realized transition does not put a person on the causal update path; judgment that controls installation does.
-
-The comparison is [declared before the development it judges](../notes/a-better-factory-claim-compares-operative-states.md), so improvement cannot be claimed on a dimension chosen after seeing F'. F' must meet non-regression thresholds on the predecessor's prior capability set and exceed a declared target on at least one dimension. That capability set includes the predecessor's factory-development path, so a one-off gain that consumes the capacity for further improvement fails the comparison. Improvement so measured is relation-relative: antecedence makes the claim capable of failing, not the declared relation adequate to everything the family needs — that gap is the oracle problem below.
-
-Passing the comparison establishes improvement under the declared relation; the question is who or what learned. At a boundary that includes the operator, a passing successor is cheap: the operator can be the learner, and people improving a system from experience is ordinary engineering. A successor can even pass with no experience link at all: a capable builder can produce a better factory from a supplied specification — the route the constructors reviewed above exemplify, with people holding the production knowledge that matters. The program's claim is learning by the factory at the declared boundary: retained experience from the predecessor's own production must causally enter the changes the improvement depends on. [An experiment identifies only the contrast it actually runs](../notes/an-experiment-identifies-only-the-contrast-it-actually-runs.md), so the experiments manipulate that link directly.
-
-### Experiment one: theory-holding and acquisition
-
-The first experiment isolates theory-holding—recognizing and applying retained project theory without a project-specific cue—in ordinary software projects. Each project should contain a non-obvious reusable design idea, a novel requirement that can be met either by extending that idea or by adding a local special case, and a later demand that exposes whether the earlier modification preserved the program's [existing organization](../notes/project-theory-relates-new-demands-to-existing-organization.md).
-
-The initial benchmark supplies the project theory to isolate holding and activation. A later acquisition condition starts without it and requires the system to construct and revise project theory from permitted project and production evidence. Acquisition is tested by the same probes as holding: the constructed theory must be recoverable, must change the system's modifications when withheld or replaced, and must be revised when its consequences arrive. These probes alone cannot show that production caused the acquisition — a system can infer the same account from the static code before any informative episode — so the condition adds a counterfactual-experience contrast: vary or withhold the production episodes and require the constructed theory to vary with them.
-
-The diagnostic path is:
-
-```text
-retained theory
-  -> held theory under a novel demand
-  -> theory-guided modification
-  -> later consequence
-  -> theory revision
-  -> changed later modification
-```
-
-A direct probe tests whether the relevant theory is recoverable. An ordinary modification demand tests whether the system recognizes its relevance without a project-specific cue. The recognition test is informative only when the retained corpus is large enough that the relevant theory competes with other retained material. A single design note in a small context would be used almost by default. A mechanism-specific hint then distinguishes failure to recognize relevance from failure to apply the theory. Withholding the theory or replacing it with a plausible but wrong alternative tests whether its content causally changes the modification rather than merely appearing in an explanation. The strongest current control is fact-matched: it supplies the same individual project facts without their theory-level organization, so a positive result shows more than that context helps. The relations, purposes, and scope conditions it removes are themselves information, so this arm identifies the contribution of the supplied organization as a bundle, not of an abstract category called theory; sharper attributions need finer contrasts, left to the experiment's protocol when it runs.
-
-Experiment one is a component test of the theory-holding function on ordinary program modification: the modified object is a single product, so it does not yet establish factory-level learning. That requires the object of modification to be the factory's own reusable production machinery, which is what the second experiment supplies.
-
-### Experiment two: the successor factory
-
-A later experiment packages the interleaved process into one attributable episode: after a period of operation, a factory is given the explicit task of constructing a successor. Candidate successors are evaluated under the fixed comparison against the predecessor's prior capability set, the target improvement, and their ability to repeat the factory-development process. Evaluation must guide revision of the candidate; an accepted candidate must then be adopted and used in later production and factory development. Three contrasts carry the causal claims, all with model weights fixed to isolate the proposed non-weight route and the task specification held constant. Supplying versus withholding the predecessor's whole retained state — production record and theory together — estimates the contribution of that experience package beyond the task specification and the incumbent factory, which already embodies earlier experience. Supplying the production record with versus without the distilled theory estimates the additional contribution of the explicit theory surface; the record-only condition may still reconstruct or implicitly carry similar organization. Replacing the correct theory with a controlled wrong one, record unchanged, tests content-sensitive steering rather than the mere presence of a theory-shaped artifact.
-
-The declared comparison has an unresolved oracle problem: the program has no trustworthy mechanism for deciding whether a successor is genuinely better. Judging a factory's capability over a family of software is expensive. An acceptance test the constructing factory can inspect can be gamed. And if people supply the decisive acceptance judgments, the human-inclusive boundary re-enters at the headline result. The program does not yet have an evaluation design that removes this; it is recorded as an open problem of the second experiment, not a solved part of it.
-
-Even full success here is bounded: one passing successor establishes one learning transition, not indefinite compounding, recursive self-improvement, or computational closure — the consequential decisions in the loop ceasing to require a human.
-
-### Testbeds and staging
-
-The program uses two complementary testbeds. **Commonplace**—the agent-operated knowledge-base framework this program is developed in, [used here as an instrument](../reference/commonplace-as-an-instrument.md)—supplies the live theory-learning line: a long-horizon human–LLM process for studying theory-holding and revision. It is currently a theory-development and knowledge-production instrument, not yet a software factory: its operative machinery—writing, grounding, review, revision—produces and revises theory, and production machinery for software does not yet exist here. The [recorded revision episode](../notes/evidence/commonplace-revision-used-theory-guided-computational-search.md) illustrates part of the mechanism but is not a controlled better-factory result. Its retention is interleaved in exactly the sense above, which makes it realistic and also raises the evidence cost: attributing an improvement to retained experience requires recording, at production time, which retained state entered which decision—git history alone cannot reconstruct that. The controlled software-project testbed supplies the experimental line: first the product-level theory-holding experiment, on working software projects into which retained theory is supplied, withheld, or replaced, and later the factory-level successor experiment—the interventions Commonplace cannot run. The two lines meet when retained theory about a factory becomes operative in that factory's reusable production machinery. Current Commonplace evidence is human-inclusive—the declared learner boundary includes the operator—so progress also means reducing how often the operator must name the relevant theory, choose the decisive branch, or supply another task-specific learning decision.
-
-In the current phase, the theory's main use is to guide the design of Commonplace itself. Experiment one can run now in the controlled software-project testbed; controlled interventions on the live Commonplace process, and the successor-factory experiment, wait until the system is sound enough to support them. Using the theory to design the system is not yet evidence for the theory, but it produces the testbed in which that evidence can be gathered.
-
-## What would count against the program
-
-The theory-mediated approach loses support if changing or withholding project theory does not change construction decisions, if another learning mechanism—learned policies, trajectory reuse, direct structural search, or plain retention and retrieval of the raw production record—performs better at comparable total cost, or if each new area still requires substantial human-built specialization.
-
-The last condition is where Richard Sutton's essay [*The Bitter Lesson*](http://www.incompleteideas.net/IncIdeas/BitterLesson.html) bites. The program's hand-built starting state—its theories, benchmarks, and declared comparisons—is a bootstrap: the running system uses its current machinery to guide the search that produces later versions, rather than being scaffolding someone rebuilds for each new area. Sutton's essay argues that approaches built on human-supplied domain knowledge are eventually overtaken by general methods that use computation and learning, and calling the starting state a bootstrap does not by itself answer it: the bootstrap fits the lesson only if it can [outgrow recurring human-supplied specialization](../notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md). A [companion article](./the-bitter-lesson-does-not-require-everything-to-live-in-weights.md) argues the lesson does not require all learning to live in model weights.
-
-## The reflective loop behind the program
-
-The program's central bet can also be reached from two directions inside its own theory. [Open-ended theory learning and factory learning close the same reflective loop](../notes/open-ended-theory-learning-and-factory-learning-close-the-same.md) derives that loop from both ends: a factory that improves coherently past shallow patching needs a held, revisable theory of its own organization, and testing a theory about a system's own organization depends on making it operative in that system's machinery. The convergence is internal coherence, not external confirmation—the derivations share the program's premises and assume delayed, partial evaluation—and it argues what the loop would require, not that any current system closes it. The derivation also commits to the same rival the loss conditions above name—plain retention and retrieval of the raw production record—so the same evidence would count against both.
-
-The derivation binds Commonplace only through a boundary claim the program makes deliberately: Commonplace is intended to become the developing system whose own organization includes the factory machinery, not a detached investigator of external factories. Under that declared boundary the retained theory is self-directed, and the theory-side derivation predicts the trajectory: the theory can be decisively tested only by becoming operative in machinery that acts on it, so the missing software-factory machinery should be forced into existence as retained theory demands consequences. If, under that boundary, theory instead accumulates and revises indefinitely without forcing the machinery into existence, the derivation loses support; if the program drops the boundary claim and tests its theories only in a separate testbed, the prediction no longer binds.
-
-The same note places Schmidhuber's proof-gated [Gödel machine](../notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md) as a contrast case rather than a maturity endpoint: it keeps its axiomatized self-description and utility function fixed as premises of every rewrite rather than acquiring or revising them from production experience—the supplied-and-fixed corner of the design space this program bets against.
+The need for a program-theory function is a theoretical argument, not a
+proved theorem. Current-LLM sufficiency and the practical training path are
+conjectures. The program is constructive: a working system establishes
+reachability over its declared scope, horizon, and envelope. Failure of one
+architecture eliminates that path; it cannot refute the existential claim
+unless the search has first been bounded.

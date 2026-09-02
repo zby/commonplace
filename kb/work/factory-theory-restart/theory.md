@@ -1,6 +1,6 @@
 # The reachability conjecture: train the house, not the LLM
 
-**TL;DR.** A software house is whatever keeps developing and changing some
+**TL;DR.** We define a software house as whatever keeps developing and changing some
 software for its users, over time, in response to what they ask for and what
 happens in use. The conjecture is that such a house can be built to run with
 no human in a production role, using only models that exist as of 2026-09-02,
