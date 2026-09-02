@@ -1,23 +1,14 @@
-# A software factory system needs a theory in Naur's meaning
+# A software house needs a theory in Naur's meaning
 
-A **software factory system** is a system that produces and changes
-software: the production machinery — tools, tests, schemas, guidance,
-retained knowledge — together with whatever fills its roles: people,
-codified assets, models. Its product scope is a parameter: one long-lived
-program at the narrow end, a declared family of products at the broad end.
-The compound names the complete producing system, not a special class of
-tooling.
-An IDE alone is production machinery, not a software factory system; the IDE
-together with the programmers and other project-specific role-fillers is the
-human-operated system at that end of the range.
-(The bare term "software factory" keeps Greenfield's meaning — the
-machinery, human-operated in his account, sitting at the family end of the
-scope; the history document explains the relation.)
+A [software house](../../notes/definitions/software-house.md) is the complete persistent system that
+develops and evolves software in response to its users and operating
+environment. Its production machinery and whatever fills its internal roles
+are inside the boundary; its users are outside. Product scope and operating
+horizon are parameters.
 
 The definition deliberately stops there. Revising the system's own machinery
-— factory development — and revising it from the system's own production
-experience — learning — are bigger steps, taken explicitly later, not parts
-of the definition.
+and revising it from the system's own production experience — learning — are
+bigger steps, taken explicitly later, not parts of the definition.
 
 In operation such a system changes things all the time: the software it
 produces and, in any long-lived setting, its own machinery for producing
@@ -45,23 +36,23 @@ whether a passing change fits.
 Those three capacities are what Naur (*Programming as Theory Building*, 1985)
 calls the theory of a program.
 
-So: a software factory system that keeps changing coherently must hold such
-a theory — of its products; and of itself wherever it also changes its own
-machinery, since those changes run under the same conditions: partial
-checks, delayed misfit.
+So: a software house that keeps changing coherently must hold such a theory —
+of its products; and of itself wherever it also changes its own machinery,
+since those changes run under the same conditions: partial checks, delayed
+misfit.
 
-The function need not run at change time. A software factory system can let misfits land and
-repair them when they surface. But repair needs the same three capacities —
-to restore a design you must know what it should have been — applied later,
-against more accumulated structure, at higher cost. Deferral moves the
-theory-need in time; it does not remove it.
+The function need not run at change time. A software house can let misfits
+land and repair them when they surface. But repair needs the same three
+capacities — to restore a design you must know what it should have been —
+applied later, against more accumulated structure, at higher cost. Deferral
+moves the theory-need in time; it does not remove it.
 
 ## What the derivation assumes
 
-Checks are partial and the evidence of misfit is delayed. A software factory system whose
-checks fully captured its purposes and organization would not need the theory;
-the checks would carry the burden. The derivation runs wherever that ideal
-fails.
+Checks are partial and the evidence of misfit is delayed. A software house
+whose checks fully captured its purposes and organization would not need the
+theory; the checks would carry the burden. The derivation runs wherever that
+ideal fails.
 
 Product scope controls whether it fails. Fix the scope so that every
 admissible demand is pre-analyzed, and the checks can be complete: a
@@ -72,14 +63,13 @@ codifies the demand space rather than the knowledge, and it extends the
 fully automatic reach only trivially, exactly over the pre-analyzed region
 where no theory was needed. The derivation bites when the demand stream
 brings what nobody pre-analyzed; relating that to the existing organization
-is what needs the theory. Whether a software factory system can pay for
-itself without admitting novelty is the question the history document
-takes up.
+is what needs the theory. Whether an economically useful software house can
+exclude novelty over its operating horizon is a separate empirical question.
 
 ## What would refute it
 
-A software factory system that sustains coherent change over a long horizon, on a
-scope that keeps admitting novel demands, with no project-specific state performing
+A software house that sustains coherent change over a long horizon, on a scope
+that keeps admitting novel demands, with no project-specific state performing
 the three functions beyond the raw production record and a general-purpose
 model. If that works, the derivation is wrong.
 
@@ -94,12 +84,12 @@ advance — raw record, general model, nothing organizing them.
   outside human heads — and outside model weights, in retained artifacts an
   LLM reads — is the empirical question, not part of the derivation; the
   holding conjecture states the program's bet on how.
-- **A learner boundary.** Which parts of the software factory system count as the
+- **A learner boundary.** Which parts of the software house count as the
   learner — the humans, the technical machinery, the composite — matters for
   attributing learning in a test. The derivation holds regardless. In
-  particular, humans satisfy it: a software factory system whose people hold the
-  theory meets the derivation in full. The
-  derivation poses no problem; the costs of each way of meeting it do.
+  particular, a human-operated software house whose people hold the theory
+  meets the derivation in full. The derivation poses no problem; the costs of
+  each way of meeting it do.
 - **A definition of learning or a measurement instrument.** Learning is
   derived separately, in the learning derivation; measuring it belongs to
   testing.

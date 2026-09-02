@@ -1,14 +1,16 @@
-# A general theory builder must become a software factory system
+# A persistent general theory builder must become a software house
 
 A **theory builder** is a system that builds, tests, and revises theories
 formulated in natural language. The domain is open: the theories may be
 about anything. Whatever fills its roles — people, models, machinery — is
-part of the system, as with the software factory system.
+part of the system. The argument here concerns a builder that persists across
+work for users and changes its machinery in response to demands and
+consequences; a one-shot theory generator does not meet that boundary.
 
 This document argues the reverse direction of the derivations: not that a
-factory needs theories, but that a general theory builder is forced toward
-being a software factory system. The chain has three links; two are already
-argued elsewhere in this workshop, one is this document's conjecture.
+software house needs theories, but that a persistent general theory builder is
+forced toward being a software house. The chain has three links; two are
+already argued elsewhere in this workshop, one is this document's conjecture.
 
 **Link one, argued: manipulating theories needs software.** A serious theory
 corpus is not read end to end at each use. Theories must be stored,
@@ -37,34 +39,36 @@ learning target, its boundary renegotiated as evidence accumulates, not
 fixed at design time.
 
 **Link three, derived: a system that keeps changing its software falls under
-the derivations.** A builder that must keep building and revising its own
-harness produces and changes software — it satisfies the definition of a
-software factory system, with its own machinery as the product at the narrow
-end of the scope parameter. The first derivation then applies to it: its
-harness changes must fit purposes and organization its checks capture only
-partly, so it must hold a theory of its own machinery. The learning
-document applies too: when its operation exposes that the held theory no
-longer fits, the theory must be revised and the revision retained.
+the derivations.** A persistent builder that must keep building and revising
+its own harness develops and evolves software in response to user demands and
+operating consequences. It therefore satisfies the [software-house
+definition](../../notes/definitions/software-house.md), with its own production machinery inside
+the development scope. The first derivation then applies to it: its harness
+changes must fit purposes and organization its checks capture only partly, so
+it must hold a theory of its own machinery. The learning document applies
+too: when its operation exposes that the held theory no longer fits, the
+theory must be revised and the revision retained.
 
 ## The circle closes, and that is the check
 
-The derivations run from the production side: a software factory system
-needs a held, continually rebuilt theory. This chain runs from the epistemic
-side: a general theory builder needs a continually rebuilt software factory.
-Two independent starting points force the same coupled system — the one the
-holding conjecture describes: notes, interpreter, harness, where the notes
-are at once the builder's product and the factory's held theory. Had the two
-directions forced incompatible structures, something upstream would be
-wrong. That they compose is the arc's consistency check.
+The derivations run from the production side: a software house needs a held
+theory, revised when experience invalidates it. This chain runs from the
+epistemic side: a persistent general theory builder needs continually revised
+software-production machinery. Two independent starting points force the same
+coupled system — the one the holding conjecture describes: notes, interpreter,
+harness, where the notes are at once the builder's product and the software
+house's held theory. Had the two directions forced incompatible structures,
+something upstream would be wrong. That they compose is the arc's consistency
+check.
 
-Stated as the arc's conclusion: the two names describe one system. A
-software factory system that keeps changing coherently — at a scope that
-keeps admitting novelty — must hold a theory — acquired by
-participation, revised when experience invalidates it: it is a theory
-builder for its own domain. A general theory builder — with domains that
-keep opening — must build and rebuild its own machinery: it is a software
-factory system with itself in scope. Neither description is complete
-without the other. The program's object is the system that is both.
+Stated as the arc's conclusion: the two names describe one system under these
+conditions. A software house that keeps changing coherently — at a scope that
+keeps admitting novelty — must hold a theory, acquired by participation and
+revised when experience invalidates it: it is a theory builder for its own
+domain. A persistent general theory builder — with domains that keep opening —
+must build and rebuild its own production machinery: it is a software house
+with that machinery inside its development scope. Neither description is
+complete without the other. The program's object is the system that is both.
 
 ## What would refute it
 

@@ -1,7 +1,7 @@
 # Learning follows when experience invalidates the held theory
 
-The first document derived that a software factory system which keeps
-changing coherently must hold a theory in Naur's meaning. Learning enters
+The first document derived that a software house which keeps changing
+coherently must hold a theory in Naur's meaning. Learning enters
 that account in two distinct places: acquiring a theory and revising one
 that no longer fits. Naur supplies the first; the second follows only under
 an additional condition about what production experience reveals.
@@ -32,7 +32,7 @@ its theory-holding capability must change in response and the change must
 persist into later work. That is learning: production experience causing a
 retained change to what the system holds.
 
-So a software factory system can exist, and can make theory-governed program
+So a software house can exist, and can make theory-governed program
 modifications, without learning. It must learn when its production
 experience exposes that the held theory is no longer adequate and coherent
 change must continue. Whether economically relevant scopes produce such
@@ -46,11 +46,11 @@ condition below.
 
 For people, acquisition is guided participation and revision is a changed
 understanding retained in the holders. For codified assets, changing what
-they carry means re-codification — the cost that bound the first wave. For
-retained readable artifacts, it means revising the cached theory-building
-results and having the composite hold the revised theory — cheap in
-principle, and exactly the holding-and-revision machinery the previous
-document conjectures is not yet there. For weights, it means retraining.
+they carry means re-codification. For retained readable artifacts, it means
+revising the cached theory-building results and having the composite hold the
+revised theory — cheap in principle, and exactly the holding-and-revision
+machinery the previous document conjectures is not yet there. For weights, it
+means retraining.
 
 ## What would disarm it
 

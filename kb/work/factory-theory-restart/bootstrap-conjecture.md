@@ -7,14 +7,15 @@ second conjecture is needed, about how the theoretical system could come to
 exist at all. Like the holding conjecture it is a bet, not a derivation —
 Naur's acquisition account supplies its model of guided participation.
 
-**The conjecture.** The system can be reached by bootstrapping: a human-operated
-software factory system internalizes its own theory-holding, step by step,
-through its own operation — seeding notes from what its people hold, building
-the harness against observed activation failures, and shifting the holding
-from people to the triple while production continues. The theory-builder
-document opens a second doorway: the same climb can start from a
-human-operated theory builder growing its harness. Both roads lead to the
-same coupled system, and the progress measure below applies to either.
+**The conjecture.** An automated software house can be reached by
+bootstrapping: a human-operated software house internalizes its own
+theory-holding, step by step, through its own operation — seeding notes from
+what its people hold, building the harness against observed activation
+failures, and shifting the holding from people to the triple while production
+continues. The theory-builder document opens a second doorway: the same climb
+can start from a human-operated theory builder growing its harness. Both roads
+lead to the same coupled system, and the progress measure below applies to
+either.
 
 **Why bootstrap is plausible.** Naur's positive acquisition account is guided
 participation: a new holder works on the program with people who already hold

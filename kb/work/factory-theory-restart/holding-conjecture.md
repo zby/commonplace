@@ -31,10 +31,10 @@ the harness gating them.
 
 ## Codification returns, aimed at logistics
 
-The harness is code. The first wave codified the content and left delivery
-to people; this conjecture leaves the content informal and codifies the
-delivery. Naur's limit blocks formalizing the theory; nothing blocks
-formalizing when and how the theory is read.
+The harness is code. A purely codified approach formalizes content so
+machinery can act on it; this conjecture leaves the theory-building results
+informal and codifies their delivery. Naur's limit blocks formalizing the
+theory; nothing blocks formalizing when and how the retained results are read.
 
 ## The Naur objection, faced
 
@@ -58,7 +58,7 @@ therefore a designed experiment, not a thought experiment.
 
 **The competing reconstruction conjecture.** Dedicated theory notes are
 unnecessary: an LLM and harness can reconstruct the theory on demand from the
-current software, factory machinery, task, and raw production record. The
+current software, production machinery, task, and raw production record. The
 system holds the theory as a reproducible capability rather than a retained
 representation; notes merely cache a computation that can be repeated. The
 conjecture succeeds if reconstruction preserves coherent change across novel
@@ -68,7 +68,7 @@ cost that additional reconstruction effort cannot recover.
 
 ## Status
 
-The conjecture defines a theoretical system. No running instance exists:
-today's software factory systems fill the theory-holding role with people —
-the wave diagnosis. How such a system could come to exist at all is its own
-question, taken up by the bootstrap-conjecture document.
+The conjecture defines a theoretical system. No running automated software
+house of this kind exists: today's software houses fill the theory-holding
+role with people — the wave diagnosis. How such a system could come to exist
+at all is its own question, taken up by the bootstrap-conjecture document.

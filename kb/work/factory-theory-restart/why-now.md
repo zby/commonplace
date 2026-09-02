@@ -1,24 +1,23 @@
-# Why software factories can work now
+# Why software houses can be automated now
 
-Software factories are being built again — agent fleets, LLM development
-pipelines, products calling themselves software factories outright — the label
-meaning, there, something closer to this workshop's software factory system
-than to Greenfield's machinery. The new wave does not cite Naur. [GROUNDING TODO: examples of the current wave, and a
-check that Naur is absent from its literature.]
+Attempts to automate software houses are being built — agent fleets, LLM
+development pipelines, and persistent systems intended to produce and evolve
+software for users. The new wave does not cite Naur. [GROUNDING TODO: examples
+of the current wave, and a check that Naur is absent from its literature.]
 
 The account in the previous documents explains the timing. Precisely: what
-could not work before was the vision at breadth. The first wave's factories
-worked wherever their theory-holders could carry them — as expert
-organizations always have. Where project-specific theory lived and what
-could interpret it, not the concept, set the ceiling.
+could not work before was moving the theory-dependent roles of a software
+house into machinery at breadth. Human-operated software houses worked; where
+project-specific theory lived and what could interpret it set the ceiling on
+automation.
 
-## What stalled the first wave
+## What previously blocked automation
 
 Machinery could carry only what crossed into formal form. Codification was
 the price of making knowledge operative — a schema, a DSL, a generator can
 act, while a design memo could be consumed only by people. Naur's limit
-says the load-bearing residue does not cross into the actable form. So the residue stayed in people, and at breadth the people were
-the bottleneck.
+says the load-bearing residue does not cross into the actable form. So the
+residue stayed in people, and at breadth the people were the bottleneck.
 
 ## What changed
 
@@ -35,18 +34,19 @@ that machine judgment requires formulated criteria, opening the bearer
 question. It does not show that theory is thereby transmitted or held.
 
 That is the why-now. Stated honestly, it is a prediction rather than a
-result: it says a software factory system can work at breadth now if the
-model-plus-artifacts bearer actually performs the theory function — which is the program's untested bet.
+result: it says a software house can be automated at breadth now if the
+model-plus-artifacts bearer actually performs the theory function — which is
+the program's untested bet.
 
 ## What this predicts about the current wave
 
-Three readings of the new factories, discriminated by the same parameter as
-before:
+Three readings of the new automated-house attempts, discriminated by the same
+parameter as before:
 
-1. **Narrow again** — working on families regular enough that checks are
+1. **Narrow again** — working on scopes regular enough that checks are
    complete. The trivial case; no bearer news.
 2. **Hidden humans** — theory-holders still in the loop, relabeled. The first
-   wave's containment with better tooling.
+   human-operated case with better tooling.
 3. **Genuine theory-holder change** — the model-plus-artifacts composite
    performing the theory function at breadth.
 
@@ -62,15 +62,16 @@ That is testing machinery, and it stays in the testing layer.
 
 ## The conjecture: the holding machinery is not yet there
 
-The current factories are not really satisfactory. [GROUNDING TODO: operator
-judgment as of 2026-09; needs examples of where the current wave
-underdelivers.] The conjecture this workshop adds: they sit at the first two
-readings because the machinery for full theory holding does not yet exist.
+Current attempts at automated software houses are not really satisfactory.
+[GROUNDING TODO: operator judgment as of 2026-09; needs examples of where the
+current wave underdelivers.] The conjecture this workshop adds: they sit at
+the first two readings because the machinery for full theory holding does not
+yet exist.
 
 The reader exists — models read informal artifacts. But holding is more than
 reading. A held theory is brought to bear on a novel demand without
 anyone naming the connection; it wins against everything else in the
-context; it stays live across the long horizon of a family; and it is
+context; it stays live across the house's operating horizon; and it is
 revised when its consequences arrive. Current machinery retains and exposes:
 it stuffs context and retrieves. Storage and exposure are not activation —
 knowledge can sit in the context without touching the decision. And nothing
@@ -85,13 +86,13 @@ their theory reliably. The missing component is the machinery of holding —
 routing the right theory into the context at the right time, making it win
 there, keeping it revised.
 
-What would refute the conjecture: satisfactory factory performance at
+What would refute the conjecture: satisfactory software-house performance at
 novelty from raw context scaling and retrieval alone. What would confirm it:
 holding machinery moving performance at novelty where added raw context does
 not. Building and testing that machinery is the program; its conjectured
 shape — notes, interpreter, harness — is the holding-conjecture document.
 
-## The bridge to learning factories
+## The bridge to learning software houses
 
 The retained-notes architecture combines machine use with cheap explicit
 revision. Readable artifacts revise by editing — and the same model that

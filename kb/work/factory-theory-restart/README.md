@@ -1,4 +1,4 @@
-# Factory theory restart
+# Software house research program restart
 
 ## Goal
 
@@ -36,33 +36,38 @@ re-derive it:
 - The theory layer does not need the learner-boundary machinery. Boundaries,
   attribution (the cheap-operator case), the relation-relative comparison, and
   the oracle problem belong to testing, not to the theory.
-- The program's term for the full system is **software factory system**: it
-  produces and changes software — machinery plus whatever fills its roles,
-  product scope a parameter from one long-lived program to a declared family.
-  Factory development and learning are later steps, not definitional; family
-  scoping is Greenfield's codification of the demand space, not ontology.
-  "Software factory" keeps Greenfield's meaning (the machinery,
-  human-operated in his account) — reusing it with a shifted meaning would
-  make the import equivocal. Current usage runs the other way: the
-  internet's software factory, expected to be or become fully automated, is
-  closer to our software factory system.
+- The program's term for the full system is **software house**: the persistent
+  producer that develops and evolves software in response to its users and
+  operating environment. The term is generalized from a human organization
+  to a system whose internal roles may be filled by people, computational
+  machinery, or both. Automation, changes to production machinery, and
+  learning are later claims, not parts of the base definition.
+- Greenfield's **software factory** remains family-specific production
+  machinery that a software house may use. The research program imports none
+  of its product-family, schema, template, or developer-role ontology;
+  Greenfield belongs in the historical comparison, not the core derivation.
 - Likely eventual shape: a theory note (or notes), then possibly a split of
   the article into a theory-formulation part and a testing part. Not committed
   yet; the derivation comes first.
 
 ## Current parts
 
+- [Software house](../../notes/definitions/software-house.md) — the canonical
+  system definition, its user boundary, implementation-neutral role
+  allocation, automation qualifier, and contrast with Greenfield's software
+  factory.
 - [naur-derivation.md](./naur-derivation.md) — the simple derivation: a
-  software factory system needs a theory in Naur's meaning.
+  software house needs a theory in Naur's meaning.
 - [where-the-theory-lived.md](./where-the-theory-lived.md) — the historical
-  factories as the derivation's first data point: constructors designed people in as
-  theory-holders, Greenfield's containment bet met Naur's residue at breadth,
-  and four combinable theory-holding architectures frame the program's bet.
-- [why-now.md](./why-now.md) — why factories can work now: LLMs move the
-  codification burden from theory content to theory delivery, stated as a prediction with three
-  discriminable readings of the current wave, the conjecture that full
-  theory-holding machinery is not yet there, and the bridge to learning
-  factories via the retained-notes architecture's cheap explicit revision.
+  comparison: Greenfield's constructors designed people in as theory-holders,
+  his containment bet met Naur's residue at breadth, and four combinable
+  theory-holding architectures frame the program's bet without supplying its
+  ontology.
+- [why-now.md](./why-now.md) — why software houses can be automated now: LLMs
+  move the codification burden from theory content to theory delivery, stated
+  as a prediction with three discriminable readings of the current wave, the
+  conjecture that full theory-holding machinery is not yet there, and the
+  bridge to learning via cheap explicit revision of retained notes.
 - [learning-derivation.md](./learning-derivation.md) — the second derivation:
   Naur's guided-participation account explains acquisition, while theory
   revision follows only when production experience exposes that the held
@@ -78,8 +83,8 @@ re-derive it:
   manipulate them, no closed harness fits a general builder (this document's
   conjecture), so it must keep changing software and falls under the
   derivations; the closing circle is the arc's consistency check, and the
-  conclusion is that the program's object is one system that is both factory
-  and builder.
+  conclusion is that the program's object is one system that is both software
+  house and theory builder.
 - [bootstrap-conjecture.md](./bootstrap-conjecture.md) — the second
   conjecture: the theoretical system can be reached by bootstrapping — a
   human-operated system internalizes its own holding through its own

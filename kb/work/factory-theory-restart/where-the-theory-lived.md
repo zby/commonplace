@@ -80,13 +80,13 @@ code against libraries. A factory is what sits on top of an IDE and
 libraries when someone commits to a family.
 
 Read this way, the containment bet is a position on the residue axis, and
-the program is its limit point: the one kind of knowledge Greenfield's
-containment left in people — the theory — is the kind the program tries to
-move into retained machinery. A software factory system that holds its own
-theory in readable artifacts is not a different project from the
-software-factory vision; it is that vision completed. It also follows that
-the derivation covers the IDE shop: there the theory is simply all of it,
-carried entirely by people.
+the comparison with this program becomes precise: the one kind of knowledge
+Greenfield's containment left in people — the theory — is the kind an
+automated software house would have to move into machinery. The program is
+not an extension of Greenfield's ontology or methodology. His factory is one
+historical arrangement of production machinery inside a human-operated
+software house. An IDE-based house is another; there the theory is carried
+entirely by people.
 
 ## The vision failed, and our reading of why
 
@@ -130,7 +130,7 @@ codification was adequate.
 ## Four theory-holding architectures
 
 Four idealized architectures for supplying the theory function a software
-factory system needs. They are not values on one axis: they combine who
+house needs. They are not values on one axis: they combine who
 performs the function, where project-specific state is represented, and how
 that state is updated. Running systems can combine them.
 
@@ -151,47 +151,30 @@ that state is updated. Running systems can combine them.
    rival to the third, at the cost of addressability and cheap revision. The
    Bitter Lesson is its argument.
 
-The derivation says a software factory system needs the theory. The historical factories ran
-a blend of the first two architectures and stopped where the history above
-stops; the last two are the live machine-intensive alternatives. Both use
-model weights. They differ in where project-specific, revisable state is
-retained: external notes under fixed weights, or the weights themselves. That
-is what makes the third and fourth separable in an experiment.
+The derivation says a software house needs the theory. The historical
+factories ran a blend of the first two architectures and stopped where the
+history above stops; the last two are the live machine-intensive alternatives.
+Both use model weights. They differ in where project-specific, revisable state
+is retained: external notes under fixed weights, or the weights themselves.
+That is what makes the third and fourth separable in an experiment.
 
-## The import names the system his account left unnamed
+## The historical factory sits inside a software house
 
-From the factory literature the program takes Greenfield's factory
-definition nearly unchanged: the machinery — environment, template, schema,
-reusable assets. It does not take the methodology. And it adds a name his
-account lacks: the bigger production system — factory plus the people in the
-two development processes — which his account describes at length and never
-names. **Software factory system**, defined in the derivation document, names
-that whole, with two of his fixtures parameterized. The role-fillers: who or
-what fills each role — a person, a codified asset, a model reading retained
-artifacts, weights — becomes the open variable. And the product scope: a
-declared family for him — itself a piece of his codification method — ranging
-down to a single long-lived program for the cases the program studies. Greenfield's operating model is then one
-instantiation of it: a human-operated software factory.
-
-Keeping the terms apart is deliberate, and the split runs against current
-usage, not with it. What the internet now calls a software factory — and
-expects to be, or to become, fully automated — is closer to what these
-documents call a software factory system than to Greenfield's definition:
-the expectation names the whole producing system, with machines filling
-every role. But Greenfield defined the words otherwise, and importing a term
-while quietly changing its meaning is how equivocation gets built. So in
-these documents "software factory" keeps Greenfield's meaning — the
-machinery — and the program's claims are about software factory systems.
-The vocabulary then states the current wave's aspiration exactly: a fully
-automated software factory system. [GROUNDING TODO: current-usage examples;
-shared with the why-now wave TODO.]
+The research program defines [software house](../../notes/definitions/software-house.md)
+independently as the complete persistent producer. It imports no product
+family, schema, template, or developer-role ontology from the factory
+literature. In the comparison developed here, Greenfield's configured
+environment is a software factory: family-specific machinery used by a human
+software house. His factory developers and solution developers are role
+fillers in that historical house, not roles the program requires every
+software house to have.
 
 The move on the role-fillers is the same move the program makes on Naur:
 take the theory function — mapping, organization-account, demand-relating —
 and not his conclusion that only people can perform it. Naur binds theory to
 human heads; Greenfield's operating model fills the system's roles with
-human occupants and its retained knowledge with codified assets. The program's move, each time, is to keep the function and unbind
-the filler. That is why the bearer question is the empirical center.
-Representational form classifies the state used within each architecture; it
-does not classify the whole architecture or determine who performs the theory
-function.
+human occupants and its retained knowledge with codified assets. The
+comparison keeps the function and varies the filler. That is why the bearer
+question is the empirical center. Representational form classifies the state
+used within each architecture; it does not classify the whole architecture or
+determine who performs the theory function.
