@@ -1,8 +1,9 @@
 # Why software factories can work now
 
 Software factories are being built again — agent fleets, LLM development
-pipelines, products calling themselves software factories outright. The new
-wave does not cite Naur. [GROUNDING TODO: examples of the current wave, and a
+pipelines, products calling themselves software factories outright — the label
+meaning, there, something closer to this workshop's software factory system
+than to Greenfield's machinery. The new wave does not cite Naur. [GROUNDING TODO: examples of the current wave, and a
 check that Naur is absent from its literature.]
 
 The account in the previous documents explains the timing. Precisely: what

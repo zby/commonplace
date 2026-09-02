@@ -167,12 +167,18 @@ declared family for him — itself a piece of his codification method — rangin
 down to a single long-lived program for the cases the program studies. Greenfield's operating model is then one
 instantiation of it: a human-operated software factory.
 
-Keeping the terms apart is deliberate. The general expectation today may
-already read "software factory" as the whole system, but Greenfield defined
-the words otherwise, and importing a term while quietly changing its meaning
-is how equivocation gets built. In these documents "software factory" keeps
-Greenfield's meaning — the machinery; the program's claims are about
-software factory systems.
+Keeping the terms apart is deliberate, and the split runs against current
+usage, not with it. What the internet now calls a software factory — and
+expects to be, or to become, fully automated — is closer to what these
+documents call a software factory system than to Greenfield's definition:
+the expectation names the whole producing system, with machines filling
+every role. But Greenfield defined the words otherwise, and importing a term
+while quietly changing its meaning is how equivocation gets built. So in
+these documents "software factory" keeps Greenfield's meaning — the
+machinery — and the program's claims are about software factory systems.
+The vocabulary then states the current wave's aspiration exactly: a fully
+automated software factory system. [GROUNDING TODO: current-usage examples;
+shared with the why-now wave TODO.]
 
 The move on the role-fillers is the same move the program makes on Naur:
 take the theory function — mapping, organization-account, demand-relating —

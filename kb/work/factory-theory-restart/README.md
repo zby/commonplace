@@ -24,7 +24,9 @@ forces, and keep the testing machinery out until the theory stands on its own.
   scoping is Greenfield's codification of the demand space, not ontology.
   "Software factory" keeps Greenfield's meaning (the machinery,
   human-operated in his account) — reusing it with a shifted meaning would
-  make the import equivocal.
+  make the import equivocal. Current usage runs the other way: the
+  internet's software factory, expected to be or become fully automated, is
+  closer to our software factory system.
 - Likely eventual shape: a theory note (or notes), then possibly a split of
   the article into a theory-formulation part and a testing part. Not committed
   yet; the derivation comes first.
