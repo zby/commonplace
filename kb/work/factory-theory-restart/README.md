@@ -17,10 +17,12 @@ forces, and keep the testing machinery out until the theory stands on its own.
 - The theory layer does not need the learner-boundary machinery. Boundaries,
   attribution (the cheap-operator case), the relation-relative comparison, and
   the oracle problem belong to testing, not to the theory.
-- The program's term for the full system is **software factory system** — two
-  coupled processes, producing software and revising its own production
-  machinery, with role-fillers open and product scope a parameter from one
-  long-lived program to a declared family. Family scoping is Greenfield's
+- The program's term for the full system is **software factory system** — the
+  system that produces and changes software: production machinery plus
+  whatever fills its roles, with product scope a parameter from one
+  long-lived program to a declared family. Machinery revision (factory
+  development) and learning are deliberate later steps, not parts of the
+  definition. Family scoping is Greenfield's
   codification of the demand space, not ontology. "Software factory" keeps Greenfield's meaning — the machinery,
   human-operated in his account; reusing it with a shifted meaning would make
   the import equivocal.

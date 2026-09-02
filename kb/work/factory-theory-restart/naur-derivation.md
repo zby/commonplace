@@ -1,14 +1,22 @@
 # A software factory system needs a theory in Naur's meaning
 
-A **software factory system** is a system running two coupled kinds of work:
-it produces and changes software, and it builds and revises the machinery it
-produces with — tools, tests, schemas, guidance, retained knowledge.
-Whatever fills its roles — people, codified assets, models — is part of the
-system. Its product scope is a parameter: one long-lived program at the
-narrow end, a declared family of products at the broad end. (The bare term
-"software factory" keeps Greenfield's meaning — the machinery, human-operated
-in his account, sitting at the family end of the scope; the second document
-explains the relation.)
+A **software factory system** is a system that produces and changes
+software: the production machinery — tools, tests, schemas, guidance,
+retained knowledge — together with whatever fills its roles: people,
+codified assets, models. Its product scope is a parameter: one long-lived
+program at the narrow end, a declared family of products at the broad end.
+(The bare term "software factory" keeps Greenfield's meaning — the
+machinery, human-operated in his account, sitting at the family end of the
+scope; the second document explains the relation.)
+
+The definition deliberately stops there. Revising the system's own machinery
+— factory development — and revising it from the system's own production
+experience — learning — are bigger steps, taken explicitly later, not parts
+of the definition.
+
+In operation such a system changes things all the time: the software it
+produces and, in any long-lived setting, its own machinery for producing
+it.
 
 Every change has to fit purposes and organization the system already has.
 
@@ -32,9 +40,10 @@ whether a passing change fits.
 Those three capacities are what Naur (*Programming as Theory Building*, 1985)
 calls the theory of a program.
 
-So: a software factory system that keeps changing coherently must hold such a theory — of its
-products, and of itself, since its own machinery changes under the same
-conditions: partial checks, delayed misfit.
+So: a software factory system that keeps changing coherently must hold such
+a theory — of its products; and of itself wherever it also changes its own
+machinery, since those changes run under the same conditions: partial
+checks, delayed misfit.
 
 The function need not run at change time. A software factory system can let misfits land and
 repair them when they surface. But repair needs the same three capacities —
