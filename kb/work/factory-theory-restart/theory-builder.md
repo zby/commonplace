@@ -56,6 +56,14 @@ are at once the builder's product and the factory's held theory. Had the two
 directions forced incompatible structures, something upstream would be
 wrong. That they compose is the arc's consistency check.
 
+Stated as the arc's conclusion: the two names describe one system. A
+software factory system that keeps changing coherently — at a scope that
+keeps admitting novelty — must build and rebuild theory: it is a theory
+builder for its own domain. A general theory builder — with domains that
+keep opening — must build and rebuild its own machinery: it is a software
+factory system with itself in scope. Neither description is complete
+without the other. The program's object is the system that is both.
+
 ## What would refute it
 
 The chain fails at link two. A closed, universal theory-manipulation system

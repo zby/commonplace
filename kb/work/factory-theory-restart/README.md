@@ -57,7 +57,9 @@ forces, and keep the testing machinery out until the theory stands on its own.
   general theory builder of natural-language theories needs software to
   manipulate them, no closed harness fits a general builder (this document's
   conjecture), so it must keep changing software and falls under the
-  derivations; the closing circle is the arc's consistency check.
+  derivations; the closing circle is the arc's consistency check, and the
+  conclusion is that the program's object is one system that is both factory
+  and builder.
 - [bootstrap-conjecture.md](./bootstrap-conjecture.md) — the second
   conjecture: the theoretical system is reached by bootstrapping — a
   human-operated system internalizes its own holding through its own
