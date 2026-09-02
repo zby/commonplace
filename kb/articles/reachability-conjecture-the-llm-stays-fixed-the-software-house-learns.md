@@ -5,6 +5,7 @@ status: draft
 byline: Zbigniew Lukasiak
 source_notes:
   - kb/notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md
+  - kb/notes/axes-of-artifact-analysis.md
   - kb/notes/code-complements-weight-prompt-with-symbolic-operations.md
   - kb/notes/continual-learning-requires-governing-behaviour-changing-writes.md
   - kb/notes/definitions/representational-form.md
@@ -273,6 +274,22 @@ Each answers part of obligation 1's question about the substrate. Obligations
 is set up to test that: what they retain and revise is judged by score or
 viability, not by whether it explains why the software is organized as it
 is.
+
+Many builders of such systems expect obligations 2 and 3 to follow without
+further machinery. The simplest version of that expectation is that an LLM
+given a record of its failures will generate the theory. The conjecture
+predicts otherwise. A record influences later behaviour only through a
+consumption path: something must load it into the context of the right
+call, with enough force to change the decision, at the moment the decision
+is made. A failure log left in a directory is advice nobody reads. Turning
+it into a theory that later changes respect requires the admission and
+credit-assignment decisions above, retention in a form later calls consume,
+and enough authority over those calls to matter. Which machinery is missing
+in a given system can be stated precisely by recording how each retained
+artifact acts, by [its storage, representational form, lineage, and
+behavioural authority](../notes/axes-of-artifact-analysis.md). That record
+is how the placements above were made, and it is the instrument this
+program uses to say what a witness needs.
 
 ## A consequence for general theory builders
 
