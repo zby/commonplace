@@ -32,7 +32,9 @@ no human in a production role, using only models available by 2026-09-02,
 and handling requests nobody listed in advance. The model stays fixed. What
 changes is everything around it: the code the house runs on, and the notes
 that record what the software is for, why it is built the way it is, and
-what earlier changes taught. People write the first version of both, and the
+what earlier changes taught. The obvious alternative, that a model with a
+log of its failures will produce and keep this understanding by itself, is
+what the conjecture denies. People write the first version of both, and the
 house revises them as requests and their consequences arrive. People still
 correct it at first. The bet is that each round needs less correction, until
 keeping that understanding current no longer depends on people.
@@ -81,30 +83,6 @@ functional test while leaving intact his claim that the theory cannot be
 written as rules. It would refute only his unproved step from "not rules" to
 "only people". [The distinction is between formal execution and explicitly
 formulated criteria](../notes/naur-equates-machine-execution-with-formulated-criteria.md).
-
-AI researcher Jürgen Schmidhuber's [Gödel
-machine](../notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md)
-is a proof-governed construction that rewrites its own code. It is not a
-software house: it has no users, and the only software it changes is itself.
-It shows what automation costs when formulated criteria buy it. An embedded
-prover admits a rewrite only after proving, from the machine's axioms and
-utility formalization, that the rewrite pays. Everything the conjecture asks
-the house to acquire is supplied there in advance as the formal acceptance
-basis: the theory of the system is the axioms, the objective is the utility
-function, the test is proof. Any of them may be rewritten, but only under a
-proof from the formalization then in force. So the initial formalization
-governs every successor by descent, and a demand nobody formalized cannot
-enter the test. The paper states the price: the machine "must ignore those
-self-improvements whose effectiveness it cannot prove"
-([Schmidhuber](../sources/goedel-machines-schmidhuber.ingest.md), verbatim).
-
-Once no human is inside, the conjectured house is closed in the same way.
-Every successor is admitted by the notes, software, and fixed LLM the prior
-state supplies, so the seed governs the lineage by descent. The difference is
-the admission relation. The Gödel machine admits only what its current axioms
-derive. The house admits what a fallible gate accepts on production
-consequences, and a consequence can contradict the current theory where a
-proof cannot contradict its axioms. The house pays with fallibility instead.
 
 The conjecture assigns each component a role:
 
@@ -171,10 +149,9 @@ chooses the successor is doing the house's credit assignment and fills the
 excluded internal role.
 
 The update mechanism is otherwise open. It may produce a successor directly
-or separate proposal, evaluation, and selection. It may edit the prior notes,
-rebuild them from the evidence, or combine both methods.
-
-A retained change counts as learning only when experience causes it and it
+or separate proposal, evaluation, and selection, and it may edit the prior
+notes, rebuild them from the evidence, or both. Whatever the mechanism, a
+retained change counts as learning only when experience causes it and it
 affects later production. Adding a validator because a bug class recurred, so
 that the validator later blocks that class, qualifies. A note never loaded by
 context assembly does not.
@@ -251,8 +228,32 @@ and 3, not a further stage.
 
 ## Nearest existing constructions
 
-No existing system is a witness, but several hold one piece, and placing
-them shows what the obligations exclude. The [Darwin Gödel
+The formal corner is AI researcher Jürgen Schmidhuber's [Gödel
+machine](../notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md),
+a proof-governed construction that rewrites its own code. It is not a
+software house: it has no users, and the only software it changes is itself.
+It shows what automation costs when formulated criteria buy it. An embedded
+prover admits a rewrite only after proving, from the machine's axioms and
+utility formalization, that the rewrite pays. Everything the conjecture asks
+the house to acquire is supplied there in advance as the formal acceptance
+basis: the theory of the system is the axioms, the objective is the utility
+function, the test is proof. Any of them may be rewritten, but only under a
+proof from the formalization then in force. So the initial formalization
+governs every successor by descent, and a demand nobody formalized cannot
+enter the test. The paper states the price: the machine "must ignore those
+self-improvements whose effectiveness it cannot prove"
+([Schmidhuber](../sources/goedel-machines-schmidhuber.ingest.md), verbatim).
+
+Once no human is inside, the conjectured house is closed in the same way.
+Every successor is admitted by the notes, software, and fixed LLM the prior
+state supplies, so the seed governs the lineage by descent. The difference is
+the admission relation. The Gödel machine admits only what its current axioms
+derive. The house admits what a fallible gate accepts on production
+consequences, and a consequence can contradict the current theory where a
+proof cannot contradict its axioms. The house pays with fallibility instead.
+
+No existing system is an empirical witness, but several hold one piece, and
+placing them shows what the obligations exclude. The [Darwin Gödel
 Machine](../sources/darwin-godel-machine-open-ended-evolution-self-improving-agents.ingest.md)
 and the [Huxley-Gödel
 Machine](../sources/huxley-godel-machine-human-level-coding-agent-development.ingest.md)
@@ -334,9 +335,9 @@ admits before testing, so that a newer model cannot quietly do the work. And it 
 resource envelope before testing, so that the scope cannot shrink until fixed
 machinery suffices. Open-ended means the declared demand stream admits
 relevant novelty: one web application whose users keep asking for things
-nobody listed qualifies; a fixed set of fifty tasks does not. The stream also
-bounds what is reachable, since the closure is taken under the demands the
-house receives as well as its gate. Bare reachability is cheap: a gate that
+nobody listed qualifies; a fixed set of fifty tasks does not. The declared
+stream is part of what the claim is about, since the reachable states depend
+on the demands received. Bare reachability is cheap: a gate that
 admits anything makes every state reachable. The claim is that adequate
 states are reached with usable probability inside the declared envelope.
 
