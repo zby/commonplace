@@ -16,11 +16,11 @@ source_notes:
 ---
 # The reachability conjecture: train the house, not the LLM
 
-> **Draft.** Comments and counterexamples are welcome through [the repository's issue tracker](https://github.com/zby/commonplace/issues).
+> **Draft.** Comments and counterexamples are welcome on [the repository's GitHub Discussions page](https://github.com/zby/commonplace/discussions).
 
 **TL;DR.** We define a software house as whatever keeps developing and changing some
 software for its users, over time, in response to what they ask for and what
-happens in use. The conjecture is that such a house can be built to run with
+happens in use. The conjecture is that such a system can be built to run with
 no human in a production role, using only models that exist as of 2026-09-02,
 and handling requests nobody listed in advance. Getting there does
 not wait for a better model. The model stays fixed. People write the first
