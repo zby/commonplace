@@ -123,21 +123,28 @@ a blend of the first two carriers and stopped where the history above stops; the
 live alternatives. The program's bet is the third, run with weights fixed —
 which is what makes the third and fourth separable in an experiment.
 
-## The import is selective, both times
+## The import is selective — and it modifies the definition
 
-From the factory literature the program takes the definition — a configured
-production environment holding reusable production knowledge for a declared
-family — and not the methodology. That is consistent, not cherry-picking: the
-definition is form-neutral, saying the production knowledge must exist and be
-reusable, not how it is carried. Greenfield's methodology is what fixed the
-form, to codified symbolic assets, and the failure reading above indicts the
-fixed form, not the target.
+From the factory literature the program takes the definition's structure: a
+configured production environment holding reusable production knowledge for a
+declared family, with two development processes — building family members,
+and building the machinery that builds them. It does not take the
+methodology, and — this must be said plainly — it does not take the
+definition unchanged. Greenfield's definition fixes the role-fillers:
+solution developers and factory developers are people, constitutively. The
+program's definition parameterizes them: the roles stay, and who or what
+fills each — a person, a codified asset, a model reading retained artifacts,
+weights — becomes the open variable. Greenfield's factories are then one
+instantiation of the generalized definition, the all-human-plus-codified
+one, not the definition itself. In these documents "the factory" uses the
+generalized sense; "Greenfield's factories" names his instantiation.
 
-The same selective import already happened with Naur: the program takes the
+The generalization is the same move the program makes on Naur: take the
 theory function — mapping, organization-account, demand-relating — and not
-his conclusion that only people can hold it. Both originals bind the
-knowledge to one carrier: Naur to human heads, Greenfield to codified
-artifacts. The program's move, both times, is to keep the function and unbind
-the carrier. That is why the bearer question is the empirical center, and why
+his conclusion that only people can perform it. Both originals bind a
+function to one filler: Naur binds theory to human heads, Greenfield binds
+the factory roles to human occupants and the retained knowledge to codified
+assets. The program's move, each time, is to keep the function and unbind
+the filler. That is why the bearer question is the empirical center, and why
 the carrier list is the representational-form axis applied to the theory
 function.
