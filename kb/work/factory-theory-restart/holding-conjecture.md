@@ -49,9 +49,9 @@ Without the harness, storage and exposure without activation — context
 stuffing, the current wave's gap. Ablating each part is therefore a
 designed experiment, not a thought experiment.
 
-## Where this is being tried
+## Status
 
-Commonplace — the knowledge system this workshop lives in — is an attempt
-at exactly this triple: notes as the theory, models as interpreters, and a
-harness of contracts, validators, routing conventions, and prompt-building
-machinery. It is the program's instrument, not yet its evidence.
+The conjecture defines a theoretical system. No running instance exists:
+today's software factory systems fill the theory-holding role with people —
+the wave diagnosis. How such a system could come to exist at all is its own
+question, taken up by the next document's bootstrap conjecture.

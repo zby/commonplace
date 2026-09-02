@@ -53,6 +53,11 @@ forces, and keep the testing machinery out until the theory stands on its own.
   and a harness — code that builds prompts so the right theory activates —
   with codification returning aimed at logistics, and the documentation
   objection faced.
+- [bootstrap-conjecture.md](./bootstrap-conjecture.md) — the second
+  conjecture: the theoretical system is reached by bootstrapping — a
+  human-operated system internalizes its own holding through its own
+  operation, with declining human theory-interventions as the progress
+  measure and two named failure modes.
 
 **Closure:** closes when the derivation and whatever it forces are promoted to
 library artifacts (notes, and possibly restructured articles) or deliberately
