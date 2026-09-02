@@ -180,6 +180,23 @@
     position:absolute;bottom:3.2vh;left:50%;transform:translateX(-50%);
     font-family:var(--mono);font-size:.72rem;color:var(--ink-soft);opacity:.7;
   }
+  aside.notes{display:none}
+  .notes-panel{
+    position:fixed;left:0;right:0;bottom:0;z-index:5;
+    max-height:40vh;overflow-y:auto;
+    background:var(--ink);color:var(--paper);
+    padding:2.2vh 7vw 2.6vh;
+    font-size:clamp(.85rem,1.9vh,1.05rem);line-height:1.55;
+    display:none;border-top:3px solid var(--accent);
+  }
+  .notes-panel.open{display:block}
+  .notes-panel p{margin-bottom:.7em;max-width:70em}
+  .notes-panel p:last-child{margin-bottom:0}
+  .notes-panel .np-label{
+    font-family:var(--mono);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;
+    color:#E8A88F;margin-bottom:1vh;
+  }
+  .notes-panel b{color:#E8A88F;font-weight:600}
   @media (prefers-reduced-motion: no-preference){
     .slide.active .body,.slide.active h2,.slide.active .eyebrow{animation:rise .35s ease both}
     @keyframes rise{from{opacity:0;transform:translateY(1.2vh)}to{opacity:1;transform:none}}
@@ -197,7 +214,10 @@
     <span>Zbigniew Łukasiak</span>
     <span>position paper + 141-system corpus</span>
   </div>
-  <div class="navhint">→ / space to advance</div>
+  <div class="navhint">→ / space to advance · N for notes</div>
+  <aside class="notes">
+    <p><b>~30s.</b> Introduce yourself. The title is the whole thesis: where a retained artifact lives — its storage — does not tell you what it is or how it acts. A position paper, but with corpus evidence at the end: 141 agent-memory systems reviewed from source code.</p>
+  </aside>
 </section>
 
 <!-- 2 · Problem -->
@@ -212,6 +232,10 @@
     </ul>
   </div>
   <div class="footmark">§1</div>
+  <aside class="notes">
+    <p><b>~1 min.</b> Agents don't adapt only by changing weights — they adapt by retaining artifacts: prompts, workflows, validators, memories, adapters, checkpoints. Today the field manages and names these by where they're stored: "memory system", "vector store", "prompt registry".</p>
+    <p>The position: storage tells you how to access, delete, version, and roll back — but it hides how the artifact acts, what evidence reviews it, and what invalidates it. That's what the rest of the talk supplies.</p>
+  </aside>
 </section>
 
 <!-- 3 · Example -->
@@ -229,6 +253,10 @@
     </div>
   </div>
   <div class="footmark">§1</div>
+  <aside class="notes">
+    <p><b>~1 min.</b> Concrete case: a coding agent keeps installing incompatible versions, ignoring lockfile constraints. The surrounding system can retain that lesson in any of these five shapes. Walk two or three, not all five: a reflection affects behavior <b>only if retrieval carries it forward</b>; a validator blocks execution cheaply <b>but must be tested like control logic</b>; learned weights give you <b>nothing to read</b> — only behavioral probes.</p>
+    <p>Punchline: calling all five "memory" hides exactly these differences.</p>
+  </aside>
 </section>
 
 <!-- 4 · Four fields -->
@@ -264,6 +292,11 @@
     <p class="corpus-note">Unit of classification: the <b>operative part</b>, not the stored object.</p>
   </div>
   <div class="footmark">§2–§6</div>
+  <aside class="notes">
+    <p><b>~1 min.</b> The proposal: a four-field record per retained artifact. Storage stays — it's a legitimate operational field (access, deletion, versioning, rollback) — but it's <b>one field of four</b>, not the classification.</p>
+    <p>Stress the unit: the record applies to the <b>operative part</b> and its consumption path, not the stored object. A skill package bundles natural-language guidance, code, tests, and activation metadata — those parts get split because they need different review evidence and different rollback.</p>
+    <p><b>Terminology note</b> (say once, briefly): the submitted paper says "prose" where I now say "natural-language" — the category was renamed because its boundary is interpretive, not editorial; fragments and structured records qualify too.</p>
+  </aside>
 </section>
 
 <!-- 5 · Derivation -->
@@ -295,6 +328,10 @@
     </div>
   </div>
   <div class="footmark">§5</div>
+  <aside class="notes">
+    <p><b>~1.5 min — centerpiece.</b> The paper lists three forms; here I derive them from two questions. First: <b>does a defined consumer assign the consequences?</b> For code, an implementation adjudicates — if two consumers disagree, one of them is wrong. Natural language has no adjudicator — two readings can both be reasonable. That's underspecification, not a defect of any particular text. Second: <b>is there an identifiable unit carrying the content</b>, or is it spread across numerical state?</p>
+    <p>The fourth cell — assigned consequences without a localized unit — is <b>unoccupied, not impossible</b>: vector-symbolic architectures aim exactly there. If agent systems ever retain state of that shape, the carve gains a fourth form.</p>
+  </aside>
 </section>
 
 <!-- 6 · Inspection -->
@@ -310,6 +347,10 @@
     </ul>
   </div>
   <div class="footmark">§5</div>
+  <aside class="notes">
+    <p><b>~45s.</b> The payoff of deriving rather than stipulating: the inspection rule falls out of the axes. A localized unit <b>with</b> defined semantics can be checked against them — test. A localized unit <b>without</b> them yields its content only to interpretation — read. A non-localized artifact offers nothing to point at, so only behavior is observable — probe.</p>
+    <p>And revisability rides the localization axis alone — which is why a prompt and a validator are both revisable one item at a time while weights are not, despite sitting on opposite sides of the semantics axis.</p>
+  </aside>
 </section>
 
 <!-- 7 · Lineage & authority -->
@@ -324,6 +365,10 @@
     </ul>
   </div>
   <div class="footmark">§6</div>
+  <aside class="notes">
+    <p><b>~1 min.</b> The remaining two fields, briefly. Lineage is deliberately <b>not</b> a full provenance model — it records just enough to know what to invalidate, regenerate, or retire when a source changes. Authority is consumer × channel × force, and force is a spectrum: advice that may be ignored, instruction, execution-blocking enforcement, ranking influence, learning input.</p>
+    <p>The failure modes connect to security the audience knows: prompt injection is exactly <b>untrusted natural language entering a high-authority channel</b> (Greshake et al.); memory poisoning hides behind opaque retrieval (AgentPoison, MemoryGraft). And a stale derived view can govern behavior after its source is fixed — a repair target no storage label surfaces.</p>
+  </aside>
 </section>
 
 <!-- 8 · Record in use -->
@@ -343,6 +388,10 @@
     <p class="corpus-note">The question is not whether a lesson is “in memory,” but whether its <b>form and authority are justified</b>.</p>
   </div>
   <div class="footmark">§7</div>
+  <aside class="notes">
+    <p><b>~1 min.</b> Same dependency lesson from the earlier example, four architectural profiles. Read one contrast aloud: the reflection is advice you delete and re-index; the script is enforcement you revert or feature-flag. Each row admits a <b>different action</b>.</p>
+    <p>The reframe to land: the design question is not whether a lesson is "in memory" but whether its current form and authority are justified — natural-language advice for the uncertain, symbolic control for the frequent or safety-critical, retrieval or learned state where generalization outweighs direct inspection.</p>
+  </aside>
 </section>
 
 <!-- 9 · Corpus -->
@@ -365,6 +414,11 @@
     <p class="corpus-note">Substrate predicts none of this — and natural-language and symbolic parts appear in <b>all 141 systems</b>: form discriminates at the operative part.</p>
   </div>
   <div class="footmark">§8 · system-level counts; descriptive corpus, not a field sample</div>
+  <aside class="notes">
+    <p><b>~1.5 min.</b> 141 agent-memory and context-engineering systems, each reviewed from source code with the same four-field record. One storage family dominates: 98 keep retained state in plain files or repositories. "Repositories" means the handful of systems where <b>git itself is the memory mechanism</b> — versioning, diffs, clone/pull distribution are part of the storage model — as opposed to systems that merely write files.</p>
+    <p>The point of the bars: hold storage fixed and the other fields still pull systems apart — an architect who knows only "it's in files" cannot predict enforcement, learned parts, activation direction, or lineage. And natural-language and symbolic parts appear in <b>all 141</b>, so form discriminates only below the system, at the operative part.</p>
+    <p><b>Q&amp;A ammunition</b>: the corpus is opportunistically assembled, seeded by a file/wiki-heavy comment thread (Karpathy), so the 98/141 describes this collection, not the field — the argument rests on within-substrate variation, which doesn't need representativeness. Counts are system-level presence, not per-artifact. Reviews ran under one saved contract; reviewer consistency is future work, along with a pre-registered sampling frame and design-review trials.</p>
+  </aside>
 </section>
 
 <!-- 10 · Takeaway -->
@@ -376,19 +430,28 @@
     <p class="close-sub">For each retained lesson: stay natural language, become symbolic control, surface through retrieval, or learn into numerical state?</p>
   </div>
   <div class="footmark">§10 · thank you — questions</div>
+  <aside class="notes">
+    <p><b>~45s, aim to land at 9:30.</b> Close on the thesis: storage locates retained state; form, lineage, and authority determine how it acts and what review it admits. Leave the four-way question hanging — stay natural language, become symbolic control, surface through retrieval, or learn into numerical state — those choices differ in cost, coverage, and the rollback they admit. Thank the audience, invite questions.</p>
+    <p>Likely questions: corpus representativeness (see previous slide's notes); "isn't this just provenance?" — lineage is deliberately thinner, only what invalidation needs; "why not a full taxonomy?" — position paper, classification discipline; validation is named future work.</p>
+  </aside>
 </section>
 
 </div>
 <div class="counter" id="counter" style="position:fixed"></div>
+<div class="notes-panel" id="notesPanel"><div class="np-label">speaker notes · N to hide</div><div id="notesBody"></div></div>
 
 <script>
   const slides=[...document.querySelectorAll('.slide')];
   const counter=document.getElementById('counter');
+  const panel=document.getElementById('notesPanel');
+  const notesBody=document.getElementById('notesBody');
   let i=0;
   function show(n){
     i=Math.max(0,Math.min(slides.length-1,n));
     slides.forEach((s,k)=>s.classList.toggle('active',k===i));
     counter.textContent=(i+1)+' / '+slides.length;
+    const notes=slides[i].querySelector('aside.notes');
+    notesBody.innerHTML=notes?notes.innerHTML:'<p>(no notes)</p>';
     try{localStorage.setItem('asisas-slide',i)}catch(e){}
   }
   try{const saved=parseInt(localStorage.getItem('asisas-slide'));if(!isNaN(saved))i=saved}catch(e){}
@@ -398,6 +461,7 @@
     else if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){e.preventDefault();show(i-1)}
     else if(e.key==='Home')show(0);
     else if(e.key==='End')show(slides.length-1);
+    else if(e.key==='n'||e.key==='N')panel.classList.toggle('open');
   });
   addEventListener('click',e=>{
     if(e.target.closest('a'))return;
