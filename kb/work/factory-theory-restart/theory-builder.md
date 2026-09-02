@@ -15,7 +15,14 @@ corpus is not read end to end at each use. Theories must be stored,
 organized, found, routed into the context where they bear, activated against
 the demand at hand, and revised with their consequences — the holding
 machinery. Storage and exposure are not activation; something must build the
-contexts. That something is software: the harness.
+contexts. That something is software: the harness. The knowledge base
+carries the deeper argument for the split: symbolic substrates eliminate
+underspecification, indeterminism, and bias for bookkeeping, while
+bookkeeping run inside a model degrades with scale — [the scheduler–LLM
+separation asymmetry](../../notes/scheduler-llm-separation-exploits-an-error-correction-asymmetry.md).
+The holding conjecture's division of labor is that asymmetry applied to
+theory manipulation: logistics in code, semantic reading in bounded model
+calls.
 
 **Link two, the conjecture: no closed harness fits a general builder.** A
 closed system — fixed in advance, however good — fixes the kinds of theories
@@ -24,7 +31,10 @@ That is scoping again, one level up, and it buys automation only over the
 pre-analyzed region. A general builder's domains are open; new domains bring
 theory shapes and manipulation demands nobody pre-analyzed — new
 organization, new validation, new activation patterns. So the harness of a
-general theory builder must keep changing.
+general theory builder must keep changing. The asymmetry note reaches the
+same conclusion from its own evidence: the symbolic layer is itself a
+learning target, its boundary renegotiated as evidence accumulates, not
+fixed at design time.
 
 **Link three, derived: a system that keeps changing its software falls under
 the derivations.** A builder that must keep building and revising its own
