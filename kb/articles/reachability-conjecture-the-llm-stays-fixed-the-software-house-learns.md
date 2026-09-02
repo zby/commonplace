@@ -284,12 +284,13 @@ call, with enough force to change the decision, at the moment the decision
 is made. A failure log left in a directory is advice nobody reads. Turning
 it into a theory that later changes respect requires the admission and
 credit-assignment decisions above, retention in a form later calls consume,
-and enough authority over those calls to matter. Which machinery is missing
-in a given system can be stated precisely by recording how each retained
-artifact acts, by [its storage, representational form, lineage, and
-behavioural authority](../notes/axes-of-artifact-analysis.md). That record
-is how the placements above were made, and it is the instrument this
-program uses to say what a witness needs.
+and enough authority over those calls to matter. This program's method is
+to map the design space of that machinery: how each retained artifact acts,
+recorded by [its storage, representational form, lineage, and behavioural
+authority](../notes/axes-of-artifact-analysis.md); where current LLMs fail;
+what context limits force; and which computational models the loop admits.
+The placements above come from the first of these. What the map adds beyond
+the consumption-path argument is not yet stated here.
 
 ## A consequence for general theory builders
 
