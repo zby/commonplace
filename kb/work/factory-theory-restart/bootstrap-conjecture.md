@@ -1,8 +1,8 @@
 # The bootstrap conjecture: reaching the system from here
 
 The holding conjecture defines a theoretical system: notes, interpreter,
-harness, with the theory-holding role machine-filled. No such system exists;
-every running software factory system today fills the role with people. So a
+harness, with the theory-holding role machine-filled. No such system runs today —
+so the holding-gap conjecture diagnoses; the role is filled with people. So a
 second conjecture is needed, about how the theoretical system could come to
 exist at all. Like the holding conjecture it is a bet, not a derivation —
 though the learning derivation supplies its central premise.

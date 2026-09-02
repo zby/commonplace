@@ -7,7 +7,7 @@ codified assets, models. Its product scope is a parameter: one long-lived
 program at the narrow end, a declared family of products at the broad end.
 (The bare term "software factory" keeps Greenfield's meaning — the
 machinery, human-operated in his account, sitting at the family end of the
-scope; the second document explains the relation.)
+scope; the history document explains the relation.)
 
 The definition deliberately stops there. Revising the system's own machinery
 — factory development — and revising it from the system's own production
@@ -68,8 +68,8 @@ fully automatic reach only trivially, exactly over the pre-analyzed region
 where no theory was needed. The derivation bites when the demand stream
 brings what nobody pre-analyzed; relating that to the existing organization
 is what needs the theory. Whether a software factory system can pay for
-itself without admitting novelty is the historical question the next
-document takes up.
+itself without admitting novelty is the question the history document
+takes up.
 
 ## What would refute it
 
@@ -87,7 +87,8 @@ advance — raw record, general model, nothing organizing them.
 - **A bearer.** Naur argued only people can hold a theory. The derivation
   needs only that *something* performs the function. Whether it can be held
   outside human heads — and outside model weights, in retained artifacts an
-  LLM reads — is the empirical question, not part of the derivation.
+  LLM reads — is the empirical question, not part of the derivation; the
+  holding conjecture states the program's bet on how.
 - **A learner boundary.** Which parts of the software factory system count as the
   learner — the humans, the technical machinery, the composite — matters for
   attributing learning in a test. The derivation holds regardless. In
@@ -95,5 +96,5 @@ advance — raw record, general model, nothing organizing them.
   theory meets the derivation in full. The
   derivation poses no problem; the costs of each way of meeting it do.
 - **A definition of learning or a measurement instrument.** Learning is
-  derived separately, in the fourth document; measuring it belongs to
+  derived separately, in the learning derivation; measuring it belongs to
   testing.

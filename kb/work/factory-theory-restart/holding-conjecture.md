@@ -1,7 +1,7 @@
 # The holding conjecture: notes, interpreter, harness
 
-The why-now document ends at a gap: the current wave has the carrier but not
-the holding. This document states the program's conjecture about what the
+The why-now document diagnoses a gap: the current wave has the carrier but
+not the holding. This document states the program's conjecture about what the
 holding machinery is. Unlike the two derivations, this is not derived; it is
 the program's constructive bet, stated so it can fail.
 

@@ -59,7 +59,8 @@ forces, and keep the testing machinery out until the theory stands on its own.
   operation, with declining human theory-interventions as the progress
   measure and two named failure modes.
 
-**Closure:** closes when the derivation and whatever it forces are promoted to
+**Closure:** closes when the derivations, the conjectures, and whatever they
+force are promoted to
 library artifacts (notes, and possibly restructured articles) or deliberately
 discarded, and the existing article's fate — rewritten around them, split, or
 superseded — is decided and executed.

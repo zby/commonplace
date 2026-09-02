@@ -82,7 +82,8 @@ making it win there, keeping it revised.
 What would refute the conjecture: satisfactory factory performance at
 novelty from raw context scaling and retrieval alone. What would confirm it:
 holding machinery moving performance at novelty where added raw context does
-not. Building and testing that machinery is the program.
+not. Building and testing that machinery is the program; its conjectured
+shape — notes, interpreter, harness — is the holding-conjecture document.
 
 ## The bridge to learning factories
 
