@@ -140,8 +140,7 @@ names. **Software factory system**, defined in the derivation document, names
 that whole, with the role-fillers parameterized: who or what fills each role
 — a person, a codified asset, a model reading retained artifacts, weights —
 becomes the open variable. Greenfield's operating model is then one
-instantiation of it: his factory machinery with human occupants in both
-roles.
+instantiation of it: a human-operated software factory.
 
 Keeping the terms apart is deliberate. The general expectation today may
 already read "software factory" as the whole system, but Greenfield defined
