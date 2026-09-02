@@ -62,7 +62,7 @@ When those inputs already determine the choices, proceed without a formal brief.
 
 ### Step 5 - Search Before Writing
 
-Write does not run active discovery — that is `cp-skill-connect`'s job. Write authors one note and commits only links the author already has in hand, plus a cheap duplicate guard:
+Write does not run active discovery — that is `cp-skill-connect`'s job. Write authors one note and adds only links supplied by the user or already loaded for this write, plus a cheap duplicate guard:
 
 This guard is intra-KB only. Do not search the external literature for missing
 prior art and do not infer novelty from the absence of a named source. If the
@@ -74,7 +74,7 @@ user to authorize the handoff again. The multistage skill loads the specialised
 literature-disposition procedure.
 
 1. **Near-duplicate check.** Search the target collection for the new note's distinctive title terms with `rg` (e.g. `rg -i "key term" kb/notes/ --glob "*.md"`). This is a targeted term search — do **not** enumerate the whole collection; a complete listing costs linear context and is the wrong tool for a single note's duplicate check. If a near-duplicate already exists, prefer editing it to creating a second note.
-2. **Context already loaded.** Notes, sources, and ingests pulled into the session for this write are first-class link candidates. If it was worth reading, it is worth considering as a link.
+2. **Context already loaded.** Consider relevant notes, sources, and ingests loaded for this write as link candidates.
 3. **User-named targets.** Link targets the user mentions in the prompt.
 
 In edit mode, also run a backlinks lookup on the target note — one query, no body search — so edits don't orphan dependents.
@@ -162,7 +162,7 @@ commonplace-validate path/to/file.md
 
 Fix structural failures before stopping.
 
-Then suggest `cp-skill-connect` as the next step. Step 5 commits only links the author already had in hand (loaded context, user-named) plus a duplicate guard; the rest of the note's share of the graph — collection-wide description scans, cross-destination candidates, body-search hits, tag-traversal, link-following, reverse-edge candidates — only surfaces under the connect skill. The suggestion is not optional polish.
+Then suggest `cp-skill-connect` as the next step. Step 5 adds only links from loaded context or the user's request, plus a duplicate guard. The connect skill performs the remaining graph discovery: collection-wide description scans, cross-destination candidate search, body search, tag traversal, link following, and reverse-edge search. The suggestion is required.
 
 ## Universal Mechanics
 
@@ -172,7 +172,9 @@ These apply to all typed artifacts regardless of collection.
 
 **Descriptions** are retrieval filters, not summaries. The test: if an agent searched for this note's concept and got 5 results, would this description help pick this one? Paraphrasing the title adds zero retrieval value.
 
-**Vocabulary.** Use the active vocabulary declared in root `AGENTS.md`. When writing or materially editing prose, gloss and link active vocabulary on first meaningful mention when the reader may not know the term. Do not churn untouched passages only to add vocabulary links. Keep one term for one concept through the artifact: do not vary a word for variety, because in technical prose a changed word reads as a changed referent.
+**Literal language.** Prefer literal wording when a metaphor or idiom would mainly add flourish, interpretation work, or unintended connotations. Keep figurative wording when it is conventional and precise or clarifies the explanation; an available literal alternative alone does not make a metaphor a problem.
+
+**Vocabulary.** Use the active vocabulary declared in root `AGENTS.md`. When writing or materially editing prose, gloss and link active vocabulary on first meaningful mention when the reader may not know the term. Do not edit otherwise untouched passages only to add vocabulary links. Keep one term for one concept through the artifact: do not vary a word for variety, because in technical prose a changed word reads as a changed referent.
 
 **Links.** Use relative markdown paths from the source file. Every link must point to a real file.
 
