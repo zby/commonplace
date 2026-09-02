@@ -31,8 +31,9 @@ forces, and keep the testing machinery out until the theory stands on its own.
   and the four theory carriers frame the program's bet.
 - [why-now.md](./why-now.md) — why factories can work now: LLMs lift the
   codification tax Naur's limit imposed, stated as a prediction with three
-  discriminable readings of the current wave, bridging to learning factories
-  via the third carrier's cheap revision.
+  discriminable readings of the current wave, the conjecture that full
+  theory-holding machinery is not yet there, and the bridge to learning
+  factories via the third carrier's cheap revision.
 
 **Closure:** closes when the derivation and whatever it forces are promoted to
 library artifacts (notes, and possibly restructured articles) or deliberately

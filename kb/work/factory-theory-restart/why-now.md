@@ -45,6 +45,36 @@ runs on: what happens at novelty. If the new wave stalls where the old one
 did, the carrier did not change. If it scales through novel demands without
 human theory-holders, it did.
 
+## The conjecture: the holding machinery is not yet there
+
+The current factories are not really satisfactory. [GROUNDING TODO: operator
+judgment as of 2026-09; needs examples of where the current wave
+underdelivers.] The conjecture this workshop adds: they sit at the first two
+readings because the machinery for full theory holding does not yet exist.
+
+The carrier exists — models read informal artifacts. But holding is more
+than reading. A held theory is brought to bear on a novel demand without
+anyone naming the connection; it wins against everything else in the
+context; it stays live across the long horizon of a family; and it is
+revised when its consequences arrive. Current machinery retains and exposes:
+it stuffs context and retrieves. Storage and exposure are not activation —
+knowledge can sit in the context without touching the decision. And nothing
+in the current wave curates, organizes, or revises theory artifacts as
+theory; they are treated as documentation, which is exactly what Naur said
+the theory is not.
+
+So the diagnosis is symmetric with the first wave's. That wave had the
+holding but not the carrier: people held theory that machinery could not
+carry. This wave has the carrier but not the holding: machinery can carry
+theory it does not yet reliably hold. The missing component is the machinery
+of holding — routing the right theory into the context at the right time,
+making it win there, keeping it revised.
+
+What would refute the conjecture: satisfactory factory performance at
+novelty from raw context scaling and retrieval alone. What would confirm it:
+holding machinery moving performance at novelty where added raw context does
+not. Building and testing that machinery is the program.
+
 ## The bridge to learning factories
 
 The third carrier has a property the others lack: cheap revision. People
