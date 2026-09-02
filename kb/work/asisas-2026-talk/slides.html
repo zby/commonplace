@@ -206,9 +206,9 @@
   <h2>Agents adapt by retaining artifacts — and we classify them by where they're stored</h2>
   <div class="body">
     <ul class="big">
-      <li class="slate">Prompts, workflows, validators, routing rules, memories, adapters, checkpoints — all shape future behavior.</li>
-      <li class="slate">Today they're managed under storage labels: <span class="key">memory system</span> <span class="key">vector store</span> <span class="key">flat files</span> <span class="key">prompt registry</span> <span class="key">model store</span></li>
-      <li><strong>Position:</strong> storage-first classification is architecturally insufficient. It hides how a retained artifact acts, what review it needs, and how to undo it.</li>
+      <li class="slate">Prompts, workflows, validators, memories, adapters, checkpoints.</li>
+      <li class="slate">Managed under storage labels: <span class="key">memory system</span> <span class="key">vector store</span> <span class="key">flat files</span> <span class="key">prompt registry</span> <span class="key">model store</span></li>
+      <li><strong>Position:</strong> storage-first classification is architecturally insufficient.</li>
     </ul>
   </div>
   <div class="footmark">§1</div>
@@ -219,13 +219,13 @@
   <div class="eyebrow"><b>02</b> · One lesson, many forms</div>
   <h2>A coding agent keeps mishandling dependency resolution</h2>
   <div class="body">
-    <p class="lede">The system can retain that lesson in very different shapes — and each creates different obligations for review, invalidation, and rollback:</p>
+    <p class="lede">One lesson, five retained shapes — each with different review, invalidation, and rollback obligations:</p>
     <div class="forms-strip">
-      <div class="form-chip nl"><h3>Natural-language reflection</h3><p>Affects behavior only if retrieval carries it forward.</p></div>
-      <div class="form-chip nl"><h3>Derived prompt summary</h3><p>Can go stale and govern behavior after its source is fixed.</p></div>
-      <div class="form-chip"><h3>Lockfile validator</h3><p>Blocks execution cheaply — but must be tested like control logic.</p></div>
-      <div class="form-chip"><h3>Conflict-check script</h3><p>Fast and repeatable; fails systematically when the spec is wrong.</p></div>
-      <div class="form-chip dp"><h3>Learned scoring weights</h3><p>Need behavioral probes — there's no record to read.</p></div>
+      <div class="form-chip nl"><h3>Natural-language reflection</h3><p>Acts only if retrieval carries it forward.</p></div>
+      <div class="form-chip nl"><h3>Derived prompt summary</h3><p>Can go stale after its source is fixed.</p></div>
+      <div class="form-chip"><h3>Lockfile validator</h3><p>Blocks cheaply; must be tested.</p></div>
+      <div class="form-chip"><h3>Conflict-check script</h3><p>Fast, repeatable; fails systematically.</p></div>
+      <div class="form-chip dp"><h3>Learned scoring weights</h3><p>Nothing to read — only probes.</p></div>
     </div>
   </div>
   <div class="footmark">§1</div>
@@ -241,27 +241,27 @@
         <tr><th>field</th><th>records</th><th>why the architect cares</th></tr>
         <tr>
           <td class="fname where">storage_substrate</td>
-          <td>Where retained state persists: files, repos, vector stores, registries, model stores.</td>
-          <td>Access, deletion, versioning, rollback paths.</td>
+          <td>Where state persists: files, repos, vector stores, registries.</td>
+          <td>Access, deletion, versioning, rollback.</td>
         </tr>
         <tr>
           <td class="fname what">representational_form</td>
-          <td>How the operative part is encoded and consumed: natural-language, symbolic, distributed-parametric.</td>
-          <td>Default inspection method, review evidence, recurring execution cost.</td>
+          <td>Natural-language, symbolic, or distributed-parametric.</td>
+          <td>Inspection method, review evidence, execution cost.</td>
         </tr>
         <tr>
           <td class="fname what">lineage</td>
-          <td>Source material, or a derived view, index, or learned update — and of what.</td>
-          <td>What must be invalidated when a source changes.</td>
+          <td>Source material, or a derived view or learned update.</td>
+          <td>What to invalidate on source change.</td>
         </tr>
         <tr>
           <td class="fname what">behavioral_authority</td>
-          <td>Consumer + channel + force: from advice through instruction to enforcement and learning input.</td>
-          <td>Who acts on it, through which channel, with what force.</td>
+          <td>Consumer × channel × force.</td>
+          <td>Who acts on it, with what force.</td>
         </tr>
       </table>
     </div>
-    <p class="corpus-note">Unit of classification: the <b>operative part</b> and its consumption path — not the stored object. Bundled objects get split.</p>
+    <p class="corpus-note">Unit of classification: the <b>operative part</b>, not the stored object.</p>
   </div>
   <div class="footmark">§2–§6</div>
 </section>
@@ -278,19 +278,19 @@
       <div class="axis-side">consequences assigned by a defined consumer</div>
       <div class="cell sym">
         <h3>symbolic</h3>
-        <p>Code, schemas, validators, route tables. An implementation adjudicates: two consumers disagreeing means one is wrong.</p>
+        <p>Code, schemas, validators — an implementation adjudicates.</p>
       </div>
       <div class="cell empty">
-        <p>unoccupied — vector-symbolic architectures aim here</p>
+        <p>unoccupied</p>
       </div>
       <div class="axis-side">reinterpreted on each consumption</div>
       <div class="cell nl">
         <h3>natural-language</h3>
-        <p>Reflections, facts, notes, policies, prompt content. No adjudicator: two readings can both be reasonable — underspecification, not a defect.</p>
+        <p>Reflections, notes, policies, prompts — no adjudicator; two readings can both be reasonable.</p>
       </div>
       <div class="cell dp">
         <h3>distributed-parametric</h3>
-        <p>Weights, adapters, embedding spaces, reward models. No addressable unit carries the content.</p>
+        <p>Weights, adapters, embeddings — no addressable unit.</p>
       </div>
     </div>
   </div>
@@ -303,10 +303,10 @@
   <h2>Read, test, or probe — derived, not stipulated</h2>
   <div class="body">
     <ul class="big">
-      <li class="slate">A localized unit <em>with</em> defined semantics can be checked against them → <span class="key">test</span> symbolic artifacts.</li>
-      <li>A localized unit <em>without</em> them yields content only to interpretation → <span class="key">read</span> natural-language artifacts.</li>
-      <li>A non-localized artifact offers nothing to point at; only behavior is observable → <span class="key">probe</span> distributed-parametric artifacts.</li>
-      <li><strong>Revisability rides the localization axis alone:</strong> a prompt and a validator are both revisable one item at a time; weights are not.</li>
+      <li class="slate">Defined semantics to check against → <span class="key">test</span> symbolic artifacts.</li>
+      <li>Interpretation only → <span class="key">read</span> natural-language artifacts.</li>
+      <li>Nothing to point at → <span class="key">probe</span> distributed-parametric artifacts.</li>
+      <li><strong>Revisability rides localization alone:</strong> prompts and validators revise item by item; weights don't.</li>
     </ul>
   </div>
   <div class="footmark">§5</div>
@@ -318,9 +318,9 @@
   <h2>Where it came from, and what force it carries</h2>
   <div class="body">
     <ul class="big">
-      <li><span class="key">lineage</span> — source material vs. derived view, index, or learned update. Not full provenance: just what to invalidate, regenerate, or retire when a source changes.</li>
-      <li><span class="key">authority</span> = consumer × channel × force — from advice that may be ignored, through instruction, to enforcement, ranking influence, and learning input.</li>
-      <li class="slate">The record exposes failure modes: a <strong>stale derived view</strong> governing behavior after its source is fixed; <strong>untrusted natural language</strong> entering high-authority prompt channels; <strong>poisoned records</strong> hidden behind opaque retrieval.</li>
+      <li><span class="key">lineage</span> — source vs. derived: what to invalidate, regenerate, or retire.</li>
+      <li><span class="key">authority</span> — force ranges from advice through instruction to enforcement and learning input.</li>
+      <li class="slate">Exposed failure modes: <strong>stale derived views</strong>; <strong>untrusted natural language</strong> in high-authority channels; <strong>poisoned records</strong> behind opaque retrieval.</li>
     </ul>
   </div>
   <div class="footmark">§6</div>
@@ -333,14 +333,14 @@
   <div class="body">
     <div class="tablewrap">
       <table class="rec">
-        <tr><th>artifact</th><th>form</th><th>force</th><th>review evidence</th><th>rollback</th></tr>
-        <tr><td>Failure reflection</td><td>natural-language (+ dense-vector path)</td><td>advice</td><td>read; probe retrieval</td><td>delete record, refresh index</td></tr>
-        <tr><td>Conflict-check script</td><td>symbolic executable</td><td>enforcement</td><td>unit &amp; integration tests</td><td>commit revert / feature flag</td></tr>
-        <tr><td>Markdown prompt (derived from workflow)</td><td>natural-language instruction</td><td>instruction</td><td>prompt review</td><td>remove or regenerate entry</td></tr>
-        <tr><td>Semantic-retrieval package</td><td>natural-language records + embeddings</td><td>ranking influence</td><td>read records; probe ranking</td><td>rebuild or roll back index</td></tr>
+        <tr><th>artifact</th><th>form</th><th>force</th><th>rollback</th></tr>
+        <tr><td>Failure reflection</td><td>natural-language</td><td>advice</td><td>delete record, refresh index</td></tr>
+        <tr><td>Conflict-check script</td><td>symbolic</td><td>enforcement</td><td>revert / feature flag</td></tr>
+        <tr><td>Derived Markdown prompt</td><td>natural-language</td><td>instruction</td><td>regenerate entry</td></tr>
+        <tr><td>Semantic-retrieval package</td><td>natural-language + embeddings</td><td>ranking influence</td><td>rebuild index</td></tr>
       </table>
     </div>
-    <p class="corpus-note">Calling all four <b>“memory”</b> hides exactly these differences. The design question is not whether a lesson is “in memory,” but whether its current <b>form and authority are justified</b>.</p>
+    <p class="corpus-note">The question is not whether a lesson is “in memory,” but whether its <b>form and authority are justified</b>.</p>
   </div>
   <div class="footmark">§7</div>
 </section>
@@ -353,7 +353,7 @@
     <div class="corpus">
       <div class="bignum">
         <div class="n">98<span style="font-size:.4em;color:var(--ink-soft)">/141</span></div>
-        <div class="cap">agent-memory systems, reviewed from source code, keep retained state in plain files or repositories</div>
+        <div class="cap">agent-memory systems keep retained state in files or repositories</div>
       </div>
       <div class="bars">
         <div class="bar-row"><span class="lbl">acts as an enforced gate</span><span class="track"><span class="fill" style="width:54%"></span></span><span class="val">53</span></div>
@@ -362,33 +362,18 @@
         <div class="bar-row"><span class="lbl">trace-extracted lineage</span><span class="track"><span class="fill" style="width:71%"></span></span><span class="val">70</span></div>
       </div>
     </div>
-    <p class="corpus-note">Substrate predicts none of this. And natural-language and symbolic parts each appear in <b>all 141 systems</b> — the form axis discriminates only below the system, at the operative part.</p>
+    <p class="corpus-note">Substrate predicts none of this — and natural-language and symbolic parts appear in <b>all 141 systems</b>: form discriminates at the operative part.</p>
   </div>
-  <div class="footmark">§8 · counts are system-level presence, corpus is descriptive, not a field sample</div>
+  <div class="footmark">§8 · system-level counts; descriptive corpus, not a field sample</div>
 </section>
 
-<!-- 10 · Limits -->
+<!-- 10 · Takeaway -->
 <section class="slide">
-  <div class="eyebrow"><b>09</b> · Honest limits</div>
-  <h2>A classification discipline, not a validated method — yet</h2>
-  <div class="body">
-    <ul class="big">
-      <li class="slate">Corpus assembled opportunistically; seeded by a file/wiki-heavy discussion thread, so distributions describe this collection, not the field.</li>
-      <li class="slate">Counts are system-level presence; the vocabulary's real unit is the artifact. Per-artifact statistics are future work.</li>
-      <li class="slate">Classifications produced under one saved review contract — reviewer consistency untested.</li>
-      <li>Next: pre-registered sampling frame, design-review and incident-analysis trials — does the record expose risks storage labels miss?</li>
-    </ul>
-  </div>
-  <div class="footmark">§9</div>
-</section>
-
-<!-- 11 · Takeaway -->
-<section class="slide">
-  <div class="eyebrow"><b>10</b> · Takeaway</div>
+  <div class="eyebrow"><b>09</b> · Takeaway</div>
   <h2 style="visibility:hidden;position:absolute">Takeaway</h2>
   <div class="body" style="justify-content:center">
     <p class="close-quote">Storage locates retained state. <span class="accent">Form, lineage, and authority determine how it acts</span> — and what review it admits.</p>
-    <p class="close-sub">For each retained lesson, ask: should it stay quick-to-capture natural language, become symbolic control, be surfaced through retrieval, or be learned into numerical state? Those choices differ sharply in cost, coverage, behavioral variance — and in the review and rollback they admit.</p>
+    <p class="close-sub">For each retained lesson: stay natural language, become symbolic control, surface through retrieval, or learn into numerical state?</p>
   </div>
   <div class="footmark">§10 · thank you — questions</div>
 </section>
