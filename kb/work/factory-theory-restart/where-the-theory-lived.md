@@ -37,6 +37,13 @@ codification: the capture is lossy, the residue is exactly what modification
 needs — so the question becomes how often the residue is needed. At breadth,
 the answer is constantly.
 
+The declared family itself belongs to the bet. Scoping is codification
+applied to the demand space: pre-analyze what may be asked, and within the
+analyzed region no theory is needed at change time. It extends the automated
+reach — but only trivially, over exactly the region pre-analysis covered.
+The family is part of Greenfield's method, not of the system's ontology,
+which is why the program's definition leaves product scope as a parameter.
+
 ## How a software factory differs from an IDE with libraries
 
 If people hold the theory either way, what separates a software factory from
@@ -154,9 +161,11 @@ reusable assets. It does not take the methodology. And it adds a name his
 account lacks: the bigger production system — factory plus the people in the
 two development processes — which his account describes at length and never
 names. **Software factory system**, defined in the derivation document, names
-that whole, with the role-fillers parameterized: who or what fills each role
-— a person, a codified asset, a model reading retained artifacts, weights —
-becomes the open variable. Greenfield's operating model is then one
+that whole, with two of his fixtures parameterized. The role-fillers: who or
+what fills each role — a person, a codified asset, a model reading retained
+artifacts, weights — becomes the open variable. And the product scope: a
+declared family for him — itself a piece of his codification method — ranging
+down to a single long-lived program for the cases the program studies. Greenfield's operating model is then one
 instantiation of it: a human-operated software factory.
 
 Keeping the terms apart is deliberate. The general expectation today may

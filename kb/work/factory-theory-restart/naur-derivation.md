@@ -49,21 +49,24 @@ checks fully captured its purposes and organization would not need the theory;
 the checks would carry the burden. The derivation runs wherever that ideal
 fails.
 
-Family breadth controls whether it fails. Declare the product family narrowly
-enough — every admissible demand pre-analyzed, the variability enumerated —
-and the checks can be complete: a generator for such a family works
-trivially, with no theory needed at change time. The derivation bites when
-the declared family is broad enough that demands arrive which nobody
-pre-analyzed; relating those to the existing organization is what needs the
-theory. Breadth here means novelty of admissible demands, not member count: a family
-can be large yet fully enumerated, and the checks can still be complete.
-Whether a software factory system can pay for itself without admitting novelty is the
+Product scope controls whether it fails. Fix the scope narrowly enough —
+every admissible demand pre-analyzed, the variability enumerated — and the
+checks can be complete: a generator for such a scope works trivially, with
+no theory needed at change time. Scoping is itself a codification move: it
+codifies the demand space rather than the knowledge, and it extends the
+reach of the fully automatic part only trivially — exactly over the
+pre-analyzed region, which is the region where no theory was needed. The
+derivation bites when the demand stream brings what nobody pre-analyzed;
+relating that to the existing organization is what needs the theory. The
+operative sense of scope is novelty, not size: a scope can be large yet
+fully enumerated, and the checks can still be complete. Whether a software
+factory system can pay for itself without admitting novelty is the
 historical question the next document takes up.
 
 ## What would refute it
 
 A software factory system that sustains coherent change over a long horizon, on a
-family that keeps admitting novel demands, with no project-specific state performing
+scope that keeps admitting novel demands, with no project-specific state performing
 the three functions beyond the raw production record and a general-purpose
 model. If that works, the derivation is wrong.
 
