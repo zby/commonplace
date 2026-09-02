@@ -72,6 +72,8 @@ advance — raw record, general model, nothing organizing them.
   LLM reads — is the empirical question, not part of the derivation.
 - **A learner boundary.** Who counts as "the factory" — the humans, the
   system, the composite — matters for attributing learning in a test. The
-  derivation holds for any of them.
+  derivation holds for any of them. In particular, humans satisfy it: a
+  factory whose people hold the theory meets the derivation in full. The
+  derivation poses no problem; the costs of each way of meeting it do.
 - **A definition of learning or a measurement instrument.** Those belong to
   testing the claim, not to deriving it.

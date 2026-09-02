@@ -5,7 +5,10 @@ pipelines, products calling themselves software factories outright. The new
 wave does not cite Naur. [GROUNDING TODO: examples of the current wave, and a
 check that Naur is absent from its literature.]
 
-The account in the previous documents explains the timing.
+The account in the previous documents explains the timing. Precisely: what
+could not work before was the vision at breadth. The first wave's factories
+worked wherever their theory-holders could carry them — as expert
+organizations always have. The carrier, not the concept, set the ceiling.
 
 ## What stalled the first wave
 
@@ -44,6 +47,11 @@ The discriminating observation is the one the derivation's refuter already
 runs on: what happens at novelty. If the new wave stalls where the old one
 did, the carrier did not change. If it scales through novel demands without
 human theory-holders, it did.
+
+Discriminating the second reading from the third is where the learner
+boundary — deliberately absent from these theory documents — earns its keep:
+attributing the function to the machinery requires ruling out the humans.
+That is testing machinery, and it stays in the testing layer.
 
 ## The conjecture: the holding machinery is not yet there
 
