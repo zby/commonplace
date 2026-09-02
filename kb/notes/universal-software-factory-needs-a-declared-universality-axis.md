@@ -38,7 +38,9 @@ Without these declarations, *universal* can collapse into ordinary portability, 
 
 ## Consequences for this research program
 
-The program does not need a registered definition of *universal software factory*. Its substantive claim can be stated directly: as covered demands widen, computation should increasingly acquire and retain the family-specific production knowledge required for later production rather than receive another bespoke human design.
+The program does not need a registered definition of *universal software factory*. For its factory-specific branch, the substantive claim can be stated directly: as covered demands widen, computation should increasingly acquire and retain the family-specific production knowledge required for later production rather than receive another bespoke human design.
+
+That branch does not define the program's complete producer. A [software house](./definitions/software-house.md) may use one or more Greenfield-style factories or none, and it does not require a declared product family. Any broader reach or acquisition claim about a software house must therefore declare its own product scope, operating horizon, permitted inputs, and human role allocation rather than inherit the factory's family boundary.
 
 A fixed general substrate remains compatible with that claim. What matters is whether target-specific production knowledge was already supplied, hidden in a catalog, or determined from the evidence permitted for the assessed demand.
 
@@ -53,6 +55,7 @@ A fixed general substrate remains compatible with that claim. What matters is wh
 
 Relevant Notes:
 
+- [Software house](./definitions/software-house.md) — contrasts: names the complete persistent producer without making Greenfield's declared product family constitutive
 - [Factory construction is not evidence of production-knowledge acquisition](./factory-construction-does-not-establish-knowledge-acquisition.md) — grounds: separates recursive construction from acquisition of the knowledge supplied to the constructor
 - [Broad software demands create pressure for agentic factory development](./broad-software-demands-create-pressure-for-agentic-factory-development.md) — extends: states the practical acquisition problem without an unqualified universality label
 - [An agentic substrate becomes a software factory through family-specific production machinery](./agentic-substrate-needs-family-specific-machinery-to-be-a-factory.md) — grounds: separates a general substrate from the configured family-specific factory

@@ -49,12 +49,12 @@ requirements vocabulary, monitoring boundary, adaptation operators, and
 evaluation policy. They need not treat the runtime model as a fallible
 explanatory theory whose content and scope are revised by delayed consequences,
 and they generally leave these adaptation-machinery choices outside the
-revision surface. Such choices count as factory-development choices in this
-research program only when they belong to a declared family-scoped
-software-production factory. Their fixed placement limits claimed production
-reach when they carry required task- or family-specific production knowledge. It
-is not an inherent defect when a component is warranted general machinery over
-the declared reach.
+revision surface. Such choices belong to a [software house's production
+machinery](./definitions/software-house.md) when they participate in the
+complete producer, whether or not the house uses a Greenfield-style factory.
+Their fixed placement limits claimed production reach when they carry required
+task- or product-scope-specific production knowledge. It is not an inherent
+defect when a component is warranted general machinery over the declared reach.
 
 ## Theory refinement supplies the epistemic lineage
 
@@ -122,7 +122,7 @@ have not been fully formalized. Persistent natural-language and symbolic
 artifacts provide addressable working state, while code and runtime carry exact
 transitions, checks, and continuity.
 
-The further ambition is that required task- or family-specific decompositions,
+The further ambition is that required task- or product-scope-specific decompositions,
 evaluators, and improvement methods can be computationally acquired or
 challenged rather than supplied anew by people as the demand class widens. The
 ambition does not require every general algorithm, runtime, interface, or

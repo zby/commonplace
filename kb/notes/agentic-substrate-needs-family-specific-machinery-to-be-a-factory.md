@@ -59,9 +59,12 @@ An agentic system can occupy either side of that inherited division. It may use 
 
 Likewise, the mapping does not imply learning. A complete family template can be supplied by people and installed computationally. The resulting agentic arrangement is a software factory even if its production knowledge never changes.
 
+Nor does the mapping classify the complete producer. A configured substrate may supply the factory machinery inside a [software house](./definitions/software-house.md), but it is not the house merely because it produces or changes software. The house additionally includes the software under continuing responsibility and every required production role-filler, and it persists in relation to external users and operating consequences.
+
 ## Scope
 
 - The mapping is functional, not a claim that a modern agent harness is identical to Greenfield's Microsoft IDE architecture.
+- The mapping classifies family-specific production machinery, not whether the surrounding arrangement is a software house.
 - The general substrate may contain fixed components that apply across families.
 - The configured factory can include human activities; actor allocation and autonomy must be declared separately.
 - A factory-valued product can itself be another factory, but recursive output does not establish acquisition, learning, reflection, or self-improvement.

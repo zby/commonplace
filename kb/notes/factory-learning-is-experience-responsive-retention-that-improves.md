@@ -7,6 +7,8 @@ tags: [foundations, learning-theory, self-improving-systems]
 
 # Factory learning is experience-responsive retention that improves the factory
 
+> TODO! remove or update to use software house instead of software factory
+
 A [software factory](./definitions/software-factory.md) undergoes **experience-responsive retention** when experience from production causally determines a retained change to its reusable family-level production machinery and later production depends on that change. It undergoes **factory-level learning** when such a retained change also improves the factory. Improvement is relative to a declared objective, so the learning claim carries that index in addition to the boundary index below.
 
 The minimal retention path is:

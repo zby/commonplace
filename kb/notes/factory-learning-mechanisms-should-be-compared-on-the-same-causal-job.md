@@ -7,6 +7,8 @@ tags: [foundations, learning-theory, self-improving-systems]
 
 # Factory-learning mechanisms should be compared on the same causal job
 
+> TODO! remove or update to use software house instead of software factory
+
 A fair comparison among factory-learning mechanisms asks how each turns production experience into a retained change to reusable production machinery that affects later production. Comparing natural language with code or weights, or readability with end-to-end optimization, mixes representational form with the causal job being performed.
 
 The shared job is:

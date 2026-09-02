@@ -7,6 +7,8 @@ tags: [foundations, learning-theory, self-improving-systems]
 
 # A better-factory claim compares operative states under an antecedent assessment relation
 
+> TODO! remove or update to use software house instead of software factory
+
 A [software factory](./definitions/software-factory.md) undergoes experience-responsive retention when production experience causes a retained change to its reusable machinery that later work depends on, and [learns when such retention improves it](./factory-learning-is-experience-responsive-retention-that-improves.md). Retention has no quality requirement: a retained change can degrade the factory as easily as improve it. Whether it got *better* is therefore its own claim with different relata and its own declarations. The claim holds between two operative states of the factory, under an assessment relation fixed before the development it judges, and its evaluator sits at a declared location that is not settled by the learner boundary. Throughout, *better* means better under the declared relation: the claim is relation-relative and auditable, not a verdict on the factory's quality over its open production family.
 
 Four declarations make a better-factory claim determinate: which states are compared, what relation they are compared under, how a state becomes the successor, and where the evaluator sits. Getting any of them from the record after the fact is where the claim goes soft.

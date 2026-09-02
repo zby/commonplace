@@ -7,6 +7,8 @@ tags: [foundations, self-improving-systems, learning-theory]
 
 # Open-ended theory learning and factory learning close the same reflective loop
 
+> TODO! remove or update to use software house instead of software factory
+
 Two research directions in this knowledge base look like separate programs. One
 asks how a system acquires, tests, and revises explanatory theories about its
 own organization. The other asks how [a software factory learns from its production experience](./factory-learning-is-experience-responsive-retention-that-improves.md). They are

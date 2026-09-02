@@ -22,6 +22,8 @@ Product-specific requirements, designs, models, code, tests, deployment descript
 
 Actor allocation is separate. Greenfield's accounts primarily describe human factory developers and solution developers supported by automation. Calling an arrangement a software factory does not imply learning, autonomy, computational closure, unattended generation, or self-improvement.
 
+The factory boundary is narrower than the complete producer. A [software house](./software-house.md) includes the software under continuing responsibility and every human or computational role-filler, as well as any factory machinery it uses. A human developer required by Greenfield's operating model can therefore be outside the factory machinery while remaining inside the surrounding software house.
+
 ## Exclusions
 
 - A generic IDE, coding agent, agent harness, build pipeline, or workflow is not a software factory in this sense merely because it helps produce software. The family-specific reusable production knowledge and declared reuse scope are essential.
@@ -34,6 +36,7 @@ Actor allocation is separate. Greenfield's accounts primarily describe human fac
 
 Relevant Notes:
 
+- [Software house](./software-house.md) — contrasts: names the complete persistent producer within which a Greenfield-style factory may be only the production machinery
 - [A software factory is family-scoped lifecycle production machinery](../a-software-factory-is-family-scoped-lifecycle-production-machinery.md) — grounds: reconstructs the versioned historical ontology and the family-machinery/member boundary
 - [Factory development](./factory-development.md) — defined-in: names the separate process that constructs or revises reusable factory machinery
 - [Factory construction is not evidence of production-knowledge acquisition](../factory-construction-does-not-establish-knowledge-acquisition.md) — contrasts: separates recursive construction from acquiring the production knowledge supplied to the constructor

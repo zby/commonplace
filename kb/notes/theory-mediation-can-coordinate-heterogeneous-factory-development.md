@@ -7,6 +7,8 @@ tags: [foundations, learning-theory, self-improving-systems]
 
 # Theory mediation can coordinate heterogeneous factory development
 
+> TODO! remove or update to use software house instead of software factory
+
 Natural-language theory may be a particularly versatile mechanism for [factory development](./definitions/factory-development.md) because one LLM-interpretable account can connect task structure, relevant solver limitations, observed failures, proposed interventions, scope conditions, and evidence, then guide changes across heterogeneous production machinery.
 
 Two claims must remain separate. Minimal factory learning does not require theory: trial-and-error retention, trajectory reuse, program search, learned policies, direct optimization, or mixtures can all produce retained changes used later. For the harder target of open-ended coherent modification, however, this program follows Naur in treating a project-theory function as indispensable. Some project-specific state or capacity must connect the program to its purposes, account for its organization, and relate new demands to what should be preserved.
