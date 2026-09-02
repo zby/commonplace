@@ -8,10 +8,12 @@ source_notes:
   - kb/notes/code-complements-weight-prompt-with-symbolic-operations.md
   - kb/notes/definitions/representational-form.md
   - kb/notes/definitions/software-house.md
+  - kb/notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md
   - kb/notes/naur-equates-machine-execution-with-formulated-criteria.md
   - kb/notes/program-theory-sustains-search-under-delayed-feedback.md
   - kb/notes/scheduler-llm-separation-exploits-an-error-correction-asymmetry.md
   - kb/notes/the-bitter-lesson-selects-production-methods-not-representational.md
+  - kb/sources/goedel-machines-schmidhuber.ingest.md
   - kb/sources/programming-as-theory-building.ingest.md
 ---
 # The reachability conjecture: train the house, not the LLM
@@ -74,6 +76,24 @@ written as rules. It would refute only his unproved step from "not rules" to
 "only people". [The distinction is between formal execution and explicitly
 formulated
 criteria](../notes/naur-equates-machine-execution-with-formulated-criteria.md).
+
+The one existing construction that automates software change with nobody
+inside is Schmidhuber's [Gödel
+machine](../notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md).
+It is not a software house — it has no users, and the only software it changes
+is itself — but it shows what automation costs when it is bought with
+formulated criteria. Any part of its code may be rewritten, provided an
+embedded prover first shows, from fixed axioms describing the machine, its
+environment, and its utility, that the rewrite pays. Everything the conjecture
+asks the house to acquire is supplied there in advance and never revised: the
+theory of the system is the axioms, the objective is the utility function, the
+test is proof. The price is stated in the paper: the machine "must ignore those
+self-improvements whose effectiveness it cannot prove"
+([Schmidhuber](../sources/goedel-machines-schmidhuber.ingest.md), verbatim),
+and a demand nobody wrote into the axioms cannot reach it. The conjecture buys
+automation the other way — informal theory in notes, a gate made of production
+consequences, and a theory the house acquires and revises — and pays with
+fallibility instead.
 
 The conjecture assigns each component a role:
 
