@@ -18,14 +18,18 @@ source_notes:
 
 > **Draft.** Comments and counterexamples are welcome on [the repository's GitHub Discussions page](https://github.com/zby/commonplace/discussions).
 
-**TL;DR.** We define a software house as whatever keeps developing and changing some
-software for its users, over time, in response to what they ask for and what
-happens in use. The conjecture is that such a system can be built to run with
-no human in a production role, using only models that exist as of 2026-09-02,
-and handling requests nobody listed in advance. Getting there does
-not wait for a better model. The model stays fixed. People write the first
-version of the code and notes around it; from then on the house changes them
-itself, as it works, and the parts people wrote stop being what carries it.
+**TL;DR.** We define a software house as whatever keeps developing and
+changing some software for its users, over time, in response to what they ask
+for and what happens in use. The conjecture is that such a system can be built
+to run with no human in a production role, using only models that exist in
+2026, and handling requests nobody listed in advance. The model stays
+fixed. What changes is everything around it: the code the house runs on, and
+the notes that record what the software is for, why it is built the way it
+is, and what earlier changes taught. People write the first version of both.
+The house then works from them and, as requests and their consequences
+arrive, rewrites them. People still correct it at first; the bet is that each
+round needs less correction, until the parts people wrote have been replaced
+by parts the house produced from its own experience.
 
 ## Claim
 
