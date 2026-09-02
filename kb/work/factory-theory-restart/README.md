@@ -2,99 +2,56 @@
 
 ## Goal
 
-Rebuild the research program, not merely revise its current article. Split it
-into atomic parts that can be assessed, rejected, and reused independently:
-definitions fix the object; derivations expose only their premises and
-conclusions; conjectures state contingent bets and their live competitors;
-historical accounts supply evidence or explicit retrodictions; and tests later
-specify the observations that discriminate among them.
+Constructively establish the [reachability
+conjecture](./theory.md): current LLMs already have the model capacity needed
+for an automated [software
+house](../../notes/definitions/software-house.md) capable of open-ended coherent
+software change. The LLM architectures and weights remain fixed. The software
+house is trained instead through computationally produced, retained changes to
+executable software and natural-language notes.
 
-An atomic part does one inferential job, states its status, and makes its
-dependencies visible. If it fails, only the parts that depend on it should
-fall. Assemble the eventual research program and publication from these parts
-after the theoretical structure settles.
+People may provide an initial seed, but a practically reachable system must
+outgrow repeated human design of its decisive project-specific theory and
+production machinery. The constructive progression is:
 
-## Starting point
+1. hold and apply an already formed program theory;
+2. acquire an initial theory through participation in software work;
+3. acquire an adequate successor when experience exposes an inadequacy;
+4. apply the same theory-building capability to the house's own production
+   machinery; and
+5. sustain the path without a required human internal role.
 
-Workshop opened 2026-09-02 by the operator. The current program article
-(`kb/articles/a-research-program-for-learning-software-factories.md`) has
-accumulated machinery — two-layer definitions, boundary declarations, the
-measurement instrument, attribution cases, and experiment contrasts — to the
-point where the core argument is getting lost in it. Treat that article as
-source material rather than inherited structure. Rebuild from scratch, theory
-first: state the simplest derivation, grow only what it forces, and keep the
-testing machinery out until the theory stands on its own.
+A successor may be produced by editing prior state, rebuilding from the
+available evidence, or a mixture. Revision names the change in what the house
+holds, not a required update mechanism. Learning is not part of the
+software-house definition; its conditions must be derived separately.
 
-## Settled direction
+The theory also runs in reverse. A persistent automated builder for open-ended
+natural-language theories needs LLM interpretation plus software that manages
+theories and exact operations. The conjecture that open-ended theory work
+eventually exceeds any fixed harness would force that system to produce and
+revise its own supporting software. The complete user-serving system is then a
+software house. The forward and reverse arguments therefore converge on one
+system that is both software house and theory builder if that conjectural link
+holds.
 
-From the article sessions of 2026-09-01/02, recorded so later work need not
-re-derive it:
+## Fixed scope
 
-- The theory-need claim is to be *derived*, not posed as a hypothesis; the
-  empirical question moves to the bearer: can the theory be held outside model
-  weights?
-- The theory layer does not need the learner-boundary machinery. Boundaries,
-  attribution (the cheap-operator case), the relation-relative comparison, and
-  the oracle problem belong to testing, not to the theory.
-- The program's term for the full system is **software house**: the persistent
-  producer that develops and evolves software in response to its users and
-  operating environment. The term is generalized from a human organization
-  to a system whose internal roles may be filled by people, computational
-  machinery, or both. Automation, changes to production machinery, and
-  learning are later claims, not parts of the base definition.
-- Greenfield's **software factory** remains family-specific production
-  machinery that a software house may use. The research program imports none
-  of its product-family, schema, template, or developer-role ontology;
-  Greenfield belongs in the historical comparison, not the core derivation.
-- Likely eventual shape: a theory note (or notes), then possibly a split of
-  the article into a theory-formulation part and a testing part. Not committed
-  yet; the derivation comes first.
+The object is the complete software house. Humans required for internal
+production roles are inside its boundary; users supplying requirements,
+feedback, domain knowledge, or acceptance judgments remain outside.
+Greenfield's [software factory](../../notes/definitions/software-factory.md) is
+optional family-specific machinery inside a software house, not the program's
+general system definition.
 
-## Current parts
+## Working order
 
-- [Software house](../../notes/definitions/software-house.md) — the canonical
-  system definition, its user boundary, implementation-neutral role
-  allocation, automation qualifier, and contrast with Greenfield's software
-  factory.
-- [naur-derivation.md](./naur-derivation.md) — the simple derivation: a
-  software house needs a theory in Naur's meaning.
-- [where-the-theory-lived.md](./where-the-theory-lived.md) — the historical
-  comparison: Greenfield's constructors designed people in as theory-holders,
-  his containment bet met Naur's residue at breadth, and four combinable
-  theory-holding architectures frame the program's bet without supplying its
-  ontology.
-- [why-now.md](./why-now.md) — why software houses can be automated now: LLMs
-  move the codification burden from theory content to theory delivery, stated
-  as a prediction with three discriminable readings of the current wave, the
-  conjecture that full theory-holding machinery is not yet there, and the
-  bridge to learning via cheap explicit revision of retained notes.
-- [learning-derivation.md](./learning-derivation.md) — the second derivation:
-  Naur's guided-participation account explains acquisition, while theory
-  revision follows only when production experience exposes that the held
-  theory is no longer adequate; the standing-requirement reading is the
-  named invalidation-frequency conjecture.
-- [holding-conjecture.md](./holding-conjecture.md) — the constructive bet:
-  theory holding internalized as natural-language notes caching prior theory
-  building, an LLM interpreter, and a harness that activates the right theory;
-  plus the competing conjecture that the LLM and harness can instead
-  reconstruct it from the primary record on demand.
-- [theory-builder.md](./theory-builder.md) — the reverse direction: a
-  general theory builder of natural-language theories needs software to
-  manipulate them, no closed harness fits a general builder (this document's
-  conjecture), so it must keep changing software and falls under the
-  derivations; the closing circle is the arc's consistency check, and the
-  conclusion is that the program's object is one system that is both software
-  house and theory builder.
-- [bootstrap-conjecture.md](./bootstrap-conjecture.md) — the second
-  conjecture: the theoretical system can be reached by bootstrapping — a
-  human-operated system internalizes its own holding through its own
-  operation, with declining human theory-interventions as the progress
-  measure, while supplied transfer and on-demand reconstruction remain
-  competing paths.
+1. Treat [the theory](./theory.md) as the current formulation.
+2. Detailed test planning is postponed. [Testing notes](./testing-notes.md)
+   retain only the constraints already forced by the theory; they are not an
+   executable protocol.
+3. When work resumes, derive the missing protocol from the settled claims and
+   the alternatives they leave live.
 
-## Closure
-
-The workshop closes when the derivations, conjectures, and whatever they force
-are promoted to library artifacts — notes and possibly restructured articles —
-or deliberately discarded, and the existing article's fate is decided and
-executed: rewritten around them, split, or superseded.
+Earlier committed drafts are not standing premises. Consult Git history only
+when a specific earlier argument becomes useful during reconstruction.
