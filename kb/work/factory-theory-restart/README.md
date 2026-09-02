@@ -47,7 +47,8 @@ forces, and keep the testing machinery out until the theory stands on its own.
 - [learning-derivation.md](./learning-derivation.md) — the second derivation:
   Naur's guided-participation account explains acquisition, while theory
   revision follows only when production experience exposes that the held
-  theory is no longer adequate.
+  theory is no longer adequate; the standing-requirement reading is the
+  named invalidation-frequency conjecture.
 - [holding-conjecture.md](./holding-conjecture.md) — the constructive bet:
   theory holding internalized as natural-language notes caching prior theory
   building, an LLM interpreter, and a harness that activates the right theory;

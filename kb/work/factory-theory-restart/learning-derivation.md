@@ -36,8 +36,11 @@ So a software factory system can exist, and can make theory-governed program
 modifications, without learning. It must learn when its production
 experience exposes that the held theory is no longer adequate and coherent
 change must continue. Whether economically relevant scopes produce such
-episodes often enough to make learning a standing requirement is an
-empirical premise of the program, not a result Naur establishes.
+episodes often enough to make learning a standing requirement is the
+program's **invalidation-frequency conjecture** — not a result Naur
+establishes, and not one to expect a decisive proof of. It stays a
+conjecture, weighed by accumulated episodes against the disarming
+condition below.
 
 ## What this means per realization
 
