@@ -53,6 +53,11 @@ forces, and keep the testing machinery out until the theory stands on its own.
   and a harness — code that builds prompts so the right theory activates —
   with codification returning aimed at logistics, and the documentation
   objection faced.
+- [theory-builder.md](./theory-builder.md) — the reverse direction: a
+  general theory builder of natural-language theories needs software to
+  manipulate them, no closed harness fits a general builder (this document's
+  conjecture), so it must keep changing software and falls under the
+  derivations; the closing circle is the arc's consistency check.
 - [bootstrap-conjecture.md](./bootstrap-conjecture.md) — the second
   conjecture: the theoretical system is reached by bootstrapping — a
   human-operated system internalizes its own holding through its own

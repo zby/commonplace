@@ -1,0 +1,54 @@
+# A general theory builder must become a software factory system
+
+A **theory builder** is a system that builds, tests, and revises theories
+formulated in natural language. The domain is open: the theories may be
+about anything. Whatever fills its roles — people, models, machinery — is
+part of the system, as with the software factory system.
+
+This document argues the reverse direction of the derivations: not that a
+factory needs theories, but that a general theory builder is forced toward
+being a software factory system. The chain has three links; two are already
+argued elsewhere in this workshop, one is this document's conjecture.
+
+**Link one, argued: manipulating theories needs software.** A serious theory
+corpus is not read end to end at each use. Theories must be stored,
+organized, found, routed into the context where they bear, activated against
+the demand at hand, and revised with their consequences — the holding
+machinery. Storage and exposure are not activation; something must build the
+contexts. That something is software: the harness.
+
+**Link two, the conjecture: no closed harness fits a general builder.** A
+closed system — fixed in advance, however good — fixes the kinds of theories
+and the operations on them: it pre-analyzes the manipulation demand space.
+That is scoping again, one level up, and it buys automation only over the
+pre-analyzed region. A general builder's domains are open; new domains bring
+theory shapes and manipulation demands nobody pre-analyzed — new
+organization, new validation, new activation patterns. So the harness of a
+general theory builder must keep changing.
+
+**Link three, derived: a system that keeps changing its software falls under
+the derivations.** A builder that must keep building and revising its own
+harness produces and changes software — it satisfies the definition of a
+software factory system, with its own machinery as the product at the narrow
+end of the scope parameter. The first derivation then applies to it: its
+harness changes must fit purposes and organization its checks capture only
+partly, so it must hold a theory of its own machinery. The learning
+derivation applies too: that theory must be rebuilt from its own operation.
+
+## The circle closes, and that is the check
+
+The derivations run from the production side: a software factory system
+needs a held, continually rebuilt theory. This chain runs from the epistemic
+side: a general theory builder needs a continually rebuilt software factory.
+Two independent starting points force the same coupled system — the one the
+holding conjecture describes: notes, interpreter, harness, where the notes
+are at once the builder's product and the factory's held theory. Had the two
+directions forced incompatible structures, something upstream would be
+wrong. That they compose is the arc's consistency check.
+
+## What would refute it
+
+The chain fails at link two. A closed, universal theory-manipulation system
+— one harness, never modified, serving a general builder across novel
+domains — would break it, and with it the reverse direction. The forward
+derivations would stand; the circle would not close.

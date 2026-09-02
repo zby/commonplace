@@ -54,4 +54,4 @@ designed experiment, not a thought experiment.
 The conjecture defines a theoretical system. No running instance exists:
 today's software factory systems fill the theory-holding role with people —
 the wave diagnosis. How such a system could come to exist at all is its own
-question, taken up by the next document's bootstrap conjecture.
+question, taken up by the bootstrap-conjecture document.

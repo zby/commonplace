@@ -11,7 +11,10 @@ though the learning derivation supplies its central premise.
 software factory system internalizes its own theory-holding, step by step,
 through its own operation — seeding notes from what its people hold, building
 the harness against observed activation failures, and shifting the holding
-from people to the triple while production continues.
+from people to the triple while production continues. The theory-builder
+document opens a second doorway: the same climb can start from a
+human-operated theory builder growing its harness. Both roads lead to the
+same coupled system, and the progress measure below applies to either.
 
 **Why the path must be a bootstrap.** The learning derivation says theory is
 built only from production experience. At the start, the only holders of
