@@ -3,25 +3,33 @@
 The software-factory literature never cites Naur. It engaged his problem
 anyway, and its outcome is the derivation's first data point.
 
-## The constructors kept people
+## The constructors kept people — by design
 
-The historical factories — Greenfield and Short's, Cook and Kent's Tool
-Factory, MDSoFa — were not fully automated, and the incomplete automation was
-not an engineering shortfall. The people in the loop were the component that
-held the theory: they supplied the family definitions and mappings, and, when
-feedback arrived, they interpreted it and redesigned the assets. Our ingest of
-Greenfield 2007 records this directly: feedback-supported revision remained
-"an open human process."
+Full automation was not the ambition. Greenfield's definition builds people
+in, as two named roles: solution developers use the machinery to build family
+members; factory developers harvest domain practice, build and revise the
+reusable machinery, and respond to variation the existing asset base did not
+anticipate. Automation is scoped inside this: model-driven development
+automates lifecycle tasks from model metadata but "is not the whole factory."
 
-## Greenfield's program was a bet against Naur
+Look at where the second role sits. Responding to unanticipated variation by
+revising the reusable machinery is the theory function — Naur's third
+capacity, institutionalized as a job. Greenfield did not overlook the
+theory-holder; he designed the position. Our ingest records the consequence:
+feedback-supported revision remained "an open human process."
+
+## Greenfield's bet was containment, not elimination
 
 The software-factory pitch was to codify expert knowledge into machinery —
 DSLs, metamodels, mappings, patterns — so the expertise of the few could be
-used by the many. That is codification applied to the theory itself, and it is
-implicitly a bet against Naur's claim that the theory of a program cannot be
-fully formulated. The pitch even half-concedes the premise: "capture the
-expertise of the few" admits the theory lives in the few; Naur adds that the
-capture is lossy and the residue is exactly what modification needs.
+used by the many. Given the role split, the bet was not that the theory could
+be fully formulated and its holders eliminated; it was containment: codify
+the anticipated variation so solution developers need little theory, and
+keep a few factory developers for the unanticipated remainder. Naur's
+objection then lands on the containment, not on a strawman of full
+codification: the capture is lossy, the residue is exactly what modification
+needs — so the question becomes how often the residue is needed. At breadth,
+the answer is constantly.
 
 ## The vision failed, and our reading of why
 
@@ -48,7 +56,9 @@ be huge and fully enumerated — so the squeeze's load-bearing premise is that
 in most software markets they do not come apart in practice: the demand that
 supplies paying member count also drifts, so the members differ in
 unanticipated ways. Under that premise: narrow enough to codify is too narrow
-to pay; broad enough to pay admits novelty, and novelty needs the theory. The
+to pay; broad enough to pay admits novelty, and novelty needs the theory — and in
+Greenfield's own role split, novel demands route through the few factory
+developers, so the contained theory-holders become the bottleneck. The
 prediction to ground: the codification successes — generators, tightly
 managed product lines — should cluster where member count is high but novelty
 is controlled, and the vision's economics required the markets where it is
@@ -67,10 +77,11 @@ Four ways of supplying the theory function a factory needs:
 1. **Keep people.** What every historical factory did. Works; but the factory
    scales only as far as its theory-holders, and the theory leaves when they
    do — Naur's account of program death.
-2. **Codify it away.** Greenfield's ambition. Captures the formalizable part
-   and hits Naur's limit at the remainder — and this strategy was run at
-   industrial scale for a decade, so the limit is not hypothetical: it is
-   where the effort stopped.
+2. **Codify what can be anticipated.** Greenfield's actual strategy was a
+   blend of this with the first — containment, people kept for the remainder.
+   It captures the formalizable part and meets Naur's limit at breadth — and
+   it ran at industrial scale for a decade, so the limit is not hypothetical:
+   it is where the effort stopped.
 3. **Hold it in natural language, interpreted by a model.** Keep the theory
    informal, as Naur requires, and change the bearer. Neither human-held nor
    codified. This is why LLMs reopen a question the 2000s closed.
@@ -79,8 +90,8 @@ Four ways of supplying the theory function a factory needs:
    implicitly, at the cost of addressability and cheap revision. The Bitter
    Lesson is its argument.
 
-The derivation says a factory needs the theory. The first two carriers are
-historical and stopped where the history above stops; the last two are the
+The derivation says a factory needs the theory. The historical factories ran
+a blend of the first two carriers and stopped where the history above stops; the last two are the
 live alternatives. The program's bet is the third, run with weights fixed —
 which is what makes the third and fourth separable in an experiment.
 
