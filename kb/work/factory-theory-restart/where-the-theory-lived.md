@@ -31,6 +31,34 @@ codification: the capture is lossy, the residue is exactly what modification
 needs — so the question becomes how often the residue is needed. At breadth,
 the answer is constantly.
 
+## How a factory differs from an IDE with libraries
+
+If people hold the theory either way, what separates a factory from ordinary
+tooling — an IDE, libraries, a framework? Not the presence of humans. Two
+things.
+
+The retained knowledge is family-scoped. An IDE and general-purpose libraries
+retain knowledge about programming in general; a factory's schemas, DSLs,
+templates, and guidance retain knowledge about producing members of one
+declared family. The declaration is what makes the reuse claim testable: the
+machinery is supposed to transfer across family members, not across all
+software. Without it, every shop with an IDE is a factory and the term says
+nothing.
+
+And the difference is a position on an axis, not a kind. The axis is how much
+of each member's production is determined by retained machinery rather than
+fresh human decision. An IDE sits near zero. Libraries move up it; a
+framework further — it already decides architecture. A factory is the high
+end: generate, assemble, configure, with people supplying the residue.
+
+Read this way, the containment bet is a position on the same axis, and the
+program is its limit point: the one kind of knowledge Greenfield's
+containment left in people — the theory — is the kind the program tries to
+move into retained machinery. A factory that holds its own theory in readable
+artifacts is not a different project from the software-factory vision; it is
+that vision completed. It also follows that the derivation covers the IDE
+shop: there the theory is simply all of it, carried entirely by people.
+
 ## The vision failed, and our reading of why
 
 The vision did not materialize at scale; the initiative faded within a decade.
