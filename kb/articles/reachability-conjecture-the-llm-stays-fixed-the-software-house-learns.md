@@ -268,9 +268,11 @@ to software. [Voyager](../agent-memory-systems/reviews/voyager.md) admits an
 executable skill when a critic reports success and replaces a skill rather
 than revising it. None of the five serves users. Their demand streams are
 benchmarks or a game environment, which the open-endedness rule excludes.
-Each answers part of obligation 1's question about the substrate, and none
-reaches obligations 2 and 3, because none holds a theory that experience
-could show to be inadequate.
+Each answers part of obligation 1's question about the substrate. Obligations
+2 and 3 concern acquiring and revising a program theory, and none of the five
+is set up to test that: what they retain and revise is judged by score or
+viability, not by whether it explains why the software is organized as it
+is.
 
 ## A consequence for general theory builders
 
