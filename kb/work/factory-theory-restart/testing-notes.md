@@ -18,8 +18,8 @@ not select tasks, evaluators, baselines, thresholds, or a schedule.
 - Test program-theory possession through behavior across novel changes. The
   presence, retrieval, citation, or paraphrase of theory-bearing notes is not
   sufficient.
-- Keep holding, initial acquisition, successor acquisition, self-application,
-  and automated continuation as separate milestones. Evidence for an earlier
+- Keep holding, initial acquisition, successor acquisition, and automated
+  continuation as separate milestones. Evidence for an earlier
   milestone does not establish a later one.
 - Permit successor acquisition by editing prior state, rebuilding from the
   available evidence, or a mixed process. The test must not define revision as
@@ -29,9 +29,9 @@ not select tasks, evaluators, baselines, thresholds, or a schedule.
 - Treat success and failure asymmetrically: a working scope-declared witness can
   establish reachability for that scope, while failure of one architecture
   eliminates only that attempted path.
-- Test the reverse derivation separately. In particular, the later plan must
-  decide how a fixed harness will be compared with a software-revising harness
-  as theory domains and manipulation requirements open.
+- Record whether the witness changed its own production machinery and why.
+  Self-application is a possible consequence of automation, not a milestone;
+  the record shows whether the declared scope required it.
 
 ## Deferred choices
 

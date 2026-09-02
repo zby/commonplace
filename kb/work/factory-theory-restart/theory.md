@@ -103,53 +103,20 @@ claim.
 Hand-crafted tools, stores, interfaces, safety boundaries, and provisional
 notes may initialize the loop. They are seed engineering, not evidence that
 the house acquired the structures computationally. The training path must
-outgrow repeated human authorship of the decisive project-specific theory and
-machinery. A wholly hand-built endpoint could support the representational
+outgrow repeated human authorship of the decisive project-specific theory. The
+decisive theory counts as human-supplied whichever form a person put it in: a
+product theory encoded in seed checks, decompositions, or evaluators is
+received from a human just as one written in notes. Fixed machinery may
+persist when it implements a general production method over the declared
+scope. A wholly hand-built endpoint could support the representational
 sufficiency claim, but not the practical training-path claim.
 
-## The reverse derivation: a general theory builder becomes a software house
-
-The argument also runs from theory building back to software production.
-Consider a persistent automated system that builds, tests, and revises
-natural-language theories for external users across domains not fixed in
-advance. A one-shot generator or a prover confined to one predeclared formal
-language is not the subject of this derivation.
-
-At present, an LLM is the only generally available computational interpreter
-for semantic operations over theories of that breadth. But an LLM alone is not
-the complete builder. A long-lived theory corpus must be stored, organized,
-selected into bounded contexts, connected to evidence, revised, and carried
-across calls. Exact state transitions, scheduling, tool execution, checks, and
-rollback also need software outside model interpretation. [Code complements
-the weight–prompt pair with independently executed symbolic
-operations](../../notes/code-complements-weight-prompt-with-symbolic-operations.md),
-and [symbolic scheduling avoids using an LLM for unreliable
-bookkeeping](../../notes/scheduler-llm-separation-exploits-an-error-correction-asymmetry.md).
-
-The next link is a conjecture. Open-ended theory domains bring not only new
-theory content but new manipulation requirements: ways to organize a theory,
-select evidence, construct contexts, test consequences, and coordinate tools.
-The conjecture is that no fixed harness can anticipate that entire demand
-space. If it holds, a general builder must acquire and revise the software that
-supports its theory work as those demands arise.
-
-If another required producer repeatedly supplies those decisive,
-demand-specific software changes, that producer fills an internal role in the
-complete theory-building system; excluding it would make the claimed automation
-boundary too narrow. This does not pull suppliers of fixed general dependencies
-inside the boundary. An automated builder must bring the demand-specific role
-inside. It then persistently develops and evolves software in response to its
-users and operating consequences and is, by the
-[definition](../../notes/definitions/software-house.md), a software house.
-
-The two directions converge. Starting from open-ended automated software
-production without a human supplying the required project theory leads to a
-theory builder for the house's own domain. Starting from open-ended automated
-theory building leads to a software house that produces and changes its own
-supporting machinery. The program's target is the coupled system that meets
-both descriptions. This convergence explains why self-application is a
-necessary destination rather than an optional extension of the reachability
-claim.
+Whether the production machinery itself must change within the declared scope
+is an empirical matter the theory does not decide. If it must, the automation
+obligation below already forces the house to make the change, and the forward
+argument applies unchanged: coherent open-ended change to the machinery needs
+a program theory of the machinery. Self-application is therefore a possible
+consequence of automation over some scopes, not a separate requirement.
 
 ## Obligations of a constructive witness
 
@@ -164,18 +131,41 @@ One construction must eventually demonstrate the whole progression:
 3. **Successor acquisition.** When experience exposes an inadequacy, it comes
    to hold an adequate successor theory, whether by editing, reconstruction, or
    a mixed process.
-4. **Self-application.** It builds and uses theories of its own production
-   machinery when changing that machinery under the same open-ended
-   conditions.
-5. **Automated continuation.** It sustains these capacities across the declared
+4. **Automated continuation.** It sustains these capacities across the declared
    scope and horizon without a required human internal role. External users may
    still provide requirements, feedback, domain knowledge, and acceptance
    judgments.
 
-Computational training of the legible state is a condition across acquisition,
-successor acquisition, and self-application, not an additional stage. Meeting
-an early obligation is progress toward the witness, not a weaker definition of
-the target.
+Computational training of the legible state is a condition across acquisition
+and successor acquisition, not an additional stage. Meeting an early
+obligation is progress toward the witness, not a weaker definition of the
+target.
+
+## A consequence for general theory builders
+
+The same components appear when the target is a persistent automated system
+that builds, tests, and revises natural-language theories for external users
+across domains not fixed in advance. At present an LLM is the only generally
+available computational interpreter for semantic operations over theories of
+that breadth; this is a time-indexed engineering premise, not a logical
+necessity. The corpus, exact state transitions, scheduling, checks, and
+rollback need software outside model interpretation: [code complements the
+weight–prompt pair with independently executed symbolic
+operations](../../notes/code-complements-weight-prompt-with-symbolic-operations.md),
+and [symbolic scheduling avoids using an LLM for unreliable
+bookkeeping](../../notes/scheduler-llm-separation-exploits-an-error-correction-asymmetry.md).
+
+If open-ended theory domains bring manipulation requirements that no fixed
+harness anticipates, such a builder must revise its own supporting software.
+Whoever repeatedly supplies those demand-specific changes fills an internal
+role in the complete builder, so an automated builder brings that role inside.
+It then persistently develops and evolves software in the service of its
+external users and meets the software-house
+[definition](../../notes/definitions/software-house.md).
+
+The reachability claim does not depend on this link. It is a conjecture, and a
+fixed harness that sustained a general theory builder across genuinely new
+domains would break it without touching the forward argument.
 
 ## Boundaries and epistemic status
 
@@ -187,20 +177,14 @@ trainable internal state; they do not exclude products, user demands, tool
 outputs, or operating consequences from its work and evidence.
 
 The software-house definition itself requires none of holding, acquisition,
-training, learning, self-application, or automation. Those are properties of
-the target constructed by this program. Open-ended also does not mean
-literally unlimited: the declared demand stream must admit relevant novelty
-rather than enumerate every case in advance.
+training, learning, or automation. Those are properties of the target
+constructed by this program. Open-ended also does not mean literally
+unlimited: the declared demand stream must admit relevant novelty rather than
+enumerate every case in advance.
 
 The need for a program-theory function is a theoretical argument, not a proved
 theorem. Current-LLM sufficiency and the practical training path are
-conjectures. So is the reverse derivation's claim that open-ended theory
-manipulation eventually exceeds every fixed harness. A fixed harness that
-sustained a general theory builder across genuinely new domains would break
-that reverse chain without refuting the forward program-theory argument.
-The claim that LLMs are presently the only generally available interpreters
-for theories of this breadth is a time-indexed engineering premise, not a
-logical necessity.
+conjectures.
 
 The program is constructive: a working system can establish reachability over
 its declared scope, horizon, and resource envelope. Failure of one architecture

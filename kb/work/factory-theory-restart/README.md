@@ -11,29 +11,24 @@ house is trained instead through computationally produced, retained changes to
 executable software and natural-language notes.
 
 People may provide an initial seed, but a practically reachable system must
-outgrow repeated human design of its decisive project-specific theory and
-production machinery. The constructive progression is:
+outgrow repeated human design of its decisive project-specific theory. The
+constructive progression is:
 
 1. hold and apply an already formed program theory;
 2. acquire an initial theory through participation in software work;
-3. acquire an adequate successor when experience exposes an inadequacy;
-4. apply the same theory-building capability to the house's own production
-   machinery; and
-5. sustain the path without a required human internal role.
+3. acquire an adequate successor when experience exposes an inadequacy; and
+4. sustain the path without a required human internal role.
 
 A successor may be produced by editing prior state, rebuilding from the
 available evidence, or a mixture. Revision names the change in what the house
 holds, not a required update mechanism. Learning is not part of the
 software-house definition; its conditions must be derived separately.
 
-The theory also runs in reverse. A persistent automated builder for open-ended
-natural-language theories needs LLM interpretation plus software that manages
-theories and exact operations. The conjecture that open-ended theory work
-eventually exceeds any fixed harness would force that system to produce and
-revise its own supporting software. The complete user-serving system is then a
-software house. The forward and reverse arguments therefore converge on one
-system that is both software house and theory builder if that conjectural link
-holds.
+Self-application is not a separate obligation. Whether the production
+machinery must change within the declared scope is empirical; if it must,
+automation already forces the house to make the change. The theory records as
+a consequence, not a premise, that a general theory builder would become a
+software house if open-ended theory work exceeds any fixed harness.
 
 ## Fixed scope
 
