@@ -15,18 +15,23 @@ organizations always have. The carrier, not the concept, set the ceiling.
 
 Machinery could carry only what crossed into formal form. Codification was
 the price of making knowledge operative — a schema, a DSL, a generator can
-act; a design memo cannot. Naur's limit says the load-bearing residue does
-not cross. So the residue stayed in people, and at breadth the people were
+act, while a design memo could be consumed only by people. Naur's limit
+says the load-bearing residue does not cross into the actable form. So the residue stayed in people, and at breadth the people were
 the bottleneck.
 
 ## What changed
 
-LLMs lift the codification tax. Informal knowledge became machine-usable: a
-model can read retained natural-language artifacts and bring them to bear at
-change time. The factory's retained knowledge no longer has to cross the
-formalization boundary to be operative. What Naur's limit blocked was
-formalizing the theory, not retaining it — and retention plus a reader is now
-a mechanism.
+LLMs move the codification burden from content to delivery. Knowledge no
+longer has to cross into formal symbolic form before machinery can use it:
+a model can read retained natural-language artifacts at change time. What
+is removed is formal codification as a prerequisite for machine use — not
+the total cost of making informal knowledge operative. That cost moves into
+delivery: writing and curating the artifacts, selecting and routing them,
+resolving competing context, handling interpretation variance, verifying
+behavior, revising stale material — the harness work the holding conjecture
+codifies. And the change shows something narrow: it breaks Naur's inference
+that machine judgment requires formulated criteria, opening the bearer
+question. It does not show that theory is thereby transmitted or held.
 
 That is the why-now. Stated honestly, it is a prediction rather than a
 result: it says a software factory system can work at breadth now if the

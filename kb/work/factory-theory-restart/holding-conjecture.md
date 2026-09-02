@@ -11,7 +11,8 @@ requires three parts working together:
 - **Natural-language notes** cache selected results of theory building in
   informal, addressable, revisable artifacts.
 - **An LLM interpreter** reconstructs the theory from those results and brings
-  it to bear on the change at hand — the lifted codification tax at work.
+  it to bear on the change at hand — content usable without content
+  codification.
 - **A harness**: code that builds each prompt — which notes enter which
   context, when, in what order and framing — so the right theory activates
   on the demand it bears on, and that gates what gets retained back.
