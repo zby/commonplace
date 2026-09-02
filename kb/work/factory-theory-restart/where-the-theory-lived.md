@@ -64,3 +64,21 @@ Three strategies for the theory function a factory needs:
 The derivation says a factory needs the theory; the triad says the historical
 options for supplying it are exhausted at two, and names the third as the
 thing to test.
+
+## The import is selective, both times
+
+From the factory literature the program takes the definition — a configured
+production environment holding reusable production knowledge for a declared
+family — and not the methodology. That is consistent, not cherry-picking: the
+definition is form-neutral, saying the production knowledge must exist and be
+reusable, not how it is carried. Greenfield's methodology is what fixed the
+form, to codified symbolic assets, and the failure reading above indicts the
+fixed form, not the target.
+
+The same selective import already happened with Naur: the program takes the
+theory function — mapping, organization-account, demand-relating — and not
+his conclusion that only people can hold it. Both originals bind the
+knowledge to one carrier: Naur to human heads, Greenfield to codified
+artifacts. The program's move, both times, is to keep the function and unbind
+the carrier. That is why the bearer question is the empirical center, and why
+the triad is the carrier axis applied to the theory function.
