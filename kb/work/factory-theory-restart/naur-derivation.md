@@ -14,18 +14,26 @@ design instead of going through it.
 
 The misfit shows up late. Not as an immediate failure, but as later changes
 that get harder, because each one has to work around what the earlier change
-broke.
+did to the design.
 
-Therefore, at change time, something in the factory must supply what the
-checks do not: how the software maps onto the activity it serves, why it is
-organized as it is, and how the new demand relates to that organization.
+Therefore, if misfits are not to accumulate, something must supply what the
+checks do not. Judging fit has three parts: knowing what the software is for
+— how it maps onto the activity it serves; knowing why it is organized as it
+is; and relating the new demand to that organization. Nothing less decides
+whether a passing change fits.
 
 Those three capacities are what Naur (*Programming as Theory Building*, 1985)
 calls the theory of a program.
 
 So: a factory that keeps changing coherently must hold such a theory — of its
-products, and of itself, because its own machinery is also long-lived software
-and organization that its changes must fit.
+products, and of itself, since its own machinery changes under the same
+conditions: partial checks, delayed misfit.
+
+The function need not run at change time. A factory can let misfits land and
+repair them when they surface. But repair needs the same three capacities —
+to restore a design you must know what it should have been — applied later,
+against more accumulated structure, at higher cost. Deferral moves the
+theory-need in time; it does not remove it.
 
 ## What the derivation assumes
 
@@ -40,14 +48,21 @@ and the checks can be complete: a generator for such a family works
 trivially, with no theory needed at change time. The derivation bites when
 the declared family is broad enough that demands arrive which nobody
 pre-analyzed; relating those to the existing organization is what needs the
-theory. Practical families are broad, because a factory has to amortize its
-own construction.
+theory. Breadth here means novelty of admissible demands, not member count: a family
+can be large yet fully enumerated, and the checks can still be complete.
+Whether a factory can pay for itself without admitting novelty is the
+historical question the next document takes up.
 
 ## What would refute it
 
-A factory that sustains coherent change over a long horizon, on a family of
-practical breadth, while nothing in it performs the three functions — for example, one running on retrieval over
-the raw production record alone. If that works, the derivation is wrong.
+A factory that sustains coherent change over a long horizon, on a family
+that keeps admitting novel demands, with no project-specific state performing
+the three functions beyond the raw production record and a general-purpose
+model. If that works, the derivation is wrong.
+
+The refuter disciplines us as much as the rival: we may not relabel every
+success as an implicit theory after the fact. The rival condition is fixed in
+advance — raw record, general model, nothing organizing them.
 
 ## What the derivation does not need
 

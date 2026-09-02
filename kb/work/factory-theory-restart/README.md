@@ -28,7 +28,7 @@ forces, and keep the testing machinery out until the theory stands on its own.
 - [where-the-theory-lived.md](./where-the-theory-lived.md) — the historical
   factories as the derivation's first data point: constructors kept people as
   theory-holders, Greenfield's codification bet ran against Naur and stopped at
-  his limit, and the bearer triad names the program's third strategy.
+  his limit, and the four theory carriers frame the program's bet.
 
 **Closure:** closes when the derivation and whatever it forces are promoted to
 library artifacts (notes, and possibly restructured articles) or deliberately

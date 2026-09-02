@@ -40,13 +40,19 @@ theory resists formulation. The assets go brittle because the theory keeps
 changing and the codified layer lags it. The bottleneck persists because the
 un-codified remainder is load-bearing and only theory-holders carry it.
 
-Family breadth gives the mechanism its squeeze. A factory pays off only when
-the declared family is broad enough to amortize building it; but breadth is
-what defeats codification, because a broad family admits demands nobody
-pre-analyzed, and those are the demands that need the theory. Narrow enough
-to codify is too narrow to pay; broad enough to pay is beyond codification.
-The generator-like successes sit on the narrow side — the degenerate case the
-derivation exempts — and the vision's economics required the broad side.
+Family breadth gives the mechanism its squeeze — with one care, because
+breadth has two senses. Amortization needs member count: enough family
+members to pay for building the factory. The theory-need comes from novelty:
+demands nobody pre-analyzed. The two come apart in principle — a family can
+be huge and fully enumerated — so the squeeze's load-bearing premise is that
+in most software markets they do not come apart in practice: the demand that
+supplies paying member count also drifts, so the members differ in
+unanticipated ways. Under that premise: narrow enough to codify is too narrow
+to pay; broad enough to pay admits novelty, and novelty needs the theory. The
+prediction to ground: the codification successes — generators, tightly
+managed product lines — should cluster where member count is high but novelty
+is controlled, and the vision's economics required the markets where it is
+not.
 
 Stated with its status: this is the program's explanatory conjecture — a
 retrodiction unifying the known failure modes under one mechanism — not an
@@ -54,9 +60,9 @@ established causal result. What would refute it: factories that scaled
 without theory-holders, or that failed where theory was held and the
 codification was adequate.
 
-## The triad
+## The carriers
 
-Three strategies for the theory function a factory needs:
+Four ways of supplying the theory function a factory needs:
 
 1. **Keep people.** What every historical factory did. Works; but the factory
    scales only as far as its theory-holders, and the theory leaves when they
@@ -65,14 +71,18 @@ Three strategies for the theory function a factory needs:
    and hits Naur's limit at the remainder — and this strategy was run at
    industrial scale for a decade, so the limit is not hypothetical: it is
    where the effort stopped.
-3. **Hold it in natural language, interpreted by a model.** The program's
-   bet: keep the theory informal, as Naur requires, and change the bearer.
-   Neither human-held nor codified. This is why LLMs reopen a question the
-   2000s closed.
+3. **Hold it in natural language, interpreted by a model.** Keep the theory
+   informal, as Naur requires, and change the bearer. Neither human-held nor
+   codified. This is why LLMs reopen a question the 2000s closed.
+4. **Train it into model weights.** Also newly available, and the standing
+   rival to the third: project-specific training carries the theory
+   implicitly, at the cost of addressability and cheap revision. The Bitter
+   Lesson is its argument.
 
-The derivation says a factory needs the theory; the triad says the historical
-options for supplying it are exhausted at two, and names the third as the
-thing to test.
+The derivation says a factory needs the theory. The first two carriers are
+historical and stopped where the history above stops; the last two are the
+live alternatives. The program's bet is the third, run with weights fixed —
+which is what makes the third and fourth separable in an experiment.
 
 ## The import is selective, both times
 
@@ -90,4 +100,5 @@ his conclusion that only people can hold it. Both originals bind the
 knowledge to one carrier: Naur to human heads, Greenfield to codified
 artifacts. The program's move, both times, is to keep the function and unbind
 the carrier. That is why the bearer question is the empirical center, and why
-the triad is the carrier axis applied to the theory function.
+the carrier list is the representational-form axis applied to the theory
+function.
