@@ -35,9 +35,9 @@ the way it is, and what earlier changes taught. People write the first
 versions of both. The house then revises them as requests and their
 consequences arrive, and people correct it at first. **The bet** is that
 each round needs less correction, until the house keeps its own notes and
-code adequate without people. That denies the obvious shortcut, in which
-a model given a log of its failures works this understanding out and keeps
-it by itself.
+code adequate without people. Whether the house does better by writing this
+understanding down as addressable notes than by rebuilding it from raw
+records each time is a separate, stronger hypothesis.
 
 ## Claim
 
@@ -78,13 +78,22 @@ cannot be reduced to a finite set of formulated criteria. An LLM is still
 formal computation. What has changed is that a machine can now take a
 paragraph explaining why the retry logic lives in the caller as input to a
 decision, without first translating it into a complete symbolic decision
-procedure. Naur's second team had such paragraphs too. Holding the theory
-means the paragraph is loaded at the decision it concerns and changes the
-outcome, which is what obligation 1 below tests. A house that passes it
+procedure. Naur's second team had such paragraphs too, so more prose of the
+same kind is not an answer. But the case tested one package and one way of
+consuming it: text, annotations, design discussion, personal advice, and
+the reading practices that team had. It did not test rationale linked to
+the decisions it affects, ADR-like records, machine-maintained indexes,
+semantic retrieval, dependency-aware context assembly, or loading the
+relevant record at the decision point. Whether such a system transfers more
+of the capacity, to people or to an LLM-based composite, remains open.
+Holding the theory means the paragraph is loaded at the decision it
+concerns and changes the outcome, which is what obligation 1 below tests. A house that passes it
 would meet Naur's functional criterion while leaving intact his claim that
 the theory cannot be written as rules. It would refute only his unproved
 step from "not rules" to "only people". [The distinction is between formal execution and explicitly
 formulated criteria](../notes/naur-equates-machine-execution-with-formulated-criteria.md).
+His evidence is bounded by the technology of its day on both sides: what
+machines could execute and what documentation practice could deliver.
 
 The conjecture assigns each component a role:
 
@@ -93,9 +102,9 @@ The conjecture assigns each component a role:
 - Natural-language notes supply the persistent project-specific state:
   purposes, commitments, explanations, evidence, and prior search. For
   example: "installs must be a single file, so the store is SQLite; do not add
-  a server dependency." Architecture decision records are the existing
-  practice closest to this. The notes generalize them, and Naur's theory is
-  what a decision record tries to write down.
+  a server dependency." Architecture decision records are the familiar
+  candidate carrier closest to this. The notes generalize them, and Naur's
+  theory is what a decision record tries to write down.
 - Executable software supplies exact behaviour and continuity. This includes
   the product, tools, context assembly, schedulers, validators and tests,
   version-control rollback, and retention rules.
@@ -153,10 +162,14 @@ excluded internal role.
 The update mechanism is otherwise open. It may produce a successor directly
 or separate proposal, evaluation, and selection, and it may edit the prior
 notes, rebuild them from the evidence, or both. Whatever the mechanism, a
-retained change counts as learning only when experience causes it and it
-affects later production. Adding a validator because a bug class recurred, so
-that the validator later blocks that class, qualifies. A note never loaded by
-context assembly does not.
+retained change counts as learning by the house only when experience causes
+it and it changes how a later, not-yet-specified production episode is
+conducted. Carrying forward the product state an earlier request asked for is
+not enough, since the next episode starts from the changed product either
+way. Adding a validator because a bug class recurred, so that the validator
+later blocks that class, qualifies; so does a product abstraction, invariant,
+or test that demonstrably shapes later changes beyond that continuity. A
+note never loaded by context assembly does not.
 
 Hand-crafted tools, stores, interfaces, safety boundaries, and provisional
 notes may start the loop. They are seed engineering, not evidence of
@@ -259,7 +272,7 @@ derive. The house admits what a fallible gate accepts on production
 consequences, and a consequence can contradict the current theory where a
 proof cannot contradict its axioms. The house pays with fallibility instead.
 
-No existing system is an empirical witness, but several hold one piece, and
+No reviewed system is an empirical witness, but several hold one piece, and
 comparing them shows what the obligations exclude. The papers describing the
 [Darwin Gödel
 Machine](../sources/darwin-godel-machine-open-ended-evolution-self-improving-agents.ingest.md)
@@ -287,23 +300,34 @@ human-inclusive software factories and the evidence behind every cell, is in
 [the companion
 map](./nearest-existing-constructions-to-a-reachability-witness.md).
 
-The simplest rival hypothesis is that obligations 2 and 3 need no further
-machinery: an LLM given a record of its failures will generate the theory
-and then hold it. The conjecture predicts otherwise. A record influences
-later behaviour only through a consumption path: something must load it into the context of the right
-call, with enough force to change the decision, at the moment the decision
-is made. A failure log left in a directory is advice nobody reads. Turning
-it into a theory that later changes respect requires the admission and
-credit-assignment decisions above, retention in a form later calls consume,
-and enough authority over those calls to matter. This program's method is
-to map the design space of that machinery: how each retained artifact acts,
+The simplest rival to explicit retained theory is that obligations 2 and 3
+need no separate theory object: an LLM given the record of what happened
+will reconstruct the theory whenever a decision needs it. The broad
+conjecture does not exclude this. It concerns the composite's functional
+capacity to acquire and maintain a program theory, and a house that reliably
+rebuilds an adequate theory from retained records at each decision holds
+one. The explicit route is a stronger mechanism hypothesis: with the model,
+source evidence, demand sequence, and inference budget held fixed,
+synthesizing, retaining, retrieving, revising, and activating addressable
+rationale-bearing theory improves coherent modification, diagnosis, or
+recovery relative to raw episodic records or direct search of the
+artifacts. The raw-record route is that hypothesis's baseline, not a denial
+of reachability. Both routes depend on a consumption path: something must
+load the record into the right call, with enough force to change the
+decision, at the moment it is made. A failure log left in a directory is
+advice nobody reads. Either way the admission and credit-assignment
+decisions above must be made, and the result retained in a form later calls
+consume with enough authority to matter. This program's method is to map
+the design space of that machinery: how each retained artifact acts,
 recorded by [its storage, representational form, lineage, and behavioural
 authority](../notes/axes-of-artifact-analysis.md); where current LLMs fail;
 what context limits force; and which computational models the loop admits.
-The comparisons above come from the first of these. What the map adds beyond
-the consumption-path argument is not yet stated here.
+The comparisons above come from the first of these.
+What the map adds is a finding: separate component mechanisms exist in
+reviewed systems, but no reviewed system demonstrates the conjunction the
+obligations require.
 
-## A consequence for general theory builders
+## A related conjecture about general theory builders
 
 The same components appear when the target is a persistent automated system
 that builds, tests, and revises natural-language theories for external users
@@ -352,6 +376,15 @@ on the demands received. Bare reachability is cheap: a gate that
 admits anything makes every state reachable. The claim is that adequate
 states are reached with usable probability inside the declared envelope.
 
+The cutoff and model pinning bind a claim-establishing witness run, not
+ordinary development. The project may build and deploy with newer models,
+and doing so can show that accumulated state and machinery let a prepared
+project exploit a newer model better than an unprepared one. That is
+evidence about the state's value, not of reachability with models available
+by 2026-09-02. In a claim-establishing run, a newer model must not supply
+trial-specific theory, diagnose the trial's internal failures, select
+successors, or fill any other excluded internal role.
+
 Software and notes are the trainable internal state. Products, demands, tool
 outputs, and operating consequences are its evidence. Holding, acquisition,
 training, learning, and automation are requirements of this witness, not of
@@ -363,3 +396,13 @@ conjectures. The program is constructive: a working system establishes
 reachability over its declared scope, horizon, and envelope. Failure of one
 architecture eliminates that path; it cannot refute the existential claim
 unless the search has first been bounded.
+
+Three outcomes differ: the full constructive conjecture; a human-inclusive
+house that materially reduces programmer work; and evidence that the method
+has outgrown human construction of the required task-specific
+specialization. The second is a positive engineering and research result
+even if the first is never reached. But while decisive task-specific
+theory, decomposition, evaluation, or selection stays repeatedly
+human-produced, the result has not met the Bitter Lesson compatibility
+condition above. It may stay useful; what is missing is a warrant for its
+durability and scaling advantage, not a proof of failure.
