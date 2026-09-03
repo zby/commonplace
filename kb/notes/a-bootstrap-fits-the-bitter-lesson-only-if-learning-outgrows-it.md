@@ -35,11 +35,11 @@ thrown away and rebuilt. A bootstrap is the running system itself, using its
 current theory and machinery to guide the search that produces later versions.
 The task- or family-specific production knowledge it starts with can therefore
 be displaced while the system persists. Complete self-replacement is neither
-the mechanism nor the criterion. Fixed general learning machinery, exact
-interfaces, resource controls, and trusted kernels may continue when their
+the mechanism nor the criterion: fixed general machinery may continue when its
 scope and warrant support the reach being claimed, since [machinery persists
 by warrant rather than by position in a reflective
 loop](./machinery-persists-by-warrant-not-position-in-a-reflective-loop.md).
+Which components those are is stated below.
 
 The hand-designed features in Richard Sutton's examples were neither: they
 were built as the solution, and the method never learned to replace them.
