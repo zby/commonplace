@@ -6,6 +6,7 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
+- [reachability-working-paper-publication](./reachability-working-paper-publication/README.md) — staging the reachability conjecture as a versioned working-paper package with frozen authoritative appendices, live successor links, a dependency audit, and the remaining definitions, protocols, references, and probability criteria filled before publication approval
 - [commonplace-nearest-constructions](./commonplace-nearest-constructions/README.md) — characterizing Commonplace through the systems nearest its current human-inclusive theory builder, its path toward less task-specific human input, and its conjectured software-house endpoint
 - [agent-operability-second-slice](./agent-operability-second-slice/README.md) — making installed-project provenance and scaffold skew inspectable, then exercising a non-mutating three-way upgrade plan while preserving compact status and keeping review state opt-in
 - [cognitive-architecture-transfer-scan](./cognitive-architecture-transfer-scan/README.md) — breadth-first conjecture scan whose promising cross-architecture candidates still require deduplication, selective grounding, and extraction

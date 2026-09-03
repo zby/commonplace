@@ -1,0 +1,123 @@
+# Workshop: Stage the reachability conjecture as a working paper
+
+## Goal
+
+Prepare a self-standing, versioned working-paper package for [The reachability
+conjecture](../../articles/reachability-conjecture-the-llm-stays-fixed-the-software-house-learns.md)
+without collapsing its live supporting knowledge base into one permanently
+copied document.
+
+The intended publication architecture has three layers:
+
+1. the main paper states the conjecture, short argument, mechanism, evidence,
+   limits, and experimental obligations;
+2. frozen appendices preserve the load-bearing definitions, arguments,
+   protocols, and evidence used by that paper version; and
+3. links from each appendix lead to the live notes where the project can revise
+   the argument after publication.
+
+The authority rule is:
+
+> The frozen appendix is authoritative for what that working-paper version
+> argues. The linked live note is authoritative only for the project's current
+> position.
+
+This workshop stages and completes the package. It does not authorize
+publication or change the article's lifecycle status. Promotion still requires
+explicit approval naming `working-paper` and must follow [Publish an
+article](../../instructions/publish-an-article.md).
+
+## Inputs
+
+- [Main draft](../../articles/reachability-conjecture-the-llm-stays-fixed-the-software-house-learns.md)
+- [Nearest-constructions supplement](../../articles/nearest-existing-constructions-to-a-reachability-witness.md)
+- [Transition-reachability supplement](../../articles/reachability-as-closure-under-the-seed-gate.md) — its formal correction is staged separately in [PR #179](https://github.com/zby/commonplace/pull/179) and must land before the publication snapshot is frozen
+- the definitions, theory notes, and source captures classified in [dependency-audit.md](./dependency-audit.md)
+
+## Working artifacts
+
+- [artifact-manifest.md](./artifact-manifest.md) — planned paper components,
+  snapshot/adaptation mode, live source, target destination, and readiness
+- [dependency-audit.md](./dependency-audit.md) — which current dependencies are
+  load-bearing enough to enter the versioned package and which remain live links
+- [appendix-plan.md](./appendix-plan.md) — paper-native appendix structure,
+  provenance headers, missing content, and assembly rules
+- [staging/README.md](./staging/README.md) — boundary and naming rules for the
+  actual copied or adapted appendix drafts once the source cohort is selected
+
+## Work sequence
+
+1. **Audit the dependency closure.** For every definition, premise, protocol,
+   material qualification, and evidence claim, decide whether a skeptical
+   reader needs it when links are unavailable.
+2. **Choose the publication mode.** Mark each included component as an exact
+   snapshot, a paper adaptation, or paper-native content. Do not call an edited
+   adaptation a snapshot.
+3. **Fill the remaining gaps.** In particular, settle the paper definitions of
+   open-ended demand generation, practical reachability, hitting probability,
+   continuation reliability, and the treatment of retries, abstentions,
+   rescues, and post-hoc demand removal.
+4. **Stage the appendices.** Copy exact snapshots from one declared source
+   commit; write adaptations in the staging area; add direct primary-source
+   references and provenance headers; keep live-note links for later
+   developments.
+5. **Assemble and test the paper package.** Verify that the main body remains
+   understandable with links disabled, that appendices discharge every
+   load-bearing dependency, and that the package contains no unresolved
+   placeholders.
+6. **Freeze a candidate.** Record paper version, source commit, source path and
+   source blob or commit for every frozen appendix, then review the complete
+   diff rather than regenerating a released version automatically from live
+   notes.
+7. **Publish only after approval.** Once the user explicitly approves the body
+   and target lifecycle, apply the repository publication procedure and record
+   the frozen package as the cited version.
+
+## Boundaries
+
+- Do not recursively copy every note reached by a link. Snapshot only the
+  load-bearing dependency closure; optional examples, neighboring theories,
+  implementation history, and later extensions remain live links.
+- Exact snapshots may receive only mechanical transformations such as heading
+  normalization, frontmatter removal, link rewriting, and provenance headers.
+  Substantive edits make the artifact a paper adaptation.
+- Appendices cite primary external sources directly. Commonplace ingest reports
+  remain provenance and analysis aids, not the paper's sole scholarly record.
+- A live-note revision does not silently revise an older paper. It may trigger a
+  new working-paper version, a visible correction, or no paper change after
+  explicit review.
+- The main article remains the public draft during staging. Workshop copies are
+  not alternative canonical versions of the paper.
+
+## Current gaps to close
+
+- final definitions for practical reachability and the prospective demand and
+  consequence process;
+- a reproducible witness protocol that separates one possible path from usable
+  hitting probability and sustained continuation;
+- the paper-native boundary between the carrier-neutral reachability witness
+  and the stronger explicit-theory mechanism experiment;
+- direct bibliographic references and source locations for the Naur and Gödel
+  arguments;
+- the final decision whether the large nearest-constructions material remains
+  an appendix inside one document or a versioned supplement released with it;
+- automated or at least checkable detection that a live note has changed since
+  the frozen source cohort.
+
+## What closes this workshop
+
+1. The dependency audit identifies every load-bearing component and no appendix
+   depends on an unversioned live note for its historical meaning.
+2. The manifest records one source commit and the exact mode and provenance of
+   every staged component.
+3. The definitions, witness protocol, transition treatment, comparison evidence,
+   and references are complete enough for an external technical reader to
+   assess without traversing the KB.
+4. Every frozen appendix links to its live successor, and each live source can
+   point back to the paper version that froze it.
+5. The assembled package validates and passes an external-reader review with
+   hyperlinks disabled.
+6. The user either approves promotion to `working-paper` and the publication
+   procedure lands it, or explicitly decides to keep the package as a draft.
+7. Durable process lessons are extracted to the article publication machinery;
+   temporary staging copies are then removed with the workshop.
