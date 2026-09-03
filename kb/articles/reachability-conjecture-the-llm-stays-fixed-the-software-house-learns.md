@@ -119,14 +119,16 @@ The conjecture implements the house from three components, each with a role:
 
 - Fixed current LLMs supply the general linguistic, programming, and
   reasoning capacity that interprets project state and produces candidate
-  changes. - Natural-language notes supply persistent project-specific
-  purposes, commitments, explanations, evidence, and prior search. For
-  example: "installs must be a single file, so the store is SQLite; do not
-  add a server dependency." Architecture decision records already carry part
-  of this rationale. - Symbolic software supplies exact behaviour and
-  continuity. This includes the product, tools, schemas, context assembly
-  (choosing what the model reads), schedulers, validators and tests,
-  version-control rollback, and retention rules.
+  changes.
+- Natural-language notes supply persistent project-specific purposes,
+  commitments, explanations, evidence, and prior search. For example:
+  "installs must be a single file, so the store is SQLite; do not add a
+  server dependency." Architecture decision records already carry part of
+  this rationale.
+- Symbolic software supplies exact behaviour and continuity. This includes
+  the product, tools, schemas, context assembly (choosing what the model
+  reads), schedulers, validators and tests, version-control rollback, and
+  retention rules.
 
 None of these holds the theory alone. A note nobody loads is inert. A fixed
 LLM without enough project state reconstructs or guesses instead of carrying
@@ -253,17 +255,19 @@ One witness must eventually demonstrate the whole progression:
    across novel changes, including cases whose correct handling is not stated
    verbatim in that state. With everything else held equal, withholding or
    replacing the relevant state changes what the house does next in a
-   predicted way. 2. **Initial acquisition.** From permitted records,
-   interaction, and participation in the work, it acquires the capacity an
-   adequate program theory provides instead of receiving the decisive
-   project-specific understanding from a human. The theory may be written
-   down, reliably reconstructed from records each time, or a mix. 3.
-   **Successor acquisition.** When experience exposes an inadequacy, such as
+   predicted way.
+2. **Initial acquisition.** From permitted records, interaction, and
+   participation in the work, it acquires the capacity an adequate program
+   theory provides instead of receiving the decisive project-specific
+   understanding from a human. The theory may be written down, reliably
+   reconstructed from records each time, or a mix.
+3. **Successor acquisition.** When experience exposes an inadequacy, such as
    a dependency change that makes an earlier design reason false, it reaches
    a successor state that supports coherent later modification, by revising
    explicit theory, records, software, production machinery, or a
-   combination. 4. **Automated continuation.** It sustains these capacities
-   across the declared scope and horizon with no human in an internal role.
+   combination.
+4. **Automated continuation.** It sustains these capacities across the
+   declared scope and horizon with no human in an internal role.
 
 These obligations do not fix which form carries the theory. A complete
 witness must show learning that responds to evidence in both notes and code
@@ -307,7 +311,7 @@ deduction; its states are closed under proof-gated transitions. The house's
 states are closed under fallible ones.
 
 No reviewed system is an empirical witness. Factories with people in internal
-roles, such as Fluent and the OpenAI agent-first account are closest in shape
+roles, such as Fluent and the OpenAI agent-first account, are closest in shape
 to a user-facing house and supplied project rationale, but people retain
 theory-building, generalization, or admission roles. Darwin and Huxley Gödel
 Machines and HyperAgents train software around frozen foundation models;
