@@ -55,16 +55,17 @@ complete generator of answers.
 
 Two differences separate theory-guided search from mutation with
 backtracking, once both are granted the same budget. The first is update
-bandwidth. Backtracking needs an address: which earlier commitment does a late
-failure indict, and what replaces it? Selection over undirected candidates
+bandwidth. Backtracking needs an address: which earlier commitment is at fault
+for a late failure, and what replaces it? Selection over undirected candidates
 extracts a few bits per trial, and the space of revert-point and alternative
 pairs grows combinatorially with sequence length. One surprising consequence
-read against a theory can indict a specific commitment and revise a whole
-region of that space at once. Where trials are few, slow, and expensive, that
+read against a theory can single out a specific commitment as at fault and
+revise a whole region of that space at once. Where trials are few, slow, and expensive, that
 asymmetry is the regime argument for theory.
 
-The second difference is the failure signature. Undirected search fails
-isotropically: errors scatter across episodes. A wrong theory fails coherently,
+The second difference is the failure signature. Undirected search fails in no
+consistent direction: its errors differ from one episode to the next. A wrong
+theory fails coherently,
 bending successive changes the same wrong way, as [broad negative transfer from
 a broad wrong
 theory](./theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md)
@@ -114,9 +115,9 @@ The two descriptions coincide:
   across new demands.
 - **Boundary side:** the actor carries the least-warrantable modification
   decision through search, delayed evaluation, recovery, and retained revision
-  without exporting the decisive judgment.
+  without passing the decisive judgment to another actor.
 
-The identity is at this crux, not across every residue class. An absent premise,
+The identity holds for this decision, not across every residue class. An absent premise,
 missing authority, or truncated horizon may block the path before coherent
 modification is attempted. Nor does the identity make coherent modification an
 essentially human capacity. It says that a computational composite must carry
