@@ -29,17 +29,14 @@ source_notes:
 for its users, as they ask for things and as the software is used. The
 conjecture is that such a house can run with no human in a production role,
 on models that already exist, and handle requests nobody listed in advance.
-
 The model never changes. Everything around it does: the code the house runs
 on, and the notes that say what the software is for, why it is built the way
 it is, and what earlier changes taught. People write the first versions of
 both. The house then revises them as requests and their consequences arrive,
 and people correct it at first. The bet is that each round needs less
 correction, until the house keeps its own notes and code adequate without
-people.
-
-The conjecture denies the obvious shortcut: that a model given a log of its
-failures will work this understanding out and keep it by itself.
+people. That denies the obvious shortcut, in which a model given a log of
+its failures works this understanding out and keeps it by itself.
 
 ## Claim
 
