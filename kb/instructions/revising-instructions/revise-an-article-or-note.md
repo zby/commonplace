@@ -1,13 +1,13 @@
 ---
-description: "Use when an operator wants a settled article or note improved for a stated audience through chosen passes, each run as a short intent packet, rather than a generic editorial rewrite or a full automated pass"
+description: "Use when a settled article or note should be improved for a stated audience through the passes an assessment recommends, each run as a short intent packet, rather than a generic editorial rewrite or a full automated pass"
 type: kb/types/instruction.md
 ---
 
 # Revise an article or note
 
 Make the artifact serve the operator's stated purpose without changing what it
-claims, by proposing ranked changes first and running only the passes the
-operator selects.
+claims, by assessing first and then running only the passes the assessment
+recommends.
 
 ## Prerequisites
 
@@ -18,16 +18,15 @@ operator selects.
 
 ## Steps
 
-1. **Assess before editing.** Read the whole artifact. Return a ranked list of
-   changes, highest value against the purpose first, each with its cost in
-   one phrase. Name the sentence a hostile reviewer would attack first. Say
-   what reads well in one sentence. Do not edit.
+1. **Assess before editing.** Read the whole artifact. Report a ranked list
+   of changes, highest value against the purpose first, each with its cost
+   in one phrase and the pass from this directory that would make it. Name
+   the sentence a hostile reviewer would attack first. Say what reads well
+   in one sentence. Recommend only passes whose value against the purpose
+   is clear; an item you would not defend is not recommended. Do not edit.
 
-2. **Let the operator select.** Wait for the operator to pick items or name
-   passes from this directory. A pass the operator did not select does not
-   run.
-
-3. **Dispatch each selected pass as a packet.** Run passes one at a time,
+2. **Dispatch each recommended pass as a packet.** Proceed without waiting;
+   the report gives the operator the chance to interrupt. Run passes one at a time,
    since they share one write scope. Each pass file carries an `effort`
    field: `simple` passes run in a fresh worker on a cheaper model or lower
    effort; `judgment` passes run on the session model, in the current
@@ -47,14 +46,15 @@ operator selects.
    The worker chooses means within the pass. It does not widen the write
    scope, add claims, or remove evidence.
 
-4. **Integrate.** After each pass read the diff, run `commonplace-validate` on
+3. **Integrate.** After each pass read the diff, run `commonplace-validate` on
    the artifact, and commit the pass alone with a body saying what it was
    meant to make true. If the operator reverts part of a pass, record the
    threshold they applied in the pass file or a memory, so the next run
    starts from it.
 
-5. **Stop when the selected passes are done.** Offer the next ranked items;
-   do not run them.
+4. **Stop when the recommended passes are done.** Report what each pass
+   changed. Items you assessed but did not recommend are listed once, not
+   run.
 
 ## Budget
 
@@ -63,12 +63,12 @@ operator selects.
 - A worker gets the artifact path and the packet, never the conversation.
 - Propose-only work (the assessment, the figurative-phrasing list, title
   proposals) may run in parallel; edits to the artifact run in sequence.
-- Stop when the operator's selection is done, even if the ranked list has
-  items left. Unrun items cost nothing.
+- Stop when the recommended passes are done. An item not recommended costs
+  nothing; recommending a pass of unclear value costs a read and a diff.
 
 ## Verify
 
-- Every applied change traces to a selected pass.
+- Every applied change traces to a recommended pass.
 - No claim, evidence, or qualification changed unless the operator asked.
 - Each pass has its own commit and validation passed before it.
 - Operator reverts have been recorded as thresholds.

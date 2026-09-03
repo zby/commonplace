@@ -1,12 +1,13 @@
 # Revising instructions
 
-Operator-selected revision passes for one article or note whose claims are
-settled but whose text is not. Each pass is a short worker packet: it states
+Revision passes for one article or note whose claims are settled but whose
+text is not; an assessment recommends the passes and they run without a
+selection step. Each pass is a short worker packet: it states
 what the pass exists to make true, what it must preserve, and what it returns.
 The orchestrating procedure is
 [revise an article or note](./revise-an-article-or-note.md).
 
-For a generic editorial pass with no operator selection, use
+For a generic editorial pass with no assessment, use
 [revise-note](../revise-note.md) instead. For a full automated review pass,
 use [run-full-improvement-pass-on-note](../run-full-improvement-pass-on-note.md);
 the [audit pass](./audit-a-prior-pass.md) here is for checking what such a

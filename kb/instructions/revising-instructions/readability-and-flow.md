@@ -9,7 +9,7 @@ effort: judgment
 Make the artifact's structure carry its argument, so a reader meets each idea
 once, in the place it does the most work.
 
-Effort: judgment. Structural moves need judgment; run tightening alone as simple when that is all the operator selected.
+Effort: judgment. Structural moves need judgment; run tightening alone as simple when the assessment recommended nothing structural.
 
 Structural moves, each applied only where the whole read shows the need:
 
