@@ -56,22 +56,23 @@ complete generator of answers.
 Two differences separate theory-guided search from mutation with
 backtracking, once both are granted the same budget. The first is update
 bandwidth. Backtracking needs an address: which earlier commitment is at fault
-for a late failure, and what replaces it? Selection over undirected candidates
-extracts a few bits per trial, and the space of revert-point and alternative
-pairs grows combinatorially with sequence length. One surprising consequence
-read against a theory can single out a specific commitment as at fault and
-revise a whole region of that space at once. Where trials are few, slow, and expensive, that
-asymmetry is the regime argument for theory.
+for a late failure, and what replaces it? An accept-or-reject result on an
+undirected candidate says little about which earlier commitment is at fault,
+while the space of revert-point and alternative pairs grows combinatorially
+with sequence length. One surprising consequence read against a theory can
+single out a specific commitment as at fault and revise a whole region of that
+space at once. Where trials are few, slow, and expensive, that asymmetry is the
+regime argument for theory.
 
 The second difference is the failure signature. Undirected search fails in no
 consistent direction: its errors differ from one episode to the next. A wrong
-theory fails coherently,
-bending successive changes the same wrong way, as [broad negative transfer from
-a broad wrong
+theory fails coherently, bending successive changes the same wrong way, as
+[broad negative transfer from a broad wrong
 theory](./theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md)
-predicts. A test that replaces the theory with a plausible wrong one therefore
-discriminates better than one that withholds it: directional failure shows the
-theory was steering.
+predicts. If that prediction holds, a test that replaces the theory with a
+plausible wrong one discriminates better than one that withholds it:
+directional failure would show the theory was steering. The prediction has not
+been tested here; how large the effect must be is an open question below.
 
 ## Warrant belongs to the path, not the first proposal
 
