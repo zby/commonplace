@@ -172,6 +172,26 @@ allOf:
         allOf:
           - description: "The eleven logical records must appear in their canonical reading order."
             pattern: '(?ms)^## Run identity\s*$.*?^## Boundary and evidence\s*$.*?^## Source register\s*$.*?^## Shared records\s*$.*?^## Runtime account\s*$.*?^## Lens scoping\s*$.*?^## Lens outputs\s*$.*?^## Reconciliation\s*$.*?^## Bounded synthesis\s*$.*?^## Limitations\s*$.*?^## Verification and blockers\s*$'
+          - description: "Run identity must state the canonical carrier."
+            pattern: '(?ms)^## Run identity\s*$.*?^\*\*Canonical carrier:\*\*[ \t]+(?:response|state|retained)[ \t]*$.*?(?=^## Boundary and evidence\s*$)'
+          - description: "Run identity must state the physical form."
+            pattern: '(?ms)^## Run identity\s*$.*?^\*\*Physical form:\*\*[ \t]+(?:response|one file|package)[ \t]*$.*?(?=^## Boundary and evidence\s*$)'
+          - description: "Run identity must name the exact-result consumers."
+            pattern: '(?ms)^## Run identity\s*$.*?^\*\*Exact-result consumers?:\*\*[ \t]+\S[^\r\n]*$.*?(?=^## Boundary and evidence\s*$)'
+          - description: "Run identity must state retention and cleanup."
+            pattern: '(?ms)^## Run identity\s*$.*?^\*\*Retention and cleanup:\*\*[ \t]+\S[^\r\n]*$.*?(?=^## Boundary and evidence\s*$)'
+          - description: "Run identity must identify run state and final disposition."
+            pattern: '(?ms)^## Run identity\s*$.*?^\*\*Run state:\*\*[ \t]+\S[^\r\n]*$.*?(?=^## Boundary and evidence\s*$)'
+          - description: "Run identity must state permitted projections."
+            pattern: '(?ms)^## Run identity\s*$.*?^\*\*Permitted projections:\*\*[ \t]+\S[^\r\n]*$.*?(?=^## Boundary and evidence\s*$)'
+          - description: "Shared-record subheadings must appear under Shared records in canonical order."
+            pattern: '(?ms)^## Shared records\s*$.*?^### Components\s*$.*?^### Operative objects\s*$.*?^### Routes\s*$.*?^### Claims\s*$.*?^### Evidenced absences\s*$.*?^### Behavioral-authority paths\s*$.*?(?=^## Runtime account\s*$)'
+          - description: "Lens-scoping subheadings must appear under Lens scoping in canonical order."
+            pattern: '(?ms)^## Lens scoping\s*$.*?^### Memory/context scope\s*$.*?^### Epistemic scope\s*$.*?(?=^## Lens outputs\s*$)'
+          - description: "Lens-output subheadings must appear under Lens outputs in canonical order."
+            pattern: '(?ms)^## Lens outputs\s*$.*?^### Memory/context lens\s*$.*?^### Epistemic lens\s*$.*?(?=^## Reconciliation\s*$)'
+          - description: "Verification subheadings must appear under Verification and blockers in canonical order."
+            pattern: '(?ms)^## Verification and blockers\s*$.*?^### Semantic verification\s*$.*?^### Deterministic validation\s*$.*?^### Blockers\s*$'
   - if:
       properties:
         frontmatter:

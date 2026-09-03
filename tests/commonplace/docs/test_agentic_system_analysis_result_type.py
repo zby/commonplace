@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import pytest
+
 from commonplace.lib import validation
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
@@ -39,7 +41,17 @@ evidence-tier: {evidence_tier}
 
 ## Run identity
 
+**Canonical carrier:** response
+
 **Physical form:** response
+
+**Exact-result consumers:** requesting operator
+
+**Retention and cleanup:** keep through response handoff, then dispose.
+
+**Run state:** `kb/reports/state/agentic-system-analysis/AAS-2026-08-30-example-system-01/run-state.md`; final phase `handoff-ready`.
+
+**Permitted projections:** none.
 
 ## Boundary and evidence
 
@@ -178,6 +190,50 @@ def test_result_requires_the_canonical_section_order(tmp_path: Path) -> None:
     results = validate_external_result(tmp_path, content)
 
     assert any("canonical reading order" in failure for failure in results.fails)
+
+
+@pytest.mark.parametrize(
+    "line",
+    [
+        "**Canonical carrier:** response\n\n",
+        "**Physical form:** response\n\n",
+        "**Exact-result consumers:** requesting operator\n\n",
+        "**Retention and cleanup:** keep through response handoff, then dispose.\n\n",
+        "**Run state:** `kb/reports/state/agentic-system-analysis/AAS-2026-08-30-example-system-01/run-state.md`; final phase `handoff-ready`.\n\n",
+        "**Permitted projections:** none.\n\n",
+    ],
+)
+def test_result_requires_each_run_identity_field(tmp_path: Path, line: str) -> None:
+    results = validate_external_result(tmp_path, result_text().replace(line, ""))
+
+    assert any("Run identity must" in failure for failure in results.fails)
+
+
+def test_run_identity_field_value_must_be_on_its_labelled_line(tmp_path: Path) -> None:
+    content = result_text().replace(
+        "**Exact-result consumers:** requesting operator",
+        "**Exact-result consumers:**",
+    )
+
+    results = validate_external_result(tmp_path, content)
+
+    assert any("exact-result consumers" in failure for failure in results.fails)
+
+
+def test_required_subheadings_must_be_nested_under_their_section(
+    tmp_path: Path,
+) -> None:
+    content = result_text().replace(
+        "### Components\n\nComponent records.\n\n",
+        "",
+    ).replace(
+        "## Runtime account\n\nRuntime records.",
+        "## Runtime account\n\n### Components\n\nComponent records.\n\nRuntime records.",
+    )
+
+    results = validate_external_result(tmp_path, content)
+
+    assert any("Shared-record subheadings" in failure for failure in results.fails)
 
 
 def test_run_identity_projects_lifecycle_without_depending_on_run_state() -> None:

@@ -238,7 +238,30 @@ def test_analysis_lifecycle_is_declared_before_source_work() -> None:
     assert "Use an explicit response only" in opening
     assert "`kb/reports/cache/` is never canonical" in opening
     assert "phase: opened" in opening
+    assert "relative to the run directory" in opening
+    assert "normalized repository-relative `kb/` paths" in opening
+    assert "Spell `validation-target` exactly like `assembled-entry`" in opening
     assert "Never advance its phase until the current phase validates" in opening
+
+
+def test_unspecified_output_defaults_to_persistent_one_file_state() -> None:
+    orchestrator = instruction("analyse-agentic-system")
+    opening = orchestrator[
+        orchestrator.index("### 1. Open one run and declare the boundary")
+        : orchestrator.index("### 2. Freeze sources once")
+    ]
+    reporting = orchestrator[
+        orchestrator.index("### 12. Save and report")
+        : orchestrator.index("## Verify")
+    ]
+
+    assert "When the caller supplies no output path or lifecycle" in opening
+    assert "use `state` as the canonical carrier" in opening
+    assert "`one file` as the physical form" in opening
+    assert "<run-id>/result.md" in opening
+    assert "not satisfied merely by returning the file path" in opening
+    assert "do not reproduce the full typed artifact in the response" in reporting
+    assert "operator handoff does not authorize deletion" in reporting
 
 
 def test_runtime_seal_and_packet_issue_are_checked_phase_gates() -> None:

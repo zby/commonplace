@@ -50,9 +50,18 @@ Advance `phase` in order:
 9. `handoff-ready` rechecks that the declared carrier still contains the
    assembled bytes and that its type and run ID match this record.
 
-Every packet and return path is normalized relative to the run-state directory
-and carries a lowercase SHA-256. Packet IDs start with the parent `run-id`.
-Every packet and return begins with the same YAML header fields: `run-id`,
+`runtime-baseline-path`, every packet and return `path`, and
+`validation-receipt-path` are normalized relative to the run-state directory.
+For `state` and `retained`, `canonical-entry`, `canonical-manifest`,
+`assembled-entry`, `assembled-manifest`, and `validation-target` are normalized
+repository-relative `kb/` paths. A response has null canonical paths; its
+assembled validation copy may instead use either a repository-relative `kb/`
+path or an absolute temporary path. `validation-target` uses exactly the same
+path spelling as `assembled-entry`. Every byte-identified path carries a
+lowercase SHA-256.
+
+Packet IDs start with the parent `run-id`. Every packet and return begins with
+the same YAML header fields: `run-id`,
 `lens`, `packet-id`, `reviewed-boundary`, `source-register`,
 `canonical-register`, and `runtime-baseline-sha256`. The validator checks those
 values against this record. Correction packets get new identities; never

@@ -65,7 +65,7 @@ Every negative, thin, conflicting, or uncertain finding names its inspected boun
 
 `## Run identity` projects the canonical frontmatter identity for readers and states:
 
-- the canonical carrier: response, `kb/reports/state/`, or `kb/reports/retained/`;
+- the canonical carrier: `response`, `state`, or `retained`;
 - the physical form: response, one file, or package;
 - the named consumers of the exact result;
 - the retention and cleanup rule;
@@ -167,7 +167,7 @@ evidence-tier: code-grounded
 
 ## Run identity
 
-**Canonical carrier:** {response | kb/reports/state/ | kb/reports/retained/}
+**Canonical carrier:** {response | state | retained}
 
 **Physical form:** {response | one file | package}
 

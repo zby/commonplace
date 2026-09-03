@@ -349,6 +349,70 @@ def test_checkout_revision_must_resolve_from_source_root(tmp_path: Path) -> None
     )
 
 
+def test_checkout_capture_path_must_equal_source_root(tmp_path: Path) -> None:
+    state = valid_run_state(tmp_path)
+    content = state.read_text(encoding="utf-8")
+    document, error = validation.parse_document(content)
+    assert error is None and document is not None and document.frontmatter is not None
+    document.frontmatter["source-capture-path"] = tmp_path.as_posix()
+    state.write_text(
+        "---\n"
+        + yaml.safe_dump(document.frontmatter, sort_keys=False)
+        + "---\n"
+        + document.body,
+        encoding="utf-8",
+    )
+
+    results = validation.validate_note(state, repo_root=tmp_path)
+
+    assert any("expected the same path as source-root" in item for item in results.fails)
+
+
+def test_runtime_artifact_paths_must_be_run_relative(tmp_path: Path) -> None:
+    state = valid_run_state(tmp_path)
+    content = state.read_text(encoding="utf-8")
+    document, error = validation.parse_document(content)
+    assert error is None and document is not None and document.frontmatter is not None
+    document.frontmatter["runtime-baseline-path"] = (
+        state.parent / "runtime-baseline.md"
+    ).as_posix()
+    state.write_text(
+        "---\n"
+        + yaml.safe_dump(document.frontmatter, sort_keys=False)
+        + "---\n"
+        + document.body,
+        encoding="utf-8",
+    )
+
+    results = validation.validate_note(state, repo_root=tmp_path)
+
+    assert any("expected a normalized run-relative path" in item for item in results.fails)
+
+
+def test_file_result_paths_must_be_repository_relative_kb_paths(
+    tmp_path: Path,
+) -> None:
+    state = valid_run_state(tmp_path)
+    content = state.read_text(encoding="utf-8")
+    document, error = validation.parse_document(content)
+    assert error is None and document is not None and document.frontmatter is not None
+    document.frontmatter["assembled-entry"] = "result.md"
+    state.write_text(
+        "---\n"
+        + yaml.safe_dump(document.frontmatter, sort_keys=False)
+        + "---\n"
+        + document.body,
+        encoding="utf-8",
+    )
+
+    results = validation.validate_note(state, repo_root=tmp_path)
+
+    assert any(
+        "expected a normalized repository-relative kb/ path" in item
+        for item in results.fails
+    )
+
+
 def test_run_state_fails_after_canonical_result_bytes_change(tmp_path: Path) -> None:
     state = valid_run_state(tmp_path)
     result = next((tmp_path / "kb/reports/retained").rglob(f"{RUN_ID}.md"))
