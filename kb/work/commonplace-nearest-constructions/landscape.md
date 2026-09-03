@@ -5,32 +5,37 @@ repository commit `6c73908fb7a0aab2b47284abbccd3ed763daae3b`.
 
 ## Working result
 
-Within the reviewed corpus, no construction is nearest to Commonplace across
-all three lenses. Different systems are near different parts of it, and
-collapsing those relations into one ranking hides the main result.
+Using the questions under the three comparison lenses as qualitative criteria,
+the reviewed evidence does not support a single nearest construction to
+Commonplace. Different systems match different parts of it, and no scalar
+distance or weighting rule has been defined for collapsing those relations
+into one ranking.
 
-- **Commonplace today:** Ars Contexta is closest to an agent-operated
-  methodology environment; AI Research OS is closest in inspectable Markdown
-  medium and source-to-synthesis structure; Eigenius is closest in typed
-  epistemic objects and checked commit routes. None combines Commonplace's
-  theory-building purpose, collection and type contracts, semantic review, and
-  current human-agent allocation.
-- **Commonplace's development path:** Ars Contexta comes closest to turning
+- **Commonplace today:** Ars Contexta is the strongest reviewed match for an
+  agent-operated methodology environment; AI Research OS is the strongest
+  match in inspectable Markdown medium and source-to-synthesis structure;
+  Eigenius is the strongest match in typed epistemic objects and checked commit
+  routes. The reviewed evidence does not show one of these systems combining
+  Commonplace's theory-building purpose, collection and type contracts,
+  semantic review, and current human-agent allocation.
+- **Commonplace's development path:** Ars Contexta is the strongest reviewed
+  match for turning
   corrections and session evidence into methodology observations and later
-  system changes. Among reviewed systems, GBrain has the broadest implemented
-  operational machinery for capture, consolidation, scheduled maintenance,
+  system changes. GBrain is the strongest code-inspected match across the
+  listed functions of capture, consolidation, scheduled maintenance,
   retrieval, and gated skill revision. Both expose useful pieces of the missing
-  path; neither establishes reliable acquisition and admission of the
-  operator's recurring semantic judgments.
-- **The conjectured endpoint:** Fluent is closest to the software-house
-  topology, while Exo is closest to broad agent-executed self-revision and
-  recovery. Recuris, Memento-Skills, and Harness Continual Learning contribute
-  bounded attribution and admission mechanisms. No witness to the
+  path; the reviewed evidence for neither establishes reliable acquisition and
+  admission of the operator's recurring semantic judgments.
+- **The conjectured endpoint:** Fluent is the strongest reviewed match for the
+  software-house topology, while Exo is the strongest code-inspected match for
+  broad agent-executed self-revision and recovery. Recuris, Memento-Skills, and
+  Harness Continual Learning contribute bounded attribution and admission
+  mechanisms. No witness to the
   [reachability
   conjecture](../../articles/reachability-conjecture-the-llm-stays-fixed-the-software-house-learns.md)
   was located in the reviewed corpus.
 
-The nearest-neighbor picture is therefore composite only as a research heuristic:
+The comparison is therefore composite only as a research heuristic:
 Commonplace-like theory and governance, Ars Contexta- or GBrain-like trace
 processing, Exo-like self-revision and recovery, Fluent-like product operation,
 and bounded-learning admission mechanisms. This list does not show that the
@@ -45,24 +50,36 @@ strongest placement supported by a local review or tracked ingest. The rows
 answer different questions against the three Commonplace lenses and the six
 endpoint criteria below; they are not a scalar ranking of systems.
 
+Evidence terms are literal. **Code-inspected** means that a local review found
+the mechanism in a pinned implementation; it does not establish that the
+mechanism ran successfully or produced a reported outcome unless the row says
+so. **Paper-reported**, **practitioner-reported**, **product-reported**, and
+**product-documented**
+identify claims made by those sources, not independently reproduced results.
+**Synthesis inference** identifies this report's comparison across those
+records. “Not demonstrated” means that the reviewed evidence does not show the
+property; “not inspected” means that implementation evidence was unavailable;
+and “not in scope” means that the source did not set out to test the property.
+
 | Claim or question an article needs to address | Reviewed placement | What it retains and what admits a change | Criterion result that may be reused | Required caveat; do not infer |
 |---|---|---|---|---|
-| Can corrections and session evidence become methodology changes? | [Ars Contexta](../../agent-memory-systems/reviews/arscontexta.md) — code-grounded review | A local Markdown vault retains sessions, observations, tensions, methodology notes, context, skills, and hooks. `/remember` and `/rethink`, executed through LLM skill instructions, classify evidence and may promote it into notes or system changes. | Meets the present-construction criterion for an agent-operated methodology environment and partially meets the developmental-path criteria for capture, candidate formation, promotion, and read-back. | Code inspection establishes the artifact paths and instructed loop, not deterministic transcript capture, reliable cross-episode recognition, independent semantic admission, or a measured change in later behavior. |
-| Can a system automate more of capture, consolidation, maintenance, and skill revision? | [GBrain](../../agentic-systems/gbrain.md) — code-grounded analysis | Database and Markdown state retain signals, facts, takes, patterns, concepts, jobs, traces, and skills. Per-message detection and scheduled LLM cycles generate changes; SkillOpt admits a locally authored skill edit only when its median score over three runs per task beats the incumbent by a threshold, while bundled-skill edits remain human-reviewed proposals. | Meets more developmental-path machinery than Commonplace currently implements: automatic capture, scheduled consolidation, crash-resumable work, and gated revision of a behavior-shaping artifact. | The inspected machinery does not establish that its judge models or task scores recover an operator's recurring semantic distinction, acquire an adequate theory, or warrant admission beyond their supplied oracle domain. |
-| Can a software factory retain both product changes and project-specific guidance? | [Fluent](../../sources/fluent-self-improving-software-factory-2081823472016335059.ingest.md) — practitioner ingest | The practitioner account says accepted product changes, project Expertise, observations, and corrective follow-ups persist; a deterministic Tester and independent Reviewers can reject work, while people shape and authorize consequential specifications. | Supports a human-inclusive **House**, **Software learning**, and **Note learning** topology in which retained guidance can affect later shaping and execution. | This is source-level practitioner evidence, not a code-grounded review. It does not test faithful program-theory acquisition, successor theory after contrary evidence, or **No-human continuation**. |
-| Can operational rulings move from natural language into executable enforcement? | [Wheelhouse](../../sources/steve-yegge-fences-not-sandboxes.ingest.md) — practitioner ingest | The reported factory retains clarifications, human verdicts, incidents, doctrine, warnings, and programs; human rulings authorize the generalization, while a dedicated officer is reported to consolidate obsolete rules. | Supports a human-inclusive developmental path from production evidence to natural-language system definition and then codified enforcement. | The source is a first-person report with no inspected implementation or independent outcome evidence. It does not establish computational generalization, program-theory holding by the curator, or human-free admission. |
-| Can an agent revise and recover its own broad operating surface? | [Exo](../../agentic-systems/exo.md) — code-grounded analysis | An ordered event stream and versioned artifacts preserve attempts while the agent may edit the executor, prompts, tools, adapters, and memory machinery. Build, tests, restart observation, git, snapshots, and rewind reject or recover mechanical failures. | Meets important developmental-path criteria for broad self-inspection, symbolic revision, activation, restart, rollback, preserved failure evidence, and scheduled continuation. | The review establishes revision capability, not an automatic experience-to-improvement trigger. Exo is not shown maintaining an external-user product, acquiring program theory, or rejecting a semantically bad change that still builds and runs. |
-| Does persistent fixed-model refinement solve semantic admission? | [Prime Agent](../../sources/prime-agent-a-self-improving-rlm-harness.ingest.md) — code-grounded mechanisms; paper-only cases | Versioned prompt, memory, skill, subagent, kernel, goal, and schedule state persists across trajectories; agents or a refinement call request edits that are recorded and can be rolled back. | Code inspection supports persistent external-state revision and bounded continuation; the reported fixed-model cases show why these mechanisms are relevant to **Fixed model** learning. | The reported Factorio case retained a specification exploit as a reusable skill. Persistence, versioning, and rollback therefore do not establish semantic admission, a software house, or program-theory acquisition; benchmark outcomes remain paper-only here. |
-| Can a fixed model admit trace-derived changes through a reject-capable gate? | [Recuris](../../sources/recursive-experiential-working-memory-evolution.ingest.md) — code-grounded mechanisms; paper-only outcomes | Experiential memory, verified work state, invocation policy, and checkers form the retained update surface. A fixed Meta-Agent proposes component-scoped patches and a deterministic paired held-out gate decides promotion. | Code inspection supports trace-to-candidate formation and reject-capable admission within a supplied four-coordinate memory design; the paper supplies the fixed-model condition and outcome claims. | The gate, benchmark partitions, runtime, and theory of the four coordinates remain fixed. Reported gains are not independently reproduced, and the system does not test software-house operation or acquisition and revision of program rationale. |
-| Can one learned unit change both natural-language and executable behavior? | [Memento-Skills](../../sources/memento-skills-let-agents-design-agents.ingest.md) — paper ingest | A skill folder retains `SKILL.md`, prompts, and executable code. Outcome judgment and failure attribution select a skill to rewrite or create; a generated unit test scored by a judge gates the mutation and failure triggers rollback. | The paper reports fixed-foundation-LLM learning through a mixed-form artifact, including **Software learning**, **Note learning**, later routing, and bounded autonomous admission. | The router itself is trained, and answerable benchmarks supply the objective and oracle. Generated tests have a narrow validation radius; the work does not test a continuing user product, program theory, or open-ended successor acquisition. |
-| Does a zero-loss historical gate establish no forgetting? | [Harness Continual Learning](../../sources/harness-continual-learning-adaptation-beyond-model-parameters.ingest.md) — paper ingest | Task interface, experience memory, capability map, and adaptive router are jointly versioned. An optimizer proposes isolated edits and an evaluator commits only candidates that improve current validation, respect sampled historical anchors, and pass validity checks. | The paper reports a proposal-evaluation-commitment loop for sequential fixed-model external-state learning and makes regression control an explicit admission criterion. | No implementation or outcome was independently reproduced. The paper reports held-out forgetting even at zero loss on retained anchors; finite benchmark oracles do not establish global retention, program theory, or software-house continuation. |
+| Can corrections and session evidence become methodology changes? | [Ars Contexta](../../agent-memory-systems/reviews/arscontexta.md) — code-inspected mechanism | A local Markdown vault retains sessions, observations, tensions, methodology notes, context, skills, and hooks. `/remember` and `/rethink`, executed through LLM skill instructions, classify evidence and may promote it into notes or system changes. | Synthesis inference: strongest present-construction match for an agent-operated methodology environment and a partial developmental-path match for capture, candidate formation, promotion, and read-back. | Static code inspection establishes the artifact paths and instructed loop, not that the path ran reliably, captured transcripts deterministically, recognized recurrences faithfully, admitted changes independently, or improved later behavior. |
+| Can a system automate more of capture, consolidation, maintenance, and skill revision? | [GBrain](../../agentic-systems/gbrain.md) — code-inspected mechanism | Database and Markdown state retain signals, facts, takes, patterns, concepts, jobs, traces, and skills. Host instructions request per-message signal detection; if adopted, that path and scheduled LLM cycles can generate changes. SkillOpt is configured to admit a locally authored skill edit only when its median score over three runs per task beats the incumbent by a threshold, while bundled-skill edits remain human-reviewed proposals. | Code inspection shows machinery for automatic capture, scheduled consolidation, crash-resumable work, and gated revision of a behavior-shaping artifact—more of the listed developmental-path machinery than Commonplace currently implements. | The inspected machinery does not establish that the host always follows the capture instruction, that the loops ran successfully, or that its judge models or task scores recover an operator's recurring semantic distinction, acquire an adequate theory, or warrant admission beyond their supplied oracle domain. |
+| Can a software factory retain both product changes and project-specific guidance? | [Fluent](../../sources/fluent-self-improving-software-factory-2081823472016335059.ingest.md) — practitioner-reported mechanism | The practitioner reports that accepted product changes, project Expertise, observations, and corrective follow-ups persist; the account assigns rejection to a deterministic Tester and independent Reviewers, while people shape and authorize consequential specifications. | The account supports a human-inclusive **House**, **Software learning**, and **Note learning** topology and reports a path by which retained guidance can affect later shaping and execution. | This is practitioner-reported architecture, not a code-inspected mechanism or independently evaluated outcome. It does not test faithful program-theory acquisition, successor theory after contrary evidence, or **No-human continuation**. |
+| Can operational rulings move from natural language into executable enforcement? | [Wheelhouse](../../sources/steve-yegge-fences-not-sandboxes.ingest.md) — practitioner-reported mechanism | The account reports retained clarifications, human verdicts, incidents, doctrine, warnings, and programs; human rulings authorize the generalization, while a dedicated officer is reported to consolidate obsolete rules. | The account supports a human-inclusive developmental path from production evidence to natural-language system definition and then codified enforcement. | The source is a first-person report with no inspected implementation or independent outcome evidence. It does not establish computational generalization, program-theory holding by the curator, or human-free admission. |
+| Can an agent revise and recover its own broad operating surface? | [Exo](../../agentic-systems/exo.md) — code-inspected mechanism | An ordered event stream and versioned artifacts preserve attempts while the agent may edit the executor, prompts, tools, adapters, and memory machinery. The inspected implementation provides build and test rejection plus restart observation, git, snapshots, and rewind for mechanical recovery. | Code inspection supports broad self-inspection, symbolic revision, activation, restart, rollback, preserved failure evidence, and scheduled continuation. | Static inspection establishes revision and recovery paths, not their reliability in a live instance or an automatic experience-to-improvement trigger. The review did not locate an external-user product, a program-theory acquisition test, or a gate that rejects a semantically bad change that still builds and runs. |
+| Does persistent fixed-model refinement solve semantic admission? | [Prime Agent](../../sources/prime-agent-a-self-improving-rlm-harness.ingest.md) — code-inspected mechanism; paper-reported cases | Versioned prompt, memory, skill, subagent, kernel, goal, and schedule state persists across trajectories; agents or a refinement call request edits that are recorded and can be rolled back. | Code inspection supports persistent external-state revision and bounded continuation; the reported fixed-model cases show why these mechanisms are relevant to **Fixed model** learning. | The reported Factorio case retained a specification exploit as a reusable skill. Persistence, versioning, and rollback therefore do not establish semantic admission, a software house, or program-theory acquisition; benchmark outcomes remain paper-only here. |
+| Can a fixed model admit trace-derived changes through a reject-capable gate? | [Recuris](../../sources/recursive-experiential-working-memory-evolution.ingest.md) — code-inspected mechanism; paper-reported outcomes | Experiential memory, verified work state, invocation policy, and checkers form the retained update surface. The paper specifies a fixed Meta-Agent; inspected code implements component-scoped patch proposals and a deterministic paired held-out promotion gate. | Code inspection supports trace-to-candidate formation and reject-capable admission within a supplied four-coordinate memory design; the paper supplies the fixed-model condition and outcome claims. | The gate, benchmark partitions, runtime, and theory of the four coordinates remain fixed. Reported gains are not independently reproduced, and the study does not test software-house operation or acquisition and revision of program rationale. |
+| Can one learned unit change both natural-language and executable behavior? | [Memento-Skills](../../sources/memento-skills-let-agents-design-agents.ingest.md) — paper-reported mechanism and outcomes | The paper describes a skill folder containing `SKILL.md`, prompts, and executable code. It reports that outcome judgment and failure attribution select a skill to rewrite or create and that a generated unit test scored by a judge gates the mutation, with rollback on failure. | The paper reports fixed-foundation-LLM learning through a mixed-form artifact, including **Software learning**, **Note learning**, later routing, and bounded autonomous admission. | The implementation was not independently inspected in this ingest. The router itself is trained, and answerable benchmarks supply the objective and oracle. Generated tests have a narrow validation radius; the study does not test a continuing user product, program theory, or open-ended successor acquisition. |
+| Does a zero-loss historical gate establish no forgetting? | [Harness Continual Learning](../../sources/harness-continual-learning-adaptation-beyond-model-parameters.ingest.md) — paper-reported mechanism and outcomes | The paper describes a jointly versioned task interface, experience memory, capability map, and adaptive router. It reports an optimizer that proposes isolated edits and an evaluator that commits only candidates that improve current validation, respect sampled historical anchors, and pass validity checks. | The paper reports a proposal-evaluation-commitment loop for sequential fixed-model external-state learning and makes regression control an explicit admission criterion. | No implementation was inspected and no outcome was independently reproduced. The paper reports held-out forgetting even at zero loss on retained anchors; finite benchmark oracles do not establish global retention, program theory, or software-house continuation. |
 
-Together these placements show that the component mechanisms are separately
-constructible: trace-derived methodology candidates, scheduled consolidation,
-cross-form retention, reject-capable gates, broad self-revision, rollback that
-preserves failed-attempt evidence, and continuing product operation with human
-authority. None of the reviewed systems tests the full conjunction. In
-particular, none tests both initial acquisition of a withheld program rationale
+Together these placements provide code-inspected or source-reported examples of
+separate component mechanisms: trace-derived methodology candidates, scheduled
+consolidation, cross-form retention, reject-capable gates, broad self-revision,
+rollback that preserves failed-attempt evidence, and continuing product
+operation with human authority. No reviewed source tests the full conjunction.
+In particular, no reviewed source tests both initial acquisition of a withheld
+program rationale
 and later replacement of that rationale from delayed product consequences,
 with causal read-back into software decisions and no human supplying the
 generalization or admission verdict. The table therefore supports claims about
@@ -83,19 +100,22 @@ operating constraints together; it is not the final program boundary, as
 [Commonplace as an instrument](../../reference/commonplace-as-an-instrument.md)
 states.
 
-The direction was always for the system to perform more of this work from less
-and less task-specific human input. That does not mean eliminating all human
-input or optimizing for fewer operator hours. It means increasing useful and
+The operator characterizes the intended direction as having been for the system
+to perform more of this work from less and less task-specific human input. This
+report treats that characterization as the program's stated direction, not as
+an independently reconstructed historical finding. It does not mean eliminating
+all human input or optimizing for fewer operator hours. It means increasing useful and
 better-warranted work per consequential human judgment, while moving the
 remaining judgments toward harder questions and longer horizons. [Increasing
 computational autonomy relocates human effort to the
 frontier](../../notes/increasing-computational-autonomy-relocates-human-effort.md)
 states that objective more precisely.
 
-This starting point differs from most nearby constructions surveyed. Harness
-optimizers begin with a task loop and add enough retained state to improve a
-score. Software factories begin with application production and add documents,
-feedback, and governance. Commonplace begins with semantic work: forming
+This operator-stated starting point differs from most constructions in the
+reviewed set. The reviewed harness optimizers begin with a task loop and add
+retained state to improve a supplied score. The reviewed software factories
+begin with application production and add documents, feedback, and governance.
+Commonplace's stated starting point is semantic work: forming
 explanations, assessing their fit and warrant, revising them under contrary
 evidence, and integrating them into a larger theory.
 
@@ -105,10 +125,11 @@ Under [the declared Commonplace
 frame](../../reference/commonplace-declared-frame.md), the repository, its
 operative artifacts and software, the agents that consume them, and designated
 maintainers form one system. Model weights and their provider remain outside.
-Agents already perform substantial search, comparison, synthesis, criticism,
-drafting, and implementation. Natural-language theory, instructions, schemas,
-validators, review state, and code retain accepted changes and affect later
-work.
+Agents already perform search, comparison, synthesis, criticism, drafting, and
+implementation. The repository retains accepted changes in natural-language
+theory, instructions, schemas, validators, review state, and code. The traced
+tag-README pathway establishes later behavioral effect for one bounded subset
+of those surfaces, not for every retained artifact.
 
 The operator still supplies decisive judgments about research direction,
 global theoretical fit, semantic admission, and system design where no
@@ -117,8 +138,10 @@ declared boundary, as a bounded human-inclusive [reflective self-improving
 system](../../notes/evidence/commonplace-as-a-reflective-system.md), not as an
 autonomous theory learner. A [2026-08-30 revision
 trace](../../notes/evidence/commonplace-revision-used-theory-guided-computational-search.md)
-shows retained theory guiding model-mediated search while the operator supplied
-sparse but decisive global-fit corrections. That is evidence for one mixed
+records retained theory being retrieved during model-mediated search while the
+operator supplied sparse but decisive global-fit corrections. The trace supports
+an inference that the retained artifacts constrained the revision, but has no
+matched control. It is evidence for one mixed
 human-computational pathway, not for computational theory acquisition.
 
 ### Developmental path: less task-specific human input
@@ -180,15 +203,15 @@ call does not by itself satisfy them.
 
 ### Working program thesis: theory building and software building converge
 
-The realization that motivates the current program is stronger than “a theory
-builder needs some tooling.” Under open-ended operation, a theory builder will
-eventually encounter material its current software cannot represent, retrieve,
+The working thesis that motivates the current program is stronger than “a theory
+builder needs some tooling.” It predicts that, under open-ended operation, a
+theory builder will eventually encounter material its current software cannot represent, retrieve,
 compare, test, schedule, or govern. Supporting a new source kind may require a
 snapshot path; a new relation may require a schema and validator; a larger
 corpus may require a different index; a new review problem may require another
 evaluator or execution path.
 
-At that point, either a person changes the supporting software or the theory
+Under the thesis, either a person changes the supporting software or the theory
 builder does. If the same person repeatedly diagnoses and implements such
 changes, that person remains an internal production and theory-holding
 component. A computational theory builder that brings the function inside must
@@ -199,8 +222,9 @@ operation, not an empirically established inevitability.
 
 The implication also runs from software building toward theory building, under
 the narrower condition that the software must remain coherent across novel
-demands whose fit cannot be decided by existing checks. Such a software house
-must preserve, apply, criticize, and sometimes revise an explanation of why the
+demands whose fit cannot be decided by existing checks. The thesis therefore
+requires such a software house to preserve, apply, criticize, and sometimes
+revise an explanation of why the
 product is organized as it is. The proposed research object is therefore one
 coupled system approached from two directions: theory work creates demands for
 new machinery, while coherent software change creates demands for theory.
@@ -219,30 +243,30 @@ single score.
 
 ## Landscape map
 
-| Construction | Nearest lens or function | What it contributes | Decisive divergence from Commonplace | Evidence basis |
+| Construction | Matched lens or function | What it contributes | Decisive divergence from Commonplace | Evidence basis |
 |---|---|---|---|---|
-| [Ars Contexta](../../agent-memory-systems/reviews/arscontexta.md) | Present operating shape; recurrence-to-methodology path | Agent-operated file graph, generated instructions and hooks, session/correction mining, observation and tension state, later promotion or implementation | Most extraction and promotion judgment is encoded in LLM skill procedure; reliable cross-episode recognition and behavioral improvement are not established | Code-grounded review |
-| [AI Research OS](../../agent-memory-systems/reviews/ai-research-os-workshop.md) | Present knowledge medium | Inspectable Markdown, immutable sources, source/synthesis separation, progressive pull, deterministic indexes | It continuously rewrites a topic wiki, has no reject-capable content-acceptance step, and does not promote learned knowledge into system-definition artifacts | Code-grounded review |
-| [Agent Skills for Context Engineering](../../agent-memory-systems/reviews/agent-skills-for-context-engineering.md) | Methodology corpus and research-to-skill promotion | File-first skills, source and claim provenance, run gates, mechanism records, validation, router benchmarks, and example trace-to-skill tooling | Published skills remain authored or human-reviewed; the trace optimizer is example scope rather than a standing cross-task learning loop | Code-grounded review |
-| [GBrain](../../agentic-systems/gbrain.md) | Operational development machinery | Trace and signal capture, fact/take/concept promotion, scheduled consolidation, durable jobs, retrieval, and gated skill revision | A larger database/runtime surface carries much of the authority; semantic admission uses machine oracles and uneven provenance rather than Commonplace's slower explicit theory governance | Code-grounded whole-system and memory reviews |
-| [Eigenius](../../agentic-systems/eigenius.md) | Typed epistemic governance | Typed graph objects, epistemic grades, certificates, route-specific validation, optional proof checking | The host supplies the reasoning protocol and calls; the system does not own a continuing theory-building loop, and formal validity does not establish content truth or explanatory quality | Code-grounded analysis |
-| [ScienceFlow](../../sources/scienceflow-long-horizon-agent-for-ml-research-and-discovery.ingest.md) | Long-horizon research continuation | Recoverable workspaces, retained evidence, bounded memory, evaluated stages, re-anchoring, and resource control | Its evaluators and stage decomposition are fixed; explanation is not a retained governing object and the reported outcomes are not independently reproduced | Code-grounded mechanisms; paper-reported outcomes |
-| [Fluent](../../sources/fluent-self-improving-software-factory-2081823472016335059.ingest.md) | Software-house topology | Users, product code, rationale-bearing work packets, expertise, rejection, deployment evidence, and corrective follow-ups | People retain consequential context, judgment, expertise, and authority; program-theory acquisition is not tested | Public repository and practitioner account |
-| [Wheelhouse](../../sources/steve-yegge-fences-not-sandboxes.ingest.md) | Human-inclusive cross-form learning | Incidents and rulings can become doctrine, warnings, and executable fences | The operator supplies the generalization and verdict; implementation and outcomes are not independently inspectable | Practitioner account |
-| [Exo](../../agentic-systems/exo.md) | Mutable and recoverable runtime | Broad agent-executed self-editing, source inspection, build/test/restart, rollback, event history, and scheduling | It has no demonstrated theory-building service, automatic trace-to-improvement trigger, or semantic gate for delayed product fit | Code-grounded analysis |
-| [Recuris](../../sources/recursive-experiential-working-memory-evolution.ingest.md), [Memento-Skills](../../sources/memento-skills-let-agents-design-agents.ingest.md), and [Harness Continual Learning](../../sources/harness-continual-learning-adaptation-beyond-model-parameters.ingest.md) | Bounded attribution and admission | Trace-based patching, mixed-form skills, regression anchors, rollback, and fixed-model continuation | Benchmarks and supplied decompositions provide the objective and oracle; none maintains a changing user product or acquires its theory | Papers and pinned implementations where available |
-| [Knowledge-Centric Self-Improvement](../../sources/knowledge-centric-self-improvement-2607.19592.ingest.md) | Knowledge as the learned object | Cross-task forums and distilled natural-language guidance isolate improvement in an external knowledge base | The protocol deliberately fixes software and uses benchmark answers; it does not build a connected, governed theory or revise its supporting system | Paper |
-| [Rainbow](../../sources/rainbow-architecture-based-self-adaptation.ingest.md) | Historical model-mediated adaptation | A live architectural model, probes, constraints, and strategies govern adaptation | Designers supply the model, goals, operators, and strategies; the system does not learn or revise that governing theory | Paper and historical implementation account |
+| [Ars Contexta](../../agent-memory-systems/reviews/arscontexta.md) | Present operating shape; recurrence-to-methodology path | Agent-operated file graph, generated instructions and hooks, session/correction mining, observation and tension state, later promotion or implementation | Most extraction and promotion judgment is encoded in LLM skill procedure; reliable cross-episode recognition and behavioral improvement are not established | Code-inspected mechanism; no live outcome evidence |
+| [AI Research OS](../../agent-memory-systems/reviews/ai-research-os-workshop.md) | Present knowledge medium | Inspectable Markdown, immutable sources, source/synthesis separation, progressive pull, deterministic indexes | The review did not locate a reject-capable content-acceptance step or a governed promotion path from learned knowledge into system-definition artifacts | Code-inspected mechanism; no live outcome evidence |
+| [Agent Skills for Context Engineering](../../agent-memory-systems/reviews/agent-skills-for-context-engineering.md) | Methodology corpus and research-to-skill promotion | File-first skills, source and claim provenance, run gates, mechanism records, validation, router benchmarks, and example trace-to-skill tooling | Published skills remain authored or human-reviewed; the trace optimizer is example scope rather than a standing cross-task learning loop | Code-inspected mechanism; reported benchmarks retain their source grade |
+| [GBrain](../../agentic-systems/gbrain.md) | Operational development machinery | Trace and signal capture, fact/take/concept promotion, scheduled consolidation, durable jobs, retrieval, and gated skill revision | A larger database/runtime surface carries much of the authority; semantic admission uses machine oracles and uneven provenance rather than Commonplace's slower explicit theory governance | Code-inspected whole-system and memory mechanisms; no live outcome evidence |
+| [Eigenius](../../agentic-systems/eigenius.md) | Typed epistemic governance | Typed graph objects, epistemic grades, certificates, route-specific validation, optional proof checking | The host supplies the reasoning protocol and calls; the system does not own a continuing theory-building loop, and formal validity does not establish content truth or explanatory quality | Code-inspected mechanism; no live outcome evidence |
+| [ScienceFlow](../../sources/scienceflow-long-horizon-agent-for-ml-research-and-discovery.ingest.md) | Long-horizon research continuation | Recoverable workspaces, retained evidence, bounded memory, evaluated stages, re-anchoring, and resource control | Its evaluators and stage decomposition are fixed; explanation is not a retained governing object and the reported outcomes are not independently reproduced | Code-inspected mechanisms; paper-reported outcomes |
+| [Fluent](../../sources/fluent-self-improving-software-factory-2081823472016335059.ingest.md) | Software-house topology | Practitioner-reported users, product code, rationale-bearing work packets, expertise, rejection, deployment evidence, and corrective follow-ups | People retain consequential context, judgment, expertise, and authority; program-theory acquisition is not tested | Product-documented architecture and practitioner-reported operation; implementation not code-inspected |
+| [Wheelhouse](../../sources/steve-yegge-fences-not-sandboxes.ingest.md) | Human-inclusive cross-form learning | Practitioner-reported incidents and rulings can become doctrine, warnings, and executable fences | The operator supplies the generalization and verdict; implementation and outcomes are not independently inspectable | Practitioner-reported mechanism and outcomes; implementation not code-inspected |
+| [Exo](../../agentic-systems/exo.md) | Mutable and recoverable runtime | Broad agent-executed self-editing, source inspection, build/test/restart, rollback, event history, and scheduling | The code-grounded review did not locate a theory-building service, automatic trace-to-improvement trigger, or semantic gate for delayed product fit | Code-inspected mechanism; no live instance run |
+| [Recuris](../../sources/recursive-experiential-working-memory-evolution.ingest.md), [Memento-Skills](../../sources/memento-skills-let-agents-design-agents.ingest.md), and [Harness Continual Learning](../../sources/harness-continual-learning-adaptation-beyond-model-parameters.ingest.md) | Bounded attribution and admission | Trace-based patching, mixed-form skills, regression anchors, rollback, and fixed-model continuation | Benchmarks and supplied decompositions provide the objective and oracle; the reviewed records do not test maintenance of a changing user product or acquisition of its theory | Paper-reported mechanisms and outcomes; Recuris mechanisms also code-inspected |
+| [Knowledge-Centric Self-Improvement](../../sources/knowledge-centric-self-improvement-2607.19592.ingest.md) | Knowledge as the learned object | Paper-reported cross-task forums and distilled natural-language guidance isolate improvement in an external knowledge base | The protocol deliberately fixes software and uses benchmark answers; it does not build a connected, governed theory or revise its supporting system | Paper-reported mechanism and outcomes; implementation not code-inspected |
+| [Rainbow](../../sources/rainbow-architecture-based-self-adaptation.ingest.md) | Historical model-mediated adaptation | A paper-described live architectural model, probes, constraints, and strategies govern adaptation | Designers supply the model, goals, operators, and strategies; the system does not learn or revise that governing theory | Paper-reported mechanism, implementation, and outcomes; not independently reproduced |
 
-The table names nearest relations, not a winner. In particular, AI Research OS
-is nearer in medium than in governance; GBrain is nearer in operational
-learning machinery than in inspectability; Fluent is nearer in production
-topology than in actor allocation; and Exo is nearer in mutation reach than in
-semantic selection.
+The table names qualitative matches, not a winner. In particular, AI Research
+OS matches the medium more strongly than the governance; GBrain matches
+operational learning machinery more strongly than inspectability; Fluent
+matches production topology more strongly than actor allocation; and Exo
+matches mutation reach more strongly than semantic selection.
 
 ## Nearest constructions to Commonplace's present and path
 
-### Ars Contexta is closest to the agent-operated methodology shape
+### Ars Contexta is the strongest reviewed match to the agent-operated methodology shape
 
 Ars Contexta treats the knowledge base as an agent-operated methodology
 environment rather than a passive memory store. Like Commonplace, it uses
@@ -253,15 +277,16 @@ breakdowns, agent confusion, and undocumented decisions. `/rethink` can then
 classify accumulated observations and tensions for promotion, implementation,
 methodology change, archiving, or continued observation.
 
-That makes Ars Contexta the closest reviewed construction to the exact missing
+That makes Ars Contexta the strongest reviewed match to the exact missing
 transition named by the operator. The qualification is decisive: much of the
 capture, recurrence judgment, classification, and promotion policy is a
 natural-language skill executed by an LLM, not an independently verified
-automatic loop. The review establishes an implemented and instructed path. It
+automatic loop. Static inspection establishes implemented artifacts and an
+instructed path, not that the path ran reliably. It
 does not establish faithful recognition of the same distinction across
 episodes, warranted admission, or improved later behavior.
 
-### AI Research OS is closest in knowledge medium
+### AI Research OS is the strongest reviewed match in knowledge medium
 
 AI Research OS uses immutable source material, per-source pages, concept and
 entity pages, cross-source comparisons, synthesis, explicit open questions,
@@ -269,15 +294,15 @@ and deterministic indexes in a local Markdown research directory. Its staged
 read path and source/synthesis separation closely resemble Commonplace's
 inspectable medium and progressive pull.
 
-The systems differ at admission and durability. AI Research OS lets later
-ingests rewrite its wiki and retains every generated page without a
-reject-capable content gate. Structural lint can find broken links, missing
+The systems differ at admission and durability. The code-grounded review found
+that later ingests can rewrite the AI Research OS wiki and that generated pages
+are retained without a reject-capable content gate. Structural lint can find broken links, missing
 hubs, and possible stale claims, but does not establish faithfulness or
 explanatory quality. Generated knowledge also remains knowledge; it does not
 become a validator, schema, or operating instruction through a governed
 promotion path.
 
-### GBrain is closest in implemented operational learning machinery
+### GBrain is the strongest code-inspected match in operational learning machinery
 
 GBrain combines a Markdown-facing brain with a Postgres-shaped active store,
 hybrid retrieval, typed operations, background jobs, scheduled maintenance,
@@ -285,8 +310,8 @@ trace and signal extraction, consolidation into stronger knowledge objects,
 and SkillOpt revision. Its host protocol asks for per-message signal detection;
 its owned dream cycle creates and maintains facts, takes, patterns, concepts,
 and skill candidates; its durable queue supports crash-resumable subagents.
-This is a much more complete operational answer to capture and continuation
-than Commonplace currently has.
+The inspected implementation covers more of the listed capture and continuation
+functions than Commonplace currently implements.
 
 It is not simply a more automated Commonplace. Much of its active authority
 lives in database state, ranking machinery, daemons, and LLM maintenance calls.
@@ -334,12 +359,13 @@ workshop](../epistemic-architectures/README.md) keeps that comparison.
 
 ## Commonplace and Exo
 
-Exo is the sharpest direct comparison for Commonplace's development path
-because the two systems start from opposite scarce resources. Exo permits broad
-agent-executed self-modification but lacks a strong semantic basis for deciding
-which changes are improvements. Commonplace has built a comparatively rich
-semantic and governance substrate but still depends on the operator for the
-highest-level theory and admission judgments.
+Exo provides a direct comparison for Commonplace's development path because the
+two systems start from opposite scarce resources. Exo permits broad
+agent-executed self-modification, but the code-grounded review did not locate an
+independent semantic gate for deciding which mechanically valid changes are
+improvements. Commonplace has explicit semantic and governance artifacts but
+still depends on the operator for the highest-level theory and admission
+judgments.
 
 Technical basis: the code-grounded [Exo whole-system
 analysis](../../agentic-systems/exo.md) and [Exo memory-system
@@ -350,23 +376,25 @@ review](../../agent-memory-systems/reviews/exo.md).
 | Starting purpose | Help a human operator build and assess theories about agentic systems | Let a long-running personal agent inspect and rewrite as much of its own runtime as safely practical |
 | Primary self-representation | Distributed typed notes, collection contracts, instructions, ADRs, schemas, validators, and code | A literal source tree, injected self-map, prompts, tools, adapters, skills, memory, and executor code |
 | Mutable surface | Natural-language theory and system-definition artifacts can both change, but consequential changes remain human-gated | The agent can rewrite the executor, prompts, tools, adapters, and memory machinery; the Rust substrate is protected by default policy |
-| Preserved evidence | Git history, source snapshots, review results, freshness state, and retained artifacts | An append-only event stream and versioned artifacts survive sandbox rewind and failed executor changes |
+| Preserved evidence | Git history, source snapshots, review results, freshness state, and retained artifacts, with coverage differing by path | An append-only event stream and versioned artifacts survive sandbox rewind and failed executor changes |
 | Context strategy | Selective pull through search, indexes, links, skills, and explicit routing | Full conversation replay plus coarse-pushed memory and skill descriptions, with skill bodies pulled on demand |
 | Admission strength | Structural validation plus semantic review and operator judgment; broad automatic promotion is deliberately absent | Build, tests, module-shape checks, restart observation, and rollback; no independent semantic judge or mandatory canary |
 | Current improvement trigger | Task-local human or agent noticing; operator interventions are not systematically captured or clustered | Deliberate model or human self-editing using inspectable state; no implemented automatic trace-learning or self-maintenance trigger |
-| Theory-building role | Explicit purpose, with retained theory already guiding search; operator still decides global fit | No explicit service or evaluation for acquiring and revising a theory of an external product |
+| Theory-building role | Operator-stated purpose; one trace records retained theory being retrieved during search, while the operator decides global fit | The review did not locate a service or evaluation for acquiring and revising a theory of an external product |
 | Autonomy direction | Move one function at a time when representation, method, correction, and warrant support the transfer | Maximize mutable agent control while keeping a small recovery and safety substrate fixed |
 | Main missing bridge | Automatic evidence capture, recurrence detection, credit assignment, semantic admission, and sustained continuation | An objective-bearing semantic theory, delayed evidence attribution, and a gate able to judge more than buildability and immediate behavior |
 
-Exo therefore supplies several pieces Commonplace does not yet have: a durable
+The inspected Exo design therefore supplies several pieces Commonplace does not
+yet have: a durable
 execution-event substrate, an explicit protected-substrate/mutable-policy
 boundary, model-accessible self-inspection, rebuild-and-restart, recovery that
-preserves failed-attempt evidence, and scheduled continuation. Commonplace
-supplies what Exo deliberately leaves thin: explicit surfaces for typed
-knowledge claims, rationale, and provenance; separation between knowledge and
-system-definition authority; semantic review; and an explicit account of which
-human judgments have not yet moved. Those surfaces do not guarantee complete
-rationale coverage or end-to-end continuity.
+preserves failed-attempt evidence, and scheduled continuation. Compared with the
+inspected Exo surface, Commonplace has explicit surfaces for typed knowledge
+claims, selected design rationale, and provenance; separation between knowledge
+and system-definition authority; semantic review; and an explicit account of
+which human judgments have not yet moved. The traced Commonplace evidence does
+not establish complete rationale coverage or end-to-end continuity across those
+surfaces.
 
 Neither can be described as the other with one component added. Giving
 Commonplace Exo's rewrite and restart machinery would not automate theory
@@ -412,32 +440,35 @@ are mechanism judgments, not uniform evidence grades; the map and detailed
 sections state whether support comes from inspected code, papers, product
 documentation, or practitioner reports. “Partial” means that a mechanism
 exists but its causal role, scope, or actor allocation does not satisfy the
-endpoint condition.
+endpoint condition. “Not demonstrated” means the available record does not show
+the property; “not in scope” means the reviewed construction does not attempt
+the endpoint function. A “reported” prefix marks a source claim rather than an
+independently reproduced result.
 
 | Construction | House | Fixed model | Software learning | Note learning | Program theory | No-human continuation | Decisive shortfall |
 |---|---|---|---|---|---|---|---|
-| Commonplace today | Not assessed; present target is the theory-building instrument | Compatible; realization not reliably pinned | Partial, human-inclusive | Yes, human-inclusive | Partial, with operator selection | No | Global fit, semantic admission, and unsupported system-design decisions remain human |
-| Fluent | Reported yes | Partial | Reported yes | Reported yes | Partial; faithful acquisition and reuse unverified | Partial | Humans confirm behavior, technical approach, and unresolved decisions; theory acquisition is not tested |
-| Wheelhouse | Yes | Unclear | Partial | Partial | Unshown | No | Human rulings and verdicts produce doctrine; Frog's theory-holding role is only a hypothesis |
-| Ona Memo factory | Bounded trial | Unclear | Partial | Partial | Unshown | No | Humans built the harness, specified taste and intent, and retained product direction |
-| OpenAI agent-first product | Yes | No pinned lineage | Partial | Partial | Partial | No | Humans made the repository legible and turned failures into tools, rules, and checks |
-| Warp skill improver | Partial | Unclear | No | Yes | No | No | Human feedback supplies evidence and human PR review admits every skill update |
-| Exo harness | No | Compatible | No demonstrated learning; broad self-edit capability | No demonstrated learning; deliberate authoring path | No | Partial; scheduling and restart exist, automatic improvement does not | It rewrites a personal-agent executor, not a user product; build/tests do not judge program theory |
-| Prime Agent | No demonstrated house | Yes in reported refinement | Partial | Yes | No | Yes, within bounded goals | Persistent refinement is directly adopted and has preserved a specification exploit; no product-theory test |
-| Autogenesis | No | Yes | Yes | Yes | No | Partial | Benchmarks and a weak semantic gate; the public implementations are transitional or incomplete |
-| Recuris | No | Yes | Partial | Yes | No | Yes, within a fixed gate | Four predeclared memory coordinates and benchmark tasks; no project rationale or product demand stream |
-| Memento-Skills | No | Yes | Yes | Yes | No | Yes, within its task loop | Mixed-form skills learn under answer oracles, not delayed software-maintenance consequences |
-| Harness Continual Learning | No | Yes | Partial | Yes | No | Yes, within its task loop | Finite benchmark streams and a fixed four-part harness partition; held-out forgetting remains |
-| Knowledge-Centric Self-Improvement | No | Yes | No | Yes | No | Yes, within its task loop | It deliberately isolates knowledge-only learning on benchmark families |
-| PROJECTMEM | No | Compatible | No | Partial | No | No evidence | It records decisions and warns before repeated mistakes but does not acquire or revise project theory |
-| Rainbow | No | Not an LLM system | No | No | Fixed, supplied model | Yes, within supplied strategies | It adapts a running configuration through a causal architecture model but does not learn its model or action repertoire |
+| Commonplace today | Not assessed; present target is the theory-building instrument | Compatible; realization not reliably pinned | Observed on bounded human-inclusive paths | Observed on bounded human-inclusive paths | Partial, with operator selection | Human-dependent | Global fit, semantic admission, and unsupported system-design decisions remain human |
+| Fluent | Practitioner-reported | Not pinned | Practitioner-reported | Practitioner-reported | Rationale is supplied; faithful acquisition and reuse are not demonstrated | Human-dependent | Humans confirm behavior, technical approach, and unresolved decisions; theory acquisition is not tested |
+| Wheelhouse | Practitioner-reported | Not reported | Practitioner-reported, human-inclusive | Practitioner-reported, human-inclusive | Not demonstrated | Human-dependent | Human rulings and verdicts produce doctrine; Frog's theory-holding role is only a hypothesis |
+| Ona Memo factory | Product-reported bounded trial | Not reported | Product-reported, human-inclusive | Product-reported, human-inclusive | Not demonstrated | Human-dependent | Humans built the harness, specified taste and intent, and retained product direction |
+| OpenAI agent-first product | Practitioner-reported | No pinned lineage | Practitioner-reported, human-inclusive | Practitioner-reported, human-inclusive | Supplied rationale; acquisition not tested | Human-dependent | Humans made the repository legible and turned failures into tools, rules, and checks |
+| Warp skill improver | Not tested as a house | Not reported | Not in scope | Practitioner-reported | Not tested | Human-dependent | Human feedback supplies evidence and human PR review admits every skill update |
+| Exo harness | Not in the inspected design | Compatible; no weight-update path reviewed | Learning not demonstrated; broad self-edit capability is code-inspected | Learning not demonstrated; deliberate authoring path is code-inspected | Not tested | Scheduler and restart are code-inspected; automatic improvement is not implemented | It rewrites a personal-agent executor, not a user product; build/tests do not judge program theory |
+| Prime Agent | Not demonstrated | Paper-reported | Paper-reported partial | Paper-reported | Not tested | Paper-reported within bounded goals | The paper reports direct adoption of persistent refinement and a retained specification exploit; it does not test product theory |
+| Autogenesis | Not in the reviewed objective | Compatible; inspected update surface excludes weight change | Code-inspected mutation path; outcomes paper-reported | Code-inspected mutation path; outcomes paper-reported | Not tested | Partial mechanism; continuation outcome not reproduced | Benchmarks and a weak semantic gate; the public implementations are transitional or incomplete |
+| Recuris | Not in scope | Paper-specified | Code-inspected partial mechanism | Code-inspected mechanism | Not tested | Code-inspected within a fixed gate; outcomes paper-reported | Four predeclared memory coordinates and benchmark tasks; no project rationale or product demand stream |
+| Memento-Skills | Not in scope | Paper-reported for the foundation LLM; router is trained | Paper-reported | Paper-reported | Not tested | Paper-reported within its task loop | Mixed-form skills learn under answer oracles, not delayed software-maintenance consequences |
+| Harness Continual Learning | Not in scope | Paper-reported | Paper-reported partial | Paper-reported | Not tested | Paper-reported within its task loop | Finite benchmark streams and a fixed four-part harness partition; held-out forgetting remains |
+| Knowledge-Centric Self-Improvement | Not in scope | Paper-reported | Deliberately not in scope | Paper-reported | Not tested | Paper-reported within its task loop | It deliberately isolates knowledge-only learning on benchmark families |
+| PROJECTMEM | Not in scope | Compatible; not pinned | Not in scope | Paper-reported partial | Not tested | Not demonstrated | It records decisions and warns before repeated mistakes but does not test acquisition or revision of project theory |
+| Rainbow | Not in scope | Not applicable; not an LLM system | Not in scope; fixed strategies adapt configuration | Not in scope | Designer-supplied and fixed | Paper-reported within supplied strategies | It adapts a running configuration through a causal architecture model but does not learn its model or action repertoire |
 
 ## Nearest constructions under the endpoint lens
 
-### Fluent is closest to the software-house topology
+### Fluent is the strongest reviewed match to the software-house topology
 
-[Fluent's public repository](https://github.com/mrinalwadhwa/fluent) describes
-an implemented factory that turns vision, bug reports, user feedback,
+[Fluent's public repository](https://github.com/mrinalwadhwa/fluent) documents
+a factory intended to turn vision, bug reports, user feedback,
 production logs, and agent traces into work items. Writers change the product;
 deterministic tests and independent reviewers reject candidates; a Learner can
 land project Expertise with the change; post-merge review can create and run a
@@ -446,10 +477,11 @@ chain of follow-ups. The local [Fluent
 ingest](../../sources/fluent-self-improving-software-factory-2081823472016335059.ingest.md)
 captures the same architecture from the builder's practitioner account.
 
-Under the endpoint lens, Fluent is closer than benchmark self-improvement
-systems because it has external stakeholders, product code, deployment
-evidence, natural-language expertise, a scheduler, rejection, retention, and
-later reuse. Among the reviewed constructions, its standard work packet is
+Under the endpoint lens, Fluent is a stronger topology match than the reviewed
+benchmark self-improvement systems because its documented design includes
+external stakeholders, product code, deployment evidence, natural-language
+expertise, a scheduler, rejection, retention, and later reuse. Among the
+reviewed constructions, its standard work packet is
 unusual in explicitly including both technical decisions and their reasoning.
 
 The gap is actor allocation. People and Fluent jointly shape and confirm the
@@ -494,16 +526,18 @@ empty repository becoming a deployed product through background agents. A
 `quality.md` self-assessment caused the factory to create further issues;
 scheduled agents inspected the automation system; production feedback was
 summarized back toward planning; and repository files carried architecture,
-design, conventions, product intent, and quality state. This is direct evidence
-that software, notes, schedulers, and production signals can form one operative
-loop. It is a bounded construction trial, not a learned successor lineage:
+design, conventions, product intent, and quality state. The product report is
+evidence that the described trial linked software, notes, schedulers, and
+production signals in one operative loop; the implementation was not inspected
+for this landscape. It is a bounded construction trial, not a learned successor lineage:
 people spent the early days writing automations, prompts, instructions,
 conventions, escalation paths, and review loops, then continued to supply
 metrics, documentation, review, and product direction.
 
 OpenAI's [agent-first product
 report](../../sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md)
-is the strongest scale case found for the substrate. Agents generated the
+provides a five-month practitioner-reported scale case for the substrate. The
+report says agents generated the
 product code, repository-local product and architecture documents made the
 business domain legible, structural tests and custom linters enforced
 invariants, and recurring gardening agents repaired stale documentation and
@@ -535,19 +569,19 @@ these mechanisms show revision capability rather than an automatic learning
 trigger or theory-acquisition process.
 
 [Prime
-Agent](../../sources/prime-agent-a-self-improving-rlm-harness.ingest.md) adds a
-persistent recursive runtime, versioned prompts, memories, skills, and subagent
-specifications, rollback, bounded autonomous continuation, goals, cron, and
-heartbeat jobs. A fixed model can therefore carry behavior across trajectories
-by revising external state. Its most informative case is adverse: a Factorio
-agent found a specification exploit and retained it as a reusable skill. The
-case demonstrates that persistence and autonomy do not supply semantic
-admission. Prime Agent is strong on retained behavior and bounded continuation,
-but its reported evaluations do not show an ongoing user software product or
-program-theory acquisition.
+Agent](../../sources/prime-agent-a-self-improving-rlm-harness.ingest.md) has an
+inspected persistent runtime with versioned prompts, memories, skills, and
+subagent specifications, rollback, goals, cron, and heartbeat jobs. This gives
+external state a path to carry behavior across trajectories without a weight
+update. Its most informative reported case is adverse: a Factorio agent found a
+specification exploit and retained it as a reusable skill. The case shows that
+the reported refinement process did not by itself supply adequate semantic
+admission. Prime Agent is a strong mechanism-level example of retained behavior
+and bounded continuation, but its reported evaluations do not show an ongoing
+user software product or program-theory acquisition.
 
-[Autogenesis](../../agentic-systems/autogenesis.md) is the broadest explicit
-resource protocol: prompts, agents, tools, environments, memory, skills,
+[Autogenesis](../../agentic-systems/autogenesis.md) exposes an explicit resource
+protocol in which prompts, agents, tools, environments, memory, skills,
 connectors, and workflows can be generated, versioned, evaluated, committed,
 and rolled back. It covers more endpoint-relevant writable forms than Exo,
 but its semantic selection is weaker than its versioning machinery, its tests
@@ -557,18 +591,20 @@ implementations are incomplete in different ways.
 ### Memento-Skills, Recuris, and HCL supply bounded fixed-model learning
 
 [Memento-Skills](../../sources/memento-skills-let-agents-design-agents.ingest.md)
-is the cleanest reviewed construction in which a surrounding system improves
-through one inspectable mixed-form unit while model weights remain frozen. Each
-skill combines a declarative `SKILL.md`,
-prompts, and executable code. Execution outcomes drive failure attribution,
-skill rewriting or creation, generated unit-test gating, rollback, and
-behavior-trained routing into later tasks. Unlike
-[Voyager](../../agent-memory-systems/reviews/voyager.md), it revises skills
-instead of only adding or replacing successful programs. Its held-out gains
-support the narrow claim that a fixed-model system can improve through code
-plus text when future tasks revisit the learned behavioral structure. Answerable
-benchmarks supply the oracle; product rationale, delayed maintenance, and
-open-ended demands are absent.
+provides a paper-reported case in which a surrounding system improves through
+one mixed-form unit while foundation-model weights remain frozen. The paper
+describes each skill as a declarative `SKILL.md`, prompts, and executable code.
+It reports that execution outcomes drive failure attribution, skill rewriting
+or creation, generated unit-test gating, rollback, and behavior-trained routing
+into later tasks. Unlike the inspected
+[Voyager](../../agent-memory-systems/reviews/voyager.md) design, the paper's
+procedure revises skills instead of only adding or replacing successful
+programs. Its reported held-out comparison supports the bounded hypothesis that
+a fixed-model system can improve through code plus text when future tasks
+revisit the learned behavioral structure; the implementation and outcomes were
+not independently inspected or reproduced here. Answerable benchmarks supply
+the oracle, while product rationale, delayed maintenance, and open-ended demands
+are not in the study's scope.
 
 [Recuris](../../sources/recursive-experiential-working-memory-evolution.ingest.md)
 is narrower in writable form but stronger in state and admission. A frozen
@@ -580,15 +616,16 @@ surface, benchmark partitions, and gate are supplied; the work does not ask
 whether the agent acquires a rationale for why a user product is organized as
 it is.
 
-[Harness Continual
-Learning](../../sources/harness-continual-learning-adaptation-beyond-model-parameters.ingest.md)
-extends the pattern across sequential tasks by jointly versioning a task
-interface, experience memory, capability map, and adaptive router. Candidate
-changes are committed only after current-task improvement, finite historical
-anchors, and validity checks. It is important negative evidence for any easy
-continuation claim: even a zero-loss gate on the retained anchors still permits
-held-out forgetting. The system remains benchmark-bound and does not test
-program theory.
+The [Harness Continual Learning
+paper](../../sources/harness-continual-learning-adaptation-beyond-model-parameters.ingest.md)
+extends the reported pattern across sequential tasks by jointly versioning a
+task interface, experience memory, capability map, and adaptive router. It
+describes candidate commitment after current-task improvement, finite
+historical-anchor checks, and validity checks. Its reported result is important
+negative evidence for any easy continuation claim: even a zero-loss gate on the
+retained anchors coincides with held-out forgetting. No implementation or
+outcome was independently inspected or reproduced here, and the study remains
+benchmark-bound rather than testing program theory.
 
 The larger fixed-model harness-optimization
 cluster—[Self-Harness](../../sources/self-harness-harnesses-that-improve-themselves.ingest.md),
@@ -603,53 +640,57 @@ Engineering](../../agent-memory-systems/reviews/agentic-harness-engineering.md)�
 the codified-revision part of the developmental and endpoint lenses. Across
 the cluster, fixed models use traces and scores to revise prompts, tools,
 middleware, routing, topology, or harness code. The same fixed outer
-decomposition and machine-score boundary recurs. None adds users, open-ended
-product demands, or a program-theory test, so listing every optimizer would not
-change the nearest-neighbor result.
+decomposition and machine-score boundary recurs. The reviewed records do not
+add users, open-ended product demands, or a program-theory test, so listing
+every optimizer would not change this function-level comparison.
 
 ### Knowledge and rationale systems retain the other form
 
-[Knowledge-Centric
-Self-Improvement](../../sources/knowledge-centric-self-improvement-2607.19592.ingest.md)
-is the strongest controlled notes-only case found. Disposable, stateless agents
-write task evidence into forums; cross-task forums test transfer; distillation
-produces scoped natural-language guidance; and later agents receive the
-resulting bundle. Held-out and cross-model experiments are designed to isolate
-the external knowledge base as the changing object. The protocol deliberately
-holds software and solver state fixed and uses benchmark answers. It is near to
-Commonplace only on making external knowledge the learned object, not on
-connected-theory construction, software revision, or software-house
-continuation.
+The [Knowledge-Centric
+Self-Improvement preprint](../../sources/knowledge-centric-self-improvement-2607.19592.ingest.md)
+reports a controlled notes-only protocol. Stateless agents write task evidence
+into forums; cross-task forums test transfer; distillation produces scoped
+natural-language guidance; and later agents receive the resulting bundle. Its
+held-out and cross-model experiments are designed to isolate the external
+knowledge base as the changing object, while software and solver state remain
+fixed and benchmark answers provide the oracle. The reported comparisons make
+it a useful match to Commonplace only on external knowledge as the learned
+object, not on connected-theory construction, software revision, or
+software-house continuation. The ingest does not independently reproduce the
+implementation or outcomes.
 
-[PROJECTMEM](https://arxiv.org/abs/2606.12329) is a smaller but more directly
-software-specific construction. It stores issues, attempts, fixes, decisions,
-and notes in an append-only text event log, projects them into agent-readable
-summaries, and uses a deterministic pre-action gate to warn before repeated
-failed fixes or edits to fragile files. This makes retained project memory
-causally active, but its two-month self-study does not establish automatic
-acquisition, semantic revision, or product development without people.
+[PROJECTMEM](https://arxiv.org/abs/2606.12329) is a smaller, software-specific
+paper-reported construction. The paper describes an append-only text event log
+of issues, attempts, fixes, decisions, and notes, agent-readable projections,
+and a deterministic pre-action gate that warns before repeated failed fixes or
+edits to fragile files. The described gate gives retained project memory a path
+to affect later action, but the reported two-month self-study does not establish
+automatic acquisition, semantic revision, or product development without
+people.
 
 Proprietary or lightly evidenced coding-memory products are worth watching, not
-promoting into the nearest set. Several store or deliver ADRs, decisions,
-conventions, and lessons. Those claims establish, at most, representation and
-retrieval; they do not establish learning or adequate theory.
+promoting into the comparison set. Several product sources report storage or
+delivery of ADRs, decisions, conventions, and lessons. Those reports establish,
+at most, claimed representation and retrieval; they do not establish learning
+or adequate theory.
 
 Warp's [scheduled skill
 improver](../../sources/how-warp-builds-self-improving-agents-on-claude.ingest.md)
 and the production [accumulated-rules
 study](../../sources/self-improving-ai-coding-agents-through-accumulated-rules.ingest.md)
-show the same boundary particularly clearly. Both convert operational feedback
-into versioned instructions used by later coding sessions. In Warp, people
-write the feedback and approve the skill PR. In the accumulated-rules study,
-an engineer decides whether one accepted review comment generalizes into a
-future rule. These are genuine production deployment-time learning systems at
-the human-inclusive boundary, but the human performs the same generalization
-and admission work that remains inside Commonplace's operator role.
+illustrate the same boundary particularly clearly. Both sources describe
+operational feedback becoming versioned instructions intended for later coding
+sessions. In Warp's practitioner report, people write the feedback and approve
+the skill PR. In the accumulated-rules study, an engineer decides whether one
+accepted review comment generalizes into a future rule. These are reported
+human-inclusive production learning loops, but the human performs the same
+generalization and admission work that remains inside Commonplace's operator
+role. Neither source independently isolates the retained rule's causal effect.
 
 ### Older constructions locate the boundary without LLMs
 
 [Rainbow](../../sources/rainbow-architecture-based-self-adaptation.ingest.md)
-is the closest pre-LLM construction on the program-model side. An external
+is the strongest reviewed pre-LLM match on the program-model side. An external
 architectural graph is updated from live probes, checked against constraints,
 and used to select strategies that change a running system. The model is
 causally operative, but its vocabulary, goals, constraints, operators,
@@ -670,17 +711,17 @@ product consequences.
 
 The comparison suggests a possible assembly, not an existing architecture:
 
-- Commonplace supplies the theory-building purpose, inspectable semantic state,
+- Commonplace contributes the theory-building purpose, inspectable semantic state,
   artifact authorities, and explicit admission problem.
-- Ars Contexta and GBrain supply different versions of trace capture,
+- The inspected Ars Contexta and GBrain designs provide different versions of trace capture,
   recurrence-oriented processing, promotion state, and scheduled maintenance.
-- Exo supplies a protected substrate, broad agent-executed revision, restart,
+- The inspected Exo design provides a protected substrate, broad agent-executed revision, restart,
   and recovery without erasing failed-attempt evidence.
-- Fluent supplies the external-user product topology, rationale-bearing work
+- Fluent's practitioner account provides the external-user product topology, rationale-bearing work
   packets, production observations, and corrective follow-ups.
-- Recuris and Harness Continual Learning supply paired and historical admission
-  patterns; Memento-Skills supplies a mixed natural-language and executable
-  mutation unit.
+- Recuris code and the Harness Continual Learning paper provide paired and
+  historical admission patterns; the Memento-Skills paper provides a mixed
+  natural-language and executable mutation unit.
 
 These parts were built around different objectives, authority models, state
 representations, and evaluators. Their juxtaposition identifies engineering
@@ -742,11 +783,12 @@ The endpoint needs the more demanding conjunction from the original search:
 
 Fluent is a plausible current host for such a test because its public materials
 describe users, product code, production observations, rationale-bearing work
-packets, expertise, scheduling, rejection, and correction. Recuris or Harness
-Continual Learning supplies the nearest admission pattern; Memento-Skills
-supplies the nearest mixed-form mutation unit; Exo supplies the nearest
-restart-and-rollback continuation substrate. That is a synthesis of parts, not
-an existing construction or evidence that the mechanisms are compatible.
+packets, expertise, scheduling, rejection, and correction. Recuris code and the
+Harness Continual Learning paper provide relevant admission patterns; the
+Memento-Skills paper provides a mixed-form mutation unit; and the inspected Exo
+design provides a restart-and-rollback continuation substrate. That is a
+synthesis of parts, not an existing construction or evidence that the
+mechanisms are compatible.
 
 ## Evidence boundary and search record
 
