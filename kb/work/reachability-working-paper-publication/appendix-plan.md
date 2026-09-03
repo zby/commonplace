@@ -28,12 +28,23 @@ web page is not an adequate substitute.
 - external user and internal production role;
 - declared product scope and operating horizon;
 - natural-language, symbolic, and distributed-parametric state;
-- program-theory function;
+- program theory as a capacity, whether written down or reconstructed from records;
 - learning by the house rather than ordinary product-state continuity;
 - admissible input histories, realized history, and selection process;
 - adequate state;
 - practical reachability;
 - hitting probability and continuation reliability.
+
+### Vocabulary
+
+The paper uses the main article's vocabulary as simplified on 2026-09-03: the
+house, internal role, notes and code, budget, declared horizon, learning step,
+and plain glosses for eligible, witness, and the explicit-theory hypothesis.
+Defined KB terms keep their names: software house, internal production role
+(the definition's term for internal role), natural-language, symbolic, and
+distributed-parametric state. Carrier-neutral survives only as the glossed
+label for the broad obligations in the comparison article; the paper body says
+that the obligations do not fix which form carries the theory.
 
 ### Mode
 
@@ -64,7 +75,7 @@ promotion back into atomic notes.
    execution of explicitly formulated criteria.
 5. Trained recognizers and LLM interpretation reopen the bearer question without
    proving that current systems pass it.
-6. Possession is tested longitudinally through theory-guided search, delayed
+6. Possession is tested over many changes through theory-guided search, delayed
    contradiction, recovery, successor acquisition, and causal interventions.
 
 ### Mode
@@ -74,7 +85,7 @@ Provisional combination:
 - B1 machine-execution bridge — exact snapshot unless compression materially
   improves the paper;
 - B2 compiler-transfer bound — exact snapshot candidate;
-- B3 longitudinal bearer test — paper adaptation from the longer note.
+- B3 bearer test over many changes — paper adaptation from the longer note.
 
 All three need direct citation to Naur's primary text. A snapshot may preserve
 internal source links, but the paper cannot make the ingest report its only
@@ -82,28 +93,28 @@ source record.
 
 ## Appendix C — Constructive-witness protocols
 
-### Carrier-neutral protocol
+### Broad protocol
 
 Start from the current seven-condition protocol in the nearest-constructions
 supplement and complete:
 
-- prospective declaration of the demand and consequence process;
+- declaration, in advance, of the demand and consequence process;
 - model, auxiliary parametric state, seed, and update machinery freeze;
 - hidden-future-demand and no-post-hoc-removal rules;
 - allowed user evidence versus internal production decisions;
 - unstated-implication and withholding/replacement interventions;
 - delayed contradiction and successor acquisition;
-- learning in both localized forms across the sequence;
+- learning in both forms, notes and code, across the sequence;
 - retries, abstentions, timeouts, rollbacks, rescues, and human-intervention
   accounting;
 - evidence for usable hitting probability;
-- evidence for continuation reliability across the autonomous horizon.
+- evidence for continuation reliability across the declared horizon.
 
 ### Explicit-theory mechanism protocol
 
 Add the stronger intervention and baseline conditions:
 
-- synthesize and retain an addressable rationale-bearing artifact;
+- synthesize and retain a rationale-bearing artifact that can be found and revised on its own;
 - load it at the decisions where unstated implications matter;
 - revise or retire it when later evidence defeats it;
 - compare against raw records and direct artifact search with model, source
@@ -160,8 +171,8 @@ claim that no unreviewed construction exists.
 
 ### Mode
 
-Paper adaptation or exact snapshot of the corrected supplement after PR #179 is
-reviewed. The appendix should be shorter than the supplement only when no
+Paper adaptation or exact snapshot of the corrected supplement. The correction
+(PR #179) merged on main as commit 465de048. The appendix should be shorter than the supplement only when no
 load-bearing distinction is lost.
 
 ## References

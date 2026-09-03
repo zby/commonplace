@@ -31,7 +31,7 @@ article](../../instructions/publish-an-article.md).
 
 - [Main draft](../../articles/reachability-conjecture-the-llm-stays-fixed-the-software-house-learns.md)
 - [Nearest-constructions supplement](../../articles/nearest-existing-constructions-to-a-reachability-witness.md)
-- [Transition-reachability supplement](../../articles/reachability-as-closure-under-the-seed-gate.md) — its formal correction is staged separately in [PR #179](https://github.com/zby/commonplace/pull/179) and must land before the publication snapshot is frozen
+- [Transition-reachability supplement](../../articles/reachability-as-closure-under-the-seed-gate.md) — its formal correction ([PR #179](https://github.com/zby/commonplace/pull/179)) merged on main as commit 465de048; the freeze precondition is met
 - the definitions, theory notes, and source captures classified in [dependency-audit.md](./dependency-audit.md)
 
 ## Working artifacts
@@ -91,11 +91,11 @@ article](../../instructions/publish-an-article.md).
 
 ## Current gaps to close
 
-- final definitions for practical reachability and the prospective demand and
-  consequence process;
+- final definitions for practical reachability, adequate state, and the demand
+  and consequence process declared in advance;
 - a reproducible witness protocol that separates one possible path from usable
   hitting probability and sustained continuation;
-- the paper-native boundary between the carrier-neutral reachability witness
+- the paper-native boundary between the broad reachability witness
   and the stronger explicit-theory mechanism experiment;
 - direct bibliographic references and source locations for the Naur and Gödel
   arguments;
