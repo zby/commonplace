@@ -10,10 +10,9 @@ published merely because it has been copied into the workshop.
 appendix-a-definitions-and-boundary.md
 appendix-b-program-theory-and-naur.md
 appendix-c-witness-protocols.md
-appendix-d-nearest-constructions.md
-appendix-e-transition-reachability.md
 references.md
-release-manifest.yml
+supplement-d-nearest-constructions.md
+supplement-e-transition-reachability.md
 ```
 
 Create these files only when their source cohort or paper-native role is clear.
@@ -51,7 +50,7 @@ Use this while staging:
 Versioned argument snapshot for: The Reachability Conjecture
 Paper version: pending
 Mode: exact snapshot | paper adaptation | paper-native
-Frozen source commit: pending
+Frozen source tag: pending
 Source paths: ...
 Live successors: ...
 Status: staging — not published
@@ -64,8 +63,8 @@ header specified by the artifact manifest.
 
 Before a staged package can leave this workshop:
 
-- all source commits and modes are recorded;
-- exact snapshots reproduce their source blobs after allowed transformations;
+- the source tag and every component's mode are recorded;
+- exact snapshots reproduce their tagged sources after allowed transformations;
 - adaptations have source-comparison review;
 - the main paper remains coherent with links disabled;
 - every load-bearing dependency is discharged by the body or appendices;

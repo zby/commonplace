@@ -47,29 +47,32 @@ article](../../instructions/publish-an-article.md).
 
 ## Work sequence
 
-1. **Audit the dependency closure.** For every definition, premise, protocol,
-   material qualification, and evidence claim, decide whether a skeptical
-   reader needs it when links are unavailable.
-2. **Choose the publication mode.** Mark each included component as an exact
-   snapshot, a paper adaptation, or paper-native content. Do not call an edited
-   adaptation a snapshot.
-3. **Fill the remaining gaps.** In particular, settle the paper definitions of
-   open-ended demand generation, practical reachability, hitting probability,
-   continuation reliability, and the treatment of retries, abstentions,
-   rescues, and post-hoc demand removal.
-4. **Stage the appendices.** Copy exact snapshots from one declared source
-   commit; write adaptations in the staging area; add direct primary-source
-   references and provenance headers; keep live-note links for later
-   developments.
-5. **Assemble and test the paper package.** Verify that the main body remains
+1. **Settle the paper definitions and the canonical protocol.** Write Appendix
+   A's definitions of open-ended demand generation, adequate state, practical
+   reachability, hitting probability, and continuation reliability, and
+   Appendix C's treatment of retries, abstentions, rescues, and post-hoc demand
+   removal. Everything else depends on these, so they come first.
+2. **Audit the dependency closure.** Done 2026-09-03 in
+   [dependency-audit.md](./dependency-audit.md); revisit only if a component
+   changes role.
+3. **Choose the publication mode.** Done 2026-09-03 in
+   [artifact-manifest.md](./artifact-manifest.md): short appendices A to C,
+   versioned supplements D and E. Do not call an edited adaptation a snapshot.
+4. **Run the completeness checklist on the current body.** The main-body
+   checklist in the dependency audit is the cheapest test in the plan and
+   needs no staging; run it before any appendix is drafted.
+5. **Stage the appendices and supplements.** Copy exact snapshots from the
+   tagged source; write adaptations in the staging area; add direct
+   primary-source references and provenance headers; keep live-note links for
+   later developments.
+6. **Assemble and test the paper package.** Verify that the main body remains
    understandable with links disabled, that appendices discharge every
    load-bearing dependency, and that the package contains no unresolved
    placeholders.
-6. **Freeze a candidate.** Record paper version, source commit, source path and
-   source blob or commit for every frozen appendix, then review the complete
-   diff rather than regenerating a released version automatically from live
-   notes.
-7. **Publish only after approval.** Once the user explicitly approves the body
+7. **Freeze a candidate.** Tag the source commit, record the tag and the mode
+   of every component, then review the complete diff rather than regenerating
+   a released version automatically from live notes.
+8. **Publish only after approval.** Once the user explicitly approves the body
    and target lifecycle, apply the repository publication procedure and record
    the frozen package as the cited version.
 
@@ -99,16 +102,14 @@ article](../../instructions/publish-an-article.md).
   and the stronger explicit-theory mechanism experiment;
 - direct bibliographic references and source locations for the Naur and Gödel
   arguments;
-- the final decision whether the large nearest-constructions material remains
-  an appendix inside one document or a versioned supplement released with it;
-- automated or at least checkable detection that a live note has changed since
-  the frozen source cohort.
+- deferred: a generated check that a live note has changed since the source
+  tag. The first version relies on the tag alone.
 
 ## What closes this workshop
 
 1. The dependency audit identifies every load-bearing component and no appendix
    depends on an unversioned live note for its historical meaning.
-2. The manifest records one source commit and the exact mode and provenance of
+2. The manifest records one source tag and the exact mode and provenance of
    every staged component.
 3. The definitions, witness protocol, transition treatment, comparison evidence,
    and references are complete enough for an external technical reader to

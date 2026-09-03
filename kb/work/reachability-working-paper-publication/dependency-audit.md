@@ -34,17 +34,17 @@ The current dispositions are staging decisions, not publication approval.
 | `kb/notes/axes-of-artifact-analysis.md` | implementation and comparison ontology | summarize and link or omit from frozen package | useful for the research program's machinery map, but not necessary if the paper directly defines the mutable surfaces and causal consumption requirement |
 | `kb/notes/code-complements-weight-prompt-with-symbolic-operations.md` | implementation rationale for symbolic state | live link only | the main paper's core claim does not depend on the full weight–prompt versus runtime derivation |
 | `kb/notes/scheduler-llm-separation-exploits-an-error-correction-asymmetry.md` | implementation rationale for symbolic bookkeeping | live link only | a useful design argument, not a necessary premise of existential reachability |
-| `kb/notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md` | formal comparison | summarize in body and Appendix E; cite primary source | the paper needs the proof-gated contrast and its limits, not the complete note's wider comparison portfolio |
+| `kb/notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md` | formal comparison | summarize in body and Supplement E; cite primary source | the paper needs the proof-gated contrast and its limits, not the complete note's wider comparison portfolio |
 | `kb/notes/an-open-domain-theory-builder-becomes-a-software-house-when-new-domains-require-production-machinery-changes.md` | optional extension | live link only | the main paper explicitly does not depend on this separate conjecture |
 | `kb/sources/programming-as-theory-building.ingest.md` | source analysis and quote locations | primary reference; provenance link optional | Appendix B and the paper bibliography should cite Naur directly with page or section locations |
-| `kb/sources/goedel-machines-schmidhuber.ingest.md` | source analysis and quote locations | primary reference; provenance link optional | Appendix E and the paper bibliography should cite Schmidhuber directly rather than relying on the ingest as the scholarly endpoint |
+| `kb/sources/goedel-machines-schmidhuber.ingest.md` | source analysis and quote locations | primary reference; provenance link optional | Supplement E and the paper bibliography should cite Schmidhuber directly rather than relying on the ingest as the scholarly endpoint |
 
 ## Article and supplement dependencies outside `source_notes`
 
 | Source | Role | Initial disposition | Remaining decision |
 |---|---|---|---|
-| `kb/articles/nearest-existing-constructions-to-a-reachability-witness.md` | evidence map and full protocols | package as Appendix D or versioned supplement; protocol core becomes Appendix C | decide whether one-document length remains manageable and freeze every system placement against its evidence basis |
-| `kb/articles/reachability-as-closure-under-the-seed-gate.md` | transition-reachability derivation | package as Appendix E; correction merged as 465de048 | confirm the corrected successor-relation treatment and settle probability evidence in Appendix C |
+| `kb/articles/nearest-existing-constructions-to-a-reachability-witness.md` | evidence map and full protocols | versioned Supplement D; protocol core becomes Appendix C and Supplement D points to it | freeze every system placement against its evidence basis |
+| `kb/articles/reachability-as-closure-under-the-seed-gate.md` | transition-reachability derivation | versioned Supplement E; correction merged as 465de048 | confirm the corrected successor-relation treatment and settle probability evidence in Appendix C |
 | `kb/articles/the-bitter-lesson-does-not-require-everything-to-live-in-weights.md` | separate companion argument | cite as separate live or versioned paper, not appendix | decide whether it is promoted alongside the reachability paper or remains a draft dependency with the main paper carrying its own minimal qualification |
 | `kb/articles/the-decisions-that-stay-human-and-what-would-move-them.md` | separate boundary and transfer argument | optional companion link | the reachability paper already carries the internal-role boundary needed for its claim |
 

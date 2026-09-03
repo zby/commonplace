@@ -2,22 +2,23 @@
 
 ## Package shape
 
-The default target is one working paper with paper-native appendices:
+The target is one short working paper with three short appendices and two
+separately paginated supplements:
 
 ```text
 Main paper
-Appendix A — Definitions and system boundary
-Appendix B — Program theory and the technology-relative reading of Naur
-Appendix C — Constructive-witness protocols
-Appendix D — Nearest existing constructions
-Appendix E — Transition reachability and seed descent
+Appendix A — Definitions and system boundary (short, paper adaptation)
+Appendix B — Program theory and Naur (compressed adaptation)
+Appendix C — Witness protocol (paper-native, canonical)
 References
+Supplement D — Nearest existing constructions (versioned)
+Supplement E — Transition reachability and seed descent (versioned)
 ```
 
-Appendix D may instead become a separately paginated supplement if the complete
-comparison makes the paper unwieldy. That supplement must be released with the
-same paper version, source commit, and revision date; an independently mutable
-web page is not an adequate substitute.
+The appendices stay short so that the paper does not read as an export of the
+knowledge base. The supplements carry the long material. Each supplement is
+released with the same paper version, source tag, and revision date; an
+independently mutable web page is not an adequate substitute.
 
 ## Appendix A — Definitions and system boundary
 
@@ -48,16 +49,16 @@ that the obligations do not fix which form carries the theory.
 
 ### Mode
 
-Paper adaptation. The source definitions are broader library artifacts; the
-appendix should select only the meanings used by this paper and make their
-relations explicit in one place.
+Paper adaptation, kept short. The source definitions are broader library
+artifacts; the appendix should select only the meanings used by this paper and
+make their relations explicit in one place.
 
 ### Gap
 
 The live KB does not yet contain settled standalone definitions of practical
 reachability, adequate state, hitting probability, or continuation reliability.
-The workshop should formulate them in Appendix A and then decide which deserve
-promotion back into atomic notes.
+The workshop formulates them in Appendix A. They are specific to this paper and
+are not promoted to standalone definition notes.
 
 ## Appendix B — Program theory and Naur
 
@@ -80,16 +81,15 @@ promotion back into atomic notes.
 
 ### Mode
 
-Provisional combination:
+Compressed paper adaptation. The appendix carries the two distinctions the paper
+depends on and no more:
 
-- B1 machine-execution bridge — exact snapshot unless compression materially
-  improves the paper;
-- B2 compiler-transfer bound — exact snapshot candidate;
-- B3 bearer test over many changes — paper adaptation from the longer note.
+- B1 formal execution versus explicitly formulated criteria;
+- B2 what the compiler case rules out versus what it leaves open;
+- B3 the bearer test's predictions, only as far as Appendix C uses them.
 
-All three need direct citation to Naur's primary text. A snapshot may preserve
-internal source links, but the paper cannot make the ingest report its only
-source record.
+All three cite Naur's primary text directly. The full notes remain live links;
+the paper cannot make the ingest report its only source record.
 
 ## Appendix C — Constructive-witness protocols
 
@@ -123,11 +123,14 @@ Add the stronger intervention and baseline conditions:
 
 ### Mode
 
-Paper-native. This appendix defines what the paper asks future constructions to
-demonstrate; it should not inherit its meaning from a changing comparison
-article.
+Paper-native and canonical. This appendix is the one full statement of the
+witness conditions in the package. The main paper's four obligations are its
+summary and point to it. Supplement D's protocol section becomes a pointer to
+this appendix instead of a restatement, so the conditions exist in one place and
+cannot drift across the package. The appendix does not inherit its meaning from
+a changing comparison article.
 
-## Appendix D — Nearest existing constructions
+## Supplement D — Nearest existing constructions
 
 ### Required content
 
@@ -142,8 +145,8 @@ article.
 
 ### Mode
 
-Paper adaptation from the current supplement, or a versioned supplement released
-as part of the same package.
+Versioned supplement, separately paginated and released with the paper. Its
+protocol section points to Appendix C rather than restating the conditions.
 
 ### Gap
 
@@ -152,7 +155,7 @@ criterion and preserve the exact source or commit behind code-inspected
 placements. The table is evidence about reviewed records, not a ranking or a
 claim that no unreviewed construction exists.
 
-## Appendix E — Transition reachability and seed descent
+## Supplement E — Transition reachability and seed descent
 
 ### Required content
 
@@ -171,9 +174,9 @@ claim that no unreviewed construction exists.
 
 ### Mode
 
-Paper adaptation or exact snapshot of the corrected supplement. The correction
-(PR #179) merged on main as commit 465de048. The appendix should be shorter than the supplement only when no
-load-bearing distinction is lost.
+Versioned supplement: an exact snapshot of the corrected article. The
+correction (PR #179) merged on main as commit 465de048. Shorten it only when no
+load-bearing distinction is lost, and then call it an adaptation.
 
 ## References
 
@@ -184,7 +187,7 @@ material claims. At minimum:
 - Jürgen Schmidhuber, *Gödel Machines: Fully Self-Referential Optimal Universal
   Self-Improvers* or the exact cited edition/title;
 - primary sources for every construction whose reported result bears load in
-  Appendix D;
+  Supplement D;
 - Richard Sutton, *The Bitter Lesson*, for the narrow production-method claim.
 
 Repository notes and ingests may appear as reproducibility and provenance links,
@@ -199,8 +202,10 @@ without traversing Commonplace.
   version may have changed.
 - Live notes should eventually link back to the paper version and appendix that
   froze or adapted them.
-- Exact snapshots are generated from the declared source commit and not
-  hand-edited in staging.
+- The freeze is one annotated git tag on the source commit. Every appendix and
+  supplement cites that tag.
+- Exact snapshots are generated from the tagged source and not hand-edited in
+  staging.
 - Paper adaptations are reviewed against every source they claim to preserve.
 - No released paper is regenerated automatically when a live source changes.
 - No `TODO`, unresolved placeholder, mutable workshop link, or link into
