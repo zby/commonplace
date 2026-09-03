@@ -5,42 +5,60 @@ repository commit `6c73908fb7a0aab2b47284abbccd3ed763daae3b`.
 
 ## Working result
 
-Using the questions under the three comparison lenses as qualitative criteria,
-the reviewed evidence does not support a single nearest construction to
-Commonplace. Different systems match different parts of it, and no scalar
-distance or weighting rule has been defined for collapsing those relations
-into one ranking.
+This report is a reusable comparison map for authors writing about Commonplace,
+an agent-operated framework that helps a human build and govern theories about
+agentic systems. It compares existing systems against three distinct objects:
+Commonplace as it operates today; a proposed path by which repeated operator
+interventions could be captured, generalized, and, when warranted, converted
+into retained theory or machinery used by later runs; and a conjectured
+endpoint in which a computational theory builder also maintains
+software for external users—a software house. Use the article-support index
+below to choose the system that bears on an article claim, then carry its
+evidence basis and required caveat into the article.
+
+It does not identify an evidence-backed single nearest system or demonstrate
+that selected mechanisms compose into a working whole. The three lenses answer
+different questions, and no single distance measure or weighting rule has been
+defined to collapse their matches into one ranking.
 
 - **Observed today — Commonplace's present construction:** Ars Contexta is the
-  strongest reviewed match for an agent-operated methodology environment; AI
-  Research OS is the strongest
-  match in inspectable Markdown medium and source-to-synthesis structure;
-  Eigenius is the strongest match in typed epistemic objects and checked commit
-  routes. The reviewed evidence does not show one of these systems combining
-  Commonplace's theory-building purpose, collection and type contracts,
-  semantic review, and current human-agent allocation.
+  strongest reviewed match for an agent-operated environment for developing a
+  methodology; AI Research OS is the strongest match in inspectable Markdown
+  and a structure that separates sources from synthesis; Eigenius is the
+  strongest match in typed claims and evidence with checked paths for accepting
+  changes. The reviewed evidence does not show one of these systems combining
+  Commonplace's theory-building purpose, rules for artifact types and
+  collections, semantic
+  review, and current division of judgment between people and agents.
 - **Proposed development path:** Ars Contexta is the strongest reviewed match
   for turning corrections and session evidence into methodology observations
-  and later system changes. GBrain is the strongest code-inspected match across the
-  listed functions of capture, consolidation, scheduled maintenance,
-  retrieval, and gated skill revision. Both expose useful pieces of the missing
-  path; the reviewed evidence for neither establishes reliable acquisition and
-  admission of the operator's recurring semantic judgments.
-- **Conjectured endpoint:** Fluent is the strongest reviewed match for the
-  software-house topology, while Exo is the strongest code-inspected match for
-  broad agent-executed self-revision and recovery. Recuris, Memento-Skills, and
-  Harness Continual Learning contribute bounded attribution and admission
-  mechanisms. No witness to the
+  and later system changes. GBrain is the strongest match found in inspected
+  code across capture, consolidation, scheduled maintenance, retrieval, and
+  skill revision gated by tests and scores. Both expose useful pieces of the
+  missing path; the reviewed evidence for neither shows reliable acquisition of
+  a recurring semantic judgment from operator interventions or a warranted
+  decision to retain the resulting change.
+- **Conjectured endpoint — the working thesis that theory building and software
+  building converge:** Fluent is the strongest reviewed match for the
+  operation of software for external users, while Exo is the strongest match
+  found in inspected code for broad agent-executed self-revision and recovery.
+  Recuris, Memento-Skills, and Harness Continual Learning contribute bounded
+  mechanisms for attributing failures and accepting or rejecting changes. No
+  witness to the
   [reachability
   conjecture](../../articles/reachability-conjecture-the-llm-stays-fixed-the-software-house-learns.md)
   was located in the reviewed corpus.
 
-The comparison is therefore composite only as a research heuristic:
-Commonplace-like theory and governance, Ars Contexta- or GBrain-like trace
-processing, Exo-like self-revision and recovery, Fluent-like product operation,
-and bounded-learning admission mechanisms. This list does not show that the
-parts compose, that their objectives agree, or that the resulting system could
-acquire and revise an adequate theory.
+The report therefore assembles a research heuristic from different systems:
+Commonplace-like theory and governance, Ars Contexta- or GBrain-like processing
+of records from past work, Exo-like self-revision and recovery, Fluent-like
+product operation, and candidate-rejection gates like those described by
+Recuris, Memento-Skills, and Harness Continual Learning. This list does not show
+that the parts compose, that their objectives agree, or that the resulting
+system could acquire and revise an adequate theory. An author can use these
+systems as bounded examples of separate mechanisms and as sources of candidate
+tests, not as a witness to Commonplace's full development path or conjectured
+endpoint.
 
 ## Article-support comparison index
 
