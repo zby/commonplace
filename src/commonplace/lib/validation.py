@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import re
+import subprocess
 from collections.abc import Callable
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -147,6 +148,7 @@ class ValidationRun:
     _collection_indexes: dict[Path, CollectionTagIndex] = field(
         default_factory=dict, init=False
     )
+    _git_ignored: dict[Path, bool] = field(default_factory=dict, init=False)
 
     def __post_init__(self) -> None:
         self.repo_root = self.repo_root.resolve()
@@ -227,6 +229,58 @@ class ValidationRun:
         self._collection_indexes[key] = index
         return index
 
+    def prime_git_ignored(self, paths: tuple[Path, ...]) -> None:
+        """Cache which paths Git actually excludes from version control.
+
+        Git-ignored files can still be validated explicitly. They retain the
+        structural pipeline, but authored-library length limits do not apply to
+        them. A missing Git executable or non-worktree root fails closed: the
+        ordinary authored limits remain in force.
+        """
+        pending: dict[str, Path] = {}
+        for path in paths:
+            key = path.resolve()
+            if key in self._git_ignored:
+                continue
+            try:
+                relative = key.relative_to(self.repo_root).as_posix()
+            except ValueError:
+                self._git_ignored[key] = False
+                continue
+            pending[relative] = key
+
+        if not pending:
+            return
+
+        for key in pending.values():
+            self._git_ignored[key] = False
+
+        try:
+            result = subprocess.run(
+                ["git", "check-ignore", "-z", "--stdin"],
+                cwd=self.repo_root,
+                check=False,
+                capture_output=True,
+                input="\0".join(pending) + "\0",
+                text=True,
+                timeout=10,
+            )
+        except (OSError, subprocess.SubprocessError):
+            return
+        if result.returncode not in {0, 1}:
+            return
+
+        for relative in result.stdout.split("\0"):
+            key = pending.get(relative)
+            if key is not None:
+                self._git_ignored[key] = True
+
+    def is_git_ignored(self, path: Path) -> bool:
+        """Return whether Git excludes one artifact from version control."""
+        key = path.resolve()
+        self.prime_git_ignored((key,))
+        return self._git_ignored[key]
+
     def impacted_marked_tag_readmes(self, paths: tuple[Path, ...]) -> list[Path]:
         """Return marked tag READMEs whose claims may be affected by paths."""
         seen = {path.resolve() for path in paths}
@@ -300,6 +354,7 @@ class ValidationRun:
     def evaluate(self) -> ValidationRunResults:
         """Expand explicit impacts and evaluate every anchor in this run."""
         paths = self.paths + tuple(self.impacted_marked_tag_readmes(self.paths))
+        self.prime_git_ignored(paths)
         inbound = self.inbound_info(paths) if self.collection is not None else {}
         results: dict[Path, CheckResults] = {}
 
@@ -369,12 +424,18 @@ def validate_title_and_slug(
     document: ParsedDocument,
     *,
     note_type: str,
+    git_ignored: bool,
 ) -> None:
     title = document.title.strip()
     title_length = len(title)
     slug_length = len(path.stem)
 
-    if title_length > MAX_NOTE_TITLE_LENGTH:
+    if git_ignored:
+        results.passes.append(
+            f"title: {title_length} chars "
+            "(git-ignored artifact; authored-artifact limit not applied)"
+        )
+    elif title_length > MAX_NOTE_TITLE_LENGTH:
         results.fails.append(
             f"title: {title_length} chars exceeds limit of {MAX_NOTE_TITLE_LENGTH}"
         )
@@ -383,7 +444,12 @@ def validate_title_and_slug(
             f"title: {title_length} chars (within {MAX_NOTE_TITLE_LENGTH}-char limit)"
         )
 
-    if note_type in _NOTE_SLUG_LIMIT_EXEMPT_TYPES:
+    if git_ignored:
+        results.passes.append(
+            f"filename slug: {slug_length} chars "
+            "(git-ignored artifact; authored-artifact limit not applied)"
+        )
+    elif note_type in _NOTE_SLUG_LIMIT_EXEMPT_TYPES:
         results.passes.append(
             f"filename slug: {slug_length} chars "
             f"(derived {note_type} name; authored-artifact limit not applied)"
@@ -1235,6 +1301,7 @@ def _validate_parsed_note(parsed: ParsedNote, *, run: ValidationRun) -> CheckRes
         parsed.path,
         parsed.document,
         note_type=parsed.note_type,
+        git_ignored=run.is_git_ignored(parsed.path),
     )
     validate_links_from_document(base, parsed.path, parsed.document.links)
     validate_proposal_archive_links(

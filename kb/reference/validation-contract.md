@@ -79,7 +79,7 @@ So the dividing line is not frontmatter/body. It is **intra-document** (declarab
 Every note **with frontmatter** is checked for the following, whatever its type. A type spec does not declare these and cannot opt out of them.
 
 - **Frontmatter parses** — valid delimiters, well-formed YAML.
-- **Title length** within `MAX_NOTE_TITLE_LENGTH`; **filename slug length** within `MAX_NOTE_SLUG_LENGTH` (derived-artifact types are exempt from the slug limit).
+- **Title length** within `MAX_NOTE_TITLE_LENGTH`; **filename slug length** within `MAX_NOTE_SLUG_LENGTH` (derived-artifact types are exempt from the slug limit). Git-ignored artifacts are not authored library artifacts, so explicit validation still runs their other structural checks but exempts both authored length limits. If Git is unavailable or the project is not a worktree, validation applies the limits.
 - **Link health** — every local relative link resolves to an existing target. *Warns.*
 - **Proposal archive boundary** — no library artifact links to a file under `kb/reference/proposals/archive/`. The archive README is a permitted target and may link to archived files itself; workshop files under `kb/work/` may also link in. Violations **fail**.
 - **Verbatim quotes** — every `verbatim`-marked quotation resolves against the source it links ([ADR 046](./adr/046-verbatim-quotes-are-validated-against-their-cited-source.md)). A quote absent from its cited source **fails**; an unpairable verbatim citation warns, but only in notes that demonstrably use the convention.

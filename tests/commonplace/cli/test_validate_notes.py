@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import os
 import shutil
+import subprocess
 import sys
 from datetime import UTC, datetime
 from pathlib import Path
@@ -1422,6 +1423,42 @@ traits: []
         f"{MAX_NOTE_SLUG_LENGTH}"
     )
     assert any(expected in item for item in results.fails)
+
+
+def test_git_ignored_artifact_is_exempt_from_authored_length_limits(
+    tmp_path: Path,
+) -> None:
+    notes_root = configure_temp_repo(tmp_path)
+    ignored_dir = notes_root / "ignored"
+    write(tmp_path / ".gitignore", "kb/notes/ignored/\n")
+    subprocess.run(["git", "init", "-q"], cwd=tmp_path, check=True)
+    overlong_slug = "a" * (MAX_NOTE_SLUG_LENGTH + 1)
+    title = "A" * 101
+    note = write(
+        ignored_dir / f"{overlong_slug}.md",
+        f"""---
+description: Ignored local artifact whose source-derived title and filename may exceed authored library limits
+type: kb/types/note.md
+traits: []
+---
+
+# {title}
+""",
+    )
+
+    results = validation.validate_note(note, repo_root=tmp_path)
+
+    assert results.fails == []
+    assert any(
+        "title: 101 chars (git-ignored artifact; authored-artifact limit not applied)"
+        in item
+        for item in results.passes
+    )
+    expected_slug = (
+        f"filename slug: {MAX_NOTE_SLUG_LENGTH + 1} chars "
+        "(git-ignored artifact; authored-artifact limit not applied)"
+    )
+    assert any(expected_slug in item for item in results.passes)
 
 
 def test_connect_report_derived_slug_is_exempt_from_note_limit(tmp_path: Path) -> None:
