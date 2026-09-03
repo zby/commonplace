@@ -162,7 +162,7 @@ The appropriate comparison is therefore strategic rather than defensive:
 
 ## Failure conditions
 
-The strategy loses in a tested regime when:
+The strategy fails in a tested regime when:
 
 - system use becomes a self-confirming test of the theory already embodied in
   the system;
