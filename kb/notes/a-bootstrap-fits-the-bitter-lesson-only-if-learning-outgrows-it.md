@@ -7,9 +7,13 @@ tags: [learning-theory, deploy-time-learning, foundations]
 
 # A hand-crafted bootstrap fits the Bitter Lesson only if learning can outgrow it
 
-The title states a **compatibility condition**, not a defense of hand-crafted
-bootstrapping and not a claim that this is the only way to build a general
-learner.
+The title states a **compatibility condition**: a hand-crafted starting state
+fits the Bitter Lesson only if computation acquires the required task- or
+family-specific production knowledge from permitted evidence rather than
+requiring people to construct it for every new demand. *Family-specific* here
+means specific to a class of related demands — a demand class — not to a single
+task. The condition is not a defense of hand-crafted bootstrapping and not a
+claim that this is the only way to build a general learner.
 
 [The Bitter Lesson selects production methods rather than representational
 forms](./the-bitter-lesson-selects-production-methods-not-representational.md).
@@ -19,7 +23,7 @@ blocks a categorical weights-only objection. It does not show that starting by
 constructing those artifacts manually is the right scaling strategy.
 
 Calling present artifacts a bootstrap cannot answer the Bitter Lesson by itself.
-A promised path beyond hand-crafting is cheap. The program must either show that
+A promised path beyond hand-crafting is cheap. The strategy must either show that
 search and evidence progressively take over useful production or concede that a
 more direct computational method is better.
 
@@ -136,7 +140,7 @@ machinery hides target-specific assumptions is an empirical scope question.
 
 End-to-end reinforcement learning, evolutionary search, self-play, learned world
 models, or future weight-updating systems may discover useful global
-organization without selecting explicit claims one at a time. The program does
+organization without selecting explicit claims one at a time. The strategy does
 not yet have grounds to say that theory-guided bootstrapping is necessary.
 
 It is the first approach being tried because explicit claims may provide
