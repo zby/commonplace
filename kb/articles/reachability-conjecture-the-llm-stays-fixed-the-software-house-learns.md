@@ -140,6 +140,14 @@ understanding from one change to the next. Software executes a decision
 without supplying the judgment that selected it. The house as a whole has to
 hold the program theory.
 
+Practitioners will recognize these components as an agent harness with
+memory. It is one. Harnesses are moving in this direction: memory files,
+self-written tests and tools, retained rules from past failures. The article
+asks what a harness needs once that movement is taken to its end, with no
+person closing the loop by noticing a recurring failure and adding the rule.
+The four obligations below state that endpoint. A harness that meets them is
+a witness.
+
 ## Training in legible forms
 
 Legible means inspectable and directly revisable. It does not mean easy to
