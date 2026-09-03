@@ -182,8 +182,8 @@ requirement.
 
 The alternative route is to train the model itself, by fine-tuning or
 retraining its weights on project experience. Neither route makes the whole
-system transparent. The fixed LLM remains distributed-parametric, and enough software
-and notes can [exceed practical
+system transparent. The fixed LLM remains distributed-parametric, and enough
+software and notes can [exceed practical
 inspection](../notes/opacity-is-a-scale-threshold.md). The difference is where
 the learned project-specific state lives. Fine-tuning spreads it across
 weights, where a changed behaviour is hard to locate, inspect, or revert on
@@ -195,8 +195,8 @@ Learning can then happen in deployment. Production evidence can cause a
 retained change to a note, test, tool, or policy, and that change can affect
 the next round of work without a training run.
 
-A further payoff is possible but not required by the conjecture. When retained program theory captures structure that survives a
-change, the house [may need fewer new observations to
+A further payoff is possible but not required by the conjecture. When
+retained program theory captures structure that survives a change, the house [may need fewer new observations to
 adapt](../notes/theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md).
 It can revise one premise and derive several consequences instead of
 relearning them separately. This advantage depends on the theory being both
@@ -287,8 +287,8 @@ map](./nearest-existing-constructions-to-a-reachability-witness.md).
 
 The simplest rival hypothesis is that obligations 2 and 3 need no further
 machinery: an LLM given a record of its failures will generate the theory
-and then hold it. The conjecture predicts otherwise. A record influences later behaviour only through a
-consumption path: something must load it into the context of the right
+and then hold it. The conjecture predicts otherwise. A record influences
+later behaviour only through a consumption path: something must load it into the context of the right
 call, with enough force to change the decision, at the moment the decision
 is made. A failure log left in a directory is advice nobody reads. Turning
 it into a theory that later changes respect requires the admission and
@@ -298,7 +298,7 @@ to map the design space of that machinery: how each retained artifact acts,
 recorded by [its storage, representational form, lineage, and behavioural
 authority](../notes/axes-of-artifact-analysis.md); where current LLMs fail;
 what context limits force; and which computational models the loop admits.
-The placements above come from the first of these. What the map adds beyond
+The comparisons above come from the first of these. What the map adds beyond
 the consumption-path argument is not yet stated here.
 
 ## A consequence for general theory builders
@@ -340,8 +340,8 @@ this boundary.
 The conjecture is existential: some current LLM, some arrangement of software
 and notes, some product scope. Two ways of saving the conjecture after a
 failure are ruled out in advance. The witness pins the model versions it
-admits before testing, so that a newer model cannot quietly do the work. And it declares product scope, horizon, and
-resource envelope before testing, so that the scope cannot shrink until fixed
+admits before testing, so that a newer model cannot quietly do the work. And
+it declares product scope, horizon, and resource envelope before testing, so that the scope cannot shrink until fixed
 machinery suffices. Open-ended means the declared demand stream admits
 relevant novelty: one web application whose users keep asking for things
 nobody listed qualifies; a fixed set of fifty tasks does not. The declared
