@@ -49,4 +49,3 @@ not currently automated.
    preserved as a retained report.
 4. The working landscape is either distilled into a self-standing article or
    consumed by those durable artifacts, after which this workshop is deleted.
-
