@@ -135,8 +135,21 @@ operation.
 | Dynamic Cheatsheet | Not in scope | Meets stated scope | Not in scope | Meets stated scope | Not in scope | Meets stated scope; bounded sequential benchmark run | Code-inspected mechanism at a pinned commit; outcomes not independently reproduced | A curator prompt is the only gate, correctness never gates a retained entry, and entries carry no provenance |
 | Voyager | Not in scope | Meets stated scope | Meets stated scope | Partial; descriptions and the question cache guide retrieval and task choice | Not in scope | Meets stated scope; bounded game curriculum | Code-inspected mechanism at a pinned commit; aggregate outcomes repository-reported and not reproduced | A critic's success report admits a skill, and a same-named program overwrites the old one instead of being revised |
 | Knowledge-Centric Self-Improvement | Not in scope | Meets stated scope | Not in scope | Meets stated scope | Not in scope | Meets stated scope; bounded task loop | Paper-reported mechanism and outcomes; implementation not independently inspected | It deliberately isolates knowledge-only learning on benchmark families |
-| PROJECTMEM | Not in scope | Not demonstrated | Not in scope | Partial | Not in scope | Not demonstrated | Paper-reported mechanism; no local ingest or inspected implementation | It records decisions and warns before repeated mistakes, but does not test acquisition or revision of project theory |
+| PROJECTMEM | Not in scope | Not demonstrated | Not in scope | Partial | Partial; decisions are logged, not applied as theory | Not demonstrated | Paper-reported mechanism; no local ingest or inspected implementation | It records decisions and warns before repeated mistakes, but does not test acquisition or revision of project theory |
 | Rainbow | Not in scope | Not applicable | Not in scope; fixed strategies adapt configuration | Not in scope | Not in scope; the governing model is designer-supplied and fixed | Meets stated scope; supplied strategies | Paper-reported mechanism, implementation, and outcomes; not independently reproduced | It adapts a running configuration through a causal architectural model, but does not learn that model or its action repertoire |
+
+The **Program theory** column has three values and one gap, and that
+distribution is the table's main result. Fifteen rows read *not in scope*
+because their objective never required a theory: a benchmark loop has no
+activity beyond the task and no user, so there is nothing for a theory to
+relate the software to. PROJECTMEM logs decisions, which is more than not
+setting out to hold one and less than applying one. Fluent and the OpenAI
+account, the two rows with a product and users, hold a theory that people
+wrote: expertise files and repository documents that make the domain legible.
+Wheelhouse's people supply rulings rather than explanations, which is why it
+reads *not demonstrated* beside them. So the column runs absent, logged,
+supplied, and the fourth value, acquired, is empty. Users and theory arrive
+together in this set, and so far only with people inside.
 
 ## Reading the rows
 
