@@ -120,7 +120,7 @@ more than one obligation.
 
 | Article obligation | Primary endpoint questions | Witness-test conditions | What the correspondence does not establish |
 |---|---|---|---|
-| **Holding and application** | **Program theory** is the direct question; **Note learning** identifies the retained natural-language form when that is where the given theory resides. | The later-load half of condition 3, then conditions 4 and 7: begin with adequate rationale already present; load it at the relevant decision; preserve coherence when a locally valid change conflicts with it; test causal use on untouched changes and by perturbing the rationale. | Storing, retrieving, or paraphrasing a rationale does not establish that it governed the later decision. |
+| **Holding and application** | **Program theory** asks directly whether the system retains and applies the given theory. | The later-load half of condition 3, then conditions 4 and 7: begin with adequate rationale already present; load it at the relevant decision; preserve coherence when a locally valid change conflicts with it; test causal use on untouched changes and by perturbing the rationale. | Storing, retrieving, or paraphrasing a rationale does not establish that it governed the later decision. |
 | **Initial acquisition** | **Program theory**, **Software learning**, and **Note learning** together ask whether the system acquired an explanation and changed both legible forms. | Condition 2, the writing and first-read-back portions of condition 3, and condition 7: withhold a decisive rationale; require cross-form writing and read-back; test that the acquired rationale caused later behavior. | A software or note update does not by itself establish acquisition of an adequate theory. |
 | **Successor acquisition** | **Program theory**, **Software learning**, and **Note learning** together ask whether contrary evidence produced an adequate replacement and corresponding changes. | Conditions 5, 6, and 7: make the old rationale false; require attributed and admitted successor changes without a person choosing them; test their causal use. | A reject-capable gate or a changed rationale does not by itself establish that the admitted successor is adequate. |
 | **Automated continuation** | **House**, **Fixed model**, and **Continuation** set the operating boundary; holding, acquisition, and both learning questions must keep working across it. | Condition 1 plus repeated coverage of conditions 3–7: pin the model and product horizon, then repeat cross-form use, conflict handling, successor acquisition, human-free admission and recovery, and causal-use tests across later changes. | Scheduling, restart, or a bounded human-free benchmark loop does not by itself establish continued software-house operation. |
@@ -685,7 +685,8 @@ cluster—[Self-Harness](../../sources/self-harness-harnesses-that-improve-thems
 [Symbolic Learning](../../sources/symbolic-learning-enables-self-evolving-agents.ingest.md),
 and [Agentic Harness
 Engineering](../../agent-memory-systems/reviews/agentic-harness-engineering.md)—strengthens
-the codified-revision part of the developmental and endpoint lenses. Across
+the codified-revision part of the **Proposed development path** and
+**Conjectured endpoint** lenses. Across
 the cluster, fixed models use traces and scores to revise prompts, tools,
 middleware, routing, topology, or harness code. The same fixed outer
 decomposition and machine-score boundary recurs. The reviewed records do not
