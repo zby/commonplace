@@ -146,7 +146,7 @@ self-written tests and tools, retained rules from past failures. The article
 asks what a harness needs once that movement is taken to its end, with no
 person closing the loop by noticing a recurring failure and adding the rule.
 The four obligations below state that endpoint. A harness that meets them is
-a witness.
+a witness for the conjecture.
 
 ## Training in legible forms
 
