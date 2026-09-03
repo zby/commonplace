@@ -1903,7 +1903,50 @@ def test_validation_json_is_compact_and_structured(
             "subject": "kb/sources/.snapshots/orphan.md",
         }
     ]
+    assert payload["analysed_artifacts"] == [
+        {
+            "failures": 0,
+            "path": "kb/sources/scratch.md",
+            "type": "text",
+            "warnings": 0,
+        }
+    ]
     assert payload["details_command"] == "commonplace-validate --full sources"
+
+
+def test_validation_json_identifies_one_typed_external_artifact(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    configure_temp_repo(tmp_path)
+    result = tmp_path / "result.md"
+    result.write_text(
+        """---
+description: "A typed note outside a collection"
+type: kb/types/note.md
+tags: []
+---
+
+# External result
+""",
+        encoding="utf-8",
+    )
+    monkeypatch.chdir(tmp_path)
+
+    exit_code = validate_notes.main(["--json", str(result)])
+    payload = json.loads(capsys.readouterr().out)
+
+    assert exit_code == 0
+    assert payload["summary"]["files_analysed"] == 1
+    assert payload["summary"]["text_files"] == 0
+    assert len(payload["analysed_artifacts"]) == 1
+    assert payload["analysed_artifacts"][0] == {
+        "failures": 0,
+        "path": "result.md",
+        "type": "note",
+        "warnings": payload["summary"]["warnings"],
+    }
 
 
 def test_source_snapshot_cache_reports_same_url_as_related_observation(

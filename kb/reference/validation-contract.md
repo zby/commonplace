@@ -36,7 +36,11 @@ The command presents these findings through two views. The default compact view
 prints counts plus every warning, failure, and material notice. `--full` retains
 the per-artifact PASS/WARN/FAIL/INFO transcript for deliberate inspection.
 `--json` emits the versioned `commonplace.validation.v1` envelope with stable
-diagnostic rule IDs, subjects, reasons, and the detailed drill-down command.
+diagnostic rule IDs, subjects, reasons, the path and detected type of every
+analysed artifact, and the detailed drill-down command. A caller that requires
+one particular typed artifact checks both `summary.files_analysed` and the
+corresponding `analysed_artifacts[].type`; `text_files: 0` means that no
+frontmatter-free text was found, not that no file was analysed.
 Presentation does not change severities or exit behavior: warnings exit zero;
 failures exit nonzero.
 

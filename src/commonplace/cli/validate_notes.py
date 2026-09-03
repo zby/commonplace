@@ -50,6 +50,14 @@ class ValidationDiagnostic:
 
 
 @dataclass(frozen=True)
+class AnalysedArtifact:
+    path: str
+    note_type: str
+    warnings: int
+    failures: int
+
+
+@dataclass(frozen=True)
 class ValidationReport:
     target: str
     scope: str
@@ -58,6 +66,7 @@ class ValidationReport:
     warning_subjects: int
     failing_subjects: int
     diagnostics: tuple[ValidationDiagnostic, ...]
+    analysed_artifacts: tuple[AnalysedArtifact, ...] = ()
     excluded_subtrees: tuple[str, ...] = ()
 
     @property
@@ -300,6 +309,15 @@ def build_validation_report(
         warning_subjects=len(warning_subjects),
         failing_subjects=len(failing_subjects),
         diagnostics=tuple(diagnostics),
+        analysed_artifacts=tuple(
+            AnalysedArtifact(
+                path=_display_path(path, repo_root=repo_root),
+                note_type=outcome.results[path].note_type,
+                warnings=len(outcome.results[path].warns),
+                failures=len(outcome.results[path].fails),
+            )
+            for path in outcome.paths
+        ),
         excluded_subtrees=tuple(
             _display_path(path, repo_root=repo_root) for path in target.ignored_dirs
         ),
@@ -353,6 +371,14 @@ def build_single_validation_report(
         warning_subjects=int(bool(results.warns)),
         failing_subjects=int(bool(results.fails)),
         diagnostics=diagnostics,
+        analysed_artifacts=(
+            AnalysedArtifact(
+                path=_display_path(path, repo_root=repo_root),
+                note_type=results.note_type,
+                warnings=len(results.warns),
+                failures=len(results.fails),
+            ),
+        ),
     )
 
 
@@ -445,6 +471,15 @@ def format_json_report(report: ValidationReport) -> str:
                 "reason": item.reason,
             }
             for item in report.diagnostics
+        ],
+        "analysed_artifacts": [
+            {
+                "path": item.path,
+                "type": item.note_type,
+                "warnings": item.warnings,
+                "failures": item.failures,
+            }
+            for item in report.analysed_artifacts
         ],
         "excluded_subtrees": list(report.excluded_subtrees),
         "details_command": f"commonplace-validate --full {shlex.quote(report.target)}",

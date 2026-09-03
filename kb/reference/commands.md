@@ -52,7 +52,8 @@ collection-landing set, redirect map, or the bounded workshop-and-task
 lifecycle surface. The default result contains counts and every warning or
 failure without printing passing artifact blocks. Use `--full` for the complete
 per-artifact transcript and `--json` for the stable compact
-`commonplace.validation.v1` result. The
+`commonplace.validation.v1` result, including the path and detected type of
+each analysed artifact. The
 [validation contract](./validation-contract.md) owns the exact check domains.
 
 ### commonplace-verify-quotes
