@@ -9,7 +9,7 @@ schema: kb/types/agentic-system-analysis-result.schema.yaml
 
 A complete stable result of one `analyse-agentic-system` run. Choose this type for the run's canonical evidence boundary, registers, lens findings, reconciliation, synthesis, limitations, and verification record. Do not use it for a compact library analysis distilled from the run, an agent-memory-system review, a Commonplace transfer scan, or an operator report.
 
-The type fixes content shape, not lifecycle. A response-only result, a working result under an authorized workshop, a workflow-owned report, and a retained result may all use this type when their owner selects that lifecycle. The applicable collection or workflow still decides whether the artifact may be written, where it belongs, how long it remains, and what later operation consumes it.
+The type fixes content shape, not lifecycle. A response-only result, a workflow-owned state result, and a retained result may all use this type when their owner selects that lifecycle. The producing workflow must fix that choice before source work in an `agentic-system-analysis-run-state` record. The applicable collection or workflow still decides whether the artifact may be written, where it belongs, how long it remains, and what later operation consumes it.
 
 ## One entry artifact
 
@@ -63,7 +63,20 @@ Every negative, thin, conflicting, or uncertain finding names its inspected boun
 
 ### Run identity
 
-`## Run identity` projects the canonical frontmatter identity for readers and states the physical form: response, one file, or package. A package lists the entry artifact and every canonical part. Do not mint another run ID in a part.
+`## Run identity` projects the canonical frontmatter identity for readers and states:
+
+- the canonical carrier: response, `kb/reports/state/`, or `kb/reports/retained/`;
+- the physical form: response, one file, or package;
+- the named consumers of the exact result;
+- the retention and cleanup rule;
+- the run-state path and final phase or stopped disposition; and
+- every permitted compact projection, identified as derived from this run rather
+  than a substitute for it.
+
+A package lists the entry artifact and every canonical part. Do not mint another
+run ID in a part. Cache is never a canonical carrier. This projection makes the
+lifecycle legible from the exact result without making the result depend on
+ignored run-state bytes after handoff.
 
 ### Boundary and evidence
 
@@ -152,7 +165,17 @@ evidence-tier: code-grounded
 
 ## Run identity
 
+**Canonical carrier:** {response | kb/reports/state/ | kb/reports/retained/}
+
 **Physical form:** {response | one file | package}
+
+**Exact-result consumers:** {named consumers}
+
+**Retention and cleanup:** {rule}
+
+**Run state:** `kb/reports/state/agentic-system-analysis/{run-id}/run-state.md` — {handoff-ready | stopped at phase and reason}
+
+**Permitted projections:** {paths and explicit derived-from relationship | none}
 
 {Canonical identity and locations.}
 

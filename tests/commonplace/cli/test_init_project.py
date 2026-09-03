@@ -119,6 +119,8 @@ def test_init_project_seeds_scaffold_files(tmp_path: Path) -> None:
         # User-space source and report types.
         Path("kb/reports/types/connect-report.md"),
         Path("kb/reports/types/connect-report.schema.yaml"),
+        Path("kb/reports/types/agentic-system-analysis-run-state.md"),
+        Path("kb/reports/types/agentic-system-analysis-run-state.schema.yaml"),
         Path("kb/sources/types/ingest-report.md"),
         Path("kb/sources/types/ingest-report.schema.yaml"),
         Path("kb/sources/types/snapshot.md"),

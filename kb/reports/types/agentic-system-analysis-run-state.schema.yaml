@@ -1,0 +1,584 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+allOf:
+  - $ref: "../../types/note.schema.yaml"
+  - type: object
+    properties:
+      frontmatter:
+        type: object
+        required:
+          - type
+          - description
+          - run-id
+          - phase
+          - producer
+          - canonical-carrier
+          - canonical-physical-form
+          - canonical-entry
+          - canonical-manifest
+          - canonical-consumers
+          - retention-rule
+          - cleanup-condition
+          - permitted-projections
+          - write-authority
+          - source-kind
+          - source-revision
+          - source-capture
+          - source-capture-path
+          - source-byte-length
+          - source-sha256
+          - source-root
+          - source-register
+          - canonical-register
+          - runtime-baseline-path
+          - runtime-baseline-sha256
+          - lens-packets
+          - lens-returns
+          - accepted-lens-packets
+          - corrections
+          - reconciliation-seal
+          - assembled-entry
+          - assembled-entry-byte-length
+          - assembled-entry-sha256
+          - assembled-manifest
+          - assembled-manifest-byte-length
+          - assembled-manifest-sha256
+          - validation-target
+          - validation-target-sha256
+          - validation-receipt-path
+          - validation-receipt-sha256
+          - handoff-entry-sha256
+          - handoff-manifest-sha256
+        properties:
+          type:
+            const: kb/reports/types/agentic-system-analysis-run-state.md
+          run-id:
+            type: string
+            pattern: '^AAS-\d{4}-\d{2}-\d{2}-[a-z0-9]+(?:-[a-z0-9]+)*-\d{2}$'
+          phase:
+            enum:
+              - opened
+              - source-frozen
+              - runtime-sealed
+              - lenses-issued
+              - lenses-complete
+              - reconciled
+              - assembled
+              - validated
+              - handoff-ready
+          producer:
+            type: string
+            minLength: 1
+          canonical-carrier:
+            enum: [response, state, retained]
+          canonical-physical-form:
+            enum: [response, "one file", package]
+          canonical-entry:
+            type: [string, "null"]
+          canonical-manifest:
+            type: [string, "null"]
+          canonical-consumers:
+            type: array
+            minItems: 1
+            uniqueItems: true
+            items:
+              type: string
+              minLength: 1
+          retention-rule:
+            type: string
+            minLength: 1
+          cleanup-condition:
+            type: string
+            minLength: 1
+          permitted-projections:
+            type: array
+            uniqueItems: true
+            items:
+              type: string
+              minLength: 1
+          write-authority:
+            type: array
+            minItems: 1
+            uniqueItems: true
+            items:
+              type: string
+              minLength: 1
+          source-kind:
+            enum: [repository-archive, checkout, document-bundle, live-capture, null]
+          source-revision:
+            type: [string, "null"]
+          source-capture:
+            type: [string, "null"]
+          source-capture-path:
+            type: [string, "null"]
+          source-byte-length:
+            type: [integer, "null"]
+            minimum: 0
+          source-sha256:
+            anyOf:
+              - type: "null"
+              - type: string
+                pattern: '^[0-9a-f]{64}$'
+          source-root:
+            type: [string, "null"]
+          source-register:
+            type: [string, "null"]
+          canonical-register:
+            type: [string, "null"]
+          runtime-baseline-path:
+            type: [string, "null"]
+          runtime-baseline-sha256:
+            anyOf:
+              - type: "null"
+              - type: string
+                pattern: '^[0-9a-f]{64}$'
+          lens-packets:
+            type: array
+            uniqueItems: true
+            items:
+              type: object
+              required:
+                - id
+                - lens
+                - path
+                - sha256
+                - source-register
+                - canonical-register
+                - runtime-baseline-sha256
+              properties:
+                id:
+                  type: string
+                  minLength: 1
+                lens:
+                  enum: [memory/context, epistemic]
+                path:
+                  type: string
+                  minLength: 1
+                sha256:
+                  type: string
+                  pattern: '^[0-9a-f]{64}$'
+                source-register:
+                  type: string
+                  minLength: 1
+                canonical-register:
+                  type: string
+                  minLength: 1
+                runtime-baseline-sha256:
+                  type: string
+                  pattern: '^[0-9a-f]{64}$'
+              additionalProperties: false
+          lens-returns:
+            type: array
+            uniqueItems: true
+            items:
+              type: object
+              required: [packet-id, path, sha256]
+              properties:
+                packet-id:
+                  type: string
+                  minLength: 1
+                path:
+                  type: string
+                  minLength: 1
+                sha256:
+                  type: string
+                  pattern: '^[0-9a-f]{64}$'
+              additionalProperties: false
+          accepted-lens-packets:
+            type: array
+            uniqueItems: true
+            items:
+              type: string
+              minLength: 1
+          corrections:
+            type: array
+            uniqueItems: true
+            items:
+              type: object
+              required:
+                - id
+                - invalidated-packets
+                - replacement-packets
+                - from-canonical-register
+                - to-canonical-register
+                - reason
+              properties:
+                id:
+                  type: string
+                  minLength: 1
+                invalidated-packets:
+                  type: array
+                  minItems: 1
+                  uniqueItems: true
+                  items:
+                    type: string
+                    minLength: 1
+                replacement-packets:
+                  type: array
+                  minItems: 1
+                  uniqueItems: true
+                  items:
+                    type: string
+                    minLength: 1
+                from-canonical-register:
+                  type: string
+                  minLength: 1
+                to-canonical-register:
+                  type: string
+                  minLength: 1
+                reason:
+                  type: string
+                  minLength: 1
+              additionalProperties: false
+          reconciliation-seal:
+            anyOf:
+              - type: "null"
+              - type: string
+                pattern: '^[0-9a-f]{64}$'
+          assembled-entry:
+            type: [string, "null"]
+          assembled-entry-byte-length:
+            type: [integer, "null"]
+            minimum: 0
+          assembled-entry-sha256:
+            anyOf:
+              - type: "null"
+              - type: string
+                pattern: '^[0-9a-f]{64}$'
+          assembled-manifest:
+            type: [string, "null"]
+          assembled-manifest-byte-length:
+            type: [integer, "null"]
+            minimum: 0
+          assembled-manifest-sha256:
+            anyOf:
+              - type: "null"
+              - type: string
+                pattern: '^[0-9a-f]{64}$'
+          validation-target:
+            type: [string, "null"]
+          validation-target-sha256:
+            anyOf:
+              - type: "null"
+              - type: string
+                pattern: '^[0-9a-f]{64}$'
+          validation-receipt-path:
+            type: [string, "null"]
+          validation-receipt-sha256:
+            anyOf:
+              - type: "null"
+              - type: string
+                pattern: '^[0-9a-f]{64}$'
+          handoff-entry-sha256:
+            anyOf:
+              - type: "null"
+              - type: string
+                pattern: '^[0-9a-f]{64}$'
+          handoff-manifest-sha256:
+            anyOf:
+              - type: "null"
+              - type: string
+                pattern: '^[0-9a-f]{64}$'
+        additionalProperties: true
+      headings:
+        type: array
+        allOf:
+          - contains:
+              const: "## Authority and lifecycle"
+            minContains: 1
+            maxContains: 1
+          - contains:
+              const: "## Source and phase receipts"
+            minContains: 1
+            maxContains: 1
+          - contains:
+              const: "## Packet and correction ledger"
+            minContains: 1
+            maxContains: 1
+          - contains:
+              const: "## Diagnostics and handoff"
+            minContains: 1
+            maxContains: 1
+      body:
+        pattern: '(?ms)^## Authority and lifecycle\s*$.*?^## Source and phase receipts\s*$.*?^## Packet and correction ledger\s*$.*?^## Diagnostics and handoff\s*$'
+  - if:
+      properties:
+        frontmatter:
+          properties:
+            canonical-carrier:
+              const: response
+    then:
+      properties:
+        frontmatter:
+          properties:
+            canonical-physical-form:
+              const: response
+            canonical-entry:
+              const: null
+            canonical-manifest:
+              const: null
+    else:
+      properties:
+        frontmatter:
+          properties:
+            canonical-physical-form:
+              enum: ["one file", package]
+            canonical-entry:
+              type: string
+              minLength: 1
+  - if:
+      properties:
+        frontmatter:
+          properties:
+            canonical-physical-form:
+              const: package
+    then:
+      properties:
+        frontmatter:
+          properties:
+            canonical-manifest:
+              type: string
+              minLength: 1
+    else:
+      properties:
+        frontmatter:
+          properties:
+            canonical-manifest:
+              const: null
+  - if:
+      properties:
+        frontmatter:
+          properties:
+            phase:
+              const: opened
+    then:
+      properties:
+        frontmatter:
+          properties:
+            source-kind: {const: null}
+            source-revision: {const: null}
+            source-capture: {const: null}
+            source-capture-path: {const: null}
+            source-byte-length: {const: null}
+            source-sha256: {const: null}
+            source-root: {const: null}
+            source-register: {const: null}
+    else:
+      properties:
+        frontmatter:
+          properties:
+            source-kind:
+              enum: [repository-archive, checkout, document-bundle, live-capture]
+            source-revision: {type: string, minLength: 1}
+            source-capture: {type: string, minLength: 1}
+            source-capture-path: {type: string, minLength: 1}
+            source-root: {type: string, minLength: 1}
+            source-register: {type: string, minLength: 1}
+  - if:
+      properties:
+        frontmatter:
+          properties:
+            source-kind:
+              const: repository-archive
+    then:
+      properties:
+        frontmatter:
+          properties:
+            source-byte-length: {type: integer, minimum: 1}
+            source-sha256:
+              type: string
+              pattern: '^[0-9a-f]{64}$'
+  - if:
+      properties:
+        frontmatter:
+          properties:
+            phase:
+              enum: [opened, source-frozen]
+    then:
+      properties:
+        frontmatter:
+          properties:
+            canonical-register: {const: null}
+            runtime-baseline-path: {const: null}
+            runtime-baseline-sha256: {const: null}
+    else:
+      properties:
+        frontmatter:
+          properties:
+            canonical-register: {type: string, minLength: 1}
+            runtime-baseline-path: {type: string, minLength: 1}
+            runtime-baseline-sha256:
+              type: string
+              pattern: '^[0-9a-f]{64}$'
+  - if:
+      properties:
+        frontmatter:
+          properties:
+            phase:
+              enum: [opened, source-frozen, runtime-sealed]
+    then:
+      properties:
+        frontmatter:
+          properties:
+            lens-packets: {maxItems: 0}
+            lens-returns: {maxItems: 0}
+            accepted-lens-packets: {maxItems: 0}
+            corrections: {maxItems: 0}
+    else:
+      properties:
+        frontmatter:
+          properties:
+            lens-packets: {minItems: 2}
+  - if:
+      properties:
+        frontmatter:
+          properties:
+            phase:
+              enum: [opened, source-frozen, runtime-sealed, lenses-issued]
+    then:
+      properties:
+        frontmatter:
+          properties:
+            accepted-lens-packets: {maxItems: 0}
+    else:
+      properties:
+        frontmatter:
+          properties:
+            lens-returns: {minItems: 2}
+            accepted-lens-packets: {minItems: 2}
+  - if:
+      properties:
+        frontmatter:
+          properties:
+            phase:
+              enum:
+                - opened
+                - source-frozen
+                - runtime-sealed
+                - lenses-issued
+                - lenses-complete
+    then:
+      properties:
+        frontmatter:
+          properties:
+            reconciliation-seal: {const: null}
+    else:
+      properties:
+        frontmatter:
+          properties:
+            reconciliation-seal:
+              type: string
+              pattern: '^[0-9a-f]{64}$'
+  - if:
+      properties:
+        frontmatter:
+          properties:
+            phase:
+              enum:
+                - opened
+                - source-frozen
+                - runtime-sealed
+                - lenses-issued
+                - lenses-complete
+                - reconciled
+    then:
+      properties:
+        frontmatter:
+          properties:
+            assembled-entry: {const: null}
+            assembled-entry-byte-length: {const: null}
+            assembled-entry-sha256: {const: null}
+            assembled-manifest: {const: null}
+            assembled-manifest-byte-length: {const: null}
+            assembled-manifest-sha256: {const: null}
+    else:
+      properties:
+        frontmatter:
+          properties:
+            assembled-entry: {type: string, minLength: 1}
+            assembled-entry-byte-length: {type: integer, minimum: 1}
+            assembled-entry-sha256:
+              type: string
+              pattern: '^[0-9a-f]{64}$'
+  - if:
+      properties:
+        frontmatter:
+          properties:
+            canonical-physical-form:
+              const: package
+            phase:
+              enum: [assembled, validated, handoff-ready]
+    then:
+      properties:
+        frontmatter:
+          properties:
+            assembled-manifest: {type: string, minLength: 1}
+            assembled-manifest-byte-length: {type: integer, minimum: 1}
+            assembled-manifest-sha256:
+              type: string
+              pattern: '^[0-9a-f]{64}$'
+  - if:
+      properties:
+        frontmatter:
+          properties:
+            canonical-physical-form:
+              enum: [response, "one file"]
+    then:
+      properties:
+        frontmatter:
+          properties:
+            assembled-manifest: {const: null}
+            assembled-manifest-byte-length: {const: null}
+            assembled-manifest-sha256: {const: null}
+            handoff-manifest-sha256: {const: null}
+  - if:
+      properties:
+        frontmatter:
+          properties:
+            phase:
+              enum:
+                - opened
+                - source-frozen
+                - runtime-sealed
+                - lenses-issued
+                - lenses-complete
+                - reconciled
+                - assembled
+    then:
+      properties:
+        frontmatter:
+          properties:
+            validation-target: {const: null}
+            validation-target-sha256: {const: null}
+            validation-receipt-path: {const: null}
+            validation-receipt-sha256: {const: null}
+    else:
+      properties:
+        frontmatter:
+          properties:
+            validation-target: {type: string, minLength: 1}
+            validation-target-sha256:
+              type: string
+              pattern: '^[0-9a-f]{64}$'
+            validation-receipt-path: {type: string, minLength: 1}
+            validation-receipt-sha256:
+              type: string
+              pattern: '^[0-9a-f]{64}$'
+  - if:
+      properties:
+        frontmatter:
+          properties:
+            phase:
+              const: handoff-ready
+    then:
+      properties:
+        frontmatter:
+          properties:
+            handoff-entry-sha256:
+              type: string
+              pattern: '^[0-9a-f]{64}$'
+    else:
+      properties:
+        frontmatter:
+          properties:
+            handoff-entry-sha256: {const: null}
+            handoff-manifest-sha256: {const: null}

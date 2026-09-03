@@ -204,3 +204,50 @@ def test_response_only_report_makes_commit_visibility_explicit() -> None:
     assert "does not convert the response-only result into a published analysis" in report
     assert "does not grant write, capture, retention, or publication authority" in report
     assert "no standalone canonical result is commit-visible" in orchestrator
+
+
+def test_analysis_lifecycle_is_declared_before_source_work() -> None:
+    orchestrator = instruction("analyse-agentic-system")
+    opening = orchestrator[
+        orchestrator.index("### 1. Open one run and declare the boundary")
+        : orchestrator.index("### 2. Freeze sources once")
+    ]
+
+    assert "Before source work, name every consumer" in opening
+    assert "Use an explicit response only" in opening
+    assert "`kb/reports/cache/` is never canonical" in opening
+    assert "phase: opened" in opening
+    assert "Never advance its phase until the current phase validates" in opening
+
+
+def test_runtime_seal_and_packet_issue_are_checked_phase_gates() -> None:
+    orchestrator = instruction("analyse-agentic-system")
+    runtime = orchestrator[
+        orchestrator.index("### 4. Run and challenge the runtime baseline")
+        : orchestrator.index("### 6. Run the memory/context lens")
+    ]
+    topology = orchestrator[
+        orchestrator.index("#### Worker topology")
+        : orchestrator.index("### 4. Run and challenge the runtime baseline")
+    ]
+
+    assert "runtime-baseline.md" in runtime
+    assert "phase: runtime-sealed" in runtime
+    assert "No lens packet may be materialized or dispatched" in runtime
+    assert "phase: lenses-issued" in topology
+    assert "runtime-baseline-sha256" in topology
+    assert "An invalidated packet cannot remain accepted" in topology
+
+
+def test_final_validation_receipt_identifies_one_typed_result() -> None:
+    orchestrator = instruction("analyse-agentic-system")
+    verification = orchestrator[
+        orchestrator.index("### 10. Verify and freeze the stable result")
+        : orchestrator.index("### 11. Route a selective transfer scan")
+    ]
+
+    assert "commonplace-validate --json" in verification
+    assert "summary.files_analysed` is `1`" in verification
+    assert "type `agentic-system-analysis-result`" in verification
+    assert "A zero `text_files` count is not a zero-subject result" in verification
+    assert "phase: handoff-ready" in verification

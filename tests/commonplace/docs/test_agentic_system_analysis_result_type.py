@@ -178,3 +178,18 @@ def test_result_requires_the_canonical_section_order(tmp_path: Path) -> None:
     results = validate_external_result(tmp_path, content)
 
     assert any("canonical reading order" in failure for failure in results.fails)
+
+
+def test_run_identity_projects_lifecycle_without_depending_on_run_state() -> None:
+    contract = (
+        REPO_ROOT / "kb" / "types" / "agentic-system-analysis-result.md"
+    ).read_text(encoding="utf-8")
+    run_identity = contract[
+        contract.index("### Run identity") : contract.index("### Boundary and evidence")
+    ]
+
+    assert "canonical carrier" in run_identity
+    assert "named consumers of the exact result" in run_identity
+    assert "retention and cleanup rule" in run_identity
+    assert "permitted compact projection" in run_identity
+    assert "without making the result depend on" in run_identity
