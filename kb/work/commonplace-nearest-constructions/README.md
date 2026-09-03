@@ -20,6 +20,16 @@ of Commonplace or the sole comparison basis.
   systems, epistemic and research systems, trace-learning mechanisms, software
   factories, self-modifying harnesses, and fixed-model learners
 
+## Extraction status
+
+- 2026-09-03: the conjectured-endpoint lens (six questions, obligation
+  crosswalk, comparison table, witness-test conditions) was distilled into
+  `kb/articles/nearest-existing-constructions-to-a-reachability-witness.md`,
+  which the reachability article links; the other two lenses remain here.
+- The retained-report snapshot (close condition 3) is deferred while the
+  landscape is under active revision; take it when the comparison axes are
+  stable (close condition 1).
+
 ## Evaluation boundary
 
 The landscape uses the local evidence corpus and the external search completed

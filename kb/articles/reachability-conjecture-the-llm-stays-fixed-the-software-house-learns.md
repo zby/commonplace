@@ -224,7 +224,12 @@ One construction must eventually demonstrate the whole progression:
    requirements, feedback, domain knowledge, and acceptance judgments.
 
 Computational training of the legible state is a condition on obligations 2
-and 3, not a further stage.
+and 3, not a further stage. A partial mechanism for one of them is not partial
+completion of it: storing or paraphrasing a rationale does not show that it
+governed a decision, and a gate that can reject does not show that the
+admitted successor was adequate. What a test of the whole progression would
+have to do is stated in [the companion
+map](./nearest-existing-constructions-to-a-reachability-witness.md).
 
 ## Nearest existing constructions
 
@@ -253,13 +258,14 @@ consequences, and a consequence can contradict the current theory where a
 proof cannot contradict its axioms. The house pays with fallibility instead.
 
 No existing system is an empirical witness, but several hold one piece, and
-placing them shows what the obligations exclude. The [Darwin Gödel
+comparing them shows what the obligations exclude. The papers describing the
+[Darwin Gödel
 Machine](../sources/darwin-godel-machine-open-ended-evolution-self-improving-agents.ingest.md)
 and the [Huxley-Gödel
 Machine](../sources/huxley-godel-machine-human-level-coding-agent-development.ingest.md)
-rewrite coding agents around frozen foundation models and admit a child on
-viability or on estimated lineage productivity.
-[HyperAgents](../agent-memory-systems/reviews/hyperagents.md) replays
+report coding agents rewritten around frozen foundation models, with a child
+admitted on viability or on estimated lineage productivity. The reviewed code
+of [HyperAgents](../agent-memory-systems/reviews/hyperagents.md) replays
 benchmark-selected patches into the code its next generation edits. All
 three train software with the model fixed. What they retain is code, not the
 reasons a later change must respect. [Dynamic
@@ -274,7 +280,10 @@ Each answers part of obligation 1's question about the substrate. Obligations
 2 and 3 concern acquiring and revising a program theory, and none of the five
 is set up to test that: what they retain and revise is judged by score or
 viability, not by whether it explains why the software is organized as it
-is.
+is. A wider comparison, with fourteen further constructions including
+human-inclusive software factories and the evidence behind every cell, is in
+[the companion
+map](./nearest-existing-constructions-to-a-reachability-witness.md).
 
 The simplest rival hypothesis is that obligations 2 and 3 need no further
 machinery: an LLM given a record of its failures will generate the theory

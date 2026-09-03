@@ -22,6 +22,8 @@ Three drafts currently remain in the article frontier. The first states the rese
 
 One supplement accompanies the first draft and is intended to become its footnote: [Reachability as closure under the seed's gate](./reachability-as-closure-under-the-seed-gate.md) — once no human is inside, the house's reachable states are the closure of the seed under its gate and demand stream, so it shares the Gödel machine's descent structure and differs only in the admission relation.
 
+A second supplement, [Nearest existing constructions to a reachability witness](./nearest-existing-constructions-to-a-reachability-witness.md), is the map behind the first draft's nearest-constructions section: nineteen reviewed systems compared against the four witness obligations with the evidence behind each cell, and the seven conditions a witness test would have to meet.
+
 Four former companion drafts were withdrawn after full review. Their titles
 remain as withdrawal notices, but none currently supplies a live article claim.
 The series is being reconstructed claim by claim.
