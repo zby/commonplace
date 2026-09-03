@@ -11,22 +11,22 @@ Commonplace. Different systems match different parts of it, and no scalar
 distance or weighting rule has been defined for collapsing those relations
 into one ranking.
 
-- **Commonplace today:** Ars Contexta is the strongest reviewed match for an
-  agent-operated methodology environment; AI Research OS is the strongest
+- **Observed today — Commonplace's present construction:** Ars Contexta is the
+  strongest reviewed match for an agent-operated methodology environment; AI
+  Research OS is the strongest
   match in inspectable Markdown medium and source-to-synthesis structure;
   Eigenius is the strongest match in typed epistemic objects and checked commit
   routes. The reviewed evidence does not show one of these systems combining
   Commonplace's theory-building purpose, collection and type contracts,
   semantic review, and current human-agent allocation.
-- **Commonplace's development path:** Ars Contexta is the strongest reviewed
-  match for turning
-  corrections and session evidence into methodology observations and later
-  system changes. GBrain is the strongest code-inspected match across the
+- **Proposed development path:** Ars Contexta is the strongest reviewed match
+  for turning corrections and session evidence into methodology observations
+  and later system changes. GBrain is the strongest code-inspected match across the
   listed functions of capture, consolidation, scheduled maintenance,
   retrieval, and gated skill revision. Both expose useful pieces of the missing
   path; the reviewed evidence for neither establishes reliable acquisition and
   admission of the operator's recurring semantic judgments.
-- **The conjectured endpoint:** Fluent is the strongest reviewed match for the
+- **Conjectured endpoint:** Fluent is the strongest reviewed match for the
   software-house topology, while Exo is the strongest code-inspected match for
   broad agent-executed self-revision and recovery. Recuris, Memento-Skills, and
   Harness Continual Learning contribute bounded attribution and admission
@@ -54,8 +54,8 @@ Evidence terms are literal. **Code-inspected** means that a local review found
 the mechanism in a pinned implementation; it does not establish that the
 mechanism ran successfully or produced a reported outcome unless the row says
 so. **Paper-reported**, **practitioner-reported**, **product-reported**, and
-**product-documented**
-identify claims made by those sources, not independently reproduced results.
+**product-documented** identify claims made by those sources, not independently
+reproduced results.
 **Synthesis inference** identifies this report's comparison across those
 records. “Not demonstrated” means that the reviewed evidence does not show the
 property; “not inspected” means that implementation evidence was unavailable;
@@ -85,6 +85,30 @@ with causal read-back into software decisions and no human supplying the
 generalization or admission verdict. The table therefore supports claims about
 available components and missing tests, not a claim that the components compose
 or that the conjectured endpoint is reachable.
+
+### Reachability-obligation crosswalk
+
+The [reachability
+article](../../articles/reachability-conjecture-the-llm-stays-fixed-the-software-house-learns.md)
+states four constructive-witness obligations. This crosswalk shows how they
+relate to this report's six endpoint questions and the seven numbered test
+conditions under [Evidence of a reachability
+witness](#evidence-of-a-reachability-witness). The obligations describe a
+progression; the endpoint questions decompose properties that may contribute to
+more than one obligation.
+
+| Article obligation | Primary endpoint questions | Witness-test conditions | What the correspondence does not establish |
+|---|---|---|---|
+| **Holding and application** | **Program theory** is the direct question; **Note learning** supplies observable read-back when the theory is retained in natural language. | Conditions 3, 4, and 7: write and later load rationale-bearing state; preserve coherence when a locally valid change conflicts with it; test causal use on untouched changes and by perturbing the rationale. | Storing, retrieving, or paraphrasing a rationale does not establish that it governed the later decision. |
+| **Initial acquisition** | **Program theory**, **Software learning**, and **Note learning** together ask whether the system acquired an explanation and changed both legible forms. | Conditions 2, 3, and 7: withhold a decisive rationale; require cross-form writing and read-back; test that the retained rationale caused later behavior. | A software or note update does not by itself establish acquisition of an adequate theory. |
+| **Successor acquisition** | **Program theory**, **Software learning**, and **Note learning** together ask whether contrary evidence produced an adequate replacement and corresponding changes. | Conditions 5, 6, and 7: make the old rationale false; require attributed and admitted successor changes without a person choosing them; test their causal use. | A reject-capable gate or a changed rationale does not by itself establish that the admitted successor is adequate. |
+| **Automated continuation** | **House**, **Fixed model**, and **Continuation** set the operating boundary; the two learning questions must continue to hold across it. | Conditions 1, 6, and 7: pin the model and product horizon; remove the human from internal admission and recovery; evaluate on untouched later changes. | Scheduling, restart, or a bounded human-free benchmark loop does not by itself establish continued software-house operation. |
+
+**House** and **Fixed model** are cross-cutting controls on the whole witness,
+not additional acquisition stages. **Software learning** and **Note learning**
+show which retained forms changed, but neither alone establishes **Program
+theory**. A partial endpoint-table cell therefore must not be read as partial
+completion of an article obligation.
 
 ## Commonplace as the reference construction
 
@@ -119,7 +143,7 @@ Commonplace's stated starting point is semantic work: forming
 explanations, assessing their fit and warrant, revising them under contrary
 evidence, and integrating them into a larger theory.
 
-### Current human-inclusive construction
+### Observed today: current human-inclusive construction
 
 Under [the declared Commonplace
 frame](../../reference/commonplace-declared-frame.md), the repository, its
@@ -144,7 +168,7 @@ an inference that the retained artifacts constrained the revision, but has no
 matched control. It is evidence for one mixed
 human-computational pathway, not for computational theory acquisition.
 
-### Developmental path: less task-specific human input
+### Proposed development path: less task-specific human input
 
 The working path is function-by-function transfer rather than an undifferentiated
 increase in autonomy:
@@ -201,7 +225,7 @@ human](../../articles/the-decisions-that-stay-human-and-what-would-move-them.md)
 develops those transfer conditions. Replacing an approval with another model
 call does not by itself satisfy them.
 
-### Working program thesis: theory building and software building converge
+### Working program thesis toward the conjectured endpoint: theory building and software building converge
 
 The working thesis that motivates the current program is stronger than “a theory
 builder needs some tooling.” It predicts that, under open-ended operation, a
@@ -233,8 +257,8 @@ new machinery, while coherent software change creates demands for theory.
 
 | Lens | Object being compared | Questions that determine proximity |
 |---|---|---|
-| **Present construction** | The human-inclusive theory builder operating now | Does the system serve theory or knowledge work; retain inspectable claims, evidence, rationale, and system definitions; route them into later work; distinguish their authority; and govern semantic admission? |
-| **Developmental path** | The process by which more functions could move from repeated operator judgment into retained capacity | Does the system capture interventions or traces, recognize recurrences, attribute evidence, form scoped candidates, revise natural-language and symbolic artifacts, test and admit them, recover from failure, reactivate them later, and measure the resulting change in human contribution? |
+| **Observed today — present construction** | The human-inclusive theory builder operating now | Does the system serve theory or knowledge work; retain inspectable claims, evidence, rationale, and system definitions; route them into later work; distinguish their authority; and govern semantic admission? |
+| **Proposed development path** | The process by which more functions could move from repeated operator judgment into retained capacity | Does the system capture interventions or traces, recognize recurrences, attribute evidence, form scoped candidates, revise natural-language and symbolic artifacts, test and admit them, recover from failure, reactivate them later, and measure the resulting change in human contribution? |
 | **Conjectured endpoint** | A computational theory builder that is also a software house | Does one fixed-model lineage maintain software for external users, acquire and revise program theory, change both software and natural-language state, and continue over a declared scope and horizon without a human in an internal production or theory-holding role? |
 
 “Partial” means that a mechanism exists but its causal role, scope, evidence, or
@@ -264,7 +288,7 @@ operational learning machinery more strongly than inspectability; Fluent
 matches production topology more strongly than actor allocation; and Exo
 matches mutation reach more strongly than semantic selection.
 
-## Nearest constructions to Commonplace's present and path
+## Nearest constructions under the observed-today and proposed-path lenses
 
 ### Ars Contexta is the strongest reviewed match to the agent-operated methodology shape
 
@@ -357,7 +381,7 @@ why authority must be traced per route. They do not amount to a general
 theory-building or software-house loop; the [epistemic-architectures
 workshop](../epistemic-architectures/README.md) keeps that comparison.
 
-## Commonplace and Exo
+## Commonplace and Exo across the observed-today and proposed-path lenses
 
 Exo provides a direct comparison for Commonplace's development path because the
 two systems start from opposite scarce resources. Exo permits broad
@@ -414,11 +438,14 @@ specific approach than “the LLM stays fixed and external memory learns,” but
 remains a program direction rather than evidence that the final contraction is
 reachable.
 
-## Endpoint lens: reachability witness obligations
+## Conjectured endpoint lens: reachability witness obligations
 
 The original search asked which systems come closest to the reachability
-conjecture. Its six questions remain useful as an endpoint-specific view, but
-they do not rank proximity to Commonplace today or to its development path:
+conjecture. The [reachability-obligation
+crosswalk](#reachability-obligation-crosswalk) maps these diagnostic questions
+to the article's four obligations and the seven test conditions below. The six
+questions remain useful as an endpoint-specific view, but they do not rank
+proximity to Commonplace today or to its development path:
 
 1. **House:** Does it keep changing software for external users across demands
    that are not a fixed benchmark list?
@@ -463,7 +490,7 @@ independently reproduced result.
 | PROJECTMEM | Not in scope | Compatible; not pinned | Not in scope | Paper-reported partial | Not tested | Not demonstrated | It records decisions and warns before repeated mistakes but does not test acquisition or revision of project theory |
 | Rainbow | Not in scope | Not applicable; not an LLM system | Not in scope; fixed strategies adapt configuration | Not in scope | Designer-supplied and fixed | Paper-reported within supplied strategies | It adapts a running configuration through a causal architecture model but does not learn its model or action repertoire |
 
-## Nearest constructions under the endpoint lens
+## Nearest constructions under the conjectured-endpoint lens
 
 ### Fluent is the strongest reviewed match to the software-house topology
 
