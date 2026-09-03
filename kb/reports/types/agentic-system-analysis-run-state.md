@@ -39,7 +39,9 @@ Advance `phase` in order:
    packet for both mandatory lenses.
 6. `reconciled` records the reconciliation seal. A correction names the
    invalidated packet, replacement packet, and old and new register versions;
-   an invalidated packet cannot be accepted.
+   an invalidated packet cannot be accepted. Accepted new-record proposals and
+   amendments may advance the canonical register during reconciliation without
+   invalidating the packet that proposed them.
 7. `assembled` records the exact entry bytes and, for a package, its canonical
    manifest bytes.
 8. `validated` records the SHA-256 of a `commonplace-validate --json` receipt

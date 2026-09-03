@@ -407,3 +407,24 @@ def test_run_state_verifies_repository_archive_identity(tmp_path: Path) -> None:
 
     assert results.fails == []
     assert any("source archive: byte identity matches" in item for item in results.passes)
+
+
+def test_reconciliation_may_advance_the_register_from_accepted_proposals(
+    tmp_path: Path,
+) -> None:
+    state = valid_run_state(tmp_path)
+    content = state.read_text(encoding="utf-8")
+    document, error = validation.parse_document(content)
+    assert error is None and document is not None and document.frontmatter is not None
+    document.frontmatter["canonical-register"] = "CANON-v2-accepted-proposals"
+    state.write_text(
+        "---\n"
+        + yaml.safe_dump(document.frontmatter, sort_keys=False)
+        + "---\n"
+        + document.body,
+        encoding="utf-8",
+    )
+
+    results = validation.validate_note(state, repo_root=tmp_path)
+
+    assert results.fails == []

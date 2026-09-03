@@ -524,13 +524,14 @@ def parse_agentic_analysis_run_state(
         accepted_lenses = {packet_lens[item] for item in accepted_packet_ids}
         if accepted_lenses != {"memory/context", "epistemic"}:
             raise ValueError("accepted-lens-packets: both mandatory lenses must be accepted")
-        if canonical_register is not None and not any(
+        if phase == "lenses-complete" and canonical_register is not None and not any(
             packet.packet_id in accepted_packet_ids
             and packet.canonical_register == canonical_register
             for packet in packets
         ):
             raise ValueError(
-                "canonical-register: no accepted lens packet uses the current register"
+                "canonical-register: before reconciliation, no accepted lens packet "
+                "uses the current register"
             )
 
     assembled_entry = _assembled_identity(
