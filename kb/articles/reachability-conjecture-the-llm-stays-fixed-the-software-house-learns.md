@@ -25,19 +25,21 @@ source_notes:
 > **Draft.** This article may change. Comments and counterexamples are welcome
 > on [the repository's GitHub Discussions page](https://github.com/zby/commonplace/discussions).
 
-**TL;DR.** Call a software house whatever keeps developing and changing
-software for its users, over time, in response to what they ask for and what
-happens in use. The conjecture is that such a house can be built to run with
-no human in a production role, using only models available by 2026-09-02,
-and handling requests nobody listed in advance. The model stays fixed. What
-changes is everything around it: the code the house runs on, and the notes
-that record what the software is for, why it is built the way it is, and
-what earlier changes taught. The obvious alternative, that a model with a
-log of its failures will produce and keep this understanding by itself, is
-what the conjecture denies. People write the first version of both, and the
-house revises them as requests and their consequences arrive. People still
-correct it at first. The bet is that each round needs less correction, until
-keeping that understanding current no longer depends on people.
+**TL;DR.** A software house is whatever keeps changing a piece of software
+for its users, as they ask for things and as the software is used. The
+conjecture is that such a house can run with no human in a production role,
+on models that already exist, and handle requests nobody listed in advance.
+
+The model never changes. Everything around it does: the code the house runs
+on, and the notes that say what the software is for, why it is built the way
+it is, and what earlier changes taught. People write the first versions of
+both. The house then revises them as requests and their consequences arrive,
+and people correct it at first. The bet is that each round needs less
+correction, until the house keeps its own notes and code adequate without
+people.
+
+The conjecture denies the obvious shortcut: that a model given a log of its
+failures will work this understanding out and keep it by itself.
 
 ## Claim
 
