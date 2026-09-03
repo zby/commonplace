@@ -23,8 +23,8 @@ the live notes.
 Naur makes two claims that are usually read as one. First, a program's theory,
 the capacity to map the program onto the world, justify its parts, and extend
 it coherently, cannot be expressed as criteria or rules. Second, that theory is
-"inextricably bound to human beings". The essay's bridge from the first to the
-second is an equation: what a program running on a computer does is execute
+"inextricably bound to human beings" (§6). The essay's bridge from the first to
+the second is an equation: what a program running on a computer does is execute
 formulated criteria, so a judgment whose criteria cannot be formulated is a
 judgment no program can make.
 
@@ -34,10 +34,10 @@ justify, and answer questions about them. Rule-following cannot be the whole of
 it, because following a rule is itself done well or badly, and rules for
 following rules regress. What ends the regress is a grasp of similarity between
 situations, and that similarity "cannot be expressed in terms of criteria, no
-more than the similarities of ... human faces, tunes, or tastes of wine". The
-theory-holder's third capability, taking in a new demand by seeing its
+more than the similarities of ... human faces, tunes, or tastes of wine" (§3).
+The theory-holder's third capability, taking in a new demand by seeing its
 similarity to what the program already does, "cannot be reduced to any limited
-set of criteria or rules".
+set of criteria or rules" (§4).
 
 The bridge held for the programs the essay describes. A machine judged only by
 criteria a programmer had written, so machine execution and formulated criteria
@@ -68,12 +68,13 @@ was closed in advance.
 
 ## B.2 What the compiler case rules out and what it leaves open
 
-Naur reports a strong transfer failure. A motivated successor group received the
-full program text, annotated sources, extensive written design discussion, and
-personal advice from the original group, and still proposed extensions that the
-original group recognized as patches destroying the compiler's structure, while
-the original group could propose simple changes framed within it. The supplied
-package did not convey enough program-specific understanding to that group.
+Naur reports a strong transfer failure (§2, Case 1). A motivated successor
+group received the full program text, annotated sources, extensive written
+design discussion, and personal advice from the original group, and still
+proposed extensions that the original group recognized as patches destroying
+the compiler's structure, while the original group could propose simple changes
+framed within it. The supplied package did not convey enough program-specific
+understanding to that group.
 
 The case rules out one answer: more prose of the same kind does not by itself
 transfer a program theory. It does not rule out other packages or other
@@ -102,8 +103,8 @@ Naur's hardest test of holding a theory is coherent modification: change the
 program for a new demand without destroying the structure and purpose that make
 it work. He ties a program's life to a team that remains in control of it and
 can answer later demands, and dates its death to the moment demands can no
-longer be answered intelligently. One coherent change may be lucky or copied;
-holding a theory is a capacity across occasions.
+longer be answered intelligently (§6). One coherent change may be lucky or
+copied; holding a theory is a capacity across occasions.
 
 Meeting the test does not need a theory strong enough to deduce the right change
 in one step. A working program theory may be partial, imprecise, and fallible.

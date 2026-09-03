@@ -311,7 +311,7 @@ the initial formalization governs every successor by descent, and a demand
 nobody formalized cannot enter the test. The paper states the price: the
 machine "must ignore those self-improvements whose effectiveness it cannot
 prove" ([Schmidhuber](../sources/goedel-machines-schmidhuber.ingest.md),
-verbatim).
+§2.4, verbatim).
 
 Once no human is inside, both the Gödel machine and the conjectured house are
 self-modifying systems. Every next state must arise through the current

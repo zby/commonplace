@@ -44,6 +44,9 @@ article](../../instructions/publish-an-article.md).
   provenance headers, missing content, and assembly rules
 - [staging/README.md](./staging/README.md) — boundary and naming rules for the
   actual copied or adapted appendix drafts once the source cohort is selected
+- [staging/assembly-check.md](./staging/assembly-check.md) — status of each
+  assembly check after the first full staging pass (2026-09-03) and the work
+  that remains before a tag
 
 ## Work sequence
 
