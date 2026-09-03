@@ -1,0 +1,25 @@
+{
+  "analysed_artifacts": [
+    {
+      "failures": 0,
+      "path": "kb/reports/retained/agentic-system-analysis-operability-replay-20260903/AAS-2026-09-03-academic-research-skills-02.md",
+      "type": "agentic-system-analysis-result",
+      "warnings": 0
+    }
+  ],
+  "details_command": "commonplace-validate --full kb/reports/retained/agentic-system-analysis-operability-replay-20260903/AAS-2026-09-03-academic-research-skills-02.md",
+  "diagnostics": [],
+  "excluded_subtrees": [],
+  "schema": "commonplace.validation.v1",
+  "scope": "kb/reports/retained/agentic-system-analysis-operability-replay-20260903/AAS-2026-09-03-academic-research-skills-02.md",
+  "status": "success",
+  "summary": {
+    "failing_subjects": 0,
+    "failures": 0,
+    "files_analysed": 1,
+    "text_files": 0,
+    "warning_subjects": 0,
+    "warnings": 0
+  },
+  "target": "kb/reports/retained/agentic-system-analysis-operability-replay-20260903/AAS-2026-09-03-academic-research-skills-02.md"
+}

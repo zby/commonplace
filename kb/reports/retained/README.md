@@ -17,6 +17,7 @@ Current retained sets:
 - [Agent operability audit](./agent-operability-audit-2026-08-31.md)
 - [Agent operability first-slice measurement](./agent-operability-first-slice-20260831/README.md)
 - [Codex ingest-session tool-result volume audit](./codex-ingest-session-tool-result-volume-20260831/README.md)
+- [Agentic-system analysis operability replay](./agentic-system-analysis-operability-replay-20260903/README.md)
 
 Promote transferable conclusions to the appropriate library collection, but
 keep the report here when a later reader still needs the exact record behind

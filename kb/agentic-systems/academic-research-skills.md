@@ -16,6 +16,11 @@ entry paths, and architecture and control documentation. I did not operate the
 plugin in Claude Code, call its external services, or inspect a real research
 run.
 
+This note is the compact projection of the retained replay result
+[AAS-2026-09-03-academic-research-skills-02](../reports/retained/agentic-system-analysis-operability-replay-20260903/AAS-2026-09-03-academic-research-skills-02.md).
+Use that result when exact run identity, source/register lineage, lens findings,
+or acceptance evidence matters.
+
 Academic Research Skills 3.21.1 is a Claude Code extension and prompt workflow,
 not a complete agent runtime. The package exposes four skills, sixteen command
 entries, thirty-nine role prompts, three plugin agents, and two hooks
@@ -94,8 +99,22 @@ written to SQLite and can replace later network calls under an exact
 citation/resolver/query-form/version key and a ninety-day semantic TTL
 ([verification cache](https://github.com/Imbad0202/academic-research-skills/blob/94436237913091d4739870159d241660527e8338/scripts/verification_cache.py#L102-L276)).
 That is executable read-back. It establishes neither that a cache hit reached a
-model nor that it changed scholarly quality. Static installed prompts are
-retained instructions, not memory accumulated through use.
+model nor that it changed scholarly quality.
+
+The fresh replay separated four other deterministic read-back routes. A
+human-read ledger is recomputed at finalization and can promote, demote, or stop
+a marker
+([human-read resolver](https://github.com/Imbad0202/academic-research-skills/blob/94436237913091d4739870159d241660527e8338/scripts/human_read_attestation_resolver.py#L311-L413));
+an inquiry ledger replays an exact Passport pointer at checkpoints
+([inquiry ledger](https://github.com/Imbad0202/academic-research-skills/blob/94436237913091d4739870159d241660527e8338/scripts/inquiry_branch_ledger.py#L1129-L1190));
+fresh update-check state may reach the `SessionStart` hook output
+([update check](https://github.com/Imbad0202/academic-research-skills/blob/94436237913091d4739870159d241660527e8338/scripts/ars_update_check.sh#L92-L215));
+and claim-standing artifacts can be replayed and freshness-checked
+([freshness check](https://github.com/Imbad0202/academic-research-skills/blob/94436237913091d4739870159d241660527e8338/scripts/check_claim_standing_freshness.py#L102-L197)).
+These consumers are wired in the tree, but host, model, provider, and human
+activation remain uninspected. A human-read attestation is operational input,
+not proof that reading occurred or that a claim is true. Static installed
+prompts are retained instructions, not memory accumulated through use.
 
 ## Integrity is coverage-bounded
 
