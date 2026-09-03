@@ -257,10 +257,7 @@ Computational training of localized state is a condition on obligations 2 and
 3, not a further stage. A partial mechanism for one of them is not partial
 completion of it: storing or paraphrasing a rationale does not show that it
 governed a decision, and a gate that can reject does not show that the
-admitted successor was adequate. The [companion
-map](./nearest-existing-constructions-to-a-reachability-witness.md) separates
-what a carrier-neutral witness must demonstrate from the stronger test of
-explicit retained theory.
+admitted successor was adequate.
 
 ## Nearest existing constructions
 
@@ -307,8 +304,8 @@ addressable rationale improves coherent modification, diagnosis, or recovery
 relative to raw records or direct artifact search. Both routes require retained
 evidence to reach the relevant decision with enough behavioural force. Only
 the explicit route additionally requires selecting, retaining, and revising
-the synthesized theory object. The companion map treats that as a mechanism
-test rather than a condition of reachability.
+the synthesized theory object. That additional requirement tests the mechanism,
+not reachability.
 
 An [open-domain theory builder may itself become a software
 house](../notes/an-open-domain-theory-builder-becomes-a-software-house-when-new-domains-require-production-machinery-changes.md)

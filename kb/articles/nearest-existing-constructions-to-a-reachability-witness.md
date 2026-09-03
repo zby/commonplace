@@ -69,7 +69,8 @@ scopes differ, and the evidence differs. The table is not a ranking.
 The comparison runs on six questions, which are narrower and more directly
 checkable than the obligations:
 
-1. **House.** Does the system keep changing software for external users,
+1. **Software-house topology.** Does the construction include the complete
+   persistent system responsible for changing software for external users
    across demands that are not a fixed benchmark list?
 2. **Fixed parametric state.** Can the documented learning happen without
    changing foundation-model weights or other distributed-parametric internal
@@ -84,6 +85,17 @@ checkable than the obligations:
    explicit theory or reconstructed from records?
 6. **Continuation.** Is the loop sustained with no person in an internal
    production, theory-holding, generalization, selection, or admission role?
+
+The first question is a boundary test, not an automation test. A coding harness
+may repeatedly change software across benchmark or repository tasks while
+remaining only one component used by a larger producer. It has software-house
+topology only when the reviewed construction includes the complete persistent
+system responsible for evolving a user product across requirements, feedback,
+and operating consequences. Direct conversation with end users is unnecessary;
+those inputs may arrive through tickets, product management, telemetry, or
+other interfaces. Human independence is assessed separately under
+**Continuation**. A construction meeting both questions would be an automated
+software house over its stated scope and horizon.
 
 ## How the questions relate to the four obligations
 
@@ -103,24 +115,24 @@ acquisition must alter later production. **Successor acquisition** asks the same
 of understanding that later evidence makes inadequate. A complete witness must
 eventually demonstrate both **Software learning** and **Note learning** across
 its sequence, but one acquisition episode need not change both forms.
-**Automated continuation** is bounded by **House**, **Fixed parametric state**,
-and **Continuation**, and it requires the holding and acquisition capacities to
-keep working across that boundary.
+**Automated continuation** is bounded by **Software-house topology**, **Fixed
+parametric state**, and **Continuation**, and it requires the holding and
+acquisition capacities to keep working across that boundary.
 
-One warning governs every use of the table. **House** and **Fixed parametric
-state** are cross-cutting controls on a whole witness, not acquisition stages.
-**Software learning** and **Note learning** report which retained forms changed,
-and neither alone establishes **Program theory**. A partial cell is therefore
-not partial completion of an obligation. Storing, retrieving, or paraphrasing a
-rationale does not show that it governed a later decision; a software or note
-update does not by itself show that adequate project understanding was
-acquired; a reject-capable gate does not show that the admitted successor was
-adequate; and scheduling or restart does not show continued software-house
-operation.
+One warning governs every use of the table. **Software-house topology** and
+**Fixed parametric state** are cross-cutting controls on a whole witness, not
+acquisition stages. **Software learning** and **Note learning** report which
+retained forms changed, and neither alone establishes **Program theory**. A
+partial cell is therefore not partial completion of an obligation. Storing,
+retrieving, or paraphrasing a rationale does not show that it governed a later
+decision; a software or note update does not by itself show that adequate
+project understanding was acquired; a reject-capable gate does not show that
+the admitted successor was adequate; and scheduling or restart does not show
+continued software-house operation.
 
 ## Comparison table
 
-| Construction | House | Fixed parametric state | Software learning | Note learning | Program theory | Continuation | Evidence basis | Decisive shortfall |
+| Construction | Software-house topology | Fixed parametric state | Software learning | Note learning | Program theory | Continuation | Evidence basis | Decisive shortfall |
 |---|---|---|---|---|---|---|---|---|
 | Fluent | Meets stated scope | Not demonstrated; model lineage and auxiliary parametric state not pinned | Meets stated scope; human-inclusive | Meets stated scope; human-inclusive | Partial; rationale is supplied, while acquisition and faithful reuse are not demonstrated | Human-dependent | Product documentation and practitioner report; implementation and outcomes not independently inspected | Humans confirm behaviour, technical approach, and unresolved decisions; theory acquisition is not tested |
 | Wheelhouse | Not demonstrated | Not demonstrated | Partial; human-inclusive | Partial; human-inclusive | Not demonstrated | Human-dependent | Practitioner report; implementation and outcomes not independently inspected | Human rulings and verdicts produce the doctrine; the consolidating agent's theory-holding role is only a hypothesis |
