@@ -61,10 +61,12 @@ extracts a few bits per trial, and the space of revert-point and alternative
 pairs grows combinatorially with sequence length. One surprising consequence
 read against a theory can indict a specific commitment and revise a whole
 region of that space at once. Where trials are few, slow, and expensive, that
-asymmetry is the regime argument for theory. The second is the failure
-signature. Undirected search fails isotropically: errors scatter across
-episodes. A wrong theory fails coherently, bending successive changes the same
-wrong way, as [broad negative transfer from a broad wrong
+asymmetry is the regime argument for theory.
+
+The second difference is the failure signature. Undirected search fails
+isotropically: errors scatter across episodes. A wrong theory fails coherently,
+bending successive changes the same wrong way, as [broad negative transfer from
+a broad wrong
 theory](./theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md)
 predicts. A test that replaces the theory with a plausible wrong one therefore
 discriminates better than one that withholds it: directional failure shows the
