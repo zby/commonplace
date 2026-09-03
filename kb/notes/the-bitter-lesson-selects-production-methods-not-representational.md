@@ -11,10 +11,10 @@ tags: [learning-theory, deploy-time-learning, foundations]
 
 | | hand-crafted | learned (search + selection) |
 |---|---|---|
-| **distributed-parametric** | hand-tuned features and weights — what the lesson displaced | deep learning — the widely cited quadrant |
-| **localized forms** | today's prompts, harnesses, curated KBs — the lesson's next target | prompt, code, and harness search — bounded instances, scaling open |
+| **distributed-parametric** | hand-tuned weights and thresholds — half of what the lesson displaced | deep learning — the widely cited quadrant |
+| **localized forms** | hand-written feature extractors, then today's prompts, harnesses, curated KBs — the other half, and the lesson's next target | prompt, code, and harness search — bounded instances, scaling open |
 
-“Localized” groups natural-language and symbolic artifacts; mixed systems should be decomposed into their operative parts. The columns classify each part by its current production or update process, not by a pure origin story: a hand-authored prompt revised through measured search has entered the learned column for that update. The matrix distinguishes the axes conceptually; it does not assume that every quadrant has an equally scalable learning method.
+“Localized” groups natural-language and symbolic artifacts; mixed systems should be decomposed into their operative parts. What the lesson originally displaced straddled both rows — hand-tuned weights and hand-written feature extractors — which is itself evidence that the selection ran along the column, not the row. The columns classify each part by its current production or update process, not by a pure origin story: a hand-authored prompt revised through measured search has entered the learned column for that update. The matrix distinguishes the axes conceptually; it does not assume that every quadrant has an equally scalable learning method.
 
 The distinction rules out two symmetric positions. **Weights-monism** — the view that scalable learning happens only in distributed weights — goes beyond Sutton's production-method claim. That bounds what the 2019 essay establishes, not every later position Sutton holds.
 
@@ -70,7 +70,7 @@ The bet can lose. If selection over localized knowledge remains artisanal as tho
 
 ## Scope
 
-- "Wins" and "need" throughout mean worse-frontier, not impossibility: a learned architecture with stable semantic modules, explicit scope, and localized update paths would confirm the mixed-form conjecture in a different substrate, not refute it.
+- "Fails", "the bet can lose", and "efficient frontier" throughout mean a worse frontier, not impossibility: a learned architecture with stable semantic modules, explicit scope, and localized update paths would confirm the mixed-form conjecture in a different substrate, not refute it.
 
 ## Open Questions
 
