@@ -31,7 +31,7 @@ A face recognizer is formal symbol manipulation by a program running on a comput
 
 Learning is not the discriminator. A decision tree can be induced from examples and remain an explicit finite rule set, so "learned" does not by itself place a system outside Naur's rule-determined pole. The discriminator is whether the resulting judgment has a formulable rubric. A decision tree has one; a face recognizer's parameters do not yield one. Naur's argument bounds the first kind and never reaches the second, because when it was written programs were the first kind.
 
-An objector may reply that the parameters *are* the formulated criteria, only not human-readable. The reply proves too much. If opaque parameters count as formulated criteria, then a face recognizer has expressed face similarity in criteria and Naur's first claim is false. If they do not count, the bridge is false. On either reading the human binding loses; only which of Naur's two claims survives changes.
+An objector may reply that the parameters *are* the formulated criteria, only not human-readable. The reply proves too much. If opaque parameters count as formulated criteria, then a face recognizer has expressed face similarity in criteria and Naur's first claim is false. If they do not count, the bridge is false. On either reading the human binding fails; only which of Naur's two claims survives changes.
 
 None of this shows that any program holds a program's theory. Breaking the bridge removes a reason to think the question is closed; it does not answer it.
 
