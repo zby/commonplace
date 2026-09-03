@@ -181,13 +181,15 @@ decisive project-specific theory, whatever its form. A hand-written check that
 rejects every schema change carries the human's theory that the schema is
 settled, just as a note saying so would. A wholly hand-built end state would
 show that software and notes can carry theory, not that the house learned it.
-Because each successor is admitted by the prior state's gate, the house can
-only occupy states reachable from the seed by admitted steps: the closure of
-the seed under that gate and the demand stream. The gate is fallible and the
-LLM samples, so the steps are nondeterministic, but the set of reachable
-states is still fixed by the seed, the gate, and the demands. Outgrowing the
-seed then means that this set contains states holding an adequate theory and
-that the house reaches one of them.
+Once no human is inside, every successor must arise through the predecessor
+state's own update machinery and the external inputs the witness permits. The
+reachable states are therefore the [transition closure of the seed under its
+state-dependent successor relation and declared input
+process](./reachability-as-closure-under-the-seed-gate.md). That relation may be
+probabilistic and may revise its own machinery through permitted transitions.
+Outgrowing the seed means that adequate human-free states receive usable
+probability and sustain coherent later work, not merely that one such state lies
+on a possible path.
 
 General production machinery such as git, the test runner, or the model client
 may stay fixed while it handles the declared scope. If the scope requires a
@@ -277,13 +279,15 @@ enter the test. The paper states the price: the machine "must ignore those
 self-improvements whose effectiveness it cannot prove"
 ([Schmidhuber](../sources/goedel-machines-schmidhuber.ingest.md), verbatim).
 
-Once no human is inside, the conjectured house is closed in the same way.
-Every successor is admitted by the notes, software, and fixed LLM the prior
-state supplies, so the seed governs the lineage by descent. The difference is
-the admission relation. The Gödel machine admits only what its current axioms
-derive. The house admits what a fallible gate accepts on production
-consequences, and a consequence can contradict the current theory where a
-proof cannot contradict its axioms. The house pays with fallibility instead.
+Once no human is inside, both the Gödel machine and the conjectured house are
+autonomous self-modifying transition systems: every successor must arise
+through the predecessor state's own machinery and permitted inputs. The
+Gödel-machine relation is proof-gated under its current formalization. The
+house's relation is fallible and evidence-responsive, so operating consequences
+may defeat part of its current theory and alter later updates. They share the
+descent structure, not the same warrant; deductive closure applies to the
+Gödel machine's theorems, while its states form a proof-gated transition
+closure.
 
 No reviewed system is an empirical witness. Human-inclusive factories such as
 Fluent and the OpenAI agent-first account are closest to the user-facing house
@@ -320,13 +324,14 @@ failure are ruled out in advance. The witness pins every eligible model and
 other distributed-parametric component before testing, so that a newer model
 or learned auxiliary component cannot quietly do the work. It also declares
 product scope, horizon, and resource envelope before testing, so that the scope
-cannot shrink until fixed machinery suffices. Open-ended means the declared
-demand stream admits relevant novelty: one web application whose users keep
-asking for things nobody listed qualifies; a fixed set of fifty tasks does not.
-The declared stream is part of what the claim is about, since the reachable
-states depend on the demands received. Bare reachability is cheap: a gate that
-admits anything makes every state reachable. The claim is that adequate states
-are reached with usable probability inside the declared envelope.
+cannot shrink until fixed machinery suffices. Open-ended means that the
+prospectively declared demand-and-consequence process permits relevant novelty
+rather than presenting a fixed benchmark list. Its admissible histories, the
+history realized in one run, and the selection distribution are distinct and
+must not be changed after seeing failures. Bare reachability is cheap: one lucky
+path establishes only possibility. The claim is that training reaches adequate
+states with usable probability inside the declared envelope and that they
+remain adequate across the autonomous horizon.
 
 The cutoff and pinning bind a claim-establishing witness run, not ordinary
 development. The project may build and deploy with newer models, and doing so
