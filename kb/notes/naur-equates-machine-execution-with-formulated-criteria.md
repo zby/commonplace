@@ -1,5 +1,5 @@
 ---
-description: "Naur argues program theory cannot be expressed as criteria, then concludes it is human-only; the bridge equates machine execution with formulated criteria, true in his day; his compiler evidence is likewise bounded by its day's documentation practice"
+description: "Naur argues program theory cannot be expressed as criteria, then concludes it is human-only; the bridge equates machine execution with formulated criteria, true for the programs of his day and separated since by trained recognizers"
 type: kb/types/note.md
 traits: [title-as-claim, has-external-sources]
 tags: [foundations, context-engineering]
@@ -39,7 +39,7 @@ None of this shows that any program holds a program's theory. Breaking the bridg
 
 Naur's compiler case is a bounded transfer failure. A motivated successor group had the full program text, annotated sources, extensive written design discussion, and personal advice, and still proposed extensions the original group recognized as patches destroying the structure; the original group could propose simple changes framed within it. The case shows that the supplied package did not convey enough program-specific understanding to that group. It does not test other rationale packages or other interpreters.
 
-The bound on this evidence is technology-relative in the same way as the bridge. The package was the documentation and knowledge-consumption machinery of its time: text, annotations, written discussion, advice, and whatever organization and reading practice the group brought to them. It did not test structured rationale linked to the decisions it affects, ADR-like records, machine-maintained indexes, semantic retrieval, dependency-aware context assembly, or automatic loading of the relevant record at the decision point. Whether a different representation-plus-consumption system transfers more of the capacity, to people or to an LLM-based composite, is therefore an open empirical question. The negative result keeps its force: the successor group already had extensive documentation, so adding more prose of the same kind is not an answer, and none of the newer carriers holds a theory by itself.
+The case tested one historically bounded documentation-and-consumption system. [A separate note](./naurs-compiler-case-tests-one-historically-bounded-documentation-and-consumption-system.md) states what the negative result establishes, which newer representation, indexing, retrieval, and activation paths it did not test, and why those mechanisms still do not hold a theory by themselves.
 
 Read with Naur's account of theory possession, the case gives three necessary tests for any claim that an interpreter-plus-artifact composite is a bearer of a program's theory:
 
@@ -56,6 +56,7 @@ The third test is longitudinal rather than a demand for a correct first change. 
 Relevant Notes:
 
 - [Programming as Theory Building](../sources/programming-as-theory-building.ingest.md) — abstracted-from: supplies the Ryle regress, the inexpressibility and human-binding claims, the program-as-formal-symbol-manipulation and rule-following passages, the program-life passage, and the compiler case; the identification of the bridge as an equation is this note's reading
+- [Naur's compiler case tests one historically bounded documentation-and-consumption system](./naurs-compiler-case-tests-one-historically-bounded-documentation-and-consumption-system.md) — extends: separates the technology-relative bound on the transfer evidence from the machine-execution bridge
 - [Attempted recovery identifies informational gaps, not provenance or authority](./documentation-generates-the-system-rather-than-describing-it.md) — grounds: why Naur's failed transfers show that content was missing from the supplied artifacts, not that program theory is inexpressible in principle
 - [Holding a program theory means sustaining coherent search under delayed feedback](./program-theory-sustains-search-under-delayed-feedback.md) — extends: develops Naur's third bearer test as a longitudinal search-and-recovery capacity rather than one-shot correctness
 - [Theory-mediated self-improvement needs interpretation, retention, and independent read-back](./theory-mediated-self-improvement-needs-interpretation-and-retention.md) — extends: the interpreter/retention division of labour that the three tests condition
