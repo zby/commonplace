@@ -54,13 +54,14 @@ embedding model. What gets trained is the house, through changes that
 computation produces and the house retains in its [notes and
 code](../notes/definitions/representational-form.md). *Notes and code* here
 means everything the house holds in natural language or in symbolic form:
-notes, code, schemas, tests, tools, and production policy. Derived indexes
-may be regenerated from those notes and code under pinned machinery, but they
-are not independently trained or treated as learned state. *Practically
-reachable* means success within a declared product scope, operating horizon
-(how long the house must keep running), and budget of compute, time, and
-cost. Within those bounds, training must discover and maintain the decisive
-project-specific structures until no human is needed in an internal role.
+notes, code, schemas, tests, tools, and rules for how production is done.
+Derived indexes may be regenerated from those notes and code under pinned
+machinery, but they are not independently trained or treated as learned
+state. *Practically reachable* means success within a declared product scope,
+operating horizon (how long the house must keep running), and budget of
+compute, time, and cost. Within those bounds, training must discover and
+maintain the decisive project-specific notes and code until no human is
+needed in an internal role.
 
 An *internal role* is what the
 [definition](../notes/definitions/software-house.md#scope) calls an internal
@@ -72,7 +73,7 @@ supply product-level requirements, facts, observed outcomes, or acceptance
 judgments about visible behaviour. The role, not the person, decides which
 side of the boundary an act falls on.
 
-## Why the substrate could suffice
+## Why the components could suffice
 
 Open-ended change brings demands nobody analysed in advance and questions of
 fit that the available checks do not settle. Say a product built for one
@@ -148,7 +149,7 @@ that scale with computation because [the lesson selects how behavior-shaping
 structure is produced, not the form in which it is
 retained](../notes/the-bitter-lesson-selects-production-methods-not-representational.md).
 Learned software and notes are not disqualified merely because they are
-localized and legible. A hand-crafted seed is compatible only if [learning
+separate and readable. A hand-crafted seed is compatible only if [learning
 outgrows the task-specific knowledge the seed
 supplies](../notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md).
 Those two points answer the objection in principle; whether training over
@@ -174,12 +175,12 @@ authorization, and
 coordination](../notes/continual-learning-requires-governing-behaviour-changing-writes.md).
 This article supplies no general solution to that problem. A *witness*, in
 the logician's sense of one working house that makes the existential claim
-true, must show that its update process attributes evidence and admits
-successors well enough to satisfy the acquisition and continuation
-obligations below. A user who supplies requirements, feedback, domain
-knowledge, or an acceptance judgment stays external. A person who repeatedly
-diagnoses the theory failure or chooses the successor is doing the house's
-credit assignment and fills the excluded internal role.
+true, must show that its credit assignment and admission work well enough to
+satisfy the acquisition and continuation obligations below. A user who
+supplies requirements, feedback, domain knowledge, or an acceptance judgment
+stays external. A person who repeatedly diagnoses the theory failure or
+chooses the successor is doing the house's credit assignment and fills the
+excluded internal role.
 
 The update mechanism is otherwise open. It may produce a successor directly
 or separate proposal, evaluation, and selection, and it may edit prior notes,
@@ -191,7 +192,8 @@ request asked for is not enough, since the next job starts from the changed
 product either way. Adding a validator because a bug class recurred, so that
 the validator later blocks that class, qualifies; so does a product
 abstraction, invariant, or test that demonstrably shapes later changes beyond
-that continuity. A note never loaded by context assembly does not.
+merely being part of the changed product. A note never loaded by context
+assembly does not.
 
 Hand-crafted tools, stores, interfaces, safety boundaries, and provisional
 notes may start the loop. They are seed engineering, not evidence of
@@ -224,12 +226,13 @@ The alternative route is to train the model itself, by fine-tuning or
 retraining its weights on project experience. Neither route makes the whole
 system transparent. The fixed LLM's weights remain opaque, and enough
 software and notes can [exceed practical
-inspection](../notes/opacity-is-a-scale-threshold.md). The difference is where
-the learned project-specific state lives. Fine-tuning spreads it across
+inspection](../notes/opacity-is-a-scale-threshold.md). The difference is
+where the learned project-specific state lives. Fine-tuning spreads it across
 weights, where a changed behaviour is hard to locate, inspect, or revert on
-its own. Training the house keeps it in separate, addressable units. The
-house can identify a changed claim or function, inspect its history, revise
-it selectively, and roll it back without retraining the model.
+its own. Training the house keeps it in separate units that can be found and
+revised on their own. The house can identify a changed claim or function,
+inspect its history, revise it selectively, and roll it back without
+retraining the model.
 
 Learning can then happen in deployment. Production evidence can cause a
 retained change to a note, test, tool, or policy, and that change can affect
@@ -246,7 +249,7 @@ misleads many decisions at once. Fewer observations also need not mean lower
 total cost once theory search, validation, retrieval, and maintenance are
 counted.
 
-## Obligations of a constructive witness
+## What a witness must show
 
 One witness must eventually demonstrate the whole progression:
 
@@ -326,12 +329,13 @@ The broad conjecture does not require a theory stored as its own artifact: a
 house may reliably reconstruct the understanding it needs from retained
 records. The stronger hypothesis, call it the explicit-theory hypothesis,
 predicts that, with model, source evidence, demand sequence, and inference
-budget held fixed, an addressable rationale improves coherent modification,
-diagnosis, or recovery relative to raw records or searching the artifacts
-directly. Both routes require retained evidence to reach the relevant
-decision and actually change it. Only the explicit route additionally
-requires selecting, retaining, and revising the stored theory. That
-additional requirement tests the mechanism, not reachability.
+budget held fixed, a rationale that can be found and revised on its own
+improves coherent modification, diagnosis, or recovery relative to raw
+records or searching the artifacts directly. Both routes require retained
+evidence to reach the relevant decision and actually change it. Only the
+explicit route additionally requires selecting, retaining, and revising the
+stored theory. That additional requirement tests the mechanism, not
+reachability.
 
 An [open-domain theory builder may itself become a software
 house](../notes/an-open-domain-theory-builder-becomes-a-software-house-when-new-domains-require-production-machinery-changes.md)
@@ -344,7 +348,7 @@ The conjecture is existential: it says only that at least one such house
 exists, for some eligible LLM, some arrangement of software and notes, some
 product scope. Two ways of saving the conjecture after a failure are ruled
 out in advance. The witness pins every eligible model and every other learned
-component before testing, so that a newer model or a newly trained auxiliary
+component before testing, so that a newer model or another newly trained
 component cannot quietly do the work. It also declares product scope,
 horizon, and budget before testing, so that the scope cannot shrink until
 fixed machinery suffices. Open-ended means that the process generating
