@@ -103,7 +103,11 @@ article](../../instructions/publish-an-article.md).
 - direct bibliographic references and source locations for the Naur and Gödel
   arguments;
 - deferred: a generated check that a live note has changed since the source
-  tag. The first version relies on the tag alone.
+  tag. The first version relies on the tag alone;
+- deferred (operator decision 2026-09-03): the fallible-theory part of the
+  argument, including hitting probability and continuation reliability, will
+  later be grounded in a search formalism. This version keeps the current
+  informal probabilistic framing as is.
 
 ## What closes this workshop
 
