@@ -75,17 +75,15 @@ compiler whose original team could extend it cleanly while a second team,
 working from the same code and documentation, produced patches that fit
 badly. He concluded that the theory lives in people because its judgments
 cannot be reduced to a finite set of formulated criteria. An LLM is still
-formal computation. What has changed is narrower than it sounds: a machine
-can now take informal project-specific state as input, such as a paragraph
-explaining why the retry logic lives in the caller, and let it bear on a
-decision without first translating it into a complete symbolic decision
-procedure. That paragraph is documentation, the same kind of artifact Naur's
-second team had. It is a held theory only when it is loaded at the decision
-it concerns and the decision comes out differently because of it. Whether
-that happens is what obligation 1 below tests. A computational house that
-passed that test would meet Naur's functional criterion while leaving intact
-his claim that the theory cannot be written as rules. It would refute only
-his unproved step from "not rules" to "only people". [The distinction is between formal execution and explicitly
+formal computation. What has changed is that a machine can now take a
+paragraph explaining why the retry logic lives in the caller as input to a
+decision, without first translating it into a complete symbolic decision
+procedure. Naur's second team had such paragraphs too. Holding the theory
+means the paragraph is loaded at the decision it concerns and changes the
+outcome, which is what obligation 1 below tests. A house that passes it
+would meet Naur's functional criterion while leaving intact his claim that
+the theory cannot be written as rules. It would refute only his unproved
+step from "not rules" to "only people". [The distinction is between formal execution and explicitly
 formulated criteria](../notes/naur-equates-machine-execution-with-formulated-criteria.md).
 
 The conjecture assigns each component a role:
