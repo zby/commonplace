@@ -35,7 +35,7 @@ the way it is, and what earlier changes taught. People write the first
 versions of both. The house then revises them as requests and their
 consequences arrive, and people correct it at first. **The bet** is that
 each round needs less correction, until the house keeps its own notes and
-code adequate without people. **That denies the obvious shortcut,** in which
+code adequate without people. That denies the obvious shortcut, in which
 a model given a log of its failures works this understanding out and keeps
 it by itself.
 
