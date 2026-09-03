@@ -70,7 +70,7 @@ successor relation that admits or produces a rewrite:
 |---|---|---|
 | Successor condition | A target theorem is proved under the current axioms and utility | The current fallible update process produces and, where applicable, admits a successor from production evidence |
 | External input | Observed state can enter a proof through `state2theorem`, but the rewrite still requires derivation in the current formal system | Declared demands, tool outputs, and operating consequences are interpreted as evidence and may defeat part of the current theory |
-| Reachable states | Transition closure under a proof-gated successor relation | Transition closure under a fallible evidence-responsive successor relation |
+| Reachable states | Transition closure under a proof-gated successor relation | Transition closure under a fallible successor relation that responds to evidence |
 | Warrant | Conditional proof relative to the encoded formalization | Empirical warrant bounded by the available evaluators and later exposure |
 | Characteristic failure | Starvation: useful changes remain unreachable because they cannot be proved | Drift: harmful or incoherent successors may receive non-negligible probability |
 
@@ -84,10 +84,11 @@ between two admission or update relations, not between deduction and closure.
 ### Existential reachability and nondeterminism are separate
 
 The conjecture is existential because it claims that at least one eligible
-construction and declared regime works. A particular construction may be
-deterministic, nondeterministic, or probabilistic. Nondeterminism does not choose
-whether the success criterion is existential, universal, almost-sure, or a
-probability threshold; the witness protocol must choose that separately.
+construction, meaning one built on models available by the cutoff date, and
+declared regime works. A particular construction may be deterministic,
+nondeterministic, or probabilistic. Nondeterminism does not choose whether the
+success criterion is existential, universal, almost-sure, or a probability
+threshold; the witness protocol must choose that separately.
 
 ### Bare reachability is cheap
 
@@ -101,7 +102,7 @@ Two quantities should remain distinct:
 - **hitting probability** — the probability that training reaches an adequate
   human-free state within the resource budget; and
 - **continuation reliability** — the probability that, once reached, the house
-  remains adequate across the declared autonomous horizon and later demands.
+  remains adequate across the declared horizon and later demands.
 
 A system that occasionally reaches a good state and immediately drifts differs
 from one that reaches it less often but remains coherent. The working paper's
@@ -150,10 +151,10 @@ specific empirical claim about where learning can occur.
 ## What this changes in the witness
 
 The witness must declare the seed, mutable state, pinned components, permitted
-external inputs, successor/update protocol, product scope, resource envelope,
-and autonomous horizon before interpreting the result. It must then show not
-only that an adequate state appears on some path, but that the process reaches
-and sustains such states with the practical reliability the claim requires.
+external inputs, successor/update protocol, product scope, budget, and horizon
+before interpreting the result. It must then show not only that an adequate
+state appears on some path, but that the process reaches and sustains such
+states with the practical reliability the claim requires.
 
 The four obligations in the main article locate the difficult transitions.
 Holding and application tests the adequacy of a reached state. Initial

@@ -121,7 +121,7 @@ article.
 ### Required content
 
 - evidence-basis vocabulary;
-- software-house topology separated from automated continuation;
+- software-house boundary separated from automated continuation;
 - fixed-parametric-state criterion;
 - software learning and note learning;
 - program-theory acquisition and successor acquisition;

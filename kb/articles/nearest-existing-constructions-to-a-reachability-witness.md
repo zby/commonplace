@@ -1,5 +1,5 @@
 ---
-description: "Comparison of reviewed self-improving systems against the reachability conjecture's carrier-neutral obligations, with a separate stronger protocol for explicit retained theory"
+description: "Comparison of reviewed self-improving systems against the reachability conjecture's four witness obligations, which do not fix which form carries the theory, with a separate stronger protocol for explicit retained theory"
 type: kb/articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
@@ -34,14 +34,15 @@ The reachability conjecture holds that an automated [software
 house](../notes/definitions/software-house.md), one that keeps developing
 software for its users across demands nobody listed in advance, can be built
 with the LLMs available in 2026 while its distributed-parametric internal state
-stays fixed and its localized natural-language and symbolic state learns. It
-states four carrier-neutral obligations that one constructive witness must
-eventually discharge. This article does not argue for the conjecture. It
-compares the systems reviewed for this program against those obligations, so
-that a researcher with a system of their own can find the nearest row and read
-what would still be missing. Only the rows resting on inspected code are
-placements of an implementation; the rest are comparisons of designs as their
-sources describe them.
+stays fixed and the natural-language and symbolic state around it, its notes and
+code, learns. It states four obligations that one constructive witness must
+eventually discharge. The obligations are carrier-neutral: they do not fix
+whether notes, code, or reconstruction from records carries the theory. This
+article does not argue for the conjecture. It compares the systems reviewed for
+this program against those obligations, so that a researcher with a system of
+their own can find the nearest row and read what would still be missing. Only
+the rows resting on inspected code are placements of an implementation; the rest
+are comparisons of designs as their sources describe them.
 
 The table below runs two separate vocabularies, and neither upgrades the other.
 The six criterion columns say what the reviewed record presents. **Meets stated
@@ -69,9 +70,9 @@ scopes differ, and the evidence differs. The table is not a ranking.
 The comparison runs on six questions, which are narrower and more directly
 checkable than the obligations:
 
-1. **Software-house topology.** Does the construction include the complete
-   persistent system responsible for changing software for external users
-   across demands that are not a fixed benchmark list?
+1. **Software-house boundary.** Does the construction include the complete
+   persistent system responsible for changing software for external users across
+   demands that are not a fixed benchmark list?
 2. **Fixed parametric state.** Can the documented learning happen without
    changing foundation-model weights or other distributed-parametric internal
    state, and are those components actually held or pinned?
@@ -89,13 +90,13 @@ checkable than the obligations:
 The first question is a boundary test, not an automation test. A coding harness
 may repeatedly change software across benchmark or repository tasks while
 remaining only one component used by a larger producer. It has software-house
-topology only when the reviewed construction includes the complete persistent
+boundary only when the reviewed construction includes the complete persistent
 system responsible for evolving a user product across requirements, feedback,
 and operating consequences. Direct conversation with end users is unnecessary;
-those inputs may arrive through tickets, product management, telemetry, or
-other interfaces. Human independence is assessed separately under
-**Continuation**. A construction meeting both questions would be an automated
-software house over its stated scope and horizon.
+those inputs may arrive through tickets, product management, telemetry, or other
+interfaces. Human independence is assessed separately under **Continuation**. A
+construction meeting both questions would be an automated software house over
+its stated scope and horizon.
 
 ## How the questions relate to the four obligations
 
@@ -105,34 +106,35 @@ and one property can serve more than one obligation.
 **Holding and application** asks whether the system realizes a program-theory
 function across novel changes. **Program theory** asks that directly. The broad
 witness conditions below require an implication not stated verbatim, causal use
-of the relevant retained state or consumption path, and a modification path
-that changes under withholding or replacement.
+of the relevant retained state or consumption path, and a change in what the
+system does next under withholding or replacement.
 
 **Initial acquisition** needs **Program theory** plus an operative retained
-change in at least one localized form: the system must acquire the
-project-specific understanding rather than receive it from a person, and that
-acquisition must alter later production. **Successor acquisition** asks the same
-of understanding that later evidence makes inadequate. A complete witness must
-eventually demonstrate both **Software learning** and **Note learning** across
-its sequence, but one acquisition episode need not change both forms.
-**Automated continuation** is bounded by **Software-house topology**, **Fixed
+change in at least one of the two forms, notes or code: the system must acquire
+the project-specific understanding rather than receive it from a person, and
+that acquisition must alter later production. **Successor acquisition** asks the
+same of understanding that later evidence makes inadequate. A complete witness
+must eventually demonstrate both **Software learning** and **Note learning**
+across its sequence, but one learning step need not change both forms.
+**Automated continuation** is bounded by **Software-house boundary**, **Fixed
 parametric state**, and **Continuation**, and it requires the holding and
 acquisition capacities to keep working across that boundary.
 
-One warning governs every use of the table. **Software-house topology** and
+One warning governs every use of the table. **Software-house boundary** and
 **Fixed parametric state** are cross-cutting controls on a whole witness, not
 acquisition stages. **Software learning** and **Note learning** report which
 retained forms changed, and neither alone establishes **Program theory**. A
 partial cell is therefore not partial completion of an obligation. Storing,
 retrieving, or paraphrasing a rationale does not show that it governed a later
 decision; a software or note update does not by itself show that adequate
-project understanding was acquired; a reject-capable gate does not show that
-the admitted successor was adequate; and scheduling or restart does not show
-continued software-house operation.
+project understanding was acquired; a reject-capable gate does not show that the
+admitted successor was adequate; and scheduling or restart does not show
+continued software-house operation. *Human-inclusive* in a cell means that
+people fill internal roles in that construction.
 
 ## Comparison table
 
-| Construction | Software-house topology | Fixed parametric state | Software learning | Note learning | Program theory | Continuation | Evidence basis | Decisive shortfall |
+| Construction | Software-house boundary | Fixed parametric state | Software learning | Note learning | Program theory | Continuation | Evidence basis | Decisive shortfall |
 |---|---|---|---|---|---|---|---|---|
 | Fluent | Meets stated scope | Not demonstrated; model lineage and auxiliary parametric state not pinned | Meets stated scope; human-inclusive | Meets stated scope; human-inclusive | Partial; rationale is supplied, while acquisition and faithful reuse are not demonstrated | Human-dependent | Product documentation and practitioner report; implementation and outcomes not independently inspected | Humans confirm behaviour, technical approach, and unresolved decisions; theory acquisition is not tested |
 | Wheelhouse | Not demonstrated | Not demonstrated | Partial; human-inclusive | Partial; human-inclusive | Not demonstrated | Human-dependent | Practitioner report; implementation and outcomes not independently inspected | Human rulings and verdicts produce the doctrine; the consolidating agent's theory-holding role is only a hypothesis |
@@ -173,22 +175,22 @@ people inside.
 
 **Human-inclusive software factories.**
 [Fluent](../sources/fluent-self-improving-software-factory-2081823472016335059.ingest.md)
-is the strongest reviewed match to the software-house topology, because the
+is the strongest reviewed match to the software-house boundary, because the
 architecture described in its product documentation and its builder's
 practitioner report includes external stakeholders, product code, deployment
 evidence, natural-language expertise, a scheduler, rejection, retention, and
 later reuse; people and the system jointly shape and confirm the brief, the
-behaviour specifications, and the technical approach. The product-reported
-[Ona Memo factory](https://ona.com/stories/software-factory-what-we-learned)
-trial took an empty repository to a deployed product in ten days with software,
-notes, schedulers, and production signals in one loop, and people spent the
-early days writing the automations, conventions, and review paths that made it
-run. Steve Yegge's practitioner-reported account describes rulings progressing
-from custom to warning to written doctrine to programs that refuse an action,
-with his own judgments producing the rulings, and it also reports the
-maintenance cost of that path in a corpus that retained "old rulings that were
-obsolete or had changed"
-([Wheelhouse](../sources/steve-yegge-fences-not-sandboxes.ingest.md), verbatim).
+behaviour specifications, and the technical approach. The product-reported [Ona
+Memo factory](https://ona.com/stories/software-factory-what-we-learned) trial
+took an empty repository to a deployed product in ten days with software, notes,
+schedulers, and production signals in one loop, and people spent the early days
+writing the automations, conventions, and review paths that made it run. Steve
+Yegge's practitioner-reported account describes rulings progressing from custom
+to warning to written doctrine to programs that refuse an action, with his own
+judgments producing the rulings, and it also reports the maintenance cost of
+that path in a corpus that retained "old rulings that were obsolete or had
+changed" ([Wheelhouse](../sources/steve-yegge-fences-not-sandboxes.ingest.md),
+verbatim).
 
 **Production scale reports and rule accumulation.** [Warp's scheduled skill
 improver](../sources/how-warp-builds-self-improving-agents-on-claude.ingest.md)
@@ -291,18 +293,18 @@ operators, and strategies are all designer-supplied and fixed. It locates the
 boundary precisely: a model can drive adaptation without the system learning
 the theory that governs adaptation.
 
-## What a carrier-neutral reachability witness would have to do
+## What a broad reachability witness would have to do
 
 No row above is a witness. A test of the broad conjecture needs the following
 conjunction:
 
 1. A system with every distributed-parametric internal component pinned
-   maintains one user product over a declared horizon and prospectively
-   specified demand process of incrementally revealed requirements and
-   production events.
+   maintains one user product over a declared horizon and a demand process,
+   specified in advance, of incrementally revealed requirements and production
+   events.
 2. The seed withholds at least one decisive piece of project-specific
    understanding while retaining the permitted records and interactions from
-   which the theory-holding function can be acquired.
+   which the capacity a program theory provides can be acquired.
 3. The system later handles an implication not stated verbatim in those records,
    and withholding or replacing the relevant retained state or consumption path
    changes proposal, evaluation, diagnosis, or recovery in a predicted way.
@@ -312,7 +314,7 @@ conjunction:
    rewriting it without grounds.
 5. Across the sequence, experience causes operative learning in both
    natural-language and symbolic state, though the two forms need not change in
-   the same acquisition episode.
+   the same learning step.
 6. Candidate admission, rollback, conflict resolution, and continuation operate
    without a person supplying the decisive understanding or choosing the
    successor. Users may supply product requirements, facts, observed outcomes,
@@ -320,18 +322,18 @@ conjunction:
    candidate comparison, theory editing, or successor selection remains an
    internal role whatever the participant is called.
 7. Evaluation covers untouched later changes and repeated runs or another
-   justified estimate of usable success within the declared resource envelope,
-   so one lucky path does not establish practical reachability.
+   justified estimate of usable success within the declared budget of compute,
+   time, and cost, so one lucky path does not establish practical reachability.
 
-This protocol does not require the acquired understanding to persist as a
-separate theory object. Reliable reconstruction from retained records or a mixed
-carrier can satisfy it if the composite passes the same causal and longitudinal
-tests.
+This protocol does not require the acquired understanding to persist as a theory
+stored as its own artifact. Reliable reconstruction from retained records or a
+mixed carrier can satisfy it if the house passes the same causal tests over many
+changes.
 
 ## The stronger explicit-theory mechanism test
 
-To establish that separately retained addressable theory contributes more than
-the carrier-neutral witness requires, add these conditions:
+To establish that a separately retained theory that can be found and revised on
+its own contributes more than the broad witness requires, add these conditions:
 
 1. The seed withholds a decisive project rationale while retaining the records
    from which it can be synthesized.
@@ -360,14 +362,14 @@ advantage over the routes that reconstruct understanding when needed.
 
 Read as a whole, the comparison is evidence about parts. Separate component
 mechanisms are inspected in code or reported by their sources: trace-derived
-candidates, scheduled consolidation, retention in both localized forms,
+candidates, scheduled consolidation, retention in both forms, notes and code,
 reject-capable gates, broad self-revision, rollback that preserves
 failed-attempt evidence, and continuing product operation with human authority.
-What no reviewed source supplies is the carrier-neutral conjunction: acquired
-project understanding, causal use on unstated implications, successor
-acquisition from delayed product consequences, learning in both localized
-forms, user-facing operation, and continuation without an internal human. None
-also supplies the stronger explicit-theory test against matched raw-record or
-direct-search baselines. The set therefore supports claims about available
+What no reviewed source supplies is the full conjunction: acquired project
+understanding, causal use on unstated implications, successor acquisition from
+delayed product consequences, learning in both forms, notes and code,
+user-facing operation, and continuation without a human in an internal role.
+None also supplies the stronger explicit-theory test against matched raw-record
+or direct-search baselines. The set therefore supports claims about available
 components and missing tests. It does not show that the components compose, and
 it does not show that the conjectured endpoint is reachable.

@@ -51,18 +51,19 @@ available by 2026-09-02.
 
 The eligible model versions, meaning those available by the cutoff date, stay
 fixed, and so do their weights and any other learned component, such as an
-embedding model. What gets trained is the house, through changes that
-computation produces and the house retains in its [notes and
-code](../notes/definitions/representational-form.md). *Notes and code* here
-means everything the house holds in natural language or in symbolic form:
-notes, code, schemas, tests, tools, and rules for how production is done.
-Derived indexes may be regenerated from those notes and code under pinned
-machinery, but they are not independently trained or treated as learned
-state. *Practically reachable* means success within a declared product scope,
-operating horizon (how long the house must keep running), and budget of
-compute, time, and cost. Within those bounds, training must discover and
-maintain the decisive project-specific notes and code until no human is
-needed in an internal role.
+embedding model. Together these are the [distributed-parametric
+state](../notes/definitions/representational-form.md). What gets trained is
+the house, through changes that computation produces and the house retains in
+its [notes and code](../notes/definitions/representational-form.md). *Notes
+and code* here means everything the house holds in natural language or in
+symbolic form: notes, code, schemas, tests, tools, and rules for how
+production is done. Derived indexes may be regenerated from those notes and
+code under pinned machinery, but they are not independently trained or
+treated as learned state. *Practically reachable* means success within a
+declared product scope, operating horizon (how long the house must keep
+running), and budget of compute, time, and cost. Within those bounds,
+training must discover and maintain the decisive project-specific notes and
+code until no human is needed in an internal role.
 
 An *internal role* is what the
 [definition](../notes/definitions/software-house.md#scope) calls an internal

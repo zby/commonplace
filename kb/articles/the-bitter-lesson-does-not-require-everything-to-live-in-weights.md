@@ -59,7 +59,7 @@ better behavior.
 The relevant contrast is the **production method**. Did designers supply the
 task-specific, behavior-shaping content, or did a computational learning method
 determine and retain it from evidence? Generating and selecting candidates is
-one such method; direct evidence-responsive updates are another.
+one such method; direct updates in response to evidence are another.
 
 Hold representation fixed and vary production. An engineer can write one
 prompt, while an optimizer generates and selects another. Both results are
@@ -138,9 +138,9 @@ Lesson framing, revised the theory and repository, and used the revised state in
 later turns.
 
 At a boundary that includes the operator, model, knowledge base, and tools, this
-is a human-inclusive theory-mediated learning loop with computational search and
-artifact retention. At a boundary excluding the operator, global-fit selection
-and final acceptance remain outside the computational subsystem.
+is a theory-mediated learning loop that includes a person, with computational
+search and artifact retention. At a boundary excluding the operator, global-fit
+selection and final acceptance remain outside the computational subsystem.
 
 The distinction is therefore not computation versus no computation. It is
 between computational theory-guided search with sparse human high-level
@@ -186,9 +186,9 @@ structure.
 
 A named assumption, purpose, or scope condition can guide candidate generation,
 interpret failure, and support targeted rescoping. Under a structured shift,
-changing one addressable theory component may need fewer observations than
-relearning behavior without an intermediate model. This is a sample-efficiency
-hypothesis, not an established general advantage.
+changing one theory component that can be revised on its own may need fewer
+observations than relearning behavior without an intermediate model. This is a
+sample-efficiency hypothesis, not an established general advantage.
 
 Explicit theory also imposes costs. It must be retrieved, interpreted,
 maintained, reconciled, and connected to evidence. A plausible explanation can
