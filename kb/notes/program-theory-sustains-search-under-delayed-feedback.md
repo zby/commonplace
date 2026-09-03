@@ -1,5 +1,5 @@
 ---
-description: "At the least-warrantable point of open-ended program modification, Naur's coherent-modification test asks whether a fallible program-specific theory can keep search, backtracking, and revision coherent until delayed evidence arrives"
+description: "Holding a program's theory is tested by whether a partial, fallible account of what the program is for keeps modification search, backtracking, and recovery coherent until delayed evidence arrives, not by whether the first change is right"
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [foundations, self-improving-systems]
@@ -7,20 +7,26 @@ tags: [foundations, self-improving-systems]
 
 # Holding a program theory means sustaining coherent search under delayed feedback
 
-At the decisive point of an open-ended programming path, Naur's
-**coherent-modification test** and the residue model's
-**least-warrantable modification decision** are the same problem viewed from
-opposite sides. Naur asks what capacity a theory-holder must have: can it change
-the program for a new demand without destroying the structure and purpose that
-make the program work? The residue model asks why that decision remains human:
-no complete rule, settled local criterion, or cheap independent oracle already
-determines which change preserves that structure and purpose.
+Peter Naur's essay *Programming as Theory Building* asks what someone who holds
+a program's theory must be able to do. His hardest test of that holding is
+coherent modification: change the program for a new demand without destroying
+the structure and purpose that make the program work. A separate argument,
+about which decisions automation leaves behind, reaches the same decision from
+the other side. Decisions whose premises are written down, whose criteria are
+settled, and whose results are cheap to check move to machines first. What
+stays with people is the residue: decisions no complete rule, settled local
+criterion, or cheap independent check already determines. On an open-ended
+modification path, the least-warrantable decision in that residue is which
+change preserves the program's structure and purpose. Naur's test names the
+capacity a theory-holder needs; the transfer argument explains why the same
+decision stays with people.
 
-This does not require a strong theory that deduces the right change in one
-step. A working program theory may be partial, imprecise, and fallible. It
-counts because it keeps modification search coherent: it shapes which changes
-are considered, what must be preserved, how failures are interpreted, when to
-backtrack, and what should be revised.
+Meeting that test does not require a theory strong enough to deduce the right
+change in one step. A working program theory may be partial, imprecise, and
+fallible. It counts because it keeps modification search coherent: it shapes
+which changes are considered, what must be preserved, how failures are
+interpreted, when to backtrack, and what should be revised. Searching, failing,
+and backtracking are therefore not signs that the theory was missing.
 
 ## Theory guides search rather than replacing it
 
