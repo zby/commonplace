@@ -41,8 +41,9 @@ scope and warrant support the reach being claimed, since [machinery persists
 by warrant rather than by position in a reflective
 loop](./machinery-persists-by-warrant-not-position-in-a-reflective-loop.md).
 
-The hand-designed features in Sutton's examples were scaffold content that
-became permanent: the method never learned to replace them. Bootstrap content
+The hand-designed features in Richard Sutton's examples were neither: they
+were built as the solution, and the method never learned to replace them.
+Bootstrap content
 is compatible only when it does not remain an expanding source of target
 competence. For a declared reach, the compatibility condition therefore becomes
 a prediction: computation will acquire the required task- or family-specific
