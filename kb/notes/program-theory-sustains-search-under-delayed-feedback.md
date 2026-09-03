@@ -106,9 +106,9 @@ the theory and affect later operation, as required by a
 
 [Warranted transfer leaves people the hardest-to-warrant decisions](./warranted-transfer-leaves-people-the-hardest-to-warrant-decisions.md)
 because represented, settled, cheaply checkable decisions move first. On an
-open-ended modification path, the residue concentrates at the question Naur
-uses as his third bearer test: which change fits the program's world, purpose,
-and organization when no finite rubric settles the case?
+open-ended modification path, the residue concentrates at the question Naur's
+modification test poses: which change fits the program's world, purpose, and
+organization when no finite rubric settles the case?
 
 The two descriptions coincide:
 
