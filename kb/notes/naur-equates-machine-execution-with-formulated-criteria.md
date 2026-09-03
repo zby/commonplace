@@ -1,5 +1,5 @@
 ---
-description: "Naur argues program theory cannot be expressed as criteria, then concludes it is human-only; the bridge is that machine execution meant formulated criteria — true of the programs of his day, and separated since by trained recognizers"
+description: "Naur argues program theory cannot be expressed as criteria, then concludes it is human-only; the bridge equates machine execution with formulated criteria, true in his day; his compiler evidence is likewise bounded by its day's documentation practice"
 type: kb/types/note.md
 traits: [title-as-claim, has-external-sources]
 tags: [foundations, context-engineering]
@@ -38,6 +38,8 @@ None of this shows that any program holds a program's theory. Breaking the bridg
 ## The transfer cases still impose three tests
 
 Naur's compiler case is a bounded transfer failure. A motivated successor group had the full program text, annotated sources, extensive written design discussion, and personal advice, and still proposed extensions the original group recognized as patches destroying the structure; the original group could propose simple changes framed within it. The case shows that the supplied package did not convey enough program-specific understanding to that group. It does not test other rationale packages or other interpreters.
+
+The bound on this evidence is technology-relative in the same way as the bridge. The package was the documentation and knowledge-consumption machinery of its time: text, annotations, written discussion, advice, and whatever organization and reading practice the group brought to them. It did not test structured rationale linked to the decisions it affects, ADR-like records, machine-maintained indexes, semantic retrieval, dependency-aware context assembly, or automatic loading of the relevant record at the decision point. Whether a different representation-plus-consumption system transfers more of the capacity, to people or to an LLM-based composite, is therefore an open empirical question. The negative result keeps its force: the successor group already had extensive documentation, so adding more prose of the same kind is not an answer, and none of the newer carriers holds a theory by itself.
 
 Read with Naur's account of theory possession, the case gives three necessary tests for any claim that an interpreter-plus-artifact composite is a bearer of a program's theory:
 
