@@ -36,10 +36,10 @@ learning happens in the software and project state around them:** code,
 notes, and the machinery through which both shape later work. People write
 the first versions. The house then revises them as requests and their
 consequences arrive, and people correct it at first. **The bet** is that the
-correction required falls over training until the house keeps its own state
-and software adequate without people. Whether it does better by writing its
-understanding down as addressable theory than by rebuilding it from raw
-records is a separate, stronger hypothesis.
+correction required shrinks as training goes on until the house keeps its own
+state and software adequate without people. Whether it does better by writing
+its understanding down where it can be found and revised as a unit than by
+rebuilding it from raw records is a separate, stronger hypothesis.
 
 ## Claim
 
@@ -48,19 +48,19 @@ house](../notes/definitions/software-house.md) (below, *the house*) capable
 of open-ended coherent software change is practically reachable with LLMs
 available by 2026-09-02.
 
-The eligible model versions stay fixed, and so do their weights and any other
-learned component, such as an embedding model. What gets trained is the
-house, through changes that computation produces and the house retains in
-its [notes and code](../notes/definitions/representational-form.md). *Notes
-and code* here means everything the house holds in natural language or in
-symbolic form: notes, code, schemas, tests, tools, and production policy.
-Derived indexes may be regenerated from that canonical state under pinned
-machinery, but they are not independently trained or treated as learned
-state. *Practically reachable* means success within a declared product
-scope, operating horizon (how long the house must keep running), and budget
-of compute, time, and cost. Within those bounds, training must discover and
-maintain the decisive project-specific structures until no human is needed
-in an internal role.
+The eligible model versions, meaning those available by the cutoff date, stay
+fixed, and so do their weights and any other learned component, such as an
+embedding model. What gets trained is the house, through changes that
+computation produces and the house retains in its [notes and
+code](../notes/definitions/representational-form.md). *Notes and code* here
+means everything the house holds in natural language or in symbolic form:
+notes, code, schemas, tests, tools, and production policy. Derived indexes
+may be regenerated from those notes and code under pinned machinery, but they
+are not independently trained or treated as learned state. *Practically
+reachable* means success within a declared product scope, operating horizon
+(how long the house must keep running), and budget of compute, time, and
+cost. Within those bounds, training must discover and maintain the decisive
+project-specific structures until no human is needed in an internal role.
 
 An *internal role* is what the
 [definition](../notes/definitions/software-house.md#scope) calls an internal
@@ -93,20 +93,21 @@ advice did not give a successor team enough program-specific understanding;
 more prose of the same kind is not an answer. But it tested [one set of
 documents and one way of reading them, bounded to its
 time](../notes/naurs-compiler-case-tests-one-historically-bounded-documentation-and-consumption-system.md),
-not linked rationale, machine-maintained indexes, semantic retrieval,
-dependency-aware context assembly, or decision-point activation. Whether a
-newer way of representing and consuming project knowledge transfers more of
-the required capacity, to people or to a house built from an LLM, remains an
-open empirical question.
+not linked rationale, machine-maintained indexes, semantic retrieval, context
+assembled by following dependencies, or a note surfaced at the point of
+decision. Whether a newer way of representing and consuming project knowledge
+transfers more of the required capacity, to people or to a house built from
+an LLM, remains an open empirical question.
 
-Naur's human-only conclusion also relied on treating machine execution as the
-same thing as executing formulated criteria. An LLM is still formal
-computation, but it can interpret a paragraph explaining why retry logic
-belongs in the caller without that judgment first being translated into a
-complete symbolic decision procedure. A successful house would falsify Naur's
-human-only conclusion while leaving intact his claim that the relevant
-judgment cannot be reduced to a finite set of formulated criteria. [The
-distinction is between formal execution and explicitly formulated
+Naur's conclusion that only people can hold a program theory also relied on
+treating machine execution as the same thing as executing formulated
+criteria. An LLM is still formal computation, but it can interpret a
+paragraph explaining why retry logic belongs in the caller without that
+judgment first being written out as a complete, explicit rule. A successful
+house would falsify Naur's human-only conclusion while leaving intact his
+claim that the relevant judgment cannot be reduced to a finite set of
+formulated criteria. [The distinction is between formal execution and
+explicitly formulated
 criteria](../notes/naur-equates-machine-execution-with-formulated-criteria.md).
 Whether the house meets Naur's criterion, judged by what it can do, can only
 be seen over many changes. Its project-specific state must guide how it
@@ -116,15 +117,15 @@ does next.
 
 The conjecture implements the house from three components, each with a role:
 
-- Fixed current LLMs supply the general linguistic, programming, and reasoning
-  capacity that interprets project state and produces candidate changes.
-- Natural-language notes supply persistent project-specific purposes,
-  commitments, explanations, evidence, and prior search. For example:
-  "installs must be a single file, so the store is SQLite; do not add a server
-  dependency." Architecture decision records are a familiar partial carrier
-  of such rationale.
-- Symbolic software supplies exact behaviour and continuity. This includes the
-  product, tools, schemas, context assembly, schedulers, validators and tests,
+- Fixed current LLMs supply the general linguistic, programming, and
+  reasoning capacity that interprets project state and produces candidate
+  changes. - Natural-language notes supply persistent project-specific
+  purposes, commitments, explanations, evidence, and prior search. For
+  example: "installs must be a single file, so the store is SQLite; do not
+  add a server dependency." Architecture decision records already carry part
+  of this rationale. - Symbolic software supplies exact behaviour and
+  continuity. This includes the product, tools, schemas, context assembly
+  (choosing what the model reads), schedulers, validators and tests,
   version-control rollback, and retention rules.
 
 None of these holds the theory alone. A note nobody loads is inert. A fixed
@@ -148,8 +149,8 @@ Learned software and notes are not disqualified merely because they are
 localized and legible. A hand-crafted seed is compatible only if [learning
 outgrows the task-specific knowledge the seed
 supplies](../notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md).
-Those two points answer the categorical objection; whether training over
-legible structures scales is what the program has to demonstrate.
+Those two points answer the objection in principle; whether training over
+legible structures scales is what the project has to demonstrate.
 
 Current LLMs can produce both notes and code. Software can put a proposed
 change into effect and feed later consequences into another update. The
@@ -164,8 +165,8 @@ production evidence + fixed LLMs + present notes and code
 
 The first arrow hides two hard decisions. Admission is deciding which changes
 of meaning may enter retained state. Credit assignment is deciding which
-earlier code, note, context route, test, objective boundary, or selection
-policy a later consequence counts for or against. [Governing a
+earlier code, note, way of loading context, test, objective boundary, or
+selection policy a later consequence counts for or against. [Governing a
 behaviour-changing write therefore requires selection, validation,
 authorization, and
 coordination](../notes/continual-learning-requires-governing-behaviour-changing-writes.md).
@@ -173,11 +174,10 @@ This article supplies no general solution to that problem. A *witness*, in
 the logician's sense of one working house that makes the existential claim
 true, must show that its update process attributes evidence and admits
 successors well enough to satisfy the acquisition and continuation
-obligations below. A user who supplies
-requirements, feedback, domain knowledge, or an acceptance judgment stays
-external. A person who repeatedly diagnoses the theory failure or chooses the
-successor is doing the house's credit assignment and fills the excluded
-internal role.
+obligations below. A user who supplies requirements, feedback, domain
+knowledge, or an acceptance judgment stays external. A person who repeatedly
+diagnoses the theory failure or chooses the successor is doing the house's
+credit assignment and fills the excluded internal role.
 
 The update mechanism is otherwise open. It may produce a successor directly
 or separate proposal, evaluation, and selection, and it may edit prior notes,
@@ -194,27 +194,27 @@ that continuity. A note never loaded by context assembly does not.
 Hand-crafted tools, stores, interfaces, safety boundaries, and provisional
 notes may start the loop. They are seed engineering, not evidence of
 acquisition. The training path must outgrow repeated human authorship of the
-decisive project-specific theory, whatever its form. A hand-written check that
-rejects every schema change carries the human's theory that the schema is
-settled, just as a note saying so would. A wholly hand-built end state would
-show that software and notes can carry theory, not that the house learned it.
-Once no human is inside, every successor must arise through the predecessor
-state's own update machinery and the external inputs the witness permits. The
-states the house can reach are therefore those its own update machinery and
-permitted inputs can produce from the seed, step by step; the companion
-article names this the [transition closure of the
+decisive project-specific theory, whatever its form. A hand-written check
+that rejects every schema change carries the human's theory that the schema
+is settled, just as a note saying so would. A wholly hand-built end state
+would show that software and notes can carry theory, not that the house
+learned it. Once no human is inside, every successor must arise through the
+predecessor state's own update machinery and the external inputs the witness
+permits. The states the house can reach are therefore those its own update
+machinery and permitted inputs can produce from the seed, step by step; the
+companion article names this the [transition closure of the
 seed](./reachability-as-closure-under-the-seed-gate.md). The step from one
 state to the next may be probabilistic, and it may revise the house's own
 machinery through permitted transitions. Outgrowing the seed means that
-adequate human-free states receive usable probability and sustain coherent
-later work, not merely that one such state lies on a possible path.
+adequate human-free states are reached with usable probability and sustain
+coherent later work, not merely that one such state lies on a possible path.
 
-General production machinery such as git, the test runner, or the model client
-may stay fixed while it handles the declared scope. If the scope requires a
-machinery change, such as a tag index once relevant notes stop fitting the
-context window, the automation obligation below requires the house to make
-it. Self-application is then a consequence of automation, not a separate
-requirement.
+General production machinery such as git, the test runner, or the model
+client may stay fixed while it handles the declared scope. If the scope
+requires a machinery change, such as a tag index once relevant notes stop
+fitting the context window, the automation obligation below requires the
+house to make it. Changing its own machinery is then a consequence of
+automation, not a separate requirement.
 
 ## What this training route could buy
 
@@ -239,10 +239,10 @@ retained program theory captures structure that survives a change, the house
 adapt](../notes/theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md).
 It can revise one premise and derive several consequences instead of
 relearning them separately. This advantage depends on the theory being both
-adequate and faithfully connected to later decisions; otherwise one wrong
-premise misleads many decisions at once. Fewer observations also need not
-mean lower total cost once theory search, validation, retrieval, and
-maintenance are counted.
+adequate and actually used in later decisions; otherwise one wrong premise
+misleads many decisions at once. Fewer observations also need not mean lower
+total cost once theory search, validation, retrieval, and maintenance are
+counted.
 
 ## Obligations of a constructive witness
 
@@ -251,24 +251,24 @@ One witness must eventually demonstrate the whole progression:
 1. **Holding and application.** Given adequate project-specific state, the
    house sustains theory-guided proposal, evaluation, diagnosis, or recovery
    across novel changes, including cases whose correct handling is not stated
-   verbatim in that state. Under matched conditions, withholding or replacing
-   the relevant state changes what the house does next in a predicted way.
-2. **Initial acquisition.** From permitted records, interaction, and
-   participation in the work, it acquires the capacity an adequate program
-   theory provides instead of receiving the decisive project-specific
-   understanding from a human. The theory may be written down, reliably
-   reconstructed from records each time, or a mix.
-3. **Successor acquisition.** When experience exposes an inadequacy, such as a
-   dependency change that makes an earlier design reason false, it reaches a
-   successor state that supports coherent later modification, by revising
-   explicit theory, records, software, production machinery, or a combination.
-4. **Automated continuation.** It sustains these capacities across the declared
-   scope and horizon with no human in an internal role.
+   verbatim in that state. With everything else held equal, withholding or
+   replacing the relevant state changes what the house does next in a
+   predicted way. 2. **Initial acquisition.** From permitted records,
+   interaction, and participation in the work, it acquires the capacity an
+   adequate program theory provides instead of receiving the decisive
+   project-specific understanding from a human. The theory may be written
+   down, reliably reconstructed from records each time, or a mix. 3.
+   **Successor acquisition.** When experience exposes an inadequacy, such as
+   a dependency change that makes an earlier design reason false, it reaches
+   a successor state that supports coherent later modification, by revising
+   explicit theory, records, software, production machinery, or a
+   combination. 4. **Automated continuation.** It sustains these capacities
+   across the declared scope and horizon with no human in an internal role.
 
 These obligations do not fix which form carries the theory. A complete
 witness must show learning that responds to evidence in both notes and code
-somewhere across the sequence, but no single acquisition episode must change
-both forms.
+somewhere across the sequence, but no single learning step must change both
+forms.
 
 Obligations 2 and 3 must be met by computation. That is a condition on them,
 not a fifth step. A partial mechanism for one of them is not partial
@@ -278,21 +278,22 @@ admitted successor was adequate.
 
 ## Nearest existing constructions
 
-The formal corner is AI researcher Jürgen Schmidhuber's [Gödel
+The fully formal case is AI researcher Jürgen Schmidhuber's [Gödel
 machine](../notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md),
 a proof-governed construction that rewrites its own code. It is not a
 software house: it has no users, and the only software it changes is itself.
 It shows what automation costs when formulated criteria buy it. An embedded
 prover admits a rewrite only after proving, from the machine's axioms and
-utility formalization, that the rewrite pays. Everything the conjecture asks
-the house to acquire is supplied there in advance as the formal acceptance
-basis: the theory of the system is the axioms, the objective is the utility
-function, the test is proof. Any of them may be rewritten, but only under a
-proof from the formalization then in force. So the initial formalization
-governs every successor by descent, and a demand nobody formalized cannot
-enter the test. The paper states the price: the machine "must ignore those
-self-improvements whose effectiveness it cannot prove"
-([Schmidhuber](../sources/goedel-machines-schmidhuber.ingest.md), verbatim).
+formal statement of utility, that the rewrite pays. Everything the conjecture
+asks the house to acquire is supplied there in advance as the formal basis
+for accepting a rewrite: the theory of the system is the axioms, the
+objective is the utility function, the test is proof. Any of them may be
+rewritten, but only under a proof from the formalization then in force. So
+the initial formalization governs every successor by descent, and a demand
+nobody formalized cannot enter the test. The paper states the price: the
+machine "must ignore those self-improvements whose effectiveness it cannot
+prove" ([Schmidhuber](../sources/goedel-machines-schmidhuber.ingest.md),
+verbatim).
 
 Once no human is inside, both the Gödel machine and the conjectured house are
 self-modifying systems whose every next state comes from their own current
@@ -305,9 +306,9 @@ not the justification. The Gödel machine's theorems are closed under
 deduction; its states are closed under proof-gated transitions. The house's
 states are closed under fallible ones.
 
-No reviewed system is an empirical witness. Human-inclusive factories such as
-Fluent and the OpenAI agent-first account are closest in shape to a
-user-facing house and supplied project rationale, but people retain
+No reviewed system is an empirical witness. Factories with people in internal
+roles, such as Fluent and the OpenAI agent-first account are closest in shape
+to a user-facing house and supplied project rationale, but people retain
 theory-building, generalization, or admission roles. Darwin and Huxley Gödel
 Machines and HyperAgents train software around frozen foundation models;
 Dynamic Cheatsheet and Voyager retain natural-language or executable
@@ -317,16 +318,16 @@ role. The [companion
 map](./nearest-existing-constructions-to-a-reachability-witness.md) compares
 nineteen constructions and records the evidence behind each placement.
 
-The broad conjecture does not require a separately retained theory object: a
+The broad conjecture does not require a theory stored as its own artifact: a
 house may reliably reconstruct the understanding it needs from retained
-records. The stronger explicit-theory hypothesis predicts that, with model,
-source evidence, demand sequence, and inference budget held fixed, an
-addressable rationale improves coherent modification, diagnosis, or recovery
-relative to raw records or direct artifact search. Both routes require
-retained evidence to reach the relevant decision and actually change it. Only
-the explicit route additionally requires selecting, retaining, and revising
-the synthesized theory object. That additional requirement tests the
-mechanism, not reachability.
+records. The stronger hypothesis, call it the explicit-theory hypothesis,
+predicts that, with model, source evidence, demand sequence, and inference
+budget held fixed, an addressable rationale improves coherent modification,
+diagnosis, or recovery relative to raw records or searching the artifacts
+directly. Both routes require retained evidence to reach the relevant
+decision and actually change it. Only the explicit route additionally
+requires selecting, retaining, and revising the stored theory. That
+additional requirement tests the mechanism, not reachability.
 
 An [open-domain theory builder may itself become a software
 house](../notes/an-open-domain-theory-builder-becomes-a-software-house-when-new-domains-require-production-machinery-changes.md)
@@ -350,18 +351,18 @@ sequences it may produce, the one it actually produced, and how likely each
 was. None may be changed after a failure is seen. Bare reachability is cheap:
 one lucky path establishes only possibility. The claim is that training
 reaches adequate states with usable probability inside the declared budget
-and that they remain adequate across the autonomous horizon.
+and that they remain adequate across the declared horizon.
 
-The cutoff and pinning bind a run meant to establish the claim, not ordinary
-development. The project may build and deploy with newer models, and doing so
-can show that accumulated state and machinery let a prepared project exploit a
-newer model better than an unprepared one. That is evidence about the state's
-value, not of reachability with models available by 2026-09-02. In a run
-meant to establish the claim, a newer model must not supply trial-specific
-theory, diagnose the trial's internal failures, select successors, or fill
-any other excluded internal role. Derived indexes may change only as
-mechanical views of the canonical notes and code under the pinned algorithms
-declared by the witness.
+The cutoff and pinning apply only to a run meant to establish the claim, not
+to ordinary development. The project may build and deploy with newer models,
+and doing so can show that accumulated state and machinery let a prepared
+project exploit a newer model better than an unprepared one. That is evidence
+about the state's value, not of reachability with models available by
+2026-09-02. In a run meant to establish the claim, a newer model must not
+supply trial-specific theory, diagnose the trial's internal failures, select
+successors, or fill any other excluded internal role. Derived indexes may
+change only as mechanical views of the notes and code under the pinned
+algorithms declared by the witness.
 
 Notes and code are the trainable internal state. Products, demands, tool
 outputs, and operating consequences are its evidence. Holding, acquisition,
@@ -369,18 +370,18 @@ training, learning, and automation are requirements of this witness, not of
 the base software-house definition.
 
 The need for a program theory is a theoretical argument, not a proved
-theorem. Current-LLM sufficiency and the practical training path are
-conjectures. The program is constructive: a working system establishes
+theorem. That current LLMs suffice, and that the training path is practical,
+are conjectures. The project is constructive: a working system establishes
 reachability over its declared scope, horizon, and budget. Failure of one
 architecture eliminates that path; it cannot refute the existential claim
 unless the search has first been bounded.
 
 Practical usefulness, automated continuation, and learning by computation in
-the way the Bitter Lesson favours are separate achievements. A
-human-inclusive house that materially reduces programmer work is a positive
-engineering and research result even if it never satisfies the full
+the way the Bitter Lesson favours are separate achievements. A house with
+people in internal roles that substantially reduces programmer work is a
+positive engineering and research result even if it never satisfies the full
 conjecture. If decisive task-specific theory, decomposition, evaluation, or
 selection remains repeatedly human-produced, however, the project has not
-established its Bitter Lesson durability argument. The system may remain
-useful; what is missing is a reason to expect its durability and scaling
-advantage, not a proof of failure.
+shown that its approach holds up under the Bitter Lesson. The system may
+remain useful; what is missing is a reason to expect its durability and
+scaling advantage, not a proof of failure.
