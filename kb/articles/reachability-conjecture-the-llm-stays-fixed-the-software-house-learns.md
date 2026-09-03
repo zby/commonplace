@@ -108,10 +108,11 @@ human-only conclusion while leaving intact his claim that the relevant
 judgment cannot be reduced to a finite set of formulated criteria. [The
 distinction is between formal execution and explicitly formulated
 criteria](../notes/naur-equates-machine-execution-with-formulated-criteria.md).
-Whether the house meets Naur's test can only be seen over many changes. Its
-project-specific state must guide how it proposes, evaluates, diagnoses, or
-recovers, on implications not stated verbatim in that state. And changing
-that state must change what the house does next.
+Whether the house meets Naur's criterion, judged by what it can do, can only
+be seen over many changes. Its project-specific state must guide how it
+proposes, evaluates, diagnoses, or recovers, on implications not stated
+verbatim in that state. And changing that state must change what the house
+does next.
 
 The conjecture implements the house from three components, each with a role:
 
@@ -253,10 +254,10 @@ One witness must eventually demonstrate the whole progression:
    verbatim in that state. Under matched conditions, withholding or replacing
    the relevant state changes what the house does next in a predicted way.
 2. **Initial acquisition.** From permitted records, interaction, and
-   participation in the work, it acquires an adequate program theory instead
-   of receiving the decisive project-specific understanding from a human. The
-   theory may be written down, reliably reconstructed from records each time,
-   or a mix.
+   participation in the work, it acquires the capacity an adequate program
+   theory provides instead of receiving the decisive project-specific
+   understanding from a human. The theory may be written down, reliably
+   reconstructed from records each time, or a mix.
 3. **Successor acquisition.** When experience exposes an inadequacy, such as a
    dependency change that makes an earlier design reason false, it reaches a
    successor state that supports coherent later modification, by revising
