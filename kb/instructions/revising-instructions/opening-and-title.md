@@ -21,6 +21,12 @@ TL;DR:
 - Cut words that add no content ("some software" is "software").
 - Identify a named person at first mention, in the sentence, not inside a
   link.
+- Define a term at its first use. Do not delete a term the body relies on
+  later; a plain-language opening that drops it leaves a later section using
+  it cold.
+- When a term appears only in a link entry or only in the body, search the
+  KB for inbound uses before choosing which side to fix. A term other notes
+  cite this artifact as the source of stays, and is introduced in the body.
 
 Title:
 

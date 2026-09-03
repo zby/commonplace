@@ -9,7 +9,7 @@ effort: judgment
 Make every load-bearing sentence assert only what its evidence can show, and
 mark what it cannot as a gap rather than filling it.
 
-Effort: judgment. Deciding what the evidence bounds needs the session model.
+Effort: judgment. Deciding what the evidence bounds needs the session model, and the parent context, where the conversation that raised the overclaim is the evidence.
 
 Apply these moves, each to the sentence that needs it:
 

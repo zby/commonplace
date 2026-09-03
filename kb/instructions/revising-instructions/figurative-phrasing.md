@@ -21,6 +21,9 @@ Effort: simple. Listing and marking against a recorded threshold; the operator s
    these go.
 3. Return the list marked keep or replace, with the reason in a few words.
    The operator strikes items. Apply only what survives.
+4. When the literal phrase needs a referent the figure did not name (who is
+   charged, what is at fault), do not choose one. Report the phrase as a
+   question with the candidate referents.
 
 Report: the applied replacements, one line each. The operator's strikes are
 recorded as the threshold for the next run.

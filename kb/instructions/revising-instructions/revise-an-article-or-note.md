@@ -11,8 +11,10 @@ recommends.
 
 ## Prerequisites
 
-- The operator has stated the purpose in one line: who the reader is and what
-  they should notice or be able to do.
+- A purpose in one line: who the reader is and what they should notice or be
+  able to do. If the operator named only the artifact, propose the purpose
+  at the top of the assessment and proceed under it; the operator corrects
+  it if it is wrong.
 - The artifact's claims are settled. A claim in dispute goes to the operator
   as a question, not into a pass.
 
@@ -25,6 +27,16 @@ recommends.
    in one sentence. Recommend only passes whose value against the purpose
    is clear; an item you would not defend is not recommended. Do not edit.
 
+   Two things the passes cannot own belong in the assessment too. For each
+   candidate overclaim, propose whether the sentence is support (may be
+   narrowed) or divergence (defend); the divergence items become the
+   packets' `Defend:` line unless the operator objects. And list
+   qualifications that have gone stale against the body: a scope bullet
+   qualifying words the body no longer uses, a table cell filed under the
+   wrong row, a cross-note ordinal pointing at the wrong list. These are
+   claim questions for the operator, applied as their own commits after
+   approval, not passes.
+
 2. **Dispatch each recommended pass as a packet.** Proceed without waiting;
    the report gives the operator the chance to interrupt. Run passes one at a time,
    since they share one write scope. Each pass file carries an `effort`
@@ -32,7 +44,11 @@ recommends.
    effort; `judgment` passes run on the session model, in the current
    context or a fresh worker. Use a fresh worker when the pass benefits from
    not having seen the conversation, as the figurative-phrasing and
-   readability passes do. The packet is:
+   readability passes do; run narrow-overclaims in the parent context, where
+   the conversation is the evidence. Apply one-word swaps and two-sentence
+   narrowings in the parent context rather than as packets. Small scoped
+   edits from different passes may share one packet when its scope is
+   enumerated. The packet is:
 
    ```
    Purpose: {the operator's one line}
@@ -40,21 +56,23 @@ recommends.
    Pass: kb/instructions/revising-instructions/{pass}.md
    Defend: {claims the operator has marked as divergence; a pass may not narrow them}
    Write scope: {the artifact only | none, return proposals}
-   Return: the pass's report, nothing committed
+   Return: the pass's report, plus items noticed but not applied, nothing committed
    ```
 
    The worker chooses means within the pass. It does not widen the write
    scope, add claims, or remove evidence.
 
-3. **Integrate.** After each pass read the diff, run `commonplace-validate` on
-   the artifact, and commit the pass alone with a body saying what it was
-   meant to make true. If the operator reverts part of a pass, record the
+3. **Integrate.** After each pass read the diff, and read every replaced
+   phrase in its full sentence, not in the diff summary; a literal
+   replacement can supply a referent the original left implicit and supply
+   the wrong one. Run `commonplace-validate` on the artifact, and commit the
+   pass alone with a body saying what it was meant to make true. If the operator reverts part of a pass, record the
    threshold they applied in the pass file or a memory, so the next run
    starts from it.
 
 4. **Stop when the recommended passes are done.** Report what each pass
-   changed. Items you assessed but did not recommend are listed once, not
-   run.
+   changed. Items you assessed but did not recommend, and the not-applied
+   items the workers returned, are listed once, not run.
 
 ## Budget
 
