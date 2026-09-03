@@ -90,6 +90,8 @@ ignored run-state bytes after handoff.
 
 A source with several evidence layers uses separate rows or clearly separated scopes. The register does not flatten implementation, doctrine/design, reported operation, observed run, and causal experiment into one layer.
 
+For a Git repository, the row identifies the canonical repository, full reviewed commit, inspected commit-relative paths, and commit-pinned citation anchors. A local `related-systems/<owner>--<repo>/` checkout may be recorded as the operational access root, but its worktree and current HEAD are not evidence and are never the sole durable source identity.
+
 For a focused test or probe, the row's citation anchor resolves to one **probe evidence capsule** in this result. The capsule contains:
 
 `source ID | check ID | UTC execution time | evidence layer | intervention and comparison, or none for an observational run | fixture or input identity | exact command, test node, or reusable-script identity | relevant environment | execution outcome and exit status | raw output inline, or resolvable exact-output location plus byte length and SHA-256 | design and confounding limits | exact conclusion supported and affected canonical IDs`

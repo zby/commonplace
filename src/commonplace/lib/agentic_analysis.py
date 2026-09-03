@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import re
+import subprocess
 from dataclasses import dataclass
 from hashlib import sha256
 from pathlib import Path, PurePosixPath
@@ -370,7 +371,16 @@ def parse_agentic_analysis_run_state(
     source_root_value = _optional_string(frontmatter, "source-root")
     source_root = None if source_root_value is None else Path(source_root_value)
     if source_root is not None and not source_root.is_absolute():
-        raise ValueError("source-root: expected an absolute frozen source root")
+        raise ValueError("source-root: expected an absolute source access root")
+    source_capture_path_value = _optional_string(frontmatter, "source-capture-path")
+    if source_kind == "checkout" and source_root is not None:
+        if source_capture_path_value is None:
+            raise ValueError("source-capture-path: expected the checkout source root")
+        source_capture_path = Path(source_capture_path_value)
+        if not source_capture_path.is_absolute():
+            raise ValueError("source-capture-path: expected an absolute checkout path")
+        if source_capture_path.resolve(strict=False) != source_root.resolve(strict=False):
+            raise ValueError("source-capture-path: expected the same path as source-root")
 
     run_dir = state_path.parent
     runtime_baseline = _file_identity(
@@ -730,7 +740,40 @@ def verify_agentic_analysis_run_state(
                 f"source root: missing regular directory {state.source_root}"
             )
         else:
-            passes.append(f"source root: frozen root exists at {state.source_root}")
+            passes.append(f"source root: access root exists at {state.source_root}")
+            if state.source_kind == "checkout" and state.source_revision is not None:
+                try:
+                    resolved_commit = subprocess.run(
+                        [
+                            "git",
+                            "--no-replace-objects",
+                            "-C",
+                            str(state.source_root),
+                            "rev-parse",
+                            "--verify",
+                            f"{state.source_revision}^{{commit}}",
+                        ],
+                        check=False,
+                        capture_output=True,
+                        text=True,
+                    )
+                except OSError as exc:
+                    failures.append(
+                        f"source checkout: could not invoke git for "
+                        f"{state.source_root}: {exc}"
+                    )
+                else:
+                    actual_commit = resolved_commit.stdout.strip()
+                    if resolved_commit.returncode != 0 or actual_commit != state.source_revision:
+                        failures.append(
+                            "source checkout: recorded commit does not resolve from "
+                            f"{state.source_root}: {state.source_revision}"
+                        )
+                    else:
+                        passes.append(
+                            "source checkout: recorded commit resolves independently "
+                            f"of HEAD at {state.source_revision}"
+                        )
 
     packet_by_id = {packet.packet_id: packet for packet in state.lens_packets}
     for packet in state.lens_packets:

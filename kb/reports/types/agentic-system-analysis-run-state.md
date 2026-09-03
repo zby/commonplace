@@ -28,7 +28,7 @@ Advance `phase` in order:
 
 1. `opened` fixes producer, consumers, carrier, retention, projections, and
    exact write authority.
-2. `source-frozen` fixes revision, capture identity, source root, and the
+2. `source-frozen` fixes revision, capture identity, source access root, and the
    versioned source register.
 3. `runtime-sealed` points to one immutable runtime-baseline packet and records
    its digest and the canonical-register version. No lens packet may exist
@@ -61,8 +61,15 @@ relabel an in-flight packet or overwrite an earlier packet or return.
 For a repository archive, use an absolute acquisition path and record its byte
 length and SHA-256; validation checks the exact archive while the run is active.
 For every source kind, use an absolute `source-root`; validation requires that
-frozen directory to exist while phase state is active. A retained result must
-still carry the immutable public source identity needed after local cleanup.
+directory to exist while phase state is active. For `source-kind: checkout`,
+the root is a Git checkout, `source-revision` is a full commit object ID, and
+`source-capture-path` equals `source-root`. Validation checks that the commit
+still resolves from that checkout. The commit is the frozen evidence boundary;
+the checkout is only its persistent access root, so its current HEAD may move
+without changing the completed analysis. A GitHub repository acquired by
+`analyse-agentic-system` uses the ignored owner-qualified path
+`related-systems/<owner>--<repo>/`. A retained result must still carry the
+immutable public source identity needed after local cleanup.
 
 The four body sections are the human audit view. Record each material failed or
 recovered command under `## Diagnostics and handoff` with producer, phase,
@@ -84,9 +91,9 @@ canonical-carrier: state
 canonical-physical-form: one file
 canonical-entry: kb/reports/state/agentic-system-analysis/AAS-YYYY-MM-DD-system-slug-nn/result.md
 canonical-manifest: null
-canonical-consumers: [operator handoff]
-retention-rule: "Keep until every declared consumer completes or is explicitly disposed."
-cleanup-condition: "All declared consumers completed; no unresolved transfer or projection disposition remains."
+canonical-consumers: [requesting operator]
+retention-rule: "Keep until the requesting operator explicitly disposes the result or selects another authorized disposition."
+cleanup-condition: "The requesting operator explicitly disposed the result or its recorded downstream disposition completed; no unresolved transfer or projection disposition remains."
 permitted-projections: []
 write-authority:
   - kb/reports/state/agentic-system-analysis/AAS-YYYY-MM-DD-system-slug-nn/

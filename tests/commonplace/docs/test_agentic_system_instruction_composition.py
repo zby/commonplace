@@ -194,7 +194,7 @@ def test_candidate_artifact_does_not_establish_phase_observation() -> None:
 def test_response_only_report_makes_commit_visibility_explicit() -> None:
     orchestrator = instruction("analyse-agentic-system")
     report = orchestrator[
-        orchestrator.index("### 12. Emit and report")
+        orchestrator.index("### 12. Save and report")
         : orchestrator.index("## Verify")
     ]
 
@@ -204,6 +204,27 @@ def test_response_only_report_makes_commit_visibility_explicit() -> None:
     assert "does not convert the response-only result into a published analysis" in report
     assert "does not grant write, capture, retention, or publication authority" in report
     assert "no standalone canonical result is commit-visible" in orchestrator
+
+
+def test_repository_sources_use_commit_addressed_related_systems_checkouts() -> None:
+    orchestrator = instruction("analyse-agentic-system")
+    source_work = orchestrator[
+        orchestrator.index("### 2. Freeze sources once")
+        : orchestrator.index("### 3. Fix truth conditions")
+    ]
+    handoff = orchestrator[
+        orchestrator.index("### 10. Verify and freeze the stable result")
+        : orchestrator.index("### 11. Route a selective transfer scan")
+    ]
+
+    assert "related-systems/<owner>--<repo>/" in orchestrator
+    assert "git check-ignore -q related-systems" in source_work
+    assert "verify that `origin` resolves to the same repository" in source_work
+    assert "git --no-replace-objects -C" in source_work
+    assert "`git ls-tree`, `git show`, and `git grep`" in source_work
+    assert "never reads from the checkout worktree" in source_work
+    assert "every cited commit-relative path to resolve" in handoff
+    assert "do not require the checkout's current HEAD to equal that commit" in handoff
 
 
 def test_analysis_lifecycle_is_declared_before_source_work() -> None:

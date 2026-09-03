@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import shutil
+import subprocess
 from hashlib import sha256
 from pathlib import Path
 
@@ -29,13 +30,14 @@ def lens_artifact(
     packet_id: str,
     runtime_sha256: str,
     body: str,
+    reviewed_boundary: str = "0123456789abcdef",
     canonical_register: str = "CANON-v1-0123456789abcdef",
 ) -> str:
     header = {
         "run-id": RUN_ID,
         "lens": lens,
         "packet-id": packet_id,
-        "reviewed-boundary": "0123456789abcdef",
+        "reviewed-boundary": reviewed_boundary,
         "source-register": "SRCREG-v1-0123456789abcdef",
         "canonical-register": canonical_register,
         "runtime-baseline-sha256": runtime_sha256,
@@ -55,9 +57,42 @@ def configure_types(tmp_path: Path) -> None:
     write(tmp_path / "kb/reports/COLLECTION.md", "# Reports\n")
 
 
+def git_checkout(path: Path) -> tuple[Path, str]:
+    path.mkdir(parents=True)
+    subprocess.run(["git", "init", "--quiet", str(path)], check=True)
+    write(path / "README.md", "# Frozen source\n")
+    subprocess.run(["git", "-C", str(path), "add", "README.md"], check=True)
+    subprocess.run(
+        [
+            "git",
+            "-C",
+            str(path),
+            "-c",
+            "user.name=Commonplace Test",
+            "-c",
+            "user.email=test@example.invalid",
+            "commit",
+            "--quiet",
+            "-m",
+            "Create source fixture",
+        ],
+        check=True,
+    )
+    revision = subprocess.run(
+        ["git", "-C", str(path), "rev-parse", "HEAD"],
+        check=True,
+        capture_output=True,
+        text=True,
+    ).stdout.strip()
+    return path, revision
+
+
 def valid_run_state(tmp_path: Path) -> Path:
     configure_types(tmp_path)
     run_dir = tmp_path / "kb/reports/state/agentic-system-analysis" / RUN_ID
+    source_root, source_revision = git_checkout(
+        tmp_path / "related-systems/example--system"
+    )
     retained = tmp_path / "kb/reports/retained/agentic-analysis" / f"{RUN_ID}.md"
     result_content = f"""---
 type: kb/types/agentic-system-analysis-result.md
@@ -79,6 +114,7 @@ run-id: {RUN_ID}
             packet_id=memory_packet_id,
             runtime_sha256=runtime_sha256,
             body="memory packet\n",
+            reviewed_boundary=source_revision,
         ),
     )
     epistemic_packet = write(
@@ -88,6 +124,7 @@ run-id: {RUN_ID}
             packet_id=epistemic_packet_id,
             runtime_sha256=runtime_sha256,
             body="epistemic packet\n",
+            reviewed_boundary=source_revision,
         ),
     )
     memory_return = write(
@@ -97,6 +134,7 @@ run-id: {RUN_ID}
             packet_id=memory_packet_id,
             runtime_sha256=runtime_sha256,
             body="memory return\n",
+            reviewed_boundary=source_revision,
         ),
     )
     epistemic_return = write(
@@ -106,6 +144,7 @@ run-id: {RUN_ID}
             packet_id=epistemic_packet_id,
             runtime_sha256=runtime_sha256,
             body="epistemic return\n",
+            reviewed_boundary=source_revision,
         ),
     )
 
@@ -129,8 +168,6 @@ run-id: {RUN_ID}
     )
 
     result_sha256 = digest(retained)
-    source_root = tmp_path / "frozen-source"
-    source_root.mkdir()
     frontmatter = {
         "type": "kb/reports/types/agentic-system-analysis-run-state.md",
         "description": f"Operational state for {RUN_ID} through handoff readiness",
@@ -150,8 +187,8 @@ run-id: {RUN_ID}
             "kb/reports/retained/agentic-analysis/",
         ],
         "source-kind": "checkout",
-        "source-revision": "0123456789abcdef",
-        "source-capture": "checkout at 0123456789abcdef",
+        "source-revision": source_revision,
+        "source-capture": f"checkout containing commit {source_revision}",
         "source-capture-path": source_root.as_posix(),
         "source-byte-length": None,
         "source-sha256": None,
@@ -240,8 +277,76 @@ def test_handoff_ready_run_state_verifies_all_owned_bytes(tmp_path: Path) -> Non
 
     assert results.note_type == "agentic-system-analysis-run-state"
     assert results.fails == []
+    assert any(
+        "source checkout: recorded commit resolves independently of HEAD" in item
+        for item in results.passes
+    )
     assert any("handoff entry: type and run-id match" in item for item in results.passes)
     assert any("one intended agentic-system-analysis-result" in item for item in results.passes)
+
+
+def test_checkout_head_may_move_after_source_revision_is_recorded(tmp_path: Path) -> None:
+    state = valid_run_state(tmp_path)
+    content = state.read_text(encoding="utf-8")
+    document, error = validation.parse_document(content)
+    assert error is None and document is not None and document.frontmatter is not None
+    source_root = Path(document.frontmatter["source-root"])
+    recorded_revision = document.frontmatter["source-revision"]
+
+    write(source_root / "later.md", "later checkout state\n")
+    subprocess.run(["git", "-C", str(source_root), "add", "later.md"], check=True)
+    subprocess.run(
+        [
+            "git",
+            "-C",
+            str(source_root),
+            "-c",
+            "user.name=Commonplace Test",
+            "-c",
+            "user.email=test@example.invalid",
+            "commit",
+            "--quiet",
+            "-m",
+            "Move checkout head",
+        ],
+        check=True,
+    )
+
+    assert subprocess.run(
+        ["git", "-C", str(source_root), "rev-parse", "HEAD"],
+        check=True,
+        capture_output=True,
+        text=True,
+    ).stdout.strip() != recorded_revision
+    results = validation.validate_note(state, repo_root=tmp_path)
+
+    assert results.fails == []
+    assert any(
+        f"independently of HEAD at {recorded_revision}" in item
+        for item in results.passes
+    )
+
+
+def test_checkout_revision_must_resolve_from_source_root(tmp_path: Path) -> None:
+    state = valid_run_state(tmp_path)
+    content = state.read_text(encoding="utf-8")
+    document, error = validation.parse_document(content)
+    assert error is None and document is not None and document.frontmatter is not None
+    document.frontmatter["source-revision"] = "0" * 40
+    state.write_text(
+        "---\n"
+        + yaml.safe_dump(document.frontmatter, sort_keys=False)
+        + "---\n"
+        + document.body,
+        encoding="utf-8",
+    )
+
+    results = validation.validate_note(state, repo_root=tmp_path)
+
+    assert any(
+        "source checkout: recorded commit does not resolve" in item
+        for item in results.fails
+    )
 
 
 def test_run_state_fails_after_canonical_result_bytes_change(tmp_path: Path) -> None:

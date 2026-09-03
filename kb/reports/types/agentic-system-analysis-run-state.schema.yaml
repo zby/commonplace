@@ -391,6 +391,19 @@ allOf:
       properties:
         frontmatter:
           properties:
+            source-kind:
+              const: checkout
+    then:
+      properties:
+        frontmatter:
+          properties:
+            source-revision:
+              type: string
+              pattern: '^(?:[0-9a-f]{40}|[0-9a-f]{64})$'
+  - if:
+      properties:
+        frontmatter:
+          properties:
             phase:
               enum: [opened, source-frozen]
     then:
