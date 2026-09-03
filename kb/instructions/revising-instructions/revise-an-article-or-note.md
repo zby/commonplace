@@ -27,10 +27,13 @@ operator selects.
    passes from this directory. A pass the operator did not select does not
    run.
 
-3. **Dispatch each selected pass as a packet.** Run passes one at a time. A
-   pass may run in the current context or in a fresh worker; use a fresh
-   worker when the pass benefits from not having seen the conversation, as
-   the figurative-phrasing and readability passes do. The packet is:
+3. **Dispatch each selected pass as a packet.** Run passes one at a time,
+   since they share one write scope. Each pass file carries an `effort`
+   field: `simple` passes run in a fresh worker on a cheaper model or lower
+   effort; `judgment` passes run on the session model, in the current
+   context or a fresh worker. Use a fresh worker when the pass benefits from
+   not having seen the conversation, as the figurative-phrasing and
+   readability passes do. The packet is:
 
    ```
    Purpose: {the operator's one line}
@@ -52,6 +55,16 @@ operator selects.
 
 5. **Stop when the selected passes are done.** Offer the next ranked items;
    do not run them.
+
+## Budget
+
+- The assessment is one full read. Each pass is one more. Do not re-read
+  linked notes unless a pass names them.
+- A worker gets the artifact path and the packet, never the conversation.
+- Propose-only work (the assessment, the figurative-phrasing list, title
+  proposals) may run in parallel; edits to the artifact run in sequence.
+- Stop when the operator's selection is done, even if the ranked list has
+  items left. Unrun items cost nothing.
 
 ## Verify
 

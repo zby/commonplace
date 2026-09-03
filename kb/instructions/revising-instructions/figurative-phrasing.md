@@ -1,12 +1,15 @@
 ---
 description: "Use when an artifact should be checked for mannered prose, metaphor and flourish standing in for direct statement, without stripping the metaphors that carry the argument"
 type: kb/types/instruction.md
+effort: simple
 ---
 
 # Figurative phrasing
 
 Replace figures that display the writer with literal statements, and keep
 figures whose mapping does explanatory work.
+
+Effort: simple. Listing and marking against a recorded threshold; the operator strikes.
 
 1. List every figurative phrase with a proposed literal replacement. Do not
    apply any.

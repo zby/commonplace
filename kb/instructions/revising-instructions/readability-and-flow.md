@@ -1,12 +1,15 @@
 ---
 description: "Use when an artifact's claims are settled but its sections repeat, interrupt each other, or bury the point a reader would repeat; structural and sentence-level edits with no change of claim"
 type: kb/types/instruction.md
+effort: judgment
 ---
 
 # Readability and flow
 
 Make the artifact's structure carry its argument, so a reader meets each idea
 once, in the place it does the most work.
+
+Effort: judgment. Structural moves need judgment; run tightening alone as simple when that is all the operator selected.
 
 Structural moves, each applied only where the whole read shows the need:
 

@@ -1,12 +1,15 @@
 ---
 description: "Use when an artifact should position named external systems against its own criteria or obligations, so readers can locate their systems on it, and the placements must survive the systems' authors reading them"
 type: kb/types/instruction.md
+effort: simple
 ---
 
 # Place external systems
 
 Give the artifact a map of named systems against its criteria, with every
 placement taken from a code-grounded review the KB already holds.
+
+Effort: simple. Lookup and summary from existing reviews; the operator checks the contestable list.
 
 1. Select systems the KB has reviewed from source: `kb/agent-memory-systems/reviews/`,
    `kb/agentic-systems/`, and `kb/sources/` ingests. Do not place a system

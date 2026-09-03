@@ -1,12 +1,15 @@
 ---
 description: "Use when a discussion has produced an argument larger than the artifact needs, and the operator wants the artifact kept simple while the full treatment is retained where later editing passes will not load it"
 type: kb/types/instruction.md
+effort: simple
 ---
 
 # Split out a treatment
 
 Leave the artifact with the shortest correct passage, and retain the full
 argument in a separate file that no pass over the artifact will read.
+
+Effort: simple. Formatting and placement once the parent supplies the passage and the discussion text.
 
 1. Write the minimal passage into the artifact: the claim, its one-sentence
    mechanism, and any term the passage introduces, glossed in place.

@@ -1,12 +1,15 @@
 ---
 description: "Use when an automated improvement pass has weakened or cut a passage and the operator wants to know whether the review finding justified it before restoring anything"
 type: kb/types/instruction.md
+effort: simple
 ---
 
 # Audit a prior pass
 
 Restore what a pass cut without justification, in the form its own findings
 asked for, and keep what it cut for cause.
+
+Effort: simple. Search, classify, and restore against a recorded finding; the packet supplies the evidence.
 
 Inputs: the artifact, the pass's diff, and its packet directory of findings.
 

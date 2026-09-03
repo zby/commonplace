@@ -14,10 +14,14 @@ pass did.
 
 ## Passes
 
-- [audit-a-prior-pass](./audit-a-prior-pass.md) — trace each passage an automated pass weakened to the finding that caused it, and restore what the finding did not justify.
-- [narrow-overclaims](./narrow-overclaims.md) — move claims from what cannot be observed to what can, and mark gaps instead of inventing precision.
-- [opening-and-title](./opening-and-title.md) — make the TL;DR read with only its own words and the title state the central contrast literally.
-- [readability-and-flow](./readability-and-flow.md) — structural moves and tightening with no change of claim.
-- [figurative-phrasing](./figurative-phrasing.md) — replace decorative figures only, after the operator approves the list.
-- [split-out-a-treatment](./split-out-a-treatment.md) — keep the artifact's passage minimal and put the full argument in a separate file that later passes do not load.
-- [place-external-systems](./place-external-systems.md) — position named systems against the artifact's criteria from the KB's own reviews.
+Each pass declares `effort: simple` or `effort: judgment` in its frontmatter.
+Simple passes run in a fresh worker on a cheaper model or lower effort;
+judgment passes stay on the session model.
+
+- [audit-a-prior-pass](./audit-a-prior-pass.md) (simple) — trace each passage an automated pass weakened to the finding that caused it, and restore what the finding did not justify.
+- [narrow-overclaims](./narrow-overclaims.md) (judgment) — move claims from what cannot be observed to what can, and mark gaps instead of inventing precision.
+- [opening-and-title](./opening-and-title.md) (judgment) — make the TL;DR read with only its own words and the title state the central contrast literally.
+- [readability-and-flow](./readability-and-flow.md) (judgment) — structural moves and tightening with no change of claim.
+- [figurative-phrasing](./figurative-phrasing.md) (simple) — replace decorative figures only, after the operator approves the list.
+- [split-out-a-treatment](./split-out-a-treatment.md) (simple) — keep the artifact's passage minimal and put the full argument in a separate file that later passes do not load.
+- [place-external-systems](./place-external-systems.md) (simple) — position named systems against the artifact's criteria from the KB's own reviews.

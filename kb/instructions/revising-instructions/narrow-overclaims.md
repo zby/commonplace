@@ -1,12 +1,15 @@
 ---
 description: "Use when a sentence about other systems, other people, or the artifact's own method asserts more than the available evidence shows, or when the operator says a sentence is too strong"
 type: kb/types/instruction.md
+effort: judgment
 ---
 
 # Narrow overclaims
 
 Make every load-bearing sentence assert only what its evidence can show, and
 mark what it cannot as a gap rather than filling it.
+
+Effort: judgment. Deciding what the evidence bounds needs the session model.
 
 Apply these moves, each to the sentence that needs it:
 
