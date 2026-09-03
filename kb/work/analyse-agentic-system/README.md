@@ -17,6 +17,13 @@ Memory is an internal lens of agentic-system analysis. Its current separate coll
 
 The public skill was promoted on 2026-08-21 after six cold trials, reconciliation, and acceptance review. It is live at `kb/instructions/analyse-agentic-system/SKILL.md` and projected into both runtime skill surfaces. On 2026-08-29 it became the public entry point for external memory-system review: target classification now conditionally invokes the retained `write-agent-memory-system-review` instructions in prepared-source mode, so the old publication workflow reuses the unified run's frozen evidence boundary. On 2026-08-30 the review boundary was split again by artifact stability: stable analyses now describe external mechanisms in source-native terms and normalize them through Commonplace ontology, while current Commonplace implications are separately commissioned, interest-conditioned transfer scans. Public memory-landscape synthesis is a second downstream operation over a pinned matrix snapshot. The remaining workshop work is downstream: design the agentic-systems result contract and plan source-regeneration migration of the separate memory-review corpus. The completed construction, trial, and acceptance record remains below and in the linked workshop artifacts.
 
+The first post-promotion whole-system run on 2026-09-03 exposed an operational
+failure cluster, including loss of the local canonical result after a valid
+response-only handoff. The [operability-hardening mission](./operability-hardening-plan.md)
+now owns the bounded continuation: settle canonical-result lifecycle, make the
+run's phase state enforceable, and replay the same frozen source. It does not
+own the reviewed repository's source-side conflict or a generic run framework.
+
 ## Known instruction inputs
 
 The `known-instructions/` directory preserves or extracts procedures whose behavior is already understood well enough to use as workshop baselines:
@@ -98,6 +105,8 @@ These are design questions, not permission to mechanically relocate or patch the
 - [x] promotion — `kb/instructions/analyse-agentic-system/SKILL.md` written from `candidate.md` (200 lines, byte-identical), 2026-08-21. `commonplace-validate`: **PASS (clean)**, zero warnings, all local relative links resolve. Projected as committed relative symlinks into `.claude/skills/` and `.agents/skills/`, and confirmed discoverable by the harness. Collection navigation deliberately not touched: `kb/reference/README.md:52` still describes the memory-review workflow this skill will eventually subsume, and rewriting it belongs to the corpus migration below, not to promotion
 - [ ] collection/type/schema migration design — includes deciding whether context-operation interface and projection boundary belong in the general result contract rather than the legacy memory matrix
 - [ ] corpus regeneration plan — includes Scroll as a candidate pilot, using its pinned source boundary rather than mechanically translating the existing memory review
+- [ ] operability-hardening mission — execute the failure-driven plan, retain
+  its acceptance evidence, and disposition each original run failure
 
 ## Lens-routing trial design
 
