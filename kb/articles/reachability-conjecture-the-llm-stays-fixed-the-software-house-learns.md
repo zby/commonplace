@@ -305,8 +305,8 @@ the consumption-path argument is not yet stated here.
 
 The same components appear when the target is a persistent automated system
 that builds, tests, and revises natural-language theories for external users
-across domains not fixed in advance, such as this knowledge base operated
-without its maintainers. At present an LLM is the only generally available
+across domains not fixed in advance, such as [this knowledge
+base](../index.md) operated without its maintainers. At present an LLM is the only generally available
 computational interpreter for semantic operations over theories of that
 breadth. Symbolic systems perform such operations only over domains someone
 has already formalized. The corpus, exact state transitions,
