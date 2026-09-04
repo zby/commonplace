@@ -327,7 +327,14 @@ and Huxley Gödel Machines and HyperAgents train software around frozen
 foundation models; Dynamic Cheatsheet and Voyager retain natural-language or
 executable artifacts. None combines user-facing open-ended operation,
 acquisition and revision of program theory, and continuation without a human
-in an internal role. The [companion
+in an internal role. The harnesses among them are the practice the article
+formalizes: memory files, self-written tests and tools, retained rules from
+past failures. What their accounts do not say is whose learning an
+improvement was. The person who noticed the recurring failure, diagnosed it,
+and chose the rule did the credit assignment, and the accounts do not
+separate that from what the harness did on its own. The internal-role
+boundary and the obligations above are the instrument for that separation.
+The [companion
 map](./nearest-existing-constructions-to-a-reachability-witness.md) compares
 nineteen constructions and records the evidence behind each placement.
 
