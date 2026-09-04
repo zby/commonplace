@@ -32,6 +32,9 @@ properties:
       capture:
         type: string
         minLength: 1
+      doi:
+        type: string
+        pattern: "^10\\.[0-9]{4,9}/[^\\s]+$"
       capture_scope:
         enum:
           - full-source

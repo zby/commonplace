@@ -25,6 +25,11 @@ provenance, genre, checksum, and analysis belong in the tracked
 - Set `captured` to the capture date or datetime.
 - Set `capture` to the capture mechanism, such as `trafilatura`, `pdftotext`,
   `xdk`, or `gh-api`.
+- For a scholarly article or paper, set `doi` to the bare DOI when the captured
+  work itself identifies one. Remove a leading `https://doi.org/` or `doi:`
+  label. Omit the field when no DOI is found or when the only candidates occur
+  in references or cannot be attributed to the captured work; never infer one
+  from an unrelated citation.
 - When the capture boundary is known, set `capture_scope` to one of:
   - `full-source` — the captured body contains the complete source document or
     page used as evidence;

@@ -318,6 +318,9 @@ def test_ingest_owns_durable_source_and_snapshot_anchor() -> None:
             encoding="utf-8"
         )
     )
+    snapshot_contract = (
+        REPO_ROOT / "kb/sources/types/snapshot.md"
+    ).read_text(encoding="utf-8")
 
     ingest_fields = ingest_schema["allOf"][1]["properties"]["frontmatter"]
     required = set(ingest_fields["required"])
@@ -335,6 +338,16 @@ def test_ingest_owns_durable_source_and_snapshot_anchor() -> None:
 
     snapshot_required = set(snapshot_schema["properties"]["frontmatter"]["required"])
     assert "genre" not in snapshot_required
+
+    snapshot_doi = snapshot_schema["properties"]["frontmatter"]["properties"][
+        "doi"
+    ]
+    ingest_doi = ingest_fields["properties"]["doi"]
+    assert snapshot_doi == ingest_doi
+    assert "doi" not in snapshot_required
+    assert "doi" not in required
+    assert "`doi`" in snapshot_contract
+    assert "`doi`" in ingest_contract
 
     snapshot_frontmatter = snapshot_schema["properties"]["frontmatter"]
     snapshot_scopes = set(

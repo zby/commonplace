@@ -126,9 +126,9 @@ re_ingest_request:
    - For a non-URL target, require one Markdown file under
      `kb/sources/.snapshots/`. A directory is not a v1 primary source.
    - Read the snapshot frontmatter. Retain `source`, `captured`, `capture`,
-     optional `capture_scope`, and flat capture-adapter fields such as
-     `status_id`, `conversation_id`, `post_count`, or `api_url`. Do not copy
-     snapshot `type`, `description`, or `tags`.
+     optional `capture_scope` and `doi`, and flat capture-adapter fields such
+     as `status_id`, `conversation_id`, `post_count`, or `api_url`. Do not
+     copy snapshot `type`, `description`, or `tags`.
    - Compute lowercase SHA-256 from the exact Markdown file bytes after capture
      completes. Do not hash a JSON, PDF, image, or other companion.
    - Derive `kb/sources/<slug>.ingest.md`. Before connection discovery, require
@@ -231,7 +231,7 @@ re_ingest_request:
    equal both the pre-dispatch checksum and the ingest's `snapshot_sha256`.
    Require exactly one Quotes block, immediately before `## Connections Found`,
    whose bytes equal `retained_quotes`. Verify that the ingest retained the
-   snapshot's capture metadata, including `capture_scope` when present,
+   snapshot's capture metadata, including `capture_scope` and `doi` when present,
    contains no `source_snapshot` or `code_revisions`, and does not link to
    `.snapshots/`, cite a `related-systems/` checkout, or name the generated
    connect report. For a code-grounded ingest, verify its `secondary_sources`

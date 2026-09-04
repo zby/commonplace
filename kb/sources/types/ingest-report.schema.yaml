@@ -38,6 +38,9 @@ allOf:
               - partial-source
               - abstract
               - excerpt
+          doi:
+            type: string
+            pattern: "^10\\.[0-9]{4,9}/[^\\s]+$"
           genre:
             severity: warn
             enum:

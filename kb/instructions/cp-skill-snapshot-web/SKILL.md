@@ -96,15 +96,19 @@ snapshot_tmp=$(mktemp -d)
 printf 'Snapshot temp: %s\n' "$snapshot_tmp"
 curl -fsSL -o "$snapshot_tmp/source.pdf" "{pdf_url}"
 pdfinfo -isodates "$snapshot_tmp/source.pdf" > "$snapshot_tmp/pdfinfo.txt"
+pdfinfo -meta "$snapshot_tmp/source.pdf" > "$snapshot_tmp/pdfmeta.xml" || true
 pdftotext -enc UTF-8 -eol unix -nopgbrk \
   "$snapshot_tmp/source.pdf" "$snapshot_tmp/extracted.txt"
 ```
 
-Use Read to inspect `pdfinfo.txt` and a bounded beginning of `extracted.txt`.
-Treat `pdfinfo` fields as metadata leads, not as authority: confirm the title
-and authors against the document text when available. Use Grep plus bounded
-Read ranges to locate an abstract, executive summary, or introduction if the
-beginning does not supply enough metadata. Do not read the whole extracted
+Use Read to inspect `pdfinfo.txt`, non-empty `pdfmeta.xml`, and a bounded
+beginning of `extracted.txt`. DOI metadata inspection is best effort and its
+failure does not make an otherwise successful capture fail. Treat PDF metadata
+fields as leads, not as authority: confirm the title and authors against the
+document text when available. Use Grep plus bounded Read ranges to locate an
+abstract, executive summary, introduction, or the source document's own DOI
+when the beginning does not supply enough metadata. Do not treat a DOI found
+only in the references as the paper's DOI. Do not read the whole extracted
 file merely to copy it. If `extracted.txt` is empty or contains no substantive
 text, go to **Step 3**.
 
@@ -131,12 +135,19 @@ snapshot_tmp=$(mktemp -d)
 printf 'Snapshot temp: %s\n' "$snapshot_tmp"
 trafilatura -u "{source_url}" \
   --markdown --with-metadata --links --no-comments --recall \
+  --backup-dir "$snapshot_tmp/raw" \
   > "$snapshot_tmp/extracted.md"
 ```
 
 Use Read to inspect only the leading metadata and a bounded beginning of
 `extracted.md`. Its leading YAML block, when present, is Trafilatura metadata:
 retain it as input to Step 4 but do not copy that block into the snapshot body.
+Trafilatura also retains its downloaded HTML as a gzip file under
+`{snapshot_tmp}/raw/`. When `gzip` is available, decompress that file within
+`{snapshot_tmp}` and use Grep with bounded output to inspect article-level DOI
+metadata such as `citation_doi`, `dc.identifier`, `prism.doi`, or a JSON-LD
+`doi` property. DOI inspection is best effort: inability to inspect the raw
+HTML does not make an otherwise successful capture fail.
 Strip that block locally without re-emitting the document:
 
 ```bash
@@ -180,6 +191,14 @@ From the bounded excerpts, extractor metadata, and `source_url`, determine:
 
 - **title**: The article/post title. Use the first H1 if present, otherwise derive from content.
 - **author**: If identifiable from the content or URL (e.g. simonwillison.net → Simon Willison)
+- **doi**: For a scholarly article or paper, try to identify the DOI from the
+  `source_url`, extractor or document metadata, and the document's own title or
+  citation block. Store the bare identifier beginning with `10.`; remove a
+  leading `https://doi.org/` or `doi:` label and surrounding whitespace. Accept
+  a candidate only when the source identifies it as the DOI of the captured
+  work. A DOI found only in references is not sufficient. If candidates
+  conflict or none is attributable to the captured work, omit `doi`; never
+  guess or manufacture one.
 - **genre**: the source's genre per the snapshot type spec's vocabulary. This is a surface judgment of what kind of document the source is as evidence — ingestion may correct it later. Prefer a value from the type spec's list; a value outside it validates with a warning, so extend only for a genuinely new evidential kind, not a container.
 - **capture_scope**: `full-source`, `partial-source`, `abstract`, or `excerpt`
   under the snapshot type contract. Judge the retained body, not the success of
@@ -210,6 +229,7 @@ captured: "{YYYY-MM-DD}"
 capture: {capture_method}
 capture_scope: {capture_scope}
 genre: {genre}
+doi: "{bare DOI; omit this line when no DOI was verified}"
 type: kb/sources/types/snapshot.md
 ---
 
@@ -217,6 +237,7 @@ type: kb/sources/types/snapshot.md
 
 Author: {author}
 Source: {source_url}
+DOI: {bare DOI; omit this line when no DOI was verified}
 Date: {publication date if known}
 
 ```

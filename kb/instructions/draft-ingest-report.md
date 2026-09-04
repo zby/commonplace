@@ -84,9 +84,9 @@ local snapshot link in the durable report.
    domain. Derive capture metadata from the snapshot frontmatter. Do not copy
    snapshot `type`, `description`, `genre`, or `tags`.
 
-   Preserve snapshot `capture_scope` when present. Treat `abstract`, `excerpt`,
-   and `partial-source` as analysis boundaries; never present one as a full
-   reading of the source.
+   Preserve snapshot `capture_scope` and `doi` when present. Treat `abstract`,
+   `excerpt`, and `partial-source` as analysis boundaries; never present one as
+   a full reading of the source.
 
    An `occasion` is the task-specific purpose for this ingest. It governs
    `Extractable Value`, `Recommended Next Action`, and the role stated in
@@ -139,7 +139,7 @@ local snapshot link in the durable report.
    source-only filing or no promotion when appropriate.
 
    Put the snapshot's retained `source`, `captured`, `capture`, optional
-   `capture_scope`, and flat adapter fields in frontmatter along with
+   `capture_scope` and `doi`, and flat adapter fields in frontmatter along with
    `snapshot_sha256`. Set `genre` from the closer reading. Record a supplied
    `occasion` verbatim in frontmatter; omit the field when it is `none`. Do
    not create a `capture_metadata` field. Do not write the removed

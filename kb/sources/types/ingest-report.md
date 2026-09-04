@@ -29,6 +29,8 @@ Assess fit relative to the installed KB's goals, local collection contracts, and
   analysis, and `capture` to its capture mechanism.
 - Preserve `capture_scope` from the snapshot when present. Do not upgrade a
   partial, abstract-only, or excerpt capture to `full-source` during ingest.
+- Preserve the snapshot's bare `doi` when present. It identifies the work while
+  `source` identifies the representation that was captured.
 - Set `genre` to the primary source's evidential genre.
 - Set `snapshot_sha256` to the lowercase SHA-256 of the exact bytes of the
   primary Markdown snapshot. The hash includes frontmatter, line endings, and
@@ -156,6 +158,7 @@ source: {canonical external URL}
 captured: "{date or datetime from snapshot frontmatter}"
 capture: {capture mechanism from snapshot frontmatter}
 capture_scope: {capture scope from snapshot frontmatter, when present}
+doi: "{bare DOI from snapshot frontmatter, when present}"
 genre: {source genre}
 snapshot_sha256: {lowercase SHA-256 of the exact snapshot file bytes}
 ingested: "{YYYY-MM-DD}"
