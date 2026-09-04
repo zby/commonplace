@@ -18,7 +18,9 @@ source_notes:
   - kb/notes/theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md
   - kb/notes/treat-continual-learning-as-representational-form-coevolution.md
 ---
-# The Software House as the Unit of Training: Production-driven learning across models, theory, and code
+# The Software House as the Unit of Training
+
+*Production-driven learning across models, theory, and code*
 
 > **Draft.** This article may change. Comments and counterexamples are welcome
 > on [the repository's GitHub Discussions page](https://github.com/zby/commonplace/discussions).

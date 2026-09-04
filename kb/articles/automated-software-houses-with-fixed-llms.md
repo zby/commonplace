@@ -18,7 +18,9 @@ source_notes:
   - kb/sources/goedel-machines-schmidhuber.ingest.md
   - kb/sources/programming-as-theory-building.ingest.md
 ---
-# The Automated Software House Conjecture: Open-ended software development with fixed LLMs
+# The Automated Software House Conjecture
+
+*Open-ended software development with fixed LLMs*
 
 > **Draft.** This article may change. Comments and counterexamples are welcome
 > on [the repository's GitHub Discussions page](https://github.com/zby/commonplace/discussions).
@@ -301,8 +303,10 @@ boundary and the obligations above are the instrument for that separation.
 Commonplace, the knowledge base this article is written in, is the one
 reviewed construction built to attack holding and acquisition directly,
 through retained explanatory theory that later work loads and revises. It has
-no witness run and is scored as a design target, not as evidence. The
-[companion
+no witness run and is scored as a design target, not as evidence; the [third
+article](./bootstrapping-the-first-automated-software-house.md) in this
+series sets out the program for getting from a house of that kind to a
+witness. The [companion
 map](./nearest-existing-constructions-to-a-reachability-witness.md) compares
 twenty constructions and records the evidence behind each placement.
 
