@@ -43,18 +43,18 @@ the results that would stop the program or redirect it.
 ## The starting point
 
 A [software house](../notes/definitions/software-house.md) is whatever keeps
-changing a piece of software for its users. Today's most capable houses are
-human-agent systems. Coding agents write and test most of the code; people
-supply requirements from outside, and inside the house they still hold a set
-of roles that no agent yet fills reliably: they notice that a recurring
-failure has one cause, decide that a design assumption no longer holds,
-choose between candidate changes that all pass the tests, approve the
+changing a piece of software for its users. The most capable houses known
+today are human-agent systems. Coding agents write and test most of the code;
+people supply requirements from outside, and inside the house they still hold
+a set of roles that no agent is yet shown to fill reliably: they notice that
+a recurring failure has one cause, decide that a design assumption no longer
+holds, choose between candidate changes that all pass the tests, approve the
 validators that later changes will be judged by, and authorize changes with
-consequences beyond the current job. Commonplace, the knowledge base in
-which this series is written, is a house of this kind: agents produce its
-notes, code, and reviews, and its retained project theory is loaded into
-later work, while people choose objectives, judge global fit, assign blame
-for failures, approve evaluators, and authorize consequential changes.
+consequences beyond the current job. Commonplace, the knowledge base in which
+this series is written, is a house of this kind: agents produce its notes,
+code, and reviews, and its retained project theory is loaded into later work,
+while people choose objectives, judge global fit, assign blame for failures,
+approve evaluators, and authorize consequential changes.
 
 The first article draws the boundary that matters here. An *internal role*
 is work the house depends on to produce the software, whoever performs it;
@@ -187,9 +187,9 @@ whether a system performs as well as a competent remote programmer given the
 same brief, repository, tools, and feedback. That test [holds the client
 fixed](../notes/holding-the-client-fixed-exports-the-least-warrantable-decisions.md):
 task choice, missing premises, feedback, and final acceptance stay outside
-the worker, so passing it says nothing about the internal roles the program
-is trying to move. It measures capability under a fixed division of roles,
-not progress on the division itself.
+the worker, so passing it does not show that any internal role the program is
+trying to move has moved. It measures capability under a fixed division of
+roles, not progress on the division itself.
 
 ## What the house's training must produce
 
@@ -279,5 +279,6 @@ article asks how to build the first one and answers: start from a human-agent
 house, move the internal roles out in the order their enabling conditions
 can be built, measure each move against an outside outcome, and require the
 house's own training to produce the machinery that enables each move after
-the seed. The program is falsifiable at every move, which is the most that
-can be asked of a plan to build something that does not yet exist.
+the seed. The program can be shown wrong at every move, by the same
+accounting that would show the move, which is the most that can be asked of
+a plan to build something that does not yet exist.
