@@ -57,7 +57,7 @@ Put simultaneous claims at different layers in separately labelled fields or row
 
 The epistemic lens preserves its own two independent fields. **Architectural status** contains one value from the invoked epistemic procedure (`implemented`, `observed, implementation uninspected`, `doctrine only`, `no route found within boundary`, or `not determinable`). **Observed candidate state** contains one value from that procedure. Neither field is a conclusion-status field, and they are never concatenated with one another or translated into this type's conclusion vocabulary. In particular, `implemented and observed` is not a value in any field.
 
-Every negative, thin, conflicting, or uncertain finding names its inspected boundary and the exact conclusion it prevents. Every source-dependent record cites a `SRC-*` ID plus a local anchor. Commonplace ontology may annotate a source-native mechanism, but it never replaces the operational account.
+Every negative, thin, conflicting, or uncertain finding names its inspected boundary and the exact conclusion it prevents. Every source-dependent record cites a `SRC-*` ID plus a local anchor. For a Git source, write the local anchor as one code span containing the full commit-relative path and one or more line ranges, for example `packages/runtime/src/agent-run.ts:595-641,944-1012`. A basename denotes a repository-root file, not an arbitrary matching file. Commit-pinned GitHub blob links use the same full path and the result's reviewed revision. Commonplace ontology may annotate a source-native mechanism, but it never replaces the operational account.
 
 ## Required sections
 
@@ -90,7 +90,7 @@ ignored run-state bytes after handoff.
 
 A source with several evidence layers uses separate rows or clearly separated scopes. The register does not flatten implementation, doctrine/design, reported operation, observed run, and causal experiment into one layer.
 
-For a Git repository, the row identifies the canonical repository, full reviewed commit, inspected commit-relative paths, and commit-pinned citation anchors. A local `related-systems/<owner>--<repo>/` checkout may be recorded as the operational access root, but its worktree and current HEAD are not evidence and are never the sole durable source identity.
+For a Git repository, the row identifies the canonical repository, full reviewed commit, inspected commit-relative paths, and commit-pinned citation anchors. Every cited path and line range must resolve from the reviewed commit. A local `related-systems/<owner>--<repo>/` checkout may be recorded as the operational access root, but its worktree and current HEAD are not evidence and are never the sole durable source identity.
 
 For a focused test or probe, the row's citation anchor resolves to one **probe evidence capsule** in this result. The capsule contains:
 

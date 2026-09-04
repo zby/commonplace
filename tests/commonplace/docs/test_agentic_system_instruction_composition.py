@@ -140,6 +140,33 @@ def test_dynamic_checks_preflight_before_execution() -> None:
     assert "every selected dynamic check has one preflight record" in orchestrator
 
 
+def test_runtime_baseline_route_closure_contract_matches_run_state_type() -> None:
+    orchestrator = instruction("analyse-agentic-system")
+    run_state_type = (
+        REPO_ROOT
+        / "kb"
+        / "reports"
+        / "types"
+        / "agentic-system-analysis-run-state.md"
+    ).read_text(encoding="utf-8")
+    fields = (
+        "route-id",
+        "immediate-return",
+        "later-read-back",
+        "delegated-visibility",
+        "selection-predicate",
+        "invalidation-or-expiry",
+        "activation-or-effect",
+        "evidence-and-limits",
+    )
+
+    for field in fields:
+        assert field in orchestrator
+        assert field in run_state_type
+    assert "exactly one mapping for every canonical `RTE-*` row" in orchestrator
+    assert "rejects duplicate, missing, or unknown routes" in run_state_type
+
+
 def test_result_type_owns_probe_capsule_shape_not_its_lifecycle() -> None:
     orchestrator = instruction("analyse-agentic-system")
     contract = (
@@ -290,7 +317,8 @@ def test_final_validation_receipt_identifies_one_typed_result() -> None:
         : orchestrator.index("### 11. Route a selective transfer scan")
     ]
 
-    assert "commonplace-validate --json" in verification
+    assert "commonplace-validate --json --output" in verification
+    assert "do not redirect, copy, or reconstruct the receipt" in verification
     assert "summary.files_analysed` is `1`" in verification
     assert "type `agentic-system-analysis-result`" in verification
     assert "A zero `text_files` count is not a zero-subject result" in verification

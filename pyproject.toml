@@ -36,6 +36,7 @@ Repository = "https://github.com/zby/commonplace"
 [project.scripts]
 commonplace-ack-review = "commonplace.cli.review.ack_review:main"
 commonplace-ack-trivial-note-changes = "commonplace.cli.review.ack_trivial_note_changes:main"
+commonplace-agentic-analysis-handoff = "commonplace.cli.agentic_analysis_handoff:main"
 commonplace-create-review-jobs = "commonplace.cli.review.create_review_jobs:main"
 commonplace-finalize-review-job = "commonplace.cli.review.finalize_review_job:main"
 commonplace-freshness-ack = "commonplace.cli.freshness_ack:main"

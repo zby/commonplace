@@ -4,9 +4,11 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import re
 import shlex
 import sys
+import tempfile
 from dataclasses import dataclass
 from datetime import UTC, datetime
 from pathlib import Path
@@ -487,6 +489,31 @@ def format_json_report(report: ValidationReport) -> str:
     return json.dumps(payload, indent=2, sort_keys=True)
 
 
+def emit_json_report(report: ValidationReport, *, output_path: Path | None) -> None:
+    """Emit one JSON receipt and optionally persist those exact bytes atomically."""
+    payload = (format_json_report(report) + "\n").encode("utf-8")
+    if output_path is not None:
+        destination = output_path.resolve()
+        if not destination.parent.is_dir():
+            raise OSError(
+                f"validation output parent does not exist: {destination.parent}"
+            )
+        file_descriptor, temporary_name = tempfile.mkstemp(
+            prefix=f".{destination.name}.",
+            dir=destination.parent,
+        )
+        temporary = Path(temporary_name)
+        try:
+            with os.fdopen(file_descriptor, "wb") as stream:
+                stream.write(payload)
+                stream.flush()
+                os.fsync(stream.fileno())
+            os.replace(temporary, destination)
+        finally:
+            temporary.unlink(missing_ok=True)
+    sys.stdout.buffer.write(payload)
+
+
 def _print_full_collection_report(
     *,
     target: ResolvedValidationTarget,
@@ -562,6 +589,11 @@ def main(argv: list[str] | None = None) -> int:
         help="Print a stable compact JSON result.",
     )
     parser.add_argument(
+        "--output",
+        type=Path,
+        help="Atomically save the exact --json stdout bytes to this existing directory.",
+    )
+    parser.add_argument(
         "target",
         help=(
             "collection directory, note path or name, types, landings, redirects, "
@@ -569,12 +601,17 @@ def main(argv: list[str] | None = None) -> int:
         ),
     )
     args = parser.parse_args(argv)
+    if args.output is not None and not args.json:
+        parser.error("--output requires --json")
 
     repo_root = Path.cwd().resolve()
 
     if args.target == "lifecycle":
         report = build_lifecycle_report(repo_root=repo_root)
-        print(format_json_report(report) if args.json else format_compact_report(report))
+        if args.json:
+            emit_json_report(report, output_path=args.output)
+        else:
+            print(format_compact_report(report))
         return 1 if report.failure_count else 0
 
     if args.target == "redirects":
@@ -588,7 +625,10 @@ def main(argv: list[str] | None = None) -> int:
                 results=results,
                 repo_root=repo_root,
             )
-            print(format_json_report(report) if args.json else format_compact_report(report))
+            if args.json:
+                emit_json_report(report, output_path=args.output)
+            else:
+                print(format_compact_report(report))
         return 1 if results.fails else 0
 
     if args.target == "landings":
@@ -602,7 +642,10 @@ def main(argv: list[str] | None = None) -> int:
                 results=results,
                 repo_root=repo_root,
             )
-            print(format_json_report(report) if args.json else format_compact_report(report))
+            if args.json:
+                emit_json_report(report, output_path=args.output)
+            else:
+                print(format_compact_report(report))
         return 1 if results.fails else 0
 
     try:
@@ -633,7 +676,7 @@ def main(argv: list[str] | None = None) -> int:
             repo_root=repo_root,
         )
     elif args.json:
-        print(format_json_report(report))
+        emit_json_report(report, output_path=args.output)
     else:
         print(format_compact_report(report))
 

@@ -31,6 +31,11 @@ allOf:
           - canonical-register
           - runtime-baseline-path
           - runtime-baseline-sha256
+          - runtime-baseline-canonical-register
+          - diagnostic-ledger-path
+          - diagnostic-ledger-byte-length
+          - diagnostic-ledger-sha256
+          - lens-return-byte-budget
           - lens-packets
           - lens-returns
           - accepted-lens-packets
@@ -48,6 +53,7 @@ allOf:
           - validation-receipt-sha256
           - handoff-entry-sha256
           - handoff-manifest-sha256
+          - handoff
         properties:
           type:
             const: kb/reports/types/agentic-system-analysis-run-state.md
@@ -131,6 +137,20 @@ allOf:
               - type: "null"
               - type: string
                 pattern: '^[0-9a-f]{64}$'
+          runtime-baseline-canonical-register:
+            type: [string, "null"]
+          diagnostic-ledger-path:
+            type: string
+            minLength: 1
+          diagnostic-ledger-byte-length:
+            type: integer
+            minimum: 0
+          diagnostic-ledger-sha256:
+            type: string
+            pattern: '^[0-9a-f]{64}$'
+          lens-return-byte-budget:
+            type: integer
+            minimum: 1
           lens-packets:
             type: array
             uniqueItems: true
@@ -141,6 +161,7 @@ allOf:
                 - lens
                 - path
                 - sha256
+                - byte-length
                 - source-register
                 - canonical-register
                 - runtime-baseline-sha256
@@ -156,6 +177,9 @@ allOf:
                 sha256:
                   type: string
                   pattern: '^[0-9a-f]{64}$'
+                byte-length:
+                  type: integer
+                  minimum: 0
                 source-register:
                   type: string
                   minLength: 1
@@ -171,7 +195,7 @@ allOf:
             uniqueItems: true
             items:
               type: object
-              required: [packet-id, path, sha256]
+              required: [packet-id, path, sha256, byte-length]
               properties:
                 packet-id:
                   type: string
@@ -182,6 +206,9 @@ allOf:
                 sha256:
                   type: string
                   pattern: '^[0-9a-f]{64}$'
+                byte-length:
+                  type: integer
+                  minimum: 0
               additionalProperties: false
           accepted-lens-packets:
             type: array
@@ -278,6 +305,8 @@ allOf:
               - type: "null"
               - type: string
                 pattern: '^[0-9a-f]{64}$'
+          handoff:
+            type: [object, "null"]
         additionalProperties: true
       headings:
         type: array
@@ -413,6 +442,7 @@ allOf:
             canonical-register: {const: null}
             runtime-baseline-path: {const: null}
             runtime-baseline-sha256: {const: null}
+            runtime-baseline-canonical-register: {const: null}
     else:
       properties:
         frontmatter:
@@ -422,6 +452,9 @@ allOf:
             runtime-baseline-sha256:
               type: string
               pattern: '^[0-9a-f]{64}$'
+            runtime-baseline-canonical-register:
+              type: string
+              minLength: 1
   - if:
       properties:
         frontmatter:
@@ -589,9 +622,75 @@ allOf:
             handoff-entry-sha256:
               type: string
               pattern: '^[0-9a-f]{64}$'
+            handoff:
+              type: object
+              required:
+                - lens-runs
+                - legacy-memory-review
+                - transfer-scan
+                - retention-disposition
+                - limitations
+                - blockers
+              properties:
+                lens-runs:
+                  type: array
+                  minItems: 2
+                  maxItems: 2
+                  items:
+                    type: object
+                    required: [lens, scope, depth]
+                    properties:
+                      lens:
+                        enum: [memory/context, epistemic]
+                      scope:
+                        type: string
+                        minLength: 1
+                      depth:
+                        enum: [brief, full]
+                    additionalProperties: false
+                legacy-memory-review:
+                  type: object
+                  required: [detection, invocation, location, validation]
+                  properties:
+                    detection:
+                      enum: [detected, not-detected, unresolved]
+                    invocation:
+                      enum: [invoked, not-applicable, not-authorized, blocked]
+                    location:
+                      type: [string, "null"]
+                    validation:
+                      type: string
+                      minLength: 1
+                  additionalProperties: false
+                transfer-scan:
+                  type: object
+                  required: [disposition, location]
+                  properties:
+                    disposition:
+                      enum: [not-requested, response, state, blocked]
+                    location:
+                      type: [string, "null"]
+                  additionalProperties: false
+                retention-disposition:
+                  type: string
+                  minLength: 1
+                limitations:
+                  type: array
+                  uniqueItems: true
+                  items:
+                    type: string
+                    minLength: 1
+                blockers:
+                  type: array
+                  uniqueItems: true
+                  items:
+                    type: string
+                    minLength: 1
+              additionalProperties: false
     else:
       properties:
         frontmatter:
           properties:
             handoff-entry-sha256: {const: null}
             handoff-manifest-sha256: {const: null}
+            handoff: {const: null}

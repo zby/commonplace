@@ -1914,6 +1914,27 @@ def test_validation_json_is_compact_and_structured(
     assert payload["details_command"] == "commonplace-validate --full sources"
 
 
+def test_validation_json_output_matches_stdout_bytes(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+    capsysbinary: pytest.CaptureFixture[bytes],
+) -> None:
+    sources = tmp_path / "kb" / "sources"
+    write(sources / "COLLECTION.md", "# Sources\n")
+    write(sources / "scratch.md", "Visible source work.\n")
+    receipt = tmp_path / "validation.json"
+    monkeypatch.chdir(tmp_path)
+
+    exit_code = validate_notes.main(
+        ["--json", "--output", receipt.as_posix(), "sources"]
+    )
+    stdout = capsysbinary.readouterr().out
+
+    assert exit_code == 0
+    assert receipt.read_bytes() == stdout
+    assert json.loads(stdout)["status"] == "success"
+
+
 def test_validation_json_identifies_one_typed_external_artifact(
     tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,

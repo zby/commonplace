@@ -29,6 +29,27 @@ _PHASES = (
     "handoff-ready",
 )
 _SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
+_LOCAL_SOURCE_ANCHOR_RE = re.compile(
+    r"`(?P<path>[A-Za-z0-9._/-]+\.[A-Za-z0-9._-]+):"
+    r"(?P<ranges>[0-9]+(?:-[0-9]+)?(?:,[0-9]+(?:-[0-9]+)?)*)`"
+)
+_GITHUB_BLOB_ANCHOR_RE = re.compile(
+    r"https://github\.com/[^/\s)]+/[^/\s)]+/blob/"
+    r"(?P<revision>[0-9a-f]{40}|[0-9a-f]{64})/"
+    r"(?P<path>[^\s)#]+)#L(?P<start>[0-9]+)(?:-L(?P<end>[0-9]+))?"
+)
+_ROUTE_ID_RE = re.compile(r"(?m)^\|\s*(RTE-[A-Za-z0-9_-]+)\s*\|")
+_ROUTE_CLOSURE_FIELDS = (
+    "route-id",
+    "immediate-return",
+    "later-read-back",
+    "delegated-visibility",
+    "selection-predicate",
+    "invalidation-or-expiry",
+    "activation-or-effect",
+    "evidence-and-limits",
+)
+_DIAGNOSTIC_SUFFIX_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_-]*$")
 
 
 @dataclass(frozen=True)
@@ -68,6 +89,9 @@ class AgenticAnalysisRunState:
     canonical_entry: Path | None
     canonical_manifest: Path | None
     runtime_baseline: FileIdentity | None
+    runtime_baseline_canonical_register: str | None
+    diagnostic_ledger: FileIdentity | None
+    lens_return_byte_budget: int
     lens_packets: tuple[LensPacket, ...]
     lens_returns: tuple[tuple[str, FileIdentity], ...]
     accepted_packet_ids: tuple[str, ...]
@@ -79,6 +103,7 @@ class AgenticAnalysisRunState:
     validation_receipt: FileIdentity | None
     handoff_entry_sha256: str | None
     handoff_manifest_sha256: str | None
+    handoff: dict[str, Any] | None
 
 
 def _required_string(values: dict[str, Any], field: str) -> str:
@@ -127,6 +152,15 @@ def _mapping_list(values: dict[str, Any], field: str) -> tuple[dict[str, Any], .
     if not isinstance(value, list) or any(not isinstance(item, dict) for item in value):
         raise ValueError(f"{field}: expected a list of mappings")
     return tuple(value)
+
+
+def _optional_mapping(values: dict[str, Any], field: str) -> dict[str, Any] | None:
+    value = values.get(field)
+    if value is None:
+        return None
+    if not isinstance(value, dict):
+        raise ValueError(f"{field}: expected null or a mapping")  # noqa: TRY004
+    return value
 
 
 def _state_relative_file(value: str, *, run_dir: Path, field: str) -> Path:
@@ -390,6 +424,32 @@ def parse_agentic_analysis_run_state(
         hash_field="runtime-baseline-sha256",
         run_dir=run_dir,
     )
+    runtime_baseline_canonical_register = _optional_string(
+        frontmatter, "runtime-baseline-canonical-register"
+    )
+    if runtime_baseline is None and runtime_baseline_canonical_register is not None:
+        raise ValueError(
+            "runtime-baseline-canonical-register: requires a runtime baseline"
+        )
+    if runtime_baseline is not None and runtime_baseline_canonical_register is None:
+        raise ValueError(
+            "runtime-baseline-canonical-register: required with a runtime baseline"
+        )
+    diagnostic_ledger = _file_identity(
+        frontmatter,
+        role="diagnostic ledger",
+        path_field="diagnostic-ledger-path",
+        hash_field="diagnostic-ledger-sha256",
+        bytes_field="diagnostic-ledger-byte-length",
+        run_dir=run_dir,
+    )
+    lens_return_byte_budget = frontmatter.get("lens-return-byte-budget")
+    if (
+        not isinstance(lens_return_byte_budget, int)
+        or isinstance(lens_return_byte_budget, bool)
+        or lens_return_byte_budget < 1
+    ):
+        raise ValueError("lens-return-byte-budget: expected a positive integer")
 
     packets: list[LensPacket] = []
     packet_ids: set[str] = set()
@@ -413,7 +473,14 @@ def parse_agentic_analysis_run_state(
                 field=f"{prefix}.path",
             ),
             expected_sha256=_required_sha256(item, "sha256"),
+            expected_bytes=item.get("byte-length"),
         )
+        if (
+            not isinstance(packet_identity.expected_bytes, int)
+            or isinstance(packet_identity.expected_bytes, bool)
+            or packet_identity.expected_bytes < 0
+        ):
+            raise ValueError(f"{prefix}.byte-length: expected a non-negative integer")
         packets.append(
             LensPacket(
                 packet_id=packet_id,
@@ -448,9 +515,22 @@ def parse_agentic_analysis_run_state(
                         display_path, run_dir=run_dir, field=f"{prefix}.path"
                     ),
                     expected_sha256=_required_sha256(item, "sha256"),
+                    expected_bytes=item.get("byte-length"),
                 ),
             )
         )
+        return_bytes = returns[-1][1].expected_bytes
+        if (
+            not isinstance(return_bytes, int)
+            or isinstance(return_bytes, bool)
+            or return_bytes < 0
+        ):
+            raise ValueError(f"{prefix}.byte-length: expected a non-negative integer")
+        if return_bytes > lens_return_byte_budget:
+            raise ValueError(
+                f"{prefix}.byte-length: {return_bytes} exceeds the declared "
+                f"lens-return-byte-budget {lens_return_byte_budget}"
+            )
 
     accepted_packet_ids = _string_list(frontmatter, "accepted-lens-packets")
     if not set(accepted_packet_ids).issubset(return_packet_ids):
@@ -606,6 +686,7 @@ def parse_agentic_analysis_run_state(
     handoff_manifest_sha256 = _optional_sha256(
         frontmatter, "handoff-manifest-sha256"
     )
+    handoff = _optional_mapping(frontmatter, "handoff")
     if (
         handoff_entry_sha256 is not None
         and assembled_entry is not None
@@ -622,6 +703,67 @@ def parse_agentic_analysis_run_state(
         raise ValueError(
             "handoff-manifest-sha256: expected the assembled-manifest SHA-256"
         )
+    if phase == "handoff-ready":
+        if handoff is None:
+            raise ValueError("handoff: required at handoff-ready")
+        lens_runs = _mapping_list(handoff, "lens-runs")
+        lenses: set[str] = set()
+        for index, lens_run in enumerate(lens_runs):
+            prefix = f"handoff.lens-runs[{index}]"
+            lens = _required_string(lens_run, "lens")
+            if lens not in {"memory/context", "epistemic"}:
+                raise ValueError(f"{prefix}.lens: expected memory/context or epistemic")
+            if lens in lenses:
+                raise ValueError(f"{prefix}.lens: duplicate lens {lens}")
+            lenses.add(lens)
+            _required_string(lens_run, "scope")
+            if _required_string(lens_run, "depth") not in {"brief", "full"}:
+                raise ValueError(f"{prefix}.depth: expected brief or full")
+        if lenses != {"memory/context", "epistemic"}:
+            raise ValueError("handoff.lens-runs: both mandatory lenses are required")
+        legacy = _optional_mapping(handoff, "legacy-memory-review")
+        if legacy is None:
+            raise ValueError("handoff.legacy-memory-review: expected a mapping")
+        if _required_string(legacy, "detection") not in {
+            "detected",
+            "not-detected",
+            "unresolved",
+        }:
+            raise ValueError(
+                "handoff.legacy-memory-review.detection: expected detected, "
+                "not-detected, or unresolved"
+            )
+        if _required_string(legacy, "invocation") not in {
+            "invoked",
+            "not-applicable",
+            "not-authorized",
+            "blocked",
+        }:
+            raise ValueError(
+                "handoff.legacy-memory-review.invocation: expected invoked, "
+                "not-applicable, not-authorized, or blocked"
+            )
+        _optional_string(legacy, "location")
+        _required_string(legacy, "validation")
+        transfer = _optional_mapping(handoff, "transfer-scan")
+        if transfer is None:
+            raise ValueError("handoff.transfer-scan: expected a mapping")
+        if _required_string(transfer, "disposition") not in {
+            "not-requested",
+            "response",
+            "state",
+            "blocked",
+        }:
+            raise ValueError(
+                "handoff.transfer-scan.disposition: expected not-requested, "
+                "response, state, or blocked"
+            )
+        _optional_string(transfer, "location")
+        _required_string(handoff, "retention-disposition")
+        _string_list(handoff, "limitations")
+        _string_list(handoff, "blockers")
+    elif handoff is not None:
+        raise ValueError("handoff: only handoff-ready phase may set it")
 
     return AgenticAnalysisRunState(
         path=state_path,
@@ -640,6 +782,9 @@ def parse_agentic_analysis_run_state(
         canonical_entry=canonical_entry,
         canonical_manifest=canonical_manifest,
         runtime_baseline=runtime_baseline,
+        runtime_baseline_canonical_register=runtime_baseline_canonical_register,
+        diagnostic_ledger=diagnostic_ledger,
+        lens_return_byte_budget=lens_return_byte_budget,
         lens_packets=tuple(packets),
         lens_returns=tuple(returns),
         accepted_packet_ids=accepted_packet_ids,
@@ -651,6 +796,7 @@ def parse_agentic_analysis_run_state(
         validation_receipt=validation_receipt,
         handoff_entry_sha256=handoff_entry_sha256,
         handoff_manifest_sha256=handoff_manifest_sha256,
+        handoff=handoff,
     )
 
 
@@ -706,6 +852,478 @@ def _verify_lens_header(
     return None
 
 
+def _markdown_section(content: str, heading: str) -> str | None:
+    match = re.search(
+        rf"(?ms)^## {re.escape(heading)}\s*$\n(?P<body>.*?)(?=^## |\Z)",
+        content,
+    )
+    return None if match is None else match.group("body")
+
+
+def _verify_runtime_baseline(
+    identity: FileIdentity,
+    *,
+    run_id: str,
+    reviewed_boundary: str | None,
+    source_register: str | None,
+    canonical_register: str | None,
+) -> tuple[list[str], list[str]]:
+    passes: list[str] = []
+    failures: list[str] = []
+    try:
+        content = identity.path.read_text(encoding="utf-8")
+    except (OSError, UnicodeError) as exc:
+        return passes, [f"runtime baseline: cannot read structured header: {exc}"]
+
+    document, error = parse_document(content)
+    frontmatter = None if document is None else document.frontmatter
+    if error is not None or frontmatter is None:
+        return passes, ["runtime baseline: expected a parseable YAML header"]
+
+    expected_header = {
+        "run-id": run_id,
+        "reviewed-boundary": reviewed_boundary,
+        "source-register": source_register,
+        "canonical-register": canonical_register,
+    }
+    actual_header = {field: frontmatter.get(field) for field in expected_header}
+    if actual_header != expected_header:
+        failures.append(
+            "runtime baseline: header does not match the run-state identities"
+        )
+
+    raw_closures = frontmatter.get("route-closure")
+    if not isinstance(raw_closures, list) or not raw_closures:
+        failures.append("runtime baseline: route-closure must be a non-empty list")
+        return passes, failures
+
+    closure_ids: list[str] = []
+    for index, closure in enumerate(raw_closures):
+        prefix = f"runtime baseline route-closure[{index}]"
+        if not isinstance(closure, dict):
+            failures.append(f"{prefix}: expected a mapping")
+            continue
+        for field in _ROUTE_CLOSURE_FIELDS:
+            value = closure.get(field)
+            if not isinstance(value, str) or not value.strip():
+                failures.append(f"{prefix}.{field}: expected a non-empty string")
+        route_id = closure.get("route-id")
+        if isinstance(route_id, str) and route_id.strip():
+            closure_ids.append(route_id)
+
+    duplicate_ids = sorted(
+        {route_id for route_id in closure_ids if closure_ids.count(route_id) > 1}
+    )
+    if duplicate_ids:
+        failures.append(
+            "runtime baseline: duplicate route-closure IDs "
+            + ", ".join(duplicate_ids)
+        )
+
+    route_section = _markdown_section(content, "Canonical routes")
+    if route_section is None:
+        failures.append("runtime baseline: missing ## Canonical routes section")
+        return passes, failures
+    canonical_route_ids = set(_ROUTE_ID_RE.findall(route_section))
+    if not canonical_route_ids:
+        failures.append(
+            "runtime baseline: ## Canonical routes contains no RTE-* table rows"
+        )
+        return passes, failures
+
+    closure_id_set = set(closure_ids)
+    missing = sorted(canonical_route_ids - closure_id_set)
+    unknown = sorted(closure_id_set - canonical_route_ids)
+    if missing:
+        failures.append(
+            "runtime baseline: route-closure omits canonical routes "
+            + ", ".join(missing)
+        )
+    if unknown:
+        failures.append(
+            "runtime baseline: route-closure names unknown routes "
+            + ", ".join(unknown)
+        )
+    if not failures:
+        passes.append(
+            "runtime baseline: header matches run state and route closure covers "
+            f"all {len(canonical_route_ids)} canonical routes"
+        )
+    return passes, failures
+
+
+def _git_blob_lines(
+    *, source_root: Path, revision: str, source_path: str
+) -> tuple[int | None, str | None]:
+    pure = PurePosixPath(source_path)
+    if (
+        pure.is_absolute()
+        or source_path != pure.as_posix()
+        or ".." in pure.parts
+        or not pure.parts
+    ):
+        return None, "expected a normalized commit-relative path"
+    try:
+        blob = subprocess.run(
+            [
+                "git",
+                "--no-replace-objects",
+                "-C",
+                str(source_root),
+                "show",
+                f"{revision}:{source_path}",
+            ],
+            check=False,
+            capture_output=True,
+        )
+    except OSError as exc:
+        return None, f"could not invoke git: {exc}"
+    if blob.returncode != 0:
+        return None, "path does not resolve to a blob at the recorded commit"
+    try:
+        content = blob.stdout.decode("utf-8")
+    except UnicodeDecodeError:
+        return None, "cited blob is not UTF-8 text"
+    return len(content.splitlines()), None
+
+
+def _parse_line_ranges(value: str) -> tuple[tuple[int, int], ...]:
+    ranges: list[tuple[int, int]] = []
+    for item in value.split(","):
+        start_text, separator, end_text = item.partition("-")
+        start = int(start_text)
+        end = int(end_text) if separator else start
+        ranges.append((start, end))
+    return tuple(ranges)
+
+
+def _verify_source_anchors(
+    content: str, *, source_root: Path, source_revision: str
+) -> tuple[list[str], list[str]]:
+    passes: list[str] = []
+    failures: list[str] = []
+    anchors: dict[tuple[str, tuple[tuple[int, int], ...]], set[str]] = {}
+
+    for match in _LOCAL_SOURCE_ANCHOR_RE.finditer(content):
+        key = (match.group("path"), _parse_line_ranges(match.group("ranges")))
+        anchors.setdefault(key, set()).add("local")
+    for match in _GITHUB_BLOB_ANCHOR_RE.finditer(content):
+        revision = match.group("revision")
+        source_path = match.group("path")
+        start = int(match.group("start"))
+        end = int(match.group("end") or start)
+        key = (source_path, ((start, end),))
+        anchors.setdefault(key, set()).add("GitHub")
+        if revision != source_revision:
+            failures.append(
+                "source citation: GitHub anchor uses revision "
+                f"{revision}, expected {source_revision}: {source_path}"
+            )
+
+    for (source_path, line_ranges), kinds in sorted(anchors.items()):
+        line_count, error = _git_blob_lines(
+            source_root=source_root,
+            revision=source_revision,
+            source_path=source_path,
+        )
+        if error is not None or line_count is None:
+            failures.append(f"source citation: {source_path}: {error}")
+            continue
+        invalid_ranges = [
+            (start, end)
+            for start, end in line_ranges
+            if start < 1 or end < start or end > line_count
+        ]
+        if invalid_ranges:
+            rendered = ", ".join(
+                str(start) if start == end else f"{start}-{end}"
+                for start, end in invalid_ranges
+            )
+            failures.append(
+                f"source citation: {source_path}: line range {rendered} is outside "
+                f"the recorded blob's 1-{line_count} lines"
+            )
+            continue
+        passes.append(
+            f"source citation: {source_path} and {len(line_ranges)} line range(s) "
+            f"resolve at the recorded commit ({'/'.join(sorted(kinds))})"
+        )
+
+    return passes, failures
+
+
+def _verify_diagnostic_ledger(
+    state: AgenticAnalysisRunState,
+) -> tuple[list[str], list[str]]:
+    identity = state.diagnostic_ledger
+    if identity is None:
+        return [], ["diagnostic ledger: missing byte identity"]
+    try:
+        content = identity.path.read_text(encoding="utf-8")
+    except (OSError, UnicodeError) as exc:
+        return [], [f"diagnostic ledger: cannot read JSON Lines: {exc}"]
+
+    passes: list[str] = []
+    failures: list[str] = []
+    records: list[dict[str, Any]] = []
+    ids: set[str] = set()
+    for line_number, line in enumerate(content.splitlines(), start=1):
+        if not line.strip():
+            failures.append(
+                f"diagnostic ledger line {line_number}: blank lines are not allowed"
+            )
+            continue
+        try:
+            record = json.loads(line)
+        except json.JSONDecodeError as exc:
+            failures.append(
+                f"diagnostic ledger line {line_number}: invalid JSON: {exc.msg}"
+            )
+            continue
+        if not isinstance(record, dict):
+            failures.append(
+                f"diagnostic ledger line {line_number}: expected a JSON object"
+            )
+            continue
+        records.append(record)
+        prefix = f"diagnostic ledger line {line_number}"
+        record_id = record.get("id")
+        if (
+            not isinstance(record_id, str)
+            or not record_id.startswith(f"{state.run_id}-DIAG-")
+            or not _DIAGNOSTIC_SUFFIX_RE.fullmatch(
+                record_id.removeprefix(f"{state.run_id}-DIAG-")
+            )
+        ):
+            failures.append(f"{prefix}.id: expected {state.run_id}-DIAG-<suffix>")
+        elif record_id in ids:
+            failures.append(f"{prefix}.id: duplicate diagnostic ID {record_id}")
+        else:
+            ids.add(record_id)
+
+        for field in ("producer", "operation", "working-directory"):
+            value = record.get(field)
+            if not isinstance(value, str) or not value.strip():
+                failures.append(f"{prefix}.{field}: expected a non-empty string")
+        working_directory = record.get("working-directory")
+        if isinstance(working_directory, str) and not Path(working_directory).is_absolute():
+            failures.append(f"{prefix}.working-directory: expected an absolute path")
+
+        phase = record.get("phase")
+        if phase not in _PHASES:
+            failures.append(f"{prefix}.phase: expected a run-state phase")
+        elif _PHASES.index(phase) > _PHASES.index(state.phase):
+            failures.append(f"{prefix}.phase: cannot be later than the run state")
+
+        outcome = record.get("outcome")
+        if not isinstance(outcome, str) or outcome not in {
+            "failed",
+            "truncated",
+            "non-executed",
+        }:
+            failures.append(
+                f"{prefix}.outcome: expected failed, truncated, or non-executed"
+            )
+        classification = record.get("classification")
+        if not isinstance(classification, str) or classification not in {
+            "tool-failure",
+            "execution-error",
+            "expected-invalidation",
+            "environmental-condition",
+            "source-conflict",
+            "harness-error",
+        }:
+            failures.append(
+                f"{prefix}.classification: expected a registered diagnostic class"
+            )
+        exit_status = record.get("exit-status")
+        if exit_status is not None and (
+            not isinstance(exit_status, int) or isinstance(exit_status, bool)
+        ):
+            failures.append(f"{prefix}.exit-status: expected an integer or null")
+        disposition = record.get("disposition")
+        if not isinstance(disposition, str) or disposition not in {
+            "recovered",
+            "unresolved",
+            "non-evidentiary",
+        }:
+            failures.append(
+                f"{prefix}.disposition: expected recovered, unresolved, or non-evidentiary"
+            )
+        if not isinstance(record.get("material"), bool):
+            failures.append(f"{prefix}.material: expected a boolean")
+        environment = record.get("relevant-environment")
+        if not isinstance(environment, list) or any(
+            not isinstance(item, str) or not item.strip() for item in environment
+        ):
+            failures.append(
+                f"{prefix}.relevant-environment: expected a list of non-empty strings"
+            )
+        recovery = record.get("recovery")
+        if disposition == "recovered" and (
+            not isinstance(recovery, str) or not recovery.strip()
+        ):
+            failures.append(f"{prefix}.recovery: required for recovered diagnostics")
+        if disposition != "recovered" and recovery is not None:
+            failures.append(
+                f"{prefix}.recovery: allowed only for recovered diagnostics"
+            )
+
+        exact_output = record.get("exact-output")
+        output_path = record.get("output-path")
+        if (isinstance(exact_output, str) and exact_output) == (
+            isinstance(output_path, str) and bool(output_path)
+        ):
+            failures.append(
+                f"{prefix}: set exactly one of exact-output or output-path"
+            )
+        if isinstance(output_path, str) and output_path:
+            output_identity_values = {
+                "path": output_path,
+                "sha256": record.get("output-sha256"),
+                "bytes": record.get("output-byte-length"),
+            }
+            try:
+                output_identity = _file_identity(
+                    output_identity_values,
+                    role=f"diagnostic output {record_id or line_number}",
+                    path_field="path",
+                    hash_field="sha256",
+                    bytes_field="bytes",
+                    run_dir=state.run_dir,
+                )
+            except ValueError as exc:
+                failures.append(f"{prefix}: {exc}")
+            else:
+                if output_identity is not None:
+                    error = _verify_file(output_identity)
+                    if error is not None:
+                        failures.append(error)
+
+    unresolved_material_ids = {
+        record["id"]
+        for record in records
+        if isinstance(record.get("id"), str)
+        and record.get("material") is True
+        and record.get("disposition") == "unresolved"
+    }
+    if unresolved_material_ids and state.assembled_entry is not None:
+        try:
+            result_content = state.assembled_entry.path.read_text(encoding="utf-8")
+        except (OSError, UnicodeError):
+            result_content = ""
+        unreported = sorted(
+            item for item in unresolved_material_ids if item not in result_content
+        )
+        if unreported:
+            failures.append(
+                "diagnostic ledger: unresolved material diagnostics are not named "
+                "in the assembled result: "
+                + ", ".join(unreported)
+            )
+
+    if not failures:
+        passes.append(
+            f"diagnostic ledger: {len(records)} structured record(s) verified"
+        )
+    return passes, failures
+
+
+def render_agentic_analysis_handoff(state: AgenticAnalysisRunState) -> str:
+    """Render the complete operator handoff from checked run and result state."""
+    if state.phase != "handoff-ready" or state.handoff is None:
+        raise ValueError("operator handoff requires a handoff-ready run state")
+    if state.assembled_entry is None:
+        raise ValueError("operator handoff requires an assembled entry")
+    try:
+        content = state.assembled_entry.path.read_text(encoding="utf-8")
+    except (OSError, UnicodeError) as exc:
+        raise ValueError(f"operator handoff cannot read the result: {exc}") from exc
+    document, error = parse_document(content)
+    frontmatter = None if document is None else document.frontmatter
+    if error is not None or frontmatter is None:
+        raise ValueError("operator handoff requires parseable result frontmatter")
+
+    handoff = state.handoff
+    lens_runs = handoff["lens-runs"]
+    legacy = handoff["legacy-memory-review"]
+    transfer = handoff["transfer-scan"]
+    consumers = ", ".join(state.frontmatter["canonical-consumers"])
+    projections = state.frontmatter["permitted-projections"]
+    projection_text = ", ".join(projections) if projections else "none"
+    if state.carrier == "response":
+        result_location = "response stable block"
+    else:
+        result_location = (
+            f"[{state.assembled_entry.display_path}]"
+            f"(<{state.assembled_entry.path.as_posix()}>)"
+        )
+    lens_text = "; ".join(
+        f"{item['lens']}: {item['depth']} over {item['scope']}" for item in lens_runs
+    )
+    legacy_location = legacy["location"] or "none"
+    transfer_location = transfer["location"] or "none"
+    receipt_text = (
+        "none"
+        if state.validation_receipt is None
+        else (
+            f"{state.validation_receipt.display_path} "
+            f"(SHA-256 {state.validation_receipt.expected_sha256})"
+        )
+    )
+    limitations = handoff["limitations"]
+    blockers = handoff["blockers"]
+    limitation_text = "; ".join(limitations) if limitations else "none"
+    blocker_text = "; ".join(blockers) if blockers else "none"
+
+    lines = [
+        f"# Agentic-system analysis handoff — {state.run_id}",
+        "",
+        f"**Result:** {result_location}",
+        "",
+        (
+            f"**System and disposition:** {frontmatter.get('system', 'unknown')} — "
+            f"{frontmatter.get('result-disposition', 'unknown')}"
+        ),
+        "",
+        (
+            f"**Lifecycle:** consumers: {consumers}; carrier: {state.carrier}; "
+            f"physical form: {state.physical_form}; retention: "
+            f"{state.frontmatter['retention-rule']}; cleanup: "
+            f"{state.frontmatter['cleanup-condition']}; permitted projections: "
+            f"{projection_text}"
+        ),
+        "",
+        (
+            f"**Boundary:** target class: {frontmatter.get('target-class')}; kind: "
+            f"{frontmatter.get('boundary-kind')}; revision: {state.source_revision}; "
+            f"tier: {frontmatter.get('evidence-tier')}"
+        ),
+        "",
+        f"**Lens runs:** {lens_text}",
+        "",
+        (
+            f"**Legacy memory review:** detection: {legacy['detection']}; "
+            f"invocation: {legacy['invocation']}; location: {legacy_location}; "
+            f"validation: {legacy['validation']}"
+        ),
+        "",
+        (
+            f"**Stable-result verification:** entry SHA-256 "
+            f"{state.handoff_entry_sha256}; validation receipt: {receipt_text}"
+        ),
+        "",
+        f"**Transfer scan:** {transfer['disposition']}; location: {transfer_location}",
+        "",
+        f"**Retention disposition:** {handoff['retention-disposition']}",
+        "",
+        f"**Limitations:** {limitation_text}",
+        "",
+        f"**Blockers:** {blocker_text}",
+    ]
+    return "\n".join(lines)
+
+
 def verify_agentic_analysis_run_state(
     state: AgenticAnalysisRunState,
 ) -> tuple[list[str], list[str]]:
@@ -717,6 +1335,7 @@ def verify_agentic_analysis_run_state(
         for identity in (
             state.source_capture,
             state.runtime_baseline,
+            state.diagnostic_ledger,
             *(packet.identity for packet in state.lens_packets),
             *(identity for _packet_id, identity in state.lens_returns),
             state.assembled_entry,
@@ -733,6 +1352,26 @@ def verify_agentic_analysis_run_state(
             )
         else:
             failures.append(error)
+
+    if state.diagnostic_ledger is not None and not any(
+        message.startswith("diagnostic ledger:") for message in failures
+    ):
+        diagnostic_passes, diagnostic_failures = _verify_diagnostic_ledger(state)
+        passes.extend(diagnostic_passes)
+        failures.extend(diagnostic_failures)
+
+    if state.runtime_baseline is not None and not any(
+        message.startswith("runtime baseline:") for message in failures
+    ):
+        baseline_passes, baseline_failures = _verify_runtime_baseline(
+            state.runtime_baseline,
+            run_id=state.run_id,
+            reviewed_boundary=state.source_revision,
+            source_register=state.source_register,
+            canonical_register=state.runtime_baseline_canonical_register,
+        )
+        passes.extend(baseline_passes)
+        failures.extend(baseline_failures)
 
     if state.source_root is not None:
         if state.source_root.is_symlink() or not state.source_root.is_dir():
@@ -862,5 +1501,58 @@ def verify_agentic_analysis_run_state(
                 failures.append("handoff entry: result run-id does not match run state")
             else:
                 passes.append("handoff entry: type and run-id match the run state")
+                if state.handoff is not None:
+                    result_disposition = frontmatter.get("result-disposition")
+                    blockers = state.handoff["blockers"]
+                    if result_disposition == "complete" and blockers:
+                        failures.append(
+                            "handoff: a complete result cannot report blockers"
+                        )
+                    if result_disposition == "blocked" and not blockers:
+                        failures.append(
+                            "handoff: a blocked result must report at least one blocker"
+                        )
+                    legacy = state.handoff["legacy-memory-review"]
+                    if (
+                        legacy["invocation"] == "invoked"
+                        and legacy["location"] is None
+                    ):
+                        failures.append(
+                            "handoff: an invoked legacy memory review requires a location"
+                        )
+                    if (
+                        legacy["detection"] == "not-detected"
+                        and legacy["invocation"] != "not-applicable"
+                    ):
+                        failures.append(
+                            "handoff: a not-detected legacy memory review must be not-applicable"
+                        )
+                    if (
+                        legacy["detection"] == "detected"
+                        and legacy["invocation"] == "not-applicable"
+                    ):
+                        failures.append(
+                            "handoff: a detected legacy memory review cannot be not-applicable"
+                        )
+                    transfer = state.handoff["transfer-scan"]
+                    if (
+                        transfer["disposition"] == "state"
+                        and transfer["location"] is None
+                    ):
+                        failures.append(
+                            "handoff: a state transfer scan requires a location"
+                        )
+                if (
+                    state.source_kind == "checkout"
+                    and state.source_root is not None
+                    and state.source_revision is not None
+                ):
+                    anchor_passes, anchor_failures = _verify_source_anchors(
+                        content,
+                        source_root=state.source_root,
+                        source_revision=state.source_revision,
+                    )
+                    passes.extend(anchor_passes)
+                    failures.extend(anchor_failures)
 
     return passes, failures
