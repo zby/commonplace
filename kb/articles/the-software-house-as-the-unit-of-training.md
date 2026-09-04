@@ -126,8 +126,9 @@ make, but it cannot reach a mistaken distinction, a missing tool, a poor
 division of work, or a context policy that never loads the note that
 matters. A capable model can sometimes compensate, inferring an intention a
 prompt omitted or reconstructing state the harness failed to keep. That
-improves measured behaviour without showing the fixed layer was right; it
-spends model capacity repairing the same system error on every run that meets it.
+improves measured behaviour without showing the fixed layer was right. It
+spends model capacity repairing the same system error on every run that meets
+it.
 
 A software house makes this concrete. Much of what the house learns about
 its product is not a fact about language or programming in general. It is
@@ -179,7 +180,7 @@ trained.
 
 **Which surface, and at what cost.** The doctrine makes the choice of update
 surface a decision, and the decision has a structure. Neither weights nor
-notes nor code make the whole system transparent; enough software and notes
+notes nor code make the whole system transparent: enough software and notes
 [exceed practical inspection](../notes/opacity-is-a-scale-threshold.md) too.
 The difference is how a change can be located, inspected, revised, and
 reverted on its own. A change trained into weights is spread across
@@ -189,9 +190,10 @@ or a function is a unit the house can identify, inspect the history of, revise
 on its own, and revert without changing anything else. That is a governance
 cost, not a representational prohibition: the weights are the surface whose
 changes are hardest to govern, so a house with a working non-parametric path
-should have a reason before it trains weights on project evidence. Which
-surface should hold which kind of learning, and when a lesson should move
-between surfaces, is itself a trainable choice. [Continual learning is
+should have a reason before it trains weights on project evidence.
+
+Which surface should hold which kind of learning, and when a lesson should
+move between surfaces, is itself a trainable choice. [Continual learning is
 representational-form
 coevolution](../notes/treat-continual-learning-as-representational-form-coevolution.md):
 the question is how the improvement loops over weights, natural language, and
@@ -200,19 +202,20 @@ code relate, not which of them is where learning really happens.
 ## Governance is the hard core
 
 The doctrine does not say that writing artifacts is learning. A memory file
-that grows with every session is not a trained house; it is a store.
-[Continual learning requires governing behaviour-changing
+that grows with every session is a store, not a trained house. [Continual
+learning requires governing behaviour-changing
 writes](../notes/continual-learning-requires-governing-behaviour-changing-writes.md):
 for each candidate change the process must select it from the alternatives,
 validate that it does what it claims, decide what authority it carries over
-later work, and coordinate it with the components it affects. The doctrine
-therefore names its own hard core. It is to construct a computational
-evidence-to-update process over the behaviour-determining organization of the
-house, and the parts of that process that remain open problems are the parts
-the automated software house conjecture also flagged: admission, deciding
-which changes of meaning may enter retained state; and credit assignment,
-deciding which earlier note, test, tool, context policy, or selection rule a
-delayed consequence counts for or against.
+later work, and coordinate it with the components it affects.
+
+The doctrine therefore names its own hard core. It is to construct a
+computational evidence-to-update process over the behaviour-determining
+organization of the house. The parts of that process that remain open
+problems are the parts the automated software house conjecture also flagged:
+admission, deciding which changes of meaning may enter retained state; and
+credit assignment, deciding which earlier note, test, tool, context policy, or
+selection rule a delayed consequence counts for or against.
 
 Two features of software houses make these harder than in a single-episode
 learner. Consequences are delayed: a design choice may show its cost three
@@ -222,7 +225,7 @@ the update process changes how every later piece of evidence is handled, so a
 wrong admission can compound. Regression control, rollback, and safe
 self-modification enter the doctrine here, as constraints on the
 evidence-to-update process rather than as separate topics. This article
-supplies no general solution; it locates the problem and says what a solution
+supplies no general solution. It locates the problem and says what a solution
 must do.
 
 ## Testable consequences
@@ -240,13 +243,15 @@ combination of higher success on later demands it has not been given, faster
 diagnosis and recovery, fewer regressions elsewhere, more proportional
 rescoping after a counterexample, cheaper rollback and local revision, and
 lower total cost once theory search, validation, retrieval, and maintenance
-are counted. Both routes require retained evidence to reach the relevant
-decision and change it. Only the explicit route additionally requires
-selecting, retaining, and revising the explicit theory. The comparison
-isolates [the causal contribution of the explicit theory surface, not
-possession of the house's whole program
-theory](../notes/retained-theory-intervention-isolates-one-explicit-surface.md);
-a trace showing that a note was loaded is not evidence that it governed the
+are counted.
+
+Both routes require retained evidence to reach the relevant decision and
+change it. Only the explicit route additionally requires selecting, retaining,
+and revising the explicit theory. The comparison isolates [the causal
+contribution of the explicit theory surface, not possession of the house's
+whole program
+theory](../notes/retained-theory-intervention-isolates-one-explicit-surface.md).
+A trace showing that a note was loaded is not evidence that it governed the
 decision.
 
 **The sample-efficiency hypothesis.** When explicit theory captures structure
@@ -258,14 +263,14 @@ integration behaviour when no executed process consumes it" can, on one
 failure, narrow the exemption to files no tooling reads; an agent holding the
 correlation "documentation files are safe" can only delete the rule or
 enumerate exceptions. The advantage depends on the theory being both adequate
-and used in later decisions; a broad wrong theory misleads as widely as a
+and used in later decisions. A broad wrong theory misleads as widely as a
 right one would have helped. Fewer observations also need not mean lower total
 cost.
 
 A test of either hypothesis bears on the doctrine only against a baseline the
 fixed-model regime cannot supply on its own: adapting the model's weights on
 the same production evidence. Without it, an advantage of explicit theory over
-raw records shows that synthesis pays; it does not distinguish training the
+raw records shows that synthesis pays. It does not distinguish training the
 state around the model from adapting the model itself, which is the contrast
 the doctrine draws.
 
@@ -296,22 +301,22 @@ challenge the theory, representations, decompositions, methods, and evaluators
 the house requires, and the retained result must affect later work beyond the
 episode that exposed the need.
 
-Read this way the lesson supports the doctrine rather than opposing it. It
+Read this way, the lesson supports the doctrine rather than opposing it. It
 demands that task-specific structure be computationally produced, and the
 doctrine's whole content is a computational evidence-to-update process over
 that structure. It also warns the doctrine against fixing permanently which
 surface holds which lesson: no note, program, or validator is guaranteed to
 last, and a future model may absorb a theory or replace an evaluator with a
 cheaper learned one. That is a possibility the doctrine already allows for,
-since which surface holds a lesson is a trainable choice. The [companion
-article](./the-bitter-lesson-does-not-require-everything-to-live-in-weights.md)
+since which surface holds a lesson is a trainable choice. A [separate article
+on the Bitter Lesson](./the-bitter-lesson-does-not-require-everything-to-live-in-weights.md)
 gives the full argument and the tests that would show a bootstrap has not
 outgrown its seed.
 
 ## What the doctrine does not claim
 
 It does not claim that weights must stay fixed. Pinning the model was the
-conjecture's experimental isolation; the doctrine treats the weights as one
+conjecture's experimental isolation. The doctrine treats the weights as one
 update surface among several, the one with the highest governance cost.
 
 It does not claim that explicit theory is the best surface for what the house
