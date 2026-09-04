@@ -56,20 +56,20 @@ preserves.
 The [companion article](./automated-software-houses-with-fixed-llms.md)
 conjectures that an automated [software
 house](../notes/definitions/software-house.md), meaning whatever keeps
-changing a piece of software for its users, is practically reachable with
-LLMs available today while every model stays fixed. In that regime the house
-learns only through changes that computation produces and retains in its
-notes and code: the natural-language and symbolic state around the model.
-The conjecture is existential and constructive. If a witness for it exists,
-it establishes that learning in the state around a fixed model can suffice
-for open-ended coherent software change over a declared scope and horizon.
+changing a piece of software for its users, is practically reachable with LLMs
+available today while every model stays fixed. In that regime the house learns
+only through changes that computation produces and retains in its notes and
+code: the natural-language and symbolic state around the model. The conjecture
+is existential and constructive. If one such house exists, that establishes
+that learning in the state around a fixed model can suffice for open-ended
+coherent software change over a declared scope and horizon.
 
 Pinning the model was an experimental isolation. It answered the question
-whether house-state learning can be enough. It said nothing about whether
-that is how such a house should be trained once it exists. This article
-takes up that question, on the assumption that the premise holds: a house
-that carries the production loop, with no human in an internal production
-role, over a declared scope and horizon.
+whether learning in the state around the model can be enough. It said nothing
+about whether that is how such a house should be trained once it exists. This
+article takes up that question, on the assumption that the premise holds: a
+house that carries the production loop, with no human in an internal
+production role, over a declared scope and horizon.
 
 ## The doctrine
 
@@ -90,7 +90,7 @@ requirements, consequences, and retained history that the house already
 receives are the evidence, and there is no separate training set. Training
 runs at the cadence of the product: a failure can produce a new test on the
 job that exposed it, and a revised assumption can alter project theory before
-the next request arrives. And the question shifts from *which weights* to
+the next demand arrives. And the question shifts from *which weights* to
 *which component, under what admission rule*. What distinguishes a training
 step from an ordinary edit is not the form of the changed component but that
 evidence caused the change, a governed process admitted it, and the retained
@@ -159,43 +159,42 @@ model training, and each has its own principal target.
 
 **A newer model is a substitution, not a migration.** When a stronger base
 model appears, it enters the house as a general-capability replacement to be
-evaluated inside the existing organization. The product's accumulated
-learning stays in the house. Some of it may become redundant, since a
-stronger model may absorb a heuristic a note used to carry, and the house
-may then retire the note. But nothing forces the house to relearn what it
-already holds. This is also why a project that has trained its house should
-exploit a newer model better than an unprepared one: it hands the new model
-a settled theory and a working production loop rather than a blank
+evaluated inside the house's existing behaviour-determining organization. The
+product's accumulated learning stays in the house. Some of it may become
+redundant, since a stronger model may absorb a heuristic a note used to carry,
+and the house may then retire the note. But nothing forces the house to
+relearn what it already holds. This is also why a project that has trained its
+house should exploit a newer model better than an unprepared one: it hands the
+new model a settled theory and a working production loop rather than a blank
 repository.
 
 **The hand-built harness is a seed to outgrow.** A house starts with
 hand-written tools, prompts, validators, and provisional notes. Under the
-doctrine these are seed engineering, and the training process is expected
-to displace repeated human construction of the decisive project-specific
-theory, decomposition, evaluators, and selection over the claimed scope. A
-house whose important product-specific decisions remain human design has
-editable files, not a training process.
+doctrine these are seed engineering, and training is expected to displace
+repeated human construction of the decisive project-specific theory,
+decomposition, evaluators, and selection over the claimed scope. A house whose
+important product-specific decisions remain human design is edited, not
+trained.
 
-**Which surface, and at what cost.** The doctrine makes the choice of
-update surface a decision, and the decision has a structure. Neither
-weights nor notes nor code make the whole system transparent; enough
-software and notes [exceed practical
-inspection](../notes/opacity-is-a-scale-threshold.md) too. The difference
-is how a change can be located, inspected, revised, and reverted on its own.
-A change trained into weights is spread across parameters, and a changed
-behaviour is hard to find, hard to revise selectively, and hard to roll back
-without retraining. A change kept in a note or a function is a unit the
-house can identify, inspect the history of, revise on its own, and revert
-without touching anything else. That is a governance cost, not a
-representational prohibition: the parametric surface is the one whose
-changes are hardest to govern, so a house with a working non-parametric
-path should have a reason before it trains weights on project evidence.
-Which surface should hold which kind of learning, and when a lesson should
-move between surfaces, is itself a trainable choice. [Continual learning is
+**Which surface, and at what cost.** The doctrine makes the choice of update
+surface a decision, and the decision has a structure. Neither weights nor
+notes nor code make the whole system transparent; enough software and notes
+[exceed practical inspection](../notes/opacity-is-a-scale-threshold.md) too.
+The difference is how a change can be located, inspected, revised, and
+reverted on its own. A change trained into weights is spread across
+parameters, and a changed behaviour is hard to find, hard to revise
+selectively, and hard to roll back without retraining. A change kept in a note
+or a function is a unit the house can identify, inspect the history of, revise
+on its own, and revert without touching anything else. That is a governance
+cost, not a representational prohibition: the weights are the surface whose
+changes are hardest to govern, so a house with a working non-parametric path
+should have a reason before it trains weights on project evidence. Which
+surface should hold which kind of learning, and when a lesson should move
+between surfaces, is itself a trainable choice. [Continual learning is
 representational-form
 coevolution](../notes/treat-continual-learning-as-representational-form-coevolution.md):
-the question is how the improvement loops over weights, natural language,
-and code relate, not which of them is the real locus of learning.
+the question is how the improvement loops over weights, natural language, and
+code relate, not which of them is the real locus of learning.
 
 ## Governance is the hard core
 
@@ -216,65 +215,65 @@ delayed consequence counts for or against.
 
 Two features of software houses make these harder than in a single-episode
 learner. Consequences are delayed: a design choice may show its cost three
-requests later, when the evidence has to be attributed back across several
+demands later, when the evidence has to be attributed back across several
 intervening changes. And the house modifies its own machinery: an update to
-the update process changes how every later piece of evidence is handled, so
-a wrong admission can compound. Regression control, rollback, and safe
+the update process changes how every later piece of evidence is handled, so a
+wrong admission can compound. Regression control, rollback, and safe
 self-modification enter the doctrine here, as constraints on the
 evidence-to-update process rather than as separate topics. This article
-supplies no general solution; it locates the problem and says what a
-solution must do.
+supplies no general solution; it locates the problem and says what a solution
+must do.
 
 ## Testable consequences
 
 The doctrine makes predictions that a fixed-model house can test without
 settling the doctrine as a whole.
 
-**The explicit-theory advantage hypothesis.** Hold the model, source
-evidence, demand sequence, and total budget fixed. Then a house that
-synthesizes, retrieves, applies, and revises an addressable project theory,
-meaning a rationale that can be found and revised on its own, performs
-better under structured change than a house that repeatedly reconstructs its
-understanding from raw records or searches the implementation directly.
-*Better* means some combination of higher success on later demands it has
-not been given, faster diagnosis and recovery, fewer collateral regressions,
-more proportional rescoping after a counterexample, cheaper rollback and
-local revision, and lower total cost once theory search, validation,
-retrieval, and maintenance are counted. Both routes require retained
-evidence to reach the relevant decision and change it. Only the explicit
-route additionally requires selecting, retaining, and revising the stored
-theory. The comparison isolates [the causal contribution of the explicit
-theory surface, not possession of the house's whole program
+**The explicit-theory advantage hypothesis.** Hold the model, source evidence,
+demand sequence, and total budget fixed. Then a house that synthesizes,
+retrieves, applies, and revises an explicit project theory, meaning a
+rationale that can be found and revised on its own, performs better under
+structured change than a house that repeatedly reconstructs its understanding
+from raw records or searches the implementation directly. *Better* means some
+combination of higher success on later demands it has not been given, faster
+diagnosis and recovery, fewer collateral regressions, more proportional
+rescoping after a counterexample, cheaper rollback and local revision, and
+lower total cost once theory search, validation, retrieval, and maintenance
+are counted. Both routes require retained evidence to reach the relevant
+decision and change it. Only the explicit route additionally requires
+selecting, retaining, and revising the explicit theory. The comparison
+isolates [the causal contribution of the explicit theory surface, not
+possession of the house's whole program
 theory](../notes/retained-theory-intervention-isolates-one-explicit-surface.md);
 a trace showing that a note was loaded is not evidence that it governed the
 decision.
 
-**The sample-efficiency hypothesis.** When retained theory captures
-structure that a change preserves, the house [may need fewer new
-observations to
+**The sample-efficiency hypothesis.** When explicit theory captures structure
+that a change preserves, the house [may need fewer new observations to
 adapt](../notes/theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md).
 It revises one premise and derives several consequences instead of relearning
 each. A coding agent that has retained "a changed file cannot affect
 integration behaviour when no executed process consumes it" can, on one
 failure, narrow the exemption to files no tooling reads; an agent holding the
 correlation "documentation files are safe" can only delete the rule or
-enumerate exceptions. The advantage depends on the theory being both
-adequate and used in later decisions; a broad wrong theory misleads as widely
-as a right one would have helped. Fewer observations also need not mean
-lower total cost.
+enumerate exceptions. The advantage depends on the theory being both adequate
+and used in later decisions; a broad wrong theory misleads as widely as a
+right one would have helped. Fewer observations also need not mean lower total
+cost.
 
 A test of either hypothesis needs a baseline the fixed-model regime cannot
-supply on its own: parametric adaptation from the same production evidence.
-Without it, an advantage of explicit theory over unsynthesized records shows
-that synthesis pays; it does not distinguish house-state training from
-model-centred adaptation, which is the contrast the doctrine draws.
+supply on its own: adapting the model's weights on the same production
+evidence. Without it, an advantage of explicit theory over unsynthesized
+records shows that synthesis pays; it does not distinguish training the state
+around the model from adapting the model itself, which is the contrast the
+doctrine draws.
 
 The doctrine survives if the explicit-theory hypothesis fails. A house can
-learn through tests, tools, learned critics, episodic retrieval, or
-parametric updates, and the doctrine says only that the loop must be able to
-reach whichever of them the evidence warrants. Conversely, explicit theory
-could help in some structured-shift regimes without becoming the universal
-carrier.
+learn through tests, tools, learned critics, episodic retrieval, or weight
+updates, and the doctrine says only that the loop must be able to reach
+whichever of them the evidence warrants. Conversely, explicit theory could
+help in some structured-shift regimes without becoming the surface for every
+lesson.
 
 ## The Bitter Lesson objection
 
@@ -299,11 +298,12 @@ work beyond the episode that exposed the need.
 Read this way the lesson supports the doctrine rather than opposing it. It
 demands that task-specific structure be computationally produced, and the
 doctrine's whole content is a computational evidence-to-update process over
-that structure. It also warns the doctrine against a permanent carrier
-allocation: no note, program, or validator is promised survival, and a future
-model may absorb a theory or replace an evaluator with a cheaper learned one.
-That is a possibility the doctrine already accommodates, since which surface
-holds a lesson is a trainable choice. The [companion
+that structure. It also warns the doctrine against fixing permanently which
+surface holds which lesson: no note, program, or validator is promised
+survival, and a future model may absorb a theory or replace an evaluator with
+a cheaper learned one. That is a possibility the doctrine already
+accommodates, since which surface holds a lesson is a trainable choice. The
+[companion
 article](./the-bitter-lesson-does-not-require-everything-to-live-in-weights.md)
 gives the full argument and the tests that would show a bootstrap has not
 outgrown its seed.
@@ -311,15 +311,15 @@ outgrown its seed.
 ## What the doctrine does not claim
 
 It does not claim that weights must stay fixed. Pinning the model was the
-conjecture's experimental isolation; the doctrine treats the parametric
-surface as one update target with the highest governance cost.
+conjecture's experimental isolation; the doctrine treats the weights as one
+update surface among several, the one with the highest governance cost.
 
-It does not claim that explicit theory is the best carrier. That is a
-hypothesis the doctrine predicts and a test can refute, and the doctrine
-survives its refutation.
+It does not claim that explicit theory is the best surface for what the house
+learns. That is a hypothesis the doctrine predicts and a test can refute, and
+the doctrine survives its refutation.
 
 It does not claim that the current allocation among weights, notes, and code
-is final, or that any current carrier will persist.
+is final, or that any current surface will persist.
 
 It does not claim that current whole-system learners scale. Cross-component
 credit assignment, validation cost, and safe retention of self-modifying
