@@ -18,7 +18,7 @@ source_notes:
   - kb/sources/goedel-machines-schmidhuber.ingest.md
   - kb/sources/programming-as-theory-building.ingest.md
 ---
-# Automated Software Houses with Fixed LLMs: A Practical Reachability Conjecture
+# The Automated Software House Conjecture: Open-ended software development with fixed LLMs
 
 > **Draft.** This article may change. Comments and counterexamples are welcome
 > on [the repository's GitHub Discussions page](https://github.com/zby/commonplace/discussions).
@@ -43,7 +43,7 @@ article](./the-software-house-as-the-unit-of-training.md) takes that up.
 
 ## Claim
 
-**The reachability conjecture.** At least one automated [software
+**The automated software house conjecture.** At least one automated [software
 house](../notes/definitions/software-house.md) (below, *the house*) capable
 of open-ended coherent software change is practically reachable with LLMs
 available by 2026-09-02.
@@ -317,7 +317,7 @@ states it as a hypothesis with its own test.
 An [open-domain theory builder may itself become a software
 house](../notes/an-open-domain-theory-builder-becomes-a-software-house-when-new-domains-require-production-machinery-changes.md)
 when new domains require changes to its production machinery. That separate
-conjecture is not needed for the reachability claim.
+conjecture is not needed for the claim made here.
 
 ## Boundaries and epistemic status
 
@@ -361,7 +361,7 @@ reachability over its declared scope, horizon, and budget. Failure of one
 architecture eliminates that path; it cannot refute the existential claim
 unless the search has first been bounded.
 
-Pinning the model isolates a reachability question. This article does not
+Pinning the model isolates the question whether the house is reachable. This article does not
 claim that explicit project theory is the best carrier of acquired
 understanding, that updates outside the weights are better than training the
 model, or that weights should stay fixed in a mature system. It asks only

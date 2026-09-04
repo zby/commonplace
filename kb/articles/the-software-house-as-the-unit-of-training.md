@@ -18,7 +18,7 @@ source_notes:
   - kb/notes/theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md
   - kb/notes/treat-continual-learning-as-representational-form-coevolution.md
 ---
-# The Software House as the Unit of Training
+# The Software House as the Unit of Training: Production-driven learning across models, theory, and code
 
 > **Draft.** This article may change. Comments and counterexamples are welcome
 > on [the repository's GitHub Discussions page](https://github.com/zby/commonplace/discussions).
@@ -198,7 +198,7 @@ later work, and coordinate it with the components it affects. The doctrine
 therefore names its own hard core. It is to construct a computational
 evidence-to-update process over the behaviour-determining organization of
 the house, and the parts of that process that no current system does well
-are the parts the reachability conjecture also flagged: admission, deciding
+are the parts the automated software house conjecture also flagged: admission, deciding
 which changes of meaning may enter retained state; and credit assignment,
 deciding which earlier note, test, tool, context policy, or selection rule a
 delayed consequence counts for or against.
@@ -300,7 +300,7 @@ outgrown its seed.
 ## What the doctrine does not claim
 
 It does not claim that weights must stay fixed. Pinning the model was the
-reachability experiment's isolation; the doctrine treats the parametric
+conjecture's experimental isolation; the doctrine treats the parametric
 surface as one update target with the highest governance cost.
 
 It does not claim that explicit theory is the best carrier. That is a
