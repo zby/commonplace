@@ -28,17 +28,17 @@ role, is reachable with fixed current LLMs. The [second](./the-software-house-as
 says how such a house should learn once it exists. This article is about
 getting there. Nobody will build the first automated house from nothing. It
 will grow out of a *human-agent house*: a production system in which agents
-already do most of the work and people still hold the internal roles that
-have not moved, such as diagnosing why a change failed, judging whether a
-design still fits, and deciding which revision is kept. The program is to
-move those roles out of human hands one class at a time, in the order in
-which the premises, settled criteria, and defeating checks each role needs
-can be built, and to be able to show at each step that the role moved
-rather than went unobserved. The article states the program, the ordering
-principle, why the order of moves is recorded rather than declared, what
-counts as evidence that a role moved,
-what the house's own training must produce along the way, and the results
-that would stop the program or send it elsewhere.
+already do most of the work and people still hold the remaining internal
+roles, such as diagnosing why a change failed, judging whether a design
+still fits, and deciding which revision is kept. The program is to move
+those roles out of human hands one class at a time, in the order in which
+the premises, settled criteria, and checks able to reject a wrong candidate
+that each role needs can be built, and to show at each step that the role
+moved, rather than that nobody measured whether it did. The article states
+the program, the ordering principle, why the order of moves is recorded as
+it happens rather than declared in advance, what counts as evidence that a
+role moved, what the house's own training must produce along the way, and
+the results that would stop the program or redirect it.
 
 ## The starting point
 
