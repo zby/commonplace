@@ -19,6 +19,7 @@ Promote an approved circulating draft on the ProperDocs deployment to either a r
 ## Publish
 
 1. Run `commonplace-validate {draft-path}` and resolve every failure. Warnings require judgment but do not automatically block publication.
+   If `kb/work/staging/{slug}/closure-check.md` exists, it must open with `Closure: reached`; otherwise stop and report the free variables it lists. Move its appendix and reference files into `kb/articles/`, apply every row of its `link-map.md` to the body, delete `kb/work/staging/{slug}/`, and validate again.
 2. Remove the draft banner without changing the substantive body.
 3. Set the frontmatter for the approved target state, using the date supplied by the user, or the current local date when the user says “today.” Do not infer a date for “tomorrow” before that day arrives.
    - Working paper: `status: working-paper`, `published: YYYY-MM-DD` for the first public date, `version: 1`, and `revised: YYYY-MM-DD` matching the publication date.
@@ -49,6 +50,7 @@ A later source-note change does not automatically stale a dated article. Search 
 - The draft banner is gone.
 - `kb/articles/README.md` lists it under the matching public heading and nowhere as a draft.
 - The article and collection validate without failures.
+- No `kb/work/staging/{slug}/` directory remains, and every link the package's `link-map.md` retargeted resolves inside `kb/articles/`.
 - After the commit reaches `main`, the ProperDocs page renders its status and the article is discoverable from the Articles navigation.
 
 ---
