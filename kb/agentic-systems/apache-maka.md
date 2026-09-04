@@ -1,6 +1,10 @@
 ---
 description: "Code-grounded analysis of Apache Maka's Runtime Host, event authority, context projection, tool settlement, graph coordination, and separate memory routes"
 type: kb/types/note.md
+generated-by: analyse-agentic-system
+analysis-run: AAS-2026-09-04-apache-maka-01
+source-identity: https://github.com/apache/maka
+reviewed-revision: fcfa0550e192c65854052aa354cd435b1422ebce
 traits: [has-external-sources, has-implementation]
 tags: [agent-memory, context-engineering, evaluation, tool-loop]
 ---
