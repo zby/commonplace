@@ -43,7 +43,7 @@ recommends.
    field: `simple` passes run in a fresh worker on a cheaper model or lower
    effort; `judgment` passes run on the session model, in the current
    context or a fresh worker. Use a fresh worker when the pass benefits from
-   not having seen the conversation, as the figurative-phrasing and
+   not having seen the conversation, as the plain-wording and
    readability passes do; run narrow-overclaims in the parent context, where
    the conversation is the evidence. Apply one-word swaps and two-sentence
    narrowings in the parent context rather than as packets. Small scoped
@@ -53,7 +53,7 @@ recommends.
    ```
    Purpose: {the operator's one line}
    Artifact: {path}
-   Pass: kb/instructions/revising-instructions/{pass}.md
+   Pass: kb/instructions/simplification-passes/{pass}.md
    Defend: {claims the operator has marked as divergence; a pass may not narrow them}
    Write scope: {the artifact only | none, return proposals}
    Return: the pass's report, plus items noticed but not applied, nothing committed
@@ -79,7 +79,7 @@ recommends.
 - The assessment is one full read. Each pass is one more. Do not re-read
   linked notes unless a pass names them.
 - A worker gets the artifact path and the packet, never the conversation.
-- Propose-only work (the assessment, the figurative-phrasing list, title
+- Propose-only work (the assessment, the plain-wording list, title
   proposals) may run in parallel; edits to the artifact run in sequence.
 - Stop when the recommended passes are done. An item not recommended costs
   nothing; recommending a pass of unclear value costs a read and a diff.

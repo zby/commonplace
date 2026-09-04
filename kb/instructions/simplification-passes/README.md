@@ -1,6 +1,6 @@
-# Revising instructions
+# Simplification passes
 
-Revision passes for one article or note whose claims are settled but whose
+Passes that simplify one article or note whose claims are settled but whose
 text is not; an assessment recommends the passes and they run without a
 selection step. Each pass is a short worker packet: it states
 what the pass exists to make true, what it must preserve, and what it returns.
@@ -23,6 +23,6 @@ judgment passes stay on the session model.
 - [narrow-overclaims](./narrow-overclaims.md) (judgment) — move claims from what cannot be observed to what can, and mark gaps instead of inventing precision.
 - [opening-and-title](./opening-and-title.md) (judgment) — make the TL;DR read with only its own words and the title state the central contrast literally.
 - [readability-and-flow](./readability-and-flow.md) (judgment) — structural moves and tightening with no change of claim.
-- [figurative-phrasing](./plain-wording.md) (simple) — replace decorative figures only, after the operator approves the list.
+- [plain-wording](./plain-wording.md) (simple) — replace decorative figures with literal statements and unusual words with common ones, after the operator approves the list.
 - [split-out-a-treatment](./split-out-a-treatment.md) (simple) — keep the artifact's passage minimal and put the full argument in a separate file that later passes do not load.
 - [place-external-systems](./place-external-systems.md) (simple) — position named systems against the artifact's criteria from the KB's own reviews.
