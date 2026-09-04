@@ -81,21 +81,22 @@ src/commonplace/          Packaged operational engine
 
 ## Research routes
 
-**Learning software factories.** Can a software factory learn from its
-production experience — retained machinery changes that make a later factory
-state better than its predecessor — without training a new model?
-The [research program](./kb/articles/automated-software-houses-with-fixed-llms.md)
-tests whether an LLM-based factory can acquire and hold project theory strongly
-enough to keep modification coherent across novel demands; retained
-natural-language theory is the addressable realization under test. Commonplace
-is the live human-inclusive testbed; a controlled programming-agent comparison
-is planned. The [Naur
+**Automated software houses.** Can a complete software house sustain
+open-ended coherent change with no human in an internal production role while
+current learned components remain fixed? The [automated software house
+conjecture](./kb/articles/automated-software-houses-with-fixed-llms.md) allows
+the starting project theory and production machinery to be written by people.
+It tests whether the resulting composite can carry the program-theory function,
+use it across novel demands, revise coherently when later demands expose an
+error, and continue over a declared scope and horizon. How the house acquires
+and improves its own organization is a separate question. The [Naur
 note](./kb/notes/naur-equates-machine-execution-with-formulated-criteria.md)
 reopens the bearer question, while the [coherent-search
 note](./kb/notes/program-theory-sustains-search-under-delayed-feedback.md)
 states the longitudinal test. Two companion articles say [how such a house
 should learn](./kb/articles/the-software-house-as-the-unit-of-training.md)
-and [how the first one would be built](./kb/articles/bootstrapping-the-first-automated-software-house.md).
+and [how the first one would be
+built](./kb/articles/bootstrapping-the-first-automated-software-house.md).
 
 **Deployment-time learning.** Durable changes to prompts, rules, tools, schemas, tests, and code can affect later sessions without updating model weights. Storage is insufficient: later operation must load or enforce the result. Start with [retained system-definition artifacts enable persistent deployment-time adaptation](./kb/notes/retained-artifacts-enable-persistent-deployment-time-adaptation.md) and the [learning theory index](./kb/notes/learning-theory-README.md).
 
