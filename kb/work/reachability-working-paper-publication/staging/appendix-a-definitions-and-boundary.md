@@ -7,6 +7,7 @@ Mode: paper adaptation
 Frozen source tag: pending
 Source paths: kb/notes/definitions/software-house.md;
   kb/notes/definitions/representational-form.md;
+  kb/notes/theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md;
   kb/articles/reachability-conjecture-the-llm-stays-fixed-the-software-house-learns.md;
   kb/articles/reachability-as-closure-under-the-seed-gate.md
 Live successors: the same paths on the main branch

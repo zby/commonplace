@@ -1,7 +1,7 @@
-# Main-body completeness check (2026-09-03)
+# Main-body completeness check (2026-09-04)
 
 Checklist from [dependency-audit.md](../dependency-audit.md), run against the
-main article at commit 91f49b79 with links treated as unavailable. Each item
+main article at commit b772b67f with links treated as unavailable. Each item
 names the section of the body that states it.
 
 | # | The reader must be able to state | Where the body states it | Result |
@@ -19,12 +19,14 @@ names the section of the body that states it.
 
 Result: ten of ten stated in the body. Items 2, 4, and 9 rely on an appendix or
 supplement for their fuller form, which the assembly rules allow, since each
-appendix carries the fuller argument and the body carries the result.
+appendix carries the fuller argument and the body carries the result. The
+later contribution-framing, practitioner-placement, and Commonplace-comparison
+edits do not change these conclusions.
 
-Two things a links-disabled reader would still miss:
+The earlier Schmidhuber bibliographic gap is closed by
+[references.md](./references.md), which now records the edition and location.
+One body-to-appendix routing choice remains:
 
-- **The Schmidhuber quotation** is cited to the ingest by name. With links off
-  the reader has no edition or page. References must carry it.
 - **"Adequate"** is used throughout without a body definition. Appendix A.9
   defines it. The body's Claim section could carry one sentence, or the paper's
   first use could point to A.9.

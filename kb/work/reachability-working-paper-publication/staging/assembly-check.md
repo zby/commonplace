@@ -1,18 +1,18 @@
-# Assembly check (2026-09-03)
+# Assembly check (2026-09-04)
 
-Status of each item in the staging README's assembly check, after the first
-full staging pass. "Pending" items are the work that remains before a release
-candidate can be tagged.
+Status of each item in the staging README's assembly check after the
+source-freshness and primary-reference pass. "Pending" items are the work that
+remains before a release candidate can be tagged.
 
 | Check | Status | Notes |
 |---|---|---|
 | Source tag and every component's mode recorded | mode: done; tag: pending | Modes are in the manifest. No tag exists; creating one is the freeze decision and needs the operator. |
-| Exact snapshots reproduce their tagged sources | pending | Supplement E was generated from the working tree at 8feceff2 and must be regenerated from the tag. |
-| Adaptations have source-comparison review | pending | A, B, and D have not been read against their sources by anyone but their author. |
-| Main paper coherent with links disabled | done | [completeness-check.md](./completeness-check.md): ten of ten stated; two notes. |
-| Every load-bearing dependency discharged | done, pending review | Software house and representational form in A; the three Naur notes in B; program theory's tests in C; Gödel machine in the body and E; the rest summarized in the body or left as live links per the audit. |
-| Direct scholarly references | pending | [references.md](./references.md) is complete for every entry the KB can support; every remaining gap carries a [verify] marker. |
-| No placeholders or workshop-only links | pending at release | Staging files carry "pending" fields and [verify] markers by design. They must be gone from the released package. |
+| Exact snapshots reproduce their tagged sources | current source: done; tag: pending | Supplement E matches the live article at b772b67f after the declared mechanical transformations. It must still be regenerated from the release tag. |
+| Adaptations have source-comparison review | done for source alignment | A, B, and D were compared with their declared sources on 2026-09-04. Appendix A's omitted theory-mediated source was restored; D differs only by its declared Appendix C pointer. |
+| Main paper coherent with links disabled | done | [completeness-check.md](./completeness-check.md): ten of ten stated against b772b67f; one body-to-appendix routing choice remains. |
+| Every load-bearing dependency discharged | done, pending operator review | Software house, representational form, and theory mediation are in A; the three Naur notes are in B; program theory's tests are in C; Gödel machine is in the body and E; the Commonplace comparison now names its evidence; the rest is summarized in the body or left as live links per the audit. |
+| Direct scholarly references | done | [references.md](./references.md) has no verification markers, names all twenty compared constructions, and records the source or commit behind each code-inspected placement. |
+| No placeholders or workshop-only links | pending at release | Only the deliberate paper-version, source-tag, status, and release-path fields remain pending. They must be resolved in the released package. |
 | Operator approval of the body and lifecycle | pending | Not requested. |
 
 ## Remaining work before a tag
@@ -20,11 +20,10 @@ candidate can be tagged.
 1. Operator review of the six paper-specific definitions (A.6, A.8 to A.11)
    and of Appendix C's eight conditions and accounting rules. Everything else
    depends on these holding.
-2. Resolve the [verify] markers in references.md against primary sources.
-3. Recheck every Supplement D row against the fixed-parametric-state criterion
-   and record the source or commit behind each code-inspected placement.
-4. Decide whether the body should carry one sentence defining "adequate" or
+2. Recheck every Supplement D row against the fixed-parametric-state criterion.
+3. Decide whether the body should carry one sentence defining "adequate" or
    point to A.9 at first use.
+4. Run the complete-package external-reader review with hyperlinks disabled.
 5. Choose the paper version and tag name, tag, regenerate Supplement E from
    the tag, and fill the "pending" provenance fields.
 
@@ -38,3 +37,8 @@ candidate can be tagged.
 - Appendix C item numbering: the comparison article had seven conditions; C.4
   has eight because "not one lucky path" is separated from "internal decisions
   stay internal". Supplement D's pointer does not depend on the numbering.
+- Appendix A now names the theory-mediated learning note whose definition A.5
+  adapts.
+- Supplement D's twenty rows and References' twenty construction entries agree;
+  the Commonplace entry names the retained evidence and the code-inspected
+  placements record their pinned commits.

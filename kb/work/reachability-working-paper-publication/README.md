@@ -45,8 +45,8 @@ article](../../instructions/publish-an-article.md).
 - [staging/README.md](./staging/README.md) — boundary and naming rules for the
   actual copied or adapted appendix drafts once the source cohort is selected
 - [staging/assembly-check.md](./staging/assembly-check.md) — status of each
-  assembly check after the first full staging pass (2026-09-03) and the work
-  that remains before a tag
+  assembly check after the source-freshness and reference pass (2026-09-04) and
+  the work that remains before a tag
 
 ## Work sequence
 
@@ -97,14 +97,15 @@ article](../../instructions/publish-an-article.md).
 
 ## Current gaps to close
 
-- final definitions for practical reachability, adequate state, and the demand
-  and consequence process declared in advance;
-- a reproducible witness protocol that separates one possible path from usable
-  hitting probability and sustained continuation;
-- the paper-native boundary between the broad reachability witness
-  and the stronger explicit-theory mechanism experiment;
-- direct bibliographic references and source locations for the Naur and Gödel
-  arguments;
+- operator review of the paper-specific definitions in Appendix A and the
+  witness accounting rules and eight conditions in Appendix C;
+- a final recheck of every Supplement D row against the fixed-parametric-state
+  criterion;
+- the body-level choice between defining adequate state at first use and
+  pointing explicitly to Appendix A.9;
+- an external-reader review of the complete package with hyperlinks disabled;
+- a paper version and source tag, followed by regeneration of Supplement E and
+  replacement of every pending provenance field;
 - deferred: a generated check that a live note has changed since the source
   tag. The first version relies on the tag alone;
 - deferred (operator decision 2026-09-03): the fallible-theory part of the

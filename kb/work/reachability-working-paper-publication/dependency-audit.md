@@ -43,10 +43,11 @@ The current dispositions are staging decisions, not publication approval.
 
 | Source | Role | Initial disposition | Remaining decision |
 |---|---|---|---|
-| `kb/articles/nearest-existing-constructions-to-a-reachability-witness.md` | evidence map and full protocols | versioned Supplement D; protocol core becomes Appendix C and Supplement D points to it | freeze every system placement against its evidence basis |
+| `kb/articles/nearest-existing-constructions-to-a-reachability-witness.md` | twenty-construction evidence map and full protocols | versioned Supplement D; protocol core becomes Appendix C and Supplement D points to it | freeze every system placement against its evidence basis |
 | `kb/articles/reachability-as-closure-under-the-seed-gate.md` | transition-reachability derivation | versioned Supplement E; correction merged as 465de048 | confirm the corrected successor-relation treatment and settle probability evidence in Appendix C |
 | `kb/articles/the-bitter-lesson-does-not-require-everything-to-live-in-weights.md` | separate companion argument | cite as separate live or versioned paper, not appendix | decide whether it is promoted alongside the reachability paper or remains a draft dependency with the main paper carrying its own minimal qualification |
 | `kb/articles/the-decisions-that-stay-human-and-what-would-move-them.md` | separate boundary and transfer argument | optional companion link | the reachability paper already carries the internal-role boundary needed for its claim |
+| `kb/notes/evidence/commonplace-as-a-reflective-system.md`; `kb/notes/evidence/commonplace-revision-used-theory-guided-computational-search.md` | evidence boundary for the Commonplace reference-construction row | summarize in the body and Supplement D; name as provenance in References | the frozen package carries the bounded result; the live notes preserve the implementation trace, human allocation, and missing causal evidence |
 
 ## Main-body completeness checklist
 

@@ -6,7 +6,7 @@ Paper version: pending
 Mode: paper-native
 Frozen source tag: pending
 Source paths: the kb/sources/*.ingest.md, kb/agent-memory-systems/reviews/*.md,
-  and kb/agentic-systems/*.md files named per entry
+  kb/agentic-systems/*.md, and kb/notes/evidence/*.md files named per entry
 Status: staging — not published
 ```
 
@@ -99,7 +99,9 @@ supplement scored it on.
   Elie Bakouch, Daniel Auras, Mika Senghaas, Fares Obeid, Konstantin Dunas,
   Johannes Hagemann, and Sami Jaghouar. 2026. "Prime Agent: A Self-Improving
   RLM Harness." arXiv:2608.23552 (v1).
-  <https://arxiv.org/abs/2608.23552>. Paper. Provenance:
+  <https://arxiv.org/abs/2608.23552>. Code:
+  <https://github.com/PrimeIntellect-ai/prime-agent>, commit 51463372. Paper
+  and code-inspected. Provenance:
   kb/sources/prime-agent-a-self-improving-rlm-harness.ingest.md.
 - Memento-Skills. Zhou, Huichi, Siyuan Guo, Anjie Liu, Zhongwei Yu, Ziqin Gong,
   Bowen Zhao, Zhixun Chen, Menglong Zhang, Yihang Chen, Jinsong Li, Runyu Yang,
@@ -110,7 +112,9 @@ supplement scored it on.
 - Recuris. Yu, Zhaochen, Yingcheng Wu, Zhenfei Yin, Kaiyuan Chen, Zhe Zhao,
   Mengdi Wang, Shuicheng Yan, and Ling Yang. 2026. "Recursive
   Experiential–Working Memory Evolution for Long-Horizon Agent Harnesses."
-  arXiv:2608.24876 (v1). <https://arxiv.org/abs/2608.24876>. Paper. Provenance:
+  arXiv:2608.24876 (v1). <https://arxiv.org/abs/2608.24876>. Code:
+  <https://github.com/Gen-Verse/Recuris>, commit f54c9dab. Paper and
+  code-inspected. Provenance:
   kb/sources/recursive-experiential-working-memory-evolution.ingest.md.
 - Harness Continual Learning. Kang, Borui, Jinrui Gu, Junhan Lv, Wenbin Li,
   Lei Wang, and Yang Gao. 2026. "Harness Continual Learning: Continual
@@ -130,7 +134,8 @@ supplement scored it on.
   Provenance: kb/agent-memory-systems/reviews/voyager.md.
 - Knowledge-Centric Self-Improvement. Wang, Xuefei, Lauren Hyoseo Yoon,
   Chengrui Qu, Amanda Zichang Wang, Atharva Sehgal, Eric Mazumdar, and Yisong
-  Yue. 2026. arXiv:2607.19592. <https://arxiv.org/abs/2607.19592>. Code:
+  Yue. 2026. "Knowledge-Centric Self-Improvement." arXiv:2607.19592.
+  <https://arxiv.org/abs/2607.19592>. Code:
   <https://github.com/recursive-knowledge/KSI>. Paper. Provenance:
   kb/sources/knowledge-centric-self-improvement-2607.19592.ingest.md.
 - PROJECTMEM. Malo, Ripon Chandra, and Tong Qiu. 2026. "PROJECTMEM: A
@@ -142,11 +147,16 @@ supplement scored it on.
   Reusable Infrastructure." *IEEE Computer* 37 (10): 46–54.
   doi:10.1109/MC.2004.175. Paper. Provenance:
   kb/sources/rainbow-architecture-based-self-adaptation.ingest.md.
+- Commonplace. 2026. "Commonplace." Repository, commit b772b67f.
+  <https://github.com/zby/commonplace/tree/b772b67f4bce1824a7eaf8eb8144f48baef89587>.
+  Code-inspected reference construction; no evaluated outcome. Evidence:
+  kb/notes/evidence/commonplace-as-a-reflective-system.md and
+  kb/notes/evidence/commonplace-revision-used-theory-guided-computational-search.md.
 
 ## Release checklist for this file
 
 - No unresolved bibliographic verification markers remain.
-- Confirm that Supplement D's table names exactly the constructions listed
-  here and no others.
+- Supplement D's current twenty table rows have matching entries here; confirm
+  the match again against the tagged source at freeze.
 - Drop the provenance lines, or move them to a short note that says the
   repository holds source captures for each entry.

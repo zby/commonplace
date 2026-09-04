@@ -150,10 +150,10 @@ protocol section points to Appendix C rather than restating the conditions.
 
 ### Gap
 
-Before freeze, recheck every row affected by the stronger fixed-parametric-state
-criterion and preserve the exact source or commit behind code-inspected
-placements. The table is evidence about reviewed records, not a ranking or a
-claim that no unreviewed construction exists.
+The exact source or commit behind each code-inspected placement is now recorded
+in References. Before freeze, recheck every row affected by the stronger
+fixed-parametric-state criterion. The table is evidence about reviewed records,
+not a ranking or a claim that no unreviewed construction exists.
 
 ## Supplement E — Transition reachability and seed descent
 
