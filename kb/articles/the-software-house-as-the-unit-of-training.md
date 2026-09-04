@@ -88,7 +88,7 @@ possible update surface inside that organization.
 
 Three things follow directly. Production is the training environment: the
 requirements, consequences, and retained history that the house already
-receives are the evidence, and there is no separate training set. Training
+receives are the evidence, and no separate training set is needed. Training
 runs at the cadence of the product: a failure can produce a new test on the
 job that exposed it, and a revised assumption can alter project theory before
 the next demand arrives. And the question shifts from *which weights* to
@@ -127,9 +127,9 @@ division of work, or a context policy that never loads the note that
 matters. A capable model can sometimes compensate, inferring an intention a
 prompt omitted or reconstructing state the harness failed to keep. That
 improves measured behaviour without showing the fixed layer was right; it
-spends model capacity repairing the same system error on every run.
+spends model capacity repairing the same system error on every run that meets it.
 
-A software house makes this concrete. Most of what the house learns about
+A software house makes this concrete. Much of what the house learns about
 its product is not a fact about language or programming in general. It is
 that installs must be a single file, so the store is SQLite; that a
 documentation-only change is safe unless a build tool reads the file; that
@@ -164,10 +164,10 @@ evaluated inside the house's existing behaviour-determining organization. The
 product's accumulated learning stays in the house. Some of it may become
 redundant, since a stronger model may absorb a heuristic a note used to carry,
 and the house may then retire the note. But nothing forces the house to
-relearn what it already holds. This is also why a project that has trained its
-house should exploit a newer model better than an unprepared one: it hands the
-new model a settled theory and a working production loop rather than a blank
-repository.
+relearn what it already holds. The doctrine also predicts that a project that
+has trained its house will exploit a newer model better than an unprepared
+one: it hands the new model a settled theory and a working production loop
+rather than a blank repository.
 
 **The hand-built harness is a seed to outgrow.** A house starts with
 hand-written tools, prompts, validators, and provisional notes. Under the
@@ -200,16 +200,16 @@ code relate, not which of them is where learning really happens.
 ## Governance is the hard core
 
 The doctrine does not say that writing artifacts is learning. A memory file
-that grows with every session is not a trained house; it is a store. [Continual
-learning requires governing behaviour-changing
+that grows with every session is not a trained house; it is a store.
+[Continual learning requires governing behaviour-changing
 writes](../notes/continual-learning-requires-governing-behaviour-changing-writes.md):
 for each candidate change the process must select it from the alternatives,
 validate that it does what it claims, decide what authority it carries over
 later work, and coordinate it with the components it affects. The doctrine
 therefore names its own hard core. It is to construct a computational
-evidence-to-update process over the behaviour-determining organization of
-the house, and the parts of that process that no current system does well
-are the parts the automated software house conjecture also flagged: admission, deciding
+evidence-to-update process over the behaviour-determining organization of the
+house, and the parts of that process that remain open problems are the parts
+the automated software house conjecture also flagged: admission, deciding
 which changes of meaning may enter retained state; and credit assignment,
 deciding which earlier note, test, tool, context policy, or selection rule a
 delayed consequence counts for or against.
@@ -262,12 +262,12 @@ and used in later decisions; a broad wrong theory misleads as widely as a
 right one would have helped. Fewer observations also need not mean lower total
 cost.
 
-A test of either hypothesis needs a baseline the fixed-model regime cannot
-supply on its own: adapting the model's weights on the same production
-evidence. Without it, an advantage of explicit theory over raw records shows
-that synthesis pays; it does not distinguish training the state around the
-model from adapting the model itself, which is the contrast the doctrine
-draws.
+A test of either hypothesis bears on the doctrine only against a baseline the
+fixed-model regime cannot supply on its own: adapting the model's weights on
+the same production evidence. Without it, an advantage of explicit theory over
+raw records shows that synthesis pays; it does not distinguish training the
+state around the model from adapting the model itself, which is the contrast
+the doctrine draws.
 
 The doctrine survives if the explicit-theory hypothesis fails. A house can
 learn through tests, tools, learned critics, episodic retrieval, or weight
@@ -278,7 +278,7 @@ lesson.
 
 ## The Bitter Lesson objection
 
-The standard objection is Sutton's Bitter Lesson: general methods that scale
+The objection to expect is Sutton's Bitter Lesson: general methods that scale
 with computation outperform hand-built structure, so learning that lives in
 readable notes and programs is the hand-built approach under a new name. The
 reply is that [the lesson selects how behaviour-shaping structure is produced,
