@@ -28,19 +28,24 @@ source_notes:
 **TL;DR.** We use *software house* for whatever keeps changing a piece of
 software for its users, not only a company. It changes the software as users
 ask for things and as the software is used. The conjecture is that such a
-house can run with no human in a production role, on models that already
-exist, and handle requests nobody listed in advance. The models stay fixed.
-Learning happens in the project state around them: code, notes, and the
-machinery through which both shape later work. People write the first
-versions. The house then revises them as requests and their consequences
-arrive, and people correct it at first. The conjecture is that the correction
-required shrinks as training goes on until the house keeps its own state and
-software adequate without people. Agent harnesses with memory files and
-self-written rules are already moving this way. The article gives that
-practice a formal statement: what the house is as a system, what counts as
-its learning rather than a person's, what its endpoint without a person would
-be, and what a witness for that endpoint would have to show. It does not
-argue that a fixed model is the best way to train such a house; a [companion
+house can run with nobody inside it in a production role, on LLMs available
+by 2026-09-02, and handle requests nobody listed in advance. Users stay
+outside; asking for things and judging what they see is not a production
+role. The computer scientist Peter Naur argued that the understanding that
+relates a program to what it is for, which he called a program theory,
+can be held only by people; the conjecture denies that. The models stay
+fixed. Learning happens in the project state around them: code, notes, and
+the tooling that loads both into later work and decides which changes are
+kept. People write the first versions. The house then revises them as
+requests and their consequences arrive, and people correct it at first. The
+conjecture includes that the correction required shrinks as the house's
+training goes on, until the house keeps its own state and software adequate
+without people. Agent harnesses with memory files and self-written rules are
+already moving this way. The article gives that practice a formal statement:
+what the house is as a system, what counts as its learning rather than a
+person's, what its endpoint without a person would be, and what one working
+house would have to show to establish the conjecture. It does not argue that
+a fixed model is the best way to train such a house; a [companion
 article](./the-software-house-as-the-unit-of-training.md) takes that up.
 
 ## Claim
