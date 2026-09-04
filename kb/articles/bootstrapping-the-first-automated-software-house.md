@@ -80,8 +80,8 @@ every move leaves a working house with fewer people inside than before. The
 order is not arbitrary: it follows what each role needs before it can move
 with warrant. And each move is a measured claim, not a felt one: the house
 must be able to show that the role is now performed inside, that quality did
-not fall where nobody was looking, and that no person quietly filled the role
-on the hard cases.
+not fall where nobody was looking, and that no person filled the role
+unnoticed on the hard cases.
 
 ## The ordering principle
 
@@ -156,7 +156,7 @@ users throughout, because they are not internal roles.
 A role has moved when the decision happens inside the house, the house's own
 evidence-to-update process determined it, and production quality on the
 affected decisions did not fall where nobody was measuring. Each part has a
-way to fail quietly.
+way to fail unnoticed.
 
 The decision can appear to happen inside while a person supplies it on the
 cases that matter. A person who fixes the three hard failures a month and
