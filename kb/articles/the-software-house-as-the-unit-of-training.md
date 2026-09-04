@@ -26,11 +26,11 @@ source_notes:
 > on [the repository's GitHub Discussions page](https://github.com/zby/commonplace/discussions).
 
 **TL;DR.** We use *software house* for whatever keeps changing a piece of
-software for its users. Suppose an automated software house carries the
-complete production loop for a product: it receives requirements, changes the
-software, observes the consequences, and revises the machinery of later
-production. That system is then itself a trainable actor, and production is
-its training environment. The alternative this article denies is the
+software for its users. Suppose a software house, automated or with people
+still inside it, carries the complete production loop for a product: it
+receives requirements, changes the software, observes the consequences, and
+revises the machinery of later production. That system is then itself a
+trainable actor, and production is its training environment. The alternative this article denies is the
 model-only loop: a product's accumulated learning lives in the model's
 weights, training the model is the learning, and everything around the model
 stays fixed. The doctrine proposed here is that project-specific continual
@@ -57,20 +57,29 @@ The [companion article](./automated-software-houses-with-fixed-llms.md)
 conjectures that an automated [software
 house](../notes/definitions/software-house.md), meaning whatever keeps
 changing a piece of software for its users, is practically reachable with LLMs
-available by 2026-09-02 while every model stays fixed. In that regime the house learns
-only through changes that computation produces and retains in its notes and
-code: the natural-language and symbolic state around the model. The conjecture
-claims only that at least one such house exists, and building one would settle
-it. If one exists, that establishes that learning in the state around a fixed
-model can suffice for open-ended coherent software change over a declared
-scope and horizon.
+available by 2026-09-02 while every model stays fixed. In that regime the
+house learns only through changes that computation produces and retains in
+its notes and code: the natural-language and symbolic state around the model.
+If one such house exists, that establishes that learning in the state around a
+fixed model can suffice for open-ended coherent software change over a
+declared scope and horizon.
 
-Pinning the model was an experimental isolation. It answered the question
-whether learning in the state around the model can be enough. It said nothing
-about whether that is how such a house should be trained once it exists. This
-article takes up that question, on the assumption that the premise holds: a
-house that carries the production loop, with no human in an internal
-production role, over a declared scope and horizon.
+The doctrine here does not wait for that house. It applies to any house that
+carries the production loop: one that receives requirements, changes the
+software, observes the consequences, and revises the machinery of later
+production. Most houses that carry the loop today have people inside them, in
+the internal production roles the first article names: diagnosing failures,
+comparing candidates, editing the theory, deciding which revision is kept. In
+this article's terms those people are the parts of the house's
+evidence-to-update process that have not yet been built, and the doctrine
+says what that process, human parts included, should be organized over. The
+automated house is the limiting case, in which every part of the process is
+computational.
+
+Pinning the model was the first article's experimental isolation. It asks
+whether learning in the state around the model can be enough. It says nothing
+about whether that is how a house should be trained, which is this article's
+question.
 
 ## The doctrine
 
@@ -334,8 +343,10 @@ credit assignment, validation cost, and safe retention of self-modifying
 changes are open problems, and the doctrine names them as its hard core
 rather than assuming them solved.
 
-It is conditional on the premise. If no automated software house is
-reachable, the doctrine has no actor to apply to, and what remains is the
-weaker claim from the unit-of-learning argument: even a house with people in
-internal roles should evaluate and improve the deployed system, not only the
-model inside it.
+It does not depend on the conjecture. If no automated software house is
+reachable, the doctrine still applies to every house that carries the
+production loop with people inside it; what is lost is the limiting case,
+not the unit. What it does depend on is that the house's evidence-to-update
+process, human parts included, can be described and its writes governed.
+The third article claims one house where that is so and gives the accounting
+that shows it.
