@@ -32,10 +32,10 @@ already do most of the work and people still hold the remaining internal
 roles, such as diagnosing why a change failed, judging whether a design
 still fits, and deciding which revision is kept. The program is to move
 those roles out of human hands one class at a time, in the order in which
-the premises, settled criteria, and checks able to reject a wrong candidate
-that each role needs can be built, and to show at each step that the role
-moved, rather than that nobody measured whether it did. The article states
-the program, the ordering principle, why the order of moves is recorded as
+each role's premises, settled criteria, and checks able to reject a wrong
+candidate can be built, and to show at each step that the role moved,
+rather than that nobody measured whether it did. The article states the
+program, the ordering principle, why the order of moves is recorded as
 it happens rather than declared in advance, what counts as evidence that a
 role moved, what the house's own training must produce along the way, and
 the results that would stop the program or redirect it.
@@ -80,7 +80,7 @@ every move leaves a working house with fewer people inside than before. The
 order is not arbitrary: it follows what each role needs before it can move
 with warrant. And each move is a measured claim, not a felt one: the house
 must be able to show that the role is now performed inside, that quality did
-not fall where nobody was looking, and that no person filled the role
+not fall where nobody was measuring, and that no person filled the role
 unnoticed on the hard cases.
 
 ## The ordering principle
@@ -119,13 +119,12 @@ premise the house already records somewhere moves first: the work is
 retrieval. A role whose criterion is unsettled moves only after the house
 has accumulated enough decided cases for a criterion to be stated, and that
 accumulation is itself production experience. A role that needs a check the
-house cannot yet perform waits for the check. The program does not fix
-the sequence in advance; the next section says why.
+house cannot yet perform waits for the check.
 
 ## What the program does not fix in advance
 
 The program does not declare a sequence of stages. The table says what each
-role class needs before it can move; it does not say which role the house
+role class needs before it can move. It does not say which role the house
 will be ready to move next, because that depends on what production has
 accumulated: which premises are already recorded, which criteria have enough
 decided cases behind them, which checks the house can already run. The order
@@ -141,13 +140,16 @@ rules at the point of decision, and doing so changes what it does. No
 premise, criterion, or check can move inside a house that does not use what
 it retains, and the evidence that it does is the first article's holding
 intervention, in which withholding or replacing retained state changes what
-the house does next. The last move is admission. Deciding which revisions are
-kept can move inside only within a grant of authority a person has set in
-advance, and only after the house produces and criticizes the candidates it
-admits, since admitting an uncriticized candidate has no warrant. A house
-with admission inside, over a declared scope and horizon, is a candidate
-witness for the first article's conjecture, the working house that would make
-it true. Between those two ends, no move removes the person from the outside:
+the house does next.
+
+The last move is admission. Deciding which revisions are kept can move
+inside only within a grant of authority a person has set in advance, and
+only after the house produces and criticizes the candidates it admits, since
+admitting an uncriticized candidate has no warrant. A house with admission
+inside, over a declared scope and horizon, is a candidate witness for the
+first article's conjecture, the working house that would make it true.
+
+Between those two ends, no move removes the person from the outside:
 requirements, facts, outcomes, and acceptance of visible behaviour stay with
 users throughout, because they are not internal roles.
 
@@ -168,7 +170,7 @@ a rescue and counted against the claim. Before that start, the program
 needs the same accounting to see whether a role is moving at all: which
 decisions of each class people made, on which demands, over time.
 
-Quality can fall unseen when a role moves and the metric that would have
+Quality can fall unmeasured when a role moves and the metric that would have
 caught the drop was itself part of the moved role. Moving evaluation inside
 the house without an independent measure of outcomes makes the house's own
 approval the only evidence of its quality, and [a path can be
