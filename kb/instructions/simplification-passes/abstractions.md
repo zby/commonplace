@@ -1,5 +1,5 @@
 ---
-description: "Use when an artifact uses a coined or registered abstraction (retained adaptation, system-definition artifact) where an ordinary word (learning, instruction file) would carry the sentence, or uses the abstraction in some places and the ordinary word in others"
+description: "Use when an artifact uses a coined or registered abstraction (retained adaptation) where the ordinary word (learning) would carry the sentence, or mixes the abstraction and the ordinary word for one thing"
 type: kb/types/instruction.md
 effort: judgment
 ---
