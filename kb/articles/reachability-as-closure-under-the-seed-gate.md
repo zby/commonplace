@@ -11,9 +11,9 @@ source_notes:
 ---
 # Reachability as transition closure under the seed's successor relation
 
-> **Draft supplement.** This is the full treatment behind the reachability and
-> Gödel-machine passages in [The reachability
-> conjecture](./automated-software-houses-with-fixed-llms.md).
+> **Draft supplement.** This is the full treatment behind the transition-closure
+> and Gödel-machine passages in [The Automated Software House
+> Conjecture](./automated-software-houses-with-fixed-llms.md).
 > It is kept separate so the main article can state the consequence without
 > carrying the transition-system detail.
 
@@ -100,15 +100,15 @@ usable probability mass within the declared compute, time, and cost envelope.
 
 Two quantities should remain distinct:
 
-- **hitting probability** — the probability that training reaches an adequate
-  human-free state within the resource budget; and
+- **hitting probability** — the probability that the lineage reaches an
+  adequate human-free state within the resource budget; and
 - **continuation reliability** — the probability that, once reached, the house
   remains adequate across the declared horizon and later demands.
 
 A system that occasionally reaches a good state and immediately drifts differs
-from one that reaches it less often but remains coherent. The working paper's
-witness protocol must set the evidence or thresholds by which both count as
-practical.
+from one that reaches it less often but remains coherent. The main article's
+practical-reliability condition is the requirement that both count as
+practical; the witness must set the evidence or thresholds for it.
 
 ### The declared input process is part of the claim
 
@@ -137,9 +137,12 @@ Revision of the updating machinery does not escape the issue. An evaluator or
 acceptance rule can govern a rewrite of itself, but only when the predecessor
 state's relation permits that rewrite. New production evidence can change what
 the house accepts only through interpretive and update capabilities already
-reachable from the seed. Initial and successor acquisition are therefore tests
-of whether those capabilities can use permitted evidence to outgrow the
-seed's task-specific contents without importing a human decision.
+reachable from the seed. Coherent revision is therefore a test of whether
+those capabilities can use permitted evidence to move the house to an adequate
+successor without importing a human decision. The conjecture does not require
+the lineage to outgrow the seed's task-specific contents: the seed may carry a
+human-written theory and human-built machinery. It requires that every
+revision after the declared start comes through the seed's own relation.
 
 ### The closure observation is general
 
@@ -157,13 +160,16 @@ before interpreting the result. It must then show not only that an adequate
 state appears on some path, but that the process reaches and sustains such
 states with the practical reliability the claim requires.
 
-The four obligations in the main article locate the difficult transitions.
-Holding and application tests the adequacy of a reached state. Initial
-acquisition tests whether the relation can reach one without receiving the
-decisive project understanding. Successor acquisition tests whether later
-evidence can move the process to an adequate replacement. Automated
-continuation tests whether those transitions remain inside the computational
-boundary over the declared horizon.
+The four conditions in the main article locate the difficult transitions.
+Holding and application tests the adequacy of the current state. Coherent
+revision tests whether later evidence can move the process, through its own
+successor relation, to an adequate replacement. Automated continuation tests
+whether those transitions remain inside the computational boundary over the
+declared horizon. Practical reliability is the hitting-probability and
+continuation-reliability requirement stated above. Whether the relation can
+also reach an adequate state without receiving the decisive project
+understanding from the seed is the stronger question the training and
+bootstrap articles ask; it is not a condition of the witness.
 
 ## Open questions
 

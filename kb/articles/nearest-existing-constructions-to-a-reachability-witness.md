@@ -1,5 +1,5 @@
 ---
-description: "Comparison of reviewed self-improving systems against the automated software house conjecture's four witness obligations, which do not fix which form carries the theory, with a separate stronger protocol for explicit retained theory"
+description: "Comparison of reviewed self-improving systems against the automated software house conjecture's four witness conditions, which allow a human-built start and do not fix which form carries the theory, plus the explicit-theory test from the training article"
 type: kb/articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
@@ -22,9 +22,9 @@ source_notes:
 ---
 # Nearest existing constructions to a reachability witness
 
-> **Draft supplement.** This is the map behind the nearest-constructions
-> section of [The reachability
-> conjecture](./automated-software-houses-with-fixed-llms.md).
+> **Draft supplement.** This is the map behind the existing-constructions
+> section of [The Automated Software House
+> Conjecture](./automated-software-houses-with-fixed-llms.md).
 > Everything in it may still change, including which systems belong in the
 > comparison and how each row is graded. Comments, corrections, and additional
 > candidates are welcome on [the repository's GitHub Discussions
@@ -33,14 +33,16 @@ source_notes:
 The [automated software house conjecture](./automated-software-houses-with-fixed-llms.md) holds that an automated [software
 house](../notes/definitions/software-house.md), one that keeps developing
 software for its users across demands nobody listed in advance, can be built
-with the LLMs available in 2026 while its [distributed-parametric](../notes/definitions/representational-form.md) internal
-state, the model weights and any other learned numerical component, stays
-fixed and the natural-language and symbolic state around it, its notes and
-code, learns. It states four obligations that one constructive witness must
-eventually discharge. The obligations are carrier-neutral: they do not fix
-whether notes, code, or reconstruction from records carries the theory. This
-article does not argue for the conjecture. It compares the systems reviewed for
-this program against those obligations, so that a researcher with a system of
+with LLMs and other learned components available by 2026-09-02 and held fixed
+during the run, while the natural-language and symbolic state around them, its
+notes and code, may change. It states four conditions that one working house
+must meet: holding and application, coherent revision, automated continuation,
+and practical reliability. The conditions do not fix whether notes, code, or
+reconstruction from records carries the theory, and they allow a human-built
+start: the house need not have acquired its starting understanding or built
+its starting machinery. This article does not argue for the conjecture. It
+compares the systems reviewed for this program against those conditions, so
+that a researcher with a system of
 their own can find the nearest row and read what would still be missing. Only
 the rows resting on inspected code are placements of an implementation; the rest
 are comparisons of designs as their sources describe them.
@@ -69,7 +71,7 @@ scopes differ, and the evidence differs. The table is not a ranking.
 ## The six endpoint questions
 
 The comparison runs on six questions, which are narrower and more directly
-checkable than the obligations:
+checkable than the conditions:
 
 1. **Software-house boundary.** Does the construction include the complete
    persistent system responsible for changing software for external users across
@@ -81,10 +83,12 @@ checkable than the obligations:
    codified change that affects later production?
 4. **Note learning.** Does experience cause a retained natural-language change
    that is read back into later production?
-5. **Program theory.** Is project-specific understanding acquired and applied,
-   rather than supplied, logged, or paraphrased, and is inadequate
-   understanding later replaced from consequences, whether it is retained as
-   explicit theory or reconstructed from records?
+5. **Program theory.** Is project-specific understanding applied across novel
+   changes, rather than only logged or paraphrased, and is inadequate
+   understanding later revised from consequences, whether it is retained as
+   explicit theory or reconstructed from records? Understanding supplied by
+   people at the start is allowed; what the question asks is whether it
+   governs later decisions and whether the house, not a person, revises it.
 6. **Continuation.** Is the loop sustained with no person in an internal
    production, theory-holding, generalization, selection, or admission role?
 
@@ -99,36 +103,38 @@ interfaces. Human independence is assessed separately under **Continuation**. A
 construction meeting both questions would be an automated software house over
 its stated scope and horizon.
 
-## How the questions relate to the four obligations
+## How the questions relate to the four conditions
 
-The obligations describe a progression. The questions decompose properties,
-and one property can serve more than one obligation.
+The conditions describe what one working house must show. The questions
+decompose properties, and one property can serve more than one condition.
 
 **Holding and application** asks whether the system realizes a program-theory
-function across novel changes. **Program theory** asks that directly. The broad
-witness conditions below require an implication not stated verbatim, causal use
-of the relevant retained state or consumption path, and a change in what the
-system does next under withholding or replacement.
+function across novel changes. **Program theory** asks that directly. The
+witness conditions below require an implication not stated verbatim, causal
+use of the relevant retained state or consumption path, and a change in what
+the system does next under withholding or replacement.
 
-**Initial acquisition** needs **Program theory** plus an operative retained
-change in at least one of the two forms, notes or code: the system must acquire
-the project-specific understanding rather than receive it from a person, and
-that acquisition must alter later production. **Successor acquisition** asks the
-same of understanding that later evidence makes inadequate. A complete witness
-must eventually demonstrate both **Software learning** and **Note learning**
-across its sequence, but one learning step need not change both forms.
-**Automated continuation** is bounded by **Software-house boundary**, **Fixed
-parametric state**, and **Continuation**, and it requires the holding and
-acquisition capacities to keep working across that boundary.
+**Coherent revision** asks whether, when later evidence exposes an inadequacy,
+the house revises the product, its retained state, or its machinery to a
+successor that supports coherent later modification. It needs **Program
+theory** in its revision half plus an operative retained change in at least
+one form, **Software learning** or **Note learning**. Neither form is
+required on its own, and a step need not change both. **Automated
+continuation** is bounded by **Software-house boundary**, **Fixed parametric
+state**, and **Continuation**, and it requires holding and revision to keep
+working across that boundary. **Practical reliability** has no column: no
+reviewed record reports repeated runs or a justified estimate of usable
+success under a declared regime, so the **Evidence basis** column is the
+nearest reading.
 
 One warning governs every use of the table. **Software-house boundary** and
 **Fixed parametric state** are cross-cutting controls on a whole witness, not
-acquisition stages. **Software learning** and **Note learning** report which
-retained forms changed, and neither alone establishes **Program theory**. A
-partial cell is therefore not partial completion of an obligation. Storing,
+stages. **Software learning** and **Note learning** report which retained
+forms changed, and neither alone establishes **Program theory**. A partial
+cell is therefore not partial satisfaction of a condition. Storing,
 retrieving, or paraphrasing a rationale does not show that it governed a later
-decision; a software or note update does not by itself show that adequate
-project understanding was acquired; a reject-capable gate does not show that the
+decision; a software or note update does not by itself show that the house
+reached an adequate successor; a reject-capable gate does not show that the
 admitted successor was adequate; and scheduling or restart does not show
 continued software-house operation. *Human-inclusive* in a cell means that
 people fill internal roles in that construction.
@@ -137,10 +143,10 @@ people fill internal roles in that construction.
 
 | Construction | Software-house boundary | Fixed parametric state | Software learning | Note learning | Program theory | Continuation | Evidence basis | Decisive shortfall |
 |---|---|---|---|---|---|---|---|---|
-| Fluent | Meets stated scope | Not demonstrated; model lineage and auxiliary parametric state not pinned | Meets stated scope; human-inclusive | Meets stated scope; human-inclusive | Partial; rationale is supplied, while acquisition and faithful reuse are not demonstrated | Human-dependent | Product documentation and practitioner report; implementation and outcomes not independently inspected | Humans confirm behaviour, technical approach, and unresolved decisions; theory acquisition is not tested |
+| Fluent | Meets stated scope | Not demonstrated; model lineage and auxiliary parametric state not pinned | Meets stated scope; human-inclusive | Meets stated scope; human-inclusive | Partial; rationale is supplied, while its causal use across novel changes and its revision by the system are not demonstrated | Human-dependent | Product documentation and practitioner report; implementation and outcomes not independently inspected | Humans confirm behaviour, technical approach, and unresolved decisions; causal use and revision of the theory are not tested |
 | Wheelhouse | Not demonstrated | Not demonstrated | Partial; human-inclusive | Partial; human-inclusive | Not demonstrated | Human-dependent | Practitioner report; implementation and outcomes not independently inspected | Human rulings and verdicts produce the doctrine; the consolidating agent's theory-holding role is only a hypothesis |
 | Ona Memo factory | Partial; bounded trial | Not demonstrated | Partial; human-inclusive | Partial; human-inclusive | Not demonstrated | Human-dependent | Product report; implementation and outcomes not independently inspected | Humans built the harness, specified taste and intent, and retained product direction |
-| OpenAI agent-first product | Meets stated scope | Not demonstrated; model lineage and auxiliary parametric state not pinned | Partial; human-inclusive | Partial; human-inclusive | Partial; supplied rationale, acquisition not tested | Human-dependent | Practitioner report; no pinned model lineage or independent comparative evaluation | Humans made the repository legible and turned failures into tools, rules, and checks |
+| OpenAI agent-first product | Meets stated scope | Not demonstrated; model lineage and auxiliary parametric state not pinned | Partial; human-inclusive | Partial; human-inclusive | Partial; supplied rationale, causal use and revision not tested | Human-dependent | Practitioner report; no pinned model lineage or independent comparative evaluation | Humans made the repository legible and turned failures into tools, rules, and checks |
 | Warp skill improver | Not in scope | Not demonstrated | Not in scope | Partial; human-inclusive | Not in scope | Human-dependent | Practitioner report; linked demonstration not independently inspected | Human feedback supplies the evidence and human review admits every skill update |
 | Darwin Gödel Machine | Not in scope | Meets stated scope for the evolving agents; a separate fixed diagnostician sits outside them | Meets stated scope | Not in scope | Not in scope | Meets stated scope; bounded benchmark loop | Paper-reported mechanism and outcomes; implementation not independently inspected | Admission is compile-and-edit viability, the benchmark score only weights parent sampling, and no rationale is retained |
 | Huxley-Gödel Machine | Not in scope | Meets stated scope | Meets stated scope | Not in scope | Not in scope | Meets stated scope; bounded benchmark loop | Paper-reported mechanism and outcomes; implementation not independently inspected | Its contribution is a lineage-level parent-selection signal; benchmark-style scoring is an explicit assumption and no rationale is retained |
@@ -154,7 +160,7 @@ people fill internal roles in that construction.
 | Dynamic Cheatsheet | Not in scope | Meets stated scope | Not in scope | Meets stated scope | Not in scope | Meets stated scope; bounded sequential benchmark run | Code-inspected mechanism at a pinned commit; outcomes not independently reproduced | A curator prompt is the only gate, correctness never gates a retained entry, and entries carry no provenance |
 | Voyager | Not in scope | Meets stated scope | Meets stated scope | Partial; descriptions and the question cache guide retrieval and task choice | Not in scope | Meets stated scope; bounded game curriculum | Code-inspected mechanism at a pinned commit; aggregate outcomes repository-reported and not reproduced | A critic's success report admits a skill, and a same-named program overwrites the old one instead of being revised |
 | Knowledge-Centric Self-Improvement | Not in scope | Meets stated scope | Not in scope | Meets stated scope | Not in scope | Meets stated scope; bounded task loop | Paper-reported mechanism and outcomes; implementation not independently inspected | It deliberately isolates knowledge-only learning on benchmark families |
-| PROJECTMEM | Not in scope | Not demonstrated | Not in scope | Partial | Partial; decisions are logged, not applied as theory | Not demonstrated | Paper-reported mechanism; no local ingest or inspected implementation | It records decisions and warns before repeated mistakes, but does not test acquisition or revision of project theory |
+| PROJECTMEM | Not in scope | Not demonstrated | Not in scope | Partial | Partial; decisions are logged, not applied as theory | Not demonstrated | Paper-reported mechanism; no local ingest or inspected implementation | It records decisions and warns before repeated mistakes, but does not test application or revision of project theory |
 | Rainbow | Not in scope | Not applicable | Not in scope; fixed strategies adapt configuration | Not in scope | Not in scope; the governing model is designer-supplied and fixed | Meets stated scope; supplied strategies | Paper-reported mechanism, implementation, and outcomes; not independently reproduced | It adapts a running configuration through a causal architectural model, but does not learn that model or its action repertoire |
 | Commonplace | Not assessed | Not demonstrated; models not reliably pinned | Partial; human-inclusive | Partial; human-inclusive | Design target: explicit, revisable theory loaded at later decisions; no causal-use evidence | Human-dependent | Code-inspected design, this repository; no evaluated outcome | No witness run; the operator selects global fit and admits successors |
 
@@ -169,9 +175,12 @@ applying one. Fluent and the OpenAI account, the two rows with a product and
 users, carry theory that people wrote: expertise files and repository documents
 that make the domain legible. Wheelhouse's people supply rulings rather than
 explanations, which is why it reads *not demonstrated* beside them. So the
-column runs absent, logged, supplied, and the fourth value, acquired, is empty.
-Users and project theory arrive together in this set, and so far only with
-people inside.
+column runs absent, logged, and supplied, and the value the conjecture needs,
+supplied or not but shown to govern later decisions and to be revised by the
+system from consequences, is empty. Users and project theory arrive together
+in this set, and so far only with people inside. Whether a house can acquire
+its theory rather than receive it is a further question, asked by the
+training and bootstrap articles, and no row tests it either.
 
 ## Reading the rows
 
@@ -278,7 +287,7 @@ behaviour.
 **Knowledge-only and project-memory studies.** The paper-reported
 [PROJECTMEM](https://arxiv.org/abs/2606.12329) study logs issues, attempts,
 fixes, and decisions and warns before repeated failed fixes, which gives
-project memory a path into later action without testing acquisition or
+project memory a path into later action without testing application or
 revision. The Knowledge-Centric Self-Improvement preprint reports a protocol
 that isolates external knowledge as the learned object, holding software and
 solver state fixed and letting benchmark answers supply the oracle, so that
@@ -297,7 +306,7 @@ the theory that governs adaptation.
 
 **Reference construction.** Commonplace, the knowledge base in which this
 comparison is written, is the one reviewed construction built to attack holding
-and acquisition directly: it retains explanatory theory as notes with declared
+and revision directly: it retains explanatory theory as notes with declared
 scope and evidence, loads them into later work, and revises them under review.
 It is scored by the same rubric and evidence classes as every other row, and it
 is a design target, not evidence. Its evidence notes record one revision in
@@ -306,56 +315,60 @@ global fit, and no case in which a later improvement has been traced to an
 earlier retained theory. It is not a witness: no run exists, the models are not
 pinned, and the operator fills the admission role.
 
-## What a broad reachability witness would have to do
+## What a witness would have to do
 
-No row above is a witness. A test of the broad conjecture needs the following
-conjunction:
+No row above is a witness. A test of the conjecture needs the following
+conjunction, which restates the main article's four conditions as checks:
 
-1. A system with every distributed-parametric internal component pinned
-   maintains one user product over a declared horizon and a demand process,
-   specified in advance, of incrementally revealed requirements and production
-   events.
-2. The seed withholds at least one decisive piece of project-specific
-   understanding while retaining the permitted records and interactions from
-   which the capacity a program theory provides can be acquired.
-3. The system later handles an implication not stated verbatim in those records,
-   and withholding or replacing the relevant retained state or consumption path
-   changes proposal, evaluation, diagnosis, or recovery in a predicted way.
-4. A later dependency or operating consequence makes part of the earlier
-   understanding inadequate. The system attributes the evidence and reaches an
-   adequate successor state rather than preserving the old account blindly or
-   rewriting it without grounds.
-5. Across the sequence, experience causes operative learning in both
-   natural-language and symbolic state, though the two forms need not change in
-   the same learning step.
-6. Candidate admission, rollback, conflict resolution, and continuation operate
+1. A system with every learned component pinned maintains one user product
+   over a declared horizon and a demand process, specified in advance, of
+   incrementally revealed requirements and production events. Its starting
+   product, project theory, tools, tests, and machinery may have been written
+   by people.
+2. The system later handles an implication not stated verbatim in its
+   retained state, and withholding or replacing the relevant retained state or
+   consumption path changes proposal, evaluation, diagnosis, or recovery in a
+   predicted way.
+3. A later dependency or operating consequence makes part of the earlier
+   understanding inadequate. The system attributes the evidence and revises
+   the product, its retained state, or its machinery to an adequate successor
+   rather than preserving the old account blindly or rewriting it without
+   grounds.
+4. Candidate admission, rollback, conflict resolution, and continuation operate
    without a person supplying the decisive understanding or choosing the
    successor. Users may supply product requirements, facts, observed outcomes,
    and acceptance judgments about visible behaviour; internal diagnosis,
    candidate comparison, theory editing, or successor selection remains an
    internal role whatever the participant is called.
-7. Evaluation covers untouched later changes and repeated runs or another
+5. Evaluation covers untouched later changes and repeated runs or another
    justified estimate of usable success within the declared budget of compute,
    time, and cost, so one lucky path does not establish practical reachability.
 
-This protocol does not require the acquired understanding to persist as a theory
-stored as its own artifact. Reliable reconstruction from retained records or a
-mixed carrier can satisfy it if the house passes the same causal tests over many
-changes.
+This protocol does not require the understanding to persist as a theory
+stored as its own artifact; reliable reconstruction from retained records or a
+mixed carrier can satisfy it if the house passes the same causal tests over
+many changes. It also does not require the house to have acquired that
+understanding, or to have built its machinery, by computation. Those are the
+stronger questions of the [training
+article](./the-software-house-as-the-unit-of-training.md) and the [bootstrap
+article](./bootstrapping-the-first-automated-software-house.md).
 
-## The stronger explicit-theory mechanism test
+## The explicit-theory test from the training article
 
-To establish that a separately retained theory that can be found and revised on
-its own contributes more than the broad witness requires, add these conditions:
+The training article's explicit-theory advantage hypothesis says that a house
+which forms, loads, applies, and revises a separately retained project theory
+does better under structured change than one that reconstructs its
+understanding from records or searches the implementation directly. Testing it
+adds these conditions to the witness:
 
 1. The seed withholds a decisive project rationale while retaining the records
    from which it can be synthesized.
 2. The system writes a rationale-bearing natural-language artifact and
    demonstrably loads it at later decisions where its unstated implications
    matter.
-3. A later change is locally valid under tests but conflicts with the acquired
-   rationale. The system preserves coherence without receiving the answer from
-   a person.
+3. A later change is locally valid under tests but conflicts with the
+   synthesized rationale. The system preserves coherence without receiving the
+   answer from a person.
 4. A later dependency or operating consequence makes the old rationale false.
    The system attributes the evidence, admits a successor rationale and the
    corresponding software or machinery change, and avoids both blind
@@ -365,11 +378,13 @@ its own contributes more than the broad witness requires, add these conditions:
 6. Evaluation includes untouched later changes, counterfactual removal or
    replacement of the retained rationale, and raw-record or direct-artifact
    baselines under the same model, source evidence, demand sequence, and
-   inference budget.
+   inference budget, with the outcome measures declared before the run.
+   Adaptation of model weights on the same production evidence is a further
+   baseline, comparing the fixed-model regime with a different one.
 
-These conditions identify the stronger mechanism claim. Storing or citing a
-rationale is insufficient; success must show causal use, revision, and an
-advantage over the routes that reconstruct understanding when needed.
+These conditions identify the mechanism claim. Storing or citing a rationale
+is insufficient; success must show causal use, revision, and an advantage over
+the routes that reconstruct understanding when needed.
 
 ## What the set shows together
 
@@ -378,11 +393,11 @@ mechanisms are inspected in code or reported by their sources: trace-derived
 candidates, scheduled consolidation, retention in both forms, notes and code,
 reject-capable gates, broad self-revision, rollback that preserves
 failed-attempt evidence, and continuing product operation with human authority.
-What no reviewed source supplies is the full conjunction: acquired project
-understanding, causal use on unstated implications, successor acquisition from
-delayed product consequences, learning in both forms, notes and code,
-user-facing operation, and continuation without a human in an internal role.
-None also supplies the stronger explicit-theory test against matched raw-record
-or direct-search baselines. The set therefore supports claims about available
+What no reviewed source supplies is the full conjunction: project
+understanding with causal use on unstated implications, coherent revision from
+delayed product consequences, user-facing operation with every learned
+component pinned, and continuation without a human in an internal role. None
+also supplies the explicit-theory test against matched raw-record or
+direct-search baselines. The set therefore supports claims about available
 components and missing tests. It does not show that the components compose, and
 it does not show that the conjectured endpoint is reachable.
