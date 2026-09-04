@@ -145,11 +145,12 @@ hold the program theory.
 
 Pinning the model does two things. It isolates one question: whether learning
 in the state around a model can suffice, with no help from a changed model.
-And it matches the regime every project built on a frontier model is already
-in. Such a project cannot retrain the model it uses, so whatever it learns
-about its own product has to be kept somewhere else. Pinning is a condition
-of the experiment, not a recommendation for how a mature house should be
-trained.
+And it matches the regime of a project that uses a hosted model whose
+weights its provider does not let it change. Such a project cannot retrain
+the model it uses. If it is to keep what it learns about its own product,
+that learning has to be kept in state outside the model. Pinning is a
+condition of the experiment, not a recommendation for how a mature house
+should be trained.
 
 Training here means search. Finding notes and tooling that work may require
 criticism, trials, production consequences, and retained correction, much as
@@ -285,30 +286,21 @@ structure, not the justification. The Gödel machine's theorems are closed
 under deduction; its states are closed under proof-gated transitions. The
 house's states are closed under fallible ones.
 
-No reviewed system is an empirical witness. Factories with people in internal
-roles, such as Fluent and the OpenAI agent-first account, come closest. They
-have the shape of a user-facing house and supply project rationale, but
-people keep the theory-building, generalization, or admission roles. Darwin
-and Huxley Gödel Machines and HyperAgents train software around frozen
-foundation models; Dynamic Cheatsheet and Voyager retain natural-language or
-executable artifacts. None combines user-facing open-ended operation,
-acquisition and revision of program theory, and continuation without a human
-in an internal role. The harnesses among them are the practice the article
-formalizes: memory files, self-written tests and tools, retained rules from
-past failures. What their accounts do not say is whose learning an
-improvement was. The person who noticed the recurring failure, diagnosed it,
-and chose the rule did the credit assignment, and the accounts do not
-separate that from what the harness did on its own. The internal-role
-boundary and the obligations above are the instrument for that separation.
-Commonplace, the knowledge base this article is written in, is the one
-reviewed construction built to attack holding and acquisition directly,
-through retained explanatory theory that later work loads and revises. It has
-no witness run and is scored as a design target, not as evidence; the [third
+The obligations above are also an instrument for reading existing systems.
+Agent harnesses that keep memory files, write their own tests and tools, and
+retain rules from past failures are the practice this article formalizes.
+What their accounts usually leave open is whose learning an improvement
+was: the person who noticed a recurring failure, diagnosed it, and chose the
+rule did the credit assignment, and an account that does not separate that
+from what the harness did on its own cannot show acquisition by the house.
+The internal-role boundary and the obligations make that separation
+explicit. A [companion
+map](./nearest-existing-constructions-to-a-reachability-witness.md) applies
+them to twenty reviewed constructions and records the evidence behind each
+placement. The [third
 article](./bootstrapping-the-first-automated-software-house.md) in this
-series sets out the program for getting from a house of that kind to a
-witness. The [companion
-map](./nearest-existing-constructions-to-a-reachability-witness.md) compares
-twenty constructions and records the evidence behind each placement.
+series sets out a program for getting from a house that still has people in
+internal roles to a witness.
 
 The conjecture does not require a theory stored as its own artifact: a house
 may reliably reconstruct the understanding it needs from retained records.
