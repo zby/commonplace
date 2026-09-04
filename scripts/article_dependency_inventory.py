@@ -154,6 +154,9 @@ def inventory(article: Path) -> str:
         )
     lines += ["", "## Terms introduced in emphasis", "", "| term | carrying sentence | binding |", "|---|---|---|"]
     seen: set[str] = set()
+    subtitle = re.search(r"^#\s+.+\n\n\*([^*\n]+)\*\s*$", body, re.MULTILINE)
+    if subtitle:
+        seen.add(subtitle.group(1).strip().lower())
     for match in EMPHASIS_RE.finditer(body):
         term = match.group(2).strip().rstrip(".")
         key = term.lower()

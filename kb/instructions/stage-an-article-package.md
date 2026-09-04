@@ -87,6 +87,9 @@ unchanged.
    - An unlinked definition term used in the KB's sense, meaning the body
      relies on a distinction the note draws: `A`. Used in ordinary English:
      `ordinary`.
+   - A claim the body asserts on its own authority, with no link, named
+     source, named system, or companion behind it: `body`. It is the paper's
+     claim and review judges it; staging does not demand evidence for it.
 
 4. **Write Appendix A.** For each `A` row, in the body's order of first use:
    1. Find every occurrence of the term in the body.
@@ -131,17 +134,24 @@ unchanged.
       `python3 scripts/article_dependency_inventory.py kb/articles/{slug}.md --strip-links`
       and hand its output, the appendices, and the references to a fresh
       sub-agent with this packet: "You are an external technical reader.
-      Using only this material, list every term you cannot define and every
-      claim whose support you cannot find in it. Quote the sentence for each.
-      Do not evaluate the claims." For each item returned: if it matches a
+      Using only this material, list (a) every term whose meaning you cannot
+      fix from the material and (b) every claim the body attributes to a
+      source, a named system, a companion article, or a linked note whose
+      support you cannot find in the material. Do not list claims the paper
+      makes on its own authority, and do not evaluate any claim. Quote the
+      sentence for each item." For each item returned: if it matches a
       bound row, the entry is inadequate; fix the entry. If it matches no
-      row, add it to the inventory as `free`. Rerun the reading once after
-      fixes; report anything still returned.
+      row, add it to the inventory: a term is bound `A` by step 4 from the
+      body's usage, and becomes `free` only when the usage does not fix its
+      meaning; an attributed claim is bound by the step 3 rules or is
+      `free`. Rerun the reading once after fixes; report anything still
+      returned.
    3. Placeholders: no `TODO`, `TBD`, `{`, or empty section in any package
       file; no link from an appendix or reference file into `kb/work/`.
    4. Provenance: every Appendix A and B entry ends with a provenance line
       naming the source commit.
-   5. `commonplace-validate kb/work/staging/{slug}/` reports no failures.
+   5. `commonplace-validate` on each package file reports no failures. The
+      validator does not accept the staging directory as a target.
 
 10. **Report.** Write the result as the first line of `closure-check.md`:
     `Closure: reached` or `Closure: not reached`. Under it, one row per free
