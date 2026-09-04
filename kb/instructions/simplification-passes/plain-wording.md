@@ -44,4 +44,6 @@ recorded as the threshold for the next run.
 Preserve: technical terms that look figurative or unusual but are the field's
 or the KB's registered words (seed, holding a theory, gradient descent,
 legible, ampliative); a term the artifact itself defines; and quoted text,
-which is never reworded.
+which is never reworded. Whether a registered abstraction should give way
+to the ordinary word is the [abstractions](./abstractions.md) pass's
+question, not this one's.
