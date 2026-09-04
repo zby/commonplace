@@ -41,8 +41,10 @@ production-driven learning loop. A hand-written validator can complete the
 first transfer without completing the second. The program tries bounded
 transfers in an order discovered from production, declares each trial before it
 runs, measures outcomes outside the transferred role, and records rescues,
-failures, reversals, and reopened roles. A witness needs both transfers over its
-declared scope and horizon.
+failures, reversals, and reopened roles. The first article's witness needs only
+the first transfer over its declared scope and horizon. A house trained as the
+second article prescribes needs the second as well, and the program aims at
+both.
 
 ## The starting point
 
@@ -238,10 +240,12 @@ case. But its criterion still came from a person. It does not complete learning
 transfer until the house can produce or revise that criterion and its machinery
 from production evidence.
 
-A full witness needs both transfers over its declared scope and horizon. This
-also explains why a wholly hand-built automated house would meet the base
-definition of an automated software house but would not satisfy the first
-article's acquisition obligations.
+The first article's witness needs only operational transfer: a wholly
+hand-built house that carries the loop with nobody inside is a witness for its
+conjecture. It is not a trained house in the second article's sense, because
+nothing in it was produced from production evidence by the house's own
+process. The program aims at both transfers, since the point of reaching the
+witness is to train it.
 
 Operational transfer can look complete while a person still handles the cases
 that matter. A person who fixes the three hard failures each month still holds
@@ -277,10 +281,11 @@ such as task choice, missing premises, feedback, and final acceptance.
 
 The operational path could be built entirely by hand: one validator for every
 recurring judgment, one diagnosis procedure for every failure class, and one
-fixed admission policy. That could produce an automated house in the base sense.
-It would not produce the witness in the first article, because the decisive
-project-specific machinery would still be supplied by people rather than
-acquired by computation.
+fixed admission policy. That could produce an automated house in the first
+article's sense, and a witness for its conjecture. It would not produce a
+house that trains as the second article prescribes, because the
+project-specific machinery would still come from people rather than from the
+house's own process.
 
 The seed is legitimate. People may write the first notes, tools, checks, and
 safety boundaries. Later transfers must increasingly depend on machinery that

@@ -268,7 +268,10 @@ baseline. It compares this fixed-model regime with a different training regime;
 it is not an update surface inside the doctrine. If theory interventions make
 no causal difference, or artifact search without theory repeatedly matches the
 proposed method at lower total cost, the theory-mediated claim fails in that
-tested regime.
+tested regime. What fails is the mediation claim. That the house is the unit
+of training, and that it can be trained with its models fixed, are not settled
+by that test: a house that learned through tests, tools, and search without
+an explicit theory would still be trained as a whole around fixed models.
 
 ## Bitter Lesson compatibility
 
