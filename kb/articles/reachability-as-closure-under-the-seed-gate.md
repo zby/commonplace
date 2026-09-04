@@ -13,7 +13,7 @@ source_notes:
 
 > **Draft supplement.** This is the full treatment behind the reachability and
 > Gödel-machine passages in [The reachability
-> conjecture](./reachability-conjecture-the-llm-stays-fixed-the-software-house-learns.md).
+> conjecture](./automated-software-houses-with-fixed-llms.md).
 > It is kept separate so the main article can state the consequence without
 > carrying the transition-system detail.
 

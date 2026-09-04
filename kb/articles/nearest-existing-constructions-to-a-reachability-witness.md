@@ -24,7 +24,7 @@ source_notes:
 
 > **Draft supplement.** This is the map behind the nearest-constructions
 > section of [The reachability
-> conjecture](./reachability-conjecture-the-llm-stays-fixed-the-software-house-learns.md).
+> conjecture](./automated-software-houses-with-fixed-llms.md).
 > Everything in it may still change, including which systems belong in the
 > comparison and how each row is graded. Comments, corrections, and additional
 > candidates are welcome on [the repository's GitHub Discussions

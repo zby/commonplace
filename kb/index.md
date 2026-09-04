@@ -13,7 +13,7 @@ Two separate pressures keep the design modular. Different collections support di
 ## Threads worth following
 
 **The reachability conjecture.** The current
-[research program](./articles/reachability-conjecture-the-llm-stays-fixed-the-software-house-learns.md)
+[research program](./articles/automated-software-houses-with-fixed-llms.md)
 conjectures that an automated software house capable of open-ended coherent
 change is reachable with the LLMs available today. The models stay fixed; the
 software and notes around them are trained, by the house itself, until they no

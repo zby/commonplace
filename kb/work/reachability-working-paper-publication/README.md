@@ -3,7 +3,7 @@
 ## Goal
 
 Prepare a self-standing, versioned working-paper package for [The reachability
-conjecture](../../articles/reachability-conjecture-the-llm-stays-fixed-the-software-house-learns.md)
+conjecture](../../articles/automated-software-houses-with-fixed-llms.md)
 without collapsing its live supporting knowledge base into one permanently
 copied document.
 
@@ -29,7 +29,7 @@ article](../../instructions/publish-an-article.md).
 
 ## Inputs
 
-- [Main draft](../../articles/reachability-conjecture-the-llm-stays-fixed-the-software-house-learns.md)
+- [Main draft](../../articles/automated-software-houses-with-fixed-llms.md)
 - [Nearest-constructions supplement](../../articles/nearest-existing-constructions-to-a-reachability-witness.md)
 - [Transition-reachability supplement](../../articles/reachability-as-closure-under-the-seed-gate.md) — its formal correction ([PR #179](https://github.com/zby/commonplace/pull/179)) merged on main as commit 465de048; the freeze precondition is met
 - the definitions, theory notes, and source captures classified in [dependency-audit.md](./dependency-audit.md)
