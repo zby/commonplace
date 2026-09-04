@@ -88,8 +88,9 @@ unnoticed on the hard cases.
 A decision moves out of human hands with warrant when the automatic process
 has the premises it needs, a criterion settled enough to apply, and a check
 independent enough to reject a plausible but harmful candidate. When those
-three are present, transfer is cheap and safe; when one is missing, transfer
-is either impossible or reckless. A house that transfers what it can
+three are present, transfer can be made with warrant, though it may still
+cost more than it saves; when one is missing, transfer is either impossible
+or reckless. A house that transfers what it can
 therefore [leaves people the decisions that are hardest to
 warrant](../notes/warranted-transfer-leaves-people-the-hardest-to-warrant-decisions.md):
 the roles that remain human are enriched for missing premises, unsettled
@@ -169,6 +170,15 @@ select successors, or edit internal state, and any such act is recorded as
 a rescue and counted against the claim. Before that start, the program
 needs the same accounting to see whether a role is moving at all: which
 decisions of each class people made, on which demands, over time.
+
+The house's own process can appear to have determined a decision when a
+person authored the machinery that makes it. A validator written by hand
+decides inside the house, but its content is the person's theory, and the
+decision it makes is the person's decision made in advance. A decision
+counts as determined by the house only when its evidence-to-update process
+produced that machinery from production evidence. The accounting for this
+is the subject of the next section: for each piece of machinery that makes
+a moved decision, whether a person or the house's process wrote it.
 
 Quality can fall unmeasured when a role moves and the metric that would have
 caught the drop was itself part of the moved role. Moving evaluation inside

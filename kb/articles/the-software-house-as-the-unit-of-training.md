@@ -57,7 +57,7 @@ The [companion article](./automated-software-houses-with-fixed-llms.md)
 conjectures that an automated [software
 house](../notes/definitions/software-house.md), meaning whatever keeps
 changing a piece of software for its users, is practically reachable with LLMs
-available today while every model stays fixed. In that regime the house learns
+available by 2026-09-02 while every model stays fixed. In that regime the house learns
 only through changes that computation produces and retains in its notes and
 code: the natural-language and symbolic state around the model. The conjecture
 claims only that at least one such house exists, and building one would settle
