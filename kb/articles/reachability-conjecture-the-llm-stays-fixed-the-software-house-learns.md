@@ -40,7 +40,11 @@ correction required shrinks as training goes on until the house keeps its own
 state and software adequate without people. A separate, stronger hypothesis
 says that the house does better when it writes its understanding down where
 it can be found and revised as a unit than when it rebuilds it from raw
-records.
+records. Agent harnesses with memory files and self-written rules are already
+moving this way. The article gives that evolution a formal statement: what
+the house is as a system, what counts as its learning rather than a person's,
+what its endpoint without a person would be, and what a witness for that
+endpoint would have to show.
 
 ## Claim
 
@@ -139,14 +143,6 @@ LLM without enough project state reconstructs or guesses instead of carrying
 understanding from one change to the next. Software executes a decision
 without supplying the judgment that selected it. The house as a whole has to
 hold the program theory.
-
-Practitioners will recognize these components as an agent harness with
-memory. It is one. Harnesses are moving in this direction: memory files,
-self-written tests and tools, retained rules from past failures. The article
-asks what a harness needs once that movement is taken to its end, with no
-person closing the loop by noticing a recurring failure and adding the rule.
-The four obligations below state that endpoint. A harness that meets them is
-a witness for the conjecture.
 
 ## Training in legible forms
 
