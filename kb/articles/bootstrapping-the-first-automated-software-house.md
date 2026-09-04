@@ -1,5 +1,5 @@
 ---
-description: "Research program for reaching the first automated software house from a human-agent house: move internal roles out of human hands one class at a time as their premises, criteria, and checks are built; evidence of a move, stop conditions"
+description: "Commonplace as a house already trained as the unit-of-training doctrine prescribes, with people in some internal roles, and the program for moving those roles out one class at a time as their premises, criteria, and checks are built"
 type: kb/articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
@@ -8,6 +8,7 @@ source_notes:
   - kb/notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md
   - kb/notes/continual-learning-requires-governing-behaviour-changing-writes.md
   - kb/notes/definitions/software-house.md
+  - kb/notes/evidence/commonplace-revision-used-theory-guided-computational-search.md
   - kb/notes/holding-the-client-fixed-exports-the-least-warrantable-decisions.md
   - kb/notes/machinery-persists-by-warrant-not-position-in-a-reflective-loop.md
   - kb/notes/residue-classes-need-different-mechanisms-so-architecture-is-mixed.md
@@ -24,21 +25,25 @@ source_notes:
 **TL;DR.** The [first article](./automated-software-houses-with-fixed-llms.md)
 in this series conjectures that an automated software house, one that keeps
 changing a product for its users with no human in an internal production
-role, is reachable with fixed current LLMs. The [second](./the-software-house-as-the-unit-of-training.md)
-says how such a house should learn once it exists. This article is about
-getting there. Nobody will build the first automated house from nothing. It
-will grow out of a *human-agent house*: a production system in which agents
-already do most of the work and people still hold the remaining internal
-roles, such as diagnosing why a change failed, judging whether a design
-still fits, and deciding which revision is kept. The program is to move
-those roles out of human hands one class at a time, in the order in which
-each role's premises, settled criteria, and checks able to reject a wrong
-candidate can be built, and to show at each step that the role moved,
-rather than that nobody measured whether it did. The article states the
-program, the ordering principle, why the order of moves is recorded as
-it happens rather than declared in advance, what counts as evidence that a
-role moved, what the house's own training must produce along the way, and
-the results that would stop the program or redirect it.
+role, is reachable with fixed current LLMs. The
+[second](./the-software-house-as-the-unit-of-training.md) says how a house
+should learn: as a whole, through a governed process that turns production
+evidence into retained changes to whichever component determines later
+production. This article makes two claims. First, Commonplace, the knowledge
+base in which the series is written, is already a house trained that way,
+with people still filling some internal roles. That is what separates it from
+an agent harness with a memory file, which retains state without governing
+what enters it, attributing later consequences to it, or recording who chose
+it. Second, the way from such a house to an automated one is a program: move
+the remaining internal roles out of human hands one class at a time, in the
+order in which each role's premises, settled criteria, and checks able to
+reject a wrong candidate can be built, and show at each step that the role
+moved rather than that nobody measured whether it did. The article states the
+instance and what people still do inside it, then the program: its ordering
+principle, why the order of moves is recorded as it happens rather than
+declared in advance, what counts as evidence that a role moved, what the
+house's own training must produce along the way, and the results that would
+stop the program or redirect it.
 
 ## The starting point
 
@@ -64,6 +69,72 @@ visible behaviour is a user and stays outside. The automated house is the
 one with nobody inside. The distance between a human-agent house and an
 automated one is therefore a list of roles, and the program is a plan for
 working through the list.
+
+## Commonplace as an instance of the doctrine
+
+The second article's doctrine says what a house must have to be trained
+rather than merely edited: retained components that determine later
+production; a process by which production evidence causes changes to them;
+admission, which decides which changes enter; credit assignment, which
+attributes a later consequence to the earlier change it counts for or
+against; and retention that makes an admitted change operative in later
+work. Commonplace has each part, and in each a person still fills some of the
+role.
+
+- **Retained theory as the main update surface.** The knowledge base holds
+  its project theory as notes that state a claim, its scope, and the evidence
+  behind it, linked to the claims they rest on. Agents load them at the point
+  of decision: the doctrine file every agent reads routes to them, and a
+  note's links carry the reader to the claims a change depends on. A note
+  that later evidence defeats is revised, superseded, or withdrawn, and its
+  address redirects to what replaced it.
+- **Machinery produced from recurring failures.** A failure class that
+  recurred became a validator rule or a review gate, with the decision that
+  introduced it recorded against the evidence: for example, when reviewers
+  with a reading limit were found to pass notes they had not fully read,
+  [a bound on how many sources a note may cite without a verified
+  quotation](../reference/adr/082-grounding-is-bounded-on-the-artifact-by-unquoted-sources.md)
+  moved onto the note as a validator rule. The thresholds that
+  simplification passes apply were recorded from an operator's rejections of
+  earlier passes, so the next pass starts from them.
+- **Admission and credit assignment through review.** A change to a note
+  passes validation and a [review
+  system](../reference/README-REVIEW-SYSTEM.md) whose gates return verdicts
+  on the note against a criterion. The store behind it keeps, for each
+  note and criterion, a baseline pinned to the input snapshots the last
+  accepted review covered, so a later change to a note the review depended
+  on marks that review stale. That is the bookkeeping credit assignment
+  needs: a later consequence can be traced to the change that invalidated
+  what an earlier decision rested on.
+- **An accounting of who decided.** One revision is recorded in enough detail
+  to say which acts were the model's and which the operator's: [the model
+  retrieved the retained theory, searched over formulations, and produced the
+  edits, while the operator supplied the decisive judgments about global
+  fit](../notes/evidence/commonplace-revision-used-theory-guided-computational-search.md).
+  That record is the form of accounting the program below requires for every
+  move.
+
+What people still do inside Commonplace is the honest half of the claim.
+They choose objectives, judge whether a claim fits the larger theory, assign
+blame when a change fails, decide which review findings to accept and which
+claims to defend, approve new gates and evaluators, and authorize changes
+whose consequences reach beyond the current job. Nothing here shows
+acquisition of project theory by computation alone, and there has been no
+witness run in the first article's sense. The claim is that the house's
+evidence-to-update process exists, that it runs over the whole house, and
+that its human parts are identified, which is what the doctrine asks of a
+house and what the program needs to start from.
+
+A memory file, as agent harnesses commonly keep one, is a retained component
+that changes later behaviour, so it meets the doctrine's weakest condition
+and nothing more. Entries are appended on the agent's judgment in the moment,
+with no criterion for what may enter and no independent check that can
+reject an entry. Nothing attributes a later failure to an entry, so a wrong
+one persists until someone notices. Entries have no stated scope, so
+defeating evidence has nothing to revise. And no record says whether the
+person or the harness chose the rule. A harness may add any of these parts,
+and the difference is the presence of the parts, not the name of the file.
+The doctrine's own sentence draws the line: it is not "save more memories."
 
 ## The program
 
@@ -285,12 +356,14 @@ that accounting cannot tell the difference between progress and drift.
 ## Where this leaves the three questions
 
 The first article asks whether an automated software house can exist and
-says what a witness must show. The second asks how such a house should learn
-and names the governance of behaviour-changing writes as the hard core. This
-article asks how to build the first one and answers: start from a human-agent
-house, move the internal roles out in the order their enabling conditions
-can be built, measure each move against an outside outcome, and require the
-house's own training to produce the machinery that enables each move after
-the seed. The program can be shown wrong at every move, by the same
-accounting that would show the move, which is the most that can be asked of
-a plan to build something that does not yet exist.
+says what a witness must show. The second asks how a house should learn and
+names the governance of behaviour-changing writes as the hard core. This
+article answers two questions of its own. Is there a house trained as the
+second article prescribes? Yes, with people inside it, and the accounting
+says where. How does such a house become the automated one? By a program:
+move the internal roles out in the order their enabling conditions can be
+built, measure each move against an outside outcome, and require the house's
+own training to produce the machinery that enables each move after the seed.
+The program can be shown wrong at every move, by the same accounting that
+shows the move, which is the most that can be asked of a plan to build
+something that does not yet exist.
