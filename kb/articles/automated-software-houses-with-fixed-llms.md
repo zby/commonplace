@@ -121,9 +121,9 @@ explicitly formulated
 criteria](../notes/naur-equates-machine-execution-with-formulated-criteria.md).
 Naur's criterion is judged by what the house can do, and that can be seen
 only over many changes. Its project-specific state must guide how it
-proposes, evaluates, diagnoses, or recovers, on implications not stated
-verbatim in that state. And changing that state must change what the house
-does next.
+proposes, evaluates, diagnoses, or recovers. That guidance must extend to
+implications not stated verbatim in the state. And changing that state must
+change what the house does next.
 
 The conjecture implements the house from three components, each with a role:
 
@@ -180,13 +180,13 @@ selection policy a later consequence counts for or against. [Governing a
 behaviour-changing write therefore requires selection, validation,
 authorization, and
 coordination](../notes/continual-learning-requires-governing-behaviour-changing-writes.md).
-This article supplies no general solution to that problem. A *witness* is one
-working house that makes the existential claim true, in the logician's sense
-of the word. It must show that its credit assignment and admission work well
-enough to satisfy the acquisition and continuation obligations below. A user
-who supplies requirements, feedback, domain knowledge, or an acceptance
-judgment stays external. A person who repeatedly diagnoses the theory failure
-or chooses the successor is doing the house's credit assignment and fills the
+This article supplies no general solution to that problem.
+
+A *witness* is one working house that makes the existential claim true, in
+the logician's sense of the word. It must show that its credit assignment
+and admission work well enough to satisfy the acquisition and continuation
+obligations below. A person who repeatedly diagnoses the theory failure or
+chooses the successor is doing the house's credit assignment and fills the
 excluded internal role.
 
 The update mechanism is otherwise open. It may produce a successor directly
@@ -212,8 +212,8 @@ would show that notes and code can carry theory, not that the house
 learned it. Once no human is inside, every successor must arise through the
 predecessor state's own update machinery and the external inputs the witness
 permits. The states the house can reach are therefore those its own update
-machinery and permitted inputs can produce from the seed, step by step. The
-companion article names this set the [transition closure of the
+machinery and permitted inputs can produce from the seed, step by step. A
+separate article on closure names this set the [transition closure of the
 seed](./reachability-as-closure-under-the-seed-gate.md). The step from one
 state to the next may be probabilistic, and it may revise the house's own
 machinery through permitted transitions. Outgrowing the seed means that
@@ -223,9 +223,9 @@ coherent later work, not merely that one such state lies on a possible path.
 General production machinery such as git, the test runner, or the model
 client may stay fixed while it handles the declared scope. If the scope
 requires a machinery change, such as a tag index once relevant notes stop
-fitting the context window, the automation obligation below requires the
-house to make it. Changing its own machinery is then a consequence of
-automation, not a separate requirement.
+fitting the context window, the continuation obligation below requires the
+house to make it. Changing its own machinery is then a consequence of that
+obligation, not a separate requirement.
 
 ## What a witness must show
 
@@ -295,9 +295,9 @@ The obligations above are also an instrument for reading existing systems.
 Agent harnesses that keep memory files, write their own tests and tools, and
 retain rules from past failures are the practice this article formalizes.
 What their accounts usually leave open is whose learning an improvement
-was: the person who noticed a recurring failure, diagnosed it, and chose the
-rule did the credit assignment, and an account that does not separate that
-from what the harness did on its own cannot show acquisition by the house.
+was. The person who noticed a recurring failure, diagnosed it, and chose the
+rule did the credit assignment. An account that does not separate that from
+what the harness did on its own cannot show acquisition by the house.
 The internal-role boundary and the obligations make that separation
 explicit. A [companion
 map](./nearest-existing-constructions-to-a-reachability-witness.md) applies
@@ -307,27 +307,14 @@ article](./bootstrapping-the-first-automated-software-house.md) in this
 series sets out a program for getting from a house that still has people in
 internal roles to a witness.
 
-The conjecture does not require a theory stored as its own artifact: a house
-may reliably reconstruct the understanding it needs from retained records.
-Whether a rationale that can be found and revised on its own does better
-than reconstruction from records is a question about the mechanism, not
-about reachability. The [companion
-article](./the-software-house-as-the-unit-of-training.md#testable-consequences)
-states it as a hypothesis with its own test.
-
-An [open-domain theory builder may itself become a software
-house](../notes/an-open-domain-theory-builder-becomes-a-software-house-when-new-domains-require-production-machinery-changes.md)
-when new domains require changes to its production machinery. That separate
-conjecture is not needed for the claim made here.
-
 ## Boundaries and epistemic status
 
 The conjecture is existential: it says only that at least one such house
 exists, for some eligible LLM, some arrangement of notes and code, some
 product scope. The witness rules out, in advance, two ways of saving the
-conjecture after a failure. The witness pins every eligible model and every
-other learned component before testing, so that a newer model or another
-newly trained component cannot do the work. It also declares product
+conjecture after a failure. It pins every eligible model and every other
+learned component before testing, so that a newer model or another newly
+trained component cannot do the work. It also declares product
 scope, horizon, and budget before testing, so that the scope cannot shrink
 until fixed machinery suffices. Open-ended means that the process generating
 requests and their consequences is declared in advance and can produce
@@ -355,6 +342,19 @@ outputs, and operating consequences are its evidence. Holding, acquisition,
 training, learning, and automation are requirements of this witness, not of
 the base software-house definition.
 
+The conjecture does not require a theory stored as its own artifact: a house
+may reliably reconstruct the understanding it needs from retained records.
+Whether a rationale that can be found and revised on its own does better
+than reconstruction from records is a question about the mechanism, not
+about reachability. The [companion
+article](./the-software-house-as-the-unit-of-training.md#testable-consequences)
+states it as a hypothesis with its own test.
+
+An [open-domain theory builder may itself become a software
+house](../notes/an-open-domain-theory-builder-becomes-a-software-house-when-new-domains-require-production-machinery-changes.md)
+when new domains require changes to its production machinery. That separate
+conjecture is not needed for the claim made here.
+
 The need for a program theory is a theoretical argument, not a proved
 theorem. That current LLMs suffice, and that the training path is practical,
 are conjectures. The project is constructive: a working system establishes
@@ -362,12 +362,11 @@ reachability over its declared scope, horizon, and budget. Failure of one
 architecture eliminates that path; it cannot refute the existential claim
 unless the search has first been bounded.
 
-Pinning the model isolates the question whether the house is reachable. This article does not
-claim that explicit project theory is the best carrier of acquired
-understanding, that updates outside the weights are better than training the
-model, or that weights should stay fixed in a mature system. It asks only
-whether an automated house can acquire and sustain the required capacity
-under that restriction. A house with people in internal roles that
+This article does not claim that explicit project theory is the best carrier
+of acquired understanding, that updates outside the weights are better than
+training the model, or that weights should stay fixed in a mature system. It
+asks only whether an automated house can acquire and sustain the required
+capacity with the model pinned. A house with people in internal roles that
 substantially reduces programmer work is a positive engineering result even
 if it never satisfies the conjecture. The [companion
 article](./the-software-house-as-the-unit-of-training.md) takes up the
