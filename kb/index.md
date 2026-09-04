@@ -12,15 +12,16 @@ Two separate pressures keep the design modular. Different collections support di
 
 ## Threads worth following
 
-**The reachability conjecture.** The current
+**The automated software house conjecture.** The current
 [research program](./articles/automated-software-houses-with-fixed-llms.md)
-conjectures that an automated software house capable of open-ended coherent
-change is reachable with the LLMs available today. The models stay fixed; the
-software and notes around them are trained, by the house itself, until they no
-longer depend on what people wrote. The test is whether that composite can
-hold, acquire, and revise a program theory well enough to keep modification
-coherent across novel demands. Commonplace is where the program plans to test
-it. The [Naur
+asks whether a complete software house can sustain open-ended coherent change
+with current learned components pinned and no human in an internal production
+role. Its starting project theory and production machinery may be written by
+people. The test is whether the resulting composite can carry the program-theory
+function, use it where the needed implication was not stated verbatim, revise
+when later demands expose an error, and continue across a declared scope and
+horizon. How such a house should acquire and improve its organization is a
+separate question. The [Naur
 note](./notes/naur-equates-machine-execution-with-formulated-criteria.md)
 reopens the bearer question, while the [coherent-search
 note](./notes/program-theory-sustains-search-under-delayed-feedback.md)
