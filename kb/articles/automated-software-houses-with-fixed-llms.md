@@ -1,10 +1,9 @@
 ---
-description: "Conjecture that an automated software house capable of open-ended coherent change is reachable with 2026 LLMs while model weights stay fixed and the notes and code around them learn; the program-theory argument, training path, and witness obligations"
+description: "Conjecture that an automated software house capable of open-ended coherent change is practically reachable with 2026 LLMs kept fixed while computation trains the notes and code around them; program theory, learning loop, seed, witness obligations"
 type: kb/articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
 source_notes:
-  - kb/notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md
   - kb/notes/an-open-domain-theory-builder-becomes-a-software-house-when-new-domains-require-production-machinery-changes.md
   - kb/notes/axes-of-artifact-analysis.md
   - kb/notes/code-complements-weight-prompt-with-symbolic-operations.md
@@ -14,15 +13,12 @@ source_notes:
   - kb/notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md
   - kb/notes/naur-equates-machine-execution-with-formulated-criteria.md
   - kb/notes/naurs-compiler-case-tests-one-historically-bounded-documentation-and-consumption-system.md
-  - kb/notes/opacity-is-a-scale-threshold.md
   - kb/notes/program-theory-sustains-search-under-delayed-feedback.md
   - kb/notes/scheduler-llm-separation-exploits-an-error-correction-asymmetry.md
-  - kb/notes/the-bitter-lesson-selects-production-methods-not-representational.md
-  - kb/notes/theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md
   - kb/sources/goedel-machines-schmidhuber.ingest.md
   - kb/sources/programming-as-theory-building.ingest.md
 ---
-# The reachability conjecture: the LLM stays fixed, the software house learns
+# Automated Software Houses with Fixed LLMs: A Practical Reachability Conjecture
 
 > **Draft.** This article may change. Comments and counterexamples are welcome
 > on [the repository's GitHub Discussions page](https://github.com/zby/commonplace/discussions).
@@ -31,20 +27,19 @@ source_notes:
 software for its users, not only a company. It changes the software as users
 ask for things and as the software is used. The conjecture is that such a
 house can run with no human in a production role, on models that already
-exist, and handle requests nobody listed in advance. **The models stay fixed;
-learning happens in the software and project state around them:** code,
-notes, and the machinery through which both shape later work. People write
-the first versions. The house then revises them as requests and their
-consequences arrive, and people correct it at first. **The bet** is that the
-correction required shrinks as training goes on until the house keeps its own
-state and software adequate without people. A separate, stronger hypothesis
-says that the house does better when it writes its understanding down where
-it can be found and revised as a unit than when it rebuilds it from raw
-records. Agent harnesses with memory files and self-written rules are already
-moving this way. The article gives that evolution a formal statement: what
-the house is as a system, what counts as its learning rather than a person's,
-what its endpoint without a person would be, and what a witness for that
-endpoint would have to show.
+exist, and handle requests nobody listed in advance. The models stay fixed.
+Learning happens in the project state around them: code, notes, and the
+machinery through which both shape later work. People write the first
+versions. The house then revises them as requests and their consequences
+arrive, and people correct it at first. The conjecture is that the correction
+required shrinks as training goes on until the house keeps its own state and
+software adequate without people. Agent harnesses with memory files and
+self-written rules are already moving this way. The article gives that
+practice a formal statement: what the house is as a system, what counts as
+its learning rather than a person's, what its endpoint without a person would
+be, and what a witness for that endpoint would have to show. It does not
+argue that a fixed model is the best way to train such a house; a [companion
+article](./the-software-house-as-the-unit-of-training.md) takes that up.
 
 ## Claim
 
@@ -144,23 +139,20 @@ understanding from one change to the next. Software executes a decision
 without supplying the judgment that selected it. The house as a whole has to
 hold the program theory.
 
-## Training in legible forms
+## How the house learns while the model stays fixed
 
-Legible means inspectable and directly revisable. It does not mean easy to
-design. Finding good notes and tooling may require search, criticism, trials,
-production consequences, and retained correction, much as finding useful
-weights requires gradient descent. The artifacts remain readable once found.
+Pinning the model does two things. It isolates one question: whether learning
+in the state around a model can suffice, with no help from a changed model.
+And it matches the regime every project built on a frontier model is already
+in. Such a project cannot retrain the model it uses, so whatever it learns
+about its own product has to be kept somewhere else. Pinning is a condition
+of the experiment, not a recommendation for how a mature house should be
+trained.
 
-This is compatible with the Bitter Lesson's preference for general methods
-that scale with computation because [the lesson selects how behavior-shaping
-structure is produced, not the form in which it is
-retained](../notes/the-bitter-lesson-selects-production-methods-not-representational.md).
-Learned software and notes are not disqualified merely because they are
-separate and readable. A hand-crafted seed is compatible only if [learning
-outgrows the task-specific knowledge the seed
-supplies](../notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md).
-Those two points answer the objection in principle; whether training over
-legible structures scales is what the project has to demonstrate.
+Training here means search. Finding notes and tooling that work may require
+criticism, trials, production consequences, and retained correction, much as
+finding useful weights requires gradient descent. That the artifacts are
+readable once found does not make them easy to find.
 
 Current LLMs can produce both notes and code. Software can put a proposed
 change into effect and feed later consequences into another update. The
@@ -227,35 +219,6 @@ fitting the context window, the automation obligation below requires the
 house to make it. Changing its own machinery is then a consequence of
 automation, not a separate requirement.
 
-## What this training route could buy
-
-The alternative route is to train the model itself, by fine-tuning or
-retraining its weights on project experience. Neither route makes the whole
-system transparent. The fixed LLM's weights remain opaque, and enough
-software and notes can [exceed practical
-inspection](../notes/opacity-is-a-scale-threshold.md). The difference is
-where the learned project-specific state lives. Fine-tuning spreads it across
-weights, where a changed behaviour is hard to locate, inspect, or revert on
-its own. Training the house keeps it in separate units that can be found and
-revised on their own. The house can identify a changed claim or function,
-inspect its history, revise it selectively, and roll it back without
-retraining the model.
-
-Learning can then happen in deployment. Production evidence can cause a
-retained change to a note, test, tool, or policy, and that change can affect
-the next round of work without a training run.
-
-A further payoff is possible but not required by the conjecture. When
-retained program theory captures structure that survives a change, the house
-[may need fewer new observations to
-adapt](../notes/theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md).
-It can revise one premise and derive several consequences instead of
-relearning them separately. This advantage depends on the theory being both
-adequate and actually used in later decisions; otherwise one wrong premise
-misleads many decisions at once. Fewer observations also need not mean lower
-total cost once theory search, validation, retrieval, and maintenance are
-counted.
-
 ## What a witness must show
 
 One witness must eventually demonstrate the whole progression:
@@ -279,10 +242,11 @@ One witness must eventually demonstrate the whole progression:
 4. **Automated continuation.** The house sustains these capacities across the
    declared scope and horizon with no human in an internal role.
 
-These obligations do not fix which form carries the theory. A complete
-witness must show learning that responds to evidence in both notes and code
-somewhere across the sequence, but no single learning step must change both
-forms.
+These obligations do not fix which form carries the theory or which form
+learns. Notes and code are both eligible surfaces. A witness may meet the
+obligations by changing either, or a mix, so long as experience causes the
+change, computation produces it, and the retained result does the work the
+obligation names.
 
 Obligations 2 and 3 must be met by computation. That is a condition on them,
 not a fifth step. A partial mechanism for one of them is not partial
@@ -342,17 +306,13 @@ no witness run and is scored as a design target, not as evidence. The
 map](./nearest-existing-constructions-to-a-reachability-witness.md) compares
 twenty constructions and records the evidence behind each placement.
 
-The broad conjecture does not require a theory stored as its own artifact: a
-house may reliably reconstruct the understanding it needs from retained
-records. The stronger hypothesis, call it the explicit-theory hypothesis, is
-a prediction. Hold the model, source evidence, demand sequence, and inference
-budget fixed. Then a rationale that can be found and revised on its own
-improves coherent modification, diagnosis, or recovery, compared with raw
-records or searching the artifacts directly. Both routes require retained
-evidence to reach the relevant decision and actually change it. Only the
-explicit route additionally requires selecting, retaining, and revising the
-stored theory. That additional requirement tests the mechanism, not
-reachability.
+The conjecture does not require a theory stored as its own artifact: a house
+may reliably reconstruct the understanding it needs from retained records.
+Whether a rationale that can be found and revised on its own does better
+than reconstruction from records is a question about the mechanism, not
+about reachability. The [companion
+article](./the-software-house-as-the-unit-of-training.md#testable-consequences)
+states it as a hypothesis with its own test.
 
 An [open-domain theory builder may itself become a software
 house](../notes/an-open-domain-theory-builder-becomes-a-software-house-when-new-domains-require-production-machinery-changes.md)
@@ -401,12 +361,13 @@ reachability over its declared scope, horizon, and budget. Failure of one
 architecture eliminates that path; it cannot refute the existential claim
 unless the search has first been bounded.
 
-Practical usefulness, automated continuation, and learning by computation in
-the way the Bitter Lesson favours are separate achievements. A house with
-people in internal roles that substantially reduces programmer work is a
-positive engineering and research result even if it never satisfies the full
-conjecture. If decisive task-specific theory, decomposition, evaluation, or
-selection remains repeatedly human-produced, however, the project has not
-shown that its approach holds up under the Bitter Lesson. The system may
-remain useful; what is missing is a reason to expect its durability and
-scaling advantage, not a proof of failure.
+Pinning the model isolates a reachability question. This article does not
+claim that explicit project theory is the best carrier of acquired
+understanding, that updates outside the weights are better than training the
+model, or that weights should stay fixed in a mature system. It asks only
+whether an automated house can acquire and sustain the required capacity
+under that restriction. A house with people in internal roles that
+substantially reduces programmer work is a positive engineering result even
+if it never satisfies the conjecture. The [companion
+article](./the-software-house-as-the-unit-of-training.md) takes up the
+training regime that becomes available once such a house exists.

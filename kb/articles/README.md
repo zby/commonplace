@@ -14,9 +14,10 @@ Nothing published yet.
 
 ## In draft
 
-Three drafts currently remain in the article frontier. The first states the research program the others develop; read it first if you are new to the series.
+Four drafts currently remain in the article frontier. The first states the reachability conjecture the others build on; read it first if you are new to the series. The second states the training doctrine that conjecture makes available.
 
-- [The reachability conjecture: the LLM stays fixed, the software house learns](./automated-software-houses-with-fixed-llms.md) — an automated software house capable of open-ended coherent change is reachable with fixed current LLMs by training the software and notes around them; why a program theory is needed and why the composite could hold one; the training path and its seed; and the four obligations a constructive witness must meet.
+- [Automated Software Houses with Fixed LLMs: A Practical Reachability Conjecture](./automated-software-houses-with-fixed-llms.md) — an automated software house capable of open-ended coherent change is practically reachable with fixed current LLMs by training the notes and code around them; why a program theory is needed and why the composite could hold one; the fixed-model learning loop and its seed; and the four obligations a constructive witness must meet.
+- [The Software House as the Unit of Training](./the-software-house-as-the-unit-of-training.md) — once a house carries the production loop, project-specific continual learning should run over the whole house, with the model as one update surface; what counts as a training step, why governance of behaviour-changing writes is the hard core, and the explicit-theory and sample-efficiency hypotheses as testable consequences.
 - [The decisions that stay human, and what would move them](./the-decisions-that-stay-human-and-what-would-move-them.md) — the conditional selection argument that automatic transfer is easiest where premises, settled criteria, and defeating checks exist, what would have to grow for each residual class to move, and why structural computational closure is not evaluator quality.
 - [The Bitter Lesson does not require everything to live in weights](./the-bitter-lesson-does-not-require-everything-to-live-in-weights.md) — separates Sutton's 2019 search-and-learning claim from a weights-only extrapolation, and names credit assignment, evaluation, and decomposition revision as the open problems for learned artifacts.
 
