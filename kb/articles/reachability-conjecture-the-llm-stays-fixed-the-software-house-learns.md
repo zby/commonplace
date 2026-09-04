@@ -334,9 +334,13 @@ improvement was. The person who noticed the recurring failure, diagnosed it,
 and chose the rule did the credit assignment, and the accounts do not
 separate that from what the harness did on its own. The internal-role
 boundary and the obligations above are the instrument for that separation.
-The [companion
+Commonplace, the knowledge base this article is written in, is the one
+reviewed construction built to attack holding and acquisition directly,
+through retained explanatory theory that later work loads and revises. It has
+no witness run and is scored as a design target, not as evidence. The
+[companion
 map](./nearest-existing-constructions-to-a-reachability-witness.md) compares
-nineteen constructions and records the evidence behind each placement.
+twenty constructions and records the evidence behind each placement.
 
 The broad conjecture does not require a theory stored as its own artifact: a
 house may reliably reconstruct the understanding it needs from retained

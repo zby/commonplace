@@ -22,7 +22,7 @@ Three drafts currently remain in the article frontier. The first states the rese
 
 One supplement accompanies the first draft: [Reachability as transition closure under the seed's successor relation](./reachability-as-closure-under-the-seed-gate.md) — once no human is inside, every successor must arise through the predecessor state's update machinery and permitted inputs; Gödel machines and the conjectured house share that descent structure but use different successor conditions and warrant.
 
-A second supplement, [Nearest existing constructions to a reachability witness](./nearest-existing-constructions-to-a-reachability-witness.md), is the map behind the first draft's nearest-constructions section: nineteen reviewed systems compared against the four witness obligations with the evidence behind each cell, and separate protocols for the carrier-neutral witness and the stronger explicit-theory mechanism test.
+A second supplement, [Nearest existing constructions to a reachability witness](./nearest-existing-constructions-to-a-reachability-witness.md), is the map behind the first draft's nearest-constructions section: twenty reviewed systems compared against the four witness obligations with the evidence behind each cell, and separate protocols for the carrier-neutral witness and the stronger explicit-theory mechanism test.
 
 Four former companion drafts were withdrawn after full review. Their titles
 remain as withdrawal notices, but none currently supplies a live article claim.

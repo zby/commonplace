@@ -139,7 +139,7 @@ a changing comparison article.
 - fixed-parametric-state criterion;
 - software learning and note learning;
 - program-theory acquisition and successor acquisition;
-- the nineteen-row comparison or its final reviewed successor;
+- the twenty-row comparison or its final reviewed successor;
 - concise reading of the strongest neighboring clusters;
 - the missing-conjunction result.
 

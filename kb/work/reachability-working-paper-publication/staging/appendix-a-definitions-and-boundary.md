@@ -93,6 +93,14 @@ single component holds it: a note nobody loads is inert, a fixed model without
 project state guesses, and code executes a decision without supplying the
 judgment that chose it.
 
+A learning path is **theory-mediated** when it represents a candidate theory
+as an intermediate object and changes behaviour by adopting, applying,
+rejecting, or revising it, so that the process can reason about what the
+theory says rather than only reproduce the behaviour it induces. The
+explicit-theory hypothesis in the paper body is the claim that a house learns
+better along such a path than by reconstructing its understanding from raw
+records each time.
+
 ## A.6 State, seed, successor, and regime
 
 A **house state** is the complete mutable content of the house at one moment:

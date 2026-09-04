@@ -146,6 +146,7 @@ people fill internal roles in that construction.
 | Knowledge-Centric Self-Improvement | Not in scope | Meets stated scope | Not in scope | Meets stated scope | Not in scope | Meets stated scope; bounded task loop | Paper-reported mechanism and outcomes; implementation not independently inspected | It deliberately isolates knowledge-only learning on benchmark families |
 | PROJECTMEM | Not in scope | Not demonstrated | Not in scope | Partial | Partial; decisions are logged, not applied as theory | Not demonstrated | Paper-reported mechanism; no local ingest or inspected implementation | It records decisions and warns before repeated mistakes, but does not test acquisition or revision of project theory |
 | Rainbow | Not in scope | Not applicable | Not in scope; fixed strategies adapt configuration | Not in scope | Not in scope; the governing model is designer-supplied and fixed | Meets stated scope; supplied strategies | Paper-reported mechanism, implementation, and outcomes; not independently reproduced | It adapts a running configuration through a causal architectural model, but does not learn that model or its action repertoire |
+| Commonplace | Not assessed | Not demonstrated; models not reliably pinned | Partial; human-inclusive | Partial; human-inclusive | Design target: explicit, revisable theory loaded at later decisions; no causal-use evidence | Human-dependent | Code-inspected design, this repository; no evaluated outcome | No witness run; the operator selects global fit and admits successors |
 
 The **Program theory** column has three values and one gap, and that
 distribution is the table's main result. Fifteen rows read *not in scope*
@@ -283,6 +284,17 @@ adaptation strategies from it, and its vocabulary, goals, constraints,
 operators, and strategies are all designer-supplied and fixed. It locates the
 boundary precisely: a model can drive adaptation without the system learning
 the theory that governs adaptation.
+
+**Reference construction.** Commonplace, the knowledge base in which this
+comparison is written, is the one reviewed construction built to attack holding
+and acquisition directly: it retains explanatory theory as notes with declared
+scope and evidence, loads them into later work, and revises them under review.
+It is scored by the same rubric and evidence classes as every other row, and it
+is a design target, not evidence. Its evidence notes record one revision in
+which retained theory guided computational search with the operator selecting
+global fit, and no case in which a later improvement has been traced to an
+earlier retained theory. It is not a witness: no run exists, the models are not
+pinned, and the operator fills the admission role.
 
 ## The witness protocol
 
