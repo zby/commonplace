@@ -25,22 +25,31 @@ source_notes:
 > **Draft.** This article may change. Comments and counterexamples are welcome
 > on [the repository's GitHub Discussions page](https://github.com/zby/commonplace/discussions).
 
-**TL;DR.** Suppose an automated software house can carry the complete
-production loop for a product: receive requirements, change the software,
-observe the consequences, and revise the machinery of later production. The
-system doing that is then itself a trainable actor, and production is its
-training environment. The doctrine proposed here is to organize
-project-specific continual learning at that boundary. A training step is a
+**TL;DR.** We use *software house* for whatever keeps changing a piece of
+software for its users. Suppose an automated software house carries the
+complete production loop for a product: it receives requirements, changes
+the software, observes the consequences, and revises the machinery of later
+production. That system is then itself a trainable actor, and production is
+its training environment. The alternative this article denies is the
+model-only loop: a product's accumulated learning lives in the model's
+weights, training the model is the learning, and everything around the model
+stays fixed. The doctrine proposed here is that project-specific continual
+learning should be organized over the whole house. A training step is a
 governed, evidence-caused change to any retained component that determines
 later production: project theory, code, tests, tools, evaluators, context
-assembly, policies, and the model's weights among them. The model checkpoint
-is one component and one possible update surface, not the place where a
-product's accumulated learning is presumed to live. The article states the
-doctrine, gives the argument for it, says what changes if it is accepted,
-names governance of behaviour-changing writes as the hard core, and states
-two hypotheses that would test it: that explicitly retained project theory
-beats reconstruction from records, and that it adapts to structured change
-with fewer observations.
+assembly (what the model is given to read), policies, and the model's weights
+among them. The model is one component, and its weights are one surface among
+several where an update can be written, not the place where a product's
+accumulated learning is presumed to live. The article states the doctrine,
+gives the argument for it, says what changes if it is accepted, names the
+hard core of the doctrine as the governance of writes that change the house's
+behaviour (deciding which changes are admitted, and which earlier change a
+later consequence counts for or against), and states two hypotheses the
+doctrine predicts, which a house whose model stays fixed can test: that
+project theory kept as its own revisable artifact beats understanding rebuilt
+from raw records each time, and that a house holding such a theory adapts to
+a change with fewer observations when the theory captures what the change
+preserves.
 
 ## The premise
 
