@@ -92,10 +92,10 @@ three are present, transfer is cheap and safe; when one is missing, transfer
 is either impossible or reckless. A house that transfers what it can
 therefore [leaves people the decisions that are hardest to
 warrant](../notes/warranted-transfer-leaves-people-the-hardest-to-warrant-decisions.md):
-the residue is enriched for missing premises, unsettled criteria, and absent
-checks. That is why the roles that remain human in current houses are the
-ones they are, and it is also the program's map. Each residual role names
-what would have to be built for it to move.
+the roles that remain human are enriched for missing premises, unsettled
+criteria, and absent checks. That is why the roles that remain human in
+current houses are the ones they are, and it is also the program's map. Each
+role that remains human names what would have to be built for it to move.
 
 | Why a role stays human | What the program must build |
 |---|---|
@@ -110,7 +110,7 @@ mechanisms](../notes/residue-classes-need-different-mechanisms-so-architecture-i
 so the house that results is mixed by construction: natural-language theory
 where premises must be stated and revised, symbolic checks where criteria
 have settled, retained evidence where checks must be independent of the
-process they check. The program does not choose one carrier and push
+process they check. The program does not choose one of these and push
 everything into it. It builds, for each role, the specific thing that role
 lacks.
 
@@ -140,15 +140,16 @@ project state to be operative: the house loads its own notes, tests, and
 rules at the point of decision, and doing so changes what it does. No
 premise, criterion, or check can move inside a house that does not use what
 it retains, and the evidence that it does is the first article's holding
-intervention. The last move is admission. Deciding which revisions are kept
-can move inside only within a grant of authority a person has set in
+intervention, in which withholding or replacing retained state changes what
+the house does next. The last move is admission. Deciding which revisions are
+kept can move inside only within a grant of authority a person has set in
 advance, and only after the house produces and criticizes the candidates it
 admits, since admitting an uncriticized candidate has no warrant. A house
 with admission inside, over a declared scope and horizon, is a candidate
-witness for the first article's conjecture. Between those two ends, no move
-removes the person from the outside: requirements, facts, outcomes, and
-acceptance of visible behaviour stay with users throughout, because they are
-not internal roles.
+witness for the first article's conjecture, the working house that would make
+it true. Between those two ends, no move removes the person from the outside:
+requirements, facts, outcomes, and acceptance of visible behaviour stay with
+users throughout, because they are not internal roles.
 
 ## What counts as a move
 
@@ -181,9 +182,9 @@ and a claim that a role moved must say which dimension moved. The program
 therefore keeps an outcome measure outside the house for every moved role:
 user-visible success on later demands, escaped failures, and cost.
 
-The wrong benchmark can hide the residue. A common test asks whether a
-system performs as well as a competent remote programmer given the same
-brief, repository, tools, and feedback. That test [holds the client
+The wrong benchmark can hide the roles that remain human. A common test asks
+whether a system performs as well as a competent remote programmer given the
+same brief, repository, tools, and feedback. That test [holds the client
 fixed](../notes/holding-the-client-fixed-exports-the-least-warrantable-decisions.md):
 task choice, missing premises, feedback, and final acceptance stay outside
 the worker, so passing it says nothing about the internal roles the program
@@ -225,7 +226,7 @@ position](../notes/machinery-persists-by-warrant-not-position-in-a-reflective-lo
 it stays fixed because its role and scope are earned, and it becomes a
 target for revision only when the declared scope requires a change it cannot
 supply. What must be produced computationally is the project-specific
-specialization, not the substrate.
+specialization, not the general machinery.
 
 The production of machinery for each move has the same shape as any
 [proposal-selection improvement
