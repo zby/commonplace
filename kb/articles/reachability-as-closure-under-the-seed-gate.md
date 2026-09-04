@@ -1,5 +1,5 @@
 ---
-description: "Supplement to the automated software house conjecture: an autonomous house's states form the transition closure of its seed under a state-dependent successor relation and declared input process; the Gödel-machine comparison differs in admission, not in having closure"
+description: "Supplement to the automated software house conjecture: an autonomous house's states are the transition closure of its seed under a state-dependent successor relation and declared inputs; the Gödel machine differs in admission, not closure"
 type: kb/articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak

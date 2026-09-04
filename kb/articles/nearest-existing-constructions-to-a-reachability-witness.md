@@ -1,5 +1,5 @@
 ---
-description: "Comparison of reviewed self-improving systems against the automated software house conjecture's four witness conditions, which allow a human-built start and do not fix which form carries the theory, plus the explicit-theory test from the training article"
+description: "Twenty reviewed self-improving systems compared against the automated software house conjecture's four witness conditions, which allow a human-built start; plus the explicit-theory test from the training article"
 type: kb/articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
