@@ -87,11 +87,11 @@ Open-ended change brings demands nobody analysed in advance and questions of
 fit that the available checks do not settle. Say a product built for one
 customer per deployment must now serve many tenants. The tenant identifier
 can enter the data model in several ways. All of them pass the existing
-tests, but only some preserve the assumptions the rest of the code silently
-relies on. Choosing among them needs what the computer scientist Peter Naur
-called a program theory. That is the capacity to relate the software to the
-activity it supports, to explain why it is organized as it is, and to relate
-a new demand to that organization. [Holding a program theory means sustaining
+tests, but only some preserve the assumptions the rest of the code relies on
+without stating them. Choosing among them needs what the computer scientist
+Peter Naur called a program theory. That is the capacity to relate the
+software to the activity it supports, to explain why it is organized as it
+is, and to relate a new demand to that organization. [Holding a program theory means sustaining
 coherent search under delayed
 feedback](../notes/program-theory-sustains-search-under-delayed-feedback.md):
 the multi-tenant choice may not show its consequences until the next three
@@ -140,11 +140,11 @@ The conjecture implements the house from three components, each with a role:
   reads), schedulers, validators and tests, version-control rollback, and
   retention rules.
 
-None of these holds the theory alone. A note nobody loads is inert. A fixed
-LLM without enough project state reconstructs or guesses instead of carrying
-understanding from one change to the next. Software executes a decision
-without supplying the judgment that selected it. The house as a whole has to
-hold the program theory.
+None of these holds the theory alone. A note nobody loads has no effect. A
+fixed LLM without enough project state reconstructs or guesses instead of
+carrying understanding from one change to the next. Software executes a
+decision without supplying the judgment that selected it. The house as a
+whole has to hold the program theory.
 
 ## How the house learns while the model stays fixed
 
@@ -157,7 +157,7 @@ that learning has to be kept in state outside the model. Pinning is a
 condition of the experiment, not a recommendation for how a mature house
 should be trained.
 
-Training here means search. Finding notes and tooling that work may require
+Training here means search. Finding notes and code that work may require
 criticism, trials, production consequences, and retained correction, much as
 finding useful weights requires gradient descent. That the artifacts are
 readable once found does not make them easy to find.
@@ -202,13 +202,13 @@ abstraction, invariant, or test that demonstrably shapes later changes beyond
 merely being part of the changed product. A note never loaded by context
 assembly does not.
 
-Hand-crafted tools, stores, interfaces, safety boundaries, and provisional
+Hand-built tools, stores, interfaces, safety boundaries, and provisional
 notes may start the loop. They are seed engineering, not evidence of
 acquisition. The training path must outgrow repeated human authorship of the
-decisive project-specific theory, whatever its form. A hand-written check
+decisive project-specific theory, whatever its form. A hand-built check
 that rejects every schema change carries the human's theory that the schema
 is settled, just as a note saying so would. A wholly hand-built end state
-would show that software and notes can carry theory, not that the house
+would show that notes and code can carry theory, not that the house
 learned it. Once no human is inside, every successor must arise through the
 predecessor state's own update machinery and the external inputs the witness
 permits. The states the house can reach are therefore those its own update
@@ -229,7 +229,7 @@ automation, not a separate requirement.
 
 ## What a witness must show
 
-One witness must eventually demonstrate the whole progression:
+One witness must eventually show the whole progression:
 
 1. **Holding and application.** Given adequate project-specific state, the
    house sustains theory-guided proposal, evaluation, diagnosis, or recovery
@@ -245,7 +245,7 @@ One witness must eventually demonstrate the whole progression:
 3. **Successor acquisition.** When experience exposes an inadequacy, the
    house reaches a successor state that supports coherent later modification.
    An example is a dependency change that makes an earlier design reason
-   false. The revision may touch explicit theory, records, software,
+   false. The revision may change explicit theory, records, software,
    production machinery, or a combination.
 4. **Automated continuation.** The house sustains these capacities across the
    declared scope and horizon with no human in an internal role.
@@ -323,11 +323,11 @@ conjecture is not needed for the claim made here.
 ## Boundaries and epistemic status
 
 The conjecture is existential: it says only that at least one such house
-exists, for some eligible LLM, some arrangement of software and notes, some
+exists, for some eligible LLM, some arrangement of notes and code, some
 product scope. The witness rules out, in advance, two ways of saving the
 conjecture after a failure. The witness pins every eligible model and every
 other learned component before testing, so that a newer model or another
-newly trained component cannot quietly do the work. It also declares product
+newly trained component cannot do the work. It also declares product
 scope, horizon, and budget before testing, so that the scope cannot shrink
 until fixed machinery suffices. Open-ended means that the process generating
 requests and their consequences is declared in advance and can produce
