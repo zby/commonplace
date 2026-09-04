@@ -27,8 +27,8 @@ source_notes:
 
 **TL;DR.** We use *software house* for whatever keeps changing a piece of
 software for its users. Suppose an automated software house carries the
-complete production loop for a product: it receives requirements, changes
-the software, observes the consequences, and revises the machinery of later
+complete production loop for a product: it receives requirements, changes the
+software, observes the consequences, and revises the machinery of later
 production. That system is then itself a trainable actor, and production is
 its training environment. The alternative this article denies is the
 model-only loop: a product's accumulated learning lives in the model's
@@ -41,15 +41,15 @@ assembly (what the model is given to read), policies, and the model's weights
 among them. The model is one component, and its weights are one surface among
 several where an update can be written, not the place where a product's
 accumulated learning is presumed to live. The article states the doctrine,
-gives the argument for it, says what changes if it is accepted, names the
-hard core of the doctrine as the governance of writes that change the house's
+gives the argument for it, says what changes if it is accepted, names the hard
+core of the doctrine as the governance of writes that change the house's
 behaviour (deciding which changes are admitted, and which earlier change a
 later consequence counts for or against), and states two hypotheses the
 doctrine predicts, which a house whose model stays fixed can test: that
-project theory kept as its own revisable artifact beats understanding rebuilt
-from raw records each time, and that a house holding such a theory adapts to
-a change with fewer observations when the theory captures what the change
-preserves.
+project theory kept as its own revisable artifact performs better than
+understanding rebuilt from raw records each time, and that a house holding
+such a theory adapts to a change with fewer observations when the theory
+captures what the change preserves.
 
 ## The premise
 
@@ -60,9 +60,10 @@ changing a piece of software for its users, is practically reachable with LLMs
 available today while every model stays fixed. In that regime the house learns
 only through changes that computation produces and retains in its notes and
 code: the natural-language and symbolic state around the model. The conjecture
-is existential and constructive. If one such house exists, that establishes
-that learning in the state around a fixed model can suffice for open-ended
-coherent software change over a declared scope and horizon.
+claims only that at least one such house exists, and building one would settle
+it. If one exists, that establishes that learning in the state around a fixed
+model can suffice for open-ended coherent software change over a declared
+scope and horizon.
 
 Pinning the model was an experimental isolation. It answered the question
 whether learning in the state around the model can be enough. It said nothing
@@ -121,7 +122,7 @@ A model-only training loop therefore freezes the rest. [Learning inside a
 fixed decomposition inherits its
 mistakes](../notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md):
 optimizing the weights can improve every choice the model is allowed to
-make, but it cannot touch a mistaken distinction, a missing tool, a poor
+make, but it cannot reach a mistaken distinction, a missing tool, a poor
 division of work, or a context policy that never loads the note that
 matters. A capable model can sometimes compensate, inferring an intention a
 prompt omitted or reconstructing state the harness failed to keep. That
@@ -152,7 +153,7 @@ back to a model-training pipeline learns at the cadence of that pipeline.
 **Two training layers.** Project-specific learning separates from general
 model training, and each has its own principal target.
 
-| Training layer | Principal target |
+| Training layer | Main target |
 |---|---|
 | General model training | Cross-project linguistic, reasoning, programming, and world competence |
 | Software-house training | Project-specific theory, production machinery, constraints, evaluators, and accumulated operating competence |
@@ -185,7 +186,7 @@ reverted on its own. A change trained into weights is spread across
 parameters, and a changed behaviour is hard to find, hard to revise
 selectively, and hard to roll back without retraining. A change kept in a note
 or a function is a unit the house can identify, inspect the history of, revise
-on its own, and revert without touching anything else. That is a governance
+on its own, and revert without changing anything else. That is a governance
 cost, not a representational prohibition: the weights are the surface whose
 changes are hardest to govern, so a house with a working non-parametric path
 should have a reason before it trains weights on project evidence. Which
@@ -194,7 +195,7 @@ between surfaces, is itself a trainable choice. [Continual learning is
 representational-form
 coevolution](../notes/treat-continual-learning-as-representational-form-coevolution.md):
 the question is how the improvement loops over weights, natural language, and
-code relate, not which of them is the real locus of learning.
+code relate, not which of them is where learning really happens.
 
 ## Governance is the hard core
 
@@ -236,7 +237,7 @@ rationale that can be found and revised on its own, performs better under
 structured change than a house that repeatedly reconstructs its understanding
 from raw records or searches the implementation directly. *Better* means some
 combination of higher success on later demands it has not been given, faster
-diagnosis and recovery, fewer collateral regressions, more proportional
+diagnosis and recovery, fewer regressions elsewhere, more proportional
 rescoping after a counterexample, cheaper rollback and local revision, and
 lower total cost once theory search, validation, retrieval, and maintenance
 are counted. Both routes require retained evidence to reach the relevant
@@ -263,10 +264,10 @@ cost.
 
 A test of either hypothesis needs a baseline the fixed-model regime cannot
 supply on its own: adapting the model's weights on the same production
-evidence. Without it, an advantage of explicit theory over unsynthesized
-records shows that synthesis pays; it does not distinguish training the state
-around the model from adapting the model itself, which is the contrast the
-doctrine draws.
+evidence. Without it, an advantage of explicit theory over raw records shows
+that synthesis pays; it does not distinguish training the state around the
+model from adapting the model itself, which is the contrast the doctrine
+draws.
 
 The doctrine survives if the explicit-theory hypothesis fails. A house can
 learn through tests, tools, learned critics, episodic retrieval, or weight
@@ -278,10 +279,10 @@ lesson.
 ## The Bitter Lesson objection
 
 The standard objection is Sutton's Bitter Lesson: general methods that scale
-with computation beat hand-built structure, so learning that lives in
-readable notes and programs is the hand-built approach in a new costume.
-The reply is that [the lesson selects how behaviour-shaping structure is
-produced, not the form in which it is
+with computation outperform hand-built structure, so learning that lives in
+readable notes and programs is the hand-built approach under a new name. The
+reply is that [the lesson selects how behaviour-shaping structure is produced,
+not the form in which it is
 retained](../notes/the-bitter-lesson-selects-production-methods-not-representational.md).
 Notes, programs, schemas, tests, and evaluators are learned products when
 computation produces and retains their evidence-responsive changes. What the
@@ -291,19 +292,18 @@ with the lesson only if [learning outgrows the task-specific knowledge the
 seed
 supplies](../notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md):
 as the claimed scope widens, computation must increasingly produce or
-challenge the theory, representations, decompositions, methods, and
-evaluators the house requires, and the retained result must affect later
-work beyond the episode that exposed the need.
+challenge the theory, representations, decompositions, methods, and evaluators
+the house requires, and the retained result must affect later work beyond the
+episode that exposed the need.
 
 Read this way the lesson supports the doctrine rather than opposing it. It
 demands that task-specific structure be computationally produced, and the
 doctrine's whole content is a computational evidence-to-update process over
 that structure. It also warns the doctrine against fixing permanently which
-surface holds which lesson: no note, program, or validator is promised
-survival, and a future model may absorb a theory or replace an evaluator with
-a cheaper learned one. That is a possibility the doctrine already
-accommodates, since which surface holds a lesson is a trainable choice. The
-[companion
+surface holds which lesson: no note, program, or validator is guaranteed to
+last, and a future model may absorb a theory or replace an evaluator with a
+cheaper learned one. That is a possibility the doctrine already allows for,
+since which surface holds a lesson is a trainable choice. The [companion
 article](./the-bitter-lesson-does-not-require-everything-to-live-in-weights.md)
 gives the full argument and the tests that would show a bootstrap has not
 outgrown its seed.
