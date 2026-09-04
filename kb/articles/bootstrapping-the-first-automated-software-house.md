@@ -1,5 +1,5 @@
 ---
-description: "Research program for reaching the first automated software house from a human-agent house: move internal roles out of human hands one class at a time as their premises, criteria, and checks are built; stages, evidence, stop conditions"
+description: "Research program for reaching the first automated software house from a human-agent house: move internal roles out of human hands one class at a time as their premises, criteria, and checks are built; evidence of a move, stop conditions"
 type: kb/articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
@@ -35,7 +35,8 @@ move those roles out of human hands one class at a time, in the order in
 which the premises, settled criteria, and defeating checks each role needs
 can be built, and to be able to show at each step that the role moved
 rather than went unobserved. The article states the program, the ordering
-principle, the stages, what counts as evidence that a stage was reached,
+principle, why the order of moves is recorded rather than declared, what
+counts as evidence that a role moved,
 what the house's own training must produce along the way, and the results
 that would stop the program or send it elsewhere.
 
@@ -75,7 +76,7 @@ boundary, objective, horizon, and workload.
 
 Three commitments are packed into that sentence. The path is incremental:
 roles move in classes, and the house stays in production throughout, so
-every stage is a working house with fewer people inside than the last. The
+every move leaves a working house with fewer people inside than before. The
 order is not arbitrary: it follows what each role needs before it can move
 with warrant. And each move is a measured claim, not a felt one: the house
 must be able to show that the role is now performed inside, that quality did
@@ -118,69 +119,36 @@ premise the house already records somewhere moves first: the work is
 retrieval. A role whose criterion is unsettled moves only after the house
 has accumulated enough decided cases for a criterion to be stated, and that
 accumulation is itself production experience. A role that needs a check the
-house cannot yet perform waits for the check. The program therefore predicts
-the sequence of stages below, but the prediction is about the order in which
-the enabling conditions can be built, not a timetable.
+house cannot yet perform waits for the check. The program does not fix
+the sequence in advance; the next section says why.
 
-## The stages
+## What the program does not fix in advance
 
-The stages are named by the class of role that moves. Different role classes
-may be at different stages at the same time; the sequence describes each
-class's path, and the house as a whole is at the stage of its least-moved
-decisive role.
+The program does not declare a sequence of stages. The table says what each
+role class needs before it can move; it does not say which role the house
+will be ready to move next, because that depends on what production has
+accumulated: which premises are already recorded, which criteria have enough
+decided cases behind them, which checks the house can already run. The order
+is therefore discovered by doing the work and recorded as it happens, one
+move at a time, with the enabling condition that made each move possible
+stated when the move is claimed. A declared sequence would be a prediction
+the program has no evidence for yet, and it would invite building toward the
+sequence instead of toward the role that is actually ready.
 
-**Stage 0: agents execute, people decide.** Agents implement changes that
-people specify, diagnose, and accept. Retained project state, if any, is
-written by people for people. This is the baseline against which every later
-stage is measured.
-
-**Stage 1: retained state becomes operative.** The house loads its own
-notes, tests, and rules at the point of decision, and doing so changes what
-it does. People still diagnose failures and choose revisions, but the premise
-class in the table starts to move: a decision that used to wait for a person
-to supply the reason a design is the way it is can now find that reason in
-retained state. The evidence that this stage is reached is the first
-article's holding intervention: withhold or replace the relevant state, and
-the house's next action changes in the predicted way.
-
-**Stage 2: recurring judgments become machinery.** A judgment people have
-made the same way many times becomes a validator, an evaluator, or a
-selection rule. This is the settled-criterion class moving: a criterion that
-was implicit in a run of human decisions is stated and enforced. Routine
-comparison of candidates and detection of known failure classes move inside.
-The house proposes the machinery from production evidence; people still
-approve it. The evidence is a fall in human interventions per demand for the
-covered classes, with no rise in escaped failures on the same classes.
-
-**Stage 3: diagnosis and successor states by computation.** The house
-diagnoses why a change failed, attributes a delayed consequence to the
-earlier decision that caused it, and proposes a successor state, whether a
-revised note, a new check, a changed tool, or a combination. This is the
-check class moving: the house's own criticism becomes independent enough of
-its own proposals to defeat some of them. People still authorize the
-successor. The evidence is the first article's successor-acquisition
-obligation met with human authorization only: given a contradiction the
-house did not anticipate, it reaches an adequate successor state and the
-person's role reduces to yes or no.
-
-**Stage 4: admission moves inside.** The house decides which revisions are
-kept, within a declared grant of authority, and people remain outside as
-users. This is the last decisive role. It can move only after stage 3, since
-admitting a successor with warrant requires the house to have produced and
-criticized it, and only within limits a person has set in advance, which is
-the represented grant of authority in the table. A house at stage 4 over a
-declared scope and horizon is a candidate witness for the first article's
-conjecture, and the evidence is that article's automated-continuation
-obligation.
-
-Two features of the sequence matter more than the stage boundaries. Each
-stage supplies the next with its enabling condition: operative state (1)
-gives machinery proposals something to be made from (2); machinery gives
-diagnosis independent checks to lean on (3); computational diagnosis gives
-admission a criticized candidate to admit (4). And no stage removes the
-person from the outside. Requirements, facts, outcomes, and acceptance of
-visible behaviour stay with users at every stage, because they are not
-internal roles.
+Two things are fixed whatever the order. The first move requires retained
+project state to be operative: the house loads its own notes, tests, and
+rules at the point of decision, and doing so changes what it does. No
+premise, criterion, or check can move inside a house that does not use what
+it retains, and the evidence that it does is the first article's holding
+intervention. The last move is admission. Deciding which revisions are kept
+can move inside only within a grant of authority a person has set in
+advance, and only after the house produces and criticizes the candidates it
+admits, since admitting an uncriticized candidate has no warrant. A house
+with admission inside, over a declared scope and horizon, is a candidate
+witness for the first article's conjecture. Between those two ends, no move
+removes the person from the outside: requirements, facts, outcomes, and
+acceptance of visible behaviour stay with users throughout, because they are
+not internal roles.
 
 ## What counts as a move
 
@@ -209,7 +177,7 @@ a no-op loop, a captured evaluator, or a bad objective can be fully closed.
 [Usefulness, autonomy, warrant, and the house's power over its product are
 separate
 dimensions](../notes/usefulness-autonomy-warrant-and-power-are-separate-dimensions.md),
-and a stage claim must say which one moved. The program
+and a claim that a role moved must say which dimension moved. The program
 therefore keeps an outcome measure outside the house for every moved role:
 user-visible success on later demands, escaped failures, and cost.
 
@@ -234,12 +202,13 @@ project-specific theory must be acquired by computation. The second article
 says what the alternative is: a governed, evidence-caused change to any
 retained component that determines later production.
 
-The program applies both to its own stages. At stages 0 and 1 the seed is
+The program applies both to its own moves. For the first move the seed is
 legitimate: people write the first notes, tools, and checks, and the house
-learns to use them. From stage 2 onward the machinery that enables each move
+learns to use them. For every later move the machinery that enables it
 must increasingly be produced by the house from production evidence and
 retained by a governed process, with people approving rather than authoring.
-By stage 4 the house must be producing successors to its own machinery,
+By the time admission moves inside, the house must be producing successors
+to its own machinery,
 including the machinery of admission, since a house that cannot revise how it
 admits changes cannot recover from an admission policy that experience
 proves wrong. The seed is outgrown when [learning has displaced the
@@ -258,14 +227,14 @@ target for revision only when the declared scope requires a change it cannot
 supply. What must be produced computationally is the project-specific
 specialization, not the substrate.
 
-The production of machinery at each stage has the same shape as any
+The production of machinery for each move has the same shape as any
 [proposal-selection improvement
 loop](../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md):
 candidates are generated from evidence, evaluated with the possibility of
-rejection, and made operative when accepted. The stages differ in who
-rejects. At stage 2 a person rejects proposed machinery; at stage 3 the
-house's own checks reject proposed successors and a person rejects what
-passes them; at stage 4 the house rejects within its grant of authority. The
+rejection, and made operative when accepted. The moves differ in who
+rejects. Early, a person rejects proposed machinery; later, the house's own
+checks reject proposed successors and a person rejects what passes them; at
+the end, the house rejects within its grant of authority. The
 program is, in that sense, the progressive transfer of the rejection role,
 and [governing the resulting behaviour-changing
 writes](../notes/continual-learning-requires-governing-behaviour-changing-writes.md)
@@ -275,12 +244,12 @@ is the problem the second article names as the hard core.
 
 The program is a bet, and it should say in advance what would lose it. Any of
 the following, observed in a declared regime, is a reason to stop or redirect
-rather than to add another stage.
+rather than to attempt the next move.
 
-- **Retained state makes no causal difference.** The holding intervention at
-  stage 1 fails repeatedly: withholding or replacing project state does not
+- **Retained state makes no causal difference.** The holding intervention
+  fails repeatedly: withholding or replacing project state does not
   change what the house does. Then the house is not using what it retains,
-  and stages 2 to 4 have nothing to build on.
+  and no later move has anything to build on.
 - **Human judgment grows with the corpus.** Interventions per demand for a
   role class rise or hold steady as retained state and machinery accumulate.
   The house is generating work for people faster than it removes it.
@@ -292,7 +261,7 @@ rather than to add another stage.
   of its quality, and the outside outcome measure has stopped moving with it.
 - **A more direct method wins at comparable total cost.** A house that
   reconstructs understanding from raw records, or a model adapted on the
-  same production evidence, reaches the same stage more cheaply. That does
+  same production evidence, reaches the same point more cheaply. That does
   not refute the first article's conjecture, but it removes the reason to
   reach it by this route.
 
@@ -309,5 +278,5 @@ article asks how to build the first one and answers: start from a human-agent
 house, move the internal roles out in the order their enabling conditions
 can be built, measure each move against an outside outcome, and require the
 house's own training to produce the machinery that enables each move after
-the seed. The program is falsifiable at every stage, which is the most that
+the seed. The program is falsifiable at every move, which is the most that
 can be asked of a plan to build something that does not yet exist.
