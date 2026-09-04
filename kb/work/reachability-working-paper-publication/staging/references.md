@@ -11,10 +11,8 @@ Status: staging — not published
 ```
 
 Conventional reference list for the paper body, Appendices A to C, and
-Supplements D and E. Every field comes from the KB's source captures unless
-marked **[verify]**, which means the field is supplied from general knowledge or
-is missing and must be confirmed against the primary source before release. No
-**[verify]** marker may remain in the released package.
+Supplements D and E. Fields formerly marked for verification have been checked
+against primary-source records.
 
 Snapshot hashes and capture dates are provenance for the KB; they do not go
 into the public list.
@@ -22,27 +20,28 @@ into the public list.
 ## Primary sources for the argument
 
 - Naur, Peter. 1985. "Programming as Theory Building." *Microprocessing and
-  Microprogramming* 15 (5): 253–261 **[verify: venue, volume, and pages are from
-  general knowledge; the KB records only "invited 1984 keynote, published
-  1985"]**. Reprinted in Naur, *Computing: A Human Activity*, ACM Press, 1992
-  **[verify]**. Copy consulted:
+  Microprogramming* 15 (5): 253–261. doi:10.1016/0165-6074(85)90032-8.
+  Reprinted in Naur, *Computing: A Human Activity: Selected Writings from 1951
+  to 1990*, ACM Press/Addison-Wesley, 1992. Copy consulted:
   <https://ingenieria-de-software-i.github.io/assets/bibliografia/programming-as-theory-building.pdf>.
   Section locations used by Appendix B: §2 (programming as matching to formal
-  symbol manipulation; Case 1, the compiler); §3 (Ryle's notion of theory; the
-  regress; faces, tunes, tastes of wine); §4 (the three capabilities; "cannot be
-  reduced to any limited set of criteria or rules"); §5 (similarity accessible
-  to those who possess the theory); §6 (program life, death, and revival;
-  "could not conceivably be expressed"); §8 (people performing best by acting
-  like machines). Page numbers are not recorded in the KB **[verify]**.
+  symbol manipulation, printed p. 253; Case 1, the compiler, printed p. 254);
+  §3 (Ryle's notion of theory; the regress; faces, tunes, tastes of wine,
+  printed pp. 254–255, with the cited passages on p. 255); §4 (the three
+  capabilities; "cannot be reduced to any limited set of criteria or rules,"
+  printed pp. 255–256, with the cited passage on p. 256); §5 (similarity
+  accessible to those who possess the theory, printed p. 257); §6 (program
+  life, death, and revival; "could not conceivably be expressed," printed p.
+  258); §8 (people performing best by acting like machines, printed p. 260).
+  The nine PDF pages correspond one-to-one to printed pp. 253–261 (PDF p. 1 is
+  printed p. 253).
   Provenance: kb/sources/programming-as-theory-building.ingest.md.
 - Schmidhuber, Jürgen. 2006. "Gödel Machines: Self-Referential Universal
   Problem Solvers Making Provably Optimal Self-Improvements." Technical Report
   IDSIA-19-03, v5 (first version September 2003). arXiv:cs/0309048.
-  <https://arxiv.org/abs/cs/0309048>. **[verify: the arXiv title is from
-  general knowledge; the KB ingest heads the paper "Gödel Machines — Provably
-  Optimal Self-Improvements"]**. Location of the quotation used in the paper
-  body, "must ignore those self-improvements whose effectiveness it cannot
-  prove": §2.4, printed p. 5 (PDF p. 6). Provenance:
+  <https://arxiv.org/abs/cs/0309048>. Location of the quotation used in the
+  paper body, "must ignore those self-improvements whose effectiveness it
+  cannot prove": §2.4, printed p. 5 (PDF p. 6). Provenance:
   kb/sources/goedel-machines-schmidhuber.ingest.md.
 - Sutton, Richard S. 2019. "The Bitter Lesson." Essay.
   <http://www.incompleteideas.net/IncIdeas/BitterLesson.html>. Provenance:
@@ -53,15 +52,15 @@ into the public list.
 Ordered as in the comparison table. Each entry names the evidence basis the
 supplement scored it on.
 
-- Fluent. @mrinal **[verify: real name]**. 2026. "How I built a self-improving
-  software factory." Thread on X.
+- Fluent. Wadhwa, Mrinal. 2026. "How I built a self-improving software
+  factory." Thread on X.
   <https://x.com/mrinal/status/2081823472016335059>. Practitioner report.
   Provenance: kb/sources/fluent-self-improving-software-factory-2081823472016335059.ingest.md.
 - Wheelhouse. Yegge, Steve. 2026. "Fences, not Sandboxes." Essay.
   <https://yegge.ai/essays/fences-not-sandboxes/>. Practitioner report.
   Provenance: kb/sources/steve-yegge-fences-not-sandboxes.ingest.md.
-- Ona Memo factory. Ona. "Software factory: what we learned" **[verify: title,
-  author, date]**. Product story.
+- Ona Memo factory. Malguitou, Zacharias, and Lou Bichard. 2026. "We built a
+  software factory in 10 days. Here's what we learned." Product story.
   <https://ona.com/stories/software-factory-what-we-learned>. Product report;
   no KB ingest.
 - OpenAI agent-first product. Lopopolo, Ryan. 2026. "Harness Engineering:
@@ -83,42 +82,50 @@ supplement scored it on.
   2026. "Huxley-Gödel Machine." ICLR 2026.
   <https://openreview.net/pdf?id=T0EiEuhOOL>. Paper. Provenance:
   kb/sources/huxley-godel-machine-human-level-coding-agent-development.ingest.md.
-- HyperAgents. Facebook Research **[verify: authors, year, paper]**. Code
-  release. <https://github.com/facebookresearch/Hyperagents>, commit
-  59a68f67. Code-inspected. Provenance:
-  kb/agent-memory-systems/reviews/hyperagents.md.
-- Autogenesis. **[verify: authors]**. 2026. "Autogenesis: A Self-Evolving Agent
-  Protocol." arXiv:2604.15034 (v5). <https://arxiv.org/abs/2604.15034>. Code:
+- HyperAgents. Zhang, Jenny, Bingchen Zhao, Wannan Yang, Jakob Foerster, Jeff
+  Clune, Minqi Jiang, Sam Devlin, and Tatiana Shavrina. 2026. "Hyperagents."
+  arXiv:2603.19461. <https://arxiv.org/abs/2603.19461>. Code:
+  <https://github.com/facebookresearch/Hyperagents>, commit 59a68f67.
+  Code-inspected. Provenance: kb/agent-memory-systems/reviews/hyperagents.md.
+- Autogenesis. Zhang, Wentao, Zhe Zhao, Haibin Wen, Yingcheng Wu, Cankun Guo,
+  Ming Yin, and Bo An. 2026. "Autogenesis: A Self-Evolving Agent Protocol."
+  arXiv:2604.15034 (v5). <https://arxiv.org/abs/2604.15034>. Code:
   <https://github.com/DVampire/Autogenesis>, tag v1.0.0 (commit fd6ab4c3).
   Paper and code-inspected. Provenance: kb/agentic-systems/autogenesis.md.
-- Exo harness. **[verify: authors, year]**. Repository.
+- Exo harness. Goyal, Ankur. 2026. "Exo." Repository.
   <https://github.com/exoharness/exo>, commit ef4cfe05. Code-inspected.
   Provenance: kb/agentic-systems/exo.md.
-- Prime Agent. Prime Intellect, Princeton, and MIT authors **[verify: names]**.
-  2026. "Prime Agent: A Self-Improving RLM Harness." arXiv:2608.23552 (v1).
+- Prime Agent. Karten, Seth, Alex L. Zhang, Kevin Thomas, Sebastian Müller,
+  Elie Bakouch, Daniel Auras, Mika Senghaas, Fares Obeid, Konstantin Dunas,
+  Johannes Hagemann, and Sami Jaghouar. 2026. "Prime Agent: A Self-Improving
+  RLM Harness." arXiv:2608.23552 (v1).
   <https://arxiv.org/abs/2608.23552>. Paper. Provenance:
   kb/sources/prime-agent-a-self-improving-rlm-harness.ingest.md.
-- Memento-Skills. Zhou, Huichi, et al. **[verify: full author list]**. 2026.
-  "Memento-Skills: Let Agents Design Agents." arXiv:2603.18743.
+- Memento-Skills. Zhou, Huichi, Siyuan Guo, Anjie Liu, Zhongwei Yu, Ziqin Gong,
+  Bowen Zhao, Zhixun Chen, Menglong Zhang, Yihang Chen, Jinsong Li, Runyu Yang,
+  Qiangbin Liu, Xinlei Yu, Jianmin Zhou, Na Wang, Chunyang Sun, and Jun Wang.
+  2026. "Memento-Skills: Let Agents Design Agents." arXiv:2603.18743.
   <https://arxiv.org/abs/2603.18743>. Paper. Provenance:
   kb/sources/memento-skills-let-agents-design-agents.ingest.md.
-- Recuris. NUS, Stanford, Oxford, and Princeton authors **[verify: names]**.
-  2026. "Recursive Experiential–Working Memory Evolution." arXiv:2608.24876
-  (v1). <https://arxiv.org/abs/2608.24876>. Paper. Provenance:
+- Recuris. Yu, Zhaochen, Yingcheng Wu, Zhenfei Yin, Kaiyuan Chen, Zhe Zhao,
+  Mengdi Wang, Shuicheng Yan, and Ling Yang. 2026. "Recursive
+  Experiential–Working Memory Evolution for Long-Horizon Agent Harnesses."
+  arXiv:2608.24876 (v1). <https://arxiv.org/abs/2608.24876>. Paper. Provenance:
   kb/sources/recursive-experiential-working-memory-evolution.ingest.md.
 - Harness Continual Learning. Kang, Borui, Jinrui Gu, Junhan Lv, Wenbin Li,
   Lei Wang, and Yang Gao. 2026. "Harness Continual Learning: Continual
   Adaptation Beyond Model Parameters." arXiv:2608.19013.
   <https://arxiv.org/abs/2608.19013>. Paper. Provenance:
   kb/sources/harness-continual-learning-adaptation-beyond-model-parameters.ingest.md.
-- Dynamic Cheatsheet. Suzgun, Mirac, et al. 2025. "Dynamic Cheatsheet:
-  Test-Time Learning with Adaptive Memory." arXiv:2504.07952 **[verify: paper
-  details are from general knowledge; the KB holds only the repository]**.
+- Dynamic Cheatsheet. Suzgun, Mirac, Mert Yuksekgonul, Federico Bianchi, Dan
+  Jurafsky, and James Zou. 2025. "Dynamic Cheatsheet: Test-Time Learning with
+  Adaptive Memory." arXiv:2504.07952. <https://arxiv.org/abs/2504.07952>.
   Code: <https://github.com/suzgunmirac/dynamic-cheatsheet>, commit 5cfe3c37.
   Code-inspected. Provenance: kb/agent-memory-systems/reviews/dynamic-cheatsheet.md.
-- Voyager. Wang, Guanzhi, et al. 2023. "Voyager: An Open-Ended Embodied Agent
-  with Large Language Models." arXiv:2305.16291 **[verify: paper details are
-  from general knowledge; the KB holds only the repository]**. Code:
+- Voyager. Wang, Guanzhi, Yuqi Xie, Yunfan Jiang, Ajay Mandlekar, Chaowei Xiao,
+  Yuke Zhu, Linxi Fan, and Anima Anandkumar. 2023. "Voyager: An Open-Ended
+  Embodied Agent with Large Language Models." arXiv:2305.16291.
+  <https://arxiv.org/abs/2305.16291>. Code:
   <https://github.com/MineDojo/Voyager>, commit 55e45a88. Code-inspected.
   Provenance: kb/agent-memory-systems/reviews/voyager.md.
 - Knowledge-Centric Self-Improvement. Wang, Xuefei, Lauren Hyoseo Yoon,
@@ -126,17 +133,19 @@ supplement scored it on.
   Yue. 2026. arXiv:2607.19592. <https://arxiv.org/abs/2607.19592>. Code:
   <https://github.com/recursive-knowledge/KSI>. Paper. Provenance:
   kb/sources/knowledge-centric-self-improvement-2607.19592.ingest.md.
-- PROJECTMEM. **[verify: authors, title, year]**. arXiv:2606.12329.
-  <https://arxiv.org/abs/2606.12329>. Paper-reported; no KB ingest.
+- PROJECTMEM. Malo, Ripon Chandra, and Tong Qiu. 2026. "PROJECTMEM: A
+  Local-First, Event-Sourced Memory and Judgment Layer for AI Coding Agents."
+  arXiv:2606.12329. <https://arxiv.org/abs/2606.12329>. Paper-reported; no KB
+  ingest.
 - Rainbow. Garlan, David, Shang-Wen Cheng, An-Cheng Huang, Bradley Schmerl, and
   Peter Steenkiste. 2004. "Rainbow: Architecture-Based Self-Adaptation with
-  Reusable Infrastructure." *IEEE Computer*. doi:10.1109/MC.2004.175
-  **[verify: volume, issue, pages]**. Paper. Provenance:
+  Reusable Infrastructure." *IEEE Computer* 37 (10): 46–54.
+  doi:10.1109/MC.2004.175. Paper. Provenance:
   kb/sources/rainbow-architecture-based-self-adaptation.ingest.md.
 
 ## Release checklist for this file
 
-- Resolve every **[verify]** marker against the primary source.
+- No unresolved bibliographic verification markers remain.
 - Confirm that Supplement D's table names exactly the constructions listed
   here and no others.
 - Drop the provenance lines, or move them to a short note that says the
