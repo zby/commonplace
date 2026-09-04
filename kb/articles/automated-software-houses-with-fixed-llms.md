@@ -35,7 +35,7 @@ role. The computer scientist Peter Naur argued that the understanding that
 relates a program to what it is for, which he called a program theory,
 can be held only by people; the conjecture denies that. The models stay
 fixed. Learning happens in the project state around them: code, notes, and
-the tooling that loads both into later work and decides which changes are
+the machinery that loads both into later work and decides which changes are
 kept. People write the first versions. The house then revises them as
 requests and their consequences arrive, and people correct it at first. The
 conjecture includes that the correction required shrinks as the house's
@@ -57,8 +57,8 @@ available by 2026-09-02.
 
 The eligible model versions, meaning those available by the cutoff date, stay
 fixed, and so do their weights and any other learned component, such as an
-embedding model. Together these are the [distributed-parametric
-state](../notes/definitions/representational-form.md). What gets trained is
+embedding model. Together these are the [learned
+parameters](../notes/definitions/representational-form.md). What gets trained is
 the house, through changes that computation produces and the house retains in
 its [notes and code](../notes/definitions/representational-form.md). *Notes
 and code* here means everything the house holds in natural language or in
