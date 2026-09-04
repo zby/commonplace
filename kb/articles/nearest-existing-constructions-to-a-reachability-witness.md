@@ -33,8 +33,9 @@ source_notes:
 The reachability conjecture holds that an automated [software
 house](../notes/definitions/software-house.md), one that keeps developing
 software for its users across demands nobody listed in advance, can be built
-with the LLMs available in 2026 while its distributed-parametric internal state
-stays fixed and the natural-language and symbolic state around it, its notes and
+with the LLMs available in 2026 while its [distributed-parametric](../notes/definitions/representational-form.md) internal
+state, the model weights and any other learned numerical component, stays
+fixed and the natural-language and symbolic state around it, its notes and
 code, learns. It states four obligations that one constructive witness must
 eventually discharge. The obligations are carrier-neutral: they do not fix
 whether notes, code, or reconstruction from records carries the theory. This

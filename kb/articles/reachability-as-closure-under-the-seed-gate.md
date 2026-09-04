@@ -23,8 +23,9 @@ Once no human fills an internal production role, every change to the house must
 arise through the computational machinery and permitted external inputs in its
 declared system. Represent one complete mutable house state by \(s\): its notes,
 software, production machinery, retention rules, evaluators, and context
-assembly. The pinned distributed-parametric components remain fixed parameters
-of the experiment rather than mutable parts of \(s\).
+assembly. The pinned [distributed-parametric](../notes/definitions/representational-form.md)
+components, the model weights and any other learned numerical component, remain
+fixed parameters of the experiment rather than mutable parts of \(s\).
 
 Let the declared external inputs include user demands, tool results, and
 operating consequences. The current state and one such input determine a set or

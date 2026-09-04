@@ -22,7 +22,7 @@ A witness run is defined by its regime (A.6). All of the following are written
 down and fixed before the first demand is revealed:
 
 1. **Pinned weights.** The exact model versions and every other
-   distributed-parametric component the house uses: embedding models,
+   distributed-parametric component the house uses (A.4): embedding models,
    rerankers, learned classifiers, adapters. None may change during the run.
 2. **Seed.** The complete initial house state: notes, software, production
    machinery, evaluators, retention rules, context assembly. The seed is
