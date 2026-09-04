@@ -243,7 +243,10 @@ combination of higher success on later demands it has not been given, faster
 diagnosis and recovery, fewer regressions elsewhere, more proportional
 rescoping after a counterexample, cheaper rollback and local revision, and
 lower total cost once theory search, validation, retrieval, and maintenance
-are counted.
+are counted. A test of the hypothesis declares, before the run, which of
+these measures it uses and what result on them counts as better. The list is
+the space of admissible measures, not the criterion; a test that chooses its
+measure after seeing the result has not tested the hypothesis.
 
 Both routes require retained evidence to reach the relevant decision and
 change it. Only the explicit route additionally requires selecting, retaining,

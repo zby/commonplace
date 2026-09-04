@@ -319,9 +319,10 @@ scope, horizon, and budget before testing, so that the scope cannot shrink
 until fixed machinery suffices. Open-ended means that the process generating
 requests and their consequences is declared in advance and can produce
 relevant novelty; it is not a fixed list of benchmark tasks. Three things
-about that process are distinct and fixed before the run: which request
-sequences it may produce, the one it actually produced, and how likely each
-was. None may be changed after a failure is seen. Bare reachability is cheap:
+about that process are distinct: which request sequences it may produce, the
+one it actually produced, and how likely each was. The first and third are
+fixed before the run, and none of the three may be altered after a failure
+is seen. Bare reachability is cheap:
 one lucky path establishes only possibility. The claim is that training
 reaches adequate states with usable probability inside the declared budget
 and that they remain adequate across the declared horizon.
