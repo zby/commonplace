@@ -18,7 +18,9 @@ Produce a selective current account of the external mechanisms that matter to a 
 - An explicit current question, design problem, or priority. A generic request to find every difference is not a valid brief. If the user asks broadly what is interesting, state the bounded standing concern you will use before selecting findings.
 - Read access to the Commonplace artifacts needed to establish the current local analogue.
 - Explicit file-output authority when the result should be written. Without it, return the scan in the response.
-- A written state result requires a byte-complete external-analysis input: one file, a package whose every canonical part is readable, or an exact delimited stable response block that may be retained verbatim in the state report. If the supplied analysis cannot be captured and fingerprinted completely, return response-only or report a blocker when a file was required.
+- A written state result requires one complete external-analysis or review file.
+  If the supplied analysis is only a response, summary, run ID, or incomplete
+  package, return response-only or report a blocker when a file was required.
 
 ## Boundaries
 
@@ -30,12 +32,13 @@ Use Commonplace ontology to name mechanisms when the external analysis supports 
 
 ## Steps
 
-1. **Fix the three substantive inputs and production provenance.** Copy the current interest brief exactly. Identify only the Commonplace artifacts actually consulted and record each path and SHA-256. Fingerprint the external analysis by form:
-   - **file:** record its identity, byte length, and SHA-256;
-   - **package:** require every canonical logical part to be readable, then create a newline-terminated manifest sorted by part identity, with one `sha256<TAB>byte-length<TAB>part-identity` row per part; record the run/result identity, manifest, and SHA-256 of the exact UTF-8 manifest bytes;
-   - **response:** read and apply [Fingerprint a response analysis](../analyse-agentic-system/references/response-fingerprint.md). Verify or compute the canonical byte length and SHA-256 of the delimited stable block and, for a written scan, retain that exact block verbatim in an input-capture appendix. Do not write state from an undelimited chat response, summary, conversation reference, run ID alone, or partially resolvable package.
-
-   Also record `scan-agentic-system-transfer` as the producing instruction and record model or runner provenance only when the harness supplies it; never infer missing provenance.
+1. **Fix the three substantive inputs and production provenance.** Copy the
+   current interest brief exactly. Record the external analysis file's identity,
+   byte length, and SHA-256. Identify only the Commonplace artifacts actually
+   consulted and record each path and SHA-256. Also record
+   `scan-agentic-system-transfer` as the producing instruction and record model
+   or runner provenance only when the harness supplies it; never infer missing
+   provenance.
 2. **Establish the current analogue.** Read the minimum Commonplace system-definition and knowledge artifacts needed to answer the brief. Distinguish shipped behavior from proposals, notes, and work in progress. Do not use a proposal or note as evidence that Commonplace already implements a mechanism.
 3. **Select, do not enumerate.** Choose zero to five differences, tensions, confirmations, or implementation variants that could change the current decision. Prefer mechanisms with a named consequence over attractive features. A similarity belongs only when it confirms or challenges a live choice. If nothing clears that threshold, return a valid zero-finding scan.
 4. **Write each finding as a transfer candidate.** Include:
@@ -52,7 +55,7 @@ Use Commonplace ontology to name mechanisms when the external analysis supports 
 
 Open with:
 
-`subject | external analysis identity, form, byte length, and digest | package-manifest digest or response-capture location when applicable | interest brief | consulted Commonplace paths and hashes | producing instruction | harness-supplied model/runner or not supplied | generated date | selective/non-exhaustive: yes`
+`subject | external analysis file, byte length, and digest | interest brief | consulted Commonplace paths and hashes | producing instruction | harness-supplied model/runner or not supplied | generated date | selective/non-exhaustive: yes`
 
 Then give the selected findings and finish with:
 
@@ -70,4 +73,6 @@ Do not add a difference count, coverage percentage, or claim that the scan exhau
 - Every ontology mapping includes a reason and preserves partial or uncertain fit.
 - Every selected finding states why it matters under the recorded brief; generic admiration is absent.
 - Omission carries no negative meaning, the result feeds no matrix or public corpus statistic, and no candidate was promoted automatically.
-- A written result has a byte-complete external-analysis fingerprint, all three freshness inputs, production provenance, a successful pre-write fingerprint recheck, and the cleanup condition recorded. A response-derived state report retains the exact delimited stable response block.
+- A written result has a byte-complete external-analysis file fingerprint, all
+  three freshness inputs, production provenance, a successful pre-write
+  fingerprint recheck, and the cleanup condition recorded.

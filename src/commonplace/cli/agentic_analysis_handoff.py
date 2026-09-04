@@ -16,7 +16,7 @@ from commonplace.lib.note_parser import parse_document
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("run_state", help="Path to a handoff-ready run-state.md")
+    parser.add_argument("run_state", help="Path to a complete run-state.md")
     args = parser.parse_args(argv)
 
     repo_root = Path.cwd().resolve()

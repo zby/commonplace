@@ -36,10 +36,9 @@ running commands.
 
 ### commonplace-agentic-analysis-handoff
 
-Validate one `handoff-ready` agentic-system analysis run state and render its
-complete Markdown operator handoff from checked run-state and result fields.
-The command is read-only. It refuses an invalid or earlier-phase run instead of
-rendering a partial summary.
+Validate one `complete` agentic-system analysis run state and render its
+Markdown operator handoff from the frozen source and current output identities.
+The command is read-only. It refuses a running, failed, or invalid run.
 
 ### commonplace-status
 

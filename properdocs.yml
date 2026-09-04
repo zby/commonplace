@@ -227,6 +227,7 @@ plugins:
         'reference/proposals/atomic-step-grounding-bounds-unquoted-sources-per-note.md': 'reference/adr/082-grounding-is-bounded-on-the-artifact-by-unquoted-sources.md'
         'reference/proposals/exceeding-a-review-budget-splits-the-task.md': 'reference/adr/082-grounding-is-bounded-on-the-artifact-by-unquoted-sources.md'
         'reference/proposals/external-articles-collection.md': 'reference/proposals/archive/external-articles-collection.md'
+        'reference/proposals/harness-capture-for-agentic-analysis-diagnostics.md': 'reference/adr/083-agentic-analysis-carriers-follow-exact-result-consumers.md'
         'reference/proposals/harness-orchestrated-review-sweeps.md': 'reference/proposals/archive/harness-orchestrated-review-sweeps.md'
         'reference/proposals/ingest-source-units-and-supporting-material.md': 'reference/proposals/archive/ingest-source-units-and-supporting-material.md'
         'reference/proposals/one-validation-algorithm-over-declared-scopes.md': 'reference/adr/050-validation-runs-share-parsed-artifacts-and-collection-indexes.md'

@@ -12,12 +12,10 @@ Current state includes:
 - [`full-pass/`](./full-pass/README.md) — guarded captures and actionable pass
   dispositions;
 - `fixes/` — warning dispositions;
-- `agentic-system-analysis/<run-id>/` — checked phase state, frozen runtime
-  baseline, immutable lens packets and returns, diagnostics, and validation
-  receipt for one analysis. The analysis workflow owns cleanup. It may remove a
-  handoff-ready run only after every declared exact-result consumer completes
-  or is explicitly disposed and no unresolved transfer or projection state
-  remains;
+- `agentic-system-analysis/<run-id>/` — one exact analysis result, temporary
+  publication candidates, and minimal `running`/`complete`/`failed` state. A
+  failed run is not resumed; a later run repeats it. The analysis workflow owns
+  cleanup after the requesting operator has consumed or disposed the result;
 - `agentic-system-transfer/` — interest-conditioned transfer scans until every candidate is promoted, recorded as `no action`, or explicitly discarded;
 - legacy review stores, backups, and revise-autoreason runs.
 

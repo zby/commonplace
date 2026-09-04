@@ -51,7 +51,7 @@ allOf:
             enum: [code-grounded, doc-grounded, null]
         additionalProperties: true
       headings:
-        description: "One H1 followed by the eleven ordered result sections; shared-record, lens, and verification subheadings remain explicit in every physical carrier and result disposition."
+        description: "One H1 followed by the eleven ordered result sections; shared-record, lens, and verification subheadings remain explicit in every result disposition."
         type: array
         minItems: 25
         prefixItems:
@@ -172,18 +172,12 @@ allOf:
         allOf:
           - description: "The eleven logical records must appear in their canonical reading order."
             pattern: '(?ms)^## Run identity\s*$.*?^## Boundary and evidence\s*$.*?^## Source register\s*$.*?^## Shared records\s*$.*?^## Runtime account\s*$.*?^## Lens scoping\s*$.*?^## Lens outputs\s*$.*?^## Reconciliation\s*$.*?^## Bounded synthesis\s*$.*?^## Limitations\s*$.*?^## Verification and blockers\s*$'
-          - description: "Run identity must state the canonical carrier."
-            pattern: '(?ms)^## Run identity\s*$.*?^\*\*Canonical carrier:\*\*[ \t]+(?:response|state|retained)[ \t]*$.*?(?=^## Boundary and evidence\s*$)'
-          - description: "Run identity must state the physical form."
-            pattern: '(?ms)^## Run identity\s*$.*?^\*\*Physical form:\*\*[ \t]+(?:response|one file|package)[ \t]*$.*?(?=^## Boundary and evidence\s*$)'
-          - description: "Run identity must name the exact-result consumers."
-            pattern: '(?ms)^## Run identity\s*$.*?^\*\*Exact-result consumers?:\*\*[ \t]+\S[^\r\n]*$.*?(?=^## Boundary and evidence\s*$)'
-          - description: "Run identity must state retention and cleanup."
-            pattern: '(?ms)^## Run identity\s*$.*?^\*\*Retention and cleanup:\*\*[ \t]+\S[^\r\n]*$.*?(?=^## Boundary and evidence\s*$)'
-          - description: "Run identity must identify run state and final disposition."
+          - description: "Run identity must identify the complete run state."
             pattern: '(?ms)^## Run identity\s*$.*?^\*\*Run state:\*\*[ \t]+\S[^\r\n]*$.*?(?=^## Boundary and evidence\s*$)'
-          - description: "Run identity must state permitted projections."
-            pattern: '(?ms)^## Run identity\s*$.*?^\*\*Permitted projections:\*\*[ \t]+\S[^\r\n]*$.*?(?=^## Boundary and evidence\s*$)'
+          - description: "Run identity must identify the generated review disposition."
+            pattern: '(?ms)^## Run identity\s*$.*?^\*\*Generated review:\*\*[ \t]+\S[^\r\n]*$.*?(?=^## Boundary and evidence\s*$)'
+          - description: "Run identity must identify the legacy memory-review disposition."
+            pattern: '(?ms)^## Run identity\s*$.*?^\*\*Legacy memory review:\*\*[ \t]+\S[^\r\n]*$.*?(?=^## Boundary and evidence\s*$)'
           - description: "Shared-record subheadings must appear under Shared records in canonical order."
             pattern: '(?ms)^## Shared records\s*$.*?^### Components\s*$.*?^### Operative objects\s*$.*?^### Routes\s*$.*?^### Claims\s*$.*?^### Evidenced absences\s*$.*?^### Behavioral-authority paths\s*$.*?(?=^## Runtime account\s*$)'
           - description: "Lens-scoping subheadings must appear under Lens scoping in canonical order."

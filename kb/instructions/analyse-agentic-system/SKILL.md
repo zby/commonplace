@@ -3,7 +3,7 @@ name: analyse-agentic-system
 description: "Use when asked to analyse, review, or refresh an external agent runtime, orchestration system, agent operating layer, agent memory/knowledge/context-engineering system, or narrower model-dependent operational mechanism from inspectable sources."
 type: kb/types/instruction.md
 user-invocable: true
-argument-hint: "<system identifier> plus source input (repository, checkout, snapshot/bundle, or documents) and optional authorized output path"
+argument-hint: "<system identifier> plus source input (repository, checkout, snapshot/bundle, or documents) and optional public review path"
 allowed-tools: Read, Write, Grep, Glob, Bash, Task
 context: fork
 model: opus
@@ -11,260 +11,284 @@ model: opus
 
 # Analyse an Agentic System
 
-Analyse one external agentic system at one frozen evidence boundary so the result identifies what the system actually wires, where its responsibilities end, and what its memory/context and epistemic routes support. Run a mandatory runtime baseline, then run both the memory/context lens and the epistemic lens at a depth proportionate to the evidence, reconcile shared records by stable IDs, and produce one bounded system synthesis. By default, save that synthesis and return a concise operator handoff that points to it instead of reproducing the full report in the response. Describe mechanisms in the external system's own terms, then use Commonplace ontology to normalize the distinctions that improve comparison. When the selected target is itself a memory, knowledge, or context-engineering system, also invoke the established legacy review workflow against the same frozen sources. A separately commissioned transfer scan may select current implications for Commonplace after the stable analysis is complete; it never changes the analysis or its comparison fields. The consumer is an analysing agent or maintainer; the channel is explicit invocation or trigger-matched skill loading; the force is a prescriptive analysis and result-writing policy.
+Analyse one external agentic system at one frozen evidence boundary. Identify
+what the system wires, where its responsibilities end, and what its
+memory/context and epistemic routes support. Run a runtime baseline and both
+mandatory lenses, then write one exact result and publish a compact generated
+review. If the target is itself a memory, knowledge, or context-engineering
+system, also publish its legacy collection review from the same sources.
 
-Do not put product rankings, generic adoption advice, a Commonplace delta, a universal taxonomy or maturity ladder for agentic systems, or any claim beyond the declared evidence boundary into the stable analysis. This skill owns orchestration of the run inside the caller's existing authority: source preparation, target routing, lens scoping, lens execution, conditional legacy-review invocation, reconciliation, stable-result verification and freezing, optional transfer-scan routing, and reporting. Invocation includes authority to write the required workflow state and default exact result under `kb/reports/state/agentic-system-analysis/`; it does not by itself authorize mutation of a supplied checkout, tracked file publication, or retained-report creation. A supplied repository reference authorizes only the bounded source acquisition stated in step 2. The agent executing this skill is the orchestrator referred to below; lens workers and the legacy-review workflow execute inside its boundary and never establish a different revision or publication authority.
+Invocation authorizes the run directory under
+`kb/reports/state/agentic-system-analysis/`, one generated review under
+`kb/agentic-systems/`, and, when applicable, one review under
+`kb/agent-memory-systems/` plus its semantic-QA state. It does not authorize
+changes to source worktrees, auxiliary indexes or surveys, transfer scans,
+landscape synthesis, retained reports, or Git staging and commits.
 
-## Prerequisites
+## Failure rule
 
-- A named target system and at least one source input (repository reference, existing checkout, snapshot or document bundle, or accessible live documents).
-- If no source input is reachable at all, allocate the run ID, stop substantive analysis, and emit a `blocked` result conforming to `kb/types/agentic-system-analysis-result.md`. Leave boundary-dependent frontmatter fields null, keep every required section, and point each unreached record to the missing-source blocker. Do not analyse from recollection.
+Runs are disposable. A failure sets `run-status: failed` with one concise reason
+and leaves every published incumbent unchanged. Do not resume the run, maintain
+a phase ledger, or preserve packet, correction, retry, or validation-receipt
+state. Rerun with a new run ID. Temporary candidates inside the failed run
+directory are non-canonical and may be overwritten or removed by its owner.
 
 ## Steps
 
-### 1. Open one run and declare the boundary
-
-1. Accept a system identifier, the source inputs, the intended use of the result, and any authorized output path. Record separately whether the request authorizes a legacy agent-memory review under `kb/agent-memory-systems/`; authorization for a whole-system file does not imply authorization for that second artifact. When it is authorized, record either the caller-supplied review path or authority to derive the collection's default path after `source-tier` is known; its replacement/archive scope; any separately authorized README or survey path; authority for the generated matrix/table pair or the required stale disposition; any separately commissioned current landscape-synthesis path and reconstructable snapshot; authority for workflow-owned semantic-QA state; and whether local drafting is authorized if no worker is available. Also record separately whether the caller commissioned a Commonplace transfer scan, the exact current interest brief, the Commonplace surface it may inspect, response-only or state-output authority, whether a response-derived state scan may retain the exact delimited stable response block as its input capture, and whether fresh-worker delegation is authorized. Analysis or review publication authority never implies comparison, synthesis, or transfer-scan authority, and a transfer request without a bounded interest brief is incomplete. Allocate one run/result ID before any analysis, in the form `AAS-<YYYY-MM-DD>-<system-slug>-<nn>`, where `system-slug` is lowercase ASCII words joined by hyphens and `nn` disambiguates runs against the same system on the same date. Every record the run produces belongs to that run, and the emitted result carries the ID as its canonical identity.
-
-   Before source work, name every consumer that needs the exact result and select one canonical carrier and physical form. When the caller supplies no output path or lifecycle, use `state` as the canonical carrier, `one file` as the physical form, and `kb/reports/state/agentic-system-analysis/<run-id>/result.md` as the canonical entry. Name the requesting operator as a consumer, retain the run until the operator explicitly disposes it or selects another authorized disposition, and set a cleanup condition that is not satisfied merely by returning the file path. Absence of an output path never means response-only. Use an explicit response only when the caller expressly selected response-only and no local operation needs the exact bytes. Use `kb/reports/state/agentic-system-analysis/` while named current local operations consume the bytes, with cleanup after every consumer completes or is explicitly disposed and no unresolved transfer or projection state remains. Use `kb/reports/retained/` only when a named future operation must read the exact bytes from a clean checkout, and retain them while that consumer or a durable citation remains. `kb/reports/cache/` is never canonical. A compact file under `kb/agentic-systems/` is a permitted projection, not the complete result. Record the consumers, carrier, canonical entry and optional manifest, retention and cleanup rules, permitted projections, and exact write authority. For a supplied GitHub repository reference, derive `related-systems/<owner>--<repo>/` before opening the state record and add that path to write authority when the checkout must be created or its Git object store must receive the selected commit; never treat that authority as permission to change its worktree.
-
-   Open `kb/reports/state/agentic-system-analysis/<run-id>/run-state.md` from the `agentic-system-analysis-run-state` template, set `phase: opened`, and run `commonplace-validate` on it before source work. This checked state is mandatory operational bookkeeping even for a response carrier; it does not convert the response into a state result. Declare a positive `lens-return-byte-budget` proportionate to the expected sparse overlays; the default template uses 32768 bytes, and a larger value needs an explicit scope reason in `## Authority and lifecycle`. In its frontmatter, make runtime-baseline, lens-packet, lens-return, and validation-receipt paths normalized and relative to the run directory. Make canonical and assembled file/package paths normalized repository-relative `kb/` paths; only a response validation copy may instead use an absolute temporary path. Spell `validation-target` exactly like `assembled-entry`. Update and validate the same record at each phase gate below. Never advance its phase until the current phase validates. A stopped run leaves its latest valid phase and stop evidence in place until the declared consumer has received the typed blocked or out-of-scope result.
-2. Confirm the subject is in scope. In scope are agent runtimes, orchestration frameworks, agent operating layers, and external memory, knowledge, or context-engineering systems that supply retained material or bounded-call context to agent work; separately, so is any narrower system whose operational behavior depends on model calls it issues **or serves**. The model-call test admits narrower systems — it does not restrict the named kinds. Under either route, a system stays in scope when the model call it depends on runs outside its own boundary: deterministic machinery driven by a model that lives elsewhere qualifies, and so does a component that only serves a call it never issues, such as an MCP server or tool. If the subject matches neither route, emit an `out-of-scope` result conforming to `kb/types/agentic-system-analysis-result.md`, retain every required section with explicit unreached dispositions, and stop.
-3. Classify the selected target before assessing it: `enclosing runtime`, `embedded inner runtime`, `runtime client`, `returning computation`, `workflow`, `extension or tool mechanism`, `builder or improvement plane`, `host integration`, `memory/knowledge/context-engineering system`, or another explicitly defined class. This is an analysis result, not an administrative precondition. A non-runtime target may still be in scope, but do not manufacture runtime deficiencies from lifecycle, authority, client, durability, or recovery responsibilities owned by its enclosing system.
-4. Define the reviewed boundary by function. Locate the bounded model call, agent runtime, runtime client, host application, memory subsystem, and builder or improvement plane; one process or repository may contain several roles, and one role may cross repositories or services. Include the components or actors whose scheduling, context selection, retained state, action execution, checking, acceptance, or authority decisions produce or constrain the behavior under review. List inclusions, exclusions, and external dependencies explicitly. Preserve **harness** only when it is the source's own term; use **agent runtime** for the operational role that owns execution state and turns model judgments into situated work.
-5. Name the boundary kind. Three are available, and the choice bounds what the result may conclude:
-   - **whole-system** — every material loop under review sits inside the boundary; conclusions may be system-wide.
-   - **subsystem-only** — the subject is one part of a larger system that is not fully inspected; conclusions cannot be whole-system.
-   - **complete artifact, partial loop** — the subject is a complete, independently distributed artifact, but a material loop producing the behavior under review crosses declared external dependencies. This is the ordinary shape for an MCP server, plugin, or tool whose model and host ship separately, and for a system whose advertised loop runs partly in a host platform outside the checkout. Conclusions may be whole-artifact; they may not describe the behavior the crossing loop produces. List the external participants as named exclusions, each with the conclusion it prevents.
-6. If no coherent system or subsystem boundary can be stated, set the result disposition to `blocked`, retain every section required by `kb/types/agentic-system-analysis-result.md` with explicit unreached dispositions, report the blocker, and stop.
-
-### 2. Freeze sources once
-
-1. Do not acquire, refresh, or capture evidence unless the caller's task or an owning workflow authorizes it. A repository reference supplied as a source input authorizes creating its missing ignored checkout and fetching the Git objects needed to resolve the selected revision, subject to the environment's permissions; it does not authorize changing an existing worktree, merging, pulling, switching branches, or resetting. Within that authority, branch by source kind:
-   - GitHub repository reference: normalize it to `https://github.com/<owner>/<repo>` and use the owner-qualified `related-systems/<owner>--<repo>/` checkout. Before creating it, require `git check-ignore -q related-systems` to succeed. If it exists, verify that `origin` resolves to the same repository; never repurpose a collision. Resolve the requested revision, or the advertised default-branch tip when none was requested, to a full commit object. Clone when the checkout is absent; otherwise fetch only as needed to make that selected commit available without changing the worktree. If a Git command unexpectedly asks for credentials, capture that exact diagnostic once and switch to an adequate authorized non-Git route; do not retry the same credential path or present the retry as source progress.
-   - Existing Git checkout: inspect it without changing its worktree or refs by default. Record its repository identity and resolve the supplied or selected revision to a full commit object.
-   - Supplied snapshot or document bundle: preserve its identity, version, or fingerprint.
-   - Live or mixed documents, where capture is permitted: capture a dated inspectable boundary.
-2. Record one analysis cutoff for the whole run. For a Git checkout, the frozen evidence boundary is the recorded commit, not its current branch or worktree. Dirty or later-moving worktree state is irrelevant only when every source read is commit-addressed; otherwise stop until the exact inspected bytes can be identified and retained. A stable but old or partial boundary is allowed with an explicit result limitation. If no stable inspectable boundary can be established, emit a blocker report instead of a substantive analysis.
-3. Build one canonical source register with `SRC-*` IDs. For each source record: kind, identity/location, revision or capture, evidence layer, inspected scope, citation anchors, and access gaps. A source whose parts carry different layers — a checkout with implementation under `src/` and doctrine under `docs/` — records each layer against the inspected scope it covers instead of flattening the whole source to one layer. Before opening a guessed file, enumerate the relevant commit subtree or search tracked paths and select from the returned names. For a Git checkout, pass the absolute checkout root to `git --no-replace-objects -C` and the full recorded commit to every inspection: use commit-addressed operations such as `git ls-tree`, `git show`, and `git grep`, never reads from the checkout worktree or replacement objects. For other source kinds, use the recorded source root as the working directory or pass it explicitly. An executor's ambient directory is not evidence of what was inspected. Keep each inspection output bounded to one evidence question or one small contiguous range. Treat truncated output as non-evidence: record the truncation immediately, narrow the query or range, and rerun it until every cited line is retained. Do not cite an untruncated fragment from a combined output when another requested fragment was truncated. Write every local Git citation anchor as a full commit-relative path and line range in one code span, such as `packages/runtime/src/agent-run.ts:595-641,944-1012`; pair it with its `SRC-*` ID. A basename is valid only for a file at the repository root. Commit-pinned GitHub blob links use the same full path, line range, and recorded revision.
-4. Record the source kind, immutable revision or capture, archive path, byte length and SHA-256 where applicable, absolute source root, and versioned source-register identity in the run state. For a Git checkout, use its absolute `related-systems/<owner>--<repo>/` path as `source-root`, the full commit as `source-revision`, and the same checkout path as `source-capture-path`; the checkout is the persistent object store, while the commit is the frozen boundary. Set `phase: source-frozen` and validate it. Freeze the sources here; finalize the evidence packet after step 4. The packet carries canonical records, and the runtime baseline is what mints them, so complete steps 2.1–2.3 and the step-3 rules, run the step-4 runtime baseline, then assemble the packet once. The packet comprises the source register, the boundary declaration, the canonical records registered by the runtime baseline, and the citation anchors relevant to each lens; anything beyond it is a targeted read under this step's rule. Lens workers must not reacquire, refresh, widen sources, or read a Git worktree. Targeted reads inside the frozen boundary are permitted, but they are added centrally to the register and they invalidate affected downstream findings, which must be redone. The packet is amendable as corrections arrive: a correction registered while a worker is in flight is checked against that worker's return on receipt, and only findings that rested on the superseded text are redone.
-
-5. Create an empty `diagnostics.jsonl` in the run-state directory at `phase: opened` and record its path, byte length, and SHA-256 in the run state. Immediately append one JSON object for each material workflow failure, truncation, or non-execution before continuing the affected operation, then update the ledger identity. This includes source acquisition and inspection, worker dispatch, phase validation, and handoff generation. Each object follows the run-state type's diagnostic-ledger contract and preserves the producer, phase, exact operation, absolute working directory, relevant non-secret environment, outcome, classification, exit status, exact inline output or byte-identified output file, materiality, and terminal disposition. A recovered record names its recovery. An unresolved material diagnostic is named by ID in the result's limitations or blockers. Summarize the ledger disposition under `## Diagnostics and handoff`; do not use that prose as a substitute for the structured record. If an older transcript is unavailable, record the evidence gap; do not reconstruct quotation-like output from recollection. Commonplace cannot infer unrecorded harness calls from repository state, so never report the ledger as transcript-complete unless the executing harness independently guarantees that capture.
-
-### 3. Fix truth conditions, definitions, and shared records
-
-Apply these rules for the rest of the run; they keep every lens using the same words and the same objects.
-
-#### Evidence vocabulary
-
-- Overall tier: the analysis is `code-grounded` only when the material ordinary routes, claim-relevant alternate routes, and warranted forcing routes recorded in the step-4 runtime baseline rest on inspected implementation material; otherwise it is `doc-grounded`. The tier is relative to the declared boundary — judge it over the routes the boundary includes. A route the boundary declares an external dependency neither raises nor lowers the tier, but record it as a limitation naming the conclusion it prevents, typically any claim about the behavior that route produces. Report one tier; do not split it into parts. Mixed inspection gaps stay claim-local limitations; they do not change the tier silently.
-- Per-source evidence layers: `implementation`, `doctrine/design`, `reported operation`, `observed run`, `causal experiment`.
-- Conclusion statuses (use exactly these):
-  - `absent` — not found within the named, recorded search boundary;
-  - `inapplicable` — the stated trigger conditions are false inside that boundary; this is a finding about the system under review, never a reason to skip a lens;
-  - `uninspected` — the evidence needed to decide was unavailable or not inspected;
-  - `claimed` — doctrine or reported operation asserts it;
-  - `afforded` — inspected code exposes an API, hook, or path that could support it, but no shipped entry path was established;
-  - `wired` — inspected implementation routes a shipped entry path through it, without proving operation in a deployed instance;
-  - `observed` — a run exhibits it, without proving cause;
-  - `causally supported` — an observed interventional comparison plus design evidence supports the attribution at the grain of the actual contrast.
-- These statuses are this instruction's namespace, and no value in it collides with the epistemic procedure invoked at step 7. That procedure carries its own vocabulary, in which `implemented` is an *architectural* status contrasting with `doctrine only`; this instruction says `afforded` or `wired` for the neighbouring implementation findings, so the vocabularies can never be silently merged. Record each vocabulary in its own terms.
-- Every negative or uncertain result names the inspected boundary and the exact conclusion it prevents.
-- Never upgrade: context presence to activation, a claim to an affordance, an affordance to shipped wiring, shipped wiring to observed operation, observation to causality, or operational continuation to warrant.
-
-#### Definitions
-
-- **Memory read-back**: material accumulated or changed through use returns to a later invocation or action. Static shipped material (documentation, tool specifications, installed skills) and ordinary current-run state are retained state, not read-back. The exclusion is per instance, not per kind: where the system itself rewrites such material using material accumulated through use, the rewritten instance is read-back and the as-shipped instance remains retained state; keep the two apart. "Current run" is the consuming agent's invocation boundary, not the host process's lifetime: material that survives from one consumer invocation to the next is read-back even when a long-lived process holds it in memory, and even when only a derived value — a count, a label set, a summary — returns rather than the content itself. Read-back is therefore easy to trigger: where it turns out to be degenerate, that is itself the finding and belongs in a brief memory lens output.
-- **Activation**: evidence that delivered material changed behavior, not merely that it entered context.
-- **Truth-apt**: capable of truth or falsity. A material epistemic route produces or changes truth-apt content, checks or disposes such a candidate, changes its authority, retains or integrates it for later reliance, or is required to assess a consequential knowledge or warrant claim. Operational curation labels name what a mechanism does to retained material; they do not establish semantic transformation or warrant.
-- **Behavioral authority**: one consumption path, recorded in four parts — consumer (who or what receives the material), channel (how it reaches them), force (what it obliges, permits, or merely suggests), and horizon (the span over which the path keeps that force). These four definitions are complete as given; apply them without opening any other document. Example record: `{consumer: spawned lens workers; channel: injected system prompt; force: binding instruction; horizon: the single run that spawned them}`. **Epistemic authority** licenses content and scope; **operational authority** permits or blocks behavior. Keep all three separate; never collapse them into one authority label.
-- **Guarantee strength**: a separate dimension from evidence status. Record whether a load-bearing property is an `invariant` over the declared paths, a participant `protocol`, a replaceable `policy`, `best effort`, a `deployment guarantee` supplied by the actual environment, or carries `no claimed guarantee`.
-
-#### Ontology mapping discipline
-
-Commonplace ontology supplies analytical names, not facts about the external system. State the source-native mechanism first, then name the Commonplace concept or controlled value, explain why its defining conditions fit, and qualify the mapping as partial or unresolved when needed. A reader must be able to reject the mapping without losing the operational account.
-
-Closed comparison dimensions require the value, assessed absence, or explicit uncertainty their contract defines. An open-ended mechanism such as frontloading is an evidenced instance only: failure to name it is not evidence that the system lacks it. Record a repeated poor fit as ontology stress in the synthesis or collection projection; never force it into the nearest term or silently invent a new universal category during one review. Ontology normalization may determine what distinctions the analysis exposes, but it never turns the stable result into a comparison with Commonplace.
-
-#### Canonical records and ownership
-
-| Canonical record | Owner | Lens rule |
-|---|---|---|
-| `SRC-*` source | Orchestrator | Lenses cite; never replace boundary or evidence layer |
-| `CMP-*` component, `OBJ-*` operative object | Orchestrator/runtime owns generic identity, form, substrate | Lenses extend by ID |
-| `RTE-*` control/context/state/action route | Runtime owns common endpoints and progression | Memory and epistemic lenses annotate, or register one new route centrally |
-| `CLM-*` claim | Orchestrator owns identity and claimed operation | Epistemic lens owns truth, scope, and warrant fields for claims inside its boundary |
-| `ABS-*` evidenced absence | Orchestrator | Lenses return absences with their recorded search boundary for central registration; cite by ID |
-| `BAP-*` behavioral-authority path | Orchestrator | Lenses reference; epistemic and operational authority remain lens-owned |
-
-A record's **generic identity** is what the thing is and what it is made of — its identity, its representational form, and its storage substrate — independent of any lens's annotations. No lens may rename or independently re-inventory a registered object or route. Any new material record returns to the orchestrator for one canonical ID.
-
-Only the orchestrator allocates canonical IDs. A lens needing a new record proposes it under a lens-local tag — `MEM-1`, `EPI-2`, unique only inside that lens — and cites it that way throughout its own return. Each proposal states the record's identity — file path, table name, route endpoints — so the orchestrator can rewrite it to a canonical ID on registration, record the mapping, and merge any proposal whose identity is already registered rather than issuing a second ID for it. Workers never mint a canonical ID: lenses running in parallel cannot see each other's numbering, so unguarded minting collides two different objects on one ID. A proposal tag is not a parallel ID namespace in the sense step 7 forbids — it is discarded at registration and never appears in the emitted result.
-
-A lens return is a **sparse overlay** on the canonical register. For an existing record, return one row keyed by its canonical ID, at most one source-native short label and one local evidence anchor for readability, and only the lens-owned annotations, evidence, and limits; omit untouched canonical IDs. The repeated label and anchor are non-authoritative; any conflict with the register is a correction, not an alternative inventory. Do not repeat generic identity, representational form, storage substrate, common route endpoints or progression, or claimed-operation identity. Only a new-record proposal carries the full generic identity needed for central registration. Record packet and return byte lengths alongside their digests. A return larger than the run's declared `lens-return-byte-budget` is not accepted; narrow duplicated context or explicitly restart the run with a justified budget rather than silently expanding the contract.
-
-Register an evidenced absence as an `ABS-*` record: a finding whose status is `absent`, carrying the named, recorded search boundary that was searched and the conclusion the absence prevents or supports. An `uninspected` gap is not an absence — it stays a limitation and gets no `ABS-*` ID. Register an absence only when it bounds a conclusion someone would otherwise draw; an absence that prevents nothing has no reason to exist, and for any system infinitely many things are absent.
-
-A lens that finds a registered record defective returns the correction with its evidence anchor instead of re-inventorying. A record is defective when it is false, when it is misclassified by the very criterion the record states, or when it is accurate as far as it goes but misleading at the scope it is stated — not only when it is outright wrong. The orchestrator amends the canonical record, preserves the superseded value, and reruns only the work that relied on it. This correction branch is distinct from the targeted-read invalidation in step 2.4: a lens that already derived its findings from the corrected source facts does not repeat its own work.
-
-A material lens return that fits none of the record kinds — a finding *about* a registered record rather than a new component, object, route, claim, absence, or authority path, such as an output asserting something false or a lineage break between two registered records — registers as an **amendment** to the record it attaches to. An amendment carries its evidence anchor and any superseded value, and is cited through the ID of the record it annotates. Never discard a material return for lack of a namespace, and never inflate one into a new record to give it somewhere to live.
-
-#### Worker topology
-
-These rules govern both lenses (steps 6 and 7). The orchestrator retains scheduling, integration, canonical-ID allocation, publication, and recovery. Use fresh worker contexts when they provide independent lens judgment and keep the worker inside the bounded evidence packet; otherwise execute the lens sequentially in the current context against the same registers. If neither path can run a lens, stop with an explicit capacity or dependency blocker — never record the lens as unnecessary, never let a thin scoping record stand in for an unrun lens, and never widen the evidence boundary to compensate.
-
-When delegating, give each worker a task packet that is a delta from the Commonplace doctrine its runtime verifiably supplies. If that baseline is not supplied, include the needed rules instead of assuming them. Freeze the packet before dispatch as an immutable file under the run-state directory and assign an immutable packet identity. On every later dispatch, change that identity whenever any supplied boundary, source register, canonical register, instruction, runtime-baseline seal, or accepted return field changes. Its YAML header carries `run-id`, `lens`, `packet-id`, `reviewed-boundary`, `source-register`, `canonical-register`, and `runtime-baseline-sha256`. The worker return echoes the same header exactly. A register identity is its digest or an immutable packet-local version that changes with any record or amendment. Do not relabel or overwrite an in-flight packet or return; after its return passes the original header check, apply step 2.4's correction check against changes registered during execution. State the lens contribution and its purpose; the accepted return blocks and their required fields; the frozen read-only inputs; any worker-owned output path; the no-reacquisition and no-publication boundary; the sparse-overlay, proposal-tag, and correction protocols; verification; and the stop or escalation condition. Accepted blocks are canonical-ID annotations, locally tagged new-record proposals, corrections or amendments, evidenced absences, and evidence limitations or targeted-read requests. The worker may inspect evidence only inside the frozen boundary and may write only its assigned lens artifact when one exists. It does not edit canonical registers, publish, or delegate again. The worker chooses evidence-supported lens findings. The orchestrator fixes source scope, canonical identity, mutation authority, and acceptance of the worker return. Before dispatch, check the request against the currently exposed delegation-tool argument names and task-name grammar; a rejected dispatch is a `non-executed` diagnostic, not evidence that a worker started.
-
-Before dispatch, record both immutable packet paths and digests in the run state, set `phase: lenses-issued`, and validate it; no worker receives a packet while the state is still `source-frozen` or `runtime-sealed`. A worker first verifies that its file digest and header equal the packet identity supplied in its task. Require the worker return to echo the complete packet header. Before merging any return, record its immutable path and digest, then verify exact equality of its run ID, lens, packet identity, reviewed boundary, source-register identity, canonical-register identity, and runtime-baseline digest; verify that every top-level block is accepted, every required field is present, every canonical ID resolves against the supplied register, and every proposal tag is declared once and unique inside the lens. Do not merge a mismatched return or silently discard an unrecognized material block; request a corrected return or redo only the affected lens work. Record the accepted packet identity and header match in reconciliation. After both mandatory lenses have an accepted return, set `phase: lenses-complete` and validate the run state.
-
-A correction creates a new canonical-register identity and new packet identity for every affected lens. Add one correction ledger entry naming the old and new registers, invalidated and replacement packet IDs, reason, and evidence; never edit the old packet, old return, or their identities. An invalidated packet cannot remain accepted. Validate the updated run state before dispatching a replacement.
-
-If a worker terminates after producing output whose header matches, its written artifact is authoritative over its own self-report and over any harness failure notice. Verify the artifact against the record set that lens was required to return; accept it when complete and redo only what is missing or unverifiable. A failure notice alone is not grounds for redoing work already written.
-
-### 4. Run and challenge the runtime baseline (always)
-
-1. Treat scheduling, context assembly, and external state/action as causal responsibilities, not mandatory module boundaries; one facility may span more than one. Use the role and target classification from step 1 so an embedded runtime, returning computation, workflow, tool, or builder is assessed at the horizon it actually owns.
-2. Begin from claimed work. Register each consequential work story or guarantee as a `CLM-*` record and identify the shipped entry path that would have to uphold it. Claims select the traces and conditional surfaces to inspect; they do not create a universal feature checklist. Separate default entry paths, optional adapters, examples, test fixtures, and integrator hooks.
-3. Trace one ordinary invocation end to end: principal and input, identity creation, state transitions, bounded-call context and action surface, model response, effect dispatch, events and runtime-client controls, terminal result, and retained or lost state. For an embedded runtime, trace both the inner invocation and the host contract around it.
-4. Before assessing a guarantee, enumerate materially equivalent alternate paths: direct model calls, provider-native tools, raw host callbacks, broad shell access, trusted or generated extension code, subprocesses or remote workers, manual graph control, and durable variants where present. A guarantee covers only the paths its enforcement point covers. Register a path when it changes the analysis question, a control route, evidence strength, or a lens result; do not inventory irrelevant possibilities.
-5. When the target's claims or effect risk warrant it, trace the smallest set of forcing cases that challenges the load-bearing conclusions — ordinarily two to four for a full code-grounded runtime pass. Cases may include denial or unresolved authority, interruption or retry, child escalation, process loss, generated execution, or later activation of a durable change. Prefer static inspection. When it cannot establish the behavior and the caller's authority permits execution, select a focused test or probe but do not run it before the preflight in item 6. A doc-grounded run traces the declared route and records the missing implementation or operation evidence instead of simulating certainty.
-6. Before executing each selected test or probe, populate the execution-preflight record required by `kb/types/agentic-system-analysis-result.md`. Check the exact command, test, or script; required tools and packages; services; credential availability; relevant configuration; and execution authority. Record only whether a credential is available, never its value. A probe that needs materialized repository files must use an isolated tree generated from the recorded commit under the already authorized run-state directory; never execute it from the shared `related-systems/` worktree. Record that tree's derivation and identity with the probe fixture. If a dependency is unavailable or authority is absent, set the execution disposition to `not run`, record the run-dependent conclusion as `uninspected`, and add the limitation and conclusion prevented. A wrapper command that starts but stops before the target check executes — during collection, import, dependency, or configuration setup — still leaves that target check `not run`; record the wrapper failure separately. Only a target check that executed may have a passed, failed, or inconclusive outcome.
-7. For every executed test or probe, register a `SRC-*` probe evidence capsule satisfying the result type's Source register contract before using its output. Classify it as `observed run` by default; use `causal experiment` and `causally supported` only when the recorded intervention, comparison, and design limits license that attribution. A failed check establishes target behavior only when the capsule shows that the subject route actually executed and the design supports the inference. Retain the capsule and its exact output only inside the already authorized result carrier: inline in a response or one-file result, or in a canonical package part. Do not create a workshop, `cache/`, `state/`, or `retained/` artifact solely to preserve probe output. If a response cannot include the exact output bytes, record the missing-output limitation and do not use that probe to upgrade a finding to `observed` or `causally supported`; a digest without resolvable retained bytes is not inspectable run evidence.
-8. For each material loop, record: trigger/input and principal; identities; next-step owner; decision policy and its representational form; context selection and framing; state reads and writes; action executor and boundary; runtime-client signals and controls; persistence; coordination and return; retry, cancellation, and recovery; and terminal output. Split routes when controller, context projection, effect boundary, guarantee, or terminal semantics differ; one facility may therefore produce several linked `RTE-*` records. For each load-bearing guarantee, also record its owner, enforcement point, conclusion status, guarantee strength, alternate paths, and required external contract. Link every record by canonical IDs and cite its evidence. Register the `CMP-*`, `OBJ-*`, and `RTE-*` records this baseline discovers as you go: these are the canonical records the step-2.4 packet carries. For a loop crossing a declared external dependency, record what the in-boundary artifact contributes to each field, mark the remainder as owned by the named external participant, and do not infer that participant's policy; append the limitation naming the conclusions the crossing prevents.
-9. Before sealing the baseline, add a YAML header whose `run-id`, `reviewed-boundary`, `source-register`, and `canonical-register` equal the run state. Preserve that seal-time register in the run state's `runtime-baseline-canonical-register`; later reconciliation may advance `canonical-register` without changing it. The header's `route-closure` list contains exactly one mapping for every canonical `RTE-*` row. Each mapping has non-empty `route-id`, `immediate-return`, `later-read-back`, `delegated-visibility`, `selection-predicate`, `invalidation-or-expiry`, `activation-or-effect`, and `evidence-and-limits` values. Use explicit `not applicable — <reason>` or `uninspected — <prevented conclusion>` values where a route lacks that stage; never make an empty field imply absence. This audit is where same-invocation receipts, later consumers, child or delegated visibility, evaluation reuse predicates, invalidation and expiry, and contextual activation are challenged before either lens inherits the baseline.
-9. Within operational authority, distinguish the **capability surface** exposed to a model, generated program, extension, or worker; the current **grant set** permitted by policy; and the deployed **isolation envelope**, which sets the maximum effects the environment permits regardless of policy. A tool-name allowlist can establish exposure or dispatch without establishing path confinement, secret separation, or attenuated delegation.
-10. Keep the anti-conflation rules: a filesystem is not a scheduler; retaining material is not selecting it into context; a tool schema present in context is not tool execution; an API hook is not shipped wiring; a returning computation is not automatically an operational runtime.
-11. Inspect permissions, approval routing, delegation, dynamic extension, builder or improvement paths, reliability, observability, providers, runtime clients, packaging, performance, and other surfaces only when they materially alter the claimed work, a control path, evidence strength, or a lens result — and state that materiality when you include one. Define every persistence horizon at the level actually evidenced: model call, top-level run, runtime instance, operating-system process, or later process through discovery and activation. For generated or self-changing behavior, record authorship, byte persistence, later activation, and change target separately. Do not turn this conditional inventory into a universal taxonomy, fixed template, maturity ladder, ranking, or adoption advice.
-12. Materialize the completed boundary declaration, source register, canonical records, routes, scoping inputs, citation anchors, and evidence limitations as immutable `runtime-baseline.md` under the run-state directory. Record its SHA-256 and the canonical-register identity, set `phase: runtime-sealed`, and validate the run state. No lens packet may be materialized or dispatched before this validation succeeds.
-
-### 5. Scope the two lenses
-
-Both lenses always run. This step does not decide *whether* — it decides *how deep*, and it is where the trigger evidence is named before any lens worker sees it.
-
-For each lens (memory/context; epistemic), emit one scoping record: `{lens, trigger evidence IDs, inspected boundary, the routes and objects that evidence points the lens at, warranted depth, rationale}`.
-
-- Warranted depth follows the evidence. Rich trigger evidence warrants a full pass; thin or degenerate evidence warrants a brief one. Thin evidence never warrants skipping a lens, and a brief pass is a result, not an omission.
-- **The floor for a brief output.** However degenerate the case, a lens output states what was inventoried, what was found, and what conclusions the thinness prevents. Brevity never licenses dropping the prevented-conclusion pairing. A complete brief finding looks like "retention is total, retrieval of content is nil; branch labels are the only accumulated caller-authored text that returns" — short, specific, and bounded.
-- **`uncertain` is not a scoping value and not an exit.** Evidence you cannot resolve becomes an explicit evidence limitation *inside* the lens output, paired with the conclusion it prevents. Never let it end a lens: an exit that means "we could not tell" reads to every later reader as "there is nothing there."
-- An absent lens section or file must never carry meaning implicitly. Every run emits both scoping records and both lens outputs.
-
-**Memory/context evidence.** Look for a path by which material accumulated or changed through use can affect a later invocation or action, in code, documentation, or observation. Static shipped material, ordinary current-run state, and retained material with no later delivery path are not such paths — where these are all you find, scope the lens brief rather than absent, and say so. A merely claimed path is trigger evidence; the lens output preserves whether the path is `claimed`, `afforded`, `wired`, or `observed`.
-
-**Legacy memory-review routing.** Separately decide whether the selected target is itself an external memory, knowledge, or context-engineering system. Detect it when the target's primary offered work is to retain, transform, organize, select, or deliver material or bounded-call context for later agent work. Also detect an explicitly requested, independently bounded subsystem with that role. Do not detect one merely because a general runtime has session state, one read-back route, or an incidental memory component; the embedded memory/context lens still covers those. Record `{selected subject, detected or not detected, evidence IDs, rationale, legacy publication authority}`. If the evidence cannot establish the classification, record the gap and the conclusion it prevents; never let uncertainty silently skip the conditional invocation.
-
-**Epistemic evidence.** Look for a material route that handles truth-apt content, and for any consequential knowledge-production or warrant claim the system makes — including where the eventual finding is failure or absence. Successful knowledge production is never a prerequisite for running the lens.
-
-**Direct-adaptation exception.** Evaluated direct behavior or policy adaptation with no truth-apt object and no knowledge or warrant claim is not an epistemic object. The exception scopes what the epistemic lens treats as its objects; it does not decide whether the lens runs. Such a route stays in the runtime account, and the scoping record names it for the orchestrator. Hand it to the invoked epistemic procedure tagged **classify-only**: that procedure classifies every content-changing edge it meets and carries a class for exactly these routes, so withholding one would leave a silent hole in its ledger. Classify-only means the route is recorded in its content/update classification and is *not* analysed for warrant, transformation, or acceptance. If the lens concludes the route is in fact truth-apt, that comes back as a correction under step 3's correction branch — never as a silent expansion of the lens's own scope.
-
-After both scoping records are fixed, materialize the two lens packets required by the worker-topology contract. Record their identities and cross-check each against the sealed runtime-baseline digest before advancing to `lenses-issued`.
-
-### 6. Run the memory/context lens and the detected-memory workflow
-
-Always analyse accumulated-from-use mechanisms in the embedded lens. Work at the depth the step-5 scoping record warrants: the items below are the full pass, and a brief pass covers the same ground proportionately rather than skipping items silently.
-
-1. Annotate retained operative parts already in the canonical register and propose any newly discovered part under a lens-local tag, splitting bundled artifacts whenever content, form, producer/consumer, checks, or authority path differs. For an existing part, cite its canonical form and substrate without copying them, then record persistence, lineage, producer and consumer, invalidation/regeneration conditions, and any promotion path toward stronger form or force — movement toward a more binding representation, such as natural-language note to schema or code, or toward a stronger consumption force, such as suggestion to binding instruction. For a proposal, also supply the generic identity, storage substrate, and representational form — natural-language, symbolic (code, schema, grammar), distributed-parametric (model weights), or mixed — needed for central registration.
-2. Separate the write side from read-back. Record whether write agency is manual, automatic, or both; separate acquisition and index maintenance from curation; where applicable, identify consolidation, deduplication, evolution, synthesis, invalidation, decay, and promotion; where relevant, distinguish raw traces from distilled retained artifacts.
-3. Annotate the runtime-owned context route with: read-back direction (pull, push, or both, from the receiving agent's perspective), selection signal, targeting, selection scope and budget, delivery and consumption point, and any behavioral-faithfulness test. Post-turn capture or consolidation is write-side maintenance, not a second read-back point.
-4. Record context presence, shipped wiring, observed operation, activation, and causal effect as separate findings with separate evidence.
-5. Reference `BAP-*` records for authority; do not let authority-family labels substitute for consumer, channel, force, and horizon. Keep lineage and curation labels independent of epistemic transformation, acceptance, and warrant — a `consolidate` or `import` label never establishes semantic preservation.
-6. Omit entirely: checkout, archive, and publication mechanics; Commonplace comparison; transfer suggestions; curiosity passes; watch items; collection routing. Commonplace ontology remains available under step 3's mapping discipline because it classifies the external mechanism rather than comparing systems.
-
-When the step-5 routing record says `detected`, always invoke [Write an agent memory system review](../write-agent-memory-system-review/SKILL.md) with a prepared-source packet. With no publication authority, pass the run ID, selected subject and stable slug, source register, and no-authority disposition; the invoked procedure returns `not published — legacy review output not authorized` before mutation.
-
-For an authorized publication, prepare the remaining packet as follows:
-
-1. Derive the legacy review's `source-tier` for the selected subject from the frozen evidence.
-2. Use the caller's path, or derive `kb/agent-memory-systems/reviews/{subject_slug}.md` for `code-grounded` and `kb/agent-memory-systems/lightweight/{subject_slug}.md` for `doc-grounded`. If that path belongs to another source identity, derive an owner- or source-qualified slug from the canonical `SRC-*` identity. Use the resulting path only when it is free or already belongs to the selected subject; otherwise return a path-collision blocker. Fix the mutation set after this check.
-3. Derive the citation format from the frozen register's anchors: for example, commit-pinned file URLs for a GitHub checkout or identified snapshot/document links for doc-grounded evidence. If no publishable format can be derived, carry that limitation so the invoked procedure returns its citation blocker.
-4. Pass the run ID; selected subject and stable slug; publication-authority disposition; `source-tier`; frozen `SRC-*` register and inspectable locations or bundle; reviewed revision or capture; citation format; evidence limitations; exact review and auxiliary mutation set; matrix/table authority or stale disposition; separately commissioned landscape-synthesis path and reconstructable snapshot or no-commission disposition; and local-drafting fallback disposition.
-
-The invoked procedure must reuse the boundary. It must not clone, fetch, refresh, capture, or widen it.
-
-The embedded lens remains the canonical memory contribution to this run; the invoked workflow produces the existing collection-specific review and its QA report. Do not substitute one for the other. Record the invocation's review path and validation result, downstream matrix/table and landscape-synthesis disposition, or its no-publication, unsupported-boundary, unavailable-delegation, or other blocker disposition, inside the memory lens output. A legacy-publication blocker does not erase a complete system analysis, but a requested legacy review is incomplete until that blocker is cleared.
-
-### 7. Invoke the epistemic procedure
-
-1. Invoke the procedure in `kb/instructions/analyse-external-system-epistemic-architecture.md` to run the accepted route-analysis method inside this run's boundary. Every run invokes it. Do not copy or restate its object-inventory, route-ledger, transformation, lifecycle, claim-comparison, or authority method.
-2. Pass to the invocation: a bounded epistemic subquestion, the run and system boundary, the frozen revision, the `SRC-*` register and evidence packet, the existing canonical records, the step-5 scoping record with its trigger evidence, and any classify-only routes the direct-adaptation exception named. The scoping record governs the invocation's depth: it tells the invoked procedure whether it is building a full route ledger or bounding and confirming a thin finding. Depth is the only thing it governs — the wrapper rules below hold identically at either depth.
-3. Enforce the wrapper rules: no source reacquisition, no boundary widening, no revision change, no silent evidence upgrade, no parallel ID namespace, no independent publication decision, no system-wide epistemic grade. Its status vocabulary stays its own: record its architectural `implemented` under that name and this run's conclusion statuses under theirs. The two sets share no value, so a return that needs both carries both.
-4. Require sparse linked returns under the worker-topology contract: material objects, routes, and claims by canonical ID; transformation class and route function; architectural status and observed candidate state; checking, acceptance, and retention/integration findings; the three authority records kept separate; and missing evidence paired with the conclusions it prevents — or, where the invoked procedure takes one of its early branches, that branch's own required substitutes, the no-candidate statement and the explicit no-claim comparison, which satisfy this requirement. Any new record or targeted-evidence request returns to the orchestrator for registration, and affected work is rerun.
-
-### 8. Reconcile and synthesize
-
-1. Merge duplicate objects and routes by canonical ID. Preserve anchored evidence conflicts as conflicts; never resolve one by selecting the strongest-sounding status. Record independently convergent findings as convergence and name the two derivations.
-2. Keep ownership: the runtime baseline owns complete control and context routes; the memory lens annotates read-back and activation; the epistemic lens annotates transformation, checking, warrant, acceptance, integration, and its two authorities.
-3. Check every shared route for one revision, consistent sources, endpoints, objects, and `BAP-*` references. Memory curation labels cannot determine epistemic transformation; behavioral influence cannot imply epistemic or operational authority.
-4. When the legacy memory-review workflow produced a review, verify that its source identity and revision equal this run's frozen boundary, then compare its central artifact, write-side, and read-back claims with the canonical memory records. Treat its controlled fields as a collection projection, not a second record namespace. Resolve a material contradiction from the frozen sources and redo the affected review QA or run finding; never preserve two incompatible current claims merely because the outputs have different forms.
-5. Materialize a reconciliation receipt that names the accepted packet IDs, proposal-to-canonical mappings, amendments, corrections and invalidations, conflicts, convergence, and legacy projection check. Hash it into `reconciliation-seal`, set `phase: reconciled`, and validate the run state before assembling the stable result.
-6. Write the synthesis as an evidence basis and boundary, an architectural characterization and claimed work, a runtime map, only the discriminating mechanism sections this target needs, a scenario-relative assessment, and concrete changes that would alter the assessment. Organize the mechanism account around the operational progression — scheduling, context, state and action, memory return where applicable, truth-apt and warrant routes where applicable, and governing controls — not as concatenated lens reports. Where Commonplace ontology improves comparison, preserve the source-native mechanism, ontology mapping, rationale, and qualification together. Surface a poor fit as ontology stress rather than a forced label. Preserve affordance-versus-wiring-versus-operation and evidence-layer limits inside the synthesis. Mention a lens's thinness only where it bounds conclusions. Do not assign a system-wide epistemic grade or add current Commonplace implications.
-7. In the assessment, distinguish a supported mechanism for a named work story, a responsibility deliberately externalized through a named contract, a tradeoff, a gap relative to claimed work, an unknown, and a misleading implication. Do not treat a non-runtime mechanism as a deficient runtime or turn the assessment into a total ranking.
-
-### 9. Assemble the stable result
-
-Assemble one entry artifact conforming to `kb/types/agentic-system-analysis-result.md`. That type is the single authority for the result's frontmatter, eleven-section reading order, shared-record subdivisions, lens subdivisions, status-field separation, blocker shape, and package-pointer convention. Do not maintain a second run-result template in this skill. This skill owns how the records are produced and how their lifecycle is selected; the type owns what the finished result contains.
-
-Assemble directly into the canonical entry declared at `phase: opened`; for a response, use the run-state-owned temporary validation copy until handoff. Do not assemble in cache and route the bytes later. Record the entry path, byte length, and SHA-256 and the corresponding manifest identity for a package, set `phase: assembled`, and validate the run state before final validation.
-
-Rules:
-
-- Set `result-disposition` to `complete`, `blocked`, or `out-of-scope`. Every disposition uses the same typed entry artifact and retains all required headings. A stopped run marks records as unreached because of its named stopping condition; it does not invent findings or switch to an unstructured blocker report.
-- Give the run result one canonical identity, with IDs resolvable across all physical parts. A response's delimited stable block is the complete typed entry artifact. A one-file result is the typed entry artifact. A package has exactly one typed entry artifact; each distributed logical record is reached through the type's section-local pointer convention.
-- A transfer scan is a separate side report, not a twelfth logical record. Neither its disposition nor its selected findings are needed to complete the stable result.
-- Use only the carrier declared at `phase: opened`. A separately authorized legacy memory review from step 6 may still be emitted under its own existing contract. Retain the exact result under `kb/reports/retained/` only for its declared future clean-checkout consumer. Keep it under `kb/reports/state/agentic-system-analysis/` only for its declared current local consumers and cleanup rule. A response carrier keeps only the run-state-owned validation copy until handoff. Never use `cache/` as the canonical carrier, and do not route the assembled bytes to a different lifecycle late in the run. Read the applicable `COLLECTION.md` before writing.
-- A durable external-system analysis belongs under `kb/agentic-systems/` only when the caller authorized publication and that collection's current contract can represent it. Distill the compact synthesis from the run result; the library artifact need not reproduce working ledgers, but it must carry the evidence basis and limits needed for its claims and must not depend on ignored `state/` or `cache/` files. Do not improvise a collection or type contract, and do not reuse the agent-memory review schema.
-- No file publication is a blocker only when the caller requested a file result and no authorized lifecycle owner can place the typed result or a permitted compact projection. Publishable limitations include doc-only evidence, inaccessible components, no observed run, no causal experiment, trigger evidence too thin to resolve, and conflicting evidence — each naming its scope and prevented conclusion. Result blockers include missing required records, ID collisions, unsupported material claims, and failed validation.
-
-### 10. Verify and freeze the stable result
-
-1. Verify conformance to `kb/types/agentic-system-analysis-result.md`, then verify: source anchors; every conclusion-status field contains exactly one of the eight values listed in step 3; epistemic architectural status and observed candidate state occupy separate fields; no record carries `implemented` as a conclusion status; unique, resolving IDs; every delegated lens return matched its run and frozen-packet header before merge; every selected dynamic check has one preflight record and every executed check has one resolving probe evidence capsule; no `not run` check is treated as failure or absence; no probe with missing exact output supports `observed` or `causally supported`; one target classification, boundary, and revision across all records; ordinary and material alternate routes covered; each warranted forcing case completed or bounded, with a rationale when none is warranted; load-bearing guarantees name their owner, enforcement point, strength, paths, and external contract; both lens scoping records present; both lens outputs present, each meeting the brief-output floor; one legacy memory-review routing record; invocation of the legacy workflow whenever that record says `detected`; source-native mechanisms retained beneath ontology mappings; prevented conclusions stated for every thin, negative, or unresolved finding; shared-route ownership respected; and no forbidden evidence upgrades.
-2. Check each distinction explicitly: a target mechanism is not automatically a runtime; an API affordance is not shipped wiring; shipped wiring is not observed operation; a capability surface is not a grant set or isolation envelope; retention is not read-back; context presence is not activation; observation is not causality; curation is not warrant; use is not acceptance; behavioral authority is not epistemic or operational authority.
-3. Before the final check, complete `### Deterministic validation` with the exact target and the success condition; do not add a digest of the result to its own bytes. From the repository root, run `commonplace-validate --json --output <run-state-directory>/validation.json <exact-entry-artifact>`. The command atomically saves the exact JSON bytes it also writes to stdout; do not redirect, copy, or reconstruct the receipt. A response's stable result bytes are already frozen at this point; copy those unchanged bytes to a temporary `.md` validation target owned by the run state, then validate that copy. For a package, validate the one typed entry artifact after every section pointer resolves. Accept the check only when `schema` is `commonplace.validation.v1`, `status` is `success`, `summary.files_analysed` is `1`, and `analysed_artifacts` contains exactly the target with type `agentic-system-analysis-result` and zero warnings and failures. A zero `text_files` count is not a zero-subject result. Record the target digest and receipt digest, set `phase: validated`, and validate the run state. Do not change the result after this receipt; any correction returns to assembly and requires a new receipt.
-4. Correct and reassemble the stable result after any failed check. If a result blocker remains, set `result-disposition: blocked`, populate every required section with the blocker-relative disposition, revalidate, freeze that typed result, and do not run a transfer scan. Otherwise freeze the exact verified result before transfer work begins: write an authorized file or package, or hold the stable response block unchanged for the final response. Immediately before handoff, rehash the canonical entry and package manifest and recheck the evidence boundary. For every Git checkout, require the recorded commit object and every cited commit-relative path to resolve from `source-root` at the recorded revision; this check includes every local line range and every commit-pinned GitHub blob link, but do not require the checkout's current HEAD to equal that commit. Check that the entry frontmatter has the result type and run ID declared by the run state. Populate the run state's `handoff` mapping with both lens scopes and depths, legacy memory-review disposition, transfer-scan disposition, retention disposition, limitations, and blockers. Record the handoff digests, set `phase: handoff-ready`, and validate the run state. A missing or changed declared carrier, incomplete handoff mapping, or unresolvable evidence boundary is a blocker, not a reporting caveat.
-5. Fingerprint the frozen analysis when the result is a file or package, a transfer scan was commissioned, an owning workflow requires byte identity, or the caller requested a digest. One file gets its byte length and SHA-256; a package gets the canonical manifest and manifest digest required by `scan-agentic-system-transfer`. For a response, read and apply [Fingerprint a response analysis](references/response-fingerprint.md): hash only its delimited stable block and put the digest outside that block. Otherwise record `fingerprint: not required — response-only result with no downstream byte-identity consumer`. Any correction after fingerprinting invalidates the digest and returns here before transfer.
-
-### 11. Route a selective transfer scan only after stable verification
-
-1. The verified stable result and any durable system or memory review are complete without a Commonplace delta. Never add transfer findings to canonical records, controlled fields, the matrix, or the public system synthesis.
-2. When no transfer scan was commissioned, record `transfer scan: not requested` and continue. When the request lacks an explicit current interest brief, digestible complete analysis input, or output authority needed for its requested form, report that transfer-specific gap without weakening the completed stable analysis.
-3. When commissioned, invoke [Scan an agentic system for current transfer](../scan-agentic-system-transfer/SKILL.md) only after step 10 has frozen and fingerprinted the stable result with no result blocker. Pass the exact analysis file and digest, the complete package manifest and digest, or the exact delimited stable response block and digest; the run/result identity; the exact interest brief; permitted Commonplace read scope; response-only or state-output and response-capture authority; and the prohibition on source reacquisition, canonical-analysis edits, matrix input, and automatic promotion. Use a fresh worker when the caller authorized delegation; otherwise invoke it in the current context and report that the transfer judgment was not independently isolated.
-4. The scan owns only its response or authorized file under `kb/reports/state/agentic-system-transfer/`. The orchestrator verifies the output against the scan contract, records only its path or response disposition in the final operator report, and leaves every promotion candidate undecided. If the scan uncovers a possible stable-analysis defect, do not patch around it: invalidate the scan, return to the affected analysis step, reverify and refingerprint the stable result, then rerun the scan against the new digest.
-
-### 12. Save and report
-
-For a `state` or `retained` carrier, leave the frozen canonical entry at its declared path and do not reproduce the full typed artifact in the response. After the handoff-ready state validates, run `commonplace-agentic-analysis-handoff <run-state-path>` from the repository root and return its unchanged Markdown output; it renders every required operator field from checked state and includes a clickable result path. Emit the frozen response result only when the caller expressly selected response-only; do not alter its stable block after fingerprinting. For that branch, emit the stable block first and the rendered handoff after it.
-
-In the operator report outside that block, include this explicit notice for a response-only run: `canonical-result commit visibility: none — no standalone repository artifact was written; the canonical result exists only in this response unless a separately authorized downstream operation captures it.` Report any such capture by its separate path and state that it does not convert the response-only result into a published analysis. The notice does not grant write, capture, retention, or publication authority.
-
-Also report: result identity and response or authorized locations; exact-result consumers, canonical carrier and physical form, retention or cleanup rule, and permitted projections; target classification; boundary, revision, and tier; both lens scoping records and the depth each lens ran at; legacy memory-review detection, invocation, path, and validation or blocker disposition; stable-result verification and digest or not-required disposition; transfer-scan not-requested, response, state path, or transfer-specific blocker disposition; retention disposition for any files; limitations; and blockers. Keep a retained diagnostic only when its named consumer and retention rule require future clean-checkout access; otherwise leave diagnostics in workflow state until cleanup. For the default state carrier, the operator handoff does not authorize deletion: keep `result.md` and its run state until explicit disposal or the recorded downstream disposition makes cleanup due. For a response carrier with no downstream consumer, emit the unchanged stable block first, then remove its temporary copy and run-state directory only when the recorded cleanup condition is true.
+### 1. Open the run and resolve output paths
+
+1. Allocate `AAS-<YYYY-MM-DD>-<system-slug>-<nn>`. Create
+   `kb/reports/state/agentic-system-analysis/<run-id>/run-state.md` from the
+   `agentic-system-analysis-run-state` template with `run-status: running`. The
+   exact result path is always `<run-id>/result.md`.
+2. Derive the public review path as `kb/agentic-systems/<system-slug>.md` unless
+   the caller supplied one. Inspect only an incumbent's frontmatter and source
+   identity. Reuse the path only for a review generated by this skill from the
+   same source identity. Otherwise choose an owner- or source-qualified slug.
+   Never overwrite a hand-authored or different-source artifact.
+3. Record separately any caller-authorized auxiliary paths and any separately
+   commissioned transfer scan. Automatic review publication does not authorize
+   those operations.
+4. Confirm the target is in scope: an agent runtime, orchestration framework,
+   agent operating layer, memory/knowledge/context-engineering system, or a
+   narrower mechanism whose operation depends on model calls it issues or
+   serves. An MCP server, tool, or returning computation may qualify without
+   owning the enclosing runtime. If the target is outside this boundary, write
+   and validate an `out-of-scope` result, complete the run without a public
+   review, and stop.
+5. Classify the target as an `enclosing runtime`, `embedded inner runtime`,
+   `runtime client`, `returning computation`, `workflow`, `extension or tool
+   mechanism`, `builder or improvement plane`, `host integration`,
+   `memory/knowledge/context-engineering system`, or another defined class.
+   State functional inclusions, exclusions, external dependencies, and one
+   boundary kind: `whole-system`, `subsystem-only`, or
+   `complete artifact, partial loop`. Do not assign responsibilities owned by
+   an excluded host to the selected target.
+
+If no coherent boundary or reachable source can be established, write a typed
+`blocked` result with every required section and explicit unreached
+dispositions. Complete the run without publishing a review.
+
+### 2. Freeze and inspect sources once
+
+1. A supplied repository reference authorizes creating its missing ignored
+   checkout and fetching the objects needed for the selected revision. It does
+   not authorize changing an existing worktree, switching branches, merging,
+   pulling, or resetting.
+2. For GitHub, normalize the repository identity and use
+   `related-systems/<owner>--<repo>/`. Require `git check-ignore -q
+   related-systems` before creating it, verify an existing checkout's origin,
+   and resolve the selected revision to a full commit. Inspect only with
+   commit-addressed `git --no-replace-objects -C <absolute-root> ls-tree`,
+   `show`, and `grep`; never read evidence from the worktree.
+3. Turn every non-Git source set into one immutable capture or bundle with a
+   stable identity, version or capture label, absolute path, and SHA-256. Do
+   not analyse a moving live page as though it were frozen.
+4. Put the Git commit or capture identity in `run-state.source` while the state
+   remains `running`. Build one `SRC-*` register in the result with evidence
+   layer, inspected scope, citation anchors, and access gaps. Keep
+   implementation, doctrine/design, reported operation, observed runs, and
+   causal experiments distinct.
+5. Treat truncated output as non-evidence. Narrow and repeat the read before
+   citing it. For Git, cite the `SRC-*` ID plus a full commit-relative path and
+   line range such as `packages/runtime/src/agent-run.ts:595-641`; use the full
+   commit in GitHub blob links.
+
+The source pin is an evidence boundary, not a recovery protocol. If it changes
+or cannot be verified, fail the run and start another one.
+
+### 3. Use one vocabulary and one record set
+
+Use the result type's conclusion statuses exactly: `absent`, `inapplicable`,
+`uninspected`, `claimed`, `afforded`, `wired`, `observed`, and
+`causally supported`. Never upgrade context presence to activation, a claim to
+an affordance, an affordance to wiring, wiring to observation, observation to
+causality, or curation to warrant. Every negative or uncertain finding names
+the inspected boundary and conclusion prevented.
+
+Keep these distinctions:
+
+- **Memory read-back** means material accumulated or changed through use affects
+  a later consumer invocation. Static shipped material and ordinary current-run
+  state are not read-back.
+- **Activation** requires evidence that delivered material changed behavior.
+- **Behavioral authority** records consumer, channel, force, and horizon.
+  Epistemic and operational authority remain separate.
+- **Guarantee strength** is separate from evidence status: invariant, protocol,
+  policy, best effort, deployment guarantee, or no claimed guarantee.
+
+Describe every external mechanism in source-native terms before mapping it to
+Commonplace ontology. Explain the fit and mark partial or unresolved mappings.
+Do not turn omission of an open-ended mechanism into evidence of absence.
+
+Maintain one canonical register: `SRC-*` sources, `CMP-*` components, `OBJ-*`
+operative objects, `RTE-*` routes, `CLM-*` claims, `ABS-*` evidenced absences,
+and `BAP-*` behavioral-authority paths. The orchestrator owns IDs and generic
+identity. A lens annotates existing IDs and proposes new records under local
+tags that disappear when the orchestrator registers or merges them. An
+`uninspected` gap is a limitation, not an `ABS-*` record.
+
+When workers are useful and available, give each one the run ID, frozen source
+identity, reviewed boundary, source register, canonical register, lens scope,
+and sparse-return contract. A worker may inspect only that boundary, does not
+publish or delegate, and returns annotations, proposals, corrections,
+evidenced absences, and limitations. The orchestrator checks that every cited
+ID and source belongs to the supplied registers before merging. Discard and
+rerun a stale, malformed, or mismatched lens return; do not maintain packet or
+correction history. Running both lenses sequentially in the current context is
+also valid.
+
+### 4. Run and challenge the runtime baseline
+
+1. Begin with consequential claimed work and shipped entry paths. Trace one
+   ordinary invocation end to end: principal, identity, context, state, model
+   call, effects, runtime-client controls, coordination, terminal result, and
+   retained or lost state.
+2. Enumerate materially equivalent alternate paths before judging a guarantee:
+   direct model calls, provider-native tools, host callbacks, shell access,
+   extension code, subprocesses or remote workers, manual graph control, and
+   durable variants where present. A guarantee covers only the paths its
+   enforcement point covers.
+3. Trace the smallest warranted set of forcing cases, ordinarily two to four
+   for a full code-grounded pass. Prefer static inspection. Before any dynamic
+   check, record the result type's execution-preflight fields and verify tools,
+   packages, services, credentials, configuration, and authority. A check that
+   never reaches the target remains `not run` and supports no negative finding.
+4. Record an executed check as a `SRC-*` probe evidence capsule. Use
+   `causally supported` only for an actual intervention and comparison whose
+   design supports the attribution. Exact output must remain inspectable in the
+   one-file result.
+5. For each material route record trigger, next-step owner, decision policy and
+   form, context, state, executor and effect boundary, persistence, return,
+   recovery, and terminal output. A load-bearing guarantee also names its owner,
+   enforcement point, strength, covered and alternate paths, and required
+   external contract.
+6. Audit every `RTE-*` route for immediate return, later read-back, delegated
+   visibility, selection predicate, invalidation or expiry, activation or
+   effect, and evidence limits. Use explicit inapplicable or uninspected reasons
+   instead of empty fields.
+7. Distinguish the capability surface, current grant set, and deployed isolation
+   envelope. Inspect permissions, approval, delegation, dynamic extension,
+   reliability, observability, providers, packaging, and performance only where
+   they change claimed work, a control path, evidence strength, or a lens result.
+
+### 5. Run both lenses
+
+For memory/context and epistemic, first record trigger evidence, inspected
+boundary, pointed-to routes and objects, warranted `brief` or `full` depth, and
+rationale. Both lenses always run. A brief result still states what was
+inventoried, what was found, and which conclusions its thin evidence prevents.
+
+The memory/context lens looks for retained material, read-back into a later
+invocation, selection and framing, activation evidence, scope and invalidation,
+and behavioral authority. Separately detect whether the selected target's
+primary offered work is retaining, transforming, organizing, selecting, or
+delivering material for later agent work. Record the detection and evidence;
+publication of the legacy review happens only after the exact result validates.
+
+Invoke
+[`analyse-external-system-epistemic-architecture.md`](../analyse-external-system-epistemic-architecture.md)
+for the epistemic lens. Pass the frozen boundary, registers, statuses, scoping
+record, and classify-only routes. Require a sparse overlay on canonical IDs.
+Keep that procedure's architectural status and observed candidate state in
+their own vocabulary; never translate `implemented` into this workflow's
+conclusion-status field.
+
+### 6. Reconcile and synthesize
+
+Resolve proposed records into canonical IDs, attach corrections and amendments
+to the affected records, preserve anchored conflicts, and report independent
+convergence only when the lenses reached it independently. Recheck shared-route
+ownership and the memory-review detection. If reconciliation exposes stale or
+unsupported lens work, rerun that lens before continuing.
+
+Write a system-organized synthesis: evidence basis and boundary,
+architectural characterization and claimed work, runtime map, discriminating
+mechanisms, scenario-relative assessment, limitations, and evidence or system
+changes that would alter the assessment. Do not concatenate lens reports or add
+a product ranking, generic adoption advice, system-wide epistemic grade,
+Commonplace delta, transfer recommendation, or universal maturity model.
+
+### 7. Write and validate the exact result
+
+Write `<run-id>/result.md` using
+`kb/types/agentic-system-analysis-result.md`. Every disposition keeps all
+required headings. Its Run identity names the run state, generated review
+disposition, and legacy review disposition. Put probe evidence inline.
+
+Run `commonplace-validate --full <result-path>` and verify every source anchor,
+canonical ID, evidence status, boundary, lens output, limitation, and blocker.
+Correct deterministic formatting errors before continuing. An unresolved
+evidence or semantic failure fails the run; do not publish from it. Do not
+persist a JSON validation receipt.
+
+### 8. Publish validated candidates
+
+Skip publication for a blocked or out-of-scope result. For a complete result:
+
+1. Generate the compact whole-system review solely from the validated result
+   and its primary-source anchors. Write it first as a temporary candidate in
+   the run directory. Use `kb/types/note.md` and exact frontmatter fields
+   `generated-by: analyse-agentic-system`, `analysis-run`, `source-identity`,
+   and `reviewed-revision`.
+2. Validate the candidate directly and verify its pinned anchors. Recheck the
+   destination's frontmatter and Git status. Do not replace a different-source,
+   hand-authored, or locally modified incumbent. Once the candidate passes,
+   publish those exact bytes in one replace operation and validate the public
+   path. Do not archive the incumbent; Git preserves committed history.
+3. If memory-review detection applies, invoke
+   [Write an agent memory system review](../write-agent-memory-system-review/SKILL.md)
+   with the frozen source register, reviewed revision, selected destination,
+   and a candidate path inside this run directory. It follows the same
+   validate-before-replace rule.
+4. Hash `result.md` and each published review. Set the run state to `complete`,
+   record `result-disposition`, `source`, the output paths and SHA-256 values,
+   and whether the legacy review was required. Run `commonplace-validate
+   --full <run-state-path>`.
+
+Any candidate, publication, or final validation failure sets the run to
+`failed`. Leave the public incumbent unchanged and rerun the analysis with a
+new run ID. Never patch generated prose independently of its source boundary
+and method. Never stage or commit unless the caller separately requested it.
+
+### 9. Run an optional transfer scan after completion
+
+A transfer scan is separate, interest-conditioned state. Run
+[`scan-agentic-system-transfer`](../scan-agentic-system-transfer/SKILL.md) only
+when separately commissioned and only after the complete run state validates.
+Pass `result.md`, its SHA-256, the interest brief, and permitted Commonplace
+read and output scope. The scan never edits the analysis, published reviews,
+or comparison corpus. If it exposes an analysis defect, fail that conclusion
+and rerun the analysis before scanning again.
+
+### 10. Report
+
+Run `commonplace-agentic-analysis-handoff <run-state-path>` and return its
+unchanged Markdown output. It validates the run state and current output bytes
+before rendering. A failed run reports its failure reason and does not use the
+handoff command.
 
 ## Verify
 
-- The run has one run/result ID, one declared boundary, one frozen revision or capture, and one source register that every lens record cites.
-- The run state validates at every phase gate; its declared exact-result consumers, carrier, physical form, retention, projections, and write authority were fixed before source work.
-- A GitHub repository source uses its owner-qualified checkout under ignored `related-systems/`; every Git inspection names the recorded full commit, and the handoff check confirms that commit, every cited path, and every cited line range still resolve without requiring HEAD to remain there. Every other inspection command is rooted at its frozen source, and no truncated output supports a finding.
-- The runtime baseline was sealed before either immutable lens packet was issued. Every accepted return echoes the packet and runtime identities; corrections preserve invalidated and replacement versions.
-- Both lenses ran. Both scoping records and both lens outputs exist as explicit records; nothing is implied by an absent section, and a brief output still names what was inventoried, what was found, and what its thinness prevents.
-- The run records whether the selected target is a memory, knowledge, or context-engineering system. When detected, the legacy review procedure ran against the same frozen boundary and returned either a validated review path or an explicit blocker/no-publication disposition.
-- No conclusion status was upgraded; every negative or uncertain finding names its inspected boundary and prevented conclusion.
-- Commonplace terms normalize evidenced external mechanisms; no label replaces the source-native account, and open-ended omissions carry no absence claim.
-- The runtime account classifies the target, traces the ordinary and material alternate paths, and attributes every load-bearing guarantee to its owner and enforcement point.
-- With no caller-supplied output lifecycle, the canonical result is the one-file state artifact at `kb/reports/state/agentic-system-analysis/<run-id>/result.md`; it remains after the operator handoff, and the response contains a concise summary and path rather than the full report.
-- A response-only operator report states that no standalone canonical result is commit-visible, reports any separately authorized downstream capture by its own path, and grants no write or lifecycle authority through that notice; this branch runs only after an express response-only request.
-- The synthesis is organized around the system, contains no system-wide epistemic grade, and the emitted entry artifact conforms to `kb/types/agentic-system-analysis-result.md` for every result disposition. Any file output follows an authorized collection and retention contract.
-- The stable result passed semantic and applicable deterministic verification, was frozen, and, when byte identity was required, was fingerprinted before any transfer scan began.
-- The final JSON receipt identifies exactly one `agentic-system-analysis-result` with no warnings or failures, and the handoff-ready state rechecks the same canonical bytes.
-- Any Commonplace transfer scan is separately commissioned, interest-conditioned, keyed to the complete analysis digest, held as operational state until disposition, excluded from the canonical result and matrix, and reported only by disposition.
+- One run ID, frozen source boundary, and source register govern every finding.
+- Git reads use the full recorded commit; captures match their SHA-256; no
+  truncated output supports a claim.
+- The runtime baseline covers ordinary, material alternate, and warranted
+  forcing routes at the target's actual responsibility horizon.
+- Both lenses and both scoping records exist; thin evidence produces a bounded
+  brief result, not a skipped lens.
+- Source-native mechanisms remain visible beneath Commonplace mappings, and no
+  conclusion status is upgraded.
+- The exact result validates before publication.
+- Each public review was validated as a candidate and still has the SHA-256 and
+  workflow identity recorded by the complete run state.
+- A failed run has no completed outputs and leaves incumbents unchanged; its
+  replacement is a new run, not a recovery continuation.
 
 ---
 
-- [Agent-runtime analysis should separate scheduling, context assembly, and external state](../../notes/agent-runtime-analysis-should-separate-scheduling-context-state.md) — rests-on: the three causal runtime responsibilities behind step 4
-- [Agent orchestration occupies a multi-dimensional design space](../../notes/agent-orchestration-occupies-a-multi-dimensional-design-space.md) — rests-on: why the runtime inventory stays open rather than becoming a taxonomy
-- [Runtime structure determines the control surfaces available to governance](../../notes/runtime-structure-determines-governance-control-surfaces.md) — rests-on: why governance surfaces are conditional, crosscutting inspections
-- [Agent memory is a crosscutting concern, not a separable niche](../../notes/agent-memory-is-a-crosscutting-concern-not-a-separable-niche.md) — rests-on: why memory is a lens inside system analysis, not a peer category
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) — rests-on: the retention/read-back/presence/activation distinctions in steps 3, 5, and 6
-- [Behavioral authority](../../notes/definitions/behavioral-authority.md) — rests-on: the consumer/channel/force path definition behind `BAP-*` records
-- [Skills are instructions plus routing and execution policy](../../notes/skills-are-instructions-plus-routing-and-execution-policy.md) — rests-on: the SKILL.md packaging that gives this instruction discovery, user invocation, and execution policy
-- [Frontloading spares execution context](../../notes/frontloading-spares-execution-context.md) — rests-on: why the runtime and memory/context procedures are embedded rather than left for the executor to reassemble
-- [Model-resolved indirection adds interpretation work to LLM execution](../../notes/model-resolved-indirection-adds-interpretation-work-to-llm-execution.md) — rests-on: the interpretation cost weighed when embedding lenses versus invoking the epistemic instruction by path
-- [Scenario decomposition drives architecture](../../notes/scenario-decomposition-drives-architecture.md) — rests-on: why claimed work selects ordinary and forcing traces before architectural guarantees are assessed
-- [Intent-framed delegation is a control regime; prompt length does not establish it](../../notes/intent-framed-delegation-is-a-control-regime-not-a-short-prompt.md) — rests-on: the retained-orchestrator ownership and task-packet rules for lens workers
+- [Agent-runtime analysis should separate scheduling, context assembly, and external state](../../notes/agent-runtime-analysis-should-separate-scheduling-context-state.md) — rests-on: the causal runtime responsibilities in step 4
+- [Agent orchestration occupies a multi-dimensional design space](../../notes/agent-orchestration-occupies-a-multi-dimensional-design-space.md) — rests-on: why the runtime inventory remains open
+- [Agent memory is a crosscutting concern, not a separable niche](../../notes/agent-memory-is-a-crosscutting-concern-not-a-separable-niche.md) — rests-on: why memory is a mandatory lens
+- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) — rests-on: the retention, read-back, presence, and activation distinctions
+- [Behavioral authority](../../notes/definitions/behavioral-authority.md) — rests-on: the consumer, channel, force, and horizon record

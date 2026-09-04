@@ -1211,7 +1211,7 @@ def validate_full_pass_report(
 def validate_agentic_analysis_run_state(
     results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
 ) -> None:
-    """Verify analysis phase identities and every referenced workflow-owned file."""
+    """Verify the source and output identities of one analysis run."""
     try:
         state = parse_agentic_analysis_run_state(
             parsed.path, parsed.document, repo_root=run.repo_root
@@ -1225,7 +1225,7 @@ def validate_agentic_analysis_run_state(
     results.fails.extend(failures)
     if not failures:
         results.passes.append(
-            f"phase state: {state.phase} prerequisites and byte identities verified"
+            f"run state: {state.status} source and output identities verified"
         )
 
 

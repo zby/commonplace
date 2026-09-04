@@ -41,17 +41,11 @@ evidence-tier: {evidence_tier}
 
 ## Run identity
 
-**Canonical carrier:** response
+**Run state:** `kb/reports/state/agentic-system-analysis/AAS-2026-08-30-example-system-01/run-state.md` — complete.
 
-**Physical form:** response
+**Generated review:** `kb/agentic-systems/example-system.md`.
 
-**Exact-result consumers:** requesting operator
-
-**Retention and cleanup:** keep through response handoff, then dispose.
-
-**Run state:** `kb/reports/state/agentic-system-analysis/AAS-2026-08-30-example-system-01/run-state.md`; final phase `handoff-ready`.
-
-**Permitted projections:** none.
+**Legacy memory review:** not applicable.
 
 ## Boundary and evidence
 
@@ -195,12 +189,9 @@ def test_result_requires_the_canonical_section_order(tmp_path: Path) -> None:
 @pytest.mark.parametrize(
     "line",
     [
-        "**Canonical carrier:** response\n\n",
-        "**Physical form:** response\n\n",
-        "**Exact-result consumers:** requesting operator\n\n",
-        "**Retention and cleanup:** keep through response handoff, then dispose.\n\n",
-        "**Run state:** `kb/reports/state/agentic-system-analysis/AAS-2026-08-30-example-system-01/run-state.md`; final phase `handoff-ready`.\n\n",
-        "**Permitted projections:** none.\n\n",
+        "**Run state:** `kb/reports/state/agentic-system-analysis/AAS-2026-08-30-example-system-01/run-state.md` — complete.\n\n",
+        "**Generated review:** `kb/agentic-systems/example-system.md`.\n\n",
+        "**Legacy memory review:** not applicable.\n\n",
     ],
 )
 def test_result_requires_each_run_identity_field(tmp_path: Path, line: str) -> None:
@@ -211,13 +202,13 @@ def test_result_requires_each_run_identity_field(tmp_path: Path, line: str) -> N
 
 def test_run_identity_field_value_must_be_on_its_labelled_line(tmp_path: Path) -> None:
     content = result_text().replace(
-        "**Exact-result consumers:** requesting operator",
-        "**Exact-result consumers:**",
+        "**Generated review:** `kb/agentic-systems/example-system.md`.",
+        "**Generated review:**",
     )
 
     results = validate_external_result(tmp_path, content)
 
-    assert any("exact-result consumers" in failure for failure in results.fails)
+    assert any("generated review" in failure for failure in results.fails)
 
 
 def test_required_subheadings_must_be_nested_under_their_section(
@@ -236,7 +227,7 @@ def test_required_subheadings_must_be_nested_under_their_section(
     assert any("Shared-record subheadings" in failure for failure in results.fails)
 
 
-def test_run_identity_projects_lifecycle_without_depending_on_run_state() -> None:
+def test_run_identity_projects_outputs_without_workflow_bookkeeping() -> None:
     contract = (
         REPO_ROOT / "kb" / "types" / "agentic-system-analysis-result.md"
     ).read_text(encoding="utf-8")
@@ -244,8 +235,7 @@ def test_run_identity_projects_lifecycle_without_depending_on_run_state() -> Non
         contract.index("### Run identity") : contract.index("### Boundary and evidence")
     ]
 
-    assert "canonical carrier" in run_identity
-    assert "named consumers of the exact result" in run_identity
-    assert "retention and cleanup rule" in run_identity
-    assert "permitted compact projection" in run_identity
-    assert "without making the result depend on" in run_identity
+    assert "run-state path" in run_identity
+    assert "generated whole-system review path" in run_identity
+    assert "legacy memory-review path" in run_identity
+    assert "without reproducing workflow bookkeeping" in run_identity

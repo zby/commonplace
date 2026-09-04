@@ -1,10 +1,16 @@
 ---
 description: "Proposal: capture harness-visible failures and truncation for agentic-system analysis without claiming completeness from repository state alone"
-type: ../types/design-proposal.md
+type: ../../types/design-proposal.md
 tags: [context-engineering, kb-maintenance]
 ---
 
 # Harness capture for agentic-analysis diagnostics
+
+> **Archived** (see [archive README](./README.md)). Retired by
+> [ADR 083](../../adr/083-agentic-analysis-carriers-follow-exact-result-consumers.md),
+> which uses a concise failure reason and a new run instead of diagnostic
+> recovery state. The 2026-09-04 harness-gap observations remain here as design
+> texture only.
 
 Agentic-system analysis now keeps a structured, byte-identified diagnostic
 ledger. That ledger can prove the integrity and disposition of events recorded
@@ -114,5 +120,5 @@ version.
 
 Relevant Notes:
 
-- [Trajectory-aware evaluation of transforming agent workflows](./trajectory-aware-evaluation-of-transforming-agent-workflows.md) — see-also: the broader proposal for using intermediate execution evidence to diagnose agent workflows
-- [Analyse an agentic system](../../instructions/analyse-agentic-system/SKILL.md) — procedure: the shipped workflow that records diagnostics but cannot observe the harness event stream
+- [Trajectory-aware evaluation of transforming agent workflows](../trajectory-aware-evaluation-of-transforming-agent-workflows.md) — see-also: the broader proposal for using intermediate execution evidence to diagnose agent workflows
+- [Analyse an agentic system](../../../instructions/analyse-agentic-system/SKILL.md) — procedure: the shipped rerun-on-failure workflow
