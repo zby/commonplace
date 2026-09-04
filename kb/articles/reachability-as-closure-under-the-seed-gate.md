@@ -1,5 +1,5 @@
 ---
-description: "Supplement to the reachability conjecture: an autonomous house's states form the transition closure of its seed under a state-dependent successor relation and declared input process; the Gödel-machine comparison differs in admission, not in having closure"
+description: "Supplement to the automated software house conjecture: an autonomous house's states form the transition closure of its seed under a state-dependent successor relation and declared input process; the Gödel-machine comparison differs in admission, not in having closure"
 type: kb/articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
@@ -146,7 +146,7 @@ seed's task-specific contents without importing a human decision.
 Nothing in the transition-closure argument requires a fixed LLM. It applies to
 any autonomous lineage whose successors arise from prior internal state and a
 declared set of external inputs. The fixed-model and fixed-parametric-state
-conditions are additional restrictions that make the reachability conjecture a
+conditions are additional restrictions that make the automated software house conjecture a
 specific empirical claim about where learning can occur.
 
 ## What this changes in the witness

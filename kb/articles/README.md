@@ -14,21 +14,20 @@ Nothing published yet.
 
 ## In draft
 
-Five drafts currently remain in the article frontier. The first three form a series and answer three questions in order: can an automated software house exist, how should it learn, and how do we build the first one. Read them in that order if you are new here.
+Three drafts form a series and answer three questions in order: can an automated software house exist, how should it learn, and how do we build the first one. Read them in that order if you are new here.
 
 - [The Automated Software House Conjecture: Open-ended software development with fixed LLMs](./automated-software-houses-with-fixed-llms.md) — an automated software house capable of open-ended coherent change is practically reachable with fixed current LLMs by training the notes and code around them; why a program theory is needed and why the composite could hold one; the fixed-model learning loop and its seed; and the four obligations a constructive witness must meet.
 - [The Software House as the Unit of Training: Production-driven learning across models, theory, and code](./the-software-house-as-the-unit-of-training.md) — once a house carries the production loop, project-specific continual learning should run over the whole house, with the model as one update surface; what counts as a training step, why governance of behaviour-changing writes is the hard core, and the explicit-theory and sample-efficiency hypotheses as testable consequences.
 - [Bootstrapping the First Automated Software House: A research program from human-agent production to human-free internal operation](./bootstrapping-the-first-automated-software-house.md) — start from a house in which agents produce and people hold the unmoved internal roles; move those roles out one class at a time in the order their premises, criteria, and checks can be built; why the order of moves is recorded rather than declared, what counts as evidence of a real move, what the house's own training must produce, and the stop conditions.
-- [The decisions that stay human, and what would move them](./the-decisions-that-stay-human-and-what-would-move-them.md) — the conditional selection argument that automatic transfer is easiest where premises, settled criteria, and defeating checks exist, what would have to grow for each residual class to move, and why structural computational closure is not evaluator quality.
-- [The Bitter Lesson does not require everything to live in weights](./the-bitter-lesson-does-not-require-everything-to-live-in-weights.md) — separates Sutton's 2019 search-and-learning claim from a weights-only extrapolation, and names credit assignment, evaluation, and decomposition revision as the open problems for learned artifacts.
 
-One supplement accompanies the first draft: [Reachability as transition closure under the seed's successor relation](./reachability-as-closure-under-the-seed-gate.md) — once no human is inside, every successor must arise through the predecessor state's update machinery and permitted inputs; Gödel machines and the conjectured house share that descent structure but use different successor conditions and warrant.
+Two supplements accompany the first draft. [Reachability as transition closure under the seed's successor relation](./reachability-as-closure-under-the-seed-gate.md) — once no human is inside, every successor must arise through the predecessor state's update machinery and permitted inputs; Gödel machines and the conjectured house share that descent structure but use different successor conditions and warrant. [Nearest existing constructions to a reachability witness](./nearest-existing-constructions-to-a-reachability-witness.md) — the map behind the first draft's nearest-constructions section: twenty reviewed systems compared against the four witness obligations with the evidence behind each cell, and the protocol for the stronger explicit-theory test that the second draft states as a hypothesis.
 
-A second supplement, [Nearest existing constructions to a reachability witness](./nearest-existing-constructions-to-a-reachability-witness.md), is the map behind the first draft's nearest-constructions section: twenty reviewed systems compared against the four witness obligations with the evidence behind each cell, and separate protocols for the carrier-neutral witness and the stronger explicit-theory mechanism test.
-
-Four former companion drafts were withdrawn after full review. Their titles
-remain as withdrawal notices, but none currently supplies a live article claim.
-The series is being reconstructed claim by claim.
+Six former companion drafts were withdrawn; their addresses redirect to the
+draft that absorbed each one. The two most recent were *The decisions that
+stay human, and what would move them*, whose selection argument is now the
+ordering principle of the third draft, and *The Bitter Lesson does not require
+everything to live in weights*, whose rebuttal is a section of the second
+draft and whose account of the Commonplace strategy is the third.
 
 ---
 

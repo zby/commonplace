@@ -93,9 +93,9 @@ is planned. The [Naur
 note](./kb/notes/naur-equates-machine-execution-with-formulated-criteria.md)
 reopens the bearer question, while the [coherent-search
 note](./kb/notes/program-theory-sustains-search-under-delayed-feedback.md)
-states the longitudinal test. Companion articles develop the [Bitter Lesson's
-scaling test](./kb/articles/the-bitter-lesson-does-not-require-everything-to-live-in-weights.md)
-and [why the hardest decisions stay human](./kb/articles/the-decisions-that-stay-human-and-what-would-move-them.md).
+states the longitudinal test. Two companion articles say [how such a house
+should learn](./kb/articles/the-software-house-as-the-unit-of-training.md)
+and [how the first one would be built](./kb/articles/bootstrapping-the-first-automated-software-house.md).
 
 **Deployment-time learning.** Durable changes to prompts, rules, tools, schemas, tests, and code can affect later sessions without updating model weights. Storage is insufficient: later operation must load or enforce the result. Start with [retained system-definition artifacts enable persistent deployment-time adaptation](./kb/notes/retained-artifacts-enable-persistent-deployment-time-adaptation.md) and the [learning theory index](./kb/notes/learning-theory-README.md).
 

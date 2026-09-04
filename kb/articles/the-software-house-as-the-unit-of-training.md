@@ -311,10 +311,10 @@ that structure. It also warns the doctrine against fixing permanently which
 surface holds which lesson: no note, program, or validator is guaranteed to
 last, and a future model may absorb a theory or replace an evaluator with a
 cheaper learned one. That is a possibility the doctrine already allows for,
-since which surface holds a lesson is a trainable choice. A [separate article
-on the Bitter Lesson](./the-bitter-lesson-does-not-require-everything-to-live-in-weights.md)
-gives the full argument and the tests that would show a bootstrap has not
-outgrown its seed.
+since which surface holds a lesson is a trainable choice. The [bootstrap
+note](../notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md)
+gives the full argument and the failure criteria that would show a bootstrap
+has not outgrown its seed.
 
 ## What the doctrine does not claim
 

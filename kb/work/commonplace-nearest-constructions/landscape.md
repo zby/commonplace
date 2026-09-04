@@ -240,9 +240,8 @@ one concrete part of that direction.
 
 A human function should move only when its required premises are represented,
 its method or authority is settled enough to act, plausible errors can be
-defeated, and later consequences can reach the responsible artifact. [The
-decisions that stay
-human](../../articles/the-decisions-that-stay-human-and-what-would-move-them.md)
+defeated, and later consequences can reach the responsible artifact. [Bootstrapping the first automated software
+house](../../articles/bootstrapping-the-first-automated-software-house.md)
 develops those transfer conditions. Replacing an approval with another model
 call does not by itself satisfy them.
 

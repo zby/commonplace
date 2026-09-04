@@ -1,5 +1,5 @@
 ---
-description: "Comparison of reviewed self-improving systems against the reachability conjecture's four witness obligations, which do not fix which form carries the theory, with a separate stronger protocol for explicit retained theory"
+description: "Comparison of reviewed self-improving systems against the automated software house conjecture's four witness obligations, which do not fix which form carries the theory, with a separate stronger protocol for explicit retained theory"
 type: kb/articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
@@ -30,7 +30,7 @@ source_notes:
 > candidates are welcome on [the repository's GitHub Discussions
 > page](https://github.com/zby/commonplace/discussions).
 
-The reachability conjecture holds that an automated [software
+The [automated software house conjecture](./automated-software-houses-with-fixed-llms.md) holds that an automated [software
 house](../notes/definitions/software-house.md), one that keeps developing
 software for its users across demands nobody listed in advance, can be built
 with the LLMs available in 2026 while its [distributed-parametric](../notes/definitions/representational-form.md) internal
