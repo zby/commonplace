@@ -1,121 +1,126 @@
 ---
-description: Four lenses on the codify-vs-LLM decision — spec completeness, oracle strength, interpretation space, pattern stability — collected from across the KB, with evidence they come apart at the edges
+description: "Specification, checking, permitted interpretations, and repeated-use cost inform which operations to codify; none alone makes code or model interpretation universally preferable"
 type: kb/types/note.md
-traits: []
+traits: [synthesis]
 tags: [learning-theory, constraining]
 ---
 
 # Codify-versus-LLM decision heuristics
 
-Should this component be deterministic code or an LLM call? The KB has accumulated heuristics for this question from several angles. This note collects them.
+The choice is between assigning an operation to a symbolic consumer and asking
+a model to interpret it at use time. [Code and model-mediated
+operations](./code-complements-weight-prompt-with-symbolic-operations.md) can
+both participate in a learned procedure. A useful decision compares their
+reliability, total cost, and ability to accommodate the changes that matter.
 
-## Four lenses on the same decision
+Four lenses help locate the tradeoff. They are questions to investigate, not
+independent rules that determine one correct allocation.
 
-The KB offers at least four framings. They often agree in practice but ask different questions, and it's not obvious they reduce to a single criterion.
+## Specification: what does exact execution establish?
 
-### 1. Spec completeness — is the spec a definition or a theory?
+An explicit specification can make conformance checkable. It does not follow
+that the specification captures the external objective. [Exact implementation
+does not validate a requirement](./exact-implementation-does-not-validate-a-requirement.md).
 
-The [fixed-artifact distinction](./exact-implementation-does-not-validate-a-requirement.md) draws the line. **Exact specs** fully capture the problem — the specification of multiplication is multiplication. Deterministic code is pure win. **Proxy theories** approximate the problem — "detect edges" was a plausible theory of what seeing requires, not a definition. The component can satisfy its local spec and still fail to compose into the target capability.
+A dependency traversal can execute exactly while its account of the build's
+inputs is incomplete. Leaving that same account to a model does not repair the
+missing dependency automatically. The house needs evidence against the account
+and a revision to whichever component embodies it.
 
-Confidence signals:
-- Is correctness fully specifiable? (definition → codify)
-- Is the spec a definition or a proxy metric? (proxy → leave for LLM)
-- Are failures local or compositional? (compositional → the specs are probably theories)
+A theory-based operation is therefore not automatically unsuitable for code.
+A fallible account can motivate a versioned validator, and later evidence can
+revise both. The question is whether its specified portion is useful enough to
+execute without fresh interpretation and whether errors remain detectable.
 
-### 2. Oracle strength — how cheaply can you verify correctness?
+## Checking: what can reject a wrong result?
 
-The [oracle strength spectrum](./oracle-strength-spectrum.md) turns the binary into a gradient:
+The [oracle-strength comparison](./oracle-strength-spectrum.md) asks what
+evidence is available and what it costs. Schema checks can test specified
+structural properties. Tests cover the cases or properties they actually
+exercise; their existence does not establish complete semantic correctness.
+Delayed consequences can expose failures that immediate checks miss.
 
-| Oracle | Verification | Codification fitness |
-|---|---|---|
-| Hard | Exact, cheap, deterministic (tests, types, schema) | Natural codification candidate |
-| Soft | Proxy score (BLEU, rubrics, heuristic checks) | Partial — codify the proxy, leave the judgment |
-| Interactive | Feedback available (user edits, preference pairs) | Extract deterministic rules from the feedback over time ([spec mining](./spec-mining-as-codification.md)) |
-| Delayed | Signal arrives later (user churn, bug surfaces) | Resist codification until signal accumulates |
-| No oracle | Vibes and anecdotes | Leave for LLM + human review |
+Strong checks help assess both generated code and model outputs. Weak checks
+do not make an LLM-plus-human path automatically reliable, and a precise
+specification does not guarantee cheap verification. [The verification
+boundary](./the-boundary-of-automation-is-the-boundary-of-verification.md)
+concerns warranted acceptance, not an intrinsic inability to produce a correct
+unchecked result.
 
-### 3. Interpretation space — does the spec admit one valid output or many?
+## Interpretation: must one output be selected in advance?
 
-The [underspecification framing](./agentic-systems-interpret-underspecified-instructions.md) asks a different question. "Parse this YAML" has one correct output. "Refactor for readability" admits extract-helpers, rename-variables, restructure-control-flow, add-comments — all valid, qualitatively different.
+An underspecified request can admit many valid results. That does not rule out
+symbolic execution. An algorithm may return any result satisfying a relation,
+search among alternatives, or use a declared random choice. Codification does
+not require a unique output or a single permanently fixed answer.
 
-Under this lens, codification is fundamentally about **committing to one interpretation** from a space the spec admits. [Constraining](./definitions/constraining.md) narrows the space; [codification](./definitions/codification.md) collapses it to a point by crossing into executable code. The risk isn't wrong code — it's wrong commitment. If the problem genuinely has many valid interpretations, codifying one loses the others.
+What is assigned is the operation's behaviour under its implemented rules.
+The risk is committing to an inadequate selection or search procedure. A model
+may be useful where new cases require semantic judgments those rules do not
+cover. It may also be called from an otherwise symbolic procedure. [Process
+and output constraints](./process-structure-and-output-structure-are-independent-levers.md)
+are separate: neither “codify what, not how” nor its reverse is a general rule.
 
-### 4. Pattern stability — has this emerged across enough runs?
+## Repetition: is a reusable procedure worth its cost?
 
-The [codification definition](./definitions/codification.md) adds a temporal dimension: "codify when a pattern has emerged across enough runs that you can confidently commit." The [spec mining](./spec-mining-as-codification.md) workflow operationalizes this — watch the system, identify regularities, extract deterministic checks.
+Repeated reconstruction creates an opportunity to retain a procedure.
+[Spec mining](./spec-mining-as-codification.md) can identify recurring behaviour
+and test whether a reusable implementation improves later work. But recurrence
+can also preserve a repeated mistake. It is a cost signal and a source of
+candidates, not a correctness criterion.
 
-This lens treats codification as empirical. You don't decide *a priori* what to codify. You observe what the LLM does repeatedly the same way, and extract that. The agent always lowercases filenames and replaces spaces with underscores, so you extract `sanitize_filename()`. The pattern emerged; the codification followed.
+A sound operation can be worth implementing after one informative case.
+Another may remain cheaper to interpret even after many cases because its
+premises change frequently. Compare construction, invocation, checking,
+retrieval, and maintenance costs under the same outcome requirements.
 
-The operational strategy is progressive [constraining](./definitions/constraining.md): start underspecified for flexibility, commit to precise semantics as patterns stabilize.
+[Artifact lifetime](./ephemeral-computation-prevents-accumulation.md) is a
+separate choice. Temporary code is symbolic while it runs. A persistent
+natural-language procedure can retain learning despite repeated model
+interpretation. Leaving an operation model-mediated does not mean the system
+cannot learn across runs.
 
-## Do the lenses reduce to one?
+## Mixed implementations and revision
 
-The four correlate but may not share a root:
+A check selector can combine symbolic dependency traversal with model judgment
+about a new kind of consumer. The traversal avoids repeated bookkeeping;
+the judgment handles a case the current procedure does not settle. Either part
+can be revised when evidence exposes an inadequacy.
 
-- **Spec completeness** is about the nature of the problem
-- **Oracle strength** is about how you check the output
-- **Interpretation space** is about how many valid answers exist
-- **Pattern stability** is about temporal evidence
+The [deterministic-validation note](./deterministic-validation-should-be-a-script.md)
+gives a bounded example: structural frontmatter and link checks have defined
+consumers, while judgments about a description's usefulness require a different
+assessment. This does not establish that every semantic judgment must remain
+model-mediated forever.
 
-A tempting reduction: spec completeness → single valid interpretation → cheap verification → stable pattern. If the spec fully captures the problem, there's one answer, you can verify cheaply, and the pattern is trivially stable. This makes spec completeness look foundational and the others downstream.
+A codified operation is a [relaxation
+candidate](./codification-and-relaxing-navigate-the-bitter-lesson-boundary.md)
+when its assumptions repeatedly fail or its maintenance cost exceeds an
+adequate alternative. Growing exceptions and integration failures are prompts
+to diagnose the cause, not proof that code is the wrong carrier. The repair may
+be a better symbolic procedure, more flexible interpretation, or a revised
+representation shared by both.
 
-But the chain breaks at the edges. Some problems have cheap verification yet admit multiple valid outputs — sorting has a unique answer, but "good variable names" has several valid options even with a testable rubric. Some problems have stable patterns despite weak oracles — the LLM always formats dates the same way, extractable as code, even though "good formatting" is loosely specified.
+## Scope
 
-There's also a directionality question. The oracle-strength lens treats verification cost as the driver: you codify *because* you can verify. The interpretation-space lens inverts this: you can verify *because* the spec admits only one output. "2+2=4" is verifiable because arithmetic has one answer, not because we built a test for it. Which is cause and which is consequence?
+These heuristics guide a comparative design decision; they do not prove a
+universal preference for code or models. A [fixed-model house](./a-fixed-model-house-must-write-the-procedures-for-each-new-theory.md)
+needs new machinery when its current operations are inadequate under the
+required reliability and budget. Existing general machinery may already
+supply what a new theory needs.
 
-The KB doesn't yet have a settled answer. This is worth investigating rather than prematurely closing.
-
-## Quick-reference checklist
-
-The lenses above explain *why* these heuristics work. This section condenses them into decision prompts.
-
-**Codify when:**
-- The spec fully captures the problem — there's one correct answer
-- You can write a test that fully specifies correct behavior
-- The LLM does the same thing every time — the pattern has stabilized
-- The spec describes *what* (output properties) rather than *how* (process steps)
-- The operation is being re-discovered by the LLM on every run at token cost
-
-**Leave for LLM when:**
-- The spec is a theory about the problem, not a definition of it
-- Correctness requires human judgment or proxy scores
-- The problem genuinely admits multiple valid interpretations
-- The pattern hasn't stabilized — you're still learning what the right behavior is
-- The constraint encodes *how* rather than *what* — process rather than outcome
-
-**Reverse a codification ([relax](./codification-and-relaxing-navigate-the-bitter-lesson-boundary.md)) when:**
-- Brittleness under paraphrase or reordering ([relaxing signals](./operational-signals-that-a-component-is-a-relaxing-candidate.md))
-- Isolation-vs-integration gap — unit tests pass but integration fails
-- Growing exception lists and special cases
-- Distribution shift breaks the codified component
-- Composition failure — individually sound components don't compose into the target capability (strongest signal, most expensive to discover)
-
-## The hybrid case
-
-Most real components are hybrids — part exact spec, part proxy theory. The practical move is to extract exact-spec subproblems into code and leave the rest for LLM.
-
-The [deterministic validation note](./deterministic-validation-should-be-a-script.md) is a worked example: most checks in `/validate` are hard-oracle (frontmatter structure, enum matching, link resolution → script) while the remaining few are soft-oracle (description quality, composability → stays in LLM skill).
-
-[AgeMem](./memory-management-policy-is-learnable-but-oracle-dependent.md), an RL-trained memory management agent, shows the same split. Its memory operations (Add, Delete, Retrieve) are exact-spec artifacts: their specs fully capture what they do. But the composition policy (when to use which) is a proxy theory that benefits from RL training.
-
-## Three common mistakes
-
-1. **Over-codifying.** Encoding "always decompose agents into three phases" as a hard rule when it's a theory about what works. Process constraints are [relaxing candidates](./operational-signals-that-a-component-is-a-relaxing-candidate.md) — they encode *how* rather than *what*.
-
-2. **Under-codifying.** Running everything through an LLM, including checks where deterministic code would be faster, cheaper, and perfectly reliable. The validation example costs real tokens for zero gain on the hard-oracle checks.
-
-3. **Static allocation.** Treating the code/LLM split as a one-time design decision rather than a [continuous cycle](./codification-and-relaxing-navigate-the-bitter-lesson-boundary.md) of codification and relaxing as understanding evolves.
+A useful comparison must allow both alternatives competent implementations.
+If the model path retains instructions, examples, and tests, count their costs
+and benefits. If the code path uses configurable rules or model calls, assess
+those actual operations rather than treating code as an inflexible baseline.
 
 ---
 
 Relevant Notes:
 
-- [fixed artifacts split into exact specs and proxy theories](./exact-implementation-does-not-validate-a-requirement.md) — foundation: the exact-spec/proxy-theory distinction (lens 1)
-- [oracle-strength-spectrum](./oracle-strength-spectrum.md) — foundation: verification cost as a gradient (lens 2)
-- [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — foundation: the interpretation-space framing (lens 3)
-- [codification](./definitions/codification.md) — foundation: pattern stability and the phase transition to code (lens 4)
-- [the boundary of automation is the boundary of verification](./the-boundary-of-automation-is-the-boundary-of-verification.md) — synthesis: the broader structural claim that verification cost determines automability — not linked in the body
-- [constraining and extraction can trade generality for reliability, speed, or cost](./constraining-and-extraction-both-trade-generality-for-reliability.md) — grounds: the trade-off codification enacts — not addressed in the body
-- [process structure and output structure are independent levers](./process-structure-and-output-structure-are-independent-levers.md) — sharpens: makes the "codify what, not how" heuristic precise — process constraints encode theories about good reasoning, output constraints encode verifiable properties
-- [ephemeral computation prevents accumulation](./ephemeral-computation-prevents-accumulation.md) — grounds: names the structural cost of the "leave for LLM" side — no accumulation, no cross-run learning
-- [Eric Evans: AI Components for a Deterministic System](https://www.domainlanguage.com/articles/ai-components-deterministic-system/) — exemplifies: Evans' modeling/classification split is a worked example where all four lenses yield different verdicts on two halves of the same system
+- [Code complements the weight–prompt pair with independently executed symbolic operations](./code-complements-weight-prompt-with-symbolic-operations.md) — grounds: defines the operation-level comparison
+- [Exact implementation does not validate a requirement against its objective](./exact-implementation-does-not-validate-a-requirement.md) — grounds: distinguishes conformance from objective fit
+- [Oracle strength spectrum](./oracle-strength-spectrum.md) — grounds: compares available checking evidence
+- [Codification](./definitions/codification.md) — defined-in: names the crossing to symbolic consumption
+- [Discarding all experience-dependent state prevents cross-run accumulation](./ephemeral-computation-prevents-accumulation.md) — contrasts: execution form does not decide whether learning persists
+- [A fixed-model house must retain missing procedures for theory use](./a-fixed-model-house-must-write-the-procedures-for-each-new-theory.md) — extends: connects the allocation decision to learning new theory-use capacity

@@ -1,5 +1,5 @@
 ---
-description: "Methodological closure tracks whether a retained method settles consequential decisions; computational closure tracks whether those decisions require a human actor"
+description: "Methodological closure tracks what a retained method settles; computational closure tracks the absence of human decisions during the assessed operation, without requiring every judgment to have explicit criteria"
 type: kb/types/note.md
 traits: [title-as-claim, synthesis]
 tags: [foundations, self-improving-systems]
@@ -7,103 +7,168 @@ tags: [foundations, self-improving-systems]
 
 # Methodological and computational closure track different changes
 
-An improvement pathway can stop depending on improvised judgment without stopping its dependence on a human actor, and it can stop depending on a human actor while continuing to improvise. Those are different architectural changes and need different readings of **closure**.
+An improvement pathway can use a settled method while depending on a human
+actor. It can also operate without a human while leaving consequential choices
+to a model's judgment. These are different properties.
 
-**Methodological closure** asks whether the retained methodology settles the consequential decisions that the pathway raises. A method is less closed where it merely says “use judgment,” names an approver, or leaves a meta-decision to be reconstructed from scratch.
+**Methodological closure** asks whether the retained methodology settles the
+consequential decisions that the pathway raises. Naming a decider or saying
+“use judgment” settles routing, not the content of that judgment.
 
-**Computational closure** asks who supplies the decision. A function is computationally closed when its execution needs no human decision; a whole pathway is computationally closed only when every required function meets that condition.
+**Computational closure** asks whether the assessed operation requires a human
+decision. A function is computationally closed when computation supplies its
+required decisions; a whole pathway is computationally closed when this holds
+for every required function within the declared boundary and horizon.
 
-Computational closure and machine autonomy therefore read the same actor allocation: human, computational, or joint for each pathway function. “More computationally autonomous” describes movement in that allocation; “more computationally closed” describes the resulting reduction in functions that still require a human decision.
+These readings are not the cybernetic notion of organizational closure. The
+[reflective-system definition](./definitions/reflective-system.md#exclusions)
+keeps that separate. Neither reading alone establishes competence, improvement,
+or warranted authority.
 
-Neither reading is the cybernetic sense. **Organizational closure** — the recursive regeneration of a network of component interactions in the autopoiesis tradition — is a different property, already excluded from this cluster's vocabulary in the [reflective-system exclusions](./definitions/reflective-system.md#exclusions); nothing here asserts or requires it.
+## Boundaries and the time of a contribution matter
 
-## Human-inclusive boundaries make allocation load-bearing
+A [reflective system](./definitions/reflective-system.md) may include people.
+A maintainer can inspect a representation, revise it, and put the revision into
+operation. That supplies a reflective path without demonstrating computational
+performance of the maintainer's decisions.
 
-A [reflective system](./definitions/reflective-system.md) may include established human processes. Put a maintainer with a standing causal role inside the boundary of a maintained system with readable source, and reflective attribution becomes cheap: the maintainer inspects the source as a representation, edits it, and the build carries the edit into operation. The attribution can be true while saying little about machine performance.
+Report consequential functions as human, computational, or joint. An agent
+writing most of a patch does not make diagnosis or admission computational when
+a person supplies those decisions. Conversely, human authorship of a starting
+method does not make every later automatic execution joint. Declare the seed
+and its construction separately from interventions during the assessed run.
+The [fixed-boundary reallocation account](./computationally-directed-self-improvement-is-a-reallocation.md)
+develops the transition toward removing internal human roles.
 
-Actor allocation restores the missing discrimination. Under a fixed human-inclusive boundary, report each consequential function as human, computational, or joint; computational closure is the no-human endpoint of that profile, and [the endpoint has a test, not only a definition — whether the boundary can be contracted to exclude the human participants](./computationally-directed-self-improvement-is-a-reallocation.md). The profile reads decision content, not production volume: an agent can produce nearly all of a patch while the maintainer supplies every improvement-directing decision, and the function is then still human. Do not replace the profile with a percentage: functions differ in decomposition, authority, and stakes, and cross-system comparison remains [an open measurement problem](./measuring-autonomy-well-enough-to-see-it-improve-is-an-open-problem.md).
+Per-function reporting has a precedent in [Parasuraman, Sheridan, and
+Wickens](https://www.cs.uml.edu/~holly/91.550/papers/sheridan-autonomy.pdf).
+Here the functions are those of the improvement pathway, such as search,
+evaluation, and retention in a proposal-selection loop. This use does not
+inherit their within-function level scale. Cross-system comparison still needs
+a basis for matching responsibilities: [autonomy measurement](./measuring-autonomy-well-enough-to-see-it-improve-is-an-open-problem.md)
+cannot be reduced to the fraction of generated text or code.
 
-The form is inherited rather than invented. [Parasuraman, Sheridan, and Wickens](https://www.cs.uml.edu/~holly/91.550/papers/sheridan-autonomy.pdf) report automation per function — information acquisition, analysis, decision and action selection, action implementation — and hold that an allocation is judged by its performance consequences, its reliability, and the cost of the consequences it admits, not by how much of the work the machine has taken over. That shape is what carries across, with three departures. The functions allocated here are the improvement pathway's own — search, evaluation, and retention where the pathway is proposal-selection — rather than task-performance stages. Their within-function ten-level scale is not inherited: the paper's validation is strongest for decision selection, and a graded level per function would reintroduce the percentage this profile refuses. And allocation still establishes nothing about warrant.
+## Declare the assessed work and permitted inputs
 
-## Closure is relative to selected tasks and declared crossings
+Evidence for computational closure must identify the task-selection process,
+objective, boundary, permitted inputs, horizon, resource limits, and treatment
+of failures. Selecting easy cases or ending observation before the next human
+intervention can otherwise make an open pathway appear closed.
 
-A pathway is not fully declared until the tasks that instantiate it are declared. A system can otherwise appear closed by selecting only easy cases, dropping failures, or ending the horizon before the next required human decision. A computational-closure claim must therefore name the task-selection rule, objective and acceptance conditions, system boundary, permitted exogenous inputs and interactions, horizon, resource limits, and coverage rule. Changing any of these creates a different claim.
+Task selection and user participation may remain external. For a [software
+house](./definitions/software-house.md), users can supply requirements, domain
+facts, observations, and acceptance judgments about visible behaviour. Supplying
+implementation diagnosis, internal design selection, or admission of a retained
+successor instead fills an internal production role. Calling that contribution
+“feedback” does not change it.
 
-Task selection may remain external. A client or environment may supply a brief, requirements, an existing repository, corrections, bug reports, tests, telemetry, permissions, changing constraints, and later acceptance evidence. Computational closure does not require the system to create its own task, objective, or environment. Conditional on those declared crossings, it requires machinery inside the boundary to determine every required decision and execute every required transition assigned to the pathway.
+A component experiment can assess a narrower set of decisions, but must not
+present the result as whole-house automation. Record failures, refusals,
+timeouts, and reopened human roles. A failure reached without human help may
+still be computationally closed; it is not thereby adequate.
 
-The line between an exogenous input and a human intervention is causal, not syntactic. A person may transmit a task or observation whose value is explicitly outside the pathway. The path remains open when a person supplies a decision the pathway is meant to make: interpreting evidence into an undeclared requirement, constructing a needed evaluator, choosing a candidate or recovery, performing an unassigned transition, or deciding that a failed case no longer counts. Calling that contribution “feedback” or listing it among inputs does not change its role.
+The task-selection process can introduce new kinds of work. Declaring how an
+evaluation selects requests does not require fixing the house's future product
+family. The evidence remains limited to the paths and conditions assessed.
 
-Declare these crossings before reading the evaluated outcomes, and keep failures, timeouts, and abstentions in the coverage account. A path may reach any of them without human help and remain computationally closed. Closure therefore establishes actor allocation over the selected paths, not competence, warrant, or breadth of task coverage.
-
-Production reach is a separate axis. A computationally closed path may remain narrow because it only updates one supplied family, while a broad process may remain human-open because people still supply the production knowledge required for each newly covered area.
-
-## Four concrete combinations
+## Four combinations
 
 | Improvement decision | Methodologically closed? | Computationally closed? | Why |
 |---|---:|---:|---|
-| A maintainer manually applies an exact checklist before accepting a patch | Yes | No | The criterion is settled, but a human supplies the verdict. |
-| A validator accepts an artifact only when an exact structural predicate holds | Yes | Yes | The criterion and its execution are both explicit and computational. |
-| An unattended coding agent is told to inspect failures and “improve the repository” using its own judgment | No | Yes | No human intervenes, but consequential choices remain improvised. |
-| A maintainer and agent jointly judge a theory note against “is this good?” | No | No | The criterion is unsettled and a human participates in the verdict. |
+| A maintainer applies an exact checklist before accepting a patch | Yes | No | The method settles the criterion, but a human supplies the verdict. |
+| A validator accepts only when a specified structural predicate holds | Yes | Yes | The criterion is settled and computation executes it. |
+| An unattended agent inspects failures and chooses a revision using its judgment | No | Yes | No human intervenes, but the retained method leaves consequential choices unresolved. |
+| A maintainer and agent jointly judge a note against “is this good?” | No | No | The method does not settle the criterion and a human participates. |
 
-Stable but tacit expertise does not count as retained methodology. A maintainer may apply a repeatable internal criterion that was never externalized — settled in practice, unsettled in representation — but methodological closure reads the representation, and the reading has one ground rather than a human-specific rule, [since only explicit retention is currently durable, writable, and addressable at once](./only-explicit-retention-is-durable-writable-and-addressable.md): a criterion that cannot be retrieved, cited, criticized, or selectively revised is not available to the pathway as methodology, however consistently it is applied — it is available only as the human actor. The state deserves its own name instead of a closure grade: stable-but-unexternalized practice is a promotion candidate, noticeable by recurrence and convertible by externalization. The last row therefore stands even when the joint judgment is secretly consistent.
+Stable but unarticulated expertise does not, by itself, add a criterion to the
+retained methodology being assessed. That is a limit of what the method states,
+not a claim that the expertise is unreal, inconsistent, or impossible to
+transfer. The same distinction applies to model competence. [Explicit
+retention](./only-explicit-retention-is-durable-writable-and-addressable.md)
+provides direct targets for criticizing a criterion; it does not define all
+possible governance or learning.
 
-The third row needs a named exclusion, not a stronger definition. Computational closure reads actor allocation within the declared frame: a hosted model is a computational actor wherever it runs, so a pathway can be computationally closed while depending on inference infrastructure and a provider outside the selected subsystem. That dependency is real, but it is a boundary and dependency-control fact, not an actor fact: an internal binding can request an external model without bringing the provider weights inside the system or giving them [reflective coverage](./reflective-coverage-is-graded-across-representational-forms.md). Widening closure to swallow substrate dependency would leave almost no model-mediated function ever computationally closed and destroy the discrimination the table exists to provide, the same reason the organizational-closure sense is excluded above.
+A hosted model can supply a computational decision while depending on external
+inference infrastructure. That dependency must be declared, but it is not a
+human production decision merely because a provider operates the service.
+Selecting a model binding also does not give the system [reflective
+coverage](./reflective-coverage-is-graded-across-representational-forms.md)
+over the provider's parameters. A fixed-model witness additionally needs the
+model identity and pinning required by its protocol.
 
-## When the two changes advance together
+## One route that advances both properties
 
-A recurring human decision becomes easier to allocate computationally after its inputs, criterion, and failure response have been made explicit. The conversion usually has three parts:
+A recurring human decision may become easier to transfer when the house makes
+its inputs, criterion, and failure response explicit. Three functions describe
+that route:
 
-1. **Representation** — the relevant inputs and commitments become available to the deciding process, [since reflection buys addressability](./reflection-buys-addressability.md).
-2. **Settlement** — the methodology supplies the criterion or determines the result instead of merely naming a decider, [since a methodology governs its own extension only as far as it settles the meta-decisions it raises](./a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md).
-3. **Warranted execution** — a computational procedure or oracle implements the criterion with evidence adequate to the case, [since warranted autonomy is bounded by oracle domain](./warranted-autonomy-is-bounded-by-oracle-domain.md).
+1. **Representation:** make relevant premises available to the deciding
+   process, using the direct handles that [reflection can
+   supply](./reflection-buys-addressability.md).
+2. **Settlement:** state or reference a criterion that constrains the result,
+   rather than merely naming its author. [Methodology governing its own
+   extension](./a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md)
+   explains the limit of that settlement.
+3. **Warranted execution:** obtain evidence that the computational process
+   performs the decision adequately within the intended scope. [Available
+   checks](./warranted-autonomy-is-bounded-by-oracle-domain.md) bound that evidence.
 
-The order is forced, not conventional: externalization is allocation's transport. A computational actor can receive a criterion only through an explicit representation — where sealed weights can only be replaced as a whole, no weight-level channel inside the boundary is writable; an editable model binding writes the localized configuration, not the selected weights. Even where fine-tuning adds a parametric write channel, the transfer is unaddressable, escaping governance at the moment it succeeds ([only explicit retention is currently durable, writable, and addressable at once](./only-explicit-retention-is-durable-writable-and-addressable.md)).
+This is not a necessary sequence for every computational transfer. A model may
+already supply the judgment or infer it from examples while leaving its
+criterion unstated. Where parameter learning is permitted, it supplies another
+possible route. Such cases can advance computational closure without making
+the retained method more complete.
 
-What a model actor changes is how much [codification](./definitions/codification.md) the transport demands. Pre-LLM automation could take delivery only of a formalized criterion, so the semantic, open-ended functions stayed human by necessity; a model can receive an explicit criterion in the same natural-language materials a human decider would read — instructions, rationale, traces — and so decision-bearing functions that were never codified become allocatable. Explicit is still required; codified no longer is. That cheapens the settlement step without touching the warrant step, which is why handing over evaluation is where the conversion still stalls.
+Under a fixed-model premise, new retained capacity must instead use the
+permitted surrounding state. A written theory, examples, tools, or a procedure
+can guide the fixed model without spelling out a complete judgment rubric.
+Explicit criteria are useful for inspection and selective revision, not a
+logical precondition of every automatic decision.
 
-These are engineering dependencies, not definitions of one another. A settled gate can remain human-executed; an agent can read explicit commitments yet improvise how to apply them; and a computational procedure can encode a poor proxy. Moving evaluation to a model changes allocation without establishing that its acceptances are trustworthy.
+Nor does making a criterion explicit warrant its execution. A settled gate can
+encode a poor proxy, and an agent can misapply a sound instruction. Admission,
+independent outcomes, and recovery therefore need evaluation separately from
+both kinds of closure. The [Commonplace reference
+case](./evidence/commonplace-as-a-reflective-system.md) records one human-agent
+path rather than demonstrating a general computational transfer.
 
-The [Commonplace reference case](./evidence/commonplace-as-a-reflective-system.md) applies this conversion to ADR 026 and keeps the trace-specific facts in one place.
+## Reflection is separate
 
-## Reflection is a separate question
+Reflectivity requires a causally connected self-representation that processes
+inside the boundary can use and change. It does not require a method that
+settles every next decision. A reflective house can revise its own principles
+through fallible judgment. A fixed pipeline can settle its operational choices
+without representing or revising itself.
 
-Reflectivity does not require methodological closure. It requires a causally connected representation of the system's own behavior that processes inside the declared frame can read and change. A reflective pathway may expose its rules for criticism while leaving the next revision to open-ended judgment. Conversely, a fixed pipeline may settle every operational choice without representing or revising itself.
-
-The properties reinforce each other when the represented object is the improvement methodology itself: an addressable criterion can be revised, then a settled and warranted version can be executed computationally. That is a trajectory through a [multi-part profile](./self-improving-systems-README.md), not one scale of reflectivity or closure.
+The properties can reinforce each other when the represented object is the
+improvement method. Making an assumption addressable permits criticism;
+settling a revised criterion permits repeatable application; transferring its
+execution removes one human role. Each step can fail independently.
 
 ## Scope
 
-- Both closure readings are per decision and per pathway, so mixed profiles are normal: exact validators can coexist with joint review, and settled acceptance rules with improvised objective-setting.
-- A task-scoped claim exports only the inputs and interactions it declares. It may not export a required decision under the names “task selection,” “feedback,” or “environment.”
-- A proposal-selection loop instance **completes** when search, evaluation, and
-  operative retention occur. A direct pathway completes through an
-  evidence-responsive operative update without a separate rejection stage.
-  Calling either event closure would conflate completion with actor allocation.
-- Both readings require a declared frame. A whole-system closure claim without named decisions and pathways hides the mixed architecture.
-- Comparing allocation profiles across releases or systems inherits the open commensurability problem: [measuring autonomy well enough to see it improve is an open problem](./measuring-autonomy-well-enough-to-see-it-improve-is-an-open-problem.md).
+Both closure readings are relative to a declared pathway and horizon. A
+completed update is not the same as closure, and an observed closed path is not
+proof of reliable continuation on untested requests. The method may also
+explicitly leave a tolerable choice open; assess whether that choice matters
+to the claim before treating it as a missing criterion.
 
 ## Open Questions
 
-- When an initial human instruction makes a downstream agent-performed function joint rather than computational; counting every instruction hides agent performance, while counting none hides decision content supplied up front.
-- Whether objective-setting can become methodologically closed without freezing the improvement objective rather than improving it.
-- How much representational explicitness computational internalization requires when learned components can execute a decision without exposing its criterion.
-- How to distinguish a computational implementation of a settled method from a proxy that silently changes what the method decides.
+How should trials distinguish seed construction from run-specific human design
+supplied through an apparently external input? What evidence establishes that a
+computational implementation preserves a criterion rather than substituting a
+convenient proxy? These are boundary and outcome questions, not reasons to
+identify explicitness with automation.
 
 ---
 
 Relevant Notes:
 
-- [A proposal-selection improvement loop requires search, evaluation, and operative retention](./a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — grounds: supplies the pathway functions over which both properties are reported
-- [Reflection buys addressability](./reflection-buys-addressability.md) — mechanism: makes retained inputs and criteria available to later deciding processes
-- [A methodology governs its own extension only as far as it settles the meta-decisions it raises](./a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md) — grounds: supplies the methodological reading of closure
-- [Reflective system](./definitions/reflective-system.md) — grounds: the boundary-relative criterion that makes human-inclusive reflection possible
-- [Measuring autonomy well enough to see it improve is an open problem](./measuring-autonomy-well-enough-to-see-it-improve-is-an-open-problem.md) — extends: explains why allocation remains a profile rather than a percentage
-- [Warranted autonomy is bounded by oracle domain](./warranted-autonomy-is-bounded-by-oracle-domain.md) — grounds: explains why computational allocation does not by itself justify unattended action
-- [Only explicit retention is currently durable, writable, and addressable at once](./only-explicit-retention-is-durable-writable-and-addressable.md) — grounds: the shared reason tacit expertise is not retained methodology and externalization is allocation's transport
-- [Increasing computational autonomy relocates human effort to the frontier instead of reducing it](./increasing-computational-autonomy-relocates-human-effort.md) — extends: states the human-side consequence when computational allocation advances
-- [Computationally directed self-improvement is a fixed-boundary reallocation ending in contraction](./computationally-directed-self-improvement-is-a-reallocation.md) — extends: restates the no-human endpoint as a testable boundary contraction, and frames the human-directed-to-computationally-directed transition the profile tracks
-- [Commonplace as a reflective system](./evidence/commonplace-as-a-reflective-system.md) — evidenced-by: applies both closure readings to one observed improvement pathway
-- [The boundary of automation is the boundary of verification](./the-boundary-of-automation-is-the-boundary-of-verification.md) — contrasts: states why computational allocation stalls where warranted checking is expensive
-- [A Model for Types and Levels of Human Interaction with Automation](https://www.cs.uml.edu/~holly/91.550/papers/sheridan-autonomy.pdf) — evidenced-by: the external per-function allocation precedent, whose within-function level scale is deliberately not inherited
-- [Distinct residue classes require distinct functions in a self-improving architecture](./residue-classes-need-different-mechanisms-so-architecture-is-mixed.md) — extends: maps the representation–settlement–warranted-execution conversion onto the architectural parts that supply each stage
+- [A proposal-selection improvement loop requires search, evaluation, and operative retention](./a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — grounds: supplies functions over which closure can be assessed
+- [A methodology governs its own extension only as far as it settles the meta-decisions it raises](./a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md) — grounds: defines what the retained method must settle
+- [Explicit retention provides direct targets for selective revision](./only-explicit-retention-is-durable-writable-and-addressable.md) — mechanism: explains the inspection advantage without making explicit criteria necessary for automation
+- [Computationally directed self-improvement is a fixed-boundary reallocation ending in contraction](./computationally-directed-self-improvement-is-a-reallocation.md) — extends: describes removal of required human production roles
+- [Software house](./definitions/software-house.md) — defined-in: supplies the complete producer's functional boundary
+- [Warranted autonomy is bounded by oracle domain](./warranted-autonomy-is-bounded-by-oracle-domain.md) — grounds: separates actor allocation from justified authority
+- [Distinct residue classes require distinct functions in a self-improving architecture](./residue-classes-need-different-mechanisms-so-architecture-is-mixed.md) — extends: distinguishes the functions missing from transfers that remain human

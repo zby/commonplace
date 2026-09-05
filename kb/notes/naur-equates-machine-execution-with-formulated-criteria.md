@@ -1,62 +1,140 @@
 ---
-description: "Naur argues program theory cannot be expressed as criteria, then concludes it is human-only; the bridge equates machine execution with formulated criteria, true for the programs of his day and separated since by trained recognizers"
+description: "Naur's human-only conclusion needs a further premise connecting unformulated judgment to computational inability; this reading preserves his functional tests without claiming that learned criteria are inexpressible"
 type: kb/types/note.md
 traits: [title-as-claim, has-external-sources]
 tags: [foundations, context-engineering]
 ---
 
-# Naur binds program theory to humans by equating machine execution with formulated criteria
+# Naur's human-only conclusion needs more than the absence of explicit criteria
 
-Peter Naur's essay *Programming as Theory Building* makes two claims that are usually read as one. The first is that a program's theory — the capacity to map it onto the world, justify its parts, and extend it coherently — cannot be expressed as criteria or rules. The second is that the theory is "inextricably bound to human beings." The essay's bridge between them is an equation: what a program running on a computer does is execute formulated criteria, so a judgment whose criteria cannot be formulated is a judgment no program can make. For the programs Naur's essay is about, the equation was accurate — making a machine judge meant writing the criteria.
+Peter Naur's [Programming as Theory Building](../sources/programming-as-theory-building.ingest.md)
+connects two claims: program theory cannot be expressed as rules or criteria,
+and it is bound to human beings. The second does not follow from the first
+alone. It also needs a reason why computation cannot perform the relevant
+judgments without their criteria having been explicitly supplied.
 
-Trained recognizers have since separated formal execution from formulated criteria, and two of the three examples Naur chose for the inexpressible — faces and tunes, if not yet tastes of wine — are the ones they separated them on. What survives is not the human binding but a set of tests that any interpreter-plus-artifact composite — a model together with the retained artifacts it reads — has to pass.
+This note reconstructs one bridge between those claims. It is an
+interpretation of the essay, not a premise Naur states as a separate theorem.
+Removing that bridge reopens the computational question; it does not establish
+that a current model or automated house holds a program theory.
 
-Retained theory and holding a theory are different. Retained theory is the stored, addressable object. Holding it is a capacity of the interpreter-plus-artifact composite that uses it. Text alone does not hold a theory, and breaking Naur's human-binding inference does not show that any current composite does.
+## What Naur asks a theory-holder to do
 
-## The inexpressibility argument targets formulable criteria
+Drawing on Ryle, Naur describes a capacity to relate program structure to the
+world, justify the program's parts, and incorporate new demands by recognizing
+relevant similarities. Following an explicit rule does not exhaust that
+capacity: applying a rule itself can require judgment. Naur uses this regress
+to argue against identifying intelligent performance with adherence to a
+formulated method.
 
-Naur takes his notion of theory from the philosopher Gilbert Ryle. Having a theory is being able to do certain things and also to explain, justify, and answer questions about them. Intelligence of this kind cannot consist in following rules: adhering to a rule is itself done well or badly, so intelligence-as-rule-following would need rules for following rules, in a regress Naur calls absurd. What ends the regress is a grasp of similarity between situations, and similarity of the relevant kind "cannot be expressed in terms of criteria, no more than the similarities of … human faces, tunes, or tastes of wine."
+That gives a demanding functional target. A modifier must do more than recall
+facts or produce a patch that passes today's tests. It must understand how a
+change relates to the program's purpose and organization, including implications
+not already stated as instructions.
 
-Applied to programs, this yields the theory-holder's three capabilities — mapping between the world and the program text, justifying each part, and incorporating a new demand by perceiving its similarity to existing facilities — and the claim that the third "cannot be reduced to any limited set of criteria or rules." The target is precise: criteria that can be formulated. Naur says so when he calls the judgment "entirely outside the reach of what can be determined by rules, since even the criteria on which to judge it cannot be formulated." Text that must decide a case by itself is formulated criteria, and the argument bounds it.
+Naur also locates theory in programmers' mental possession and stresses their
+knowledge of the world. These are part of his account, not consequences that
+his maintenance cases independently establish for every possible computational
+system.
 
-## The bridge to human beings is an equation that held for the programs of its time
+## The reconstructed bridge
 
-The human binding is stated as "a main claim": the theory "could not conceivably be expressed, *but* is inextricably bound to human beings," and "by its very nature is part of the mental possession of each programmer." The "but" moves from *not expressible* to *human*. What licenses the move is the way the essay places computers. Programming is defined as matching real-world activity "to the formal symbol manipulation that can be done by a program running on a computer." The similarity judgment is "accessible to the human beings who possess the theory" and "outside the reach of what can be determined by rules." The view Naur rejects is that "human beings perform best if they act like machines, by following rules," paired with the notion "that the human mind works like a computer." In these passages a program on a computer, rule-determination, and formulable criteria occupy one pole, and human judgment the other.
+The essay contrasts formal symbol manipulation with similarity judgments whose
+criteria cannot be formulated. One reading reconstructs the inference as:
 
-So the inference runs: the criteria cannot be formulated; what a program does is execute formulated criteria; therefore no program can make the judgment; therefore it is human. The second premise is the bridge. The essay does not argue it and did not need to: for the programming it describes, a machine judged only by criteria a programmer had written, so machine execution and formulated criteria were one thing and the premise was a description, not a conjecture. Read in full, the essay's other person-bound statements — theory as mental possession, relevance as something only an agent with knowledge of the world can supply — can be read as a second premise. If they are, it is a premise about what the judgment needs, not about what programs can do: it binds theory to whatever has that knowledge. The equation is the only reason the essay offers for why a program cannot have it, and it was a good one when it was written.
+1. Program-theory judgments cannot be reduced to explicitly formulated criteria.
+2. A computer can make a judgment only by executing such criteria.
+3. Therefore a computer cannot perform the program-theory function.
 
-## Trained recognizers separate execution from formulated criteria
+The second premise is doing essential work. It identifies formal execution
+with the prior formulation of a judgment's criteria. Even granting the first
+premise does not establish the conclusion without it. Nor does excluding
+computers alone establish that humans are the only conceivable bearers.
 
-A face recognizer is formal symbol manipulation by a program running on a computer — its execution is as formal as anything Naur describes — and it performs a similarity judgment for which nobody can state the criteria. It is not a counterexample to Naur's first claim; the criteria are as unformulable as he said. It is a counterexample to the bridge: formal execution no longer requires formulated criteria, so a judgment can be beyond formulable criteria and still within the reach of a program. The same holds for tune recognition, and the argument extends to the case that matters here, judging whether a new demand in natural language resembles a facility a program already has — the judgment a language model is asked to make over retained text. Whether it makes that judgment well enough is the empirical question below, not something the recognizer cases settle.
+The claim that this bridge captures Naur's reasoning must remain distinguishable
+from the passages supporting it. Another reading may treat his human-only
+position as an additional commitment rather than a conclusion from the
+rule-following argument. Either way, a human-only premise needs its own support.
 
-Learning is not the discriminator. A decision tree can be induced from examples and remain an explicit finite rule set, so "learned" does not by itself place a system outside Naur's rule-determined pole. The discriminator is whether the resulting judgment has a formulable rubric. A decision tree has one; a face recognizer's parameters do not yield one. Naur's argument bounds the first kind and never reaches the second, because when it was written programs were the first kind.
+## Formal execution does not require a hand-written judgment rubric
 
-An objector may reply that the parameters *are* the formulated criteria, only not human-readable. The reply proves too much. If opaque parameters count as formulated criteria, then a face recognizer has expressed face similarity in criteria and Naur's first claim is false. If they do not count, the bridge is false. On either reading the human binding fails; only which of Naur's two claims survives changes.
+A learned model is executed by defined computational operations. That fact does
+not mean its designers supplied a project-specific rubric for every judgment
+it can make. A fixed model can be asked to interpret a new explanation and
+relate it to a case without receiving a complete decision rule for that case.
+Whether it does so adequately is the empirical issue.
 
-None of this shows that any program holds a program's theory. Breaking the bridge removes a reason to think the question is closed; it does not answer it.
+Two claims must stay separate: the criteria were not explicitly supplied, and
+the criteria cannot be formulated. The first does not prove the second. A
+model's numerical parameters and execution rules specify a computation, but
+that specification need not be a useful human-readable account of its judgment.
+Difficulty explaining the judgment is not a proof that such an account is
+impossible.
 
-## The transfer cases still impose three tests
+The computational proposal therefore need not defend inexpressibility or claim
+that machines were incapable of learned judgment when Naur wrote. Its narrower
+point is that absence of a supplied rubric does not by itself rule out
+computational performance. A working computational theory-holder would challenge
+the human-only thesis while leaving the expressibility question separate.
 
-Naur's compiler case is a bounded transfer failure. A motivated successor group had the full program text, annotated sources, extensive written design discussion, and personal advice, and still proposed extensions the original group recognized as patches destroying the structure; the original group could propose simple changes framed within it. The case shows that the supplied package did not convey enough program-specific understanding to that group. It does not test other rationale packages or other interpreters.
+## What the transfer evidence establishes
 
-The case tested one historically bounded documentation-and-consumption system. [A separate note](./naurs-compiler-case-tests-one-historically-bounded-documentation-and-consumption-system.md) states what the negative result establishes, which newer representation, indexing, retrieval, and activation paths it did not test, and why those mechanisms still do not hold a theory by themselves.
+Naur's compiler case describes a motivated successor group with program text,
+annotations, extensive design discussion, and personal advice. It still proposed
+changes the original group regarded as damaging patches, where the original
+group could propose changes within the existing structure.
 
-Read with Naur's account of theory possession, the case gives three necessary tests for any claim that an interpreter-plus-artifact composite is a bearer of a program's theory:
+The negative result concerns that [documentation-and-consumption
+system](./naurs-compiler-case-tests-one-historically-bounded-documentation-and-consumption-system.md).
+It does not show that all possible records or interpreters must fail. It also
+does not show that the supplied records were sufficient and merely needed
+better retrieval. Missing premises, missing application skill, and failure to
+activate relevant understanding are different possible explanations.
 
-- **Program-specific acquisition.** General competence over language and the world is not the theory of this program. The composite must acquire this program's mapping, justification, and modification judgments; the tested artifacts did not enable the successor group to do so.
-- **Provision of premises the interpreter cannot regenerate.** If coherent modification depends on a decision premise the interpreter cannot recover from the implementation and general knowledge, some component must supply it. The recovery test in [design rationale must preserve decision premises its interpreter cannot regenerate](./design-rationale-must-preserve-unregenerable-decision-premises.md) identifies such premises. Naur's case establishes the failure of one supplied package, not of retained rationale as a route.
-- **Dispositional reliability.** Naur ties a program's life to a team that remains in control of it and can answer later demands, and dates its death to the moment modification demands cannot be intelligently answered. One coherent extension may be lucky or memorized; possession is a capacity across occasions.
+Retained theory and holding a theory must therefore remain separate. Retained
+text is one addressable carrier. Holding a theory is a capacity of the system
+that consumes the available state. A document that is never used supplies no
+evidence of that capacity; successful reconstruction from other records need
+not require that document.
 
-Whether a current LLM-plus-artifact composite passes these tests is an empirical question. What the essay cannot do is settle it in advance, because the premise that would settle it — that a program executes only formulated criteria — was true of the programs it describes and is not true of trained recognizers.
+## Tests for a computational bearer
 
-The third test is longitudinal rather than a demand for a correct first change. [Holding a program theory means sustaining coherent search under delayed feedback](./program-theory-sustains-search-under-delayed-feedback.md) develops it as a capacity to guide search, backtracking, recovery, and revision across later demands.
+Three tests follow from this functional reading:
+
+- **Project-specific understanding.** General programming competence is not
+  the theory of this program. The system must relate the actual program to
+  its purposes, justify consequential choices, and handle novel modifications.
+  The understanding may be supplied in the seed or acquired during operation;
+  its use and its acquisition are separate claims.
+- **Access to necessary premises.** A decision premise not recoverable from
+  the implementation and general knowledge must reach the modifier through
+  some other permitted path. [Attempted
+  recovery](./design-rationale-must-preserve-unregenerable-decision-premises.md)
+  can expose that information gap without making one document format necessary.
+- **Reliable continuation.** One coherent extension may be lucky or familiar.
+  The system must sustain coherent search, diagnosis, recovery, and revision
+  across later demands, including evidence against earlier assumptions.
+
+[Holding program theory under delayed
+feedback](./program-theory-sustains-search-under-delayed-feedback.md) develops
+the last test. Interventions on retained commitments or their consumption paths
+can test their causal contribution. Altering a written carrier alone does not
+isolate the whole capacity when other records can reconstruct it.
+
+## Scope
+
+This is a criticism of an inference, not a proof of computational theory
+possession. The functional tests are an operational reading of Naur for a
+research program, not a claim that he would accept every system passing them.
+A successful computational witness would bear on human exclusivity; it would
+not settle every philosophical claim about knowledge or rule-following.
 
 ---
 
 Relevant Notes:
 
-- [Programming as Theory Building](../sources/programming-as-theory-building.ingest.md) — abstracted-from: supplies the Ryle regress, the inexpressibility and human-binding claims, the program-as-formal-symbol-manipulation and rule-following passages, the program-life passage, and the compiler case; the identification of the bridge as an equation is this note's reading
-- [Naur's compiler case tests one historically bounded documentation-and-consumption system](./naurs-compiler-case-tests-one-historically-bounded-documentation-and-consumption-system.md) — extends: separates the technology-relative bound on the transfer evidence from the machine-execution bridge
-- [Attempted recovery identifies informational gaps, not provenance or authority](./documentation-generates-the-system-rather-than-describing-it.md) — grounds: why Naur's failed transfers show that content was missing from the supplied artifacts, not that program theory is inexpressible in principle
-- [Holding a program theory means sustaining coherent search under delayed feedback](./program-theory-sustains-search-under-delayed-feedback.md) — extends: develops Naur's third bearer test as a longitudinal search-and-recovery capacity rather than one-shot correctness
-- [Theory-mediated self-improvement needs interpretation, retention, and independent read-back](./theory-mediated-self-improvement-needs-interpretation-and-retention.md) — extends: the interpreter/retention division of labour that the three tests condition
+- [Programming as Theory Building](../sources/programming-as-theory-building.ingest.md) — abstracted-from: supplies Naur's rule-following discussion, human-binding statements, capabilities, and transfer cases; the reconstructed bridge is this note's interpretation
+- [Naur's compiler case tests one historically bounded documentation-and-consumption system](./naurs-compiler-case-tests-one-historically-bounded-documentation-and-consumption-system.md) — extends: separates the failed transfer from a universal impossibility claim
+- [Design rationale must preserve decision premises its interpreter cannot regenerate](./design-rationale-must-preserve-unregenerable-decision-premises.md) — grounds: identifies when retained project-specific information is necessary
+- [Holding a program theory means sustaining coherent search under delayed feedback](./program-theory-sustains-search-under-delayed-feedback.md) — extends: develops the longitudinal capacity test
+- [Theory-mediated self-improvement needs interpretation, retention, and independent read-back](./theory-mediated-self-improvement-needs-interpretation-and-retention.md) — extends: separates application, retention, and correction on a computational path

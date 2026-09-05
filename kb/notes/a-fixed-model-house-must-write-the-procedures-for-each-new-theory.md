@@ -1,194 +1,175 @@
 ---
-description: "Retained theory is inert without operations that select, apply, check, and revise it; when weights are pinned those operations cannot be practised into the model, so they have to be retained outside it, and code is where one runs the same way twice"
+description: "With models pinned, newly acquired theory-use procedures must persist outside their parameters; existing general machinery may already supply them, while code can make specified steps cheaper and more reliable"
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [learning-theory, self-improving-systems]
 ---
 
-# A fixed-model house must write the procedures for manipulating each new theory
+# A fixed-model house must retain missing procedures for theory use
 
-A retained theory states what is the case: design commitments, causal
-assumptions, invariants. Using it is a set of operations the text does not
-contain: selecting the fragment that bears on the decision at hand, deriving
-this case's consequence, checking a candidate change against it, noticing an
-observation that contradicts an assumption, and rewriting the theory when one
-does.
+A retained theory and the capacity to use it are different acquisitions. A
+[software house](./definitions/software-house.md) needs operations that select
+relevant commitments, derive consequences, check changes, notice contrary
+evidence, and revise the account. A text stating design commitments does not
+by itself perform these operations. It may describe some of them, and existing
+machinery may already supply others.
 
-Acquiring the theory and acquiring those operations are two different
-acquisitions. A [software house](./definitions/software-house.md) that gains
-the first without the second holds a text that [changes nothing
-later](./knowledge-storage-does-not-imply-contextual-activation.md) — and a
-text it cannot test, since checking a theory by attempted falsification is
-itself an application: deriving what the theory predicts and confronting the
-prediction with observations. The derive-and-test steps of the [discovery
-lifecycle](./definitions/discovery-lifecycle.md) run on the same operations
-as production use.
+When the house needs a procedure its existing machinery cannot perform
+adequately, acquiring more theory text alone may leave that theory inert.
+With models pinned, a newly acquired procedure cannot persist through changes
+to their parameters. It must be carried by retained state outside them. In the
+fixed-model regime considered here, the writable carriers are natural-language
+and symbolic artifacts, including records from which a procedure can be
+reconstructed. This does not require new code for every new theory.
 
-This split is the one the familiar knowing-that / knowing-how distinction
-names, and
-this KB already records its cognitive-science version in the [three-space memory
-taxonomy](./three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy.md),
-where procedural content sits in a space of its own. The analogy is doing one
-job here: it names a function and a failure mode — knowledge acquired but inert
-because the skill for applying it was not acquired alongside it. It does not
-argue that the house needs a component called procedural memory, since [human
-analogies can motivate functions without determining component
-boundaries](./human-analogies-suggest-functions-not-component-boundaries.md).
+## Theory possession requires application
 
-## Pinning the weights closes the usual path
+[Knowledge storage does not imply contextual
+activation](./knowledge-storage-does-not-imply-contextual-activation.md).
+Retaining an account of tenant isolation is not enough if no process consults
+it when changing a query. Testing the account also requires application:
+derive what it predicts, expose that prediction to observations, and revise
+an assumption when the evidence warrants it. The derive-and-test steps of the
+[discovery lifecycle](./definitions/discovery-lifecycle.md) depend on the same
+capacity as production use.
 
-In a system whose weights can change, the second acquisition can happen without
-any artifact naming it. Practice writes into the same substrate that runs the
-operations, so a new operation for a new kind of theory can be consolidated
-where nothing points at it. Under a fixed-model premise that route is closed by
-construction: the pinned model [supplies whatever it already does with text
-on the spot](./weight-resident-methodologies-compress-behavior-in-context.md),
-and no amount of production adds an operation to it.
+The knowing-that / knowing-how distinction helps name this failure mode. The
+[three-space memory analogy](./three-space-agent-memory-echoes-tulvings-taxonomy-but-the-analogy.md)
+separates retained knowledge from skill in applying it. It does not establish
+that either must occupy a separate component: [human analogies suggest
+functions, not component boundaries](./human-analogies-suggest-functions-not-component-boundaries.md).
+Nor must both be acquired anew. A new account can be usable immediately when
+the house already has suitable operations.
 
-What remains are the localized [representational
-forms](./definitions/representational-form.md) — natural language and symbolic
-artifacts. A procedure the house needs and the model does not already perform
-has to be [written into one of them and
-retained](./only-explicit-retention-is-durable-writable-and-addressable.md),
-because [the deployed system,
-not the model alone, is the unit of
-learning](./the-deployed-system-not-the-model-is-the-unit-of-learning.md):
-retrieval, scheduling, schemas, validators, tests, and tools each perform a step
-of theory use, and each is revisable while the weights are not. It cannot be
-optimized into place from inside the existing arrangement either, since
-[learning inside a fixed decomposition inherits its
-mistakes](./learning-inside-a-fixed-decomposition-inherits-its-mistakes.md): an
-operation absent from the supplied structure is not reachable by tuning that
-structure.
+## What pinning changes
 
-## Where the demand starts
+Parameter learning is one possible place to consolidate a new procedure.
+Pinning closes that route, not the capacity to learn through context, records,
+or software. The [deployed system, not the model alone, is the unit of
+learning](./the-deployed-system-not-the-model-is-the-unit-of-learning.md).
+A fixed model can behave differently when retrieval, instructions, tools, or
+scheduling change.
 
-The claim is not that every retained theory obliges new machinery. A fixed
-model's generic competence with text covers a wide band of theory use for free:
-read a short account, apply it to the case in front of it, spot a plain
-contradiction. While a theory's operations stay inside that band, retaining the
-text is the whole of the acquisition.
+[Weight-resident methodologies](./weight-resident-methodologies-compress-behavior-in-context.md)
+may already supply useful operations. A fixed interpreter can also apply many
+new theories through the same retrieval, graph traversal, and checking tools.
+Their reuse can make a new theory sufficient as the only retained change.
 
-The demand appears where an operation scales with what the theory governs.
-Selecting the relevant commitment out of hundreds is a retrieval problem, not a
-reading problem. Enumerating every file an invariant reaches is a traversal
-problem. Deciding whether a candidate change respects the invariant, on every
-change rather than when someone thinks to ask, is a checking problem. Watching
-for the observation that would refute an assumption is a monitoring problem.
-These are the operations a growing project keeps asking for, and they are the
-ones a pinned model will not acquire. A house that can revise its theories but
-not its machinery should therefore improve for a while and then stop, at roughly
-the scale where its theories outgrow what the model can do with them in one
-pass.
+The relevant limit is the [effective update
+space](./learning-inside-a-fixed-decomposition-inherits-its-mistakes.md), not
+whether an operation has a dedicated name or implementation. Existing tools,
+histories, and compositions of calls may express it. An operation that is
+possible but too costly is different from one the permitted machinery cannot
+express. Both can motivate extending the machinery, but they require different
+evidence.
 
-## Why the procedure tends toward code
+## Where new procedures become necessary
 
-Both localized forms can carry a procedure, and the difference between them is
-not whether the procedure is retained but how it executes. A procedure written
-as instructions is re-interpreted at each use: the model reconstructs the
-operation from the text every time, paying the cost and taking the variance
-again, which is [ephemeral computation](./ephemeral-computation-prevents-accumulation.md)
-of the operation itself even though the instructions persist. A procedure
-written as code is executed by a defined consumer, because [code complements the
-weight–prompt pair with independently executed symbolic
-operations](./code-complements-weight-prompt-with-symbolic-operations.md): once
-installed it runs the same way twice, can be tested against cases, and can be
-revised one step at a time.
+Consider a theory that says every file contributing to a release manifest
+needs a particular check. If the house already has a reliable dependency
+traversal and a configurable check selector, it can apply the theory without
+writing a new traversal or selector.
+
+Suppose the exporter instead gains an include mechanism that the traversal
+cannot follow. The house must repair or replace that operation, find another
+adequate route, or fail to cover the affected files. A second failure is
+possible even with a correct traversal: a model may invoke it too
+inconsistently, or repeated interpretation may exceed the operating budget.
+Retaining a scheduling rule or installing an automatic check can address that
+failure.
+
+The requirement is therefore conditional: when existing operations cannot
+apply, check, or revise a theory reliably within the budget, the house needs a
+change that supplies the missing capacity. It may change a procedure, the
+representation the procedure consumes, or both. Project growth alone does not
+prove that this limit has been reached.
+
+## Why specified steps can move into code
+
+Natural-language instructions are a workable carrier for a procedure. They
+persist even when a model interprets them afresh at each use. Repeated
+interpretation has a cost and may vary, but it is not the loss of all learning:
+the instructions and other experience-dependent state remain. The
+[ephemerality distinction](./ephemeral-computation-prevents-accumulation.md)
+concerns what is discarded and what still affects later work.
+
+[Code complements model-mediated operations](./code-complements-weight-prompt-with-symbolic-operations.md)
+by assigning specified steps to a runtime. A traversal or bookkeeping rule can
+then run without a fresh model judgment at each step. This can improve
+repeatability, cost, and coverage. Exact execution remains relative to the
+runtime, inputs, and environment; it does not establish that the procedure
+implements the right requirement. Instructions can also be tested, and code
+can still call models or depend on uncertain inputs.
+
+[Codification](./definitions/codification.md) becomes necessary for a particular
+operation only when it is needed to meet the declared outcome and resource
+limits and no permitted alternative does so. There is no general threshold at
+which every growing theory must become code. Reusable machinery can postpone
+or remove the need for theory-specific implementations. The related
+[two-layer execution account](./theory-and-methodology-form-a-two-layer-execution-system.md)
+explains how a retained procedure can serve as a cheaper path while theory
+remains available for cases it does not cover.
+
+## What existing reports support
+
 [Memento-Skills](../sources/memento-skills-let-agents-design-agents.ingest.md)
-reports the pattern in the field: frozen-LLM agents that learn at deploy time
-by writing and rewriting an executable skill memory.
+reports deploy-time revision of mixed instruction-and-code skill memory around
+a frozen LLM. Its router is trained separately, so it is not evidence that all
+distributed-parametric components remained fixed.
 
-So the two forms are not interchangeable for this purpose. Written instructions
-are the cheap first carrier for a procedure still being worked out, and a
-workable carrier in its own right —
 [SkillOpt](../sources/skillopt-executive-strategy-self-evolving-agent-skills.ingest.md)
-reports validation-gated optimization of compact natural-language skills
-around frozen models. The crossing
-into code — [codification](./definitions/codification.md) — is what makes a
-theory-manipulation step repeatable and checkable. The pressure to cross grows
-with how often the step runs and how much a wrong execution costs. At
-sufficient volume the crossing stops being an optimization and becomes the
-condition of application: having a model re-interpret the theory for every
-change to a large product exceeds any practical budget, so at that scale the
-theory is applied only as software.
+reports validation-gated changes to natural-language skills with a frozen target
+model and harness. It supports the instruction carrier, not a requirement to
+turn every procedure into code.
 
-This is a different argument from the neighbouring [two-layer
-arrangement](./theory-and-methodology-form-a-two-layer-execution-system.md),
-where a derived methodology is a cheaper fast path for derivations the theory
-could still supply the slow way. There the case for building the procedure is
-a cost case; here, past the band the model covers for free, the procedure is
-what lets the theory reach the decision at all. That is the concrete reason a
-house under the pin must be able to write and revise programs, not only
-retain text: a text can hold the theory, but it holds a procedure only as a
-recipe the model must re-derive at each use.
-
-## What would show this is wrong
-
-The prediction is a signature in the record of retained changes: in a house
-whose models stay pinned, theory revisions should be accompanied by revisions to
-retrieval, schemas, checks, tools, or scheduling, at a rate that rises as the
-theories govern more. Half of that signature is already on record:
 [Self-harness](../sources/self-harness-harnesses-that-improve-themselves.ingest.md)
-reports harness machinery revised under a fixed model through failure mining
-and regression-gated edits, though inside a fixed outer method and without a
-revisable theory driving it. A lineage of theory-only revisions that keeps improving
-later work while the project grows would refute the claim, and would show
-instead that the model's generic competence absorbs the procedure demand at the
-scales tested. A single stretch of theory-only improvement does not refute it;
-the claim is about what happens as the governed scope grows.
+reports machinery revision through failure mining and regression-gated edits
+under a fixed model and supplied outer method. It supports a machinery-learning
+mechanism, not the stronger claim that new theories caused those revisions.
+None of these reports establishes the proposed coupling by itself.
+
+## A test of the coupling
+
+Compare matched houses with the same fixed models, observations, tasks, and
+resource ceilings. One may revise theory-use machinery; the other retains new
+theories and records but uses the same frozen general machinery. Give the
+frozen baseline capable retrieval, traversal, and checking operations, rather
+than making repeated unaided model interpretation its only option.
+
+Before testing, identify the operation expected to fail and the workload change
+expected to expose it. Measure missed consequences, recovery, and total cost,
+including procedure construction and maintenance. A machinery edit supports
+the account only when it repairs the named failure and improves later work;
+co-occurring theory and code edits alone do not show that relation.
+
+If the frozen baseline remains adequate under the same limits, the proposed
+need for new machinery was not established for those conditions. If it performs
+better at comparable cost, that counts against the proposed extension. Do not
+rescue a failed prediction by moving the claimed scale limit after the run.
 
 ## Scope
 
-- The second half of the claim is conditional on the pin. Where weights can be
-  updated, the procedural substrate may be parametric and the argument for
-  writing procedures down loses its force; the first half — that using a theory
-  takes operations the theory does not contain — does not depend on the pin.
-- *Procedure* here covers anything that performs a step of theory use: a
-  retrieval path, a schema, a validator, a test, a tool, a scheduling rule, or a
-  written instruction. It is not restricted to callable functions.
-- Code is not claimed to be the sole carrier. Natural-language instructions
-  carry procedures too, and the claim about code is comparative: it is the
-  carrier whose consequences are assigned rather than re-interpreted.
-- A procedure held only in a context window or a prompt cache is not retained
-  state under this argument. It expires, and the next episode starts without it.
-- The human knowing-that / knowing-how split motivates the distinction and
-  supplies a failure mode to look for. It is not evidence that a fixed-model
-  house behaves this way.
+The strong requirement is to supply a missing capacity, not to rewrite every
+component or to allocate one procedure per theory. The argument concerns
+retained learning across the declared horizon; temporary computation can still
+apply a theory or teach a lesson retained elsewhere. A stored procedure counts
+as an acquisition only when its later use changes the house's capacity.
 
 ## Open Questions
 
-- Which theory-manipulation operations actually exceed a current fixed model's
-  in-context competence, and at what project scale? The answer fixes where the
-  procedure demand starts, and [it moves with model
-  capability](./scaling-absorbs-scaffolding-at-fixed-difficulty-not-at-the-frontier.md).
-- Does the demand per theory fall over time? If procedures written for earlier
-  theories are general enough to be reused — one retrieval path, one checking
-  harness, many theories — the plateau this note predicts is pushed back rather
-  than removed, and the interesting quantity becomes the reuse rate.
+Which operations exceed the existing machinery's reliability or budget on
+real workloads? How much can generic procedures be reused across theories?
+These determine whether a text-only writable surface suffices in practice,
+rather than the fixed-model premise alone.
 
 ---
 
 Relevant Notes:
 
-- [Code complements the weight–prompt pair with independently executed symbolic operations](./code-complements-weight-prompt-with-symbolic-operations.md) — grounds: supplies the distinction between an operation re-instantiated from a prompt at each use and one whose consequences a runtime assigns
-- [The deployed system, not the model alone, is the unit of learning](./the-deployed-system-not-the-model-is-the-unit-of-learning.md) — grounds: establishes that retrieval, tools, and runtime policy are behaviour-determining parts, which is what lets a written procedure count as an acquisition
-- [Learning inside a fixed decomposition inherits its mistakes](./learning-inside-a-fixed-decomposition-inherits-its-mistakes.md) — grounds: an operation missing from the supplied structure cannot be recovered by optimizing within it, so the procedure must be written rather than tuned into existence
-- [Knowledge storage does not imply contextual activation](./knowledge-storage-does-not-imply-contextual-activation.md) — grounds: separates knowledge that exists from knowledge that changes behaviour; the opening claim is the theory-shaped case of that activation gap
-- [Only explicit retention is currently durable, writable, and addressable at once](./only-explicit-retention-is-durable-writable-and-addressable.md) — grounds: supplies the premise that makes explicit writing the only governed option once the parametric route is closed
-- [System-definition artifacts are crystallized reasoning under context scarcity](./system-definition-artifacts-are-crystallized-reasoning-under-context.md) — grounds: distinguishes artifacts that substitute for reasoning the model could do anyway from those that stay necessary, which keeps the enablement claim from collapsing into the cost argument it disowns
-- [LLM↔code boundaries are natural checkpoints](./llm-code-boundaries-are-natural-checkpoints.md) — grounds: why a codified step is testable and not merely repeatable — semantic underspecification and execution indeterminism collapse together at the boundary
-- [Weight-resident methodologies provide context-efficient behavioral compression](./weight-resident-methodologies-compress-behavior-in-context.md) — mechanism: names how the pinned model supplies its free band, and the limit the argument relies on — activation is model-dependent reconstruction, not retained editable specification
-- [Semantic work can be relocated but not eliminated](./semantic-work-can-be-relocated-but-not-eliminated.md) — mechanism: codification pays the interpretive cost once at authoring instead of at each use; the crossing buys placement, not free execution
-- [Scaling absorbs scaffolding at fixed task difficulty, not at the deployment frontier](./scaling-absorbs-scaffolding-at-fixed-difficulty-not-at-the-frontier.md) — extends: develops the first open question, separating whether scaling absorbs existing procedures from whether the deployment frontier reopens the demand
-- [Skills derive from methodology](./skills-derive-from-methodology.md) — contrasts: a same-medium way to fix a procedure in natural language with the methodology retained as live fallback, a third move between re-interpreted instructions and code
-- [Memento-Skills lets agents design agents](../sources/memento-skills-let-agents-design-agents.ingest.md) — evidenced-by: frozen-LLM deploy-time learning through routed, rewritten executable skill memory; the closest published instance of the central mechanism
-- [SkillOpt: executive strategy for self-evolving agent skills](../sources/skillopt-executive-strategy-self-evolving-agent-skills.ingest.md) — evidenced-by: validation-gated text-space optimization of compact skills around frozen models, showing the instruction carrier is workable and not only a way-station to code
-- [Self-harness: harnesses that improve themselves](../sources/self-harness-harnesses-that-improve-themselves.ingest.md) — evidenced-by: machinery revision under a fixed model through failure mining and regression-gated edits — a partial observation of the predicted signature, without the theory half
-- [An open-domain theory builder becomes a software house when new domains require production-machinery changes](./an-open-domain-theory-builder-becomes-a-software-house-when-new-domains-require-production-machinery-changes.md) — extends: applies the same coupling to a boundary question, concluding that a builder facing new manipulation requirements must bring software development inside its own boundary
-- [Treat continual learning as representational-form coevolution](./treat-continual-learning-as-representational-form-coevolution.md) — extends: names the coupling this note supplies one mechanism for — why the natural-language and symbolic loops cannot be optimized independently once the parametric one is pinned
-- [Methodology with incomplete coverage and its live theory fallback form a two-layer execution system](./theory-and-methodology-form-a-two-layer-execution-system.md) — contrasts: there a derived procedure is a cheaper path to an effect the theory can still produce slowly; here the procedure is what gives the theory any effect on the decision
-- [Ephemeral computation prevents accumulation](./ephemeral-computation-prevents-accumulation.md) — mechanism: explains what a house pays when the operation is rebuilt from instructions at each use instead of installed once
-- [Codification](./definitions/codification.md) — defined-in: names the natural-language-to-symbolic crossing a procedure makes when it becomes code
-- [Discovery lifecycle](./definitions/discovery-lifecycle.md) — defined-in: names the derive-and-test path that checking a theory runs on, which this note ties to the same operations as production use
-- [Representational form](./definitions/representational-form.md) — defined-in: supplies the three-form classification and the localized pair the pin leaves writable
-- [Software house](./definitions/software-house.md) — defined-in: the persistent producer whose retained theory and machinery this claim is about
+- [Code complements the weight–prompt pair with independently executed symbolic operations](./code-complements-weight-prompt-with-symbolic-operations.md) — grounds: distinguishes model interpretation from runtime-assigned execution
+- [Learning inside a fixed decomposition inherits its mistakes](./learning-inside-a-fixed-decomposition-inherits-its-mistakes.md) — grounds: defines the effective update space, including compositions of existing operations
+- [The deployed system, not the model alone, is the unit of learning](./the-deployed-system-not-the-model-is-the-unit-of-learning.md) — grounds: places retained theory and its application machinery inside one learner
+- [Explicit retention provides direct targets for selective revision](./only-explicit-retention-is-durable-writable-and-addressable.md) — mechanism: explains the inspection and revision affordances of written procedures without making them the only possible form of learning
+- [An open-domain theory builder becomes a software house when new domains require production-machinery changes](./an-open-domain-theory-builder-becomes-a-software-house-when-new-domains-require-production-machinery-changes.md) — extends: applies the conditional procedure demand to the producer's boundary
+- [Treat continual learning as representational-form coevolution](./treat-continual-learning-as-representational-form-coevolution.md) — extends: places theory and machinery revision within a wider learning process
+- [Representational form](./definitions/representational-form.md) — defined-in: supplies the natural-language, symbolic, and distributed-parametric distinction
