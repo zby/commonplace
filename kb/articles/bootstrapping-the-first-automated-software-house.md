@@ -309,7 +309,7 @@ compare, or stop. Different findings challenge different parts of the approach:
   cost.
 
 These results alone do not refute the conjecture that a house can exist. They
-show that this approach, in the tested regime, is not working or is not the best
+show that this approach, under the tested conditions, is not working or is not the best
 use of resources. The same production history that supports a transfer must
 also be able to reveal these failures.
 
