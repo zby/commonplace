@@ -27,11 +27,12 @@ conjecture is that, within at least one declared product scope, such a house
 can handle relevant requests not listed in advance with no human in an
 internal production role, using only LLMs and other learned components
 available by 2026-09-02 and held fixed during the run. The house may start
-with human-written project theory, tools, tests, and production machinery.
-The claim is that the resulting system can carry the complete production
-function, including the program-specific understanding needed for coherent
-change. It does not require the house to have discovered its starting theory
-or outgrown its human-built seed. Companion articles ask [how a software
+with a human-written explicit project theory, tools, tests, and production
+machinery. The claim is that the resulting system can carry the complete
+production function, including the program theory needed for coherent change.
+It does not require the house to have discovered the explicit project theory
+with which it starts or to have outgrown its human-built seed. Companion
+articles ask [how a software
 house should be trained](./the-software-house-as-the-unit-of-training.md)
 and [how the first automated one might be
 built](./bootstrapping-the-first-automated-software-house.md).
@@ -53,18 +54,18 @@ possible software product or request.
 ## The boundary
 
 An *internal production role* is work the house depends on to develop and
-evolve the software, whoever performs it. Internal roles include interpreting
-project knowledge, making implementation decisions, diagnosing failures,
-comparing candidates, revising project state or production machinery, and
-choosing which revision takes effect.
+evolve the software, whoever performs it. Internal production roles include
+interpreting project knowledge, making implementation decisions, diagnosing
+failures, comparing candidates, revising project state or production
+machinery, and choosing which revision takes effect.
 
 Users remain outside the house when they provide product requirements, domain
 facts, preferences, observed outcomes, or acceptance judgments about visible
-behaviour. A user crosses into an internal role when asked to diagnose an
-implementation failure, choose among internal designs, supply a missing
-project-specific design decision, or select the retained successor. The role,
-not the person's identity, decides which side of the boundary an act falls
-on.
+behaviour. A user crosses into an internal production role when asked to
+diagnose an implementation failure, choose among internal designs, supply a
+missing project-specific design decision, or select the retained successor.
+The role, not the person's identity, decides which side of the boundary an act
+falls on.
 
 An automated software house has no human in an internal production role over
 its declared scope and horizon. User participation is compatible with
@@ -85,15 +86,15 @@ demand to that organization. We use coherent modification across later
 demands as the main behavioural test. [Holding a program theory means
 sustaining coherent search under delayed
 feedback](../notes/program-theory-sustains-search-under-delayed-feedback.md):
-the first choice may be tentative, but the process must use project-specific
-understanding to guide search, interpret failure, backtrack, and recover when
+the first choice may be tentative, but the process must use program theory to
+guide search, interpret failure, backtrack, and recover when
 later consequences arrive.
 
 [Naur's compiler case](../sources/programming-as-theory-building.ingest.md)
 reports that full code, annotations, extensive design discussion, and personal
-advice did not give one successor team enough program-specific
-understanding. The case therefore rules out only a simple answer in which more
-documentation of the same kind automatically transfers that understanding. It
+advice did not give one successor team enough program theory. The case
+therefore rules out only a simple answer in which more documentation of the
+same kind automatically transfers that program theory. It
 tested [one historically bounded document package and way of using
 it](../notes/naurs-compiler-case-tests-one-historically-bounded-documentation-and-consumption-system.md).
 It did not test linked rationale, machine-maintained indexes, semantic
@@ -127,14 +128,14 @@ The conjectured house combines three kinds of component:
   the product, tools, schemas, tests, context assembly, schedulers,
   validators, rollback, and retention rules.
 
-None of these holds the theory alone. A note nobody loads has no effect. A
-fixed LLM without enough project state reconstructs or guesses instead of
-carrying understanding from one change to the next. Software executes a
-decision without supplying all the judgment that selected it. The house as a
-whole has to carry the program-theory function.
+None of these holds the program theory alone. A note nobody loads has no
+effect. A fixed LLM without enough project state reconstructs or guesses the
+program theory instead of carrying it from one change to the next. Software
+executes a decision without supplying all the judgment that selected it. The
+house as a whole has to carry the program-theory function.
 
-The theory need not be stored as one explicit artifact. The house may use a
-separately retained rationale, reconstruct working understanding from
+The program theory need not be stored in an explicit project theory. The house
+may use an explicit project theory, reconstruct its program theory from
 records, or combine both. What matters is causal use: the project-specific
 state must change proposal, evaluation, diagnosis, or recovery, including
 where the relevant implication is not stated verbatim. This range does not
@@ -156,11 +157,12 @@ its model lineage can be audited for the run.
 
 The cutoff applies only to a run intended to establish the claim; ordinary
 development may use newer models. In a witness run, however, a newer model
-must not supply trial-specific theory, diagnose internal failures, compare
-candidates, select successors, or fill any other internal role.
+must not supply trial-specific program theory, diagnose internal failures,
+compare candidates, select successors, or fill any other internal production
+role.
 
 The product and the house's natural-language and symbolic state may change.
-The house may edit project rationale, code, tests, tools, evaluators,
+The house may edit its explicit project theory, code, tests, tools, evaluators,
 workflows, context assembly, or its own production machinery. Derived indexes
 may be regenerated mechanically from that mutable canonical state under
 algorithms pinned before the run; they are not an independent learned update.
@@ -176,8 +178,8 @@ request + operating evidence + current product and project state
 
 Once the witness run starts, every internal decision and successor state must
 come from the house's current state, its fixed learned components, and the
-permitted external inputs. A human rescue in an internal role ends that
-witness run.
+permitted external inputs. A human rescue in an internal production role ends
+that witness run.
 
 This is the transition closure of the declared starting state: later states
 must be reachable through the current house and permitted inputs. The
@@ -190,18 +192,18 @@ better than weight updates. It isolates whether the system around current
 models can carry the complete software-house function without help from a
 newer or newly trained model.
 
-## What a witness must show
+## What a witness house must show
 
-One working house must show the following conjunction.
+One witness house must show the following conjunction.
 
 1. **Holding and application.** Across novel changes, the house uses
-   project-specific understanding to guide proposal, evaluation, diagnosis,
+   program theory to guide proposal, evaluation, diagnosis,
    or recovery, including cases whose correct handling is not stated verbatim
    in its retained state. With everything else held equal, withholding or
    replacing the relevant state changes what the house does next in a
    predicted way.
 2. **Coherent revision.** When a later request or operating consequence
-   exposes an inadequacy in the current product understanding, the house
+   exposes an inadequacy in the current program theory, the house
    revises the product, retained project state, production machinery, or a
    combination, and the successor supports coherent later modification.
 3. **Automated continuation.** The house sustains those capacities across the
@@ -211,11 +213,12 @@ One working house must show the following conjunction.
    horizon. One lucky path establishes only possibility, not practical
    reachability.
 
-These obligations do not fix which form carries the theory or which mutable
-surface changes. Storing or citing a rationale is insufficient if it does not
-govern a later decision. A gate that can reject is insufficient if the
-accepted successor is not adequate. Passing tests on one requested change is
-insufficient if the house cannot preserve coherence across later demands.
+These obligations do not fix which representational form carries the program
+theory or which mutable surface changes. Storing or citing a rationale is
+insufficient if it does not govern a later decision. A gate that can reject is
+insufficient if the accepted successor is not adequate. Passing tests on one
+requested change is insufficient if the house cannot preserve coherence
+across later demands.
 
 ## Formal contrast and existing constructions
 
@@ -231,10 +234,10 @@ effectiveness it cannot prove"
 ([Schmidhuber](../sources/goedel-machines-schmidhuber.ingest.md), §2.4,
 verbatim).
 
-At the level of state-transition provenance, both systems obey the same descent
-constraint: every next state must arise through the current state's machinery
-and permitted inputs. Their system boundaries and successor relations still
-differ. The Gödel machine admits only a
+At the level of state-transition provenance, both systems obey the same
+transition-closure condition: every next state must arise through the current
+state's machinery and permitted inputs. Their system boundaries and successor
+relations still differ. The Gödel machine admits only a
 proof-licensed successor. The house may make a fallible change, observe later
 consequences, and recover. A novel demand can affect the Gödel machine's
 rewrite only insofar as its formalization gives that demand
@@ -247,9 +250,9 @@ long-running human-agent production. Their code-inspected rows can support
 implementation claims; papers and practitioner or product reports support only
 what those sources describe. No row supplies the missing conjunction: a complete
 user-facing software-house boundary, fixed learned components, a demonstrated
-program-theory function across novel changes, and continuation with no human in
-an internal role. Evidence for separate components does not show that they
-compose.
+program-theory function across novel changes, and continuation with no human
+in an internal production role. Evidence for separate components does not
+show that they compose.
 
 ## Boundaries and epistemic status
 
@@ -272,6 +275,6 @@ one architecture eliminates that path, not every possible construction.
 The [training article](./the-software-house-as-the-unit-of-training.md) asks
 how such a house should improve once it exists. The [bootstrap
 article](./bootstrapping-the-first-automated-software-house.md) asks how to
-reach it from a house that still has people in internal roles, including how
-the house might learn to build the project-specific machinery that its
-starting state may inherit from people.
+reach it from a house that still has people in internal production roles,
+including how the house might learn to build the project-specific machinery
+that its starting state may inherit from people.

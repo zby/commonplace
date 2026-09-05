@@ -17,7 +17,7 @@ source_notes:
 ---
 # The Automated Software House as the Unit of Training
 
-*A fixed-model, theory-mediated training regime*
+*A fixed-model training regime for theory-mediated learning*
 
 > **Draft.** This article may change. Comments and counterexamples are welcome
 > on [the repository's GitHub Discussions page](https://github.com/zby/commonplace/discussions).
@@ -26,21 +26,21 @@ source_notes:
 house](../notes/definitions/software-house.md) already exists: over a declared
 scope and horizon, every internal production role is computational. This
 article does not ask how that first house was built. It asks how the house can
-keep learning while all of its model weights remain fixed. The proposed regime
-trains the house as a whole. Production supplies requirements, consequences,
-and retained experience. The house forms and revises an explicit project
-theory, then uses that theory to guide governed changes to the retained
-organization around the fixed models: theory, code, tests, tools,
-evaluators, context assembly, workflows, and the learning process itself. A
-change that only satisfies the current requirement is production; a retained
-change that alters how later requirements are handled is training. The regime
-targets general project-specific software learning by allowing the house-level
-update process to build new representations, tools, decompositions, and
-evaluators instead of learning only inside a fixed task structure. Whether it
-achieves that generality is an empirical question. It is compatible with the
-Bitter Lesson because computation, not people, produces and selects the
-task-specific structure. Its hard problem is governing those behaviour-changing
-writes.
+keep learning while all of its model weights remain fixed. The proposed
+fixed-model training regime trains the house as a whole. Production supplies
+requirements, consequences, and retained experience. The house forms and
+revises an explicit project theory, then uses that explicit project theory to
+guide governed changes to the retained organization around the fixed models:
+explicit project theory, code, tests, tools, evaluators, context assembly,
+workflows, and the learning process itself. A change that only satisfies the
+current requirement is production; a retained change that alters how later
+requirements are handled is training. The fixed-model training regime targets
+general project-specific software learning by allowing the house-level update
+process to build new representations, tools, decompositions, and evaluators
+instead of learning only inside a fixed task structure. Whether it achieves
+that generality is an empirical question. It is compatible with the Bitter
+Lesson because computation, not people, produces and selects the task-specific
+structure. Its hard problem is governing those behaviour-changing writes.
 
 ## The fixed-model premise
 
@@ -50,8 +50,8 @@ LLMs available by 2026-09-02 while every model stays fixed. This article begins
 after such a house exists. It assumes that the house receives requirements,
 changes a product, observes operating consequences, retains project-specific
 state, and can computationally revise the retained machinery around its fixed
-models. No person diagnoses its internal failures, writes its project theory,
-chooses its successors, or admits its internal changes. Users may still supply
+models. No person diagnoses its internal failures, writes its explicit project
+theory, chooses its successors, or admits its internal changes. Users may still supply
 requirements, domain facts, feedback, and acceptance judgments about visible
 behaviour; those are inputs from outside the house.
 
@@ -61,11 +61,12 @@ been hand-built, trained, evolved, produced by another house, or reached by the
 claim here begins from the resulting automated house and concerns the training
 lineage that follows.
 
-The models remain fixed throughout that lineage. They still interpret natural
-language, propose theories and programs, use tools, and judge candidates. What
-they do not receive is a weight update from the house's production experience.
-The question is whether the surrounding house can nevertheless acquire and
-retain general project-specific production competence.
+The models remain fixed throughout the training lineage. They still interpret
+natural language, propose explicit project theories and programs, use tools,
+and judge candidates. What they do not receive is a weight update from the
+house's production experience. The question is whether the surrounding house
+can nevertheless acquire and retain general project-specific production
+competence.
 
 ## What is trained: the whole house
 
@@ -88,20 +89,20 @@ retained project knowledge, production machinery, and every computational role
 on which later evolution depends. That complete persistent producer is the
 automated software house.
 
-Within the fixed-model regime, the house's [behaviour-determining
+Within the fixed-model training regime, the house's [behaviour-determining
 organization](../notes/definitions/behavior-determining-organization.md) is the
 trainable state. The models are part of that organization but remain fixed; the
 writable training surface is the retained state and machinery around them. A
-revision may change the project theory itself, product or production code,
-schemas, tests, tools, evaluators, retrieval, context assembly, scheduling,
-retention rules, or the update process.
+revision may change the explicit project theory itself, product or production
+code, schemas, tests, tools, evaluators, retrieval, context assembly,
+scheduling, retention rules, or the update process.
 
 Much of what the house learns is specific to the product: that installs must
 be a single file, so the store is SQLite; that a documentation-only change is
 safe unless a build tool consumes the file; that the tenant identifier belongs
-in request context rather than the data model. Such lessons can be stated as
-theory, enforced by tests, compiled into tools, or embodied in code without
-changing model weights.
+in request context rather than the data model. Such lessons can be stated in
+the explicit project theory, enforced by tests, compiled into tools, or
+embodied in code without changing model weights.
 
 This wider update space matters because [learning inside a fixed decomposition
 inherits its
@@ -126,7 +127,7 @@ requirements: for example by revising an assumption, introducing a reusable
 abstraction, adding an invariant, creating a tool, or changing how later work
 is evaluated.
 
-## Why the learning is theory-mediated
+## Why this is theory-mediated learning
 
 An explicit project theory is more than a memory of past episodes. It states
 what the house currently takes to explain the product: its design commitments,
@@ -136,36 +137,39 @@ confirm, challenge, narrow, or replace.
 
 The proposed loop is:
 
-> **production experience → project-theory revision → theory-guided revision of
-> the house → later production → further evidence**
+> **production experience → explicit project theory revision → revision of the
+> house guided by the explicit project theory → later production → further
+> evidence**
 
-Theory mediates learning when it changes the update path. It can direct search
-toward one component, explain why a failure counts against an earlier
-assumption, predict which other behaviour a candidate revision may affect, and
-supply the rationale from which a test or tool is constructed. The theory need
-not remain the final storage place of every lesson. A conclusion stated first
-as a fallible explanation may become a test, validator, tool, or program.
-Merely loading or citing a note is not enough. A [retained-theory
+The explicit project theory mediates learning when it changes the update path.
+It can direct search toward one component, explain why a failure counts against
+an earlier assumption, predict which other behaviour a candidate revision may
+affect, and supply the rationale from which a test or tool is constructed. The
+explicit project theory need not remain the final storage place of every
+lesson. A conclusion stated first as a fallible explanation may become a test,
+validator, tool, or program. Merely loading or citing a note is not enough. A [retained-theory
 intervention](../notes/retained-theory-intervention-isolates-one-explicit-surface.md)
-can test the causal role of the theory by withholding, replacing, or perturbing
-it while holding the rest of the house fixed.
+can test the causal role of the explicit project theory by withholding,
+replacing, or perturbing it while holding the rest of the house fixed.
 
-The regime relies on the fixed model for semantic operations over theories that
-have not been formalized. Whether the available fixed models can perform those
-operations reliably across the declared scope is part of the empirical claim,
-not established by the architecture. Symbolic artifacts supply exact execution
-and checks once a commitment is settled enough to encode. Production can move a
-lesson between these [representational
-forms](../notes/definitions/representational-form.md): experience revises a
-theory, the theory motivates a validator, and later failures may reopen the
-validator's premise for interpretation and revision. The model remains fixed
-while the theory and symbolic production machinery coevolve around it.
+The fixed-model training regime relies on the fixed model for semantic
+operations over explicit project theories that have not been formalized.
+Whether the available fixed models can perform those operations reliably
+across the declared scope is part of the empirical claim, not established by
+the architecture. Symbolic artifacts supply exact execution and checks once a
+commitment is settled enough to encode. Production can move a lesson between
+these [representational
+forms](../notes/definitions/representational-form.md): experience revises the
+explicit project theory, the explicit project theory motivates a validator,
+and later failures may reopen the validator's premise for interpretation and
+revision. The model remains fixed while the explicit project theory and
+symbolic production machinery coevolve around it.
 
-Using an explicit theory defines this proposed regime. Whether explicit theory
-improves learning over the alternatives is a separate empirical hypothesis,
-tested below.
+Using an explicit project theory defines this proposed fixed-model training
+regime. Whether an explicit project theory improves learning over the
+alternatives is a separate empirical hypothesis, tested below.
 
-## Why the regime can be general
+## Why the fixed-model training regime can be general
 
 Here *general* does not mean unlimited intelligence or competence outside the
 capabilities of the fixed models and available computation. It means that the
@@ -173,12 +177,13 @@ training method is not restricted in advance to a predefined family of
 changes, ontology, list of skills, or kind of retained update.
 
 To meet this definition on a new software demand, the house must be able, within
-its capability envelope, to construct the project-specific structure the demand
-requires: a new concept, representation, decomposition, tool, workflow, test,
-evaluator, or piece of update machinery. Its model weights remain fixed, but
-programs and theories provide a house-level hypothesis space beyond responses
-inside a frozen harness. The architecture makes such construction available as
-an update path; it does not establish that the house will find and admit the
+the capabilities of its fixed models and available computation, to construct
+the project-specific structure the demand requires: a new concept,
+representation, decomposition, tool, workflow, test, evaluator, or piece of
+update machinery. Its model weights remain fixed, but programs and explicit
+project theories provide a house-level hypothesis space beyond responses inside
+a frozen harness. The architecture makes such construction available as an
+update path; it does not establish that the house will find and admit the
 needed structure.
 
 The generality claim is still scoped. Some objectives, authority boundaries,
@@ -187,13 +192,13 @@ general training must name its product scope and operating horizon, and it
 fails where new demand classes repeatedly require people to supply the missing
 project-specific ontology, decomposition, or evaluator.
 
-## What the regime buys
+## What the fixed-model training regime buys
 
 **Training at production cadence.** [Retained artifacts provide a persistent
 deployment-time adaptation
 path](../notes/retained-artifacts-enable-persistent-deployment-time-adaptation.md).
-A failure can revise a theory or add a test before the next demand without a
-model-training cycle.
+A failure can revise the explicit project theory or add a test before the next
+demand without a model-training cycle.
 
 **Addressable revision.** A particular assumption, rule, test, or function can
 be identified, challenged, revised, and often rolled back without reverting
@@ -204,24 +209,24 @@ its update process semantic and symbolic units on which to operate.
 work into tools, checks, and workflows. It need not spend fixed-model capacity
 reconstructing the same project decision on every run.
 
-**Project continuity.** The accumulated project theory and machinery persist as
-artifacts outside a trained checkpoint, but their effective use may still
-depend on the model. Replacing the fixed model is outside the training lineage
-considered here and requires revalidation. Whether the retained learning
-transfers without substantial repair is an empirical question.
+**Project continuity.** The accumulated explicit project theory and machinery
+persist as artifacts outside a trained checkpoint, but their effective use may
+still depend on the model. Replacing the fixed model is outside the training
+lineage considered here and requires revalidation. Whether the retained
+learning transfers without substantial repair is an empirical question.
 
-**Testable mediation.** Explicit theory can be varied independently enough to
-ask whether it changed diagnosis, search, evaluation, recovery, or later
-revision. Purely behavioural success does not offer the same direct
+**Testable mediation.** The explicit project theory can be varied independently
+enough to ask whether it changed diagnosis, search, evaluation, recovery, or
+later revision. Purely behavioural success does not offer the same direct
 intervention on a named project assumption.
 
-These are architectural affordances, not a proof that the regime is cheaper or
-more capable than weight adaptation. Discovery, retrieval, validation,
-coordination, and maintenance can consume the apparent gain.
+These are architectural affordances, not a proof that the fixed-model training
+regime is cheaper or more capable than weight adaptation. Discovery, retrieval,
+validation, coordination, and maintenance can consume the apparent gain.
 
 ## Governance is the hard core
 
-The doctrine does not say that writing files is learning. A memory file that
+The proposal does not say that writing files is learning. A memory file that
 grows after every session is a store, not a trained house. [Continual learning
 requires governing behaviour-changing
 writes](../notes/continual-learning-requires-governing-behaviour-changing-writes.md):
@@ -231,86 +236,95 @@ components, and retain or reject it.
 
 Two problems dominate. **Admission** decides which proposed changes may enter
 the behaviour-determining organization. **Credit assignment** decides which
-earlier theory, test, tool, context policy, or selection rule a later
-consequence counts for or against. Delayed effects make both hard: a design
-choice may show its cost several demands later, after other revisions have
-intervened.
+earlier part of the explicit project theory, test, tool, context policy, or
+selection rule a later consequence counts for or against. Delayed effects make
+both hard: a design choice may show its cost several demands later, after other
+revisions have intervened.
 
 The house also changes its own learning machinery. A revision to an evaluator
 or admission rule changes how later evidence is interpreted, so a wrong update
 can compound. Regression control, independent checks, versioning, rollback,
-and safe self-modification are therefore parts of the training regime, not
+and safe self-modification are therefore parts of the fixed-model training regime, not
 separate concerns. Holding model weights fixed does not solve these problems;
 it only makes the proposed update path clear.
 
 ## Testable hypotheses
 
-**The explicit-theory advantage hypothesis.** Hold the fixed models, source
-evidence, demand sequence, and total budget constant. Compare the proposed
-house with one that reconstructs its understanding from raw records, searches
-the implementation directly, or revises artifacts without an explicit project
-theory. The theory-mediated house should perform better under structured
-change if the theory has a real causal role.
+**The explicit-project-theory advantage hypothesis.** Hold the fixed models,
+source evidence, demand sequence, and total budget constant. Compare the
+proposed house with one that reconstructs its program theory from raw records,
+searches the implementation directly, or revises artifacts without an explicit
+project theory. The house using theory-mediated learning should perform better
+under structured change if the explicit project theory has a real causal role.
 
 A test must choose its measures in advance: success on later demands, diagnosis
 and recovery cost, regressions, proportional rescoping after a counterexample,
-rollback cost, and total cost after theory search, retrieval, validation, and
-maintenance are counted. A trace showing that a note was loaded is not enough;
-withholding or replacing it should change the relevant decision.
+rollback cost, and total cost after search over explicit project theories,
+retrieval, validation, and maintenance are counted. A trace showing that a note
+was loaded is not enough; withholding or replacing it should change the
+relevant decision.
 
-**The sample-efficiency hypothesis.** When an explicit theory captures
+**The sample-efficiency hypothesis.** When an explicit project theory captures
 structure that a change preserves, the house [may need fewer new
 observations to
 adapt](../notes/theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md).
 It can revise one premise and derive several consequences instead of relearning
-each behaviour separately. A broad wrong theory creates the opposite risk: it
-can mislead as widely as a right theory would have helped. Fewer observations
-also need not mean lower total cost.
+each behaviour separately. A broad but wrong explicit project theory creates
+the opposite risk: it can mislead as widely as a correct explicit project
+theory would have helped. Fewer observations also need not mean lower total
+cost.
 
 Model-weight adaptation on the same production evidence is an important
-baseline. It compares this fixed-model regime with a different training regime;
-it is not an update surface inside the doctrine. If theory interventions make
-no causal difference, or artifact search without theory repeatedly matches the
-proposed method at lower total cost, the theory-mediated claim fails in that
-tested regime. What fails is the mediation claim. That the house is the unit
-of training, and that it can be trained with its models fixed, are not settled
-by that test: a house that learned through tests, tools, and search without
-an explicit theory would still be trained as a whole around fixed models.
+baseline. It compares this fixed-model training regime with a different training regime;
+it is not an update surface inside the fixed-model training regime. If explicit
+project theory interventions make no causal difference, or artifact search
+without an explicit project theory repeatedly matches the proposed method at
+lower total cost, the theory-mediated learning claim fails in that tested
+regime. What fails is the theory-mediated learning claim. That the house is the
+unit of training, and that it can be trained with its models fixed, are not
+settled by that test: a house that learned through tests, tools, and search
+without an explicit project theory would still be trained as a whole around
+fixed models.
 
 ## Bitter Lesson compatibility
 
 The expected objection is Sutton's Bitter Lesson: general methods that scale
 with computation outperform methods built from human knowledge, so learning in
-readable theories and programs is hand-crafted structure under another name.
+readable explicit project theories and programs is hand-crafted structure under
+another name.
 The answer is that [the lesson selects how behaviour-shaping structure is
 produced, not the form in which it is retained](../notes/the-bitter-lesson-selects-production-methods-not-representational.md).
 
-In this regime, computation forms and revises the project theory, searches over
-programs and tools, constructs tests and evaluators, and admits changes from
-production evidence. Natural-language and symbolic artifacts are learned
-products when the automated house produces and selects them. Keeping model
-weights fixed does not make those changes human-authored.
+In this fixed-model training regime, computation forms and revises the explicit
+project theory, searches over programs and tools, constructs tests and
+evaluators, and admits changes from production evidence. Natural-language and
+symbolic artifacts are learned products when the automated house produces and
+selects them. Keeping model weights fixed does not make those changes
+human-authored.
 
 The claim attaches to the training lineage, not to the provenance of the
 initial house. This article does not say whether constructing that seed was
-Bitter-Lesson compatible. After the lineage begins, however, task-specific
-structure cannot keep arriving from people: there are no people in internal
-production roles. Across new demands in the declared scope, and any later
-scope expansion, the house must computationally produce or revise the theory,
-representations, decompositions, methods, and evaluators it needs.
+Bitter-Lesson compatible. After the training lineage begins, however,
+task-specific structure cannot keep arriving from people: there are no people
+in internal production roles. Across new demands in the declared scope, and
+any later scope expansion, the house must computationally produce or revise
+the explicit project theory, representations, decompositions, methods, and
+evaluators it needs.
 
-This makes the regime structurally compatible with the lesson; it does not show
-that it will win the scaling comparison. The regime may still lose if
-search, validation, and credit assignment over localized artifacts do not
-scale, or if weight adaptation reaches the same competence at lower total cost.
-The Bitter Lesson makes that comparison necessary; it does not decide it by
-calling one retained form "learning" and another "structure."
+This makes the fixed-model training regime structurally compatible with the
+lesson; it does not show that it will win the scaling comparison. The
+fixed-model training regime may still lose if search, validation, and credit
+assignment over localized artifacts do not scale, or if weight adaptation
+reaches the same competence at lower total cost. The Bitter Lesson makes that
+comparison necessary; it does not decide it by calling one retained form
+"learning" and another "structure."
 
 ## Limits
 
-Holding weights fixed isolates and defines this training regime; it does not
+Holding weights fixed isolates and defines this fixed-model training regime; it does not
 claim that model weights are never useful to update. Parametric and hybrid
-regimes remain alternatives. Current systems have not solved theory search,
-causal use of retained theory, cross-artifact credit assignment, validation,
-and safe admission. The target is a fully automatic, general project-specific
-training loop in which the model stays fixed and the software house learns.
+regimes remain alternatives. Current systems have not solved search over
+explicit project theories, causal use of the explicit project theory,
+cross-artifact credit assignment, validation, and safe admission. The target
+is a fully automatic, general project-specific training loop in which the
+model stays fixed and the software house learns.
