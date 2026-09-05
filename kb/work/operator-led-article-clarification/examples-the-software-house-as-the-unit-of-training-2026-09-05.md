@@ -115,7 +115,11 @@ done first and reported before any prose work.
   distributed-parametric models only, so the sentence keeps only the embedding
   models pinned and names the building algorithms as ordinary revisable
   machinery. This corrects a claim the pre-edit article text also made
-  ("under pinned algorithms and embedding models").
+  ("under pinned algorithms and embedding models"). Second follow-up: "maybe
+  double check about the pinned algorithms - the main idea is that the house
+  can revise both natural language and symbolic forms of its own definition -
+  this needs to be clear" — the paragraph now states that rule by
+  representational form before placing indexes as the boundary case.
 - **Diagnosis:** The index sentence stated a permission with no reason. The
   agent proposed "looks like an exception but is not one"; the operator
   corrected the frame: indexes sit on the boundary between symbolic and
@@ -138,11 +142,13 @@ done first and reported before any prose work.
 **After:**
 
 > Training changes its surrounding state and machinery while keeping
-> distributed-parametric models fixed. Derived indexes are an exception: they
-> sit on the boundary between symbolic and distributed-parametric forms, and
-> they may be regenerated during the run because the records they are built
-> from change while the embedding models used to build them stay pinned. The
-> building algorithms are ordinary machinery the house may revise.
+> distributed-parametric models fixed. The rule is by representational form:
+> the house may revise both the natural-language and the symbolic forms of its
+> own definition; only its distributed-parametric models are pinned. Derived
+> indexes sit on the boundary between the forms and are an exception: they may
+> be regenerated during the run because the records they are built from are
+> revisable state and the embedding models used to build them stay pinned. The
+> algorithms that build them are symbolic machinery, revisable like any other.
 >
 > The experiments below do not wait for a complete automated house. They test
 > its learning mechanisms in bounded components.
