@@ -265,8 +265,9 @@ transfer.
 
 ## What the house's training must produce
 
-Learning transfer requires evidence that experience produces or revises the
-house's project-specific machinery. The seed is outgrown when [learning
+Learning transfer, the result the house's training must produce, requires
+evidence that experience produces or revises the house's project-specific
+machinery. The seed is outgrown when [learning
 displaces repeated human construction of
 project-specific knowledge](../notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md)
 as new work arises. This may show up in new theories, checks, decompositions,
