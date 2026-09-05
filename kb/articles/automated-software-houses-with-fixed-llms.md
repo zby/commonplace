@@ -174,12 +174,11 @@ that the seed may inherit is the separate question of the training article.
 
 Declare every eligible distributed-parametric model and pin its parameters,
 including adapters, before testing. This covers LLMs, embedding models, and
-parametric routers and critics.
-A provider endpoint that may change silently is insufficient unless its model
-lineage can be audited. The cutoff applies to witness runs; ordinary development may use
-newer models. During a witness run, no newer model may supply trial-specific theory,
-diagnosis, candidate comparison, successor selection, or another internal
-production decision.
+parametric routers and critics. A provider endpoint that may change silently
+is insufficient unless its model lineage can be audited. The cutoff binds only
+witness runs; ordinary development may use newer models. During a witness run,
+no newer model may supply run-specific theory, diagnosis, candidate
+comparison, successor selection, or another internal production decision.
 
 The house may learn by changing its natural-language and symbolic state,
 including tests, evaluators, workflows, and update machinery. Its product may
