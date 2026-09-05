@@ -19,7 +19,7 @@ between paragraphs and check them"
 
 ## Whole-article read: findings not acted on
 
-Reported for the operator's decision, per README step 2. None was edited.
+Reported for the operator's decision, per README step 2. None was edited in the sweep; all five were applied afterward on the operator's verdict (examples 20 to 24 below).
 
 1. **Possible vestigial framing: the trial-boundary sentence.** "A trial's
    boundaries identify the decisions being assessed; they need not fix the
@@ -496,3 +496,115 @@ Reported for the operator's decision, per README step 2. None was edited.
 **After:**
 
 > show that this approach, under the tested conditions, is not working or is not the best
+
+## Findings applied on the operator's verdict
+
+After the report above, the operator replied "OK - apply these". All five whole-article findings were applied, one commit each, `764bd476` through `f0d7e2c9`. These carry an operator verdict; the nineteen sweep edits above still do not.
+
+## 20. The trial-boundary sentence
+
+- **Commit:** `764bd476`
+- **Kind:** Defensive definition (post-restructure)
+- **Operator's verdict:** "OK - apply these"
+- **Diagnosis:** Whole-article finding 1. Added by `08215a3d` when product scope left the definition; its second half defended against a reading the article no longer invites. The positive half is kept because it introduces *boundary*, used twice later.
+
+**Before:**
+
+> The program measures two kinds of transfer separately. A trial's boundaries
+> identify the decisions being assessed; they need not fix the house's future
+> products or responsibilities.
+
+**After:**
+
+> The program measures two kinds of transfer separately. Each trial declares a
+> boundary: the decisions being assessed.
+
+## 21. TL;DR: the residue prediction
+
+- **Commit:** `467fb481`
+- **Kind:** Lost claim after restructure (partial: a section-level claim absent from the TL;DR)
+- **Operator's verdict:** "OK - apply these"
+- **Diagnosis:** Whole-article finding 2. Not mangled, since the frontmatter description omitted it too, but the readiness section and the closing treat the residue prediction as the route's distinctive content. One sentence added in the readiness section's own terms.
+
+**Before:**
+
+
+
+**After:**
+
+> Transferring the best-supported decisions first should leave people the
+> hardest-to-warrant ones, and what those still need identifies the functions
+> the house must grow.
+
+## 22. One term for the dependency account
+
+- **Commit:** `866d3354`
+- **Kind:** One term per concept (series-wide)
+- **Operator's verdict:** "OK - apply these"
+- **Diagnosis:** Whole-article finding 3. Six sites said *account*, two said *explanation*, for one retained artifact. Unified on *dependency account*, the training article's term for the same artifact, and introduced in italics at first use. The training article's own alternation is left for its run.
+
+**Before (hunk 1):**
+
+> from manifest checks. A retained explanation relates this exemption to the
+> build's dependencies and assumes its configured input list is exhaustive.
+
+**After (hunk 1):**
+
+> from manifest checks. A retained *dependency account* relates this exemption
+> to the build's dependencies and assumes its configured input list is
+> exhaustive.
+
+**Before (hunk 2):**
+
+> the explanation should lead the house to extend manifest checks to those
+> files. A further change introduces
+
+**After (hunk 2):**
+
+> the account should lead the house to extend manifest checks to those files. A further change introduces
+
+## 23. The production history must show failure
+
+- **Commit:** `8e5a05ec`
+- **Kind:** Verdict without its why (inferred why, operator-accepted)
+- **Operator's verdict:** "OK - apply these"
+- **Diagnosis:** Whole-article finding 4. The why was two bullets away (the self-confirming-evaluation stop condition). Flagged rather than applied in the first pass per the training run's lesson; the operator accepted the proposed text unchanged.
+
+**Before:**
+
+> use of resources. The same production history that supports a transfer must
+> also be able to reveal these failures.
+
+**After:**
+
+> use of resources. The records that count as evidence for a transfer must be
+> able to show these failures too; a history that can only confirm success is
+> the self-confirming evaluation above.
+
+## 24. Reopened roles and viability
+
+- **Commit:** `f0d7e2c9`
+- **Kind:** Unintroduced term (two sites)
+- **Operator's verdict:** "OK - apply these"
+- **Diagnosis:** Whole-article finding 5. *Reopened roles* in the TL;DR said in plain words; *viability* glossed as the KB uses it for Darwin Gödel Machine admission (a change stays if the system still works).
+
+**Before (hunk 1):**
+
+> The program records failures, interventions, and reopened roles against
+> independent outcome and cost measures.
+
+**After (hunk 1):**
+
+> The program records failures, interventions, and roles that return to people
+> against independent outcome and cost measures.
+
+**Before (hunk 2):**
+
+> the only option. Other update architectures let reward, error, viability, or
+> gradients drive changes without a separate admission event. What the endpoint
+
+**After (hunk 2):**
+
+> the only option. Other update architectures let reward, error, gradients, or a viability
+> filter (a change stays if the system still works) drive changes without a
+> separate admission event. What the endpoint
