@@ -65,9 +65,10 @@ products or responsibilities.
 | **Operational transfer** | Computation makes the declared production decisions, including hard cases, without human decisions. External outcomes and costs remain acceptable. |
 | **Learning transfer** | Production evidence causes the house to produce or revise the machinery that makes those decisions, and the retained change affects later work. |
 
-A hand-written validator can complete operational transfer. Learning transfer
-requires the house to produce or revise its criterion and machinery from
-experience.
+The difference shows in a simple case. A validator that a person wrote can
+complete operational transfer: computation now makes the decision. Learning
+transfer requires the house to have produced or revised the validator's
+criterion and machinery from its own experience.
 
 The conjecture permits a human-built seed, provided the house applies its
 program theory, revises coherently, and continues reliably without human
