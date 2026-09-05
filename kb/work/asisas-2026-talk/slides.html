@@ -400,13 +400,18 @@
 
 <!-- Interrupt · localized vs distributed -->
 <section class="slide interrupt">
-  <svg viewBox="0 0 640 400" role="img" aria-label="The same circle twice: once drawn as a single stroke, once appearing as a pattern in a uniform grid of dots">
-    <circle cx="180" cy="200" r="95" fill="none" stroke="#F6F5F1" stroke-width="4"/>
-    <g id="dotcloud" fill="#C9A45C"></g>
+  <svg viewBox="0 0 640 400" role="img" aria-label="Two glasses: one with a sugar cube resting in clear liquid, one with the sugar dissolved and the liquid tinted throughout">
+    <!-- left glass: cube in clear liquid -->
+    <polygon points="114,148 246,148 236,305 124,305" fill="#F6F5F1" opacity=".08"/>
+    <rect x="163" y="262" width="36" height="36" fill="#C9A45C" stroke="#F6F5F1" stroke-width="2" transform="rotate(-8 181 280)"/>
+    <path d="M105,90 L118,302 Q120,312 130,312 L230,312 Q240,312 242,302 L255,90" fill="none" stroke="#F6F5F1" stroke-width="3.5" stroke-linejoin="round"/>
+    <!-- right glass: dissolved -->
+    <polygon points="394,148 526,148 516,305 404,305" fill="#C9A45C" opacity=".5"/>
+    <path d="M385,90 L398,302 Q400,312 410,312 L510,312 Q520,312 522,302 L535,90" fill="none" stroke="#F6F5F1" stroke-width="3.5" stroke-linejoin="round"/>
   </svg>
   <aside class="notes">
-    <p><b>~15s beat — talk over the picture.</b> The grid's second axis in one picture: the same circle, twice. On the left it is an <b>addressable unit</b> — you can point at it, revise it, delete it, and it's gone. On the right the circle is just as crisply there — but as a <b>pattern over the whole grid of dots</b>: every dot holds an exact value, and no dot is the circle. Distributed does not mean fuzzy — nothing here is vague; what's missing is an addressable part.</p>
-    <p>That is the distributed-parametric cell — weights, adapters, embeddings — and it is why they are <b>probed, not read</b>, and why prompts and validators revise item by item while weights don't.</p>
+    <p><b>~15s beat — talk over the picture.</b> The grid's second axis: the same sugar, twice. On the left it is a lump — an <b>addressable unit</b>: point at it, fish it out, and it's gone. On the right it is <b>dissolved</b>: in every sip, nowhere in particular. Nothing vague about it — the sweetness is exact — but there is no part you can remove, and the only way to check it is to <b>taste</b>.</p>
+    <p>That is the distributed-parametric cell — weights, adapters, embeddings: <b>probed, not read</b>. Prompts and validators revise item by item; dissolved state you can only dilute or re-brew — retrain.</p>
   </aside>
 </section>
 
@@ -490,23 +495,6 @@
 <div class="notes-panel" id="notesPanel"><div class="np-label">speaker notes · N to hide</div><div id="notesBody"></div></div>
 
 <script>
-  (function(){
-    const g=document.getElementById('dotcloud');
-    if(!g)return;
-    const NS='http://www.w3.org/2000/svg';
-    const cx=460,cy=200,R=95,step=13,half=117,sigma=15;
-    for(let x=cx-half;x<=cx+half;x+=step){
-      for(let y=cy-half;y<=cy+half;y+=step){
-        const d=Math.abs(Math.hypot(x-cx,y-cy)-R);
-        const w=Math.exp(-(d*d)/(2*sigma*sigma));
-        const c=document.createElementNS(NS,'circle');
-        c.setAttribute('cx',x);c.setAttribute('cy',y);
-        c.setAttribute('r',(1.1+3.1*w).toFixed(2));
-        c.setAttribute('opacity',(0.28+0.72*w).toFixed(2));
-        g.appendChild(c);
-      }
-    }
-  })();
   const slides=[...document.querySelectorAll('.slide')];
   const counter=document.getElementById('counter');
   const panel=document.getElementById('notesPanel');
