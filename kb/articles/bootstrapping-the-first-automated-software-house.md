@@ -169,12 +169,12 @@ and duplicate service identifiers make that manifest invalid.
 
 **A change that challenges the checking policy.** Initially, the exporter reads
 only configuration files. Markdown edits receive syntax checks and are exempt
-from manifest checks. A retained explanation relates this exemption to the
-build's dependencies and assumes its configured input list is exhaustive.
+from manifest checks. A retained *dependency account* relates this exemption
+to the build's dependencies and assumes its configured input list is
+exhaustive.
 
 When the exporter starts reading service definitions from named Markdown files,
-the explanation should lead the house to extend manifest checks to those
-files. A further change introduces
+the account should lead the house to extend manifest checks to those files. A further change introduces
 indirectly included snippets. An edit to one can pass its syntax check yet
 produce an invalid manifest. Revealing that failure after intervening edits
 would test whether the house traces the consequence to the incomplete dependency
