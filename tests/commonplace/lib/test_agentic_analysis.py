@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import re
 import shutil
 import subprocess
 from hashlib import sha256
@@ -8,8 +9,7 @@ from pathlib import Path
 import pytest
 import yaml
 
-from commonplace.cli import agentic_analysis_handoff
-from commonplace.freshness.snapshots import load_snapshot_by_id
+from commonplace.cli import agentic_analysis_handoff, agentic_analysis_publication
 from commonplace.lib import agentic_publication, systems_matrix, validation
 from commonplace.lib.agentic_analysis import (
     parse_agentic_analysis_run_state,
@@ -19,12 +19,6 @@ from commonplace.lib.agentic_publication import (
     PublicationSpec,
     prepare_publication,
     publish_publication,
-)
-from commonplace.review import review_db
-from commonplace.review.paths import criterion_path_for_id, review_gates_dir
-from commonplace.review.resolve_criteria import (
-    applicable_criterion_ids_for_note,
-    resolve_to_criterion_ids,
 )
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
@@ -52,6 +46,8 @@ def configure_types(tmp_path: Path) -> None:
     for name in (
         "agentic-system-analysis-run-state.md",
         "agentic-system-analysis-run-state.schema.yaml",
+        "agent-memory-analysis-report.md",
+        "agent-memory-analysis-report.schema.yaml",
     ):
         shutil.copyfile(REPO_ROOT / "kb/reports/types" / name, report_types / name)
     write(tmp_path / "kb/reports/COLLECTION.md", "# Reports\n")
@@ -59,88 +55,6 @@ def configure_types(tmp_path: Path) -> None:
         REPO_ROOT / "kb/instructions/review-gates",
         tmp_path / "kb/instructions/review-gates",
     )
-
-
-def seed_semantic_baselines(tmp_path: Path, note_path: str) -> None:
-    gates_dir = review_gates_dir(tmp_path)
-    criterion_ids = applicable_criterion_ids_for_note(
-        tmp_path / note_path,
-        resolve_to_criterion_ids(["semantic"], gates_dir),
-        gates_dir,
-    )
-    db_path = review_db.prepare_review_db(tmp_path)
-    completed_at = "2026-09-04T12:00:00Z"
-    with review_db.connect(db_path) as conn:
-        note_snapshot = review_db.snapshot_file(
-            conn, repo_root=tmp_path, path=note_path
-        )
-        criterion_snapshots = {
-            criterion_id: review_db.snapshot_file(
-                conn,
-                repo_root=tmp_path,
-                path=criterion_path_for_id(tmp_path, criterion_id),
-            )
-            for criterion_id in criterion_ids
-        }
-        requests = [
-            review_db.ReviewPairRequest(
-                note_path=note_path,
-                criterion_path=criterion_path_for_id(tmp_path, criterion_id),
-                pair_ordinal=ordinal,
-                result_kind="verdict",
-                reviewed_note_snapshot_id=note_snapshot.snapshot_id,
-                reviewed_criterion_snapshot_id=criterion_snapshots[
-                    criterion_id
-                ].snapshot_id,
-            )
-            for ordinal, criterion_id in enumerate(criterion_ids, start=1)
-        ]
-        job_id = review_db.create_job_with_pairs(
-            conn,
-            model_partition="codex",
-            runner="test",
-            created_at=completed_at,
-            status="queued",
-            grouping="note",
-            pairs=requests,
-        )
-        review_db.complete_review_pairs(
-            conn,
-            review_job_id=job_id,
-            review_pairs=[
-                review_db.ReviewPairCompletion(
-                    note_path=request.note_path,
-                    criterion_path=request.criterion_path,
-                    outcome="pass",
-                    completed_at=completed_at,
-                )
-                for request in requests
-            ],
-            completed_at=completed_at,
-        )
-        review_db.complete_review_job(
-            conn, review_job_id=job_id, completed_at=completed_at
-        )
-        rows = review_db.load_review_pairs_for_job(conn, review_job_id=job_id)
-        for row in rows:
-            criterion_id = next(
-                item
-                for item in criterion_ids
-                if criterion_path_for_id(tmp_path, item) == row.criterion_path
-            )
-            review_db.upsert_freshness_baseline(
-                conn,
-                note_path=note_path,
-                criterion_path=row.criterion_path,
-                model_partition="codex",
-                evidence_review_pair_id=row.review_pair_id,
-                baseline_note_snapshot_id=note_snapshot.snapshot_id,
-                baseline_criterion_snapshot_id=criterion_snapshots[
-                    criterion_id
-                ].snapshot_id,
-                baseline_updated_at=completed_at,
-            )
-        conn.commit()
 
 
 def git_checkout(path: Path) -> tuple[Path, str]:
@@ -184,15 +98,43 @@ def state_text(frontmatter: dict[str, object]) -> str:
     )
 
 
-def valid_run_state(tmp_path: Path, *, legacy: bool = False) -> Path:
+def memory_report_fixture(run_dir: Path, revision: str) -> Path:
+    handoff = write(run_dir / "memory-input.md", "# Frozen memory input\n\nOBJ-1 fixture object. RTE-1 fixture route.\n")
+    profile = {
+        "scope": "Fixture scope",
+        "axes": {axis: {"assessment": "uninspected", "basis": None,
+                         "values": [], "records": [], "note": "Fixture gap."}
+                 for axis in systems_matrix.AXES},
+    }
+    values = {
+        "type": "kb/reports/types/agent-memory-analysis-report.md",
+        "description": "Fixture specialist report bound to the frozen source and shared input",
+        "analysis-run": RUN_ID,
+        "source-identity": "https://example.invalid/example-system",
+        "reviewed-boundary": revision,
+        "report-status": "complete",
+        "canonical-register-sha256": digest(handoff),
+        "worker-model": "fixture-model",
+        "method-sha256": "a" * 64,
+        "memory-comparison": profile,
+    }
+    body = "# Fixture memory analysis\n\n" + "\n\n".join(
+        f"## {heading}\n\nFixture evidence."
+        for heading in ("Boundary and evidence", "Core ideas", "Shared records",
+                        "Write side", "Read-back", "Comparison rationale",
+                        "Integration issues", "Limitations and checks")
+    )
+    return write(run_dir / "memory-report.md", "---\n" + yaml.safe_dump(values) + "---\n\n" + body + "\n")
+
+
+def valid_run_state(tmp_path: Path) -> Path:
     configure_types(tmp_path)
     run_dir = tmp_path / "kb/reports/state/agentic-system-analysis" / RUN_ID
     source_root, revision = git_checkout(
         tmp_path / "related-systems/example--system"
     )
     result_path = f"kb/reports/state/agentic-system-analysis/{RUN_ID}/result.md"
-    legacy_path = "kb/agent-memory-systems/reviews/example-system.md"
-    legacy_projection = f"`{legacy_path}`" if legacy else "not applicable"
+    report = memory_report_fixture(run_dir, revision)
     result = write(
         tmp_path / result_path,
         f'''---
@@ -217,7 +159,9 @@ evidence-tier: code-grounded
 
 **Generated review:** `kb/agentic-systems/reviews/example-system.md`
 
-**Legacy memory review:** {legacy_projection}
+**Memory analysis report:** `{report.relative_to(tmp_path).as_posix()}`
+
+**Memory analysis report SHA-256:** `{digest(report)}`
 
 ## Boundary and evidence
 
@@ -339,56 +283,6 @@ analysis-result-sha256: {digest(result)}
 **Evidence basis:** `README.md:1` at `{revision}`.
 ''',
     )
-    legacy_output: dict[str, str] | None = None
-    if legacy:
-        legacy_file = write(
-            tmp_path / legacy_path,
-            '''---
-description: "Fixture memory-system review with source-grounded mechanisms"
-type: ../types/agent-memory-system-review.md
-source-tier: code-grounded
-last-checked: "2026-09-04"
-generated-by: analyse-agentic-system
-analysis-run: AAS-2026-09-04-example-system-01
-source-identity: https://example.invalid/example-system
-reviewed-revision: PLACEHOLDER_REVISION
----
-
-# Example memory system
-
-## Core Ideas
-
-Fixture mechanism.
-
-## Artifact analysis
-
-- **Storage substrate:** `files` — fixture storage.
-- **Representational form:** `natural-language` — fixture content.
-- **Lineage:** `authored` — fixture authorship.
-- **Behavioral authority:** `knowledge` — fixture advice.
-
-## Write side
-
-**Write agency:** `manual` — fixture writes are manual.
-
-## Read-back
-
-**Read-back:** `pull` — the fixture requires lookup.
-
-## Curiosity Pass
-
-None.
-''',
-        )
-        legacy_file.write_text(
-            legacy_file.read_text(encoding="utf-8").replace(
-                "PLACEHOLDER_REVISION", revision
-            ),
-            encoding="utf-8",
-        )
-        legacy_output = {"path": legacy_path, "sha256": digest(legacy_file)}
-        seed_semantic_baselines(tmp_path, legacy_path)
-
     run_frontmatter: dict[str, object] = {
         "type": "kb/reports/types/agentic-system-analysis-run-state.md",
         "description": f"Minimal completion state for {RUN_ID}",
@@ -408,9 +302,9 @@ None.
             "path": generated_path,
             "sha256": digest(generated),
         },
-        "memory-review-required": legacy,
-        "legacy-review": legacy_output,
-        "legacy-review-model-partition": "codex" if legacy else None,
+
+
+
         "failure": None,
     }
     return write(run_dir / "run-state.md", state_text(run_frontmatter))
@@ -438,102 +332,34 @@ def replace_frontmatter(path: Path, values: dict[str, object]) -> None:
 
 def sync_retained_fixture(tmp_path: Path, values: dict) -> None:
     result = tmp_path / values["result"]["path"]
+    report = result.parent / "memory-report.md"
+    report_values = frontmatter(report)
+    report_values.update({"source-identity": values["source"]["identity"],
+                          "reviewed-boundary": values["source"]["revision"]})
+    replace_frontmatter(report, report_values)
+    result.write_text(re.sub(r"(\*\*Memory analysis report SHA-256:\*\* )`[0-9a-f]+`",
+                             rf"\g<1>`{digest(report)}`", result.read_text()))
+    values["result"]["sha256"] = digest(result)
     generated = tmp_path / values["generated-review"]["path"]
     (tmp_path / systems_matrix.retained_result_path(RUN_ID)).write_bytes(result.read_bytes())
     replace_frontmatter(generated, {**frontmatter(generated), "analysis-result-sha256": digest(result)})
 
 
-def publication_fixture(tmp_path: Path) -> tuple[Path, PublicationSpec, bytes, bytes]:
-    state = valid_run_state(tmp_path, legacy=True)
+def publication_fixture(tmp_path: Path) -> tuple[Path, PublicationSpec, bytes]:
+    state = valid_run_state(tmp_path)
     subprocess.run(["git", "init", "--quiet", str(tmp_path)], check=True)
     values = frontmatter(state)
-    generated_destination = values["generated-review"]["path"]  # type: ignore[index]
-    legacy_destination = values["legacy-review"]["path"]  # type: ignore[index]
-    generated_public = tmp_path / generated_destination
-    legacy_public = tmp_path / legacy_destination
-    generated_bytes = generated_public.read_bytes()
-    legacy_bytes = legacy_public.read_bytes()
-    generated_candidate = state.parent / "generated-review.candidate.md"
-    legacy_candidate = state.parent / "legacy-review.candidate.md"
-    generated_candidate.write_bytes(generated_bytes)
-    legacy_candidate.write_bytes(legacy_bytes)
-    generated_public.unlink()
-    legacy_public.unlink()
+    destination = values["generated-review"]["path"]
+    public = tmp_path / destination
+    generated_bytes = public.read_bytes()
+    candidate = state.parent / "generated-review.candidate.md"
+    candidate.write_bytes(generated_bytes)
+    public.unlink()
     (tmp_path / systems_matrix.retained_result_path(RUN_ID)).unlink()
-    db_path = review_db.resolve_db_path(tmp_path)
-    db_path.unlink()
-
-    values.update(
-        {
-            "run-status": "running",
-            "result-disposition": None,
-            "result": None,
-            "generated-review": None,
-            "memory-review-required": None,
-            "legacy-review": None,
-            "legacy-review-model-partition": None,
-            "failure": None,
-        }
-    )
+    values.update({"run-status": "running", "result-disposition": None,
+                   "result": None, "generated-review": None, "failure": None})
     replace_frontmatter(state, values)
-    spec = PublicationSpec(
-        repo_root=tmp_path,
-        run_state_path=state,
-        generated_candidate_path=generated_candidate,
-        generated_destination=generated_destination,
-        legacy_candidate_path=legacy_candidate,
-        legacy_destination=legacy_destination,
-        legacy_model_partition="codex",
-    )
-    return state, spec, generated_bytes, legacy_bytes
-
-
-def accept_prepared_semantic_review(tmp_path: Path, spec: PublicationSpec) -> int:
-    prepared = prepare_publication(spec)
-    assert prepared.review_batch is not None
-    batch = prepared.review_batch
-    completed_at = "2026-09-05T12:00:00Z"
-    db_path = review_db.resolve_db_path(tmp_path)
-    with review_db.connect(db_path) as conn:
-        completions = [
-            review_db.ReviewPairCompletion(
-                note_path=row.note_path,
-                criterion_path=row.criterion_path,
-                outcome="pass",
-                completed_at=completed_at,
-            )
-            for row in batch.pairs
-        ]
-        review_db.complete_review_pairs(
-            conn,
-            review_job_id=batch.review_job_id,
-            review_pairs=completions,
-            completed_at=completed_at,
-        )
-        review_db.complete_review_job(
-            conn,
-            review_job_id=batch.review_job_id,
-            completed_at=completed_at,
-        )
-        for row in batch.pairs:
-            assert row.reviewed_note_snapshot_id is not None
-            assert row.reviewed_criterion_snapshot_id is not None
-            review_db.upsert_freshness_baseline(
-                conn,
-                note_path=row.note_path,
-                criterion_path=row.criterion_path,
-                model_partition=row.model_partition,
-                evidence_review_pair_id=row.review_pair_id,
-                baseline_note_snapshot_id=row.reviewed_note_snapshot_id,
-                baseline_criterion_snapshot_id=row.reviewed_criterion_snapshot_id,
-                baseline_updated_at=completed_at,
-                expected_baseline_revision=row.expected_baseline_revision,
-                expected_generation_next_revision=(
-                    row.expected_generation_next_revision
-                ),
-            )
-        conn.commit()
-    return batch.review_job_id
+    return state, PublicationSpec(tmp_path, state, candidate, destination), generated_bytes
 
 
 def test_complete_run_state_verifies_source_and_outputs(tmp_path: Path) -> None:
@@ -576,9 +402,9 @@ def test_running_state_needs_no_recovery_records(tmp_path: Path) -> None:
         "source": None,
         "result": None,
         "generated-review": None,
-        "memory-review-required": None,
-        "legacy-review": None,
-        "legacy-review-model-partition": None,
+
+
+
         "failure": None,
     }
     write(state, state_text(values))
@@ -601,9 +427,9 @@ def test_failed_state_requires_only_a_reason(tmp_path: Path) -> None:
         "source": None,
         "result": None,
         "generated-review": None,
-        "memory-review-required": None,
-        "legacy-review": None,
-        "legacy-review-model-partition": None,
+
+
+
         "failure": "Generated review candidate failed validation; rerun required.",
     }
     write(state, state_text(values))
@@ -623,9 +449,9 @@ def test_failed_state_without_reason_is_rejected(tmp_path: Path) -> None:
             "source": None,
             "result": None,
             "generated-review": None,
-            "memory-review-required": None,
-            "legacy-review": None,
-            "legacy-review-model-partition": None,
+
+
+
             "failure": None,
         }
     )
@@ -707,9 +533,9 @@ def test_blocked_result_completes_without_public_review(tmp_path: Path) -> None:
             "source": None,
             "result": {"path": values["result"]["path"], "sha256": digest(result)},  # type: ignore[index]
             "generated-review": None,
-            "memory-review-required": False,
-            "legacy-review": None,
-            "legacy-review-model-partition": None,
+
+
+
         }
     )
     replace_frontmatter(state, values)
@@ -717,26 +543,6 @@ def test_blocked_result_completes_without_public_review(tmp_path: Path) -> None:
     results = validation.validate_note(state, repo_root=tmp_path)
 
     assert results.fails == []
-
-
-def test_required_memory_review_must_exist(tmp_path: Path) -> None:
-    state = valid_run_state(tmp_path)
-    values = frontmatter(state)
-    values["memory-review-required"] = True
-    replace_frontmatter(state, values)
-
-    results = validation.validate_note(state, repo_root=tmp_path)
-
-    assert any("legacy-review" in item or "legacy review" in item for item in results.fails)
-
-
-def test_required_memory_review_is_byte_verified(tmp_path: Path) -> None:
-    state = valid_run_state(tmp_path, legacy=True)
-
-    results = validation.validate_note(state, repo_root=tmp_path)
-
-    assert results.fails == []
-    assert any("legacy review: byte identity" in item for item in results.passes)
 
 
 def test_capture_source_is_byte_verified(tmp_path: Path) -> None:
@@ -973,9 +779,9 @@ def test_handoff_command_refuses_a_running_run(
             "source": None,
             "result": None,
             "generated-review": None,
-            "memory-review-required": None,
-            "legacy-review": None,
-            "legacy-review-model-partition": None,
+
+
+
         }
     )
     replace_frontmatter(state, values)
@@ -1005,35 +811,92 @@ def test_handoff_command_renders_a_valid_run(
     assert f"# Agentic-system analysis handoff — {RUN_ID}" in capsys.readouterr().out
 
 
-def test_prepare_reviews_candidate_bytes_under_the_public_identity(
-    tmp_path: Path,
-) -> None:
-    state, spec, _, legacy_bytes = publication_fixture(tmp_path)
-    assert spec.legacy_candidate_path is not None
-    direct = validation.validate_note(spec.legacy_candidate_path, repo_root=tmp_path)
-    assert direct.fails
-
-    prepared = prepare_publication(spec)
-
-    assert prepared.review_batch is not None
-    batch = prepared.review_batch
-    assert {row.note_path for row in batch.pairs} == {spec.legacy_destination}
-    with review_db.connect(review_db.resolve_db_path(tmp_path)) as conn:
-        snapshots = {
-            load_snapshot_by_id(conn, row.reviewed_note_snapshot_id)
-            for row in batch.pairs
-        }
-    assert {snapshot.content_text.encode("utf-8") for snapshot in snapshots if snapshot} == {
-        legacy_bytes
-    }
+def test_prepare_checks_handoff_without_publishing(tmp_path: Path) -> None:
+    state, spec, _ = publication_fixture(tmp_path)
+    assert prepare_publication(spec).prepared
     assert not (tmp_path / spec.generated_destination).exists()
-    assert spec.legacy_destination is not None
-    assert not (tmp_path / spec.legacy_destination).exists()
     assert frontmatter(state)["run-status"] == "running"
 
 
+@pytest.mark.parametrize("mutation", ["valid", "vocabulary", "empty", "outside", "absence", "dependency"])
+def test_standing_memory_report_comparison_validation(tmp_path: Path, mutation: str) -> None:
+    state = valid_run_state(tmp_path)
+    report = state.parent / "memory-report.md"
+    body = report.read_text().replace(
+        "## Shared records\n", "## Shared records\n\nMEM-OBJ-1 fixture object.\nMEM-ABS-1 inspected absence.\n"
+    )
+    report.write_text(body)
+    metadata = frontmatter(report)
+    axes = metadata["memory-comparison"]["axes"]
+    axes["storage_substrate"] = {
+        "assessment": "known", "basis": "wired", "values": ["files"],
+        "records": ["MEM-OBJ-1"], "note": "Fixture source writes files.",
+    }
+    axes["trace_learning"] = {
+        "assessment": "absent", "basis": None, "values": [],
+        "records": ["MEM-ABS-1"], "note": "Fixture source was inspected.",
+    }
+    expected_error = None
+    if mutation == "vocabulary":
+        axes["storage_substrate"]["values"] = ["invented"]
+        expected_error = "off-vocabulary"
+    elif mutation == "empty":
+        axes["storage_substrate"]["values"] = []
+        expected_error = "known assessment needs"
+    elif mutation == "outside":
+        report.write_text(report.read_text().replace("MEM-OBJ-1 fixture object.\n", "") + "\nMEM-OBJ-1 outside the register.\n")
+        expected_error = "unresolved shared or proposed"
+    elif mutation == "absence":
+        axes["trace_learning"]["records"] = ["MEM-OBJ-1"]
+        expected_error = "absence requires"
+    elif mutation == "dependency":
+        axes["trace_learning"].update({"assessment": "known", "basis": "wired", "values": ["no"]})
+        expected_error = "must be inapplicable"
+    replace_frontmatter(report, metadata)
+    checked = validation.validate_note(report, repo_root=tmp_path)
+    if expected_error:
+        assert any(expected_error in error for error in checked.fails)
+    else:
+        assert checked.fails == []
+        assert any("shared or proposed references resolve" in message for message in checked.passes)
+        document, error = validation.parse_document(report.read_text())
+        assert error is None
+        with pytest.raises(ValueError, match="unresolved canonical"):
+            systems_matrix.validate_comparison(metadata["memory-comparison"], document.body)
+
+
+@pytest.mark.parametrize("name", ["memory-report.md", "memory-input.md"])
+def test_publication_cannot_consume_specialist_evidence_as_candidate(tmp_path: Path, name: str) -> None:
+    state, spec, _ = publication_fixture(tmp_path)
+    with pytest.raises(ValueError, match="reserved"):
+        prepare_publication(PublicationSpec(tmp_path, state, state.parent / name, spec.generated_destination))
+
+
+def test_publication_cli_rejects_retired_legacy_arguments(tmp_path: Path) -> None:
+    state, spec, _ = publication_fixture(tmp_path)
+    with pytest.raises(SystemExit) as error:
+        agentic_analysis_publication.main([
+            "prepare", str(state), "--generated-candidate", str(spec.generated_candidate_path),
+            "--generated-destination", spec.generated_destination,
+            "--legacy-candidate", "retired.md",
+        ], cwd=tmp_path)
+    assert error.value.code == 2
+
+
+def test_memory_report_quote_is_checked_at_the_frozen_source(tmp_path: Path) -> None:
+    state, spec, _ = publication_fixture(tmp_path)
+    report = state.parent / "memory-report.md"
+    revision = frontmatter(state)["source"]["revision"]
+    report.write_text(report.read_text() + f"\n> absent quotation\n> --- `README.md` @ `{revision}`\n")
+    result = state.parent / "result.md"
+    result.write_text(re.sub(r"(\*\*Memory analysis report SHA-256:\*\* )`[0-9a-f]+`",
+                             rf"\g<1>`{digest(report)}`", result.read_text()))
+    with pytest.raises(ValueError, match="memory report:.*quote does not occur"):
+        prepare_publication(spec)
+
+
 def test_prepare_rejects_an_unresolved_quote_in_a_candidate(tmp_path: Path) -> None:
-    state, spec, _, _ = publication_fixture(tmp_path)
+    state, spec, _ = publication_fixture(tmp_path)
     running_values = frontmatter(state)
     revision = running_values["source"]["revision"]
     with spec.generated_candidate_path.open("a", encoding="utf-8") as handle:
@@ -1062,61 +925,16 @@ def commit_incumbent(tmp_path: Path, path: Path) -> None:
     )
 
 
-@pytest.mark.parametrize(
-    ("recorded_identity", "header_identity", "accepted"),
-    [
-        ("https://example.invalid/example-system", "", True),
-        ("https://example.invalid/example-system-other", "", False),
-        (
-            "https://example.invalid/example-system-other",
-            "https://example.invalid/example-system",
-            False,
-        ),
-        (None, "https://example.invalid/example-system", True),
-        (None, "https://example.invalid/example-system-other", False),
-    ],
-)
-def test_prepare_requires_an_exact_legacy_source_identity(
-    tmp_path: Path, recorded_identity: str | None, header_identity: str, accepted: bool
-) -> None:
-    state, spec, _, legacy_bytes = publication_fixture(tmp_path)
-    assert spec.legacy_destination is not None
-    incumbent = tmp_path / spec.legacy_destination
-    incumbent.parent.mkdir(parents=True, exist_ok=True)
-    incumbent.write_bytes(legacy_bytes)
-    values = frontmatter(incumbent)
-    if recorded_identity is None:
-        del values["source-identity"]
-    else:
-        values["source-identity"] = recorded_identity
-    replace_frontmatter(incumbent, values)
-    content = incumbent.read_text(encoding="utf-8").replace(
-        "## Core Ideas", f"**Repository:** {header_identity}\n\n## Core Ideas", 1
-    )
-    incumbent.write_text(content, encoding="utf-8")
-    commit_incumbent(tmp_path, incumbent)
-
-    if accepted:
-        assert prepare_publication(spec).review_batch is not None
-    else:
-        with pytest.raises(ValueError, match="same source"):
-            prepare_publication(spec)
-
-    assert incumbent.read_text(encoding="utf-8") == content
-    assert frontmatter(state)["run-status"] == "running"
-
-
-@pytest.mark.parametrize("generated", [True, False])
 @pytest.mark.parametrize("staged", [True, False])
 def test_prepare_rejects_a_locally_deleted_review(
-    tmp_path: Path, generated: bool, staged: bool
+    tmp_path: Path, staged: bool
 ) -> None:
-    state, spec, generated_bytes, legacy_bytes = publication_fixture(tmp_path)
-    destination = spec.generated_destination if generated else spec.legacy_destination
+    state, spec, generated_bytes = publication_fixture(tmp_path)
+    destination = spec.generated_destination
     assert destination is not None
     incumbent = tmp_path / destination
     incumbent.parent.mkdir(parents=True, exist_ok=True)
-    incumbent.write_bytes(generated_bytes if generated else legacy_bytes)
+    incumbent.write_bytes(generated_bytes)
     commit_incumbent(tmp_path, incumbent)
     incumbent.unlink()
     if staged:
@@ -1132,12 +950,11 @@ def test_prepare_rejects_a_locally_deleted_review(
 def test_publish_rejects_a_source_mismatch_before_replacing_an_incumbent(
     tmp_path: Path,
 ) -> None:
-    state, spec, _, legacy_bytes = publication_fixture(tmp_path)
-    accept_prepared_semantic_review(tmp_path, spec)
-    assert spec.legacy_destination is not None
-    incumbent = tmp_path / spec.legacy_destination
+    state, spec, generated_bytes = publication_fixture(tmp_path)
+    prepare_publication(spec)
+    incumbent = tmp_path / spec.generated_destination
     incumbent.parent.mkdir(parents=True, exist_ok=True)
-    incumbent.write_bytes(legacy_bytes)
+    incumbent.write_bytes(generated_bytes)
     values = frontmatter(incumbent)
     values["source-identity"] = "https://example.invalid/example-system-other"
     replace_frontmatter(incumbent, values)
@@ -1151,46 +968,46 @@ def test_publish_rejects_a_source_mismatch_before_replacing_an_incumbent(
     assert frontmatter(state)["run-status"] == "running"
 
 
-def test_publish_requires_current_semantic_passes_and_leaves_incumbents_alone(
-    tmp_path: Path,
-) -> None:
-    state, spec, _, _ = publication_fixture(tmp_path)
-
-    try:
-        publish_publication(spec)
-    except ValueError as exc:
-        assert "semantic baselines" in str(exc)
+@pytest.mark.parametrize("mutation", ["missing", "bytes", "input", "run", "source", "boundary", "blocked"])
+def test_publication_requires_exact_completed_memory_handoff(tmp_path: Path, mutation: str) -> None:
+    state, spec, _ = publication_fixture(tmp_path)
+    report = state.parent / "memory-report.md"
+    if mutation == "missing":
+        report.unlink()
+    elif mutation == "bytes":
+        report.write_text(report.read_text() + "\nChanged.\n")
+    elif mutation == "input":
+        (state.parent / "memory-input.md").write_text("Changed input.\n")
     else:
-        raise AssertionError("publication unexpectedly succeeded without semantic passes")
-
+        values = frontmatter(report)
+        field = {"run": "analysis-run", "source": "source-identity", "boundary": "reviewed-boundary", "blocked": "report-status"}[mutation]
+        values[field] = "blocked" if mutation == "blocked" else "different"
+        replace_frontmatter(report, values)
+        result = state.parent / "result.md"
+        result.write_text(re.sub(r"(\*\*Memory analysis report SHA-256:\*\* )`[0-9a-f]+`", rf"\g<1>`{digest(report)}`", result.read_text()))
+    with pytest.raises(ValueError, match="memory report"):
+        publish_publication(spec)
     assert not (tmp_path / spec.generated_destination).exists()
-    assert spec.legacy_destination is not None
-    assert not (tmp_path / spec.legacy_destination).exists()
     assert frontmatter(state)["run-status"] == "running"
 
 
 def test_publish_replaces_the_bundle_and_completes_run_state(tmp_path: Path) -> None:
-    state, spec, generated_bytes, legacy_bytes = publication_fixture(tmp_path)
-    accept_prepared_semantic_review(tmp_path, spec)
+    state, spec, generated_bytes = publication_fixture(tmp_path)
+    prepare_publication(spec)
 
     published = publish_publication(spec)
 
     assert (tmp_path / spec.generated_destination).read_bytes() == generated_bytes
-    assert spec.legacy_destination is not None
-    assert (tmp_path / spec.legacy_destination).read_bytes() == legacy_bytes
     assert not spec.generated_candidate_path.exists()
-    assert spec.legacy_candidate_path is not None
-    assert not spec.legacy_candidate_path.exists()
     values = frontmatter(state)
     assert values["run-status"] == "complete"
-    assert values["legacy-review-model-partition"] == "codex"
     assert (tmp_path / published.retained_path).read_bytes() == (state.parent / "result.md").read_bytes()
     assert published.cleanup_warnings == ()
     assert validation.validate_note(state, repo_root=tmp_path).fails == []
 
 
 def test_publication_resolves_links_to_results_in_the_same_bundle(tmp_path: Path) -> None:
-    state, spec, _, _ = publication_fixture(tmp_path)
+    state, spec, _ = publication_fixture(tmp_path)
     retained = tmp_path / systems_matrix.retained_result_path(RUN_ID)
     candidate = spec.generated_candidate_path
     content = candidate.read_text() + (
@@ -1198,7 +1015,7 @@ def test_publication_resolves_links_to_results_in_the_same_bundle(tmp_path: Path
     )
     candidate.write_text(content)
 
-    assert prepare_publication(spec).review_batch is not None
+    assert prepare_publication(spec).prepared
     assert not retained.exists()
     assert not (tmp_path / spec.generated_destination).exists()
 
@@ -1208,7 +1025,7 @@ def test_publication_resolves_links_to_results_in_the_same_bundle(tmp_path: Path
     assert not retained.exists()
 
     candidate.write_text(content)
-    accept_prepared_semantic_review(tmp_path, spec)
+    prepare_publication(spec)
     publish_publication(spec)
     assert retained.read_bytes() == (state.parent / "result.md").read_bytes()
     assert (tmp_path / spec.generated_destination).read_text() == content
@@ -1221,19 +1038,18 @@ def test_publish_rolls_back_an_ordinary_multi_file_write_failure(
     tmp_path: Path,
     monkeypatch,
 ) -> None:
-    state, spec, _, _ = publication_fixture(tmp_path)
-    accept_prepared_semantic_review(tmp_path, spec)
+    state, spec, _ = publication_fixture(tmp_path)
+    prepare_publication(spec)
     original_state = state.read_bytes()
-    assert spec.legacy_destination is not None
-    legacy_destination = tmp_path / spec.legacy_destination
+    failure_destination = state
     real_atomic_write = agentic_publication._atomic_write
 
-    def fail_on_legacy(path: Path, content: bytes) -> None:
-        if path == legacy_destination:
+    def fail_on_state(path: Path, content: bytes) -> None:
+        if path == failure_destination:
             raise OSError("injected write failure")
         real_atomic_write(path, content)
 
-    monkeypatch.setattr(agentic_publication, "_atomic_write", fail_on_legacy)
+    monkeypatch.setattr(agentic_publication, "_atomic_write", fail_on_state)
 
     try:
         publish_publication(spec)
@@ -1243,12 +1059,9 @@ def test_publish_rolls_back_an_ordinary_multi_file_write_failure(
         raise AssertionError("publication unexpectedly survived injected failure")
 
     assert not (tmp_path / spec.generated_destination).exists()
-    assert not legacy_destination.exists()
     assert not (tmp_path / systems_matrix.retained_result_path(RUN_ID)).exists()
     assert state.read_bytes() == original_state
     assert spec.generated_candidate_path.exists()
-    assert spec.legacy_candidate_path is not None
-    assert spec.legacy_candidate_path.exists()
 
 
 
@@ -1330,7 +1143,7 @@ def test_comparison_population_must_select_one_review_per_source(tmp_path):
 
 
 def test_publication_requires_comparison_fields_and_preserves_retained_bytes(tmp_path):
-    state, spec, _, _ = publication_fixture(tmp_path)
+    state, spec, _ = publication_fixture(tmp_path)
     result = state.parent / "result.md"
     data = frontmatter(result)
     data.pop("memory-comparison")

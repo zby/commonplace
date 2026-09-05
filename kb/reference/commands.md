@@ -42,12 +42,12 @@ The command is read-only. It refuses a running, failed, or invalid run.
 
 ### commonplace-agentic-analysis-publication
 
-Prepare or publish the review projections of one running agentic-system
-analysis. `prepare` validates candidate bytes as their intended destinations,
-checks incumbents, and creates the required legacy semantic-review job without
-changing public artifacts. After that job finalizes with passes, `publish`
-rechecks its baselines, validates the prospective complete run state, replaces
-the reviews, retains the exact result bytes at
+Prepare or publish the compact review of one running agentic-system
+analysis. `prepare` validates the exact result, specialist memory report, and
+candidate review, and checks the incumbent without changing public artifacts.
+It does not create a semantic-review job; specialist analysis does not establish
+independent semantic clearance. `publish` rechecks the inputs, validates the
+prospective complete run state, replaces the review, retains the exact result bytes at
 `kb/reports/retained/agentic-system-analysis/<run-id>/result.md`, and writes the
 run state last. New publications require the result's `memory-comparison`
 fields and matching retained-result path/hash in the public review. An existing

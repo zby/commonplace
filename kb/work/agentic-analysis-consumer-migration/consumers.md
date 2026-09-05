@@ -21,9 +21,9 @@ Entries without an execution record remain **pending**. The acceptance condition
 | C09 — done | [External-system placement pass](../../instructions/simplification-passes/place-external-systems.md) reads generated main reviews, with source ingests identified separately. | Check support, evidence status, source revision, and input hashes; withhold unsupported or local-only citations. See [acceptance](./c09-acceptance.md). |
 | C10 — done | [Classification audit](../../instructions/refresh-agent-memory-review-taxonomy.md) reads retained main results and diagnoses their classifications. | Require exact evidence and method identities; preserve scope and uncertainty. Route defects through the producing method and source regeneration, without patching generated prose. See [acceptance](./c10-acceptance.md). |
 | C11 — retired into publication | Quote-grounding now runs inside [main-review analysis checks](../../../src/commonplace/lib/agentic_analysis.py); the standalone live-checkout instruction is retired. | Every quote-anchored block in an exact result or generated candidate resolves against the recorded Git commit or immutable capture before publication. Occurrence remains distinct from semantic support. See [acceptance](./c11-acceptance.md). |
-| C12 | [Legacy review writer](../../instructions/write-agent-memory-system-review/SKILL.md) reads existing reviews for style and drafts again from frozen sources. | Retire the extra drafting and style-exemplar dependency with C14. Do not rewrite this writer as a legacy-format projection adapter. |
+| C12 — done | [Memory specialist](../../instructions/analyse-agent-memory/SKILL.md) produces a typed report from frozen sources for integration into the main result. | Retired the legacy writer and its skill entry points. Verify source-only analysis, proposal integration and report validation; see [acceptance](./memory-specialist-acceptance.md). |
 | C13 | Authored evidence links in `kb/notes/`, `kb/articles/`, `kb/sources/`, `kb/reference/`, and per-system analyses; [grounding-alignment gate](../../instructions/review-gates/semantic/grounding-alignment.md) follows linked library evidence. | Work by citing artifact or bounded claim group. Check support before changing a target; retain historical citations when the original observation matters. The generic gate already recognizes both system collections: change it only if the selected evidence location requires it. |
-| C14 | Main-review publication and handoff: [analysis checks](../../../src/commonplace/lib/agentic_analysis.py), [publication code](../../../src/commonplace/lib/agentic_publication.py), [validation](../../../src/commonplace/lib/validation.py), result/run-state contracts, and producing skill. | After active consumers are resolved, remove mandatory legacy candidate/output fields, legacy publication gates, and stale-output reporting tied to the old pipeline. Preserve necessary evidence and publication checks on the main outputs; handle validation of retained historical artifacts explicitly. Prove a memory-system run can complete with its main-review outputs alone. |
+| C14 — done | Main-review publication and handoff: [analysis checks](../../../src/commonplace/lib/agentic_analysis.py), [publication code](../../../src/commonplace/lib/agentic_publication.py), [validation](../../../src/commonplace/lib/validation.py), result/run-state contracts, and producing skill. | The operator authorized removing legacy production now. Remove mandatory legacy candidate/output fields, legacy publication gates, and stale-output reporting tied to the old pipeline. Preserve necessary evidence and publication checks on the main outputs; handle validation of retained historical artifacts explicitly. Prove a memory-system run can complete with one integrated main result and its local specialist report, without legacy publication or compatibility paths. |
 | C15 | Collection READMEs, generated indexes/table links, and website/search navigation. | Route current discovery to the main reviews and migrated comparison outputs. Keep supported historical references navigable. Verify public evidence from a clean checkout without ignored run files. |
 
 ## Inventory boundaries
@@ -156,8 +156,8 @@ explicit historical disposition. Pond remains outside the new comparison
 population. Consumer IDs remain an inventory, not a fixed sequence.
 
 C15 received navigation and public-citation contract updates needed by C01–C04. Broader citation
-and public-navigation migration remains pending. C12/C14 still require the
-legacy publication; this change has not retired duplicate drafting.
+and public-navigation migration remains pending. C12/C14 now use the operator-authorized specialist handoff and have retired
+duplicate drafting; see the acceptance record below.
 
 ### C09 — External-system placement
 
@@ -257,3 +257,24 @@ inside `prepare`. The implementation and documentation passed the full test and
 validation checks recorded in the acceptance file. Historical reviews were not
 retroactively attested. C11 adds no consumer-facing secondary analysis and no
 legacy-format adapter.
+
+
+### C12/C14 — Memory specialist and legacy production retirement
+
+**Status: done for implementation and bounded acceptance; production rerun pending.**
+
+The operator authorized delegating memory analysis into a typed report and
+removing all legacy paths without compatibility. This supersedes C14's earlier
+ordering prerequisite. Pending historical survey and citation migrations remain
+pending; they do not justify keeping the legacy producer callable.
+
+The specialist owns source-native memory findings and proposed comparison
+classifications. The coordinator assigns canonical IDs, resolves shared-record
+conflicts and incorporates the report into one self-contained main result.
+Only that result supplies public reviews, comparisons and later consumers.
+Local input and report files support completion verification, without becoming
+public evidence dependencies. Historical results are not silently upgraded to
+the new completion contract.
+
+See [memory specialist acceptance](./memory-specialist-acceptance.md) for the
+bounded source trial, validation checks and remaining coverage limits.

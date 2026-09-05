@@ -32,27 +32,6 @@ def test_analysis_failure_is_rerun_instead_of_recovered() -> None:
         assert obsolete not in orchestrator
 
 
-def test_complete_analysis_publishes_validated_candidates() -> None:
-    orchestrator = instruction("analyse-agentic-system")
-    memory_writer = instruction("write-agent-memory-system-review")
-    collection = (REPO_ROOT / "kb/agentic-systems/COLLECTION.md").read_text(
-        encoding="utf-8"
-    )
-
-    assert "Publish validated candidates" in orchestrator
-    assert "temporary candidate" in orchestrator
-    assert "commonplace-agentic-analysis-publication prepare" in orchestrator
-    assert "commonplace-agentic-analysis-publication publish" in orchestrator
-    assert "rolls back ordinary" in orchestrator
-    assert "authorizes only the candidate" in memory_writer.lower()
-    assert "incumbent untouched" in memory_writer
-    assert "Do not run semantic review or publish" in memory_writer
-    collection_text = collection.replace("\n", " ")
-    assert "private candidate as its intended destination" in collection_text
-    assert "complete run state is the sole declaration" in collection_text
-    assert "Never stage or commit" in orchestrator
-
-
 def test_exact_result_has_one_fixed_state_location() -> None:
     orchestrator = instruction("analyse-agentic-system")
     contract = (
@@ -96,33 +75,6 @@ def test_runtime_checks_preflight_before_execution() -> None:
     assert "probe evidence capsule" in runtime
     assert "actual intervention and comparison" in runtime
     assert "checks considered" in runtime
-
-
-def test_both_lenses_share_one_canonical_register() -> None:
-    orchestrator = instruction("analyse-agentic-system")
-    epistemic = (
-        REPO_ROOT
-        / "kb/instructions/analyse-external-system-epistemic-architecture.md"
-    ).read_text(encoding="utf-8")
-    result_contract = (
-        REPO_ROOT / "kb/types/agentic-system-analysis-result.md"
-    ).read_text(encoding="utf-8")
-
-    assert "Both lenses always run" in orchestrator
-    assert "Maintain one canonical register" in orchestrator
-    assert "Require a sparse overlay on canonical IDs" in orchestrator
-    assert "it never mints a canonical ID" in epistemic
-    assert "They do not reproduce the shared inventory" in result_contract
-
-
-def test_memory_review_publication_closes_downstream_disposition() -> None:
-    writer = instruction("write-agent-memory-system-review")
-    orchestrator = instruction("analyse-agentic-system")
-
-    assert "systems.csv" not in writer and "systems-table.md" not in writer
-    assert "systems.csv" in orchestrator and "systems-table.md" in orchestrator
-    assert "report a prior current landscape synthesis as historical" in orchestrator.lower()
-    assert "publication of the legacy review happens only after" in orchestrator
 
 
 def test_transfer_scan_runs_after_complete_state() -> None:

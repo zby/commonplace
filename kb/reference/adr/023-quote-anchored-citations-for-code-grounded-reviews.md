@@ -40,12 +40,15 @@ Used on the claims that carry a review, not on every sentence. Existing citation
 ### Verification splits by where the source lives
 
 - **Resolution is a publication check.** `analyse-agentic-system` resolves every
-  quote in its exact result and generated review candidates against the Git
+  quote in its exact result and compact review candidate against the Git
   blob at the run's recorded full commit. It never reads quote evidence from
   the worktree. A missing blob, mismatched repository or revision, or quote
   absent after whitespace normalization blocks publication. This check belongs
   to the parent publication bundle because that boundary has the frozen source
   and every candidate byte together.
+  Historical memory reviews are outside this publication path. The specialist
+  memory report is an analytical handoff, not independent semantic clearance;
+  publication does not create a semantic-review job.
 - **The standing validator checks shape only.** For reviews it confirms each quote-anchored citation is well-formed and names a source. It cannot resolve the quote offline, because the source is not retained — and does not need to, because the pinned commit cannot drift.
 - **`kb/sources/` is where standing resolution would live.** Snapshots there *are* retained immutably in the repo, so a future standing validator could resolve quotes against them with no network. Not built now (one use site today); recorded as the natural home if the convention is reused.
 
@@ -69,7 +72,9 @@ Used on the claims that carry a review, not on every sentence. Existing citation
 ### Not changing
 
 - Document-level citations remain valid for ordinary claims; quote-anchoring is opt-in for load-bearing ones.
-- Semantic faithfulness remains the `semantic/grounding-alignment` gate's job; no validator check claims to cover it. This ADR only hands that gate a firmer structural floor to stand on.
+- Semantic faithfulness requires a separate judgment. The
+  `semantic/grounding-alignment` gate supplies that judgment when invoked; quote
+  resolution does not invoke it or imply that it passed.
 - The reviewed source stays out of the KB (ADR-011 and the type constraints stand).
 
 ## Relevant Notes

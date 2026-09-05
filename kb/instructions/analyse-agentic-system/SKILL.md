@@ -15,15 +15,14 @@ Analyse one external agentic system at one frozen evidence boundary. Identify
 what the system wires, where its responsibilities end, and what its
 memory/context and epistemic routes support. Run a runtime baseline and both
 mandatory lenses, then write one exact result and publish a compact generated
-review. If the target is itself a memory, knowledge, or context-engineering
-system, also publish its legacy collection review from the same sources.
+review. Delegate memory/context analysis to a fresh specialist and integrate
+its typed report into that result.
 
 Invocation authorizes the run directory under
 `kb/reports/state/agentic-system-analysis/`, one generated review under
 `kb/agentic-systems/reviews/`, its identical exact-result copy under
-`kb/reports/retained/agentic-system-analysis/<run-id>/result.md`, and, when
-applicable, one review under
-`kb/agent-memory-systems/` plus its semantic-QA state. It does not authorize
+`kb/reports/retained/agentic-system-analysis/<run-id>/result.md`, and the local
+memory specialist input and report inside that run directory. It does not authorize
 changes to source worktrees, auxiliary indexes or surveys, transfer scans,
 landscape synthesis, other retained reports, or Git staging and commits.
 
@@ -154,15 +153,12 @@ referent. Splitting a combined record requires new IDs for the parts and an
 explicit superseded disposition on the original record; do not assign its ID
 to one part. Use local labels for provisional seeds.
 
-When workers are useful and available, give each one the run ID, frozen source
-identity, reviewed boundary, source register, canonical register, lens scope,
-and sparse-return contract. A worker may inspect only that boundary, does not
-publish or delegate, and returns annotations, proposals, corrections,
-evidenced absences, and limitations. The orchestrator checks that every cited
-ID and source belongs to the supplied registers before merging. Discard and
-rerun a stale, malformed, or mismatched lens return; do not maintain packet or
-correction history. Running both lenses sequentially in the current context is
-also valid.
+The memory/context lens runs in a fresh specialist context under step 5. The
+parent owns scheduling, canonical IDs, integration, and recovery. The epistemic
+lens may run locally or in a separate worker with the same frozen boundary and
+sparse overlay contract. Workers do not publish or delegate. If a fresh memory
+worker is unavailable, report the execution blocker; do not silently perform
+that specialist pass in the coordinator's context.
 
 ### 4. Run and challenge the runtime baseline
 
@@ -200,7 +196,6 @@ also valid.
    envelope. Inspect permissions, approval, delegation, dynamic extension,
    reliability, observability, providers, packaging, and performance only where
    they change claimed work, a control path, evidence strength, or a lens result.
-
 ### 5. Run both lenses
 
 For memory/context and epistemic, first record trigger evidence, inspected
@@ -208,12 +203,21 @@ boundary, pointed-to routes and objects, warranted `brief` or `full` depth, and
 rationale. Both lenses always run. A brief result still states what was
 inventoried, what was found, and which conclusions its thin evidence prevents.
 
-The memory/context lens looks for retained material, read-back into a later
-invocation, selection and framing, activation evidence, scope and invalidation,
-and behavioral authority. Separately detect whether the selected target's
-primary offered work is retaining, transforming, organizing, selecting, or
-delivering material for later agent work. Record the detection and evidence;
-publication of the legacy review happens only after the exact result validates.
+Write `<run-id>/memory-input.md` before launching the specialist. Freeze the
+run identity, source register (full revisions or capture hashes and access
+roots), reviewed boundary, provisional canonical records, memory lens scope
+and depth, exclusions, and the question the report must answer. Records are
+source-checkable seeds, not accepted conclusions. Do not supply legacy reviews
+or precomputed memory classifications. Hash the complete input file.
+
+Invoke [Analyse agent memory](../analyse-agent-memory/SKILL.md) in a fresh
+sub-agent context with that input and `<run-id>/memory-report.md` as its sole
+output. The worker owns source-native memory analysis and the proposed
+`memory-comparison` profile. Its typed report is the substantive handoff.
+Off-band messages may carry progress or access problems; all findings and
+integration issues must be retained in the report. Check its run, source,
+boundary, input hash, completion status, and source anchors before integration.
+If the frozen input changes, commission a new report against the new bytes.
 
 Invoke
 [`analyse-external-system-epistemic-architecture.md`](../analyse-external-system-epistemic-architecture.md)
@@ -228,8 +232,11 @@ conclusion-status field.
 Resolve proposed records into canonical IDs, attach corrections and amendments
 to the affected records, preserve anchored conflicts, and report independent
 convergence only when the lenses reached it independently. Recheck shared-route
-ownership and the memory-review detection. If reconciliation exposes stale or
-unsupported lens work, rerun that lens before continuing.
+ownership. Record mappings from specialist proposal IDs to canonical IDs and
+the disposition of every material integration issue. Return substantive
+conflicts to the specialist or retain explicit uncertainty; do not silently
+strengthen its findings. If reconciliation exposes stale or unsupported lens
+work, rerun that lens before continuing.
 
 Write a system-organized synthesis: evidence basis and boundary,
 architectural characterization and claimed work, runtime map, discriminating
@@ -243,14 +250,16 @@ Commonplace delta, transfer recommendation, or universal maturity model.
 Write `<run-id>/result.md` using
 `kb/types/agentic-system-analysis-result.md`. Every disposition keeps all
 required headings. Its Run identity names the run state, generated review
-disposition, and legacy review disposition. Put probe evidence inline.
+disposition, memory report path, and SHA-256 of the report bytes. Put probe
+evidence inline.
 
-Normalize the established memory/context findings into the result type's
-`memory-comparison` frontmatter. Name the memory boundary and fill every axis
-with its assessment, evidence basis, values, canonical records, and rationale.
-Keep uncertain, uninspected, inapplicable, and evidenced-absent cases explicit.
-Use the weakest evidence basis across an aggregated value set; never infer
-comparison values from legacy reviews or a missing tag or section.
+Integrate the specialist's `memory-comparison` profile by mapping its proposed
+record IDs to accepted canonical IDs. Preserve its scope, evidence basis,
+uncertainties, and rationale. The parent checks integration and shared-record
+conflicts; it does not independently draft a second memory analysis. Include
+all adopted findings and evidence needed to understand the main result without
+opening the local report. The report is provenance, not independent semantic
+clearance.
 
 After reconciliation, check the integrated result against the type's comparison
 rules, not just the separate lens returns:
@@ -270,7 +279,7 @@ rules, not just the separate lens returns:
 Record the checked routes and material dispositions in the existing Semantic
 verification section. A known assessment unsupported by its records blocks
 publication; properly scoped explicit uncertainty does not. Structural
-validation or the absence of a legacy review job does not perform this check.
+validation does not perform this check.
 
 Run `commonplace-validate --full <result-path>` and verify every source anchor,
 canonical ID, evidence status, boundary, lens output, limitation, and blocker.
@@ -294,38 +303,23 @@ Skip publication for a blocked or out-of-scope result. For a complete result:
    `kb/reports/retained/agentic-system-analysis/<run-id>/result.md` and the SHA-256
    of the validated exact result. Publication retains those identical bytes;
    do not draft a separate retained report or rewrite the result for the matrix.
-2. If memory-review detection applies, invoke
-   [Write an agent memory system review](../write-agent-memory-system-review/SKILL.md)
-   with the frozen source register, reviewed revision, selected destination,
-   and a candidate path inside this run directory. The child writes only that
-   candidate. Require its workflow fields `generated-by:
-   analyse-agentic-system`, `analysis-run`, `source-identity`, and
-   `reviewed-revision`.
-3. Run `commonplace-agentic-analysis-publication prepare` with the run state,
-   generated candidate and destination, plus the legacy candidate,
-   destination, and model partition when applicable. This validates candidate
-   bytes as their intended public paths, verifies source anchors and any
-   quote-anchored blocks against the frozen source, verifies workflow identity,
-   checks incumbents, and creates one semantic review job for the legacy
-   candidate. It changes no public artifact.
-4. When prepare returns a review job, dispatch its prompt through the normal
-   review worker path and run `commonplace-finalize-review-job` for that job.
-   All applicable semantic gates must pass. Do not copy an incumbent baseline
-   or substitute an informal review.
-5. Run `commonplace-agentic-analysis-publication publish` with the same
-   arguments. It requires current semantic pass baselines for the candidate
-   revision, validates the prospective complete run state, replaces all review
-   projections, retains the exact result, and writes the complete run state last.
-   It rolls back ordinary
-   in-process write or validation failures. A crash or power loss during the
-   short replace sequence may still leave partial public writes; inspect them,
+2. Run `commonplace-agentic-analysis-publication prepare` with the run state,
+   generated candidate, and destination. It validates candidate bytes as their
+   intended public path, source anchors and quote blocks against the frozen
+   source, workflow identity, memory report and input, and incumbents. It
+   changes no public artifact and dispatches no semantic review job.
+3. Run `commonplace-agentic-analysis-publication publish` with the same
+   arguments. It validates the prospective complete run state, replaces the
+   compact review, retains the exact result, and writes the complete run state
+   last. It rolls back ordinary in-process write or validation failures. A
+   crash during replacement may leave partial public writes; inspect them,
    mark the run `failed`, and use a new run ID.
 
-The publish command records the exact result and review hashes and the legacy
-review model partition in the run state. Candidate cleanup after success is
-best effort. A cleanup warning does not undo completion. Never patch generated
-prose independently of its source boundary and method. Never stage or commit
-unless the caller separately requested it.
+The run state binds the exact result, compact review, and memory report hashes.
+Keep the frozen input and report with the local run while completion checks
+need them. Candidate cleanup after success is best effort. A cleanup warning
+does not undo completion. Never patch generated prose independently of its
+source boundary and method. Never stage or commit unless separately requested.
 
 After a main review changes, report the comparison outputs under
 `kb/agentic-systems/comparisons/` stale unless rebuilt and validated under
@@ -379,8 +373,7 @@ A failed run reports its failure reason and does not use the handoff command.
   conclusion status is upgraded.
 - The exact result validates before publication.
 - Each public review has the SHA-256 and workflow identity recorded by the
-  complete run state; a required legacy review also has current semantic pass
-  baselines for the recorded model partition.
+  complete run state; the memory report and frozen input match that run.
 - Correctable pre-publication failures keep the run `running`. A failed run was
   abandoned or has uncertain public state; its replacement is a new run.
 

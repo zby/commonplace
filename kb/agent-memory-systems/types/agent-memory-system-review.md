@@ -9,13 +9,23 @@ schema: ./agent-memory-system-review.schema.yaml
 
 A review of an external agent memory, knowledge, or context-engineering system. It captures what the system actually does, not what it claims, and maps those mechanisms into Commonplace's shared analytical ontology at the confidence the evidence supports. Mark what you cannot verify, never present reported behavior as observed, and never force a partial analogy into an exact classification.
 
-The durable review serves readers surveying systems and the downstream matrix and public landscape analysis. It is a source-faithful, ontology-normalized case study: Commonplace supplies the distinctions and names, while the external system remains the subject. Current differences from Commonplace and ideas worth transferring are separate living state because their selection depends on a changing Commonplace baseline and current interest brief.
+This type describes the retained historical review corpus and its historical
+matrix inputs. Current comparisons read exact main-analysis results. The review
+is a source-faithful, ontology-normalized case study: Commonplace supplies the
+distinctions and names, while the external system remains the subject. Current
+differences from Commonplace and ideas worth transferring are separate living
+state because their selection depends on a changing Commonplace baseline and
+current interest brief.
 
-**Two evidence tiers, one type.** The `source-tier` frontmatter field records which: `code-grounded` (the default this spec assumes — material findings rest on inspected implementation; abandoned-but-readable code counts) or `doc-grounded` (no inspectable implementation supports the material findings; they rest on paper/README/blog, stay claim-level, and are filed under `lightweight/`). The section specs, evidence-stance, source-metadata, and citation rules below are tier-neutral; only production, owned by the skill, differs by tier.
+**Two evidence tiers, one type.** The `source-tier` frontmatter field records which: `code-grounded` (the default this spec assumes — material findings rest on inspected implementation; abandoned-but-readable code counts) or `doc-grounded` (no inspectable implementation supports the material findings; they rest on paper/README/blog, stay claim-level, and are filed under `lightweight/`). The section specs, evidence-stance, source-metadata, and citation rules below are tier-neutral.
 
-Normal production enters through [`analyse-agentic-system`](../../instructions/analyse-agentic-system/SKILL.md). When it detects a memory, knowledge, or context-engineering target, it invokes [`write-agent-memory-system-review`](../../instructions/write-agent-memory-system-review/SKILL.md) against the same frozen source boundary. That child drafts only the candidate; the parent validates it as its intended destination, owns semantic review and publication, and records completion. Conformance here is judged only from the completed review — a writer's process is not something a reviewer can check.
+This type is not a current production target. [`analyse-agentic-system`](../../instructions/analyse-agentic-system/SKILL.md)
+delegates memory analysis to [`analyse-agent-memory`](../../instructions/analyse-agent-memory/SKILL.md),
+which returns an [agent-memory-analysis-report](../../reports/types/agent-memory-analysis-report.md)
+for integration into the main result. It does not draft or publish a review of
+this type. The remaining contract describes existing artifacts.
 
-A new workflow-produced review also carries `generated-by:
+An existing workflow-produced review may carry `generated-by:
 analyse-agentic-system`, its `analysis-run`, stable `source-identity`, and
 `reviewed-revision`. These fields bind the public projection to its parent run;
 they do not replace the source metadata below.
@@ -53,7 +63,13 @@ For GitHub-backed sources the attribution may instead be a commit-pinned blob UR
 
 The quoted text is the anchor; the attribution pins where it came from. Do not record byte offsets, character spans, or ids — the quote is self-relocating (it can be re-found by search) and the pinned commit is immutable, so nothing else is needed to verify it.
 
-This is **optional and additive** — use it on the claims that carry the review, not on every sentence. It strengthens the "readable without the source" goal above: the evidence now travels inline rather than hiding behind a file path. The parent `analyse-agentic-system` publication check resolves every quote in the generated candidate against the Git blob at the run's frozen full commit, never against the worktree. A resolution failure blocks publication. A later reader or the standing validator cannot redo that check from the KB because the source is not retained; standing validation checks only that each quote-anchored citation is well-formed and names a source. Resolution establishes that the text occurs in the source. The semantic gates separately judge whether it supports the claim.
+This is **optional and additive** — used on the claims that carry the review,
+not on every sentence. The evidence travels inline rather than hiding behind a
+file path. Standing validation checks only that each quote-anchored citation is
+well-formed and names a source. Resolving an existing review's quote requires
+retrieving its pinned source; the current publication command does not publish
+or verify these historical reviews. Quote occurrence alone does not establish
+that the source supports the claim.
 
 ## Opening and source metadata
 
@@ -106,9 +122,13 @@ For systems that learn from agent traces, the Write side section deepens this wi
 
 ## Local transfer is a separate output
 
-Do not add `Comparison with Our System`, `Borrowable Ideas`, or `What to Watch` to a new or replacement review. Those sections select current implications rather than characterize the external system. Run `scan-agentic-system-transfer` against the completed review and a named current interest brief when the caller separately requests that judgment. The scan is non-exhaustive, lives as operational state until its candidates are disposed, is excluded from matrix and public landscape inputs, and distinguishes shipped Commonplace behavior from proposals or theory.
-
-Legacy reviews may retain those sections until source-regenerated. Do not mechanically delete or treat their omission as a semantic migration; they are excluded from downstream corpus evidence now.
+Historical reviews may retain `Comparison with Our System`, `Borrowable Ideas`,
+or `What to Watch`. Those sections record implications at an earlier boundary;
+they are excluded from current downstream corpus evidence. For a current
+judgment, run `scan-agentic-system-transfer` against a completed main analysis
+and a named current interest brief. The scan lives as operational state until
+its candidates are disposed and distinguishes shipped Commonplace behavior
+from proposals or theory.
 
 ## Write side
 

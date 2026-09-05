@@ -106,7 +106,9 @@ def _strings(value: object, label: str) -> list[str]:
     return value
 
 
-def validate_comparison(profile: object, body: str) -> dict:
+def validate_comparison(
+    profile: object, body: str, *, memory_report: bool = False
+) -> dict:
     """Validate authored assessments and references, without classifying prose."""
     if not isinstance(profile, dict) or set(profile) != {"scope", "axes"}:
         raise ValueError("memory-comparison requires exactly scope and axes")
@@ -119,14 +121,16 @@ def validate_comparison(profile: object, body: str) -> dict:
         raise ValueError(
             "memory-comparison.axes must contain every registered axis exactly once"
         )
-    shared = (
-        body.split("## Shared records\n", 1)[1].split("## Runtime account", 1)[0]
-        if "## Shared records\n" in body
-        else ""
+    end_heading = "Write side" if memory_report else "Runtime account"
+    shared_match = re.search(
+        rf"(?ms)^## Shared records[ \t]*\n(.*?)(?=^## {end_heading}[ \t]*$|\Z)",
+        body,
     )
+    shared = shared_match.group(1) if shared_match else ""
+    record_prefix = r"(?:MEM-)?" if memory_report else ""
     ids = set(
         re.findall(
-            r"(?m)^\s*(?:\|\s*|[-*]\s+|#{3,6}\s+)?[*`]*((?:CMP|OBJ|RTE|CLM|ABS|BAP)-\d+)\b",
+            rf"(?m)^\s*(?:\|\s*|[-*]\s+|#{{3,6}}\s+)?[*`]*({record_prefix}(?:CMP|OBJ|RTE|CLM|ABS|BAP)-\d+)\b",
             shared,
         )
     )
@@ -152,7 +156,8 @@ def validate_comparison(profile: object, body: str) -> dict:
         if not isinstance(entry["note"], str) or not entry["note"].strip():
             raise ValueError(f"{name}: missing rationale or conclusion prevented")
         if not set(records) <= ids:
-            raise ValueError(f"{name}: unresolved canonical records")
+            label = "shared or proposed" if memory_report else "canonical"
+            raise ValueError(f"{name}: unresolved {label} records")
         if not set(values) <= vocabulary:
             raise ValueError(f"{name}: off-vocabulary values")
         if entry["assessment"] == "known":
@@ -170,7 +175,8 @@ def validate_comparison(profile: object, body: str) -> dict:
                 f"{name}: non-known assessment requires empty values and null basis"
             )
         if entry["assessment"] == "absent" and not any(
-            r.startswith("ABS-") for r in records
+            r.startswith("ABS-") or (memory_report and r.startswith("MEM-ABS-"))
+            for r in records
         ):
             raise ValueError(f"{name}: absence requires an evidenced-absence record")
         if name in {"trace_learning", "faithfulness_tested"} and len(values) > 1:

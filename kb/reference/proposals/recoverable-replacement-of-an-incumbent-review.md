@@ -6,13 +6,19 @@ tags: [architecture, lifecycle-management]
 
 # Recoverable replacement of an incumbent review
 
+The legacy writer discussed below has been retired. Its links name the frozen
+historical implementation. The current [main analysis](../../instructions/analyse-agentic-system/SKILL.md)
+uses a memory specialist report and validates a candidate before replacement;
+it does not invoke the archived-first writer. The remaining design questions
+below require reassessment against that current workflow.
+
 A workflow that replaces an artifact in place has to decide when the incumbent stops being the live one, and what happens if the replacement never arrives. `write-agent-memory-system-review` now refuses to start when it can see in advance that drafting is impossible. It still has no answer for the failures it cannot see in advance: a worker that launches and then fails, and a draft that quality assurance rejects. In both cases the incumbent has already been archived, and nothing restores it.
 
 This proposal parks the remaining question: what restore obligation a replacement workflow owes the artifact it is replacing. It does not select an option.
 
 ## Current state (as of 2026-08-29)
 
-- [`write-agent-memory-system-review`](../../instructions/write-agent-memory-system-review/SKILL.md) is a fourteen-step procedure. Steps 1–6 are read-only setup.
+- [`write-agent-memory-system-review`](https://github.com/zby/commonplace/blob/70c0ff32c7d1c6be3eda4846d23bb22e843cd261/kb/instructions/write-agent-memory-system-review/SKILL.md) is a fourteen-step procedure. Steps 1–6 are read-only setup.
 - **Adopted 2026-08-29:** step 7 now confirms that drafting is possible before anything mutates. If the harness cannot launch a worker and no local fallback is authorized, the run stops with the incumbent untouched at `note_path`. This was option 1 of this proposal's original option space; it shipped, so it is recorded here rather than proposed below.
 - Step 8 archives the incumbent, and the rename is not the whole edit: it also clears `tags` (including `trace-learning`), inserts a banner pointing at the not-yet-written replacement, and removes `user-verified` if present.
 - Step 9 delegates drafting. Steps 12 and 13 run taxonomy and semantic quality assurance, either of which can reject the draft. All three sit after the archive.

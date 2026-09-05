@@ -987,6 +987,26 @@ def _agentic_comparison_rule(
         results.passes.append("memory comparison: assessments and canonical references resolve")
 
 
+@type_rule("kb/reports/types/agent-memory-analysis-report.md")
+def _memory_report_comparison_rule(
+    results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
+) -> None:
+    from commonplace.lib.systems_matrix import validate_comparison
+
+    metadata = parsed.document.frontmatter or {}
+    try:
+        validate_comparison(
+            metadata.get("memory-comparison"), parsed.document.body,
+            memory_report=True,
+        )
+    except ValueError as exc:
+        results.fails.append(f"memory comparison: {exc}")
+    else:
+        results.passes.append(
+            "memory comparison: assessments and shared or proposed references resolve"
+        )
+
+
 @type_rule("kb/types/type-spec.md")
 def validate_type_spec_definition(
     results: CheckResults,

@@ -186,10 +186,12 @@ Every negative, thin, conflicting, or uncertain finding names its inspected boun
 - the intended run-state path;
 - the generated whole-system review path, or `not applicable` for a blocked or
   out-of-scope result; and
-- the legacy memory-review path when one was required, otherwise
-  `not applicable`.
+- `**Memory analysis report:**` with its local run path, and
+  `**Memory analysis report SHA-256:**` with its exact byte digest (both
+  `not applicable` when no report was produced for an incomplete result).
 
-These fields make the relationship between the exact result and its public
+The local report is operational provenance; the retained result must remain
+self-contained after local run cleanup. These fields make the relationship between the exact result and its public
 projections legible without reproducing workflow bookkeeping. They name
 intended destinations; only the run state declares that publication completed.
 
@@ -246,13 +248,13 @@ Each check ID is unique inside the run. An executed check reuses it in the probe
 
 ### Lens outputs
 
-`## Lens outputs` contains `### Memory/context lens` and `### Epistemic lens`. Each output says what it inventoried, what it found, and which conclusions its evidence prevents. The memory/context output includes the legacy agent-memory-review detection and invocation disposition. The epistemic output preserves the invoked procedure's distinct architectural-status and observed-candidate-state fields, route-level warrant, and separate epistemic, operational, and behavioral authorities.
+`## Lens outputs` contains `### Memory/context lens` and `### Epistemic lens`. Each output says what it inventoried, what it found, and which conclusions its evidence prevents. The memory/context output integrates the specialist report with canonical IDs and retains the evidence necessary to understand its findings without opening that local report. The epistemic output preserves the invoked procedure's distinct architectural-status and observed-candidate-state fields, route-level warrant, and separate epistemic, operational, and behavioral authorities.
 
 The lens sections annotate canonical IDs. They do not reproduce the shared inventory under lens-local IDs.
 
 ### Reconciliation
 
-`## Reconciliation` records merged proposals, amendments, anchored conflicts, independent convergence, cross-lens ownership checks, and any legacy review projection check. It names affected IDs and states how each discrepancy was disposed without selecting the strongest-sounding status.
+`## Reconciliation` records merged proposals, amendments, anchored conflicts, independent convergence, cross-lens ownership checks, and specialist proposal-ID mappings and integration-issue dispositions. It names affected IDs and states how each discrepancy was disposed without selecting the strongest-sounding status.
 
 ### Bounded synthesis
 
@@ -297,7 +299,8 @@ evidence-tier: code-grounded
 
 **Generated review:** {`kb/agentic-systems/reviews/<system-slug>.md` | not applicable}
 
-**Legacy memory review:** {path | not applicable}
+**Memory analysis report:** {path | not applicable}
+**Memory analysis report SHA-256:** {sha256 | not applicable}
 
 {Canonical identity and locations.}
 
@@ -353,7 +356,7 @@ evidence-tier: code-grounded
 
 ### Memory/context lens
 
-{Canonical annotations and legacy-review disposition.}
+{Integrated specialist findings and canonical annotations.}
 
 ### Epistemic lens
 

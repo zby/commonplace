@@ -6,9 +6,15 @@ tags: [architecture, context-engineering]
 
 # Checked inline blocks for shared instruction text
 
+The legacy writer discussed below has been retired. Its links name the frozen
+historical implementation. The current [main analysis](../../instructions/analyse-agentic-system/SKILL.md)
+uses a memory specialist report and validates a candidate before replacement;
+it does not invoke the archived-first writer. The remaining design questions
+below require reassessment against that current workflow.
+
 Extracting a function in code separates one implementation from its call sites. Natural-language instructions have no equally reliable call operation: a link does not make the reader follow it, asking an agent to load another skill spends context and introduces another interpretation step, and invoking a whole workflow composes far more behavior than a caller may need. Yet copying the needed prose into every consuming prompt creates independent versions of behavior that should remain identical.
 
-Commonplace has a concrete instance. [`cp-skill-write`](../../instructions/cp-skill-write/SKILL.md) carries universal artifact-authoring mechanics, while [`write-agent-memory-system-review`](../../instructions/write-agent-memory-system-review/SKILL.md) constructs a self-contained brief for a delegated writer. The specialized workflow needs some of the generic mechanics, but not the generic workflow around them. This proposal parks the design question exposed by that seam: whether a small natural-language instruction block should behave like an expanded function body—literal at each point of use, authoritative in one place, and mechanically prevented from drifting.
+Commonplace has a concrete instance. [`cp-skill-write`](../../instructions/cp-skill-write/SKILL.md) carries universal artifact-authoring mechanics, while [`write-agent-memory-system-review`](https://github.com/zby/commonplace/blob/70c0ff32c7d1c6be3eda4846d23bb22e843cd261/kb/instructions/write-agent-memory-system-review/SKILL.md) constructs a self-contained brief for a delegated writer. The specialized workflow needs some of the generic mechanics, but not the generic workflow around them. This proposal parks the design question exposed by that seam: whether a small natural-language instruction block should behave like an expanded function body—literal at each point of use, authoritative in one place, and mechanically prevented from drifting.
 
 ## Current state (as of 2026-07-28)
 

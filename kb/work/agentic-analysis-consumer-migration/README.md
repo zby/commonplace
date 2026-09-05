@@ -81,7 +81,11 @@ inventory. Its order is not a prescribed implementation sequence. Before the
 first migration, inspect an available completed run and choose one consumer
 whose requirements can be tested against it. Matrix readers depend on the new
 matrix input contract; public syntheses depend on durable evidence; retirement
-of mandatory legacy publication depends on the active consumers being resolved.
+of mandatory legacy publication is now explicitly authorized without waiting
+for historical publication migrations. The operator authorized a fresh memory
+specialist and typed report on 2026-09-05, then required removal of legacy paths
+without compatibility. That report is an internal handoff integrated into the
+main result, not another independently published memory review.
 
 For each selected consumer, record its owned files, input requirements, chosen
 main-review inputs, unresolved prerequisite, and acceptance evidence alongside

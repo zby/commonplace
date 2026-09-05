@@ -9,6 +9,10 @@ The quality goal is **fidelity + economy**: faithful to what the system actually
 Memory and knowledge are lenses of the whole-system analysis. The separate
 `kb/agent-memory-systems/` collection is the legacy review corpus; new comparison
 procedures consume the main analysis and its memory/context findings directly.
+The `analyse-agent-memory` sub-agent returns a typed specialist report within
+the parent run. The parent resolves its findings into the main result; the
+specialist report does not supply comparison inputs or independent semantic
+clearance.
 
 ## Structure
 

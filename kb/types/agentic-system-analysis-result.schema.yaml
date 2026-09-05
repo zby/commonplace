@@ -178,8 +178,10 @@ allOf:
             pattern: '(?ms)^## Run identity\s*$.*?^\*\*Run state:\*\*[ \t]+\S[^\r\n]*$.*?(?=^## Boundary and evidence\s*$)'
           - description: "Run identity must identify the generated review disposition."
             pattern: '(?ms)^## Run identity\s*$.*?^\*\*Generated review:\*\*[ \t]+\S[^\r\n]*$.*?(?=^## Boundary and evidence\s*$)'
-          - description: "Run identity must identify the legacy memory-review disposition."
-            pattern: '(?ms)^## Run identity\s*$.*?^\*\*Legacy memory review:\*\*[ \t]+\S[^\r\n]*$.*?(?=^## Boundary and evidence\s*$)'
+          - description: "Run identity identifies the specialist report or its non-complete disposition."
+            pattern: '(?ms)^## Run identity\s*$.*?^\*\*Memory analysis report:\*\*[ \t]+\S[^\r\n]*$.*?(?=^## Boundary and evidence\s*$)'
+          - description: "Run identity binds the exact specialist report bytes or states not applicable."
+            pattern: '(?ms)^## Run identity\s*$.*?^\*\*Memory analysis report SHA-256:\*\*[ \t]+\S[^\r\n]*$.*?(?=^## Boundary and evidence\s*$)'
           - description: "Shared-record subheadings must appear under Shared records in canonical order."
             pattern: '(?ms)^## Shared records\s*$.*?^### Components\s*$.*?^### Operative objects\s*$.*?^### Routes\s*$.*?^### Claims\s*$.*?^### Evidenced absences\s*$.*?^### Behavioral-authority paths\s*$.*?(?=^## Runtime account\s*$)'
           - description: "Lens-scoping subheadings must appear under Lens scoping in canonical order."

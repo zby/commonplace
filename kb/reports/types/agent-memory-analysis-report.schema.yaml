@@ -1,0 +1,212 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "allOf": [
+    {
+      "$ref": "../../types/note.schema.yaml"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "frontmatter": {
+          "type": "object",
+          "required": [
+            "type",
+            "description",
+            "analysis-run",
+            "source-identity",
+            "reviewed-boundary",
+            "report-status",
+            "canonical-register-sha256",
+            "worker-model",
+            "method-sha256",
+            "memory-comparison"
+          ],
+          "properties": {
+            "type": {
+              "const": "kb/reports/types/agent-memory-analysis-report.md"
+            },
+            "description": {
+              "type": "string",
+              "minLength": 1
+            },
+            "analysis-run": {
+              "type": "string",
+              "pattern": "^AAS-\\d{4}-\\d{2}-\\d{2}-[a-z0-9]+(?:-[a-z0-9]+)*-\\d{2}$"
+            },
+            "source-identity": {
+              "type": "string",
+              "minLength": 1
+            },
+            "reviewed-boundary": {
+              "type": "string",
+              "minLength": 1
+            },
+            "report-status": {
+              "enum": [
+                "complete",
+                "blocked"
+              ]
+            },
+            "canonical-register-sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "worker-model": {
+              "type": "string",
+              "minLength": 1
+            },
+            "method-sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "memory-comparison": {
+              "type": "object",
+              "required": [
+                "scope",
+                "axes"
+              ],
+              "properties": {
+                "scope": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "axes": {
+                  "type": "object",
+                  "required": [
+                    "storage_substrate",
+                    "representational_form",
+                    "lineage",
+                    "behavioral_authority",
+                    "write_agency",
+                    "curation_operations",
+                    "read_back_direction",
+                    "read_back_signal",
+                    "trace_learning",
+                    "trace_source",
+                    "learning_scope",
+                    "learning_timing",
+                    "distilled_form",
+                    "faithfulness_tested"
+                  ],
+                  "minProperties": 14,
+                  "maxProperties": 14,
+                  "additionalProperties": {
+                    "type": "object",
+                    "required": [
+                      "assessment",
+                      "basis",
+                      "values",
+                      "records",
+                      "note"
+                    ],
+                    "properties": {
+                      "assessment": {
+                        "enum": [
+                          "known",
+                          "absent",
+                          "inapplicable",
+                          "uninspected",
+                          "not-determinable"
+                        ]
+                      },
+                      "basis": {
+                        "enum": [
+                          "claimed",
+                          "afforded",
+                          "wired",
+                          "observed",
+                          "causally supported",
+                          null
+                        ]
+                      },
+                      "values": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "records": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "note": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        },
+        "headings": {
+          "type": "array",
+          "allOf": [
+            {
+              "contains": {
+                "const": "## Boundary and evidence"
+              },
+              "minContains": 1,
+              "maxContains": 1
+            },
+            {
+              "contains": {
+                "const": "## Core ideas"
+              },
+              "minContains": 1,
+              "maxContains": 1
+            },
+            {
+              "contains": {
+                "const": "## Shared records"
+              },
+              "minContains": 1,
+              "maxContains": 1
+            },
+            {
+              "contains": {
+                "const": "## Write side"
+              },
+              "minContains": 1,
+              "maxContains": 1
+            },
+            {
+              "contains": {
+                "const": "## Read-back"
+              },
+              "minContains": 1,
+              "maxContains": 1
+            },
+            {
+              "contains": {
+                "const": "## Comparison rationale"
+              },
+              "minContains": 1,
+              "maxContains": 1
+            },
+            {
+              "contains": {
+                "const": "## Integration issues"
+              },
+              "minContains": 1,
+              "maxContains": 1
+            },
+            {
+              "contains": {
+                "const": "## Limitations and checks"
+              },
+              "minContains": 1,
+              "maxContains": 1
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

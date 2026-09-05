@@ -12,7 +12,12 @@ We track these systems to make a shared design space inspectable. Commonplace su
 
 ## How we review
 
-Every review classifies a system's retained behavior-shaping artifacts in **one
+Current analysis uses [`analyse-agentic-system`](../instructions/analyse-agentic-system/SKILL.md),
+which delegates memory findings to [`analyse-agent-memory`](../instructions/analyse-agent-memory/SKILL.md)
+and integrates its typed report into the main result. New runs publish under
+`kb/agentic-systems/`; the reviews in this collection remain historical records.
+
+The historical reviews classify a system's retained behavior-shaping artifacts in **one
 shared vocabulary**, so independent systems can be set side by side on the same
 terms. The vocabulary, and the activation distinction the reviews turn on, come
 from these theory notes:
@@ -28,8 +33,8 @@ from these theory notes:
 - [Rule-based context selection needs a pre-existing signal](../notes/rule-based-context-selection-needs-a-pre-existing-signal.md) — why a targeted push needs an identifier already on the table or a content inference; grounds the read-back **signal** (coarse vs identifier vs inferred).
 - [agent memory is a crosscutting concern, not a separable niche](../notes/agent-memory-is-a-crosscutting-concern-not-a-separable-niche.md) — why these axes span storage, retrieval, and learning at once rather than being one "memory" box.
 
-The [review type spec](./types/agent-memory-system-review.md) is the operational
-contract that turns these notes into the fixed review sections and the
+The [review type spec](./types/agent-memory-system-review.md) records the
+contract that turned these notes into the fixed review sections and the
 backticked lead tokens used by the historical [matrix](./systems.csv).
 
 The review states the external mechanism first, then explains why a Commonplace
@@ -38,7 +43,10 @@ differences are selective [transfer scans](../instructions/scan-agentic-system-t
 kept as living operational state until disposition; they do not feed the matrix
 or public analysis.
 ## Coverage
-**Two coverage tiers.** Systems with inspectable implementations get the deep path: clone the repo, read the code, write a review note here. Systems known only from a README, paper, spec, or non-implementation repo get the lightweight path: snapshot the source into `kb/sources/`, run `/ingest`, and optionally add a standard note under `lightweight/` when the system needs a stable place in this collection.
+**Two historical coverage tiers.** `reviews/` holds implementation-grounded
+reviews; `lightweight/` holds coverage grounded in papers, READMEs, or other
+documents. Current main analyses preserve the same distinction through their
+`evidence-tier` field, without adding reviews to either directory here.
 
 Browse the roster:
 

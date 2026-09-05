@@ -45,7 +45,9 @@ evidence-tier: {evidence_tier}
 
 **Generated review:** `kb/agentic-systems/reviews/example-system.md`
 
-**Legacy memory review:** not applicable
+**Memory analysis report:** `kb/reports/state/agentic-system-analysis/AAS-2026-08-30-example-system-01/memory-report.md`
+
+**Memory analysis report SHA-256:** `{'a' * 64}`
 
 ## Boundary and evidence
 
@@ -191,13 +193,15 @@ def test_result_requires_the_canonical_section_order(tmp_path: Path) -> None:
     [
         "**Run state:** `kb/reports/state/agentic-system-analysis/AAS-2026-08-30-example-system-01/run-state.md`\n\n",
         "**Generated review:** `kb/agentic-systems/reviews/example-system.md`\n\n",
-        "**Legacy memory review:** not applicable\n\n",
+        "**Memory analysis report:** `kb/reports/state/agentic-system-analysis/AAS-2026-08-30-example-system-01/memory-report.md`\n\n",
+        f"**Memory analysis report SHA-256:** `{'a' * 64}`\n\n",
     ],
 )
 def test_result_requires_each_run_identity_field(tmp_path: Path, line: str) -> None:
     results = validate_external_result(tmp_path, result_text().replace(line, ""))
 
-    assert any("Run identity must" in failure for failure in results.fails)
+    assert len(results.fails) == 1
+    assert "Run identity" in results.fails[0]
 
 
 def test_run_identity_field_value_must_be_on_its_labelled_line(tmp_path: Path) -> None:
@@ -225,17 +229,3 @@ def test_required_subheadings_must_be_nested_under_their_section(
     results = validate_external_result(tmp_path, content)
 
     assert any("Shared-record subheadings" in failure for failure in results.fails)
-
-
-def test_run_identity_projects_outputs_without_workflow_bookkeeping() -> None:
-    contract = (
-        REPO_ROOT / "kb" / "types" / "agentic-system-analysis-result.md"
-    ).read_text(encoding="utf-8")
-    run_identity = contract[
-        contract.index("### Run identity") : contract.index("### Boundary and evidence")
-    ]
-
-    assert "run-state path" in run_identity
-    assert "generated whole-system review path" in run_identity
-    assert "legacy memory-review path" in run_identity
-    assert "without reproducing workflow bookkeeping" in run_identity

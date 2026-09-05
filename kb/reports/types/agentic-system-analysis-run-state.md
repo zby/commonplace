@@ -18,8 +18,7 @@ This record proves only what later consumers need:
 - which run produced the outputs;
 - which frozen source boundary it used;
 - which exact result and published review bytes completed the run; and
-- which model partition passed the legacy review's semantic gates, when that
-  projection was required.
+- which typed memory specialist report the exact result integrated.
 
 It is not a recovery log. A run is `running`, `complete`, or `failed`. Do not
 resume a failed run or preserve phase, packet, correction, validation-receipt,
@@ -36,9 +35,12 @@ derived from the run ID and the existing `result.sha256`; no duplicate output
 mapping is needed. Completion verification checks this copy and the public
 review's `analysis-result` path and `analysis-result-sha256`. Durable comparison
 readers follow those public fields without requiring ignored run state or a
-local source checkout. Set `memory-review-required: true` only when the target is
-itself a memory, knowledge, or context-engineering system; that requires one
-published legacy review and its `legacy-review-model-partition`.
+local source checkout. Every substantive complete analysis requires the typed
+`memory-report.md` and frozen `memory-input.md` in its run directory. The exact
+result names the report and its SHA-256 in Run identity. Completion checks the
+report's run, source, reviewed boundary, complete status, and input hash, and
+validates its type and source anchors. These checks establish identity and
+structure; they do not certify the specialist's semantic judgments.
 
 `source` is either a Git commit or an immutable capture. A Git source records
 the stable repository identity, full commit ID, and absolute checkout path. A
@@ -49,7 +51,7 @@ state exists.
 Each output mapping contains a normalized repository-relative `kb/` path and
 the SHA-256 of its current bytes. Validate candidate bytes as their intended
 destination before publication. The run-state validator rechecks byte,
-workflow, and legacy semantic-baseline identity; it does not retain a
+workflow, and specialist handoff identity; it does not retain a
 validation receipt.
 
 A publication candidate is validated before it replaces a same-source review.
@@ -72,9 +74,6 @@ result-disposition: null
 source: null
 result: null
 generated-review: null
-memory-review-required: null
-legacy-review: null
-legacy-review-model-partition: null
 failure: null
 ---
 

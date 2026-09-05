@@ -201,7 +201,7 @@ rg "^tags:.*learning-theory" kb/notes/ kb/reference/ kb/instructions/ --glob "*.
 
 ### Skills
 
-The `cp-skill-*` family (`cp-skill-write`, `cp-skill-validate`, `cp-skill-connect`, etc.) is installed into `.claude/skills/` and `.agents/skills/` by `commonplace-init`; the harness loads them automatically. Repo-local skills (`operator-brief`, `roughdraft-review`, `write-agent-memory-system-review`) are symlinked the same way but are not promoted framework skills.
+The `cp-skill-*` family (`cp-skill-write`, `cp-skill-validate`, `cp-skill-connect`, etc.) is installed into `.claude/skills/` and `.agents/skills/` by `commonplace-init`; the harness loads them automatically. Repo-local skills (`operator-brief`, `roughdraft-review`, `analyse-agent-memory`) are symlinked the same way but are not promoted framework skills.
 
 ### Commands
 

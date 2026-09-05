@@ -16,18 +16,9 @@ from commonplace.lib import validation
 from commonplace.lib.agentic_analysis import (
     AgenticAnalysisRunState,
     parse_agentic_analysis_run_state,
-    verify_agentic_analysis_run_state,
 )
 from commonplace.lib.note_parser import ParsedDocument, parse_document
 from commonplace.lib.systems_matrix import retained_result_path, validate_comparison
-from commonplace.review.batch import PreparedBatch, prepare_grouped_review_job
-from commonplace.review.paths import criterion_path_for_id, review_gates_dir
-from commonplace.review.resolve_criteria import (
-    applicable_criterion_ids_for_frontmatter,
-    resolve_to_criterion_ids,
-)
-from commonplace.review.review_db import prepare_review_db
-from commonplace.review.review_model import normalize_model_partition
 
 
 @dataclass(frozen=True)
@@ -36,36 +27,27 @@ class PublicationSpec:
     run_state_path: Path
     generated_candidate_path: Path
     generated_destination: str
-    legacy_candidate_path: Path | None = None
-    legacy_destination: str | None = None
-    legacy_model_partition: str | None = None
 
 
 @dataclass(frozen=True)
 class PreparedPublication:
-    review_batch: PreparedBatch | None
+    prepared: bool = True
 
 
 @dataclass(frozen=True)
 class PublishedPublication:
     generated_path: str
     retained_path: str
-    legacy_path: str | None
     cleanup_warnings: tuple[str, ...]
 
 
 @dataclass(frozen=True)
 class _CheckedBundle:
     spec: PublicationSpec
-    running_state: AgenticAnalysisRunState
-    final_state: AgenticAnalysisRunState
     final_state_text: str
-    generated_text: str
     generated_bytes: bytes
     result_bytes: bytes
     retained_path: Path
-    legacy_text: str | None
-    legacy_bytes: bytes | None
 
 
 class PublicationUncertainError(RuntimeError):
@@ -82,34 +64,20 @@ def _repo_path(repo_root: Path, raw: Path) -> Path:
     return resolved
 
 
-def _destination_path(repo_root: Path, raw: str, *, legacy: bool) -> Path:
+def _destination_path(repo_root: Path, raw: str) -> Path:
     pure = PurePosixPath(raw)
-    valid = (
-        not pure.is_absolute()
-        and raw == pure.as_posix()
-        and ".." not in pure.parts
-        and pure.suffix == ".md"
-        and (
-            (
-                legacy
-                and len(pure.parts) == 4
-                and pure.parts[:2] == ("kb", "agent-memory-systems")
-                and pure.parts[2] in {"reviews", "lightweight"}
-            )
-            or (
-                not legacy
-                and len(pure.parts) == 4
-                and pure.parts[:3] == ("kb", "agentic-systems", "reviews")
-            )
+    if (
+        pure.is_absolute()
+        or raw != pure.as_posix()
+        or ".." in pure.parts
+        or pure.suffix != ".md"
+        or len(pure.parts) != 4
+        or pure.parts[:3] != ("kb", "agentic-systems", "reviews")
+    ):
+        raise ValueError(
+            "publication destination must be kb/agentic-systems/reviews/<name>.md: "
+            f"{raw}"
         )
-    )
-    if not valid:
-        expected = (
-            "kb/agent-memory-systems/{reviews|lightweight}/<name>.md"
-            if legacy
-            else "kb/agentic-systems/reviews/<name>.md"
-        )
-        raise ValueError(f"publication destination must be {expected}: {raw}")
     return repo_root.joinpath(*pure.parts)
 
 
@@ -161,7 +129,9 @@ def _require_candidate_in_run(candidate: Path, state: AgenticAnalysisRunState) -
         relative = candidate.relative_to(state.run_dir)
     except ValueError as exc:
         raise ValueError(f"candidate must be inside {state.run_dir}: {candidate}") from exc
-    if not relative.parts or candidate == state.path or candidate.name == "result.md":
+    if not relative.parts or candidate == state.path or candidate.name in {
+        "result.md", "memory-input.md", "memory-report.md"
+    }:
         raise ValueError(f"candidate path is reserved: {candidate}")
 
 
@@ -170,7 +140,6 @@ def _check_incumbent(
     path: Path,
     repo_root: Path,
     source_identity: str,
-    generated: bool,
 ) -> None:
     if path.exists() and not path.is_file():
         raise ValueError(f"publication destination is not a file: {path}")
@@ -196,30 +165,10 @@ def _check_incumbent(
     _, content = _read_utf8(path, label="publication incumbent")
     document = _parse(content, label="publication incumbent")
     frontmatter = document.frontmatter or {}
-    if generated:
-        same_source = (
-            frontmatter.get("generated-by") == "analyse-agentic-system"
-            and frontmatter.get("source-identity") == source_identity
-        )
-    else:
-        accepted_types = {
-            "kb/agent-memory-systems/types/agent-memory-system-review.md",
-            "../types/agent-memory-system-review.md",
-        }
-        identity_header = document.body.split("\n## ", maxsplit=1)[0]
-        header_sources = {
-            url.rstrip(".,;")
-            for url in re.findall(r"https?://[^\s<>()`\"']+", identity_header)
-        }
-        source_matches = (
-            frontmatter["source-identity"] == source_identity
-            if "source-identity" in frontmatter
-            else source_identity in header_sources
-        )
-        same_source = (
-            frontmatter.get("type") in accepted_types
-            and source_matches
-        )
+    same_source = (
+        frontmatter.get("generated-by") == "analyse-agentic-system"
+        and frontmatter.get("source-identity") == source_identity
+    )
     if not same_source:
         raise ValueError(
             "publication destination is not a generated review of the same source: "
@@ -234,9 +183,6 @@ def _render_final_state(
     result_bytes: bytes,
     generated_bytes: bytes,
     generated_destination: str,
-    legacy_bytes: bytes | None,
-    legacy_destination: str | None,
-    legacy_model_partition: str | None,
 ) -> str:
     frontmatter = dict(document.frontmatter or {})
     result_path = state.run_dir / "result.md"
@@ -252,16 +198,6 @@ def _render_final_state(
                 "path": generated_destination,
                 "sha256": sha256(generated_bytes).hexdigest(),
             },
-            "memory-review-required": legacy_bytes is not None,
-            "legacy-review": (
-                {
-                    "path": legacy_destination,
-                    "sha256": sha256(legacy_bytes).hexdigest(),
-                }
-                if legacy_bytes is not None
-                else None
-            ),
-            "legacy-review-model-partition": legacy_model_partition,
             "failure": None,
         }
     )
@@ -279,58 +215,17 @@ def _render_final_state(
     return f"---\n{serialized}---\n{body.lstrip()}"
 
 
-def _check_bundle(spec: PublicationSpec, *, require_semantic: bool) -> _CheckedBundle:
+def _check_bundle(spec: PublicationSpec) -> _CheckedBundle:
     repo_root = spec.repo_root.resolve()
     state_path = _repo_path(repo_root, spec.run_state_path)
     generated_candidate = _repo_path(repo_root, spec.generated_candidate_path)
     generated_path = _destination_path(
-        repo_root, spec.generated_destination, legacy=False
+        repo_root, spec.generated_destination
     )
-    has_legacy = any(
-        value is not None
-        for value in (
-            spec.legacy_candidate_path,
-            spec.legacy_destination,
-            spec.legacy_model_partition,
-        )
-    )
-    if has_legacy and not all(
-        value is not None
-        for value in (
-            spec.legacy_candidate_path,
-            spec.legacy_destination,
-            spec.legacy_model_partition,
-        )
-    ):
-        raise ValueError(
-            "legacy candidate, destination, and model partition are required together"
-        )
-    legacy_candidate = (
-        _repo_path(repo_root, spec.legacy_candidate_path)
-        if spec.legacy_candidate_path is not None
-        else None
-    )
-    legacy_path = (
-        _destination_path(repo_root, spec.legacy_destination, legacy=True)
-        if spec.legacy_destination is not None
-        else None
-    )
-    model_partition = (
-        normalize_model_partition(spec.legacy_model_partition)
-        if spec.legacy_model_partition is not None
-        else None
-    )
-
     running_state, state_document = _load_running_state(
         state_path, repo_root=repo_root
     )
     _require_candidate_in_run(generated_candidate, running_state)
-    if legacy_candidate is not None:
-        _require_candidate_in_run(legacy_candidate, running_state)
-    if legacy_candidate == generated_candidate:
-        raise ValueError("generated and legacy candidates must be different files")
-    if legacy_path == generated_path:
-        raise ValueError("generated and legacy destinations must be different files")
 
     result_path = running_state.run_dir / "result.md"
     result_bytes, result_text = _read_utf8(result_path, label="exact result")
@@ -353,124 +248,46 @@ def _check_bundle(spec: PublicationSpec, *, require_semantic: bool) -> _CheckedB
     generated_bytes, generated_text = _read_utf8(
         generated_candidate, label="generated candidate"
     )
-    legacy_bytes: bytes | None = None
-    legacy_text: str | None = None
-    if legacy_candidate is not None:
-        legacy_bytes, legacy_text = _read_utf8(
-            legacy_candidate, label="legacy candidate"
-        )
-
     final_state_text = _render_final_state(
         state=running_state,
         document=state_document,
         result_bytes=result_bytes,
         generated_bytes=generated_bytes,
         generated_destination=spec.generated_destination,
-        legacy_bytes=legacy_bytes,
-        legacy_destination=spec.legacy_destination,
-        legacy_model_partition=model_partition,
-    )
-    final_document = _parse(final_state_text, label="prospective run state")
-    final_state = parse_agentic_analysis_run_state(
-        state_path, final_document, repo_root=repo_root
     )
     overrides = {generated_path: generated_text, retained_path: result_text}
-    if legacy_path is not None and legacy_text is not None:
-        overrides[legacy_path] = legacy_text
-    if require_semantic:
-        results = validation.validate_note_text_at_path(
-            final_state_text,
-            path=state_path,
-            repo_root=repo_root,
-            content_overrides=overrides,
-        )
-        diagnostics = [*results.warns, *results.fails]
-        if diagnostics:
-            raise ValueError(
-                "publication bundle verification failed: " + "; ".join(diagnostics)
-            )
-    else:
-        _, failures = verify_agentic_analysis_run_state(
-            final_state,
-            content_overrides=overrides,
-            require_legacy_semantic_baselines=False,
-        )
-        if failures:
-            raise ValueError(
-                "publication bundle verification failed: " + "; ".join(failures)
-            )
+    results = validation.validate_note_text_at_path(
+        final_state_text, path=state_path, repo_root=repo_root,
+        content_overrides=overrides,
+    )
+    diagnostics = [*results.warns, *results.fails]
+    if diagnostics:
+        raise ValueError("publication bundle verification failed: " + "; ".join(diagnostics))
 
     source_identity = running_state.source.identity
     _check_incumbent(
         path=generated_path,
         repo_root=repo_root,
         source_identity=source_identity,
-        generated=True,
     )
-    if legacy_path is not None:
-        _check_incumbent(
-            path=legacy_path,
-            repo_root=repo_root,
-            source_identity=source_identity,
-            generated=False,
-        )
-
     return _CheckedBundle(
         spec=PublicationSpec(
             repo_root=repo_root,
             run_state_path=state_path,
             generated_candidate_path=generated_candidate,
             generated_destination=spec.generated_destination,
-            legacy_candidate_path=legacy_candidate,
-            legacy_destination=spec.legacy_destination,
-            legacy_model_partition=model_partition,
         ),
-        running_state=running_state,
-        final_state=final_state,
         final_state_text=final_state_text,
-        generated_text=generated_text,
         generated_bytes=generated_bytes,
         result_bytes=result_bytes,
         retained_path=retained_path,
-        legacy_text=legacy_text,
-        legacy_bytes=legacy_bytes,
     )
 
 
 def prepare_publication(spec: PublicationSpec) -> PreparedPublication:
-    """Validate a candidate bundle and create its one semantic review job."""
-    bundle = _check_bundle(spec, require_semantic=False)
-    if bundle.legacy_text is None or bundle.spec.legacy_destination is None:
-        return PreparedPublication(review_batch=None)
-
-    document = _parse(bundle.legacy_text, label="legacy candidate")
-    gates_dir = review_gates_dir(bundle.spec.repo_root)
-    criterion_ids = applicable_criterion_ids_for_frontmatter(
-        document.frontmatter or {},
-        resolve_to_criterion_ids(["semantic"], gates_dir),
-        gates_dir,
-    )
-    pairs = [
-        (
-            bundle.spec.legacy_destination,
-            criterion_path_for_id(bundle.spec.repo_root, criterion_id),
-            "verdict",
-        )
-        for criterion_id in criterion_ids
-    ]
-    db_path = prepare_review_db(bundle.spec.repo_root)
-    review_batch = prepare_grouped_review_job(
-        repo_root=bundle.spec.repo_root,
-        db_path=db_path,
-        pairs=pairs,
-        grouping="note",
-        runner=None,
-        model_partition=bundle.spec.legacy_model_partition or "",
-        note_text_overrides={
-            bundle.spec.legacy_destination: bundle.legacy_text,
-        },
-    )
-    return PreparedPublication(review_batch=review_batch)
+    """Validate exact result, specialist handoff, and compact publication bytes."""
+    _check_bundle(spec)
+    return PreparedPublication()
 
 
 def _atomic_write(path: Path, content: bytes) -> None:
@@ -496,22 +313,15 @@ def _restore(path: Path, content: bytes | None) -> None:
 
 
 def publish_publication(spec: PublicationSpec) -> PublishedPublication:
-    """Publish an already-reviewed bundle, rolling back ordinary failures."""
-    bundle = _check_bundle(spec, require_semantic=True)
+    """Publish a verified bundle, rolling back ordinary failures."""
+    bundle = _check_bundle(spec)
     repo_root = bundle.spec.repo_root
     generated_path = repo_root / bundle.spec.generated_destination
-    legacy_path = (
-        repo_root / bundle.spec.legacy_destination
-        if bundle.spec.legacy_destination is not None
-        else None
-    )
     state_path = bundle.spec.run_state_path
     targets: list[tuple[Path, bytes]] = [
         (bundle.retained_path, bundle.result_bytes),
         (generated_path, bundle.generated_bytes),
     ]
-    if legacy_path is not None and bundle.legacy_bytes is not None:
-        targets.append((legacy_path, bundle.legacy_bytes))
     targets.append((state_path, bundle.final_state_text.encode("utf-8")))
     old_bytes = {
         path: path.read_bytes() if path.exists() else None for path, _ in targets
@@ -544,7 +354,6 @@ def publish_publication(spec: PublicationSpec) -> PublishedPublication:
     cleanup_warnings: list[str] = []
     for candidate in (
         bundle.spec.generated_candidate_path,
-        bundle.spec.legacy_candidate_path,
     ):
         if candidate is None:
             continue
@@ -555,6 +364,5 @@ def publish_publication(spec: PublicationSpec) -> PublishedPublication:
     return PublishedPublication(
         generated_path=bundle.spec.generated_destination,
         retained_path=bundle.retained_path.relative_to(repo_root).as_posix(),
-        legacy_path=bundle.spec.legacy_destination,
         cleanup_warnings=tuple(cleanup_warnings),
     )
