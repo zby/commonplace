@@ -87,7 +87,7 @@ Each kind is named by what the reader is missing. Examples are commits on
 | Defensive definition | A definition written to fend off adversarial readings has gone vacuous or invites a degenerate reading | State the working standard plainly and accept an informal term | `4d5bf80d` open-ended, with "reasonable" left informal and a comparative baseline |
 | Lost claim after restructure | Concurrent or mechanical edits removed the sentence that carried the main claim | Restore the claim first in the passage | `9f864870` TL;DR |
 | Unlabelled example or parallel | A concrete case is mapped onto an abstract mechanism without saying it is an example, or which part maps to which | Announce the example; map each part | `383244f8` tenant commitments; `41920fc4` human-written axioms as the seed parallel |
-| Unintroduced term | A word appears once, carrying a technical meaning the article never set up | Introduce it through the sentence that uses it, or through the example that explains it | `383244f8` "search for a design"; `82a6c51e` equivalent reconstruction; `bad358db` trial-specific |
+| Unintroduced term | A word appears once, carrying a technical meaning the article never set up | Introduce it through the sentence that uses it, or through the example that explains it. For a term a sibling article or linked note defines, gloss it in plain words and name it as borrowed | `383244f8` "search for a design"; `82a6c51e` equivalent reconstruction; `bad358db` trial-specific; bootstrap `cb91bd42`, `e73c3ae1`, `e60a1f6e`, `f3d68bbb` borrowed terms |
 | Unsignposted roles | Adjacent paragraphs do different jobs and nothing says which | One lead-in naming the roles; a topic sentence per paragraph | `c65e2933`, `b06e616b` Naur's thesis and its evidence; `485156d0` components |
 | Verdict without its why | A sentence states a conclusion ("leaves untouched", "depends on the rest of the evaluation") that compresses a reason the reader cannot reconstruct | Spell the reason out, one idea per sentence | `5fbf07d7` what a house refutes in Naur; `d12e15e9` pinning; `b108973f` the two limits of an intervention |
 | Compressed description | A phrase stands in for an ordinary-language description ("expose an assumption after intervening changes", "unlisted parameter variations") | Say it in the words the reader would use | `f462b3d8` |
@@ -146,7 +146,10 @@ Two consequences for the theory, both open:
   and one draft series. One article is one example.
 - Whether phase 2 can run without phase 1. The sweep worked because the
   accepted rewrites fixed the operator's taste; a sweep from the taxonomy
-  alone may produce edits the operator would not accept.
+  alone may produce edits the operator would not accept. The bootstrap run
+  (2026-09-05, below) is the first test: nineteen edits applied by a fresh
+  agent from the two examples files with no phase-1 verdicts. The answer is
+  the operator's acceptance rate on those commits, still to be recorded.
 - How this relates to the existing prose instructions:
   [edit-with-churchill-and-zinsser](../../instructions/edit-with-churchill-and-zinsser.md)
   aims at shorter and more direct prose; several fixes here made passages
@@ -185,3 +188,22 @@ definition, the mechanism paragraph, and the Naur section. Phase 2 produced
 eight candidates, all applied. Side effects: the software-house definition
 note lost its declared-scope clause (`08215a3d`), and one supplement was
 renamed.
+
+### 2026-09-05: the bootstrap article
+
+`kb/articles/bootstrapping-the-first-automated-software-house.md`, commits
+`7d5d9988` through `0609c34a` (nineteen). Run by a fresh agent on the
+operator's instruction to do as much as possible alone, so phase 2 ran without
+phase 1; the whole-article read produced five findings reported for the
+operator and not edited. Edits and findings in
+[examples-bootstrapping-the-first-automated-software-house-2026-09-05.md](./examples-bootstrapping-the-first-automated-software-house-2026-09-05.md).
+No operator verdicts yet: record accepts and reverts there when the operator
+reviews. Kinds seen: unintroduced term (eight sites, five of them terms
+borrowed from a sibling article or note), verdict without its why (seven),
+unsignposted roles (five), compressed description (five), unlabelled example
+or parallel (four), vestigial vocabulary after a partial sweep (one, the same
+shape as `bad358db`). No new row; the borrowed-term variant was added to the
+unintroduced-term row's fix column. Three times the agent's first draft
+supplied a why or a mapping the sources did not support and was cut before
+commit (examples 2, 7, 9); the skipped-candidate lesson from the training run
+held.
