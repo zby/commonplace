@@ -244,10 +244,11 @@ narrowing its scope, revising the machinery, or restoring human involvement.
 Measure change over declared windows rather than assuming each step is permanent.
 
 [Usefulness, autonomy, warrant, and power are separate
-dimensions](../notes/usefulness-autonomy-warrant-and-power-are-separate-dimensions.md).
-A self-approving evaluator can hide declining quality, so state which dimension
-changed and retain independent measures of later success, missed failures, and
-total cost.
+dimensions](../notes/usefulness-autonomy-warrant-and-power-are-separate-dimensions.md),
+and a transfer can raise one while another falls. A self-approving evaluator,
+for example, raises autonomy while hiding declining quality. So state which
+dimension changed, and retain independent measures of later success, missed
+failures, and total cost.
 
 The declared boundary also determines what the comparison can establish. A
 worker benchmark [does not test the client decisions it holds
