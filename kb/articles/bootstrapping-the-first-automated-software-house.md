@@ -91,9 +91,11 @@ still depends partly on people in three ways:
 
 - **Admission: which change takes effect.** The [review
   system](../reference/README-REVIEW-SYSTEM.md) records verdicts against pinned
-  note and criterion snapshots; a verdict does not select the retained revision.
-  One episode records [the model retrieving theory and producing edits while
-  the operator selected global fit](../notes/evidence/commonplace-revision-used-theory-guided-computational-search.md).
+  note and criterion snapshots; choosing which revision is kept is a separate
+  decision that a verdict does not make. One episode records [the model
+  retrieving theory and producing edits while the operator judged which
+  fitted the research program as a
+  whole](../notes/evidence/commonplace-revision-used-theory-guided-computational-search.md).
 - **Credit assignment: what a later consequence supports or counts against.**
   The [freshness model](../reference/review-architecture.md) tracks changed
   review inputs, treating linked files as reading context. It does not establish
