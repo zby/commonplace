@@ -227,3 +227,31 @@ done first and reported before any prose work.
 > copies of the house that resume work from identical product snapshots. Retain
 > the revised explanation and checking policy in one; restore their earlier
 > versions in the other.
+
+## 8. The embodied-in-code comparison, said in ordinary words
+
+- **Commit:** see log (`Workshop:` trailer)
+- **Kind:** Compressed description
+- **Operator's verdict:** "apply the rest" (phase-2 sweep candidate 7; the
+  agent flagged "embody different lessons" as its interpretation of
+  "equivalent current functionality" and the operator accepted)
+- **Diagnosis:** "Compare implementations with equivalent current
+  functionality" did not say what is compared with what or why equivalence
+  matters. Reordered so the patch-is-both-production-and-training point leads,
+  and the comparison is spelled out: implementations that currently behave the
+  same but embody different lessons.
+
+**Before:**
+
+> When learning is embodied in product code, compare implementations with
+> equivalent current functionality on later maintenance tasks. A patch can be
+> both production and training, and the acquired capability can remain specific
+> to one product. The comparison identifies its contribution to later work.
+
+**After:**
+
+> Learning can also be embodied in product code: a patch is then both
+> production and training. To measure what it taught, compare implementations
+> that currently behave the same but embody different lessons, on later
+> maintenance tasks. The acquired capability can remain specific to one product;
+> the comparison identifies what it contributes to later work.

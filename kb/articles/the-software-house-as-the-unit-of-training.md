@@ -149,10 +149,11 @@ versions in the other. Better check
 selection on untouched files would demonstrate an acquired capability beyond
 repairing the first failure.
 
-When learning is embodied in product code, compare implementations with
-equivalent current functionality on later maintenance tasks. A patch can be
-both production and training, and the acquired capability can remain specific
-to one product. The comparison identifies its contribution to later work.
+Learning can also be embodied in product code: a patch is then both
+production and training. To measure what it taught, compare implementations
+that currently behave the same but embody different lessons, on later
+maintenance tasks. The acquired capability can remain specific to one product;
+the comparison identifies what it contributes to later work.
 
 ## Why the fixed-model training regime can be general
 
