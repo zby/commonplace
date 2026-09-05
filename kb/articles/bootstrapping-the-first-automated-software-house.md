@@ -220,11 +220,11 @@ learning are included.
 
 People may prepare the workload and provide outcome evidence. Human diagnosis
 or policy repair within the transferred role would defeat a claim of autonomous
-operation for that continuation, while still informing the next trial.
+operation for that run, while still informing the next trial.
 
 ## How each trial is specified and evaluated
 
-The example makes explicit what every local trial needs before it runs:
+The example makes explicit what every trial needs before it runs:
 its decision class, workload, boundary, objective, horizon, current human
 contributions, missing functions, separate transfer claims, and measures of
 outcomes, costs, interventions, and reopened roles. Retain failures and reversals
