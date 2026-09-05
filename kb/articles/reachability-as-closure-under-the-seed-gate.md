@@ -11,11 +11,34 @@ source_notes:
 ---
 # Reachability as transition closure under the seed's successor relation
 
-> **Draft supplement.** This is the full treatment behind the transition-closure
-> and Gödel-machine passages in [The Automated Software House
-> Conjecture](./automated-software-houses-with-fixed-llms.md).
-> It is kept separate so the main article can state the consequence without
-> carrying the transition-system detail.
+> **Draft supplement.** Everything in this supplement may still change. It is
+> the full treatment behind the transition-closure and Gödel-machine passages
+> in [The Automated Software House
+> Conjecture](./automated-software-houses-with-fixed-llms.md). Comments and
+> counterexamples are welcome on [the repository's GitHub Discussions
+> page](https://github.com/zby/commonplace/discussions).
+
+**TL;DR.** An automated software house—a persistent computational system that
+develops and maintains software without humans in internal production roles—
+starts from a declared seed state. Its current internal state and a permitted
+external input determine possible next, or successor, states, provided that the
+state includes every history-dependent variable inside the system boundary.
+The mapping is the **successor relation**. The states reachable from the seed
+are the least set that contains the seed and is closed under this relation over
+the declared input histories. This is the seed's **transition closure**. The
+updating machinery is mutable, so the successor relation may itself change, but
+each replacement must be produced by the predecessor state's successor
+relation. This is only a claim of causal descent: it does not say that the seed
+proves, predicts, or explicitly settles each later revision, and it holds only
+relative to the declared system boundary and input process. A Gödel machine has
+the same transition-reachable structure; the contrast is not closure versus
+deduction. It differs because proof under its current formalization gates each
+rewrite, whereas the conjectured house uses a fallible update process that
+responds to production evidence. A witness for the conjecture therefore cannot
+rely on one lucky reachable state. It must declare the seed, mutable state,
+pinned components, external inputs, update protocol, product scope, resources,
+and horizon, then show that the process reaches and sustains an adequate
+human-free state with the required practical reliability.
 
 ## The observation
 
