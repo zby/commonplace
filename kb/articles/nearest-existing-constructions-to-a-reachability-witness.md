@@ -37,37 +37,12 @@ with LLMs and other learned components available by 2026-09-02 and held fixed
 during the run, while the natural-language and symbolic state around them, its
 notes and code, may change. It states four conditions that one working house
 must meet: holding and application, coherent revision, automated continuation,
-and practical reliability. The conditions do not fix whether notes, code, or
-reconstruction from records carries the theory, and they allow a human-built
-start: the house need not have acquired its starting understanding or built
-its starting machinery. This article does not argue for the conjecture. It
+and practical reliability. This article does not argue for the conjecture. It
 compares the constructions and system reports reviewed for this program against
-those conditions, so
-that a researcher with a system of
-their own can find the nearest row and read what would still be missing. Only
-the rows resting on inspected code are placements of an implementation; the rest
-are comparisons of designs as their sources describe them.
-
-The table below runs two separate vocabularies, and neither upgrades the other.
-The six criterion columns say what the reviewed record presents. **Meets stated
-scope** means the record presents the criterion as holding inside the boundary
-that record declares, and nothing more. **Partial** means the mechanism exists
-but its causal role, scope, or actor allocation does not meet the question.
-**Human-dependent** means a person occupies the role the question asks about.
-**Not demonstrated** means the record does not show the property, **not in
-scope** means the source did not set out to perform the function, **not
-applicable** means the question does not apply to that kind of system, and
-**not assessed** means no judgment was formed.
-
-The **Evidence basis** column carries the doubt. It says whether the record was
-inspected code at a pinned commit, a paper, a practitioner report, or product
-material, and whether any outcome was independently reproduced. Only
-code-inspected rows support a claim about an implementation. Rows resting on
-papers, practitioner reports, or product materials are design-space
-comparisons, and this article attributes them as such rather than treating them
-as inspected implementations or evaluated outcomes. A row that reads *meets
-stated scope* across several columns is therefore not close to a witness: the
-scopes differ, and the evidence differs. The table is not a ranking.
+those conditions, so that a researcher can find the nearest row for their own
+system and see what would still be missing. The set contains many of the needed
+mechanisms separately, but no row demonstrates them together as an automated
+software house.
 
 ## The six endpoint questions
 
@@ -128,6 +103,29 @@ records report repeated benchmark runs, but none estimates usable success for
 the full witness under a declared software-house regime, so the **Evidence
 basis** column is the nearest reading.
 
+## How to read the table
+
+The table runs two separate vocabularies, and neither upgrades the other. The
+six criterion columns say what the reviewed record presents. **Meets stated
+scope** means the record presents the criterion as holding inside the boundary
+that record declares, and nothing more. **Partial** means the mechanism exists
+but its causal role, scope, or actor allocation does not meet the question.
+**Human-dependent** means a person occupies the role the question asks about.
+**Not demonstrated** means the record does not show the property, **not in
+scope** means the source did not set out to perform the function, **not
+applicable** means the question does not apply to that kind of system, and
+**not assessed** means no judgment was formed.
+
+The **Evidence basis** column carries the doubt. It says whether the record was
+inspected code at a pinned commit, a paper, a practitioner report, or product
+material, and whether any outcome was independently reproduced. Only
+code-inspected rows support a claim about an implementation. Rows resting on
+papers, practitioner reports, or product materials are design-space
+comparisons, and this article attributes them as such rather than treating them
+as inspected implementations or evaluated outcomes. A row that reads *meets
+stated scope* across several columns is therefore not close to a witness: the
+scopes differ, and the evidence differs. The table is not a ranking.
+
 One warning governs every use of the table. **Software-house boundary** and
 **Fixed parametric state** are cross-cutting controls on a whole witness, not
 stages. **Software learning** and **Note learning** report which retained
@@ -182,47 +180,50 @@ far only with people inside. Whether a house can acquire its theory rather than
 receive it is a further question, asked by the training and bootstrap articles,
 and no row tests it either.
 
-## Reading the rows
+## Evidence behind the rows
 
-**Human-inclusive software factories.**
+The table carries each placement and decisive shortfall. The grouped notes
+below add source links, quotations, and mechanism or evidence details that do
+not fit in those cells.
+
+### User-product operation and human admission
+
 [Fluent](../sources/fluent-self-improving-software-factory-2081823472016335059.ingest.md)
-is one of two rows classified as meeting the software-house boundary within its
-stated scope. Its product documentation and its builder's practitioner report
-describe external stakeholders, product code, deployment evidence,
-natural-language expertise, a scheduler, rejection, retention, and later reuse;
-people and the system jointly shape and confirm the brief, the behaviour
-specifications, and the technical approach. Steve Yegge's practitioner-reported
-account describes rulings progressing from custom to warning to written doctrine
-to programs that refuse an action, with his own judgments producing the rulings,
-and it also reports the maintenance cost of that path in a corpus that retained
-"old rulings that were obsolete or had changed"
-([Wheelhouse](../sources/steve-yegge-fences-not-sandboxes.ingest.md), verbatim).
-
-**Production scale reports and rule accumulation.** [Warp's scheduled skill
-improver](../sources/how-warp-builds-self-improving-agents-on-claude.ingest.md)
-is practitioner-reported on the note side only: people write the feedback and a
-human review admits every skill update. OpenAI's five-month
-practitioner-reported account describes agents generating the product code,
-repository-local documents making the business domain legible, and recurring
-agents repairing stale documentation, and it assigns the generalization work
-to people. When agents struggled,
-engineers asked "what capability is missing? What constraint is unenforced?"
-and then built the tool, wrote the linter, or added the structural test
-([agent-first
+product documentation and its builder's practitioner report describe external
+stakeholders, product code, deployment evidence, natural-language expertise, a
+scheduler, rejection, retention, and later reuse. People and the system jointly
+shape and confirm the brief, the behaviour specifications, and the technical
+approach. OpenAI's five-month practitioner-reported account describes agents
+generating the product code, repository-local documents making the business
+domain legible, and recurring agents repairing stale documentation, and it
+assigns the generalization work to people. When agents struggled, engineers
+asked "what capability is missing? What constraint is unenforced?" and then
+built the tool, wrote the linter, or added the structural test ([agent-first
 product](../sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md),
 verbatim).
 
-**Self-rewriting agent lineages around frozen models.** The Darwin Gödel
-Machine paper reports an evolutionary loop over coding agents around frozen
-foundation models. A separate fixed diagnostician reads the selected parent's
-evaluation logs and supplies the next improvement suggestion. A child is
-admitted on viability rather than on score, because "Only agents that compile
-successfully and retain the ability to edit a given codebase are added to the
-DGM archive" ([Darwin Gödel
+Steve Yegge's practitioner-reported account describes rulings progressing from
+custom to warning to written doctrine to programs that refuse an action, with
+his own judgments producing the rulings. It also reports the maintenance cost
+of that path in a corpus that retained "old rulings that were obsolete or had
+changed" ([Wheelhouse](../sources/steve-yegge-fences-not-sandboxes.ingest.md),
+verbatim). [Warp's scheduled skill
+improver](../sources/how-warp-builds-self-improving-agents-on-claude.ingest.md)
+is practitioner-reported on the note side only: people write the feedback and a
+human review admits every skill update.
+
+### Self-rewriting agents and persistent substrates
+
+The Darwin Gödel Machine paper reports an evolutionary loop over coding agents
+around frozen foundation models. A separate fixed diagnostician reads the
+selected parent's evaluation logs and supplies the next improvement suggestion.
+A child is admitted on viability rather than on score, because "Only agents
+that compile successfully and retain the ability to edit a given codebase are
+added to the DGM archive" ([Darwin Gödel
 Machine](../sources/darwin-godel-machine-open-ended-evolution-self-improving-agents.ingest.md),
 verbatim).
 
-**Neighbours in that family.** The [Huxley-Gödel
+The [Huxley-Gödel
 Machine](../sources/huxley-godel-machine-human-level-coding-agent-development.ingest.md)
 paper reports that immediate benchmark score predicts descendant productivity
 poorly, a result aimed at the parent-selection layer the Darwin Gödel Machine
@@ -234,7 +235,7 @@ is executable but not explanatory. The code-inspected
 forms than either, and its semantic selection is weaker than its versioning
 machinery.
 
-**Mutable persistent substrates.** The code-inspected
+The code-inspected
 [Exo](../agentic-systems/exo.md) harness supports broad self-inspection,
 symbolic revision, restart, rollback, and preserved failure evidence, and the
 inspected design contains no automatic trigger from experience to improvement.
@@ -245,8 +246,9 @@ exploit and "preserved it as a reusable skill", which shows that persistence,
 versioning, and rollback do not by themselves supply semantic admission ([Prime
 Agent](../sources/prime-agent-a-self-improving-rlm-harness.ingest.md), verbatim).
 
-**Fixed-parametric-state learning under benchmark oracles.** The
-paper-reported [Harness Continual
+### Benchmark-scoped retained learning
+
+The paper-reported [Harness Continual
 Learning](../sources/harness-continual-learning-adaptation-beyond-model-parameters.ingest.md)
 work commits an edit only when it improves the current task, respects sampled
 historical anchors, and passes validity checks, and it reports held-out
@@ -260,8 +262,8 @@ optimisation step, leaving "no failure attribution, no skill rewriting, and no
 skill discovery" ([Memento-Skills](../sources/memento-skills-let-agents-design-agents.ingest.md),
 verbatim).
 
-**A reject-capable gate on a fixed surface.** Recuris forms component-scoped
-patch proposals from traces and decides each with a deterministic paired
+Recuris forms component-scoped patch proposals from traces and decides each
+with a deterministic paired
 held-out gate. Its four memory coordinates, gate, and benchmark partitions are
 all supplied in advance, and the work does not ask whether the agent acquires a
 rationale for why a user product is organized as it is. Its reported retirement
@@ -269,7 +271,7 @@ limit is explicit: "The memory only grows, and it can afford to."
 ([Recuris](../sources/recursive-experiential-working-memory-evolution.ingest.md),
 verbatim).
 
-**Single-form retention under a thin gate.** The code-inspected [Dynamic
+The code-inspected [Dynamic
 Cheatsheet](../agent-memory-systems/reviews/dynamic-cheatsheet.md) keeps a
 natural-language cheatsheet curated from solver traces and injected into the
 next prompt, with the curator prompt as the only gate and no software change at
@@ -280,7 +282,7 @@ foundation-model weights stay fixed, but the learned skill and QA indexes add
 new embeddings as memory changes. Neither review found a test isolating a
 retained item's causal effect on later behaviour.
 
-**Knowledge-only study.** The Knowledge-Centric Self-Improvement preprint
+The Knowledge-Centric Self-Improvement preprint
 reports a protocol that isolates external knowledge as the learned object,
 holding software and solver state fixed and letting benchmark answers supply
 the oracle, so that "The only object that changes is the curated knowledge base."
@@ -288,7 +290,9 @@ the oracle, so that "The only object that changes is the curated knowledge base.
 Self-Improvement](../sources/knowledge-centric-self-improvement-2607.19592.ingest.md),
 verbatim).
 
-**Pre-LLM.** The paper-reported
+### Fixed-model adaptation and the reference construction
+
+The paper-reported
 [Rainbow](../sources/rainbow-architecture-based-self-adaptation.ingest.md)
 architecture keeps a causally operative model of a running system and selects
 adaptation strategies from it, and its vocabulary, goals, constraints,
@@ -296,7 +300,7 @@ operators, and strategies are all designer-supplied and fixed. It locates the
 boundary precisely: a model can drive adaptation without the system learning
 the theory that governs adaptation.
 
-**Reference construction.** Commonplace, the knowledge base in which this
+Commonplace, the knowledge base in which this
 comparison is written, is included as a construction built to address holding
 and revision directly: it retains explanatory theory as notes with declared
 scope and evidence, loads them into later work, and revises them under review.
@@ -305,14 +309,12 @@ is a design target, not evidence. Its [evidence
 note](../notes/evidence/commonplace-revision-used-theory-guided-computational-search.md)
 records one revision in which retained theory guided computational search with
 the operator selecting global fit. It does not isolate the retained theory's
-causal effect or record an autonomous successor-selection episode. It is not a
-witness: no end-to-end witness run exists, the models are not pinned, and the
-operator fills the admission role.
+causal effect or record an autonomous successor-selection episode.
 
 ## What a witness would have to do
 
-No row above is a witness. A test of the conjecture needs the following five
-checks, which operationalize the main article's four conditions:
+The comparison's shortfalls define five checks that operationalize the main
+article's four conditions:
 
 1. A system with every learned component pinned maintains one user product
    over a declared horizon and a demand process, specified in advance, of
@@ -341,9 +343,8 @@ checks, which operationalize the main article's four conditions:
 This protocol does not require the understanding to persist as a theory
 stored as its own artifact; reliable reconstruction from retained records or a
 mixed carrier can satisfy it if the house passes the same causal tests over
-many changes. It also does not require the house to have acquired that
-understanding, or to have built its machinery, by computation. Those are the
-stronger questions of the [training
+many changes. Whether a house can acquire that understanding and whether it can
+build the machinery by computation are the stronger questions of the [training
 article](./the-software-house-as-the-unit-of-training.md) and the [bootstrap
 article](./bootstrapping-the-first-automated-software-house.md).
 
@@ -382,16 +383,16 @@ the routes that reconstruct understanding when needed.
 
 ## What the set shows together
 
-Read as a whole, the comparison is evidence about parts. Separate component
-mechanisms are inspected in code or reported by their sources: trace-derived
+At their stated evidence levels, the rows establish separate component
+mechanisms inspected in code or reported by their sources: trace-derived
 candidates, scheduled consolidation, retention in both forms, notes and code,
-reject-capable gates, broad self-revision, rollback that preserves
-failed-attempt evidence, and continuing product operation with human authority.
-What no reviewed source supplies is the full conjunction: project
+reject-capable gates, broad self-revision, rollback that preserves failed-attempt
+evidence, and continuing product operation with human authority. No reviewed
+source supplies the full conjunction: project
 understanding with causal use on unstated implications, coherent revision from
 delayed product consequences, user-facing operation with every learned
-component pinned, and continuation without a human in an internal role. None
-also supplies the explicit-theory test against matched raw-record or
+component pinned, and continuation without a human in an internal role. Nor
+does any source supply the explicit-theory test against matched raw-record or
 direct-search baselines. The set therefore supports claims about available
-components and missing tests. It does not show that the components compose, and
-it does not show that the conjectured endpoint is reachable.
+components and missing tests, not that the components compose or that the
+conjectured endpoint is reachable.
