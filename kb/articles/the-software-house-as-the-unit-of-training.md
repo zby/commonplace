@@ -65,7 +65,10 @@ learning mechanisms in bounded components before a complete automated house exis
 
 ## What is trained: the whole house
 
-[The deployed system, not the model alone, is the unit of
+In this article *training* names the regime — what production is arranged to
+do to the house — and *learning* names the retained change in capacity that
+results. Both have the same unit. [The deployed system, not the model alone,
+is the unit of
 learning](../notes/the-deployed-system-not-the-model-is-the-unit-of-learning.md)
 because several components jointly determine its behaviour. Retrieval selects
 the evidence a model sees, scheduling determines which calls happen and what
