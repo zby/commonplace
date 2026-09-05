@@ -430,3 +430,25 @@ done first and reported before any prose work.
 > A null intervention result is inconclusive: removing the designated theory
 > text may change nothing because the house reconstructs the same understanding
 > from other retained state.
+
+## 16. Signpost the exporter example
+
+- **Commit:** see log (`Workshop:` trailer)
+- **Kind:** Unsignposted role (transition)
+- **Operator's verdict:** "apply the rest" (phase-2 sweep candidate T1)
+- **Diagnosis:** The section titled "Why this is theory-mediated learning"
+  opened "Consider a hypothetical release exporter" with nothing saying the
+  example carries the argument.
+
+**Before:**
+
+> ## Why this is theory-mediated learning
+>
+> Consider a hypothetical release exporter. It builds a deployment manifest
+
+**After:**
+
+> ## Why this is theory-mediated learning
+>
+> The claim is easiest to show on a concrete case. Consider a hypothetical
+> release exporter. It builds a deployment manifest

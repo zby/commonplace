@@ -98,7 +98,8 @@ enforced by tests, compiled into a tool, or embodied in product code.
 
 ## Why this is theory-mediated learning
 
-Consider a hypothetical release exporter. It builds a deployment manifest
+The claim is easiest to show on a concrete case. Consider a hypothetical
+release exporter. It builds a deployment manifest
 listing service identifiers and ports for an installer. Duplicate identifiers
 make the manifest invalid. Initially, the exporter reads only configuration
 files, so Markdown edits receive syntax checks and are exempt from manifest
