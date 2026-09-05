@@ -1,5 +1,5 @@
 ---
-description: "Commonplace as a seed that still includes people and a bootstrap program that separately transfers production decisions and the machinery that produces them"
+description: "Commonplace as a human-agent seed, separate operational and learning transfers, and a worked component trial of learning which checks a Markdown edit needs"
 type: kb/articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
@@ -12,6 +12,7 @@ source_notes:
   - kb/notes/holding-the-client-fixed-exports-the-least-warrantable-decisions.md
   - kb/notes/machinery-persists-by-warrant-not-position-in-a-reflective-loop.md
   - kb/notes/residue-classes-need-different-mechanisms-so-architecture-is-mixed.md
+  - kb/notes/retained-theory-intervention-isolates-one-explicit-surface.md
   - kb/notes/usefulness-autonomy-warrant-and-power-are-separate-dimensions.md
   - kb/notes/warranted-transfer-leaves-people-the-hardest-to-warrant-decisions.md
 ---
@@ -39,20 +40,16 @@ independent outcome and cost measures.
 ## The starting point
 
 In a human-agent [software house](../notes/definitions/software-house.md),
-coding agents may write and test much of the code while people supply
-requirements from outside and still fill
-internal production roles such as noticing that several failures share one
-cause, deciding that a design assumption no longer holds, choosing among
-changes that all pass the tests, approving new evaluators, and authorizing
-changes with effects beyond the current job.
+agents may write and test much of the code while people diagnose shared causes,
+revise design assumptions, choose among passing candidates, and approve new
+evaluators. These are internal production roles: work the house depends on to
+evolve software, whoever performs it.
 
-The [conjecture article](./automated-software-houses-with-fixed-llms.md) draws
-the boundary that matters here. An *internal production role* is work the house
-depends on to produce the software, whoever performs
-it. A person in such a role is inside the house. A person who supplies
-requirements, facts, observed outcomes, or acceptance judgments about visible
-behaviour is a user and stays outside. An automated house has no person in an
-internal production role over its declared scope and horizon.
+The [conjecture article](./automated-software-houses-with-fixed-llms.md)
+distinguishes these roles from external inputs. Users may supply requirements,
+facts, observed outcomes, and acceptance judgments about visible behaviour.
+An automated house performs every internal role computationally over its
+declared scope and horizon.
 
 ## Two kinds of transfer
 
@@ -60,208 +57,234 @@ The program measures two kinds of transfer separately.
 
 | Claim | What must be shown |
 |---|---|
-| **Operational transfer** | Computation now makes the declared production decisions, including hard cases, without a person supplying them. External outcome and cost measures remain acceptable. |
-| **Learning transfer** | Production evidence causes the house's own process to produce or revise the project-specific machinery that makes those decisions, and the retained change affects later work. |
+| **Operational transfer** | Computation makes the declared production decisions, including hard cases, without human decisions. External outcomes and costs remain acceptable. |
+| **Learning transfer** | Production evidence causes the house to produce or revise the machinery that makes those decisions, and the retained change affects later work. |
 
-A hand-written validator can complete operational transfer. It makes the
-declared production decision inside the house without a person being present at
-each case. But its criterion still came from a person. It does not complete
-learning transfer until the house can produce or revise that criterion and its
-machinery from production evidence.
+A hand-written validator can complete operational transfer. Learning transfer
+requires the house to produce or revise its criterion and machinery from
+experience.
 
-A wholly human-built house can be a witness if it also applies its *program
-theory*—its capacity to relate the software to its purpose and new demands—
-revises coherently, and operates reliably without human production decisions.
-The witness conditions do not require learning transfer. The separate proposal
-to [train the house from production](./the-software-house-as-the-unit-of-training.md)
-does: its own process must produce or revise project-specific machinery from
-evidence. The bootstrap aims at both transfers.
+The conjecture permits a human-built seed, provided the house applies its
+program theory—its understanding of the software's purpose and organization—
+revises coherently, and continues reliably without human production decisions.
+The separate proposal to [train the house from
+production](./the-software-house-as-the-unit-of-training.md) asks whether its
+own process can also produce the project-specific machinery. The bootstrap
+aims at both transfers.
 
 ## Commonplace as a seed instance
 
-Commonplace combines retained project knowledge, computational proposal and
-revision, and checks implemented in code. Three control problems remain partly
-human. *Admission* decides which proposed change takes effect. *Credit
-assignment* decides which earlier state or decision a later consequence
-supports or counts against. *Authority* sets which later behaviour an admitted
-change may control.
+Commonplace combines retained project knowledge, computational revision, and
+checks implemented in code. Three control problems remain partly human:
+*admission* decides which change takes effect; *credit assignment* decides
+which earlier decision a later consequence supports or counts against; and
+*authority* sets which later behaviour an admitted change may control.
 
-- **Explicit project theory supplies revisable assumptions and rationale.**
-  Notes state claims, scope, and evidence, and link to the claims they depend
-  on. Agents can load them at
-  the point of decision. A note shown to be wrong can be revised, superseded, or
-  withdrawn, with its address redirected to its replacement.
-- **Some recurring failures have produced machinery.** For example, evidence
-  that bounded reviewers could pass material they had not read led to [a
-  validator rule that limits unquoted source use on the
-  artifact](../reference/adr/082-grounding-is-bounded-on-the-artifact-by-unquoted-sources.md).
-  Other repeated operator corrections have been retained as instructions for
-  later passes.
-- **Review supplies evaluation and provenance, not full admission or credit
-  assignment.** The [review system](../reference/README-REVIEW-SYSTEM.md)
-  records verdicts against pinned note and criterion snapshots. This shows
-  which note and criterion formed the registered baseline and when either one
-  changed. Review is opt-in, however, and a verdict does not itself decide which
-  change is kept. Its [freshness
-  model](../reference/review-architecture.md) also treats linked files as
-  reading context rather than freshness inputs. Most importantly, staleness is
-  not delayed credit assignment: it does not show that a later production
-  outcome was caused by an earlier change.
-- **Some episodes record who decided.** One revision records that [the model
-  retrieved retained theory, searched over formulations, and produced edits,
-  while the operator supplied the decisive judgments about global
+- **Revisable project theory.** Notes state claims, scope, evidence, and
+  dependencies. Agents can load them at a decision and revise, supersede, or
+  withdraw them when their claims fail.
+- **Machinery built from failures.** Evidence that bounded reviewers could pass
+  material they had not read led to [a validator rule limiting unquoted source
+  use](../reference/adr/082-grounding-is-bounded-on-the-artifact-by-unquoted-sources.md).
+  Other operator corrections persist as instructions.
+- **Evaluation records.** The [review system](../reference/README-REVIEW-SYSTEM.md)
+  records verdicts against pinned note and criterion snapshots. Review is
+  opt-in; a verdict does not decide which revision is kept. Its [freshness
+  model](../reference/review-architecture.md) tracks changes to those inputs,
+  treating linked files as reading context. It does not establish that an
+  earlier change caused a later production outcome.
+- **Decision records.** One episode records [the model retrieving retained
+  theory and producing edits while the operator selected global
   fit](../notes/evidence/commonplace-revision-used-theory-guided-computational-search.md).
-  This is the kind of decision record the bootstrap needs.
 
-People still choose objectives, judge whether a claim fits the explicit project
-theory, assign blame when a change fails, decide which review findings to
-accept, approve new gates, and authorize changes whose effects reach beyond the
-current job. Nothing here shows acquisition of program theory by computation
-alone, and there has been no witness run in the first article's sense.
-
-A memory file by itself is weaker. It can affect later behaviour, but it may admit
-entries without a settled rule, keep wrong entries without tracing later
-failures back to them, omit their scope, and leave unclear whether a person or
-the harness chose the rule. A harness can add the missing parts. The difference
-is the process that governs the file, not the file's name.
+People still choose objectives, judge fit, attribute failures, accept review
+findings, approve gates, and authorize broader changes. There has been no
+witness run or demonstrated acquisition of program theory by computation alone.
+The governing process, rather than merely the presence of memory, is what the
+bootstrap must develop.
 
 ## The bootstrap program
 
-Try a bounded decision class, or the smallest coupled bundle that cannot be
-separated. Build the functions it lacks, measure the transfer, and use the
-result to select the next trial.
-
-The house should require fewer human decisions, not fewer people.
-One operator may stop doing one internal production role while still doing
-several others.
+Try a bounded decision class, or the smallest inseparable bundle. Build the
+functions it lacks, measure the transfer, and use the result to select the next
+trial. Count internal decisions still supplied by people: one operator may
+stop performing one role while retaining several others.
 
 ## The readiness conditions
 
-A decision can be transferred to an automatic process with warrant when that
-process has the premises it needs, an acceptance rule or grant of authority
-settled enough to apply, and a check independent enough to reject a plausible
-harmful candidate. It also needs continuity when the decision or its evidence
-arrives after the current run.
+A warranted transfer requires the necessary premises, a settled acceptance
+rule or grant of authority, and a check independent enough to reject a
+plausible harmful candidate. It also requires continuity when the decision or
+its evidence arrives after the current run.
 
-If a house first transfers decisions that meet these conditions, the decisions
-left with people should disproportionately involve missing premises, unsettled
-criteria, weak checks, and delayed consequences. This is a prediction about the
-transfer policy, not a claim that every real automation approach already follows
-it. The
-[residue analysis](../notes/warranted-transfer-leaves-people-the-hardest-to-warrant-decisions.md)
-turns the remaining work into a list of missing functions:
+Transferring ready decisions first should leave people disproportionately
+handling missing premises, unsettled criteria, weak checks, and delayed
+consequences. The [residue
+analysis](../notes/warranted-transfer-leaves-people-the-hardest-to-warrant-decisions.md)
+turns this prediction about the transfer policy into a list of missing
+functions:
 
 | Why a decision stays human | What the program must build |
 |---|---|
 | A needed premise is unavailable | Representation, retrieval, or acquisition of that premise |
-| No objective, criterion, commitment, or grant of authority settles acceptance | A settled rule or represented grant of authority within declared limits |
+| Acceptance lacks a settled criterion or grant of authority | A usable rule or represented grant within declared limits |
 | No independent check can reject a wrong candidate | Verification, criticism with different failure modes, delayed exposure, or an accepted error tolerance |
 | The decision arises after the automatic process stops | Persistent state, scheduling, and later reactivation |
 | Transfer is possible but too expensive | No new capacity; wait for the cost to fall |
 
-The table says what is ready; it does not give a full schedule. Among several
-ready transfers, value, cost, risk, and dependencies decide which one to try
-next. A role whose only missing premise is already recorded may be inexpensive
-to transfer. A role with an unsettled criterion must wait for more decided cases. A
-role with no usable check must wait for a stronger check or a declared tolerance
-for error.
-
-The remaining human decisions require different
+Among ready transfers, value, cost, risk, and dependencies determine what to
+try next. The remaining decisions require different
 [functions](../notes/residue-classes-need-different-mechanisms-so-architecture-is-mixed.md):
-representation, interpretation of settled guidance, verification, and
-continuity. Commonplace currently implements these through natural-language
-notes, LLM interpretation, symbolic checks and scheduling, and retained
-evidence. The final house need not keep those forms separate. The program
-requires the functions, not a permanent split among notes, models, and code.
+representation, interpretation, verification, and continuity. Commonplace uses
+notes, models, code, and retained evidence to supply them; a final house need
+not preserve that division.
+
+## A first trial: learning which checks a Markdown edit needs
+
+This proposed pilot transfers the decision about which checks a Markdown edit
+must pass. It tests whether experience teaches the house to revise its *check
+selector*, the procedure that chooses those checks, and use the revision on
+untouched files. The product is a small fixture that exports a configuration
+manifest. Scripted product changes supply the workload; building the exporter
+is outside the transferred role. The pilot can therefore run before a complete
+automated house exists.
+
+**Evidence and authority.** Initially, the build consumes configuration files
+and no Markdown. The house receives the source, build configuration, past
+check results, and a selector that applies Markdown syntax checks while
+exempting Markdown from manifest checks. The theory treatment explains the
+exemption by the build's input list, which initially exhausts the files that
+can affect the manifest.
+
+The house may inspect the fixture, run checks, and revise its retained account,
+selector, and selector tests. Workload edits, reference checks, and scoring
+remain outside its write scope. Each decision applies a proposed edit to a
+fresh copy of the specified product version. Only the selector, its tests, and
+the retained account persist, so an accepted defect cannot contaminate later
+cases.
+
+**Workload.** Compare two twelve-decision histories:
+
+| Decisions | Workload | What it tests |
+|---|---|---|
+| 1–3, identical in both histories | Markdown edits under the original build | The initial exemption |
+| 4–6, identical in both histories | The exporter starts reading named Markdown files; valid and invalid edits follow | Applying the existing dependency explanation to new facts |
+| 7–9, histories diverge | One adds another named input; the other adds snippets included by a named input | Preserving or breaking the assumption that the input list is exhaustive |
+| 10–12 | Edits to untouched files under each history's dependencies | Transfer after the house has had a chance to revise its policy |
+
+At decision seven, a valid edit exercises the new dependency. Decision eight
+introduces an invalid manifest while preserving Markdown syntax. An unrelated
+edit intervenes before the reference result arrives after decision nine. It
+identifies the bad manifest without prescribing a selector change. The report
+records a prevented defect if the house rejected the edit, or supplies delayed
+evidence against its decision if it accepted it.
+
+The final three decisions contain an invalid edit to a different file with the
+same dependency, a valid edit to another consumed file, and a valid edit to an
+unrelated file. Randomize their order and file names across repetitions, keeping
+them identical within each comparison. Hide the schedule and expected
+classifications from the decision process, and withhold final reference
+feedback until all three are complete. Adding only the first failing filename
+to an exception list will not suffice.
+
+**Comparisons and resources.** Use the four [retained-account
+treatments](./the-software-house-as-the-unit-of-training.md#testable-hypotheses):
+theory, raw records, descriptive summary, and plausible wrong theory. An
+account that treats file extension as decisive predicts missed checks after
+Markdown enters the build. Construct each treatment from the same observation
+inventory, excluding future cases and answers, and retain later material under
+that treatment's rules.
+
+Run ten paired repetitions per history and treatment. Cap each continuation
+at 100,000 total model tokens and twenty minutes; exhaustion makes the run
+incomplete. Declare exact model versions, sampling settings, treatment texts,
+fixture versions, workload orders, and reference outputs before testing. These
+are pilot choices, not thresholds for whole-house reliability.
+
+After decision nine, branch each continuation again. Keep the product
+identical but restore the initial selector and retained account in the
+comparison branch. Freeze policy updates in both branches for the final three
+decisions. Better decisions with the retained revision test acquired checking
+capacity beyond product changes. Separate [theory
+interventions](../notes/retained-theory-intervention-isolates-one-explicit-surface.md)
+can isolate the explanation's contribution from that of the revised selector.
+
+**Admission and outcomes.** The selected checks determine whether an edit is
+accepted. The house may revise its selection policy without human approval,
+while a fixed reference process runs the full manifest check on every proposed
+edit. Record missed defects, unnecessary checks, and checking CPU time in the
+same execution environment. Report reference-evaluation cost alongside the cost
+of operating the selector. The reference result can reject an improvement claim
+even when the revised gate accepts every edit.
+
+A successful local operational transfer requires completion within the
+ceilings, no human production decisions, rejection of the invalid final edit,
+acceptance of the two valid final edits, and lower final checking cost than
+always running the full suite. Record earlier misses and recovery costs too.
+Evidence of learning requires improvement over the restored policy and account;
+theory advantage requires improvement over the other treatments.
+
+People prepare the fixture; the harness supplies demands and reference
+outcomes. Any human diagnosis, policy edit, or successor choice during a
+continuation is an intervention that defeats its operational-transfer claim.
+Report every repetition, including failures and paired differences. The pilot
+tests this bounded transfer, not reliable operation across an open-ended
+workload.
 
 ## How each trial is specified and evaluated
 
-Declare each local trial before it runs so the result cannot be used to
-rationalize its selection after the fact. The declaration records:
+The example makes explicit what every local trial needs before it runs:
+its decision class, workload, boundary, objective, horizon, current human
+contributions, missing functions, separate transfer claims, and measures of
+outcomes, costs, interventions, and reopened roles. Retain failures and reversals
+as well as successes so they can inform the next transfer.
 
-- the decision class or coupled bundle;
-- the declared workload, boundary, objective, and horizon;
-- which decisions people currently supply;
-- which premise, rule, check, or continuity mechanism is thought to be missing;
-- the separate operational-transfer and learning-transfer claims;
-- measures of external outcomes, costs, human interventions, and reopened roles.
+Record who made each decision, for which demand, and when. A person who fixes
+three hard failures each month still holds the diagnosis role. Such
+interventions are allowed and recorded during bootstrapping; after a witness
+run begins, an internal human decision ends that run and breaks its autonomous
+training lineage.
 
-Keep the result whether the transfer succeeds, fails, reverses, or later
-reopens. The discovered order must include unsuccessful cases.
+Transfers can reopen when a new demand exceeds a rule's scope or creates a new
+human review role. Return that role to the human set until the missing function
+is built. Measure change over declared windows rather than assuming each step
+is permanent.
 
-An operational transfer may precede evidence of learning: a narrow hand-written
-rule can automate a routine decision before retained theory has shown a causal
-effect. The record must keep the two claims separate.
-
-Admission can also be automated in parts: a deterministic formatter or a
-well-tested dependency update may already be admitted automatically. The
-training endpoint requires project-specific successors to take effect without
-a person choosing them, including revisions to update machinery when evidence
-exposes its failure. In a gated architecture this includes admission machinery;
-the requirement does not fix when its transfer occurs.
-
-Operational transfer can look complete while a person still handles the cases
-that matter. A person who fixes the three hard failures each month still holds
-the diagnosis role. The record must show who made the decisions in each class,
-for which demands, and when. During the bootstrap, a human intervention is
-allowed but must be recorded. After the declared start of a witness run, any
-internal diagnosis, successor selection, or state edit by a person ends that
-witness run and breaks the human-free training lineage.
-
-Transfers may also reopen. A new demand can show that a rule covered only the
-old workload, or that moving one role created another human review role. A
-reopened role returns to the human set until the missing function is built. The
-program measures the decrease in that set over declared windows; it does not
-assume every step is permanent.
-
-A process can operate without people while a self-approving evaluator hides
-declining quality.
 [Usefulness, autonomy, warrant, and power are separate
 dimensions](../notes/usefulness-autonomy-warrant-and-power-are-separate-dimensions.md).
-Each transfer claim must say which dimension changed. The program therefore keeps an
-independent outcome measure: user-visible success on later demands, failures
-the role missed, and total cost.
+A self-approving evaluator can hide declining quality, so state which dimension
+changed and retain independent measures of later success, missed failures, and
+total cost.
 
-The wrong benchmark can omit the remaining internal production roles. A test
-that compares an agent with a remote programmer while holding the same brief,
-tools, feedback, and client fixed measures the worker role under that division
-of labour. It [does not test the client decisions it holds
+The declared boundary also determines what the comparison can establish. A
+worker benchmark [does not test the client decisions it holds
 fixed](../notes/holding-the-client-fixed-exports-the-least-warrantable-decisions.md).
-Which of those decisions must transfer depends on the software-house boundary.
-A user may request tenant isolation, supply domain facts, or reject visible
-behaviour. If the client instead chooses the internal design, diagnoses an
-implementation failure, or selects which internal revision takes effect, the
-client supplies an internal production decision. The bootstrap must record and
-transfer those decisions; ordinary user requirements and feedback remain
-permitted external inputs.
+Requirements and judgments about visible behaviour remain external inputs;
+client-supplied design, diagnosis, or successor selection remains internal
+production work that the bootstrap must record and transfer.
 
 ## What the house's training must produce
 
-Later transfers must increasingly depend on machinery that the house produces
-and retains from production evidence. The seed is outgrown
-when [learning displaces repeated human construction of the task-specific
-knowledge it supplied](../notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md)
-over the claimed scope. New explicit project theories, checks, decompositions,
-and evaluators then come from the house's own process rather than another round
-of human design.
+Later transfers must increasingly depend on machinery produced from experience.
+The seed is outgrown when [learning displaces repeated human construction of
+project-specific knowledge](../notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md)
+over the claimed scope. The house then produces its own theories, checks,
+decompositions, and evaluators.
 
-This does not require every component to change. General machinery such as the
-version-control system, test runner, or model client may [stay fixed when its
-scope is warranted](../notes/machinery-persists-by-warrant-not-position-in-a-reflective-loop.md).
-It becomes a revision target only when the declared scope needs a change it
-cannot supply. The house must produce the project-specific specializations it
-needs; it need not change every inherited tool.
+General tools such as version control, a test runner, or a model client may
+[stay fixed while their scope remains
+warranted](../notes/machinery-persists-by-warrant-not-position-in-a-reflective-loop.md).
+They become revision targets when new demands exceed what they can supply.
 
-In the current explicit-artifact approach, machinery is usually produced
-through a [proposal-selection
-loop](../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md):
-produce candidates, evaluate them with a real chance of rejection, and make an
-accepted change take effect. Early in the bootstrap a person may supply the
-final rejection. Later, the house automates more of that acceptance. Other
-update forms are also allowed. Reward-, error-, viability-, or gradient-driven
-updates may change the house without a separate candidate-admission event. The
-bootstrap program requires an evidence-caused change that takes effect, not one
-permanent update architecture.
+In the current approach, a [proposal-selection
+loop](../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md)
+produces candidates, evaluates them with a real chance of rejection, and makes
+an accepted change take effect. Admission itself can transfer in parts, from
+formatting and routine updates to revisions of the admission machinery. The
+endpoint requires these decisions to be computational without fixing their
+transfer order. Other update architectures are possible: reward, error,
+viability, or gradients can drive changes without a separate admission event.
+The requirement is an evidence-caused change that takes effect.
 
 ## Stop or redirect conditions
 

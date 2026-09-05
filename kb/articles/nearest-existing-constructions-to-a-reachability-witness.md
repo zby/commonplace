@@ -39,332 +39,220 @@ application, coherent revision, automated continuation, and practical
 reliability. It identifies available mechanisms and missing evidence; no row
 demonstrates the conditions together.
 
-## The six endpoint questions
-
-The comparison runs on six questions, which are narrower and more directly
-checkable than the conditions:
-
-1. **Software-house boundary.** Does the construction include the complete
-   persistent system responsible for changing software for external users across
-   demands that are not a fixed benchmark list?
-2. **Fixed learned components.** Can the documented learning happen without
-   updating foundation models or other learned components, and are their
-   versions actually pinned? Indexes derived from mutable retained text may
-   change under a pinned embedding model and generation algorithm.
-3. **Software learning.** Does experience cause a retained executable or
-   codified change that affects later production?
-4. **Note learning.** Does experience cause a retained natural-language change
-   that is read back into later production?
-5. **Program theory.** Is project-specific understanding applied across novel
-   changes, rather than only logged or paraphrased, and is inadequate
-   understanding later revised from consequences, whether it is retained as
-   explicit project theory or reconstructed from records? Understanding supplied by
-   people at the start is allowed; what the question asks is whether it
-   governs later decisions and whether the house, not a person, revises it.
-6. **Human independence.** Is the loop sustained with no person in an internal
-   production, theory-holding, generalization, selection, or admission role?
-
-The first question uses the complete-producer boundary from the
-[software-house definition](../notes/definitions/software-house.md). A coding
-harness can remain one component of that producer. Requirements and outcomes
-may arrive through tickets, product management, or telemetry; direct end-user
-conversation is unnecessary. Whether people still perform internal roles is
-assessed separately under **Human independence**.
-
-## How the questions relate to the four conditions
-
-The conditions describe what one working house must show. The questions
-decompose properties, and one property can serve more than one condition.
-
-**Holding and application** asks whether the system realizes a program-theory
-function across novel changes. **Program theory** asks that directly. The
-witness conditions below require an implication not stated verbatim, causal
-use of the relevant retained state or consumption path, and a change in what
-the system does next under withholding or replacement.
-
-**Coherent revision** asks whether, when later evidence exposes an inadequacy,
-the house revises the product, its retained state, or its machinery to a
-successor that supports coherent later modification. It needs **Program
-theory** in its revision half plus an operative retained change in at least
-one form, **Software learning** or **Note learning**. Neither form is
-required on its own, and a step need not change both. **Automated
-continuation** is bounded by **Software-house boundary**, **Fixed learned
-components**, and **Human independence**, and it requires holding and revision to keep
-working across that boundary. **Practical reliability** has no column. Some
-sources report repeated benchmark runs, but none estimates usable success for
-the full witness under a declared software-house regime, so the **Evidence
-basis** column is the nearest reading.
-
 ## How to read the table
 
-The six criterion columns say what the reviewed source presents. **Meets stated
-scope** means the source presents the criterion as holding inside the boundary
-that source declares, and nothing more. **Partial** means the mechanism exists
-but its causal role, scope, or actor allocation does not meet the question.
-**Human-dependent** means a person occupies the role the question asks about.
-**Not demonstrated** means the source does not show the property, **not in
-scope** means the source did not set out to perform the function, **not
-applicable** means the question does not apply to that kind of system, and
-**not assessed** means no judgment was formed.
+Each column asks about one witness condition. Cells identify relevant evidence
+and its limit within the reviewed source's scope. Retained patches need not
+establish coherent product revision, and an autonomous benchmark loop need not
+meet the complete [software-house boundary](../notes/definitions/software-house.md).
 
-The **Evidence basis** column distinguishes code inspected at a pinned commit
-from paper, practitioner, and product reports, and states whether outcomes were
-independently reproduced. Reported mechanisms and results remain attributed
-claims. Several *meets stated scope* cells do not establish proximity to a
-witness, because those scopes and evidence bases differ. The table is not a
-ranking.
+**Holding and application** requires project-specific commitments to guide
+novel changes, including unstated implications. **Coherent revision** requires
+revision from later consequences that supports continued modification.
+**Automated continuation** requires both capacities across the declared product
+scope with pinned learned components and no internal human decisions.
+**Practical reliability** requires useful success across the declared horizon
+and budget, supported by repeated runs or another justified estimate.
 
-The columns describe properties, not stages toward a witness. An update's
-retained form does not establish causal theory use or an adequate successor;
-scheduling does not establish continued software-house operation. A *partial*
-cell is not partial satisfaction of a witness condition. *Human-inclusive*
-means that people fill internal roles in the construction.
+No row establishes reliability under the full witness conditions. The final
+column records narrower outcomes or gaps in their assessment. The accounts below
+separately identify code inspection, papers, and practitioner reports as
+sources. Implementation evidence establishes mechanisms; outcome evidence
+assesses performance. Reported outcomes were not independently reproduced here.
 
 ## Comparison table
 
-| Construction | Software-house boundary | Fixed learned components | Software learning | Note learning | Program theory | Human independence | Evidence basis | Decisive shortfall |
-|---|---|---|---|---|---|---|---|---|
-| Fluent | Meets stated scope | Not demonstrated; model lineage and auxiliary parametric state not pinned | Meets stated scope; human-inclusive | Meets stated scope; human-inclusive | Partial; rationale is supplied, while its causal use across novel changes and its revision by the system are not demonstrated | Human-dependent | Product documentation and practitioner report; implementation and outcomes not independently inspected | Humans confirm behaviour, technical approach, and unresolved decisions; causal use and revision of the theory are not tested |
-| Wheelhouse | Not demonstrated | Not demonstrated | Partial; human-inclusive | Partial; human-inclusive | Not demonstrated | Human-dependent | Practitioner report; implementation and outcomes not independently inspected | Human rulings and verdicts produce the doctrine; the consolidating agent's theory-holding role is only a hypothesis |
-| OpenAI agent-first product | Meets stated scope | Not demonstrated; model lineage and auxiliary parametric state not pinned | Partial; human-inclusive | Partial; human-inclusive | Partial; supplied rationale, causal use and revision not tested | Human-dependent | Practitioner report; no pinned model lineage or independent comparative evaluation | Humans made the repository legible and turned failures into tools, rules, and checks |
-| Warp skill improver | Not in scope | Not demonstrated | Not in scope | Partial; human-inclusive | Not in scope | Human-dependent | Practitioner report; linked demonstration not independently inspected | Human feedback supplies the evidence and human review admits every skill update |
-| Darwin Gödel Machine | Not in scope | Meets stated scope; the evolving agents and separate diagnostician use frozen foundation models | Meets stated scope | Partial; evaluation logs feed the next modification, but no rationale is shown to persist across generations | Not in scope | Meets stated scope; bounded benchmark loop | Paper-reported mechanism and outcomes; implementation not independently inspected | Admission judges only compile-and-edit viability; benchmark score weights parent sampling, and diagnostic rationale is not shown to persist across generations |
-| Huxley-Gödel Machine | Not in scope | Meets stated scope | Meets stated scope | Not in scope | Not in scope | Meets stated scope; bounded benchmark loop | Paper-reported mechanism and outcomes; implementation not independently inspected | It tests a lineage-level parent-selection signal under benchmark scoring; no retained project rationale or product demand stream is reported |
-| HyperAgents | Not in scope | Not demonstrated; the reviewed repo retains no learned weights, but no run with pinned learned components was inspected | Meets stated scope | Not demonstrated | Not in scope | Meets stated scope; bounded generation loop | Code-inspected mechanism at a pinned commit; no run or outcome reproduced | Replayed patches change later behaviour but carry no reason, and no test isolates a replayed patch's causal effect |
-| Autogenesis | Not in scope | Partial; the inspected mutation surface excludes parametric updates, but model lineage is not pinned | Partial | Partial | Not in scope | Partial | Code-inspected mutation paths; outcomes paper-reported and not reproduced | Benchmarks and a weak semantic gate; the public implementations are transitional or incomplete |
-| Exo harness | Not in scope | Not demonstrated; no learning process reviewed | Not demonstrated; the broad self-edit path is distinct from learning | Not demonstrated; the deliberate authoring path is distinct from learning | Not in scope | Partial; scheduling and restart paths, no automatic improvement | Code-inspected mechanism; no live instance run | It rewrites a personal-agent executor, not a user product, and build and test results do not judge program theory |
-| Prime Agent | Not demonstrated | Meets stated scope | Partial | Meets stated scope | Not in scope | Meets stated scope; bounded goals | Code-inspected mechanism; paper-reported cases and outcomes | The paper reports direct adoption of persistent refinement and a retained specification exploit; it does not test program theory |
-| Memento-Skills | Not in scope | Partial; the foundation LLM is fixed, but the router is trained | Meets stated scope | Meets stated scope | Not in scope | Meets stated scope; bounded task loop | Paper-reported mechanism and outcomes; implementation not independently inspected | Mixed-form skills learn under answer oracles, not under delayed software-maintenance consequences |
-| Recuris | Not in scope | Meets stated scope | Meets stated scope; component-scoped patches can revise invocation and checker logic | Meets stated scope | Not in scope | Meets stated scope; fixed gate and benchmark loop | Code-inspected mechanism; fixed learned components and outcomes paper-reported | Four predeclared memory coordinates and benchmark tasks; no project rationale and no product demand stream |
-| Harness Continual Learning | Not in scope | Meets stated scope | Meets stated scope; the reported update surface includes parsers, skills, and routing workflows | Meets stated scope | Not in scope | Meets stated scope; bounded task loop | Paper-reported mechanism and outcomes; implementation not independently inspected | Finite benchmark streams and a fixed four-part harness partition; held-out forgetting remains |
-| Dynamic Cheatsheet | Not in scope | Not demonstrated; the reviewed loop has no weight-update path, but no run with pinned learned components was inspected | Not in scope | Meets stated scope | Not in scope | Meets stated scope; bounded sequential benchmark run | Code-inspected mechanism at a pinned commit; outcomes not independently reproduced | A curator prompt is the only gate, correctness never gates a retained entry, and entries carry no provenance |
-| Voyager | Not in scope | Not demonstrated; indexes are derived from retained text without weight updates, but model pinning is not established | Meets stated scope | Partial; descriptions and the question cache guide retrieval and task choice | Not in scope | Meets stated scope; bounded game curriculum | Code-inspected mechanism at a pinned commit; aggregate outcomes repository-reported and not reproduced | A critic's success report admits a skill, and a same-named program overwrites the old one instead of being revised |
-| Knowledge-Centric Self-Improvement | Not in scope | Meets stated scope | Not in scope | Meets stated scope | Not in scope | Meets stated scope; bounded task loop | Paper-reported mechanism and outcomes; implementation not independently inspected | It deliberately isolates knowledge-only learning on benchmark families |
-| Rainbow | Not in scope | Not applicable | Not in scope; fixed strategies adapt configuration | Not in scope | Not in scope; the governing model is designer-supplied and fixed | Meets stated scope; supplied strategies | Paper-reported mechanism, implementation, and outcomes; not independently reproduced | It adapts a running configuration through a causal architectural model, but does not learn that model or its action repertoire |
-| Commonplace | Not assessed | Not demonstrated; models not reliably pinned | Partial; human-inclusive | Partial; human-inclusive | Partial; one human-inclusive revision includes retrieval and later use, but no ablated causal effect or autonomous revision | Human-dependent | Local [system-definition artifacts](../notes/definitions/system-definition-artifact.md) and one evidence note; no evaluated outcome | No witness run; the operator selects global fit and admits successors |
-
-The **Program theory** column is the table's main result. Fourteen rows read
-*not in scope*
-because their objective does not ask them to acquire project understanding that
-relates a maintained user product to the activity it supports and guides later
-modification. A benchmark agent could still need a theory of its own
-organization; these sources do not test that function. Fluent and the OpenAI
-agent-first product, the two rows meeting the software-house boundary, carry
-theory that people wrote: expertise files and repository documents that make
-the domain legible. Wheelhouse's people supply rulings rather than explanations,
-which is why it reads *not demonstrated*. Commonplace supplies evidence from one
-human-inclusive revision in which retained theory was retrieved and later work
-used the revised
-state, but the operator supplied decisive global-fit judgments and no ablation
-isolated the theory's effect. No row shows understanding governing later
-decisions and being revised by the system from consequences. Whether the house
-can acquire that understanding without receiving it in the seed is the further
-test below.
+| Construction | Holding and application | Coherent revision | Automated continuation | Practical reliability |
+|---|---|---|---|---|
+| Fluent | Supplied rationale; causal use untested | People help settle revisions | Internal human decisions; pinning unshown | Product operation; no witness reliability estimate |
+| Wheelhouse | Human rulings; computational theory use unshown | People supply the governing rulings | Internal human decisions | Practitioner account only |
+| OpenAI agent-first product | Supplied rationale; causal use untested | People generalize failures into machinery | Internal human decisions; pinning unshown | Five months of human-agent product work |
+| Warp skill improver | Program theory outside tested scope | People supply feedback and admit skill edits | Internal human decisions | No independently assessed outcomes |
+| Darwin Gödel Machine | Program theory outside tested scope | Agent-code evolution on benchmarks | Autonomous benchmark loop; no product demand stream | Coding-benchmark improvements |
+| Huxley-Gödel Machine | Program theory outside tested scope | Parent selection tested through descendants | Autonomous benchmark loop; no product demand stream | Coding-benchmark outcomes |
+| HyperAgents | Program theory outside tested scope | Executable patch lineage; rationale absent | Bounded generations; model pinning unshown | No reproduced run or outcome in the review |
+| Autogenesis | Program theory outside tested scope | Broad mutation paths; weak semantic selection | Implementations transitional or incomplete | Paper outcomes; incomplete inspected implementations |
+| Exo harness | Program theory outside tested scope | Self-editing tools; no automatic learning trigger | Scheduling and restart, without an improvement loop | No live instance run in the review |
+| Prime Agent | Program theory untested | Retained refinements can include an exploit | Bounded autonomous goals; producer boundary unshown | Cases include a retained exploit |
+| Memento-Skills | Program theory outside tested scope | Skills revised under answer oracles | Bounded task loop; router training changes learned state | Answerable-benchmark outcomes |
+| Recuris | Program theory outside tested scope | Memory patches pass a supplied gate | Fixed memory coordinates and benchmark loop | Benchmark outcomes only |
+| Harness Continual Learning | Program theory outside tested scope | Harness edits checked against sampled anchors | Fixed harness partition and benchmark streams | Held-out forgetting despite retained-anchor checks |
+| Dynamic Cheatsheet | Program theory outside tested scope | Curated notes; correctness does not gate retention | Sequential benchmark loop; pinning unshown | No independently reproduced outcomes |
+| Voyager | Program theory outside tested scope | Critic-admitted skills; no theory-revision test | Game curriculum; model pinning unshown | Game outcomes only |
+| Knowledge-Centric Self-Improvement | Program theory outside tested scope | Knowledge-only revision under benchmark oracles | Bounded autonomous task loop | Benchmark outcomes only |
+| Rainbow | Supplied causal model drives configuration | Governing model and strategies remain fixed | Automatic configuration adaptation | Configuration-adaptation outcomes |
+| Commonplace | One human-inclusive use of retained theory; no ablation | Operator supplies decisive global-fit judgments | Internal human decisions; models not reliably pinned | One episode; no evaluated witness outcome |
 
 ## Evidence behind the rows
 
-The table carries each placement and decisive shortfall. The grouped notes
-below add source links, quotations, and mechanism or evidence details that do
-not fit in those cells.
+The following accounts explain the mechanisms and evidence limits behind the
+comparison.
 
 ### User-product operation and human admission
 
 [Fluent](../sources/fluent-self-improving-software-factory-2081823472016335059.ingest.md)
-product documentation and its builder's practitioner report describe external
-stakeholders, product code, deployment evidence, natural-language expertise, a
-scheduler, rejection, retention, and later reuse. People and the system jointly
-shape and confirm the brief, the behaviour specifications, and the technical
-approach. OpenAI's five-month practitioner report describes agents
-generating the product code, repository-local documents making the business
-domain legible, and recurring agents repairing stale documentation, and it
-assigns the generalization work to people. When agents struggled, engineers
-asked "what capability is missing? What constraint is unenforced?" and then
-built the tool, wrote the linter, or added the structural test ([agent-first
-product](../sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md),
+product documentation and its builder's report describe external stakeholders,
+product code, deployment evidence, retained expertise, scheduling, rejection,
+and reuse. People and the system jointly settle the brief, behaviour
+specifications, and technical approach.
+
+OpenAI's five-month report describes agent-generated code, repository documents
+that explain the business domain, and recurring documentation repair. People
+perform the generalization: when agents struggle, engineers ask "what capability
+is missing? What constraint is unenforced?" and build the tool, linter, or test
+([agent-first product](../sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md),
 verbatim).
 
-Steve Yegge's practitioner report describes rulings progressing from
-custom to warning to written doctrine to programs that refuse an action, with
-his own judgments producing the rulings. It also reports the maintenance cost
-of that path in a corpus that retained "old rulings that were obsolete or had
-changed" ([Wheelhouse](../sources/steve-yegge-fences-not-sandboxes.ingest.md),
-verbatim). [Warp's scheduled skill
-improver](../sources/how-warp-builds-self-improving-agents-on-claude.ingest.md)
-is practitioner-reported on the note side only: people write the feedback and a
-human review admits every skill update.
+Steve Yegge reports human rulings progressing from custom to warnings, written
+doctrine, and programs that refuse actions. Maintaining those rulings also has
+costs: the corpus retained "old rulings that were obsolete or had changed"
+([Wheelhouse](../sources/steve-yegge-fences-not-sandboxes.ingest.md), verbatim).
+[Warp's scheduled skill improver](../sources/how-warp-builds-self-improving-agents-on-claude.ingest.md)
+likewise depends on human feedback and review to admit its skill updates.
 
 ### Self-rewriting agents and persistent substrates
 
-The Darwin Gödel Machine paper reports an evolutionary loop over coding agents
-around frozen foundation models. A separate fixed diagnostician reads the
-selected parent's evaluation logs and supplies the next improvement suggestion.
-A child is admitted on viability rather than on score, because "Only agents
-that compile successfully and retain the ability to edit a given codebase are
-added to the DGM archive" ([Darwin Gödel
-Machine](../sources/darwin-godel-machine-open-ended-evolution-self-improving-agents.ingest.md),
-verbatim).
+The Darwin Gödel Machine paper reports evolution of coding agents around frozen
+foundation models. A separate fixed diagnostician uses the selected parent's
+logs to suggest improvements. Admission requires viability: "Only agents that
+compile successfully and retain the ability to edit a given codebase are added
+to the DGM archive" ([Darwin Gödel Machine](../sources/darwin-godel-machine-open-ended-evolution-self-improving-agents.ingest.md),
+verbatim). Benchmark score weights parent sampling; diagnostic rationale is not
+shown to persist as a project explanation across generations.
 
-The [Huxley-Gödel
-Machine](../sources/huxley-godel-machine-human-level-coding-agent-development.ingest.md)
-paper reports that immediate benchmark score predicts descendant productivity
-poorly, a result aimed at the parent-selection layer the Darwin Gödel Machine
-leaves fixed; its implementation was not inspected here. The code-inspected
-[HyperAgents](../agent-memory-systems/reviews/hyperagents.md) release replays
-patch lineages into the code its next generation edits, so its retained memory
-is executable but not explanatory. The code-inspected
-[Autogenesis](../agentic-systems/reviews/autogenesis.md) protocol covers more writable
-forms than either, and its semantic selection is weaker than its versioning
-machinery.
+The [Huxley-Gödel Machine](../sources/huxley-godel-machine-human-level-coding-agent-development.ingest.md)
+paper reports that immediate benchmark score poorly predicts descendant
+productivity. It targets the parent-selection layer DGM leaves fixed, also
+around frozen models. Neither implementation was independently inspected here.
 
-The code-inspected
-[Exo](../agentic-systems/reviews/exo.md) harness supports broad self-inspection,
-symbolic revision, restart, rollback, and preserved failure evidence, and the
-inspected design contains no automatic trigger from experience to improvement.
-Prime Agent has a code-inspected runtime carrying versioned prompts, memories,
-skills, and subagent specifications across trajectories without a weight
-update. One reported case used here is adverse: an agent found a specification
-exploit and "preserved it as a reusable skill", which shows that persistence,
-versioning, and rollback do not by themselves supply semantic admission ([Prime
-Agent](../sources/prime-agent-a-self-improving-rlm-harness.ingest.md), verbatim).
+The code-inspected [HyperAgents](../agent-memory-systems/reviews/hyperagents.md)
+release replays patch lineages into the next generation's code. Its retained
+memory is executable but carries no explanation. The code-inspected
+[Autogenesis](../agentic-systems/reviews/autogenesis.md) protocol covers more
+writable forms, but semantic selection is weaker than versioning. Its mutation
+surface excludes model-weight updates without pinning model lineage; public
+implementations are transitional or incomplete, and outcomes remain paper
+reports.
+
+The inspected [Exo](../agentic-systems/reviews/exo.md) harness supports
+self-inspection, revision, restart, rollback, and preserved failure evidence,
+but has no automatic trigger from experience to improvement. Prime Agent's
+inspected runtime carries versioned prompts, memories, skills, and subagent
+specifications across trajectories without weight updates. One reported case
+found a specification exploit and "preserved it as a reusable skill"
+([Prime Agent](../sources/prime-agent-a-self-improving-rlm-harness.ingest.md),
+verbatim): persistence and rollback do not themselves ensure sound admission.
 
 ### Benchmark-scoped retained learning
 
-The paper-reported [Harness Continual
-Learning](../sources/harness-continual-learning-adaptation-beyond-model-parameters.ingest.md)
-work commits an edit only when it improves the current task, respects sampled
-historical anchors, and passes validity checks, and it reports held-out
-forgetting even at zero loss on the retained anchors, which is negative
-evidence for any easy continuation claim. The Memento-Skills paper reports
-learning through one mixed-form unit of declarative instructions plus
-executable code under an answerable-benchmark oracle, but also trains a router,
-so it is not a witness with every learned component fixed. Its
-ablation isolates the mixed-form optimization mechanism by removing the
-optimisation step, leaving "no failure attribution, no skill rewriting, and no
-skill discovery" ([Memento-Skills](../sources/memento-skills-let-agents-design-agents.ingest.md),
+[Harness Continual Learning](../sources/harness-continual-learning-adaptation-beyond-model-parameters.ingest.md)
+reports retaining edits only when they improve the current task, respect
+sampled historical anchors, and pass validity checks. Updates to parsers,
+skills, and routing workflows leave learned components fixed. Held-out
+forgetting persists even at zero loss on retained anchors, showing the limit
+of those checks.
+
+Memento-Skills reports learning mixed-form skills—declarative instructions and
+executable code—under benchmark answer oracles. It also trains a router, so
+learned components do not all remain fixed. Its optimization ablation leaves
+"no failure attribution, no skill rewriting, and no skill discovery"
+([Memento-Skills](../sources/memento-skills-let-agents-design-agents.ingest.md),
 verbatim).
 
-Recuris forms component-scoped patch proposals from traces and decides each
-with a deterministic paired
-held-out gate. Its four memory coordinates, gate, and benchmark partitions are
-all supplied in advance, and the work does not ask whether the agent acquires a
-rationale for why a user product is organized as it is. Its reported retirement
-limit is explicit: "The memory only grows, and it can afford to."
+The inspected Recuris mechanism proposes memory-component patches from traces
+and decides each through a deterministic paired held-out gate. Four memory
+coordinates, the gate, and benchmark partitions are supplied in advance; fixed
+learned components and outcomes are paper-reported. It does not test acquiring
+an account of a user product's organization. Its retention limit is explicit:
+"The memory only grows, and it can afford to."
 ([Recuris](../sources/recursive-experiential-working-memory-evolution.ingest.md),
 verbatim).
 
-The code-inspected [Dynamic
-Cheatsheet](../agent-memory-systems/reviews/dynamic-cheatsheet.md) keeps a
-natural-language cheatsheet curated from solver traces and injected into the
-next prompt, with the curator prompt as the only gate and no software change at
-all. The code-inspected [Voyager](../agent-memory-systems/reviews/voyager.md)
-keeps the other form, admitting an executable skill when a critic reports
-success and overwriting a same-named program rather than revising it. Voyager's
-skill and QA indexes add embeddings derived from retained descriptions and
-questions. This is index generation, not model-weight training, and is allowed
-by the conjecture when the embedding model and generation algorithm are pinned.
-The inspected code does not establish that pinning. Neither review found a test
-isolating a retained item's causal effect on later behaviour.
+The inspected [Dynamic Cheatsheet](../agent-memory-systems/reviews/dynamic-cheatsheet.md)
+loop curates notes from solver traces and injects them into later prompts. The
+curator prompt is the only gate; no software changes. The inspected
+[Voyager](../agent-memory-systems/reviews/voyager.md) loop admits executable
+skills on a critic's success report and overwrites a same-named program rather
+than revising it. Its skill and QA indexes contain embeddings derived from
+retained descriptions and questions. Such index generation is allowed when the
+embedding model and algorithm are pinned; the reviewed code does not establish
+that pinning. Neither review isolates a retained item's causal effect.
+Voyager's aggregate outcomes are repository-reported; neither system's outcomes
+were independently reproduced in the reviews.
 
-The Knowledge-Centric Self-Improvement preprint
-reports a protocol that isolates external knowledge as the learned object,
-holding software and solver state fixed and letting benchmark answers supply
-the oracle, so that "The only object that changes is the curated knowledge base."
-([Knowledge-Centric
-Self-Improvement](../sources/knowledge-centric-self-improvement-2607.19592.ingest.md),
-verbatim).
+Knowledge-Centric Self-Improvement holds software and solver state fixed and
+uses benchmark answers as an oracle: "The only object that changes is the
+curated knowledge base."
+([Knowledge-Centric Self-Improvement](../sources/knowledge-centric-self-improvement-2607.19592.ingest.md),
+verbatim). The preprint thereby isolates external knowledge as the learned
+object.
 
 ### Fixed-model adaptation and the reference construction
 
-The paper-reported
-[Rainbow](../sources/rainbow-architecture-based-self-adaptation.ingest.md)
-architecture keeps a causally operative model of a running system and selects
-adaptation strategies from it, and its vocabulary, goals, constraints,
-operators, and strategies are all designer-supplied and fixed. It locates the
-boundary precisely: a model can drive adaptation without the system learning
-the theory that governs adaptation.
+The paper-reported [Rainbow](../sources/rainbow-architecture-based-self-adaptation.ingest.md)
+architecture selects adaptation strategies using a causal model of a running
+system. Its vocabulary, goals, constraints, operators, and strategies are
+supplied and fixed. The model drives adaptation without the system learning
+that model or its action repertoire.
 
-Commonplace, the knowledge base in which this comparison is written, retains
-explanatory notes with scope and evidence and revises them under review. Its
-[evidence note](../notes/evidence/commonplace-revision-used-theory-guided-computational-search.md)
-documents one revision in which retained theory guided computational search
-with the operator selecting global fit. It supplies no ablation or autonomous
-successor-selection result.
+Commonplace retains explanatory notes with scope and evidence and revises them
+under review. Its [system-definition artifacts](../notes/definitions/system-definition-artifact.md)
+describe the machinery; models are not reliably pinned. One [evidence
+note](../notes/evidence/commonplace-revision-used-theory-guided-computational-search.md)
+records theory-guided computational search with the operator selecting global
+fit, without ablation or autonomous successor selection.
 
 ## What a witness would have to do
 
-The comparison's shortfalls define five checks that operationalize the main
-article's four conditions:
+The missing evidence suggests a test with five checks:
 
-1. A system with every learned component pinned maintains one user product
-   over a declared horizon and a demand process, specified in advance, of
-   incrementally revealed requirements and production events. Its starting
-   product, explicit project theory, tools, tests, and machinery may have been written
-   by people.
-2. The system later handles an implication not stated verbatim in its
-   retained state, and withholding or replacing the relevant retained state or
-   consumption path changes proposal, evaluation, diagnosis, or recovery in a
-   predicted way.
-3. A later dependency or operating consequence makes part of the earlier
-   understanding inadequate. The system attributes the evidence and revises
-   the product, its retained state, or its machinery to an adequate successor
-   rather than preserving the earlier understanding blindly or rewriting it without
-   grounds.
-4. Candidate admission, rollback, conflict resolution, and continuation operate
-   without a person supplying the decisive understanding or choosing the
-   successor. Users may supply product requirements, facts, observed outcomes,
-   and acceptance judgments about visible behaviour; internal diagnosis,
-   candidate comparison, theory editing, or successor selection remains an
-   internal role whatever the participant is called.
-5. Evaluation covers untouched later changes and repeated runs or another
-   justified estimate of usable success within the declared budget of compute,
-   time, and cost, so one lucky path does not establish practical reachability.
+1. With learned components pinned, maintain one user product over a declared
+   horizon and a predeclared process of incrementally revealed requirements and
+   operating consequences. The seed may be human-built.
+2. Handle implications not stated verbatim in retained state. Withholding or
+   replacing the relevant state or consumption path must change proposal,
+   evaluation, diagnosis, or recovery as predicted.
+3. When a later consequence defeats part of the earlier understanding, use
+   that evidence to revise the product, retained state, or machinery and
+   support further coherent modification.
+4. Continue through admission, rollback, and conflict resolution without human
+   design, diagnosis, theory editing, candidate comparison, or successor
+   selection. Users may supply requirements, facts, observed outcomes, and
+   judgments about visible behaviour.
+5. Evaluate untouched later changes and estimate success within the declared
+   budget through repeated runs or another justified method.
 
-This protocol does not require the understanding to persist as a theory
-stored as its own artifact; reliable reconstruction from retained records or a
-mixed carrier can satisfy it if the house passes the same causal tests over
-many changes. Whether a house can acquire that understanding and whether it can
-build the machinery by computation are the stronger questions of the [training
-article](./the-software-house-as-the-unit-of-training.md) and the [bootstrap
-article](./bootstrapping-the-first-automated-software-house.md).
+Reliable reconstruction from records or mixed carriers can satisfy these checks;
+an explicit theory artifact is optional. Acquisition of understanding and
+machinery absent from the seed is a further question for the
+[training](./the-software-house-as-the-unit-of-training.md) and
+[bootstrap](./bootstrapping-the-first-automated-software-house.md) articles.
 
 ## The test for explicit project theory from the training article
 
-The training article's explicit-project-theory advantage hypothesis says that a house
-which forms, loads, applies, and revises an explicit project theory
-does better under structured change than one that reconstructs its
-understanding from records or searches the implementation directly. Testing it
-adds these conditions to the witness:
+The training article asks whether an explicit explanation improves learning
+compared with other uses of the same production evidence. Its [component
+experiment](./the-software-house-as-the-unit-of-training.md#testable-hypotheses)
+compares theory, raw records, a descriptive summary, and a plausible wrong
+theory across changes that preserve or break assumptions. It can run before a
+complete witness exists.
 
-1. The seed withholds a decisive project rationale while retaining the records
-   from which it can be synthesized.
-2. The system writes a rationale-bearing natural-language artifact and
-   demonstrably loads it at later decisions where its unstated implications
-   matter.
-3. A later change is locally valid under tests but conflicts with the
-   synthesized rationale. The system preserves coherence without receiving the
-   answer from a person.
-4. A later dependency or operating consequence makes the old rationale false.
-   The system attributes the evidence, admits a successor rationale and the
-   corresponding software or machinery change, and avoids both blind
-   preservation and ungrounded rewrite.
-5. Candidate admission, rollback, retirement, and conflict resolution operate
-   without a person supplying the decisive theory or choosing the successor.
-6. Evaluation includes untouched later changes, counterfactual removal or
-   replacement of the retained rationale, and raw-record or direct-artifact
-   baselines under the same model, source evidence, demand sequence, and
-   inference budget, with the outcome measures declared before the run.
-   Adaptation of model weights on the same production evidence is a further
-   baseline, comparing the fixed-model regime with a different one.
+The prediction combines useful transfer while an account applies, specific
+misdirection when it is wrong, and recovery after contrary evidence. Errors
+under a wrong theory establish influence; an advantage also needs better
+transfer or recovery relative to the controls, with observations and total
+cost counted. The training article specifies the treatments and their limits.
 
-These conditions identify the mechanism claim. Storing or citing a rationale
-is insufficient; success must show causal use, revision, and an advantage over
-the routes that reconstruct understanding when needed.
+A supplied theory tests use and revision. To test acquisition, withhold the
+decisive rationale from the seed while retaining the records from which it can
+be synthesized, and count the cost of forming it. A whole-house training claim
+additionally requires these updates and later production to continue without
+internal human decisions.
 
 ## What the set shows together
 
-The inspected mechanisms and reported results supply components for a trial:
-trace-derived candidates, scheduled consolidation, retained notes and code,
-reject-capable gates, broad self-revision, rollback with failure evidence, and
-product operation with human authority. The missing result is reliable
-composition under the witness conditions. The explicit-project-theory
-advantage additionally needs the matched comparison above.
+The reviewed work supplies candidate components: retained notes and code,
+scheduled revision, gates capable of rejection, and rollback with failure
+evidence. Product operation is reported with human authority. What remains to
+be shown is reliable composition under the witness conditions, and whether
+explicit theory improves that process in the matched comparison.
