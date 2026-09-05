@@ -21,9 +21,9 @@ source_notes:
 > on [the repository's GitHub Discussions page](https://github.com/zby/commonplace/discussions).
 
 **TL;DR.** A *software house* is the complete persistent system that keeps
-changing software for its users. We conjecture that, within at least one
-declared product scope, it can sustain coherent change for relevant requests
-not listed in advance while computation performs every production decision.
+changing software for its users. We conjecture that such a house can sustain
+coherent change as requirements and operating conditions develop, while
+computation performs every production decision.
 Its LLMs and other distributed-parametric models stay fixed. The house learns
 by revising its retained knowledge and production machinery, and may begin
 from a human-built seed.
@@ -46,17 +46,18 @@ during the run.
 
 *Operates practically* means that the house, started from a declared seed,
 sustains adequate performance over a stated horizon within a stated resource
-budget, reliably rather than by chance. An adequate house applies program
-theory, revises coherently, and continues automatically within the declared
-product scope. The four conditions below specify these capacities and the
-evidence needed for their reliability. The seed may be human-built; how it is
+budget, reliably rather than by chance. For an evaluation, adequate performance
+means applying program theory, revising coherently, and continuing automatically
+on the work being assessed. The four conditions below specify these capacities
+and the evidence needed for their reliability. The seed may be human-built; how it is
 reached from human-agent production is the bootstrap article's question.
 Report the resources used to build the seed separately from the operating
 budget.
 
-*Open-ended* means that the declared process can produce relevant requests and
-consequences that were not listed one by one in advance. It does not mean that
-one house must handle every possible software product or request.
+*Open-ended* means that relevant requests and consequences arise during
+continued development without being listed one by one in advance. The house's
+products and responsibilities can change with those requests. This does not
+mean that one house must handle every possible software product or request.
 
 A *witness* is a concrete example that establishes an existence claim. Here a
 **witness house** would establish the conjecture by meeting its four conditions.
@@ -79,9 +80,9 @@ missing project-specific design decision, or select the retained successor.
 The role, not the person's identity, decides which side of the boundary an act
 falls on.
 
-An automated software house has no human in an internal production role during
-the run, over its declared scope and horizon. People may build the seed before
-that boundary takes effect.
+An automated software house performs every internal production role
+computationally. A witness run must maintain that boundary throughout the
+observed operation; people may build the seed beforehand.
 
 ## Why the claim is not trivial
 
@@ -176,7 +177,7 @@ request + operating evidence + current product and project state
 Every internal decision and successor must come from the current house,
 its fixed distributed-parametric models, and permitted external inputs. An internal human
 intervention ends the witness run. The [transition-closure
-supplement](./transition-closure-and-practical-reachability.md) develops this
+supplement](./transition-closure-and-continuation-reliability.md) develops this
 provenance requirement.
 
 Pinning rules out model-parameter updates as the source of improvement during
@@ -187,7 +188,9 @@ outside weights are generally better.
 
 ## What a witness house must show
 
-One witness house must show all the following conditions together.
+One witness house must show all the following conditions together. Each needs
+positive evidence: a run that never challenges an assumption cannot establish
+coherent revision merely because nothing went wrong.
 
 1. **Holding and application.** Across novel changes, the house uses
    program theory to guide proposal, evaluation, diagnosis,
@@ -198,12 +201,12 @@ One witness house must show all the following conditions together.
    change in the house's decisions, accounting for equivalent reconstruction.
    Removing one written carrier without changing behaviour is inconclusive
    when other records supply the same understanding.
-2. **Coherent revision.** When a later request or operating consequence
-   exposes an inadequacy in the current program theory, the house
-   revises the product, retained project state, production machinery, or a
-   combination, and the successor supports coherent later modification.
-3. **Automated continuation.** The house sustains those capacities across the
-   declared scope and horizon while satisfying the boundary above.
+2. **Coherent revision.** Later requests or operating consequences expose
+   an inadequacy in the current program theory. The house responds by revising
+   the product, retained project state, production machinery, or a combination,
+   and the successor supports coherent later modification.
+3. **Automated continuation.** The house sustains those capacities through
+   subsequent requests and consequences without internal human production decisions.
 4. **Practical reliability.** The declared evaluation must show useful
    success in sustaining adequacy across the horizon within the resource
    budget. A single successful sequence may result from chance and
@@ -211,12 +214,12 @@ One witness house must show all the following conditions together.
 
 ## Future work: testing whether a house holds a program theory
 
-A proposed experiment would follow one maintained product under a declared
-process generating new requirements and operating consequences. A demanding
-workload would require revising an architectural assumption, expose
-consequences after intervening changes, and continue maintenance afterward.
-These challenge choices preserve the existential claim while testing more than
-unlisted parameter variations within an anticipated design.
+A proposed experiment could start with one maintained product and follow new
+requirements and operating consequences. One way to exercise the witness
+conditions is to expose an architectural assumption after intervening changes,
+then continue maintenance after its revision. The evidence must demonstrate
+application and revision of program theory; a stream of unlisted parameter
+variations does not establish those capacities by itself.
 
 In the tenant example, suppose each account initially belongs to one tenant.
 A later request lets consultants work across customer organizations with one
@@ -287,24 +290,28 @@ The witness protocol must declare the following before testing:
 
 - **Starting system:** seed, mutable state, pinned distributed-parametric models, and
   update procedure, including what that procedure may revise.
-- **Boundary and workload:** product scope, permitted external inputs, allowed
-  request and consequence histories, and the procedure selecting those histories.
+- **Boundary and workload:** starting products, permitted external inputs,
+  how requests and consequences are selected or generated, and any restrictions
+  on their histories. Record how failures, refusals, and excluded cases are counted.
 - **Resources:** seed-construction effort, the budget for sustaining
   adequacy, and the operating horizon.
 - **Evaluation:** success thresholds for sustained adequacy,
   repetitions or another justified estimation method, and the interventions
   used to test program-theory application.
 
-Keep the allowed histories and selection procedure distinct from the history
-realized in one run. Fixing them in advance prevents removing failed cases
-afterward. The [transition-closure supplement](./transition-closure-and-practical-reachability.md)
-explains how these declarations constrain possible paths and their probabilities.
+These declarations govern the evaluation. The input process may respond to the
+house's actions and introduce new kinds of work; it need not fix a product
+family or enumerate future requests. Keep the selection rules distinct from
+the history realized in a run, and retain failures rather than removing them
+afterward. The [transition-closure supplement](./transition-closure-and-continuation-reliability.md)
+explains how the input process affects possible paths and their probabilities.
 
 The need for program theory is a theoretical argument, not a proved theorem.
 Whether current LLMs can participate in a practically operable house that
-performs this function remains conjectural. A working house establishes the
-claim only over its declared regime; a failed architecture rules out only that
-construction.
+performs this function remains conjectural. A successful run supplies evidence
+for the capacities it exercises under the reported conditions; extending that
+conclusion to untested work needs further support. A failed architecture rules
+out only that construction.
 
 The [training article](./the-software-house-as-the-unit-of-training.md) asks
 how such a house should improve. The [bootstrap

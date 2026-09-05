@@ -8,7 +8,7 @@ source_notes:
   - kb/notes/warranted-autonomy-is-bounded-by-oracle-domain.md
   - kb/notes/a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md
 ---
-# Transition closure and practical reachability
+# Transition closure and continuation reliability
 
 > **Draft supplement.** This develops the transition-closure and Gödel-machine
 > arguments in [The Automated Software House

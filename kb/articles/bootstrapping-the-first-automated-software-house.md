@@ -291,7 +291,7 @@ also be able to reveal these failures.
 
 The [conjecture](./automated-software-houses-with-fixed-llms.md) supplies the
 witness conditions; the [training proposal](./the-software-house-as-the-unit-of-training.md)
-supplies the learning target. The [transition-closure supplement](./transition-closure-and-practical-reachability.md)
+supplies the learning target. The [transition-closure supplement](./transition-closure-and-continuation-reliability.md)
 defines continuation reliability for a house that is already adequate; the
 chance of reaching one from human-agent production is this article's separate
 measure. This program tests a route toward both targets by measuring changes

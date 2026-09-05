@@ -27,7 +27,7 @@ automated house exists.
 The supplements develop two parts of the conjecture:
 
 - [Nearest existing constructions to a reachability witness](./nearest-existing-constructions-to-a-reachability-witness.md) — a selective comparison of eighteen constructions against the four conditions, with evidence links and a separate test of explicit project theory.
-- [Transition closure and practical reachability](./transition-closure-and-practical-reachability.md) — permitted paths from a seed, continuation reliability as the measure of sustained adequacy, and the Gödel-machine comparison.
+- [Transition closure and continuation reliability](./transition-closure-and-continuation-reliability.md) — permitted paths from a seed, continuation reliability as the measure of sustained adequacy, and the Gödel-machine comparison.
 
 Six former companion drafts were withdrawn; their addresses redirect to the
 draft that absorbed each one. The two most recent were *The decisions that

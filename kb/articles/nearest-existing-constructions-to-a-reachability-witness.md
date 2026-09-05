@@ -58,7 +58,7 @@ Each column asks about one of the conjecture's conditions:
 
 An adequate house can perform the first three functions; the fourth asks how
 reliably it sustains that capacity. The [transition-closure
-supplement](./transition-closure-and-practical-reachability.md) defines that
+supplement](./transition-closure-and-continuation-reliability.md) defines that
 measure. Users may supply requirements, facts, observations, and judgments
 about visible behaviour. Supplying implementation diagnosis, internal design,
 or selection of retained revisions instead performs a production role.
