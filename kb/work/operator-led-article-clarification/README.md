@@ -57,6 +57,38 @@ reading the article as a whole rather than sentence by sentence. Keep them in
 the table because the same session finds both, and a procedure that only
 looks at sentences will miss them.
 
+## Why this workshop is an instance of the conjecture's own learning
+
+The operator's reading, 2026-09-05: this workshop is exactly the learning
+mechanism the [training
+article](../../articles/the-software-house-as-the-unit-of-training.md)
+proposes. Fixed model weights cannot supply this kind of fine-tuning of
+texts, because what counts as a good fix is specific to this KB's texts: its
+conventions, its terms, its readers, and one author's judgment of when a
+passage fails. The knowledge has to be gathered as a corpus of examples and
+rules that apply to these texts, retained in notes, and applied by a fixed
+model at the next edit. That is learning in retained natural-language state
+around a pinned model, and this workshop is the corpus at its first
+observation.
+
+Two consequences for the theory, both open:
+
+- **Theories may need to carry exemplars, not only rules.** The training
+  article defines an explicit project theory as design commitments, causal
+  assumptions, and invariants. The taxonomy above carries its meaning mostly
+  through the commit examples in its last column; the rule text alone
+  ("verdict without its why") would not let a fresh session recognize a case.
+  If that holds up, the theory's carrier needs a slot for worked examples.
+  The KB already uses *prototype* for something else (a theory's [revision
+  cost standing](../../notes/prototype-standing-is-revision-cost-binding-plus-lost-investment.md)),
+  so call these *exemplars* until a term is settled.
+- **The rules have instance-level warrant only.** Each row was abstracted
+  from edits the operator accepted, and [an accepted edit verifies the change,
+  not the rule](../../notes/an-accepted-edit-verifies-the-change-not-the-rule.md).
+  The closing condition below (two more article runs) is the re-verification
+  that would give a row rule-level standing; a row that fires wrongly on a
+  later article is the refutation.
+
 ## What is not yet known
 
 - Whether the taxonomy is stable across articles, or specific to one author
@@ -72,6 +104,8 @@ looks at sentences will miss them.
   without their why, which were the most common kinds here.
 - Whether operator verdicts should be recorded verbatim in commit messages.
   Today's messages record the diagnosis, not the operator's words.
+  If the rows are exemplar-carried, the operator's verdict is part of the
+  exemplar and the commit is the cheapest place to keep it.
 
 ## What would close this workshop
 
