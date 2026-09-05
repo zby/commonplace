@@ -61,8 +61,8 @@ advance, including requests that change what the house is responsible for.
 *Reasonable* is left informal. Some programs cannot be produced at all, and
 others not within the available budget; those do not count against the house.
 The working standard is comparative: given the same requests and resources,
-the house should do at least as well as a counterpart house with people in
-its internal production roles.
+the house should do at least as well as a *human-agent house*, one with
+people in its internal production roles.
 
 A *witness* is a concrete example that establishes an existence claim. Here a
 **witness house** would establish the conjecture by meeting its four conditions.
@@ -229,10 +229,12 @@ coherent revision merely because nothing went wrong.
    and the successor supports coherent later modification.
 3. **Automated continuation.** The house sustains those capacities through
    subsequent requests and consequences without internal human production decisions.
-4. **Practical reliability.** The declared evaluation must show useful
-   success in sustaining adequacy across the horizon within the resource
-   budget. A single successful sequence may result from chance and
-   establishes only possibility, not practical operability.
+4. **Practical reliability.** The declared evaluation must show that the
+   house sustains adequacy across the horizon within the resource budget,
+   reliably enough to be useful, with a human-agent house given the same
+   requests and resources as the baseline. A single successful sequence may
+   result from chance and establishes only possibility, not practical
+   operability.
 
 ## Future work: testing whether a house holds a program theory
 
@@ -324,9 +326,9 @@ The witness protocol must declare the following before testing:
   on their histories. Record how failures, refusals, and excluded cases are counted.
 - **Resources:** seed-construction effort, the budget for sustaining
   adequacy, and the operating horizon.
-- **Evaluation:** success thresholds for sustained adequacy,
-  repetitions or another justified estimation method, and the interventions
-  used to test program-theory application.
+- **Evaluation:** the human-agent baseline and success thresholds for
+  sustained adequacy, repetitions or another justified estimation method, and
+  the interventions used to test program-theory application.
 
 These declarations govern the evaluation. The input process may respond to the
 house's actions and introduce new kinds of work; it need not fix a product
