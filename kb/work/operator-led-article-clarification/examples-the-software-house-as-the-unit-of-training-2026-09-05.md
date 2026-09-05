@@ -316,3 +316,27 @@ done first and reported before any prose work.
 > the facts observed before the continuations start, which each treatment
 > retains in its own form. Vary that retained form, then let each continuation
 > learn from its own actions and observations. Compare four treatments:
+
+## 11. Unpack "the retained learning pathway"
+
+- **Commit:** see log (`Workshop:` trailer)
+- **Kind:** Verdict without its why
+- **Operator's verdict:** "apply the rest" (phase-2 sweep candidate 10)
+- **Diagnosis:** Why the reconstruction sentence was there, and what "the
+  retained learning pathway" meant, were both compressed: the treatments
+  differ in what survives to the next decision, not in what the model can
+  think in the moment.
+
+**Before:**
+
+> their explanations. All may revise executable machinery and its tests. A
+> model can reconstruct an explanation while reasoning in any treatment. The
+> comparison concerns the retained learning pathway.
+
+**After:**
+
+> their explanations. All may revise executable machinery and its tests. In any
+> treatment the model can still build an explanation while reasoning; no
+> treatment forbids thinking in theories. What differs is what survives to the
+> next decision: the comparison concerns what each treatment retains, not what
+> the model can construct in the moment.

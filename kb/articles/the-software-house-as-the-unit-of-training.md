@@ -257,9 +257,11 @@ learn from its own actions and observations. Compare four treatments:
 
 During learning, the raw-record treatment appends observations; the summary
 treatment revises factual summaries; the two theory treatments may revise
-their explanations. All may revise executable machinery and its tests. A
-model can reconstruct an explanation while reasoning in any treatment. The
-comparison concerns the retained learning pathway.
+their explanations. All may revise executable machinery and its tests. In any
+treatment the model can still build an explanation while reasoning; no
+treatment forbids thinking in theories. What differs is what survives to the
+next decision: the comparison concerns what each treatment retains, not what
+the model can construct in the moment.
 
 Construct the summary from an inventory of observed facts supplied to every
 treatment. Keep names, examples, access to source records, and context allowance
