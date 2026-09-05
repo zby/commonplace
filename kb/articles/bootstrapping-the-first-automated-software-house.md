@@ -183,10 +183,10 @@ it learns more than an exception for the first failing filename.
 changes while the house inspects source, build configuration, and prior results,
 then revises its *check selector*, the procedure choosing the checks, and any
 supporting tests or retained account. This bounded trial could begin before a
-complete automated house exists. An independent manifest
-check could reject a claimed improvement even after the revised selector
-accepts the edit. The selector being evaluated must not control that reference
-judgment.
+complete automated house exists. Authority over the result is split: an
+independent manifest check, the *reference judgment*, can reject a claimed
+improvement even after the revised selector accepts the edit, and the selector
+being evaluated must not control that check.
 
 **Comparisons depend on the claim.** Operational transfer requires useful check
 selection within declared outcome and cost limits, without people making the
