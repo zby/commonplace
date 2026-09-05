@@ -97,9 +97,11 @@ still depends partly on people in three ways:
   fitted the research program as a
   whole](../notes/evidence/commonplace-revision-used-theory-guided-computational-search.md).
 - **Credit assignment: what a later consequence supports or counts against.**
-  The [freshness model](../reference/review-architecture.md) tracks changed
-  review inputs, treating linked files as reading context. It does not establish
-  that an earlier change caused a later outcome; people still help attribute failures.
+  The [freshness model](../reference/review-architecture.md) tracks which of
+  a review's inputs have changed since its verdict; files the note links to
+  count as reading context, not as tracked inputs. Knowing that an input
+  changed does not establish that an earlier change caused a later outcome, so
+  people still help attribute failures.
 - **Authority: what an admitted change may control.** Evidence that bounded
   reviewers passed unread material led to [a validator rule limiting unquoted
   source use](../reference/adr/082-grounding-is-bounded-on-the-artifact-by-unquoted-sources.md).
