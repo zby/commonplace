@@ -110,7 +110,12 @@ done first and reported before any prose work.
 - **Kind:** Verdict without its why; unsignposted role
 - **Operator's verdict:** "3 indexes are kind of on the boundary between
   symbolic and distributed parametric - I think we can state that they are an
-  exception" (phase-2 sweep candidate 3)
+  exception" (phase-2 sweep candidate 3); follow-up after the first commit:
+  "actually algorithms don't need to be pinned" — the pin covers
+  distributed-parametric models only, so the sentence keeps only the embedding
+  models pinned and names the building algorithms as ordinary revisable
+  machinery. This corrects a claim the pre-edit article text also made
+  ("under pinned algorithms and embedding models").
 - **Diagnosis:** The index sentence stated a permission with no reason. The
   agent proposed "looks like an exception but is not one"; the operator
   corrected the frame: indexes sit on the boundary between symbolic and
@@ -136,8 +141,8 @@ done first and reported before any prose work.
 > distributed-parametric models fixed. Derived indexes are an exception: they
 > sit on the boundary between symbolic and distributed-parametric forms, and
 > they may be regenerated during the run because the records they are built
-> from change while the algorithms and embedding models that build them stay
-> pinned.
+> from change while the embedding models used to build them stay pinned. The
+> building algorithms are ordinary machinery the house may revise.
 >
 > The experiments below do not wait for a complete automated house. They test
 > its learning mechanisms in bounded components.

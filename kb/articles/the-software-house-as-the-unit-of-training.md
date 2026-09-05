@@ -64,8 +64,8 @@ Training changes its surrounding state and machinery while keeping
 distributed-parametric models fixed. Derived indexes are an exception: they
 sit on the boundary between symbolic and distributed-parametric forms, and
 they may be regenerated during the run because the records they are built
-from change while the algorithms and embedding models that build them stay
-pinned.
+from change while the embedding models used to build them stay pinned. The
+building algorithms are ordinary machinery the house may revise.
 
 The experiments below do not wait for a complete automated house. They test
 its learning mechanisms in bounded components.
