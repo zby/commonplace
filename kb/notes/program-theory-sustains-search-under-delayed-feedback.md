@@ -64,15 +64,18 @@ single out a specific commitment as at fault and revise a whole region of that
 space at once. Where trials are few, slow, and expensive, that asymmetry is the
 regime argument for theory.
 
-The second difference is the failure signature. Undirected search fails in no
-consistent direction: its errors differ from one episode to the next. A wrong
-theory fails coherently, bending successive changes the same wrong way, as
+The proposed second difference is a theory-specific failure signature. Search
+without an explicit theory can already have systematic biases from its
+generator, available actions, or evaluator. The prediction is that replacing
+the theory with a plausible wrong one adds a particular pattern of errors
+relative to a matched baseline, bending successive changes in the direction
+that the wrong theory predicts, as
 [broad negative transfer from a broad wrong
 theory](./theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md)
-predicts. If that prediction holds, a test that replaces the theory with a
-plausible wrong one discriminates better than one that withholds it:
-directional failure would show the theory was steering. The prediction has not
-been tested here; how large the effect must be is an open question below.
+predicts. If that effect appears beyond the baseline's existing biases,
+replacement discriminates better than withholding alone: the change in error
+pattern would show how the theory was steering. The prediction has not been
+tested here; how large the effect must be is an open question below.
 
 ## Warrant belongs to the path, not the first proposal
 
@@ -170,8 +173,8 @@ recovery, or revise the theory.
 - What task distribution and horizon distinguish coherent modification from
   luck, memorization, or a permissive evaluator?
 - How large must the wrong-theory effect be, and over how many episodes, to
-  separate directional failure from ordinary variance when both arms
-  eventually find an acceptable change?
+  separate the predicted error pattern from baseline biases and ordinary
+  variance when both arms eventually find an acceptable change?
 - How should delayed evidence receive credit when several changes and theory
   revisions intervene before the consequence appears?
 

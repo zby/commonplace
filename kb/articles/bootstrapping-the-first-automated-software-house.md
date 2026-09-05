@@ -23,64 +23,32 @@ source_notes:
 > on [the repository's GitHub Discussions page](https://github.com/zby/commonplace/discussions).
 
 **TL;DR.** A *software house* is the complete persistent system that keeps
-changing software for its users. This article proposes a bootstrap program for
-turning a human-agent software house into a *witness house*: an automated
-house tested over a declared scope and horizon with its learned components
-fixed and no person in an *internal production role*—work the house depends on
-to develop and evolve the software. The program starts from a human-built seed
-and transfers bounded classes of production decisions to computation in an
-order discovered from production evidence.
+changing software for its users. This bootstrap program starts with a house
+that includes people and transfers bounded classes of production decisions to
+computation. Each trial separately tests whether computation now makes the
+decisions and whether production evidence teaches the house to build or revise
+the machinery that makes them. Evidence determines which transfer to try next.
 
-Commonplace, the human-agent knowledge-base project in which this article is
-written, is a useful seed, but not yet a complete system that learns through
-computation alone. It has an *explicit project theory*—a retained statement of
-project assumptions and rationale—that affects later work, computational
-proposal and revision, checks implemented in code, and durable retention.
-People still make decisive judgments about whether a change fits the project
-as a whole and about three control problems. *Admission* decides which
-proposed change takes effect. *Credit assignment* decides which earlier state
-or decision a later consequence supports or counts against. *Authority* sets
-which later behaviour an admitted change may control.
-
-The program measures two kinds of transfer separately. *Operational transfer*
-means that computation now makes the declared production decisions without a
-person supplying them. *Learning transfer* means that production evidence
-causes the house to produce or revise the project-specific machinery that
-makes those decisions, and that the retained change affects later work. The
-program declares each bounded trial before it runs, evaluates it with outcome
-measures independent of the transferred role, and records human interventions,
-failures, reversals, and reopened roles.
-
-Operational transfer across every internal production role is necessary for a
-witness house, but not sufficient: the house must also apply its *program
-theory*—its capacity to relate the software to its purpose and new demands—
-revise coherently, and operate reliably within its declared regime. Learning
-transfer is not necessary to establish that a witness house can exist. It is
-required for the separate proposal that the whole house can be [trained from
-production while its model weights remain
-fixed](./the-software-house-as-the-unit-of-training.md). The bootstrap program
-aims at both transfers because it seeks not only a witness house, but a house
-that can learn through its own process.
+Commonplace is a seed for this program: agents use and revise retained project
+knowledge, while people still supply decisive judgments. The target is a
+*witness house* that sustains coherent software change with fixed learned
+components and no human production decisions over a declared scope and horizon.
+The program records failures, interventions, and reopened roles against
+independent outcome and cost measures.
 
 ## The starting point
 
-A [software house](../notes/definitions/software-house.md) is whatever keeps
-changing a piece of software for its users. The houses from which this program
-proposes to bootstrap are human-agent systems. Coding agents may write and test
-much of the code while people supply requirements from outside and still fill
+In a human-agent [software house](../notes/definitions/software-house.md),
+coding agents may write and test much of the code while people supply
+requirements from outside and still fill
 internal production roles such as noticing that several failures share one
 cause, deciding that a design assumption no longer holds, choosing among
 changes that all pass the tests, approving new evaluators, and authorizing
 changes with effects beyond the current job.
 
-Commonplace, the knowledge base in which this series is written, is a house of
-this kind. Agents produce notes, code, and reviews. The explicit project theory
-is loaded into later work. People still choose objectives, judge global fit,
-assign blame for failures, approve evaluators, and authorize consequential
-changes.
-
-The first article draws the boundary that matters here. An *internal production
-role* is work the house depends on to produce the software, whoever performs
+The [conjecture article](./automated-software-houses-with-fixed-llms.md) draws
+the boundary that matters here. An *internal production role* is work the house
+depends on to produce the software, whoever performs
 it. A person in such a role is inside the house. A person who supplies
 requirements, facts, observed outcomes, or acceptance judgments about visible
 behaviour is a user and stays outside. An automated house has no person in an
@@ -88,7 +56,7 @@ internal production role over its declared scope and horizon.
 
 ## Two kinds of transfer
 
-Saying that a role "moved" can mean two different things.
+The program measures two kinds of transfer separately.
 
 | Claim | What must be shown |
 |---|---|
@@ -101,29 +69,26 @@ each case. But its criterion still came from a person. It does not complete
 learning transfer until the house can produce or revise that criterion and its
 machinery from production evidence.
 
-In principle, operational automation could be built entirely by hand: one
-validator for every recurring judgment, one diagnosis procedure for every
-failure class, and one fixed admission policy. A wholly hand-built starting
-house can be a witness house if, with nobody inside, it also satisfies the
-program-theory, coherent-revision, and practical-reliability conditions. The
-first article's witness conditions therefore do not require learning transfer,
-but operational transfer alone does not satisfy all the witness conditions.
-Such a house is not trained in the second article's sense if none of its
-project-specific machinery was produced from production evidence by the
-house's own process. The program aims at both transfers, since the purpose of
-reaching a witness house is to train it.
+A wholly human-built house can be a witness if it also applies its *program
+theory*—its capacity to relate the software to its purpose and new demands—
+revises coherently, and operates reliably without human production decisions.
+The witness conditions do not require learning transfer. The separate proposal
+to [train the house from production](./the-software-house-as-the-unit-of-training.md)
+does: its own process must produce or revise project-specific machinery from
+evidence. The bootstrap aims at both transfers.
 
 ## Commonplace as a seed instance
 
-The second article says that a trained house needs retained components that
-affect later production, a process by which production evidence changes them,
-admission of accepted changes, credit assignment from later consequences, and
-retention that makes accepted changes affect later work. Commonplace has a
-partial implementation of this shape. It does not yet perform every part
-computationally.
+Commonplace combines retained project knowledge, computational proposal and
+revision, and checks implemented in code. Three control problems remain partly
+human. *Admission* decides which proposed change takes effect. *Credit
+assignment* decides which earlier state or decision a later consequence
+supports or counts against. *Authority* sets which later behaviour an admitted
+change may control.
 
-- **Explicit project theory is one component the learning process can change.** Notes state claims, scope,
-  and evidence, and link to the claims they depend on. Agents can load them at
+- **Explicit project theory supplies revisable assumptions and rationale.**
+  Notes state claims, scope, and evidence, and link to the claims they depend
+  on. Agents can load them at
   the point of decision. A note shown to be wrong can be revised, superseded, or
   withdrawn, with its address redirected to its replacement.
 - **Some recurring failures have produced machinery.** For example, evidence
@@ -154,12 +119,6 @@ accept, approve new gates, and authorize changes whose effects reach beyond the
 current job. Nothing here shows acquisition of program theory by computation
 alone, and there has been no witness run in the first article's sense.
 
-The useful claim is narrower. Commonplace already implements several components
-of the proposed learning process: explicit project theory, computational proposal
-and revision, symbolic checks, review provenance, and durable retention. Its
-remaining internal production roles can be named and measured. It is a seed
-implementation of the program, not proof that the program already works.
-
 A memory file by itself is weaker. It can affect later behaviour, but it may admit
 entries without a settled rule, keep wrong entries without tracing later
 failures back to them, omit their scope, and leave unclear whether a person or
@@ -168,11 +127,9 @@ is the process that governs the file, not the file's name.
 
 ## The bootstrap program
 
-**The bootstrap program.** Starting from a human-agent house with retained
-project state that affects later work, try repeated, measured transfers of
-bounded production decisions. For each decision class, or the smallest coupled
-bundle that cannot be separated, build the missing premises, acceptance
-authority, independent checks, and continuity machinery.
+Try a bounded decision class, or the smallest coupled bundle that cannot be
+separated. Build the functions it lacks, measure the transfer, and use the
+result to select the next trial.
 
 The house should require fewer human decisions, not fewer people.
 One operator may stop doing one internal production role while still doing
@@ -219,11 +176,8 @@ requires the functions, not a permanent split among notes, models, and code.
 
 ## How each trial is specified and evaluated
 
-The program does not declare a universal sequence of stages. Evidence from
-production determines which transfer is ready next. Transfers are incremental,
-but their order may change. Declaring each local trial before it runs prevents
-the result from being used to rationalize the order after the fact. The
-declaration records:
+Declare each local trial before it runs so the result cannot be used to
+rationalize its selection after the fact. The declaration records:
 
 - the decision class or coupled bundle;
 - the declared workload, boundary, objective, and horizon;
@@ -232,24 +186,19 @@ declaration records:
 - the separate operational-transfer and learning-transfer claims;
 - measures of external outcomes, costs, human interventions, and reopened roles.
 
-The result is then kept whether the transfer succeeds or fails. This prevents
-the discovered order from becoming only a list of successful cases. Failed,
-reversed, and reopened transfers remain part of the evidence.
+Keep the result whether the transfer succeeds, fails, reverses, or later
+reopens. The discovered order must include unsuccessful cases.
 
-Retained state that affects later work is required for a claim that the house
-learns from what it retains. It need not be the first operational transfer. A
-narrow hand-written rule may automate a routine decision before the explicit
-project theory has shown a causal effect. That is real automation, but not yet
-evidence of learning by the house.
+An operational transfer may precede evidence of learning: a narrow hand-written
+rule can automate a routine decision before retained theory has shown a causal
+effect. The record must keep the two claims separate.
 
-Admission can also be automated in parts before the training endpoint. A
-deterministic formatter or a well-tested dependency update may already be
-admitted automatically. At the training endpoint, project-specific successors
-must take effect over the declared scope without a person choosing them, and
-production evidence must be able to revise the update machinery when it fails.
-In an architecture with an explicit admission gate, this includes computational
-admission and revision of its machinery. That is an obligation of the training
-endpoint, not a claim about the literal last chronological move.
+Admission can also be automated in parts: a deterministic formatter or a
+well-tested dependency update may already be admitted automatically. The
+training endpoint requires project-specific successors to take effect without
+a person choosing them, including revisions to update machinery when evidence
+exposes its failure. In a gated architecture this includes admission machinery;
+the requirement does not fix when its transfer occurs.
 
 Operational transfer can look complete while a person still handles the cases
 that matter. A person who fixes the three hard failures each month still holds
@@ -265,9 +214,8 @@ reopened role returns to the human set until the missing function is built. The
 program measures the decrease in that set over declared windows; it does not
 assume every step is permanent.
 
-A process can operate without people while its evaluator is no longer
-independent, so quality can fall without being detected. A no-op loop, bad
-objective, or self-approving evaluator can run without people.
+A process can operate without people while a self-approving evaluator hides
+declining quality.
 [Usefulness, autonomy, warrant, and power are separate
 dimensions](../notes/usefulness-autonomy-warrant-and-power-are-separate-dimensions.md).
 Each transfer claim must say which dimension changed. The program therefore keeps an
@@ -289,9 +237,8 @@ permitted external inputs.
 
 ## What the house's training must produce
 
-The seed is legitimate. People may write the first notes, tools, checks, and
-safety boundaries. Later transfers must increasingly depend on machinery that
-the house produces and retains from production evidence. The seed is outgrown
+Later transfers must increasingly depend on machinery that the house produces
+and retains from production evidence. The seed is outgrown
 when [learning displaces repeated human construction of the task-specific
 knowledge it supplied](../notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md)
 over the claimed scope. New explicit project theories, checks, decompositions,
@@ -344,16 +291,8 @@ also be able to reveal these failures.
 
 ## Where this leaves the series
 
-The first article asks whether an automated software house can exist and states
-what a witness house must show. The second asks how a software house should
-learn and makes governed behaviour-changing writes a central requirement.
-
-This article supplies the construction program. Commonplace is not already the
-finished trained house. It is a seed with retained state that affects later
-work, computational search, partial evaluation machinery, durable retention,
-and named remaining human decisions. Starting from that seed, the program must
-reduce two things together: the production decisions supplied by people and the
-project-specific production machinery supplied by people. Measuring both
-prevents ordinary automation from being mistaken for learning. It also prevents
-a learning loop that still needs human approval from being called a human-free
-house.
+The [conjecture](./automated-software-houses-with-fixed-llms.md) supplies the
+witness conditions; the [training proposal](./the-software-house-as-the-unit-of-training.md)
+supplies the learning target. This program tests a route toward both by measuring
+changes in the production decisions and project-specific machinery supplied by
+people. Failed and reopened transfers determine where that route needs repair.

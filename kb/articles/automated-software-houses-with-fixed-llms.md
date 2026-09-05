@@ -25,28 +25,17 @@ source_notes:
 > on [the repository's GitHub Discussions page](https://github.com/zby/commonplace/discussions).
 
 **TL;DR.** A *software house* is the complete persistent system that keeps
-changing software for its users, not only a company or a model. We conjecture
-that, within at least one declared product scope, such a house can sustain
-coherent change for relevant requests not listed in advance, with no human in
-an *internal production role*—work the house depends on to develop and evolve
-the software. Every LLM and other learned component is fixed at a version
-available by 2026-09-02 for the entire run. This denies that open-ended
-coherent change necessarily requires either a person inside production or an
-update to a learned component during the run.
+changing software for its users. We conjecture that, within at least one
+declared product scope, it can sustain coherent change for relevant requests
+not listed in advance while computation performs every production decision.
+Its LLMs and other learned components stay fixed; its product, retained
+knowledge, and production machinery may change. The house may begin from a
+human-built seed.
 
-The fixed learned components work with mutable natural-language and symbolic
-state: the product, tools, tests, production machinery, and possibly an
-*explicit project theory*. An explicit project theory is one possible written
-carrier of the house's *program theory*: its capacity to relate the software
-to its purpose, explain its organization, and apply that understanding to new
-demands. The house may start from a human-built seed containing all of these.
-The conjecture requires the house to use that seed to perform every production
-function and revise its mutable state coherently. It does not require the
-house to have discovered or outgrown the seed. Companion articles ask [how a
-software house should be
-trained](./the-software-house-as-the-unit-of-training.md) and [how the first
-automated one might be
-built](./bootstrapping-the-first-automated-software-house.md).
+The central test is whether the house can apply and revise its *program
+theory*: its capacity to relate the software to its purpose, explain its
+organization, and handle new demands. An *explicit project theory* is one
+possible written carrier of that understanding.
 
 ## Claim
 
@@ -79,8 +68,7 @@ The role, not the person's identity, decides which side of the boundary an act
 falls on.
 
 An automated software house has no human in an internal production role over
-its declared scope and horizon. User participation is compatible with
-automation; hidden human production work is not.
+its declared scope and horizon.
 
 ## Why the claim is not trivial
 
@@ -90,11 +78,9 @@ The tenant identifier can enter the data model in several ways. More than one
 choice may pass the current tests, while only some preserve the assumptions
 on which later changes depend.
 
-Choosing and revising such designs needs what the computer scientist Peter
-Naur called a program theory: the capacity to relate the software to the
-activity it supports, explain why it is organized as it is, and relate a new
-demand to that organization. We use coherent modification across later
-demands as the main behavioural test. [Holding a program theory means
+Computer scientist Peter Naur called the understanding needed to choose and
+revise such designs a program theory. We use coherent modification across
+later demands as its main behavioural test. [Holding a program theory means
 sustaining coherent search under delayed
 feedback](../notes/program-theory-sustains-search-under-delayed-feedback.md):
 the first choice may be tentative, but the process must use program theory to
@@ -146,20 +132,18 @@ program theory instead of preserving it from one change to the next. Software
 executes a decision without supplying all the judgment that selected it. The
 house as a whole has to perform the program-theory function.
 
-The program theory need not be stored in an explicit project theory. The house
-may use an explicit project theory, reconstruct its program theory from
-records, or combine both. What matters is causal use: the project-specific
+The house may use an explicit project theory, reconstruct its understanding
+from records, or combine both. What matters is causal use: the project-specific
 state must change proposal, evaluation, diagnosis, or recovery, including
-where the relevant implication is not stated verbatim. This range does not
-claim that any one form is the best carrier.
+where the relevant implication is not stated verbatim.
 
 ## The witness run
 
 The house may begin from a state constructed by people. That state may
 include the product, project-specific purposes and rationale, tools, tests,
 evaluators, workflows, context assembly, safety boundaries, and other
-production machinery. How the starting state was created is not part of the
-claim.
+production machinery. The witness tests operation from that seed, not its
+discovery or outgrowth.
 
 For a witness run, every eligible model version and every other learned
 component is declared and pinned before testing. This includes model weights,
@@ -191,12 +175,8 @@ request + operating evidence + current product and project state
 Once the witness run starts, every internal decision and successor state must
 come from the house's current state, its fixed learned components, and the
 permitted external inputs. A human intervention in an internal production role
-ends that witness run.
-
-This is the transition closure of the declared starting state: later states
-must be reachable through the current house and permitted inputs. The
-observation says where successors may come from; it does not require the
-house to outgrow or rediscover its starting design.
+ends that witness run. This provenance requirement is developed in the
+[transition-closure supplement](./reachability-as-closure-under-the-seed-gate.md).
 
 Pinning is an experimental condition, not a recommendation for a mature
 software house or a claim that updates outside model weights are generally
@@ -225,8 +205,7 @@ One witness house must show all the following conditions together.
    horizon. A single successful sequence may result from chance and establishes
    only possibility, not practical reachability.
 
-These obligations do not fix which representational form expresses the program
-theory or which retained component changes. Storing or citing a rationale is
+Storing or citing a rationale is
 insufficient if it does not govern a later decision. A gate that can reject is
 insufficient if the accepted successor is not adequate. Passing tests on one
 requested change is insufficient if the house cannot preserve coherence
@@ -307,11 +286,9 @@ sample-efficient is a separate hypothesis in the
 The scope, request process, horizon, resource budget, and success threshold
 are declared before testing so they cannot be narrowed after a failure.
 
-The request process must be able to include relevant new requests and
-consequences rather than replay a fixed benchmark list. Its allowed histories,
-the history realized in one run, and the probability or selection procedure
-over histories are distinct.
-The allowed set and selection procedure are fixed before the run. Repeated
+The request process's allowed histories, the history realized in one run, and
+the probability or selection procedure over histories are distinct. Fix the
+allowed set and selection procedure before the run. Repeated
 runs or another justified estimate must show that adequate operation receives
 usable probability and persists across the declared horizon.
 

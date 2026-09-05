@@ -18,27 +18,13 @@ source_notes:
 > counterexamples are welcome on [the repository's GitHub Discussions
 > page](https://github.com/zby/commonplace/discussions).
 
-**TL;DR.** An automated software house—a persistent computational system that
-develops and maintains software without humans in internal production roles—
-starts from a declared seed state. Its current internal state and a permitted
-external input determine possible next, or successor, states, provided that the
-state includes every history-dependent variable inside the system boundary.
-The mapping is the **successor relation**. The states reachable from the seed
-are the least set that contains the seed and is closed under this relation over
-the declared input histories. This is the seed's **transition closure**. The
-updating machinery is mutable, so the successor relation may itself change, but
-each replacement must be produced by the predecessor state's successor
-relation. This is only a claim of causal descent: it does not say that the seed
-proves, predicts, or explicitly settles each later revision, and it holds only
-relative to the declared system boundary and input process. A Gödel machine has
-the same transition-reachable structure; the contrast is not closure versus
-deduction. It differs because proof under its current formalization gates each
-rewrite, whereas the conjectured house uses a fallible update process that
-responds to production evidence. A witness for the conjecture therefore cannot
-rely on one lucky reachable state. It must declare the seed, mutable state,
-pinned components, external inputs, update protocol, product scope, resources,
-and horizon, then show that the process reaches and sustains an adequate
-human-free state with the required practical reliability.
+**TL;DR.** An automated software house develops and maintains software without
+humans in internal production roles. Every internal change must arise through
+its current machinery and permitted external inputs, even when the change
+rewrites that machinery. A Gödel machine obeys the same causal requirement,
+with proof governing its rewrites. The practical question is how reliably the
+process reaches an adequate state and sustains it across later demands. One
+lucky path establishes only possibility.
 
 ## The observation
 
@@ -50,8 +36,10 @@ machinery, retention rules, evaluators, and context assembly. Persistent tool
 or environment state on which a transition depends must either be included in
 \(s\) or declared as external. The pinned
 [distributed-parametric](../notes/definitions/representational-form.md)
-components, the model weights and any other learned numerical component, remain
-fixed parameters of the experiment rather than mutable parts of \(s\).
+components, such as model weights and trained routers, remain fixed parameters
+of the experiment rather than mutable parts of \(s\). Indexes regenerated from
+mutable canonical records under pinned algorithms belong to the mutable state;
+the embedding model itself remains fixed.
 
 Let the declared external inputs include user demands, tool results, and
 operating consequences. Define \(s\) broadly enough to include every
@@ -95,9 +83,8 @@ the predecessor formalization licenses. Its later machine states therefore
 remain causally descended from the seed through proof-gated successor relations
 in the same structural sense.
 
-The conjectured house does not differ by having closure where the Gödel machine
-has deduction. Both have transition-reachable state sets. They differ in the
-successor relation that admits or produces a rewrite:
+The two systems differ in the successor relation that admits or produces a
+rewrite:
 
 | | Gödel machine | Conjectured house |
 |---|---|---|
@@ -107,10 +94,9 @@ successor relation that admits or produces a rewrite:
 | Warrant | Conditional proof relative to the encoded formalization | Empirical warrant bounded by the available evaluators and later exposure |
 | Characteristic failure | Starvation: useful changes remain unreachable because they cannot be proved | Drift: harmful or incoherent successors may receive non-negligible probability |
 
-Deductive closure applies to the theorems derivable from the Gödel machine's
-axioms. Its machine states are not themselves a deductive closure; they are
-states reachable through proof-gated transitions. The comparison is therefore
-between two admission or update relations, not between deduction and closure.
+Deductive closure describes the theorems derivable from the Gödel machine's
+axioms. Transition closure describes its reachable machine states. Both
+concepts apply to that construction.
 
 ## Consequences for the conjecture
 
@@ -172,18 +158,16 @@ state's relation permits that rewrite. New production evidence can change what
 the house accepts only through interpretive and update capabilities already
 reachable from the seed. Coherent revision is therefore a test of whether
 those capabilities can use permitted evidence to move the house to an adequate
-successor without importing a human decision. The conjecture does not require
-the lineage to outgrow the seed's task-specific contents: the seed may carry a
-human-written theory and human-built machinery. It requires that every
-revision after the declared start comes through the sequence of successor
-relations reachable from the seed.
+successor without importing a human decision. The seed may supply human-written
+theory and machinery; the test concerns whether the process reaches and
+sustains adequate successors.
 
 ### The closure observation is general
 
 Nothing in the transition-closure argument requires a fixed LLM. It applies to
 any autonomous lineage whose successors arise from prior internal state and a
-declared set of external inputs. The fixed-model and fixed-parametric-state
-conditions are additional restrictions that make the automated software house conjecture a
+declared set of external inputs. Fixing the models and other learned components
+is an additional restriction that makes the automated software house conjecture a
 specific empirical claim about where learning can occur.
 
 ## What this changes in the witness
@@ -194,16 +178,12 @@ before interpreting the result. It must then show not only that an adequate
 state appears on some path, but that the process reaches and sustains such
 states with the practical reliability the claim requires.
 
-The four conditions in the main article locate the difficult transitions.
-Holding and application tests the adequacy of the current state. Coherent
-revision tests whether later evidence can move the process, through its own
-successor relation, to an adequate replacement. Automated continuation tests
-whether those transitions remain inside the computational boundary over the
-declared horizon. Practical reliability is the hitting-probability and
-continuation-reliability requirement stated above. Whether the relation can
-also reach an adequate state without receiving the decisive project
-understanding from the seed is the stronger question the training and
-bootstrap articles ask; it is not a condition of the witness.
+The main article's four conditions test application of program theory,
+coherent revision, automated continuation, and practical reliability on this
+path. Whether the house can also acquire decisive project understanding that
+the seed did not supply is the stronger question of the
+[training](./the-software-house-as-the-unit-of-training.md) and
+[bootstrap](./bootstrapping-the-first-automated-software-house.md) articles.
 
 ## Open questions
 
