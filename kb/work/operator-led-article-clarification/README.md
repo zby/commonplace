@@ -198,9 +198,11 @@ phase 1; the whole-article read produced five findings reported for the
 operator and not edited. Edits and findings in
 [examples-bootstrapping-the-first-automated-software-house-2026-09-05.md](./examples-bootstrapping-the-first-automated-software-house-2026-09-05.md).
 The five findings were then applied on the operator's "OK - apply these"
-(`764bd476` through `f0d7e2c9`, five more commits). The nineteen sweep edits
-have no operator verdict yet: record accepts and reverts there when the
-operator reviews. Kinds seen: unintroduced term (eight sites, five of them terms
+(`764bd476` through `f0d7e2c9`, five more commits), and a second re-read
+produced seven small candidates, all applied on the same verdict
+(`cd67c528` through `dfe8712f`). The operator checked a sample of the
+nineteen sweep edits and found them acceptable without naming which; no
+entry carries an individual accept, none has been reverted. Kinds seen: unintroduced term (eight sites, five of them terms
 borrowed from a sibling article or note), verdict without its why (seven),
 unsignposted roles (five), compressed description (five), unlabelled example
 or parallel (four), vestigial vocabulary after a partial sweep (one, the same

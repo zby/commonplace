@@ -613,3 +613,143 @@ After the report above, the operator replied "OK - apply these". All five whole-
 > the only option. Other update architectures let reward, error, gradients, or a viability
 > filter (a change stays if the system still works) drive changes without a
 > separate admission event. What the endpoint
+
+## Second pass: what a re-read found after the sweep
+
+Asked "Are there any more improvement steps?", the agent re-read the revised
+article and reported seven candidates: five recommended, two flagged as the
+operator's call. The operator replied "OK - apply these"; all seven were
+applied (`cd67c528` through `dfe8712f`, plus the rewrap). The second pass
+found only small things, which is some evidence the sweep had reached the
+article's floor for these kinds. Also reported but not part of this method:
+a claim-level critique pass and the shorter-prose pass have not been run on
+this article, and the second would partly pull against the fixes here.
+
+The rewrap commit `ab023cf0` is whitespace-only (zero word changes) but its
+message says three paragraphs; the reflow touched seventeen, because the
+filter caught every paragraph with a line over 80 columns, not only the
+three earlier edits had left. Not amended, per the shared-checkout rule.
+
+## 25. The back-reference to the governing decisions
+
+- **Commit:** `cd67c528`
+- **Kind:** Unclear referent
+- **Operator's verdict:** "OK - apply these"
+- **Diagnosis:** Second-pass finding 1. "These governing decisions" referred to the three bullets across an intervening sentence. Sentences swapped.
+
+**Before (hunk 1):**
+
+
+
+**After (hunk 1):**
+
+> These three governing decisions are part of what the bootstrap must transfer.
+
+**Before (hunk 2):**
+
+> computation alone. These governing decisions are part of what the bootstrap
+> must transfer.
+
+**After (hunk 2):**
+
+> computation alone.
+
+## 26. The check-selector gloss
+
+- **Commit:** `1de2273a`
+- **Kind:** Compressed description (appositive read as a list item)
+- **Operator's verdict:** "OK - apply these"
+- **Diagnosis:** Second-pass finding 2. The gloss on *check selector* sat inside a list of revised things and read as one of them. Bracketed, list separated.
+
+**Before:**
+
+> then revises its *check selector*, the procedure choosing the checks, and any
+> supporting tests or retained account. This bounded trial could begin before a
+
+**After:**
+
+> then revises its *check selector* (the procedure that chooses the checks),
+> along with any supporting tests and the retained account. This bounded trial could begin before a
+
+## 27. The general-tools concession
+
+- **Commit:** `ce5baa1e`
+- **Kind:** Unsignposted role (concession)
+- **Operator's verdict:** "OK - apply these"
+- **Diagnosis:** Second-pass finding 3. Same shape as the training article's generality concession (`c962f460`): a qualification of "the seed is outgrown" with nothing naming it as one.
+
+**Before:**
+
+> General tools such as version control, a test runner, or a model client may
+
+**After:**
+
+> Not all machinery must be outgrown. General tools such as version control, a
+> test runner, or a model client may
+
+## 28. The closing paragraph's "both targets"
+
+- **Commit:** `3c2b5e75`
+- **Kind:** Unclear referent; ordering
+- **Operator's verdict:** "OK - apply these"
+- **Diagnosis:** Second-pass finding 4. The supplement sentence sat between the two targets and "both targets". Moved to the end; the article now closes on its own question. No wording change beyond the join.
+
+**Before (hunk 1):**
+
+> supplies the learning target. The [transition-closure supplement](./transition-closure-and-continuation-reliability.md)
+> defines continuation reliability for a house that is already adequate. How
+
+**After (hunk 1):**
+
+> supplies the learning target. This program tests a route toward both by
+> measuring changes in the production decisions and project-specific machinery
+> supplied by people. Failed and reopened transfers determine where that route
+> needs repair. The [transition-closure supplement](./transition-closure-and-continuation-reliability.md)
+> defines continuation reliability for a house that is already adequate; how
+
+**Before (hunk 2):**
+
+> question. This program tests a route toward both targets by measuring changes
+> in the production decisions and project-specific machinery supplied by people.
+> Failed and reopened transfers determine where that route needs repair.
+
+**After (hunk 2):**
+
+> question.
+
+## 29. Training versus learning under the training heading
+
+- **Commit:** `53349b6a`
+- **Kind:** Unintroduced term (undrawn distinction, cross-article)
+- **Operator's verdict:** "OK - apply these"
+- **Diagnosis:** Second-pass finding 6, flagged rather than recommended. Heading said training, body said learning transfer, relation never stated here; the training article defines training as the regime and learning as its retained result (its example 1). One clause states the relation. The operator accepted the flagged item with the rest.
+
+**Before:**
+
+> Learning transfer requires evidence that experience produces or revises the
+> house's project-specific machinery. The seed is outgrown when [learning
+
+**After:**
+
+> Learning transfer, the result the house's training must produce, requires
+> evidence that experience produces or revises the house's project-specific
+> machinery. The seed is outgrown when [learning
+
+## 30. The trial section's first sentence
+
+- **Commit:** `dfe8712f`
+- **Kind:** Restated heading
+- **Operator's verdict:** "OK - apply these"
+- **Diagnosis:** Second-pass finding 7, flagged rather than recommended. The first sentence repeated the section title. Merged with the test statement. Accepted with the rest.
+
+**Before:**
+
+> One possible trial asks which checks a Markdown edit needs. It would test
+> whether computation can make that decision and whether experience improves
+> later check selection. The [training article's hypothetical release
+
+**After:**
+
+> This trial would test whether computation can decide which checks a Markdown
+> edit needs, and whether experience improves later check selection. The
+> [training article's hypothetical release
