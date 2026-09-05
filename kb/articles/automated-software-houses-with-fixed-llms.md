@@ -96,16 +96,23 @@ product built for one customer per deployment must now serve many tenants.
 Several designs for representing tenant identity may pass the current tests,
 while only some preserve the assumptions on which later changes depend.
 
-Computer scientist Peter Naur called the understanding needed to choose and
-revise such designs a program theory. Coherent modification across later
-requests is its main behavioural test here. The proposed mechanism is that
-project-specific commitments constrain changes, direct diagnosis, and identify
-what recovery must preserve. Separating a person's identity from organizational
-membership suggests where to revise the model; tenant isolation states what
-must survive. These commitments could [keep search coherent until delayed
-evidence arrives](../notes/program-theory-sustains-search-under-delayed-feedback.md).
-Success tests the capacity; intervening on the commitments tests this proposed
-explanation of how the house achieves it.
+Computer scientist Peter Naur called the understanding needed to choose among
+such designs, and to revise them later, a *program theory*. In this article its
+main behavioural test is coherent modification: later requests are handled in
+ways that fit the earlier design.
+
+How would a house achieve that? The proposed mechanism is that retained
+project-specific commitments do three jobs: they rule out changes that break
+the design, they point diagnosis at the likely cause, and they say what a
+recovery must preserve. In the tenant example, the commitment that a person's
+identity is separate from their organizational membership shows where the data
+model has to change; the commitment to tenant isolation says what every change
+must keep true. Commitments like these could [keep the house's search for a
+design coherent while the consequences of a choice are still
+unknown](../notes/program-theory-sustains-search-under-delayed-feedback.md).
+Passing the test shows that the house has the capacity. Changing the
+commitments and observing what the house does next tests whether this
+mechanism explains it.
 
 [Naur's compiler case](../sources/programming-as-theory-building.ingest.md)
 reports that full code, annotations, extensive design discussion, and personal
