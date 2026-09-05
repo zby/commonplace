@@ -34,18 +34,14 @@ symbolic checks, and durable retention. People still supply decisive judgments
 about global fit, admission, delayed credit assignment, and authority over
 consequential changes.
 
-The program separates two transfers. **Operational transfer** moves a production
-decision from a person to computation. **Learning transfer** moves production
-and revision of the machinery behind that decision into the house's own
-production-driven learning loop. A hand-written validator can complete the
-first transfer without completing the second. The program tries bounded
+The program measures both computational control of production decisions and
+production-driven revision of the machinery behind them. It tries bounded
 transfers in an order discovered from production, declares each trial before it
 runs, measures outcomes outside the transferred role, and records rescues,
-failures, reversals, and reopened roles. The first article's witness requires
-operational transfer across every internal production role in its declared
-scope and horizon; it does not additionally require learning transfer. A house
-trained as the second article prescribes needs learning transfer as well, and
-the program aims at both.
+failures, reversals, and reopened roles. The first article's witness needs the
+production decisions under computational control across every internal role in
+its declared scope and horizon. A house trained as the second article
+prescribes also needs production-driven revision of the machinery.
 
 ## The starting point
 
@@ -71,10 +67,31 @@ observed outcomes, or acceptance judgments about visible behaviour is a user
 and stays outside. An automated house has no person in an internal role over
 its declared scope and horizon.
 
-The distance to that endpoint is not just a list of jobs to automate. It has two
-parts. The house must stop depending on people for production decisions, and it
-must stop depending on people to keep supplying the project-specific machinery
-that makes those decisions possible.
+## Two kinds of transfer
+
+A single statement that a role "moved" hides two different claims.
+
+| Claim | What must be shown |
+|---|---|
+| **Operational transfer** | Computation now makes the declared production decisions, including hard cases, without a person supplying them. External outcome and cost measures remain acceptable. |
+| **Learning transfer** | Production evidence causes the house's own process to produce or revise the project-specific machinery that makes those decisions, and the retained change affects later work. |
+
+A hand-written validator can complete operational transfer. It makes the
+declared production decision inside the house without a person being present at
+each case. But its criterion still came from a person. It does not complete
+learning transfer until the house can produce or revise that criterion and its
+machinery from production evidence.
+
+In principle, an operational path could be built entirely by hand: one
+validator for every recurring judgment, one diagnosis procedure for every
+failure class, and one fixed admission policy. A wholly hand-built starting
+house can be a witness if, with nobody inside, it also satisfies the
+program-theory, coherent-revision, and practical-reliability conditions. The
+first article's witness therefore does not require learning transfer, but
+operational transfer alone is not the full witness. Such a house is not trained
+in the second article's sense if none of its project-specific machinery was
+produced from production evidence by the house's own process. The program aims
+at both transfers, since the point of reaching the witness is to train it.
 
 ## Commonplace as a seed instance
 
@@ -135,21 +152,7 @@ is the process around the file, not the file's name.
 retained project state, try repeated, measured transfers of bounded production
 decisions. For each decision class, or the smallest coupled bundle that cannot
 be separated, build the missing premises, acceptance authority, independent
-checks, and continuity machinery. Then test two claims separately: whether
-computation now performs the production decisions, and whether production
-evidence now causes computationally produced changes to the machinery that
-performs them.
-
-The global order is discovered from production. Each local trial is declared
-before it runs. Its boundary, objective, horizon, workload, human contribution,
-expected transfer, outcome measures, and rescue rules are fixed for that trial.
-Failed, reversed, and reopened transfers remain part of the evidence.
-
-The path is incremental, but it need not be smooth. One transfer may create a
-new review role. Two roles may have to move together. A later demand may expose
-that an earlier transfer covered only routine cases. The bootstrap can use
-human rescues while learning from such failures. The human-free witness lineage
-starts only when those rescues stop.
+checks, and continuity machinery.
 
 The quantity that should contract is the set of required human decisions, not
 the number of people. One operator may stop doing one internal role while still
@@ -194,12 +197,12 @@ notes, LLM interpretation, symbolic checks and scheduling, and retained
 evidence. The final house need not keep those forms separate. The program
 requires the functions, not a permanent split among notes, models, and code.
 
-## What is fixed for each trial
+## How each trial is fixed and judged
 
 The program does not declare a universal sequence of stages. Production decides
-which transfer is ready next. But adaptive global order does not license a
-story written after the result. Before each attempted transfer, the program
-records:
+which transfer is ready next. The path is incremental, but it need not be
+smooth. Adaptive global order does not license a story written after the
+result, so each local trial is declared before it runs. The declaration records:
 
 - the decision class or coupled bundle;
 - the declared workload, boundary, objective, and horizon;
@@ -209,7 +212,8 @@ records:
 - external outcome, cost, rescue, and reopening measures.
 
 The result is then kept whether the transfer succeeds or fails. This prevents
-the discovered order from becoming only a list of successful cases.
+the discovered order from becoming only a list of successful cases. Failed,
+reversed, and reopened transfers remain part of the evidence.
 
 Operative retained state is a prerequisite for a claim that the house learns
 from what it retains. It need not be the first operational transfer. A narrow
@@ -226,39 +230,13 @@ an explicit admission gate, this includes computational admission and revision
 of its machinery. That is an endpoint obligation, not a claim about the literal
 last chronological move.
 
-Requirements, facts, outcomes, and acceptance judgments about visible behaviour
-remain with users throughout. Those are outside inputs, not internal roles.
-
-## Two kinds of transfer
-
-A single statement that a role "moved" hides two different claims.
-
-| Claim | What must be shown |
-|---|---|
-| **Operational transfer** | Computation now makes the declared production decisions, including hard cases, without a person supplying them. External outcome and cost measures remain acceptable. |
-| **Learning transfer** | Production evidence causes the house's own process to produce or revise the project-specific machinery that makes those decisions, and the retained change affects later work. |
-
-A hand-written validator can complete operational transfer. It makes the
-declared production decision inside the house without a person being present at
-each case. But its criterion still came from a person. It does not complete
-learning transfer until the house can produce or revise that criterion and its
-machinery from production evidence.
-
-The first article's witness does not require learning transfer, but operational
-transfer alone is not the full witness. A wholly hand-built starting house can
-be a witness if, with nobody inside, it also satisfies the program-theory,
-coherent-revision, and practical-reliability conditions. It is not a trained
-house in the second article's sense if none of its project-specific machinery
-was produced from production evidence by the house's own process. The program
-aims at both transfers, since the point of reaching the witness is to train it.
-
 Operational transfer can look complete while a person still handles the cases
 that matter. A person who fixes the three hard failures each month still holds
 the diagnosis role. The accounting must record who made each decision class,
-on which demands, and when. After the declared start of a human-free witness
-lineage, any internal diagnosis, successor selection, or state edit by a person
-is a rescue and breaks that lineage. During the bootstrap, the same rescue is
-allowed but must remain visible.
+on which demands, and when. During the bootstrap, a human rescue is allowed but
+must remain visible. After the declared start of a human-free witness lineage,
+any internal diagnosis, successor selection, or state edit by a person breaks
+that lineage.
 
 Transfers may also reopen. A new demand can show that a rule covered only the
 old workload, or that moving one role created another human review role. A
@@ -283,14 +261,6 @@ fixed](../notes/holding-the-client-fixed-exports-the-least-warrantable-decisions
 such as task choice, missing premises, feedback, and final acceptance.
 
 ## What the house's training must produce
-
-The operational path could be built entirely by hand: one validator for every
-recurring judgment, one diagnosis procedure for every failure class, and one
-fixed admission policy. That could produce an automated house in the first
-article's sense, and a witness for its conjecture. It would not produce a
-house that trains as the second article prescribes, because the
-project-specific machinery would still come from people rather than from the
-house's own process.
 
 The seed is legitimate. People may write the first notes, tools, checks, and
 safety boundaries. Later transfers must increasingly depend on machinery that

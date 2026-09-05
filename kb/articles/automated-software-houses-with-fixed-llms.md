@@ -50,13 +50,6 @@ process can produce relevant requests and consequences that were not listed
 one by one in advance. It does not mean that one house must handle every
 possible software product or request.
 
-The house may begin from a state constructed by people. That state may
-include the product, project-specific purposes and rationale, tools, tests,
-evaluators, workflows, context assembly, safety boundaries, and other
-production machinery. The conjecture asks whether this complete system can
-then do the work without a human inside it. How the starting state was
-created is not part of the claim.
-
 ## The boundary
 
 An *internal production role* is work the house depends on to develop and
@@ -144,15 +137,27 @@ The theory need not be stored as one explicit artifact. The house may use a
 separately retained rationale, reconstruct working understanding from
 records, or combine both. What matters is causal use: the project-specific
 state must change proposal, evaluation, diagnosis, or recovery, including
-where the relevant implication is not stated verbatim.
+where the relevant implication is not stated verbatim. This range does not
+claim that any one form is the best carrier.
 
-## What remains fixed
+## The witness run
+
+The house may begin from a state constructed by people. That state may
+include the product, project-specific purposes and rationale, tools, tests,
+evaluators, workflows, context assembly, safety boundaries, and other
+production machinery. How the starting state was created is not part of the
+claim.
 
 For a witness run, every eligible model version and every other learned
 component is declared and pinned before testing. This includes model weights,
 adapters, embedding models, learned routers, learned critics, and similar
 components. A provider endpoint that may change silently is not enough unless
 its model lineage can be audited for the run.
+
+The cutoff applies only to a run intended to establish the claim; ordinary
+development may use newer models. In a witness run, however, a newer model
+must not supply trial-specific theory, diagnose internal failures, compare
+candidates, select successors, or fill any other internal role.
 
 The product and the house's natural-language and symbolic state may change.
 The house may edit project rationale, code, tests, tools, evaluators,
@@ -169,11 +174,10 @@ request + operating evidence + current product and project state
   -> later request
 ```
 
-This is not a claim that the house learned to construct its starting state.
-Human-written starting theory and machinery are allowed. Once the witness run
-starts, however, every internal decision and successor state must come from
-the house's current state, its fixed learned components, and the permitted
-external inputs. A human rescue in an internal role ends that witness run.
+Once the witness run starts, every internal decision and successor state must
+come from the house's current state, its fixed learned components, and the
+permitted external inputs. A human rescue in an internal role ends that
+witness run.
 
 This is the transition closure of the declared starting state: later states
 must be reachable through the current house and permitted inputs. The
@@ -181,9 +185,10 @@ observation says where successors may come from; it does not require the
 house to outgrow or rediscover its starting design.
 
 Pinning is an experimental condition, not a recommendation for a mature
-software house. It isolates whether the system around current models can
-carry the complete software-house function without help from a newer or
-newly trained model.
+software house or a claim that updates outside model weights are generally
+better than weight updates. It isolates whether the system around current
+models can carry the complete software-house function without help from a
+newer or newly trained model.
 
 ## What a witness must show
 
@@ -199,11 +204,8 @@ One working house must show the following conjunction.
    exposes an inadequacy in the current product understanding, the house
    revises the product, retained project state, production machinery, or a
    combination, and the successor supports coherent later modification.
-   The starting understanding may have been supplied by people.
 3. **Automated continuation.** The house sustains those capacities across the
-   declared scope and horizon with no human in an internal production role.
-   Requirements, facts, visible outcomes, and product-level acceptance may
-   continue to come from users.
+   declared scope and horizon while satisfying the boundary above.
 4. **Practical reliability.** The declared evaluation must show useful
    success within the resource budget and continued adequacy across the
    horizon. One lucky path establishes only possibility, not practical
@@ -214,10 +216,6 @@ surface changes. Storing or citing a rationale is insufficient if it does not
 govern a later decision. A gate that can reject is insufficient if the
 accepted successor is not adequate. Passing tests on one requested change is
 insufficient if the house cannot preserve coherence across later demands.
-
-Initial acquisition of project theory is not an obligation. Neither is
-computational production of the starting tools, evaluators, or workflows.
-Those are stronger training and bootstrapping questions.
 
 ## Formal contrast and existing constructions
 
@@ -255,15 +253,8 @@ compose.
 
 ## Boundaries and epistemic status
 
-The conjecture is existential. It says only that at least one eligible
-construction works for some declared product scope, request process, horizon,
-and budget. It does not claim a universal software house.
-
-The witness rules out two post-hoc escapes. The learned components are pinned
-before testing, so a newer model or newly trained auxiliary component cannot
-supply the missing capacity. The scope, request process, horizon, resource
-budget, and success threshold are also declared before testing, so they
-cannot be narrowed after a failure.
+The scope, request process, horizon, resource budget, and success threshold
+are declared before testing so they cannot be narrowed after a failure.
 
 The request process must be able to expose relevant novelty rather than replay
 a fixed benchmark list. Its admissible histories, the history realized in one
@@ -272,25 +263,15 @@ The admissible set and selection procedure are fixed before the run. Repeated
 runs or another justified estimate must show that adequate operation receives
 usable probability and persists across the declared horizon.
 
-The cutoff applies only to a run intended to establish the claim. Ordinary
-development may use newer models. In a witness run, however, a newer model
-must not supply trial-specific theory, diagnose internal failures, compare
-candidates, select successors, or fill any other internal role.
-
 The need for a program theory is a theoretical argument, not a proved
 theorem. That current LLMs can participate in a system carrying that function,
 and that such a system is practically reachable, remain conjectures. A
 working house establishes the claim only over its declared regime. Failure of
 one architecture eliminates that path, not every possible construction.
 
-This article does not claim that explicit project theory is the best carrier,
-that updates outside model weights are generally better than weight updates,
-or that weights should stay fixed in a mature system. It also does not claim
-that the house acquired its starting understanding or learned to build its
-own production machinery. It asks only whether a computational software
-house can carry the complete production function with current learned
-components pinned. The [training
-article](./the-software-house-as-the-unit-of-training.md) asks how such a
-house should improve once it exists; the [bootstrap
+The [training article](./the-software-house-as-the-unit-of-training.md) asks
+how such a house should improve once it exists. The [bootstrap
 article](./bootstrapping-the-first-automated-software-house.md) asks how to
-reach it from a house that still has people in internal roles.
+reach it from a house that still has people in internal roles, including how
+the house might learn to build the project-specific machinery that its
+starting state may inherit from people.

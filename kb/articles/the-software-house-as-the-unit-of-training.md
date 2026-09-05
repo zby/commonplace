@@ -42,7 +42,7 @@ Bitter Lesson because computation, not people, produces and selects the
 task-specific structure. Its hard problem is governing those behaviour-changing
 writes.
 
-## The premise
+## The fixed-model premise
 
 The [companion article](./automated-software-houses-with-fixed-llms.md)
 conjectures that an automated software house is practically reachable with
@@ -67,44 +67,9 @@ they do not receive is a weight update from the house's production experience.
 The question is whether the surrounding house can nevertheless acquire and
 retain general project-specific production competence.
 
-## The doctrine
+## What is trained: the whole house
 
-**The automated software house is the unit of project-specific training.** Its
-[behaviour-determining
-organization](../notes/definitions/behavior-determining-organization.md) is the
-trainable state. The models are part of that organization but remain fixed; the
-writable training surface is the retained state and machinery around them. The
-explicit project theory mediates the transition from production experience to
-a governed change in that surface.
-
-The basic loop is:
-
-> **production experience → project-theory revision → theory-guided revision of
-> the house → later production → further evidence**
-
-A revision may change the project theory itself, product or production code,
-schemas, tests, tools, evaluators, retrieval, context assembly, scheduling,
-retention rules, or the update process. The theory need not remain the final
-storage place of every lesson. A conclusion stated first as a fallible
-explanation may become a test, validator, tool, or program. The learning is
-theory-mediated because the theory explains the evidence, identifies what
-should change, and guides the construction and assessment of the retained
-revision.
-
-Production supplies the training stream. Requirements provide new demands;
-operating consequences provide evidence about the results; retained history
-provides material for diagnosis and comparison. These episodes may be replayed,
-simulated, or augmented. A separate model-training pipeline is not
-constitutive of training the house.
-
-Not every product change is a training step. A patch that only carries the
-current requirement into the product is production. It counts as training only
-insofar as the retained change also alters the house's capacity on later
-requirements: for example by revising an assumption, introducing a reusable
-abstraction, adding an invariant, creating a tool, or changing how later work
-is evaluated.
-
-## Why the house is the unit
+**The automated software house is the unit of project-specific training.**
 
 User-visible production is joint behaviour. [The deployed system, not the
 model alone, is the unit of
@@ -123,13 +88,20 @@ retained project knowledge, production machinery, and every computational role
 on which later evolution depends. That complete persistent producer is the
 automated software house.
 
-A fixed-model training regime can revise this wider system. Much of what the
-house learns is specific to the product: that installs must be a single file,
-so the store is SQLite; that a documentation-only change is safe unless a
-build tool consumes the file; that the tenant identifier belongs in request
-context rather than the data model. Such lessons can be stated as theory,
-enforced by tests, compiled into tools, or embodied in code without changing
-model weights.
+Within the fixed-model regime, the house's [behaviour-determining
+organization](../notes/definitions/behavior-determining-organization.md) is the
+trainable state. The models are part of that organization but remain fixed; the
+writable training surface is the retained state and machinery around them. A
+revision may change the project theory itself, product or production code,
+schemas, tests, tools, evaluators, retrieval, context assembly, scheduling,
+retention rules, or the update process.
+
+Much of what the house learns is specific to the product: that installs must
+be a single file, so the store is SQLite; that a documentation-only change is
+safe unless a build tool consumes the file; that the tenant identifier belongs
+in request context rather than the data model. Such lessons can be stated as
+theory, enforced by tests, compiled into tools, or embodied in code without
+changing model weights.
 
 This wider update space matters because [learning inside a fixed decomposition
 inherits its
@@ -139,6 +111,21 @@ missing distinction, tool, action, or mapping outside it. Training the house
 can instead revise the decomposition, construct a new representation, or add
 the missing operation.
 
+## What counts as training
+
+Production supplies the training stream. Requirements provide new demands;
+operating consequences provide evidence about the results; retained history
+provides material for diagnosis and comparison. These episodes may be replayed,
+simulated, or augmented. A separate model-training pipeline is not
+constitutive of training the house.
+
+Not every product change is a training step. A patch that only carries the
+current requirement into the product is production. It counts as training only
+insofar as the retained change also alters the house's capacity on later
+requirements: for example by revising an assumption, introducing a reusable
+abstraction, adding an invariant, creating a tool, or changing how later work
+is evaluated.
+
 ## Why the learning is theory-mediated
 
 An explicit project theory is more than a memory of past episodes. It states
@@ -147,11 +134,18 @@ causal assumptions, invariants, mechanisms, and the scope within which they are
 expected to hold. It gives production experience an addressable object to
 confirm, challenge, narrow, or replace.
 
+The proposed loop is:
+
+> **production experience → project-theory revision → theory-guided revision of
+> the house → later production → further evidence**
+
 Theory mediates learning when it changes the update path. It can direct search
 toward one component, explain why a failure counts against an earlier
 assumption, predict which other behaviour a candidate revision may affect, and
-supply the rationale from which a test or tool is constructed. Merely loading
-or citing a note is not enough. A [retained-theory
+supply the rationale from which a test or tool is constructed. The theory need
+not remain the final storage place of every lesson. A conclusion stated first
+as a fallible explanation may become a test, validator, tool, or program.
+Merely loading or citing a note is not enough. A [retained-theory
 intervention](../notes/retained-theory-intervention-isolates-one-explicit-surface.md)
 can test the causal role of the theory by withholding, replacing, or perturbing
 it while holding the rest of the house fixed.
@@ -166,6 +160,10 @@ forms](../notes/definitions/representational-form.md): experience revises a
 theory, the theory motivates a validator, and later failures may reopen the
 validator's premise for interpretation and revision. The model remains fixed
 while the theory and symbolic production machinery coevolve around it.
+
+Using an explicit theory defines this proposed regime. Whether explicit theory
+improves learning over the alternatives is a separate empirical hypothesis,
+tested below.
 
 ## Why the regime can be general
 
@@ -308,23 +306,11 @@ scale, or if weight adaptation reaches the same competence at lower total cost.
 The Bitter Lesson makes that comparison necessary; it does not decide it by
 calling one retained form "learning" and another "structure."
 
-## What the doctrine does not claim
+## Limits
 
-It does not explain how the first automated software house is built. That is a
-separate construction problem.
-
-It does not claim that model weights are never useful to update. They are held
-fixed to isolate and define this training regime. Parametric and hybrid regimes
-remain alternatives.
-
-It does not claim unbounded learning. Fixed models, available tools,
-computation, objectives, and authority set a capability envelope.
-
-It does not count every software change as training. The change must alter how
-the house handles later demands, not only satisfy the present one.
-
-It does not claim that current systems have solved the regime. Theory search,
+Holding weights fixed isolates and defines this training regime; it does not
+claim that model weights are never useful to update. Parametric and hybrid
+regimes remain alternatives. Current systems have not solved theory search,
 causal use of retained theory, cross-artifact credit assignment, validation,
-and safe admission remain open problems. The article states the target: a
-fully automatic, general project-specific training loop in which the model
-stays fixed and the software house learns.
+and safe admission. The target is a fully automatic, general project-specific
+training loop in which the model stays fixed and the software house learns.
