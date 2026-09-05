@@ -1,128 +1,230 @@
 ---
-description: "pond review: Lance-backed cross-harness agent-session archive with canonical codecs, scheduled ingestion, BM25/vector recall, read-only MCP/SQL, and pull-only read-back"
+description: "Pond review: Lance-backed cross-client session archive with canonical codecs, scheduled trace acquisition, pull-only recall, read-only analytics, and restore"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
 tags: [trace-learning]
-last-checked: "2026-08-03"
+last-checked: "2026-09-04"
 ---
 
-# pond
+# Pond
 
-pond, by tenequm, is a Rust archive and retrieval layer for AI-agent sessions. It parses histories from multiple coding-agent harnesses into a canonical Session/Message/Part model, stores them in Lance on local or object storage, derives full-text and vector retrieval structures, and serves bounded transcript recall through CLI, HTTP, MCP, and read-only SQL. Its durable target is the trace corpus itself, not a curated fact or lesson store.
+Pond, built by tenequm, is a durable archive and interchange layer for agent
+sessions. It converts session formats from agent clients into one canonical
+`Session`/`Message`/`Part` representation, persists them in Lance, and exposes
+search, transcript reads, SQL analytics, and restore-to-client operations. It
+retains interaction traces for later use but does not run the agent loop that
+decides when retrieved material enters a model context.
 
 **Repository:** https://github.com/tenequm/pond
 
-**Reviewed commit:** [9ab0165c1e68f3e3d35eb22ca6e17ed8a07ec808](https://github.com/tenequm/pond/commit/9ab0165c1e68f3e3d35eb22ca6e17ed8a07ec808)
+**Reviewed commit:** [`bb4f791ba1be6d4a70cf007e1bee9eb8008d9334`](https://github.com/tenequm/pond/commit/bb4f791ba1be6d4a70cf007e1bee9eb8008d9334)
 
-**Last checked:** 2026-08-03
+**Last checked:** 2026-09-04
 
 ## Core Ideas
 
-**The canonical session archive is the product.** Pond models a session as messages and typed parts, including conversational text, reasoning, files, tool calls/results, approval events, provider options, project/source metadata, and parent-session links. Adapters preserve source-specific records in the options bag while core types require provenance and prevent several synthesized fallback values, so future agents can inspect what actually happened rather than only a preselected summary ([docs/spec.md](https://github.com/tenequm/pond/blob/9ab0165c1e68f3e3d35eb22ca6e17ed8a07ec808/docs/spec.md), [packages/pond/src/wire.rs](https://github.com/tenequm/pond/blob/9ab0165c1e68f3e3d35eb22ca6e17ed8a07ec808/packages/pond/src/wire.rs), [packages/pond/src/adapter/mod.rs](https://github.com/tenequm/pond/blob/9ab0165c1e68f3e3d35eb22ca6e17ed8a07ec808/packages/pond/src/adapter/mod.rs)).
+**The canonical session model is the durable record and interchange boundary.**
+Adapters parse client-specific traces into typed sessions, messages, and parts;
+the same adapters serialize canonical sessions back to native or foreign client
+formats. Canonical rows retain source agent, project, timestamps, structured
+tool and file parts, source-specific options, injected-versus-conversational
+provenance, and an ingest-host stamp
+([canonical model](https://github.com/tenequm/pond/blob/bb4f791ba1be6d4a70cf007e1bee9eb8008d9334/docs/spec.md#L268-L433),
+[validator](https://github.com/tenequm/pond/blob/bb4f791ba1be6d4a70cf007e1bee9eb8008d9334/packages/pond/src/sessions.rs#L3962-L4185)).
+This is an exact mapping to trace-extracted retained memory: Pond transforms an
+external execution trace without trying to derive a lesson from it.
 
-**Cross-harness interchange is implemented as typed codecs.** The adapter registry covers Claude Code, Claude Desktop, Claude.ai export, Codex CLI, OpenCode, OpenClaw, NanoClaw, Hermes, and pi-coding-agent. Each factory discovers/opens one source format and can serialize canonical sessions toward a target format; source extractors and ingest validation enforce identity, ordering, parentage, provenance, and additive writes ([packages/pond/src/adapter/mod.rs](https://github.com/tenequm/pond/blob/9ab0165c1e68f3e3d35eb22ca6e17ed8a07ec808/packages/pond/src/adapter/mod.rs), [packages/pond/src/adapter/codex_cli.rs](https://github.com/tenequm/pond/blob/9ab0165c1e68f3e3d35eb22ca6e17ed8a07ec808/packages/pond/src/adapter/codex_cli.rs), [packages/pond/src/handlers.rs](https://github.com/tenequm/pond/blob/9ab0165c1e68f3e3d35eb22ca6e17ed8a07ec808/packages/pond/src/handlers.rs)). Native and foreign serializers exist, but the inspected CLI does not yet expose restoration into a harness; the production restore helper is explicitly described as future wiring ([packages/pond/src/adapter/mod.rs](https://github.com/tenequm/pond/blob/9ab0165c1e68f3e3d35eb22ca6e17ed8a07ec808/packages/pond/src/adapter/mod.rs)).
+**Fidelity is protected structurally, not semantically.** The adapter seam uses
+sealed extracted values so adapter code cannot fill missing source fields with
+ordinary literals; canonical validation checks ordering, identity, lineage,
+provenance, and Pond-owned metadata. Append writes leave matching composite
+keys unchanged. These mechanisms protect record shape and source attribution.
+They do not check whether a human, model, or tool statement in the trace is
+true.
 
-**Context efficiency comes from selective, progressively deeper reads.** Ingest computes one `search_text` per message from conversational parts and excludes system/tool carrier rows, reasoning, tool bodies, and harness-injected scaffolding from ordinary search. A query chooses either BM25 full-text or vector retrieval, pushes project/session/source/date filters before ranking, excludes subagents by default, groups hits by session, returns roughly 600-character match windows, and exposes whole-session or one-message expansion as separate calls. Search also reports the in-scope message count so an empty result is not silently read as proof that no relevant history exists ([docs/spec.md](https://github.com/tenequm/pond/blob/9ab0165c1e68f3e3d35eb22ca6e17ed8a07ec808/docs/spec.md), [packages/pond/src/handlers.rs](https://github.com/tenequm/pond/blob/9ab0165c1e68f3e3d35eb22ca6e17ed8a07ec808/packages/pond/src/handlers.rs), [packages/pond/src/transport.rs](https://github.com/tenequm/pond/blob/9ab0165c1e68f3e3d35eb22ca6e17ed8a07ec808/packages/pond/src/transport.rs)).
+> An adapter MUST NOT substitute a sentinel, default, or placeholder for source data it could not find.
+> --- [docs/spec.md](https://github.com/tenequm/pond/blob/bb4f791ba1be6d4a70cf007e1bee9eb8008d9334/docs/spec.md)
 
-**Trace ingestion is staged and can run unattended.** Explicit, scheduled, or in-server sync discovers enabled adapters, skips sources whose watermarks are already represented, streams canonical events through validation, embeds new searchable messages inline, appends them to three Lance datasets, and folds deferred index tails. `pond optimize` handles old or model-stale embedding backlogs through the same embedding seam. This is a durable trace-to-parametric-ranking loop, but it does not infer reusable lessons from the sessions ([packages/pond/src/main.rs](https://github.com/tenequm/pond/blob/9ab0165c1e68f3e3d35eb22ca6e17ed8a07ec808/packages/pond/src/main.rs), [packages/pond/src/embed.rs](https://github.com/tenequm/pond/blob/9ab0165c1e68f3e3d35eb22ca6e17ed8a07ec808/packages/pond/src/embed.rs), [packages/pond/src/substrate.rs](https://github.com/tenequm/pond/blob/9ab0165c1e68f3e3d35eb22ca6e17ed8a07ec808/packages/pond/src/substrate.rs)).
+**Recall is explicit and progressively disclosed.** An agent or human first
+searches with BM25 FTS or optional vector similarity, receives bounded excerpts
+grouped by session, then expands a selected session or message. Filters, limits,
+IDs, scope counts, pagination, and integration-level output caps control volume
+and complexity. This is context engineering by pull and staged expansion, not
+automatic recall
+([search](https://github.com/tenequm/pond/blob/bb4f791ba1be6d4a70cf007e1bee9eb8008d9334/packages/pond/src/handlers.rs#L1049-L1375),
+[get](https://github.com/tenequm/pond/blob/bb4f791ba1be6d4a70cf007e1bee9eb8008d9334/packages/pond/src/handlers.rs#L820-L1043)).
+Actual precision, context dilution, model receipt, and behavioral effect were
+not verified from static code.
 
-**Trust is preservation- and provenance-oriented, not semantic-review-oriented.** Pond distinguishes conversational from injected parts, records source and ingest-host provenance, makes the canonical store authoritative after ingest, keeps MCP strictly read-only, and validates writes at typed and storage chokepoints. The repository tests codec and storage behavior and carries search benchmarks, but whether a retrieved old session is correct for the present task, and whether an agent follows it faithfully, are not verified by these mechanisms ([docs/spec.md](https://github.com/tenequm/pond/blob/9ab0165c1e68f3e3d35eb22ca6e17ed8a07ec808/docs/spec.md), [packages/pond/src/wire.rs](https://github.com/tenequm/pond/blob/9ab0165c1e68f3e3d35eb22ca6e17ed8a07ec808/packages/pond/src/wire.rs), [packages/pond/src/transport.rs](https://github.com/tenequm/pond/blob/9ab0165c1e68f3e3d35eb22ca6e17ed8a07ec808/packages/pond/src/transport.rs)). Adoption is local-first and inspectable at the command/schema level, though Lance datasets are less directly editable than Markdown and the first semantic-search use may download a roughly 500 MB model.
+**Searchable memory excludes low-signal scaffolding without deleting it.**
+`search_text` includes user/assistant conversational text and selected file
+metadata, while system, reasoning, tool, and injected content remain available
+through full session/message reads and restore. Pond therefore uses different
+projections for discovery and preservation instead of compacting the source
+record into a summary
+([search projection](https://github.com/tenequm/pond/blob/bb4f791ba1be6d4a70cf007e1bee9eb8008d9334/packages/pond/src/sessions.rs#L4440-L4520)).
+
+**Host integrations add routing and policy, not autonomous memory use.** Pi,
+OpenClaw, and Hermes register four read-only recall tools. Static server
+instructions, tool descriptions, a bundled skill, and Pi prompt guidelines tell
+the model when and how to search; these are authored system-definition
+artifacts, not accumulated memory. OpenClaw also translates host session
+visibility into a project clamp and restricts whole-corpus SQL, but direct core,
+Pi, and Hermes access are alternate paths. The wrapper policy is not core
+authorization
+([Pi tools and guidance](https://github.com/tenequm/pond/blob/bb4f791ba1be6d4a70cf007e1bee9eb8008d9334/packages/pi-pond/src/tools.ts#L73-L229),
+[OpenClaw tools](https://github.com/tenequm/pond/blob/bb4f791ba1be6d4a70cf007e1bee9eb8008d9334/packages/openclaw-pond/src/tools.ts#L131-L317),
+[Hermes tools](https://github.com/tenequm/pond/blob/bb4f791ba1be6d4a70cf007e1bee9eb8008d9334/packages/hermes-pond/tools.py#L175-L246),
+[MCP instructions](https://github.com/tenequm/pond/blob/bb4f791ba1be6d4a70cf007e1bee9eb8008d9334/packages/pond/src/transport.rs#L1202-L1260),
+[bundled skill](https://github.com/tenequm/pond/blob/bb4f791ba1be6d4a70cf007e1bee9eb8008d9334/packages/pond/SKILL.md#L1-L57),
+[OpenClaw scope](https://github.com/tenequm/pond/blob/bb4f791ba1be6d4a70cf007e1bee9eb8008d9334/packages/openclaw-pond/src/scope.ts#L71-L180)).
+
+**Adoption is local-first but the trust envelope remains operator-owned.** Pond
+ships as one binary with local or object-store Lance storage, explicit adapters,
+HTTP/MCP surfaces, and first-party host plugins. Operators can inspect and move
+the canonical data and restore sessions to client files. Hosted identity,
+authorization, encryption, tenant routing, and object-store IAM are assigned to
+the integrator, so this source review does not establish a deployment-level
+privacy boundary
+([deployment scope](https://github.com/tenequm/pond/blob/bb4f791ba1be6d4a70cf007e1bee9eb8008d9334/docs/spec.md#L83-L108)).
 
 ## Artifact analysis
 
-- **Storage substrate:** `files` `service-object` `vector` — The three Lance datasets and their manifests/indexes persist either in a local directory or in an operator-owned S3/GCS/Azure-compatible object store; `messages.vector` and its optional IVF_SQ index provide vector-store behavior over the same dataset ([packages/pond/src/substrate.rs](https://github.com/tenequm/pond/blob/9ab0165c1e68f3e3d35eb22ca6e17ed8a07ec808/packages/pond/src/substrate.rs), [packages/pond/src/sessions.rs](https://github.com/tenequm/pond/blob/9ab0165c1e68f3e3d35eb22ca6e17ed8a07ec808/packages/pond/src/sessions.rs)).
-- **Representational form:** `natural-language` `symbolic` `parametric` — Conversational text and transcript views are natural-language; canonical rows, typed parts, provenance, adapter metadata, schemas, filters, indexes, config, and tool contracts are symbolic; per-message embedding vectors are retained parametric representations used for similarity ranking.
-- **Lineage:** `authored` `trace-extracted` `other-compiled` — Configuration, the bundled skill, schemas, and retrieval policy are authored; canonical sessions, `search_text`, and message embeddings are extracted from agent traces; FTS/vector/scalar indexes and row maps are compiled from already-retained dataset columns. A source session growing invalidates the sync watermark, an embedding-model id change invalidates its vectors, and a dataset tail advances the index-fold state ([packages/pond/src/adapter/mod.rs](https://github.com/tenequm/pond/blob/9ab0165c1e68f3e3d35eb22ca6e17ed8a07ec808/packages/pond/src/adapter/mod.rs), [packages/pond/src/embed.rs](https://github.com/tenequm/pond/blob/9ab0165c1e68f3e3d35eb22ca6e17ed8a07ec808/packages/pond/src/embed.rs), [packages/pond/src/substrate.rs](https://github.com/tenequm/pond/blob/9ab0165c1e68f3e3d35eb22ca6e17ed8a07ec808/packages/pond/src/substrate.rs)).
-- **Behavioral authority:** `knowledge` `instruction` `routing` `validation` `ranking` — Stored sessions and returned transcript windows are knowledge artifacts for agents and humans; the installed skill instructs agents when and how to recall; tool schemas, adapter/source/project filters, and session/message identifiers route reads; canonical types, ingest checks, storage chokepoints, and read-only SQL/MCP gates validate operations; BM25, cosine, recency, scalar prefilters, and grouping rank recall. Pond does not promote trace content into an enforced rule or reviewed instruction.
+- **Storage substrate:** `files` `vector` — Canonical rows, full-text structures, and optional vectors persist in local or object-store-backed Lance datasets; restored sessions and SQL exports are ordinary destination files.
+- **Representational form:** `natural-language` `symbolic` `parametric` — Conversation and transcript text are natural-language; canonical schemas, IDs, metadata, indexes, filters, and tool contracts are symbolic; optional embeddings provide parametric similarity signals.
+- **Lineage:** `authored` `trace-extracted` `other-compiled` — Routing instructions and integration policy are authored; the canonical corpus is transformed from agent-session traces; search text, indexes, and embeddings are compiled from canonical rows.
+- **Behavioral authority:** `knowledge` `instruction` `enforcement` `routing` `validation` `ranking` — Retrieved sessions advise as knowledge; server/skill/tool text instructs and routes; OpenClaw scope code enforces within its wrapper; ingest validators admit rows; FTS/vector scores rank excerpts. No corpus artifact is promoted to an accepted rule or learned policy.
 
-**Canonical session corpus.** Sessions, messages, and parts are durable trace-extracted knowledge artifacts. Natural-language conversational content sits inside a symbolic envelope carrying role, timestamps, source agent, project, parentage, typed parts, options, and provenance. The canonical dataset is the retained source of truth; source records needed for faithful reconstruction are carried inside its options rather than kept in a second raw store ([docs/spec.md](https://github.com/tenequm/pond/blob/9ab0165c1e68f3e3d35eb22ca6e17ed8a07ec808/docs/spec.md), [packages/pond/src/wire.rs](https://github.com/tenequm/pond/blob/9ab0165c1e68f3e3d35eb22ca6e17ed8a07ec808/packages/pond/src/wire.rs)).
+**Canonical session corpus.** The operative retained memory is a set of Lance
+rows for sessions, messages, and typed parts. Natural-language and symbolic
+content is trace-extracted through an adapter rather than copied byte-for-byte.
+The validator and no-synthesis seam give it structural validation authority;
+when later retrieved, it remains a knowledge artifact with advisory force.
 
-**Search text, embeddings, and indexes.** `search_text` is a lossy retrieval projection over the value-complete archive: it keeps conversational text and file metadata while excluding other preserved parts. One locally loaded E5/XLM-RoBERTa pass produces one FP16 vector per message, truncated to 512 model tokens with no chunking; BM25 and vector indexes then compile those columns into access structures. These artifacts have ranking authority, not truth authority, and retrieval precision is not verified from source inspection alone ([packages/pond/src/embed.rs](https://github.com/tenequm/pond/blob/9ab0165c1e68f3e3d35eb22ca6e17ed8a07ec808/packages/pond/src/embed.rs), [packages/pond/src/sessions.rs](https://github.com/tenequm/pond/blob/9ab0165c1e68f3e3d35eb22ca6e17ed8a07ec808/packages/pond/src/sessions.rs)).
+**Search access structures.** `search_text`, FTS indexes, and optional embeddings
+are other-compiled from the corpus. They carry routing and ranking authority for
+a query, not authority over the truth of the selected content. A source-row
+change or embedding-model mismatch invalidates or regenerates the corresponding
+access structure
+([embedding writes](https://github.com/tenequm/pond/blob/bb4f791ba1be6d4a70cf007e1bee9eb8008d9334/packages/pond/src/sessions.rs#L1000-L1050)).
 
-**Skill, tool schemas, and configuration.** The bundled `SKILL.md`, MCP instructions/resources, adapter configuration, storage URL/credential rules, and search settings are authored system-definition artifacts. They tell an agent when to use `pond_search`, when to expand a session/message, and when SQL is the correct escape hatch; the MCP surface itself exposes no write tool ([packages/pond/SKILL.md](https://github.com/tenequm/pond/blob/9ab0165c1e68f3e3d35eb22ca6e17ed8a07ec808/packages/pond/SKILL.md), [packages/pond/src/transport.rs](https://github.com/tenequm/pond/blob/9ab0165c1e68f3e3d35eb22ca6e17ed8a07ec808/packages/pond/src/transport.rs), [packages/pond/src/config.rs](https://github.com/tenequm/pond/blob/9ab0165c1e68f3e3d35eb22ca6e17ed8a07ec808/packages/pond/src/config.rs)).
+**Routing and scope artifacts.** MCP server instructions, the bundled
+`SKILL.md`, integration tool descriptions, and OpenClaw scope code are authored
+system-definition artifacts. They can route a host agent toward search and, in
+OpenClaw, block or narrow tool calls. Their effective authority depends on the
+external host loading and honoring them; that behavior was not verified from
+Pond's code.
 
-**Promotion path.** Pond promotes raw harness histories into a canonical trace archive, a conversational search projection, parametric message vectors, and compiled indexes. This strengthens form and retrieval authority, but not semantic authority: there is no implemented step from a recalled episode to a reviewed fact, procedural rule, validator, or enforced gate.
+**Restored client files.** `pond resume` non-ampliatively reshapes a stored
+session into a target adapter's filesystem format. Destination containment,
+collision refusal, and rollback protect the write. Native restore is labelled
+value-complete and foreign restore best effort, but no adapter-by-adapter
+round-trip instance was observed
+([restore](https://github.com/tenequm/pond/blob/bb4f791ba1be6d4a70cf007e1bee9eb8008d9334/packages/pond/src/main.rs#L1924-L2165)).
 
-## Comparison with Our System
-
-Pond and Commonplace both favor operator-owned durable state, explicit provenance, typed boundaries, and agent-facing retrieval commands. Pond is stronger at retaining high-volume execution evidence across heterogeneous harnesses and at serving bounded recall from a corpus too large to load directly. Commonplace is stronger at turning selected evidence into readable, linkable, reviewed artifacts whose type and behavioral authority are explicit.
-
-The systems therefore answer different questions. Pond answers “what happened in prior sessions?” by preserving and ranking traces. Commonplace answers “what should future agents believe or do?” through authored notes, source-grounded reviews, instructions, schemas, and validation. Pond's canonical archive is columnar and operationally robust but not pleasant to hand-edit; Commonplace's Markdown is transparent and version-controlled but is intentionally not a raw event warehouse.
-
-Their trust models also diverge. Pond's no-synthesis and provenance rules protect fidelity to the source trace, while Commonplace's review and citation rules protect the meaning of promoted claims. Combining the two would require an explicit promotion boundary: a Pond result can be evidence for a Commonplace artifact, but relevance rank or recurrence cannot itself grant the artifact authority.
-
-### Borrowable Ideas
-
-**Report retrieval scope even when no result matches.** Ready now for agent-facing search. Pond's `searchable_in_scope` count distinguishes an empty corpus/filter slice from weak relevance, reducing false claims of absence.
-
-**Make heterogeneous import omissions unrepresentable.** Ready for any future Commonplace importer. Pond's sealed extractor values, per-part provenance, and mandatory attribution are a useful shape when several source formats map into one retained model.
-
-**Use a trace archive beneath, not inside, the knowledge library.** Needs a concrete operational use case. Commonplace could use an external Pond-like corpus as evidence for investigations while promoting only selected, cited findings into `kb/`; raw session rows should not become ordinary library notes.
-
-**Expose progressive transcript expansion as separate tools.** Ready where review output references large traces. Search snippets, session pages, and one-message tool-body expansion give agents explicit control over both volume and semantic complexity.
-
-**Do not treat embeddings as review state.** Ready as a constraint. Pond's vectors are rebuildable ranking aids; Commonplace should keep any similar index non-load-bearing and never let similarity substitute for source grounding or semantic review.
+**Promotion path.** Pond has no route that promotes an archived statement from
+advisory session evidence to an instruction, validator, accepted claim, or
+learned policy. A model may act on a retrieved transcript, but that host-owned
+action is not a retained authority transition inside Pond.
 
 ## Write side
 
-**Write agency:** `automatic` — Enabled adapters, scheduled sync, `serve --with-sync`, HTTP ingest, inline embedding, backlog optimization, copying, and index maintenance mechanically acquire or derive retained state. Operators configure and trigger these paths, but the corpus has no manual semantic-curation interface comparable to editing a note.
+**Write agency:** `automatic` — Manual, scheduled, and host-lifecycle triggers
+run deterministic ingestion that discovers source traces, converts them to
+canonical events, validates them, appends new rows, computes optional
+embeddings, and maintains search indexes. The operator chooses sources and can
+trigger sync, but Pond does not expose a manual memory-authoring or editing
+surface.
 
-**Curation operations:** `none` — Automatic writes acquire canonical trace rows, produce embeddings, and maintain access structures. The inspected code does not consolidate sessions into summaries, deduplicate semantically similar memories, evolve stored content from later evidence, synthesize new claims, invalidate contradictions while retaining history, decay by age/capacity, or promote recurrent content.
+**Curation operations:** `none` — Pond acquires traces and maintains access
+structures. It does not consolidate, evolve, synthesize, invalidate, decay, or
+promote already-stored session content. Composite-key insertion prevents
+duplicate rows; it is not semantic near-duplicate merging. At the reviewed
+commit, no implemented session-erasure path supplies the only planned deletion
+exception.
 
 ### Trace-learning
 
-**Trace source:** `session-logs` `tool-traces` `event-streams` `trajectories` — Adapters consume harness session files/databases and exports containing user/assistant turns, system carriers, reasoning, files, tool calls/results, approvals, subagent links, timestamps, and provider metadata.
+**Trace source:** `session-logs` `tool-traces` `event-streams` — Enabled
+adapters consume client session files and event records containing messages,
+tool calls/results, reasoning, approvals, and harness-injected parts.
 
-**Learning scope:** `cross-task` — One store can accumulate sessions across projects, machines, source harnesses, and time; project, session, source-agent, and date fields scope later retrieval rather than separate the learning store.
+**Learning scope:** `per-project` `cross-task` — Project and source-agent
+metadata remain filterable, while one Pond corpus can retain sessions across
+projects, machines, clients, and later tasks.
 
-**Learning timing:** `offline` `staged` — Normal adapters read histories after they have been written by their harness, either on explicit/scheduled sync or a periodic in-server cycle. Live ingestion while a session is running is explicitly deferred in the reviewed specification ([docs/spec.md](https://github.com/tenequm/pond/blob/9ab0165c1e68f3e3d35eb22ca6e17ed8a07ec808/docs/spec.md)).
+**Learning timing:** `offline` `staged` — Sync runs manually, periodically, or
+at host lifecycle boundaries after clients have written source traces; index
+maintenance can run after row commits.
 
-**Distilled form:** `natural-language` `symbolic` `parametric` — The trace becomes retained conversational text, a symbolic canonical/session schema and `search_text` projection, and parametric message embeddings used for future ranking.
+**Distilled form:** `natural-language` `symbolic` `parametric` — Trace content
+becomes canonical natural-language and symbolic rows plus optional embeddings.
+“Distilled” is only the controlled field name here: Pond preserves and indexes
+the trace rather than summarizing or extracting higher-level lessons.
 
-**Extraction.** The oracle is mechanical, not an LLM judge: source-specific adapters parse known record shapes, sealed extractors preserve absence instead of inventing values, ingest validation rejects or attributes malformed events, core code decides which conversational parts become `search_text`, and the configured embedding model maps that text to one vector. Pond learns how to retrieve the trace, not what lesson the trace contains.
-
-**Scope and timing.** Sync can run every few minutes and embed new searchable messages in the same append commit, but the source boundary is still a previously persisted harness history. Embedding-model changes cause a staged re-embedding pass; dataset growth causes later index folds, while unfurled tails remain searchable by flat scan.
-
-**Survey fit.** Pond belongs beside deja-vu in the survey's weak-promotion, trace-to-recall branch, but adds a value-complete cross-harness canonical archive, parametric semantic ranking, typed provenance, and object-store scale. It strengthens the survey claim that trace-derived memory can remain a knowledge/ranking artifact and still affect future work without being distilled into lessons, rules, or harness mutations.
+Pond belongs at the archival-acquisition end of the trace-learning survey. It
+strengthens the distinction between retaining raw interaction evidence and
+learning a higher-authority rule from it. Its adapters perform structured,
+loss-aware conversion, but there is no judge, semantic distillation step, or
+promotion policy. The raw-to-distilled loop therefore stops at canonicalization
+and access-structure compilation.
 
 ## Read-back
 
-**Read-back:** `pull` — Retained sessions reach an agent only after the agent, user, or host explicitly invokes `pond_search`, `pond_get_session`, `pond_get_message`, or `pond_sql`. The bundled skill and MCP tool descriptions encourage those calls but are static routing instructions, not pushed retained memory.
-
-Pull selection is deliberately bounded: a caller chooses vector or BM25, filters by project/session/source/date, raises a capped session limit when needed, then expands only the relevant session or message. Search suppresses injected/tool/reasoning bodies from the first retrieval surface, pages long sessions, and byte-bounds plugin responses. Actual context dilution, retrieval precision, and whether the returned history changes the receiving agent's behavior are not verified from code.
-
-Other consumers include humans using CLI search/get/SQL/status, OpenClaw and Hermes agents through read-only projected tools, HTTP clients, and operators copying or inspecting archives. None of these surfaces automatically injects recalled session content into every model invocation ([packages/openclaw-pond/src/tools.ts](https://github.com/tenequm/pond/blob/9ab0165c1e68f3e3d35eb22ca6e17ed8a07ec808/packages/openclaw-pond/src/tools.ts), [packages/hermes-pond/tools.py](https://github.com/tenequm/pond/blob/9ab0165c1e68f3e3d35eb22ca6e17ed8a07ec808/packages/hermes-pond/tools.py)).
+**Read-back:** `pull` — Retained session memory reaches an agent only after the
+agent or user deliberately invokes search, get, SQL, or resume. Pi, OpenClaw,
+and Hermes do not register a hook that automatically selects and injects past
+session content. Search is followed by bounded expansion, and weak results do
+not prove that the archive lacks an answer. Authored server instructions and
+tool descriptions may be loaded automatically, but static routing guidance is
+not retained-memory read-back. The external host owns actual context insertion
+and model use, so read-back faithfulness and behavioral effect are not verified
+from code.
 
 ## Curiosity Pass
 
-**Pond is deliberately an archive beneath memory, yet it still qualifies as trace-learning here.** It does not extract lessons, but it does transform agent traces into durable parametric embeddings and ranking structures that change which past behavior is retrieved. The `trace-learning` label therefore describes its learned access path, not semantic knowledge distillation.
+**“Lossless” is a contract with two different evidence levels.** The adapter
+seam, canonical validator, source options, and native/foreign restore branch are
+implemented. The stronger statement that every registered adapter preserves
+every source value through a native round trip remains unobserved without the
+adapter conformance fixtures and live outputs.
 
-**“Lossless archive” and “selective search” are compatible because they are separate paths.** Canonical storage preserves tool bodies, reasoning, injected scaffolding, and provider details; ordinary search intentionally omits much of that material and exposes it through later message/SQL expansion. This is a useful separation of preservation from context budgeting.
+**“No prompt injection” is accurate only when narrowed to recalled content.**
+The integrations do not push past-session memory, but Pond does load or register
+server instructions and tool descriptions, and Pi adds prompt guidelines about
+when to use the tools. This does not change the pull-only memory verdict; it
+does expose a terminology boundary between memory injection and routing
+instruction.
 
-**The specification overstates implemented erasure.** It specifies `pond erase` as the operator-only append-only exception, but the reviewed sync path only detects some OpenClaw deletions and reports that erasure is pending:
+**Read-only has an object boundary.** MCP has no canonical ingest or delete
+tool, and the SQL parser rejects mutations of the Lance corpus. SQL formatting
+can write an export artifact, restore writes client files, and local-store
+self-heal may rename damaged storage. “Read-only” is therefore precise for the
+MCP corpus surface, not for every filesystem effect a Pond command can have.
 
-> openclaw: {} explicitly deleted session(s) detected (erase pending; pond erase is not yet implemented): {}
-> --- [packages/pond/src/main.rs](https://github.com/tenequm/pond/blob/9ab0165c1e68f3e3d35eb22ca6e17ed8a07ec808/packages/pond/src/main.rs)
+**The specification and implementation disagree about erasure.** The design
+specifies an operator-only true purge and resurrection denylist, while the
+README still places `pond erase` next on the roadmap. The inspected
+implementation is explicit:
 
-This leaves the documented byte-purge and resurrection-denylist privacy contract unimplemented at the reviewed revision ([docs/spec.md](https://github.com/tenequm/pond/blob/9ab0165c1e68f3e3d35eb22ca6e17ed8a07ec808/docs/spec.md)).
+> erase pending; pond erase is not yet implemented
+> --- [packages/pond/src/main.rs](https://github.com/tenequm/pond/blob/bb4f791ba1be6d4a70cf007e1bee9eb8008d9334/packages/pond/src/main.rs)
 
-**Cross-client continuation is also ahead of its production surface.** Adapter serializers and fidelity tests support the codec claim, but the core source says the production restore CLI “will route through” the helper, and the current `pond copy` restore path restores a Pond archive into a Pond store rather than materializing a session into another agent client ([packages/pond/src/adapter/mod.rs](https://github.com/tenequm/pond/blob/9ab0165c1e68f3e3d35eb22ca6e17ed8a07ec808/packages/pond/src/adapter/mod.rs), [packages/pond/src/main.rs](https://github.com/tenequm/pond/blob/9ab0165c1e68f3e3d35eb22ca6e17ed8a07ec808/packages/pond/src/main.rs)).
+No implemented expiry, pruning, contradiction invalidation, or true-purge route
+was found in the inspected boundary. At this commit, the stored corpus is
+append-only in practice unless an operator changes the storage outside Pond.
 
-**One-vector-per-message is a simple but consequential boundary.** It makes embedding cost and lineage clear, while 512-token truncation means semantic rank may ignore the tail of a long message even though the complete content remains retrievable from canonical storage.
-
-## What to Watch
-
-- Whether `pond erase` lands with byte purge plus a resurrection denylist; until then, Pond's preservation guarantee is stronger than its deletion/privacy guarantee.
-- Whether adapter serializers gain a production command for restoring a canonical session into a different harness; that determines whether interchange is a usable workflow or mainly a tested internal seam.
-- Whether deferred live-write is implemented; it would move trace learning from offline/staged history ingestion toward online capture and change the durability boundary for in-flight events.
-- Whether the planned FM-index for `parts.variant_data` lands; indexed tool-body substring search would reduce the need for scoped SQL scans and make tool traces a first-class retrieval surface.
-- Whether the deferred versioned-document consumer is activated; that would make Pond a knowledge/memory store as well as an archive and force new authority, curation, and read-back decisions.
+**Provenance is not truth warrant.** Injected/conversational markers,
+source-agent metadata, timestamps, options, and ingest-host stamps help a
+reader reconstruct origin. Pond does not test propositions, record acceptance,
+or prevent a later model from treating a plausible but false archived statement
+as advice.
 
 Relevant Notes:
 
-- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - distinguishes: Pond retains a large session corpus, but memory read-back remains explicit pull through search/get/SQL.
-- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - applies: canonical traces, search projections, embeddings, indexes, skills, and config carry different forms and authorities.
-- [Knowledge artifact](../../notes/definitions/knowledge-artifact.md) - classifies: archived sessions and retrieved transcript windows serve as evidence, reference, and context.
-- [System-definition artifact](../../notes/definitions/system-definition-artifact.md) - classifies: adapter contracts, tool schemas, the bundled skill, validation, and ranking policy shape how traces are written and consumed.
-- [Use trace extraction as meta-learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md) - qualifies: Pond derives durable retrieval state from traces but stops before lesson or rule extraction.
-- [Rule-based context selection needs a pre-existing signal](../../notes/rule-based-context-selection-needs-a-pre-existing-signal.md) - relates: project, session, source-agent, date, role, provenance, and message ids provide explicit retrieval signals alongside inferred lexical/vector relevance.
+- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - rests-on: Pond retains and serves sessions, while the external host owns actual model activation.
+- [Trace-learning techniques in related systems](../trace-learning-techniques-in-related-systems.md) - places: Pond converts session and tool traces into durable canonical records without a semantic distillation or promotion loop.
+- [Axes of artifact analysis](../../notes/axes-of-artifact-analysis.md) - grounds: separates Pond's canonical corpus, search structures, routing instructions, wrapper policy, and restored files by substrate, form, lineage, and authority.
+- [Behavioral authority](../../notes/definitions/behavioral-authority.md) - grounds: distinguishes advisory transcripts, routing instructions, relevance ranking, validation, and OpenClaw wrapper enforcement.
+- [Representational form](../../notes/definitions/representational-form.md) - grounds: separates natural-language trace content, symbolic schemas and indexes, and optional parametric embeddings.
+- [Pond whole-system analysis](../../agentic-systems/reviews/pond.md) - part-of: traces the same frozen source through core runtime, host-integration, security-boundary, and epistemic routes.
