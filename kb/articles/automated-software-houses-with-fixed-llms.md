@@ -292,20 +292,25 @@ all four conditions together; their reliable composition remains conjectural.
 
 Jürgen Schmidhuber's [Gödel
 machine](../notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md)
-is a formal construction that can rewrite its own code. Its embedded prover
-admits a rewrite only after proving, from the current axioms and formal utility
-function, that switching pays. The starting formalization is supplied in
-advance, as the conjecture allows. Its limit is that it "must ignore those
-self-improvements whose effectiveness it cannot prove"
+is the nearest formal construction that changes itself under the same
+provenance requirement as the conjectured house, and the contrast shows what
+proof-gated admission costs. The machine can rewrite its own code. Its
+embedded prover admits a rewrite only after proving, from the current axioms
+and formal utility function, that switching pays. Its starting axioms and
+utility function are written by people in advance, as the conjecture's seed
+may be. Its limit is that it "must ignore those self-improvements whose
+effectiveness it cannot prove"
 ([Schmidhuber](../sources/goedel-machines-schmidhuber.ingest.md), §2.4, verbatim).
 
 Both systems require each successor to arise through current machinery and
 permitted inputs. Their update policies differ: the Gödel machine requires a
 proof, while the proposed house can make a fallible change, observe its
-consequences, and recover. External requests affect a Gödel-machine rewrite only
-as its formalization gives them utility-relevant meaning. The house relies on
-model interpretation, available checks, and later exposure. The Gödel-machine
-paper does not demonstrate a software house meeting the witness conditions.
+consequences, and recover. They also differ in how the outside world reaches
+an update. A request can influence a Gödel-machine rewrite only if its
+formalization already assigns that request a utility; the house instead
+interprets the request with its models, checks what it can, and learns the
+rest from later consequences. The Gödel-machine paper does not demonstrate a
+software house meeting the witness conditions.
 
 ## Boundaries, evidence, and uncertainty
 
