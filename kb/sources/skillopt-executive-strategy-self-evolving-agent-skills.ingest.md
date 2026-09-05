@@ -23,7 +23,16 @@ SkillOpt treats an agent skill document as trainable external state. A separate 
 
 ## Quotes
 
-No source quotes have been retained yet.
+- **Source extract (verbatim):** A skill is a natural-language policy inserted into the agent context before execution. In direct-chat benchmarks it is prepended to system or developer instructions; in tool-use harnesses it becomes persistent procedural memory. The target model and execution harness are frozen.
+  - **Source location:** Section 3.1 "Problem Setup"
+- **Source extract (verbatim):** Every candidate skill is evaluated on the selection split with the same frozen target model and harness. A candidate is accepted only if it strictly improves the current selection score; otherwise it is rejected.
+  - **Source location:** Section 3.5 "Validation Gate and Rejected-Edit Buffer"
+- **Source extract (verbatim):** SkillOpt is described as best or tied-best on every evaluated cell, with positive gains over no-skill baselines throughout.
+  - **Source location:** Section 4.1 "Main Results"
+- **Source extract (verbatim):** The learned skills are reported as compact. Table 6 lists final skill lengths ranging from 379 tokens for LiveMathematicianBench to 1,995 tokens for SpreadsheetBench, with one to four accepted edits in the GPT-5.5 target/optimizer runs.
+  - **Source location:** Section 4.4 "Learned Skills: Compactness, Cost, and Examples"
+- **Source extract (verbatim):** The paper concludes that agent skill documents can be optimized as external natural-language state for frozen agents. It presents SkillOpt as a reproducible, validation-gated text-space training loop that improves a compact skill artifact while keeping the target model and harness fixed.
+  - **Source location:** Section 5 "Conclusion"
 
 ## Connections Found
 
