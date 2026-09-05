@@ -22,29 +22,45 @@ source_notes:
 > **Draft.** This article may change. Comments and counterexamples are welcome
 > on [the repository's GitHub Discussions page](https://github.com/zby/commonplace/discussions).
 
-**TL;DR.** The [first article](./automated-software-houses-with-fixed-llms.md)
-conjectures that an automated software house is practically reachable with
-fixed current LLMs. The [second](./the-software-house-as-the-unit-of-training.md)
-says that
-project-specific learning should apply to the whole house, not only to the
-model. This article gives a bootstrap program for reaching the first witness
-house.
+**TL;DR.** A *software house* is the complete persistent system that keeps
+changing software for its users. This article proposes a bootstrap program for
+turning a human-agent software house into a *witness house*: an automated
+house tested over a declared scope and horizon with its learned components
+fixed and no person in an *internal production role*—work the house depends on
+to develop and evolve the software. The program starts from a human-built seed
+and transfers bounded classes of production decisions to computation in an
+order discovered from production evidence.
 
-Commonplace is a useful starting point, but not yet a complete system that
-learns through computation alone. It has explicit project theory that affects
-later work, computational proposal and revision, symbolic checks, and durable
-retention. People still supply decisive judgments about global fit, admission,
-delayed credit assignment, and authority over consequential changes.
+Commonplace, the human-agent knowledge-base project in which this article is
+written, is a useful seed, but not yet a complete system that learns through
+computation alone. It has an *explicit project theory*—a retained statement of
+project assumptions and rationale—that affects later work, computational
+proposal and revision, checks implemented in code, and durable retention.
+People still make decisive judgments about whether a change fits the project
+as a whole and about three control problems. *Admission* decides which
+proposed change takes effect. *Credit assignment* decides which earlier state
+or decision a later consequence supports or counts against. *Authority* sets
+which later behaviour an admitted change may control.
 
-The program measures both computational control of production decisions and
-production-driven revision of the machinery that produces them. It tries
-bounded transfers in an order discovered from production, declares each trial
-before it runs, uses outcome measures independent of the transferred role, and
-records human interventions, failures, reversals, and reopened roles. The first
-article's witness house needs the production decisions under computational
-control across every internal production role in its declared scope and
-horizon. A house that meets the second article's training requirements also
-needs production-driven revision of the machinery.
+The program measures two kinds of transfer separately. *Operational transfer*
+means that computation now makes the declared production decisions without a
+person supplying them. *Learning transfer* means that production evidence
+causes the house to produce or revise the project-specific machinery that
+makes those decisions, and that the retained change affects later work. The
+program declares each bounded trial before it runs, evaluates it with outcome
+measures independent of the transferred role, and records human interventions,
+failures, reversals, and reopened roles.
+
+Operational transfer across every internal production role is necessary for a
+witness house, but not sufficient: the house must also apply its *program
+theory*—its capacity to relate the software to its purpose and new demands—
+revise coherently, and operate reliably within its declared regime. Learning
+transfer is not necessary to establish that a witness house can exist. It is
+required for the separate proposal that the whole house can be [trained from
+production while its model weights remain
+fixed](./the-software-house-as-the-unit-of-training.md). The bootstrap program
+aims at both transfers because it seeks not only a witness house, but a house
+that can learn through its own process.
 
 ## The starting point
 
@@ -261,10 +277,15 @@ the role missed, and total cost.
 The wrong benchmark can omit the remaining internal production roles. A test
 that compares an agent with a remote programmer while holding the same brief,
 tools, feedback, and client fixed measures the worker role under that division
-of labour. It
-[does not test the client decisions it holds
-fixed](../notes/holding-the-client-fixed-exports-the-least-warrantable-decisions.md),
-such as task choice, missing premises, feedback, and final acceptance.
+of labour. It [does not test the client decisions it holds
+fixed](../notes/holding-the-client-fixed-exports-the-least-warrantable-decisions.md).
+Which of those decisions must transfer depends on the software-house boundary.
+A user may request tenant isolation, supply domain facts, or reject visible
+behaviour. If the client instead chooses the internal design, diagnoses an
+implementation failure, or selects which internal revision takes effect, the
+client supplies an internal production decision. The bootstrap must record and
+transfer those decisions; ordinary user requirements and feedback remain
+permitted external inputs.
 
 ## What the house's training must produce
 
@@ -311,9 +332,10 @@ transfer.
   ontology, evaluator, or decomposition whenever the scope expands.
 - **Evaluation becomes self-confirming.** The house's approval is the only
   evidence of quality, while external outcomes stop tracking it.
-- **A more direct method reaches the same result at lower cost or with greater
-  reliability.** Reconstruction from raw records, direct search, or model
-  adaptation reaches the same result more cheaply or reliably.
+- **A more direct method performs better at comparable total cost.**
+  Reconstruction from raw records, direct search, or model adaptation reaches
+  the same result more cheaply, or reaches it more reliably at comparable total
+  cost.
 
 These results alone do not refute the conjecture that a house can exist. They
 show that this approach, in the tested regime, is not working or is not the best

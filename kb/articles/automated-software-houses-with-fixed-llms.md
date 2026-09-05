@@ -11,7 +11,10 @@ source_notes:
   - kb/notes/naur-equates-machine-execution-with-formulated-criteria.md
   - kb/notes/naurs-compiler-case-tests-one-historically-bounded-documentation-and-consumption-system.md
   - kb/notes/program-theory-sustains-search-under-delayed-feedback.md
+  - kb/notes/retained-theory-intervention-isolates-one-explicit-surface.md
+  - kb/sources/darwin-godel-machine-open-ended-evolution-self-improving-agents.ingest.md
   - kb/sources/goedel-machines-schmidhuber.ingest.md
+  - kb/sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md
   - kb/sources/programming-as-theory-building.ingest.md
 ---
 # The Automated Software House Conjecture
@@ -21,21 +24,28 @@ source_notes:
 > **Draft.** This article may change. Comments and counterexamples are welcome
 > on [the repository's GitHub Discussions page](https://github.com/zby/commonplace/discussions).
 
-**TL;DR.** We use *software house* for the complete persistent system that
-keeps changing a piece of software for its users, not only for a company. The
-conjecture is that, within at least one declared product scope, such a house
-can handle relevant requests not listed in advance with no human in an
-internal production role, using only LLMs and other learned components
-available by 2026-09-02 and held fixed during the run. The house may start
-with a human-written explicit project theory, tools, tests, and production
-machinery. The claim is that the resulting system can perform all production
-functions, including the program theory needed for coherent change.
-It does not require the house to have discovered the explicit project theory
-with which it starts or to have stopped depending on the task-specific
-knowledge supplied by its human-built seed. Companion
-articles ask [how a software
-house should be trained](./the-software-house-as-the-unit-of-training.md)
-and [how the first automated one might be
+**TL;DR.** A *software house* is the complete persistent system that keeps
+changing software for its users, not only a company or a model. We conjecture
+that, within at least one declared product scope, such a house can sustain
+coherent change for relevant requests not listed in advance, with no human in
+an *internal production role*—work the house depends on to develop and evolve
+the software. Every LLM and other learned component is fixed at a version
+available by 2026-09-02 for the entire run. This denies that open-ended
+coherent change necessarily requires either a person inside production or an
+update to a learned component during the run.
+
+The fixed learned components work with mutable natural-language and symbolic
+state: the product, tools, tests, production machinery, and possibly an
+*explicit project theory*. An explicit project theory is one possible written
+carrier of the house's *program theory*: its capacity to relate the software
+to its purpose, explain its organization, and apply that understanding to new
+demands. The house may start from a human-built seed containing all of these.
+The conjecture requires the house to use that seed to perform every production
+function and revise its mutable state coherently. It does not require the
+house to have discovered or outgrown the seed. Companion articles ask [how a
+software house should be
+trained](./the-software-house-as-the-unit-of-training.md) and [how the first
+automated one might be
 built](./bootstrapping-the-first-automated-software-house.md).
 
 ## Claim
@@ -115,7 +125,7 @@ inference to a human-only conclusion, but would not settle Naur's separate
 claim that the relevant judgment cannot be reduced to a finite set of
 formulated criteria.
 
-## Components that can perform the program-theory function
+## How the components could perform the program-theory function
 
 The conjectured house combines three kinds of component:
 
@@ -222,12 +232,35 @@ insufficient if the accepted successor is not adequate. Passing tests on one
 requested change is insufficient if the house cannot preserve coherence
 across later demands.
 
-## Formal contrast and existing constructions
+## Support from existing constructions
+
+Two reported constructions make parts of the conjecture concrete.
+[OpenAI's agent-first product account](../sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md)
+describes five months of product development with agent-generated code,
+repository-local project knowledge, and automated checks and cleanup. People
+still supplied internal design and production judgments. It supports the
+possibility of sustained product development by agents within a human-agent
+house. The [Darwin Gödel Machine paper](../sources/darwin-godel-machine-open-ended-evolution-self-improving-agents.ingest.md)
+reports improved coding-benchmark performance through search over retained
+agent code around frozen foundation models. It supports computational revision
+of production machinery without model-weight updates, within a bounded
+benchmark setting.
+
+These reports give reasons to attempt the proposed composition. They do not
+show autonomous program theory across later product changes. The
+[comparison supplement](./nearest-existing-constructions-to-a-reachability-witness.md)
+maps these and other constructions against the witness conditions, separating
+code-inspected mechanisms from paper and practitioner reports. No reviewed
+construction demonstrates all the conditions together. Whether the separate
+capacities compose into a reliable automated house remains the conjecture.
+
+## A formal contrast
 
 The fully formal contrast is AI researcher Jürgen Schmidhuber's [Gödel
 machine](../notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md),
-a proof-governed construction that can rewrite its own code. It is not a
-software house: it has no users, and the only software it changes is itself.
+a proof-governed construction that can rewrite its own code. The construction
+allows interaction with an external environment, but the paper does not
+demonstrate a software house meeting the witness conditions here.
 An embedded prover admits a rewrite only after proving, from the current
 axioms and formal utility function, that switching pays. Its starting
 formalization is supplied in advance, which the conjecture stated here
@@ -246,15 +279,28 @@ machine's rewrite only when and to the extent that its formalization gives that
 demand utility-relevant meaning. The house instead relies on model
 interpretation, available checks, and later exposure.
 
-Reviewed records describe separate parts of the possible house: persistent
-project records, code and tool revision, reject-capable gates, rollback, and
-long-running human-agent production. Their code-inspected rows can support
-implementation claims; papers and practitioner or product reports support only
-what those sources describe. No row supplies all the required conditions
-together: a complete user-facing software-house boundary, fixed learned
-components, a demonstrated program-theory function across novel changes, and
-continuation with no human in an internal production role. Evidence for
-separate components does not show that they compose.
+## Future work: testing whether a house holds a program theory
+
+A proposed experiment would follow one maintained product under a predeclared
+process that can generate new requirements and operating consequences. In the
+multi-tenant example, the initial design could assume that each account
+belongs to one tenant. A later request for consultants to work across customer
+organizations with one login would test whether the house recognizes and
+revises that assumption, changes the product and relevant project state, and
+preserves tenant isolation across subsequent changes. The starting rationale
+may be human-written; every internal production decision during the run must
+be computational.
+
+At selected decisions, matched runs would withhold or replace relevant retained
+project state while holding models, product code, tools, demands, and budget
+fixed. Predicted differences in proposal, diagnosis, or recovery would test
+that state's causal contribution. An intervention on [explicit retained theory
+tests that particular component](../notes/retained-theory-intervention-isolates-one-explicit-surface.md);
+other records may encode the same understanding. The full experiment must also
+show coherent revision and reliable continuation under the witness conditions.
+It remains future work. Whether explicit project theory makes learning more
+sample-efficient is a separate hypothesis in the
+[training article](./the-software-house-as-the-unit-of-training.md#testable-hypotheses).
 
 ## Boundaries, evidence, and uncertainty
 
