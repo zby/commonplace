@@ -62,6 +62,7 @@
   }
   .accent{color:var(--accent)}
   .slatec{color:var(--slate)}
+  s.was{color:var(--ink-soft);opacity:.55;text-decoration-thickness:.06em;font-weight:inherit;margin-right:.05em}
 
   /* ---------- title slide ---------- */
   .title-slide{justify-content:center;padding-bottom:14vh}
@@ -119,7 +120,6 @@
   table.rec td.fname{font-family:var(--mono);font-weight:600;white-space:nowrap}
   table.rec td.fname.where{color:var(--slate)}
   table.rec td.fname.what{color:var(--accent)}
-
   /* ---------- derivation 2x2 ---------- */
   .deriv{display:grid;grid-template-columns:auto 1fr 1fr;gap:0;max-width:62em;margin-top:1vh}
   .deriv .corner{border:none}
@@ -169,6 +169,13 @@
   .corpus-note{margin-top:2.5vh;font-size:clamp(.85rem,2vh,1.1rem);color:var(--ink-soft);max-width:44em;line-height:1.45}
   .corpus-note b{color:var(--ink)}
 
+  /* ---------- interrupt slides ---------- */
+  .slide.interrupt{background:var(--ink);align-items:center;justify-content:center}
+  .slide.interrupt svg{width:min(72vw,100vh);height:auto}
+  @media (prefers-reduced-motion: no-preference){
+    .slide.active.interrupt svg{animation:rise .35s ease both}
+  }
+
   /* ---------- takeaway ---------- */
   .close-quote{
     font-size:clamp(1.4rem,4.2vh,2.4rem);font-weight:600;line-height:1.3;max-width:22em;text-wrap:balance;
@@ -209,21 +216,22 @@
 <section class="slide title-slide active">
   <div class="where">ASISAS 2026 · European Conference on Software Architecture</div>
   <h1>Where it lives is <span class="not">not</span> what it is</h1>
-  <p class="sub">An architectural vocabulary for retained adaptation in agentic systems</p>
+  <p class="sub">An architectural vocabulary for <s class="was">retained adaptation</s> memory in agentic systems</p>
   <div class="meta">
     <span>Zbigniew Łukasiak</span>
     <span>position paper + 141-system corpus</span>
   </div>
   <div class="navhint">→ / space to advance · N for notes</div>
   <aside class="notes">
-    <p><b>~30s.</b> Introduce yourself. The title is the whole thesis: where a retained artifact lives — its storage — does not tell you what it is or how it acts. A position paper, but with corpus evidence at the end: 141 agent-memory systems reviewed from source code.</p>
+    <p><b>~30s.</b> Introduce yourself. The title is the whole thesis: where a memory lives — its storage — does not tell you what it is or how it acts. A position paper, but with corpus evidence at the end: 141 agent-memory systems reviewed from source code.</p>
+    <p>The struck-out terms on the slides are the submitted paper's vocabulary; the talk deliberately renames them — say "memory" with the room, then unpack it.</p>
   </aside>
 </section>
 
 <!-- 2 · Problem -->
 <section class="slide">
   <div class="eyebrow"><b>01</b> · The problem</div>
-  <h2>Agents adapt by retaining artifacts — and we classify them by where they're stored</h2>
+  <h2>Agents adapt through <s class="was">retained artifacts</s> memory — and we classify it by where it's stored</h2>
   <div class="body">
     <ul class="big">
       <li class="slate">Prompts, workflows, validators, memories, adapters, checkpoints.</li>
@@ -233,75 +241,130 @@
   </div>
   <div class="footmark">§1</div>
   <aside class="notes">
-    <p><b>~1 min.</b> Agents don't adapt only by changing weights — they adapt by retaining artifacts: prompts, workflows, validators, memories, adapters, checkpoints. Today the field manages and names these by where they're stored: "memory system", "vector store", "prompt registry".</p>
+    <p><b>~1 min.</b> Agents don't adapt only by changing weights — they retain things: prompts, workflows, validators, memories, adapters, checkpoints. The talk calls all of it <b>memory</b> — the room's word — where the paper says "retained artifacts"; the strikeout marks the renaming. Today the field manages and names memory by where it's stored: "memory system", "vector store", "prompt registry".</p>
     <p>The position: storage tells you how to access, delete, version, and roll back — but it hides how the artifact acts, what evidence reviews it, and what invalidates it. That's what the rest of the talk supplies.</p>
   </aside>
 </section>
 
 <!-- 3 · Example -->
 <section class="slide">
-  <div class="eyebrow"><b>02</b> · One lesson, many forms</div>
-  <h2>A coding agent keeps mishandling dependency resolution</h2>
+  <div class="eyebrow"><b>02</b> · The usual first question</div>
+  <h2>“Should the memory be a database or flat files?”</h2>
   <div class="body">
-    <p class="lede">One lesson, five retained shapes — each with different review, invalidation, and rollback obligations:</p>
-    <div class="forms-strip">
-      <div class="form-chip nl"><h3>Natural-language reflection</h3><p>Acts only if retrieval carries it forward.</p></div>
-      <div class="form-chip nl"><h3>Derived prompt summary</h3><p>Can go stale after its source is fixed.</p></div>
-      <div class="form-chip"><h3>Lockfile validator</h3><p>Blocks cheaply; must be tested.</p></div>
-      <div class="form-chip"><h3>Conflict-check script</h3><p>Fast, repeatable; fails systematically.</p></div>
-      <div class="form-chip dp"><h3>Learned scoring weights</h3><p>Nothing to read — only probes.</p></div>
-    </div>
+    <p class="lede">A coding agent keeps mishandling dependency resolution. The lesson can be retained as:</p>
+    <ul class="big" style="margin-top:2.5vh">
+      <li>Failure reflection <small>natural-language · advice</small></li>
+      <li>Conflict-check validator <small>symbolic · enforcement</small></li>
+      <li>Derived prompt summary <small>natural-language · instruction</small></li>
+      <li>Learned scoring weights <small>distributed-parametric · probe-only</small></li>
+    </ul>
+    <p class="corpus-note">Every one of these can be saved into a database <b>or</b> stored as flat files. The answer settles backup, access, and deletion — <b>not how the lesson acts</b>.</p>
   </div>
   <div class="footmark">§1</div>
   <aside class="notes">
-    <p><b>~1 min.</b> Concrete case: a coding agent keeps installing incompatible versions, ignoring lockfile constraints. The surrounding system can retain that lesson in any of these five shapes. Walk two or three, not all five: a reflection affects behavior <b>only if retrieval carries it forward</b>; a validator blocks execution cheaply <b>but must be tested like control logic</b>; learned weights give you <b>nothing to read</b> — only behavioral probes.</p>
-    <p>Punchline: calling all five "memory" hides exactly these differences.</p>
+    <p><b>~1 min.</b> The first architecture question teams actually ask about agent memory: database or flat files? Concrete case: a coding agent keeps installing incompatible versions, ignoring lockfile constraints. The lesson can be retained in any of these shapes — and <b>every one of them</b> can be saved into a database or stored as flat files: the reflection is advice whether it's a Markdown file or a table row; the validator blocks execution either way; the weights are unreadable either way.</p>
+    <p>Punchline: the storage answer settles backup, access, and deletion mechanics only. What changes review, invalidation, rollback, and force is which <b>shape</b> the lesson takes — and the database-vs-files debate never mentions that.</p>
   </aside>
 </section>
 
-<!-- 4 · Four fields -->
+<!-- 4 · Script vs prompt -->
 <section class="slide">
-  <div class="eyebrow"><b>03</b> · The vocabulary</div>
-  <h2>A four-field record for every retained artifact</h2>
+  <div class="eyebrow"><b>03</b> · Same job, same place</div>
+  <h2>A validator script vs. a validating prompt</h2>
   <div class="body">
-    <div class="tablewrap">
+    <p class="lede">Both check the same dependency rule; both are small text files in the repo.</p>
+    <div class="tablewrap" style="margin-top:2vh">
       <table class="rec">
-        <tr><th>field</th><th>records</th><th>why the architect cares</th></tr>
+        <tr><th></th><th>hooks/check-lockfile.sh</th><th>“check deps before install” in AGENTS.md</th></tr>
         <tr>
-          <td class="fname where">storage_substrate</td>
-          <td>Where state persists: files, repos, vector stores, registries.</td>
-          <td>Access, deletion, versioning, rollback.</td>
+          <td class="fname what">form</td>
+          <td>symbolic — an interpreter adjudicates</td>
+          <td>natural-language — the model interprets</td>
         </tr>
         <tr>
-          <td class="fname what">representational_form</td>
-          <td>Natural-language, symbolic, or distributed-parametric.</td>
-          <td>Inspection method, review evidence, execution cost.</td>
+          <td class="fname what">force</td>
+          <td>enforcement — blocks the action</td>
+          <td>instruction — can be weighed away</td>
         </tr>
         <tr>
-          <td class="fname what">lineage</td>
-          <td>Source material, or a derived view or learned update.</td>
-          <td>What to invalidate on source change.</td>
-        </tr>
-        <tr>
-          <td class="fname what">behavioral_authority</td>
-          <td>Consumer × channel × force.</td>
-          <td>Who acts on it, with what force.</td>
+          <td class="fname what">failure</td>
+          <td>systematic, reproducible</td>
+          <td>interpretive, varies per run</td>
         </tr>
       </table>
     </div>
+    <p class="corpus-note">Storage cannot tell them apart. What can — <b>form, lineage, authority</b> — is the vocabulary of the next slides.</p>
+  </div>
+  <div class="footmark">§2–§6</div>
+  <aside class="notes">
+    <p><b>~1 min.</b> Take the sharpest pair from the example: a validator script and a validating prompt. Same job — check the dependency rule — and the same storage answer: both are small text files in the repo. Every storage-side operation treats them identically: version them, diff them, delete them, roll them back.</p>
+    <p>Everything an architect actually needs differs: the script's semantics are adjudicated by an interpreter, so you test it and it blocks the action, failing the same way every time; the prompt is interpreted by the model on each run, so you read and trial it, it can be weighed away against competing instructions, and it fails interpretively. This pair motivates the paper's proposal: record <b>form, lineage, and behavioral authority</b> alongside storage, per operative part — the next slides define them.</p>
+    <p><b>Terminology note</b> (say once, briefly): the struck-out terms mark two deliberate renamings from the submitted paper — "retained artifacts" → <b>memory</b> (use the room's word, then unpack it), and "prose" → <b>natural-language</b> (the boundary is interpretive, not editorial; fragments and structured records qualify too).</p>
+  </aside>
+</section>
+
+<!-- Interrupt · same outside -->
+<section class="slide interrupt">
+  <svg viewBox="0 0 640 400" role="img" aria-label="Two identical roads: one closed by a striped barrier where the path stops, one with a no-traffic sign beside it where the path continues">
+    <defs>
+      <pattern id="barrier-stripes" width="22" height="22" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+        <rect width="22" height="22" fill="#F6F5F1"/>
+        <rect width="11" height="22" fill="#E0673B"/>
+      </pattern>
+    </defs>
+    <!-- left road -->
+    <g stroke="#F6F5F1" stroke-width="3" fill="none" stroke-linejoin="round">
+      <path d="M105,340 L135,60"/>
+      <path d="M255,340 L225,60"/>
+    </g>
+    <!-- left travel path: stops at the barrier -->
+    <path d="M180,336 V232" stroke="#F6F5F1" stroke-width="3" stroke-dasharray="10 9" fill="none"/>
+    <path d="M180,214 L171,231 L189,231 Z" fill="#F6F5F1"/>
+    <!-- barrier -->
+    <rect x="104" y="184" width="152" height="26" rx="5" fill="url(#barrier-stripes)" stroke="#F6F5F1" stroke-width="2.5"/>
+    <!-- right road -->
+    <g stroke="#F6F5F1" stroke-width="3" fill="none" stroke-linejoin="round">
+      <path d="M385,340 L415,60"/>
+      <path d="M535,340 L505,60"/>
+    </g>
+    <!-- right travel path: continues past the sign -->
+    <path d="M460,336 V92" stroke="#F6F5F1" stroke-width="3" stroke-dasharray="10 9" fill="none"/>
+    <path d="M460,72 L451,91 L469,91 Z" fill="#F6F5F1"/>
+    <!-- no-traffic sign (Vienna C2 / Polish B-1) beside the road -->
+    <rect x="546" y="168" width="5" height="68" fill="#F6F5F1" opacity=".7"/>
+    <circle cx="548" cy="140" r="25.5" fill="#F6F5F1" stroke="#E0673B" stroke-width="12"/>
+    <circle cx="548" cy="140" r="31.8" fill="none" stroke="#F6F5F1" stroke-width="1.5"/>
+  </svg>
+  <aside class="notes">
+    <p><b>~15s beat — talk over the picture.</b> A barrier and a no-traffic sign (Vienna Convention C2 — Polish B-1) encode <b>exactly the same rule</b> on the same road: closed to all vehicles. The barrier is the validator script: it <b>blocks</b> — nobody drives through it, and it fails the same way every time. The sign is the validating prompt: an <b>instruction the driver interprets</b> — and can weigh away against whatever else is on their mind.</p>
+    <p>And from the storage layer the two roads look identical — <b>git diff sees no difference</b>. Then advance: so what does tell them apart? The four-field record.</p>
+  </aside>
+</section>
+
+<!-- 5 · Four fields -->
+<section class="slide">
+  <div class="eyebrow"><b>04</b> · The vocabulary</div>
+  <h2>A four-field record for every <s class="was">retained artifact</s> memory</h2>
+  <div class="body">
+    <ul class="big" style="margin-top:1vh">
+      <li class="slate"><span class="key">storage_substrate</span> — where the state persists</li>
+      <li><span class="key">representational_form</span> — <s class="was">prose</s> natural-language, symbolic, or distributed-parametric</li>
+      <li><span class="key">lineage</span> — source material, or derived or learned from it</li>
+      <li><span class="key">behavioral_authority</span> — who consumes it, with what force</li>
+    </ul>
     <p class="corpus-note">Unit of classification: the <b>operative part</b>, not the stored object.</p>
   </div>
   <div class="footmark">§2–§6</div>
   <aside class="notes">
-    <p><b>~1 min.</b> The proposal: a four-field record per retained artifact. Storage stays — it's a legitimate operational field (access, deletion, versioning, rollback) — but it's <b>one field of four</b>, not the classification.</p>
+    <p><b>~45s.</b> The proposal: a four-field record per memory. Storage stays — it's a legitimate operational field — but it's <b>one field of four</b>, not the classification. Per field, what it records and why the architect cares:</p>
+    <p><b>storage_substrate</b> — files, repos, vector stores, registries → access, deletion, versioning, rollback. <b>representational_form</b> — natural-language, symbolic, or distributed-parametric → inspection method, review evidence, execution cost. <b>lineage</b> — source material, or a derived view or learned update → what to invalidate on source change. <b>behavioral_authority</b> — consumer × channel × force → who acts on it, and whether it advises, instructs, or enforces.</p>
     <p>Stress the unit: the record applies to the <b>operative part</b> and its consumption path, not the stored object. A skill package bundles natural-language guidance, code, tests, and activation metadata — those parts get split because they need different review evidence and different rollback.</p>
-    <p><b>Terminology note</b> (say once, briefly): the submitted paper says "prose" where I now say "natural-language" — the category was renamed because its boundary is interpretive, not editorial; fragments and structured records qualify too.</p>
   </aside>
 </section>
 
-<!-- 5 · Derivation -->
+<!-- 6 · Derivation -->
 <section class="slide">
-  <div class="eyebrow"><b>04</b> · Representational form, derived</div>
+  <div class="eyebrow"><b>05</b> · Representational form, derived</div>
   <h2>Two axes generate the three forms</h2>
   <div class="body">
     <div class="deriv">
@@ -318,7 +381,7 @@
       </div>
       <div class="axis-side">reinterpreted on each consumption</div>
       <div class="cell nl">
-        <h3>natural-language</h3>
+        <h3><s class="was">prose</s> natural-language</h3>
         <p>Reflections, notes, policies, prompts — no adjudicator; two readings can both be reasonable.</p>
       </div>
       <div class="cell dp">
@@ -331,25 +394,33 @@
   <aside class="notes">
     <p><b>~1.5 min — centerpiece.</b> The paper lists three forms; here I derive them from two questions. First: <b>does a defined consumer assign the consequences?</b> For code, an implementation adjudicates — if two consumers disagree, one of them is wrong. Natural language has no adjudicator — two readings can both be reasonable. That's underspecification, not a defect of any particular text. Second: <b>is there an identifiable unit carrying the content</b>, or is it spread across numerical state?</p>
     <p>The fourth cell — assigned consequences without a localized unit — is <b>unoccupied, not impossible</b>: vector-symbolic architectures aim exactly there. If agent systems ever retain state of that shape, the carve gains a fourth form.</p>
+    <p>If time allows, the inspection payoff in one breath: the review method falls out of the axes — <b>test</b> symbolic artifacts (defined semantics to check against), <b>read</b> natural-language ones (interpretation only), <b>probe</b> distributed-parametric ones (nothing to point at).</p>
   </aside>
 </section>
 
-<!-- 6 · Inspection -->
-<section class="slide">
-  <div class="eyebrow"><b>05</b> · Inspection follows from the axes</div>
-  <h2>Read, test, or probe — derived, not stipulated</h2>
-  <div class="body">
-    <ul class="big">
-      <li class="slate">Defined semantics to check against → <span class="key">test</span> symbolic artifacts.</li>
-      <li>Interpretation only → <span class="key">read</span> natural-language artifacts.</li>
-      <li>Nothing to point at → <span class="key">probe</span> distributed-parametric artifacts.</li>
-      <li><strong>Revisability rides localization alone:</strong> prompts and validators revise item by item; weights don't.</li>
-    </ul>
-  </div>
-  <div class="footmark">§5</div>
+<!-- Interrupt · two readings -->
+<section class="slide interrupt">
+  <svg viewBox="0 0 640 400" role="img" aria-label="A Necker cube and its two possible readings">
+    <g stroke="#F6F5F1" stroke-width="3" fill="none" stroke-linejoin="round">
+      <rect x="140" y="130" width="160" height="160"/>
+      <rect x="202" y="84" width="160" height="160"/>
+      <path d="M140,130 L202,84 M300,130 L362,84 M140,290 L202,244 M300,290 L362,244"/>
+    </g>
+    <g stroke="#F6F5F1" stroke-width="2" fill="none" stroke-linejoin="round">
+      <rect x="475" y="77" width="64" height="64"/>
+      <path d="M450,96 L475,77 M514,96 L539,77 M450,160 L475,141 M514,160 L539,141"/>
+    </g>
+    <rect x="450" y="96" width="64" height="64" fill="#8FA9C4" stroke="#F6F5F1" stroke-width="2"/>
+    <text x="494" y="199" font-size="18" fill="#F6F5F1" opacity=".6" text-anchor="middle" font-family="'IBM Plex Mono',monospace">or</text>
+    <g stroke="#F6F5F1" stroke-width="2" fill="none" stroke-linejoin="round">
+      <rect x="450" y="236" width="64" height="64"/>
+      <path d="M450,236 L475,217 M514,236 L539,217 M450,300 L475,281 M514,300 L539,281"/>
+    </g>
+    <rect x="475" y="217" width="64" height="64" fill="#E0673B" stroke="#F6F5F1" stroke-width="2"/>
+  </svg>
   <aside class="notes">
-    <p><b>~45s.</b> The payoff of deriving rather than stipulating: the inspection rule falls out of the axes. A localized unit <b>with</b> defined semantics can be checked against them — test. A localized unit <b>without</b> them yields its content only to interpretation — read. A non-localized artifact offers nothing to point at, so only behavior is observable — probe.</p>
-    <p>And revisability rides the localization axis alone — which is why a prompt and a validator are both revisable one item at a time while weights are not, despite sitting on opposite sides of the semantics axis.</p>
+    <p><b>~15s beat — talk over the picture.</b> The Necker cube: one figure, two readings, both reasonable — and nothing in the figure adjudicates between them. That is the natural-language cell of the grid: <b>underspecification, not a defect of any particular text</b>.</p>
+    <p>The contrast in one breath: if two consumers of code disagree, one of them is wrong; if two readers of a prompt disagree, maybe neither is.</p>
   </aside>
 </section>
 
@@ -374,23 +445,15 @@
 <!-- 8 · Record in use -->
 <section class="slide">
   <div class="eyebrow"><b>07</b> · The record in use</div>
-  <h2>Same dependency lesson, four architectural profiles</h2>
-  <div class="body">
-    <div class="tablewrap">
-      <table class="rec">
-        <tr><th>artifact</th><th>form</th><th>force</th><th>rollback</th></tr>
-        <tr><td>Failure reflection</td><td>natural-language</td><td>advice</td><td>delete record, refresh index</td></tr>
-        <tr><td>Conflict-check script</td><td>symbolic</td><td>enforcement</td><td>revert / feature flag</td></tr>
-        <tr><td>Derived Markdown prompt</td><td>natural-language</td><td>instruction</td><td>regenerate entry</td></tr>
-        <tr><td>Semantic-retrieval package</td><td>natural-language + embeddings</td><td>ranking influence</td><td>rebuild index</td></tr>
-      </table>
-    </div>
-    <p class="corpus-note">The question is not whether a lesson is “in memory,” but whether its <b>form and authority are justified</b>.</p>
+  <h2 style="visibility:hidden;position:absolute">The record in use</h2>
+  <div class="body" style="justify-content:center">
+    <p class="close-quote">The question is not whether a lesson is “in memory” — but whether its <span class="accent">form and authority are justified</span>.</p>
+    <p class="close-sub">Natural-language advice for the uncertain · symbolic control for the frequent or safety-critical · learned state where generalization outweighs inspection.</p>
   </div>
   <div class="footmark">§7</div>
   <aside class="notes">
-    <p><b>~1 min.</b> Same dependency lesson from the earlier example, four architectural profiles. Read one contrast aloud: the reflection is advice you delete and re-index; the script is enforcement you revert or feature-flag. Each row admits a <b>different action</b>.</p>
-    <p>The reframe to land: the design question is not whether a lesson is "in memory" but whether its current form and authority are justified — natural-language advice for the uncertain, symbolic control for the frequent or safety-critical, retrieval or learned state where generalization outweighs direct inspection.</p>
+    <p><b>~45s.</b> The reframe to land, spoken over the dependency lesson: each shape it can take admits a <b>different action</b>. The reflection is natural-language <b>advice</b> — rollback is delete the record and refresh the index. The conflict-check script is symbolic <b>enforcement</b> — revert it or put it behind a feature flag. The derived Markdown prompt is natural-language <b>instruction</b> — regenerate the entry when its source changes. The semantic-retrieval package (natural language + embeddings) carries <b>ranking influence</b> — rebuild the index.</p>
+    <p>Walk one contrast aloud (reflection vs. script is the sharpest), then land the sentence on the slide: the design question is not whether the lesson is "in memory" but whether its current form and authority are justified.</p>
   </aside>
 </section>
 
