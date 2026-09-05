@@ -452,3 +452,32 @@ done first and reported before any prose work.
 >
 > The claim is easiest to show on a concrete case. Consider a hypothetical
 > release exporter. It builds a deployment manifest
+
+## 17. Signpost the generality paragraph's four jobs
+
+- **Commit:** see log (`Workshop:` trailer)
+- **Kind:** Unsignposted roles
+- **Operator's verdict:** "apply the rest" (phase-2 sweep candidate T2)
+- **Diagnosis:** Four sentences doing four jobs — concession, positive
+  evidence, reporting rule, negative evidence — with nothing marking the
+  first as a concession. The concession is now announced and the reporting
+  rule attached to the evidence sentence it qualifies.
+
+**Before:**
+
+> Some objectives, authority boundaries, hard dependencies, runtimes, and trusted
+> kernels may remain fixed. Evidence for generality comes from adapting as the
+> house takes on new kinds of work, including changes to its initial responsibilities.
+> Evaluations must report the work and period examined. Repeated dependence on
+> people to supply a missing ontology, decomposition, or evaluator counts against
+> the proposed learning capacity.
+
+**After:**
+
+> Generality does not mean everything is trainable: some objectives, authority
+> boundaries, hard dependencies, runtimes, and trusted kernels may remain fixed.
+> Evidence for generality comes from adapting as the house takes on new kinds of
+> work, including changes to its initial responsibilities; evaluations must
+> report the work and period examined. Repeated dependence on people to supply
+> a missing ontology, decomposition, or evaluator counts against the proposed
+> learning capacity.

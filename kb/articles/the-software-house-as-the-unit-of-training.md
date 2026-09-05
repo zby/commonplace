@@ -172,12 +172,13 @@ workflows, tests, evaluators, and update machinery as requests require them.
 This opens a wider search space; it does not establish that the available
 models and computation will find adequate changes.
 
-Some objectives, authority boundaries, hard dependencies, runtimes, and trusted
-kernels may remain fixed. Evidence for generality comes from adapting as the
-house takes on new kinds of work, including changes to its initial responsibilities.
-Evaluations must report the work and period examined. Repeated dependence on
-people to supply a missing ontology, decomposition, or evaluator counts against
-the proposed learning capacity.
+Generality does not mean everything is trainable: some objectives, authority
+boundaries, hard dependencies, runtimes, and trusted kernels may remain fixed.
+Evidence for generality comes from adapting as the house takes on new kinds of
+work, including changes to its initial responsibilities; evaluations must
+report the work and period examined. Repeated dependence on people to supply
+a missing ontology, decomposition, or evaluator counts against the proposed
+learning capacity.
 
 ## What the fixed-model training regime buys
 
