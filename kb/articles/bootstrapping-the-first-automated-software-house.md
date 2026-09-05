@@ -56,9 +56,8 @@ An automated house performs every internal production role computationally.
 
 ## Two kinds of transfer
 
-The program measures two kinds of transfer separately. A trial's boundaries
-identify the decisions being assessed; they need not fix the house's future
-products or responsibilities.
+The program measures two kinds of transfer separately. Each trial declares a
+boundary: the decisions being assessed.
 
 | Claim | What must be shown |
 |---|---|
