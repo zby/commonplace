@@ -8,7 +8,7 @@ source_notes:
   - kb/notes/definitions/software-house.md
   - kb/notes/program-theory-sustains-search-under-delayed-feedback.md
 ---
-# Nearest existing constructions to a reachability witness
+# Nearest existing constructions to a witness house
 
 > **Draft supplement.** This is the map behind the existing-constructions
 > section of [The Automated Software House

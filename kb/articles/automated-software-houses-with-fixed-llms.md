@@ -286,7 +286,7 @@ of production machinery within that benchmark setting.
 
 Neither report demonstrates autonomous program theory across later product
 changes. The [comparison
-supplement](./nearest-existing-constructions-to-a-reachability-witness.md)
+supplement](./nearest-existing-constructions-to-a-witness-house.md)
 maps eighteen constructions against the witness conditions, separating
 code-inspected mechanisms from paper and practitioner reports. None demonstrates
 all four conditions together; their reliable composition remains conjectural.

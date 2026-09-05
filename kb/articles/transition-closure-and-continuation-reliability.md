@@ -181,7 +181,7 @@ separate from the bootstrap article's question of constructing an adequate house
 The [training](./the-software-house-as-the-unit-of-training.md) and
 [bootstrap](./bootstrapping-the-first-automated-software-house.md) articles ask
 how the house might acquire understanding and machinery absent from the seed.
-The [construction comparison](./nearest-existing-constructions-to-a-reachability-witness.md)
+The [construction comparison](./nearest-existing-constructions-to-a-witness-house.md)
 assesses the available evidence for the four conditions together.
 
 ## Open questions

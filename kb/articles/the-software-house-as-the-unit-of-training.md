@@ -350,7 +350,7 @@ Even successful component tests leave the whole-house proposal dependent on
 reliable theory use, credit assignment, validation, and admission working
 together. Parametric and hybrid regimes remain alternatives.
 
-The [comparison supplement](./nearest-existing-constructions-to-a-reachability-witness.md#the-test-for-explicit-project-theory-from-the-training-article)
+The [comparison supplement](./nearest-existing-constructions-to-a-witness-house.md#the-test-for-explicit-project-theory-from-the-training-article)
 distinguishes existing evidence for program-theory use from this proposed test
 of a written carrier. The [bootstrap program](./bootstrapping-the-first-automated-software-house.md)
 turns the learning proposal into a first trial and a sequence of bounded transfers.
