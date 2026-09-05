@@ -142,9 +142,10 @@ change that persists — every product edit changes the starting conditions of
 later work. It requires experience to cause a retained change in the house's
 capacity on later requirements.
 
-After correcting the failing edit in the example, give two continuations
-identical product snapshots. Retain the revised explanation and checking
-policy in one; restore their earlier versions in the other. Better check
+After correcting the failing edit in the example, run two *continuations*:
+copies of the house that resume work from identical product snapshots. Retain
+the revised explanation and checking policy in one; restore their earlier
+versions in the other. Better check
 selection on untouched files would demonstrate an acquired capability beyond
 repairing the first failure.
 

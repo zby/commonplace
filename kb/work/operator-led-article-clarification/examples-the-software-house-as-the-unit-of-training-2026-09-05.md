@@ -204,3 +204,26 @@ done first and reported before any prose work.
 > change that persists — every product edit changes the starting conditions of
 > later work. It requires experience to cause a retained change in the house's
 > capacity on later requirements.
+
+## 7. Introduce continuations
+
+- **Commit:** see log (`Workshop:` trailer)
+- **Kind:** Unintroduced term
+- **Operator's verdict:** "apply the rest" (phase-2 sweep candidate 6)
+- **Diagnosis:** *Continuation* first appeared here carrying the whole
+  experimental design, and recurs in the hypotheses section ("paired
+  continuations"). Introduced at first use: copies of the house that resume
+  work from identical product snapshots.
+
+**Before:**
+
+> After correcting the failing edit in the example, give two continuations
+> identical product snapshots. Retain the revised explanation and checking
+> policy in one; restore their earlier versions in the other.
+
+**After:**
+
+> After correcting the failing edit in the example, run two *continuations*:
+> copies of the house that resume work from identical product snapshots. Retain
+> the revised explanation and checking policy in one; restore their earlier
+> versions in the other.
