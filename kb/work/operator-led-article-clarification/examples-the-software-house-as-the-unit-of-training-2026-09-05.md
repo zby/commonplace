@@ -410,3 +410,23 @@ done first and reported before any prose work.
 > may disappear or reverse when assumptions break: the theory then misdirects
 > the house. Measure that misdirection separately from recovery after revision,
 > because rapid recovery can erase the initial loss in a whole-run score.
+
+## 15. The null-result limit, said plainly
+
+- **Commit:** see log (`Workshop:` trailer)
+- **Kind:** Compressed description
+- **Operator's verdict:** "apply the rest" (phase-2 sweep candidate 14)
+- **Diagnosis:** "Leaves open reconstruction of equivalent understanding from
+  other state" compressed the equivalent-reconstruction point the conjecture
+  article states plainly. Unpacked in the same plain form.
+
+**Before:**
+
+> A null intervention result leaves open reconstruction of equivalent
+> understanding from other state.
+
+**After:**
+
+> A null intervention result is inconclusive: removing the designated theory
+> text may change nothing because the house reconstructs the same understanding
+> from other retained state.

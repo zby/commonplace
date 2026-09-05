@@ -361,8 +361,9 @@ an assumption no case covers.
 
 ## Limits
 
-A null intervention result leaves open reconstruction of equivalent
-understanding from other state. If the controls repeatedly match the theory
+A null intervention result is inconclusive: removing the designated theory
+text may change nothing because the house reconstructs the same understanding
+from other retained state. If the controls repeatedly match the theory
 treatment at lower total cost, its advantage hypothesis fails in that regime.
 Neither result settles whether a house can exist or learn with fixed models:
 learning through tests, tools, and search is also learning by the house.
