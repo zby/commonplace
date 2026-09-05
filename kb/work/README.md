@@ -6,6 +6,7 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
+- [operator-led-article-clarification](./operator-led-article-clarification/README.md) — recording a two-phase method for clarifying draft articles (operator-flagged passages diagnosed by kind, then an agent sweep by pattern) and its working taxonomy of reader difficulties, until enough article runs exist to promote a procedure
 - [agentic-analysis-consumer-migration](./agentic-analysis-consumer-migration/README.md) — migrating legacy memory-review consumers one by one to the main agentic review's generated files, then retiring duplicate legacy publication
 - [reachability-working-paper-publication](./reachability-working-paper-publication/README.md) — staging the reachability conjecture as a versioned working-paper package with frozen authoritative appendices, live successor links, a dependency audit, and the remaining definitions, protocols, references, and probability criteria filled before publication approval
 - [commonplace-nearest-constructions](./commonplace-nearest-constructions/README.md) — characterizing Commonplace through the systems nearest its current human-inclusive theory builder, its path toward less task-specific human input, and its conjectured software-house endpoint
