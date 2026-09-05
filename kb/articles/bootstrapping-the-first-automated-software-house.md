@@ -161,9 +161,9 @@ need not keep them in separate kinds of carrier.
 
 ## A possible early trial: learning which checks a Markdown edit needs
 
-One possible trial asks which checks a Markdown edit needs. It would test
-whether computation can make that decision and whether experience improves
-later check selection. The [training article's hypothetical release
+This trial would test whether computation can decide which checks a Markdown
+edit needs, and whether experience improves later check selection. The
+[training article's hypothetical release
 exporter](./the-software-house-as-the-unit-of-training.md#why-this-is-theory-mediated-learning)
 provides a concrete setting: it produces a deployment manifest for an
 installer, and duplicate service identifiers make that manifest invalid.
