@@ -11,6 +11,11 @@ commit. **No edit below has an operator verdict yet.** Each is a prediction
 that the operator would accept it; a reverted commit is a refutation and
 should be recorded here as such.
 
+Partial verdict on the sweep, same day: "Unfortunately I cannot check them
+all now - but what I checked was OK." The operator did not say which commits
+were checked, so no individual entry below carries an accept; none has been
+reverted.
+
 Operator's instruction for the run: "use
 kb/work/operator-led-article-clarification/ on
 kb/articles/bootstrapping-the-first-automated-software-house.md - but do as
