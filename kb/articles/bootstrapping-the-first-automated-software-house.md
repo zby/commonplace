@@ -70,17 +70,16 @@ complete operational transfer: computation now makes the decision. Learning
 transfer requires the house to have produced or revised the validator's
 criterion and machinery from its own experience.
 
-The conjecture permits a human-built seed, provided the house applies its
-program theory, revises coherently, and continues reliably without human
-production decisions. Program theory means understanding the software's purpose,
-organization, and how to handle new requests.
-An explicit project theory is one possible written carrier of that understanding,
-stating design commitments, causal assumptions, and invariants. The conjecture
-also permits reconstructing understanding from records.
-The separate proposal to [train the house from
-production](./the-software-house-as-the-unit-of-training.md) asks whether its
-own process can also produce the project-specific machinery. The bootstrap
-aims at both transfers.
+The conjecture allows that: it permits a human-built seed, provided the house
+applies its program theory, revises coherently, and continues reliably without
+human production decisions. Program theory here means understanding the
+software's purpose, organization, and how to handle new requests. An explicit
+project theory is one possible written carrier of that understanding, stating
+design commitments, causal assumptions, and invariants; the conjecture also
+permits reconstructing understanding from records. The separate proposal to
+[train the house from production](./the-software-house-as-the-unit-of-training.md)
+asks a further question: whether the house's own process can also produce the
+project-specific machinery. The bootstrap aims at both transfers.
 
 ## Commonplace as a seed instance
 
