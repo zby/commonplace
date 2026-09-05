@@ -303,41 +303,29 @@
   </aside>
 </section>
 
-<!-- Interrupt · same outside -->
+<!-- Interrupt · two readings -->
 <section class="slide interrupt">
-  <svg viewBox="0 0 640 400" role="img" aria-label="Two identical roads: one closed by a striped barrier where the path stops, one with a no-traffic sign beside it where the path continues">
-    <defs>
-      <pattern id="barrier-stripes" width="22" height="22" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
-        <rect width="22" height="22" fill="#F6F5F1"/>
-        <rect width="11" height="22" fill="#E0673B"/>
-      </pattern>
-    </defs>
-    <!-- left road -->
+  <svg viewBox="0 0 640 400" role="img" aria-label="A Necker cube and its two possible readings">
     <g stroke="#F6F5F1" stroke-width="3" fill="none" stroke-linejoin="round">
-      <path d="M105,340 L135,60"/>
-      <path d="M255,340 L225,60"/>
+      <rect x="140" y="130" width="160" height="160"/>
+      <rect x="202" y="84" width="160" height="160"/>
+      <path d="M140,130 L202,84 M300,130 L362,84 M140,290 L202,244 M300,290 L362,244"/>
     </g>
-    <!-- left travel path: stops at the barrier -->
-    <path d="M180,336 V232" stroke="#F6F5F1" stroke-width="3" stroke-dasharray="10 9" fill="none"/>
-    <path d="M180,214 L171,231 L189,231 Z" fill="#F6F5F1"/>
-    <!-- barrier -->
-    <rect x="104" y="184" width="152" height="26" rx="5" fill="url(#barrier-stripes)" stroke="#F6F5F1" stroke-width="2.5"/>
-    <!-- right road -->
-    <g stroke="#F6F5F1" stroke-width="3" fill="none" stroke-linejoin="round">
-      <path d="M385,340 L415,60"/>
-      <path d="M535,340 L505,60"/>
+    <g stroke="#F6F5F1" stroke-width="2" fill="none" stroke-linejoin="round">
+      <rect x="475" y="77" width="64" height="64"/>
+      <path d="M450,96 L475,77 M514,96 L539,77 M450,160 L475,141 M514,160 L539,141"/>
     </g>
-    <!-- right travel path: continues past the sign -->
-    <path d="M460,336 V92" stroke="#F6F5F1" stroke-width="3" stroke-dasharray="10 9" fill="none"/>
-    <path d="M460,72 L451,91 L469,91 Z" fill="#F6F5F1"/>
-    <!-- no-traffic sign (Vienna C2 / Polish B-1) beside the road -->
-    <rect x="546" y="168" width="5" height="68" fill="#F6F5F1" opacity=".7"/>
-    <circle cx="548" cy="140" r="25.5" fill="#F6F5F1" stroke="#E0673B" stroke-width="12"/>
-    <circle cx="548" cy="140" r="31.8" fill="none" stroke="#F6F5F1" stroke-width="1.5"/>
+    <rect x="450" y="96" width="64" height="64" fill="#8FA9C4" stroke="#F6F5F1" stroke-width="2"/>
+    <text x="494" y="199" font-size="18" fill="#F6F5F1" opacity=".6" text-anchor="middle" font-family="'IBM Plex Mono',monospace">or</text>
+    <g stroke="#F6F5F1" stroke-width="2" fill="none" stroke-linejoin="round">
+      <rect x="450" y="236" width="64" height="64"/>
+      <path d="M450,236 L475,217 M514,236 L539,217 M450,300 L475,281 M514,300 L539,281"/>
+    </g>
+    <rect x="475" y="217" width="64" height="64" fill="#E0673B" stroke="#F6F5F1" stroke-width="2"/>
   </svg>
   <aside class="notes">
-    <p><b>~15s beat — talk over the picture.</b> A barrier and a no-traffic sign (Vienna Convention C2 — Polish B-1) encode <b>exactly the same rule</b> on the same road: closed to all vehicles. The barrier is the validator script: it <b>blocks</b> — nobody drives through it, and it fails the same way every time. The sign is the validating prompt: an <b>instruction the driver interprets</b> — and can weigh away against whatever else is on their mind.</p>
-    <p>And from the storage layer the two roads look identical — <b>git diff sees no difference</b>. Then advance: so what does tell them apart? The four-field record.</p>
+    <p><b>~15s beat — talk over the picture.</b> One figure, two readings — both reasonable, and nothing in the figure adjudicates between them. That is the prompt's side of the table just shown: reinterpreted on every run, so its failures are interpretive and vary.</p>
+    <p>The contrast in one breath: if two consumers of code disagree, one of them is wrong; if two readers of a prompt disagree, maybe neither is. The derivation grid two slides ahead turns this into an axis.</p>
   </aside>
 </section>
 
@@ -398,29 +386,41 @@
   </aside>
 </section>
 
-<!-- Interrupt · two readings -->
+<!-- Interrupt · barrier vs sign -->
 <section class="slide interrupt">
-  <svg viewBox="0 0 640 400" role="img" aria-label="A Necker cube and its two possible readings">
+  <svg viewBox="0 0 640 400" role="img" aria-label="Two identical roads: one closed by a striped barrier where the path stops, one with a no-traffic sign beside it where the path continues">
+    <defs>
+      <pattern id="barrier-stripes" width="22" height="22" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+        <rect width="22" height="22" fill="#F6F5F1"/>
+        <rect width="11" height="22" fill="#E0673B"/>
+      </pattern>
+    </defs>
+    <!-- left road -->
     <g stroke="#F6F5F1" stroke-width="3" fill="none" stroke-linejoin="round">
-      <rect x="140" y="130" width="160" height="160"/>
-      <rect x="202" y="84" width="160" height="160"/>
-      <path d="M140,130 L202,84 M300,130 L362,84 M140,290 L202,244 M300,290 L362,244"/>
+      <path d="M105,340 L135,60"/>
+      <path d="M255,340 L225,60"/>
     </g>
-    <g stroke="#F6F5F1" stroke-width="2" fill="none" stroke-linejoin="round">
-      <rect x="475" y="77" width="64" height="64"/>
-      <path d="M450,96 L475,77 M514,96 L539,77 M450,160 L475,141 M514,160 L539,141"/>
+    <!-- left travel path: stops at the barrier -->
+    <path d="M180,336 V232" stroke="#F6F5F1" stroke-width="3" stroke-dasharray="10 9" fill="none"/>
+    <path d="M180,214 L171,231 L189,231 Z" fill="#F6F5F1"/>
+    <!-- barrier -->
+    <rect x="104" y="184" width="152" height="26" rx="5" fill="url(#barrier-stripes)" stroke="#F6F5F1" stroke-width="2.5"/>
+    <!-- right road -->
+    <g stroke="#F6F5F1" stroke-width="3" fill="none" stroke-linejoin="round">
+      <path d="M385,340 L415,60"/>
+      <path d="M535,340 L505,60"/>
     </g>
-    <rect x="450" y="96" width="64" height="64" fill="#8FA9C4" stroke="#F6F5F1" stroke-width="2"/>
-    <text x="494" y="199" font-size="18" fill="#F6F5F1" opacity=".6" text-anchor="middle" font-family="'IBM Plex Mono',monospace">or</text>
-    <g stroke="#F6F5F1" stroke-width="2" fill="none" stroke-linejoin="round">
-      <rect x="450" y="236" width="64" height="64"/>
-      <path d="M450,236 L475,217 M514,236 L539,217 M450,300 L475,281 M514,300 L539,281"/>
-    </g>
-    <rect x="475" y="217" width="64" height="64" fill="#E0673B" stroke="#F6F5F1" stroke-width="2"/>
+    <!-- right travel path: continues past the sign -->
+    <path d="M460,336 V92" stroke="#F6F5F1" stroke-width="3" stroke-dasharray="10 9" fill="none"/>
+    <path d="M460,72 L451,91 L469,91 Z" fill="#F6F5F1"/>
+    <!-- no-traffic sign (Vienna C2 / Polish B-1) beside the road -->
+    <rect x="546" y="168" width="5" height="68" fill="#F6F5F1" opacity=".7"/>
+    <circle cx="548" cy="140" r="25.5" fill="#F6F5F1" stroke="#E0673B" stroke-width="12"/>
+    <circle cx="548" cy="140" r="31.8" fill="none" stroke="#F6F5F1" stroke-width="1.5"/>
   </svg>
   <aside class="notes">
-    <p><b>~15s beat — talk over the picture.</b> The Necker cube: one figure, two readings, both reasonable — and nothing in the figure adjudicates between them. That is the natural-language cell of the grid: <b>underspecification, not a defect of any particular text</b>.</p>
-    <p>The contrast in one breath: if two consumers of code disagree, one of them is wrong; if two readers of a prompt disagree, maybe neither is.</p>
+    <p><b>~15s beat — talk over the picture.</b> The two occupied cells of the grid, standing on one road. The barrier is the <b>symbolic</b> cell: consequences assigned — it adjudicates by itself, and nobody drives through it. The no-traffic sign (Vienna Convention C2 — Polish B-1) states <b>exactly the same rule</b> in the <b>natural-language</b> cell: reinterpreted by every driver on every approach, so the path can run right past it.</p>
+    <p>Bridge to the next slide: same rule, different force — which is what behavioral authority records.</p>
   </aside>
 </section>
 
