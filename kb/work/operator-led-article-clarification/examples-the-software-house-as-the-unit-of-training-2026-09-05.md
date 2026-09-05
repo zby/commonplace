@@ -255,3 +255,32 @@ done first and reported before any prose work.
 > that currently behave the same but embody different lessons, on later
 > maintenance tasks. The acquired capability can remain specific to one product;
 > the comparison identifies what it contributes to later work.
+
+## 9. Define the training lineage at first use
+
+- **Commit:** see log (`Workshop:` trailer)
+- **Kind:** Unintroduced term (two sites)
+- **Operator's verdict:** "apply the rest" (phase-2 sweep candidate 8; the
+  agent flagged its definition for checking and the operator accepted)
+- **Diagnosis:** *Training lineage* appeared first in the continuity bullet
+  and again in the Bitter Lesson section as "that training lineage" with no
+  local antecedent, never defined. Defined at first use as the history of
+  retained changes made while the models stay pinned; the second site now
+  says "the training lineage".
+
+**Before (continuity bullet):**
+
+>   outside a model checkpoint. Their effective use may still depend on the
+>   model, so replacing it requires revalidation and lies outside the fixed-model
+>   training lineage.
+
+**After (continuity bullet):**
+
+>   outside a model checkpoint. Their effective use may still depend on the
+>   model, so replacing the model requires revalidation and falls outside the
+>   *training lineage* — the history of retained changes made while the models
+>   stay pinned.
+
+**Before (Bitter Lesson):** "that training lineage; the seed may be human-built"
+
+**After (Bitter Lesson):** "the training lineage; the seed may be human-built"

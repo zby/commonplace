@@ -190,8 +190,9 @@ The proposed regime offers three practical benefits:
   these local operations to be useful.
 - **Continuity through retained artifacts.** Theory and machinery persist
   outside a model checkpoint. Their effective use may still depend on the
-  model, so replacing it requires revalidation and lies outside the fixed-model
-  training lineage.
+  model, so replacing the model requires revalidation and falls outside the
+  *training lineage* — the history of retained changes made while the models
+  stay pinned.
 
 These benefits must cover the costs of discovery, retrieval, validation,
 coordination, and maintenance. The experiments below ask whether they do.
@@ -225,7 +226,7 @@ retained](../notes/the-bitter-lesson-selects-production-methods-not-representati
 In this regime, computation forms and revises theories, searches over programs
 and tools, constructs evaluators, and selects changes from production
 evidence. These artifacts are learned products. Compatibility is assessed over
-that training lineage; the seed may be human-built, but subsequent
+the training lineage; the seed may be human-built, but subsequent
 project-specific structure must be produced or revised by computation.
 
 This is structural compatibility, not evidence of a scaling advantage. Search,
