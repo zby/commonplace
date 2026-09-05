@@ -1,66 +1,146 @@
 ---
-description: "Use when refreshing existing agent-memory-system reviews for the current artifact taxonomy without doing a full source re-review"
+description: "Use when auditing retained main-review memory classifications for ambiguous terminology, inconsistent mappings or missing evidence"
 type: kb/types/instruction.md
 ---
 
-# Refresh agent-memory review taxonomy
+# Audit main-review memory classifications
 
-Use this procedure to update existing `kb/agent-memory-systems/reviews/` notes so they use the current artifact vocabulary. This is a taxonomy-consistency pass, not a full repository re-review.
+Identify classification defects in retained main analyses and route corrections
+through the producing method and source regeneration.
 
-## Prerequisites
+## Inputs and authority
 
-- The target is one or more existing review notes under `kb/agent-memory-systems/reviews/`.
-- The goal is to clarify current review text, not to reassess the external repository from source.
-- The working tree has been checked with `git status --short`.
+Use the supplied generated main reviews under `kb/agentic-systems/reviews/`.
+Without an explicit selection, inspect all generated main reviews; do not
+silently drop an input that fails. An input must identify its complete retained
+result through `analysis-result` and `analysis-result-sha256`. A legacy review,
+old CSV, transfer scan or compact summary cannot substitute for that result.
+If the request names only a legacy review, report the main-analysis regeneration
+needed rather than treating its prose as classification evidence.
 
-## Scope
+This procedure produces a diagnosis in the response, or at an audit destination
+commissioned by the caller. It does not edit generated reviews, retained results,
+comparison files or surveys, and it does not refresh source evidence. A request
+that also commissions corrections authorizes the subsequent producing workflow
+within that request's scope; do not request authorization again.
 
-Do:
+## Check and read the inputs
 
-- clarify storage substrate, representational form, lineage, and behavioral authority where the existing review already contains enough evidence
-- replace stale shorthand such as role, substrate class, knowledge memory, or system-definition memory when it means an artifact-analysis field
-- keep edits local to review wording and the trace-learning survey when placement wording changes
+1. **Load the main-result contract.** Read
+   `kb/types/agentic-system-analysis-result.md`, including `memory-comparison`.
+   Record the procedure, contract, schema and reader identities used for the
+   audit: this instruction, that type and its `.schema.yaml`,
+   `src/commonplace/lib/systems_matrix.py`, and the producing
+   `kb/instructions/analyse-agentic-system/SKILL.md`. Record hashes for any
+   additional ontology definition actually used.
+2. **Check the selected population.** From the repository root, use the existing
+   main-result reader. Pass the explicit review paths as arguments to this
+   check; omit them only for the all-generated selection:
 
-Do not:
-
-- update `last-checked` unless you actually re-read the source repository
-- archive and rewrite the review
-- add new implementation claims that require source inspection
-- force every review to include a rigid four-field section
-
-## Steps
-
-1. **Select targets.** Prefer trace-learning and behavior-changing systems first. If no target list is supplied, start with reviews whose existing text mentions traces, lessons, rules, playbooks, skills, prompts, validators, learned policies, or benchmark-gated promotion.
-
-2. **Read the current review.** Use only the active review file. Ignore archived `.replaced.*.md` files unless the user explicitly asks for historical comparison.
-
-3. **Check review staleness.** Read `last-checked` from frontmatter. If it is missing or more than 30 days before today's date, record a staleness warning in the final report before editing. Continue only for vocabulary and taxonomy-clarity edits grounded in the existing review text. Do not resolve ambiguity by adding new mechanism claims; recommend a source re-review instead.
-
-4. **Classify each retained surface that matters.** For each memory, skill, rule, prompt, trace store, index, policy, dataset, or learned state that the review treats as architecturally important, ask:
-   - **Storage substrate:** where does it persist?
-   - **Representational form:** is the operative part natural-language, symbolic, distributed-parametric, or mixed?
-   - **Lineage:** what source material, derivation path, invalidation rule, or regeneration rule controls it?
-   - **Behavioral authority:** is it consumed as evidence, reference, context, explanation, or advice, or with instruction, enforcement, routing, validation, configuration, evaluation, ranking, or learning force?
-
-5. **Patch only ambiguous text.** Add wording when the old review leaves a taxonomy-relevant mechanism unclear. Prefer short replacements in existing paragraphs over new sections. Leave fields implicit when they are obvious and not central to the review's comparison.
-
-6. **Handle trace-learning reviews carefully.** If the review has a trace-learning placement, ensure it distinguishes raw trace artifacts from the artifacts produced from them. Raw traces often have knowledge-artifact or evidence use; rules, tools, prompts, validators, fine-tunes, or rankers produced from traces often have system-definition-artifact use.
-
-7. **Update the trace-learning survey only when needed.** Edit `kb/agent-memory-systems/trace-learning-techniques-in-related-systems.md` only if the refresh changes survey placement, axis wording, or a cross-system claim.
-
-8. **Validate.** Run the smallest validation scope that covers the edited reviews and instruction or survey files. For a few files, validate each file directly:
    ```bash
-   commonplace-validate path/to/edited-file.md
+   uv run python - <main-review-path> <<'PY'
+   import json
+   import sys
+   from pathlib import Path
+   from commonplace.lib.systems_matrix import load_results
+
+   root = Path.cwd()
+   inputs = load_results(root, [Path(p) for p in sys.argv[1:]] or None)
+   inputs.recheck(root)
+   fields = ("review_file", "result_file", "analysis_run", "source_identity",
+             "reviewed_revision", "analysis_cutoff", "source_tier", "comparison_scope")
+   print(json.dumps({"inputs": inputs.hashes,
+                     "population": [{k: row[k] for k in fields} for row in inputs.rows]},
+                    sort_keys=True, indent=2))
+   PY
    ```
-   For a broad review sweep, validate:
-   ```bash
-   commonplace-validate kb/agent-memory-systems
-   ```
+
+   Save the successful check output for the final recheck. A missing result,
+   hash/identity mismatch, malformed assessment or duplicate source identity
+   blocks the selected audit. Report the diagnostic and affected input; do not
+   repair generated bytes, use a legacy fallback or call the population checked.
+   Structural validation does not establish semantic consistency.
+3. **Read full results.** Read each selected retained file at its recorded hash:
+   source register, shared records, memory/context lens, reconciliation and
+   limits, as well as the comparison frontmatter. Follow the compact projection
+   only to check whether it preserves those findings. Source revision and cutoff
+   bound the evidence; age alone neither invalidates an immutable observation
+   nor establishes present upstream behavior. Do not use `last-checked` or a
+   rolling age threshold as permission to edit it.
+
+## Diagnose the classifications
+
+4. **Check each scoped operative part.** Use canonical object, route and
+   behavioral-authority records; do not produce a second system inventory.
+
+   | Question | Check against the recorded mechanism |
+   |---|---|
+   | Storage substrate | Where does this retained part persist? Preserve distinct stores; distinguish retained objects from transient views. |
+   | Representational form | How is the part encoded and consumed: natural-language, symbolic or distributed-parametric? A file extension or opaque encoding does not decide the form. `parametric` is the registered comparison abbreviation. |
+   | Lineage | What supplied or transformed the content? Preserve source/trace versus derived artifact, provenance, and any recorded invalidation or regeneration limits. |
+   | Behavioral authority | Which consumer receives it, through which channel, with what force and horizon? Separate payload advice from metadata enforcement, and epistemic warrant from operational permission. |
+
+5. **Check the aggregate and dependent axes.** Compare values and rationale with
+   the cited records and declared memory scope. A known set must cover all
+   scoped parts and use the weakest supporting basis. Match scope across the
+   profile, objects, route branches and lens account, including opaque parts and
+   explicit exclusions. Preserve per-route distinctions such as a wired push
+   consumer and an afforded pull API. Do not
+   infer a model consumer from storage or infer activation from delivered text.
+   Check push signals at a named consumer and selector; distinguish requested
+   returns from automatic selection and names in a catalog from identity matches
+   that select delivered parts.
+   For trace learning, distinguish retained raw traces from automatically
+   produced durable material and its behavior-shaping consumer; keep source,
+   scope, timing and distilled form attached to every qualifying scoped route.
+   Apply the type's criterion to generated continuation summaries too; reshaping
+   is not an exclusion and a session ID does not decide the task horizon.
+   A test definition, quote check or format validator is not a retained
+   recall-dependence test.
+6. **Dispose each consequential issue.** Report the affected field or passage,
+   canonical IDs, exact result/run/hash, supporting sections and the applicable
+   contract clause. Separate:
+
+   - **Supported:** the terminology and assessment preserve the recorded mechanism.
+   - **Evidence limit:** an explicit unknown, uninspected part or missing consumer
+     prevents a stronger conclusion; leave that limitation intact.
+   - **Classification defect:** the profile or projection contradicts its own
+     records, loses a scoped part or upgrades evidence. State the contradiction,
+     without writing a replacement system finding.
+   - **Method gap:** the shared vocabulary, aggregation rule or producing
+     instruction cannot represent the recorded distinction. Name the smallest
+     shared clarification needed and the result population it could affect.
+
+   An unknown is not itself a defect. If the retained evidence cannot decide
+   whether a classification is wrong, identify the missing source inspection;
+   do not independently reconstruct the external system in this audit.
+
+## Return or continue through the producer
+
+7. **Recheck and report.** Repeat the identical population check and require its
+   identities and hashes to match. Recheck the recorded method/ontology hashes
+   too. On drift, withhold current conclusions and restart on one boundary.
+   Return selection, run/source/cutoff/tier, result hashes, method identities,
+   dispositions, unassessed coverage and required regeneration. A clean audit
+   means no defect found within that boundary, not source freshness or semantic
+   endorsement. Validate an authorized written Markdown audit.
+8. **Route commissioned corrections.** When corrections are in scope, fix the
+   shared method/contract if it is defective; when the existing method already
+   covers the issue, keep it and rerun its application. Invoke
+   [analyse-agentic-system](./analyse-agentic-system/SKILL.md) with the source
+   identity, recorded revision or capture, target boundary, affected canonical
+   findings, and the diagnosis. Use a new run ID and the producer's normal
+   source inspection, validation and publication. The old result supplies the
+   issue to check, not replacement source evidence. Missing source access blocks
+   regeneration; it never licenses a prose patch. After publication, rerun this
+   audit on the replacement result. Comparison and survey refreshes remain
+   separately scoped downstream operations.
 
 ## Verify
 
-- No active review still uses old taxonomy shorthand where the current fields are meant.
-- Reviews whose `last-checked` date is older than 30 days are reported with a staleness warning.
-- `last-checked` dates are unchanged unless source was re-read.
-- Trace-learning reviews distinguish raw trace storage from behavior-changing artifacts produced from traces when both exist.
-- Validation reports no failures in the edited scope.
+- Findings read the full main result and cite its canonical records and hash.
+- Scope, evidence tiers, weaker bases and explicit uncertainty survive the audit.
+- Neither generated findings nor their observation dates were hand-edited.
+- Final input/population and method identities match the recorded boundary.
+- Defects and gaps name their correction owner and regeneration condition;
+  unsupported findings are withheld rather than patched into a review or survey.

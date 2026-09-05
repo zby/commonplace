@@ -19,7 +19,7 @@ Entries without an execution record remain **pending**. The acceptance condition
 | C07 | [Thalo type comparison](../../agent-memory-systems/thalo-type-comparison.md) uses a legacy review for its external-system account. | Ground the Thalo mechanism in the main review. Disposition the Commonplace mapping as current transfer or a bounded historical comparison under the appropriate contract. |
 | C08 — done | [Transfer scan](../../instructions/scan-agentic-system-transfer/SKILL.md) now requires the exact main-review result and its completion state. | Initial and final completion/identity checks, canonical finding references, and no legacy or summary fallback. See [acceptance](./c08-acceptance.md). |
 | C09 — done | [External-system placement pass](../../instructions/simplification-passes/place-external-systems.md) reads generated main reviews, with source ingests identified separately. | Check support, evidence status, source revision, and input hashes; withhold unsupported or local-only citations. See [acceptance](./c09-acceptance.md). |
-| C10 | [Taxonomy refresh](../../instructions/refresh-agent-memory-review-taxonomy.md) patches old review prose. | Replace or retire the mutation procedure. Any successor reads main-review files to diagnose missing or inconsistent classifications and routes corrections through the shared method and regeneration. Its present direct-edit steps conflict with generated-review ownership. |
+| C10 — done | [Classification audit](../../instructions/refresh-agent-memory-review-taxonomy.md) reads retained main results and diagnoses their classifications. | Require exact evidence and method identities; preserve scope and uncertainty. Route defects through the producing method and source regeneration, without patching generated prose. See [acceptance](./c10-acceptance.md). |
 | C11 | [Quote-grounding check](../../instructions/verify-review-quote-grounding.md) reads review quotations and checkout files. | Determine which main-review output actually contains quotations and migrate the relevant check, or retire the unused procedure. Resolve evidence against the frozen commit/capture, not the current worktree; keep quote verification distinct from claim-support judgment. |
 | C12 | [Legacy review writer](../../instructions/write-agent-memory-system-review/SKILL.md) reads existing reviews for style and drafts again from frozen sources. | Retire the extra drafting and style-exemplar dependency with C14. Do not rewrite this writer as a legacy-format projection adapter. |
 | C13 | Authored evidence links in `kb/notes/`, `kb/articles/`, `kb/sources/`, `kb/reference/`, and per-system analyses; [grounding-alignment gate](../../instructions/review-gates/semantic/grounding-alignment.md) follows linked library evidence. | Work by citing artifact or bounded claim group. Check support before changing a target; retain historical citations when the original observation matters. The generic gate already recognizes both system collections: change it only if the selected evidence location requires it. |
@@ -117,6 +117,12 @@ retained result. The default all-generated build still rejects Pond. The
 workshop pair covers Maka alone; public defaults and legacy snapshots remain
 unchanged.
 
+The later [producer-check exercise](./producer-check-acceptance.md) found
+unsupported task-horizon and inconsistent learning-branch assessments in Maka.
+The reader/output mechanics remain accepted, but affected complete learning
+claims must be withheld pending source regeneration. The pilot does not certify
+every comparison classification.
+
 ### C04 — Landscape synthesis
 
 **Status: done for procedure migration and one-system production pilot.**
@@ -141,14 +147,14 @@ tests and was committed in `c589b981`. The subsequent
 `AAS-2026-09-05-apache-maka-01` and its retained result directly for bounded
 queries and qualitative findings. It also fixes link validation for results
 supplied in the same prospective publication bundle. All 723 tests pass. No
-public landscape article or whole-corpus comparison was refreshed.
+public landscape article or whole-corpus comparison was refreshed. Pilot and
+publication fix committed in `f586fb1d`.
 
-**Next:** C10, replacing or retiring direct taxonomy patching. Its current
-mutation procedure conflicts with generated-review ownership and can be
-resolved without first regenerating the whole corpus. C11 remains a subsequent
-procedure choice; C05–C07 need enough regenerated evidence or an explicit
-historical disposition. Pond remains outside the new comparison population.
-Consumer IDs remain an inventory, not a fixed sequence.
+**Next:** C11, checking where the main result retains quotations and migrating
+or retiring the quote-grounding procedure. Resolve quotations against the
+recorded source revision or capture. C05–C07 need enough regenerated evidence
+or an explicit historical disposition. Pond remains outside the new comparison
+population. Consumer IDs remain an inventory, not a fixed sequence.
 
 C15 received navigation and public-citation contract updates needed by C01–C04. Broader citation
 and public-navigation migration remains pending. C12/C14 still require the
@@ -176,3 +182,44 @@ review. It retained implemented storage/retrieval findings, withheld automatic
 injection and demonstrated-improvement claims, and preserved the distinction
 between static wiring and observed use. Changed Markdown validated cleanly.
 Committed in `c1490415`.
+
+### C10 — Main-review classification audit
+
+**Status: done for procedure migration and a bounded audit.** The existing
+instruction path now diagnoses classifications in retained main results.
+It checks evidence and method identities before and after interpretation,
+distinguishes structural validity from semantic support, and preserves unknown
+assessments. Corrections go through the shared method when needed and a new
+source-based main-review run; the audit cannot patch generated findings or
+refresh surveys.
+
+Owned files: `kb/instructions/refresh-agent-memory-review-taxonomy.md`,
+this queue and [acceptance record](./c10-acceptance.md). Repository search found
+no automated caller or skill projection. Two mentions in other workshop
+inventories are descriptive, not procedure calls. The conditional producing
+skill already accepts the required source, target and diagnosis; its interface
+is unchanged.
+
+The audit consumed the public Maka review and exact retained result from
+`AAS-2026-09-05-apache-maka-01`, including scoped comparison fields, canonical
+objects, routes, authority records and limits. No classification defect was
+established in that selected result. Missing or mismatched evidence, a legacy
+path, input drift and unregenerated Pond were rejected. Two temporary semantic
+defects passed structural validation and were identified by reading their
+supporting records. An isolated copy worked without legacy files or local run
+state. Input and method identities matched at the final recheck.
+
+The changed procedure and workshop records validate cleanly. This Markdown
+change exercised the existing reader directly; no code changed or new pytest
+run was needed. No production source regeneration or generated-output edit
+occurred in C10. Initial acceptance covers Maka alone; the all-generated audit
+still blocks on Pond. The subsequent [oh-my-pi report audit](./c10-oh-my-pi-audit.md)
+identifies two real classification defects after structural success and one
+remaining selection-mapping question. Corrections require a new producer run;
+the diagnostic does not invalidate the row automatically in the reader.
+The [producer-check update](./producer-check-acceptance.md) adds the focused
+integrated check and shared clarifications before that rerun. It preserves the
+existing publication interface and passed all 723 tests. Its independent
+exercise reproduced oh-my-pi's defects and identified two further learning
+assessment gaps in Maka, while preserving valid uncertainty and weaker bases.
+Implementation and verification are recorded in this workshop's Git history.

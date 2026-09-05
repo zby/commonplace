@@ -95,6 +95,11 @@ records. A known set is complete for this axis within that scope. If an
 uninspected part prevents that assertion, record the uncertainty rather than
 silently omitting the part.
 
+The scope must agree across the profile, canonical objects/routes and lens
+account. If a route combines included and excluded alternatives, identify the
+parts on each branch. An inspected container or display summary does not decide
+the representational form of an opaque payload consumed alongside it.
+
 Other assessments require `values: []` and `basis: null`. An `absent`
 assessment references an `ABS-*` record establishing the bounded absence.
 Every assessment has a `note` explaining its mapping, aggregation, or conclusion
@@ -113,11 +118,31 @@ Read-back concerns accumulated memory, not static routing instructions. Use
 both `pull` and `push` when both routes exist. Read-back signal characterizes
 push selection and is inapplicable for a known pull-only boundary.
 
+Name the memory consumer and selection operation when assigning direction.
+Fulfilling that consumer's request for retained material is pull. An automatic
+selector supplying retained material without that request is push; an upstream
+operator choice can supply its selection input. Distinguish these operations
+within a chain rather than counting a requested return as another push merely
+because code delivers it. For each push signal, name trigger, selector input
+and selected retained part. Identifier-based push requires an actual identity
+match that selects delivered parts, such as branch/entry selection during
+automatic history assembly. An identifier on a requested file or a catalog
+entry alone is insufficient; coarse availability and budget filtering remain
+separate from targeted selection.
+
 Trace learning requires automatic trace-fed writes producing durable
 behavior-shaping artifacts or learned parameters; storing raw logs alone does
 not qualify. Its source, scope, timing, and distilled form describe that
 learning route and are explicitly inapplicable when trace learning is known
 not to occur. Ordinary retention and retrieval fields still apply.
+
+A generated continuation summary qualifies when traces feed its automatic
+production, it is retained, and a later consumer receives it as context or
+guidance. Calling the transformation reshaping does not exclude it. Neither
+new knowledge nor observed improvement is required for a wired classification.
+Assess every qualifying scoped route's source, scope, timing and distilled
+form before aggregating. Establish the task horizon from that route; a session
+identifier alone does not decide `per-task` versus `cross-task`.
 
 Boolean axes have one value only; quote `"yes"` and `"no"` in YAML so they
 remain strings. Faithfulness tested means retained execution
@@ -133,6 +158,10 @@ legacy review, or compact prose.
 ### Canonical identity
 
 Use the run's canonical namespaces: `SRC-*` sources, `CMP-*` components, `OBJ-*` operative objects, `RTE-*` routes, `CLM-*` claims, `ABS-*` evidenced absences, and `BAP-*` behavioral-authority paths. IDs are unique across the whole result and resolve within this file. A lens may extend a canonical record only where the producing instruction assigns that field to it; it never silently redefines generic identity.
+
+Canonical identity applies from allocation and sharing, not only final
+acceptance. A split gives the new parts fresh IDs and marks the combined record
+superseded; its ID does not change referent. Provisional labels are local tags.
 
 Each amendment stays attached to its canonical record and gives the superseded value, replacement value, evidence anchor, and affected findings. Do not create a second inventory for amended or lens-specific views.
 

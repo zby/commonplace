@@ -101,10 +101,13 @@ dispositions. Complete the run without publishing a review.
 5. Use a recorded search boundary only for a load-bearing absence claim. Name
    the searched roots or files, query, and revision; a casual search miss is a
    limitation, not an `ABS-*` record.
-6. Treat truncated output as non-evidence. Narrow and repeat the read before
-   citing it. For Git, cite the `SRC-*` ID plus a full commit-relative path and
-   line range such as `packages/runtime/src/agent-run.ts:595-641`; use the full
-   commit in GitHub blob links.
+6. Select files and line ranges before reading content. Budget the aggregate
+   output of parallel reads against the tool wrapper's delivery limit; an
+   output cap alone does not bound the inspection. Treat truncated output as
+   non-evidence. Narrow and repeat the read before citing it. For Git, cite the
+   `SRC-*` ID plus a full commit-relative path and line range such as
+   `packages/runtime/src/agent-run.ts:595-641`; use the full commit in GitHub
+   blob links.
 
 The source pin is an evidence boundary, not a recovery protocol. If it changes
 or cannot be verified, fail the run and start another one.
@@ -140,7 +143,11 @@ identity. A lens annotates existing IDs and proposes new records under local
 tags that disappear when the orchestrator registers or merges them. An
 `uninspected` gap is a limitation, not an `ABS-*` record.
 Allocate canonical IDs monotonically. Never reuse an ID after merging or
-rejecting its record; gaps are harmless.
+rejecting its record; gaps are harmless. An ID shared with a worker is canonical
+before final integration. Amend its evidence or status without changing its
+referent. Splitting a combined record requires new IDs for the parts and an
+explicit superseded disposition on the original record; do not assign its ID
+to one part. Use local labels for provisional seeds.
 
 When workers are useful and available, give each one the run ID, frozen source
 identity, reviewed boundary, source register, canonical register, lens scope,
@@ -239,6 +246,26 @@ with its assessment, evidence basis, values, canonical records, and rationale.
 Keep uncertain, uninspected, inapplicable, and evidenced-absent cases explicit.
 Use the weakest evidence basis across an aggregated value set; never infer
 comparison values from legacy reviews or a missing tag or section.
+
+After reconciliation, check the integrated result against the type's comparison
+rules, not just the separate lens returns:
+
+- Match the profile scope to canonical objects, route branches and lens scope.
+  Account for included alternatives and opaque parts in each known aggregate;
+  distinguish excluded branches explicitly.
+- Check every scoped trace-fed write against the learning criterion, including
+  compaction. Carry each qualifying route into the dependent assessments with
+  its own source, task horizon, timing and form.
+- For each push signal, identify the consumer, trigger, selector input and
+  selected retained part. Separate requested reads from automatic selection;
+  a named object alone does not establish identifier-based push.
+- Check that source/status amendments still concern the same canonical IDs,
+  and that overlays cite rather than duplicate their generic records.
+
+Record the checked routes and material dispositions in the existing Semantic
+verification section. A known assessment unsupported by its records blocks
+publication; properly scoped explicit uncertainty does not. Structural
+validation or the absence of a legacy review job does not perform this check.
 
 Run `commonplace-validate --full <result-path>` and verify every source anchor,
 canonical ID, evidence status, boundary, lens output, limitation, and blocker.
