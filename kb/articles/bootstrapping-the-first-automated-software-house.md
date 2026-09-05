@@ -115,13 +115,15 @@ must transfer.
 
 Bounded decision classes make transfer easier to measure. A trial can focus on
 one class, a bundle of coupled decisions, or a broader redesign when the
-current division of work is itself the problem. Exploratory trials can expose
-missing functions while people remain involved. Their results should guide
-which responsibilities to transfer and how to group them.
+current division of work is itself the problem. Exploratory trials, run while
+people remain involved, can expose which functions the house still lacks, and
+their results should guide which responsibilities to transfer and how to group
+them. The next section names those functions.
 
-Count internal decisions still supplied by people: one operator may stop
-performing one role while retaining several others. The program needs evidence
-of transfer without assuming a fixed order or steady progress at every step.
+Measure progress by counting the internal decisions people still make, not the
+people: one operator may stop performing one role while retaining several
+others. The program needs evidence of transfer without assuming a fixed order
+or steady progress at every step.
 
 ## The readiness conditions
 
