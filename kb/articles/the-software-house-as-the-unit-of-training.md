@@ -37,8 +37,9 @@ organization, and how to handle new requests. The proposed mediator is an
 *explicit project theory*: one possible written carrier of that understanding,
 stating design commitments, causal assumptions, and invariants. A house that
 explains why some files need product checks may adapt its checking policy when
-dependencies change. Whether this improves diagnosis and transfer compared
-with other uses of the same evidence is an empirical hypothesis.
+dependencies change. Whether this improves diagnosis, transfer, and sample
+efficiency compared with other uses of the same evidence is an empirical
+hypothesis.
 
 ## The fixed-model premise
 

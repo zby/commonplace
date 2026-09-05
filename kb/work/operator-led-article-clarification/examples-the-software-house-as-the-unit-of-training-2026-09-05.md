@@ -40,3 +40,28 @@ done first and reported before any prose work.
 > is the unit of
 > learning](../notes/the-deployed-system-not-the-model-is-the-unit-of-learning.md)
 > because several components jointly determine its behaviour.
+
+## 2. TL;DR: restore the sample-efficiency claim
+
+- **Commit:** see log (`Workshop:` trailer)
+- **Kind:** Lost claim after restructure (partial: one of three hypotheses
+  dropped from the TL;DR)
+- **Operator's verdict:** "ok - fix both", accepting the whole-article read
+  finding: the TL;DR's last sentence names only "diagnosis and transfer",
+  while the hypotheses section asks three questions (influence,
+  transfer/recovery, sample efficiency) and the frontmatter description names
+  all three ("causal influence, transfer, and learning cost").
+- **Diagnosis:** The TL;DR silently narrowed the empirical hypothesis to two
+  of its three questions. Fixed by naming the third; *sample efficiency* is
+  the article's own term for it (the sample-efficiency hypothesis).
+
+**Before:**
+
+> dependencies change. Whether this improves diagnosis and transfer compared
+> with other uses of the same evidence is an empirical hypothesis.
+
+**After:**
+
+> dependencies change. Whether this improves diagnosis, transfer, and sample
+> efficiency compared with other uses of the same evidence is an empirical
+> hypothesis.
