@@ -299,9 +299,9 @@ revision when evidence contradicts it.
 **The explicit-project-theory advantage hypothesis.** The theory treatment
 should improve later check selection and recovery when changes preserve its
 account, without unnecessary changes to unaffected files. Its initial advantage
-may disappear or reverse when assumptions break. Measure that misdirection
-separately from recovery after revision: rapid recovery can erase the initial
-loss in the whole-run score.
+may disappear or reverse when assumptions break: the theory then misdirects
+the house. Measure that misdirection separately from recovery after revision,
+because rapid recovery can erase the initial loss in a whole-run score.
 
 **The sample-efficiency hypothesis.** Correct theory may [reduce the new
 observations needed to adapt](../notes/theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md)

@@ -387,3 +387,26 @@ done first and reported before any prose work.
 > same errors. Evidence of useful explanatory guidance additionally requires
 > correct handling of consequences the text does not state, and appropriate
 > revision when evidence contradicts it.
+
+## 14. Name the misdirection before measuring it
+
+- **Commit:** see log (`Workshop:` trailer)
+- **Kind:** Unintroduced referent
+- **Operator's verdict:** "apply the rest" (phase-2 sweep candidate 13)
+- **Diagnosis:** "Measure that misdirection" pointed at something the previous
+  sentence had not named. The reversal is now called what it is — the theory
+  misdirecting the house — before it is measured.
+
+**Before:**
+
+> Its initial advantage
+> may disappear or reverse when assumptions break. Measure that misdirection
+> separately from recovery after revision: rapid recovery can erase the initial
+> loss in the whole-run score.
+
+**After:**
+
+> Its initial advantage
+> may disappear or reverse when assumptions break: the theory then misdirects
+> the house. Measure that misdirection separately from recovery after revision,
+> because rapid recovery can erase the initial loss in a whole-run score.
