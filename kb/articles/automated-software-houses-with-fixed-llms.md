@@ -203,10 +203,11 @@ supplement](./transition-closure-and-continuation-reliability.md) develops this
 provenance requirement.
 
 Pinning rules out model-parameter updates as the source of improvement during
-the run. Whether the resulting system performs every software-house
-function depends on the rest of the evaluation. Pinning is an experimental
-condition, not a recommendation for mature houses or a claim that updates
-outside weights are generally better.
+the run. It isolates one variable and proves nothing on its own: whether the
+house performs every software-house function is what the rest of the
+evaluation must show. Pinning is an experimental condition, not a
+recommendation for mature houses or a claim that updates outside weights are
+generally better.
 
 ## What a witness house must show
 
