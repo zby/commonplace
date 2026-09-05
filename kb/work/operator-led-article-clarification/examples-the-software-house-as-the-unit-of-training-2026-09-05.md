@@ -340,3 +340,25 @@ done first and reported before any prose work.
 > treatment forbids thinking in theories. What differs is what survives to the
 > next decision: the comparison concerns what each treatment retains, not what
 > the model can construct in the moment.
+
+## 12. Map the two kinds of change onto the two histories
+
+- **Commit:** see log (`Workshop:` trailer)
+- **Kind:** Unintroduced term
+- **Operator's verdict:** "apply the rest" (phase-2 sweep candidate 11)
+- **Diagnosis:** *History* arrived mid-paragraph ("both histories") and the
+  mapping from the two kinds of change to the two histories was implicit.
+  Now each kind of change is introduced as its own request history.
+
+**Before:**
+
+> Test two kinds of change separately. Adding another configured exporter input
+> preserves the initial account of direct inputs. Adding indirect includes breaks
+> its assumption that the list is exhaustive.
+
+**After:**
+
+> Test two kinds of change separately, each as its own request history. In the
+> first history, adding another configured exporter input preserves the initial
+> account of direct inputs. In the second, adding indirect includes breaks its
+> assumption that the list is exhaustive.

@@ -272,9 +272,10 @@ reader can inspect the differences and compliance with the retention rules.
 This controls the supplied observations and presentation without guaranteeing
 that a model extracts identical information from each text.
 
-Test two kinds of change separately. Adding another configured exporter input
-preserves the initial account of direct inputs. Adding indirect includes breaks
-its assumption that the list is exhaustive. Include unaffected files in both
+Test two kinds of change separately, each as its own request history. In the
+first history, adding another configured exporter input preserves the initial
+account of direct inputs. In the second, adding indirect includes breaks its
+assumption that the list is exhaustive. Include unaffected files in both
 histories, and reserve later edits to different files for testing transfer.
 The [bootstrap article](./bootstrapping-the-first-automated-software-house.md#a-possible-early-trial-learning-which-checks-a-markdown-edit-needs)
 illustrates how this comparison could inform an early transfer trial. A concrete
