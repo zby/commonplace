@@ -60,11 +60,12 @@ internal production role. This boundary applies during the run.
 
 The house may begin from a human-built seed or emerge from the
 [bootstrap program](./bootstrapping-the-first-automated-software-house.md).
-Training changes its surrounding state and machinery while keeping
-distributed-parametric models fixed. The rule is by representational form:
-the house may revise both the natural-language and the symbolic forms of its
-own definition; only its distributed-parametric models are pinned. Derived
-indexes are an exception, and a safe one. An index is traditional machinery,
+Training changes its surrounding state and machinery. The rule is by
+representational form: the house may revise both the natural-language and the
+symbolic forms of its own definition; only its distributed-parametric models
+are pinned.
+
+Derived indexes are an exception, and a safe one. An index is traditional machinery,
 in use since the first computers, and symbolic in its operation: construction
 and lookup are defined, fast, and testable, even though its content is
 derived from the whole record set. Where the values are embedding vectors

@@ -514,3 +514,34 @@ done first and reported before any prose work.
 
 > Two functions do that governing. **Admission** decides which changes take
 > effect. **Credit assignment** decides
+
+## 19. Flow pass: deduplicate the pin and split the index paragraph
+
+- **Commit:** see log (`Workshop:` trailer)
+- **Kind:** Redundancy after revision; paragraph overload (flow-pass findings
+  F1 and F4)
+- **Operator's verdict:** "ok - go with your recommendation" on the flow-and-
+  redundancy check run after the sweep
+- **Diagnosis:** The run's edits left the pin stated twice in adjacent
+  sentences ("while keeping distributed-parametric models fixed" next to
+  "only its distributed-parametric models are pinned"), and the index
+  exception had grown to take over a paragraph whose topic sentence is the
+  seed. The redundant clause is dropped and the exception gets its own
+  paragraph.
+
+**Before:**
+
+> Training changes its surrounding state and machinery while keeping
+> distributed-parametric models fixed. The rule is by representational form:
+> the house may revise both the natural-language and the symbolic forms of its
+> own definition; only its distributed-parametric models are pinned. Derived
+> indexes are an exception, and a safe one. An index is traditional machinery,
+
+**After:**
+
+> Training changes its surrounding state and machinery. The rule is by
+> representational form: the house may revise both the natural-language and the
+> symbolic forms of its own definition; only its distributed-parametric models
+> are pinned.
+>
+> Derived indexes are an exception, and a safe one. An index is traditional machinery,
