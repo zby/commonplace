@@ -26,29 +26,40 @@ source_notes:
 complete persistent system that keeps changing software for its users. Assume
 an automated one exists. The proposed *fixed-model training regime* trains
 the house through production: experience changes retained knowledge and
-machinery that affect later work, while every model weight stays fixed.
+machinery that affect later work, while distributed-parametric models stay
+fixed. This pins the parameters of LLMs, embedding models, and parametric
+routers and critics, including their adapters.
 
-The proposed mediator is an *explicit project theory*: a retained account of
-design commitments, causal assumptions, and invariants. A house that explains
-why some files need product checks may adapt its checking policy when
+The house's *program theory* is its understanding of the software's purpose,
+organization, and how to handle new requests. The proposed mediator is an
+*explicit project theory*: one possible written carrier of that understanding,
+stating design commitments, causal assumptions, and invariants. A house that
+explains why some files need product checks may adapt its checking policy when
 dependencies change. Whether this improves diagnosis and transfer compared
 with other uses of the same evidence is an empirical hypothesis.
 
 ## The fixed-model premise
 
 The [companion article](./automated-software-houses-with-fixed-llms.md)
-conjectures that an automated software house is reachable with learned
-components available by 2026-09-02 and held fixed. Here that house is the
-starting point. Computation performs every internal production role, including
+conjectures that an automated software house can operate practically with
+distributed-parametric models available by the conjecture's cutoff, 2026-09-02,
+and held fixed. Here that
+house is the starting point. Computation performs every internal production role, including
 implementation, diagnosis, and choosing which revisions take effect. Users
 supply requirements, facts, feedback, and acceptance judgments about visible
 behaviour from outside that boundary.
 
+The distinction turns on the decision supplied: users may say what the product
+should do or report what it did. Asking them to diagnose its implementation,
+choose an internal design, or select a retained revision assigns them an
+internal production role. This boundary applies during the run.
+
 The house may begin from a human-built seed or emerge from the
 [bootstrap program](./bootstrapping-the-first-automated-software-house.md).
-Training changes its surrounding state and machinery while keeping the models
-fixed. The learning mechanisms can also be tested in bounded components before
-a complete automated house exists; the experiments below use that approach.
+Training changes its surrounding state and machinery while keeping
+distributed-parametric models fixed. Derived indexes may be regenerated from changing records
+under pinned algorithms and embedding models. The experiments below test
+learning mechanisms in bounded components before a complete automated house exists.
 
 ## What is trained: the whole house
 
@@ -73,16 +84,19 @@ enforced by tests, compiled into a tool, or embodied in product code.
 
 ## Why this is theory-mediated learning
 
-An explicit project theory explains the product and states where its
-commitments and assumptions hold. Consider the checking example in more
-detail. An exporter initially builds a manifest from configuration files. Markdown edits
-receive syntax checks but are exempt from manifest checks because they cannot
-affect the generated manifest.
+Consider a hypothetical release exporter. It builds a deployment manifest
+listing service identifiers and ports for an installer. Duplicate identifiers
+make the manifest invalid. Initially, the exporter reads only configuration
+files, so Markdown edits receive syntax checks and are exempt from manifest
+checks. The retained explanation says that checks follow executable consumers
+and assumes the configured input list includes every file that can affect the
+manifest.
 
-When the exporter starts reading named Markdown files, the explanation directs
-the house to revoke their exemptions. This applies an existing explanation to
-new facts. Now suppose the exporter gains support for included snippets. The
-old checking policy still treats the configured input list as exhaustive. An
+When the exporter starts reading service definitions from named Markdown files,
+the explanation directs the house to revoke their exemptions. This applies an
+existing explanation to new facts. Now suppose the exporter gains support for
+included Markdown snippets containing more service definitions. The old
+checking policy still treats the configured input list as exhaustive. An
 edit to an unlisted snippet passes its syntax check, but a later release
 contains an invalid manifest. The local check missed an indirect dependency.
 
@@ -136,14 +150,16 @@ a learner cannot directly repair a missing distinction, action, or tool outside
 its supplied task structure.
 
 The house can instead construct project-specific representations, tools,
-workflows, tests, evaluators, and update machinery as demands require them.
+workflows, tests, evaluators, and update machinery as requests require them.
 This opens a wider search space; it does not establish that the available
 models and computation will find adequate changes.
 
 Some objectives, authority boundaries, hard dependencies, runtimes, and trusted
-kernels may remain fixed. The generality claim is scoped to a declared product
-and horizon. It fails where new demand classes repeatedly require people to
-supply the missing ontology, decomposition, or evaluator.
+kernels may remain fixed. Evidence for generality comes from adapting as the
+house takes on new kinds of work, including changes to its initial responsibilities.
+Evaluations must report the work and period examined. Repeated dependence on
+people to supply a missing ontology, decomposition, or evaluator counts against
+the proposed learning capacity.
 
 ## What the fixed-model training regime buys
 
@@ -152,7 +168,7 @@ The proposed regime offers three practical benefits:
 - **Adaptation during production.** [Retained artifacts can change later
   behaviour](../notes/retained-artifacts-enable-persistent-deployment-time-adaptation.md)
   without a model-training cycle. A failure can revise a theory or add a test
-  before the next demand.
+  before the next request.
 - **Revision of identified components.** A particular assumption, rule, test,
   or function can be challenged and often rolled back without reverting
   unrelated learning. The whole house need not be fully understandable for
@@ -165,7 +181,7 @@ The proposed regime offers three practical benefits:
 These benefits must cover the costs of discovery, retrieval, validation,
 coordination, and maintenance. The experiments below ask whether they do.
 
-## Governance is the main difficulty
+## Governing retained changes
 
 [Continual learning requires governing behaviour-changing
 writes](../notes/continual-learning-requires-governing-behaviour-changing-writes.md):
@@ -209,7 +225,7 @@ influences decisions, whether it improves transfer and recovery, and whether
 it reduces the observations needed to learn.
 
 Use paired continuations with the same starting product, fixed models, tools,
-source observations, demand sequence, and resource ceilings. Vary how
+source observations, request sequence, and resource ceilings. Vary how
 observations are retained, then let each continuation learn from its own
 actions and observations. Compare four treatments:
 
@@ -239,8 +255,12 @@ Test two kinds of change separately. Adding another configured exporter input
 preserves the initial account of direct inputs. Adding indirect includes breaks
 its assumption that the list is exhaustive. Include unaffected files in both
 histories, and reserve later edits to different files for testing transfer.
-The [bootstrap article](./bootstrapping-the-first-automated-software-house.md#a-first-trial-learning-which-checks-a-markdown-edit-needs)
-gives a proposed component trial using this distinction.
+The [bootstrap article](./bootstrapping-the-first-automated-software-house.md#a-possible-early-trial-learning-which-checks-a-markdown-edit-needs)
+illustrates how this comparison could inform an early transfer trial. A concrete
+protocol should match workloads within repetitions, vary cases and model sampling
+between repetitions, and set its resource limits and decision rules before
+scored runs. Analyse each history separately and publish every run, including
+timeouts and interventions.
 
 **Causal contribution.** A [retained-theory
 intervention](../notes/retained-theory-intervention-isolates-one-explicit-surface.md)
@@ -265,8 +285,21 @@ observations needed to adapt](../notes/theory-mediated-learning-may-improve-samp
 by letting one discovered dependency change checking decisions for several
 files. Count inspected new cases and feedback used in recovery, alongside
 missed defects, unnecessary checks, collateral regressions, rollback, and total
-cost. Include theory construction, retrieval, validation, and maintenance in
-that cost. Fewer observations need not mean a cheaper method. Model-weight
+cost. Report model input and output tokens, check-execution CPU seconds,
+end-to-end elapsed seconds, and monetary cost at declared model and compute
+prices. Separate operating cost from reference evaluation; include theory
+construction, retrieval, validation, and maintenance in operating cost. Fewer
+observations need not mean a cheaper method.
+
+For each treatment and history, report completion and defect counts, the median
+and range of resource use, and all paired differences. Give exact binomial 95%
+intervals for run pass rates and the fraction of matched repetitions favouring
+each treatment. Small samples leave wide uncertainty even if every run passes.
+For a larger confirmatory trial, use pilot variability to choose the repetition
+count for a declared minimum effect and interval precision. For paired cost
+differences, resample whole matched repetitions, keeping histories separate;
+decisions within a history are not independent replications.
+Predeclare which comparisons are primary and account for testing several controls. Model-weight
 adaptation on the same evidence is a further comparison with another training
 regime, beyond this component trial.
 
@@ -281,3 +314,8 @@ learning through tests, tools, and search is also learning by the house.
 Even successful component tests leave the whole-house proposal dependent on
 reliable theory use, credit assignment, validation, and admission working
 together. Parametric and hybrid regimes remain alternatives.
+
+The [comparison supplement](./nearest-existing-constructions-to-a-reachability-witness.md#the-test-for-explicit-project-theory-from-the-training-article)
+distinguishes existing evidence for program-theory use from this proposed test
+of a written carrier. The [bootstrap program](./bootstrapping-the-first-automated-software-house.md)
+turns the learning proposal into a first trial and a sequence of bounded transfers.

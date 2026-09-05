@@ -14,14 +14,20 @@ Nothing published yet.
 
 ## In draft
 
-Three drafts form a series and answer three questions in order: can an automated software house exist, how should it learn, and how do we build the first one. Read them in that order if you are new here.
+Five drafts comprise three main articles and two supplements.
 
-- [The Automated Software House Conjecture: Open-ended software development with fixed LLMs](./automated-software-houses-with-fixed-llms.md) — an automated software house can sustain open-ended coherent change with current LLMs and other learned components pinned; the starting project theory and production machinery may be human-built; why a program theory is needed, how the complete composite could carry it, and the four conditions a witness must meet.
-- [The Automated Software House as the Unit of Training: A fixed-model, theory-mediated training regime](./the-software-house-as-the-unit-of-training.md) — assume the automated house exists; production can then train it as a whole while every model weight stays fixed, through an explicit project theory that mediates governed changes to notes, code, tests, tools, evaluators, and the learning process itself; why that regime can be general, what it buys, why governing behaviour-changing writes is its hard core, and the explicit-theory and sample-efficiency hypotheses that would test it.
-- [Bootstrapping the First Automated Software House: A research program from human-agent production to human-free internal operation](./bootstrapping-the-first-automated-software-house.md) — Commonplace as a seed: operative retained theory, computational proposal and revision, symbolic checks, durable retention, and named human residuals; a program of declared, measured transfers that separates moving a production decision to computation from moving the production of its machinery into the house's own learning loop; readiness conditions, what each trial fixes in advance, and the stop conditions.
+Read the main articles in order for the existence claim, learning proposal, and
+bootstrap program. Their component experiments can begin before a complete
+automated house exists.
 
-- [Nearest existing constructions to a reachability witness](./nearest-existing-constructions-to-a-reachability-witness.md) — a supplement to *The Automated Software House Conjecture*; it holds the full construction-by-construction comparison of eighteen reviewed constructions against the four witness conditions and the training article's explicit-project-theory test.
-- [Reachability as transition closure under the seed's successor relation](./transition-closure-and-practical-reachability.md) — a supplement to *The Automated Software House Conjecture*; it holds the full treatment of transition closure from a declared seed, the Gödel-machine comparison, and the resulting witness requirements.
+- [The Automated Software House Conjecture: Open-ended software development with fixed LLMs](./automated-software-houses-with-fixed-llms.md) — the system boundary, program theory, and four conditions a concrete witness house must meet.
+- [The Automated Software House as the Unit of Training: A fixed-model training regime for theory-mediated learning](./the-software-house-as-the-unit-of-training.md) — how production might train the whole house with every learned component fixed, and experiments comparing explicit project theory with other uses of the same evidence.
+- [Bootstrapping the First Automated Software House: A research program from human-agent production to human-free internal operation](./bootstrapping-the-first-automated-software-house.md) — Commonplace as a seed, separate operational and learning transfers, and an example of a component trial.
+
+The supplements develop two parts of the conjecture:
+
+- [Nearest existing constructions to a reachability witness](./nearest-existing-constructions-to-a-reachability-witness.md) — a selective comparison of eighteen constructions against the four conditions, with evidence links and a separate test of explicit project theory.
+- [Transition closure and practical reachability](./transition-closure-and-practical-reachability.md) — permitted paths from a seed, continuation reliability as the measure of sustained adequacy, and the Gödel-machine comparison.
 
 Six former companion drafts were withdrawn; their addresses redirect to the
 draft that absorbed each one. The two most recent were *The decisions that
