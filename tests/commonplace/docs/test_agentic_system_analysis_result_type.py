@@ -57,6 +57,9 @@ Boundary record.
 
 Source records.
 
+> Supporting fixture source text.
+> --- `README.md` @ `0123456789abcdef0123456789abcdef01234567`
+
 ## Shared records
 
 ### Components

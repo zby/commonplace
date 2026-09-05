@@ -278,7 +278,11 @@ public evidence dependencies. Historical results are not silently upgraded to
 the new completion contract.
 
 See [memory specialist acceptance](./memory-specialist-acceptance.md) for the
-bounded source trial, validation checks and remaining coverage limits.
+bounded source trial, validation checks and remaining coverage limits. The
+[rerun acceptance](./rerun-acceptance.md) covers metadata isolation, exposure
+recovery and replacement of unchanged uncommitted generated reviews. The
+[Prime Agent follow-up](./prime-agent-followup-acceptance.md) covers copyable
+source initialization, required quoted evidence and complete identifier checks.
 
 ### C16 — Autonomy evidence before normalization
 

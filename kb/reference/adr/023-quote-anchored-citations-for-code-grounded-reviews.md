@@ -1,5 +1,5 @@
 ---
-description: "Permits reviewed-commit-pinned verbatim quote anchors in code-grounded reviews; main-review publication resolves generated quotes against frozen Git blobs while standing validation checks retained shape"
+description: "Requires pinned verbatim evidence for load-bearing main-analysis findings; main-review publication resolves generated quotes against frozen Git blobs while standing validation checks retained shape"
 type: ../types/adr.md
 tags: []
 status: accepted
@@ -27,20 +27,26 @@ One constraint is specific to this collection and shapes the whole design: **the
 
 ## Decision
 
-Adopt **quote-anchored citations** for code-grounded reviews, defined in the `agent-memory-system-review` type spec's Citations section.
+Adopt **quote-anchored citations** for load-bearing findings in main analyses and their specialist handoffs. The exact-result and memory-report types define the current contract; the agent-memory-system-review type retains the historical convention.
 
 ### The convention
 
-A load-bearing claim may be anchored by quoting the verbatim supporting text as a blockquote whose final line is a `---` attribution naming the source location pinned to the reviewed commit (a source-relative path in a code span, or a commit-pinned blob URL). The quoted text is the anchor; the pinned commit is the position. **No byte offsets, character spans, or ids** — the quote is self-relocating and the commit is immutable, so nothing else is needed.
+A load-bearing claim is anchored by quoting the verbatim supporting text as a blockquote whose final line is a `---` attribution naming the source location pinned to the reviewed commit (a source-relative path in a code span, or a commit-pinned blob URL). The quoted text is the anchor; the pinned commit is the position. **No byte offsets, character spans, or ids** — the quote is self-relocating and the commit is immutable, so nothing else is needed.
 
-### Optional and additive
+### Coverage
 
-Used on the claims that carry a review, not on every sentence. Existing citations and outbound links are untouched; validation fires only where the convention is actually used.
+Quote the minimum source text supporting disputed mechanisms, comparison
+classifications and assessments. Retain each passage once on the supporting
+canonical record; lens overlays and the compact review may refer to that
+record. Ordinary navigation citations remain valid. A complete main result or
+memory report with no quote anchor fails structural validation. That minimum
+cannot certify that every load-bearing finding has adequate evidence; claim
+support remains a semantic check.
 
 ### Verification splits by where the source lives
 
 - **Resolution is a publication check.** `analyse-agentic-system` resolves every
-  quote in its exact result and compact review candidate against the Git
+  quote in its exact result, memory report and compact review candidate against the Git
   blob at the run's recorded full commit. It never reads quote evidence from
   the worktree. A missing blob, mismatched repository or revision, or quote
   absent after whitespace normalization blocks publication. This check belongs
@@ -71,7 +77,9 @@ Used on the claims that carry a review, not on every sentence. Existing citation
 
 ### Not changing
 
-- Document-level citations remain valid for ordinary claims; quote-anchoring is opt-in for load-bearing ones.
+- Document-level citations remain valid for ordinary navigation. Load-bearing
+  findings retain quoted evidence in the exact result; line numbers do not
+  replace verification of the text.
 - Semantic faithfulness requires a separate judgment. The
   `semantic/grounding-alignment` gate supplies that judgment when invoked; quote
   resolution does not invoke it or imply that it passed.

@@ -55,6 +55,17 @@ When `analyse-agentic-system` invokes this procedure with canonical source, obje
 
 A newly discovered object, route, claim, absence, or authority path uses an invocation-local proposal tag and supplies the full identity needed for orchestrator registration; it never mints a canonical ID. Return a targeted-read request for new source material and a correction with its evidence anchor for a defective canonical fact. When an invoking packet exists, its accepted blocks and required fields govern the return envelope; otherwise the orchestrator's linked-return contract governs. Without supplied canonical records, use the standalone stable-ID rules below.
 
+In a source-based orchestrated return, retain minimum verbatim code or prose
+for load-bearing findings as quote blocks ending with
+``> --- `commit-relative/path` @ `full-commit` `` or a matching commit-pinned
+GitHub blob URL; name the frozen source for a capture. Use separate blocks for
+discontiguous passages. Omit display line numbers and invented ellipses from
+the quote. The parent retains each passage once on its supporting canonical
+record; publication verifies occurrence by full-text matching. File/line
+existence alone does not verify the cited text or its support for a finding.
+Write each canonical ID or local proposal tag in full in every list; never
+abbreviate suffixes or use ranges. Expand shorthand before parent remapping.
+
 ## Required output
 
 Produce these six blocks in order. Use readable Markdown tables or compact records.

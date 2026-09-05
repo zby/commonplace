@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 import re
 import shutil
 import subprocess
@@ -124,6 +125,7 @@ def memory_report_fixture(run_dir: Path, revision: str) -> Path:
                         "Write side", "Read-back", "Comparison rationale",
                         "Integration issues", "Limitations and checks")
     )
+    body += f"\n\n> # Frozen source\n> --- `README.md` @ `{revision}`\n"
     return write(run_dir / "memory-report.md", "---\n" + yaml.safe_dump(values) + "---\n\n" + body + "\n")
 
 
@@ -170,6 +172,9 @@ Fixture boundary at `{revision}`.
 ## Source register
 
 Source evidence: SRC-1, `https://example.invalid/example-system`, `README.md:1`.
+
+> # Frozen source
+> --- `README.md` @ `{revision}`
 
 ## Shared records
 
@@ -359,7 +364,7 @@ def publication_fixture(tmp_path: Path) -> tuple[Path, PublicationSpec, bytes]:
     values.update({"run-status": "running", "result-disposition": None,
                    "result": None, "generated-review": None, "failure": None})
     replace_frontmatter(state, values)
-    return state, PublicationSpec(tmp_path, state, candidate, destination), generated_bytes
+    return state, PublicationSpec(tmp_path, state, candidate, destination, "absent"), generated_bytes
 
 
 def test_complete_run_state_verifies_source_and_outputs(tmp_path: Path) -> None:
@@ -547,7 +552,7 @@ def test_blocked_result_completes_without_public_review(tmp_path: Path) -> None:
 
 def test_capture_source_is_byte_verified(tmp_path: Path) -> None:
     state = valid_run_state(tmp_path)
-    capture = write(tmp_path / "source.bundle", "captured source\n")
+    capture = write(tmp_path / "source.bundle", "# Frozen source\ncaptured source\n")
     values = frontmatter(state)
     values["source"] = {
         "kind": "capture",
@@ -865,11 +870,11 @@ def test_standing_memory_report_comparison_validation(tmp_path: Path, mutation: 
             systems_matrix.validate_comparison(metadata["memory-comparison"], document.body)
 
 
-@pytest.mark.parametrize("name", ["memory-report.md", "memory-input.md"])
+@pytest.mark.parametrize("name", ["memory-report.md", "memory-input.md", "incumbent-review.md", "incumbent-result.md"])
 def test_publication_cannot_consume_specialist_evidence_as_candidate(tmp_path: Path, name: str) -> None:
     state, spec, _ = publication_fixture(tmp_path)
     with pytest.raises(ValueError, match="reserved"):
-        prepare_publication(PublicationSpec(tmp_path, state, state.parent / name, spec.generated_destination))
+        prepare_publication(PublicationSpec(tmp_path, state, state.parent / name, spec.generated_destination, "absent"))
 
 
 def test_publication_cli_rejects_retired_legacy_arguments(tmp_path: Path) -> None:
@@ -1184,3 +1189,214 @@ def test_statistics_keep_evidence_tiers_and_weaker_bases_separate(tmp_path, monk
     assert line.split()[1] == expected_fill
     if expected_rows:
         assert f"known:{basis}" in output
+
+
+def rerun_publication_fixture(tmp_path: Path) -> tuple[PublicationSpec, bytes, bytes]:
+    """Create a second run over a real, uncommitted first publication."""
+    from commonplace.lib.agentic_publication import inspect_destination
+
+    state, first, _ = publication_fixture(tmp_path)
+    publish_publication(first)
+    old_review = (tmp_path / first.generated_destination).read_bytes()
+    old_result = (state.parent / "result.md").read_bytes()
+    next_id = RUN_ID[:-2] + "02"
+    new_dir = state.parent.with_name(next_id)
+    shutil.copytree(state.parent, new_dir)
+    for path in new_dir.glob("*.md"):
+        path.write_text(path.read_text().replace(RUN_ID, next_id))
+    report = new_dir / "memory-report.md"
+    replace_frontmatter(report, {**frontmatter(report),
+        "canonical-register-sha256": digest(new_dir / "memory-input.md")})
+    result = new_dir / "result.md"
+    result.write_text(re.sub(
+        r"(\*\*Memory analysis report SHA-256:\*\* )`[0-9a-f]+`",
+        rf"\g<1>`{digest(report)}`", result.read_text(),
+    ))
+    next_state = new_dir / "run-state.md"
+    values = frontmatter(next_state)
+    values.update({"run-status": "running", "result-disposition": None,
+                   "result": None, "generated-review": None})
+    replace_frontmatter(next_state, values)
+    candidate = new_dir / "review-candidate.md"
+    candidate.write_text(old_review.decode().replace(RUN_ID, next_id))
+    replace_frontmatter(candidate, {**frontmatter(candidate), "analysis-result-sha256": digest(result)})
+    inspection = inspect_destination(
+        repo_root=tmp_path, generated_destination=first.generated_destination,
+        source_identity=values["source"]["identity"],
+    )
+    return PublicationSpec(tmp_path, next_state, candidate, first.generated_destination,
+                           inspection["expected_incumbent_sha256"]), old_review, old_result
+
+
+def test_inspect_destination_cli_never_returns_prior_prose(tmp_path: Path, capsys) -> None:
+    from commonplace.cli.agentic_analysis_publication import main
+    state, spec, _ = publication_fixture(tmp_path)
+    source = frontmatter(state)["source"]["identity"]
+    args = ["inspect-destination", "--generated-destination", spec.generated_destination,
+            "--source-identity", source]
+    assert main(args, cwd=tmp_path) == 0
+    assert json.loads(capsys.readouterr().out) == {
+        "replaceable": True, "exists": False, "expected_incumbent_sha256": "absent",
+    }
+    secret = "INCUMBENT-PROSE-MUST-NOT-ENTER-COORDINATOR-CONTEXT"
+    candidate = spec.generated_candidate_path
+    candidate.write_text(candidate.read_text() + "\n" + secret + "\n")
+    publish_publication(spec)
+    assert main(args, cwd=tmp_path) == 0
+    output = capsys.readouterr().out
+    assert secret not in output
+    assert set(json.loads(output)) == {"replaceable", "exists", "expected_incumbent_sha256"}
+    assert json.loads(output)["expected_incumbent_sha256"] == digest(tmp_path / spec.generated_destination)
+
+
+@pytest.mark.parametrize("tracked", [False, True])
+def test_rerun_replaces_unchanged_publication_and_keeps_recovery_copies(tmp_path: Path, tracked: bool) -> None:
+    spec, old_review, old_result = rerun_publication_fixture(tmp_path)
+    if tracked:
+        commit_incumbent(tmp_path, tmp_path / spec.generated_destination)
+    prepare_publication(spec)
+    publish_publication(spec)
+    assert (spec.run_state_path.parent / "incumbent-review.md").read_bytes() == old_review
+    assert (spec.run_state_path.parent / "incumbent-result.md").read_bytes() == old_result
+    assert validation.validate_note(spec.run_state_path, repo_root=tmp_path).fails == []
+
+
+@pytest.mark.parametrize("mutation", ["review", "receipt", "missing-result", "result", "source", "missing-receipt"])
+def test_inspection_rejects_unverified_incumbents(tmp_path: Path, mutation: str) -> None:
+    from commonplace.lib.agentic_publication import inspect_destination
+    spec, _, _ = rerun_publication_fixture(tmp_path)
+    review = tmp_path / spec.generated_destination
+    metadata = frontmatter(review)
+    retained = tmp_path / metadata["analysis-result"]
+    receipt = spec.run_state_path.parent.with_name(RUN_ID) / "run-state.md"
+    if mutation == "review":
+        review.write_text(review.read_text() + "\nHuman correction.\n")
+    elif mutation == "receipt":
+        replace_frontmatter(receipt, {**frontmatter(receipt), "run-status": "running"})
+    elif mutation == "missing-result":
+        retained.unlink()
+    elif mutation == "result":
+        retained.write_text(retained.read_text() + "\nAltered evidence.\n")
+    elif mutation == "source":
+        replace_frontmatter(review, {**metadata, "source-identity": "other"})
+    else:
+        receipt.unlink()
+    with pytest.raises(ValueError):
+        inspect_destination(repo_root=tmp_path, generated_destination=spec.generated_destination,
+                            source_identity=metadata["source-identity"])
+
+
+def test_publish_rejects_destination_change_after_prepare(tmp_path: Path) -> None:
+    spec, _, _ = rerun_publication_fixture(tmp_path)
+    prepare_publication(spec)
+    path = tmp_path / spec.generated_destination
+    path.write_text(path.read_text() + "\nConcurrent edit.\n")
+    changed = path.read_bytes()
+    with pytest.raises(ValueError, match="local changes"):
+        publish_publication(spec)
+    assert path.read_bytes() == changed
+    assert frontmatter(spec.run_state_path)["run-status"] == "running"
+
+
+def test_publish_requires_inspected_digest_even_for_valid_incumbent(tmp_path: Path) -> None:
+    from dataclasses import replace
+    spec, old_review, _ = rerun_publication_fixture(tmp_path)
+    with pytest.raises(ValueError, match="changed since inspection"):
+        publish_publication(replace(spec, expected_incumbent_sha256="absent"))
+    assert (tmp_path / spec.generated_destination).read_bytes() == old_review
+
+
+def test_rerun_rollback_preserves_concurrent_incumbent_edit(tmp_path: Path, monkeypatch) -> None:
+    from commonplace.lib import agentic_publication as publication
+    spec, _, _ = rerun_publication_fixture(tmp_path)
+    original_write = publication._atomic_write
+    public = tmp_path / spec.generated_destination
+    changed = public.read_bytes() + b"\nConcurrent human edit.\n"
+
+    def edit_after_backup(path, content):
+        original_write(path, content)
+        if path.name == "incumbent-review.md":
+            public.write_bytes(changed)
+
+    monkeypatch.setattr(publication, "_atomic_write", edit_after_backup)
+    with pytest.raises(ValueError, match="changed before replacement"):
+        publish_publication(spec)
+    assert public.read_bytes() == changed
+    assert frontmatter(spec.run_state_path)["run-status"] == "running"
+    assert not (tmp_path / systems_matrix.retained_result_path(RUN_ID[:-2] + "02")).exists()
+
+
+def test_rerun_failure_restores_uncommitted_publication(tmp_path: Path, monkeypatch) -> None:
+    spec, old_review, old_result = rerun_publication_fixture(tmp_path)
+    original_write = agentic_publication._atomic_write
+
+    def fail_completion(path, content):
+        if path == spec.run_state_path:
+            raise OSError("injected completion failure")
+        original_write(path, content)
+
+    monkeypatch.setattr(agentic_publication, "_atomic_write", fail_completion)
+    with pytest.raises(OSError, match="injected completion failure"):
+        publish_publication(spec)
+    assert (tmp_path / spec.generated_destination).read_bytes() == old_review
+    assert (tmp_path / systems_matrix.retained_result_path(RUN_ID)).read_bytes() == old_result
+    assert frontmatter(spec.run_state_path)["run-status"] == "running"
+    assert spec.generated_candidate_path.exists()
+    assert not (tmp_path / systems_matrix.retained_result_path(RUN_ID[:-2] + "02")).exists()
+
+
+def test_rerun_never_overwrites_a_conflicting_recovery_copy(tmp_path: Path) -> None:
+    spec, old_review, _ = rerun_publication_fixture(tmp_path)
+    backup = spec.run_state_path.parent / "incumbent-review.md"
+    backup.write_bytes(b"Other recovery evidence.\n")
+    with pytest.raises(ValueError, match="recovery copy already contains different bytes"):
+        publish_publication(spec)
+    assert backup.read_bytes() == b"Other recovery evidence.\n"
+    assert (tmp_path / spec.generated_destination).read_bytes() == old_review
+
+
+@pytest.mark.parametrize("role", ["result.md", "memory-report.md"])
+def test_complete_analysis_cannot_omit_quoted_source_evidence(tmp_path: Path, role: str) -> None:
+    state, spec, _ = publication_fixture(tmp_path)
+    path = state.parent / role
+    path.write_text("\n".join(line for line in path.read_text().splitlines()
+                               if not line.startswith(">")) + "\n")
+    checked = validation.validate_note(path, repo_root=tmp_path)
+    assert any("requires quoted source evidence" in error for error in checked.fails)
+    with pytest.raises(ValueError, match="requires quoted source evidence"):
+        prepare_publication(spec)
+
+
+def test_result_validation_catches_shorthand_in_ordinary_prose(tmp_path: Path) -> None:
+    state, _, _ = publication_fixture(tmp_path)
+    result = state.parent / "result.md"
+    result.write_text(result.read_text() + "\nBroken integration: OBJ-1/O2/O3.\n")
+    checked = validation.validate_note(result, repo_root=tmp_path)
+    assert any("expand shorthand" in error for error in checked.fails)
+
+
+def test_git_source_example_can_initialize_running_state(tmp_path: Path) -> None:
+    state, _, _ = publication_fixture(tmp_path)
+    values = frontmatter(state)
+    actual = values["source"]
+    contract = (REPO_ROOT / "kb/reports/types/agentic-system-analysis-run-state.md").read_text()
+    example = yaml.safe_load(re.search(r"```yaml\n(source:.*?)```", contract, re.DOTALL)[1])["source"]
+    example.update({key: actual[key] for key in ("identity", "revision", "path")})
+    replace_frontmatter(state, {**values, "source": example})
+    assert validation.validate_note(state, repo_root=tmp_path).fails == []
+
+
+def test_quoted_code_is_searched_in_the_full_pinned_blob(tmp_path: Path) -> None:
+    from commonplace.lib.agentic_analysis import SourceIdentity, _verify_quote_anchors
+
+    root, _ = git_checkout(tmp_path / "source")
+    source = write(root / "operation.py", "# Navigation heading\n\ndef apply():\n    rebuild_prompt()\n")
+    commit_incumbent(root, source)
+    revision = subprocess.check_output(["git", "-C", str(root), "rev-parse", "HEAD"], text=True).strip()
+    identity = SourceIdentity("git", "https://github.com/example/system", revision, root, None)
+    quote = f"> rebuild_prompt()\n> --- [operation](https://github.com/example/system/blob/{revision}/operation.py#L1)\n"
+    _, errors = _verify_quote_anchors(quote, source=identity)
+    assert errors == []  # L1 is navigation; the text match is elsewhere in the blob.
+    source.write_text("rebuild_prompt_WRONG()\n")
+    _, errors = _verify_quote_anchors(quote.replace("rebuild_prompt()", "rebuild_prompt_WRONG()"), source=identity)
+    assert any("quote does not occur" in error for error in errors)

@@ -971,6 +971,31 @@ def _quote_citation_rule(
 
 
 @type_rule("kb/types/agentic-system-analysis-result.md")
+@type_rule("kb/reports/types/agent-memory-analysis-report.md")
+def _agentic_evidence_and_references_rule(
+    results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
+) -> None:
+    from commonplace.lib.agentic_analysis import _quote_citations
+    from commonplace.lib.agentic_records import record_reference_errors
+
+    metadata = parsed.document.frontmatter or {}
+    is_report = metadata.get("type") == "kb/reports/types/agent-memory-analysis-report.md"
+    errors = record_reference_errors(parsed.document.body, memory_report=is_report)
+    results.fails.extend(errors)
+    if not errors:
+        results.passes.append("record references: explicit IDs and declarations checked")
+    validate_quote_citations(results, parsed.content)
+    disposition = metadata.get("report-status" if is_report else "result-disposition")
+    if disposition == "complete" and not any(
+        quote and attribution for _, quote, attribution in _quote_citations(parsed.document.body)
+    ):
+        results.fails.append(
+            "source evidence: complete analysis requires quoted source evidence; "
+            "bare file and line citations are insufficient"
+        )
+
+
+@type_rule("kb/types/agentic-system-analysis-result.md")
 def _agentic_comparison_rule(
     results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
 ) -> None:

@@ -157,7 +157,7 @@ legacy review, or compact prose.
 
 ### Canonical identity
 
-Use the run's canonical namespaces: `SRC-*` sources, `CMP-*` components, `OBJ-*` operative objects, `RTE-*` routes, `CLM-*` claims, `ABS-*` evidenced absences, and `BAP-*` behavioral-authority paths. IDs are unique across the whole result and resolve within this file. A lens may extend a canonical record only where the producing instruction assigns that field to it; it never silently redefines generic identity.
+Use the run's canonical namespaces: `SRC-*` sources, `CMP-*` components, `OBJ-*` operative objects, `RTE-*` routes, `CLM-*` claims, `ABS-*` evidenced absences, and `BAP-*` behavioral-authority paths. IDs are unique across the whole result and resolve within this file. Write each ID in full, including lists; abbreviated suffixes and ranges are invalid. Declare canonical records in Shared records and sources in Source register. Source quotations and fenced excerpts are excluded from identifier checks; they can legitimately contain unrelated identifiers. A lens may extend a canonical record only where the producing instruction assigns that field to it; it never silently redefines generic identity.
 
 Canonical identity applies from allocation and sharing, not only final
 acceptance. A split gives the new parts fresh IDs and marks the combined record
@@ -211,14 +211,24 @@ layers uses separate rows or clearly separated scopes. The register does not fla
 
 For a Git repository, the row identifies the canonical repository, full reviewed commit, inspected commit-relative paths, and commit-pinned citation anchors. Every cited path and line range must resolve from the reviewed commit. A local `related-systems/<owner>--<repo>/` checkout may be recorded as the operational access root, but its worktree and current HEAD are not evidence and are never the sole durable source identity.
 
+Retain minimum verbatim source excerpts for load-bearing findings: disputed
+mechanisms, comparison classifications and assessments. Quote code when code
+supports the operation; source prose can support claim-level findings. Each
+passage belongs once on its supporting canonical record, with lens overlays
+and the compact review referring to that record. An absence additionally needs
+its searched boundary. At least one quote anchor is required for a complete
+result; that structural minimum does not certify coverage or semantic support.
+
 A quote-anchored blockquote in this result or one of its generated review
 projections ends with a `> ---` attribution. For Git, the attribution contains
 either a full-commit GitHub blob URL matching the registered repository or
 `` `commit-relative/path` @ `full-commit` ``. For a capture, it names the
 captured source. Publication normalizes whitespace and requires the quote to
 occur in the Git blob at the recorded commit or in the immutable capture. This
-is a structural occurrence check. Semantic support remains part of semantic
-verification.
+is a structural occurrence check. Line numbers are navigation only. Omit
+numbers added for display, invented ellipses and formatting fences from the
+quoted text; discontiguous passages use separate blocks. Semantic support
+remains part of semantic verification.
 
 For a focused test or probe, the row's citation anchor resolves to one **probe evidence capsule** in this result. The capsule contains:
 

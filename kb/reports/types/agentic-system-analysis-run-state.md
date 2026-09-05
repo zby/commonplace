@@ -24,6 +24,10 @@ It is not a recovery log. A run is `running`, `complete`, or `failed`. Do not
 resume a failed run or preserve phase, packet, correction, validation-receipt,
 or retry state. Start another run with a new run ID. Temporary candidate files
 inside the run directory are disposable and never appear in this record.
+Keep the destination inspection's expected incumbent digest (or `absent`) in
+`## Run` prose. Publication requires it again at prepare and publish. Recovery
+copies `incumbent-review.md` and `incumbent-result.md` are retained with the new
+run when a review is replaced; they are not disposable candidate files.
 
 The exact result always lives at
 `kb/reports/state/agentic-system-analysis/<run-id>/result.md`. A substantive
@@ -47,6 +51,22 @@ the stable repository identity, full commit ID, and absolute checkout path. A
 capture records its stable identity, version or capture label, absolute file
 path, and SHA-256. The validator checks the commit or capture while the run
 state exists.
+
+For a Git source, replace `source: null` with this mapping, substituting the
+repository identity, full commit and absolute checkout path:
+
+```yaml
+source:
+  kind: git
+  identity: https://github.com/owner/repository
+  revision: "0123456789abcdef0123456789abcdef01234567"
+  path: /absolute/path/to/checkout
+  sha256: null
+```
+
+Use `path`, not `root`. Git sources require `sha256: null`; immutable captures
+use their content digest instead. Validate the running state again immediately
+after setting the source, before source analysis or delegation.
 
 Each output mapping contains a normalized repository-relative `kb/` path and
 the SHA-256 of its current bytes. Validate candidate bytes as their intended

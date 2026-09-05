@@ -42,8 +42,22 @@ The command is read-only. It refuses a running, failed, or invalid run.
 
 ### commonplace-agentic-analysis-publication
 
-Prepare or publish the compact review of one running agentic-system
-analysis. `prepare` validates the exact result, specialist memory report, and
+Inspect a destination, prepare or publish the compact review of one running
+agentic-system analysis. `inspect-destination` takes `--generated-destination`
+and `--source-identity`; it returns a replacement decision and incumbent digest
+without emitting prior review prose or descriptions. Both `prepare` and
+`publish` require that digest through `--expected-incumbent-sha256` (`absent`
+for a vacant destination). Destination drift requires a new inspection.
+
+An uncommitted incumbent is eligible only when its review and retained-result
+hashes match its completed publication record and source identity. This checks
+replacement provenance, not compliance of the old analysis with today's method.
+Unrecorded local edits, source collisions and missing or mismatched retained
+evidence fail. Replacement saves `incumbent-review.md` and
+`incumbent-result.md` in the new run for recovery. No Git commit is required
+for an unchanged generated incumbent.
+
+ `prepare` validates the exact result, specialist memory report, and
 candidate review, and checks the incumbent without changing public artifacts.
 It does not create a semantic-review job; specialist analysis does not establish
 independent semantic clearance. `publish` rechecks the inputs, validates the

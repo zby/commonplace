@@ -56,14 +56,18 @@ Keep enough source identity and scope here to understand the report alone.
 Describe the few mechanisms that distinguish how retained material affects
 later work, including context selection and budget, source trust, and material
 editing/adoption surfaces. Findings carry primary-source anchors and evidence
-status. Do not turn source claims into implemented or observed behavior.
+status. Load-bearing findings retain minimal verbatim source code or prose in
+quote blocks with full-commit path/URL attribution (or frozen capture identity).
+The source text, not a line number, is matched at publication; the parent
+retains it once on the corresponding canonical record. A complete report must
+contain quote anchors; that minimum does not certify every claim's support. Do not turn source claims into implemented or observed behavior.
 
 ### Shared records
 
 Use relevant parent canonical IDs with short source-native descriptions,
 evidence anchors and memory-specific fields. Do not copy the entire runtime
 inventory. New records use local IDs such as `MEM-OBJ-1` or `MEM-RTE-1`;
-these are proposals and never reassign a canonical ID. Records distinguish
+these are proposals and never reassign a canonical ID. Write every ID in full in lists; no abbreviated suffixes or ranges. Records distinguish
 operative parts, raw and derived forms, their storage, lineage, consumers,
 authority, and limits. A route identifies trigger, producer or selector,
 retained input, persistence, delivery, later consumer and status.

@@ -47,7 +47,15 @@ returns a blocked report with the conclusion it prevents.
 
 Follow the old memory review's analytical progression: core mechanisms,
 operative artifacts, write side, read-back, then a curiosity pass. Keep each
-finding source-native before giving a Commonplace classification. A thin
+finding source-native before giving a Commonplace classification. Retain the
+minimum verbatim supporting code or prose for each load-bearing finding as a
+blockquote ending with ``> --- `commit-relative/path` @ `full-commit` `` or a
+matching commit-pinned GitHub blob link (the frozen source identity for a
+capture). Do not include display line numbers or invented ellipses. Separate
+discontiguous passages. Publication searches the full frozen source for that
+text; checking a file and line range alone is insufficient. Explain the
+passage's support for the finding, and let the parent retain it once on the
+canonical record. A thin
 memory boundary warrants short sections with explicit limits.
 
 - **Core mechanisms:** explain what retained material can change in later
@@ -82,7 +90,9 @@ known value its supporting records and inference. A complete set covers all
 scoped alternatives; use explicit uncertainty when an included branch remains
 opaque or uninspected. A Session identifier alone supplies no task horizon.
 Distinguish missing evidence from a negative finding. Use local proposal IDs
-where the parent has not yet registered a discovered object or route.
+where the parent has not yet registered a discovered object or route. Write
+every identifier in full, including lists: `MEM-OBJ-1, MEM-OBJ-2`. Never use
+abbreviations such as `MEM-OBJ-1/O2` or ranges. The parent maps exact tokens.
 
 Use curation terms consistently: `consolidate` reduces retained content without
 new claims; `dedup` merges near duplicates; `evolve` revises an existing entry;
