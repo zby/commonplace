@@ -103,3 +103,41 @@ done first and reported before any prose work.
   governs. A verdict-without-its-why fix that supplies the wrong why is worse
   than the compression; when the why is inferred rather than stated nearby,
   flag it for the operator instead of writing it in.
+
+## 4. Derived indexes are an exception; the scope sentence gets its own move
+
+- **Commit:** see log (`Workshop:` trailer)
+- **Kind:** Verdict without its why; unsignposted role
+- **Operator's verdict:** "3 indexes are kind of on the boundary between
+  symbolic and distributed parametric - I think we can state that they are an
+  exception" (phase-2 sweep candidate 3)
+- **Diagnosis:** The index sentence stated a permission with no reason. The
+  agent proposed "looks like an exception but is not one"; the operator
+  corrected the frame: indexes sit on the boundary between symbolic and
+  distributed-parametric forms, so state them as a genuine exception to the
+  pin, justified because only the input records change. The article's reading
+  instruction (experiments run before a complete house exists) was also
+  buried as the paragraph's last sentence; it now stands alone.
+- **Frame correction:** The agent's rewrite denied the exception to defend the
+  premise; the operator accepted the exception instead. Lesson: when a rule
+  has a borderline case, saying "this is an exception, and here is why it is
+  safe" can be more honest than arguing the case back inside the rule.
+
+**Before:**
+
+> Training changes its surrounding state and machinery while keeping
+> distributed-parametric models fixed. Derived indexes may be regenerated from changing records
+> under pinned algorithms and embedding models. The experiments below test
+> learning mechanisms in bounded components before a complete automated house exists.
+
+**After:**
+
+> Training changes its surrounding state and machinery while keeping
+> distributed-parametric models fixed. Derived indexes are an exception: they
+> sit on the boundary between symbolic and distributed-parametric forms, and
+> they may be regenerated during the run because the records they are built
+> from change while the algorithms and embedding models that build them stay
+> pinned.
+>
+> The experiments below do not wait for a complete automated house. They test
+> its learning mechanisms in bounded components.

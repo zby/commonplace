@@ -61,9 +61,14 @@ internal production role. This boundary applies during the run.
 The house may begin from a human-built seed or emerge from the
 [bootstrap program](./bootstrapping-the-first-automated-software-house.md).
 Training changes its surrounding state and machinery while keeping
-distributed-parametric models fixed. Derived indexes may be regenerated from changing records
-under pinned algorithms and embedding models. The experiments below test
-learning mechanisms in bounded components before a complete automated house exists.
+distributed-parametric models fixed. Derived indexes are an exception: they
+sit on the boundary between symbolic and distributed-parametric forms, and
+they may be regenerated during the run because the records they are built
+from change while the algorithms and embedding models that build them stay
+pinned.
+
+The experiments below do not wait for a complete automated house. They test
+its learning mechanisms in bounded components.
 
 ## What is trained: the whole house
 
