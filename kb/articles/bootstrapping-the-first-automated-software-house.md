@@ -171,7 +171,8 @@ from manifest checks. A retained explanation relates this exemption to the
 build's dependencies and assumes its configured input list is exhaustive.
 
 When the exporter starts reading service definitions from named Markdown files,
-the explanation should guide a change in checking. A further change introduces
+the explanation should lead the house to extend manifest checks to those
+files. A further change introduces
 indirectly included snippets. An edit to one can pass its syntax check yet
 produce an invalid manifest. Revealing that failure after intervening edits
 would test whether the house traces the consequence to the incomplete dependency
