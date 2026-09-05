@@ -51,9 +51,10 @@ and held fixed. Here that
 house is the starting point. Computation performs every internal production role, including
 implementation, diagnosis, and choosing which revisions take effect. Users
 supply requirements, facts, feedback, and acceptance judgments about visible
-behaviour from outside that boundary.
+behaviour from outside the production boundary.
 
-The distinction turns on the decision supplied: users may say what the product
+Which side of the boundary a contribution falls on turns on the decision
+supplied: users may say what the product
 should do or report what it did. Asking them to diagnose its implementation,
 choose an internal design, or select a retained revision assigns them an
 internal production role. This boundary applies during the run.

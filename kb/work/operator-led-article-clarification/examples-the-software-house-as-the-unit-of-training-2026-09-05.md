@@ -560,3 +560,31 @@ current product,"
 
 **After:** "For coherent product evolution, the unit's boundary must include
 the current product,"
+
+## 21. Flow pass: name the production boundary and the distinction
+
+- **Commit:** see log (`Workshop:` trailer)
+- **Kind:** Unintroduced referents (flow-pass finding F6; a narrower fix of
+  skipped candidate 2 that leaves the "applies during the run" sentence
+  untouched)
+- **Operator's verdict:** "ok - go with your recommendation"
+- **Diagnosis:** Paragraph 1 ended "from outside that boundary" with no
+  boundary named; paragraph 2 opened "The distinction turns on" with no
+  distinction named. The boundary is now named at first mention and the
+  second paragraph opens by saying what it decides.
+
+**Before:**
+
+> supply requirements, facts, feedback, and acceptance judgments about visible
+> behaviour from outside that boundary.
+>
+> The distinction turns on the decision supplied: users may say what the product
+> should do or report what it did.
+
+**After:**
+
+> supply requirements, facts, feedback, and acceptance judgments about visible
+> behaviour from outside the production boundary.
+>
+> Which side of the boundary a contribution falls on turns on the decision
+> supplied: users may say what the product should do or report what it did.
