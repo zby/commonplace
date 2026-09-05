@@ -250,12 +250,16 @@ for example, raises autonomy while hiding declining quality. So state which
 dimension changed, and retain independent measures of later success, missed
 failures, and total cost.
 
-The declared boundary also determines what the comparison can establish. A
-worker benchmark [does not test the client decisions it holds
-fixed](../notes/holding-the-client-fixed-exports-the-least-warrantable-decisions.md).
-Requirements and judgments about visible behaviour remain external inputs;
-client-supplied design, diagnosis, or successor selection remains internal
-production work that the bootstrap must record and transfer.
+The declared boundary also determines what a comparison can establish. A
+benchmark that treats the house as a worker and holds the client fixed, the
+party that chooses the task, writes the brief, and accepts the result, [does
+not test the decisions it leaves with the
+client](../notes/holding-the-client-fixed-exports-the-least-warrantable-decisions.md).
+Which of those decisions matter depends on their kind. Requirements and
+judgments about visible behaviour remain external inputs, so a client may keep
+supplying them. Design, diagnosis, or successor selection supplied by the
+client is internal production work that the bootstrap must record and
+transfer.
 
 ## What the house's training must produce
 
