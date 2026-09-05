@@ -1,0 +1,48 @@
+{
+  "readback": {
+    "axis": "read_back_direction",
+    "denominator": 0,
+    "excluded_runs": [
+      "AAS-2026-09-05-apache-maka-01"
+    ],
+    "exclusions": {
+      "code-grounded:known:afforded": 1
+    },
+    "included_runs": [],
+    "matched_runs": [],
+    "numerator": 0,
+    "test": "set contains [\"pull\"]"
+  },
+  "selected_rows": 1,
+  "storage": {
+    "axis": "storage_substrate",
+    "denominator": 1,
+    "excluded_runs": [],
+    "exclusions": {},
+    "included_runs": [
+      "AAS-2026-09-05-apache-maka-01"
+    ],
+    "matched_runs": [
+      "AAS-2026-09-05-apache-maka-01"
+    ],
+    "numerator": 1,
+    "test": "set contains [\"files\", \"sqlite\"]"
+  },
+  "unknowns": {
+    "curation_operations": {
+      "uninspected": 1
+    },
+    "distilled_form": {
+      "not-determinable": 1
+    },
+    "faithfulness_tested": {
+      "uninspected": 1
+    },
+    "lineage": {
+      "not-determinable": 1
+    },
+    "representational_form": {
+      "not-determinable": 1
+    }
+  }
+}

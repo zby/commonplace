@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import re
 import subprocess
-from collections.abc import Callable
+from collections.abc import Callable, Collection
 from dataclasses import dataclass, field
 from pathlib import Path
 from urllib.parse import unquote, urlsplit
@@ -487,14 +487,19 @@ def _resolve_local_link_target(source: Path, link: str) -> Path | None:
 
 
 def validate_links_from_document(
-    results: CheckResults, path: Path, links: tuple[str, ...]
+    results: CheckResults,
+    path: Path,
+    links: tuple[str, ...],
+    *,
+    available_paths: Collection[Path] = (),
 ) -> None:
+    """Resolve links against disk and normalized paths supplied by this validation run."""
     missing: list[str] = []
     for link in links:
         target = _resolve_local_link_target(path, link)
         if target is None:
             continue
-        if not target.exists():
+        if target not in available_paths and not target.exists():
             missing.append(link)
 
     if missing:
@@ -1356,7 +1361,12 @@ def _validate_parsed_note(parsed: ParsedNote, *, run: ValidationRun) -> CheckRes
         note_type=parsed.note_type,
         git_ignored=run.is_git_ignored(parsed.path),
     )
-    validate_links_from_document(base, parsed.path, parsed.document.links)
+    validate_links_from_document(
+        base,
+        parsed.path,
+        parsed.document.links,
+        available_paths=run.content_overrides,
+    )
     validate_proposal_archive_links(
         base,
         parsed.path,

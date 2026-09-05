@@ -85,7 +85,7 @@ Committed in `c1490415`.
 
 ### C01–C03 — Matrix, table, and statistics
 
-**Status: done for the reader migration. Production population: not regenerated.**
+**Status: done for the reader migration. Production pilot: one regenerated system.**
 C01 established normalized assessments in the exact main result and retention
 of those same bytes during publication. C02 then replaced its CSV dependency
 with the same direct reader and public evidence links. C03 replaced its CSV
@@ -109,14 +109,17 @@ identity requires explicit selection of one review.
 
 The [acceptance record](./c01-c03-acceptance.md) covers clean-input builds,
 missing and mismatched evidence, unknown/absence distinctions, evidence-tier
-filtering, input drift, retention, and publication rollback. The current live
-build rejects Apache Maka for missing retained-result metadata. Existing main
-reviews and the larger legacy corpus need source regeneration before a public
-population can be compared. No production matrix or table was generated. Implemented in `c1490415`.
+filtering, input drift, retention, and publication rollback. The initial live
+build rejected Apache Maka for missing retained-result metadata. Implemented
+in `c1490415`. The [production pilot](./production-pilot.md) now rebuilds Maka
+through the main workflow and verifies the matrix, table and analyzer on its
+retained result. The default all-generated build still rejects Pond. The
+workshop pair covers Maka alone; public defaults and legacy snapshots remain
+unchanged.
 
 ### C04 — Landscape synthesis
 
-**Status: done for procedure migration. Production pilot: pending regeneration.**
+**Status: done for procedure migration and one-system production pilot.**
 The skill now requires full retained main results for qualitative claims and
 builds its CSV from those same inputs. The reusable bundle command captures
 contracts and hashes, rejects drift and mixed populations, and distinguishes
@@ -132,15 +135,20 @@ loads the changed procedure immediately. No main-review findings were edited.
 The [acceptance record](./c04-acceptance.md) and
 [bounded fixture synthesis](./c04-trial.md) cover a four-result population,
 one eligible quantitative case, three explicit exclusions, canonical-record
-support, and rejected stronger claims. All 722 tests pass; Ruff and changed
-Markdown validation pass. The real corpus is still rejected for missing
-retained-result metadata. No production synthesis was refreshed. C04 changes
-are not yet committed.
+support, and rejected stronger claims. The procedure migration passed 722
+tests and was committed in `c589b981`. The subsequent
+[production pilot](./production-pilot.md) uses main run
+`AAS-2026-09-05-apache-maka-01` and its retained result directly for bounded
+queries and qualitative findings. It also fixes link validation for results
+supplied in the same prospective publication bundle. All 723 tests pass. No
+public landscape article or whole-corpus comparison was refreshed.
 
-**Next:** regenerate a small production population through the main analysis
-and exercise the new comparison/synthesis path. Then select C10 or C11 for the
-next procedure migration; C05–C07 need enough regenerated evidence or an explicit
-historical disposition. Consumer IDs remain an inventory, not a fixed sequence.
+**Next:** C10, replacing or retiring direct taxonomy patching. Its current
+mutation procedure conflicts with generated-review ownership and can be
+resolved without first regenerating the whole corpus. C11 remains a subsequent
+procedure choice; C05–C07 need enough regenerated evidence or an explicit
+historical disposition. Pond remains outside the new comparison population.
+Consumer IDs remain an inventory, not a fixed sequence.
 
 C15 received navigation and public-citation contract updates needed by C01–C04. Broader citation
 and public-navigation migration remains pending. C12/C14 still require the

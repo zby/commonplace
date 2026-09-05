@@ -1086,6 +1086,34 @@ def test_publish_replaces_the_bundle_and_completes_run_state(tmp_path: Path) -> 
     assert validation.validate_note(state, repo_root=tmp_path).fails == []
 
 
+def test_publication_resolves_links_to_results_in_the_same_bundle(tmp_path: Path) -> None:
+    state, spec, _, _ = publication_fixture(tmp_path)
+    retained = tmp_path / systems_matrix.retained_result_path(RUN_ID)
+    candidate = spec.generated_candidate_path
+    content = candidate.read_text() + (
+        f"\n[Exact analysis](../../reports/retained/agentic-system-analysis/{RUN_ID}/result.md)\n"
+    )
+    candidate.write_text(content)
+
+    assert prepare_publication(spec).review_batch is not None
+    assert not retained.exists()
+    assert not (tmp_path / spec.generated_destination).exists()
+
+    candidate.write_text(content + "\n[Missing](./not-in-the-bundle.md)\n")
+    with pytest.raises(ValueError, match="missing target ./not-in-the-bundle.md"):
+        prepare_publication(spec)
+    assert not retained.exists()
+
+    candidate.write_text(content)
+    accept_prepared_semantic_review(tmp_path, spec)
+    publish_publication(spec)
+    assert retained.read_bytes() == (state.parent / "result.md").read_bytes()
+    assert (tmp_path / spec.generated_destination).read_text() == content
+    checks = validation.validate_note(state, repo_root=tmp_path)
+    assert checks.fails == []
+    assert checks.warns == []
+
+
 def test_publish_rolls_back_an_ordinary_multi_file_write_failure(
     tmp_path: Path,
     monkeypatch,

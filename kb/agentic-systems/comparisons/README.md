@@ -37,7 +37,7 @@ observation. Denominators describe this selected population only.
 Existing reviews without retained-result metadata and normalized comparison
 fields need regeneration through the main analysis before inclusion. Do not
 patch generated findings, reuse an old CSV value, or infer absence from an
-omission. No production comparison has yet been built with this contract.
+omission. Use an explicit review list to compare only regenerated inputs.
 The old matrix and table under `kb/agent-memory-systems/` remain historical
 snapshots; these commands no longer rebuild them. Public landscape synthesis uses the same inputs through
 `synthesize-agent-memory-landscape`. Its bundle command captures selected main

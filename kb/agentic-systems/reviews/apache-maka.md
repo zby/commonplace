@@ -1,218 +1,113 @@
 ---
-description: "Code-grounded analysis of Apache Maka's host-owned execution spine, context projections, effect settlement, alternate forcing routes, and distinct memory lifecycles"
+description: "Apache Maka's separate history, local-memory and atomic-extraction routes, with their consumers and evidence limits"
 type: kb/types/note.md
 generated-by: analyse-agentic-system
-analysis-run: AAS-2026-09-04-apache-maka-02
+analysis-run: AAS-2026-09-05-apache-maka-01
 source-identity: https://github.com/apache/maka
 reviewed-revision: ece69ab3e7a1629a6073831005711d8aa7160ca4
+analysis-result: kb/reports/retained/agentic-system-analysis/AAS-2026-09-05-apache-maka-01/result.md
+analysis-result-sha256: fcd16d145d4ee6730eedab994478c8a320fd98f79123dd2df145c3cb6b8d3c18
 traits: [has-external-sources, has-implementation]
 tags: [agent-memory, context-engineering, evaluation, tool-loop]
 ---
 
 # Apache Maka
 
-**Evidence basis:** code-grounded inspection of [Apache Maka at commit
-`ece69ab3e7a1629a6073831005711d8aa7160ca4`](https://github.com/apache/maka/tree/ece69ab3e7a1629a6073831005711d8aa7160ca4),
-with an applicability cutoff of 2026-09-04. The repository is a complete
-artifact, but its operating loop crosses external model providers, operating
-systems, tools and services, peer deployments, and user workspaces. The
-analysis establishes static wiring and bounded absences, not deployed behavior,
-output quality, universal isolation, or causality.
+Maka is an enclosing agent runtime whose Host owns the inspected execution
+path while model context is projected from retained execution events. Its
+built-in memory has distinct write and later-read routes: local Markdown memory
+is injected into prompts, conversation checkpoints replace covered history,
+and atomic SQLite MemoryItems are written without an inspected production
+recall consumer.
 
-Maka is an agent workspace built around one Runtime Host. Desktop, TUI, CLI,
-bot, and evaluation clients enter the same host protocol. The host owns one
-State Root, admits top-level work, composes model requests, mediates effects,
-and persists execution facts. Interactive turns, graph children, approved
-remote requests, scheduled tasks, and goal continuations change how work is
-triggered, but they return to the same root-execution path. Maka's [system
-map](https://github.com/apache/maka/blob/ece69ab3e7a1629a6073831005711d8aa7160ca4/ARCHITECTURE.md#L22-L84)
-and [Runtime Host
-architecture](https://github.com/apache/maka/blob/ece69ab3e7a1629a6073831005711d8aa7160ca4/docs/architecture/runtime-host-architecture.md#L41-L112)
-state this design.
+This is a code-grounded analysis of [commit
+ece69ab3e7a1629a6073831005711d8aa7160ca4](https://github.com/apache/maka/tree/ece69ab3e7a1629a6073831005711d8aa7160ca4),
+inspected on 2026-09-05. The [exact analysis](../../reports/retained/agentic-system-analysis/AAS-2026-09-05-apache-maka-01/result.md)
+retains the canonical records, scoped comparison fields and limitations.
+No target run or intervention was performed; implemented wiring does not
+establish successful operation, activation or benefit.
 
-## Immutable events participate in execution authority
+## Execution and effect boundaries
 
-The ordinary route is:
+The ordinary route is client request → Host admission → AgentRun and
+RuntimeKernel → provider step → local tool settlement or final output →
+durable events and terminal state. Host checks session/turn identity against
+existing admission. The adapter issues one provider step; the runtime owns
+continuation and refreshes its history projection. Before local tool effects,
+the backend requires readable current-run events. These are implementation
+findings in RTE-1/RTE-2, supported by [root admission](https://github.com/apache/maka/blob/ece69ab3e7a1629a6073831005711d8aa7160ca4/packages/runtime-host/src/server/root-turn-coordinator.ts#L1462-L1510),
+[provider dispatch](https://github.com/apache/maka/blob/ece69ab3e7a1629a6073831005711d8aa7160ca4/packages/runtime/src/model-adapter.ts#L281-L339)
+and [local tool continuation](https://github.com/apache/maka/blob/ece69ab3e7a1629a6073831005711d8aa7160ca4/packages/runtime/src/ai-sdk-backend.ts#L2815-L2878).
 
-`client -> Runtime Host -> SessionManager/AgentRun -> provider -> tools -> durable events -> client projection`
+Graph supervisor wakes and scheduled agent work enter hosted execution, but
+provider-owned tools and scheduled native notifications have separate effect
+owners. Local ToolRuntime checks therefore do not establish universal control
+over external effects. Recovery closes unfinished runs from retained evidence;
+continuation requires an authoritative safety check. These are bounded
+protocols, with no inspected crash experiment or deployed isolation result
+(RTE-3 through RTE-6): [provider activity](https://github.com/apache/maka/blob/ece69ab3e7a1629a6073831005711d8aa7160ca4/packages/runtime/src/ai-sdk-backend.ts#L2506-L2557),
+[graph admission](https://github.com/apache/maka/blob/ece69ab3e7a1629a6073831005711d8aa7160ca4/packages/runtime-host/src/server/agent-graph-execution-coordinator.ts#L74-L143),
+[scheduled effects](https://github.com/apache/maka/blob/ece69ab3e7a1629a6073831005711d8aa7160ca4/packages/runtime-host/src/server/scheduled-task-coordinator.ts#L560-L605)
+and [continuation safety](https://github.com/apache/maka/blob/ece69ab3e7a1629a6073831005711d8aa7160ca4/packages/runtime/src/runtime-kernel.ts#L1475-L1486).
 
-Before provider or tool dispatch, AgentRun commits an invocation opening. It
-fixes provider route, configuration, root authority, source, and lineage. Run
-Composer separately persists the prompt and tool basis. Provider output is
-normalized into RuntimeEvents, and required facts are committed before
-downstream projection. One first terminal fact controls completion. The
-[composition and opening
-path](https://github.com/apache/maka/blob/ece69ab3e7a1629a6073831005711d8aa7160ca4/packages/runtime/src/agent-run.ts#L1120-L1258)
-and [event settlement
-path](https://github.com/apache/maka/blob/ece69ab3e7a1629a6073831005711d8aa7160ca4/packages/runtime/src/agent-run.ts#L948-L1015)
-make the event ledger part of execution authority rather than diagnostic history
-alone.
+## Three memory routes
 
-This supports recoverable execution provenance, not bit-exact provider replay.
-The inspected system does not retain one complete byte-level snapshot of every
-materialized request, provider state, and external dependency.
+| Material | Write and maintenance | Later consumer and limit |
+|---|---|---|
+| Local MEMORY.md/PENDING.md | User operations, proposal approval/rejection, status changes and revision-checked bundle writes | Active, session-visible entries pass policy/privacy gates and enter the prompt as untrusted lower-priority context; activation unmeasured |
+| Atomic SQLite MemoryItems | Models transform eligible user text; citation/policy checks and canonicalization judgments gate durable writes with event provenance | Storage key/ID lookup is available, but no production task-model caller was found in the inspected composition |
+| RuntimeEvents and compaction checkpoints | Events are retained; text compaction produces and structurally checks summaries; provider compaction can retain opaque state | Coverage-matched history/checkpoint replay changes later context; text faithfulness and opaque representation remain unmeasured |
 
-## Working context is a validated projection
+The first two routes must not be joined into a single extraction-to-prompt
+loop. [Local prompt composition](https://github.com/apache/maka/blob/ece69ab3e7a1629a6073831005711d8aa7160ca4/packages/runtime-host/src/server/interactive-run-composer.ts#L588-L624)
+reads the file bundle (RTE-8), while [atomic commitment](https://github.com/apache/maka/blob/ece69ab3e7a1629a6073831005711d8aa7160ca4/packages/runtime/src/memory-extraction.ts#L1019-L1139)
+writes structured items (RTE-9 through RTE-11). ABS-1 records the bounded
+production call search behind the missing-recall finding; an external embedder
+could still call the storage API.
 
-Run Composer assembles a provider request from system and workspace
-instructions, skills, eligible local memory, prior visible RuntimeEvents or a
-compact projection, tool schemas, capability bindings, and the current message.
-The [composer](https://github.com/apache/maka/blob/ece69ab3e7a1629a6073831005711d8aa7160ca4/packages/runtime-host/src/server/interactive-run-composer.ts#L126-L254)
-owns selection; the [AI SDK
-backend](https://github.com/apache/maka/blob/ece69ab3e7a1629a6073831005711d8aa7160ca4/packages/runtime/src/ai-sdk-backend.ts#L2050-L2205)
-materializes the provider call.
+Text checkpointing is an implemented online, session-bounded transformation of
+accumulated traces for later task continuation. It does not demonstrate
+cross-task learning from atomic items or improved outcomes. [Checkpoint
+variants](https://github.com/apache/maka/blob/ece69ab3e7a1629a6073831005711d8aa7160ca4/packages/runtime/src/history-compact-checkpoint.ts#L87-L138)
+include encrypted provider content, so the comparison leaves the complete
+representational and distilled-form classifications unresolved. See
+RTE-12/RTE-13 and [coverage-matched replay](https://github.com/apache/maka/blob/ece69ab3e7a1629a6073831005711d8aa7160ca4/packages/runtime/src/ai-sdk-backend.ts#L1890-L1916).
 
-Compaction shortens working context without deleting canonical history. A
-checkpoint may replace an exact event prefix with a text summary or compatible
-provider state only after coverage, digest, lineage, and provider checks. A
-mismatch falls back to raw events. The [compaction
-design](https://github.com/apache/maka/blob/ece69ab3e7a1629a6073831005711d8aa7160ca4/docs/architecture/llm-compaction-events-log-projection-draft.md#L55-L288)
-therefore separates retained history from model-visible projection. Its checks
-warrant structural substitution, not semantic fidelity or observed influence.
+## What the checks authorize
 
-## Effect control is layered and recovery is conservative
+Atomic extraction checks citation membership and uses a separate model
+judgment of support. These checks do not establish the truth of user assertions
+or observed rewrite fidelity. Local human approval authorizes inclusion;
+summary checks authorize a structurally eligible checkpoint. Neither is an
+inspected semantic-faithfulness test (RTE-7/RTE-10/RTE-12).
 
-A tool schema only affords a call. ToolRuntime separately applies availability,
-loop, capacity, permission, managed-path, client-capability, and execution-
-boundary gates. After admission, it persists a T1 dispatch fact, attempts the
-effect, then persists T2 and a correlated Tool Result before the result can
-drive another model step. The [tool settlement
-path](https://github.com/apache/maka/blob/ece69ab3e7a1629a6073831005711d8aa7160ca4/packages/runtime/src/tool-runtime.ts#L1400-L1735)
-and [durable T1/T2
-ordering](https://github.com/apache/maka/blob/ece69ab3e7a1629a6073831005711d8aa7160ca4/packages/runtime/src/tool-runtime.ts#L2250-L2445)
-implement these distinct authorities.
+Goal evaluation is a separate, tool-free call using the session model and recent
+conversation. Its flags can settle or continue a goal, and its reason steers
+later work. The parser coerces values to booleans, so accepted JSON alone does
+not establish strict flag types. Task reminders are advisory and cannot veto
+an already-terminal judge result. This is operational control, with no
+independent environmental verification established (RTE-14/RTE-15): [goal
+parser](https://github.com/apache/maka/blob/ece69ab3e7a1629a6073831005711d8aa7160ca4/packages/runtime/src/goal-evaluator.ts#L122-L173)
+and [settlement](https://github.com/apache/maka/blob/ece69ab3e7a1629a6073831005711d8aa7160ca4/packages/runtime/src/goal-continuation.ts#L699-L741).
 
-Containment remains route-specific. Restricted managed paths can require
-OS-backed enforcement, while bypass profiles, some PTY and resource routes,
-client-executed capabilities, external services, and platform gaps have
-different envelopes. Maka's [sandbox
-contract](https://github.com/apache/maka/blob/ece69ab3e7a1629a6073831005711d8aa7160ca4/packages/runtime/src/sandbox/README.md#L20-L108)
-supports a guarantee only for a named tool, profile, adapter, and platform.
+The eval framework separately acquires verifier results and chooses the
+earliest attempt excluding infrastructure failures and indeterminate outcomes,
+including scored task failures. That licenses a selected benchmark outcome,
+not a claim that memory caused an improvement (RTE-16): [result
+selection](https://github.com/apache/maka/blob/ece69ab3e7a1629a6073831005711d8aa7160ca4/packages/eval/src/result.ts#L87-L94).
+The inspected benchmark report is attributed operation; its raw traces and
+verifier output were not available to this pass.
 
-If a process dies after T1 but before T2, recovery does not silently invent an
-outcome. It repairs readable ledgers, checks whether continuation is safe, and
-parks or admits a fresh invocation. General tool-specific effect reconciliation
-and workspace checkpoint restore are not wired for every route. The [resume
-architecture](https://github.com/apache/maka/blob/ece69ab3e7a1629a6073831005711d8aa7160ca4/docs/architecture/runtime-resume-architecture.md#L50-L164)
-makes that limit explicit.
+## Scope
 
-## Alternate forcing routes reuse the host spine
+The whole-system target is assessed through selected material routes. The
+comparison covers built-in conversational history/checkpoints, local memory and
+atomic items with their access bookkeeping. Mutable skills and goal state are
+adjacent control/instruction material. Offloaded tool artifacts, arbitrary
+project files, external skills/extensions, peer meshes, image-context and
+research features are outside the comparison or not traced end to end.
 
-Agent Graph stores schedules, claims, wakes, and child references durably. A
-claimed child receives its own Session and execution identities; the root
-supervisor must explicitly read a bounded child result. The [graph execution
-coordinator](https://github.com/apache/maka/blob/ece69ab3e7a1629a6073831005711d8aa7160ca4/packages/runtime-host/src/server/agent-graph-execution-coordinator.ts#L1-L220)
-connects this work to ordinary Host admission. Durable coordination does not
-make child propositions true or merge their transcripts implicitly.
-
-Session collaboration also preserves Host ownership. A guest can submit only a
-grant-authorized turn request. An owner approval changes the request's durable
-state; the coordinator then calls ordinary `turn.start` or regeneration with an
-approved Host connection context. The [request
-protocol](https://github.com/apache/maka/blob/ece69ab3e7a1629a6073831005711d8aa7160ca4/packages/runtime-host/src/protocol/session-collaboration.ts#L30-L180)
-and [approved-turn
-coordinator](https://github.com/apache/maka/blob/ece69ab3e7a1629a6073831005711d8aa7160ca4/packages/runtime-host/src/server/session-turn-access-request-coordinator.ts#L20-L159)
-do not transfer runtime authority to the guest.
-
-Scheduled tasks retain intent and stable execution identities, then submit a
-durability-required user turn through Host admission. Goals add a more active
-continuation policy. After a completed goal turn, a bounded, tool-free model
-call judges progress from the goal condition and recent messages. Deterministic
-coordinator policy and durable state settle, wait, pause, or start a fresh Host
-turn after lease, task, iteration, token, and stall gates. The [goal
-evaluator](https://github.com/apache/maka/blob/ece69ab3e7a1629a6073831005711d8aa7160ca4/packages/runtime/src/goal-evaluator.ts#L20-L235)
-and [continuation
-coordinator](https://github.com/apache/maka/blob/ece69ab3e7a1629a6073831005711d8aa7160ca4/packages/runtime/src/goal-continuation.ts#L640-L860)
-separate the model judgment from the state transition. Evaluator failure is
-fail-open continuation, so the judgment is not treated as semantic proof.
-
-## Retained context has distinct lifecycles
-
-Maka uses “memory” for mechanisms with different producers, stores, selectors,
-and later consumers.
-
-### Approved document memory
-
-`MemoryBundle` is a user-approved document store. Runtime policy gates reading;
-the prompt selector filters active entries by Session scope, redacts secrets,
-and applies a character budget. Run Composer inserts the result into a main-
-session `<local-memory>` fragment explicitly marked as user-authorized but
-untrusted. The [selection
-path](https://github.com/apache/maka/blob/ece69ab3e7a1629a6073831005711d8aa7160ca4/packages/core/src/local-memory.ts#L291-L383)
-and [prompt
-injection](https://github.com/apache/maka/blob/ece69ab3e7a1629a6073831005711d8aa7160ca4/packages/runtime-host/src/server/interactive-run-composer.ts#L588-L623)
-form a wired later-read route. Child compositions omit this implicit memory.
-Static wiring does not show that an entry changed a model decision. The parsed
-`decayTtlMs` metadata is not enforced by the inspected prompt selector, so it
-does not establish automatic expiry.
-
-### Structured extraction
-
-`MemoryExtractionEngine` is a separate write route. It selects bounded user-
-authored event evidence, asks an auxiliary model to propose and canonicalize
-items, then applies quote, secret, schema, coverage, scope, and budget gates
-before atomically committing `MemoryItem` records, cursors, and receipts. The
-[extraction
-implementation](https://github.com/apache/maka/blob/ece69ab3e7a1629a6073831005711d8aa7160ca4/packages/runtime/src/memory-extraction.ts#L780-L1166)
-warrants provenance and admission shape for retained items.
-
-The store affords item lookup, but no production route in the inspected
-Runtime, Runtime Host server, or Desktop main composition reads those items into
-a later agent request or promotes them into `MemoryBundle`. An explicit remember
-operation can return a same-invocation result, which is not persistent recall.
-Durable structured extraction is therefore wired; durable structured-memory
-influence on later model behavior is not.
-
-### Image context offload
-
-An image Read can store Session-owned, content-addressed bytes and retain only a
-reference in the Tool Result. A later vision-capable request rehydrates the
-bytes after ownership, digest, media-type, availability, and budget checks. The
-[snapshot store](https://github.com/apache/maka/blob/ece69ab3e7a1629a6073831005711d8aa7160ca4/packages/storage/src/read-image-snapshot-store.ts#L37-L115)
-and [provider
-materialization](https://github.com/apache/maka/blob/ece69ab3e7a1629a6073831005711d8aa7160ca4/packages/runtime/src/ai-sdk-backend.ts#L4560-L4655)
-warrant byte provenance within that contract, not image meaning or relevance.
-
-## Operational acceptance is not truth acceptance
-
-Maka has strong, distinct authorities for execution facts: event durability
-accepts identity and occurrence; permission authorizes an attempted action;
-tool settlement records an outcome; graph claims authorize work; memory gates
-authorize retention or prompt eligibility; remote approval authorizes a turn;
-evaluation selection chooses a verifier-relative result; and goal policy chooses
-a transition. None is a general route that accepts model, tool, child, memory,
-image, or summary propositions as true.
-
-Model-mediated compaction and extraction make the distinction sharp. Their
-deterministic gates check coverage, quotation, secrets, schema, and provenance,
-not entailment. The evaluation package similarly retains declarative cells,
-immutable attempts, verifier output, and earliest-compatible selection. The
-inspected production runtime does not consume evaluation results to update
-policy or behavior. [Evaluation
-selection](https://github.com/apache/maka/blob/ece69ab3e7a1629a6073831005711d8aa7160ca4/packages/eval/src/runner.ts#L145-L245)
-is operational machinery, not an online learning loop.
-
-## Assessment
-
-At this revision, Maka's strongest architectural property is explicit ownership
-of execution decisions. One Host admits work; immutable composition and opening
-records precede dispatch; canonical events control replay and termination;
-ToolRuntime stages effect settlement; and graph, remote, scheduled, and goal
-routes retain distinct identities while returning to the same runtime spine.
-Context is a replaceable projection over stronger state, and memory mechanisms
-are separable by later consumer rather than name.
-
-The main limits sit at external and semantic boundaries. Containment depends on
-the exact route and deployed platform. Recovery parks effects it cannot
-reconcile. Structured extraction has no later agent read-back. Goal judgments
-can force continuation without becoming truth. Operational provenance never
-becomes general semantic acceptance. Evaluation results do not feed runtime
-adaptation. No candidate-linked run shows activation or causal value. These
-limits qualify the guarantees without negating the implemented Host and event
-spine.
-
----
-
-Relevant Notes:
-
-- [Apache Maka repository at the reviewed commit](https://github.com/apache/maka/tree/ece69ab3e7a1629a6073831005711d8aa7160ca4) — evidenced-by: frozen implementation and doctrine boundary for this analysis
+A wired atomic recall consumer, paired source/summary evidence, stricter goal
+admission, inspected deployment boundaries or retained recall interventions
+would change specific conclusions. No product ranking, measured benefit or
+system-wide epistemic grade follows from this source inspection.

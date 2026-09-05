@@ -1,8 +1,10 @@
 # C04 acceptance — landscape synthesis from main results
 
 Accepted on 2026-09-05 for procedure migration. The preceding five consumer
-migrations were committed in `c1490415`. C04 is not yet committed. Production
-corpus regeneration and a production synthesis remain outstanding.
+migrations were committed in `c1490415`; C04 was committed in `c589b981`.
+The later [one-system production pilot](./production-pilot.md) regenerates
+Apache Maka and verifies the migrated procedures. Broader corpus regeneration
+and a public landscape synthesis remain outstanding.
 
 ## Changed consumption path
 
