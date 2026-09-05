@@ -13,7 +13,12 @@ The durable review serves readers surveying systems and the downstream matrix an
 
 **Two evidence tiers, one type.** The `source-tier` frontmatter field records which: `code-grounded` (the default this spec assumes — material findings rest on inspected implementation; abandoned-but-readable code counts) or `doc-grounded` (no inspectable implementation supports the material findings; they rest on paper/README/blog, stay claim-level, and are filed under `lightweight/`). The section specs, evidence-stance, source-metadata, and citation rules below are tier-neutral; only production, owned by the skill, differs by tier.
 
-Normal production enters through [`analyse-agentic-system`](../../instructions/analyse-agentic-system/SKILL.md). When it detects a memory, knowledge, or context-engineering target, it invokes [`write-agent-memory-system-review`](../../instructions/write-agent-memory-system-review/SKILL.md) against the same frozen source boundary; that publication subworkflow owns candidate drafting, QA, validation, and replacement. Conformance here is judged only from the completed review — a writer's process is not something a reviewer can check.
+Normal production enters through [`analyse-agentic-system`](../../instructions/analyse-agentic-system/SKILL.md). When it detects a memory, knowledge, or context-engineering target, it invokes [`write-agent-memory-system-review`](../../instructions/write-agent-memory-system-review/SKILL.md) against the same frozen source boundary. That child drafts only the candidate; the parent validates it as its intended destination, owns semantic review and publication, and records completion. Conformance here is judged only from the completed review — a writer's process is not something a reviewer can check.
+
+A new workflow-produced review also carries `generated-by:
+analyse-agentic-system`, its `analysis-run`, stable `source-identity`, and
+`reviewed-revision`. These fields bind the public projection to its parent run;
+they do not replace the source metadata below.
 
 The section specs below distill [designing-agent-memory-systems](../../notes/designing-agent-memory-systems.md) and its requirements inventory into a review-time contract — don't load that note during ordinary review writing.
 

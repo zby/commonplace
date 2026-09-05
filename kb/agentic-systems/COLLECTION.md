@@ -10,20 +10,25 @@ Memory and knowledge subsystems are carved out: they have their own collection, 
 
 ## Structure
 
-The collection root holds per-system and per-feature analyses plus navigation. No subdirectory structure yet — add one when a category accumulates enough artifacts to need its own conventions.
+The collection root is reserved for collection-level operating material:
+`README.md`, `COLLECTION.md`, and meta-document directories such as `types/`.
+Per-system and per-feature analyses live under `reviews/` so the growing
+analysis corpus does not obscure those operating documents.
 
 ## Generated reviews
 
 Every complete `analyse-agentic-system` run publishes one compact review in the
-collection root. These files carry `generated-by: analyse-agentic-system`, the
-producing `analysis-run`, a stable `source-identity`, and the
+`reviews/` directory. Each file records `generated-by: analyse-agentic-system`,
+the producing `analysis-run`, a stable `source-identity`, and the
 `reviewed-revision`. They are workflow-owned projections of a frozen analysis,
 not hand-authored notes. Do not substantively hand-edit them. Correct the source
 boundary or the shared review method, then rerun the skill and replace the
 review from those inputs. Git history preserves earlier generated versions.
 Publication cannot be waived per complete analysis. The workflow validates a
-private candidate before replacing the review. If generation or validation
-fails, the incumbent remains unchanged and a later run repeats the analysis.
+private candidate as its intended destination before replacing the review. A
+correctable pre-publication failure leaves the incumbent unchanged and the run
+open. The complete run state is the sole declaration that publication
+succeeded.
 
 This regeneration rule keeps system-specific judgment inside one declared
 method. A human may change the method and request a new run, but may not tune one

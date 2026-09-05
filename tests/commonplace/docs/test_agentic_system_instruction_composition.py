@@ -18,8 +18,9 @@ def test_analysis_failure_is_rerun_instead_of_recovered() -> None:
         / "kb/reports/types/agentic-system-analysis-run-state.md"
     ).read_text(encoding="utf-8")
 
-    assert "Runs are disposable" in orchestrator
-    assert "Rerun with a new run ID" in orchestrator
+    assert "correctable pre-publication failure" in orchestrator
+    assert "only when abandoning the run" in orchestrator
+    assert "Use a new run ID" in orchestrator
     assert "resume a failed run" in run_state
     for obsolete in (
         "phase: handoff-ready",
@@ -40,13 +41,15 @@ def test_complete_analysis_publishes_validated_candidates() -> None:
 
     assert "Publish validated candidates" in orchestrator
     assert "temporary candidate" in orchestrator
-    assert "publish those exact bytes in one replace operation" in orchestrator
-    assert "Do not archive the incumbent" in orchestrator
-    assert "validate a private candidate before replacing" in memory_writer.lower()
+    assert "commonplace-agentic-analysis-publication prepare" in orchestrator
+    assert "commonplace-agentic-analysis-publication publish" in orchestrator
+    assert "rolls back ordinary" in orchestrator
+    assert "authorizes only the candidate" in memory_writer.lower()
     assert "incumbent untouched" in memory_writer
+    assert "Do not run semantic review or publish" in memory_writer
     collection_text = collection.replace("\n", " ")
-    assert "private candidate before replacing" in collection_text
-    assert "incumbent remains unchanged" in collection_text
+    assert "private candidate as its intended destination" in collection_text
+    assert "complete run state is the sole declaration" in collection_text
     assert "Never stage or commit" in orchestrator
 
 
@@ -76,6 +79,8 @@ def test_repository_sources_remain_commit_addressed() -> None:
     assert "git --no-replace-objects -C" in source_work
     assert "never read evidence from the worktree" in source_work
     assert "full commit-relative path" in source_work
+    assert "compact source allowlist" in source_work
+    assert "recorded search boundary" in source_work
 
 
 def test_runtime_checks_preflight_before_execution() -> None:
@@ -90,6 +95,7 @@ def test_runtime_checks_preflight_before_execution() -> None:
     assert "never reaches the target remains `not run`" in runtime
     assert "probe evidence capsule" in runtime
     assert "actual intervention and comparison" in runtime
+    assert "checks considered" in runtime
 
 
 def test_both_lenses_share_one_canonical_register() -> None:
@@ -113,9 +119,9 @@ def test_memory_review_publication_closes_downstream_disposition() -> None:
     writer = instruction("write-agent-memory-system-review")
     orchestrator = instruction("analyse-agentic-system")
 
-    assert "systems.csv" in writer and "systems-table.md" in writer
-    assert "report the pair stale" in writer
-    assert "Refresh a current landscape synthesis only when separately commissioned" in writer
+    assert "systems.csv" not in writer and "systems-table.md" not in writer
+    assert "systems.csv" in orchestrator and "systems-table.md" in orchestrator
+    assert "report a prior current landscape synthesis as historical" in orchestrator
     assert "publication of the legacy review happens only after" in orchestrator
 
 

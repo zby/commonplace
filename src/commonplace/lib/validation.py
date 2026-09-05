@@ -146,6 +146,7 @@ class ValidationRun:
     repo_root: Path
     paths: tuple[Path, ...]
     collection: Path | None = None
+    content_overrides: dict[Path, str] = field(default_factory=dict)
     _documents: dict[Path, LoadedDocument] = field(default_factory=dict, init=False)
     _notes: dict[Path, tuple[ParsedNote | None, str | None]] = field(
         default_factory=dict, init=False
@@ -160,13 +161,18 @@ class ValidationRun:
         self.paths = tuple(path.resolve() for path in self.paths)
         if self.collection is not None:
             self.collection = self.collection.resolve()
+        self.content_overrides = {
+            path.resolve(): content for path, content in self.content_overrides.items()
+        }
 
     def load_document(self, path: Path) -> LoadedDocument:
         """Read and parse one Markdown artifact at most once during this run."""
         key = path.resolve()
         if key in self._documents:
             return self._documents[key]
-        content = key.read_text(encoding="utf-8")
+        content = self.content_overrides.get(key)
+        if content is None:
+            content = key.read_text(encoding="utf-8")
         document, error = parse_document(content)
         loaded = LoadedDocument(content=content, document=document, error=error)
         self._documents[key] = loaded
@@ -1220,7 +1226,10 @@ def validate_agentic_analysis_run_state(
         results.fails.append(f"agentic-system analysis run state: {exc}")
         return
 
-    passes, failures = verify_agentic_analysis_run_state(state)
+    passes, failures = verify_agentic_analysis_run_state(
+        state,
+        content_overrides=run.content_overrides,
+    )
     results.passes.extend(passes)
     results.fails.extend(failures)
     if not failures:
@@ -1363,6 +1372,23 @@ def _validate_parsed_note(parsed: ParsedNote, *, run: ValidationRun) -> CheckRes
 def validate_note(path: Path, *, repo_root: Path) -> CheckResults:
     """Run the deterministic pipeline on one note outside a wider run."""
     return ValidationRun(repo_root=repo_root, paths=(path,)).validate(path)
+
+
+def validate_note_text_at_path(
+    content: str,
+    *,
+    path: Path,
+    repo_root: Path,
+    content_overrides: dict[Path, str] | None = None,
+) -> CheckResults:
+    """Validate supplied bytes as though they occupied their intended path."""
+    overrides = dict(content_overrides or {})
+    overrides[path] = content
+    return ValidationRun(
+        repo_root=repo_root,
+        paths=(path,),
+        content_overrides=overrides,
+    ).validate(path)
 
 
 def validate_collection_structure(

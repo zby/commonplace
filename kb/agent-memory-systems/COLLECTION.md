@@ -17,16 +17,19 @@ The quality goal is **fidelity + economy**: faithful to what the code actually d
 Reviews record each external mechanism absolutely, even when it resembles Commonplace. The shared ontology chooses the distinctions and names comparable solutions; it does not turn the review into a Commonplace delta. Closed controlled fields feed the matrix. Open-ended mechanisms and ontology boundary cases support qualitative synthesis but no prevalence claim until the full corpus has been assayed for that concept.
 
 Per-system reviews under `reviews/` and `lightweight/` are workflow-owned
-outputs of `analyse-agentic-system` and `write-agent-memory-system-review`, not
-hand-edited analysis. Do not substantively patch one review in isolation.
+outputs of `analyse-agentic-system`; `write-agent-memory-system-review` drafts
+the legacy candidate but does not review or publish it. Do not substantively
+patch one review in isolation.
 Correct the frozen source boundary, review workflow, type contract, or shared
 ontology, then regenerate the review. Git history and the replacement workflow
 preserve prior generated versions. This keeps system-specific judgment inside
 one declared method instead of allowing manual tuning of individual reviews.
 Publication cannot be waived for a target detected as a memory, knowledge, or
 context-engineering system. The workflow validates a private candidate before
-replacement. A failed candidate leaves the incumbent unchanged, marks the
-parent run failed, and is handled by a later analysis run.
+replacement and requires current semantic pass baselines for those candidate
+bytes. A correctable pre-publication failure leaves the incumbent unchanged
+and the parent run open. The complete parent run state is the sole declaration
+that publication succeeded.
 
 A code-grounded review change invalidates the generated matrix/table pair and any landscape synthesis presented as current until each downstream artifact is rebuilt from the new source set. The publishing workflow must either complete that chain under explicit authority or report the generated pair as stale and the prior synthesis as historical. A public synthesis pins the matrix, row-linked reviews, and ontology inputs at one reconstructable revision or retained snapshot and accepts only a zero-flag matrix build.
 
@@ -65,6 +68,6 @@ A typed artifact in this collection may use a global type spec under `kb/types/`
 - Procedures and how-to guidance → `kb/instructions/`
 - Descriptions of the Commonplace system itself → `kb/reference/`
 - Selective Commonplace differences, borrowable ideas, or current watch items → a transfer scan under `kb/reports/state/agentic-system-transfer/`
-- Whole external agentic-system or harness analyses not centered on memory/knowledge/context engineering → `kb/agentic-systems/`
+- Whole external agentic-system or harness analyses not centered on memory/knowledge/context engineering → `kb/agentic-systems/reviews/`
 - Raw snapshots of external sources → `kb/sources/`
 - Work in progress → `kb/work/`

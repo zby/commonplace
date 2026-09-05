@@ -3,7 +3,9 @@
 from __future__ import annotations
 
 import re
+import sqlite3
 import subprocess
+from collections.abc import Mapping
 from dataclasses import dataclass
 from hashlib import sha256
 from pathlib import Path, PurePosixPath
@@ -60,6 +62,7 @@ class AgenticAnalysisRunState:
     generated_review: OutputIdentity | None
     memory_review_required: bool | None
     legacy_review: OutputIdentity | None
+    legacy_review_model_partition: str | None
     failure: str | None
 
 
@@ -208,6 +211,9 @@ def parse_agentic_analysis_run_state(
         role="legacy review",
         repo_root=repo_root,
     )
+    legacy_review_model_partition = _optional_string(
+        frontmatter, "legacy-review-model-partition"
+    )
     memory_review_required = frontmatter.get("memory-review-required")
     if memory_review_required is not None and not isinstance(
         memory_review_required, bool
@@ -229,11 +235,14 @@ def parse_agentic_analysis_run_state(
     if generated_review is not None:
         pure = PurePosixPath(generated_review.display_path)
         if (
-            len(pure.parts) != 3
-            or pure.parts[:2] != ("kb", "agentic-systems")
+            len(pure.parts) != 4
+            or pure.parts[:3] != ("kb", "agentic-systems", "reviews")
             or pure.suffix != ".md"
         ):
-            raise ValueError("generated-review.path: expected kb/agentic-systems/<name>.md")
+            raise ValueError(
+                "generated-review.path: expected "
+                "kb/agentic-systems/reviews/<name>.md"
+            )
     if legacy_review is not None:
         pure = PurePosixPath(legacy_review.display_path)
         if (
@@ -256,6 +265,7 @@ def parse_agentic_analysis_run_state(
                 generated_review,
                 memory_review_required,
                 legacy_review,
+                legacy_review_model_partition,
                 failure,
             )
         ):
@@ -271,6 +281,7 @@ def parse_agentic_analysis_run_state(
                 generated_review,
                 memory_review_required,
                 legacy_review,
+                legacy_review_model_partition,
             )
         ):
             raise ValueError("failed state cannot record completed outputs")
@@ -292,6 +303,11 @@ def parse_agentic_analysis_run_state(
             raise ValueError(
                 "legacy review must be present exactly when memory review is required"
             )
+        if memory_review_required != (legacy_review_model_partition is not None):
+            raise ValueError(
+                "legacy review model partition must be present exactly when memory "
+                "review is required"
+            )
 
     return AgenticAnalysisRunState(
         path=state_path,
@@ -307,13 +323,43 @@ def parse_agentic_analysis_run_state(
         generated_review=generated_review,
         memory_review_required=memory_review_required,
         legacy_review=legacy_review,
+        legacy_review_model_partition=legacy_review_model_partition,
         failure=failure,
     )
 
 
-def _verify_output(identity: OutputIdentity) -> str | None:
+def _text_override(
+    path: Path, content_overrides: Mapping[Path, str] | None
+) -> str | None:
+    if content_overrides is None:
+        return None
+    return content_overrides.get(path.resolve())
+
+
+def _read_output_bytes(
+    identity: OutputIdentity, content_overrides: Mapping[Path, str] | None
+) -> bytes:
+    override = _text_override(identity.path, content_overrides)
+    if override is not None:
+        return override.encode("utf-8")
+    return identity.path.read_bytes()
+
+
+def _read_output_text(
+    identity: OutputIdentity, content_overrides: Mapping[Path, str] | None
+) -> str:
+    override = _text_override(identity.path, content_overrides)
+    if override is not None:
+        return override
+    return identity.path.read_text(encoding="utf-8")
+
+
+def _verify_output(
+    identity: OutputIdentity,
+    content_overrides: Mapping[Path, str] | None,
+) -> str | None:
     try:
-        content = identity.path.read_bytes()
+        content = _read_output_bytes(identity, content_overrides)
     except OSError as exc:
         return f"{identity.role}: cannot read {identity.display_path}: {exc}"
     actual = sha256(content).hexdigest()
@@ -462,14 +508,27 @@ def _verify_source_anchors(
     return passes, failures
 
 
-def _parsed_frontmatter(identity: OutputIdentity) -> tuple[dict[str, Any] | None, str | None]:
+def _parsed_output(
+    identity: OutputIdentity,
+    content_overrides: Mapping[Path, str] | None,
+) -> tuple[ParsedDocument | None, str | None]:
     try:
-        content = identity.path.read_text(encoding="utf-8")
+        content = _read_output_text(identity, content_overrides)
     except (OSError, UnicodeError) as exc:
         return None, str(exc)
     document, error = parse_document(content)
     if error is not None or document is None or document.frontmatter is None:
         return None, "frontmatter is not parseable"
+    return document, None
+
+
+def _parsed_frontmatter(
+    identity: OutputIdentity,
+    content_overrides: Mapping[Path, str] | None,
+) -> tuple[dict[str, Any] | None, str | None]:
+    document, error = _parsed_output(identity, content_overrides)
+    if error is not None or document is None:
+        return None, error
     return document.frontmatter, None
 
 
@@ -511,8 +570,133 @@ def render_agentic_analysis_handoff(state: AgenticAnalysisRunState) -> str:
     )
 
 
+def _run_identity_value(body: str, label: str) -> str | None:
+    match = re.search(rf"(?m)^\*\*{re.escape(label)}:\*\*\s+(.+?)\s*$", body)
+    if match is None:
+        return None
+    value = match.group(1).strip()
+    if value.startswith("`") and value.endswith("`"):
+        value = value[1:-1]
+    return value
+
+
+def _verify_result_projection_paths(
+    state: AgenticAnalysisRunState,
+    result_document: ParsedDocument,
+) -> tuple[list[str], list[str]]:
+    expected = {
+        "Run state": state.path.relative_to(state.repo_root).as_posix(),
+        "Generated review": (
+            state.generated_review.display_path
+            if state.generated_review is not None
+            else "not applicable"
+        ),
+        "Legacy memory review": (
+            state.legacy_review.display_path
+            if state.legacy_review is not None
+            else "not applicable"
+        ),
+    }
+    failures: list[str] = []
+    for label, expected_value in expected.items():
+        actual = _run_identity_value(result_document.body, label)
+        if actual != expected_value:
+            failures.append(
+                f"result: {label.lower()} projection is {actual!r}, "
+                f"expected {expected_value!r}"
+            )
+    if failures:
+        return [], failures
+    return ["result: intended publication paths match run state"], []
+
+
+def _verify_legacy_semantic_baselines(
+    state: AgenticAnalysisRunState,
+    legacy_frontmatter: dict[str, Any],
+) -> tuple[list[str], list[str]]:
+    if state.legacy_review is None or state.legacy_review_model_partition is None:
+        return [], []
+
+    # Imports stay lazy because validation registers this module's type rule.
+    from commonplace import store
+    from commonplace.lib.hashing import content_sha256_for_text
+    from commonplace.review.paths import criterion_path_for_id, review_gates_dir
+    from commonplace.review.resolve_criteria import (
+        applicable_criterion_ids_for_frontmatter,
+        resolve_to_criterion_ids,
+    )
+    from commonplace.review.review_db import load_current_freshness_baselines
+    from commonplace.review.review_model import normalize_model_partition
+
+    gates_dir = review_gates_dir(state.repo_root)
+    try:
+        criterion_ids = applicable_criterion_ids_for_frontmatter(
+            legacy_frontmatter,
+            resolve_to_criterion_ids(["semantic"], gates_dir),
+            gates_dir,
+        )
+        model_partition = normalize_model_partition(
+            state.legacy_review_model_partition
+        )
+        db_path = store.resolve_db_path(state.repo_root)
+        if not db_path.is_file():
+            return [], [f"legacy review semantic baselines: store not found: {db_path}"]
+        with store.connect(db_path) as conn:
+            store.assert_store_integrity(conn)
+            baselines = load_current_freshness_baselines(conn)
+    except (OSError, RuntimeError, sqlite3.Error, ValueError) as exc:
+        return [], [f"legacy review semantic baselines: {exc}"]
+
+    failures: list[str] = []
+    for criterion_id in criterion_ids:
+        try:
+            criterion_path = criterion_path_for_id(state.repo_root, criterion_id)
+            criterion_hash = content_sha256_for_text(
+                (state.repo_root / criterion_path).read_text(encoding="utf-8")
+            )
+        except (OSError, ValueError) as exc:
+            failures.append(
+                f"legacy review semantic criterion cannot be read: {criterion_id}: {exc}"
+            )
+            continue
+        baseline = baselines.get(
+            (
+                state.legacy_review.display_path,
+                criterion_path,
+                model_partition,
+            )
+        )
+        if baseline is None:
+            failures.append(
+                "legacy review semantic baseline missing: "
+                f"{criterion_id} [{model_partition}]"
+            )
+            continue
+        if (
+            baseline.result_kind != "verdict"
+            or baseline.outcome != "pass"
+            or baseline.baseline_note_hash != state.legacy_review.expected_sha256
+            or baseline.baseline_criterion_hash != criterion_hash
+        ):
+            failures.append(
+                "legacy review semantic baseline is not a current pass: "
+                f"{criterion_id} [{model_partition}]"
+            )
+    if failures:
+        return [], failures
+    return [
+        (
+            "legacy review semantic baselines: "
+            f"all {len(criterion_ids)} applicable gates pass [{model_partition}]"
+        )
+    ], []
+
+
 def verify_agentic_analysis_run_state(
     state: AgenticAnalysisRunState,
+    *,
+    content_overrides: Mapping[Path, str] | None = None,
+    require_legacy_semantic_baselines: bool = True,
 ) -> tuple[list[str], list[str]]:
     """Verify the frozen source and exact bytes named by the state."""
     passes: list[str] = []
@@ -533,7 +717,7 @@ def verify_agentic_analysis_run_state(
         if item is not None
     )
     for output in outputs:
-        error = _verify_output(output)
+        error = _verify_output(output, content_overrides)
         if error is None:
             passes.append(f"{output.role}: byte identity matches {output.display_path}")
         else:
@@ -548,7 +732,17 @@ def verify_agentic_analysis_run_state(
     for output in outputs:
         if any(message.startswith(f"{output.role}:") for message in failures):
             continue
-        checked = validation_lib.validate_note(output.path, repo_root=state.repo_root)
+        override = _text_override(output.path, content_overrides)
+        checked = (
+            validation_lib.validate_note_text_at_path(
+                override,
+                path=output.path,
+                repo_root=state.repo_root,
+                content_overrides=dict(content_overrides or {}),
+            )
+            if override is not None
+            else validation_lib.validate_note(output.path, repo_root=state.repo_root)
+        )
         diagnostics = [*checked.warns, *checked.fails]
         if diagnostics:
             failures.extend(
@@ -558,10 +752,12 @@ def verify_agentic_analysis_run_state(
         else:
             passes.append(f"{output.role}: direct validation passed")
 
-    result_frontmatter, error = _parsed_frontmatter(state.result)
-    if error is not None or result_frontmatter is None:
+    result_document, error = _parsed_output(state.result, content_overrides)
+    if error is not None or result_document is None:
         failures.append(f"result: {error}")
         return passes, failures
+    result_frontmatter = result_document.frontmatter
+    assert result_frontmatter is not None
     if result_frontmatter.get("type") != AGENTIC_ANALYSIS_RESULT_TYPE:
         failures.append(f"result: expected type {AGENTIC_ANALYSIS_RESULT_TYPE}")
     if result_frontmatter.get("run-id") != state.run_id:
@@ -576,9 +772,16 @@ def verify_agentic_analysis_run_state(
         failures.append("result: reviewed-boundary does not match frozen source")
     if not any(message.startswith("result:") for message in failures):
         passes.append("result: workflow identity matches run state")
+    projection_passes, projection_failures = _verify_result_projection_paths(
+        state, result_document
+    )
+    passes.extend(projection_passes)
+    failures.extend(projection_failures)
 
     if state.generated_review is not None:
-        generated_frontmatter, error = _parsed_frontmatter(state.generated_review)
+        generated_frontmatter, error = _parsed_frontmatter(
+            state.generated_review, content_overrides
+        )
         if error is not None or generated_frontmatter is None:
             failures.append(f"generated review: {error}")
         else:
@@ -603,7 +806,9 @@ def verify_agentic_analysis_run_state(
                 passes.append("generated review: workflow identity matches run state")
 
     if state.legacy_review is not None:
-        legacy_frontmatter, error = _parsed_frontmatter(state.legacy_review)
+        legacy_frontmatter, error = _parsed_frontmatter(
+            state.legacy_review, content_overrides
+        )
         accepted_types = {
             "kb/agent-memory-systems/types/agent-memory-system-review.md",
             "../types/agent-memory-system-review.md",
@@ -613,12 +818,35 @@ def verify_agentic_analysis_run_state(
         elif legacy_frontmatter.get("type") not in accepted_types:
             failures.append("legacy review: expected agent-memory-system-review type")
         else:
-            passes.append("legacy review: type matches the publication contract")
+            expected = {
+                "generated-by": "analyse-agentic-system",
+                "analysis-run": state.run_id,
+                "source-identity": None if state.source is None else state.source.identity,
+                "reviewed-revision": None if state.source is None else state.source.revision,
+            }
+            mismatches = [
+                field
+                for field, value in expected.items()
+                if legacy_frontmatter.get(field) != value
+            ]
+            if mismatches:
+                failures.append(
+                    "legacy review: workflow identity mismatch in "
+                    + ", ".join(mismatches)
+                )
+            else:
+                passes.append("legacy review: workflow identity matches run state")
+            if require_legacy_semantic_baselines:
+                baseline_passes, baseline_failures = _verify_legacy_semantic_baselines(
+                    state, legacy_frontmatter
+                )
+                passes.extend(baseline_passes)
+                failures.extend(baseline_failures)
 
     if state.source is not None and state.source.kind == "git":
         for output in outputs:
             try:
-                content = output.path.read_text(encoding="utf-8")
+                content = _read_output_text(output, content_overrides)
             except (OSError, UnicodeError):
                 continue
             anchor_passes, anchor_failures = _verify_source_anchors(

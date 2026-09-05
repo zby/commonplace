@@ -11,7 +11,10 @@ from commonplace import store
 from commonplace.freshness import baselines as freshness_baselines
 from commonplace.freshness.models import ArtifactSnapshot as ReviewFileSnapshot
 from commonplace.freshness.snapshots import insert_or_get_snapshot, load_snapshot_by_id
-from commonplace.freshness.versioning import resolve_file_text
+from commonplace.freshness.versioning import (
+    resolve_file_text,
+    resolve_file_text_content,
+)
 from commonplace.review.artifacts import (
     job_output_path_rel,
     prompt_path_rel,
@@ -223,6 +226,22 @@ def _placeholders(values: Sequence[object]) -> str:
 
 def snapshot_file(conn: sqlite3.Connection, *, repo_root: Path, path: str) -> ReviewFileSnapshot:
     resolved = resolve_file_text(repo_root=repo_root, path=path)
+    return insert_or_get_snapshot(conn, resolved=resolved)
+
+
+def snapshot_file_text(
+    conn: sqlite3.Connection,
+    *,
+    repo_root: Path,
+    path: str,
+    content_text: str,
+) -> ReviewFileSnapshot:
+    """Snapshot supplied text under its intended repository path."""
+    resolved = resolve_file_text_content(
+        repo_root=repo_root,
+        path=path,
+        content_text=content_text,
+    )
     return insert_or_get_snapshot(conn, resolved=resolved)
 
 

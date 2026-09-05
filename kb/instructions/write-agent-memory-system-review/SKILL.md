@@ -6,19 +6,20 @@ user-invocable: false
 allowed-tools: Read, Write, Grep, Glob, Bash, Task
 context: fork
 model: opus
-argument-hint: "frozen source and candidate-publication paths from analyse-agentic-system"
+argument-hint: "frozen source, candidate path, and intended destination from analyse-agentic-system"
 ---
 
 # Write Agent Memory System Review
 
-Generate one legacy-collection review from the source boundary frozen by
-`analyse-agentic-system`. Validate a private candidate before replacing the
-public review. The parent owns source scope, the destination, final publication,
-and the run's success or failure.
+Draft one legacy-collection review candidate from the source boundary frozen by
+`analyse-agentic-system`. The parent owns source scope, semantic review,
+destination validation, publication, downstream reporting, and the run's
+status.
 
-Invocation authorizes the candidate, one public review, and workflow-owned
-semantic-QA state. It does not authorize source changes, auxiliary collection
-edits, comparison refreshes, landscape synthesis, or Git staging and commits.
+Invocation authorizes only the candidate inside the parent run directory. It
+does not authorize a public review, review-system state, source changes,
+auxiliary collection edits, comparison refreshes, landscape synthesis, or Git
+staging and commits.
 
 ## Inputs
 
@@ -30,20 +31,18 @@ Require:
 - frozen `SRC-*` register and readable source locations;
 - reviewed Git commit or capture identity and citation format;
 - evidence limitations;
-- a candidate path inside the parent's run directory; and
+- a candidate path inside the parent's run directory;
 - the final public path under `reviews/` for code-grounded work or
   `lightweight/` for doc-grounded work.
 
-The public path may replace only a generated review of the same subject and
-source identity. If it belongs to another source or has uncommitted local
-changes, fail without changing it.
+The final path determines relative type and link resolution. Do not inspect its
+incumbent; the parent publication operation owns that check.
 
 ## Failure rule
 
-A missing input, changed source boundary, drafting failure, semantic-QA
-failure, or validation failure returns one concise failure to the parent. Leave
-the incumbent untouched. Do not archive, restore, or maintain retry state; the
-parent marks its run failed and a later analysis reruns the work.
+A missing input, changed source boundary, or drafting failure returns one
+concise failure to the parent. Leave the incumbent untouched. The parent
+decides whether to correct the running run or abandon it.
 
 ## Steps
 
@@ -67,43 +66,22 @@ parent marks its run failed and a later analysis reruns the work.
    type contract. Keep evidence limitations next to the claims they limit.
    Do not add a Commonplace comparison, borrowable ideas, transfer
    recommendations, or watch items.
-5. Run `commonplace-validate <candidate-path>`. Then perform ontology and
-   taxonomy QA against the type contract and run the semantic review bundle
-   through `kb/instructions/run-review-batches.md`. Apply clearly valid fixes
-   to the candidate and validate it again. If semantic QA cannot run, fail the
-   subworkflow; do not substitute a shell-launched agent.
-6. Immediately before publication, inspect the destination's frontmatter and
-   `git status --short`. Confirm it is absent or is a same-subject,
-   same-source review with no local modifications. Publish the exact validated
-   candidate bytes in one replace operation. Do not archive the incumbent;
-   Git preserves committed history.
-7. Run `commonplace-validate <public-path>` and verify its source anchors. A
-   successful return contains the public path and SHA-256. The candidate is no
-   longer authoritative.
-
-## Downstream comparison
-
-A code-grounded review changes the source set for `systems.csv` and
-`systems-table.md`. Refresh both only when the caller separately authorized
-both paths; otherwise report the pair stale. Never hand-edit either generated
-artifact. A doc-grounded review does not enter that matrix.
-
-Refresh a current landscape synthesis only when separately commissioned with
-authorized inputs and output. Otherwise report an affected synthesis as
-historical. These downstream dispositions do not change whether the review
-candidate itself passed.
+5. Add exact workflow frontmatter fields `generated-by:
+   analyse-agentic-system`, `analysis-run`, `source-identity`, and
+   `reviewed-revision`. Check the draft against the type's ontology and taxonomy
+   requirements. Do not run semantic review or publish. The parent validates
+   these bytes as the intended destination.
 
 ## Report
 
-Return the parent run ID, reused source boundary, public review path and
-SHA-256, drafting mode, ontology/taxonomy QA result, semantic-QA result, final
-validation result, and comparison/synthesis disposition. On failure return
-only the failed operation and reason needed for a clean rerun.
+Return the parent run ID, reused source boundary, candidate path and SHA-256,
+drafting mode, ontology/taxonomy QA result, and material limitations. On
+failure return only the failed operation and reason needed for correction.
 
 ## Constraints
 
 - Never inspect or edit an incumbent's analytical body while drafting.
-- Never publish a candidate that has not passed structural and semantic QA.
+- Never inspect or write the public destination or review-system state.
 - Never run an agent CLI to bypass unavailable harness delegation.
 - Never add `user-verified`; this workflow cannot grant human attestation.
 - Never stage or commit unless the caller separately requested it.

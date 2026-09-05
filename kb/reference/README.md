@@ -49,7 +49,7 @@ Most operations are things you ask the agent to do. Each entry below shows what 
 - "Read this PDF and ingest the key claims."
 - "Ingest the README at github.com/org/project as a related system."
 
-*What happens.* The agent snapshots the source into ignored `kb/sources/.snapshots/`, reads it, finds related notes, and writes a tracked analysis whose frontmatter carries the durable URL, capture provenance, genre, and exact snapshot checksum. In this repo, external memory-system review enters through `analyse-agentic-system`; after it freezes one evidence boundary and detects a memory-system target, it invokes `write-agent-memory-system-review` so legacy review lifecycle, delegated drafting, semantic QA, and validation stay together.
+*What happens.* The agent snapshots the source into ignored `kb/sources/.snapshots/`, reads it, finds related notes, and writes a tracked analysis whose frontmatter carries the durable URL, capture provenance, genre, and exact snapshot checksum. In this repo, external memory-system review enters through `analyse-agentic-system`; after it freezes one evidence boundary and detects a memory-system target, it invokes `write-agent-memory-system-review` for candidate drafting, then owns destination validation, semantic review, publication, and completion itself.
 
 *What you get.* A local snapshot under `kb/sources/.snapshots/` and a tracked ingest report at `kb/sources/<slug>.ingest.md` with summary, claims, and links into `kb/notes/`.
 

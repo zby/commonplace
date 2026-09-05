@@ -16,12 +16,16 @@ with the dependency on the criterion side, not a wider per-pair input set.
 from __future__ import annotations
 
 import sqlite3
-from collections.abc import Sequence
+from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
 from pathlib import Path
 
 from commonplace.lib import frontmatter
-from commonplace.review.review_db import ReviewPairRequest, snapshot_file
+from commonplace.review.review_db import (
+    ReviewPairRequest,
+    snapshot_file,
+    snapshot_file_text,
+)
 
 
 @dataclass(frozen=True)
@@ -36,13 +40,30 @@ def capture_review_inputs(
     *,
     repo_root: Path,
     pairs: Sequence[tuple[str, str, str]],
+    note_text_overrides: Mapping[str, str] | None = None,
 ) -> CapturedReviewInputs:
     """Snapshot note/criterion files and build assay-pair requests from them."""
     note_paths = sorted({note_path for note_path, _, _ in pairs})
     criterion_paths = sorted({criterion_path for _, criterion_path, _ in pairs})
 
+    overrides = note_text_overrides or {}
+    unexpected = set(overrides) - set(note_paths)
+    if unexpected:
+        raise ValueError(
+            "note text overrides do not match requested pairs: "
+            + ", ".join(sorted(unexpected))
+        )
     note_snapshots = {
-        note_path: snapshot_file(conn, repo_root=repo_root, path=note_path)
+        note_path: (
+            snapshot_file_text(
+                conn,
+                repo_root=repo_root,
+                path=note_path,
+                content_text=overrides[note_path],
+            )
+            if note_path in overrides
+            else snapshot_file(conn, repo_root=repo_root, path=note_path)
+        )
         for note_path in note_paths
     }
     criterion_snapshots = {

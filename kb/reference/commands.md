@@ -40,6 +40,16 @@ Validate one `complete` agentic-system analysis run state and render its
 Markdown operator handoff from the frozen source and current output identities.
 The command is read-only. It refuses a running, failed, or invalid run.
 
+### commonplace-agentic-analysis-publication
+
+Prepare or publish the review projections of one running agentic-system
+analysis. `prepare` validates candidate bytes as their intended destinations,
+checks incumbents, and creates the required legacy semantic-review job without
+changing public artifacts. After that job finalizes with passes, `publish`
+rechecks its baselines, validates the prospective complete run state, replaces
+the reviews, and writes the run state last. Ordinary in-process failures roll
+back written files; crash-level partial writes remain an admitted failure mode.
+
 ### commonplace-status
 
 Show one compact, read-only situation report assembled from project and command

@@ -129,6 +129,13 @@ def _matches_requirement(actual_values: set[str], required: Any) -> bool:
 
 def applicable_criterion_ids_for_note(note_path: Path, criterion_ids: list[str], gates_dir: Path) -> list[str]:
     note_meta = _load_frontmatter(note_path)
+    return applicable_criterion_ids_for_frontmatter(note_meta, criterion_ids, gates_dir)
+
+
+def applicable_criterion_ids_for_frontmatter(
+    note_meta: dict[str, Any], criterion_ids: list[str], gates_dir: Path
+) -> list[str]:
+    """Return criteria applicable to supplied note frontmatter."""
     note_type_raw = note_meta.get("type")
     note_types = {note_type_raw} if isinstance(note_type_raw, str) else set()
     note_traits_raw = note_meta.get("traits", [])

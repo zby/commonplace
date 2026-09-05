@@ -33,6 +33,12 @@ The criterion role is path-generic. Catalog gates, type specs, collection
 contracts, and the critique instruction can occupy it. No synthetic criterion
 or third dependency is registered.
 
+A review preparation path may supply note text under its intended repository
+path, as agentic-analysis candidate publication does. This changes neither
+target identity nor the two-input model: the note snapshot contains the bytes
+actually reviewed, and the public file remains stale until those bytes are
+published.
+
 Each review baseline points to the completed pair whose evidence it makes
 current. Acknowledgement can advance the baseline while preserving that pair;
 a new review replaces it. The store records which evidence still applies, not

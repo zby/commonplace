@@ -61,14 +61,15 @@ Every negative, thin, conflicting, or uncertain finding names its inspected boun
 
 `## Run identity` projects the canonical frontmatter identity for readers and states:
 
-- the run-state path and `complete` status;
+- the intended run-state path;
 - the generated whole-system review path, or `not applicable` for a blocked or
   out-of-scope result; and
 - the legacy memory-review path when one was required, otherwise
   `not applicable`.
 
 These fields make the relationship between the exact result and its public
-projections legible without reproducing workflow bookkeeping.
+projections legible without reproducing workflow bookkeeping. They name
+intended destinations; only the run state declares that publication completed.
 
 ### Boundary and evidence
 
@@ -134,7 +135,7 @@ Use `none` only after checking the full result. A blocker is also represented in
 
 ### Verification and blockers
 
-`## Verification and blockers` contains `### Semantic verification`, `### Deterministic validation`, and `### Blockers`. Record the producing skill's semantic checks, the exact deterministic validation target and result, and every unresolved blocker. A complete result says `none` under blockers. A blocked or out-of-scope result states the stopping condition and marks unreached sections explicitly; it does not omit or fabricate analysis records.
+`## Verification and blockers` contains `### Semantic verification`, `### Deterministic validation`, and `### Blockers`. Record checks of the analysis content, the exact deterministic validation target and result, and every unresolved blocker. Do not record projection review jobs, publication attempts, or cleanup here. A complete result says `none` under blockers. A blocked or out-of-scope result states the stopping condition and marks unreached sections explicitly; it does not omit or fabricate analysis records.
 
 A transfer-scan disposition belongs in the operator report unless an owning workflow requires it in a separate state artifact. The result's digest never appears inside the bytes it identifies.
 
@@ -159,9 +160,9 @@ evidence-tier: code-grounded
 
 ## Run identity
 
-**Run state:** `kb/reports/state/agentic-system-analysis/{run-id}/run-state.md` — complete
+**Run state:** `kb/reports/state/agentic-system-analysis/{run-id}/run-state.md`
 
-**Generated review:** {`kb/agentic-systems/<system-slug>.md` | not applicable}
+**Generated review:** {`kb/agentic-systems/reviews/<system-slug>.md` | not applicable}
 
 **Legacy memory review:** {path | not applicable}
 

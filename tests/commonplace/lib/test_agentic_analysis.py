@@ -8,10 +8,22 @@ from pathlib import Path
 import yaml
 
 from commonplace.cli import agentic_analysis_handoff
-from commonplace.lib import validation
+from commonplace.freshness.snapshots import load_snapshot_by_id
+from commonplace.lib import agentic_publication, validation
 from commonplace.lib.agentic_analysis import (
     parse_agentic_analysis_run_state,
     render_agentic_analysis_handoff,
+)
+from commonplace.lib.agentic_publication import (
+    PublicationSpec,
+    prepare_publication,
+    publish_publication,
+)
+from commonplace.review import review_db
+from commonplace.review.paths import criterion_path_for_id, review_gates_dir
+from commonplace.review.resolve_criteria import (
+    applicable_criterion_ids_for_note,
+    resolve_to_criterion_ids,
 )
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
@@ -42,6 +54,92 @@ def configure_types(tmp_path: Path) -> None:
     ):
         shutil.copyfile(REPO_ROOT / "kb/reports/types" / name, report_types / name)
     write(tmp_path / "kb/reports/COLLECTION.md", "# Reports\n")
+    shutil.copytree(
+        REPO_ROOT / "kb/instructions/review-gates",
+        tmp_path / "kb/instructions/review-gates",
+    )
+
+
+def seed_semantic_baselines(tmp_path: Path, note_path: str) -> None:
+    gates_dir = review_gates_dir(tmp_path)
+    criterion_ids = applicable_criterion_ids_for_note(
+        tmp_path / note_path,
+        resolve_to_criterion_ids(["semantic"], gates_dir),
+        gates_dir,
+    )
+    db_path = review_db.prepare_review_db(tmp_path)
+    completed_at = "2026-09-04T12:00:00Z"
+    with review_db.connect(db_path) as conn:
+        note_snapshot = review_db.snapshot_file(
+            conn, repo_root=tmp_path, path=note_path
+        )
+        criterion_snapshots = {
+            criterion_id: review_db.snapshot_file(
+                conn,
+                repo_root=tmp_path,
+                path=criterion_path_for_id(tmp_path, criterion_id),
+            )
+            for criterion_id in criterion_ids
+        }
+        requests = [
+            review_db.ReviewPairRequest(
+                note_path=note_path,
+                criterion_path=criterion_path_for_id(tmp_path, criterion_id),
+                pair_ordinal=ordinal,
+                result_kind="verdict",
+                reviewed_note_snapshot_id=note_snapshot.snapshot_id,
+                reviewed_criterion_snapshot_id=criterion_snapshots[
+                    criterion_id
+                ].snapshot_id,
+            )
+            for ordinal, criterion_id in enumerate(criterion_ids, start=1)
+        ]
+        job_id = review_db.create_job_with_pairs(
+            conn,
+            model_partition="codex",
+            runner="test",
+            created_at=completed_at,
+            status="queued",
+            grouping="note",
+            pairs=requests,
+        )
+        review_db.complete_review_pairs(
+            conn,
+            review_job_id=job_id,
+            review_pairs=[
+                review_db.ReviewPairCompletion(
+                    note_path=request.note_path,
+                    criterion_path=request.criterion_path,
+                    outcome="pass",
+                    completed_at=completed_at,
+                )
+                for request in requests
+            ],
+            completed_at=completed_at,
+        )
+        review_db.complete_review_job(
+            conn, review_job_id=job_id, completed_at=completed_at
+        )
+        rows = review_db.load_review_pairs_for_job(conn, review_job_id=job_id)
+        for row in rows:
+            criterion_id = next(
+                item
+                for item in criterion_ids
+                if criterion_path_for_id(tmp_path, item) == row.criterion_path
+            )
+            review_db.upsert_freshness_baseline(
+                conn,
+                note_path=note_path,
+                criterion_path=row.criterion_path,
+                model_partition="codex",
+                evidence_review_pair_id=row.review_pair_id,
+                baseline_note_snapshot_id=note_snapshot.snapshot_id,
+                baseline_criterion_snapshot_id=criterion_snapshots[
+                    criterion_id
+                ].snapshot_id,
+                baseline_updated_at=completed_at,
+            )
+        conn.commit()
 
 
 def git_checkout(path: Path) -> tuple[Path, str]:
@@ -92,6 +190,8 @@ def valid_run_state(tmp_path: Path, *, legacy: bool = False) -> Path:
         tmp_path / "related-systems/example--system"
     )
     result_path = f"kb/reports/state/agentic-system-analysis/{RUN_ID}/result.md"
+    legacy_path = "kb/agent-memory-systems/reviews/example-system.md"
+    legacy_projection = f"`{legacy_path}`" if legacy else "not applicable"
     result = write(
         tmp_path / result_path,
         f'''---
@@ -112,11 +212,11 @@ evidence-tier: code-grounded
 
 ## Run identity
 
-**Run state:** `kb/reports/state/agentic-system-analysis/{RUN_ID}/run-state.md` — complete.
+**Run state:** `kb/reports/state/agentic-system-analysis/{RUN_ID}/run-state.md`
 
-**Generated review:** `kb/agentic-systems/example-system.md`.
+**Generated review:** `kb/agentic-systems/reviews/example-system.md`
 
-**Legacy memory review:** not applicable.
+**Legacy memory review:** {legacy_projection}
 
 ## Boundary and evidence
 
@@ -203,7 +303,7 @@ Passed.
 None.
 ''',
     )
-    generated_path = "kb/agentic-systems/example-system.md"
+    generated_path = "kb/agentic-systems/reviews/example-system.md"
     generated = write(
         tmp_path / generated_path,
         f'''---
@@ -222,7 +322,6 @@ reviewed-revision: {revision}
     )
     legacy_output: dict[str, str] | None = None
     if legacy:
-        legacy_path = "kb/agent-memory-systems/reviews/example-system.md"
         legacy_file = write(
             tmp_path / legacy_path,
             '''---
@@ -230,6 +329,10 @@ description: "Fixture memory-system review with source-grounded mechanisms"
 type: ../types/agent-memory-system-review.md
 source-tier: code-grounded
 last-checked: "2026-09-04"
+generated-by: analyse-agentic-system
+analysis-run: AAS-2026-09-04-example-system-01
+source-identity: https://example.invalid/example-system
+reviewed-revision: PLACEHOLDER_REVISION
 ---
 
 # Example memory system
@@ -258,7 +361,14 @@ Fixture mechanism.
 None.
 ''',
         )
+        legacy_file.write_text(
+            legacy_file.read_text(encoding="utf-8").replace(
+                "PLACEHOLDER_REVISION", revision
+            ),
+            encoding="utf-8",
+        )
         legacy_output = {"path": legacy_path, "sha256": digest(legacy_file)}
+        seed_semantic_baselines(tmp_path, legacy_path)
 
     frontmatter: dict[str, object] = {
         "type": "kb/reports/types/agentic-system-analysis-run-state.md",
@@ -281,6 +391,7 @@ None.
         },
         "memory-review-required": legacy,
         "legacy-review": legacy_output,
+        "legacy-review-model-partition": "codex" if legacy else None,
         "failure": None,
     }
     return write(run_dir / "run-state.md", state_text(frontmatter))
@@ -306,6 +417,97 @@ def replace_frontmatter(path: Path, values: dict[str, object]) -> None:
     )
 
 
+def publication_fixture(tmp_path: Path) -> tuple[Path, PublicationSpec, bytes, bytes]:
+    state = valid_run_state(tmp_path, legacy=True)
+    values = frontmatter(state)
+    generated_destination = values["generated-review"]["path"]  # type: ignore[index]
+    legacy_destination = values["legacy-review"]["path"]  # type: ignore[index]
+    generated_public = tmp_path / generated_destination
+    legacy_public = tmp_path / legacy_destination
+    generated_bytes = generated_public.read_bytes()
+    legacy_bytes = legacy_public.read_bytes()
+    generated_candidate = state.parent / "generated-review.candidate.md"
+    legacy_candidate = state.parent / "legacy-review.candidate.md"
+    generated_candidate.write_bytes(generated_bytes)
+    legacy_candidate.write_bytes(legacy_bytes)
+    generated_public.unlink()
+    legacy_public.unlink()
+    db_path = review_db.resolve_db_path(tmp_path)
+    db_path.unlink()
+
+    values.update(
+        {
+            "run-status": "running",
+            "result-disposition": None,
+            "result": None,
+            "generated-review": None,
+            "memory-review-required": None,
+            "legacy-review": None,
+            "legacy-review-model-partition": None,
+            "failure": None,
+        }
+    )
+    replace_frontmatter(state, values)
+    spec = PublicationSpec(
+        repo_root=tmp_path,
+        run_state_path=state,
+        generated_candidate_path=generated_candidate,
+        generated_destination=generated_destination,
+        legacy_candidate_path=legacy_candidate,
+        legacy_destination=legacy_destination,
+        legacy_model_partition="codex",
+    )
+    return state, spec, generated_bytes, legacy_bytes
+
+
+def accept_prepared_semantic_review(tmp_path: Path, spec: PublicationSpec) -> int:
+    prepared = prepare_publication(spec)
+    assert prepared.review_batch is not None
+    batch = prepared.review_batch
+    completed_at = "2026-09-05T12:00:00Z"
+    db_path = review_db.resolve_db_path(tmp_path)
+    with review_db.connect(db_path) as conn:
+        completions = [
+            review_db.ReviewPairCompletion(
+                note_path=row.note_path,
+                criterion_path=row.criterion_path,
+                outcome="pass",
+                completed_at=completed_at,
+            )
+            for row in batch.pairs
+        ]
+        review_db.complete_review_pairs(
+            conn,
+            review_job_id=batch.review_job_id,
+            review_pairs=completions,
+            completed_at=completed_at,
+        )
+        review_db.complete_review_job(
+            conn,
+            review_job_id=batch.review_job_id,
+            completed_at=completed_at,
+        )
+        for row in batch.pairs:
+            assert row.reviewed_note_snapshot_id is not None
+            assert row.reviewed_criterion_snapshot_id is not None
+            review_db.upsert_freshness_baseline(
+                conn,
+                note_path=row.note_path,
+                criterion_path=row.criterion_path,
+                model_partition=row.model_partition,
+                evidence_review_pair_id=row.review_pair_id,
+                baseline_note_snapshot_id=row.reviewed_note_snapshot_id,
+                baseline_criterion_snapshot_id=row.reviewed_criterion_snapshot_id,
+                baseline_updated_at=completed_at,
+                expected_baseline_revision=row.expected_baseline_revision,
+                expected_generation_next_revision=(
+                    row.expected_generation_next_revision
+                ),
+            )
+        conn.commit()
+    return batch.review_job_id
+
+
 def test_complete_run_state_verifies_source_and_outputs(tmp_path: Path) -> None:
     state = valid_run_state(tmp_path)
 
@@ -315,6 +517,22 @@ def test_complete_run_state_verifies_source_and_outputs(tmp_path: Path) -> None:
     assert results.note_type == "agentic-system-analysis-run-state"
     assert any("run state: complete" in item for item in results.passes)
     assert any("README.md" in item and "resolve" in item for item in results.passes)
+
+
+def test_generated_review_must_live_in_reviews_directory(tmp_path: Path) -> None:
+    state = valid_run_state(tmp_path)
+    values = frontmatter(state)
+    values["generated-review"]["path"] = (  # type: ignore[index]
+        "kb/agentic-systems/example-system.md"
+    )
+    replace_frontmatter(state, values)
+
+    results = validation.validate_note(state, repo_root=tmp_path)
+
+    assert any(
+        "expected kb/agentic-systems/reviews/<name>.md" in item
+        for item in results.fails
+    )
 
 
 def test_running_state_needs_no_recovery_records(tmp_path: Path) -> None:
@@ -332,6 +550,7 @@ def test_running_state_needs_no_recovery_records(tmp_path: Path) -> None:
         "generated-review": None,
         "memory-review-required": None,
         "legacy-review": None,
+        "legacy-review-model-partition": None,
         "failure": None,
     }
     write(state, state_text(values))
@@ -356,6 +575,7 @@ def test_failed_state_requires_only_a_reason(tmp_path: Path) -> None:
         "generated-review": None,
         "memory-review-required": None,
         "legacy-review": None,
+        "legacy-review-model-partition": None,
         "failure": "Generated review candidate failed validation; rerun required.",
     }
     write(state, state_text(values))
@@ -377,6 +597,7 @@ def test_failed_state_without_reason_is_rejected(tmp_path: Path) -> None:
             "generated-review": None,
             "memory-review-required": None,
             "legacy-review": None,
+            "legacy-review-model-partition": None,
             "failure": None,
         }
     )
@@ -447,6 +668,10 @@ def test_blocked_result_completes_without_public_review(tmp_path: Path) -> None:
         f"reviewed-boundary: {values['source']['revision']}",  # type: ignore[index]
         "reviewed-boundary: null",
     )
+    content = content.replace(
+        "**Generated review:** `kb/agentic-systems/reviews/example-system.md`",
+        "**Generated review:** not applicable",
+    )
     result.write_text(content, encoding="utf-8")
     values.update(
         {
@@ -456,6 +681,7 @@ def test_blocked_result_completes_without_public_review(tmp_path: Path) -> None:
             "generated-review": None,
             "memory-review-required": False,
             "legacy-review": None,
+            "legacy-review-model-partition": None,
         }
     )
     replace_frontmatter(state, values)
@@ -558,7 +784,10 @@ def test_operator_handoff_is_rendered_from_complete_state(tmp_path: Path) -> Non
     assert RUN_ID in rendered
     assert "**Result:**" in rendered
     assert "**Frozen source:**" in rendered
-    assert "**Generated system review:** kb/agentic-systems/example-system.md" in rendered
+    assert (
+        "**Generated system review:** "
+        "kb/agentic-systems/reviews/example-system.md"
+    ) in rendered
     assert "**Run status:** complete" in rendered
 
 
@@ -578,6 +807,7 @@ def test_handoff_command_refuses_a_running_run(
             "generated-review": None,
             "memory-review-required": None,
             "legacy-review": None,
+            "legacy-review-model-partition": None,
         }
     )
     replace_frontmatter(state, values)
@@ -605,3 +835,100 @@ def test_handoff_command_renders_a_valid_run(
 
     assert exit_code == 0
     assert f"# Agentic-system analysis handoff — {RUN_ID}" in capsys.readouterr().out
+
+
+def test_prepare_reviews_candidate_bytes_under_the_public_identity(
+    tmp_path: Path,
+) -> None:
+    state, spec, _, legacy_bytes = publication_fixture(tmp_path)
+    assert spec.legacy_candidate_path is not None
+    direct = validation.validate_note(spec.legacy_candidate_path, repo_root=tmp_path)
+    assert direct.fails
+
+    prepared = prepare_publication(spec)
+
+    assert prepared.review_batch is not None
+    batch = prepared.review_batch
+    assert {row.note_path for row in batch.pairs} == {spec.legacy_destination}
+    with review_db.connect(review_db.resolve_db_path(tmp_path)) as conn:
+        snapshots = {
+            load_snapshot_by_id(conn, row.reviewed_note_snapshot_id)
+            for row in batch.pairs
+        }
+    assert {snapshot.content_text.encode("utf-8") for snapshot in snapshots if snapshot} == {
+        legacy_bytes
+    }
+    assert not (tmp_path / spec.generated_destination).exists()
+    assert spec.legacy_destination is not None
+    assert not (tmp_path / spec.legacy_destination).exists()
+    assert frontmatter(state)["run-status"] == "running"
+
+
+def test_publish_requires_current_semantic_passes_and_leaves_incumbents_alone(
+    tmp_path: Path,
+) -> None:
+    state, spec, _, _ = publication_fixture(tmp_path)
+
+    try:
+        publish_publication(spec)
+    except ValueError as exc:
+        assert "semantic baselines" in str(exc)
+    else:
+        raise AssertionError("publication unexpectedly succeeded without semantic passes")
+
+    assert not (tmp_path / spec.generated_destination).exists()
+    assert spec.legacy_destination is not None
+    assert not (tmp_path / spec.legacy_destination).exists()
+    assert frontmatter(state)["run-status"] == "running"
+
+
+def test_publish_replaces_the_bundle_and_completes_run_state(tmp_path: Path) -> None:
+    state, spec, generated_bytes, legacy_bytes = publication_fixture(tmp_path)
+    accept_prepared_semantic_review(tmp_path, spec)
+
+    published = publish_publication(spec)
+
+    assert (tmp_path / spec.generated_destination).read_bytes() == generated_bytes
+    assert spec.legacy_destination is not None
+    assert (tmp_path / spec.legacy_destination).read_bytes() == legacy_bytes
+    assert not spec.generated_candidate_path.exists()
+    assert spec.legacy_candidate_path is not None
+    assert not spec.legacy_candidate_path.exists()
+    values = frontmatter(state)
+    assert values["run-status"] == "complete"
+    assert values["legacy-review-model-partition"] == "codex"
+    assert published.cleanup_warnings == ()
+    assert validation.validate_note(state, repo_root=tmp_path).fails == []
+
+
+def test_publish_rolls_back_an_ordinary_multi_file_write_failure(
+    tmp_path: Path,
+    monkeypatch,
+) -> None:
+    state, spec, _, _ = publication_fixture(tmp_path)
+    accept_prepared_semantic_review(tmp_path, spec)
+    original_state = state.read_bytes()
+    assert spec.legacy_destination is not None
+    legacy_destination = tmp_path / spec.legacy_destination
+    real_atomic_write = agentic_publication._atomic_write
+
+    def fail_on_legacy(path: Path, content: bytes) -> None:
+        if path == legacy_destination:
+            raise OSError("injected write failure")
+        real_atomic_write(path, content)
+
+    monkeypatch.setattr(agentic_publication, "_atomic_write", fail_on_legacy)
+
+    try:
+        publish_publication(spec)
+    except OSError as exc:
+        assert "injected write failure" in str(exc)
+    else:
+        raise AssertionError("publication unexpectedly survived injected failure")
+
+    assert not (tmp_path / spec.generated_destination).exists()
+    assert not legacy_destination.exists()
+    assert state.read_bytes() == original_state
+    assert spec.generated_candidate_path.exists()
+    assert spec.legacy_candidate_path is not None
+    assert spec.legacy_candidate_path.exists()

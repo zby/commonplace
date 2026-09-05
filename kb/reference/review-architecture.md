@@ -27,9 +27,16 @@ external worker  -> job-owned output file
 finalization     -> parsed results + completion + freshness baselines
 ```
 
-Selector JSON is the only job-creation input. A job groups pairs by note or by
-criterion for prompt sharing, but every pair remains an independent unit of
-output and freshness, and every job uses one persisted result kind.
+Ordinary review CLI job creation takes selector JSON. A job groups pairs by
+note or by criterion for prompt sharing, but every pair remains an independent
+unit of output and freshness, and every job uses one persisted result kind.
+
+The agentic-analysis publication operation is the one specialized preparation
+path. It may supply candidate note text while retaining the intended public
+`note_path`. The ordinary pair still snapshots exactly note text and criterion
+text, and finalization still creates the ordinary freshness baseline. Until the
+candidate is published, that baseline is current for the candidate snapshot
+and stale relative to the incumbent file.
 
 The parent owns dispatch and concurrency. Each review worker starts without the
 parent's task conversation, reads one generated prompt path, and writes only the

@@ -7,6 +7,7 @@ canonical prompt for a parent-dispatched worker.
 
 from __future__ import annotations
 
+from collections.abc import Mapping
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -86,6 +87,7 @@ def prepare_grouped_review_job(
     runner_model: str | None = None,
     runner_effort: str | None = None,
     status: str = "queued",
+    note_text_overrides: Mapping[str, str] | None = None,
 ) -> PreparedBatch:
     """Create one review job for already-normalized, applicable pairs."""
     if not pairs:
@@ -106,6 +108,7 @@ def prepare_grouped_review_job(
             conn,
             repo_root=repo_root,
             pairs=pairs,
+            note_text_overrides=note_text_overrides,
         )
         review_job_id = create_job_with_pairs(
             conn,

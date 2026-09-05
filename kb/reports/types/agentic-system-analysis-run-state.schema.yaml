@@ -17,6 +17,7 @@ allOf:
           - generated-review
           - memory-review-required
           - legacy-review
+          - legacy-review-model-partition
           - failure
         properties:
           type:
@@ -53,6 +54,9 @@ allOf:
             anyOf:
               - type: "null"
               - $ref: "#/$defs/output"
+          legacy-review-model-partition:
+            type: [string, "null"]
+            minLength: 1
           failure:
             type: [string, "null"]
             minLength: 1
@@ -85,6 +89,7 @@ allOf:
             generated-review: {const: null}
             memory-review-required: {const: null}
             legacy-review: {const: null}
+            legacy-review-model-partition: {const: null}
             failure: {const: null}
   - if:
       properties:
@@ -101,6 +106,7 @@ allOf:
             generated-review: {const: null}
             memory-review-required: {const: null}
             legacy-review: {const: null}
+            legacy-review-model-partition: {const: null}
             failure:
               type: string
               minLength: 1
@@ -160,11 +166,15 @@ allOf:
           properties:
             legacy-review:
               $ref: "#/$defs/output"
+            legacy-review-model-partition:
+              type: string
+              minLength: 1
     else:
       properties:
         frontmatter:
           properties:
             legacy-review: {const: null}
+            legacy-review-model-partition: {const: null}
 $defs:
   source:
     type: object

@@ -41,11 +41,11 @@ evidence-tier: {evidence_tier}
 
 ## Run identity
 
-**Run state:** `kb/reports/state/agentic-system-analysis/AAS-2026-08-30-example-system-01/run-state.md` — complete.
+**Run state:** `kb/reports/state/agentic-system-analysis/AAS-2026-08-30-example-system-01/run-state.md`
 
-**Generated review:** `kb/agentic-systems/example-system.md`.
+**Generated review:** `kb/agentic-systems/reviews/example-system.md`
 
-**Legacy memory review:** not applicable.
+**Legacy memory review:** not applicable
 
 ## Boundary and evidence
 
@@ -189,9 +189,9 @@ def test_result_requires_the_canonical_section_order(tmp_path: Path) -> None:
 @pytest.mark.parametrize(
     "line",
     [
-        "**Run state:** `kb/reports/state/agentic-system-analysis/AAS-2026-08-30-example-system-01/run-state.md` — complete.\n\n",
-        "**Generated review:** `kb/agentic-systems/example-system.md`.\n\n",
-        "**Legacy memory review:** not applicable.\n\n",
+        "**Run state:** `kb/reports/state/agentic-system-analysis/AAS-2026-08-30-example-system-01/run-state.md`\n\n",
+        "**Generated review:** `kb/agentic-systems/reviews/example-system.md`\n\n",
+        "**Legacy memory review:** not applicable\n\n",
     ],
 )
 def test_result_requires_each_run_identity_field(tmp_path: Path, line: str) -> None:
@@ -202,7 +202,7 @@ def test_result_requires_each_run_identity_field(tmp_path: Path, line: str) -> N
 
 def test_run_identity_field_value_must_be_on_its_labelled_line(tmp_path: Path) -> None:
     content = result_text().replace(
-        "**Generated review:** `kb/agentic-systems/example-system.md`.",
+        "**Generated review:** `kb/agentic-systems/reviews/example-system.md`",
         "**Generated review:**",
     )
 
