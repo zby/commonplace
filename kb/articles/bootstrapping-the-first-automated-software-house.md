@@ -29,6 +29,9 @@ that includes people and transfers bounded classes of production decisions to
 computation. Each trial separately tests whether computation now makes the
 decisions and whether production evidence teaches the house to build or revise
 the machinery that makes them. Evidence determines which transfer to try next.
+Transferring the best-supported decisions first should leave people the
+hardest-to-warrant ones, and what those still need identifies the functions
+the house must grow.
 
 Commonplace offers one starting point: agents use and revise retained project
 knowledge, while people still supply decisive judgments. The target is a
