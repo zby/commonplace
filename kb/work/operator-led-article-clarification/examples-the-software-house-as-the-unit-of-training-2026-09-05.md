@@ -65,3 +65,41 @@ done first and reported before any prose work.
 > dependencies change. Whether this improves diagnosis, transfer, and sample
 > efficiency compared with other uses of the same evidence is an empirical
 > hypothesis.
+
+## 3. TL;DR: introduce the mediator, label the example
+
+- **Commit:** see log (`Workshop:` trailer)
+- **Kind:** Unintroduced term; unlabelled example
+- **Operator's verdict:** "1 - apply" (phase-2 sweep candidate 1)
+- **Diagnosis:** *Mediator* connects to the subtitle's *theory-mediated
+  learning* but the TL;DR never says what mediates what; the checking
+  sentence is an example without being announced as one.
+
+**Before:**
+
+> The house's *program theory* is its understanding of the software's purpose,
+> organization, and how to handle new requests. The proposed mediator is an
+> *explicit project theory*: one possible written carrier of that understanding,
+> stating design commitments, causal assumptions, and invariants. A house that
+> explains why some files need product checks may adapt its checking policy when
+> dependencies change.
+
+**After:**
+
+> The house's *program theory* is its understanding of the software's purpose,
+> organization, and how to handle new requests. The regime's proposed mediator —
+> what experience revises and later decisions consult — is an *explicit project
+> theory*: one possible written carrier of that understanding, stating design
+> commitments, causal assumptions, and invariants. For example, a house whose
+> theory explains why some files need product checks can adapt its checking
+> policy when dependencies change.
+
+## Skipped: the premise boundary paragraphs (sweep candidate 2)
+
+- **Operator's verdict:** "2 skip - building the seed is from a different cycle"
+- **Lesson:** The agent's proposed why for "This boundary applies during the
+  run" (that a human-built seed does not violate it) read the seed into the
+  wrong cycle; the seed belongs to a different cycle than the run the boundary
+  governs. A verdict-without-its-why fix that supplies the wrong why is worse
+  than the compression; when the why is inferred rather than stated nearby,
+  flag it for the operator instead of writing it in.

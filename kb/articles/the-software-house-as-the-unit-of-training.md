@@ -33,11 +33,12 @@ fixed. This pins the parameters of LLMs, embedding models, and parametric
 routers and critics, including their adapters.
 
 The house's *program theory* is its understanding of the software's purpose,
-organization, and how to handle new requests. The proposed mediator is an
-*explicit project theory*: one possible written carrier of that understanding,
-stating design commitments, causal assumptions, and invariants. A house that
-explains why some files need product checks may adapt its checking policy when
-dependencies change. Whether this improves diagnosis, transfer, and sample
+organization, and how to handle new requests. The regime's proposed mediator —
+what experience revises and later decisions consult — is an *explicit project
+theory*: one possible written carrier of that understanding, stating design
+commitments, causal assumptions, and invariants. For example, a house whose
+theory explains why some files need product checks can adapt its checking
+policy when dependencies change. Whether this improves diagnosis, transfer, and sample
 efficiency compared with other uses of the same evidence is an empirical
 hypothesis.
 
