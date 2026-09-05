@@ -362,3 +362,28 @@ done first and reported before any prose work.
 > first history, adding another configured exporter input preserves the initial
 > account of direct inputs. In the second, adding indirect includes breaks its
 > assumption that the list is exhaustive.
+
+## 13. Influence versus explanatory guidance
+
+- **Commit:** see log (`Workshop:` trailer)
+- **Kind:** Verdict without its why
+- **Operator's verdict:** "apply the rest" (phase-2 sweep candidate 12)
+- **Diagnosis:** "That establishes influence; following a misleading
+  instruction can also produce errors" compressed the contrast: influence is
+  not explanatory guidance, because a model that merely obeyed the text would
+  show the same error pattern. The reason is now stated.
+
+**Before:**
+
+> That establishes influence; following a misleading instruction can also
+> produce errors. Evidence of useful explanatory guidance additionally requires
+> correct handling of unstated consequences and appropriate revision under
+> contradiction.
+
+**After:**
+
+> That establishes influence, but influence alone is not explanatory guidance:
+> a model that merely followed the text as an instruction would produce the
+> same errors. Evidence of useful explanatory guidance additionally requires
+> correct handling of consequences the text does not state, and appropriate
+> revision when evidence contradicts it.

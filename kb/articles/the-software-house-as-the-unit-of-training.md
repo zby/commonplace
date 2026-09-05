@@ -290,10 +290,11 @@ at a selected decision holds the model, selector, other state, available
 evidence, and budget fixed while varying the designated theory text. It
 should change search, diagnosis, or recovery as predicted. A wrong theory
 should add a specific error pattern beyond the controls' existing biases.
-That establishes influence; following a misleading instruction can also
-produce errors. Evidence of useful explanatory guidance additionally requires
-correct handling of unstated consequences and appropriate revision under
-contradiction.
+That establishes influence, but influence alone is not explanatory guidance:
+a model that merely followed the text as an instruction would produce the
+same errors. Evidence of useful explanatory guidance additionally requires
+correct handling of consequences the text does not state, and appropriate
+revision when evidence contradicts it.
 
 **The explicit-project-theory advantage hypothesis.** The theory treatment
 should improve later check selection and recovery when changes preserve its
