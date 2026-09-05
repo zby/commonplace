@@ -136,9 +136,10 @@ execution and explicitly formulated criteria are different
 things](../notes/naur-equates-machine-execution-with-formulated-criteria.md):
 an LLM is formal computation, yet it can act on an explanation of tenant
 isolation without that judgment first being reduced to a complete rule. A
-working computational house would refute the human-only claim. It would leave
-untouched Naur's separate point that the judgment cannot be reduced to a
-finite set of formulated criteria.
+working computational house would show that a program can make this judgment,
+refuting the human-only thesis. It would not show that the judgment can be
+written as rules. An LLM's judgment has no formulated criteria either, so
+Naur's claim that the criteria cannot be formulated would stand.
 
 ## How the components could perform the program-theory function
 
