@@ -41,21 +41,22 @@ production-driven learning loop. A hand-written validator can complete the
 first transfer without completing the second. The program tries bounded
 transfers in an order discovered from production, declares each trial before it
 runs, measures outcomes outside the transferred role, and records rescues,
-failures, reversals, and reopened roles. The first article's witness needs only
-the first transfer over its declared scope and horizon. A house trained as the
-second article prescribes needs the second as well, and the program aims at
-both.
+failures, reversals, and reopened roles. The first article's witness requires
+operational transfer across every internal production role in its declared
+scope and horizon; it does not additionally require learning transfer. A house
+trained as the second article prescribes needs learning transfer as well, and
+the program aims at both.
 
 ## The starting point
 
 A [software house](../notes/definitions/software-house.md) is whatever keeps
-changing a piece of software for its users. The most capable houses known today
-are human-agent systems. Coding agents write and test much of the code. People
-supply requirements from outside, and they still fill internal roles such as:
-noticing that several failures share one cause, deciding that a design
-assumption no longer holds, choosing among changes that all pass the tests,
-approving new evaluators, and authorizing changes with effects beyond the
-current job.
+changing a piece of software for its users. The houses from which this program
+proposes to bootstrap are human-agent systems. Coding agents may write and test
+much of the code while people supply requirements from outside and still fill
+internal roles such as: noticing that several failures share one cause,
+deciding that a design assumption no longer holds, choosing among changes that
+all pass the tests, approving new evaluators, and authorizing changes with
+effects beyond the current job.
 
 Commonplace, the knowledge base in which this series is written, is a house of
 this kind. Agents produce notes, code, and reviews. Retained project theory is
@@ -116,10 +117,11 @@ approve new gates, and authorize changes whose effects reach beyond the current
 job. Nothing here shows acquisition of project theory by computation alone, and
 there has been no witness run in the first article's sense.
 
-The useful claim is narrower. Commonplace already has the main surfaces of the
-proposed learning process, and its remaining human roles can be named and
-measured. It is a seed implementation of the program, not proof that the program
-already works.
+The useful claim is narrower. Commonplace already has several surfaces named by
+the proposed learning process: retained theory, computational proposal and
+revision, symbolic checks, review provenance, and durable retention. Its
+remaining human roles can be named and measured. It is a seed implementation of
+the program, not proof that the program already works.
 
 A bare memory file is weaker. It can affect later behaviour, but it may admit
 entries without a settled rule, keep wrong entries without tracing later
@@ -216,11 +218,13 @@ causal effect. That is real automation, but not yet evidence of learning by the
 house.
 
 Admission can also move in parts before the endpoint. A deterministic formatter
-or a well-tested dependency update may already be admitted automatically. The
-endpoint requires something stronger: the house must admit project-specific
-successors over the declared scope and must be able to revise its admission
-machinery when production evidence defeats it. That is an endpoint obligation,
-not a claim about the literal last chronological move.
+or a well-tested dependency update may already be admitted automatically. At
+the training endpoint, project-specific successors must become operative over
+the declared scope without a person choosing them, and production evidence must
+be able to revise the update machinery when it fails. In an architecture with
+an explicit admission gate, this includes computational admission and revision
+of its machinery. That is an endpoint obligation, not a claim about the literal
+last chronological move.
 
 Requirements, facts, outcomes, and acceptance judgments about visible behaviour
 remain with users throughout. Those are outside inputs, not internal roles.
@@ -235,17 +239,18 @@ A single statement that a role "moved" hides two different claims.
 | **Learning transfer** | Production evidence causes the house's own process to produce or revise the project-specific machinery that makes those decisions, and the retained change affects later work. |
 
 A hand-written validator can complete operational transfer. It makes the
-production decision inside the house without a person being present at each
-case. But its criterion still came from a person. It does not complete learning
-transfer until the house can produce or revise that criterion and its machinery
-from production evidence.
+declared production decision inside the house without a person being present at
+each case. But its criterion still came from a person. It does not complete
+learning transfer until the house can produce or revise that criterion and its
+machinery from production evidence.
 
-The first article's witness needs only operational transfer: a wholly
-hand-built house that carries the loop with nobody inside is a witness for its
-conjecture. It is not a trained house in the second article's sense, because
-nothing in it was produced from production evidence by the house's own
-process. The program aims at both transfers, since the point of reaching the
-witness is to train it.
+The first article's witness does not require learning transfer, but operational
+transfer alone is not the full witness. A wholly hand-built starting house can
+be a witness if, with nobody inside, it also satisfies the program-theory,
+coherent-revision, and practical-reliability conditions. It is not a trained
+house in the second article's sense if none of its project-specific machinery
+was produced from production evidence by the house's own process. The program
+aims at both transfers, since the point of reaching the witness is to train it.
 
 Operational transfer can look complete while a person still handles the cases
 that matter. A person who fixes the three hard failures each month still holds

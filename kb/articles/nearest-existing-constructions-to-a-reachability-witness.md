@@ -1,5 +1,5 @@
 ---
-description: "Twenty reviewed self-improving systems compared against the automated software house conjecture's four witness conditions, which allow a human-built start; plus the explicit-theory test from the training article"
+description: "Twenty reviewed constructions compared against the automated software house conjecture's four witness conditions, which allow a human-built start; plus the explicit-theory test from the training article"
 type: kb/articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
@@ -41,7 +41,8 @@ and practical reliability. The conditions do not fix whether notes, code, or
 reconstruction from records carries the theory, and they allow a human-built
 start: the house need not have acquired its starting understanding or built
 its starting machinery. This article does not argue for the conjecture. It
-compares the systems reviewed for this program against those conditions, so
+compares the constructions and system reports reviewed for this program against
+those conditions, so
 that a researcher with a system of
 their own can find the nearest row and read what would still be missing. Only
 the rows resting on inspected code are placements of an implementation; the rest
@@ -165,7 +166,7 @@ people fill internal roles in that construction.
 | Commonplace | Not assessed | Not demonstrated; models not reliably pinned | Partial; human-inclusive | Partial; human-inclusive | Design target: explicit, revisable theory loaded at later decisions; no causal-use evidence | Human-dependent | Code-inspected design, this repository; no evaluated outcome | No witness run; the operator selects global fit and admits successors |
 
 The **Program theory** column has three values and one gap, and that
-distribution is the table's main result. Fifteen rows read *not in scope*
+distribution is the table's main result. Fourteen rows read *not in scope*
 because their objective does not ask them to acquire project understanding that
 relates a maintained user product to the activity it supports and guides later
 modification. A benchmark agent could still need a theory of its own
@@ -186,12 +187,12 @@ training and bootstrap articles, and no row tests it either.
 
 **Human-inclusive software factories.**
 [Fluent](../sources/fluent-self-improving-software-factory-2081823472016335059.ingest.md)
-is the strongest reviewed match to the software-house boundary, because the
-architecture described in its product documentation and its builder's
-practitioner report includes external stakeholders, product code, deployment
-evidence, natural-language expertise, a scheduler, rejection, retention, and
-later reuse; people and the system jointly shape and confirm the brief, the
-behaviour specifications, and the technical approach. The product-reported [Ona
+is one of two rows classified as meeting the software-house boundary within its
+stated scope. Its product documentation and its builder's practitioner report
+describe external stakeholders, product code, deployment evidence,
+natural-language expertise, a scheduler, rejection, retention, and later reuse;
+people and the system jointly shape and confirm the brief, the behaviour
+specifications, and the technical approach. The product-reported [Ona
 Memo factory](https://ona.com/stories/software-factory-what-we-learned) trial
 took an empty repository to a deployed product in ten days with software, notes,
 schedulers, and production signals in one loop, and people spent the early days
@@ -207,10 +208,10 @@ verbatim).
 improver](../sources/how-warp-builds-self-improving-agents-on-claude.ingest.md)
 is practitioner-reported on the note side only: people write the feedback and a
 human review admits every skill update. OpenAI's five-month
-practitioner-reported account is the largest substrate case in the set, with
-agents generating the product code, repository-local documents making the
-business domain legible, and recurring agents repairing stale documentation,
-and it assigns the generalization work to people. When agents struggled,
+practitioner-reported account describes agents generating the product code,
+repository-local documents making the business domain legible, and recurring
+agents repairing stale documentation, and it assigns the generalization work
+to people. When agents struggled,
 engineers asked "what capability is missing? What constraint is unenforced?"
 and then built the tool, wrote the linter, or added the structural test
 ([agent-first
@@ -243,10 +244,9 @@ symbolic revision, restart, rollback, and preserved failure evidence, and the
 inspected design contains no automatic trigger from experience to improvement.
 Prime Agent has a code-inspected runtime carrying versioned prompts, memories,
 skills, and subagent specifications across trajectories without a weight
-update, and its most informative reported case is adverse: an agent found a
-specification exploit and "preserved it as a reusable skill", which shows that
-persistence, versioning, and rollback do not by themselves supply semantic
-admission ([Prime
+update. One reported case used here is adverse: an agent found a specification
+exploit and "preserved it as a reusable skill", which shows that persistence,
+versioning, and rollback do not by themselves supply semantic admission ([Prime
 Agent](../sources/prime-agent-a-self-improving-rlm-harness.ingest.md), verbatim).
 
 **Fixed-parametric-state learning under benchmark oracles.** The
@@ -266,12 +266,11 @@ verbatim).
 
 **A reject-capable gate on a fixed surface.** Recuris forms component-scoped
 patch proposals from traces and decides each with a deterministic paired
-held-out gate, which is the strongest admission mechanism in the set, while its
-four memory coordinates, its gate, and its benchmark partitions are all
-supplied in advance and the work does not ask whether the agent acquires a
+held-out gate. Its four memory coordinates, gate, and benchmark partitions are
+all supplied in advance, and the work does not ask whether the agent acquires a
 rationale for why a user product is organized as it is. Its reported retirement
-behaviour is the weakest part of the design, because "The memory only grows,
-and it can afford to." ([Recuris](../sources/recursive-experiential-working-memory-evolution.ingest.md),
+limit is explicit: "The memory only grows, and it can afford to."
+([Recuris](../sources/recursive-experiential-working-memory-evolution.ingest.md),
 verbatim).
 
 **Single-form retention under a thin gate.** The code-inspected [Dynamic
@@ -305,7 +304,7 @@ boundary precisely: a model can drive adaptation without the system learning
 the theory that governs adaptation.
 
 **Reference construction.** Commonplace, the knowledge base in which this
-comparison is written, is the one reviewed construction built to attack holding
+comparison is written, is included as a construction built to address holding
 and revision directly: it retains explanatory theory as notes with declared
 scope and evidence, loads them into later work, and revises them under review.
 It is scored by the same rubric and evidence classes as every other row, and it
@@ -317,8 +316,8 @@ pinned, and the operator fills the admission role.
 
 ## What a witness would have to do
 
-No row above is a witness. A test of the conjecture needs the following
-conjunction, which restates the main article's four conditions as checks:
+No row above is a witness. A test of the conjecture needs the following five
+checks, which operationalize the main article's four conditions:
 
 1. A system with every learned component pinned maintains one user product
    over a declared horizon and a demand process, specified in advance, of

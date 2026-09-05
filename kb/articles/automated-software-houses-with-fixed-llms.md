@@ -97,25 +97,27 @@ understanding to guide search, interpret failure, backtrack, and recover when
 later consequences arrive.
 
 [Naur's compiler case](../sources/programming-as-theory-building.ingest.md)
-showed that full code, annotations, extensive design discussion, and personal
+reports that full code, annotations, extensive design discussion, and personal
 advice did not give one successor team enough program-specific
-understanding. More documentation of the same kind is not an answer. But the
-case tested [one historically bounded document package and way of using
+understanding. The case therefore rules out only a simple answer in which more
+documentation of the same kind automatically transfers that understanding. It
+tested [one historically bounded document package and way of using
 it](../notes/naurs-compiler-case-tests-one-historically-bounded-documentation-and-consumption-system.md).
 It did not test linked rationale, machine-maintained indexes, semantic
 retrieval, dependency-aware context assembly, or automatic loading of the
 relevant material at the decision point.
 
-On one reading of Naur's argument, his human-only conclusion depends on
-treating machine execution as execution of explicitly formulated criteria.
+One route from Naur's argument to a human-only conclusion depends on treating
+machine execution as execution of explicitly formulated criteria.
 An LLM is still formal computation, but it can interpret a paragraph about
 why retry logic belongs in the caller without that judgment first being
 reduced to a complete rule. [Formal execution and explicitly formulated
 criteria are not the same
 thing](../notes/naur-equates-machine-execution-with-formulated-criteria.md).
-A successful house would refute the human-only conclusion. It would not by
-itself settle Naur's separate claim that the relevant judgment cannot be
-reduced to a finite set of formulated criteria.
+A successful house would show that a computational composite can carry the
+program-theory function defined here. It would reject that route to a
+human-only conclusion, but would not settle Naur's separate claim that the
+relevant judgment cannot be reduced to a finite set of formulated criteria.
 
 ## A possible bearer of the program theory
 
@@ -231,22 +233,25 @@ effectiveness it cannot prove"
 ([Schmidhuber](../sources/goedel-machines-schmidhuber.ingest.md), §2.4,
 verbatim).
 
-Once no human is inside, both systems have the same descent structure: every
-next state must arise through the current state's machinery and permitted
-inputs. They differ in justification. The Gödel machine admits only a
+At the level of state-transition provenance, both systems obey the same descent
+constraint: every next state must arise through the current state's machinery
+and permitted inputs. Their system boundaries and successor relations still
+differ. The Gödel machine admits only a
 proof-licensed successor. The house may make a fallible change, observe later
 consequences, and recover. A novel demand can affect the Gödel machine's
 rewrite only insofar as its formalization gives that demand
 utility-relevant meaning. The house instead relies on model interpretation,
 available checks, and later exposure.
 
-Reviewed agent systems already demonstrate separate parts of the possible
-house: persistent project records, code and tool revision, reject-capable
-gates, rollback, and long-running human-agent production. The missing
-conjunction is a complete user-facing software-house boundary, fixed learned
-components, a demonstrated program-theory function across novel changes, and
-continuation with no human in an internal role. Evidence for separate
-components does not show that they compose.
+Reviewed records describe separate parts of the possible house: persistent
+project records, code and tool revision, reject-capable gates, rollback, and
+long-running human-agent production. Their code-inspected rows can support
+implementation claims; papers and practitioner or product reports support only
+what those sources describe. No row supplies the missing conjunction: a complete
+user-facing software-house boundary, fixed learned components, a demonstrated
+program-theory function across novel changes, and continuation with no human in
+an internal role. Evidence for separate components does not show that they
+compose.
 
 ## Boundaries and epistemic status
 

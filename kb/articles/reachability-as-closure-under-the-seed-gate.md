@@ -19,19 +19,26 @@ source_notes:
 
 ## The observation
 
-Once no human fills an internal production role, every change to the house must
-arise through the computational machinery and permitted external inputs in its
-declared system. Represent one complete mutable house state by \(s\): its notes,
-software, production machinery, retention rules, evaluators, and context
-assembly. The pinned [distributed-parametric](../notes/definitions/representational-form.md)
+Once no human fills an internal production role, every change counted as an
+internal house transition must arise through the computational machinery and
+permitted external inputs in its declared system. Represent the mutable state
+inside that declared boundary by \(s\): its notes, software, production
+machinery, retention rules, evaluators, and context assembly. Persistent tool
+or environment state on which a transition depends must either be included in
+\(s\) or declared as external. The pinned
+[distributed-parametric](../notes/definitions/representational-form.md)
 components, the model weights and any other learned numerical component, remain
 fixed parameters of the experiment rather than mutable parts of \(s\).
 
 Let the declared external inputs include user demands, tool results, and
-operating consequences. The current state and one such input determine a set or
-distribution of possible successor states. This **successor relation** covers
-both architectures with an explicit proposal-and-admission gate and direct
-update architectures in which no separate gate is exposed.
+operating consequences. Define \(s\) broadly enough to include every
+history-dependent variable inside the boundary that can affect the next update.
+The current state and one permitted input then determine a set or distribution
+of possible successor states. If omitted state or earlier history can still
+affect the successor, the representation must be augmented; the listed artifact
+classes are not by themselves a claim of Markov completeness. This **successor
+relation** covers both architectures with an explicit proposal-and-admission
+gate and direct update architectures in which no separate gate is exposed.
 
 From a seed state \(s_0\), the reachable set is the least set that contains
 \(s_0\) and is closed under those permitted successor transitions over the
@@ -43,9 +50,10 @@ probabilistic; that does not make it less of a closure.
 The successor relation may itself change because production machinery belongs
 to the mutable state. A house can rewrite an evaluator, retention rule, or
 update procedure. But that rewrite must still be produced by the predecessor
-state's successor relation. In this sense the seed governs the lineage by
-descent: every later revision of the updating machinery must enter through
-machinery already reachable from the seed.
+state's successor relation. In this limited sense the lineage remains causally
+descended from the seed: every later revision of the updating machinery must
+enter through machinery already reachable from it. This descent relation does
+not mean that the seed explicitly settles each later revision.
 
 A human correction during bootstrapping can introduce a transition or decision
 that the autonomous relation would not have produced. It is therefore
@@ -60,8 +68,9 @@ A Gödel machine is a particularly explicit self-modifying transition system.
 Its next rewrite executes only after its proof searcher proves the target
 theorem under the axioms and utility function then in force. Those axioms and
 that utility function may themselves be rewritten, but only through a rewrite
-the predecessor formalization licenses. The seed therefore governs the lineage
-by descent in the same structural sense.
+the predecessor formalization licenses. Its later machine states therefore
+remain causally descended from the seed through proof-gated successor relations
+in the same structural sense.
 
 The conjectured house does not differ by having closure where the Gödel machine
 has deduction. Both have transition-reachable state sets. They differ in the
@@ -70,7 +79,7 @@ successor relation that admits or produces a rewrite:
 | | Gödel machine | Conjectured house |
 |---|---|---|
 | Successor condition | A target theorem is proved under the current axioms and utility | The current fallible update process produces and, where applicable, admits a successor from production evidence |
-| External input | Observed state can enter a proof through `state2theorem`, but the rewrite still requires derivation in the current formal system | Declared demands, tool outputs, and operating consequences are interpreted as evidence and may defeat part of the current theory |
+| External input | Observed state can enter a proof through `state2theorem` when the formalization represents it, but the rewrite still requires derivation in the current formal system | Declared demands, tool outputs, and operating consequences affect a transition only through capabilities supplied by the current state; when interpreted as relevant evidence, they may defeat part of the current theory |
 | Reachable states | Transition closure under a proof-gated successor relation | Transition closure under a fallible successor relation that responds to evidence |
 | Warrant | Conditional proof relative to the encoded formalization | Empirical warrant bounded by the available evaluators and later exposure |
 | Characteristic failure | Starvation: useful changes remain unreachable because they cannot be proved | Drift: harmful or incoherent successors may receive non-negligible probability |
@@ -125,13 +134,14 @@ distribution may move probability mass away from them. A witness therefore
 establishes reachability only relative to its declared input process, not to an
 informal ordering from poorer to richer streams.
 
-### The seed can exclude or suppress adequate successors
+### The reachable update path can exclude or suppress adequate successors
 
 The main risk exposed by this framing is not that the seed remains visibly
-unchanged. It is that the seed's update machinery may define the successor
-relation so narrowly or badly that adequate states lie outside its reachable
-set, or inside it only with negligible probability. This is the fallible
-counterpart of a Gödel machine having to ignore an improvement it cannot prove.
+unchanged. It is that the starting update machinery and the successor relations
+reachable from it may be so narrow or unreliable that adequate states lie
+outside the reachable set, or inside it only with negligible probability. This
+is the fallible counterpart of a Gödel machine having to ignore an improvement
+it cannot prove.
 
 Revision of the updating machinery does not escape the issue. An evaluator or
 acceptance rule can govern a rewrite of itself, but only when the predecessor
@@ -142,7 +152,8 @@ those capabilities can use permitted evidence to move the house to an adequate
 successor without importing a human decision. The conjecture does not require
 the lineage to outgrow the seed's task-specific contents: the seed may carry a
 human-written theory and human-built machinery. It requires that every
-revision after the declared start comes through the seed's own relation.
+revision after the declared start comes through the sequence of successor
+relations reachable from the seed.
 
 ### The closure observation is general
 

@@ -34,11 +34,13 @@ organization around the fixed models: theory, code, tests, tools,
 evaluators, context assembly, workflows, and the learning process itself. A
 change that only satisfies the current requirement is production; a retained
 change that alters how later requirements are handled is training. The regime
-can be general across project-specific software learning because it can build
-new representations, tools, decompositions, and evaluators instead of learning
-only inside a fixed task structure. It is compatible with the Bitter Lesson
-because computation, not people, produces and selects the task-specific
-structure. Its hard problem is governing those behaviour-changing writes.
+targets general project-specific software learning by allowing the house-level
+update process to build new representations, tools, decompositions, and
+evaluators instead of learning only inside a fixed task structure. Whether it
+achieves that generality is an empirical question. It is compatible with the
+Bitter Lesson because computation, not people, produces and selects the
+task-specific structure. Its hard problem is governing those behaviour-changing
+writes.
 
 ## The premise
 
@@ -154,9 +156,11 @@ intervention](../notes/retained-theory-intervention-isolates-one-explicit-surfac
 can test the causal role of the theory by withholding, replacing, or perturbing
 it while holding the rest of the house fixed.
 
-The fixed model supplies the semantic machinery needed to operate on theories
-that have not been formalized. Symbolic artifacts supply exact execution and
-checks once a commitment is settled enough to encode. Production can move a
+The regime relies on the fixed model for semantic operations over theories that
+have not been formalized. Whether the available fixed models can perform those
+operations reliably across the declared scope is part of the empirical claim,
+not established by the architecture. Symbolic artifacts supply exact execution
+and checks once a commitment is settled enough to encode. Production can move a
 lesson between these [representational
 forms](../notes/definitions/representational-form.md): experience revises a
 theory, the theory motivates a validator, and later failures may reopen the
@@ -170,13 +174,14 @@ capabilities of the fixed models and available computation. It means that the
 training method is not restricted in advance to a predefined family of
 changes, ontology, list of skills, or kind of retained update.
 
-For a new software demand within its capability envelope, the house can in
-principle construct the project-specific structure the demand requires: a new
-concept, representation, decomposition, tool, workflow, test, evaluator, or
-piece of update machinery. Its model weights remain fixed, but its effective
-house-level hypothesis space is not limited to choosing among responses inside
-a frozen harness. Programs and theories can create new state and operations
-that later production can use.
+To meet this definition on a new software demand, the house must be able, within
+its capability envelope, to construct the project-specific structure the demand
+requires: a new concept, representation, decomposition, tool, workflow, test,
+evaluator, or piece of update machinery. Its model weights remain fixed, but
+programs and theories provide a house-level hypothesis space beyond responses
+inside a frozen harness. The architecture makes such construction available as
+an update path; it does not establish that the house will find and admit the
+needed structure.
 
 The generality claim is still scoped. Some objectives, authority boundaries,
 hard dependencies, runtimes, and trusted kernels may remain fixed. A claim of
@@ -201,10 +206,11 @@ its update process semantic and symbolic units on which to operate.
 work into tools, checks, and workflows. It need not spend fixed-model capacity
 reconstructing the same project decision on every run.
 
-**Project continuity.** The accumulated project theory and machinery are not
-bound to a trained checkpoint. Replacing the fixed model is outside the
-training lineage considered here and requires revalidation, but it need not
-reset the project's retained learning.
+**Project continuity.** The accumulated project theory and machinery persist as
+artifacts outside a trained checkpoint, but their effective use may still
+depend on the model. Replacing the fixed model is outside the training lineage
+considered here and requires revalidation. Whether the retained learning
+transfers without substantial repair is an empirical question.
 
 **Testable mediation.** Explicit theory can be varied independently enough to
 ask whether it changed diagnosis, search, evaluation, recovery, or later
