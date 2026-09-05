@@ -13,7 +13,7 @@ Entries without an execution record remain **pending**. The acceptance condition
 | C01 — done | [Matrix builder](../../../scripts/build_systems_matrix.py) and [reader](../../../src/commonplace/lib/systems_matrix.py) read retained main results. | Read main-review results directly. Establish supported fields, system/run identity, evidence tier, population, and input hashes. Derive each classified value from a recorded finding; report missing support. Disposition prior hand-classified and identity-join columns explicitly. |
 | C02 — done | [Table renderer](../../../scripts/render_systems_table.py) reads retained main results and links their public evidence. | Render the migrated data and link sufficient tracked main-review evidence. Verify link resolution and population against the originating result set. Depends on C01's data contract. |
 | C03 — done | [Matrix analyzer](../../../scripts/analyze_matrix.py) computes statistics directly from retained main results. | Update field assumptions, evidence population, and missing-value handling against C01. Verify a bounded query against the originating main-review findings. |
-| C04 — pending | [Landscape synthesis skill](../../instructions/synthesize-agent-memory-landscape/SKILL.md) bundles the matrix, full legacy reviews, and legacy contracts/parser. | Read main-review files as qualitative evidence and bind quantitative results to that same population. Update the frozen evidence bundle and cited-file identities. Preserve evidence-tier distinctions and exclusion of transfer judgments. Requires the durable-evidence decision and C01 for matrix-based claims. |
+| C04 — done | [Landscape synthesis skill](../../instructions/synthesize-agent-memory-landscape/SKILL.md) reads full retained main results and bundles a matching derived matrix. | Read main-review files as qualitative evidence and bind quantitative results to that same population. Update the frozen evidence bundle and cited-file identities. Preserve evidence-tier distinctions and exclusion of transfer judgments. Requires the durable-evidence decision and C01 for matrix-based claims. |
 | C05 | [Trace-learning survey](../../agent-memory-systems/trace-learning-techniques-in-related-systems.md) cites individual legacy reviews. | Refresh from main-review findings with sufficient lineage, behavior-change, and evidence-status detail. Declare the new snapshot/population and distinguish unavailable evidence from a negative finding. |
 | C06 | [Comparative review](../../agent-memory-systems/agentic-memory-systems-comparative-review.md) combines matrix claims and legacy qualitative examples. | Rebuild one coherent snapshot through the migrated synthesis procedure, or explicitly retire it as a current account. Do not update counts while retaining claims from a different population. |
 | C07 | [Thalo type comparison](../../agent-memory-systems/thalo-type-comparison.md) uses a legacy review for its external-system account. | Ground the Thalo mechanism in the main review. Disposition the Commonplace mapping as current transfer or a bounded historical comparison under the appropriate contract. |
@@ -81,7 +81,7 @@ patch their generated analyses or waive validation to make the trial pass.
 The [bounded positive replay and rejection checks](./c08-acceptance.md) accept
 the input migration without claiming either production run now validates.
 All 699 tests passed; changed skills and the replay scan validated cleanly.
-No commit has been made.
+Committed in `c1490415`.
 
 ### C01–C03 — Matrix, table, and statistics
 
@@ -112,18 +112,37 @@ missing and mismatched evidence, unknown/absence distinctions, evidence-tier
 filtering, input drift, retention, and publication rollback. The current live
 build rejects Apache Maka for missing retained-result metadata. Existing main
 reviews and the larger legacy corpus need source regeneration before a public
-population can be compared. No production matrix or table was generated.
+population can be compared. No production matrix or table was generated. Implemented in `c1490415`.
 
-### C04 — Next migration
+### C04 — Landscape synthesis
 
-**Status: pending.** Its durable-evidence and matrix prerequisites are now
-implemented. The skill's existing legacy-bundle workflow is explicitly limited
-to reconstructable historical snapshots; current refresh waits for its bundle,
-selection, query ledger, and citations to migrate to retained main results.
-No synthesis has been refreshed. Select C04 next, and exercise its new bundle
-on a bounded regenerated population before claiming a current landscape.
+**Status: done for procedure migration. Production pilot: pending regeneration.**
+The skill now requires full retained main results for qualitative claims and
+builds its CSV from those same inputs. The reusable bundle command captures
+contracts and hashes, rejects drift and mixed populations, and distinguishes
+current checks from historical verification. Explicit unknown assessments
+withhold unsupported conclusions without blocking unrelated findings.
 
-C15 received only the navigation updates needed by C01–C03. Broader citation
+Owned files: the synthesis skill, `scripts/bundle_agentic_landscape.py`, its
+tests, the comparison README, legacy collection navigation and design note,
+and the two public-output collection contracts permitting citations to
+published exact main results. Invocation through the existing skill projections
+loads the changed procedure immediately. No main-review findings were edited.
+
+The [acceptance record](./c04-acceptance.md) and
+[bounded fixture synthesis](./c04-trial.md) cover a four-result population,
+one eligible quantitative case, three explicit exclusions, canonical-record
+support, and rejected stronger claims. All 722 tests pass; Ruff and changed
+Markdown validation pass. The real corpus is still rejected for missing
+retained-result metadata. No production synthesis was refreshed. C04 changes
+are not yet committed.
+
+**Next:** regenerate a small production population through the main analysis
+and exercise the new comparison/synthesis path. Then select C10 or C11 for the
+next procedure migration; C05–C07 need enough regenerated evidence or an explicit
+historical disposition. Consumer IDs remain an inventory, not a fixed sequence.
+
+C15 received navigation and public-citation contract updates needed by C01–C04. Broader citation
 and public-navigation migration remains pending. C12/C14 still require the
 legacy publication; this change has not retired duplicate drafting.
 
@@ -148,4 +167,4 @@ The [Pond placement trial](./c09-acceptance.md) used only the tracked generated
 review. It retained implemented storage/retrieval findings, withheld automatic
 injection and demonstrated-improvement claims, and preserved the distinction
 between static wiring and observed use. Changed Markdown validated cleanly.
-No commit has been made.
+Committed in `c1490415`.

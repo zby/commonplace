@@ -67,9 +67,10 @@ under `kb/agentic-systems/comparisons/`; see the
 They no longer rebuild these legacy files or preserve hand-classified columns.
 
 The [landscape procedure](../instructions/synthesize-agent-memory-landscape/SKILL.md)
-still describes the old evidence bundle and requires migration before a
-current refresh. Historical reproduction must use the matching old reviews,
-contracts, parser, and matrix from one reconstructable revision.
+now reads retained main results and derives a matching matrix in one frozen
+bundle. The legacy snapshots here remain outside that population. Historical
+reproduction of these old comparisons requires their matching reviews,
+contracts, parser, and matrix at one reconstructable revision.
 
 The ASISAS-2026 paper's frozen corpus and Karpathy-gist sample split are deposited
 separately at DOI `10.5281/zenodo.20759081`, pinned to Commonplace `v0.1.0`

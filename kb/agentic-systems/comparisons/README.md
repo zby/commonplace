@@ -39,5 +39,18 @@ fields need regeneration through the main analysis before inclusion. Do not
 patch generated findings, reuse an old CSV value, or infer absence from an
 omission. No production comparison has yet been built with this contract.
 The old matrix and table under `kb/agent-memory-systems/` remain historical
-snapshots; these commands no longer rebuild them. Public landscape synthesis
-still needs migration to this input contract before a current refresh.
+snapshots; these commands no longer rebuild them. Public landscape synthesis uses the same inputs through
+`synthesize-agent-memory-landscape`. Its bundle command captures selected main
+results and derives a matching matrix without changing public comparison files:
+
+```bash
+uv run python scripts/bundle_agentic_landscape.py prepare --output <new-bundle-directory> --review <main-review-path>
+uv run python scripts/bundle_agentic_landscape.py verify <bundle-directory> --sha256 <recorded-manifest-hash> --source-root .
+```
+
+Repeat `--review` for a bounded population or omit it to select all generated
+main reviews. Save the returned manifest hash outside the immutable bundle.
+Verification checks captured bytes, matrix/result agreement, and current input
+and population drift. Omit `--source-root` only for historical verification.
+Quantitative claims retain their population, evidence filters, and exclusions;
+qualitative claims require reading and citing the full retained result.

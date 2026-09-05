@@ -58,9 +58,12 @@ Author each link from the external reader's need at its source. Search these des
 - **→ `kb/articles/`** — when a companion article gives a distinct reader-facing development or explicit contrast that would interrupt this article. Relationships: `extends`, `contrasts`, `see-also`.
 - **→ `kb/instructions/` and `kb/tasks/`** — when the reader has a concrete operational next step. Relationship: `procedure`.
 
-Do not link into `kb/work/` or `kb/reports/`: workshops are temporary and the
-reports collection is not published, so neither is an available onward path for
-an external article reader.
+Articles may cite exact main-analysis results at
+`kb/reports/retained/agentic-system-analysis/<run-id>/result.md`. Those immutable
+records are published and provide the full evidence behind cross-system claims;
+identify their run and hash when binding an article to a comparison snapshot.
+Other report paths and `kb/work/` remain unavailable as onward links for an
+external article reader.
 
 In-prose links to the `external` destination are authorized for primary attribution, canonical sources, and material an external reader should be able to inspect directly; they carry no formal identifier. External prospecting is part of article research, not `cp-skill-connect`.
 

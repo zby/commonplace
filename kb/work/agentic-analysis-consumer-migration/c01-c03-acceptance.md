@@ -1,7 +1,7 @@
 # C01–C03 acceptance — direct main-result comparisons
 
 Accepted on 2026-09-05 for the reader migration. Production corpus regeneration
-and public landscape refresh remain outstanding. No commit has been made.
+and public landscape refresh remain outstanding. Committed in `c1490415`.
 
 ## Inputs and retention decision
 

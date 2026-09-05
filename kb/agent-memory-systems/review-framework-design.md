@@ -6,7 +6,12 @@ tags: [agent-memory]
 
 # Review framework and comparison matrix: design and decisions
 
-This collection reviews external agent-memory systems through a shared Commonplace ontology so independent systems can be set side by side without making Commonplace the comparison target. Two artifacts carry the stable comparison: the per-system reviews under `reviews/`, written to the [review type spec](./types/agent-memory-system-review.md), and [`systems.csv`](./systems.csv), a matrix whose comparison axes are parsed from the reviews by `commonplace.lib.systems_matrix` (run via `scripts/build_systems_matrix.py`). The build script also joins identity metadata. Selective implications for Commonplace are separate living state until their candidates are disposed. This note records the motivations and the design decisions behind that machinery, so later changes start from the reasoning rather than re-deriving it.
+This note records the design of the legacy review corpus and its comparison
+matrix. Decisions D1–D8 describe that historical pipeline. Current comparison
+scripts and `synthesize-agent-memory-landscape` consume retained main-analysis
+results; see the [current comparison contract](../agentic-systems/comparisons/README.md).
+The historical reviews and CSV remain independently citable. D9's separation
+of local transfer judgments from public evidence continues to apply.
 
 It is a collection-scoped decision log, deliberately *not* a `kb/reference/adr/` record: those govern the shipped Commonplace system, whereas this governs how *this collection* reviews and compares external systems. The format is ADR-style (context / decision / consequences) for rigour.
 
@@ -94,9 +99,23 @@ A second realisation sharpened the cut: when maintenance is **manual**, it *is* 
 
 **Context.** A narrative comparison can explain interactions that a table cannot, but manually maintained prose drifts from a growing matrix. Qualitative ontology observations also have a different evidence shape from population-complete controlled fields.
 
-**Decision.** Run `synthesize-agent-memory-landscape` as a separate downstream operation over one zero-flag `systems.csv` snapshot plus the exact row-linked reviews and ontology inputs at the same reconstructable revision or retained snapshot. Quantitative claims come only from mechanically queried closed fields and state their denominators. Open-ended mechanisms support examples, variants, and ontology stress cases but no prevalence claim without a corpus-wide assay. Transfer scans and legacy Commonplace-comparison sections are excluded.
+**Current decision.** Run `synthesize-agent-memory-landscape` over one
+hash-identified population of retained `analyse-agentic-system` results.
+The bundle command derives its matrix from those exact main results and retains
+the result contracts, reader, instruction, and any additional ontology inputs.
+Qualitative claims require the full result and its canonical records. Numerical
+claims state the cohort, applicable assessments, evidence-basis filters, and
+denominators. Structural input failures block the selected population; explicit
+unknown assessments withhold only conclusions requiring that evidence.
+Transfer scans and legacy reviews supply no field or qualitative example.
 
-**Consequences.** A public article states its matrix and complete-evidence manifest hashes, population, review/ontology revision, and cited-review hashes, and is replaced as one coherent snapshot. Its worker and checker operate on frozen bytes, so mid-run corpus changes cannot silently alter the evidence and every number and qualitative example remains reproducible.
+**Consequences.** A public synthesis records the manifest and matrix hashes,
+selection rule, evidence tiers, source cutoffs, and cited result hashes. It
+uses one reconstructable revision or retained snapshot and is replaced as a
+coherent whole. Final verification detects changed inputs and population
+changes; archived bundles remain usable without local run state. The old
+zero-flag matrix/review bundle belongs only to historical reproduction with
+its matching old method.
 
 ## Open follow-ons
 

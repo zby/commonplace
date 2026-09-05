@@ -1,70 +1,142 @@
 ---
 name: synthesize-agent-memory-landscape
-description: Use when asked to write or refresh public cross-system analysis from the agent-memory review corpus and its generated matrix. Produces a snapshot-bound landscape synthesis; do not use Commonplace transfer scans as evidence.
+description: Use when asked to write or refresh a public cross-system synthesis from retained analyse-agentic-system results and their memory-comparison fields. Produces one snapshot-bound analysis; excludes legacy reviews and Commonplace transfer scans.
 type: kb/types/instruction.md
 user-invocable: true
-argument-hint: "[authorized public analysis path] [current or historical matrix snapshot]"
+argument-hint: "[public analysis path or response] [selected main reviews] [current or historical]"
 context: fork
 ---
 
-# Synthesize the Agent-Memory Landscape
+# Synthesize the agent-memory landscape
 
-Produce a public, source-auditable synthesis of the agent-memory-system corpus from one pinned matrix snapshot and the ontology-normalized reviews that justify it.
+Produce a public comparison whose numbers and qualitative findings come from
+one frozen population of main-analysis results.
 
-## Prerequisites
+## Inputs and authority
 
-Current refresh is blocked pending migration of this procedure's evidence
-bundle to the [main comparison contract](../../agentic-systems/comparisons/README.md).
-The live builder, renderer, and analyzer no longer consume the legacy corpus.
-The steps below apply only to reconstructable historical snapshots with their
-matching old parser and contracts. Do not run the new scripts against an old
-matrix or present their output as a refresh of that population.
+Use the requested output, selected systems, and current or historical mode from
+the user request or invoking packet. A request to refresh a named artifact
+supplies its output authority. Without a file destination, return the synthesis
+in the response. Load the output collection's contract before writing there.
 
-- Use the output path and current-versus-historical mode supplied in `$ARGUMENTS`, the user request, or an invoking worker packet. Do not infer file-mutation authority from a request for analysis alone.
-- Read `kb/agent-memory-systems/COLLECTION.md`, `kb/agent-memory-systems/types/agent-memory-system-review.md`, and `kb/agent-memory-systems/review-framework-design.md` before analysing the corpus.
-- Use `kb/agent-memory-systems/systems.csv` as the quantitative source and code-grounded reviews as its qualitative support. Doc-grounded reviews may appear only in a separately labelled qualitative section.
-- Require an authorized output path for publication. Without one, return the proposed synthesis in the response and do not edit the existing public analysis.
-- Determine whether the requested result is current or historical. A current result requires a matrix rebuilt from the current reviews with `flags: 0` and a human table regenerated from those exact matrix bytes; mutate those generated artifacts only when their paths are separately authorized. Otherwise describe an exact existing matrix as historical only when its matching review and ontology inputs and zero-flag build status can also be reconstructed.
-- A published result requires an immutable input boundary: either one repository revision that contains the exact matrix, row-linked reviews, type/schema, parser, and ontology inputs, or an authorized retained snapshot containing those bytes. If neither exists, return response-only and report that publication lacks a reconstructable evidence boundary.
+The evidence inputs are generated reviews under `kb/agentic-systems/reviews/`
+and the exact retained results named by their `analysis-result` paths and
+`analysis-result-sha256` values. Read the full retained results for findings:
+source register, shared records, memory/context lens, reconciliation, and limits.
+The compact review supplies publication identity and navigation. It cannot
+replace a missing full result or comparison assessment.
 
-## Evidence boundary
+Use `kb/types/agentic-system-analysis-result.md` for the `memory-comparison`
+contract. Each row preserves its source revision, run, analysis cutoff, evidence
+tier, compared memory boundary, and per-axis assessment, basis, values, and
+canonical records. No legacy review, old CSV, transfer scan, or newly acquired
+source may supply or repair a finding. Missing required inputs block the
+selected population; report the main-analysis regeneration needed. Existing
+results must not be hand-patched to make a comparison pass.
 
-Before interpreting the corpus, materialize a read-only evidence bundle in a temporary directory. Include the exact matrix; every code-grounded review named by its rows; `kb/agent-memory-systems/COLLECTION.md`; the review type, schema, and framework-design note; `src/commonplace/lib/systems_matrix.py`; `scripts/build_systems_matrix.py`; `kb/instructions/synthesize-agent-memory-landscape/SKILL.md`; and every additional ontology artifact used in the analysis. Create a newline-terminated canonical manifest sorted by repository-relative path, with one `sha256<TAB>byte-length<TAB>repository-relative-path` row per input, then record the manifest SHA-256, matrix SHA-256, row count, source-tier population, repository revision or retained-snapshot identity, and analysis cutoff. Use only the bundled bytes for analysis and checking. Record each cited review's SHA-256 in the published evidence boundary so qualitative examples remain auditable without treating the combined manifest digest as a file list.
+## Freeze the evidence
 
-The matrix and bundled reviews are canonical inputs. Never use `kb/reports/state/agentic-system-transfer/` or any `Comparison with Our System`, `Borrowable Ideas`, or `What to Watch` section retained in a legacy review as corpus evidence. When a complete legacy review contains those sections, ignore them. Treat its `Curiosity Pass` and concluding summary as leads only and verify any example against the source-grounded characterization, write-side, or read-back account.
+1. **Select the population.** Default a refresh to current inputs. Repeat
+   `--review` to select the commissioned main reviews; omit it only when the
+   commission covers all generated main reviews. Record the selection rule and
+   exclusions. Select one review per source identity. A small selected set is
+   a bounded comparison, with no implication of historical-corpus coverage.
+2. **Create a new bundle.** Run from the repository root:
 
-The Commonplace ontology is the declared analytical lens, not a claim of perspective-free classification. Preserve two layers in qualitative examples: what the external system does in its own mechanism and why the Commonplace term fits.
+   ```bash
+   uv run python scripts/bundle_agentic_landscape.py prepare --output <new-bundle-directory> --review <main-review-path>
+   ```
 
-Treat evidence shapes differently:
+   Repeat `--review` as needed. Add `--ontology <kb/notes/path.md>` for each
+   additional ontology artifact actually used. The command reads main results
+   directly, derives `matrix.csv`, and captures the exact review/result bytes,
+   result contracts, reader code, producing and consuming instructions, and
+   dependency declarations under their repository-relative paths. It writes
+   `snapshot.json` and a canonical `MANIFEST.tsv` containing sorted
+   `sha256<TAB>byte-length<TAB>path` rows. Require exit status zero and save the
+   reported manifest hash outside the bundle before interpretation. Existing
+   bundle directories are never replaced. The command does not update public
+   matrix or table files.
+3. **Use only bundled evidence.** Treat the bundle as immutable. If a needed
+   finding or ontology input is absent, create a new complete bundle before
+   drafting; do not mix in live files. For an existing historical bundle,
+   verify it with its previously recorded manifest hash and use its bundled
+   instruction and contracts. A method mismatch requires the matching pinned
+   checkout. Legacy-corpus snapshots remain historical evidence, but this
+   procedure does not rebuild or merge them into its population.
 
-- Closed, population-complete controlled fields may support counts, proportions, and cross-tabs.
-- A missing controlled value means unassessed unless the field contract explicitly gives it assessed-absent semantics.
-- Open-ended mechanism observations may support named examples, variants, combinations, and ontology stress cases. They do not support prevalence claims until every member has been assayed for that concept.
-- Transfer findings are local, interest-conditioned judgments and support no public corpus claim.
+A temporary bundle suffices for a response or workshop trial. Before publishing,
+ensure the exact bundle and every cited original retained result are kept in
+Git, or identify a repository revision containing every input byte. A commit ID
+alone is insufficient when an input differs from that revision. Record the
+manifest hash, matrix hash, input file identities, and the reconstructable
+revision or retained-snapshot location in the published evidence boundary.
+A tracked comparison must remain auditable without ignored local run state.
 
-## Steps
+## Analyse and write
 
-1. **Prove the build is usable.** For a current result, rebuild the matrix, capture the build report, and stop before analysis unless it says `flags: 0`; then regenerate the human table from those bytes. For a historical result, require a contemporaneous zero-flag build report or rerun the parser against the matching pinned reviews and require zero flags. A flagged field is unresolved input, not a warning the writer may work around or omit from selected findings.
-2. **Pin the complete snapshot.** Build the temporary bundle and canonical manifest described above. Confirm every matrix `review_file` resolves exactly once inside it, the row count equals the code-grounded review population, and the matrix, reviews, and ontology inputs share the recorded revision or retained-snapshot identity. Do not silently mix a newer review or field contract with an older matrix classification.
-3. **Generate quantitative candidates mechanically.** Use Python's standard library or an existing repository script against the bundled CSV to compute every count, denominator, cross-tab, missingness value, and change claim. Keep a working query ledger that states the fields, filters, numerator, and denominator for each candidate. Do not tally rows manually.
-4. **Select public findings.** Choose four to six findings that change how a reader understands the design space. Prefer contrasts, interactions, rare mechanisms, and evidence limits over a tour of every column. State the denominator next to every quantitative result.
-5. **Ground qualitative interpretation.** For each selected finding, read the relevant complete review from the bundle. Give representative mechanisms, a contrasting case when one materially bounds the claim, and links to the evidence-bearing reviews. Do not infer a system property from its one-line matrix description alone.
-6. **Write one snapshot analysis.** Open with the complete evidence identity: matrix and manifest SHA-256 values, population, zero-flag build status, review/ontology revision or retained snapshot, cited-review hashes, cutoff, and ontology lens. Present the selected findings, then explicit corpus and evidence limits. General implications for memory-system designers are allowed when the findings support them; Commonplace-specific recommendations belong in a transfer scan. Replace an incumbent synthesis as one coherent snapshot rather than patching counts into prose written against another population.
-7. **Verify independently where authorized.** Give a fresh checker the frozen bundle, query ledger, and draft, but no live corpus paths, transfer scans, or writer rationale. Require it to recompute every number, verify every example against the bundled review, check code-grounded/doc-grounded separation, and flag causal language unsupported by the data. When independent delegation is not authorized or available, rerun all quantitative queries against the bundle and report that semantic verification was local.
-8. **Recheck, publish, and validate.** Immediately before writing, recompute the live or retained-snapshot manifest and require it to equal the pinned manifest. If any input drifted, discard the draft and restart from step 1. Apply supported corrections, write only the authorized analysis path plus any separately authorized generated matrix/table paths, and run `commonplace-validate` on every changed Markdown artifact.
+4. **Compute quantitative candidates.** Query the bundled CSV mechanically,
+   decoding value cells as JSON arrays. For implementation/operation counts,
+   use code-grounded rows with `known` values at `wired`, `observed`, or
+   `causally supported` basis, plus `absent` assessments for evidenced negatives.
+   Keep claimed and afforded findings separate. Keep doc-grounded findings in
+   a separate qualitative section. Within each query, report inapplicable,
+   uninspected, and not-determinable rows separately; none is an observed
+   negative. A structurally valid unknown does not block unrelated findings.
+
+   Retain an executable query and its output in a working query ledger. Each
+   candidate names the fields, value-membership or set-equality test, tier and
+   basis filters, numerator, denominator, included run IDs, and exclusions.
+   Count each system once per query even when its value set contains several
+   stores or routes. An assessed-subset proportion must name that subset;
+   a whole-population prevalence claim requires complete applicable assessment.
+   A change claim requires two verified snapshots, comparable scopes/contracts,
+   and an explicit treatment of population changes.
+5. **Read and ground the mechanisms.** For each selected finding, read the full
+   bundled result and the cited canonical records, including their source
+   evidence and limitations. Preserve the external mechanism and explain why
+   the Commonplace term fits. Trace every qualitative example to a result path,
+   hash, run ID, canonical IDs, and supporting section. Open-ended observations
+   support named examples and contrasts, never prevalence from omitted mentions.
+   Keep static wiring, observed use, contextual activation, and causal effect
+   distinct. Withhold claims stronger than their records support.
+6. **Write one coherent snapshot.** State the evidence identity, selection,
+   source-tier population, source cutoffs, and analytical lens. Select only
+   findings that the available population supports; do not pad a small pilot
+   into a landscape survey. Give denominators beside numbers and scope beside
+   comparisons. Link qualitative claims to their original retained result
+   paths, using a section anchor where useful; compact reviews may additionally
+   serve navigation. Do not cite the temporary bundle path. Name withheld
+   conclusions and evidence gaps. Commonplace-specific recommendations belong
+   in a separately commissioned transfer scan. Replace an incumbent synthesis
+   as a complete snapshot, never by updating counts alone.
+7. **Verify the draft.** Recompute every query from bundled bytes and check each
+   example against its full result and records. If independent review is
+   commissioned, give the checker the frozen bundle and expected hash, query
+   ledger, and draft, without live corpus paths, transfer scans, or writer
+   rationale. Otherwise perform these checks locally and report that mode.
+8. **Recheck and publish.** Immediately before returning or writing, run:
+
+   ```bash
+   uv run python scripts/bundle_agentic_landscape.py verify <bundle-directory> --sha256 <recorded-manifest-hash> --source-root .
+   ```
+
+   For a historical snapshot, omit `--source-root`; always keep the externally
+   recorded hash. The command checks the manifest, captured bytes, and exact
+   matrix/result agreement. For current inputs it also checks source-file drift
+   and population changes, including additions to an all-generated selection.
+   On failure, withhold the draft and restart from selection. Write the
+   commissioned output only after verification and evidence retention are
+   satisfied; run `commonplace-validate` on every changed Markdown artifact.
+   Public matrix/table refresh is a separate output: when commissioned, pass
+   the identical explicit review list to both existing build scripts and check
+   their recorded input identities against this bundle.
 
 ## Report
 
-Report the output path or response-only disposition; matrix and manifest SHA-256 values; population; zero-flag build result; review/ontology revision or retained-snapshot identity; current-versus-historical status; quantitative-query verification; qualitative verification mode; final manifest recheck; validation result; and any finding withheld because its evidence was not population-complete.
-
-## Verify
-
-- The article names one reconstructable matrix, review, and ontology snapshot and never mixes revisions silently.
-- The matrix build has zero flags; unresolved controlled fields block synthesis.
-- Every number is mechanically reproducible from the pinned CSV with an explicit denominator.
-- Every qualitative example resolves to a hash-identified bundled review and retains the external mechanism behind the ontology mapping.
-- No open-ended observation is presented as prevalence without a corpus-wide assay.
-- No transfer scan or legacy Commonplace-comparison section is used as public evidence.
-- Limitations distinguish code-visible wiring, observed operation, activation, and causal effect.
-- The final manifest recheck matches the analysis bundle.
-- The published artifact is coherent as a replacement snapshot and passes deterministic validation.
+Return the output path or response-only disposition; current or historical
+status; selection rule and source-tier population; cutoffs; manifest and matrix
+hashes; reconstructable evidence location; query verification and semantic
+verification mode; final bundle/source recheck; validation; and withheld claims.
+A fixture trial establishes procedure behavior, not external-system findings or
+production corpus coverage.

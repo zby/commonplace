@@ -35,8 +35,9 @@ The matrix and table in this collection are historical snapshots. Active
 comparison scripts now read retained main-analysis results and write under
 `kb/agentic-systems/comparisons/`. They do not update the legacy pair. Historical
 synthesis requires matching legacy reviews, contracts, and parser from one
-reconstructable revision; current synthesis must first migrate its evidence
-bundle to the main-review contract.
+reconstructable revision. Current synthesis reads main results directly,
+bundles their exact bytes and comparison contracts, and derives its CSV from
+that same selected population.
 
 Selective Commonplace implications are living transfer scans under `kb/reports/state/agentic-system-transfer/`. They are conditioned on a current interest brief and current Commonplace artifacts, never feed the matrix or public corpus analysis, and do not belong in a durable review. Their owning workflow keeps unresolved candidate judgments until disposition, then may replace or delete them. Legacy `Comparison with Our System`, `Borrowable Ideas`, and `What to Watch` sections may remain until their reviews are regenerated from source; new and replacement reviews omit them.
 
@@ -57,6 +58,7 @@ Organised per destination: when to prospect for links, and the authorised labels
 - **→ `kb/sources/`** — for lightweight coverage, link back to the snapshot it was abstracted from. Labels: `derived-from`, `evidenced-by`, `see-also`.
 - **→ `external`** — cite the reviewed repository, code, documents, or papers already in hand. Code-grounded reviews follow the type's commit-pinning and citation-shape rules; do not prospect the open web. Labels: `evidenced-by`, `see-also`.
 - **→ `kb/notes/`** — search when a system's design depends on a theoretical claim. Use `rests-on` for that design dependency and rare `is-evidence-for` when the reviewed system instead bears on the target claim; promote a novel claim to `kb/notes/` rather than author theory in a review. Labels: `rests-on`, `is-evidence-for` (rare), `defined-in`, `see-also`.
+- **→ `kb/reports/retained/agentic-system-analysis/`** — cite the exact main-analysis result when a current comparison needs its canonical records or full evidence. These results are published and hash-identified. Labels: `see-also`.
 - **→ `kb/reference/`** — scan when a design element has a direct Commonplace analogue. Labels: `see-also`.
 - **→ `kb/agentic-systems/`** — search when the reviewed memory, knowledge, or context-engineering subsystem is part of a broader agentic harness, or when a whole-system analysis supplies useful comparison context. Labels: `part-of` / `contains`, `compares-with`, `see-also`.
 - **→ `kb/instructions/`** — scan when a review describes a workflow with a Commonplace counterpart. Labels: `see-also`.
