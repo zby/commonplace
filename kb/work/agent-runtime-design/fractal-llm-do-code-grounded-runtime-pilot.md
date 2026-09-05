@@ -7,7 +7,7 @@ This pilot tests the [provisional review protocol](./agent-runtime-review-protoc
 - **Fractal:** first-hand source inspection of `Trampoline-AI/fractal` at commit [5954a07d](https://github.com/Trampoline-AI/fractal/commit/5954a07d464feeaf6c311a9fa5ca2e54200a6794), covering the CLI/TUI, runtime, session store, agent adapter, event hooks, documentation, and focused tests. No tests or live model calls were run because the checkout lacks the `predict-rlm` dependency.
 - **llm-do:** first-hand source inspection of `zby/llm-do` at commit [d86c6868](https://github.com/zby/llm-do/commit/d86c686813ec569f1d688ee6948919ff6d0022bb), covering the runtime and call scopes, project linker, CLI/TUI, approval wrappers, built-in toolsets, dynamic agents, documentation, and focused tests. No live model calls were run. A local focused-test attempt could not import `pydantic_ai`, so no test result is claimed.
 
-This is a methodology pilot, not a replacement for the existing [Fractal system analysis](../../agentic-systems/fractal.md). Its evidence is stronger than the earlier mechanism comparison because both targets have commit-pinned source and their own runtime and client paths can be inspected. Dependency-owned behavior remains `not established` unless the inspected runtime enforces or tests the boundary itself.
+This is a methodology pilot, not a replacement for the existing [Fractal system analysis](../../agentic-systems/reviews/fractal.md). Its evidence is stronger than the earlier mechanism comparison because both targets have commit-pinned source and their own runtime and client paths can be inspected. Dependency-owned behavior remains `not established` unless the inspected runtime enforces or tests the boundary itself.
 
 ## Architectural characterization
 

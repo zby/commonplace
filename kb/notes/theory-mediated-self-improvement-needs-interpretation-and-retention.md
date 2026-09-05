@@ -114,7 +114,7 @@ independent assessment, blame assignment, acceptance, and continuity across
 ambiguous cases. It therefore gives evidence for the mechanism and for useful
 human-inclusive theory work, not independent computational theory possession.
 
-[Exo](../agentic-systems/exo.md) provides a stronger technical revision surface:
+[Exo](../agentic-systems/reviews/exo.md) provides a stronger technical revision surface:
 it can edit prompts, tools, and executor code, rebuild, and restart. That shows
 reflective membership, operative retention, and continuity over some changes.
 Build success, tests, and post-restart behavior can reject broken candidates,

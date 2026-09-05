@@ -30,7 +30,7 @@ Line numbers below identify the reviewed baseline. Migration must reconcile sour
 
 | current edge(s) | successor | adjudication |
 |---|---|---|
-| `kb/agentic-systems/claude-code-dynamic-workflows.md:70` | `is-evidence-for` | The feature analysis feeds back as evidence for the target design stance; the stance did not motivate the analysis artifact. |
+| `kb/agentic-systems/reviews/claude-code-dynamic-workflows.md:70` | `is-evidence-for` | The feature analysis feeds back as evidence for the target design stance; the stance did not motivate the analysis artifact. |
 | `kb/sources/goedel-machines-schmidhuber.ingest.md:134` | `is-evidence-for` | The source is an existence proof bearing on the target claim. |
 | `kb/notes/a-knowledge-base-holds-theories-descriptions-and-prescriptions-with.md:99` | `evidenced-by` | ADR 042 records the decision that qualifies and narrows the source assertion. |
 | retired theory-side text-contract definition, former line 57 | `evidenced-by` | ADR 042 was the decision record supporting the definition's then-open profile set. |

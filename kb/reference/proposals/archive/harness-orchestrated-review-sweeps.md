@@ -13,7 +13,7 @@ Review sweeps need fan-out: many (note, gate) pairs, packed into batches, execut
 ## Current state (as of 2026-07-01)
 
 - The execution seams exist and are validated. [ADR 035](../../adr/035-review-jobs-finalize-all-or-nothing-with-derived-artifacts.md) defines queued jobs: selector JSON -> `commonplace-create-review-jobs --input ... --grouping {note,gate}` -> worker output -> `commonplace-finalize-review-job` with optional provenance flags. One experiment ran a real slice end-to-end on an older seam (selector -> two prepared batches -> a 12-line workflow script with one reviewer agent per batch in parallel -> ingest; 4 pairs recorded, zero Python changes; observations in `kb/log.md`, 2026-06-12). The experiment remains evidence for the orchestration pattern, not for current command names.
-- The orchestration feature is Claude Code-only ([dynamic workflows](../../../agentic-systems/claude-code-dynamic-workflows.md)). No comparable scriptable sub-agent surface is known in the other harness this project runs (codex CLI).
+- The orchestration feature is Claude Code-only ([dynamic workflows](../../../agentic-systems/reviews/claude-code-dynamic-workflows.md)). No comparable scriptable sub-agent surface is known in the other harness this project runs (codex CLI).
 - The workflow script sandbox has no shell or filesystem, so it cannot invoke `commonplace-*` commands; only the parent conversation or sub-agents can.
 - Frictions observed in the experiment: workflow `args` input did not reach the script (data had to be inlined); no token telemetry landed on the review records (the harness reports usage per workflow); the recorded model partition was the orchestrator's assertion. ADR 034 now treats telemetry as optional execution evidence, not review identity.
 
@@ -50,6 +50,6 @@ Adopt as framework methodology when a second harness ships a comparable scriptab
 
 Relevant Notes:
 
-- [Claude Code dynamic workflows](../../../agentic-systems/claude-code-dynamic-workflows.md) — abstracted-from: the single shipped instance of the orchestration surface this design targets
+- [Claude Code dynamic workflows](../../../agentic-systems/reviews/claude-code-dynamic-workflows.md) — abstracted-from: the single shipped instance of the orchestration surface this design targets
 - [030-harness-facing seams: batch endpoints and runner adapters](../../adr/030-harness-facing-seams-batch-endpoints-and-runner-adapters.md) — see-also: the shipped endpoints this design composes; the experiment validating them
 - [structured-output codec for the review protocol](../structured-output-codec-for-review-protocol.md) — see-also: the output-encoding decision this medium puts on the table

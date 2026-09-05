@@ -5,8 +5,8 @@
 This pilot applies the [provisional review protocol](./agent-runtime-review-protocol.md) to three unlike systems. It tests the comparison method; it does not replace or refresh the existing library reviews.
 
 - **Pi:** first-hand source inspection of `badlogic/pi-mono` at `fc3554e16defffcf76553b1bd12f676adf26d0a4` (2026-08-06), recorded in the [Pi subprocess-subagent baseline](./pi-subprocess-subagents-expose-an-approval-routing-choice.md).
-- **Swamp:** the existing [code-grounded Swamp analysis](../../agentic-systems/swamp.md), pinned to `cf38c4ec1068613bb7d3432eb74a1ad854156dd7` (2026-07-18). This pilot did not refresh its source checkout.
-- **Exo:** the existing [code-grounded Exo analysis](../../agentic-systems/exo.md), pinned to `ef4cfe057af02955a73c85beb6ab79e253253114` (2026-07-29). This pilot did not refresh its source checkout.
+- **Swamp:** the existing [code-grounded Swamp analysis](../../agentic-systems/reviews/swamp.md), pinned to `cf38c4ec1068613bb7d3432eb74a1ad854156dd7` (2026-07-18). This pilot did not refresh its source checkout.
+- **Exo:** the existing [code-grounded Exo analysis](../../agentic-systems/reviews/exo.md), pinned to `ef4cfe057af02955a73c85beb6ab79e253253114` (2026-07-29). This pilot did not refresh its source checkout.
 
 The selection deliberately spans a small interactive coding runtime, a durable distributed automation control plane, and a reflective runtime whose agent generates durable changes to its own executor.
 

@@ -26,7 +26,7 @@ What kind of "programs" LLM instructions are, and what programming-language conc
 - [session history should not be the default next context](./session-history-should-not-be-the-default-next-context.md) — stored history and next-context loading are separate decisions; `select` should decide what to load
 - [A context-operation interface bounds the projections its policy can realize](./context-operation-interface-bounds-context-policy.md) — models context assembly as legal interface traces whose reachable projections remain distinct from policy quality
 - [tool loop](./tool-loop-README.md) — the tool-loop area: loop exposure, hidden schedulers, and the observability problems of framework-owned loops (apparent success, semantic recovery)
-- [Claude Code dynamic workflows](../agentic-systems/claude-code-dynamic-workflows.md) — shipped instance of the cluster: a harness exposing a returning `agent()` plus host-language composition beneath its frozen loop
+- [Claude Code dynamic workflows](../agentic-systems/reviews/claude-code-dynamic-workflows.md) — shipped instance of the cluster: a harness exposing a returning `agent()` plus host-language composition beneath its frozen loop
 
 ## Instruction Properties
 

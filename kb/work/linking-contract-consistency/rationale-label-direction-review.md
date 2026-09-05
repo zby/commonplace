@@ -72,10 +72,10 @@ The following ledger reconciles all 134 active `rationale` edges. Multiple edges
 | `kb/agent-memory-systems/lightweight/incremental-self-improvement.md` | 86 → `notes/choosing-what-to-learn-requires-both-validity-and-learning-value-gates.md`; 87 → `notes/oracle-strength-spectrum.md` | R |
 | `kb/agent-memory-systems/review-framework-design.md` | 88 → `notes/symbolic-context-engineering-is-bounded-by-symbol-availability.md` | R |
 | `kb/agent-memory-systems/trace-learning-techniques-in-related-systems.md` | 768 → `notes/designing-agent-memory-systems.md` | R |
-| `kb/agentic-systems/claude-code-dynamic-workflows.md` | 69 → `notes/the-practical-scheduler-is-the-host-language.md` | R |
-| `kb/agentic-systems/claude-code-dynamic-workflows.md` | 70 → `notes/llm-frameworks-should-keep-the-tool-loop-optional.md` | E |
-| `kb/agentic-systems/exo.md` | 94 → `notes/theory-mediated-self-improvement-needs-interpretation-and-retention.md`; 95 → `notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md`; 96 → `notes/warranted-autonomy-is-bounded-by-oracle-domain.md`; 97 → `notes/definitions/reflective-system.md`; 98 → `notes/measuring-autonomy-well-enough-to-see-it-improve-is-an-open-problem.md` | R |
-| `kb/agentic-systems/gbrain.md` | 53 → `notes/the-practical-scheduler-is-the-host-language.md`; 54 → `notes/orchestration-strategies-and-run-state-have-opposite-persistence.md` | R |
+| `kb/agentic-systems/reviews/claude-code-dynamic-workflows.md` | 69 → `notes/the-practical-scheduler-is-the-host-language.md` | R |
+| `kb/agentic-systems/reviews/claude-code-dynamic-workflows.md` | 70 → `notes/llm-frameworks-should-keep-the-tool-loop-optional.md` | E |
+| `kb/agentic-systems/reviews/exo.md` | 94 → `notes/theory-mediated-self-improvement-needs-interpretation-and-retention.md`; 95 → `notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md`; 96 → `notes/warranted-autonomy-is-bounded-by-oracle-domain.md`; 97 → `notes/definitions/reflective-system.md`; 98 → `notes/measuring-autonomy-well-enough-to-see-it-improve-is-an-open-problem.md` | R |
+| `kb/agentic-systems/reviews/gbrain.md` | 53 → `notes/the-practical-scheduler-is-the-host-language.md`; 54 → `notes/orchestration-strategies-and-run-state-have-opposite-persistence.md` | R |
 | `kb/instructions/composition-friction-gate.md` | 56 → `notes/llm-generation-relaxes-goals-where-human-writing-stalls.md`; 57 → `notes/adversarial-loop-can-reconstruct-the-writing-is-thinking-filter.md` | R |
 | `kb/instructions/critique-note.md` | 48 → `notes/adversarial-loop-can-reconstruct-the-writing-is-thinking-filter.md` | R |
 | `kb/instructions/retire-artifact.md` | 139 → `notes/stale-indexes-are-worse-than-no-indexes.md` | R |
@@ -129,7 +129,7 @@ The following ledger reconciles all 134 active `rationale` edges. Multiple edges
 | `kb/sources/goedel-machines-schmidhuber.ingest.md` | 134 → `notes/a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md` | E |
 | `kb/types/type-spec.md` | 71 → `notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md` | R |
 
-The ledger counts are R=114, E=2, N=18. The two E cases are not ambiguous after reading their context: the Claude Code analysis says it “feeds back as evidence” (`kb/agentic-systems/claude-code-dynamic-workflows.md:70`), and the Gödel Machines ingest records an “existence proof” (`kb/sources/goedel-machines-schmidhuber.ingest.md:134`).
+The ledger counts are R=114, E=2, N=18. The two E cases are not ambiguous after reading their context: the Claude Code analysis says it “feeds back as evidence” (`kb/agentic-systems/reviews/claude-code-dynamic-workflows.md:70`), and the Gödel Machines ingest records an “existence proof” (`kb/sources/goedel-machines-schmidhuber.ingest.md:134`).
 
 ## Grounds comparison
 
@@ -203,7 +203,7 @@ The source collection remains visible context, but it is not a substitute for th
 
 No edge remains A after full local reading, but these are the highest-information near-ambiguous cases:
 
-- `kb/agentic-systems/claude-code-dynamic-workflows.md:70` says the design stance “partially ships” and the analysis “feeds back as evidence there.” Changing the target note would update the assessment, not require redesigning the external feature: E.
+- `kb/agentic-systems/reviews/claude-code-dynamic-workflows.md:70` says the design stance “partially ships” and the analysis “feeds back as evidence there.” Changing the target note would update the assessment, not require redesigning the external feature: E.
 - `kb/sources/goedel-machines-schmidhuber.ingest.md:134` calls the system an “existence proof” of a closed extreme. The source bears on the target claim; the target did not motivate the ingest report's existence: E.
 - `kb/reference/tag-readme-trace-as-self-improving-loop.md:36–40` uses both labels in one theoretical reading. The local contexts do not preserve a reliable separate reader action: reclassify the `grounds` edge to the chosen cross-register relation if it remains formal.
 - `kb/types/type-spec.md:70–72` does the same in a system-definition artifact. Its target notes explain the contract's inspection and checkability choices; the type surface has no collection contract, so the semantic result is separable from the authorization result.

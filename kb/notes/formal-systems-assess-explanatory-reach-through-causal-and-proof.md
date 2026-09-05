@@ -58,5 +58,5 @@ Relevant Notes:
 - [Towards Causal Representation Learning](../sources/towards-causal-representation-learning.ingest.md) — evidenced-by: causal models support intervention and counterfactual generalization beyond one observed distribution
 - [Causal-learn: Causal Discovery in Python](../sources/causal-learn-causal-discovery-in-python.ingest.md) — evidenced-by: causal discovery under explicit method assumptions
 - [DoWhy: Expressing and validating causal assumptions](../sources/dowhy-expressing-and-validating-causal-assumptions.ingest.md) — evidenced-by: assumption declaration and partial validation
-- [Eigenius](../agentic-systems/eigenius.md) — evidenced-by: its Lean path establishes proof validity under a fixed axiom allowlist, while correspondence to a graph claim is checked only when optional anchors are present and pass
+- [Eigenius](../agentic-systems/reviews/eigenius.md) — evidenced-by: its Lean path establishes proof validity under a fixed axiom allowlist, while correspondence to a graph claim is checked only when optional anchors are present and pass
 - [DiscoverPhysics](../sources/discoverphysics-benchmarking-llms-out-of-the-box-scientific.ingest.md) — evidenced-by: its abstract-page record separates a natural-language explanation from a Python implementation and reports that predictive accuracy does not guarantee explanation quality

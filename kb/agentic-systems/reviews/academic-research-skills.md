@@ -17,7 +17,7 @@ plugin in Claude Code, call its external services, or inspect a real research
 run.
 
 This note is the compact projection of the retained replay result
-[AAS-2026-09-03-academic-research-skills-02](../reports/retained/agentic-system-analysis-operability-replay-20260903/AAS-2026-09-03-academic-research-skills-02.md).
+[AAS-2026-09-03-academic-research-skills-02](../../reports/retained/agentic-system-analysis-operability-replay-20260903/AAS-2026-09-03-academic-research-skills-02.md).
 Use that result when exact run identity, source/register lineage, lens findings,
 or acceptance evidence matters.
 
@@ -168,7 +168,7 @@ component.
 
 Relevant Notes:
 
-- [Agent-runtime analysis should separate scheduling, context assembly, and external state](../notes/agent-runtime-analysis-should-separate-scheduling-context-state.md) — rests-on: supplies the responsibility split used to keep the plugin's prompts and scripts separate from Claude Code's scheduling, context, and execution duties.
-- [Code complements the weight–prompt pair with independently executed symbolic operations](../notes/code-complements-weight-prompt-with-symbolic-operations.md) — rests-on: explains why the exact reducers, guards, and validators warrant stronger implementation claims than the surrounding prompt protocols.
-- [Knowledge storage does not imply contextual activation](../notes/knowledge-storage-does-not-imply-contextual-activation.md) — rests-on: separates the Passport and cache's persistence from context presence, behavioral uptake, and downstream benefit.
-- [Runtime structure determines the control surfaces available to governance](../notes/runtime-structure-determines-governance-control-surfaces.md) — rests-on: explains why installation channel and host-exposed hooks determine which declared controls can actually enforce a decision.
+- [Agent-runtime analysis should separate scheduling, context assembly, and external state](../../notes/agent-runtime-analysis-should-separate-scheduling-context-state.md) — rests-on: supplies the responsibility split used to keep the plugin's prompts and scripts separate from Claude Code's scheduling, context, and execution duties.
+- [Code complements the weight–prompt pair with independently executed symbolic operations](../../notes/code-complements-weight-prompt-with-symbolic-operations.md) — rests-on: explains why the exact reducers, guards, and validators warrant stronger implementation claims than the surrounding prompt protocols.
+- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) — rests-on: separates the Passport and cache's persistence from context presence, behavioral uptake, and downstream benefit.
+- [Runtime structure determines the control surfaces available to governance](../../notes/runtime-structure-determines-governance-control-surfaces.md) — rests-on: explains why installation channel and host-exposed hooks determine which declared controls can actually enforce a decision.

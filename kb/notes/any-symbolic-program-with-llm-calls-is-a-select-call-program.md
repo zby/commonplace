@@ -102,4 +102,4 @@ Relevant Notes:
 - [orchestration model](./bounded-context-orchestration-model.md) — grounds: supplies the conditional loop and call-oriented invariants used by the lemma
 - [decomposition heuristics](./decomposition-heuristics-for-bounded-context-scheduling.md) — extends: develops transformations between programs that retain the lemma's preconditions
 - [LLM-mediated schedulers are a degraded variant of the clean model](./llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md) — contrasts: separates an explicit symbolic handoff from progression retained inside a model-mediated loop
-- [Claude Code dynamic workflows](../agentic-systems/claude-code-dynamic-workflows.md) — evidenced-by: describes a shipped barrier-oriented workflow with symbolic host control
+- [Claude Code dynamic workflows](../agentic-systems/reviews/claude-code-dynamic-workflows.md) — evidenced-by: describes a shipped barrier-oriented workflow with symbolic host control

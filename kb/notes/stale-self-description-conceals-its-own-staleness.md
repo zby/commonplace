@@ -43,7 +43,7 @@ Three parts, failing independently:
 
 Soundness needs the trigger and the operation. Revalidating everything on every change is sound and expensive. The dependency relation buys **selectivity**, which makes it an efficiency requirement rather than a correctness one — the same split as [reusable verification](./verification-needs-a-typed-target-before-it-needs-an-oracle.md), where a check aimed at one artifact is sound but covers nothing new.
 
-[Exo](../agentic-systems/exo.md) has the third and neither of the first two. Its self map is agent-editable through the same shell path as everything else, so the operation exists; nothing connects a code change to the claims describing it, and the documents holding its theory of itself sit outside the loop's consumption path. Capability without a wire, which is the configuration this note predicts is worst: an operation that is available, unexercised, and describing a system that moves daily.
+[Exo](../agentic-systems/reviews/exo.md) has the third and neither of the first two. Its self map is agent-editable through the same shell path as everything else, so the operation exists; nothing connects a code change to the claims describing it, and the documents holding its theory of itself sit outside the loop's consumption path. Capability without a wire, which is the configuration this note predicts is worst: an operation that is available, unexercised, and describing a system that moves daily.
 
 ## Scope
 
@@ -70,4 +70,4 @@ Relevant Notes:
 - [Reflection buys addressability](./reflection-buys-addressability.md) — mechanism: why a retained claim can be revised selectively at all
 - [Link graph plus timestamps enables make-like staleness detection](./link-graph-plus-timestamps-enables-make-like-staleness-detection.md) — mechanism: one cheap implementation of the trigger and dependency parts
 - [Increasing computational autonomy relocates human effort to the frontier](./increasing-computational-autonomy-relocates-human-effort.md) — extends: the rate coupling, where the autonomy being pursued generates the maintenance load
-- [Exo](../agentic-systems/exo.md) — evidenced-by: operation present, trigger and dependency absent, over a self map injected into every turn
+- [Exo](../agentic-systems/reviews/exo.md) — evidenced-by: operation present, trigger and dependency absent, over a self map injected into every turn

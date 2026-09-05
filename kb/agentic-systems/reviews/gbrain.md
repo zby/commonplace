@@ -9,7 +9,7 @@ tags: [computational-model, tool-loop]
 
 **Evidence basis:** first-hand reading of the `garrytan/gbrain` checkout at commit [9a0bae8d](https://github.com/garrytan/gbrain/commit/9a0bae8d62cdd1e0dd6655e24e082fe6c69c5dac) (2026-06-12), the same commit the memory-subsystem review pins.
 
-GBrain presents as a memory layer, but the codebase is a second agentic system that installs itself *inside* a host agent: it ships an adoption protocol the host must follow on every message, runs its own LLM loops on a schedule, orchestrates crash-resumable subagents through a durable job queue, and rewrites its own instructions behind validation gates. The memory subsystem (pages, facts, search, embeddings) is reviewed in [the agent-memory review](../agent-memory-systems/reviews/gbrain.md); this analysis covers the rest.
+GBrain presents as a memory layer, but the codebase is a second agentic system that installs itself *inside* a host agent: it ships an adoption protocol the host must follow on every message, runs its own LLM loops on a schedule, orchestrates crash-resumable subagents through a durable job queue, and rewrites its own instructions behind validation gates. The memory subsystem (pages, facts, search, embeddings) is reviewed in [the agent-memory review](../../agent-memory-systems/reviews/gbrain.md); this analysis covers the rest.
 
 ## Host-agent adoption protocol
 
@@ -33,7 +33,7 @@ SkillOpt (`src/core/skillopt/`) is an epoch-based optimization loop over skill m
 
 ## Reading against the orchestration cluster
 
-The dream cycle is a clean shipped instance of [the practical scheduler is the host language](../notes/the-practical-scheduler-is-the-host-language.md): TypeScript control flow plays `select` over bounded LLM calls, with no framework graph layer. Minions reifies run-state exactly where [orchestration strategies and run-state have opposite persistence economics](../notes/orchestration-strategies-and-run-state-have-opposite-persistence.md) predicts: the journal (messages, tool executions, token rollups) lives in durable tables because crash-resume demands it, while the strategies (skills, phase order) live in markdown and code under version control. Against [Claude Code dynamic workflows](./claude-code-dynamic-workflows.md) the contrast is authorship and persistence: workflows have the model write a disposable orchestrator per run inside the harness; GBrain ships a fixed, versioned orchestrator outside any harness, durable by construction. And where the workflow sandbox withholds capability composition, GBrain's subagent handler grants it per job (`allowed_tools`, slug-prefix write bounds) — caller-constructed capability surfaces, the thing the workflows API reserves to a registry.
+The dream cycle is a clean shipped instance of [the practical scheduler is the host language](../../notes/the-practical-scheduler-is-the-host-language.md): TypeScript control flow plays `select` over bounded LLM calls, with no framework graph layer. Minions reifies run-state exactly where [orchestration strategies and run-state have opposite persistence economics](../../notes/orchestration-strategies-and-run-state-have-opposite-persistence.md) predicts: the journal (messages, tool executions, token rollups) lives in durable tables because crash-resume demands it, while the strategies (skills, phase order) live in markdown and code under version control. Against [Claude Code dynamic workflows](./claude-code-dynamic-workflows.md) the contrast is authorship and persistence: workflows have the model write a disposable orchestrator per run inside the harness; GBrain ships a fixed, versioned orchestrator outside any harness, durable by construction. And where the workflow sandbox withholds capability composition, GBrain's subagent handler grants it per job (`allowed_tools`, slug-prefix write bounds) — caller-constructed capability surfaces, the thing the workflows API reserves to a registry.
 
 ## Reading against Commonplace
 
@@ -49,7 +49,7 @@ Both are agent-operated markdown knowledge systems with types, links, skills, ma
 
 Relevant Notes:
 
-- [GBrain (agent-memory review)](../agent-memory-systems/reviews/gbrain.md) — contains: the memory, retrieval, and trace-learning subsystem this analysis deliberately excludes
-- [the practical scheduler is the host language](../notes/the-practical-scheduler-is-the-host-language.md) — rests-on: the dream cycle and Minions instantiate host-language `select` with run-state reified only where durability forces it
-- [orchestration strategies and run-state have opposite persistence economics](../notes/orchestration-strategies-and-run-state-have-opposite-persistence.md) — rests-on: Minions journals K in Postgres while strategies stay versioned markdown/code
+- [GBrain (agent-memory review)](../../agent-memory-systems/reviews/gbrain.md) — contains: the memory, retrieval, and trace-learning subsystem this analysis deliberately excludes
+- [the practical scheduler is the host language](../../notes/the-practical-scheduler-is-the-host-language.md) — rests-on: the dream cycle and Minions instantiate host-language `select` with run-state reified only where durability forces it
+- [orchestration strategies and run-state have opposite persistence economics](../../notes/orchestration-strategies-and-run-state-have-opposite-persistence.md) — rests-on: Minions journals K in Postgres while strategies stay versioned markdown/code
 - [Claude Code dynamic workflows](./claude-code-dynamic-workflows.md) — see-also: the inverse authorship/persistence answer — model-authored disposable orchestrators inside the harness versus a shipped durable orchestrator outside it

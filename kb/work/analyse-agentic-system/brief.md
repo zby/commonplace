@@ -102,10 +102,10 @@ Exclude for this target:
 
 - `kb/agentic-systems/COLLECTION.md`
 - `kb/agentic-systems/README.md`
-- `kb/agentic-systems/agno-agentos.md`
-- `kb/agentic-systems/claude-code-dynamic-workflows.md`
-- `kb/agentic-systems/exo.md`
-- `kb/agentic-systems/gbrain.md`
+- `kb/agentic-systems/reviews/agno-agentos.md`
+- `kb/agentic-systems/reviews/claude-code-dynamic-workflows.md`
+- `kb/agentic-systems/reviews/exo.md`
+- `kb/agentic-systems/reviews/gbrain.md`
 - `kb/agent-memory-systems/COLLECTION.md`
 - `kb/agent-memory-systems/review-framework-design.md`
 - `kb/instructions/COLLECTION.md`

@@ -1,6 +1,6 @@
 # Eigenius contact points: a whole-system witness for the verification-locus theory
 
-Working note. Eigenius (local clone at `related-systems/eigenius/`, gitignored) is an open-source typed knowledge-graph platform for verifiable AI in science. It combines content-addressed immutable layers, four declared epistemic categories (Declared / Observed / Derived / Verified), path-specific commit gates, trace-bearing derivations, justification certificates, and Lean 4 proof checking. Its method docs (`docs/method/reasoning.md`, `docs/method/grounding.md`) and design docs (D39 justification logic, D54 lemma citation, D58 obligation graphs, D61 grounding discovery, D62 encoding pipeline) run this workshop's problem list from the far end of the constraining axis. It belongs beside Build Systems à la Carte, PROV, and in-toto as a literature anchor, but not as those systems already unified without gaps: the [code-grounded whole-system review](../../agentic-systems/eigenius.md) shows incomplete cache identity, task recovery, ordinary runtime provenance, and proof-to-claim correspondence.
+Working note. Eigenius (local clone at `related-systems/eigenius/`, gitignored) is an open-source typed knowledge-graph platform for verifiable AI in science. It combines content-addressed immutable layers, four declared epistemic categories (Declared / Observed / Derived / Verified), path-specific commit gates, trace-bearing derivations, justification certificates, and Lean 4 proof checking. Its method docs (`docs/method/reasoning.md`, `docs/method/grounding.md`) and design docs (D39 justification logic, D54 lemma citation, D58 obligation graphs, D61 grounding discovery, D62 encoding pipeline) run this workshop's problem list from the far end of the constraining axis. It belongs beside Build Systems à la Carte, PROV, and in-toto as a literature anchor, but not as those systems already unified without gaps: the [code-grounded whole-system review](../../agentic-systems/reviews/eigenius.md) shows incomplete cache identity, task recovery, ordinary runtime provenance, and proof-to-claim correspondence.
 
 Clone paths below are repo-local pointers, not durable links. The `kb/agentic-systems/` review now owns present-tense implementation claims; this file maps the case into lineage theory and distinguishes implemented controls, host-agent method, and intended design.
 
@@ -66,7 +66,7 @@ Their program traces can record the component, output, provider/model identity, 
 
 Relevant notes:
 
-- [Eigenius](../../agentic-systems/eigenius.md) — see-also: pinned code-grounded authority for the system behavior this workshop maps into lineage theory
+- [Eigenius](../../agentic-systems/reviews/eigenius.md) — see-also: pinned code-grounded authority for the system behavior this workshop maps into lineage theory
 - [verification-locus-and-provenance-theory.md](./verification-locus-and-provenance-theory.md) — grounds: the theoretical spine these contact points map onto
 - [model-provenance.md](./model-provenance.md) — is-evidence-for: event-side model recording
 - [history has one chance to become checkable](../../notes/history-has-one-chance-to-become-checkable.md) — is-evidence-for: their authoring-time chain discipline is the claim practiced as method

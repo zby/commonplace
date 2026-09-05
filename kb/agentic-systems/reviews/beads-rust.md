@@ -85,8 +85,8 @@ This review does not establish deployed reliability, throughput gains, agent upt
 
 Relevant Notes:
 
-- [Active work state is not retrospective memory or chat history](../notes/active-work-state-is-not-retrospective-memory-or-chat-history.md) - rests-on: supplies the active-work distinction used to classify issue and coordination state.
-- [Agent-runtime analysis should separate scheduling, context assembly, and external state](../notes/agent-runtime-analysis-should-separate-scheduling-context-state.md) - rests-on: separates `br`'s ranking and retained-state roles from the external agent runtime and code execution.
-- [Keep Lineage And Compiled Views From Drifting](../notes/agent-memory-requirements/keep-compiled-views-aligned.md) - rests-on: explains why the official skill and injected instruction blurb need lineage to the runtime workflow contract.
-- [Knowledge storage does not imply contextual activation](../notes/knowledge-storage-does-not-imply-contextual-activation.md) - rests-on: distinguishes retained `agent_context`, delivery in a response, and demonstrated effect on an agent's action.
-- [Moving the interpretation–enforcement boundary requires cross-form coverage](../notes/moving-the-interpretation-enforcement-boundary-requires-coverage.md) - see-also: frames the difference between workflow advice in agent instructions and transactionally enforced claim or transition rules.
+- [Active work state is not retrospective memory or chat history](../../notes/active-work-state-is-not-retrospective-memory-or-chat-history.md) - rests-on: supplies the active-work distinction used to classify issue and coordination state.
+- [Agent-runtime analysis should separate scheduling, context assembly, and external state](../../notes/agent-runtime-analysis-should-separate-scheduling-context-state.md) - rests-on: separates `br`'s ranking and retained-state roles from the external agent runtime and code execution.
+- [Keep Lineage And Compiled Views From Drifting](../../notes/agent-memory-requirements/keep-compiled-views-aligned.md) - rests-on: explains why the official skill and injected instruction blurb need lineage to the runtime workflow contract.
+- [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) - rests-on: distinguishes retained `agent_context`, delivery in a response, and demonstrated effect on an agent's action.
+- [Moving the interpretation–enforcement boundary requires cross-form coverage](../../notes/moving-the-interpretation-enforcement-boundary-requires-coverage.md) - see-also: frames the difference between workflow advice in agent instructions and transactionally enforced claim or transition rules.

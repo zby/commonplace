@@ -38,7 +38,7 @@ Lifecycle evidence is uneven too. Self-Harness reports promotion but no criterio
 
 ## Scope
 
-- These are readings of six published descriptions through their KB ingests, not independent reproductions. Autogenesis and HyperAgents also have separate code-grounded reviews ([Autogenesis](../../agentic-systems/autogenesis.md), [HyperAgents](../../agent-memory-systems/reviews/hyperagents.md)); the Darwin Gödel Machine implementation has not been inspected here. The HyperAgents paper and code review agree on executable lineage, while the checked-in initial meta-agent does not reliably receive prior evaluation history through its prompt.
+- These are readings of six published descriptions through their KB ingests, not independent reproductions. Autogenesis and HyperAgents also have separate code-grounded reviews ([Autogenesis](../../agentic-systems/reviews/autogenesis.md), [HyperAgents](../../agent-memory-systems/reviews/hyperagents.md)); the Darwin Gödel Machine implementation has not been inspected here. The HyperAgents paper and code review agree on executable lineage, while the checked-in initial meta-agent does not reliably receive prior evaluation history through its prompt.
 - The sample is a narrow research neighbourhood: recent systems that mostly revise readable artifacts around fixed model backbones. It does not estimate how common these placements are across self-improving systems.
 - Closing a causal path establishes operative redesign over the declared horizon. It does not establish net improvement, continuity of the revision path, or a contribution to compounding.
 

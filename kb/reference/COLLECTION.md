@@ -111,6 +111,6 @@ not decide placement.
 - Transferable claims about KB methodology → `kb/notes/`
 - Bounded datasets, experiments, traces, or casebooks whose intended contribution states what they establish about the design space and the limit of that inference → `kb/notes/evidence/`
 - Procedures and how-to guidance → `kb/instructions/`
-- Descriptions of external systems → `kb/agent-memory-systems/reviews/` for memory/context-engineering systems, or `kb/agentic-systems/` for whole agentic systems and harnesses
+- Descriptions of external systems → `kb/agent-memory-systems/reviews/` for memory/context-engineering systems, or `kb/agentic-systems/reviews/` for whole agentic systems and harnesses
 - Work in progress → `kb/work/` (workshops)
 - Report outputs and operational evidence → choose `kb/reports/cache/`, `state/`, or `retained/` from the reports collection contract

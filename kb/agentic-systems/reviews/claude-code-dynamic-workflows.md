@@ -33,7 +33,7 @@ Constraints the runtime imposes:
 
 ## Mapping onto the orchestration model
 
-| [Bounded-context orchestration model](../notes/bounded-context-orchestration-model.md) | Workflows implementation |
+| [Bounded-context orchestration model](../../notes/bounded-context-orchestration-model.md) | Workflows implementation |
 |---|---|
 | Bounded call | `agent(prompt, opts)` — returning, per-call-parameterized |
 | `select(K) -> B` | Ordinary JS control flow builds the next singleton call or `parallel` group |
@@ -42,16 +42,16 @@ Constraints the runtime imposes:
 | `select` authorship | The model, per run (RLM-style); whole script promotable to a `/command` |
 | Stop condition | Model-finished, or `schema`-validated structured output |
 
-The fit with [the practical scheduler is the host language](../notes/the-practical-scheduler-is-the-host-language.md) is close to literal: a returning primitive, host-language control flow playing `select`, live variables holding `K` — and `K` reified (the journal) exactly when within-run durability demands it, the boundary that note draws. The persistence split matches [orchestration strategies and run-state have opposite persistence economics](../notes/orchestration-strategies-and-run-state-have-opposite-persistence.md): `K` dies with the session while the `select`-strategy (the script) is the promotion target. The authorship model is [RLM's](../notes/rlm-has-the-model-write-ephemeral-orchestrators-over-sub-agents.md) — the model writes the orchestrator rather than being it — with the persistence RLM lacks added on top.
+The fit with [the practical scheduler is the host language](../../notes/the-practical-scheduler-is-the-host-language.md) is close to literal: a returning primitive, host-language control flow playing `select`, live variables holding `K` — and `K` reified (the journal) exactly when within-run durability demands it, the boundary that note draws. The persistence split matches [orchestration strategies and run-state have opposite persistence economics](../../notes/orchestration-strategies-and-run-state-have-opposite-persistence.md): `K` dies with the session while the `select`-strategy (the script) is the promotion target. The authorship model is [RLM's](../../notes/rlm-has-the-model-write-ephemeral-orchestrators-over-sub-agents.md) — the model writes the orchestrator rather than being it — with the persistence RLM lacks added on top.
 
 ## What the runtime withholds
 
 Four restrictions, each a framework-retained decision rather than an incidental limit:
 
-1. **Guest language, not host language.** With no filesystem or shell access, the symbolic scheduler cannot read its own working set. Partitioning a corpus — the canonical case in [semantic sub-goals that exceed one context window](../notes/semantic-sub-goals-that-exceed-one-context-window-become-scheduling.md) — requires either spending an agent on enumeration or having the parent conversation scout the work-list first and pass it via `args` (the tool contract recommends this "hybrid" explicitly). Deterministic transforms (dedupe, rank, filter) operate only on what agents return, never on the corpus directly.
-2. **Capability surface by registry, not per call.** `agent()` takes an `agentType`, not a `tools` argument: the next call's action alphabet is *selected* from registered sub-agent types, not *constructed*. The central forcing case of [subtasks that need different tools](../notes/subtasks-that-need-different-tools-force-loop-exposure-in-agent.md) is met through registry indirection, and the permission posture (`acceptEdits`, inherited allowlist) is fixed.
+1. **Guest language, not host language.** With no filesystem or shell access, the symbolic scheduler cannot read its own working set. Partitioning a corpus — the canonical case in [semantic sub-goals that exceed one context window](../../notes/semantic-sub-goals-that-exceed-one-context-window-become-scheduling.md) — requires either spending an agent on enumeration or having the parent conversation scout the work-list first and pass it via `args` (the tool contract recommends this "hybrid" explicitly). Deterministic transforms (dedupe, rank, filter) operate only on what agents return, never on the corpus directly.
+2. **Capability surface by registry, not per call.** `agent()` takes an `agentType`, not a `tools` argument: the next call's action alphabet is *selected* from registered sub-agent types, not *constructed*. The central forcing case of [subtasks that need different tools](../../notes/subtasks-that-need-different-tools-force-loop-exposure-in-agent.md) is met through registry indirection, and the permission posture (`acceptEdits`, inherited allowlist) is fixed.
 3. **No dispatch hook, no stop predicate.** The script surface has no tool-execution interposition point (harness-level hooks exist in settings, outside the script), and `agent()` accepts no caller-supplied stop predicate — no step cap or per-agent budget; `budget` is run-granular only.
-4. **Frozen loop at the seams.** The parent conversation loop stays frozen and is the only glue between workflows: no mid-run input, so multi-stage work with sign-off runs one workflow per stage with inter-workflow `select` happening in the conversational medium — the regime [LLM-mediated schedulers](../notes/llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md) describes, relocated one level up.
+4. **Frozen loop at the seams.** The parent conversation loop stays frozen and is the only glue between workflows: no mid-run input, so multi-stage work with sign-off runs one workflow per stage with inter-workflow `select` happening in the conversational medium — the regime [LLM-mediated schedulers](../../notes/llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md) describes, relocated one level up.
 
 ## Promotion path
 
@@ -59,7 +59,7 @@ Save-as-command promotes the **whole script, manually, with no test gate** — f
 
 ## Reading against the tool-loop cluster
 
-Dynamic workflows are the first shipped harness instance of [keeping the tool loop optional](../notes/llm-frameworks-should-keep-the-tool-loop-optional.md): the bounded call exposed beneath the frozen loop, composable in a host-ish language. The qualifications — exposure to the model rather than the application programmer, a deliberately weakened substrate, registry-mediated capability surfaces, whole-script promotion granularity — are what keep the cluster's question ("who decides what the next step *can do*?") open; the argumentative consequences live in the theory notes, not here.
+Dynamic workflows are the first shipped harness instance of [keeping the tool loop optional](../../notes/llm-frameworks-should-keep-the-tool-loop-optional.md): the bounded call exposed beneath the frozen loop, composable in a host-ish language. The qualifications — exposure to the model rather than the application programmer, a deliberately weakened substrate, registry-mediated capability surfaces, whole-script promotion granularity — are what keep the cluster's question ("who decides what the next step *can do*?") open; the argumentative consequences live in the theory notes, not here.
 
 ---
 
@@ -67,10 +67,10 @@ Relevant Notes:
 
 - [Claude Code dynamic workflows docs](https://code.claude.com/docs/en/workflows) — derived-from: the official documentation this analysis is grounded in
 - [A harness for every task — dynamic workflows](https://x.com/trq212/status/2061907337154367865) — see-also: practitioner walkthrough of the same feature
-- [the practical scheduler is the host language](../notes/the-practical-scheduler-is-the-host-language.md) — rests-on: the minimal surface (returning primitive, host-language `select`/`K`, reify-`K`-when-forced) this API approximates and deviates from
-- [LLM frameworks should keep the tool loop optional](../notes/llm-frameworks-should-keep-the-tool-loop-optional.md) — is-evidence-for: the design stance this feature partially ships; the analysis feeds back as evidence there
-- [any barrier-delimited symbolic program with LLM calls is a batched select/call program](../notes/any-symbolic-program-with-llm-calls-is-a-select-call-program.md) — see-also: the lemma the mapping table instantiates — JS control flow playing `select`, `parallel` preserving batch membership, and script variables holding `K`
-- [agent orchestration occupies a multi-dimensional design space](../notes/agent-orchestration-occupies-a-multi-dimensional-design-space.md) — see-also: the four withholdings read as independent design axes; this note names that independence
-- [RLM has the model write ephemeral orchestrators over sub-agents](../notes/rlm-has-the-model-write-ephemeral-orchestrators-over-sub-agents.md) — see-also: the same authorship model with persistence added
-- [orchestration strategies and run-state have opposite persistence economics](../notes/orchestration-strategies-and-run-state-have-opposite-persistence.md) — see-also: the journal/save split instantiates the predicted asymmetric lifecycle; the promotion machinery remains coarse and manual
-- [tool loop](../notes/tool-loop-README.md) — see-also: the cluster this system is read against
+- [the practical scheduler is the host language](../../notes/the-practical-scheduler-is-the-host-language.md) — rests-on: the minimal surface (returning primitive, host-language `select`/`K`, reify-`K`-when-forced) this API approximates and deviates from
+- [LLM frameworks should keep the tool loop optional](../../notes/llm-frameworks-should-keep-the-tool-loop-optional.md) — is-evidence-for: the design stance this feature partially ships; the analysis feeds back as evidence there
+- [any barrier-delimited symbolic program with LLM calls is a batched select/call program](../../notes/any-symbolic-program-with-llm-calls-is-a-select-call-program.md) — see-also: the lemma the mapping table instantiates — JS control flow playing `select`, `parallel` preserving batch membership, and script variables holding `K`
+- [agent orchestration occupies a multi-dimensional design space](../../notes/agent-orchestration-occupies-a-multi-dimensional-design-space.md) — see-also: the four withholdings read as independent design axes; this note names that independence
+- [RLM has the model write ephemeral orchestrators over sub-agents](../../notes/rlm-has-the-model-write-ephemeral-orchestrators-over-sub-agents.md) — see-also: the same authorship model with persistence added
+- [orchestration strategies and run-state have opposite persistence economics](../../notes/orchestration-strategies-and-run-state-have-opposite-persistence.md) — see-also: the journal/save split instantiates the predicted asymmetric lifecycle; the promotion machinery remains coarse and manual
+- [tool loop](../../notes/tool-loop-README.md) — see-also: the cluster this system is read against

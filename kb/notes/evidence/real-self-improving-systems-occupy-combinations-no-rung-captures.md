@@ -28,7 +28,7 @@ Selected profile fields, not the whole profile: the governance dimension appears
 | [Autogenesis](../../sources/autogenesis-a-self-evolving-agent-protocol.ingest.md) | proposal-selection | yes | yes | computational | score against a fixed objective and safety invariants; acceptance rule and learnability mask sit outside the loop |
 | [Accumulated Behavioral Rules](../../sources/self-improving-ai-coding-agents-through-accumulated-rules.ingest.md) | proposal-selection | yes | yes | joint — capture human, consumption computational | one engineer's capture-time generalizability judgment; no per-rule outcome test |
 | [Darwin Gödel Machine](../../sources/darwin-godel-machine-open-ended-evolution-self-improving-agents.ingest.md) | proposal-selection | yes | yes | computational | compile-and-viability check; benchmark score steers only parent sampling |
-| [Exo](../../agentic-systems/exo.md) | proposal-selection | yes | yes | computational | build, test, immediate behaviour |
+| [Exo](../../agentic-systems/reviews/exo.md) | proposal-selection | yes | yes | computational | build, test, immediate behaviour |
 | [Commonplace](./commonplace-as-a-reflective-system.md) | proposal-selection | yes | yes | joint, by decision | tests and validators; human judgment |
 
 ### Retained evidence
@@ -84,5 +84,5 @@ Relevant Notes:
 - [Ingest: Autogenesis](../../sources/autogenesis-a-self-evolving-agent-protocol.ingest.md) — evidenced-by: versioned, rollback-capable retention under a fixed objective and learnability mask
 - [Ingest: Accumulated Behavioral Rules](../../sources/self-improving-ai-coding-agents-through-accumulated-rules.ingest.md) — evidenced-by: human capture-time judgment as the entire gate over an append-friendly rule file with in-place refinement and unresolved removal policy
 - [Ingest: Darwin Gödel Machine](../../sources/darwin-godel-machine-open-ended-evolution-self-improving-agents.ingest.md) — evidenced-by: viability-gated acceptance with benchmark score demoted to a search signal, far from its namesake's row
-- [Exo](../../agentic-systems/exo.md) — evidenced-by: reflective, cumulative, and computationally autonomous at once, over a literal source-tree self-representation
+- [Exo](../../agentic-systems/reviews/exo.md) — evidenced-by: reflective, cumulative, and computationally autonomous at once, over a literal source-tree self-representation
 - [Commonplace as a reflective system](./commonplace-as-a-reflective-system.md) — evidenced-by: the human-inclusive joint-allocation reading

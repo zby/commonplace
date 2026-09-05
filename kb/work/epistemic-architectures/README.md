@@ -5,7 +5,7 @@
 Compare the epistemic architectures of six research systems — how claims, evidence, warrant, and explanation route through each system's acceptance machinery, and what its operative oracle actually discriminates. The six cases:
 
 - **Commonplace** — this KB: natural-language artifacts, declared quality goals, verdict/report review pairs, freshness baselines.
-- **Eigenius** — typed kernel substrate: certificates, epistemic grades, path-specific commit gates, optional Lean proof checking; pinned authority in the [code-grounded review](../../agentic-systems/eigenius.md).
+- **Eigenius** — typed kernel substrate: certificates, epistemic grades, path-specific commit gates, optional Lean proof checking; pinned authority in the [code-grounded review](../../agentic-systems/reviews/eigenius.md).
 - **ScienceFlow** — long-horizon research-agent harness: evaluator-gated Stage acceptance, anchor selection, folded memory; pinned authority in the [code-grounded ingest](../../sources/scienceflow-long-horizon-agent-for-ml-research-and-discovery.ingest.md).
 - **AI Research OS** — skill-driven personal research wiki: immutable sources, LLM-maintained synthesis pages, deterministic indexes, structural lint, no reject-capable acceptance step; pinned authority in the [code-grounded review](../../agent-memory-systems/reviews/ai-research-os-workshop.md).
 - **The ontology draft** — a private research-ontology design for an artifact-focused AI lab (v0.2, examined 2026-08-19): measurement-only acceptance over versioned objects, with explanation represented but unscored. Kept anonymous in all committed text until the authors approve naming; the source document is not ingested.

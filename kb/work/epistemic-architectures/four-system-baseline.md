@@ -41,7 +41,7 @@ ScienceFlow takes no response — the asymmetry is unmanaged because explanation
 Relevant notes:
 
 - [weakly discriminated qualities tend to be underselected](../../notes/weakly-discriminated-qualities-tend-to-be-underselected.md) — rests-on: the selection conjecture all four readings apply
-- [Eigenius](../../agentic-systems/eigenius.md) — evidenced-by: pinned code-grounded authority for the Eigenius reading
+- [Eigenius](../../agentic-systems/reviews/eigenius.md) — evidenced-by: pinned code-grounded authority for the Eigenius reading
 - [ScienceFlow ingest](../../sources/scienceflow-long-horizon-agent-for-ml-research-and-discovery.ingest.md) — evidenced-by: pinned code-grounded authority for the ScienceFlow reading
 - [the verifiability gradient](../../notes/verifiability-gradient.md) — mechanism: why hard oracles cluster on form
 - [oracle-strength-spectrum](../../notes/oracle-strength-spectrum.md) — mechanism: oracle hardening as codification applied to the objective itself

@@ -61,7 +61,7 @@ packet. The original same-revision persistent-FAIL conflict remains unresolved.
   `e9f12349e4fb6fb5520cf38d3d6ab5bf1df03eb8bb36abdcc46634463a788ffa`.
 
 The compact library projection is
-[Academic Research Skills](../../../agentic-systems/academic-research-skills.md).
+[Academic Research Skills](../../../agentic-systems/reviews/academic-research-skills.md).
 Reconciliation found material drift only in its persistence account. The note
 now names the additional executable human-read, inquiry-ledger, update-state,
 and claim-standing read-back routes and links to the retained replay. It does

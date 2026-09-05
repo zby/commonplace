@@ -37,7 +37,7 @@ The repo ships a `fractal` agent skill that tells another coding agent to delega
 
 ## Reading Against Commonplace
 
-Fractal is a shipped instance of the [RLM model-authorship pattern](../notes/rlm-has-the-model-write-ephemeral-orchestrators-over-sub-agents.md). The model writes symbolic orchestration code inside the turn, while the REPL and PredictRLM runtime execute the bookkeeping outside conversational context. Fractal adds a CLI, sandbox, provider/config layer, workspace instructions, and session persistence around that pattern.
+Fractal is a shipped instance of the [RLM model-authorship pattern](../../notes/rlm-has-the-model-write-ephemeral-orchestrators-over-sub-agents.md). The model writes symbolic orchestration code inside the turn, while the REPL and PredictRLM runtime execute the bookkeeping outside conversational context. Fractal adds a CLI, sandbox, provider/config layer, workspace instructions, and session persistence around that pattern.
 
 The comparison with [Claude Code dynamic workflows](./claude-code-dynamic-workflows.md) is useful. Dynamic workflows expose a sandboxed JavaScript orchestrator over sub-agents inside a larger Claude Code session, with a path to save the whole script as a command. Fractal instead makes the whole turn an RLM call: the generated orchestration is not exposed as a reusable workflow artifact, but the session stores summaries and traces that could later be mined. It partially softens RLM ephemerality by retaining traces, while leaving orchestration-strategy promotion outside the product.
 
@@ -55,7 +55,7 @@ For Commonplace operations, Fractal is better read as a bounded-context workbenc
 
 Relevant Notes:
 
-- [RLM has the model write ephemeral orchestrators over sub-agents](../notes/rlm-has-the-model-write-ephemeral-orchestrators-over-sub-agents.md) - see-also: the theoretical pattern Fractal packages into a terminal and headless coding agent.
-- [RLM, Tendril, and llm-do place symbolic work at different persistence boundaries](../notes/rlm-tendril-and-llm-do-place-symbolic-work-at-different-persistence.md) - see-also: situates Fractal's trace persistence and missing promotion path on the symbolic-work persistence axis.
+- [RLM has the model write ephemeral orchestrators over sub-agents](../../notes/rlm-has-the-model-write-ephemeral-orchestrators-over-sub-agents.md) - see-also: the theoretical pattern Fractal packages into a terminal and headless coding agent.
+- [RLM, Tendril, and llm-do place symbolic work at different persistence boundaries](../../notes/rlm-tendril-and-llm-do-place-symbolic-work-at-different-persistence.md) - see-also: situates Fractal's trace persistence and missing promotion path on the symbolic-work persistence axis.
 - [Claude Code dynamic workflows](./claude-code-dynamic-workflows.md) - see-also: another shipped harness that exposes model-authored symbolic orchestration, but with a different language, sandbox boundary, and promotion surface.
-- [tool loop](../notes/tool-loop-README.md) - see-also: the local theory cluster for reading Fractal's RLM loop and delegation surface.
+- [tool loop](../../notes/tool-loop-README.md) - see-also: the local theory cluster for reading Fractal's RLM loop and delegation surface.

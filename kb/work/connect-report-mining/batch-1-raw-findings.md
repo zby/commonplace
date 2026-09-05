@@ -2,7 +2,7 @@
 
 Sources read (15 reports, full text):
 
-1. `kb/agentic-systems/semantic-engine.md`
+1. `kb/agentic-systems/reviews/semantic-engine.md`
 2. `kb/agent-memory-systems/reviews/ReframeWeb.md`
 3. `kb/notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md`
 4. `kb/notes/evidence/clausal-binding-scopes-a-captured-predicate-word-like-a-coinage.md`

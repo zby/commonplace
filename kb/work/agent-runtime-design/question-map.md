@@ -146,12 +146,12 @@ These tests should stop the eventual review type from becoming a feature checkli
 
 The current corpus is useful because it is heterogeneous rather than standardized:
 
-- [Claude Code dynamic workflows](../../agentic-systems/claude-code-dynamic-workflows.md) exposes model-authored orchestration over bounded sub-agents and makes the withheld runtime state visible by contrast.
-- [Fractal](../../agentic-systems/fractal.md) separates workspace turns, sandbox mounting, delegation, and session continuity.
-- [Swamp](../../agentic-systems/swamp.md) emphasizes a typed operational model, declarative workflows, distributed execution, policy gates, and audit.
-- [Agno AgentOS](../../agentic-systems/agno-agentos.md) separates agent/team loops, workflow control flow, a service control plane, recovery, and builder authority.
-- [Exo](../../agentic-systems/exo.md) separates a protected substrate from a rewritable executor and exposes the boundary of self-modification.
-- [Autogenesis](../../agentic-systems/autogenesis.md) contrasts versioned mutation and rollback with weaker evidence that a change deserved commitment.
+- [Claude Code dynamic workflows](../../agentic-systems/reviews/claude-code-dynamic-workflows.md) exposes model-authored orchestration over bounded sub-agents and makes the withheld runtime state visible by contrast.
+- [Fractal](../../agentic-systems/reviews/fractal.md) separates workspace turns, sandbox mounting, delegation, and session continuity.
+- [Swamp](../../agentic-systems/reviews/swamp.md) emphasizes a typed operational model, declarative workflows, distributed execution, policy gates, and audit.
+- [Agno AgentOS](../../agentic-systems/reviews/agno-agentos.md) separates agent/team loops, workflow control flow, a service control plane, recovery, and builder authority.
+- [Exo](../../agentic-systems/reviews/exo.md) separates a protected substrate from a rewritable executor and exposes the boundary of self-modification.
+- [Autogenesis](../../agentic-systems/reviews/autogenesis.md) contrasts versioned mutation and rollback with weaker evidence that a change deserved commitment.
 
 The theory base supplies candidate explanations rather than a ready schema:
 

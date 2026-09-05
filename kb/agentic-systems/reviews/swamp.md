@@ -83,5 +83,5 @@ The main tradeoff is architectural weight. A one-off task can become a model typ
 
 Relevant Notes:
 
-- [Swamp memory-system review](../agent-memory-systems/reviews/swamp.md) - contains: the versioned operational data, retained definitions, progressive-disclosure skills, and agent read-back behavior analysed as Swamp's memory subsystem.
-- [Scheduler-LLM separation exploits an error-correction asymmetry](../notes/scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) - rationale: explains why Swamp assigns repeatable DAG bookkeeping to a deterministic runtime after the agent authors the workflow.
+- [Swamp memory-system review](../../agent-memory-systems/reviews/swamp.md) - contains: the versioned operational data, retained definitions, progressive-disclosure skills, and agent read-back behavior analysed as Swamp's memory subsystem.
+- [Scheduler-LLM separation exploits an error-correction asymmetry](../../notes/scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) - rationale: explains why Swamp assigns repeatable DAG bookkeeping to a deterministic runtime after the agent authors the workflow.

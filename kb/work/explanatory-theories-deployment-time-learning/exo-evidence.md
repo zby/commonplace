@@ -4,7 +4,7 @@
 
 ## Pinned Exo and ExoWorker facts
 
-The evaluation boundary includes Exo commit `ef4cfe057af0` from canonical main and ExoWorker commit `ed08a571` from the separately linked branch. The [whole-system analysis](../../agentic-systems/exo.md) uses the same canonical Exo pin. The [memory-system review](../../agent-memory-systems/reviews/exo.md) remains pinned to the earlier `baa07f67`. Unchanged memory claims rely on that review; refreshed claims rely on the checkout diff and branch inspection. Neither review included a live Exo run.
+The evaluation boundary includes Exo commit `ef4cfe057af0` from canonical main and ExoWorker commit `ed08a571` from the separately linked branch. The [whole-system analysis](../../agentic-systems/reviews/exo.md) uses the same canonical Exo pin. The [memory-system review](../../agent-memory-systems/reviews/exo.md) remains pinned to the earlier `baa07f67`. Unchanged memory claims rely on that review; refreshed claims rely on the checkout diff and branch inspection. Neither review included a live Exo run.
 
 | Claim | Evidence status | Pinned basis |
 |---|---|---|
