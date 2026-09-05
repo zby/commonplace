@@ -114,11 +114,11 @@ Passing the test shows that the house has the capacity. Changing the
 commitments and observing what the house does next tests whether this
 mechanism explains it.
 
-Naur makes two claims that bear on the conjecture. The first is that
-documentation cannot pass a program theory to a new team. The second is that
-only people can hold one.
+Naur's thesis is that only people can hold a program theory. His evidence
+for it is that documentation did not pass the theory to new programmers. Both
+bear on the conjecture.
 
-The first claim bears on the mechanism. [Naur's compiler
+The evidence bears on the mechanism. [Naur's compiler
 case](../sources/programming-as-theory-building.ingest.md) reports that full
 code, annotations, extensive design discussion, and personal advice did not
 give a successor team enough program theory, and that more documentation of
@@ -129,7 +129,7 @@ it](../notes/naurs-compiler-case-tests-one-historically-bounded-documentation-an
 not linked rationale, semantic retrieval, or automatic loading of relevant
 material at the decision point. Whether those transfer more remains open.
 
-The second claim, if true, rules out the conjecture: computation could not
+The thesis, if true, rules out the conjecture: computation could not
 fill every production role. Naur's argument reaches it only by treating
 machine execution as executing explicitly formulated criteria. [Formal
 execution and explicitly formulated criteria are different
