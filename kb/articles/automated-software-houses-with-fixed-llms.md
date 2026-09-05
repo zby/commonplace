@@ -114,32 +114,29 @@ Passing the test shows that the house has the capacity. Changing the
 commitments and observing what the house does next tests whether this
 mechanism explains it.
 
-Naur's thesis is that only people can hold a program theory. His evidence
-for it is that documentation did not pass the theory to new programmers. Both
-bear on the conjecture.
+Naur argues that program theory is bound to people. His maintenance cases also
+show that possessing documentation does not establish the capacity to use it.
+Both bear on the conjecture.
 
-The evidence bears on the mechanism. [Naur's compiler
-case](../sources/programming-as-theory-building.ingest.md) reports that full
-code, annotations, extensive design discussion, and personal advice did not
-give a successor team enough program theory, and that more documentation of
-the same kind did not help. If that generalizes, the retained commitments
-above would be inert. But the case tested [one historically bounded package
-and way of using
-it](../notes/naurs-compiler-case-tests-one-historically-bounded-documentation-and-consumption-system.md),
-not linked rationale, semantic retrieval, or automatic loading of relevant
-material at the decision point. Whether those transfer more remains open.
+[Naur's compiler case](../sources/programming-as-theory-building.ingest.md)
+reports that full code, annotations, extensive design discussion, and personal
+advice did not give a successor team enough program theory. The case tested
+[one historically bounded package and way of using
+it](../notes/naurs-compiler-case-tests-one-historically-bounded-documentation-and-consumption-system.md).
+It does not isolate whether the failure lay in missing premises, application
+skill, or use of the available knowledge. Whether linked rationale, semantic
+retrieval, and loading relevant material at the decision point improve transfer
+remains open.
 
-The thesis, if true, rules out the conjecture: computation could not
-fill every production role. Naur's argument reaches it only by treating
-machine execution as executing explicitly formulated criteria. [Formal
-execution and explicitly formulated criteria are different
-things](../notes/naur-equates-machine-execution-with-formulated-criteria.md):
-an LLM is formal computation, yet it can act on an explanation of tenant
-isolation without that judgment first being reduced to a complete rule. A
-working computational house would show that a program can make this judgment,
-refuting the human-only thesis. It would not show that the judgment can be
-written as rules. An LLM's judgment has no formulated criteria either, so
-Naur's claim that the criteria cannot be formulated would stand.
+The human-only thesis would rule out the conjecture. [Our reading of Naur's
+argument](../notes/naur-equates-machine-execution-with-formulated-criteria.md)
+identifies a further premise: computation can make these judgments only by
+executing explicitly formulated criteria. But formal execution does not require
+designers to supply a complete project-specific rule for each judgment. A fixed
+LLM may interpret an explanation of tenant isolation without such a rule;
+whether it does so reliably is an empirical question. A successful computational
+witness would challenge the human-only thesis without settling whether the
+judgment's criteria can be formulated.
 
 ## How the components could perform the program-theory function
 
