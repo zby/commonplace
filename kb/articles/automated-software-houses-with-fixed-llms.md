@@ -154,11 +154,14 @@ The conjectured house combines three kinds of component:
   product, tools, schemas, tests, context assembly, scheduling, validation,
   rollback, and retention rules.
 
-The components must work together. An unloaded note has no effect; a model
-without enough project state must reconstruct or guess missing understanding;
-software executes a decision without supplying all the judgment that selected
-it. The house may retain an explicit project theory, reconstruct understanding
-from records, or combine both. What matters is causal use: project-specific
+No component holds the program theory alone. A note that is never loaded has
+no effect. A model without enough project state must reconstruct or guess the
+missing understanding. Software executes a decision without supplying all the
+judgment that selected it.
+
+Nor does the conjecture fix which form carries the theory. The house may
+retain an explicit project theory, reconstruct understanding from records
+each time, or combine both. What matters is causal use: project-specific
 state changes proposal, evaluation, diagnosis, or recovery, including where
 the relevant implication is not stated verbatim.
 
