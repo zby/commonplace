@@ -293,8 +293,9 @@ Repeated failures under reported test conditions should guide what to repair,
 compare, or stop. Different findings challenge different parts of the approach:
 
 - **The proposed retained account makes no causal difference.** Interventions
-  that control equivalent reconstruction still fail to change later decisions
-  in the predicted way.
+  on the account still fail to change later decisions in the predicted way,
+  even after ruling out the house rebuilding the same understanding from other
+  records (the conjecture article's *equivalent reconstruction*).
 - **Human production work does not decrease.** Across comparable workloads,
   interventions persist, transferred roles repeatedly reopen, or each transfer
   creates equal or harder human work elsewhere.
