@@ -127,14 +127,15 @@ or steady progress at every step.
 
 ## The readiness conditions
 
-A warranted transfer requires the necessary premises, a settled acceptance
-rule or grant of authority, and a check independent enough to reject a
-plausible harmful candidate. It also requires continuity when the decision or
-its evidence arrives after the current run.
+A transfer is ready, or *warranted*, when the deciding process has the
+premises it needs, a settled acceptance rule or grant of authority, and a check
+independent enough to reject a plausible harmful candidate. It also needs
+continuity when the decision or its evidence arrives after the current run.
 
 If the program transfers its best-supported decisions first, people should
-increasingly handle missing premises, unsettled criteria, weak checks, and
-delayed consequences. The [residue
+increasingly be left with the decisions that fail one of these conditions: a
+missing premise, an unsettled criterion, a weak check, or a delayed
+consequence. The [residue
 analysis](../notes/warranted-transfer-leaves-people-the-hardest-to-warrant-decisions.md)
 helps identify what those remaining decisions need:
 
