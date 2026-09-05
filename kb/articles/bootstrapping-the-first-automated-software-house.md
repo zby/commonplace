@@ -109,9 +109,9 @@ still depends partly on people in three ways:
   source use](../reference/adr/082-grounding-is-bounded-on-the-artifact-by-unquoted-sources.md).
   People authorized that evidence to become a binding rule for later artifacts.
 
+These three governing decisions are part of what the bootstrap must transfer.
 There has been no witness run or demonstrated acquisition of program theory by
-computation alone. These governing decisions are part of what the bootstrap
-must transfer.
+computation alone.
 
 ## The bootstrap program
 
