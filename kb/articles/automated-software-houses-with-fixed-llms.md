@@ -247,12 +247,13 @@ project state, and preserve tenant isolation through subsequent changes.
 
 At selected decisions, matched runs would vary retained project state while
 holding models, code, tools, requests, and budget fixed. Predicted differences
-in proposal, diagnosis, or recovery would test its causal contribution. An
+in proposal, diagnosis, or recovery would test its causal contribution. Such an
 [intervention on explicit retained
 theory](../notes/retained-theory-intervention-isolates-one-explicit-surface.md)
-is local to that component: other records may encode the same understanding,
-and an effect alone need not distinguish explanatory guidance from extra
-information or instruction following.
+has two limits. If removing the retained theory changes nothing, that may be
+because other records carry the same understanding. If it changes the house's
+decisions, that shows the note mattered, but not how: the house may have used
+it as an explanation, as extra facts, or as an instruction to follow.
 
 The [training article's component
 experiment](./the-software-house-as-the-unit-of-training.md#testable-hypotheses)
