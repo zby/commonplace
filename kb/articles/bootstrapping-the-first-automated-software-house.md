@@ -275,15 +275,17 @@ General tools such as version control, a test runner, or a model client may
 warranted](../notes/machinery-persists-by-warrant-not-position-in-a-reflective-loop.md).
 They become revision targets when new requests exceed what they can supply.
 
-In the current approach, a [proposal-selection
-loop](../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md)
-produces candidates, evaluates them with a real chance of rejection, and makes
-an accepted change take effect. Admission itself can transfer in parts, from
-formatting and routine updates to revisions of the admission machinery. The
-endpoint requires these decisions to be computational without fixing their
-transfer order. Other update architectures are possible: reward, error,
-viability, or gradients can drive changes without a separate admission event.
-The requirement is an evidence-caused change that takes effect.
+The current approach uses a [proposal-selection
+loop](../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md):
+it produces candidates, evaluates them with a real chance of rejection, and
+makes an accepted change take effect. In that loop, admission itself can
+transfer in parts, from formatting and routine updates to revisions of the
+admission machinery. The endpoint requires all of these decisions to be
+computational without fixing the order in which they transfer. The loop is not
+the only option. Other update architectures let reward, error, viability, or
+gradients drive changes without a separate admission event. What the endpoint
+requires of any architecture is the same: an evidence-caused change that takes
+effect.
 
 ## Stop or redirect conditions
 
