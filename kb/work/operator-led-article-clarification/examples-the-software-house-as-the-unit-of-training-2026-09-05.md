@@ -545,3 +545,18 @@ done first and reported before any prose work.
 > are pinned.
 >
 > Derived indexes are an exception, and a safe one. An index is traditional machinery,
+
+## 20. Flow pass: restore the antecedent of "this boundary"
+
+- **Commit:** see log (`Workshop:` trailer)
+- **Kind:** Lost antecedent after revision (flow-pass finding F5)
+- **Operator's verdict:** "ok - go with your recommendation"
+- **Diagnosis:** The training/learning edit (entry 1) changed the section's
+  lead to talk about the unit, leaving "this boundary" in the next paragraph
+  pointing at nothing.
+
+**Before:** "For coherent product evolution, this boundary must include the
+current product,"
+
+**After:** "For coherent product evolution, the unit's boundary must include
+the current product,"

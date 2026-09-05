@@ -88,7 +88,7 @@ the evidence a model sees, scheduling determines which calls happen and what
 state survives, and validators determine which changes can take effect.
 Revising any of them can change the result while the model stays fixed.
 
-For coherent product evolution, this boundary must include the current
+For coherent product evolution, the unit's boundary must include the current
 product, retained project knowledge, production machinery, and every
 computational role on which later evolution depends. The mutable part of this
 [behaviour-determining organization](../notes/definitions/behavior-determining-organization.md)
