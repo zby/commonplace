@@ -64,10 +64,13 @@ Training changes its surrounding state and machinery while keeping
 distributed-parametric models fixed. The rule is by representational form:
 the house may revise both the natural-language and the symbolic forms of its
 own definition; only its distributed-parametric models are pinned. Derived
-indexes sit on the boundary between the forms and are an exception: they may
-be regenerated during the run because the records they are built from are
-revisable state and the embedding models used to build them stay pinned. The
-algorithms that build them are symbolic machinery, revisable like any other.
+indexes are an exception, and a safe one. An index is traditional machinery,
+in use since the first computers, and symbolic in its operation: construction
+and lookup are defined, fast, and testable, even though its content is
+derived from the whole record set. Where the values are embedding vectors
+they are distributed-parametric, but they come from a pinned embedding model
+applied to revisable records, so regenerating the index during the run
+introduces no new learned parameters.
 
 The experiments below do not wait for a complete automated house. They test
 its learning mechanisms in bounded components.
