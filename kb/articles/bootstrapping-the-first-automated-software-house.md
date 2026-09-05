@@ -322,9 +322,10 @@ the self-confirming evaluation above.
 
 The [conjecture](./automated-software-houses-with-fixed-llms.md) supplies the
 witness conditions; the [training proposal](./the-software-house-as-the-unit-of-training.md)
-supplies the learning target. The [transition-closure supplement](./transition-closure-and-continuation-reliability.md)
-defines continuation reliability for a house that is already adequate. How
+supplies the learning target. This program tests a route toward both by
+measuring changes in the production decisions and project-specific machinery
+supplied by people. Failed and reopened transfers determine where that route
+needs repair. The [transition-closure supplement](./transition-closure-and-continuation-reliability.md)
+defines continuation reliability for a house that is already adequate; how
 human-agent production can lead to such a house is this article's separate
-question. This program tests a route toward both targets by measuring changes
-in the production decisions and project-specific machinery supplied by people.
-Failed and reopened transfers determine where that route needs repair.
+question.
