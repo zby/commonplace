@@ -70,6 +70,7 @@ plugins:
         'instructions/run-review-batches-on-note.md': 'instructions/run-review-batches.md'
         'instructions/simplification-passes/figurative-phrasing.md': 'instructions/simplification-passes/plain-wording.md'
         'instructions/simplify-prose-without-weakening-claims.md': 'instructions/simplify-prose-sentence-by-sentence.md'
+        'instructions/verify-review-quote-grounding.md': 'instructions/analyse-agentic-system/SKILL.md'
         'notes/a-capable-agent-needs-methodology-selection-not-just-relevant-knowledge.md': 'notes/capable-agents-need-methodology-selection.md'
         'notes/a-closed-factory-learning-transition-produces-a-successor-factory.md': 'notes/factory-learning-is-experience-responsive-retention-that-improves.md'
         'notes/a-declared-mark-is-an-accelerator-never-a-load-bearing-wall.md': 'reference/adr/026-tag-readme-type-with-completeness-and-coverage-marks.md'

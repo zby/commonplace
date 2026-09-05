@@ -209,6 +209,15 @@ layers uses separate rows or clearly separated scopes. The register does not fla
 
 For a Git repository, the row identifies the canonical repository, full reviewed commit, inspected commit-relative paths, and commit-pinned citation anchors. Every cited path and line range must resolve from the reviewed commit. A local `related-systems/<owner>--<repo>/` checkout may be recorded as the operational access root, but its worktree and current HEAD are not evidence and are never the sole durable source identity.
 
+A quote-anchored blockquote in this result or one of its generated review
+projections ends with a `> ---` attribution. For Git, the attribution contains
+either a full-commit GitHub blob URL matching the registered repository or
+`` `commit-relative/path` @ `full-commit` ``. For a capture, it names the
+captured source. Publication normalizes whitespace and requires the quote to
+occur in the Git blob at the recorded commit or in the immutable capture. This
+is a structural occurrence check. Semantic support remains part of semantic
+verification.
+
 For a focused test or probe, the row's citation anchor resolves to one **probe evidence capsule** in this result. The capsule contains:
 
 `source ID | check ID | UTC execution time | evidence layer | intervention and comparison, or none for an observational run | fixture or input identity | exact command, test node, or reusable-script identity | relevant environment | execution outcome and exit status | raw output inline, or resolvable exact-output location plus byte length and SHA-256 | design and confounding limits | exact conclusion supported and affected canonical IDs`

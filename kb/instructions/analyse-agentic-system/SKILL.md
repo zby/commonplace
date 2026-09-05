@@ -107,7 +107,12 @@ dispositions. Complete the run without publishing a review.
    non-evidence. Narrow and repeat the read before citing it. For Git, cite the
    `SRC-*` ID plus a full commit-relative path and line range such as
    `packages/runtime/src/agent-run.ts:595-641`; use the full commit in GitHub
-   blob links.
+   blob links. If an exact result or review projection uses a quote-anchored
+   blockquote, end it with either a matching full-commit GitHub blob URL or
+   `` `commit-relative/path` @ `full-commit` ``. Publication checks the quote
+   against the recorded Git blob, never the worktree. For a capture it checks
+   the quote against the frozen captured bytes. This establishes occurrence,
+   not whether the quote supports the surrounding claim.
 
 The source pin is an evidence boundary, not a recovery protocol. If it changes
 or cannot be verified, fail the run and start another one.
@@ -299,9 +304,10 @@ Skip publication for a blocked or out-of-scope result. For a complete result:
 3. Run `commonplace-agentic-analysis-publication prepare` with the run state,
    generated candidate and destination, plus the legacy candidate,
    destination, and model partition when applicable. This validates candidate
-   bytes as their intended public paths, verifies source anchors and workflow
-   identity, checks incumbents, and creates one semantic review job for the
-   legacy candidate. It changes no public artifact.
+   bytes as their intended public paths, verifies source anchors and any
+   quote-anchored blocks against the frozen source, verifies workflow identity,
+   checks incumbents, and creates one semantic review job for the legacy
+   candidate. It changes no public artifact.
 4. When prepare returns a review job, dispatch its prompt through the normal
    review worker path and run `commonplace-finalize-review-job` for that job.
    All applicable semantic gates must pass. Do not copy an incumbent baseline

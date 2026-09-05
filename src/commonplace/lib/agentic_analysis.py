@@ -27,6 +27,12 @@ _LOCAL_SOURCE_ANCHOR_RE = re.compile(
 _GITHUB_URL_RE = re.compile(
     r"https?://github\.com/[^\s<>()`\"']+", re.IGNORECASE
 )
+_QUOTE_CITE_ATTR_RE = re.compile(r"^\s*>\s*---\s*(?P<attribution>.*\S)?\s*$")
+_LOCAL_QUOTE_SOURCE_RE = re.compile(
+    r"`(?P<path>[A-Za-z0-9._/-]+\.[A-Za-z0-9._-]+)"
+    r"(?::(?P<ranges>[0-9]+(?:-[0-9]+)?(?:,[0-9]+(?:-[0-9]+)?)*)?)?`"
+    r"\s*@\s*`(?P<revision>[^`]+)`"
+)
 
 
 @dataclass(frozen=True)
@@ -408,9 +414,9 @@ def _verify_source(source: SourceIdentity) -> str | None:
     return None
 
 
-def _git_blob_lines(
+def _git_blob_text(
     *, source_root: Path, revision: str, source_path: str
-) -> tuple[int | None, str | None]:
+) -> tuple[str | None, str | None]:
     pure = PurePosixPath(source_path)
     if (
         pure.is_absolute()
@@ -441,6 +447,19 @@ def _git_blob_lines(
         content = blob.stdout.decode("utf-8")
     except UnicodeDecodeError:
         return None, "cited blob is not UTF-8 text"
+    return content, None
+
+
+def _git_blob_lines(
+    *, source_root: Path, revision: str, source_path: str
+) -> tuple[int | None, str | None]:
+    content, error = _git_blob_text(
+        source_root=source_root,
+        revision=revision,
+        source_path=source_path,
+    )
+    if error is not None or content is None:
+        return None, error
     return len(content.splitlines()), None
 
 
@@ -528,6 +547,146 @@ def _verify_source_anchors(
             f"source citation: {source_path} and {len(line_ranges)} line range(s) "
             f"resolve at the recorded commit ({'/'.join(sorted(kinds))})"
         )
+    return passes, failures
+
+
+def _quote_citations(content: str) -> tuple[tuple[int, str, str], ...]:
+    """Return attribution-line number, quote body, and attribution."""
+    lines = content.splitlines()
+    citations: list[tuple[int, str, str]] = []
+    for index, line in enumerate(lines):
+        match = _QUOTE_CITE_ATTR_RE.fullmatch(line)
+        if match is None:
+            continue
+        quote_lines: list[str] = []
+        cursor = index - 1
+        while cursor >= 0 and re.match(r"^\s*>", lines[cursor]):
+            quote_lines.append(re.sub(r"^\s*> ?", "", lines[cursor], count=1))
+            cursor -= 1
+        citations.append(
+            (
+                index + 1,
+                "\n".join(reversed(quote_lines)).strip(),
+                (match.group("attribution") or "").strip(),
+            )
+        )
+    return tuple(citations)
+
+
+def _normalized_whitespace(value: str) -> str:
+    return " ".join(value.split())
+
+
+def _github_quote_source(
+    attribution: str, *, source_identity: str, source_revision: str
+) -> tuple[str | None, str | None]:
+    match = _GITHUB_URL_RE.search(attribution)
+    if match is None:
+        return None, None
+    url = match.group().rstrip(".,;")
+    parsed = urlsplit(url)
+    parts = parsed.path.split("/")
+    if len(parts) < 6 or parts[3] != "blob" or not parts[5]:
+        return None, f"incomplete GitHub blob path: {url}"
+    repository = f"https://github.com/{parts[1]}/{parts[2]}"
+    expected_repository = source_identity.rstrip("/").removesuffix(".git")
+    if repository.casefold() != expected_repository.casefold():
+        return None, (
+            f"GitHub attribution uses repository {repository}, "
+            f"expected {source_identity}"
+        )
+    revision = parts[4]
+    if revision != source_revision:
+        return None, (
+            f"GitHub attribution uses revision {revision}, "
+            f"expected {source_revision}"
+        )
+    return unquote("/".join(parts[5:])), None
+
+
+def _local_quote_source(
+    attribution: str, *, source_revision: str
+) -> tuple[str | None, str | None]:
+    match = _LOCAL_QUOTE_SOURCE_RE.search(attribution)
+    if match is None:
+        return None, (
+            "expected a commit-pinned GitHub blob URL or "
+            "`commit-relative/path` @ `full-commit`"
+        )
+    revision = match.group("revision")
+    if revision != source_revision:
+        return None, (
+            f"local attribution uses revision {revision}, "
+            f"expected {source_revision}"
+        )
+    return match.group("path"), None
+
+
+def _verify_quote_anchors(
+    content: str, *, source: SourceIdentity
+) -> tuple[list[str], list[str]]:
+    """Resolve quote-anchored citations against one frozen source."""
+    passes: list[str] = []
+    failures: list[str] = []
+    citations = _quote_citations(content)
+    if not citations:
+        return passes, failures
+
+    capture_text: str | None = None
+    capture_error: str | None = None
+    if source.kind == "capture":
+        try:
+            capture_bytes = source.path.read_bytes()
+            actual_sha256 = sha256(capture_bytes).hexdigest()
+            if actual_sha256 != source.expected_sha256:
+                capture_error = (
+                    "frozen capture SHA-256 mismatch; expected "
+                    f"{source.expected_sha256}, got {actual_sha256}"
+                )
+            else:
+                capture_text = capture_bytes.decode("utf-8")
+        except (OSError, UnicodeError) as exc:
+            capture_error = f"cannot read frozen capture as UTF-8 text: {exc}"
+
+    for line_number, quote, attribution in citations:
+        label = f"quote-anchored citation at output line {line_number}"
+        if not quote:
+            failures.append(f"{label}: quote body is empty")
+            continue
+        if not attribution:
+            failures.append(f"{label}: attribution is empty")
+            continue
+
+        if source.kind == "capture":
+            source_text, error = capture_text, capture_error
+            location = f"frozen capture {source.revision}"
+        else:
+            source_path, error = _github_quote_source(
+                attribution,
+                source_identity=source.identity,
+                source_revision=source.revision,
+            )
+            if source_path is None and error is None:
+                source_path, error = _local_quote_source(
+                    attribution, source_revision=source.revision
+                )
+            if error is not None or source_path is None:
+                failures.append(f"{label}: {error}")
+                continue
+            source_text, error = _git_blob_text(
+                source_root=source.path,
+                revision=source.revision,
+                source_path=source_path,
+            )
+            location = f"{source_path} at the recorded commit"
+
+        if error is not None or source_text is None:
+            failures.append(f"{label}: {error}")
+            continue
+        if _normalized_whitespace(quote) not in _normalized_whitespace(source_text):
+            failures.append(f"{label}: quote does not occur in {location}")
+            continue
+        passes.append(f"{label}: quote resolves in {location}")
     return passes, failures
 
 
@@ -882,19 +1041,25 @@ def verify_agentic_analysis_run_state(
                 passes.extend(baseline_passes)
                 failures.extend(baseline_failures)
 
-    if state.source is not None and state.source.kind == "git":
+    if state.source is not None:
         for output in outputs:
             try:
                 content = _read_output_text(output, content_overrides)
             except (OSError, UnicodeError):
                 continue
-            anchor_passes, anchor_failures = _verify_source_anchors(
-                content,
-                source_root=state.source.path,
-                source_identity=state.source.identity,
-                source_revision=state.source.revision,
+            if state.source.kind == "git":
+                anchor_passes, anchor_failures = _verify_source_anchors(
+                    content,
+                    source_root=state.source.path,
+                    source_identity=state.source.identity,
+                    source_revision=state.source.revision,
+                )
+                passes.extend(anchor_passes)
+                failures.extend(anchor_failures)
+            quote_passes, quote_failures = _verify_quote_anchors(
+                content, source=state.source
             )
-            passes.extend(anchor_passes)
-            failures.extend(anchor_failures)
+            passes.extend(f"{output.role} {message}" for message in quote_passes)
+            failures.extend(f"{output.role} {message}" for message in quote_failures)
 
     return passes, failures

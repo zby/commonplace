@@ -769,7 +769,9 @@ def test_capture_source_is_byte_verified(tmp_path: Path) -> None:
         ).replace(
             "source-identity: https://example.invalid/example-system",
             "source-identity: document bundle",
-        ),
+        )
+        + "\n> captured\n> source\n"
+        + "> --- [captured source](https://example.invalid/captured-source)\n",
         encoding="utf-8",
     )
     sync_retained_fixture(tmp_path, values)
@@ -779,6 +781,7 @@ def test_capture_source_is_byte_verified(tmp_path: Path) -> None:
     results = validation.validate_note(state, repo_root=tmp_path)
 
     assert results.fails == []
+    assert any("frozen capture" in item for item in results.passes)
 
 
 def test_source_anchor_past_blob_end_is_rejected(tmp_path: Path) -> None:
@@ -848,6 +851,89 @@ def test_github_citations_match_the_frozen_source(
         assert any("resolve" in item and "GitHub" in item for item in results.passes)
     else:
         assert any(expected_error in item for item in results.fails)
+
+
+@pytest.mark.parametrize("output_role", ["result", "generated-review"])
+@pytest.mark.parametrize("citation_kind", ["local", "github"])
+def test_quote_anchors_resolve_from_the_recorded_commit(
+    tmp_path: Path, output_role: str, citation_kind: str
+) -> None:
+    state = valid_run_state(tmp_path)
+    values = frontmatter(state)
+    revision = values["source"]["revision"]
+    if citation_kind == "github":
+        source_identity = "https://github.com/example/system"
+        values["source"]["identity"] = source_identity
+        generated = tmp_path / values["generated-review"]["path"]
+        replace_frontmatter(
+            generated,
+            {**frontmatter(generated), "source-identity": source_identity},
+        )
+        attribution = (
+            "[README.md](https://github.com/example/system/blob/"
+            f"{revision}/README.md)"
+        )
+    else:
+        attribution = f"`README.md` @ `{revision}`"
+
+    source_root = Path(values["source"]["path"])
+    write(source_root / "README.md", "# Changed worktree\n")
+    output = tmp_path / values[output_role]["path"]
+    with output.open("a", encoding="utf-8") as handle:
+        handle.write(
+            "\n> # Frozen\n> source\n"
+            f"> --- {attribution}\n"
+        )
+    sync_retained_fixture(tmp_path, values)
+    for role in ("result", "generated-review"):
+        values[role]["sha256"] = digest(tmp_path / values[role]["path"])
+    replace_frontmatter(state, values)
+
+    results = validation.validate_note(state, repo_root=tmp_path)
+
+    assert results.fails == []
+    assert any("quote resolves" in item for item in results.passes)
+
+
+def test_quote_anchor_rejects_text_found_only_in_the_worktree(tmp_path: Path) -> None:
+    state = valid_run_state(tmp_path)
+    values = frontmatter(state)
+    revision = values["source"]["revision"]
+    source_root = Path(values["source"]["path"])
+    write(source_root / "README.md", "# Changed worktree\n")
+    generated = tmp_path / values["generated-review"]["path"]
+    with generated.open("a", encoding="utf-8") as handle:
+        handle.write(
+            "\n> # Changed worktree\n"
+            f"> --- `README.md` @ `{revision}`\n"
+        )
+    sync_retained_fixture(tmp_path, values)
+    values["result"]["sha256"] = digest(tmp_path / values["result"]["path"])
+    values["generated-review"]["sha256"] = digest(generated)
+    replace_frontmatter(state, values)
+
+    results = validation.validate_note(state, repo_root=tmp_path)
+
+    assert any("quote does not occur" in item for item in results.fails)
+
+
+def test_quote_anchor_rejects_a_local_revision_mismatch(tmp_path: Path) -> None:
+    state = valid_run_state(tmp_path)
+    values = frontmatter(state)
+    generated = tmp_path / values["generated-review"]["path"]
+    with generated.open("a", encoding="utf-8") as handle:
+        handle.write(
+            "\n> # Frozen source\n"
+            f"> --- `README.md` @ `{'0' * 40}`\n"
+        )
+    sync_retained_fixture(tmp_path, values)
+    values["result"]["sha256"] = digest(tmp_path / values["result"]["path"])
+    values["generated-review"]["sha256"] = digest(generated)
+    replace_frontmatter(state, values)
+
+    results = validation.validate_note(state, repo_root=tmp_path)
+
+    assert any("local attribution uses revision" in item for item in results.fails)
 
 
 def test_operator_handoff_is_rendered_from_complete_state(tmp_path: Path) -> None:
@@ -943,6 +1029,23 @@ def test_prepare_reviews_candidate_bytes_under_the_public_identity(
     assert not (tmp_path / spec.generated_destination).exists()
     assert spec.legacy_destination is not None
     assert not (tmp_path / spec.legacy_destination).exists()
+    assert frontmatter(state)["run-status"] == "running"
+
+
+def test_prepare_rejects_an_unresolved_quote_in_a_candidate(tmp_path: Path) -> None:
+    state, spec, _, _ = publication_fixture(tmp_path)
+    running_values = frontmatter(state)
+    revision = running_values["source"]["revision"]
+    with spec.generated_candidate_path.open("a", encoding="utf-8") as handle:
+        handle.write(
+            "\n> text absent from the source\n"
+            f"> --- `README.md` @ `{revision}`\n"
+        )
+
+    with pytest.raises(ValueError, match="quote does not occur"):
+        prepare_publication(spec)
+
+    assert not (tmp_path / spec.generated_destination).exists()
     assert frontmatter(state)["run-status"] == "running"
 
 

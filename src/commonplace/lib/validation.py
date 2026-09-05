@@ -564,9 +564,9 @@ def validate_proposal_archive_links(
 def validate_quote_citations(results: CheckResults, content: str) -> None:
     """Shape-check quote-anchored citations (a blockquote + `> ---` attribution).
 
-    Resolving the quote against the reviewed source is a write-time concern handled
-    by verify-review-quote-grounding; the source is not retained in the KB, so here
-    we only confirm each citation is well-formed and names a source.
+    Main-review publication resolves generated quote anchors against its frozen
+    source. The source is not retained in the KB, so standing validation only
+    confirms that each citation is well-formed and names a source.
     """
     lines = content.splitlines()
     found = 0

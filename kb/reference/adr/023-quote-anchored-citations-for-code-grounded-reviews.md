@@ -1,5 +1,5 @@
 ---
-description: "Permits reviewed-commit-pinned verbatim quote anchors in code-grounded reviews; write time resolves quotes against the checkout while standing validation checks only retained shape"
+description: "Permits reviewed-commit-pinned verbatim quote anchors in code-grounded reviews; main-review publication resolves generated quotes against frozen Git blobs while standing validation checks retained shape"
 type: ../types/adr.md
 tags: []
 status: accepted
@@ -39,7 +39,13 @@ Used on the claims that carry a review, not on every sentence. Existing citation
 
 ### Verification splits by where the source lives
 
-- **Resolution is a write-time check.** Confirming a quote appears in its pinned source is owned by a separate instruction (`verify-review-quote-grounding`) run against the live checkout, while the checkout still exists. It is kept *out* of the `write-agent-memory-system-review` skill to keep that skill a thin contract; quote errors are expected to be rare, so a runnable-on-demand procedure is sufficient.
+- **Resolution is a publication check.** `analyse-agentic-system` resolves every
+  quote in its exact result and generated review candidates against the Git
+  blob at the run's recorded full commit. It never reads quote evidence from
+  the worktree. A missing blob, mismatched repository or revision, or quote
+  absent after whitespace normalization blocks publication. This check belongs
+  to the parent publication bundle because that boundary has the frozen source
+  and every candidate byte together.
 - **The standing validator checks shape only.** For reviews it confirms each quote-anchored citation is well-formed and names a source. It cannot resolve the quote offline, because the source is not retained — and does not need to, because the pinned commit cannot drift.
 - **`kb/sources/` is where standing resolution would live.** Snapshots there *are* retained immutably in the repo, so a future standing validator could resolve quotes against them with no network. Not built now (one use site today); recorded as the natural home if the convention is reused.
 
@@ -58,7 +64,7 @@ Used on the claims that carry a review, not on every sentence. Existing citation
 ### Harder
 
 - **Authors must quote precisely.** A paraphrase in the blockquote fails resolution. The blockquote must be verbatim.
-- **Resolution is only as good as the moment it runs.** Because the source is not retained, a quote that was never verified at write time cannot be verified later from the KB alone — it would require re-fetching the external repo at the pinned commit.
+- **Resolution depends on the frozen source being available during publication.** Because the source is not retained, a quote outside that checked publication path cannot be verified later from the KB alone without retrieving the external repository at the pinned commit.
 
 ### Not changing
 
@@ -72,5 +78,5 @@ Used on the claims that carry a review, not on every sentence. Existing citation
 - [ADR-019: collection-owned link vocabulary](./019-collection-owned-link-vocabulary.md) — foundation: the source collection owns outbound authorization
 - [ADR-059: external is a reserved outbound destination](./059-external-is-a-reserved-outbound-destination.md) — amendment: external authorization is collection-owned while citation shape remains type-owned
 - [agent-memory-system-review type spec](../../agent-memory-systems/types/agent-memory-system-review.md) — where the convention is defined
-- [verify-review-quote-grounding](../../instructions/verify-review-quote-grounding.md) — the write-time resolution procedure
+- [analyse-agentic-system](../../instructions/analyse-agentic-system/SKILL.md) — the producer and publication procedure that owns resolution against the frozen source
 - [grounding-alignment review gate](../../instructions/review-gates/semantic/grounding-alignment.md) — see-also: the semantic complement — this ADR's structural check narrows the question the gate's judgment then answers

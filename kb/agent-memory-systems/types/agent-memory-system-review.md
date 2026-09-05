@@ -41,7 +41,7 @@ For a **load-bearing claim** — one a reader could reasonably dispute, or that 
 
 ```markdown
 > the verbatim line(s) the claim rests on, copied exactly from the source
-> --- `src/memory/store.py` @ `abc123`
+> --- `src/memory/store.py` @ `<full-reviewed-commit>`
 ```
 
 For GitHub-backed sources the attribution may instead be a commit-pinned blob URL, consistent with the caller's citation format:
@@ -53,7 +53,7 @@ For GitHub-backed sources the attribution may instead be a commit-pinned blob UR
 
 The quoted text is the anchor; the attribution pins where it came from. Do not record byte offsets, character spans, or ids — the quote is self-relocating (it can be re-found by search) and the pinned commit is immutable, so nothing else is needed to verify it.
 
-This is **optional and additive** — use it on the claims that carry the review, not on every sentence. It strengthens the "readable without the source" goal above: the evidence now travels inline rather than hiding behind a file path. Resolution (does the quote actually appear in the pinned source?) is a write-time check run against the live checkout — see [verify-review-quote-grounding](../../instructions/verify-review-quote-grounding.md) — not something a later reader or the standing validator can redo, because the source is not retained in the KB. The validator checks only that each quote-anchored citation is well-formed and names a source.
+This is **optional and additive** — use it on the claims that carry the review, not on every sentence. It strengthens the "readable without the source" goal above: the evidence now travels inline rather than hiding behind a file path. The parent `analyse-agentic-system` publication check resolves every quote in the generated candidate against the Git blob at the run's frozen full commit, never against the worktree. A resolution failure blocks publication. A later reader or the standing validator cannot redo that check from the KB because the source is not retained; standing validation checks only that each quote-anchored citation is well-formed and names a source. Resolution establishes that the text occurs in the source. The semantic gates separately judge whether it supports the claim.
 
 ## Opening and source metadata
 

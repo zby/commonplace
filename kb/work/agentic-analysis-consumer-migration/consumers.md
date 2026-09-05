@@ -20,7 +20,7 @@ Entries without an execution record remain **pending**. The acceptance condition
 | C08 — done | [Transfer scan](../../instructions/scan-agentic-system-transfer/SKILL.md) now requires the exact main-review result and its completion state. | Initial and final completion/identity checks, canonical finding references, and no legacy or summary fallback. See [acceptance](./c08-acceptance.md). |
 | C09 — done | [External-system placement pass](../../instructions/simplification-passes/place-external-systems.md) reads generated main reviews, with source ingests identified separately. | Check support, evidence status, source revision, and input hashes; withhold unsupported or local-only citations. See [acceptance](./c09-acceptance.md). |
 | C10 — done | [Classification audit](../../instructions/refresh-agent-memory-review-taxonomy.md) reads retained main results and diagnoses their classifications. | Require exact evidence and method identities; preserve scope and uncertainty. Route defects through the producing method and source regeneration, without patching generated prose. See [acceptance](./c10-acceptance.md). |
-| C11 | [Quote-grounding check](../../instructions/verify-review-quote-grounding.md) reads review quotations and checkout files. | Determine which main-review output actually contains quotations and migrate the relevant check, or retire the unused procedure. Resolve evidence against the frozen commit/capture, not the current worktree; keep quote verification distinct from claim-support judgment. |
+| C11 — retired into publication | Quote-grounding now runs inside [main-review analysis checks](../../../src/commonplace/lib/agentic_analysis.py); the standalone live-checkout instruction is retired. | Every quote-anchored block in an exact result or generated candidate resolves against the recorded Git commit or immutable capture before publication. Occurrence remains distinct from semantic support. See [acceptance](./c11-acceptance.md). |
 | C12 | [Legacy review writer](../../instructions/write-agent-memory-system-review/SKILL.md) reads existing reviews for style and drafts again from frozen sources. | Retire the extra drafting and style-exemplar dependency with C14. Do not rewrite this writer as a legacy-format projection adapter. |
 | C13 | Authored evidence links in `kb/notes/`, `kb/articles/`, `kb/sources/`, `kb/reference/`, and per-system analyses; [grounding-alignment gate](../../instructions/review-gates/semantic/grounding-alignment.md) follows linked library evidence. | Work by citing artifact or bounded claim group. Check support before changing a target; retain historical citations when the original observation matters. The generic gate already recognizes both system collections: change it only if the selected evidence location requires it. |
 | C14 | Main-review publication and handoff: [analysis checks](../../../src/commonplace/lib/agentic_analysis.py), [publication code](../../../src/commonplace/lib/agentic_publication.py), [validation](../../../src/commonplace/lib/validation.py), result/run-state contracts, and producing skill. | After active consumers are resolved, remove mandatory legacy candidate/output fields, legacy publication gates, and stale-output reporting tied to the old pipeline. Preserve necessary evidence and publication checks on the main outputs; handle validation of retained historical artifacts explicitly. Prove a memory-system run can complete with its main-review outputs alone. |
@@ -150,10 +150,9 @@ supplied in the same prospective publication bundle. All 723 tests pass. No
 public landscape article or whole-corpus comparison was refreshed. Pilot and
 publication fix committed in `f586fb1d`.
 
-**Next:** C11, checking where the main result retains quotations and migrating
-or retiring the quote-grounding procedure. Resolve quotations against the
-recorded source revision or capture. C05–C07 need enough regenerated evidence
-or an explicit historical disposition. Pond remains outside the new comparison
+**Next:** C05 needs corrected regenerated trace-learning evidence before its
+survey can move. C06 and C07 likewise need enough regenerated evidence or an
+explicit historical disposition. Pond remains outside the new comparison
 population. Consumer IDs remain an inventory, not a fixed sequence.
 
 C15 received navigation and public-citation contract updates needed by C01–C04. Broader citation
@@ -223,3 +222,38 @@ existing publication interface and passed all 723 tests. Its independent
 exercise reproduced oh-my-pi's defects and identified two further learning
 assessment gaps in Maka, while preserving valid uncertainty and weaker bases.
 Implementation and verification are recorded in this workshop's Git history.
+
+### C11 — Quote-grounding check
+
+**Status: retired into main-review publication.** The standalone instruction
+had no automated caller, freshness baseline, or skill projection. Its required
+input was a live worktree, while the main workflow already owns the exact
+result, generated candidates, frozen source identity, and prospective complete
+state at one publication boundary. Repository inspection found no
+quote-anchored blocks in the current generated Maka or oh-my-pi outputs. The
+unmarked Semantic Engine review and several historical legacy reviews contain
+them, but they are retained artifacts rather than inputs to this migration.
+
+Owned files: main-review analysis checks and tests, the producer and result
+contracts, the standing shape validator's explanation, the legacy review type
+and quote-anchor ADR, the removed instruction, its public redirect, this queue,
+the earlier contract snapshot's retirement notice, and the [acceptance
+record](./c11-acceptance.md). No generated review content or historical
+citation was changed.
+
+The prospective bundle verifier now extracts every blockquote ending in a
+`> ---` attribution from the exact result, compact review candidate, and
+conditional legacy candidate. For Git sources it requires a matching
+repository and full revision, reads the attributed blob with `git cat-file`,
+and compares normalized quote text. The worktree and current HEAD cannot
+supply evidence. For immutable captures it compares against the captured bytes
+whose SHA-256 is already part of run state. Any failure blocks both prepare and
+publish before public writes. Standing validation still checks retained shape,
+and semantic gates still decide whether an occurring quote supports a claim.
+
+Focused checks cover both main outputs, local and GitHub attributions, changed
+worktree content, wrong revisions, capture resolution, and candidate rejection
+inside `prepare`. The implementation and documentation passed the full test and
+validation checks recorded in the acceptance file. Historical reviews were not
+retroactively attested. C11 adds no consumer-facing secondary analysis and no
+legacy-format adapter.
