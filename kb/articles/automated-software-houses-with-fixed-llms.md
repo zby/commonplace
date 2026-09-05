@@ -215,14 +215,14 @@ positive evidence: a run that never challenges an assumption cannot establish
 coherent revision merely because nothing went wrong.
 
 1. **Holding and application.** Across novel changes, the house uses
-   program theory to guide proposal, evaluation, diagnosis,
-   or recovery, including cases whose correct handling is not stated verbatim
-   in its retained state. Test causal use through matched interventions on
-   retained commitments or the paths used to reconstruct and consume them.
-   The test must connect a changed commitment or access path to a predicted
-   change in the house's decisions, accounting for equivalent reconstruction.
-   Removing one written carrier without changing behaviour is inconclusive
-   when other records supply the same understanding.
+   program theory to guide proposal, evaluation, diagnosis, or recovery,
+   including cases whose correct handling is not stated verbatim in its
+   retained state. Test causal use through matched interventions on retained
+   commitments or on the paths used to reconstruct and consume them: a
+   changed commitment or access path must produce a predicted change in the
+   house's decisions. Removing one written carrier without changing behaviour
+   is inconclusive when other records supply the same understanding; call
+   that equivalent reconstruction, and the test must account for it.
 2. **Coherent revision.** Later requests or operating consequences expose
    an inadequacy in the current program theory. The house responds by revising
    the product, retained project state, production machinery, or a combination,
