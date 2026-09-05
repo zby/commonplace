@@ -87,7 +87,10 @@ Two consequences for the theory, both open:
   them into the definition would blur the contrast the component experiment
   isolates. If the effect holds over the next two article runs, propose a
   fifth treatment, theory with exemplars, and let the experiment decide
-  whether they belong in the theory.
+  whether they belong in the theory. Follow-up the same day: the training
+  article gained a short "Future work: exemplars instead of theories"
+  section naming retained cases as an alternative regime that gives up
+  explanatory reach, with the fifth treatment and its prediction.
 - **The rules have instance-level warrant only.** Each row was abstracted
   from edits the operator accepted, and [an accepted edit verifies the change,
   not the rule](../../notes/an-accepted-edit-verifies-the-change-not-the-rule.md).
