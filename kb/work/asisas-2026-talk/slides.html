@@ -398,29 +398,15 @@
   </aside>
 </section>
 
-<!-- Interrupt · two readings -->
+<!-- Interrupt · localized vs distributed -->
 <section class="slide interrupt">
-  <svg viewBox="0 0 640 400" role="img" aria-label="A Necker cube and its two possible readings">
-    <g stroke="#F6F5F1" stroke-width="3" fill="none" stroke-linejoin="round">
-      <rect x="140" y="130" width="160" height="160"/>
-      <rect x="202" y="84" width="160" height="160"/>
-      <path d="M140,130 L202,84 M300,130 L362,84 M140,290 L202,244 M300,290 L362,244"/>
-    </g>
-    <g stroke="#F6F5F1" stroke-width="2" fill="none" stroke-linejoin="round">
-      <rect x="475" y="77" width="64" height="64"/>
-      <path d="M450,96 L475,77 M514,96 L539,77 M450,160 L475,141 M514,160 L539,141"/>
-    </g>
-    <rect x="450" y="96" width="64" height="64" fill="#8FA9C4" stroke="#F6F5F1" stroke-width="2"/>
-    <text x="494" y="199" font-size="18" fill="#F6F5F1" opacity=".6" text-anchor="middle" font-family="'IBM Plex Mono',monospace">or</text>
-    <g stroke="#F6F5F1" stroke-width="2" fill="none" stroke-linejoin="round">
-      <rect x="450" y="236" width="64" height="64"/>
-      <path d="M450,236 L475,217 M514,236 L539,217 M450,300 L475,281 M514,300 L539,281"/>
-    </g>
-    <rect x="475" y="217" width="64" height="64" fill="#E0673B" stroke="#F6F5F1" stroke-width="2"/>
+  <svg viewBox="0 0 640 400" role="img" aria-label="The same circle twice: once drawn as a single stroke, once emerging from a cloud of scattered dots">
+    <circle cx="180" cy="200" r="95" fill="none" stroke="#F6F5F1" stroke-width="4"/>
+    <g id="dotcloud" fill="#C9A45C"></g>
   </svg>
   <aside class="notes">
-    <p><b>~15s beat — talk over the picture.</b> The Necker cube: one figure, two readings, both reasonable — and nothing in the figure adjudicates between them. That is the natural-language cell of the grid: <b>underspecification, not a defect of any particular text</b>.</p>
-    <p>The contrast in one breath: if two consumers of code disagree, one of them is wrong; if two readers of a prompt disagree, maybe neither is.</p>
+    <p><b>~15s beat — talk over the picture.</b> The grid's second axis in one picture: the same circle, twice. On the left it is an <b>addressable unit</b> — you can point at it, revise it, delete it, and it's gone. On the right the circle is still plainly there, but <b>no dot is the circle</b>: the content is spread across the state. Remove any dot and the circle persists; there is nothing to point at.</p>
+    <p>That is the distributed-parametric cell — weights, adapters, embeddings — and it is why they are <b>probed, not read</b>, and why prompts and validators revise item by item while weights don't.</p>
   </aside>
 </section>
 
@@ -504,6 +490,21 @@
 <div class="notes-panel" id="notesPanel"><div class="np-label">speaker notes · N to hide</div><div id="notesBody"></div></div>
 
 <script>
+  (function(){
+    const g=document.getElementById('dotcloud');
+    if(!g)return;
+    let s=42;const rnd=()=>((s=(s*1103515245+12345)&0x7fffffff)/0x7fffffff);
+    const NS='http://www.w3.org/2000/svg';
+    for(let k=0;k<120;k++){
+      const a=rnd()*Math.PI*2,r=95+(rnd()+rnd()+rnd()-1.5)*24;
+      const c=document.createElementNS(NS,'circle');
+      c.setAttribute('cx',(460+Math.cos(a)*r).toFixed(1));
+      c.setAttribute('cy',(200+Math.sin(a)*r).toFixed(1));
+      c.setAttribute('r',(1.4+rnd()*2.6).toFixed(1));
+      c.setAttribute('opacity',(0.5+rnd()*0.5).toFixed(2));
+      g.appendChild(c);
+    }
+  })();
   const slides=[...document.querySelectorAll('.slide')];
   const counter=document.getElementById('counter');
   const panel=document.getElementById('notesPanel');
