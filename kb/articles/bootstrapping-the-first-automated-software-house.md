@@ -148,11 +148,13 @@ helps identify what those remaining decisions need:
 | Transfer is possible but too expensive | Reduce its cost, change the method, or defer it |
 
 Among ready transfers, value, cost, risk, and dependencies determine what to
-try next. The remaining decisions require different
-[functions](../notes/residue-classes-need-different-mechanisms-so-architecture-is-mixed.md):
-representation, interpretation, verification, and continuity. Commonplace uses
-notes, models, code, and retained evidence to supply them; a final house need
-not preserve that division.
+try next. The decisions that are not ready each need a different
+[function](../notes/residue-classes-need-different-mechanisms-so-architecture-is-mixed.md)
+to grow before they can move: representation for a missing premise,
+interpretation for an unsettled criterion, verification for a missing check,
+and continuity for a decision that arrives late. Commonplace currently supplies
+these functions with notes, models, code, and retained evidence; a final house
+need not keep them in separate kinds of carrier.
 
 ## A possible early trial: learning which checks a Markdown edit needs
 
