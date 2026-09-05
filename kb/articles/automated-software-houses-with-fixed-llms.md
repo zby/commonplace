@@ -238,10 +238,11 @@ coherent revision merely because nothing went wrong.
 
 A proposed experiment could start with one maintained product and follow new
 requirements and operating consequences. One way to exercise the witness
-conditions is to expose an architectural assumption after intervening changes,
-then continue maintenance after its revision. The evidence must demonstrate
-application and revision of program theory; a stream of unlisted parameter
-variations does not establish those capacities by itself.
+conditions is to build in an architectural assumption whose consequences
+surface only after later changes, then continue maintenance after the house
+revises it. The evidence must demonstrate application and revision of program
+theory. A stream of requests that vary within the anticipated design, even if
+none was listed in advance, does not establish those capacities by itself.
 
 In the tenant example, suppose each account initially belongs to one tenant.
 A later request lets consultants work across customer organizations with one
