@@ -8,6 +8,7 @@ source_notes:
   - kb/notes/definitions/behavior-determining-organization.md
   - kb/notes/definitions/representational-form.md
   - kb/notes/definitions/software-house.md
+  - kb/notes/ephemeral-computation-prevents-accumulation.md
   - kb/notes/first-principles-reasoning-selects-for-explanatory-reach-over.md
   - kb/notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md
   - kb/notes/retained-artifacts-enable-persistent-deployment-time-adaptation.md
@@ -315,7 +316,19 @@ knowledge that resists statement as a rule, such as what makes a passage fail
 a particular readership, where in practice the retained rule has carried its
 meaning through its examples.
 
-What it gives up is mostly [explanatory
+In pure form this is [ephemeral
+computation](../notes/ephemeral-computation-prevents-accumulation.md): the
+model builds whatever theory it needs from the cases on the spot, uses it,
+and discards it, then rebuilds it at the next decision. The cost is paid at
+every use, and the result varies between uses. A retained theory is a cache
+of that derivation. Under the fixed-model premise it is the cache that does
+not require training: weights are one place to store a derived
+understanding, retained natural-language theory is another, and a prompt or
+KV cache is a third that is fast but opaque, cannot be revised as text, and
+expires. Retained theory is the only one of the three that the house can
+inspect, revise, and test.
+
+What exemplars give up is mostly [explanatory
 reach](../notes/first-principles-reasoning-selects-for-explanatory-reach-over.md).
 A theory says why, so it applies to changes unlike the cases that produced it
 and states what would refute it. A case set covers what has been seen and
