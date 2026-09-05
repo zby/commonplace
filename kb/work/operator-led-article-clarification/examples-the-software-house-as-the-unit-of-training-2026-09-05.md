@@ -588,3 +588,30 @@ the current product,"
 >
 > Which side of the boundary a contribution falls on turns on the decision
 > supplied: users may say what the product should do or report what it did.
+
+## 22. Why the unit is a house and not a model with a cache
+
+- **Commit:** see log (`Workshop:` trailer)
+- **Kind:** Verdict without its why (operator-supplied content: the missing
+  justification for the unit choice)
+- **Operator's verdict:** "there is just one more thing - you can define the
+  training regime without the automatic sofware house starting point if you
+  believe that caching only the llm outputs is enough - but we believe that
+  the ultimate model requires both symbolic and natural language learning and
+  that actually manipulating new theories will require new code."
+- **Diagnosis:** The article never said why the regime needs a whole house
+  rather than a model with a cache of its own outputs. The reason is the
+  cross-form learning commitment: new theories will need new code to be
+  manipulated, so the unit must be a system that can write and revise both
+  forms. Placed at the end of "What is trained", extending the
+  lesson-can-take-any-form sentence it follows.
+
+**Added (end of "What is trained: the whole house"):**
+
+> This also says why the regime starts from a software house rather than from a
+> model with a cache of its own outputs. If retaining the models'
+> natural-language outputs were enough, a text store would be all the trainable
+> state a learner needs. We believe instead that learning must span both the
+> natural-language and the symbolic forms — manipulating new theories will
+> require new code — so the unit must be a system that can write and revise
+> both.

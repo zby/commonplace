@@ -101,6 +101,14 @@ Markdown edit require product checks, or where tenant identity must be
 represented to preserve isolation. A lesson can be stated in a theory,
 enforced by tests, compiled into a tool, or embodied in product code.
 
+This also says why the regime starts from a software house rather than from a
+model with a cache of its own outputs. If retaining the models'
+natural-language outputs were enough, a text store would be all the trainable
+state a learner needs. We believe instead that learning must span both the
+natural-language and the symbolic forms — manipulating new theories will
+require new code — so the unit must be a system that can write and revise
+both.
+
 ## Why this is theory-mediated learning
 
 The claim is easiest to show on a concrete case. Consider a hypothetical
