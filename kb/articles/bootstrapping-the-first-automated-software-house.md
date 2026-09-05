@@ -201,9 +201,12 @@ while holding fixed every other place the learned information could be carried.
 The trial could also support the [training article's
 comparison](./the-software-house-as-the-unit-of-training.md#testable-hypotheses)
 of explicit project theory with raw records, a descriptive summary, and a
-plausible wrong theory. Changes that
-preserve the initial dependency account and changes that break it test different
-predictions. Record initial errors separately from recovery after feedback.
+plausible wrong theory. Changes that preserve the initial dependency account
+and changes that break it test different predictions: the first should favour
+the theory treatment, while the second may cancel or reverse that advantage
+until the account is revised. Record initial errors separately from recovery
+after feedback, because rapid recovery can hide the initial loss in a whole-run
+score.
 Targeted [interventions on retained theory](../notes/retained-theory-intervention-isolates-one-explicit-surface.md)
 can help distinguish the account's contribution from that of a revised selector.
 
