@@ -1,113 +1,42 @@
 ---
-description: "Apache Maka's separate history, local-memory and atomic-extraction routes, with their consumers and evidence limits"
 type: kb/types/note.md
+description: "Apache Maka's hosted execution, durable continuation, separate memory acquisition and evaluation authority at a pinned source boundary"
 generated-by: analyse-agentic-system
-analysis-run: AAS-2026-09-05-apache-maka-01
+analysis-run: AAS-2026-09-05-apache-maka-06
 source-identity: https://github.com/apache/maka
-reviewed-revision: ece69ab3e7a1629a6073831005711d8aa7160ca4
-analysis-result: kb/reports/retained/agentic-system-analysis/AAS-2026-09-05-apache-maka-01/result.md
-analysis-result-sha256: fcd16d145d4ee6730eedab994478c8a320fd98f79123dd2df145c3cb6b8d3c18
-traits: [has-external-sources, has-implementation]
-tags: [agent-memory, context-engineering, evaluation, tool-loop]
+reviewed-revision: "02f97c16d76e644d5b565889701958293ff7b5fb"
+analysis-result: kb/reports/retained/agentic-system-analysis/AAS-2026-09-05-apache-maka-06/result.md
+analysis-result-sha256: "9752e8525ec9e76d03dbac0934726cecf97263b2a6f092ea5ae413c769db42b4"
 ---
 
 # Apache Maka
 
-Maka is an enclosing agent runtime whose Host owns the inspected execution
-path while model context is projected from retained execution events. Its
-built-in memory has distinct write and later-read routes: local Markdown memory
-is injected into prompts, conversation checkpoints replace covered history,
-and atomic SQLite MemoryItems are written without an inspected production
-recall consumer.
+Evidence basis: source code and source documentation at commit `02f97c16d76e644d5b565889701958293ff7b5fb`, inspected on 2026-09-05. No target execution or behavioral experiment was performed.
 
-This is a code-grounded analysis of [commit
-ece69ab3e7a1629a6073831005711d8aa7160ca4](https://github.com/apache/maka/tree/ece69ab3e7a1629a6073831005711d8aa7160ca4),
-inspected on 2026-09-05. The [exact analysis](../../reports/retained/agentic-system-analysis/AAS-2026-09-05-apache-maka-01/result.md)
-retains the canonical records, scoped comparison fields and limitations.
-No target run or intervention was performed; implemented wiring does not
-establish successful operation, activation or benefit.
+Apache Maka (Incubating) is an enclosing agent runtime organized around hosted execution and a retained event log. Clients submit work to Runtime Host; RuntimeKernel and AgentRun own the turn, the model-step loop selects subsequent calls, and ToolRuntime settles client-executed effects. Agent Graph admits dependent child activations through revision-bound claims. Eval separately executes experiment cells, imports verifier scores and selects authoritative attempt results. This is a whole-system ownership account with bounded feature coverage, not an exhaustive proof of every client or deployment path. See the [exact result](../../reports/retained/agentic-system-analysis/AAS-2026-09-05-apache-maka-06/result.md) for canonical records and retained verbatim evidence.
 
-## Execution and effect boundaries
+## Execution and recovery
 
-The ordinary route is client request → Host admission → AgentRun and
-RuntimeKernel → provider step → local tool settlement or final output →
-durable events and terminal state. Host checks session/turn identity against
-existing admission. The adapter issues one provider step; the runtime owns
-continuation and refreshes its history projection. Before local tool effects,
-the backend requires readable current-run events. These are implementation
-findings in RTE-1/RTE-2, supported by [root admission](https://github.com/apache/maka/blob/ece69ab3e7a1629a6073831005711d8aa7160ca4/packages/runtime-host/src/server/root-turn-coordinator.ts#L1462-L1510),
-[provider dispatch](https://github.com/apache/maka/blob/ece69ab3e7a1629a6073831005711d8aa7160ca4/packages/runtime/src/model-adapter.ts#L281-L339)
-and [local tool continuation](https://github.com/apache/maka/blob/ece69ab3e7a1629a6073831005711d8aa7160ca4/packages/runtime/src/ai-sdk-backend.ts#L2815-L2878).
+The ordinary loop assembles context and the active tool subset, calls the configured provider, settles returned tool calls and continues while step budget and stop conditions permit. Its terminal message records what the runtime returned; it does not establish task success. Model identity resolves through connection/model configuration. Exact provider weights and operational parameter changes remain uninspected. RTE-1 and CMP-2: [model-step loop](https://github.com/apache/maka/blob/02f97c16d76e644d5b565889701958293ff7b5fb/packages/runtime/src/ai-sdk-turn.ts), [model resolution](https://github.com/apache/maka/blob/02f97c16d76e644d5b565889701958293ff7b5fb/packages/runtime/src/model-adapter.ts).
 
-Graph supervisor wakes and scheduled agent work enter hosted execution, but
-provider-owned tools and scheduled native notifications have separate effect
-owners. Local ToolRuntime checks therefore do not establish universal control
-over external effects. Recovery closes unfinished runs from retained evidence;
-continuation requires an authoritative safety check. These are bounded
-protocols, with no inspected crash experiment or deployed isolation result
-(RTE-3 through RTE-6): [provider activity](https://github.com/apache/maka/blob/ece69ab3e7a1629a6073831005711d8aa7160ca4/packages/runtime/src/ai-sdk-backend.ts#L2506-L2557),
-[graph admission](https://github.com/apache/maka/blob/ece69ab3e7a1629a6073831005711d8aa7160ca4/packages/runtime-host/src/server/agent-graph-execution-coordinator.ts#L74-L143),
-[scheduled effects](https://github.com/apache/maka/blob/ece69ab3e7a1629a6073831005711d8aa7160ca4/packages/runtime-host/src/server/scheduled-task-coordinator.ts#L560-L605)
-and [continuation safety](https://github.com/apache/maka/blob/ece69ab3e7a1629a6073831005711d8aa7160ca4/packages/runtime/src/runtime-kernel.ts#L1475-L1486).
+Durability has distinct enforcement points. Where a durable commit sink is configured, tool preparation is committed before invocation; an outcome-write failure can still follow an external effect, with compensation only best effort. Ordinary nonterminal events can fail open, while steering and selected terminal/interaction boundaries require durable writes. Replay planning blocks indeterminate effects, including model-hidden nested calls. These are source-level protocols, not observed crash guarantees or exactly-once arbitrary effects. RTE-2, RTE-3 and CLM-1: [tool settlement](https://github.com/apache/maka/blob/02f97c16d76e644d5b565889701958293ff7b5fb/packages/runtime/src/tool-runtime.ts), [event persistence](https://github.com/apache/maka/blob/02f97c16d76e644d5b565889701958293ff7b5fb/packages/runtime/src/agent-run.ts), [replay planning](https://github.com/apache/maka/blob/02f97c16d76e644d5b565889701958293ff7b5fb/packages/runtime/src/runtime-resume.ts).
 
-## Three memory routes
+Graph readiness is computed from stored state; dispatch then checks the expected schedule revision. Supervisor notifications are an observation channel rather than a per-dispatch approval gate. RTE-4: [schedule reconciliation](https://github.com/apache/maka/blob/02f97c16d76e644d5b565889701958293ff7b5fb/packages/runtime/src/stream-graph-schedule-reconcile.ts).
 
-| Material | Write and maintenance | Later consumer and limit |
-|---|---|---|
-| Local MEMORY.md/PENDING.md | User operations, proposal approval/rejection, status changes and revision-checked bundle writes | Active, session-visible entries pass policy/privacy gates and enter the prompt as untrusted lower-priority context; activation unmeasured |
-| Atomic SQLite MemoryItems | Models transform eligible user text; citation/policy checks and canonicalization judgments gate durable writes with event provenance | Storage key/ID lookup is available, but no production task-model caller was found in the inspected composition |
-| RuntimeEvents and compaction checkpoints | Events are retained; text compaction produces and structurally checks summaries; provider compaction can retain opaque state | Coverage-matched history/checkpoint replay changes later context; text faithfulness and opaque representation remain unmeasured |
+## Memory and context
 
-The first two routes must not be joined into a single extraction-to-prompt
-loop. [Local prompt composition](https://github.com/apache/maka/blob/ece69ab3e7a1629a6073831005711d8aa7160ca4/packages/runtime-host/src/server/interactive-run-composer.ts#L588-L624)
-reads the file bundle (RTE-8), while [atomic commitment](https://github.com/apache/maka/blob/ece69ab3e7a1629a6073831005711d8aa7160ca4/packages/runtime/src/memory-extraction.ts#L1019-L1139)
-writes structured items (RTE-9 through RTE-11). ABS-1 records the bounded
-production call search behind the missing-recall finding; an external embedder
-could still call the storage API.
+Maka's retained-context mechanisms have different consumers:
 
-Text checkpointing is an implemented online, session-bounded transformation of
-accumulated traces for later task continuation. It does not demonstrate
-cross-task learning from atomic items or improved outcomes. [Checkpoint
-variants](https://github.com/apache/maka/blob/ece69ab3e7a1629a6073831005711d8aa7160ca4/packages/runtime/src/history-compact-checkpoint.ts#L87-L138)
-include encrypted provider content, so the comparison leaves the complete
-representational and distilled-form classifications unresolved. See
-RTE-12/RTE-13 and [coverage-matched replay](https://github.com/apache/maka/blob/ece69ab3e7a1629a6073831005711d8aa7160ca4/packages/runtime/src/ai-sdk-backend.ts#L1890-L1916).
+- Earlier inline session invocations are automatically projected into later context. Portable compaction creates a durable continuation summary; provider-native compaction retains encrypted state that later requests consume directly. Both checkpoint branches establish automatic trace-fed write, retention and later consumption. Trace learning is therefore **wired**, without establishing improvement. Opaque native content prevents a complete representation/distilled-form classification, and session identity does not establish the aggregate task horizon. RTE-8, RTE-9, RTE-10: [checkpoint forms and replay](https://github.com/apache/maka/blob/02f97c16d76e644d5b565889701958293ff7b5fb/packages/runtime/src/history-compact-checkpoint.ts).
+- Active manual Markdown memory enters eligible main-session prompts as explicitly untrusted context. Automatic extraction instead proposes and canonicalizes assertions from cited user events into a separate SQLite store. The bounded in-tree call-site search established no later semantic recall consumer for those SQLite items; a saved receipt is not evidence of future recall. RTE-11, RTE-12 and ABS-1: [manual-memory composition](https://github.com/apache/maka/blob/02f97c16d76e644d5b565889701958293ff7b5fb/packages/runtime-host/src/server/interactive-run-composer.ts), [extraction](https://github.com/apache/maka/blob/02f97c16d76e644d5b565889701958293ff7b5fb/packages/runtime/src/memory-extraction.ts).
+- Acquired skills have a shared turn inventory, deterministic catalog ranking and requested instruction reads. Archived tool results and child outputs also have explicit requested-read routes. Automatic identity/coarse selection and model-requested pull coexist; lexical search answering a request is not automatic relevance-based push. RTE-13, RTE-14, RTE-15, RTE-16: [skill context](https://github.com/apache/maka/blob/02f97c16d76e644d5b565889701958293ff7b5fb/packages/runtime/src/skills-context.ts), [archive read](https://github.com/apache/maka/blob/02f97c16d76e644d5b565889701958293ff7b5fb/packages/runtime/src/archive-read-tool.ts).
 
-## What the checks authorize
+## Evidence and authority
 
-Atomic extraction checks citation membership and uses a separate model
-judgment of support. These checks do not establish the truth of user assertions
-or observed rewrite fidelity. Local human approval authorizes inclusion;
-summary checks authorize a structurally eligible checkpoint. Neither is an
-inspected semantic-faithfulness test (RTE-7/RTE-10/RTE-12).
+Memory admission, checkpoint compatibility, tool permission and graph readiness have operational force. They do not automatically warrant the truth of an answer. Extraction combines model semantic guidance with code-level provenance/quote/shape checks; quote containment does not prove entailment. Compaction coverage checks likewise do not establish semantic fidelity.
 
-Goal evaluation is a separate, tool-free call using the session model and recent
-conversation. Its flags can settle or continue a goal, and its reason steers
-later work. The parser coerces values to booleans, so accepted JSON alone does
-not establish strict flag types. Task reminders are advisory and cannot veto
-an already-terminal judge result. This is operational control, with no
-independent environmental verification established (RTE-14/RTE-15): [goal
-parser](https://github.com/apache/maka/blob/ece69ab3e7a1629a6073831005711d8aa7160ca4/packages/runtime/src/goal-evaluator.ts#L122-L173)
-and [settlement](https://github.com/apache/maka/blob/ece69ab3e7a1629a6073831005711d8aa7160ca4/packages/runtime/src/goal-continuation.ts#L699-L741).
-
-The eval framework separately acquires verifier results and chooses the
-earliest attempt excluding infrastructure failures and indeterminate outcomes,
-including scored task failures. That licenses a selected benchmark outcome,
-not a claim that memory caused an improvement (RTE-16): [result
-selection](https://github.com/apache/maka/blob/ece69ab3e7a1629a6073831005711d8aa7160ca4/packages/eval/src/result.ts#L87-L94).
-The inspected benchmark report is attributed operation; its raw traces and
-verifier output were not available to this pass.
+Eval provides a different, bounded check: it imports the configured verifier's score and selects the earliest reusable substantive attempt, rather than the highest score. Verifier validity, expected-answer access and reported benchmark outcomes were not inspected, so this run establishes evaluation machinery without a performance or causal advantage. RTE-5, RTE-6 and CLM-3: [evaluation runner](https://github.com/apache/maka/blob/02f97c16d76e644d5b565889701958293ff7b5fb/packages/eval/src/runner.ts), [result selection](https://github.com/apache/maka/blob/02f97c16d76e644d5b565889701958293ff7b5fb/packages/eval/src/result.ts).
 
 ## Scope
 
-The whole-system target is assessed through selected material routes. The
-comparison covers built-in conversational history/checkpoints, local memory and
-atomic items with their access bookkeeping. Mutable skills and goal state are
-adjacent control/instruction material. Offloaded tool artifacts, arbitrary
-project files, external skills/extensions, peer meshes, image-context and
-research features are outside the comparison or not traced end to end.
-
-A wired atomic recall consumer, paired source/summary evidence, stricter goal
-admission, inspected deployment boundaries or retained recall interventions
-would change specific conclusions. No product ranking, measured benefit or
-system-wide epistemic grade follows from this source inspection.
+Provider internals, remote peer transport, every platform sandbox and individual tool, deep-research/goal/bot workflows, release machinery and third-party session import routes were not exhaustively inspected. Operator-facing recap was checked and excluded from model-learning scope. No recalled-content dependence test was observed. These limits prevent universal isolation, faithfulness, task-success and causal claims. Candidate-linked runs, boundary fault tests, provider semantics and recalled-content interventions would strengthen or change this assessment.
