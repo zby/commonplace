@@ -55,10 +55,14 @@ reached from human-agent production is the bootstrap article's question.
 Report the resources used to build the seed separately from the operating
 budget.
 
-*Open-ended* means that relevant requests and consequences arise during
-continued development without being listed one by one in advance. The house's
-products and responsibilities can change with those requests. This does not
-mean that one house must handle every possible software product or request.
+*Open-ended* means that the house handles whatever reasonable requests and
+consequences arise as development continues, without their being listed in
+advance, including requests that change what the house is responsible for.
+*Reasonable* is left informal. Some programs cannot be produced at all, and
+others not within the available budget; those do not count against the house.
+The working standard is comparative: given the same requests and resources,
+the house should do at least as well as a counterpart house with people in
+its internal production roles.
 
 A *witness* is a concrete example that establishes an existence claim. Here a
 **witness house** would establish the conjecture by meeting its four conditions.
