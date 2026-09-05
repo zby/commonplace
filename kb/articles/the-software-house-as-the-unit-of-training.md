@@ -135,12 +135,12 @@ reliability in those operations remains an empirical question.
 
 ## What counts as training
 
-Production implements current requirements and supplies evidence through
-operating consequences and retained history. These episodes may also be
-replayed, simulated, or augmented. Evidence of training requires experience to
-cause a retained change in the house's capacity on later requirements.
-Persistence alone is insufficient: every product edit changes the starting
-conditions of later work.
+Production implements current requirements, and each episode of it supplies
+evidence: operating consequences and retained history. Episodes may also be
+replayed, simulated, or augmented. Evidence of training requires more than a
+change that persists — every product edit changes the starting conditions of
+later work. It requires experience to cause a retained change in the house's
+capacity on later requirements.
 
 After correcting the failing edit in the example, give two continuations
 identical product snapshots. Retain the revised explanation and checking

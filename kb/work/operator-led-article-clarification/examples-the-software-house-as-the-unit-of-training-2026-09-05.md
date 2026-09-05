@@ -176,3 +176,31 @@ done first and reported before any prose work.
 > a later decision. These are claims about how the house produces its updates,
 > and they can be tested separately from the outcome: two houses can both end up
 > modifying coherently while only one got there by revising an explanation.
+
+## 6. "These episodes" and "persistence alone"
+
+- **Commit:** see log (`Workshop:` trailer)
+- **Kind:** Unintroduced term; verdict without its why
+- **Operator's verdict:** "apply the rest" (phase-2 sweep candidate 5)
+- **Diagnosis:** *Episodes* appeared as an anaphor with no antecedent;
+  "persistence alone is insufficient" trailed the requirement it qualifies.
+  Reordered: introduce episodes as episodes of production, state the
+  insufficiency with its reason, then the requirement.
+
+**Before:**
+
+> Production implements current requirements and supplies evidence through
+> operating consequences and retained history. These episodes may also be
+> replayed, simulated, or augmented. Evidence of training requires experience to
+> cause a retained change in the house's capacity on later requirements.
+> Persistence alone is insufficient: every product edit changes the starting
+> conditions of later work.
+
+**After:**
+
+> Production implements current requirements, and each episode of it supplies
+> evidence: operating consequences and retained history. Episodes may also be
+> replayed, simulated, or augmented. Evidence of training requires more than a
+> change that persists — every product edit changes the starting conditions of
+> later work. It requires experience to cause a retained change in the house's
+> capacity on later requirements.
