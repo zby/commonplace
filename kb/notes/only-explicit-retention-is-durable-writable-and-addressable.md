@@ -1,54 +1,109 @@
 ---
-description: "Every tacit retention form — in-context conditioning, weights under selection or fine-tuning, human expertise — fails addressability, so governed retention currently runs through explicit artifacts"
+description: "Explicit artifacts give a learner direct targets for inspecting and revising commitments; durability, writability, and effective addressability still depend on the boundary and available operations"
 type: kb/types/note.md
 traits: [title-as-claim, has-comparison, synthesis]
 tags: [learning-theory, self-improving-systems, agent-memory]
 ---
 
-# Only explicit retention is currently durable, writable, and addressable at once
+# Explicit retention provides direct targets for selective revision
 
-A system that learns during operation must retain what it learned in some form, and the candidate forms differ on three properties that decide whether the retention can be governed. **Durability**: the retention survives the session or run that produced it. **Writability**: the system's own operation can change it. **Addressability**: processes inside the boundary can treat a retained commitment as an object — retrieve it, say what it claims, criticize it, revise it selectively, carry it to a new problem — since [reflection buys addressability](./reflection-buys-addressability.md). Cutting across all three is the tacit/explicit divide of [representational form](./definitions/representational-form.md): explicit forms (natural-language, symbolic) encode commitments readably; tacit forms (distributed-parametric state, conditioned context state, embodied human expertise) encode competence that cannot be read out as commitments.
+A retained theory, rule, or procedure can make a commitment an object the
+learner retrieves, criticizes, and revises. This is the practical advantage of
+explicit retention: it supplies a direct target for a named change. It does not
+establish that explicit artifacts are the only way to learn, transfer a
+judgment, or govern behaviour.
 
-| Retention form | Durable | Writable | Addressable |
-|---|---|---|---|
-| In-context conditioning | no — dies with the session | yes — every token writes it | no — the transcript is addressable; the competence it induces is not |
-| In-boundary sealed weights, replaceable only as a whole | yes | no — replacement changes component identity, not the weights | no |
-| Weights, with fine-tuning | yes | yes | no — no per-commitment retrieval, criticism, selective revision, or rollback |
-| Human expertise | yes | yes — practice writes it | no — stable, perhaps, but not inspectable, diffable, or transferable |
-| Explicit artifacts (natural-language, symbolic) | yes | yes | yes |
+Three properties must be assessed separately. **Durability** means state
+survives across the horizon of the learning claim. **Writability** means the
+system can change it through its permitted operations. **Addressability**
+means those operations can target the relevant commitment, rather than only
+replace or probe the component as a whole. [Reflection buys
+addressability](./reflection-buys-addressability.md), but neither a readable
+file nor a numerical parameter guarantees a clean boundary around a semantic
+commitment.
 
-Addressability here is comparative, not absolute — the reflection note is explicit that opaque retention still admits indirect handles (behavioral probing, wholesale rollback, retraining, steering). The column records whether any handle operates on the retained commitment *as an object*, and for every tacit row the answer is no.
+## Compare operations, not opaque and readable substrates alone
 
-Two rows deserve unpacking. **In-context conditioning looks explicit because its medium is text.** But the readable transcript and the induced competence are different objects: no sentence of the transcript contains the calibration the whole context conditions into the model, so the competence cannot be excerpted, revised, or transferred sentence-wise — the transcript is the explicit trace of a tacit state. **Fine-tuned weights and human expertise fail the same property**, and the symmetry is the point: both are durable, writable (by training, by practice), and rich, and in neither can a single retained commitment be diffed, cited, criticized, or rolled back. Verification collapses to behavioral probing in both cases, exactly as the per-form review obligation in [reflective coverage](./reflective-coverage-is-graded-across-representational-forms.md) predicts for the parametric form. So when [methodological closure](./methodological-and-computational-closure-track-different-changes.md) declines to count a maintainer's tacit-but-stable criterion as retained methodology, and when a knowledge system declines to retain lessons by fine-tuning, they apply one criterion, not two special rules: closure and governance read the addressable channel.
+| Retention form | Durability and writability | Handle on a commitment |
+|---|---|---|
+| Context-conditioned state | Depends on runtime persistence; discarded state does not survive the episode | The retained transcript may be editable even when the state it induces is not directly inspectable |
+| Pinned model parameters | Durable over the run, not writable under the pin | Prompting or probing changes the conditions of use, not the parameters |
+| Parameters with an allowed update path | Updates can persist | A targeted edit needs evidence that it changes the intended judgment without unacceptable collateral effects |
+| Human expertise inside the boundary | Can persist and change through practice | Articulation and behavioural tests expose some commitments; the person's whole competence is not a versioned artifact |
+| Natural-language and symbolic artifacts | Durable when retained and writable when permissions allow | Text spans, rules, functions, and fields provide direct edit targets; their consequences still need checking |
 
-## Externalization is the transport, not a preliminary
+These are operation profiles, not permanent rankings of
+[representational forms](./definitions/representational-form.md). A read-only
+note is not writable. A vague theory paragraph may not isolate one assumption.
+A retained context can affect later work even without a separately written
+theory. A numerical representation with a tested commitment-level editing
+interface should be assessed by that interface, not excluded by its form.
 
-The conversion of a human-held decision to computational execution puts settlement — making the criterion explicit — before allocation. The table shows that ordering is forced, twice over. Where sealed weights can only be replaced as a whole, explicit artifacts are the only durable *writable* channel available to the system: changing an internal model binding selects a component but writes nothing into its weights. And even where fine-tuning adds parametric writability, the transfer is unaddressable — what was allocated can no longer be stated, reviewed, or revised as a commitment, so the allocation escapes governance at the moment it succeeds. Either way, a criterion moves to a computational actor only through an explicit representation. Externalization is the transport mechanism of allocation, not preparation for it.
+The distinction between a transcript and the competence it induces is useful.
+Editing a sentence is direct control over the text, not guaranteed selective
+control over the resulting judgment. The same limitation applies to a retained
+theory: its apparent locality must be checked against the behaviour of the
+system that consumes it. [Reflective coverage](./reflective-coverage-is-graded-across-representational-forms.md)
+therefore reports the operations available on each part.
 
-## The claim is current, and its falsifier is named
+## What follows under the fixed-model premise
 
-This is an empirical claim about existing substrates, so its application to a particular system must state both the boundary and the available operations rather than universalize from one deployment. [Commonplace keeps provider weights outside its frame](../reference/commonplace-declared-frame.md), so those weights are excluded from its retention forms rather than occupying a selection-only row. Commonplace has no in-boundary parametric write path; its writable object is the localized binding request, whose requested-to-realized effect remains runtime-contingent. What would break the general claim is not more writability: fine-tuning exists now, and continual-learning pipelines only add write channels. The falsifier is addressability of a tacit form — interpretability-grade editing under which a weight-encoded commitment can be individually retrieved, criticized, and revised. A system whose capabilities cross that boundary owes every artifact derived from this claim a re-derivation.
+When model parameters are pinned and the declared writable surfaces are
+natural-language and symbolic artifacts, retained changes must use those
+surfaces. This follows from the declared update rules, not from a theorem that
+other substrates cannot learn. A cached state or external record also needs
+its own declared persistence and consumption path.
+
+[Commonplace's declared frame](../reference/commonplace-declared-frame.md)
+places provider weights outside the revision boundary. Changing a model binding
+there edits a configuration request; it does not edit the provider's weights.
+That describes one system's available operations, not a general limit on
+learning systems.
+
+## Explicitness supports one route to transfer
+
+A human can externalize a criterion as a rule, rationale, example, or test that
+computation later consumes. A named criterion makes it easier to compare what
+was transferred and to revise the record when its use fails. This is useful for
+[methodological closure](./methodological-and-computational-closure-track-different-changes.md),
+which asks what a retained method settles.
+
+Computational transfer need not follow that route. A model may already supply
+the required judgment, infer it from examples, or acquire it through an allowed
+parameter-learning process. Such a transfer may be harder to inspect
+commitment by commitment. It can still be governed through outcome checks,
+limited authority, regression tests, and rollback. Lack of a directly editable
+criterion is not lack of all governance, and automatic execution is not proof
+that a criterion has become explicit.
+
+## What would establish the advantage
+
+At a selected decision, identify the commitment to change and compare the
+available editing routes. Measure whether the intended later behaviour changes,
+what collateral behaviour changes, whether the update can be reversed, and the
+cost of diagnosis and validation. Explicit retention earns its place when its
+direct targets make that process more useful at acceptable cost.
+
+An equally selective numerical or reconstructed representation would defeat
+an exclusivity claim. A readable edit that repeatedly changes unrelated
+judgments would defeat the assumed locality of that artifact. Neither result
+would deny that retained state can support learning.
 
 ## Scope
 
-- Not a ranking. Tacit forms hold what explicit ones cannot: the residue — calibration, situational feel, style — that resists articulation and is often the competence that matters. The trade runs both ways, and the consequences for what to retain in which form are developed in [retaining the episode keeps a distilled rule re-derivable](./retaining-the-episode-keeps-a-distilled-rule-re-derivable.md).
-- Retention through an actor the system neither observes nor selects — a provider training on usage data — is excluded: whatever returns through later model versions is not a retention pathway of the system, and no property in the table applies to it.
-
-## Open Questions
-
-- Whether behavioral probing, evals, and activation steering constitute a graded middle — partial addressability worth naming — or stay indirect handles in kind.
-- Host binding: the tacit-knowing literature (Polanyi's "we know more than we can tell"; Nonaka's externalization step) is the natural host for the tacit/explicit side of this claim. Inheritance is deferred until the sources are ingested and a canonical statement chosen.
-- Whether the conditioned-state/transcript split recurs often enough to need a registered term.
+Addressability concerns the commitment and the operations the claim actually
+needs. It is not complete transparency of the learner. Retained episodes,
+examples, theories, and programs can supply different information and different
+edit targets; [retaining an episode](./retaining-the-episode-keeps-a-distilled-rule-re-derivable.md)
+can preserve details that a distilled rule omits. None guarantees that later
+interpretation recovers those details correctly.
 
 ---
 
 Relevant Notes:
 
-- [Reflection buys addressability](./reflection-buys-addressability.md) — grounds: defines addressability and its comparative reading; this note extends the comparison across all current retention forms
-- [Reflective coverage is graded across representational forms](./reflective-coverage-is-graded-across-representational-forms.md) — grounds: distinguishes an operation profile over an in-boundary component from control of an external dependency, and supplies the per-form verification obligation the tacit rows collapse to
-- [Methodological and computational closure track different changes](./methodological-and-computational-closure-track-different-changes.md) — extends: supplies the shared ground for its tacit-expertise and substrate-dependency resolutions
-- [Retained system-definition artifacts enable persistent deployment-time adaptation](./retained-artifacts-enable-persistent-deployment-time-adaptation.md) — extends: adds the addressability property and the human row to its persistence comparison of adaptation paths
-- [Retaining the episode keeps a distilled rule re-derivable](./retaining-the-episode-keeps-a-distilled-rule-re-derivable.md) — extends: what the explicit-only regime should retain in which explicit form
-- [Representational form](./definitions/representational-form.md) — defined-in: the natural-language / symbolic / distributed-parametric axis the tacit/explicit divide runs across
-- [Retained artifact](./definitions/retained-artifact.md) — defined-in: the umbrella term for durable behavior-shaping state this note's rows instantiate
-- [Commonplace as a reflective system](./evidence/commonplace-as-a-reflective-system.md) — evidenced-by: the excluded external-provider case and the distinction between its writable localized binding request and the provider weights it names
+- [Reflection buys addressability](./reflection-buys-addressability.md) — grounds: supplies the direct-target advantage and its comparative scope
+- [Reflective coverage is graded across representational forms](./reflective-coverage-is-graded-across-representational-forms.md) — grounds: evaluates available operations rather than inferring control from component membership
+- [Methodological and computational closure track different changes](./methodological-and-computational-closure-track-different-changes.md) — contrasts: explicit decision content and human-free execution are separate properties
+- [Retained system-definition artifacts enable persistent deployment-time adaptation](./retained-artifacts-enable-persistent-deployment-time-adaptation.md) — extends: connects retained artifacts to later behaviour
+- [Retained artifact](./definitions/retained-artifact.md) — defined-in: the durable state whose later consumption matters
