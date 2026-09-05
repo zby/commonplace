@@ -196,6 +196,31 @@ that specialist pass in the coordinator's context.
    envelope. Inspect permissions, approval, delegation, dynamic extension,
    reliability, observability, providers, packaging, and performance only where
    they change claimed work, a control path, evidence strength, or a lens result.
+8. Inventory the distributed-parametric components used by the inspected
+   runtime routes — LLMs, embedding models, parametric routers, critics, and
+   adapters — as `CMP-*` records. For each, distinguish parameter changes
+   during operation from identity pinning to an exact version or resolution
+   through a mutable provider endpoint. Give each finding its evidence status;
+   leave inaccessible provider internals explicitly uninspected. Fixed weights
+   do not preclude learning through retained knowledge or changed procedures.
+9. Inspect materially distinct mechanisms that admit changes to the product,
+   retained knowledge or instructions, capabilities, or production machinery.
+   Record the trigger, proposed change, admission mechanism, rejection ability,
+   and rollback or recovery path on the admitting `RTE-*` record. Group writes
+   governed by the same mechanism; routine logging, counters and unchanged
+   checkpoint persistence need no separate revision analysis unless they alter
+   later decisions or recovery. Reuse the memory specialist's findings for
+   memory revisions rather than tracing those mechanisms twice.
+   For diagnosis, candidate comparison, admission and successor selection,
+   identify who proposes, decides, and can veto. Describe computational and
+   human contributions separately when they share a step. Independently name
+   any answer oracle: a supplied expected answer or reference outcome used to
+   judge the candidate, including its provider and authority. A model judgment
+   alone does not establish access to such an answer. State what triggers
+   improvement and whether operation serves open requests, bounded experiments or curricula,
+   or multiple modes; attach oracle use to the applicable mode. Unknowns and
+   inapplicable steps remain explicit, without assigning an autonomy grade.
+
 ### 5. Run both lenses
 
 For memory/context and epistemic, first record trigger evidence, inspected
@@ -367,6 +392,9 @@ A failed run reports its failure reason and does not use the handoff command.
   truncated output supports a claim.
 - The runtime baseline covers ordinary, material alternate, and warranted
   forcing routes at the target's actual responsibility horizon.
+- Component fixity, material revision admission, decision roles, improvement
+  triggers, operating modes and answer-oracle access are recorded or carry
+  explicit `uninspected` or `inapplicable` reasons.
 - Both lenses and both scoping records exist; thin evidence produces a bounded
   brief result, not a skipped lens.
 - Source-native mechanisms remain visible beneath Commonplace mappings, and no

@@ -25,6 +25,7 @@ Entries without an execution record remain **pending**. The acceptance condition
 | C13 | Authored evidence links in `kb/notes/`, `kb/articles/`, `kb/sources/`, `kb/reference/`, and per-system analyses; [grounding-alignment gate](../../instructions/review-gates/semantic/grounding-alignment.md) follows linked library evidence. | Work by citing artifact or bounded claim group. Check support before changing a target; retain historical citations when the original observation matters. The generic gate already recognizes both system collections: change it only if the selected evidence location requires it. |
 | C14 — done | Main-review publication and handoff: [analysis checks](../../../src/commonplace/lib/agentic_analysis.py), [publication code](../../../src/commonplace/lib/agentic_publication.py), [validation](../../../src/commonplace/lib/validation.py), result/run-state contracts, and producing skill. | The operator authorized removing legacy production now. Remove mandatory legacy candidate/output fields, legacy publication gates, and stale-output reporting tied to the old pipeline. Preserve necessary evidence and publication checks on the main outputs; handle validation of retained historical artifacts explicitly. Prove a memory-system run can complete with one integrated main result and its local specialist report, without legacy publication or compatibility paths. |
 | C15 | Collection READMEs, generated indexes/table links, and website/search navigation. | Route current discovery to the main reviews and migrated comparison outputs. Keep supported historical references navigable. Verify public evidence from a clean checkout without ignored run files. |
+| C16 | [Nearest-constructions supplement](../../articles/nearest-existing-constructions-to-a-witness-house.md) grades eighteen constructions against the witness conditions from mixed-vintage reviews and source ingests. | Regenerated rows cite main-review findings for parametric fixity, material revision admission, decision roles, operating modes and answer-oracle access (required as evidenced prose by the producer). Paper-only rows stay on ingests or move to doc-grounded runs. Normalizing these facts for a rebuildable table is the [autonomy-comparison proposal](../../reference/proposals/normalized-autonomy-and-revision-comparison-fields.md), not this queue. |
 
 ## Inventory boundaries
 
@@ -278,3 +279,18 @@ the new completion contract.
 
 See [memory specialist acceptance](./memory-specialist-acceptance.md) for the
 bounded source trial, validation checks and remaining coverage limits.
+
+### C16 — Autonomy evidence before normalization
+
+**Status: pending consumer migration; prose requirements implemented.** The
+operator authorized finishing the prose requirements and deferring normalized
+comparison fields until several regenerated reviews demonstrate useful,
+consistent distinctions. Inspect materially distinct revision mechanisms,
+reuse specialist findings, and separate decision roles from answer-oracle
+access. This adds no autonomy grade, registry or generated-table support.
+
+Next, exercise these requirements in source-based main-review runs and check
+whether their evidence supports the supplement's actual claims. Reconsider
+normalization only after comparing those records; no old-format fallback or
+compatibility path is authorized. The supplement and existing generated Maka
+outputs are unchanged by this step.
