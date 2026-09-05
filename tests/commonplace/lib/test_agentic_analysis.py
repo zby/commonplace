@@ -5,6 +5,7 @@ import subprocess
 from hashlib import sha256
 from pathlib import Path
 
+import pytest
 import yaml
 
 from commonplace.cli import agentic_analysis_handoff
@@ -419,6 +420,7 @@ def replace_frontmatter(path: Path, values: dict[str, object]) -> None:
 
 def publication_fixture(tmp_path: Path) -> tuple[Path, PublicationSpec, bytes, bytes]:
     state = valid_run_state(tmp_path, legacy=True)
+    subprocess.run(["git", "init", "--quiet", str(tmp_path)], check=True)
     values = frontmatter(state)
     generated_destination = values["generated-review"]["path"]  # type: ignore[index]
     legacy_destination = values["legacy-review"]["path"]  # type: ignore[index]
@@ -768,6 +770,58 @@ def test_source_anchor_past_blob_end_is_rejected(tmp_path: Path) -> None:
     assert any("outside the recorded blob" in item for item in results.fails)
 
 
+@pytest.mark.parametrize("output_role", ["result", "generated-review"])
+@pytest.mark.parametrize(
+    ("citation", "expected_error"),
+    [
+        ("example/system/blob/{revision}/README.md#L1", None),
+        ("EXAMPLE/System/blob/{revision}/README.md#L1-L1", None),
+        ("example/system/blob/{revision}/README.md", None),
+        ("unrelated/other/blob/{revision}/README.md#L1", "uses repository"),
+        ("example/system/blob/main/README.md#L999", "uses revision"),
+        ("example/system/blob/main/README.md", "uses revision"),
+        ("example/system/blob/{short_revision}/README.md#L1", "uses revision"),
+        ("example/system/blob/{wrong_revision}/README.md#L1", "uses revision"),
+        ("example/system/blob/{revision}/missing.md#L1", "does not resolve to a blob"),
+        ("example/system/blob/{revision}/README.md#L999", "outside the recorded blob"),
+        ("example/system/blob/{revision}/README.md#L1oops", "invalid GitHub line anchor"),
+        ("example/system/blob/{revision}", "incomplete GitHub blob path"),
+    ],
+)
+def test_github_citations_match_the_frozen_source(
+    tmp_path: Path, output_role: str, citation: str, expected_error: str | None
+) -> None:
+    state = valid_run_state(tmp_path)
+    values = frontmatter(state)
+    source_identity = "https://github.com/example/system"
+    values["source"]["identity"] = source_identity
+    revision = values["source"]["revision"]
+    generated = tmp_path / values["generated-review"]["path"]
+    generated_values = frontmatter(generated)
+    generated_values["source-identity"] = source_identity
+    replace_frontmatter(generated, generated_values)
+
+    output = tmp_path / values[output_role]["path"]
+    target = citation.format(
+        revision=revision,
+        short_revision=revision[:8],
+        wrong_revision="0" * len(revision),
+    )
+    with output.open("a", encoding="utf-8") as handle:
+        handle.write(f"\nSource evidence: [source](https://github.com/{target}).\n")
+    for role in ("result", "generated-review"):
+        values[role]["sha256"] = digest(tmp_path / values[role]["path"])
+    replace_frontmatter(state, values)
+
+    results = validation.validate_note(state, repo_root=tmp_path)
+
+    if expected_error is None:
+        assert results.fails == []
+        assert any("resolve" in item and "GitHub" in item for item in results.passes)
+    else:
+        assert any(expected_error in item for item in results.fails)
+
+
 def test_operator_handoff_is_rendered_from_complete_state(tmp_path: Path) -> None:
     state_path = valid_run_state(tmp_path)
     content = state_path.read_text(encoding="utf-8")
@@ -861,6 +915,108 @@ def test_prepare_reviews_candidate_bytes_under_the_public_identity(
     assert not (tmp_path / spec.generated_destination).exists()
     assert spec.legacy_destination is not None
     assert not (tmp_path / spec.legacy_destination).exists()
+    assert frontmatter(state)["run-status"] == "running"
+
+
+def commit_incumbent(tmp_path: Path, path: Path) -> None:
+    subprocess.run(["git", "-C", str(tmp_path), "add", str(path)], check=True)
+    subprocess.run(
+        [
+            "git", "-C", str(tmp_path),
+            "-c", "user.name=Commonplace Test",
+            "-c", "user.email=test@example.invalid",
+            "commit", "--quiet", "-m", "Record incumbent",
+        ],
+        check=True,
+    )
+
+
+@pytest.mark.parametrize(
+    ("recorded_identity", "header_identity", "accepted"),
+    [
+        ("https://example.invalid/example-system", "", True),
+        ("https://example.invalid/example-system-other", "", False),
+        (
+            "https://example.invalid/example-system-other",
+            "https://example.invalid/example-system",
+            False,
+        ),
+        (None, "https://example.invalid/example-system", True),
+        (None, "https://example.invalid/example-system-other", False),
+    ],
+)
+def test_prepare_requires_an_exact_legacy_source_identity(
+    tmp_path: Path, recorded_identity: str | None, header_identity: str, accepted: bool
+) -> None:
+    state, spec, _, legacy_bytes = publication_fixture(tmp_path)
+    assert spec.legacy_destination is not None
+    incumbent = tmp_path / spec.legacy_destination
+    incumbent.parent.mkdir(parents=True, exist_ok=True)
+    incumbent.write_bytes(legacy_bytes)
+    values = frontmatter(incumbent)
+    if recorded_identity is None:
+        del values["source-identity"]
+    else:
+        values["source-identity"] = recorded_identity
+    replace_frontmatter(incumbent, values)
+    content = incumbent.read_text(encoding="utf-8").replace(
+        "## Core Ideas", f"**Repository:** {header_identity}\n\n## Core Ideas", 1
+    )
+    incumbent.write_text(content, encoding="utf-8")
+    commit_incumbent(tmp_path, incumbent)
+
+    if accepted:
+        assert prepare_publication(spec).review_batch is not None
+    else:
+        with pytest.raises(ValueError, match="same source"):
+            prepare_publication(spec)
+
+    assert incumbent.read_text(encoding="utf-8") == content
+    assert frontmatter(state)["run-status"] == "running"
+
+
+@pytest.mark.parametrize("generated", [True, False])
+@pytest.mark.parametrize("staged", [True, False])
+def test_prepare_rejects_a_locally_deleted_review(
+    tmp_path: Path, generated: bool, staged: bool
+) -> None:
+    state, spec, generated_bytes, legacy_bytes = publication_fixture(tmp_path)
+    destination = spec.generated_destination if generated else spec.legacy_destination
+    assert destination is not None
+    incumbent = tmp_path / destination
+    incumbent.parent.mkdir(parents=True, exist_ok=True)
+    incumbent.write_bytes(generated_bytes if generated else legacy_bytes)
+    commit_incumbent(tmp_path, incumbent)
+    incumbent.unlink()
+    if staged:
+        subprocess.run(["git", "-C", str(tmp_path), "add", destination], check=True)
+
+    with pytest.raises(ValueError, match="has local changes"):
+        prepare_publication(spec)
+
+    assert not incumbent.exists()
+    assert frontmatter(state)["run-status"] == "running"
+
+
+def test_publish_rejects_a_source_mismatch_before_replacing_an_incumbent(
+    tmp_path: Path,
+) -> None:
+    state, spec, _, legacy_bytes = publication_fixture(tmp_path)
+    accept_prepared_semantic_review(tmp_path, spec)
+    assert spec.legacy_destination is not None
+    incumbent = tmp_path / spec.legacy_destination
+    incumbent.parent.mkdir(parents=True, exist_ok=True)
+    incumbent.write_bytes(legacy_bytes)
+    values = frontmatter(incumbent)
+    values["source-identity"] = "https://example.invalid/example-system-other"
+    replace_frontmatter(incumbent, values)
+    old_bytes = incumbent.read_bytes()
+    commit_incumbent(tmp_path, incumbent)
+
+    with pytest.raises(ValueError, match="same source"):
+        publish_publication(spec)
+
+    assert incumbent.read_bytes() == old_bytes
     assert frontmatter(state)["run-status"] == "running"
 
 

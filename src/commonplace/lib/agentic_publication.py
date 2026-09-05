@@ -168,9 +168,7 @@ def _check_incumbent(
     source_identity: str,
     generated: bool,
 ) -> None:
-    if not path.exists():
-        return
-    if not path.is_file():
+    if path.exists() and not path.is_file():
         raise ValueError(f"publication destination is not a file: {path}")
     relative = path.relative_to(repo_root).as_posix()
     try:
@@ -188,6 +186,8 @@ def _check_incumbent(
         raise ValueError(f"cannot inspect destination Git status: {status.stderr.strip()}")
     if status.stdout.strip():
         raise ValueError(f"publication destination has local changes: {relative}")
+    if not path.exists():
+        return
 
     _, content = _read_utf8(path, label="publication incumbent")
     document = _parse(content, label="publication incumbent")
@@ -202,13 +202,19 @@ def _check_incumbent(
             "kb/agent-memory-systems/types/agent-memory-system-review.md",
             "../types/agent-memory-system-review.md",
         }
-        identity_header = content.split("\n## ", maxsplit=1)[0]
+        identity_header = document.body.split("\n## ", maxsplit=1)[0]
+        header_sources = {
+            url.rstrip(".,;")
+            for url in re.findall(r"https?://[^\s<>()`\"']+", identity_header)
+        }
+        source_matches = (
+            frontmatter["source-identity"] == source_identity
+            if "source-identity" in frontmatter
+            else source_identity in header_sources
+        )
         same_source = (
             frontmatter.get("type") in accepted_types
-            and (
-                frontmatter.get("source-identity") == source_identity
-                or source_identity in identity_header
-            )
+            and source_matches
         )
     if not same_source:
         raise ValueError(

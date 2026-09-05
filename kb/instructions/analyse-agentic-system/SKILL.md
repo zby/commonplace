@@ -281,9 +281,10 @@ prose independently of its source boundary and method. Never stage or commit
 unless the caller separately requested it.
 
 After a code-grounded legacy review changes, report `systems.csv` and
-`systems-table.md` stale unless the caller separately authorized their rebuild;
-report a prior current landscape synthesis as historical unless its refresh was
-separately commissioned. A doc-grounded review does not enter the matrix.
+`systems-table.md` stale unless they were rebuilt and validated under separate
+authority. Report a prior current landscape synthesis as historical unless it
+was refreshed under separate authority. Authorization alone does not establish
+that either operation completed. A doc-grounded review does not enter the matrix.
 
 ### 9. Run an optional transfer scan after completion
 
@@ -297,10 +298,17 @@ and rerun the analysis before scanning again.
 
 ### 10. Report
 
-Run `commonplace-agentic-analysis-handoff <run-state-path>` and return its
-unchanged Markdown output. It validates the run state and current output bytes
-before rendering. A failed run reports its failure reason and does not use the
-handoff command.
+Run `commonplace-agentic-analysis-handoff <run-state-path>` and include its
+Markdown output unchanged in the final response. It validates the run state
+and current output bytes before rendering.
+
+Append the downstream freshness dispositions required by step 8. For a
+separately commissioned transfer scan, also return its output path and material
+findings, or its full output when no file was written. Report any blocker
+that prevented the scan from completing. These session outcomes supplement the
+checked handoff; they do not require additional run-state fields.
+
+A failed run reports its failure reason and does not use the handoff command.
 
 ## Verify
 

@@ -121,7 +121,7 @@ def test_memory_review_publication_closes_downstream_disposition() -> None:
 
     assert "systems.csv" not in writer and "systems-table.md" not in writer
     assert "systems.csv" in orchestrator and "systems-table.md" in orchestrator
-    assert "report a prior current landscape synthesis as historical" in orchestrator
+    assert "report a prior current landscape synthesis as historical" in orchestrator.lower()
     assert "publication of the legacy review happens only after" in orchestrator
 
 

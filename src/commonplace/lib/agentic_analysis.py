@@ -10,6 +10,7 @@ from dataclasses import dataclass
 from hashlib import sha256
 from pathlib import Path, PurePosixPath
 from typing import Any
+from urllib.parse import unquote, urlsplit
 
 from commonplace.lib.note_parser import ParsedDocument, parse_document
 
@@ -23,10 +24,8 @@ _LOCAL_SOURCE_ANCHOR_RE = re.compile(
     r"`(?P<path>[A-Za-z0-9._/-]+\.[A-Za-z0-9._-]+):"
     r"(?P<ranges>[0-9]+(?:-[0-9]+)?(?:,[0-9]+(?:-[0-9]+)?)*)`"
 )
-_GITHUB_BLOB_ANCHOR_RE = re.compile(
-    r"https://github\.com/[^/\s)]+/[^/\s)]+/blob/"
-    r"(?P<revision>[0-9a-f]{40}|[0-9a-f]{64})/"
-    r"(?P<path>[^\s)#]+)#L(?P<start>[0-9]+)(?:-L(?P<end>[0-9]+))?"
+_GITHUB_URL_RE = re.compile(
+    r"https?://github\.com/[^\s<>()`\"']+", re.IGNORECASE
 )
 
 
@@ -427,7 +426,8 @@ def _git_blob_lines(
                 "--no-replace-objects",
                 "-C",
                 str(source_root),
-                "show",
+                "cat-file",
+                "blob",
                 f"{revision}:{source_path}",
             ],
             check=False,
@@ -455,7 +455,7 @@ def _parse_line_ranges(value: str) -> tuple[tuple[int, int], ...]:
 
 
 def _verify_source_anchors(
-    content: str, *, source_root: Path, source_revision: str
+    content: str, *, source_root: Path, source_identity: str, source_revision: str
 ) -> tuple[list[str], list[str]]:
     passes: list[str] = []
     failures: list[str] = []
@@ -464,18 +464,41 @@ def _verify_source_anchors(
     for match in _LOCAL_SOURCE_ANCHOR_RE.finditer(content):
         key = (match.group("path"), _parse_line_ranges(match.group("ranges")))
         anchors.setdefault(key, set()).add("local")
-    for match in _GITHUB_BLOB_ANCHOR_RE.finditer(content):
-        revision = match.group("revision")
-        source_path = match.group("path")
-        start = int(match.group("start"))
-        end = int(match.group("end") or start)
-        key = (source_path, ((start, end),))
-        anchors.setdefault(key, set()).add("GitHub")
+    for match in _GITHUB_URL_RE.finditer(content):
+        url = match.group().rstrip(".,;")
+        parsed = urlsplit(url)
+        parts = parsed.path.split("/")
+        if len(parts) < 4 or parts[3] != "blob":
+            continue
+        if len(parts) < 6 or not parts[5]:
+            failures.append(f"source citation: incomplete GitHub blob path: {url}")
+            continue
+        repository = f"https://github.com/{parts[1]}/{parts[2]}"
+        expected_repository = source_identity.rstrip("/").removesuffix(".git")
+        if repository.casefold() != expected_repository.casefold():
+            failures.append(
+                "source citation: GitHub anchor uses repository "
+                f"{repository}, expected {source_identity}"
+            )
+            continue
+        revision = parts[4]
+        source_path = unquote("/".join(parts[5:]))
         if revision != source_revision:
             failures.append(
                 "source citation: GitHub anchor uses revision "
                 f"{revision}, expected {source_revision}: {source_path}"
             )
+            continue
+        line_ranges: tuple[tuple[int, int], ...] = ()
+        if parsed.fragment:
+            lines = re.fullmatch(r"L([0-9]+)(?:-L([0-9]+))?", parsed.fragment)
+            if lines is None:
+                failures.append(f"source citation: invalid GitHub line anchor: {url}")
+                continue
+            start = int(lines[1])
+            end = int(lines[2] or start)
+            line_ranges = ((start, end),)
+        anchors.setdefault((source_path, line_ranges), set()).add("GitHub")
 
     for (source_path, line_ranges), kinds in sorted(anchors.items()):
         line_count, error = _git_blob_lines(
@@ -852,6 +875,7 @@ def verify_agentic_analysis_run_state(
             anchor_passes, anchor_failures = _verify_source_anchors(
                 content,
                 source_root=state.source.path,
+                source_identity=state.source.identity,
                 source_revision=state.source.revision,
             )
             passes.extend(anchor_passes)
