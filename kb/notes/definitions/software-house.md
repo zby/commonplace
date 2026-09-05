@@ -16,11 +16,13 @@ Users remain outside the software house when they supply requirements, domain kn
 
 The same person can occupy both positions in different interactions. The boundary follows the role being performed, not the person's identity or legal relationship to an organization.
 
-Product scope and operating horizon are parameters of a software house. Persistence means continuity of responsibility for software evolution across demands and operating consequences. It does not mean indefinite life, immutable membership, or retention of every state change.
+The house's products and responsibilities can change as requirements develop; it need not declare a product family in advance. Persistence means continuity of responsibility for software evolution across demands and operating consequences. It does not mean indefinite life, immutable membership, or retention of every state change.
 
 Persistence alone establishes neither retention nor learning. It identifies continuity of responsibility, not a causal dependence of later production on a change made from experience. A theoretical software house whose fixed production knowledge and machinery suffice for every admitted demand still meets this definition. Responding to a demand may change the software without changing the house's capacity or production method. Claims that the house retained experience, learned, or revised its production machinery must be derived and tested separately.
 
-An **automated software house** is a software house in which no human is required for an internal production role over its declared product scope and operating horizon. User participation is compatible with automation; dependence on a human for an internal production role is not.
+An **automated software house** performs every internal production role computationally. User participation is compatible with automation; dependence on a human for an internal production role is not.
+
+An evaluation examines particular work over a particular period. Those limits bound what its evidence establishes; they do not define the house's future responsibilities.
 
 ## Exclusions
 
@@ -32,7 +34,7 @@ A [software factory](./software-factory.md), in Greenfield's sense, is family-sp
 
 - Calling an IDE, LLM, agent harness, or generator a software house when it is only one component of the producing system.
 - Counting a user as part of the software house merely because their requirements or feedback affect the software.
-- Calling a software house automated when a human still performs an internal production role within the declared scope and horizon.
+- Calling a software house automated when a human still performs an internal production role.
 - Treating persistence as indefinite existence rather than continued responsibility across software changes.
 - Treating persistence as evidence that the house retained experience or learned from it.
 

@@ -40,7 +40,7 @@ Without these declarations, *universal* can collapse into ordinary portability, 
 
 The program does not need a registered definition of *universal software factory*. For its factory-specific branch, the substantive claim can be stated directly: as covered demands widen, computation should increasingly acquire and retain the family-specific production knowledge required for later production rather than receive another bespoke human design.
 
-That branch does not define the program's complete producer. A [software house](./definitions/software-house.md) may use one or more Greenfield-style factories or none, and it does not require a declared product family. Any broader reach or acquisition claim about a software house must therefore declare its own product scope, operating horizon, permitted inputs, and human role allocation rather than inherit the factory's family boundary.
+That branch does not define the program's complete producer. A [software house](./definitions/software-house.md) may use one or more Greenfield-style factories or none, and it does not require a declared product family. Evidence for broader capability or acquisition claims must identify the work examined, observation period, supplied inputs, and human production roles. These limits belong to the evaluation; the house's products and responsibilities may develop as new requirements arise.
 
 A fixed general substrate remains compatible with that claim. What matters is whether target-specific production knowledge was already supplied, hidden in a catalog, or determined from the evidence permitted for the assessed demand.
 

@@ -26,12 +26,13 @@ A software house is the complete persistent system that develops and maintains
 software for users. The conjecture asks for a **witness house**: a concrete
 example meeting four conditions together. It must apply program theory,
 revise coherently, continue without internal human production decisions, and
-perform reliably within a declared scope, horizon, and budget. Program theory
-means understanding the software's purpose, organization, and how to handle new
-requests. Coherent revision means responding to a failed assumption in ways
+perform reliably. The evaluation reports the work examined, observation period,
+and resource limits. Program theory means understanding the software's purpose,
+organization, and how to handle new requests. Coherent revision means responding to a failed assumption in ways
 that support later modification. Below, an *adequate state* is one from which
 the house can perform that work; reliability concerns sustaining such states
-across runs and later requests.
+across runs and later requests. A run must actually exercise application and
+revision; an unchallenged assumption supplies no evidence of revision.
 
 Eligible constructions use only distributed-parametric models available by the
 conjecture's chosen cutoff, 2026-09-02, and keep them fixed during a **witness
@@ -94,20 +95,21 @@ the horizon, even if both pass an early evaluation.
 
 The conjecture allows a human-built seed, so it does not ask how likely an
 autonomous process is to reach an adequate house from a non-adequate seed.
-That **hitting probability** is the [bootstrap
-article's](./bootstrapping-the-first-automated-software-house.md) measure, and
-seed-construction effort is reported separately for the same reason.
+How to produce the seed is the [bootstrap
+article's](./bootstrapping-the-first-automated-software-house.md) question.
+An autonomous bootstrap stage could measure this **hitting probability**;
+seed-construction effort is reported separately from operating cost.
 
 ### The existential claim and nondeterminism are separate
 
-The conjecture says at least one eligible construction and declared regime
-works. That construction may be deterministic, nondeterministic, or
-probabilistic. Its transition model does not settle whether success requires
+The conjecture says at least one eligible house can operate practically.
+That house may be deterministic, nondeterministic, or probabilistic. Its
+transition model does not settle whether success requires
 one possible path, all paths, almost-sure success, or a probability threshold.
 The **witness protocol**, the evaluation plan fixed before testing, must specify
 that separately. One lucky run cannot establish practical reliability.
 
-### The declared input process is part of the claim
+### The input process shapes the evaluation
 
 Distinguish the set of admissible request and consequence histories, the
 history realized in one run, and the distribution or procedure selecting
@@ -115,6 +117,10 @@ histories. With `R` fixed, allowing more histories can enlarge the reachable
 set without making adequate successors more probable. The selection procedure
 may direct more runs toward failure. Practical operability depends on that
 process, not an informal claim that the house receives richer requests.
+Specifying it for an evaluation does not require a fixed product family:
+requests can introduce new kinds of work and change the house's responsibilities.
+The rules that decide when such work enters must themselves be fixed before
+the run, as the path definition above requires.
 
 ### Permitted self-modification can suppress adequate successors
 
@@ -166,9 +172,11 @@ not remove that limit.
 
 Use the main article's [protocol declaration](./automated-software-houses-with-fixed-llms.md#boundaries-evidence-and-uncertainty):
 starting system, boundary and workload, resources, and evaluation. The path
-account explains why the allowed histories and their selection procedure must
-both be fixed, and why sustained adequacy needs its own measure, separate from
-the bootstrap article's question of reaching an adequate house.
+account separates the rules selecting requests from the history actually
+observed. Those rules, fixed before the run, may respond to the house's actions
+and expand the work examined; the evaluator may not widen or narrow the workload
+afterward, and failures must remain in the record. Sustained adequacy needs its own measure,
+separate from the bootstrap article's question of constructing an adequate house.
 
 The [training](./the-software-house-as-the-unit-of-training.md) and
 [bootstrap](./bootstrapping-the-first-automated-software-house.md) articles ask

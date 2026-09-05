@@ -21,7 +21,7 @@ bootstrap program. Their component experiments can begin before a complete
 automated house exists.
 
 - [The Automated Software House Conjecture: Open-ended software development with fixed LLMs](./automated-software-houses-with-fixed-llms.md) — the system boundary, program theory, and four conditions a concrete witness house must meet.
-- [The Automated Software House as the Unit of Training: A fixed-model training regime for theory-mediated learning](./the-software-house-as-the-unit-of-training.md) — how production might train the whole house with every learned component fixed, and experiments comparing explicit project theory with other uses of the same evidence.
+- [The Automated Software House as the Unit of Training: A fixed-model training regime for theory-mediated learning](./the-software-house-as-the-unit-of-training.md) — how production might train the whole house while model parameters stay fixed, and experiments comparing explicit project theory with other uses of the same evidence.
 - [Bootstrapping the First Automated Software House: A research program from human-agent production to human-free internal operation](./bootstrapping-the-first-automated-software-house.md) — Commonplace as a seed, separate operational and learning transfers, and an example of a component trial.
 
 The supplements develop two parts of the conjecture:

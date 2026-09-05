@@ -36,7 +36,7 @@ witness house: a concrete system demonstrating the [conjecture's four
 conditions](./automated-software-houses-with-fixed-llms.md#what-a-witness-house-must-show).
 During its run, model weights, adapters, embedding models, parametric routers, and
 parametric critics all stay fixed, and computation makes every internal production
-decision over the declared scope and horizon. The conjecture's eligibility
+decision throughout the observed operation. The conjecture's eligibility
 cutoff is 2026-09-02; the bootstrap may use newer models before witness testing.
 The program records failures, interventions, and reopened roles against
 independent outcome and cost measures.
@@ -52,12 +52,13 @@ evolve software, whoever performs it.
 The [conjecture article](./automated-software-houses-with-fixed-llms.md)
 distinguishes these roles from external inputs. Users may supply requirements,
 facts, observed outcomes, and acceptance judgments about visible behaviour.
-An automated house performs every internal role computationally over its
-declared scope and horizon.
+An automated house performs every internal production role computationally.
 
 ## Two kinds of transfer
 
-The program measures two kinds of transfer separately.
+The program measures two kinds of transfer separately. A trial's boundaries
+identify the decisions being assessed; they need not fix the house's future
+products or responsibilities.
 
 | Claim | What must be shown |
 |---|---|
@@ -244,7 +245,7 @@ Learning transfer requires evidence that experience produces or revises the
 house's project-specific machinery. The seed is outgrown when [learning
 displaces repeated human construction of
 project-specific knowledge](../notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md)
-over the claimed scope. This may show up in new theories, checks, decompositions,
+as new work arises. This may show up in new theories, checks, decompositions,
 or evaluators, depending on what later work requires.
 
 General tools such as version control, a test runner, or a model client may
@@ -264,8 +265,8 @@ The requirement is an evidence-caused change that takes effect.
 
 ## Stop or redirect conditions
 
-Repeated failures in a declared regime should guide what to repair, compare,
-or stop. Different findings challenge different parts of the approach:
+Repeated failures under reported test conditions should guide what to repair,
+compare, or stop. Different findings challenge different parts of the approach:
 
 - **The proposed retained account makes no causal difference.** Interventions
   that control equivalent reconstruction still fail to change later decisions
@@ -274,7 +275,7 @@ or stop. Different findings challenge different parts of the approach:
   interventions persist, transferred roles repeatedly reopen, or each transfer
   creates equal or harder human work elsewhere.
 - **Each new request class needs new human design.** A person must supply a new
-  ontology, evaluator, or decomposition whenever the scope expands.
+  ontology, evaluator, or decomposition as the house takes on new kinds of work.
 - **Evaluation becomes self-confirming.** The house's approval is the only
   evidence of quality, while external outcomes stop tracking it.
 - **A more direct method performs better at comparable total cost.**
@@ -292,8 +293,8 @@ also be able to reveal these failures.
 The [conjecture](./automated-software-houses-with-fixed-llms.md) supplies the
 witness conditions; the [training proposal](./the-software-house-as-the-unit-of-training.md)
 supplies the learning target. The [transition-closure supplement](./transition-closure-and-continuation-reliability.md)
-defines continuation reliability for a house that is already adequate; the
-chance of reaching one from human-agent production is this article's separate
-measure. This program tests a route toward both targets by measuring changes
+defines continuation reliability for a house that is already adequate. How
+human-agent production can lead to such a house is this article's separate
+question. This program tests a route toward both targets by measuring changes
 in the production decisions and project-specific machinery supplied by people.
 Failed and reopened transfers determine where that route needs repair.

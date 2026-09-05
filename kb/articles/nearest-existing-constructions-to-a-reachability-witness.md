@@ -51,13 +51,17 @@ Each column asks about one of the conjecture's conditions:
   implications not stated verbatim in retained material.
 - **Coherent revision:** evidence against earlier understanding leads to changes
   in the product, retained state, or machinery that support continued modification.
-- **Automated continuation:** those capacities persist over the declared product
-  scope with pinned distributed-parametric models and no internal human decisions.
+- **Automated continuation:** those capacities persist through later requests
+  and consequences, with pinned distributed-parametric models and no internal
+  human production decisions.
 - **Practical reliability:** evaluation supports useful success in sustaining
   adequacy within the declared horizon and budget.
 
-An adequate house can perform the first three functions; the fourth asks how
-reliably it sustains that capacity. The [transition-closure
+The first two conditions need positive evidence: a run that never challenges
+an assumption does not demonstrate coherent revision. Workload and observation
+limits describe the evaluation, rather than a product family the house must
+stay within. An adequate house can perform the first three functions; the
+fourth asks how reliably it sustains that capacity. The [transition-closure
 supplement](./transition-closure-and-continuation-reliability.md) defines that
 measure. Users may supply requirements, facts, observations, and judgments
 about visible behaviour. Supplying implementation diagnosis, internal design,
