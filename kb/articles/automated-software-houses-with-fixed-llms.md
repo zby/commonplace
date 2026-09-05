@@ -159,7 +159,7 @@ request + operating evidence + current product and project state
 Every internal decision and successor must come from the current house,
 its fixed learned components, and permitted external inputs. An internal human
 intervention ends the witness. The [transition-closure
-supplement](./reachability-as-closure-under-the-seed-gate.md) develops this
+supplement](./transition-closure-and-practical-reachability.md) develops this
 provenance requirement.
 
 Pinning isolates whether the system around current models can perform every
