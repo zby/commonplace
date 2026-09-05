@@ -21,12 +21,13 @@ source_notes:
 > on [the repository's GitHub Discussions page](https://github.com/zby/commonplace/discussions).
 
 **TL;DR.** A *software house* is the complete persistent system that keeps
-changing software for its users. We conjecture that such a house can sustain
-coherent change as requirements and operating conditions develop, while
-computation performs every production decision.
-Its LLMs and other distributed-parametric models stay fixed. The house learns
-by revising its retained knowledge and production machinery, and may begin
-from a human-built seed.
+changing software for its users. We conjecture that an automated software
+house is possible with today's LLM weights: a house in which computation
+performs every production decision can sustain coherent change as
+requirements and operating conditions develop, using only LLMs and other
+distributed-parametric models available by 2026-09-02 and held fixed. The
+house learns by revising its retained knowledge and production machinery,
+not its models, and may begin from a human-built seed.
 
 The central test is whether the house can apply and revise its *program
 theory*: its understanding of the software's purpose, organization, and how to
