@@ -49,6 +49,8 @@ allOf:
             format: date
           evidence-tier:
             enum: [code-grounded, doc-grounded, null]
+          memory-comparison:
+            type: object
         additionalProperties: true
       headings:
         description: "One H1 followed by the eleven ordered result sections; shared-record, lens, and verification subheadings remain explicit in every result disposition."

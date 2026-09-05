@@ -1,6 +1,11 @@
 # Agentic Systems
 
-Coverage of external **agentic systems and harnesses as whole systems** — execution loops, orchestration APIs, sub-agent surfaces, scheduling, and control. The companion collection [agent-memory-systems](../agent-memory-systems/README.md) covers one subsystem — memory — with a full review methodology; this collection covers the rest of how agentic systems are built, starting wherever a shipped system makes contact with our theory.
+Coverage of external **agentic systems and harnesses**: execution loops,
+orchestration, scheduling, permissioning, memory, knowledge, and context.
+Memory comparisons now consume the main analysis's retained results; see
+[comparison inputs and builds](./comparisons/README.md). The companion
+[agent-memory-systems collection](../agent-memory-systems/README.md) retains
+legacy reviews and historical comparison snapshots.
 
 ## Analyses
 

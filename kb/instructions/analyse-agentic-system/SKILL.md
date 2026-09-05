@@ -20,10 +20,12 @@ system, also publish its legacy collection review from the same sources.
 
 Invocation authorizes the run directory under
 `kb/reports/state/agentic-system-analysis/`, one generated review under
-`kb/agentic-systems/reviews/`, and, when applicable, one review under
+`kb/agentic-systems/reviews/`, its identical exact-result copy under
+`kb/reports/retained/agentic-system-analysis/<run-id>/result.md`, and, when
+applicable, one review under
 `kb/agent-memory-systems/` plus its semantic-QA state. It does not authorize
 changes to source worktrees, auxiliary indexes or surveys, transfer scans,
-landscape synthesis, retained reports, or Git staging and commits.
+landscape synthesis, other retained reports, or Git staging and commits.
 
 ## Failure rule
 
@@ -231,6 +233,13 @@ Write `<run-id>/result.md` using
 required headings. Its Run identity names the run state, generated review
 disposition, and legacy review disposition. Put probe evidence inline.
 
+Normalize the established memory/context findings into the result type's
+`memory-comparison` frontmatter. Name the memory boundary and fill every axis
+with its assessment, evidence basis, values, canonical records, and rationale.
+Keep uncertain, uninspected, inapplicable, and evidenced-absent cases explicit.
+Use the weakest evidence basis across an aggregated value set; never infer
+comparison values from legacy reviews or a missing tag or section.
+
 Run `commonplace-validate --full <result-path>` and verify every source anchor,
 canonical ID, evidence status, boundary, lens output, limitation, and blocker.
 Correct deterministic formatting errors before continuing. An unresolved
@@ -248,7 +257,11 @@ Skip publication for a blocked or out-of-scope result. For a complete result:
    and its primary-source anchors. Write it first as a temporary candidate in
    the run directory. Use `kb/types/note.md` and exact frontmatter fields
    `generated-by: analyse-agentic-system`, `analysis-run`, `source-identity`,
-   and `reviewed-revision`.
+   `reviewed-revision`, `analysis-result`, and `analysis-result-sha256`.
+   The last two fields name
+   `kb/reports/retained/agentic-system-analysis/<run-id>/result.md` and the SHA-256
+   of the validated exact result. Publication retains those identical bytes;
+   do not draft a separate retained report or rewrite the result for the matrix.
 2. If memory-review detection applies, invoke
    [Write an agent memory system review](../write-agent-memory-system-review/SKILL.md)
    with the frozen source register, reviewed revision, selected destination,
@@ -269,7 +282,8 @@ Skip publication for a blocked or out-of-scope result. For a complete result:
 5. Run `commonplace-agentic-analysis-publication publish` with the same
    arguments. It requires current semantic pass baselines for the candidate
    revision, validates the prospective complete run state, replaces all review
-   projections, and writes the complete run state last. It rolls back ordinary
+   projections, retains the exact result, and writes the complete run state last.
+   It rolls back ordinary
    in-process write or validation failures. A crash or power loss during the
    short replace sequence may still leave partial public writes; inspect them,
    mark the run `failed`, and use a new run ID.
@@ -280,19 +294,28 @@ best effort. A cleanup warning does not undo completion. Never patch generated
 prose independently of its source boundary and method. Never stage or commit
 unless the caller separately requested it.
 
-After a code-grounded legacy review changes, report `systems.csv` and
-`systems-table.md` stale unless they were rebuilt and validated under separate
-authority. Report a prior current landscape synthesis as historical unless it
-was refreshed under separate authority. Authorization alone does not establish
-that either operation completed. A doc-grounded review does not enter the matrix.
+After a main review changes, report the comparison outputs under
+`kb/agentic-systems/comparisons/` stale unless rebuilt and validated under
+separate authority. The matrix, table, and numerical-analysis scripts read the
+retained result directly. Repeated `--review` arguments select a bounded corpus;
+without them every generated main review must meet the input contract.
+The old `kb/agent-memory-systems/systems.csv` and `systems-table.md` are historical
+snapshots and are not rebuilt by these scripts.
+Report a prior current landscape synthesis as historical unless it was refreshed
+under separate authority.
+Authorization alone does not establish that an operation completed. The new
+matrix records both evidence tiers; numerical claims use code-grounded rows,
+with doc-grounded findings kept separate.
 
 ### 9. Run an optional transfer scan after completion
 
 A transfer scan is separate, interest-conditioned state. Run
 [`scan-agentic-system-transfer`](../scan-agentic-system-transfer/SKILL.md) only
 when separately commissioned and only after the complete run state validates.
-Pass `result.md`, its SHA-256, the interest brief, and permitted Commonplace
-read and output scope. The scan never edits the analysis, published reviews,
+Pass `result.md`, its SHA-256, the sibling `run-state.md` path, the interest
+brief, and permitted Commonplace read and output scope. The scan verifies the
+completed run and reads the exact result directly; a legacy review or compact
+public review is not a substitute. The scan never edits the analysis, published reviews,
 or comparison corpus. If it exposes an analysis defect, fail that conclusion
 and rerun the analysis before scanning again.
 

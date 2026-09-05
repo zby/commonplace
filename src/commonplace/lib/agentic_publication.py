@@ -19,6 +19,7 @@ from commonplace.lib.agentic_analysis import (
     verify_agentic_analysis_run_state,
 )
 from commonplace.lib.note_parser import ParsedDocument, parse_document
+from commonplace.lib.systems_matrix import retained_result_path, validate_comparison
 from commonplace.review.batch import PreparedBatch, prepare_grouped_review_job
 from commonplace.review.paths import criterion_path_for_id, review_gates_dir
 from commonplace.review.resolve_criteria import (
@@ -48,6 +49,7 @@ class PreparedPublication:
 @dataclass(frozen=True)
 class PublishedPublication:
     generated_path: str
+    retained_path: str
     legacy_path: str | None
     cleanup_warnings: tuple[str, ...]
 
@@ -60,6 +62,8 @@ class _CheckedBundle:
     final_state_text: str
     generated_text: str
     generated_bytes: bytes
+    result_bytes: bytes
+    retained_path: Path
     legacy_text: str | None
     legacy_bytes: bytes | None
 
@@ -339,6 +343,12 @@ def _check_bundle(spec: PublicationSpec, *, require_semantic: bool) -> _CheckedB
         repo_root=repo_root,
         label="exact result",
     )
+    validate_comparison(result_document.frontmatter.get("memory-comparison"), result_document.body)
+    retained_path = _repo_path(repo_root, retained_result_path(running_state.run_id))
+    if retained_path.relative_to(repo_root) != retained_result_path(running_state.run_id):
+        raise ValueError("retained result must use its canonical path")
+    if retained_path.exists():
+        raise ValueError(f"retained result already exists; use a new run ID: {retained_path}")
 
     generated_bytes, generated_text = _read_utf8(
         generated_candidate, label="generated candidate"
@@ -364,7 +374,7 @@ def _check_bundle(spec: PublicationSpec, *, require_semantic: bool) -> _CheckedB
     final_state = parse_agentic_analysis_run_state(
         state_path, final_document, repo_root=repo_root
     )
-    overrides = {generated_path: generated_text}
+    overrides = {generated_path: generated_text, retained_path: result_text}
     if legacy_path is not None and legacy_text is not None:
         overrides[legacy_path] = legacy_text
     if require_semantic:
@@ -420,6 +430,8 @@ def _check_bundle(spec: PublicationSpec, *, require_semantic: bool) -> _CheckedB
         final_state_text=final_state_text,
         generated_text=generated_text,
         generated_bytes=generated_bytes,
+        result_bytes=result_bytes,
+        retained_path=retained_path,
         legacy_text=legacy_text,
         legacy_bytes=legacy_bytes,
     )
@@ -495,6 +507,7 @@ def publish_publication(spec: PublicationSpec) -> PublishedPublication:
     )
     state_path = bundle.spec.run_state_path
     targets: list[tuple[Path, bytes]] = [
+        (bundle.retained_path, bundle.result_bytes),
         (generated_path, bundle.generated_bytes),
     ]
     if legacy_path is not None and bundle.legacy_bytes is not None:
@@ -541,6 +554,7 @@ def publish_publication(spec: PublicationSpec) -> PublishedPublication:
             cleanup_warnings.append(f"could not remove candidate {candidate}: {exc}")
     return PublishedPublication(
         generated_path=bundle.spec.generated_destination,
+        retained_path=bundle.retained_path.relative_to(repo_root).as_posix(),
         legacy_path=bundle.spec.legacy_destination,
         cleanup_warnings=tuple(cleanup_warnings),
     )

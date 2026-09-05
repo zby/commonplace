@@ -1,338 +1,346 @@
-"""Parse agent-memory-system reviews into comparison-matrix rows.
+"""Read memory comparisons directly from retained main-analysis results."""
 
-Pure parsing logic for the systems matrix (``kb/agent-memory-systems/systems.csv``).
-Text-in, row-out, so it is unit-testable; the CLI runner
-(``scripts/build_systems_matrix.py``) owns file discovery, the identity join, and
-CSV writing. This module stays stdlib-only so the runner script works without the
-package's dependencies installed.
-
-The matrix is **faithful**: multi-valued axes are one-hot indicator columns
-(``1`` present / ``0`` assessed-absent / ``''`` not assessed or assessed-unknown),
-authored as a set of backticked tokens after a lead label, e.g.::
-
-    **Read-back signal:** `coarse` `identifier` `inferred / embedding` — …
-
-Values come only from authored lead tokens, never guessed; an applicable axis
-with no lead token is left blank and flagged, which makes the flag list the
-precise retrofit worklist. A lead line containing only ``not-determinable`` is
-treated as assessed-unknown: it leaves the axis blank without flagging. See
-kb/agent-memory-systems/types/agent-memory-system-review.md for the authoring
-contract.
-"""
 from __future__ import annotations
 
+import csv
+import io
+import json
 import re
+from dataclasses import dataclass
+from hashlib import sha256
 from pathlib import Path
 
-NOT_DETERMINABLE = "not-determinable"
-# Assessed-absent sentinel: the reviewer looked and found none of the axis values
-# apply. Distinct from `not-determinable` (assessed-unknown -> blank) and from an
-# omitted line (retrofit gap -> flag). `none` records an explicit 0 across the
-# whole axis, so "verified no curation" stays distinct from "not assessed".
-NONE_TOKEN = "none"
+from commonplace.lib.note_parser import parse_document
 
-# --- single-valued lead tokens (one column, one backticked value) -------------
-SINGLE_VOCAB = {
-    "storage_substrate": ("Storage substrate",
-        {"files", "repo", "sqlite", "rdbms", "vector", "graph", "kv",
-         "in-memory", "prompt-registry", "model-weights", "service-object"}),
-    "read_back_direction": ("Read-back", {"pull", "push", "both"}),
-}
-
-# --- one-hot axes: column -> the controlled backticked token it fires on -------
-# Applicability decides whether a missing token is flagged (worklist) or simply
-# left blank (axis does not apply to this system).
-FORM = {
-    "form_natural_language": "natural-language",
-    "form_symbolic": "symbolic",
-    "form_parametric": "parametric",
-}
-
-ONEHOT_AXES = {
-    "Lineage": {
-        "lin_authored": "authored", "lin_imported": "imported",
-        "lin_trace_extracted": "trace-extracted",
-        "lin_other_compiled": "other-compiled"},
-    "Behavioral authority": {
-        "auth_knowledge": "knowledge", "auth_instruction": "instruction",
-        "auth_enforcement": "enforcement", "auth_routing": "routing",
-        "auth_validation": "validation", "auth_ranking": "ranking",
-        "auth_learning": "learning"},
-    # write side: agency is universal; curation operations gate on automatic agency.
-    # Keep "Write agency" before "Curation operations" so wa_automatic is parsed
-    # before the curation-ops applicability check reads it.
-    "Write agency": {"wa_manual": "manual", "wa_automatic": "automatic"},
-    "Curation operations": {
-        "op_consolidate": "consolidate", "op_dedup": "dedup",
-        "op_evolve": "evolve", "op_synthesize": "synthesize",
-        "op_invalidate": "invalidate", "op_decay": "decay",
-        "op_promote": "promote"},
-    "Read-back signal": {
-        "sig_coarse": "coarse", "sig_identifier": "identifier",
-        "sig_inferred_lexical": "inferred / lexical",
-        "sig_inferred_embedding": "inferred / embedding",
-        "sig_inferred_judgment": "inferred / judgment"},
-    "Trace source": {
-        "ts_session_logs": "session-logs", "ts_tool_traces": "tool-traces",
-        "ts_event_streams": "event-streams", "ts_trajectories": "trajectories"},
-    "Learning scope": {
-        "ls_per_task": "per-task", "ls_per_project": "per-project",
-        "ls_cross_task": "cross-task"},
-    "Learning timing": {
-        "lt_online": "online", "lt_offline": "offline", "lt_staged": "staged"},
-    "Distilled form": {
-        "df_natural_language": "natural-language",
-        "df_symbolic": "symbolic",
-        "df_parametric": "parametric",
+RESULT_TYPE = "kb/types/agentic-system-analysis-result.md"
+RETAINED_ROOT = Path("kb/reports/retained/agentic-system-analysis")
+REVIEWS_ROOT = Path("kb/agentic-systems/reviews")
+RUN_ID = re.compile(r"AAS-\d{4}-\d{2}-\d{2}-[a-z0-9]+(?:-[a-z0-9]+)*-\d{2}")
+AXES = {
+    "storage_substrate": {
+        "files",
+        "repo",
+        "sqlite",
+        "rdbms",
+        "vector",
+        "graph",
+        "kv",
+        "in-memory",
+        "prompt-registry",
+        "model-weights",
+        "service-object",
     },
+    "representational_form": {"natural-language", "symbolic", "parametric"},
+    "lineage": {"authored", "imported", "trace-extracted", "other-compiled"},
+    "behavioral_authority": {
+        "knowledge",
+        "instruction",
+        "enforcement",
+        "routing",
+        "validation",
+        "ranking",
+        "learning",
+    },
+    "write_agency": {"manual", "automatic"},
+    "curation_operations": {
+        "consolidate",
+        "dedup",
+        "evolve",
+        "synthesize",
+        "invalidate",
+        "decay",
+        "promote",
+    },
+    "read_back_direction": {"pull", "push"},
+    "read_back_signal": {
+        "coarse",
+        "identifier",
+        "inferred-lexical",
+        "inferred-embedding",
+        "inferred-judgment",
+    },
+    "trace_learning": {"yes", "no"},
+    "trace_source": {"session-logs", "tool-traces", "event-streams", "trajectories"},
+    "learning_scope": {"per-task", "per-project", "cross-task"},
+    "learning_timing": {"online", "offline", "staged"},
+    "distilled_form": {"natural-language", "symbolic", "parametric"},
+    "faithfulness_tested": {"yes", "no"},
 }
-
-# Axes applicable only to push/both read-back, to trace-learning systems, and to
-# systems with automatic write agency, respectively.
-PUSH_AXES = {"Read-back signal"}
-TRACE_AXES = {"Trace source", "Learning scope", "Learning timing", "Distilled form"}
-AUTOMATIC_AXES = {"Curation operations"}
-
-COLUMNS = [
-    # identity / meta
-    "system_name", "review_file", "public_repo", "clone_path",
-    "one_line", "source_tier",
-    # artifact analysis
-    "storage_substrate",
-    "representational_form", *FORM,
-    *ONEHOT_AXES["Lineage"],
-    *ONEHOT_AXES["Behavioral authority"],
-    # write side
-    *ONEHOT_AXES["Write agency"],
-    *ONEHOT_AXES["Curation operations"],
-    # trace-learning
-    "trace_learning",
-    *ONEHOT_AXES["Trace source"],
-    *ONEHOT_AXES["Distilled form"],
-    *ONEHOT_AXES["Learning scope"],
-    *ONEHOT_AXES["Learning timing"],
-    # read-back
-    "read_back_direction", "rb_pull", "rb_push",
-    *ONEHOT_AXES["Read-back signal"],
-    "rb_faithfulness_tested",
-    "read_back_notes",
+ASSESSMENTS = {"known", "absent", "inapplicable", "uninspected", "not-determinable"}
+BASES = {"claimed", "afforded", "wired", "observed", "causally supported"}
+METADATA = [
+    "system_name",
+    "review_file",
+    "review_sha256",
+    "result_file",
+    "result_sha256",
+    "analysis_run",
+    "source_identity",
+    "reviewed_revision",
+    "analysis_cutoff",
+    "source_tier",
+    "boundary_kind",
+    "comparison_scope",
+    "one_line",
+]
+COLUMNS = METADATA + [
+    name + suffix
+    for name in AXES
+    for suffix in ("", "_assessment", "_basis", "_records")
 ]
 
-# Columns the parser owns (recomputed every run). Everything else is
-# hand-classified and preserved across runs by the CLI.
-_PARSED_ONEHOT = [c for cols in ONEHOT_AXES.values() for c in cols] + list(FORM)
-PARSED = {
-    "system_name", "review_file", "source_tier", "one_line",
-    "storage_substrate", "representational_form",
-    "read_back_direction", "read_back_notes", "rb_pull", "rb_push",
-    "rb_faithfulness_tested",
-    "trace_learning",
-    *_PARSED_ONEHOT,
-}
-JOINED = {"public_repo", "clone_path"}
 
-VOCAB = {k: v for k, (_, v) in SINGLE_VOCAB.items()}
-
-_H1 = re.compile(r"^#\s+(.+?)\s*$", re.MULTILINE)
-_TAGS = re.compile(r"^tags:\s*\[([^\]]*)\]", re.MULTILINE)
+def retained_result_path(run_id: str) -> Path:
+    if not isinstance(run_id, str) or not RUN_ID.fullmatch(run_id):
+        raise ValueError("invalid analysis run ID")
+    return RETAINED_ROOT / run_id / "result.md"
 
 
-def norm(s: str) -> str:
-    return re.sub(r"[^a-z0-9]", "", s.lower())
+def _strings(value: object, label: str) -> list[str]:
+    if not isinstance(value, list) or any(
+        not isinstance(v, str) or not v.strip() for v in value
+    ):
+        raise ValueError(f"{label}: expected a list of nonempty strings")
+    if len(value) != len(set(value)):
+        raise ValueError(f"{label}: duplicate values")
+    return value
 
 
-def _lead_tokens(line: str) -> list[str]:
-    """Return only the contiguous backticked tokens that lead a finding line.
-
-    Backticked terms in the rationale are prose, not authored matrix values. The
-    review contract therefore makes the controlled tokens a contiguous prefix.
-    """
-    tokens: list[str] = []
-    remainder = line
-    while match := re.match(r"\s*`([^`]+)`", remainder):
-        tokens.append(re.sub(r"\s+", " ", match.group(1).strip()))
-        remainder = remainder[match.end():]
-    return tokens
-
-
-def _is_assessed_unknown(label: str, tokens: list[str], flags: list[str]) -> bool:
-    if NOT_DETERMINABLE not in tokens:
-        return False
-    if tokens == [NOT_DETERMINABLE]:
-        return True
-    flags.append(f"{label}: `{NOT_DETERMINABLE}` cannot be mixed with controlled values")
-    return False
-
-
-def _is_assessed_none(label: str, tokens: list[str], flags: list[str]) -> bool:
-    if NONE_TOKEN not in tokens:
-        return False
-    if tokens == [NONE_TOKEN]:
-        return True
-    flags.append(f"{label}: `{NONE_TOKEN}` cannot be mixed with controlled values")
-    return False
-
-
-def extract_token(label: str, text: str) -> str:
-    """Value of a ``**Label:** `token``` lead token, or '' if absent."""
-    line = _lead_line(label, text)
-    tokens = _lead_tokens(line) if line is not None else []
-    return tokens[0] if tokens else ""
-
-
-def _lead_line(label: str, text: str) -> str | None:
-    """The remainder of the line after ``**Label:**``, or None if absent."""
-    m = re.search(
-        rf"^[ \t]*(?:[-*][ \t]+)?\*\*{re.escape(label)}:\*\*[ \t]*(.*)$",
-        text,
-        re.MULTILINE,
+def validate_comparison(profile: object, body: str) -> dict:
+    """Validate authored assessments and references, without classifying prose."""
+    if not isinstance(profile, dict) or set(profile) != {"scope", "axes"}:
+        raise ValueError("memory-comparison requires exactly scope and axes")
+    if not isinstance(profile["scope"], str) or not profile["scope"].strip():
+        raise ValueError(
+            "memory-comparison.scope must name the compared memory boundary"
+        )
+    axes = profile["axes"]
+    if not isinstance(axes, dict) or set(axes) != set(AXES):
+        raise ValueError(
+            "memory-comparison.axes must contain every registered axis exactly once"
+        )
+    shared = (
+        body.split("## Shared records\n", 1)[1].split("## Runtime account", 1)[0]
+        if "## Shared records\n" in body
+        else ""
     )
-    return m.group(1) if m else None
-
-
-def _h2_section(text: str, heading: str) -> str:
-    """Body of one exact H2 section, excluding later H2 sections."""
-    match = re.search(
-        rf"^##[ \t]+{re.escape(heading)}[ \t]*$\n?(.*?)(?=^##[ \t]+|\Z)",
-        text,
-        re.MULTILINE | re.DOTALL,
+    ids = set(
+        re.findall(
+            r"(?m)^\s*(?:\|\s*|[-*]\s+|#{3,6}\s+)?[*`]*((?:CMP|OBJ|RTE|CLM|ABS|BAP)-\d+)\b",
+            shared,
+        )
     )
-    return match.group(1) if match else ""
+    for name, vocabulary in AXES.items():
+        entry = axes[name]
+        if not isinstance(entry, dict) or set(entry) != {
+            "assessment",
+            "basis",
+            "values",
+            "records",
+            "note",
+        }:
+            raise ValueError(
+                f"{name}: requires assessment, basis, values, records, and note"
+            )
+        values = _strings(entry["values"], name + ".values")
+        records = _strings(entry["records"], name + ".records")
+        if (
+            not isinstance(entry["assessment"], str)
+            or entry["assessment"] not in ASSESSMENTS
+        ):
+            raise ValueError(f"{name}: invalid assessment")
+        if not isinstance(entry["note"], str) or not entry["note"].strip():
+            raise ValueError(f"{name}: missing rationale or conclusion prevented")
+        if not set(records) <= ids:
+            raise ValueError(f"{name}: unresolved canonical records")
+        if not set(values) <= vocabulary:
+            raise ValueError(f"{name}: off-vocabulary values")
+        if entry["assessment"] == "known":
+            if (
+                not values
+                or not records
+                or not isinstance(entry["basis"], str)
+                or entry["basis"] not in BASES
+            ):
+                raise ValueError(
+                    f"{name}: known assessment needs values, records, and evidence basis"
+                )
+        elif values or entry["basis"] is not None:
+            raise ValueError(
+                f"{name}: non-known assessment requires empty values and null basis"
+            )
+        if entry["assessment"] == "absent" and not any(
+            r.startswith("ABS-") for r in records
+        ):
+            raise ValueError(f"{name}: absence requires an evidenced-absence record")
+        if name in {"trace_learning", "faithfulness_tested"} and len(values) > 1:
+            raise ValueError(f"{name}: yes and no cannot be combined")
+    trace = axes["trace_learning"]
+    if trace["assessment"] == "known" and trace["values"] == ["no"]:
+        for name in (
+            "trace_source",
+            "learning_scope",
+            "learning_timing",
+            "distilled_form",
+        ):
+            if axes[name]["assessment"] != "inapplicable":
+                raise ValueError(
+                    f"{name}: must be inapplicable when trace learning is no"
+                )
+    direction = axes["read_back_direction"]
+    if (
+        direction["assessment"] == "known"
+        and "push" not in direction["values"]
+        and axes["read_back_signal"]["assessment"] != "inapplicable"
+    ):
+        raise ValueError(
+            "read_back_signal: must be inapplicable for pull-only read-back"
+        )
+    faithfulness = axes["faithfulness_tested"]
+    if faithfulness["values"] == ["yes"] and faithfulness["basis"] not in {
+        "observed",
+        "causally supported",
+    }:
+        raise ValueError("faithfulness_tested: yes requires execution evidence")
+    return profile
 
 
-def _onehot(label: str, cols: dict[str, str], text: str, applicable: bool,
-            row: dict[str, str], flags: list[str]) -> None:
-    """Set a one-hot axis from its authored lead-token line.
-
-    applicable=False -> leave blank (axis does not apply). applicable=True with no
-    lead token -> blank + flag (retrofit worklist). Present -> 1/0 across the vocab.
-    A sole `not-determinable` token means assessed-unknown and leaves the axis blank.
-    A sole `none` token means assessed-absent and sets every column to 0.
-    """
-    if not applicable:
-        return
-    line = _lead_line(label, text)
-    if line is None:
-        flags.append(f"{label}: missing lead token")
-        return
-    tokens = _lead_tokens(line)
-    if _is_assessed_unknown(label, tokens, flags):
-        return
-    if _is_assessed_none(label, tokens, flags):
-        for col in cols:
-            row[col] = "0"
-        return
-    matched = False
-    for col, value in cols.items():
-        hit = value in tokens
-        row[col] = "1" if hit else "0"
-        matched = matched or hit
-    if not matched:
-        flags.append(f"{label}: lead token has no controlled value")
+def _document(content: bytes, label: str):
+    document, error = parse_document(content.decode("utf-8"))
+    if error or document is None or document.frontmatter is None:
+        raise ValueError(f"{label}: malformed typed Markdown")
+    return document
 
 
-def empty_row() -> dict[str, str]:
-    return {c: "" for c in COLUMNS}
+@dataclass(frozen=True)
+class MatrixInputs:
+    rows: list[dict[str, str]]
+    hashes: dict[str, str]
+
+    def recheck(self, root: Path) -> None:
+        for path, digest in self.hashes.items():
+            if sha256((root / path).read_bytes()).hexdigest() != digest:
+                raise ValueError(f"input changed: {path}")
 
 
-def parse_review_text(text: str, review_file: str, source_tier: str) -> tuple[dict[str, str], list[str]]:
-    """Extract the parsed fields from one review's text. Returns (row, flags)."""
-    flags: list[str] = []
-    row = empty_row()
-    row["review_file"] = review_file
-    row["source_tier"] = source_tier
+def load_results(root: Path, review_paths: list[Path] | None = None) -> MatrixInputs:
+    """Select explicit main reviews, or all generated main reviews; fail on gaps."""
+    root = root.resolve()
+    paths = (
+        review_paths
+        if review_paths is not None
+        else sorted((root / REVIEWS_ROOT).glob("*.md"))
+    )
+    rows, hashes, identities = [], {}, set()
+    for raw_path in paths:
+        path = (root / raw_path).resolve()
+        relative = path.relative_to(root)
+        if relative.parent != REVIEWS_ROOT or relative.suffix != ".md":
+            raise ValueError(f"not a main-review path: {raw_path}")
+        review_bytes = path.read_bytes()
+        review, error = parse_document(review_bytes.decode("utf-8"))
+        if error or review is None:
+            raise ValueError(f"{relative}: malformed Markdown")
+        meta = review.frontmatter or {}
+        if meta.get("generated-by") != "analyse-agentic-system":
+            if review_paths is not None:
+                raise ValueError(f"not a generated main review: {relative}")
+            continue
+        retained = retained_result_path(meta.get("analysis-run"))
+        if meta.get("analysis-result") != retained.as_posix():
+            raise ValueError(
+                f"{relative}: missing or mismatched retained result; regenerate the main review"
+            )
+        result_path = (root / retained).resolve()
+        if result_path.relative_to(root) != retained:
+            raise ValueError(f"retained result must use its canonical path: {retained}")
+        result_bytes = result_path.read_bytes()
+        result_hash = sha256(result_bytes).hexdigest()
+        if meta.get("analysis-result-sha256") != result_hash:
+            raise ValueError(f"retained result SHA-256 mismatch: {retained}")
+        result = _document(result_bytes, str(retained))
+        from commonplace.lib import validation
 
-    h1 = _H1.search(text)
-    row["system_name"] = h1.group(1).strip() if h1 else Path(review_file).stem
+        checks = validation.validate_note(result_path, repo_root=root)
+        if checks.fails or checks.warns:
+            raise ValueError(
+                f"invalid retained result {retained}: "
+                + "; ".join([*checks.fails, *checks.warns])
+            )
+        data = result.frontmatter
+        if (
+            data.get("type") != RESULT_TYPE
+            or data.get("result-disposition") != "complete"
+        ):
+            raise ValueError(f"not a complete main-analysis result: {retained}")
+        if data.get("run-id") != meta["analysis-run"] or data.get(
+            "reviewed-boundary"
+        ) != meta.get("reviewed-revision"):
+            raise ValueError(f"review/result identity mismatch: {relative}")
+        source = meta.get("source-identity")
+        if not isinstance(source, str) or not source.strip():
+            raise ValueError(f"missing source identity: {relative}")
+        register = result.body.split("## Source register\n", 1)[-1].split(
+            "## Shared records", 1
+        )[0]
+        source_ids = {
+            s.rstrip(".,;") for s in re.findall(r"https?://[^\s<>()`\"']+", register)
+        }
+        source_ids.update(re.findall(r"`([^`\n]+)`", register))
+        if source not in source_ids:
+            raise ValueError(
+                f"source identity missing from result register: {relative}"
+            )
+        if source in identities:
+            raise ValueError(
+                f"multiple selected reviews of source {source}; choose one boundary explicitly"
+            )
+        identities.add(source)
+        profile = validate_comparison(data.get("memory-comparison"), result.body)
+        tier = data.get("evidence-tier")
+        if tier not in {"code-grounded", "doc-grounded"}:
+            raise ValueError(f"invalid evidence tier: {retained}")
+        row = dict(
+            zip(
+                METADATA,
+                [
+                    str(data["system"]),
+                    relative.as_posix(),
+                    sha256(review_bytes).hexdigest(),
+                    retained.as_posix(),
+                    result_hash,
+                    meta["analysis-run"],
+                    source,
+                    str(data["reviewed-boundary"]),
+                    str(data["analysis-cutoff"]),
+                    tier,
+                    str(data["boundary-kind"]),
+                    profile["scope"],
+                    str(meta.get("description", "")),
+                ],
+            )
+        )
+        for name, entry in profile["axes"].items():
+            row[name] = json.dumps(sorted(entry["values"]), separators=(",", ":"))
+            row[name + "_assessment"] = entry["assessment"]
+            row[name + "_basis"] = entry["basis"] or ""
+            row[name + "_records"] = ";".join(entry["records"])
+        rows.append(row)
+        hashes[relative.as_posix()] = row["review_sha256"]
+        hashes[retained.as_posix()] = result_hash
+    if not rows:
+        raise ValueError("no generated main reviews selected")
+    return MatrixInputs(
+        sorted(
+            rows, key=lambda row: (row["system_name"].casefold(), row["analysis_run"])
+        ),
+        hashes,
+    )
 
-    # one-line description from frontmatter, stripped of the "<Name> review:" prefix
-    # the reviews conventionally lead with (127/129) so the human table reads cleanly.
-    md = re.search(r'^description:\s*"?(.+?)"?\s*$', text, re.MULTILINE)
-    one_line = md.group(1).strip() if md else ""
-    one_line = re.sub(r"^.{0,40}?\breview:\s*", "", one_line, count=1, flags=re.IGNORECASE)
-    row["one_line"] = one_line
 
-    tags = set()
-    mt = _TAGS.search(text)
-    if mt:
-        tags = {t.strip() for t in mt.group(1).split(",") if t.strip()}
-    trace_learning = "trace-learning" in tags
-    row["trace_learning"] = "yes" if trace_learning else "no"
-    # Targeting (coarse vs instance) lives in the Read-back signal one-hots; there is
-    # no separate push_engineered flag — an `instance` signal *is* a targeted push.
-
-    # Controlled values are authoritative only inside their contract sections.
-    # Legacy comparison/transfer sections can retain similar labels as inert prose.
-    artifact_text = _h2_section(text, "Artifact analysis")
-    write_text = _h2_section(text, "Write side")
-    read_text = _h2_section(text, "Read-back")
-
-    # single-valued lead tokens + vocab flagging
-    for col, (label, vocab) in SINGLE_VOCAB.items():
-        section = artifact_text if col == "storage_substrate" else read_text
-        v = extract_token(label, section)
-        row[col] = v
-        if not v:
-            flags.append(f"{col}: missing")
-        elif v not in vocab:
-            flags.append(f"{col}: off-vocab `{v}`")
-
-    # read-back justification + direction one-hot (kills the `both` bucket)
-    mrb = re.search(r"\*\*Read-back:\*\*\s*`[^`]+`\s*[—-]+\s*(.+)", read_text)
-    if mrb:
-        row["read_back_notes"] = mrb.group(1).strip()
-    direction = row["read_back_direction"]
-    is_push = direction in ("push", "both")
-    if direction in ("pull", "push", "both"):
-        row["rb_pull"] = "1" if direction in ("pull", "both") else "0"
-        row["rb_push"] = "1" if direction in ("push", "both") else "0"
-
-    # representational form: one-hot components; derive a compact component list
-    line = _lead_line("Representational form", artifact_text)
-    if line is None:
-        flags.append("Representational form: missing lead token")
-    else:
-        tokens = _lead_tokens(line)
-        if not _is_assessed_unknown("Representational form", tokens, flags):
-            present = []
-            for col, value in FORM.items():
-                hit = value in tokens
-                row[col] = "1" if hit else "0"
-                if hit:
-                    present.append(value)
-            if present:
-                row["representational_form"] = ";".join(present)
-            else:
-                flags.append("representational_form: lead token has no controlled value")
-
-    # generic one-hot axes
-    for label, cols in ONEHOT_AXES.items():
-        applicable = True
-        if label in PUSH_AXES:
-            applicable = is_push
-        elif label in TRACE_AXES:
-            applicable = trace_learning
-        elif label in AUTOMATIC_AXES:
-            applicable = row.get("wa_automatic") == "1"
-        if label in {"Lineage", "Behavioral authority"}:
-            section = artifact_text
-        elif label == "Read-back signal":
-            section = read_text
-        else:
-            section = write_text
-        _onehot(label, cols, section, applicable, row, flags)
-
-    # faithfulness tested (single yes/no), applicable to push/both
-    if is_push:
-        ft = extract_token("Faithfulness tested", read_text)
-        if ft in ("yes", "no"):
-            row["rb_faithfulness_tested"] = ft
-        elif ft == NOT_DETERMINABLE:
-            line = _lead_line("Faithfulness tested", read_text) or ""
-            _is_assessed_unknown("Faithfulness tested", _lead_tokens(line), flags)
-        elif ft:
-            flags.append(f"rb_faithfulness_tested: off-vocab `{ft}`")
-        else:
-            flags.append("Faithfulness tested: missing lead token")
-
-    return row, flags
+def csv_text(inputs: MatrixInputs) -> str:
+    output = io.StringIO(newline="")
+    writer = csv.DictWriter(output, fieldnames=COLUMNS, lineterminator="\n")
+    writer.writeheader()
+    writer.writerows(inputs.rows)
+    return output.getvalue()

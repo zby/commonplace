@@ -802,6 +802,20 @@ def verify_agentic_analysis_run_state(
     failures.extend(projection_failures)
 
     if state.generated_review is not None:
+        from commonplace.lib.systems_matrix import retained_result_path
+
+        retained_relative = retained_result_path(state.run_id)
+        retained = OutputIdentity(
+            role="retained result",
+            display_path=retained_relative.as_posix(),
+            path=state.repo_root / retained_relative,
+            expected_sha256=state.result.expected_sha256,
+        )
+        retained_error = _verify_output(retained, content_overrides)
+        if retained_error:
+            failures.append(retained_error)
+        else:
+            passes.append("retained result: exact result bytes preserved")
         generated_frontmatter, error = _parsed_frontmatter(
             state.generated_review, content_overrides
         )
@@ -814,6 +828,8 @@ def verify_agentic_analysis_run_state(
                 "analysis-run": state.run_id,
                 "source-identity": None if state.source is None else state.source.identity,
                 "reviewed-revision": None if state.source is None else state.source.revision,
+                "analysis-result": retained_relative.as_posix(),
+                "analysis-result-sha256": state.result.expected_sha256,
             }
             mismatches = [
                 field

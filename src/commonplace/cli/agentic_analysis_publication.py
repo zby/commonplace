@@ -69,6 +69,7 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
             payload = {
                 "published": True,
                 "generated_path": published.generated_path,
+                "retained_path": published.retained_path,
                 "legacy_path": published.legacy_path,
                 "cleanup_warnings": list(published.cleanup_warnings),
             }

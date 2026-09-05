@@ -13,6 +13,13 @@ Produce a public, source-auditable synthesis of the agent-memory-system corpus f
 
 ## Prerequisites
 
+Current refresh is blocked pending migration of this procedure's evidence
+bundle to the [main comparison contract](../../agentic-systems/comparisons/README.md).
+The live builder, renderer, and analyzer no longer consume the legacy corpus.
+The steps below apply only to reconstructable historical snapshots with their
+matching old parser and contracts. Do not run the new scripts against an old
+matrix or present their output as a refresh of that population.
+
 - Use the output path and current-versus-historical mode supplied in `$ARGUMENTS`, the user request, or an invoking worker packet. Do not infer file-mutation authority from a request for analysis alone.
 - Read `kb/agent-memory-systems/COLLECTION.md`, `kb/agent-memory-systems/types/agent-memory-system-review.md`, and `kb/agent-memory-systems/review-framework-design.md` before analysing the corpus.
 - Use `kb/agent-memory-systems/systems.csv` as the quantitative source and code-grounded reviews as its qualitative support. Doc-grounded reviews may appear only in a separately labelled qualitative section.

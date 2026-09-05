@@ -13,9 +13,12 @@ A complete result of one `analyse-agentic-system` run. It holds the run's eviden
 
 Every result is one typed Markdown file at
 `kb/reports/state/agentic-system-analysis/<run-id>/result.md`. Its frontmatter
-and eleven level-two sections are the canonical structure. The workflow may
-promote a copy separately when a future consumer needs durable retention, but
-that does not change this run or create another result identity.
+and eleven level-two sections are the canonical structure. Successful publication
+also retains the identical bytes at
+`kb/reports/retained/agentic-system-analysis/<run-id>/result.md`. This copy keeps
+the same result identity. The public review pins its path and SHA-256 so later
+consumers can read the exact analysis from a clean checkout. Correct it through
+a new analysis run, never by editing the retained copy.
 
 ## Frontmatter
 
@@ -36,6 +39,96 @@ that does not change this run or create another result identity.
 For a `complete` result, `target-class`, `boundary-kind`, `reviewed-boundary`, `analysis-cutoff`, and `evidence-tier` are non-null. `blocked` and `out-of-scope` are result dispositions, not excuses for a second output shape: retain every required section and state what was not reached, why, and which conclusion that prevents.
 
 ## Record conventions
+
+### Memory comparison fields
+
+Every newly published complete result includes `memory-comparison` in its
+frontmatter. This normalizes findings already established by the main analysis;
+it is not another memory review. A historical result without it cannot enter
+the new matrix. Publication requires the field; validation checks it whenever
+present.
+
+The mapping has exactly `scope` and `axes`. `scope` names the memory boundary:
+retained objects accumulated or changed through use, their access structures,
+and their write, maintenance, and later-consumer routes. Do not substitute the
+whole runtime's storage, permissions, or shipped static instructions for that
+memory boundary. Every axis below occurs exactly once in `axes`:
+
+| Axis | Controlled values |
+|---|---|
+| `storage_substrate` | `files`, `graph`, `in-memory`, `kv`, `model-weights`, `prompt-registry`, `rdbms`, `repo`, `service-object`, `sqlite`, `vector` |
+| `representational_form` | `natural-language`, `parametric`, `symbolic` |
+| `lineage` | `authored`, `imported`, `other-compiled`, `trace-extracted` |
+| `behavioral_authority` | `enforcement`, `instruction`, `knowledge`, `learning`, `ranking`, `routing`, `validation` |
+| `write_agency` | `automatic`, `manual` |
+| `curation_operations` | `consolidate`, `decay`, `dedup`, `evolve`, `invalidate`, `promote`, `synthesize` |
+| `read_back_direction` | `pull`, `push` |
+| `read_back_signal` | `coarse`, `identifier`, `inferred-embedding`, `inferred-judgment`, `inferred-lexical` |
+| `trace_learning` | `no`, `yes` |
+| `trace_source` | `event-streams`, `session-logs`, `tool-traces`, `trajectories` |
+| `learning_scope` | `cross-task`, `per-project`, `per-task` |
+| `learning_timing` | `offline`, `online`, `staged` |
+| `distilled_form` | `natural-language`, `parametric`, `symbolic` |
+| `faithfulness_tested` | `no`, `yes` |
+
+Each axis has exactly these fields:
+
+```yaml
+assessment: known
+basis: wired
+values: [pull, push]
+records: [RTE-2, RTE-3]
+note: "Both read-back routes are wired within the named memory boundary."
+```
+
+`assessment` is `known`, `absent`, `inapplicable`, `uninspected`, or
+`not-determinable`. The last value means inspected evidence cannot determine
+the classification. These are comparison assessments, distinct from the
+result's conclusion-status vocabulary.
+
+For `known`, give a nonempty set of controlled values, existing canonical
+records declared at the start of a table row, paragraph, list item, or
+subheading under Shared records, and one evidence `basis`: `claimed`,
+`afforded`, `wired`, `observed`, or `causally supported`. Union values across the declared scoped parts; use the
+weakest basis supporting that union and retain per-route differences in the
+records. A known set is complete for this axis within that scope. If an
+uninspected part prevents that assertion, record the uncertainty rather than
+silently omitting the part.
+
+Other assessments require `values: []` and `basis: null`. An `absent`
+assessment references an `ABS-*` record establishing the bounded absence.
+Every assessment has a `note` explaining its mapping, aggregation, or conclusion
+prevented. A term outside the vocabulary requires an explicit partial mapping
+or a not-determinable assessment, not an invented token.
+
+Storage and representational form cover the scoped operative parts, not one
+chosen primary store. `parametric` abbreviates distributed-parametric form.
+Lineage covers their derivation paths. Behavioral authority names the force
+in actual memory consumer paths; `knowledge` abbreviates advisory/evidential
+consumption. A human-triggered automatic extraction remains automatic write
+agency. Curation operates over retained memory; acquisition and primary-key
+collision checks alone are not memory consolidation or deduplication.
+
+Read-back concerns accumulated memory, not static routing instructions. Use
+both `pull` and `push` when both routes exist. Read-back signal characterizes
+push selection and is inapplicable for a known pull-only boundary.
+
+Trace learning requires automatic trace-fed writes producing durable
+behavior-shaping artifacts or learned parameters; storing raw logs alone does
+not qualify. Its source, scope, timing, and distilled form describe that
+learning route and are explicitly inapplicable when trace learning is known
+not to occur. Ordinary retention and retrieval fields still apply.
+
+Boolean axes have one value only; quote `"yes"` and `"no"` in YAML so they
+remain strings. Faithfulness tested means retained execution
+evidence tests dependence on recalled content; test code or a proposed
+experiment alone cannot support yes. A yes requires observed or causally
+supported basis, with the result's probe or retained evidence records.
+
+CSV readers preserve value sets, assessment, basis, and record references
+separately. The original result retains the rationale and full evidence account.
+No reader recovers missing classifications from a previous CSV, absent tag,
+legacy review, or compact prose.
 
 ### Canonical identity
 
@@ -81,7 +174,9 @@ intended destinations; only the run state declares that publication completed.
 
 `source ID | kind | identity/location | revision or capture | evidence layer | inspected scope | citation anchors | access gaps and conclusion prevented`
 
-A source with several evidence layers uses separate rows or clearly separated scopes. The register does not flatten implementation, doctrine/design, reported operation, observed run, and causal experiment into one layer.
+Put each stable source identity in a code span so direct consumers can match it
+exactly, including non-URL capture identities. A source with several evidence
+layers uses separate rows or clearly separated scopes. The register does not flatten implementation, doctrine/design, reported operation, observed run, and causal experiment into one layer.
 
 For a Git repository, the row identifies the canonical repository, full reviewed commit, inspected commit-relative paths, and commit-pinned citation anchors. Every cited path and line range must resolve from the reviewed commit. A local `related-systems/<owner>--<repo>/` checkout may be recorded as the operational access root, but its worktree and current HEAD are not evidence and are never the sole durable source identity.
 

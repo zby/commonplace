@@ -20,7 +20,7 @@ def test_raw_sources_stay_out_while_ingests_are_published() -> None:
     assert not excluded.match_file("sources/types/ingest-report.md")
 
 
-def test_report_collection_stays_out_of_the_published_site() -> None:
+def test_only_retained_main_analysis_results_are_published() -> None:
     config = yaml.safe_load((ROOT / "properdocs.yml").read_text(encoding="utf-8"))
     excluded = PathSpec().run_validation(config["exclude_docs"])
 
@@ -29,6 +29,10 @@ def test_report_collection_stays_out_of_the_published_site() -> None:
     assert excluded.match_file("reports/cache/connect/example.connect.md")
     assert excluded.match_file("reports/state/reviews/example.md")
     assert excluded.match_file("reports/retained/example.md")
+    run = "agentic-system-analysis/AAS-2026-09-05-example-01/"
+    assert not excluded.match_file("reports/retained/" + run + "result.md")
+    assert excluded.match_file("reports/retained/" + run + "run-state.md")
+    assert excluded.match_file("reports/state/" + run + "result.md")
 
 
 def test_source_redirects_only_cover_published_ingests() -> None:

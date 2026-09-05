@@ -3,6 +3,7 @@ site_description: Commonplace knowledge base rendered as static HTML.
 docs_dir: kb
 exclude_docs: |
   reports/**
+  !reports/retained/agentic-system-analysis/**/result.md
   sources/**
   !sources/**/*.ingest.md
   !sources/README.md

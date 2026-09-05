@@ -26,4 +26,4 @@ judgment passes stay on the session model.
 - [plain-wording](./plain-wording.md) (simple) — replace decorative figures with literal statements and unusual words with common ones, after the operator approves the list.
 - [abstractions](./abstractions.md) (judgment) — per term, either keep a coined or registered abstraction everywhere because one sentence needs its distinction, or replace it with the ordinary word everywhere.
 - [split-out-a-treatment](./split-out-a-treatment.md) (simple) — keep the artifact's passage minimal and put the full argument in a separate file that later passes do not load.
-- [place-external-systems](./place-external-systems.md) (simple) — position named systems against the artifact's criteria from the KB's own reviews.
+- [place-external-systems](./place-external-systems.md) (simple) — position named systems against the artifact's criteria by reading generated main-review files, with source ingests identified separately.

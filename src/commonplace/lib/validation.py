@@ -965,6 +965,23 @@ def _quote_citation_rule(
     validate_quote_citations(results, parsed.content)
 
 
+@type_rule("kb/types/agentic-system-analysis-result.md")
+def _agentic_comparison_rule(
+    results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
+) -> None:
+    from commonplace.lib.systems_matrix import validate_comparison
+
+    metadata = parsed.document.frontmatter or {}
+    if "memory-comparison" not in metadata:
+        return
+    try:
+        validate_comparison(metadata["memory-comparison"], parsed.document.body)
+    except ValueError as exc:
+        results.fails.append(f"memory comparison: {exc}")
+    else:
+        results.passes.append("memory comparison: assessments and canonical references resolve")
+
+
 @type_rule("kb/types/type-spec.md")
 def validate_type_spec_definition(
     results: CheckResults,

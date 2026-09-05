@@ -47,7 +47,11 @@ analysis. `prepare` validates candidate bytes as their intended destinations,
 checks incumbents, and creates the required legacy semantic-review job without
 changing public artifacts. After that job finalizes with passes, `publish`
 rechecks its baselines, validates the prospective complete run state, replaces
-the reviews, and writes the run state last. Ordinary in-process failures roll
+the reviews, retains the exact result bytes at
+`kb/reports/retained/agentic-system-analysis/<run-id>/result.md`, and writes the
+run state last. New publications require the result's `memory-comparison`
+fields and matching retained-result path/hash in the public review. An existing
+retained result requires a new run ID. Ordinary in-process failures roll
 back written files; crash-level partial writes remain an admitted failure mode.
 
 ### commonplace-status

@@ -10,7 +10,7 @@ import yaml
 
 from commonplace.cli import agentic_analysis_handoff
 from commonplace.freshness.snapshots import load_snapshot_by_id
-from commonplace.lib import agentic_publication, validation
+from commonplace.lib import agentic_publication, systems_matrix, validation
 from commonplace.lib.agentic_analysis import (
     parse_agentic_analysis_run_state,
     render_agentic_analysis_handoff,
@@ -225,7 +225,7 @@ Fixture boundary at `{revision}`.
 
 ## Source register
 
-Source evidence: SRC-1, `README.md:1`.
+Source evidence: SRC-1, `https://example.invalid/example-system`, `README.md:1`.
 
 ## Shared records
 
@@ -304,6 +304,22 @@ Passed.
 None.
 ''',
     )
+    profile = {
+        "scope": "The fixture's accumulated project memory and retrieval routes",
+        "axes": {
+            axis: {"assessment": "uninspected", "basis": None, "values": [],
+                   "records": [], "note": "Not inspected in this fixture."}
+            for axis in systems_matrix.AXES
+        },
+    }
+    profile["axes"]["storage_substrate"] = {
+        "assessment": "known", "basis": "wired", "values": ["sqlite", "files"],
+        "records": ["OBJ-1"], "note": "Both stores occur within the fixture boundary.",
+    }
+    replace_frontmatter(result, {**frontmatter(result), "memory-comparison": profile})
+    retained = tmp_path / systems_matrix.retained_result_path(RUN_ID)
+    retained.parent.mkdir(parents=True, exist_ok=True)
+    retained.write_bytes(result.read_bytes())
     generated_path = "kb/agentic-systems/reviews/example-system.md"
     generated = write(
         tmp_path / generated_path,
@@ -314,6 +330,8 @@ generated-by: analyse-agentic-system
 analysis-run: {RUN_ID}
 source-identity: https://example.invalid/example-system
 reviewed-revision: {revision}
+analysis-result: {systems_matrix.retained_result_path(RUN_ID).as_posix()}
+analysis-result-sha256: {digest(result)}
 ---
 
 # Example System
@@ -371,7 +389,7 @@ None.
         legacy_output = {"path": legacy_path, "sha256": digest(legacy_file)}
         seed_semantic_baselines(tmp_path, legacy_path)
 
-    frontmatter: dict[str, object] = {
+    run_frontmatter: dict[str, object] = {
         "type": "kb/reports/types/agentic-system-analysis-run-state.md",
         "description": f"Minimal completion state for {RUN_ID}",
         "run-id": RUN_ID,
@@ -395,7 +413,7 @@ None.
         "legacy-review-model-partition": "codex" if legacy else None,
         "failure": None,
     }
-    return write(run_dir / "run-state.md", state_text(frontmatter))
+    return write(run_dir / "run-state.md", state_text(run_frontmatter))
 
 
 def frontmatter(path: Path) -> dict[str, object]:
@@ -418,6 +436,13 @@ def replace_frontmatter(path: Path, values: dict[str, object]) -> None:
     )
 
 
+def sync_retained_fixture(tmp_path: Path, values: dict) -> None:
+    result = tmp_path / values["result"]["path"]
+    generated = tmp_path / values["generated-review"]["path"]
+    (tmp_path / systems_matrix.retained_result_path(RUN_ID)).write_bytes(result.read_bytes())
+    replace_frontmatter(generated, {**frontmatter(generated), "analysis-result-sha256": digest(result)})
+
+
 def publication_fixture(tmp_path: Path) -> tuple[Path, PublicationSpec, bytes, bytes]:
     state = valid_run_state(tmp_path, legacy=True)
     subprocess.run(["git", "init", "--quiet", str(tmp_path)], check=True)
@@ -434,6 +459,7 @@ def publication_fixture(tmp_path: Path) -> tuple[Path, PublicationSpec, bytes, b
     legacy_candidate.write_bytes(legacy_bytes)
     generated_public.unlink()
     legacy_public.unlink()
+    (tmp_path / systems_matrix.retained_result_path(RUN_ID)).unlink()
     db_path = review_db.resolve_db_path(tmp_path)
     db_path.unlink()
 
@@ -746,6 +772,7 @@ def test_capture_source_is_byte_verified(tmp_path: Path) -> None:
         ),
         encoding="utf-8",
     )
+    sync_retained_fixture(tmp_path, values)
     values["generated-review"]["sha256"] = digest(generated)  # type: ignore[index]
     replace_frontmatter(state, values)
 
@@ -809,6 +836,7 @@ def test_github_citations_match_the_frozen_source(
     )
     with output.open("a", encoding="utf-8") as handle:
         handle.write(f"\nSource evidence: [source](https://github.com/{target}).\n")
+    sync_retained_fixture(tmp_path, values)
     for role in ("result", "generated-review"):
         values[role]["sha256"] = digest(tmp_path / values[role]["path"])
     replace_frontmatter(state, values)
@@ -1053,6 +1081,7 @@ def test_publish_replaces_the_bundle_and_completes_run_state(tmp_path: Path) -> 
     values = frontmatter(state)
     assert values["run-status"] == "complete"
     assert values["legacy-review-model-partition"] == "codex"
+    assert (tmp_path / published.retained_path).read_bytes() == (state.parent / "result.md").read_bytes()
     assert published.cleanup_warnings == ()
     assert validation.validate_note(state, repo_root=tmp_path).fails == []
 
@@ -1084,7 +1113,130 @@ def test_publish_rolls_back_an_ordinary_multi_file_write_failure(
 
     assert not (tmp_path / spec.generated_destination).exists()
     assert not legacy_destination.exists()
+    assert not (tmp_path / systems_matrix.retained_result_path(RUN_ID)).exists()
     assert state.read_bytes() == original_state
     assert spec.generated_candidate_path.exists()
     assert spec.legacy_candidate_path is not None
     assert spec.legacy_candidate_path.exists()
+
+
+
+def test_comparison_tools_use_retained_results_without_local_or_legacy_inputs(tmp_path, monkeypatch, capsys):
+    import csv
+    import io
+
+    from scripts import analyze_matrix, build_systems_matrix, render_systems_table
+
+    state = valid_run_state(tmp_path)
+    retained = tmp_path / systems_matrix.retained_result_path(RUN_ID)
+    shutil.rmtree(tmp_path / "kb/reports/state")
+    shutil.rmtree(tmp_path / "kb/agent-memory-systems")
+    shutil.rmtree(tmp_path / "related-systems")
+    assert not state.exists()
+    write(tmp_path / "kb/agentic-systems/reviews/README.md", "# Ordinary navigation\n")
+    inputs = systems_matrix.load_results(tmp_path)
+    assert len(inputs.rows) == 1
+    assert inputs.rows[0]["storage_substrate"] == '["files","sqlite"]'
+    assert inputs.rows[0]["lineage_assessment"] == "uninspected"
+    assert inputs.rows[0]["result_sha256"] == digest(retained)
+    for module in (analyze_matrix, build_systems_matrix, render_systems_table):
+        monkeypatch.setattr(module, "REPO_ROOT", tmp_path)
+    matrix = tmp_path / "kb/agentic-systems/comparisons/memory-systems.csv"
+    table = matrix.with_suffix(".md")
+    assert build_systems_matrix.main(["--output", str(matrix)]) == 0
+    assert list(csv.DictReader(io.StringIO(matrix.read_text()))) == inputs.rows
+    assert render_systems_table.main(["--output", str(table)]) == 0
+    assert "files, sqlite [wired]" in table.read_text()
+    assert "## code-grounded (1)" in table.read_text()
+    assert digest(retained) in table.read_text()
+    assert validation.validate_note(table, repo_root=tmp_path).fails == []
+    assert analyze_matrix.main([]) == 0
+    output = capsys.readouterr().out
+    line = next(line for line in output.splitlines() if line.startswith("storage_substrate "))
+    assert line.split()[:3] == ["storage_substrate", "100%", "1"]
+    assert "uninspected:" in output
+    assert "doc-grounded excluded from statistics: 0" in output
+
+
+@pytest.mark.parametrize("mutation, error", [
+    ("bytes", "SHA-256 mismatch"), ("profile", "memory-comparison"),
+    ("source", "source identity missing"), ("revision", "identity mismatch"),
+    ("missing", "No such file"),
+])
+def test_comparison_reader_rejects_incomplete_or_mismatched_evidence(tmp_path, mutation, error):
+    valid_run_state(tmp_path)
+    retained = tmp_path / systems_matrix.retained_result_path(RUN_ID)
+    review = tmp_path / "kb/agentic-systems/reviews/example-system.md"
+    if mutation == "bytes":
+        retained.write_bytes(retained.read_bytes() + b"drift\n")
+    elif mutation == "missing":
+        retained.unlink()
+    elif mutation == "profile":
+        data = frontmatter(retained)
+        data.pop("memory-comparison")
+        replace_frontmatter(retained, data)
+        replace_frontmatter(review, {**frontmatter(review), "analysis-result-sha256": digest(retained)})
+    else:
+        key = "source-identity" if mutation == "source" else "reviewed-revision"
+        value = "https://example.invalid/example-system-other" if mutation == "source" else "other"
+        replace_frontmatter(review, {**frontmatter(review), key: value})
+    with pytest.raises((ValueError, OSError), match=error):
+        systems_matrix.load_results(tmp_path)
+
+
+def test_comparison_population_must_select_one_review_per_source(tmp_path):
+    valid_run_state(tmp_path)
+    review = tmp_path / "kb/agentic-systems/reviews/example-system.md"
+    second = review.with_name("second.md")
+    second.write_bytes(review.read_bytes())
+    with pytest.raises(ValueError, match="multiple selected reviews"):
+        systems_matrix.load_results(tmp_path)
+    assert len(systems_matrix.load_results(tmp_path, [review]).rows) == 1
+    inputs = systems_matrix.load_results(tmp_path, [review])
+    review.write_bytes(review.read_bytes() + b"changed\n")
+    with pytest.raises(ValueError, match="input changed"):
+        inputs.recheck(tmp_path)
+
+
+def test_publication_requires_comparison_fields_and_preserves_retained_bytes(tmp_path):
+    state, spec, _, _ = publication_fixture(tmp_path)
+    result = state.parent / "result.md"
+    data = frontmatter(result)
+    data.pop("memory-comparison")
+    old_bytes = result.read_bytes()
+    replace_frontmatter(result, data)
+    with pytest.raises(ValueError, match="memory-comparison"):
+        prepare_publication(spec)
+    result.write_bytes(old_bytes)
+    retained = write(tmp_path / systems_matrix.retained_result_path(RUN_ID), "frozen earlier result\n")
+    with pytest.raises(ValueError, match="already exists"):
+        prepare_publication(spec)
+    assert retained.read_text() == "frozen earlier result\n"
+    assert frontmatter(state)["run-status"] == "running"
+
+
+@pytest.mark.parametrize("tier,basis,expected_rows,expected_fill", [
+    ("code-grounded", "wired", 1, "100%"),
+    ("code-grounded", "claimed", 1, "0%"),
+    ("code-grounded", "afforded", 1, "0%"),
+    ("doc-grounded", "wired", 0, "0%"),
+])
+def test_statistics_keep_evidence_tiers_and_weaker_bases_separate(tmp_path, monkeypatch, capsys, tier, basis, expected_rows, expected_fill):
+    from scripts import analyze_matrix
+
+    valid_run_state(tmp_path)
+    retained = tmp_path / systems_matrix.retained_result_path(RUN_ID)
+    data = frontmatter(retained)
+    data["evidence-tier"] = tier
+    data["memory-comparison"]["axes"]["storage_substrate"]["basis"] = basis
+    replace_frontmatter(retained, data)
+    review = tmp_path / "kb/agentic-systems/reviews/example-system.md"
+    replace_frontmatter(review, {**frontmatter(review), "analysis-result-sha256": digest(retained)})
+    monkeypatch.setattr(analyze_matrix, "REPO_ROOT", tmp_path)
+    assert analyze_matrix.main([]) == 0
+    output = capsys.readouterr().out
+    assert f"rows: {expected_rows}  (code-grounded" in output
+    line = next(line for line in output.splitlines() if line.startswith("storage_substrate "))
+    assert line.split()[1] == expected_fill
+    if expected_rows:
+        assert f"known:{basis}" in output

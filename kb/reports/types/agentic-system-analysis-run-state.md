@@ -30,7 +30,13 @@ The exact result always lives at
 `kb/reports/state/agentic-system-analysis/<run-id>/result.md`. A substantive
 `complete` result also publishes one generated review under
 `kb/agentic-systems/reviews/`. A blocked or out-of-scope result has no
-generated review. Set `memory-review-required: true` only when the target is
+generated review. Publication also retains the exact result bytes at
+`kb/reports/retained/agentic-system-analysis/<run-id>/result.md`. Its identity is
+derived from the run ID and the existing `result.sha256`; no duplicate output
+mapping is needed. Completion verification checks this copy and the public
+review's `analysis-result` path and `analysis-result-sha256`. Durable comparison
+readers follow those public fields without requiring ignored run state or a
+local source checkout. Set `memory-review-required: true` only when the target is
 itself a memory, knowledge, or context-engineering system; that requires one
 published legacy review and its `legacy-review-model-partition`.
 

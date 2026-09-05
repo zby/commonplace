@@ -31,7 +31,12 @@ bytes. A correctable pre-publication failure leaves the incumbent unchanged
 and the parent run open. The complete parent run state is the sole declaration
 that publication succeeded.
 
-A code-grounded review change invalidates the generated matrix/table pair and any landscape synthesis presented as current until each downstream artifact is rebuilt from the new source set. The publishing workflow must either complete that chain under explicit authority or report the generated pair as stale and the prior synthesis as historical. A public synthesis pins the matrix, row-linked reviews, and ontology inputs at one reconstructable revision or retained snapshot and accepts only a zero-flag matrix build.
+The matrix and table in this collection are historical snapshots. Active
+comparison scripts now read retained main-analysis results and write under
+`kb/agentic-systems/comparisons/`. They do not update the legacy pair. Historical
+synthesis requires matching legacy reviews, contracts, and parser from one
+reconstructable revision; current synthesis must first migrate its evidence
+bundle to the main-review contract.
 
 Selective Commonplace implications are living transfer scans under `kb/reports/state/agentic-system-transfer/`. They are conditioned on a current interest brief and current Commonplace artifacts, never feed the matrix or public corpus analysis, and do not belong in a durable review. Their owning workflow keeps unresolved candidate judgments until disposition, then may replace or delete them. Legacy `Comparison with Our System`, `Borrowable Ideas`, and `What to Watch` sections may remain until their reviews are regenerated from source; new and replacement reviews omit them.
 

@@ -1,34 +1,26 @@
-from __future__ import annotations
-
 from pathlib import Path
 
+import pytest
+
 from scripts import build_systems_matrix as builder
+from scripts import render_systems_table as renderer
 
 
-def test_flags_do_not_replace_the_existing_matrix(
-    tmp_path: Path, monkeypatch, capsys
-) -> None:
-    reviews = tmp_path / "kb" / "agent-memory-systems" / "reviews"
-    reviews.mkdir(parents=True)
-    (reviews / "incomplete.md").write_text(
-        """---
-source-tier: code-grounded
----
-
-# Incomplete
-""",
-        encoding="utf-8",
+@pytest.mark.parametrize(
+    "module, message",
+    [(builder, "matrix not written"), (renderer, "table not written")],
+)
+def test_incomplete_main_review_preserves_existing_output(
+    tmp_path: Path, monkeypatch, capsys, module, message
+):
+    review = tmp_path / "kb/agentic-systems/reviews/incomplete.md"
+    review.parent.mkdir(parents=True)
+    review.write_text(
+        "---\ngenerated-by: analyse-agentic-system\nanalysis-run: AAS-2026-09-04-incomplete-01\n---\n\n# Incomplete\n"
     )
-    matrix = reviews.parent / "systems.csv"
-    matrix.write_text("last-complete-matrix\n", encoding="utf-8")
-
-    monkeypatch.setattr(builder, "REPO_ROOT", tmp_path)
-    monkeypatch.setattr(builder, "REVIEWS_DIR", reviews)
-    monkeypatch.setattr(builder, "SYSTEMS_CSV", matrix)
-    monkeypatch.setattr(builder, "RELATED_SYSTEMS", tmp_path / "related-systems")
-
-    assert builder.main() == 1
-    assert matrix.read_text(encoding="utf-8") == "last-complete-matrix\n"
-    captured = capsys.readouterr()
-    assert "flags:" in captured.out
-    assert "matrix not written" in captured.err
+    output = tmp_path / "incumbent"
+    output.write_text("last complete output\n")
+    monkeypatch.setattr(module, "REPO_ROOT", tmp_path)
+    assert module.main(["--output", str(output)]) == 1
+    assert output.read_text() == "last complete output\n"
+    assert message in capsys.readouterr().err
