@@ -1,5 +1,5 @@
 ---
-description: "Twenty reviewed constructions compared against the automated software house conjecture's four witness conditions, which allow a human-built start; plus the explicit-theory test from the training article"
+description: "Eighteen constructions with local review or evidence compared against the automated software house conjecture's four witness conditions, which allow a human-built start; plus the explicit-theory test from the training article"
 type: kb/articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
@@ -123,10 +123,10 @@ one form, **Software learning** or **Note learning**. Neither form is
 required on its own, and a step need not change both. **Automated
 continuation** is bounded by **Software-house boundary**, **Fixed parametric
 state**, and **Continuation**, and it requires holding and revision to keep
-working across that boundary. **Practical reliability** has no column: no
-reviewed record reports repeated runs or a justified estimate of usable
-success under a declared regime, so the **Evidence basis** column is the
-nearest reading.
+working across that boundary. **Practical reliability** has no column. Some
+records report repeated benchmark runs, but none estimates usable success for
+the full witness under a declared software-house regime, so the **Evidence
+basis** column is the nearest reading.
 
 One warning governs every use of the table. **Software-house boundary** and
 **Fixed parametric state** are cross-cutting controls on a whole witness, not
@@ -146,42 +146,41 @@ people fill internal roles in that construction.
 |---|---|---|---|---|---|---|---|---|
 | Fluent | Meets stated scope | Not demonstrated; model lineage and auxiliary parametric state not pinned | Meets stated scope; human-inclusive | Meets stated scope; human-inclusive | Partial; rationale is supplied, while its causal use across novel changes and its revision by the system are not demonstrated | Human-dependent | Product documentation and practitioner report; implementation and outcomes not independently inspected | Humans confirm behaviour, technical approach, and unresolved decisions; causal use and revision of the theory are not tested |
 | Wheelhouse | Not demonstrated | Not demonstrated | Partial; human-inclusive | Partial; human-inclusive | Not demonstrated | Human-dependent | Practitioner report; implementation and outcomes not independently inspected | Human rulings and verdicts produce the doctrine; the consolidating agent's theory-holding role is only a hypothesis |
-| Ona Memo factory | Partial; bounded trial | Not demonstrated | Partial; human-inclusive | Partial; human-inclusive | Not demonstrated | Human-dependent | Product report; implementation and outcomes not independently inspected | Humans built the harness, specified taste and intent, and retained product direction |
 | OpenAI agent-first product | Meets stated scope | Not demonstrated; model lineage and auxiliary parametric state not pinned | Partial; human-inclusive | Partial; human-inclusive | Partial; supplied rationale, causal use and revision not tested | Human-dependent | Practitioner report; no pinned model lineage or independent comparative evaluation | Humans made the repository legible and turned failures into tools, rules, and checks |
 | Warp skill improver | Not in scope | Not demonstrated | Not in scope | Partial; human-inclusive | Not in scope | Human-dependent | Practitioner report; linked demonstration not independently inspected | Human feedback supplies the evidence and human review admits every skill update |
-| Darwin Gödel Machine | Not in scope | Meets stated scope for the evolving agents; a separate fixed diagnostician sits outside them | Meets stated scope | Not in scope | Not in scope | Meets stated scope; bounded benchmark loop | Paper-reported mechanism and outcomes; implementation not independently inspected | Admission is compile-and-edit viability, the benchmark score only weights parent sampling, and no rationale is retained |
-| Huxley-Gödel Machine | Not in scope | Meets stated scope | Meets stated scope | Not in scope | Not in scope | Meets stated scope; bounded benchmark loop | Paper-reported mechanism and outcomes; implementation not independently inspected | Its contribution is a lineage-level parent-selection signal; benchmark-style scoring is an explicit assumption and no rationale is retained |
-| HyperAgents | Not in scope | Partial; no parametric-update path in the reviewed commit, but model lineage is not pinned | Meets stated scope | Not demonstrated | Not in scope | Meets stated scope; bounded generation loop | Code-inspected mechanism at a pinned commit; no run or outcome reproduced | Replayed patches change later behaviour but carry no reason, and no test isolates a replayed patch's causal effect |
+| Darwin Gödel Machine | Not in scope | Meets stated scope; the evolving agents and separate diagnostician use frozen foundation models | Meets stated scope | Partial; evaluation logs feed the next modification, but no rationale is shown to persist across generations | Not in scope | Meets stated scope; bounded benchmark loop | Paper-reported mechanism and outcomes; implementation not independently inspected | Admission judges only compile-and-edit viability; benchmark score weights parent sampling, and diagnostic rationale is not shown to persist across generations |
+| Huxley-Gödel Machine | Not in scope | Meets stated scope | Meets stated scope | Not in scope | Not in scope | Meets stated scope; bounded benchmark loop | Paper-reported mechanism and outcomes; implementation not independently inspected | It tests a lineage-level parent-selection signal under benchmark scoring; no retained project rationale or product demand stream is reported |
+| HyperAgents | Not in scope | Not demonstrated; the reviewed repo retains no learned weights, but no run with pinned learned components was inspected | Meets stated scope | Not demonstrated | Not in scope | Meets stated scope; bounded generation loop | Code-inspected mechanism at a pinned commit; no run or outcome reproduced | Replayed patches change later behaviour but carry no reason, and no test isolates a replayed patch's causal effect |
 | Autogenesis | Not in scope | Partial; the inspected mutation surface excludes parametric updates, but model lineage is not pinned | Partial | Partial | Not in scope | Partial | Code-inspected mutation paths; outcomes paper-reported and not reproduced | Benchmarks and a weak semantic gate; the public implementations are transitional or incomplete |
 | Exo harness | Not in scope | Not demonstrated; no learning process reviewed | Not demonstrated; the broad self-edit path is distinct from learning | Not demonstrated; the deliberate authoring path is distinct from learning | Not in scope | Partial; scheduling and restart paths, no automatic improvement | Code-inspected mechanism; no live instance run | It rewrites a personal-agent executor, not a user product, and build and test results do not judge program theory |
 | Prime Agent | Not demonstrated | Meets stated scope | Partial | Meets stated scope | Not in scope | Meets stated scope; bounded goals | Code-inspected mechanism; paper-reported cases and outcomes | The paper reports direct adoption of persistent refinement and a retained specification exploit; it does not test product theory |
 | Memento-Skills | Not in scope | Partial; the foundation LLM is fixed, but the router is trained | Meets stated scope | Meets stated scope | Not in scope | Meets stated scope; bounded task loop | Paper-reported mechanism and outcomes; implementation not independently inspected | Mixed-form skills learn under answer oracles, not under delayed software-maintenance consequences |
-| Recuris | Not in scope | Meets stated scope | Partial | Meets stated scope | Not in scope | Meets stated scope; fixed gate and benchmark loop | Code-inspected mechanism; fixed-parametric-state condition and outcomes paper-reported | Four predeclared memory coordinates and benchmark tasks; no project rationale and no product demand stream |
-| Harness Continual Learning | Not in scope | Meets stated scope | Partial | Meets stated scope | Not in scope | Meets stated scope; bounded task loop | Paper-reported mechanism and outcomes; implementation not independently inspected | Finite benchmark streams and a fixed four-part harness partition; held-out forgetting remains |
-| Dynamic Cheatsheet | Not in scope | Meets stated scope | Not in scope | Meets stated scope | Not in scope | Meets stated scope; bounded sequential benchmark run | Code-inspected mechanism at a pinned commit; outcomes not independently reproduced | A curator prompt is the only gate, correctness never gates a retained entry, and entries carry no provenance |
-| Voyager | Not in scope | Meets stated scope | Meets stated scope | Partial; descriptions and the question cache guide retrieval and task choice | Not in scope | Meets stated scope; bounded game curriculum | Code-inspected mechanism at a pinned commit; aggregate outcomes repository-reported and not reproduced | A critic's success report admits a skill, and a same-named program overwrites the old one instead of being revised |
+| Recuris | Not in scope | Meets stated scope | Meets stated scope; component-scoped patches can revise invocation and checker logic | Meets stated scope | Not in scope | Meets stated scope; fixed gate and benchmark loop | Code-inspected mechanism; fixed-parametric-state condition and outcomes paper-reported | Four predeclared memory coordinates and benchmark tasks; no project rationale and no product demand stream |
+| Harness Continual Learning | Not in scope | Meets stated scope | Meets stated scope; the reported update surface includes parsers, skills, and routing workflows | Meets stated scope | Not in scope | Meets stated scope; bounded task loop | Paper-reported mechanism and outcomes; implementation not independently inspected | Finite benchmark streams and a fixed four-part harness partition; held-out forgetting remains |
+| Dynamic Cheatsheet | Not in scope | Not demonstrated; the reviewed loop has no weight-update path, but no run with pinned learned components was inspected | Not in scope | Meets stated scope | Not in scope | Meets stated scope; bounded sequential benchmark run | Code-inspected mechanism at a pinned commit; outcomes not independently reproduced | A curator prompt is the only gate, correctness never gates a retained entry, and entries carry no provenance |
+| Voyager | Not in scope | Partial; foundation-model weights stay fixed, but learned skill and QA embeddings change with retained memory | Meets stated scope | Partial; descriptions and the question cache guide retrieval and task choice | Not in scope | Meets stated scope; bounded game curriculum | Code-inspected mechanism at a pinned commit; aggregate outcomes repository-reported and not reproduced | A critic's success report admits a skill, and a same-named program overwrites the old one instead of being revised |
 | Knowledge-Centric Self-Improvement | Not in scope | Meets stated scope | Not in scope | Meets stated scope | Not in scope | Meets stated scope; bounded task loop | Paper-reported mechanism and outcomes; implementation not independently inspected | It deliberately isolates knowledge-only learning on benchmark families |
-| PROJECTMEM | Not in scope | Not demonstrated | Not in scope | Partial | Partial; decisions are logged, not applied as theory | Not demonstrated | Paper-reported mechanism; no local ingest or inspected implementation | It records decisions and warns before repeated mistakes, but does not test application or revision of project theory |
 | Rainbow | Not in scope | Not applicable | Not in scope; fixed strategies adapt configuration | Not in scope | Not in scope; the governing model is designer-supplied and fixed | Meets stated scope; supplied strategies | Paper-reported mechanism, implementation, and outcomes; not independently reproduced | It adapts a running configuration through a causal architectural model, but does not learn that model or its action repertoire |
-| Commonplace | Not assessed | Not demonstrated; models not reliably pinned | Partial; human-inclusive | Partial; human-inclusive | Design target: explicit, revisable theory loaded at later decisions; no causal-use evidence | Human-dependent | Code-inspected design, this repository; no evaluated outcome | No witness run; the operator selects global fit and admits successors |
+| Commonplace | Not assessed | Not demonstrated; models not reliably pinned | Partial; human-inclusive | Partial; human-inclusive | Partial; one human-inclusive revision records retrieval and later use, but no ablated causal effect or autonomous revision | Human-dependent | Local system-definition artifacts and one evidence note; no evaluated outcome | No witness run; the operator selects global fit and admits successors |
 
-The **Program theory** column has three values and one gap, and that
-distribution is the table's main result. Fourteen rows read *not in scope*
+The **Program theory** column is the table's main result. Fourteen rows read
+*not in scope*
 because their objective does not ask them to acquire project understanding that
 relates a maintained user product to the activity it supports and guides later
 modification. A benchmark agent could still need a theory of its own
-organization; these records do not test that function. PROJECTMEM logs
-decisions, which is more than not setting out to hold a theory and less than
-applying one. Fluent and the OpenAI account, the two rows with a product and
-users, carry theory that people wrote: expertise files and repository documents
-that make the domain legible. Wheelhouse's people supply rulings rather than
-explanations, which is why it reads *not demonstrated* beside them. So the
-column runs absent, logged, and supplied, and the value the conjecture needs,
-supplied or not but shown to govern later decisions and to be revised by the
-system from consequences, is empty. Users and project theory arrive together
-in this set, and so far only with people inside. Whether a house can acquire
-its theory rather than receive it is a further question, asked by the
-training and bootstrap articles, and no row tests it either.
+organization; these records do not test that function. Fluent and the OpenAI
+account, the two rows meeting the software-house boundary, carry theory that
+people wrote: expertise files and repository documents that make the domain
+legible. Wheelhouse's people supply rulings rather than explanations, which is
+why it reads *not demonstrated*. Commonplace records one human-inclusive
+revision in which retained theory was retrieved and later work used the revised
+state, but the operator supplied decisive global-fit judgments and no ablation
+isolated the theory's effect. The value the conjecture needs—understanding shown
+to govern later decisions and to be revised by the system from consequences—is
+therefore empty. Users and project theory arrive together in this set, and so
+far only with people inside. Whether a house can acquire its theory rather than
+receive it is a further question, asked by the training and bootstrap articles,
+and no row tests it either.
 
 ## Reading the rows
 
@@ -192,17 +191,12 @@ stated scope. Its product documentation and its builder's practitioner report
 describe external stakeholders, product code, deployment evidence,
 natural-language expertise, a scheduler, rejection, retention, and later reuse;
 people and the system jointly shape and confirm the brief, the behaviour
-specifications, and the technical approach. The product-reported [Ona
-Memo factory](https://ona.com/stories/software-factory-what-we-learned) trial
-took an empty repository to a deployed product in ten days with software, notes,
-schedulers, and production signals in one loop, and people spent the early days
-writing the automations, conventions, and review paths that made it run. Steve
-Yegge's practitioner-reported account describes rulings progressing from custom
-to warning to written doctrine to programs that refuse an action, with his own
-judgments producing the rulings, and it also reports the maintenance cost of
-that path in a corpus that retained "old rulings that were obsolete or had
-changed" ([Wheelhouse](../sources/steve-yegge-fences-not-sandboxes.ingest.md),
-verbatim).
+specifications, and the technical approach. Steve Yegge's practitioner-reported
+account describes rulings progressing from custom to warning to written doctrine
+to programs that refuse an action, with his own judgments producing the rulings,
+and it also reports the maintenance cost of that path in a corpus that retained
+"old rulings that were obsolete or had changed"
+([Wheelhouse](../sources/steve-yegge-fences-not-sandboxes.ingest.md), verbatim).
 
 **Production scale reports and rule accumulation.** [Warp's scheduled skill
 improver](../sources/how-warp-builds-self-improving-agents-on-claude.ingest.md)
@@ -220,9 +214,11 @@ verbatim).
 
 **Self-rewriting agent lineages around frozen models.** The Darwin Gödel
 Machine paper reports an evolutionary loop over coding agents around frozen
-foundation models, in which a child is admitted on viability rather than on
-score, because "Only agents that compile successfully and retain the ability to
-edit a given codebase are added to the DGM archive" ([Darwin Gödel
+foundation models. A separate fixed diagnostician reads the selected parent's
+evaluation logs and supplies the next improvement suggestion. A child is
+admitted on viability rather than on score, because "Only agents that compile
+successfully and retain the ability to edit a given codebase are added to the
+DGM archive" ([Darwin Gödel
 Machine](../sources/darwin-godel-machine-open-ended-evolution-self-improving-agents.ingest.md),
 verbatim).
 
@@ -279,18 +275,15 @@ natural-language cheatsheet curated from solver traces and injected into the
 next prompt, with the curator prompt as the only gate and no software change at
 all. The code-inspected [Voyager](../agent-memory-systems/reviews/voyager.md)
 keeps the other form, admitting an executable skill when a critic reports
-success and overwriting a same-named program rather than revising it. Neither
-review found a test isolating a retained item's causal effect on later
-behaviour.
+success and overwriting a same-named program rather than revising it. Voyager's
+foundation-model weights stay fixed, but the learned skill and QA indexes add
+new embeddings as memory changes. Neither review found a test isolating a
+retained item's causal effect on later behaviour.
 
-**Knowledge-only and project-memory studies.** The paper-reported
-[PROJECTMEM](https://arxiv.org/abs/2606.12329) study logs issues, attempts,
-fixes, and decisions and warns before repeated failed fixes, which gives
-project memory a path into later action without testing application or
-revision. The Knowledge-Centric Self-Improvement preprint reports a protocol
-that isolates external knowledge as the learned object, holding software and
-solver state fixed and letting benchmark answers supply the oracle, so that
-"The only object that changes is the curated knowledge base."
+**Knowledge-only study.** The Knowledge-Centric Self-Improvement preprint
+reports a protocol that isolates external knowledge as the learned object,
+holding software and solver state fixed and letting benchmark answers supply
+the oracle, so that "The only object that changes is the curated knowledge base."
 ([Knowledge-Centric
 Self-Improvement](../sources/knowledge-centric-self-improvement-2607.19592.ingest.md),
 verbatim).
@@ -308,11 +301,13 @@ comparison is written, is included as a construction built to address holding
 and revision directly: it retains explanatory theory as notes with declared
 scope and evidence, loads them into later work, and revises them under review.
 It is scored by the same rubric and evidence classes as every other row, and it
-is a design target, not evidence. Its evidence notes record one revision in
-which retained theory guided computational search with the operator selecting
-global fit, and no case in which a later improvement has been traced to an
-earlier retained theory. It is not a witness: no run exists, the models are not
-pinned, and the operator fills the admission role.
+is a design target, not evidence. Its [evidence
+note](../notes/evidence/commonplace-revision-used-theory-guided-computational-search.md)
+records one revision in which retained theory guided computational search with
+the operator selecting global fit. It does not isolate the retained theory's
+causal effect or record an autonomous successor-selection episode. It is not a
+witness: no end-to-end witness run exists, the models are not pinned, and the
+operator fills the admission role.
 
 ## What a witness would have to do
 
