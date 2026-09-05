@@ -10,10 +10,10 @@ source_notes:
   - kb/notes/definitions/representational-form.md
   - kb/notes/definitions/software-house.md
   - kb/notes/ephemeral-computation-prevents-accumulation.md
-  - kb/notes/first-principles-reasoning-selects-for-explanatory-reach-over.md
   - kb/notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md
   - kb/notes/retained-artifacts-enable-persistent-deployment-time-adaptation.md
   - kb/notes/retained-theory-intervention-isolates-one-explicit-surface.md
+  - kb/notes/retaining-the-episode-keeps-a-distilled-rule-re-derivable.md
   - kb/notes/the-bitter-lesson-selects-production-methods-not-representational.md
   - kb/notes/the-deployed-system-not-the-model-is-the-unit-of-learning.md
   - kb/notes/theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md
@@ -67,13 +67,10 @@ representational form: the house may revise both the natural-language and the
 symbolic forms of its own definition; only its distributed-parametric models
 are pinned.
 
-Derived indexes are an exception, and a safe one. An index is traditional machinery,
-in use since the first computers, and symbolic in its operation: construction
-and lookup are defined, fast, and testable, even though its content is
-derived from the whole record set. Where the values are embedding vectors
-they are distributed-parametric, but they come from a pinned embedding model
-applied to revisable records, so regenerating the index during the run
-introduces no new learned parameters.
+Derived indexes may be regenerated from mutable records under pinned
+construction algorithms and embedding models. Their vectors can change as the
+records change while the model parameters stay fixed. This permits a derived
+representation of revised knowledge, not a separately trained model.
 
 The experiments below do not wait for a complete automated house. They test
 its learning mechanisms in bounded components.
@@ -102,14 +99,14 @@ Markdown edit require product checks, or where tenant identity must be
 represented to preserve isolation. A lesson can be stated in a theory,
 enforced by tests, compiled into a tool, or embodied in product code.
 
-This also says why the regime starts from a software house rather than from a
-model with a cache of its own outputs. If retaining the models'
-natural-language outputs were enough, a text store would be all the trainable
-state a learner needs. We believe instead that learning must span both the
-natural-language and the symbolic forms — [manipulating new theories will
-require new
-code](../notes/a-fixed-model-house-must-write-the-procedures-for-each-new-theory.md)
-— so the unit must be a system that can write and revise both.
+Production can expose failures in both retained knowledge and executable
+machinery. The regime therefore trains a house that can revise both, rather
+than limiting learning to a text store. Existing general operations may suffice
+for a new theory. When they cannot apply, check, or revise it reliably within
+the budget, [the house must supply the missing
+capacity](../notes/a-fixed-model-house-must-write-the-procedures-for-each-new-theory.md).
+With models pinned, newly acquired procedures must persist outside their
+parameters.
 
 ## Why this is theory-mediated learning
 
@@ -177,10 +174,10 @@ the comparison identifies what it contributes to later work.
 
 Here *general* means that training is not restricted in advance to a predefined
 family of changes, ontology, list of skills, or kind of retained update.
-[Learning inside a fixed decomposition inherits its
-mistakes](../notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md):
-a learner cannot directly repair a missing distinction, action, or tool outside
-its supplied task structure.
+A learner's [permitted updates](../notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md)
+bound what it can repair, including what it can express by composing existing
+tools and calls. Lacking a dedicated tool alone does not establish a missing
+capacity.
 
 The house can instead construct project-specific representations, tools,
 workflows, tests, evaluators, and update machinery as requests require them.
@@ -346,42 +343,38 @@ regime, beyond this component trial.
 
 ## Future work: exemplars instead of theories
 
-An alternative learning approach retains worked cases rather than
-explanations: the request, the change that was accepted, and the judgment
-that accepted it. The fixed model generalizes from the cases at the point of
-use. This also fits natural-language and symbolic forms, since a case is text
-and can be paired with a check derived from it. It is a plausible regime for
-knowledge that resists statement as a rule, such as what makes a passage fail
-a particular readership, where in practice the retained rule has carried its
-meaning through its examples.
+An alternative retains worked cases rather than a general explanation: the
+request, the accepted change, and the evidence and judgment behind acceptance.
+The fixed model may infer an explanation from those cases at use time, not
+merely imitate similar cases. The comparison concerns what is retained, not
+which reasoning mechanism the model is allowed to use.
 
-In pure form this is [ephemeral
-computation](../notes/ephemeral-computation-prevents-accumulation.md): the
-model builds whatever theory it needs from the cases on the spot, uses it,
-and discards it, then rebuilds it at the next decision. The cost is paid at
-every use, and the result varies between uses. A retained theory is a cache
-of that derivation. Under the fixed-model premise it is the cache that does
-not require training: weights are one place to store a derived
-understanding, retained natural-language theory is another, and a prompt or
-KV cache is a third that is fast but opaque, cannot be revised as text, and
-expires. Retained theory is the only one of the three that the house can
-inspect, revise, and test.
+When an explanation is reconstructed and discarded, that derivation is
+[ephemeral](../notes/ephemeral-computation-prevents-accumulation.md), but the
+retained cases can still carry learning. Keeping an explicit theory may save
+repeated derivation and expose assumptions for targeted revision. Constructing
+and revising it trains the house without changing model parameters.
 
-What exemplars give up is mostly [explanatory
-reach](../notes/first-principles-reasoning-selects-for-explanatory-reach-over.md).
-A theory says why, so it applies to changes unlike the cases that produced it
-and states what would refute it. A case set covers what has been seen and
-extends only as far as the model's similarity judgment, with no stated
-boundary. The component experiment can test this as a fifth treatment,
-retained exemplars, with a prediction: it matches the theory treatment on
-changes that resemble retained cases and falls behind on changes that break
-an assumption no case covers.
+A retained theory can also omit relevant details or repeatedly activate a
+mistaken abstraction. [Retained cases can preserve evidence for re-examining
+it](../notes/retaining-the-episode-keeps-a-distilled-rule-re-derivable.md),
+although storing them does not guarantee successful reconstruction. Neither
+form determines transfer or recovery by itself.
+
+A fifth treatment could retain a curated set of worked cases, rather than the
+raw-record treatment's uncurated history. Compare it with explicit theory under
+the same source observations and resource ceilings, across both
+assumption-preserving and assumption-breaking changes. Count case selection
+and reconstruction alongside theory construction, retrieval, validation, and
+revision. The question is whether retaining an explanation saves enough useful
+work to outweigh its maintenance costs and the errors it can carry forward.
 
 ## Limits
 
-A null intervention result is inconclusive: removing the designated theory
-text may change nothing because the house reconstructs the same understanding
-from other retained state. If the controls repeatedly match the theory
+A null intervention result does not show that the house lacks program theory:
+it may reconstruct the same understanding from other retained state. With
+sufficient precision, the comparison can still count against an incremental
+benefit from the designated text. If the controls repeatedly match the theory
 treatment at lower total cost, its advantage hypothesis fails in that regime.
 Neither result settles whether a house can exist or learn with fixed models:
 learning through tests, tools, and search is also learning by the house.

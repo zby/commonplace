@@ -194,8 +194,9 @@ being evaluated must not control that check.
 
 **Comparisons depend on the claim.** Operational transfer requires useful check
 selection within declared outcome and cost limits, without people making the
-transferred decisions. Always running the full suite is the baseline: it misses
-nothing, so a selector must match its outcomes at lower cost.
+transferred decisions. Always running the full suite is the baseline: it omits
+no available check, so a selector must match its measured outcomes at lower
+total cost. The suite itself can still miss defects.
 Learning transfer additionally requires evidence that retained changes improve
 later decisions. One way to isolate that contribution is to run two copies of
 the house from identical product snapshots, one keeping the revised state and
