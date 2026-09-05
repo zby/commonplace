@@ -2,7 +2,7 @@
 
 Preparing the presentation of the ASISAS 2026 position paper "Where It Lives Is Not What It Is" ([ingest](../../sources/where-it-lives-retained-adaptation-2026-06-23.ingest.md)). Slot: 10 minutes of slides, 2 minutes of questions. Posed by the operator, 2026-09-01.
 
-`slides.html` is a self-contained HTML deck (arrow keys / space / click to navigate; also published as a Claude artifact at <https://claude.ai/code/artifact/1b676774-3fa9-4539-a05e-023f25a747a6>). It follows the paper's argument but applies deliberate deviations from the submitted text:
+[`slides.html`](./slides.html) is a self-contained HTML deck, copied verbatim to the published site (arrow keys / space / click to navigate; also published as a Claude artifact at <https://claude.ai/code/artifact/1b676774-3fa9-4539-a05e-023f25a747a6>). It follows the paper's argument but applies deliberate deviations from the submitted text:
 
 - **natural-language** replaces **prose** as the representational-form category name — rationale in [representational form](../../notes/definitions/representational-form.md) ("Revision rationale"). Shown on the slides as the paper's term struck through in front of the replacement.
 - **memory** replaces **retained artifact(s)** as the talk's running term — same strikeout device in the subtitle and headlines. Rationale: use the audience's word and then unpack it, rather than carry a coined compound through a 10-minute slot.
