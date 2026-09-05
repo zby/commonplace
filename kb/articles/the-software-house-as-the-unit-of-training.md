@@ -208,7 +208,8 @@ writes](../notes/continual-learning-requires-governing-behaviour-changing-writes
 the house must evaluate a revision, decide which later behaviour it may
 control, coordinate affected components, and retain or reject it.
 
-**Admission** decides which changes take effect. **Credit assignment** decides
+Two functions do that governing. **Admission** decides which changes take
+effect. **Credit assignment** decides
 which earlier theory, test, tool, or policy a later consequence supports or
 counts against. In the checking example, the house must trace the invalid
 manifest back to the incomplete dependency account, then judge a replacement

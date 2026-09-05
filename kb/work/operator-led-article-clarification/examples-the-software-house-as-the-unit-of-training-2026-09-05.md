@@ -481,3 +481,21 @@ done first and reported before any prose work.
 > report the work and period examined. Repeated dependence on people to supply
 > a missing ontology, decomposition, or evaluator counts against the proposed
 > learning capacity.
+
+## 18. Lead into the two governance functions
+
+- **Commit:** see log (`Workshop:` trailer)
+- **Kind:** Unsignposted role (transition)
+- **Operator's verdict:** "apply the rest" (phase-2 sweep candidate T3)
+- **Diagnosis:** The bold Admission and Credit assignment definitions arrived
+  with no sentence saying these are the functions that do the governing the
+  previous paragraph described.
+
+**Before:**
+
+> **Admission** decides which changes take effect. **Credit assignment** decides
+
+**After:**
+
+> Two functions do that governing. **Admission** decides which changes take
+> effect. **Credit assignment** decides
