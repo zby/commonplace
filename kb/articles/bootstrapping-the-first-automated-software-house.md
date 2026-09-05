@@ -312,8 +312,9 @@ compare, or stop. Different findings challenge different parts of the approach:
 
 These results alone do not refute the conjecture that a house can exist. They
 show that this approach, under the tested conditions, is not working or is not the best
-use of resources. The same production history that supports a transfer must
-also be able to reveal these failures.
+use of resources. The records that count as evidence for a transfer must be
+able to show these failures too; a history that can only confirm success is
+the self-confirming evaluation above.
 
 ## Where this leaves the series
 
