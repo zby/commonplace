@@ -232,9 +232,11 @@ as well as successes so they can inform the next transfer.
 
 Record who made each decision, for which request, and when. A person who fixes
 three hard failures each month still holds the diagnosis role. Such
-interventions are allowed and recorded during bootstrapping; after a witness
-run begins, an internal human decision ends that run and breaks its autonomous
-training lineage.
+interventions are allowed and recorded during bootstrapping. After a witness
+run begins, an internal human decision ends that run: the conjecture's
+continuation condition allows none, and the changes retained from then on no
+longer form an autonomous *training lineage*, a history of changes made while
+the models stay pinned and no person decides.
 
 Transfers can reopen when a new request exceeds a rule's scope or creates a new
 human review role. Record the reopened responsibility and test a response:
