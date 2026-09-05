@@ -8,6 +8,7 @@ source_notes:
   - kb/notes/definitions/behavior-determining-organization.md
   - kb/notes/definitions/representational-form.md
   - kb/notes/definitions/software-house.md
+  - kb/notes/first-principles-reasoning-selects-for-explanatory-reach-over.md
   - kb/notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md
   - kb/notes/retained-artifacts-enable-persistent-deployment-time-adaptation.md
   - kb/notes/retained-theory-intervention-isolates-one-explicit-surface.md
@@ -302,6 +303,27 @@ decisions within a history are not independent replications.
 Predeclare which comparisons are primary and account for testing several controls. Model-weight
 adaptation on the same evidence is a further comparison with another training
 regime, beyond this component trial.
+
+## Future work: exemplars instead of theories
+
+An alternative learning approach retains worked cases rather than
+explanations: the request, the change that was accepted, and the judgment
+that accepted it. The fixed model generalizes from the cases at the point of
+use. This also fits natural-language and symbolic forms, since a case is text
+and can be paired with a check derived from it. It is a plausible regime for
+knowledge that resists statement as a rule, such as what makes a passage fail
+a particular readership, where in practice the retained rule has carried its
+meaning through its examples.
+
+What it gives up is mostly [explanatory
+reach](../notes/first-principles-reasoning-selects-for-explanatory-reach-over.md).
+A theory says why, so it applies to changes unlike the cases that produced it
+and states what would refute it. A case set covers what has been seen and
+extends only as far as the model's similarity judgment, with no stated
+boundary. The component experiment can test this as a fifth treatment,
+retained exemplars, with a prediction: it matches the theory treatment on
+changes that resemble retained cases and falls behind on changes that break
+an assumption no case covers.
 
 ## Limits
 
