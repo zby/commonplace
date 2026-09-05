@@ -41,8 +41,8 @@ During its run, model weights, adapters, embedding models, parametric routers, a
 parametric critics all stay fixed, and computation makes every internal production
 decision throughout the observed operation. The conjecture's eligibility
 cutoff is 2026-09-02; the bootstrap may use newer models before witness testing.
-The program records failures, interventions, and reopened roles against
-independent outcome and cost measures.
+The program records failures, interventions, and roles that return to people
+against independent outcome and cost measures.
 
 ## The starting point
 
@@ -284,8 +284,9 @@ makes an accepted change take effect. In that loop, admission itself can
 transfer in parts, from formatting and routine updates to revisions of the
 admission machinery. The endpoint requires all of these decisions to be
 computational without fixing the order in which they transfer. The loop is not
-the only option. Other update architectures let reward, error, viability, or
-gradients drive changes without a separate admission event. What the endpoint
+the only option. Other update architectures let reward, error, gradients, or a viability
+filter (a change stays if the system still works) drive changes without a
+separate admission event. What the endpoint
 requires of any architecture is the same: an evidence-caused change that takes
 effect.
 
