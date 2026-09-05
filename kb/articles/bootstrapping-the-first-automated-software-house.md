@@ -272,7 +272,8 @@ project-specific knowledge](../notes/a-bootstrap-fits-the-bitter-lesson-only-if-
 as new work arises. This may show up in new theories, checks, decompositions,
 or evaluators, depending on what later work requires.
 
-General tools such as version control, a test runner, or a model client may
+Not all machinery must be outgrown. General tools such as version control, a
+test runner, or a model client may
 [stay fixed while their scope remains
 warranted](../notes/machinery-persists-by-warrant-not-position-in-a-reflective-loop.md).
 They become revision targets when new requests exceed what they can supply.
