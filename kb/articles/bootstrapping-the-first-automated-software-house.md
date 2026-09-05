@@ -185,8 +185,8 @@ filename.
 
 **Evidence and authority.** A component trial could supply scripted exporter
 changes while the house inspects source, build configuration, and prior results,
-then revises its *check selector*, the procedure choosing the checks, and any
-supporting tests or retained account. This bounded trial could begin before a
+then revises its *check selector* (the procedure that chooses the checks),
+along with any supporting tests and the retained account. This bounded trial could begin before a
 complete automated house exists. Authority over the result is split: an
 independent manifest check, the *reference judgment*, can reject a claimed
 improvement even after the revised selector accepts the edit, and the selector
