@@ -146,3 +146,33 @@ done first and reported before any prose work.
 >
 > The experiments below do not wait for a complete automated house. They test
 > its learning mechanisms in bounded components.
+
+## 5. The mechanism paragraph: unpack "separately testable from the outcome"
+
+- **Commit:** see log (`Workshop:` trailer)
+- **Kind:** Verdict without its why
+- **Operator's verdict:** "apply the rest" (phase-2 sweep candidate 4)
+- **Diagnosis:** A three-coordinate-clause mechanism sentence, and a closing
+  verdict ("separately testable from the outcome of coherent modification")
+  whose reason the reader could not reconstruct: mechanism claims are about
+  how an update came to be, so they can differ between houses whose outcomes
+  match.
+
+**Before:**
+
+> The proposed mechanism is that the explanation directs diagnosis toward the
+> consumer path, the failure challenges the assumption that the input list is
+> exhaustive, and a revised account identifies other files that need checks.
+> Testing a second, untouched snippet asks whether that revision guides a later
+> decision. These are claims about how updates are produced, separately testable
+> from the outcome of coherent modification.
+
+**After:**
+
+> The proposed mechanism has three steps: the explanation directs diagnosis
+> toward the consumer path; the failure challenges the assumption that the input
+> list is exhaustive; and a revised account identifies other files that need
+> checks. Testing a second, untouched snippet asks whether that revision guides
+> a later decision. These are claims about how the house produces its updates,
+> and they can be tested separately from the outcome: two houses can both end up
+> modifying coherently while only one got there by revising an explanation.

@@ -112,12 +112,13 @@ checking policy still treats the configured input list as exhaustive. An
 edit to an unlisted snippet passes its syntax check, but a later release
 contains an invalid manifest. The local check missed an indirect dependency.
 
-The proposed mechanism is that the explanation directs diagnosis toward the
-consumer path, the failure challenges the assumption that the input list is
-exhaustive, and a revised account identifies other files that need checks.
-Testing a second, untouched snippet asks whether that revision guides a later
-decision. These are claims about how updates are produced, separately testable
-from the outcome of coherent modification.
+The proposed mechanism has three steps: the explanation directs diagnosis
+toward the consumer path; the failure challenges the assumption that the input
+list is exhaustive; and a revised account identifies other files that need
+checks. Testing a second, untouched snippet asks whether that revision guides
+a later decision. These are claims about how the house produces its updates,
+and they can be tested separately from the outcome: two houses can both end up
+modifying coherently while only one got there by revising an explanation.
 
 The learning loop is:
 
