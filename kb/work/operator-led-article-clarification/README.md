@@ -63,10 +63,14 @@ For an agent asked to apply this method to a draft article:
    article by the accepted kinds. List candidates in article order with the
    kind, what the reader is missing, and a proposed rewrite for each, strongest
    first. Apply only on approval.
-6. One commit per accepted edit, validated (`commonplace-validate` on the
+6. After the sweep, reread the article whole for flow and redundancy: the
+   run's own edits duplicate statements, overload paragraphs, and orphan
+   referents (a "this boundary" whose antecedent an edit rewrote). Propose
+   the findings as candidates like any others.
+7. One commit per accepted edit, validated (`commonplace-validate` on the
    article), with the diagnosis in the commit body. Record the operator's
    verdict verbatim in the run's examples file, not only in the commit.
-7. Add a run section to this README and a new examples file named
+8. Add a run section to this README and a new examples file named
    `examples-<article-stem>-<date>.md`. Revise the taxonomy against the run:
    add a row only for a kind seen in that run, and note any row that fired
    wrongly.
@@ -92,6 +96,7 @@ Each kind is named by what the reader is missing. Examples are commits on
 | Verdict without its why | A sentence states a conclusion ("leaves untouched", "depends on the rest of the evaluation") that compresses a reason the reader cannot reconstruct | Spell the reason out, one idea per sentence | `5fbf07d7` what a house refutes in Naur; `d12e15e9` pinning; `b108973f` the two limits of an intervention |
 | Compressed description | A phrase stands in for an ordinary-language description ("expose an assumption after intervening changes", "unlisted parameter variations") | Say it in the words the reader would use | `f462b3d8` |
 | Missing baseline | A standard is named ("useful success") after the article has defined the real standard elsewhere | Name the baseline wherever the standard is invoked; use one term for it | `3f3fa5f7` human-agent house |
+| Revision residue | Nothing new — the run's own accepted edits left a statement duplicated, a paragraph overloaded, or a referent orphaned | A closing flow-and-redundancy pass over the whole article after the sweep (step 6) | Unit-of-training `3f3d3c39` duplicated pin, overloaded paragraph; `359c6028`, `f21963ad` orphaned referents |
 
 Two of these are not readability kinds. Vestigial framing and lost claim are
 conceptual drift after a restructure, and the operator caught both by
@@ -150,6 +155,9 @@ Two consequences for the theory, both open:
   (2026-09-05, below) is the first test: nineteen edits applied by a fresh
   agent from the two examples files with no phase-1 verdicts. The answer is
   the operator's acceptance rate on those commits, still to be recorded.
+  The unit-of-training run adds explicit per-candidate rates: fourteen of
+  seventeen sweep candidates applied as proposed after only three phase-1
+  items.
 - How this relates to the existing prose instructions:
   [edit-with-churchill-and-zinsser](../../instructions/edit-with-churchill-and-zinsser.md)
   aims at shorter and more direct prose; several fixes here made passages
@@ -211,3 +219,27 @@ unintroduced-term row's fix column. Three times the agent's first draft
 supplied a why or a mapping the sources did not support and was cut before
 commit (examples 2, 7, 9); the skipped-candidate lesson from the training run
 held.
+
+### 2026-09-05: the unit-of-training article
+
+`kb/articles/the-software-house-as-the-unit-of-training.md`, commits
+`d353c642` through `f21963ad` (twenty-four). Twenty-one edits and one recorded
+skip in
+[examples-the-software-house-as-the-unit-of-training-2026-09-05.md](./examples-the-software-house-as-the-unit-of-training-2026-09-05.md).
+The whole-article read produced two findings, both accepted: an undrawn
+training/learning distinction, and a TL;DR that had dropped one of its three
+hypotheses. Phase 2 ran from the first run's examples after only those three
+phase-1 items: of seventeen sweep candidates the operator applied fourteen as
+proposed, skipped one — the agent's fix supplied an inferred why that was
+wrong; when the why is not stated nearby, flag the gap instead of filling it —
+and drove one passage, the derived-index exception, through three substantive
+iterations that ended grounded in the representational-form definition. A
+closing flow-and-redundancy pass over the run's own edits found a duplicated
+pin statement, an overloaded paragraph, and two orphaned referents, all
+fixed; that pass became step 6 and the revision-residue row. Kinds that
+carried the run: unintroduced term or referent (nine), verdict without its
+why (five), unsignposted roles (four), compressed description (two), lost
+claim after restructure (one), revision residue (two). Out of scope but
+surfaced by the session: the article gained a substantive paragraph on why
+the unit is a house (`5d5e62ab`), kept in the article and removed from this
+record (`1d715911`).
