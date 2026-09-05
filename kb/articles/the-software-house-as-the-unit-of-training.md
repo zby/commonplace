@@ -243,9 +243,10 @@ influences decisions, whether it improves transfer and recovery, and whether
 it reduces the observations needed to learn.
 
 Use paired continuations with the same starting product, fixed models, tools,
-source observations, request sequence, and resource ceilings. Vary how
-observations are retained, then let each continuation learn from its own
-actions and observations. Compare four treatments:
+request sequence, and resource ceilings, and the same *source observations*:
+the facts observed before the continuations start, which each treatment
+retains in its own form. Vary that retained form, then let each continuation
+learn from its own actions and observations. Compare four treatments:
 
 | Retained treatment | What the comparison tests |
 |---|---|

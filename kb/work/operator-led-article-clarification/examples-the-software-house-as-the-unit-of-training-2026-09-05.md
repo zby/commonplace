@@ -290,3 +290,29 @@ done first and reported before any prose work.
 **Before (Bitter Lesson):** "that training lineage; the seed may be human-built"
 
 **After (Bitter Lesson):** "the training lineage; the seed may be human-built"
+
+## 10. Introduce source observations
+
+- **Commit:** see log (`Workshop:` trailer)
+- **Kind:** Unintroduced term
+- **Operator's verdict:** "apply the rest" (phase-2 sweep candidate 9)
+- **Diagnosis:** *Source observations* separates the facts supplied to every
+  treatment from the observations each continuation makes itself —
+  load-bearing for the whole treatment table, unexplained. Introduced in
+  place: the facts observed before the continuations start, which each
+  treatment retains in its own form.
+
+**Before:**
+
+> Use paired continuations with the same starting product, fixed models, tools,
+> source observations, request sequence, and resource ceilings. Vary how
+> observations are retained, then let each continuation learn from its own
+> actions and observations. Compare four treatments:
+
+**After:**
+
+> Use paired continuations with the same starting product, fixed models, tools,
+> request sequence, and resource ceilings, and the same *source observations*:
+> the facts observed before the continuations start, which each treatment
+> retains in its own form. Vary that retained form, then let each continuation
+> learn from its own actions and observations. Compare four treatments:
