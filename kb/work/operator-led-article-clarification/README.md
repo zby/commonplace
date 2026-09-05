@@ -34,6 +34,48 @@ The division of labour matters: the operator supplies the judgment that a
 passage fails a reader and the conceptual frame; the agent supplies the
 diagnosis of *why* it fails, which is what makes the sweep possible.
 
+## How to run this on another article
+
+For an agent asked to apply this method to a draft article:
+
+1. Read the [examples file](./examples-automated-software-houses-2026-09-05.md)
+   first. It holds every edit from the first run with the operator's verdict,
+   the diagnosis, and the text before and after. The verdicts show what the
+   operator counts as a failure; the before/after pairs show the size and kind
+   of fix that was accepted. Do not skip to the taxonomy: the rows are
+   abstractions of those pairs and carry less than the pairs do.
+2. Read the article once as a whole before any sentence-level work, looking
+   for the two conceptual kinds: a term left over from an earlier version of
+   the argument, and a main claim that a restructure has removed. These are
+   found by asking what the article now claims and whether each section still
+   serves that claim. Report them before touching prose; they usually need
+   the operator's decision and they change which prose edits are worth making.
+3. Phase 1. When the operator quotes a passage with a verdict, do not rewrite
+   first. Name the kind of difficulty in one or two sentences (which row, or
+   a new one), then propose the rewrite and stop. Expect the operator to
+   correct the frame; when they do, the correction is the content of the
+   fix. When the operator says "I don't understand", explain the passage in
+   plain words in the reply; the explanation is usually the rewrite.
+4. When the operator's verdict contradicts the source (example 6), check the
+   source before agreeing. Push back with the evidence and let the operator
+   decide.
+5. Phase 2. After several accepted edits, or when asked, sweep the rest of the
+   article by the accepted kinds. List candidates in article order with the
+   kind, what the reader is missing, and a proposed rewrite for each, strongest
+   first. Apply only on approval.
+6. One commit per accepted edit, validated (`commonplace-validate` on the
+   article), with the diagnosis in the commit body. Record the operator's
+   verdict verbatim in the run's examples file, not only in the commit.
+7. Add a run section to this README and a new examples file named
+   `examples-<article-stem>-<date>.md`. Revise the taxonomy against the run:
+   add a row only for a kind seen in that run, and note any row that fired
+   wrongly.
+
+Things the first run did not do and a later run should decide: whether to
+add a description of the intended reader to the framing (the verdicts assume
+one), and whether the sweep should be run by a fresh agent from the examples
+alone, which is the test in "What is not yet known" below.
+
 ## Working taxonomy of difficulties
 
 Each kind is named by what the reader is missing. Examples are commits on
@@ -137,7 +179,8 @@ procedure's checklist; rows that appear once are dropped.
 
 `kb/articles/automated-software-houses-with-fixed-llms.md`, commits
 `298295d2` through `3f3fa5f7` (nineteen, one unrelated landscape commit
-interleaved). Phase 1 covered the claim, the TL;DR, the open-ended
+interleaved). Fifteen edits with before/after text and verdicts in
+[examples-automated-software-houses-2026-09-05.md](./examples-automated-software-houses-2026-09-05.md). Phase 1 covered the claim, the TL;DR, the open-ended
 definition, the mechanism paragraph, and the Naur section. Phase 2 produced
 eight candidates, all applied. Side effects: the software-house definition
 note lost its declared-scope clause (`08215a3d`), and one supplement was
