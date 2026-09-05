@@ -1,5 +1,5 @@
 ---
-description: "Conjecture that an automated software house can sustain open-ended coherent software change with LLMs available by 2026-09-02 and held fixed; system boundary, program-theory bearer, and witness conditions"
+description: "Conjecture that an automated software house can sustain open-ended coherent software change with LLMs available by 2026-09-02 and held fixed; system boundary, components that perform the program-theory function, and witness conditions"
 type: kb/articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
@@ -28,10 +28,11 @@ can handle relevant requests not listed in advance with no human in an
 internal production role, using only LLMs and other learned components
 available by 2026-09-02 and held fixed during the run. The house may start
 with a human-written explicit project theory, tools, tests, and production
-machinery. The claim is that the resulting system can carry the complete
-production function, including the program theory needed for coherent change.
+machinery. The claim is that the resulting system can perform all production
+functions, including the program theory needed for coherent change.
 It does not require the house to have discovered the explicit project theory
-with which it starts or to have outgrown its human-built seed. Companion
+with which it starts or to have stopped depending on the task-specific
+knowledge supplied by its human-built seed. Companion
 articles ask [how a software
 house should be trained](./the-software-house-as-the-unit-of-training.md)
 and [how the first automated one might be
@@ -101,19 +102,20 @@ It did not test linked rationale, machine-maintained indexes, semantic
 retrieval, dependency-aware context assembly, or automatic loading of the
 relevant material at the decision point.
 
-One route from Naur's argument to a human-only conclusion depends on treating
-machine execution as execution of explicitly formulated criteria.
+One inference from Naur's argument to a human-only conclusion depends on
+treating machine execution as execution of explicitly formulated criteria.
 An LLM is still formal computation, but it can interpret a paragraph about
 why retry logic belongs in the caller without that judgment first being
 reduced to a complete rule. [Formal execution and explicitly formulated
 criteria are not the same
 thing](../notes/naur-equates-machine-execution-with-formulated-criteria.md).
-A successful house would show that a computational composite can carry the
-program-theory function defined here. It would reject that route to a
-human-only conclusion, but would not settle Naur's separate claim that the
-relevant judgment cannot be reduced to a finite set of formulated criteria.
+A successful house would show that a system made of computational components
+can perform the program-theory function defined here. It would refute that
+inference to a human-only conclusion, but would not settle Naur's separate
+claim that the relevant judgment cannot be reduced to a finite set of
+formulated criteria.
 
-## A possible bearer of the program theory
+## Components that can perform the program-theory function
 
 The conjectured house combines three kinds of component:
 
@@ -130,9 +132,9 @@ The conjectured house combines three kinds of component:
 
 None of these holds the program theory alone. A note nobody loads has no
 effect. A fixed LLM without enough project state reconstructs or guesses the
-program theory instead of carrying it from one change to the next. Software
+program theory instead of preserving it from one change to the next. Software
 executes a decision without supplying all the judgment that selected it. The
-house as a whole has to carry the program-theory function.
+house as a whole has to perform the program-theory function.
 
 The program theory need not be stored in an explicit project theory. The house
 may use an explicit project theory, reconstruct its program theory from
@@ -178,8 +180,8 @@ request + operating evidence + current product and project state
 
 Once the witness run starts, every internal decision and successor state must
 come from the house's current state, its fixed learned components, and the
-permitted external inputs. A human rescue in an internal production role ends
-that witness run.
+permitted external inputs. A human intervention in an internal production role
+ends that witness run.
 
 This is the transition closure of the declared starting state: later states
 must be reachable through the current house and permitted inputs. The
@@ -189,12 +191,12 @@ house to outgrow or rediscover its starting design.
 Pinning is an experimental condition, not a recommendation for a mature
 software house or a claim that updates outside model weights are generally
 better than weight updates. It isolates whether the system around current
-models can carry the complete software-house function without help from a
+models can perform every software-house function without help from a
 newer or newly trained model.
 
 ## What a witness house must show
 
-One witness house must show the following conjunction.
+One witness house must show all the following conditions together.
 
 1. **Holding and application.** Across novel changes, the house uses
    program theory to guide proposal, evaluation, diagnosis,
@@ -210,11 +212,11 @@ One witness house must show the following conjunction.
    declared scope and horizon while satisfying the boundary above.
 4. **Practical reliability.** The declared evaluation must show useful
    success within the resource budget and continued adequacy across the
-   horizon. One lucky path establishes only possibility, not practical
-   reachability.
+   horizon. A single successful sequence may result from chance and establishes
+   only possibility, not practical reachability.
 
-These obligations do not fix which representational form carries the program
-theory or which mutable surface changes. Storing or citing a rationale is
+These obligations do not fix which representational form expresses the program
+theory or which retained component changes. Storing or citing a rationale is
 insufficient if it does not govern a later decision. A gate that can reject is
 insufficient if the accepted successor is not adequate. Passing tests on one
 requested change is insufficient if the house cannot preserve coherence
@@ -229,7 +231,7 @@ software house: it has no users, and the only software it changes is itself.
 An embedded prover admits a rewrite only after proving, from the current
 axioms and formal utility function, that switching pays. Its starting
 formalization is supplied in advance, which the conjecture stated here
-allows. The price is that it "must ignore those self-improvements whose
+allows. The limitation is that it "must ignore those self-improvements whose
 effectiveness it cannot prove"
 ([Schmidhuber](../sources/goedel-machines-schmidhuber.ingest.md), §2.4,
 verbatim).
@@ -238,39 +240,41 @@ At the level of state-transition provenance, both systems obey the same
 transition-closure condition: every next state must arise through the current
 state's machinery and permitted inputs. Their system boundaries and successor
 relations still differ. The Gödel machine admits only a
-proof-licensed successor. The house may make a fallible change, observe later
-consequences, and recover. A novel demand can affect the Gödel machine's
-rewrite only insofar as its formalization gives that demand
-utility-relevant meaning. The house instead relies on model interpretation,
-available checks, and later exposure.
+proof-licensed successor. The house can make a change that may be wrong,
+observe later consequences, and recover. A novel demand can affect the Gödel
+machine's rewrite only when and to the extent that its formalization gives that
+demand utility-relevant meaning. The house instead relies on model
+interpretation, available checks, and later exposure.
 
 Reviewed records describe separate parts of the possible house: persistent
 project records, code and tool revision, reject-capable gates, rollback, and
 long-running human-agent production. Their code-inspected rows can support
 implementation claims; papers and practitioner or product reports support only
-what those sources describe. No row supplies the missing conjunction: a complete
-user-facing software-house boundary, fixed learned components, a demonstrated
-program-theory function across novel changes, and continuation with no human
-in an internal production role. Evidence for separate components does not
-show that they compose.
+what those sources describe. No row supplies all the required conditions
+together: a complete user-facing software-house boundary, fixed learned
+components, a demonstrated program-theory function across novel changes, and
+continuation with no human in an internal production role. Evidence for
+separate components does not show that they compose.
 
-## Boundaries and epistemic status
+## Boundaries, evidence, and uncertainty
 
 The scope, request process, horizon, resource budget, and success threshold
 are declared before testing so they cannot be narrowed after a failure.
 
-The request process must be able to expose relevant novelty rather than replay
-a fixed benchmark list. Its admissible histories, the history realized in one
-run, and the probability or selection procedure over histories are distinct.
-The admissible set and selection procedure are fixed before the run. Repeated
+The request process must be able to include relevant new requests and
+consequences rather than replay a fixed benchmark list. Its allowed histories,
+the history realized in one run, and the probability or selection procedure
+over histories are distinct.
+The allowed set and selection procedure are fixed before the run. Repeated
 runs or another justified estimate must show that adequate operation receives
 usable probability and persists across the declared horizon.
 
 The need for a program theory is a theoretical argument, not a proved
-theorem. That current LLMs can participate in a system carrying that function,
-and that such a system is practically reachable, remain conjectures. A
-working house establishes the claim only over its declared regime. Failure of
-one architecture eliminates that path, not every possible construction.
+theorem. That current LLMs can participate in a system performing that
+function, and that such a system is practically reachable, remain conjectures.
+A working house establishes the claim only over its declared regime. Failure
+of an architecture rules out only that architecture, not every possible
+construction.
 
 The [training article](./the-software-house-as-the-unit-of-training.md) asks
 how such a house should improve once it exists. The [bootstrap

@@ -1,5 +1,5 @@
 ---
-description: "Commonplace as a human-inclusive seed and a bootstrap program that separately transfers production decisions and the machinery behind them"
+description: "Commonplace as a seed that still includes people and a bootstrap program that separately transfers production decisions and the machinery that produces them"
 type: kb/articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
@@ -26,25 +26,25 @@ source_notes:
 conjectures that an automated software house is practically reachable with
 fixed current LLMs. The [second](./the-software-house-as-the-unit-of-training.md)
 says that
-project-specific learning should run over the whole house, not only over the
+project-specific learning should apply to the whole house, not only to the
 model. This article gives a bootstrap program for reaching the first witness
 house.
 
 Commonplace is a useful starting point, but not yet a complete system that
-learns through computation alone. It has operative explicit project theory,
-computational proposal and revision, symbolic checks, and durable retention.
-People still supply decisive judgments about global fit, admission, delayed
-credit assignment, and authority over consequential changes.
+learns through computation alone. It has explicit project theory that affects
+later work, computational proposal and revision, symbolic checks, and durable
+retention. People still supply decisive judgments about global fit, admission,
+delayed credit assignment, and authority over consequential changes.
 
 The program measures both computational control of production decisions and
-production-driven revision of the machinery behind them. It tries bounded
-transfers in an order discovered from production, declares each trial before it
-runs, measures outcomes outside the transferred role, and records rescues,
-failures, reversals, and reopened roles. The first article's witness house needs
-the production decisions under computational control across every internal
-production role in its declared scope and horizon. A house trained as the
-second article prescribes also needs production-driven revision of the
-machinery.
+production-driven revision of the machinery that produces them. It tries
+bounded transfers in an order discovered from production, declares each trial
+before it runs, uses outcome measures independent of the transferred role, and
+records human interventions, failures, reversals, and reopened roles. The first
+article's witness house needs the production decisions under computational
+control across every internal production role in its declared scope and
+horizon. A house that meets the second article's training requirements also
+needs production-driven revision of the machinery.
 
 ## The starting point
 
@@ -72,7 +72,7 @@ internal production role over its declared scope and horizon.
 
 ## Two kinds of transfer
 
-A single statement that a role "moved" hides two different claims.
+Saying that a role "moved" can mean two different things.
 
 | Claim | What must be shown |
 |---|---|
@@ -85,7 +85,7 @@ each case. But its criterion still came from a person. It does not complete
 learning transfer until the house can produce or revise that criterion and its
 machinery from production evidence.
 
-In principle, an operational path could be built entirely by hand: one
+In principle, operational automation could be built entirely by hand: one
 validator for every recurring judgment, one diagnosis procedure for every
 failure class, and one fixed admission policy. A wholly hand-built starting
 house can be a witness house if, with nobody inside, it also satisfies the
@@ -94,7 +94,7 @@ first article's witness conditions therefore do not require learning transfer,
 but operational transfer alone does not satisfy all the witness conditions.
 Such a house is not trained in the second article's sense if none of its
 project-specific machinery was produced from production evidence by the
-house's own process. The program aims at both transfers, since the point of
+house's own process. The program aims at both transfers, since the purpose of
 reaching a witness house is to train it.
 
 ## Commonplace as a seed instance
@@ -102,13 +102,13 @@ reaching a witness house is to train it.
 The second article says that a trained house needs retained components that
 affect later production, a process by which production evidence changes them,
 admission of accepted changes, credit assignment from later consequences, and
-retention that makes accepted changes operative. Commonplace has a partial
-implementation of this shape. It does not yet perform every part
+retention that makes accepted changes affect later work. Commonplace has a
+partial implementation of this shape. It does not yet perform every part
 computationally.
 
-- **Explicit project theory is an update surface.** Notes state claims, scope,
+- **Explicit project theory is one component the learning process can change.** Notes state claims, scope,
   and evidence, and link to the claims they depend on. Agents can load them at
-  the point of decision. A defeated note can be revised, superseded, or
+  the point of decision. A note shown to be wrong can be revised, superseded, or
   withdrawn, with its address redirected to its replacement.
 - **Some recurring failures have produced machinery.** For example, evidence
   that bounded reviewers could pass material they had not read led to [a
@@ -130,7 +130,7 @@ computationally.
   retrieved retained theory, searched over formulations, and produced edits,
   while the operator supplied the decisive judgments about global
   fit](../notes/evidence/commonplace-revision-used-theory-guided-computational-search.md).
-  This is the kind of accounting the bootstrap needs.
+  This is the kind of decision record the bootstrap needs.
 
 People still choose objectives, judge whether a claim fits the explicit project
 theory, assign blame when a change fails, decide which review findings to
@@ -138,42 +138,42 @@ accept, approve new gates, and authorize changes whose effects reach beyond the
 current job. Nothing here shows acquisition of program theory by computation
 alone, and there has been no witness run in the first article's sense.
 
-The useful claim is narrower. Commonplace already has several surfaces named by
-the proposed learning process: explicit project theory, computational proposal
+The useful claim is narrower. Commonplace already implements several components
+of the proposed learning process: explicit project theory, computational proposal
 and revision, symbolic checks, review provenance, and durable retention. Its
 remaining internal production roles can be named and measured. It is a seed
 implementation of the program, not proof that the program already works.
 
-A bare memory file is weaker. It can affect later behaviour, but it may admit
+A memory file by itself is weaker. It can affect later behaviour, but it may admit
 entries without a settled rule, keep wrong entries without tracing later
 failures back to them, omit their scope, and leave unclear whether a person or
 the harness chose the rule. A harness can add the missing parts. The difference
-is the process around the file, not the file's name.
+is the process that governs the file, not the file's name.
 
 ## The bootstrap program
 
-**The bootstrap program.** Starting from a human-agent house with operative
-retained project state, try repeated, measured transfers of bounded production
-decisions. For each decision class, or the smallest coupled bundle that cannot
-be separated, build the missing premises, acceptance authority, independent
-checks, and continuity machinery.
+**The bootstrap program.** Starting from a human-agent house with retained
+project state that affects later work, try repeated, measured transfers of
+bounded production decisions. For each decision class, or the smallest coupled
+bundle that cannot be separated, build the missing premises, acceptance
+authority, independent checks, and continuity machinery.
 
-The quantity that should contract is the set of required human decisions, not
-the number of people. One operator may stop doing one internal production role
-while still doing several others.
+The house should require fewer human decisions, not fewer people.
+One operator may stop doing one internal production role while still doing
+several others.
 
 ## The readiness conditions
 
-A decision can move out of human hands with warrant when the automatic process
-has the premises it needs, an acceptance rule or grant of authority settled
-enough to apply, and a check independent enough to reject a plausible harmful
-candidate. It also needs continuity when the decision or its evidence arrives
-after the current run.
+A decision can be transferred to an automatic process with warrant when that
+process has the premises it needs, an acceptance rule or grant of authority
+settled enough to apply, and a check independent enough to reject a plausible
+harmful candidate. It also needs continuity when the decision or its evidence
+arrives after the current run.
 
 If a house first transfers decisions that meet these conditions, the decisions
-left with people should become enriched for missing premises, unsettled
+left with people should disproportionately involve missing premises, unsettled
 criteria, weak checks, and delayed consequences. This is a prediction about the
-transfer policy, not a claim that every real automation path already follows
+transfer policy, not a claim that every real automation approach already follows
 it. The
 [residue analysis](../notes/warranted-transfer-leaves-people-the-hardest-to-warrant-decisions.md)
 turns the remaining work into a list of missing functions:
@@ -182,53 +182,54 @@ turns the remaining work into a list of missing functions:
 |---|---|
 | A needed premise is unavailable | Representation, retrieval, or acquisition of that premise |
 | No objective, criterion, commitment, or grant of authority settles acceptance | A settled rule or represented grant of authority within declared limits |
-| No independent check can defeat a wrong candidate | Verification, criticism with different failure modes, delayed exposure, or an accepted error tolerance |
-| The decision arises after the automatic path stops | Persistent state, scheduling, and later reactivation |
+| No independent check can reject a wrong candidate | Verification, criticism with different failure modes, delayed exposure, or an accepted error tolerance |
+| The decision arises after the automatic process stops | Persistent state, scheduling, and later reactivation |
 | Transfer is possible but too expensive | No new capacity; wait for the cost to fall |
 
 The table says what is ready; it does not give a full schedule. Among several
 ready transfers, value, cost, risk, and dependencies decide which one to try
-next. A role whose only missing premise is already recorded may be cheap to
-move. A role with an unsettled criterion must wait for more decided cases. A
+next. A role whose only missing premise is already recorded may be inexpensive
+to transfer. A role with an unsettled criterion must wait for more decided cases. A
 role with no usable check must wait for a stronger check or a declared tolerance
 for error.
 
 The remaining human decisions require different
 [functions](../notes/residue-classes-need-different-mechanisms-so-architecture-is-mixed.md):
 representation, interpretation of settled guidance, verification, and
-continuity. Commonplace currently realizes these through natural-language
+continuity. Commonplace currently implements these through natural-language
 notes, LLM interpretation, symbolic checks and scheduling, and retained
 evidence. The final house need not keep those forms separate. The program
 requires the functions, not a permanent split among notes, models, and code.
 
-## How each trial is fixed and judged
+## How each trial is specified and evaluated
 
-The program does not declare a universal sequence of stages. Production decides
-which transfer is ready next. The path is incremental, but it need not be
-smooth. Adaptive global order does not license a story written after the
-result, so each local trial is declared before it runs. The declaration records:
+The program does not declare a universal sequence of stages. Evidence from
+production determines which transfer is ready next. Transfers are incremental,
+but their order may change. Declaring each local trial before it runs prevents
+the result from being used to rationalize the order after the fact. The
+declaration records:
 
 - the decision class or coupled bundle;
 - the declared workload, boundary, objective, and horizon;
 - which decisions people currently supply;
 - which premise, rule, check, or continuity mechanism is thought to be missing;
 - the separate operational-transfer and learning-transfer claims;
-- external outcome, cost, rescue, and reopening measures.
+- measures of external outcomes, costs, human interventions, and reopened roles.
 
 The result is then kept whether the transfer succeeds or fails. This prevents
 the discovered order from becoming only a list of successful cases. Failed,
 reversed, and reopened transfers remain part of the evidence.
 
-Operative retained state is a prerequisite for a claim that the house learns
-from what it retains. It need not be the first operational transfer. A narrow
-hand-written rule may move a routine decision before the explicit project
-theory has shown a causal effect. That is real automation, but not yet evidence
-of learning by the house.
+Retained state that affects later work is required for a claim that the house
+learns from what it retains. It need not be the first operational transfer. A
+narrow hand-written rule may automate a routine decision before the explicit
+project theory has shown a causal effect. That is real automation, but not yet
+evidence of learning by the house.
 
-Admission can also move in parts before the training endpoint. A deterministic
-formatter or a well-tested dependency update may already be admitted
-automatically. At the training endpoint, project-specific successors must
-become operative over the declared scope without a person choosing them, and
+Admission can also be automated in parts before the training endpoint. A
+deterministic formatter or a well-tested dependency update may already be
+admitted automatically. At the training endpoint, project-specific successors
+must take effect over the declared scope without a person choosing them, and
 production evidence must be able to revise the update machinery when it fails.
 In an architecture with an explicit admission gate, this includes computational
 admission and revision of its machinery. That is an obligation of the training
@@ -236,28 +237,28 @@ endpoint, not a claim about the literal last chronological move.
 
 Operational transfer can look complete while a person still handles the cases
 that matter. A person who fixes the three hard failures each month still holds
-the diagnosis role. The accounting must record who made each decision class,
-on which demands, and when. During the bootstrap, a human rescue is allowed but
-must remain visible. After the declared start of a witness run, any internal
-diagnosis, successor selection, or state edit by a person ends that witness run
-and breaks the human-free training lineage.
+the diagnosis role. The record must show who made the decisions in each class,
+for which demands, and when. During the bootstrap, a human intervention is
+allowed but must be recorded. After the declared start of a witness run, any
+internal diagnosis, successor selection, or state edit by a person ends that
+witness run and breaks the human-free training lineage.
 
 Transfers may also reopen. A new demand can show that a rule covered only the
 old workload, or that moving one role created another human review role. A
 reopened role returns to the human set until the missing function is built. The
-program measures contraction over declared windows; it does not assume every
-step is permanent.
+program measures the decrease in that set over declared windows; it does not
+assume every step is permanent.
 
-Quality can fall when the metric that would have caught the drop moves with the
-role. A path can be computationally closed while its evaluator is captured. A
-no-op loop, bad objective, or self-approving evaluator can run without people.
+A process can operate without people while its evaluator is no longer
+independent, so quality can fall without being detected. A no-op loop, bad
+objective, or self-approving evaluator can run without people.
 [Usefulness, autonomy, warrant, and power are separate
 dimensions](../notes/usefulness-autonomy-warrant-and-power-are-separate-dimensions.md).
-Each transfer claim must say which one moved. The program therefore keeps an
-outcome measure outside the transferred role: user-visible success on later
-demands, escaped failures, and total cost.
+Each transfer claim must say which dimension changed. The program therefore keeps an
+independent outcome measure: user-visible success on later demands, failures
+the role missed, and total cost.
 
-The wrong benchmark can hide the remaining internal production roles. A test
+The wrong benchmark can omit the remaining internal production roles. A test
 that compares an agent with a remote programmer while holding the same brief,
 tools, feedback, and client fixed measures the worker role under that division
 of labour. It
@@ -280,55 +281,57 @@ This does not require every component to change. General machinery such as the
 version-control system, test runner, or model client may [stay fixed when its
 scope is warranted](../notes/machinery-persists-by-warrant-not-position-in-a-reflective-loop.md).
 It becomes a revision target only when the declared scope needs a change it
-cannot supply. The burden is on project-specific specialization, not on changing
-every inherited tool.
+cannot supply. The house must produce the project-specific specializations it
+needs; it need not change every inherited tool.
 
-In the current explicit-artifact path, machinery is usually produced
+In the current explicit-artifact approach, machinery is usually produced
 through a [proposal-selection
 loop](../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md):
 produce candidates, evaluate them with a real chance of rejection, and make an
-accepted change operative. Early in the bootstrap a person may supply the final
-rejection. Later, more of that gate moves into the house. Other update forms are
-also allowed. Reward-, error-, viability-, or gradient-driven updates may change
-the house without a separate candidate-admission event. The bootstrap program
-requires an evidence-caused operative change, not one permanent update
-architecture.
+accepted change take effect. Early in the bootstrap a person may supply the
+final rejection. Later, the house automates more of that acceptance. Other
+update forms are also allowed. Reward-, error-, viability-, or gradient-driven
+updates may change the house without a separate candidate-admission event. The
+bootstrap program requires an evidence-caused change that takes effect, not one
+permanent update architecture.
 
 ## Stop or redirect conditions
 
-The program is a bet. The following patterns, observed in a declared regime,
-are reasons to stop or change the route rather than attempt the next transfer.
+The program may fail. The following patterns, observed in a declared regime,
+are reasons to stop or change the approach rather than attempt the next
+transfer.
 
 - **Retained state makes no causal difference.** Repeatedly withholding or
   replacing project state does not change later decisions in the predicted
   way.
-- **The human set does not contract.** Interventions per demand stay flat or
-  rise, transferred roles repeatedly reopen, or each transfer creates equal or
+- **The human set does not decrease.** Interventions per demand do not decrease,
+  transferred roles repeatedly reopen, or each transfer creates equal or
   harder human work elsewhere.
 - **Each new demand class needs new human design.** A person must supply a new
   ontology, evaluator, or decomposition whenever the scope expands.
 - **Evaluation becomes self-confirming.** The house's approval is the only
   evidence of quality, while external outcomes stop tracking it.
-- **A more direct method wins at comparable total cost.** Reconstruction from
-  raw records, direct search, or model adaptation reaches the same result more
-  cheaply or reliably.
+- **A more direct method reaches the same result at lower cost or with greater
+  reliability.** Reconstruction from raw records, direct search, or model
+  adaptation reaches the same result more cheaply or reliably.
 
-These results do not refute the existential conjecture by themselves. They show
-that this path, in the tested regime, is not working or is not the best use of
-resources. The same production history that supports a transfer must also be
-able to reveal these failures.
+These results alone do not refute the conjecture that a house can exist. They
+show that this approach, in the tested regime, is not working or is not the best
+use of resources. The same production history that supports a transfer must
+also be able to reveal these failures.
 
 ## Where this leaves the series
 
 The first article asks whether an automated software house can exist and states
 what a witness house must show. The second asks how a software house should
-learn and puts governed behaviour-changing writes at the center.
+learn and makes governed behaviour-changing writes a central requirement.
 
 This article supplies the construction program. Commonplace is not already the
-finished trained house. It is a seed with operative retained state,
-computational search, partial evaluation machinery, durable retention, and
-named remaining human decisions. The path from that seed has two coupled
-contractions: fewer production decisions supplied by people, and less
-project-specific production machinery supplied by people. Measuring both keeps
-ordinary automation from being mistaken for learning. It also keeps a learning
-loop that still needs human approval from being called a human-free house.
+finished trained house. It is a seed with retained state that affects later
+work, computational search, partial evaluation machinery, durable retention,
+and named remaining human decisions. Starting from that seed, the program must
+reduce two things together: the production decisions supplied by people and the
+project-specific production machinery supplied by people. Measuring both
+prevents ordinary automation from being mistaken for learning. It also prevents
+a learning loop that still needs human approval from being called a human-free
+house.
