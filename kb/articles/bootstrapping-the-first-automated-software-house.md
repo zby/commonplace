@@ -193,9 +193,10 @@ selection within declared outcome and cost limits, without people making the
 transferred decisions. Always running the full suite is the baseline: it misses
 nothing, so a selector must match its outcomes at lower cost.
 Learning transfer additionally requires evidence that retained changes improve
-later decisions. One way to isolate that contribution is to compare the revised
-state with its earlier version on identical product snapshots and untouched
-cases, controlling other carriers of the learned information.
+later decisions. One way to isolate that contribution is to run two copies of
+the house from identical product snapshots, one keeping the revised state and
+one with its earlier version restored, on cases the failure did not touch,
+while holding fixed every other place the learned information could be carried.
 
 The trial could also support the [training article's
 comparison](./the-software-house-as-the-unit-of-training.md#testable-hypotheses)
