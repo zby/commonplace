@@ -4,6 +4,7 @@ type: kb/articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
 source_notes:
+  - kb/notes/a-fixed-model-house-must-write-the-procedures-for-each-new-theory.md
   - kb/notes/continual-learning-requires-governing-behaviour-changing-writes.md
   - kb/notes/definitions/behavior-determining-organization.md
   - kb/notes/definitions/representational-form.md
@@ -105,9 +106,10 @@ This also says why the regime starts from a software house rather than from a
 model with a cache of its own outputs. If retaining the models'
 natural-language outputs were enough, a text store would be all the trainable
 state a learner needs. We believe instead that learning must span both the
-natural-language and the symbolic forms — manipulating new theories will
-require new code — so the unit must be a system that can write and revise
-both.
+natural-language and the symbolic forms — [manipulating new theories will
+require new
+code](../notes/a-fixed-model-house-must-write-the-procedures-for-each-new-theory.md)
+— so the unit must be a system that can write and revise both.
 
 ## Why this is theory-mediated learning
 
