@@ -41,7 +41,7 @@
   .eyebrow b{color:var(--accent);font-weight:600}
   h1,h2{font-weight:700;line-height:1.08;text-wrap:balance}
   h2{font-size:clamp(1.8rem,5.2vh,3rem);margin-bottom:3.5vh}
-  .body{flex:1;display:flex;flex-direction:column;justify-content:flex-start;min-height:0}
+  .body{flex:1;display:flex;flex-direction:column;justify-content:center;min-height:0;padding-bottom:6vh}
   p.lede{font-size:clamp(1.05rem,2.6vh,1.5rem);line-height:1.5;max-width:34em;color:var(--ink)}
   .counter{
     position:absolute;bottom:3.2vh;right:7vw;
@@ -255,7 +255,7 @@
     <span>Zbigniew Łukasiak</span>
     <span>position paper + 141-system corpus</span>
   </div>
-  <div class="navhint">→ / space to advance · N for notes</div>
+  <div class="navhint">→ / space to advance · N for notes · F for fullscreen</div>
   <aside class="notes">
     <p><b>~30s.</b> Introduce yourself. The title is the whole thesis: where a memory lives — its storage — does not tell you what it is or how it acts. A position paper, but with corpus evidence at the end: 141 agent-memory systems reviewed from source code.</p>
     <p>The struck-out terms on the slides are the submitted paper's vocabulary; the talk deliberately renames them — say "memory" with the room, then unpack it.</p>
@@ -701,6 +701,9 @@
     else if(e.key==='Home')show(0);
     else if(e.key==='End')show(slides.length-1);
     else if(e.key==='n'||e.key==='N')panel.classList.toggle('open');
+    else if(e.key==='f'||e.key==='F'){
+      document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen();
+    }
   });
   addEventListener('click',e=>{
     if(e.target.closest('a'))return;
