@@ -262,6 +262,20 @@
   </aside>
 </section>
 
+<!-- 2 · The point -->
+<section class="slide">
+  <div class="eyebrow"><b>00</b> · The point</div>
+  <h2 style="visibility:hidden;position:absolute">The point</h2>
+  <div class="body" style="justify-content:center">
+    <p class="close-quote">The same feature can be realized in several ways. <span class="accent">Informed tradeoffs need the fundamental differences</span> between the realizations.</p>
+    <p class="close-sub">This talk builds a vocabulary that names those differences.</p>
+  </div>
+  <aside class="notes">
+    <p><b>~30s.</b> State the purpose before any apparatus: most of what an agent retains — a lesson, a guardrail, a preference — can be realized in several ways, and picking a realization is an architectural decision. Making that pick informed requires understanding the fundamental differences between the realizations: what reviews each one, what invalidates it, what rolls it back, what force it carries. Storage location is one of those differences — it settles backup, access, and deletion — but it is the only one the field records, and alone it is not enough.</p>
+    <p>This is the leitmotif; everything that follows is an instance of it: the box (one object, three roles), the YAML file (one text, two consumers), the lesson retained five ways, the script versus the prompt, the force ladder, the derivation of the forms. Return to it in the close.</p>
+  </aside>
+</section>
+
 <!-- Interrupt · box in use (opening) -->
 <section class="slide interrupt">
   <svg viewBox="0 0 640 400" role="img" aria-label="The same wooden box three times: with a coffee cup on top, with a person sitting on it, and with the lid open holding items">
@@ -489,7 +503,7 @@
   <aside class="notes">
     <p><b>~1.5 min — centerpiece.</b> The paper lists three forms; here I derive them from two questions. First: <b>does a defined consumer assign the consequences?</b> For code, an implementation adjudicates — if two consumers disagree, one of them is wrong. Natural language has no adjudicator — two readings can both be reasonable. That's underspecification, not a defect of any particular text. Second: <b>is there an identifiable unit carrying the content</b>, or is it spread across numerical state?</p>
     <p>The fourth cell — assigned consequences without a localized unit — is <b>unoccupied, not impossible</b>: vector-symbolic architectures aim exactly there. If agent systems ever retain state of that shape, the carve gains a fourth form.</p>
-    <p>If time allows, the inspection payoff in one breath: the review method falls out of the axes — <b>test</b> symbolic artifacts (defined semantics to check against), <b>read</b> natural-language ones (interpretation only), <b>probe</b> distributed-parametric ones (nothing to point at).</p>
+    <p>If time allows, the inspection payoff in one breath: the review method falls out of the axes — <b>test</b> symbolic artifacts (defined semantics to check against), <b>read</b> natural-language ones (interpretation only), <b>probe</b> distributed-parametric ones (nothing to point at). This is the leitmotif at its purest: the axes <b>are</b> fundamental differences between realizations, which is why consequences fall out of them instead of being stipulated per form.</p>
   </aside>
 </section>
 
@@ -542,7 +556,7 @@
   <div class="footmark">§6</div>
   <aside class="notes">
     <p><b>~1 min.</b> The dependency lesson from the opening example, ordered by force. The action is the same in every row — get the agent to check dependency constraints — implemented four ways. As a memory record it is <b>advice</b>: may never be retrieved, and the model can weigh it away when it is. As a system-prompt line it is <b>instruction</b>: always present, still weighable. As a pre-tool hook it is <b>enforcement</b>: the install is blocked no matter what the model thinks. As fine-tuning examples it is <b>learning input</b>: it shifts tendencies and stops being addressable at all.</p>
-    <p>That is behavioral authority — consumer × channel × force. The failure mode runs both directions: a safety-critical lesson implemented as retrievable advice is <b>too weak</b>; a mild preference hardened into a blocking hook is <b>too strong</b>. The review question the field adds: is this lesson's current force justified?</p>
+    <p>That is behavioral authority — consumer × channel × force. And the four rows are <b>alternatives</b> — an architect picks one; the record is what makes the pick informed rather than habitual. The failure mode runs both directions: a safety-critical lesson implemented as retrievable advice is <b>too weak</b>; a mild preference hardened into a blocking hook is <b>too strong</b>. The review question the field adds: is this lesson's current force justified?</p>
   </aside>
 </section>
 
@@ -633,7 +647,7 @@
   </div>
   <div class="footmark">§10 · thank you — questions</div>
   <aside class="notes">
-    <p><b>~45s. The slot is 20 minutes — aim to land the talk at 12–13, leaving ample Q&amp;A.</b> Close on the thesis: storage locates retained state; form, lineage, and authority determine how it acts and what review it admits. Leave the four-way question hanging — stay natural language, become symbolic control, surface through retrieval, or learn into numerical state — those choices differ in cost, coverage, and the rollback they admit. Thank the audience, invite questions.</p>
+    <p><b>~45s. The slot is 20 minutes — aim to land the talk at 12–13, leaving ample Q&amp;A.</b> Close on the thesis: storage locates retained state; form, lineage, and authority determine how it acts and what review it admits. Leave the four-way question hanging — stay natural language, become symbolic control, surface through retrieval, or learn into numerical state — those choices differ in cost, coverage, and the rollback they admit. Close the loop with the opening slide: informed tradeoffs need the fundamental differences, and the record is the vocabulary that names them. Thank the audience, invite questions.</p>
     <p>Likely questions: corpus representativeness (see previous slide's notes); "isn't this just provenance?" — lineage is deliberately thinner, only what invalidation needs; "why not a full taxonomy?" — position paper, classification discipline; validation is named future work.</p>
   </aside>
 </section>
