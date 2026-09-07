@@ -264,7 +264,7 @@
 
 <!-- 2 · The point -->
 <section class="slide">
-  <div class="eyebrow"><b>00</b> · The point</div>
+  <div class="eyebrow"><b>01</b> · The point</div>
   <h2 style="visibility:hidden;position:absolute">The point</h2>
   <div class="body" style="justify-content:center">
     <p class="close-quote">The same feature can be realized in several ways. <span class="accent">Informed tradeoffs need the fundamental differences</span> between the realizations.</p>
@@ -273,6 +273,26 @@
   <aside class="notes">
     <p><b>~30s.</b> State the purpose before any apparatus: most of what an agent retains — a lesson, a guardrail, a preference — can be realized in several ways, and picking a realization is an architectural decision. Making that pick informed requires understanding the fundamental differences between the realizations: what reviews each one, what invalidates it, what rolls it back, what force it carries. Storage location is one of those differences — it settles backup, access, and deletion — but it is the only one the field records, and alone it is not enough.</p>
     <p>This is the leitmotif; everything that follows is an instance of it: the box (one object, three roles), the YAML file (one text, two consumers), the lesson retained five ways, the script versus the prompt, the force ladder, the derivation of the forms. Return to it in the close.</p>
+  </aside>
+</section>
+
+<!-- 3 · The raw differences -->
+<section class="slide">
+  <div class="eyebrow"><b>02</b> · The raw differences</div>
+  <h2>What actually differs between realizations</h2>
+  <div class="body">
+    <ul class="big" style="margin-top:1vh">
+      <li><strong>Deterministic or interpretive</strong> — code returns the same verdict every run; a model reads afresh each time.</li>
+      <li><strong>Cheap or costly to run</strong> — a script costs milliseconds; interpretation spends a model call, every time.</li>
+      <li><strong>Weighable or blocking</strong> — a hint can be argued away in context; an enforced check cannot.</li>
+      <li class="slate">And behind them: what reviews it, what invalidates it, what rolls it back.</li>
+    </ul>
+    <p class="corpus-note">These are the differences tradeoffs are made of. The rest of the talk <b>organizes them</b>.</p>
+  </div>
+  <div class="footmark">§2–§6</div>
+  <aside class="notes">
+    <p><b>~45s.</b> Before any theory, the raw material: the differences an architect actually feels. A validator gives the same verdict every run; a model gives a fresh reading each time — and two readings can both be reasonable. The validator costs milliseconds and no tokens; interpretation spends a model call, every time. And realizations differ in what they can do: a remembered hint can be weighed away against whatever else is in context; a blocking check cannot.</p>
+    <p>Don't classify anything yet — just get the room to agree these differences are real and consequential. The talk's job from here is to organize them so they can be recorded and compared. The most load-bearing ones will turn out to come from representational form (the derivation slide) and behavioral authority (the force ladder).</p>
   </aside>
 </section>
 
@@ -339,7 +359,7 @@
 
 <!-- 2 · Problem -->
 <section class="slide">
-  <div class="eyebrow"><b>01</b> · The problem</div>
+  <div class="eyebrow"><b>03</b> · The problem</div>
   <h2>Agents adapt through <s class="was">retained artifacts</s> memory — and we classify it by where it's stored</h2>
   <div class="body">
     <ul class="big">
@@ -357,7 +377,7 @@
 
 <!-- 3 · Example -->
 <section class="slide">
-  <div class="eyebrow"><b>02</b> · The usual first question</div>
+  <div class="eyebrow"><b>04</b> · The usual first question</div>
   <h2>“Should the memory be a database or flat files?”</h2>
   <div class="body">
     <p class="lede">A coding agent keeps mishandling dependency resolution. The lesson can be retained as:</p>
@@ -378,7 +398,7 @@
 
 <!-- 4 · Script vs prompt -->
 <section class="slide">
-  <div class="eyebrow"><b>03</b> · Same job, same place</div>
+  <div class="eyebrow"><b>05</b> · Same job, same place</div>
   <h2>A validator script vs. a validating prompt</h2>
   <div class="body">
     <p class="lede">Both check the same dependency rule; both are small text files in the repo.</p>
@@ -452,7 +472,7 @@
 
 <!-- 5 · Four fields -->
 <section class="slide">
-  <div class="eyebrow"><b>04</b> · The vocabulary</div>
+  <div class="eyebrow"><b>06</b> · The vocabulary</div>
   <h2>A four-field record for every <s class="was">retained artifact</s> memory</h2>
   <div class="body">
     <ul class="big" style="margin-top:1vh">
@@ -473,7 +493,7 @@
 
 <!-- 6 · Derivation -->
 <section class="slide">
-  <div class="eyebrow"><b>05</b> · Representational form, derived</div>
+  <div class="eyebrow"><b>07</b> · Representational form, derived</div>
   <h2>Two axes generate the three forms</h2>
   <div class="body">
     <div class="deriv">
@@ -526,7 +546,7 @@
 
 <!-- 7 · Behavioral authority -->
 <section class="slide">
-  <div class="eyebrow"><b>06</b> · Behavioral authority</div>
+  <div class="eyebrow"><b>08</b> · Behavioral authority</div>
   <h2>The same action, four forces</h2>
   <div class="body">
     <div class="ladder">
@@ -562,7 +582,7 @@
 
 <!-- 8 · Lineage -->
 <section class="slide">
-  <div class="eyebrow"><b>07</b> · Lineage</div>
+  <div class="eyebrow"><b>09</b> · Lineage</div>
   <h2>An instruction does not say where it came from</h2>
   <div class="body">
     <p class="lede">The model reads everything in context as text. Origin leaves no trace in the bytes.</p>
@@ -597,7 +617,7 @@
 
 <!-- 8 · Record in use -->
 <section class="slide">
-  <div class="eyebrow"><b>08</b> · The record in use</div>
+  <div class="eyebrow"><b>10</b> · The record in use</div>
   <h2 style="visibility:hidden;position:absolute">The record in use</h2>
   <div class="body" style="justify-content:center">
     <p class="close-quote">The question is not whether a lesson is “in memory” — but whether its <span class="accent">form and authority are justified</span>.</p>
@@ -612,7 +632,7 @@
 
 <!-- 9 · Corpus -->
 <section class="slide">
-  <div class="eyebrow"><b>09</b> · Evidence from a system corpus</div>
+  <div class="eyebrow"><b>11</b> · Evidence from a system corpus</div>
   <h2>Hold storage fixed — the other fields still pull systems apart</h2>
   <div class="body">
     <div class="corpus">
@@ -639,7 +659,7 @@
 
 <!-- 10 · Takeaway -->
 <section class="slide">
-  <div class="eyebrow"><b>10</b> · Takeaway</div>
+  <div class="eyebrow"><b>12</b> · Takeaway</div>
   <h2 style="visibility:hidden;position:absolute">Takeaway</h2>
   <div class="body" style="justify-content:center">
     <p class="close-quote">Storage locates retained state. <span class="accent">Form, lineage, and authority determine how it acts</span> — and what review it admits.</p>
