@@ -1,3 +1,4 @@
+<!doctype html>
 <title>Where It Lives Is Not What It Is</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
 <style>
@@ -11,14 +12,16 @@
     --card:#FFFFFF;
     --sans:'IBM Plex Sans',-apple-system,'Segoe UI',Helvetica,Arial,sans-serif;
     --mono:'IBM Plex Mono',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+    --pad:max(7vw,calc((100vw - 72rem)/2));
   }
   *{box-sizing:border-box;margin:0}
   html,body{height:100%}
+  html{font-size:clamp(12px,min(2vh,1.15vw),30px)}
   body{
     background:var(--paper);
     color:var(--ink);
     font-family:var(--sans);
-    font-size:16px;
+    font-size:1rem;
     overflow:hidden;
   }
   .deck{height:100vh;position:relative}
@@ -26,7 +29,7 @@
     position:absolute;inset:0;
     display:none;
     flex-direction:column;
-    padding:5vh 7vw 9vh;
+    padding:5vh var(--pad) 9vh;
     background:var(--paper);
   }
   .slide.active{display:flex}
@@ -44,11 +47,11 @@
   .body{flex:1;display:flex;flex-direction:column;justify-content:center;min-height:0;padding-bottom:6vh}
   p.lede{font-size:clamp(1.05rem,2.6vh,1.5rem);line-height:1.5;max-width:34em;color:var(--ink)}
   .counter{
-    position:absolute;bottom:3.2vh;right:7vw;
+    position:absolute;bottom:3.2vh;right:var(--pad);
     font-family:var(--mono);font-size:.8rem;color:var(--ink-soft);
   }
   .footmark{
-    position:absolute;bottom:3.2vh;left:7vw;
+    position:absolute;bottom:3.2vh;left:var(--pad);
     font-family:var(--mono);font-size:.75rem;color:var(--ink-soft);letter-spacing:.06em;
   }
   .key{
@@ -226,7 +229,7 @@
     position:fixed;left:0;right:0;bottom:0;z-index:5;
     max-height:40vh;overflow-y:auto;
     background:var(--ink);color:var(--paper);
-    padding:2.2vh 7vw 2.6vh;
+    padding:2.2vh var(--pad) 2.6vh;
     font-size:clamp(.85rem,1.9vh,1.05rem);line-height:1.55;
     display:none;border-top:3px solid var(--accent);
   }
