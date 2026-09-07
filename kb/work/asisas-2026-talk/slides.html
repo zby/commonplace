@@ -475,7 +475,7 @@
 <!-- 7 · Behavioral authority -->
 <section class="slide">
   <div class="eyebrow"><b>06</b> · Behavioral authority</div>
-  <h2>The same sentence, four forces</h2>
+  <h2>The same action, four forces</h2>
   <div class="body">
     <div class="ladder">
       <div class="rung advice">
@@ -485,26 +485,26 @@
       </div>
       <div class="rung instr">
         <span class="chan">system prompt<br>loaded every run</span>
-        <span class="sent">“Check dependency constraints before installing.”</span>
+        <span class="sent">the same sentence in <span class="key">AGENTS.md</span></span>
         <span class="force">instruction</span>
       </div>
       <div class="rung enforce">
-        <span class="chan">pre-tool hook<br>checked before install</span>
-        <span class="sent">“Check dependency constraints before installing.”</span>
+        <span class="chan">pre-tool hook<br>runs before install</span>
+        <span class="sent"><span class="key">hooks/check-lockfile.sh</span> — install blocked on failure</span>
         <span class="force">enforcement</span>
       </div>
       <div class="rung learn">
-        <span class="chan">fine-tuning example<br>trained into weights</span>
-        <span class="sent">“Check dependency constraints before installing.”</span>
+        <span class="chan">fine-tuning set<br>trained into weights</span>
+        <span class="sent">correct-install examples — no addressable sentence left</span>
         <span class="force">learning input</span>
       </div>
     </div>
-    <p class="corpus-note">Same bytes in every row — force comes from <b>consumer × channel</b>, not from the words.</p>
+    <p class="corpus-note">The same action in every row — what varies is the <b>implementation</b> and the <b>force</b> it carries.</p>
   </div>
   <div class="footmark">§6</div>
   <aside class="notes">
-    <p><b>~1 min.</b> One field, one trick: the same sentence, four channels. As a memory record it is <b>advice</b> — it may never be retrieved, and when it is, the model can weigh it away. In the system prompt it is <b>instruction</b> — always present, still weighable. As the rule a pre-tool hook enforces it is <b>enforcement</b> — the install is blocked no matter what the model thinks. As a fine-tuning example it is <b>learning input</b> — it shifts tendencies and stops being addressable at all.</p>
-    <p>Same bytes in every row: the force comes from the consumer and channel, not the words. That is behavioral authority — consumer × channel × force. The failure mode runs both directions: a safety-critical lesson parked as retrievable advice is <b>too weak</b>; a mild preference hardened into a blocking gate is <b>too strong</b>. The review question the field adds: is this lesson's current force justified?</p>
+    <p><b>~1 min.</b> The dependency lesson from the opening example, ordered by force. The action is the same in every row — get the agent to check dependency constraints — implemented four ways. As a memory record it is <b>advice</b>: may never be retrieved, and the model can weigh it away when it is. As a system-prompt line it is <b>instruction</b>: always present, still weighable. As a pre-tool hook it is <b>enforcement</b>: the install is blocked no matter what the model thinks. As fine-tuning examples it is <b>learning input</b>: it shifts tendencies and stops being addressable at all.</p>
+    <p>That is behavioral authority — consumer × channel × force. The failure mode runs both directions: a safety-critical lesson implemented as retrievable advice is <b>too weak</b>; a mild preference hardened into a blocking hook is <b>too strong</b>. The review question the field adds: is this lesson's current force justified?</p>
   </aside>
 </section>
 
