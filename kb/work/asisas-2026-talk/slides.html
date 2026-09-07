@@ -406,28 +406,31 @@
       <table class="rec">
         <tr><th></th><th>hooks/check-lockfile.sh</th><th>“check deps before install” in AGENTS.md</th></tr>
         <tr>
-          <td class="fname what">form</td>
-          <td>symbolic — an interpreter adjudicates</td>
-          <td>natural-language — the model interprets</td>
+          <td class="fname where">storage</td>
+          <td colspan="2">a small text file in the repo — versioned, diffed, deleted the same way</td>
         </tr>
         <tr>
-          <td class="fname what">force</td>
+          <td class="fname what">form</td>
+          <td>symbolic — an interpreter adjudicates; fails reproducibly</td>
+          <td>natural-language — the model interprets; fails interpretively</td>
+        </tr>
+        <tr>
+          <td class="fname what">authority</td>
           <td>enforcement — blocks the action</td>
           <td>instruction — can be weighed away</td>
         </tr>
         <tr>
-          <td class="fname what">failure</td>
-          <td>systematic, reproducible</td>
-          <td>interpretive, varies per run</td>
+          <td class="fname what">lineage</td>
+          <td colspan="2">both derived from the same incident — change the policy and both must be found and updated</td>
         </tr>
       </table>
     </div>
-    <p class="corpus-note">Storage cannot tell them apart. What can — <b>form, lineage, authority</b> — is the vocabulary of the next slides.</p>
+    <p class="corpus-note">Storage cannot tell them apart; <b>form and authority</b> pull them apart; lineage ties them together. The next slide names the rows.</p>
   </div>
   <div class="footmark">§2–§6</div>
   <aside class="notes">
-    <p><b>~1 min.</b> Take the sharpest pair from the example: a validator script and a validating prompt. Same job — check the dependency rule — and the same storage answer: both are small text files in the repo. Every storage-side operation treats them identically: version them, diff them, delete them, roll them back.</p>
-    <p>Everything an architect actually needs differs: the script's semantics are adjudicated by an interpreter, so you test it and it blocks the action, failing the same way every time; the prompt is interpreted by the model on each run, so you read and trial it, it can be weighed away against competing instructions, and it fails interpretively. This pair motivates the paper's proposal: record <b>form, lineage, and behavioral authority</b> alongside storage, per operative part — the next slides define them.</p>
+    <p><b>~1 min.</b> Take the sharpest pair from the example: a validator script and a validating prompt, same job — and the rows preview the whole record. The <b>storage</b> row is one merged cell because storage cannot tell them apart: both are small text files in the repo, versioned, diffed, and deleted identically. <b>Form</b> and <b>authority</b> pull them apart: the script's semantics are adjudicated by an interpreter — you test it, it blocks the action, and it fails the same way every time; the prompt is interpreted by the model each run — you read and trial it, it can be weighed away against competing instructions, and it fails interpretively. <b>Lineage</b> ties them back together: both derive from the same incident, so when the dependency policy changes, both must be found and updated — one source, two derivatives, one invalidation trigger.</p>
+    <p>This table <b>is</b> the four-field record, shown before it is named — the next slide just gives the rows their names.</p>
     <p><b>Terminology note</b> (say once, briefly): the struck-out terms mark two deliberate renamings from the submitted paper — "retained artifacts" → <b>memory</b> (use the room's word, then unpack it), and "prose" → <b>natural-language</b> (the boundary is interpretive, not editorial; fragments and structured records qualify too).</p>
   </aside>
 </section>
