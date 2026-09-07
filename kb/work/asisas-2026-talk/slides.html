@@ -188,8 +188,27 @@
   .slide.interrupt{background:var(--ink);align-items:center;justify-content:center}
   .slide.interrupt svg{width:min(72vw,100vh);height:auto}
   @media (prefers-reduced-motion: no-preference){
-    .slide.active.interrupt svg{animation:rise .35s ease both}
+    .slide.active.interrupt svg,.slide.active.interrupt .yamlcard{animation:rise .35s ease both}
   }
+
+  /* ---------- yaml card (interrupt) ---------- */
+  .yamlcard{
+    background:#242C28;border:1px solid rgba(246,245,241,.22);border-radius:6px;
+    box-shadow:0 1vh 4vh rgba(0,0,0,.4);min-width:min(30em,80vw);
+  }
+  .yamlcard .tab{
+    font-family:var(--mono);font-size:clamp(.75rem,1.8vh,.95rem);color:#9AA39E;
+    padding:1.2vh 1.4em;border-bottom:1px solid rgba(246,245,241,.15);letter-spacing:.05em;
+  }
+  .yamlcard pre{
+    margin:0;padding:2.6vh 1.6em 3vh;font-family:var(--mono);
+    font-size:clamp(1rem,3vh,1.7rem);line-height:1.65;color:#F6F5F1;
+  }
+  .yamlcard .yk{color:#8FB4D9}
+  .yamlcard .ys{color:#C9A45C}
+  .yamlcard .yb{color:#E0673B}
+  .yamlcard .yp{color:#9AA39E}
+  .yamlcard .yc{color:#9AA39E;font-style:italic}
 
   /* ---------- takeaway ---------- */
   .close-quote{
@@ -281,7 +300,26 @@
   <aside class="notes">
     <p><b>~30s opener — talk over the picture; this is how the whole approach gets introduced.</b> The same wooden box, three times. Put a coffee cup on it — it's a <b>table</b>. Sit on it — a <b>stool</b>. Fill it — <b>storage</b>. Its material, shape, and dimensions are intrinsic and identical in all three; looking at the object alone you cannot tell which it is. "Stool" names the box's <b>role in a pattern of use</b> — a relational property that belongs to the object-in-use, not to the object.</p>
     <p>The move of this talk is exactly that: <b>classify what agents retain by how the system uses it, not by what it looks like in storage</b>. Present it as a small, <b>informal ontology</b> — and classifying by role rather than intrinsic properties is something any ontology may legitimately do; nothing exotic is being asked of memory. Say openly that this framing is an <b>update</b>: the submitted paper proposes the four-field vocabulary without it, and the ontological reading is how the approach has settled since submission — the same kind of delta the strikeouts mark for terminology.</p>
-    <p>The software echo, if wanted: the bytes of a Markdown file don't tell you whether it's advice, instruction, or enforcement input — the <b>consumption path</b> does; the same YAML text is an example in a docs directory and configuration when the application loads it. Then advance into the problem.</p>
+    <p>The software echo: the bytes of a retained file don't tell you whether it's advice, instruction, or enforcement input — the <b>consumption path</b> does. Then advance: the next slide makes this concrete with a YAML file.</p>
+  </aside>
+</section>
+
+<!-- Interrupt · yaml two readings -->
+<section class="slide interrupt">
+  <div class="yamlcard" role="img" aria-label="A small YAML file mixing natural-language comments about strict dependency handling with install settings: lockfile check required, prereleases disallowed, conflicts blocked, two retries">
+    <div class="tab">deps.yaml</div>
+    <pre><span class="yc"># Dependency rules for the coding agent.</span>
+<span class="yc"># A version conflict once broke the build for a day —</span>
+<span class="yc"># keep this strict, even for quick fixes.</span>
+<span class="yk">install</span><span class="yp">:</span>
+  <span class="yk">lockfile_check</span><span class="yp">:</span> <span class="ys">required</span>
+  <span class="yk">allow_prereleases</span><span class="yp">:</span> <span class="yb">false</span>
+  <span class="yk">on_conflict</span><span class="yp">:</span> <span class="yb">block</span>   <span class="yc"># never auto-resolve</span>
+  <span class="yk">retries</span><span class="yp">:</span> <span class="ys">2</span></pre>
+  </div>
+  <aside class="notes">
+    <p><b>~30s beat — talk over the file.</b> The software version of the box. This exact text can be consumed two ways. Fed to an <b>LLM</b> in context, it is something to read — an example, advice, a story about why the rules are strict; the model may follow it, adapt it, or ignore it. Loaded by <b>code</b> — a parser at application startup — it determines behavior: these keys, these values, exactly. Same bytes; genuinely different things: one path <b>informs</b>, the other <b>binds</b>.</p>
+    <p>And notice the file already contains both kinds of text: the parser acts on the keys and <b>strips the comments</b> — while for the model reading it, the comments ("a conflict once broke the build") may be the most influential lines in the file. Nothing in the file says which reading applies — the consumption path does. (This quietly foreshadows two of the four fields: who consumes it with what force, and whether an interpreter or an interpreting model assigns its meaning.) Then advance into the problem.</p>
   </aside>
 </section>
 
