@@ -176,6 +176,24 @@ Keep these distinctions:
   Epistemic and operational authority remain separate.
 - **Guarantee strength** is separate from evidence status: invariant, protocol,
   policy, best effort, deployment guarantee, or no claimed guarantee.
+- **Theory refinement** is the established loop in which a retained theory
+  guides a decision, an outcome localizes a defect, and the theory is revised.
+  A **theory** says why, is a stable unit whose assumptions and scope can be
+  inspected, and is revised by reasoning. Retained guidance on a revision
+  route is therefore a theory, a **rule whose reasons are not retained**,
+  **parameters**, or none; a retained reason counts only where a later
+  consumer reads it, and a theory counts only where it is on the causal path
+  of a decision. The other operations on a theory are **applying** it and
+  **explanation-based generalization**, regressing a reusable rule from its
+  explanation of one episode without revising it. **Reflective theory
+  refinement** is theory refinement whose theory describes behavior-determining
+  organization inside the declared boundary. Among revisions that fit the
+  evidence, reach is preferred; do not write "reach rather than fit".
+
+On a theory route, never upgrade a citation of retained theory to load-bearing
+use, a theory edit after an outcome to a read-back against the theory that
+guided the change, or a revised theory to its later use. Each link carries its
+own conclusion status.
 
 Describe every external mechanism in source-native terms before mapping it to
 Commonplace ontology. Explain the fit and mark partial or unresolved mappings.
@@ -261,6 +279,15 @@ that specialist pass in the coordinator's context.
    improvement and whether operation serves open requests, bounded experiments or curricula,
    or multiple modes; attach oracle use to the applicable mode. Unknowns and
    inapplicable steps remain explicit, without assigning an autonomy grade.
+   On each admitting route, name the retained guidance that shaped the
+   proposal and classify it under step 3. For a theory, record the operation
+   performed on it and a separate conclusion status for each link of a
+   refinement path: the theory entered the decision, the outcome bore on the
+   theory, the theory state changed in response, and the changed state guided
+   a later operation. A link without evidence is `uninspected`, not inferred
+   from its neighbours. A retained prediction, rationale, or expected outcome
+   is a model assertion; it makes the retained material a theory only when a
+   later route reads it.
 
 ### 5. Run both lenses
 
@@ -446,6 +473,8 @@ A failed run reports its failure reason and does not use the handoff command.
 - Component fixity, material revision admission, decision roles, improvement
   triggers, operating modes and answer-oracle access are recorded or carry
   explicit `uninspected` or `inapplicable` reasons.
+- Every admitting route classifies its retained guidance under step 3; a
+  theory route names the operation and gives each link its own status.
 - Both lenses and both scoping records exist; thin evidence produces a bounded
   brief result, not a skipped lens.
 - Source-native mechanisms remain visible beneath Commonplace mappings, and no
@@ -463,3 +492,8 @@ A failed run reports its failure reason and does not use the handoff command.
 - [Agent memory is a crosscutting concern, not a separable niche](../../notes/agent-memory-is-a-crosscutting-concern-not-a-separable-niche.md) — rests-on: why memory is a mandatory lens
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) — rests-on: the retention, read-back, presence, and activation distinctions
 - [Behavioral authority](../../notes/definitions/behavioral-authority.md) — rests-on: the consumer, channel, force, and horizon record
+- [Theory refinement may improve sample efficiency under structured shifts](../../notes/theory-refinement-may-improve-sample-efficiency-under-shifts.md) — rests-on: what makes retained guidance a theory rather than a rule, and why the revising loop is the one worth recording
+- [Theory refinement combining analytical and empirical methods](../../sources/theory-refinement-analytical-empirical-methods.ingest.md) — rests-on: the established sense of theory refinement used in step 3
+- [Reflective theory refinement needs interpretation, retention, and independent read-back](../../notes/reflective-theory-refinement-needs-interpretation-and-retention.md) — rests-on: the four links of a refinement path, each carrying its own conclusion status
+- [Reflective system](../../notes/definitions/reflective-system.md) — rests-on: the self-representation condition that makes a refinement route reflective
+- [Self-improving system](../../notes/definitions/self-improving-system.md) — rests-on: the operative, evidence-responsive change the revision-admission records describe

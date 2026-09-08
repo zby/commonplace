@@ -70,6 +70,10 @@ memory boundary warrants short sections with explicit limits.
   maintenance and withdrawal. Separate manual authoring, automatic acquisition,
   and automatic operations over already retained material. Examine every
   trace-fed transformation, including compaction, for a later consuming route.
+  For each derived behavior-shaping artifact, state whether it retains the
+  reason for what it prescribes and whether any later route reads that reason;
+  the parent classifies the retained guidance as theory, rule, or parameters
+  from this.
 - **Read-back:** trace retained material through selection and delivery to a
   named later consumer. Separate availability, delivery, activation and
   demonstrated benefit. For pull, identify the requesting consumer role and

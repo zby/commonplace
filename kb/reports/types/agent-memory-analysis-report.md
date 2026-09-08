@@ -77,8 +77,9 @@ retained input, persistence, delivery, later consumer and status.
 Trace acquisition, authoring, automatic transformation and maintenance. For
 trace-fed transformations, show the raw-to-derived-to-later-consumer chain,
 including alternative checkpoint forms. Give task/project horizons and timing
-only when established by that route. Link to the shared records rather than
-repeating their full artifact classifications.
+only when established by that route. State whether derived behavior-shaping
+material retains its reasons and whether a later route reads them. Link to the
+shared records rather than repeating their full artifact classifications.
 
 ### Read-back
 

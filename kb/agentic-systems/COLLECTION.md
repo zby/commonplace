@@ -57,6 +57,8 @@ Open each analysis with a one-line **evidence basis**: what it is grounded in �
 
 State the external mechanism in its own operational terms before applying a Commonplace concept. Explain why the concept fits and qualify partial or unresolved mappings. Commonplace chooses the analytical distinctions; it is not the comparison target, and a reader must be able to reject a mapping without losing the external-system account.
 
+Describe a learning pathway in the KB's established terms. **Theory refinement** names the loop in which a retained theory guides a decision, an outcome localizes a defect, and the theory is revised; **reflective theory refinement** is that loop over a theory of the system's own organization inside the declared boundary. A route that retains rules without their reasons, or parameters, is neither. Link the defining notes with `rests-on` or `defined-in`.
+
 Current differences from Commonplace, borrowable ideas, and watch items are not part of the durable analysis. They depend on a current Commonplace baseline and interest brief. Produce them, when separately requested, as living transfer state under `kb/reports/state/agentic-system-transfer/`; never feed that scan back into the stable analysis or a public corpus comparison. Keep unresolved candidate judgments until disposition, then replace or delete the state report under its owning workflow.
 
 ## Title conventions
@@ -70,7 +72,7 @@ Organised per destination; label semantics in [link-vocabulary.md](../reference/
 
 - **→ `kb/sources/`** — link the snapshots an analysis is grounded in. Labels: `derived-from`, `evidenced-by`, `see-also`.
 - **→ `external`** — cite the source code, documents, papers, or first-hand records already used for the evidence basis; prefer version-pinned targets when available and do not prospect the open web. Labels: `evidenced-by`, `see-also`.
-- **→ `kb/notes/`** — search when an analysis maps a system onto theory. Use `rests-on` when the theory explains the analysed design; use rare `is-evidence-for` when the observed system instead bears on the target claim. Promote a novel transferable claim to `kb/notes/` rather than author theory here. Labels: `rests-on`, `is-evidence-for` (rare), `see-also`.
+- **→ `kb/notes/`** — search when an analysis maps a system onto theory. Use `rests-on` when the theory explains the analysed design; use rare `is-evidence-for` when the observed system instead bears on the target claim. Promote a novel transferable claim to `kb/notes/` rather than author theory here. Labels: `rests-on`, `is-evidence-for` (rare), `defined-in`, `see-also`.
 - **→ `kb/agent-memory-systems/`** — when the analysed whole system has a memory, knowledge, or context-engineering subsystem reviewed there. Use `contains` from the whole-system analysis to the subsystem review; use `part-of` only from a subsystem-focused analysis back to the whole system. Labels: `part-of` / `contains`, `compares-with`, `see-also`.
 - **→ `kb/reports/retained/`** — cite the exact main-analysis result when a comparison needs its full records, evidence, or normalized fields. Labels: `see-also`.
 - **→ `kb/reference/`** — scan when a design element has a direct Commonplace analogue. Labels: `see-also`.

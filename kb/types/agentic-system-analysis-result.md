@@ -244,6 +244,8 @@ Component and operative-object records preserve source-native identity, represen
 
 Route records preserve endpoints, progression, owner, context/state/action effects, applicable status fields, and evidence. For materially distinct mechanisms admitting changes to the product, retained knowledge or instructions, capabilities, or production machinery, record trigger, proposed change, admission, rejection ability, and rollback or recovery. Group writes governed by the same mechanism. Routine logs, counters and unchanged checkpoint persistence need no separate revision account unless they alter later decisions or recovery. Memory revision findings use the integrated specialist records.
 
+Each admitting route also names the retained guidance that shaped the proposal: a theory (explanatory, addressable, revised by reasoning), a rule whose reasons are not retained, parameters, or none. A retained reason counts only where a later route reads it. For a theory, the record names the operation performed on it (application, explanation-based generalization, or theory refinement) and gives a separate conclusion status to each link of a refinement path: the theory entered the decision, the outcome bore on the theory, the theory state changed in response, and the changed state guided a later operation. The record states whether the theory describes organization inside the declared boundary, which makes the route reflective theory refinement, or an external target. The producing skill's step 3 defines these terms.
+
 Claim records preserve claimed operation and source. An evidenced absence carries an `absent` conclusion status, searched boundary, evidence, and the conclusion it supports or prevents. A behavioral-authority path records consumer, channel, force, and horizon.
 
 ### Runtime account
@@ -274,7 +276,7 @@ The lens sections annotate canonical IDs. They do not reproduce the shared inven
 
 ### Bounded synthesis
 
-`## Bounded synthesis` gives the evidence basis and boundary, architectural characterization and claimed work, runtime map, only the discriminating mechanisms this target needs, scenario-relative assessment, and concrete evidence or system changes that would alter the assessment. It is organized around the system's operational progression, not as concatenated lens reports. It gives no product ranking, generic adoption advice, system-wide epistemic grade, Commonplace delta, or transfer recommendation.
+`## Bounded synthesis` gives the evidence basis and boundary, architectural characterization and claimed work, runtime map, only the discriminating mechanisms this target needs, scenario-relative assessment, and concrete evidence or system changes that would alter the assessment. Where the runtime account supports it, the synthesis states separately whether the system retains a revisable theory on its decision path, whether it is reflective, and whether it is self-improving at the declared boundary, each at its own evidence status; these are three independent properties, not a grade or a ladder. It is organized around the system's operational progression, not as concatenated lens reports. It gives no product ranking, generic adoption advice, system-wide epistemic grade, Commonplace delta, or transfer recommendation.
 
 ### Limitations
 
