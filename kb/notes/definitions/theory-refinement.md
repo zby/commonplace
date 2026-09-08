@@ -1,5 +1,5 @@
 ---
-description: "Definition — theory refinement is the established loop in which a fallible explicit theory guides inference, a failure localizes a defect, and the theory is revised; the KB widens what counts as a theory, with mechanical checks only for codified parts"
+description: "Definition — theory refinement is the established loop in which a fallible explicit theory guides inference, a failure localizes a defect, and the theory is revised; the KB widens what counts as a theory and marks recovered guarantees as conjecture"
 type: kb/types/definition.md
 tags: [foundations, self-improving-systems, learning-theory]
 ---
@@ -66,7 +66,7 @@ Two widenings are the KB's own and should not be read back into the sources:
   [reflective system](./reflective-system.md); it is composed from the two
   terms and defined by neither alone.
 
-## Consequences are computed only for codified parts
+## Consequences are computed only for codified parts, and that alone is not the classical loop
 
 In the classical setting a proof procedure fixes what the theory implies for a
 case. A contradiction is therefore a fact, blame lands on a nameable rule, and
@@ -77,18 +77,26 @@ checked. Abduction is the most exposed step, since it is where new content
 enters and a plausible post-hoc account is easiest to mistake for a located
 defect.
 
-This is not a loss the prose form suffers. It is what
-[codification](./codification.md) buys, part by part. A theory in this KB is a
-mixed-form object: the parts committed to a validator, schema, or test have a
-consequence relation a formal consumer computes, and for those parts
-contradiction, localization, and acceptance are mechanical. The parts still in
+A theory in this KB is a mixed-form object. The parts committed to a
+validator, schema, or test have crossed into
+[codification](./codification.md): a formal consumer computes their
+consequences, so for those parts a contradiction is a fact. The parts still in
 prose have consequences an interpreter derives. Refinement moves parts across
-that boundary as they settle, and the classical guarantees hold exactly where
-that crossing has happened. Where it has not, two things stand in for the
-proof: withholding or perturbing the theory and observing a changed decision
-is the evidence that it shaped one, and whether a model interprets prose
-theories consistently enough for contradiction and blame to mean anything is
-the empirical conjecture argued in
+that boundary as they settle.
+
+Whether the codified parts recover the rest of the classical guarantees is a
+conjecture, not something codification supplies by itself. Localization needs
+the failing check to name the part of the theory it tests, so that a failure
+identifies a premise rather than only a broken artifact; acceptance needs a
+decidable test of the revised part against the cases it must still fit. A
+validator that fails says a check failed, not which commitment was wrong. The
+KB's expectation is that a loop can arrange both for settled parts, since the
+classical systems arranged them for whole theories, and it has not shown it.
+Where no crossing has happened, two things stand in for the proof: withholding
+or perturbing the theory and observing a changed decision is the evidence that
+it shaped one, and whether a model interprets prose theories consistently
+enough for contradiction and blame to mean anything is the empirical
+conjecture argued in
 [theory refinement may improve sample efficiency under structured shifts](../theory-refinement-may-improve-sample-efficiency-under-shifts.md).
 
 Refining theories nobody computes is the older case, not the exception.
