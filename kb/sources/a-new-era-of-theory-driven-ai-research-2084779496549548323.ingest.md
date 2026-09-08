@@ -10,7 +10,7 @@ conversation_id: 2084779496549548323
 post_count: 1
 ingested: "2026-08-18"
 type: kb/sources/types/ingest-report.md
-domains: [scientific-discovery, theory-mediated-learning, auto-research, automation-boundary]
+domains: [scientific-discovery, auto-research, automation-boundary]
 ---
 
 # Ingest: A new Era Of Theory-Driven AI Research

@@ -10,7 +10,7 @@ snapshot_sha256: 22d74d58cc20a282fdbccdfc06c4478ef9a60699cbe7f24ef20e489ec89f10e
 ingested: "2026-08-31"
 occasion: "Determine what this source establishes about learning from an explicit but fallible theory: how theory guides inference, search, or generalization; how empirical success or failure bears on the theory; how defects are localized and repaired; and whether the revised theory changes later learning. Distinguish a theory of an external problem domain from a reflective theory of the learner's own software organization. This is source ingestion, not a request to confirm the proposed synthesis."
 type: kb/sources/types/ingest-report.md
-domains: [learning-theory, explanation-based-learning, theory-mediated-learning, concept-generalization]
+domains: [learning-theory, explanation-based-learning, concept-generalization]
 ---
 
 # Ingest: Explanation-Based Generalization: A Unifying View

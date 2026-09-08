@@ -1,5 +1,5 @@
 ---
-description: "A 2010 design proposal reifies requirements as runtime objects and synchronizes them with architecture, providing structural lineage—not empirical evidence—for theory-mediated system learning."
+description: "A 2010 design proposal reifies requirements as runtime objects and synchronizes them with architecture, providing structural lineage—not empirical evidence—for reflective theory refinement."
 source: https://doi.org/10.1145/1810295.1810329
 captured: "2026-08-30"
 capture: pdftotext
@@ -33,7 +33,7 @@ The paper is the requirements-specific structural-lineage anchor for [the lineag
 
 ## Extractable Value
 
-1. **A requirements-level self-model can be causally relevant without being a learned theory** -- The paper proposes runtime objects for goals, refinements, alternatives, assumptions, conflicts, and their links to architecture. This supplies the self-target and adaptation-path half of theory-mediated system learning while keeping the empirical theory-revision half distinct. [quick-win]
+1. **A requirements-level self-model can be causally relevant without being a learned theory** -- The paper proposes runtime objects for goals, refinements, alternatives, assumptions, conflicts, and their links to architecture. This supplies the self-target and adaptation-path half of reflective theory refinement while keeping the empirical theory-revision half distinct. [quick-win]
 2. **The represented vocabulary determines the available questions and interventions** -- A KAOS-like meta-model would let a system navigate goal relations, identify responsible agents, inspect assumptions, and invoke operations such as adding, deleting, replacing, or assigning requirements and goals. This gives a concrete requirements-specific instance of runtime representation creating a control surface. [quick-win]
 3. **Causal connection requires an explicit transfer mechanism between representations** -- The proposal separates requirements and architecture into strata, each with base and meta-levels, then requires semantic synchronization so a requirements change can generate architectural changes and an architectural change can be checked against requirements. Merely retaining goals does not establish this connection. [deep-dive]
 4. **Most of the effective update space remains designer-supplied** -- The paper leaves the goal language and meta-model, exposed primitives, requirements-to-architecture mapping, monitoring boundary, uncertainty formalism, decision procedure, and human interaction policy to designers. Runtime reprioritization or replacement therefore occurs inside a fixed decomposition rather than revising the machinery that defines valid representations and adaptations. [deep-dive]
@@ -41,7 +41,7 @@ The paper is the requirements-specific structural-lineage anchor for [the lineag
 
 ## Limitations (our opinion)
 
-The central mechanism is underspecified and untested. The paper does not define or evaluate the semantic synchronization that would translate a changed goal into safe architectural changes, nor does it show that reverse monitoring can diagnose which requirement should change. Its vacuum-cleaner case is illustrative, not evidence, and the proposed KAOS-derived representation may omit requirements or environmental phenomena that do not fit its designer-chosen ontology. Human participation is proposed for resolving multi-objective conflicts, but the allocation of authority, elicitation of preferences, and behavior under disagreement are not evaluated. Most importantly for theory-mediated system learning, the paper does not learn or empirically revise the requirements meta-model, synchronization rules, monitors, adaptation operators, or evaluation policy; it proposes reasoning and modification within that supplied structure.
+The central mechanism is underspecified and untested. The paper does not define or evaluate the semantic synchronization that would translate a changed goal into safe architectural changes, nor does it show that reverse monitoring can diagnose which requirement should change. Its vacuum-cleaner case is illustrative, not evidence, and the proposed KAOS-derived representation may omit requirements or environmental phenomena that do not fit its designer-chosen ontology. Human participation is proposed for resolving multi-objective conflicts, but the allocation of authority, elicitation of preferences, and behavior under disagreement are not evaluated. Most importantly for reflective theory refinement, the paper does not learn or empirically revise the requirements meta-model, synchronization rules, monitors, adaptation operators, or evaluation policy; it proposes reasoning and modification within that supplied structure.
 
 ## Recommended Next Action
 
