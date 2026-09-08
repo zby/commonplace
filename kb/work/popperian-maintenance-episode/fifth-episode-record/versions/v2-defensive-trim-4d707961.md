@@ -35,7 +35,7 @@ A composite of retained text and an interpreter is therefore only a possibility 
 
 Even then, the records would not perform Naur's three capabilities. A justification can be written down, but a fresh interpreter must still select and apply the relevant reason. Fixed mapping points can be recorded, but extending the mapping to a new case remains a judgment. The artifact supplies inputs to the capacities; it does not relocate the capacities into text.
 
-This division of labour is the one proposed in [theory-mediated self-improvement needs both interpretation and retention from one substrate](../../../../notes/theory-mediated-self-improvement-needs-interpretation-and-retention.md). Its retention boundary follows the recovery question in [design rationale must preserve decision premises its interpreter cannot regenerate](../../../../notes/design-rationale-must-preserve-unregenerable-decision-premises.md): which decision-relevant claims can this interpreter recover, at the required fidelity, from its other available sources?
+This division of labour is the one proposed in [theory-mediated self-improvement needs both interpretation and retention from one substrate](../../../../notes/reflective-theory-refinement-needs-interpretation-and-retention.md). Its retention boundary follows the recovery question in [design rationale must preserve decision premises its interpreter cannot regenerate](../../../../notes/design-rationale-must-preserve-unregenerable-decision-premises.md): which decision-relevant claims can this interpreter recover, at the required fidelity, from its other available sources?
 
 Any candidate composite must meet at least three conditions:
 

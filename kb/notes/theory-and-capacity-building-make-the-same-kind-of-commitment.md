@@ -44,7 +44,7 @@ experience
   -> theory revision
 ```
 
-Its value is empirical: if direct use of retained experience produces comparable capacity at comparable cost, the mediation loses support. What the path requires in order to run is stated in [theory-mediated self-improvement needs interpretation and retention](./theory-mediated-self-improvement-needs-interpretation-and-retention.md).
+Its value is empirical: if direct use of retained experience produces comparable capacity at comparable cost, the mediation loses support. What the path requires in order to run is stated in [theory-mediated self-improvement needs interpretation and retention](./reflective-theory-refinement-needs-interpretation-and-retention.md).
 
 The reverse path runs regardless. A constructive commitment creates machinery, the machinery produces new experience, and that experience can support, narrow, or defeat the theory that guided the construction. The two kinds of commitment can co-evolve without collapsing into one kind of retained state.
 
@@ -69,4 +69,4 @@ Relevant Notes:
 - [Design rationale must preserve decision premises its interpreter cannot regenerate](./design-rationale-must-preserve-unregenerable-decision-premises.md) — grounds: why the premises behind constructive commitments must themselves be retained
 - [Project-theory possession requires comparing new demands with existing organization](./project-theory-relates-new-demands-to-existing-organization.md) — extends: develops the historical component into a bearer test for open-ended modification
 - [Holding a program theory means sustaining coherent search under delayed feedback](./program-theory-sustains-search-under-delayed-feedback.md) — extends: places backtracking over commitments inside fallible theory-guided search
-- [Theory-mediated self-improvement needs interpretation, retention, and independent read-back](./theory-mediated-self-improvement-needs-interpretation-and-retention.md) — extends: states the functional requirements of the mediated causal path
+- [Theory-mediated self-improvement needs interpretation, retention, and independent read-back](./reflective-theory-refinement-needs-interpretation-and-retention.md) — extends: states the functional requirements of the mediated causal path

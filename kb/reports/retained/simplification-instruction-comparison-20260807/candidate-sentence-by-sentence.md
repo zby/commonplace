@@ -11,7 +11,7 @@ source_notes:
   - kb/notes/reflection-buys-addressability.md
   - kb/notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md
   - kb/notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md
-  - kb/notes/theory-mediated-self-improvement-needs-interpretation-and-retention.md
+  - kb/notes/reflective-theory-refinement-needs-interpretation-and-retention.md
   - kb/notes/theory-and-methodology-form-a-two-layer-execution-system.md
   - kb/notes/agent-context-is-constrained-by-soft-degradation-not-hard-token-limits.md
   - kb/notes/accumulation-counts-dependence-through-the-retained-result.md

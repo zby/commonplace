@@ -37,7 +37,7 @@ argued in [theory refinement may improve sample efficiency under structured shif
 - **One mediated stage suffices, and one episode is the minimum unit.**
   Retaining the theory, refining it, and reusing the refined state are further
   links on the [evidence
-  ladder](../theory-mediated-self-improvement-needs-interpretation-and-retention.md#evidence-forms-a-ladder),
+  ladder](../reflective-theory-refinement-needs-interpretation-and-retention.md#evidence-forms-a-ladder),
   each needing its own evidence. A contemporaneous [citation at the decision
   point](../citing-retained-theory-at-the-decision-point-is-a-mediation-trace.md)
   is the cheapest evidence for the first link.
@@ -91,7 +91,7 @@ theory refinement*, formerly *theory-mediated system learning*, composes
 Relevant Notes:
 
 - [Theory refinement may improve sample efficiency under structured shifts](../theory-refinement-may-improve-sample-efficiency-under-shifts.md) — extends: the payoff conjecture and the test that would decide it
-- [Theory-mediated self-improvement needs interpretation, retention, and independent read-back](../theory-mediated-self-improvement-needs-interpretation-and-retention.md) — extends: the evidence ladder whose first rung this definition names
+- [Theory-mediated self-improvement needs interpretation, retention, and independent read-back](../reflective-theory-refinement-needs-interpretation-and-retention.md) — extends: the evidence ladder whose first rung this definition names
 - [Disconnected witnesses do not establish a full causal path through theory](../disconnected-witnesses-do-not-establish-a-theory-mediated-path.md) — extends: what separate links must share before they compose into one path
 - [Citing retained theory at the decision point is a mediation trace](../citing-retained-theory-at-the-decision-point-is-a-mediation-trace.md) — mechanism: the cheapest checkable evidence for mediation
 - [Reach-assessment](./reach-assessment.md) — contrasts: the judgment that decides whether a theory deserves its scope; mediation does not supply it

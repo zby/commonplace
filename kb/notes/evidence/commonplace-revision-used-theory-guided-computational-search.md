@@ -142,7 +142,7 @@ merely future machinery.
 
 Relevant Notes:
 
-- [Theory-mediated self-improvement needs interpretation, retention, and independent read-back](../theory-mediated-self-improvement-needs-interpretation-and-retention.md) — exemplifies: records one human-inclusive path through interpretation, retention, read-back, and later use
+- [Theory-mediated self-improvement needs interpretation, retention, and independent read-back](../reflective-theory-refinement-needs-interpretation-and-retention.md) — exemplifies: records one human-inclusive path through interpretation, retention, read-back, and later use
 - [System use is an initial selection environment when theory fit lacks a fixed oracle](../system-use-selects-theory-fit-without-a-fixed-oracle.md) — exemplifies: supplies the episode from which the initial-selection claim was sharpened
 - [Citing retained theory at the decision point is a mediation trace](../citing-retained-theory-at-the-decision-point-is-a-mediation-trace.md) — contrasts: explains why artifact-specific use is evidence without being a causal estimate
 - [A proposal-selection improvement loop requires search, evaluation, and operative retention](../a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — exemplifies: maps the recorded sequence onto the minimum improvement-loop functions

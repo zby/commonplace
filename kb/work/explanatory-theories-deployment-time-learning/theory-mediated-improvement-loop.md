@@ -46,7 +46,7 @@ A reusable theory needs a separate assessment and retention decision. Evidence s
 
 An **on-the-spot treatment** constructs `tau_n` for the current episode and discards it afterward. This treatment tests whether theory mediation improves the current search or decision. If the theory guides a behavioral change that is accepted and later becomes operative, the episode can still count as theory-mediated learning even though the theory itself does not accumulate.
 
-A **retained-theory treatment** starts from an addressable `T_n`, records whether the episode retrieves and uses it, and permits the system to retain a revision separately as `T_{n+1}`. This treatment tests the stronger claim that theory work in earlier episodes can improve later ones. Any benefit must outweigh the costs of retrieval, applicability checking, maintenance, and correction. It must also outweigh the risk that a false retained theory will misdirect several episodes. The [theory-mediated self-improvement note](../../notes/theory-mediated-self-improvement-needs-interpretation-and-retention.md) develops this retained case.
+A **retained-theory treatment** starts from an addressable `T_n`, records whether the episode retrieves and uses it, and permits the system to retain a revision separately as `T_{n+1}`. This treatment tests the stronger claim that theory work in earlier episodes can improve later ones. Any benefit must outweigh the costs of retrieval, applicability checking, maintenance, and correction. It must also outweigh the risk that a false retained theory will misdirect several episodes. The [theory-mediated self-improvement note](../../notes/reflective-theory-refinement-needs-interpretation-and-retention.md) develops this retained case.
 
 ## What the theory is about
 
