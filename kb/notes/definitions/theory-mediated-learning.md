@@ -8,133 +8,98 @@ tags: [foundations, self-improving-systems, learning-theory]
 
 **Theory-mediated learning** is model-based learning in which the model is a
 theory. A learner is model-based when an internal model of its target stands
-between evidence and behavior change, and it acts by running the model rather
-than by fitting behavior to observations directly; a [learned world
+between evidence and behavior change; a [learned world
 model](../world-models-assess-explanatory-reach-through-action-conditioned.md)
-is the familiar case. The model is a **theory** when it has three further
-properties. It is explanatory: it proposes a mechanism, invariant, or other
-relation that says why, not only what will happen next. It is addressable: it
-is a stable semantic unit whose assumptions, scope, and parts can be inspected.
-And it is revised by reasoning: the learner changes it by deriving a
-consequence, exposing an assumption, comparing a rival, or narrowing a scope,
-not only by further fitting. **Mediated** is then a causal relation, not
-co-occurrence: the learner must operate on the theory's content, not hold it
-beside a decision it would have made anyway.
+is the familiar case. The model is a **theory** when it is explanatory, saying
+why and not only what happens next; addressable, a stable unit whose
+assumptions, scope, and parts can be inspected; and revised by reasoning, by
+deriving a consequence, exposing an assumption, comparing a rival, or
+narrowing a scope, not only by further fitting. **Mediated** is causal: the
+learner operates on the theory's content rather than holding it beside a
+decision it would have made anyway.
 
-The three properties are what the term adds to model-based learning, and the
-boundary follows from them. A latent predictor of environment dynamics is
-model-based and has none of the three: it is revised only by further training,
-and its scope is discoverable only behaviorally. An explicit causal model or
-simulator program whose premises can be inspected and rescoped has all three
-and is both a world model and a theory. The payoff is argued elsewhere:
-[theory-mediated learning may improve sample efficiency under structured
-shifts](../theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md)
-predicts a gain only where the theory names structure the shift preserves.
-This note fixes the vocabulary.
+The term names a property, not a mechanism. Its species are the established
+operations on a theory: **applying** it, which is deduction and the minimum
+mediation requires; **explanation-based generalization**, regressing a
+reusable rule from the theory's explanation of one episode, in the sense of
+[Mitchell, Keller, and
+Kedar-Cabelli](../../sources/explanation-based-generalization-unifying-view.ingest.md);
+and **theory refinement**, revising the theory when empirical failure
+localizes a defect, in the sense of [Ourston and
+Mooney](../../sources/theory-refinement-analytical-empirical-methods.ingest.md).
+Classical theory refinement is therefore an instance of this term, and the
+[software house regime](../../articles/the-software-house-as-the-unit-of-training.md)
+is theory refinement with different fillers in the same slots. The payoff is
+argued in [theory-mediated learning may improve sample efficiency under
+structured shifts](../theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md).
 
 ## Scope
 
-- **One mediated stage is enough.** A theory can shape diagnosis and search,
-  candidate proposal and ranking, choice of evaluation evidence, or
-  interpretation of the outcome, the stages of a [proposal-selection
-  loop](../a-proposal-selection-loop-requires-search-evaluation-and-retention.md).
-  These succeed and fail independently, so a report of mediation should name
-  the stage it holds for.
-- **One episode is the minimum unit.** A theory built for the current episode
-  and discarded afterwards still mediates it. Whether the theory is also
-  retained, revised against the outcome, and consumed again later is a further
-  question, and each of those steps needs its own evidence.
-- **Any representational form.** The theory may be natural language, a causal
-  model, a program, a schema, or a mixture. [Representational
-  form](./representational-form.md) decides which assessment routes are
-  available, not whether mediation obtains. Addressability comes in degrees,
-  though: a theory reachable only as an indivisible document can be replaced
-  but not rescoped one premise at a time.
-- **Not a success term.** A false theory mediates as readily as a true one,
-  toward worse outcomes. Being able to apply a theory is a semantic capability
-  and is all the term requires. Whether the theory earns the scope it claims is
-  [reach-assessment](./reach-assessment.md), a separate epistemic function that
-  mediation neither supplies nor presupposes.
-
-## Mediation is the first link, not the whole path
-
-Four claims of increasing strength get collapsed into this one term. Mediation
-is the first: changing or withholding the theory changes a proposal, an
-evaluation, a recovery step, or a realized change. Empirical contact, theory
-learning, and recurrent use of the revised theory are the further links, and
-[disconnected witnesses do not establish the full
-path](../disconnected-witnesses-do-not-establish-a-theory-mediated-path.md):
-each link must identify the same theory state as its neighbours. The functions
-a full path needs are set out in [theory-mediated self-improvement needs
-interpretation, retention, and independent
-read-back](../theory-mediated-self-improvement-needs-interpretation-and-retention.md).
-
-Two further conditions are independent of mediation and of each other. A
-system is *reflective* when the mediating theory describes organization that
-helps determine the system's own behavior; a theory of an external target
-mediates without being reflective. It is *self-improving* when the accepted
-change persists and affects later operation. A system can be theory-mediated
-and neither, either, or both, so the three are reported separately.
-
-The cheapest evidence for mediation is a contemporaneous [citation at the
-decision
-point](../citing-retained-theory-at-the-decision-point-is-a-mediation-trace.md),
-which identifies the theory a decision claims to have consumed. Withholding,
-replacing, or perturbing the theory and observing a changed decision is
-stronger.
+- **One mediated stage suffices, and one episode is the minimum unit.**
+  Retaining the theory, refining it, and reusing the refined state are further
+  links on the [evidence
+  ladder](../theory-mediated-self-improvement-needs-interpretation-and-retention.md#evidence-forms-a-ladder),
+  each needing its own evidence. A contemporaneous [citation at the decision
+  point](../citing-retained-theory-at-the-decision-point-is-a-mediation-trace.md)
+  is the cheapest evidence for the first link.
+- **Any representational form.** [Form](./representational-form.md) fixes the
+  assessment route, not whether mediation obtains. Addressability comes in
+  degrees: an indivisible document can be replaced but not rescoped.
+- **Any machinery.** An LLM, a program, or a mixture may do the applying and
+  revising.
+- **Not a success term.** A false theory mediates as readily as a true one.
+  Whether a theory earns its scope is [reach-assessment](./reach-assessment.md),
+  which mediation neither supplies nor presupposes.
+- **Independent of what the theory is about.** A theory of an external target
+  and a theory of the learner's own organization are applied, generalized
+  from, and refined alike. Whether the learner is
+  [reflective](./reflective-system.md), and whether the change persists as
+  [self-improvement](./self-improving-system.md), are separate conditions.
 
 ## Exclusions
 
-- **A stored theory nothing consumes.** [A stored representation matters only
+- **A stored theory nothing consumes**, since [a representation matters only
   through its consumption
-  path](../an-action-model-matters-only-through-its-consumption-path.md). A
-  theory repository beside a self-changing system is the expected case, not
-  evidence of mediation.
-- **Rules whose reasons are not retained.** A rule set can guide decisions
-  without being a theory. With no mechanism retained, a correction to one rule
-  reaches none of the others that share its unstated reason, and there is
-  nothing to derive consequences from.
-- **Post-hoc rationale and retrieval logs.** An explanation written after the
-  decision, or a citation naming everything that was in context, records
-  something correlated with consumption, not consumption.
-- **Deliberation as such.** Reasoning that produces no criticizable
-  intermediate object is not mediation. An experiment claiming mediation has to
-  control for deliberation budget.
+  path](../an-action-model-matters-only-through-its-consumption-path.md).
+- **A latent world model as such.** It is model-based but revised only by
+  training, with scope discoverable only behaviorally. An inspectable causal
+  model or simulator program is both a world model and a theory.
+- **Rules whose reasons are not retained.** With no mechanism to derive from,
+  a correction to one rule reaches none of the others that share its unstated
+  reason.
+- **Post-hoc rationale, retrieval logs, and deliberation** that produce no
+  criticizable intermediate object.
 
 ## Misuse cases
 
-- Calling a system theory-mediated because it retains explicit prose about
-  itself. The term names a causal path through the theory, not the presence of
-  an artifact.
-- Reserving the term for the full recurrent loop, so that a single-episode
-  theory-guided change goes unreported. Narrower claims are reportable at their
-  own strength.
-- Reading the term as a claim that natural language is the right carrier. The
-  prevalence of prose theories is a fact about available substrates, not part
-  of the meaning.
+- Calling a system theory-mediated because it retains prose about itself. The
+  term names a causal path, not an artifact.
+- Reserving the term for the full recurrent loop. Narrower claims are
+  reportable at their own strength.
+- Reading it as endorsing natural language as the carrier. Prose theories are
+  a fact about available substrates, not part of the meaning.
 - Treating an accepted change as confirmation of the theory that motivated it.
-  Acceptance judges the change; the theory needs its own read-back.
 
 ## Word forms
 
-Hyphenate the adjective: *theory-mediated learning*, *a theory-mediated path*.
-The noun phrase is spaced: *theory mediation*. Bare *mediation*, once the
-pathway has been introduced, names the first link, not the full path.
-*Theory-mediated system learning* is the reflective case, where the theory is
-about the learning system itself.
+Hyphenate the adjective, *theory-mediated*; the noun is spaced, *theory
+mediation*. Bare *mediation* names the first link on the ladder. *Reflective
+theory refinement*, formerly *theory-mediated system learning*, composes
+*theory refinement* with *reflective system* and is defined by neither alone.
 
 ---
 
 Relevant Notes:
 
-- [Theory-mediated learning may improve sample efficiency under structured shifts](../theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md) — extends: develops the payoff conjecture, the addressability contrast with parametric retention, and the test that would decide it
-- [Theory-mediated self-improvement needs interpretation, retention, and independent read-back](../theory-mediated-self-improvement-needs-interpretation-and-retention.md) — extends: states the functions a full path needs and the evidence ladder whose first rung this definition names
-- [Disconnected witnesses do not establish a full causal path through theory](../disconnected-witnesses-do-not-establish-a-theory-mediated-path.md) — extends: what the witnesses must identify before separate links compose into one path
-- [Citing retained theory at the decision point is a mediation trace](../citing-retained-theory-at-the-decision-point-is-a-mediation-trace.md) — mechanism: the cheapest checkable evidence for the mediation link, and what it leaves open
-- [A proposal-selection improvement loop requires search, evaluation, and operative retention](../a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — grounds: the loop whose stages a theory can mediate
-- [Reach-assessment](./reach-assessment.md) — contrasts: the epistemic judgment that decides whether a mediating theory deserves its scope; mediation does not supply it
+- [Theory-mediated learning may improve sample efficiency under structured shifts](../theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md) — extends: the payoff conjecture and the test that would decide it
+- [Theory-mediated self-improvement needs interpretation, retention, and independent read-back](../theory-mediated-self-improvement-needs-interpretation-and-retention.md) — extends: the evidence ladder whose first rung this definition names
+- [Disconnected witnesses do not establish a full causal path through theory](../disconnected-witnesses-do-not-establish-a-theory-mediated-path.md) — extends: what separate links must share before they compose into one path
+- [Citing retained theory at the decision point is a mediation trace](../citing-retained-theory-at-the-decision-point-is-a-mediation-trace.md) — mechanism: the cheapest checkable evidence for mediation
+- [Reach-assessment](./reach-assessment.md) — contrasts: the judgment that decides whether a theory deserves its scope; mediation does not supply it
 - [Representational form](./representational-form.md) — grounds: the axis that fixes assessment route without fixing whether mediation obtains
-- [Reflective system](./reflective-system.md) — contrasts: reflective membership is an added condition, not part of mediation
-- [World models assess explanatory-reach through action-conditioned prediction](../world-models-assess-explanatory-reach-through-action-conditioned.md) — contrasts: the familiar model-based case, which lacks the three properties that make a model a theory
-- [Theory mediation can coordinate heterogeneous factory development](../theory-mediation-can-coordinate-heterogeneous-factory-development.md) — extends: applies the term across mixed prose, symbolic, and executable machinery
-- [Three 2026 harnesses retain rules or weights, not a revisable theory](../evidence/three-2026-harnesses-retain-rules-or-weights-not-a-revisable-theory.md) — evidenced-by: worked cases on the near side of the boundary, where retained rules and retained weights both fall outside the term
+- [Reflective system](./reflective-system.md) — contrasts: an independent condition on what the theory is about
+- [World models assess explanatory-reach through action-conditioned prediction](../world-models-assess-explanatory-reach-through-action-conditioned.md) — contrasts: the familiar model-based case that lacks the three properties of a theory
+- [Theory-mediated system learning combines runtime self-modeling with empirical theory refinement](../theory-mediated-learning-joins-self-modeling-and-theory-refinement.md) — extends: places the reflective case against its lineages
+- [Three 2026 harnesses retain rules or weights, not a revisable theory](../evidence/three-2026-harnesses-retain-rules-or-weights-not-a-revisable-theory.md) — evidenced-by: worked cases on the near side of the boundary
+- [Explanation-based generalization: a unifying view](../../sources/explanation-based-generalization-unifying-view.ingest.md) — abstracted-from: the established sense of generalizing from a theory without revising it
+- [Theory refinement combining analytical and empirical methods](../../sources/theory-refinement-analytical-empirical-methods.ingest.md) — abstracted-from: the established sense of revising a fallible explicit theory from empirical failure

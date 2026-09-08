@@ -36,10 +36,9 @@ the house must grow.
 Commonplace is the starting point: agents use and revise retained project
 knowledge while people still supply decisive judgments. The target is a
 witness house meeting the [conjecture's four
-conditions](./automated-software-houses-with-fixed-llms.md#what-a-witness-house-must-show),
-learning under the [fixed-model
-regime](./the-software-house-as-the-unit-of-training.md) with its models
-held fixed throughout the observed run.
+conditions](./automated-software-houses-with-fixed-llms.md#what-a-witness-house-must-show)
+and learning by theory refinement under the [fixed-model
+regime](./the-software-house-as-the-unit-of-training.md).
 
 ## The starting point
 
@@ -165,7 +164,7 @@ need not keep them in separate kinds of carrier.
 This trial would test whether computation can decide which checks a Markdown
 edit needs, and whether experience improves later check selection. The
 [training article's hypothetical release
-exporter](./the-software-house-as-the-unit-of-training.md#why-this-is-theory-mediated-learning)
+exporter](./the-software-house-as-the-unit-of-training.md#why-this-is-theory-refinement)
 provides a concrete setting: it produces a deployment manifest for an
 installer, and duplicate service identifiers make that manifest invalid.
 

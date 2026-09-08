@@ -9,8 +9,8 @@ tags: [foundations, self-improving-systems]
 
 [Theory-mediated learning may improve sample efficiency under structured
 shifts](./theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md)
-regardless of what its theories describe. Reflective theory-mediated learning
-is the narrower case in which the retained theory describes
+regardless of what its theories describe. Reflective theory refinement is the
+narrower case in which the retained theory describes
 behavior-determining organization inside the declared system boundary and
 participates in changing that organization.
 
@@ -68,7 +68,7 @@ be distinguished:
    proposal, evaluation, recovery step, or realized intervention.
 2. **Empirical contact.** The intervention produces an outcome that bears on
    the theory rather than merely accompanying it.
-3. **Theory learning.** The outcome changes the theory's content, scope,
+3. **Theory refinement.** The outcome changes the theory's content, scope,
    confidence, status, or operational role. Explicit rejection or principled
    retention after a refuting opportunity also counts as a theory-state change.
 4. **Recurrent theory-mediated self-improvement.** The updated theory state
@@ -155,7 +155,7 @@ empirical.
 - Independent read-back can be delayed. For coherent program modification, a
   later demand or maintenance failure may be the strongest available oracle.
 - An unchanged theory after confirming evidence can still have mediated a
-  useful improvement. It establishes less than theory learning unless the
+  useful improvement. It establishes less than theory refinement unless the
   record shows a deliberate theory-state judgment.
 
 ## Open Questions

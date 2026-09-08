@@ -32,8 +32,8 @@ and argues that the target is not ruled out in advance.
 
 The existence claim matters because such a house could learn in the way the
 [companion article](./the-software-house-as-the-unit-of-training.md) proposes:
-continually, from its own production, in a substrate that can be inspected and
-revised piece by piece.
+by refining its program theory from its own production, continually, in a
+substrate that can be inspected and revised piece by piece.
 
 ## Claim
 
@@ -169,8 +169,10 @@ the relevant implication is not stated verbatim.
 
 The human-built seed may include the product, purposes and rationale, tools,
 tests, evaluators, workflows, context assembly, and safety boundaries. The
-witness run tests operation from that seed. Learning to construct machinery
-that the seed may inherit is the separate question of the training article.
+witness run tests operation from that seed. Whether the house can learn to
+rebuild machinery that the seed supplies is a separate question: the training
+article says what such learning would be, and the bootstrap article says how
+to test for it.
 
 Declare every eligible distributed-parametric model and pin its parameters,
 including adapters, before testing. This covers LLMs, embedding models, and
@@ -309,11 +311,12 @@ The Gödel machine and the conjectured house share the provenance requirement:
 in each, every successor state arises through the current machinery and the
 permitted inputs. They differ in update policy: the Gödel machine requires a
 proof, while the house can make a fallible change, observe its consequences,
-and recover. They also differ in how the outside world reaches an update. A request can influence a Gödel-machine rewrite only if its
-formalization already assigns that request a utility; the house instead
-interprets the request with its models, checks what it can, and learns the
-rest from later consequences. The Gödel-machine paper does not demonstrate a
-software house meeting the witness conditions.
+and recover. They also differ in how the outside world reaches an update. A
+request can influence a Gödel-machine rewrite only if its formalization
+already assigns that request a utility; the house instead interprets the
+request with its models, checks what it can, and learns the rest from later
+consequences. The Gödel-machine paper does not demonstrate a software house
+meeting the witness conditions.
 
 ## Boundaries, evidence, and uncertainty
 

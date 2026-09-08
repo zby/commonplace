@@ -1,5 +1,5 @@
 ---
-description: "Theory-mediated system learning joins runtime self-modeling and self-adaptation with empirical refinement of fallible explicit theories; Workspace Optimization is a contemporary implementation analogy rather than the overall closest antecedent"
+description: "Reflective theory refinement (earlier: theory-mediated system learning) joins runtime self-modeling with classical refinement of fallible explicit theories; Workspace Optimization is an implementation analogy, not the closest antecedent"
 type: kb/types/note.md
 traits: [title-as-claim, synthesis, has-external-sources]
 tags: [learning-theory, deploy-time-learning, self-improving-systems, foundations]
@@ -7,8 +7,11 @@ tags: [learning-theory, deploy-time-learning, self-improving-systems, foundation
 
 # Theory-mediated system learning combines runtime self-modeling with empirical theory refinement
 
-No single predecessor is closest to theory-mediated system learning on every
-relevant dimension. A similarity claim must say what it compares:
+No single predecessor is closest to reflective theory refinement, [theory
+refinement](./definitions/theory-mediated-learning.md) of a theory about the
+[learning system itself](./definitions/reflective-system.md) and earlier
+called theory-mediated system learning, on every relevant dimension. A
+similarity claim must say what it compares:
 
 - the **object and target** of representation — whether the retained model is
   about the modifying system's own structure, purposes, requirements, or goals;
@@ -102,7 +105,7 @@ self-modeling, self-adaptation, and theory-refinement traditions.
 
 ## The proposed program joins the lineages
 
-Theory-mediated system learning proposes one causally co-indexed longitudinal
+Reflective theory refinement proposes one causally co-indexed longitudinal
 path:
 
 ```text

@@ -9,6 +9,7 @@ source_notes:
   - kb/notes/definitions/behavior-determining-organization.md
   - kb/notes/definitions/representational-form.md
   - kb/notes/definitions/software-house.md
+  - kb/notes/definitions/theory-mediated-learning.md
   - kb/notes/ephemeral-computation-prevents-accumulation.md
   - kb/notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md
   - kb/notes/retained-artifacts-enable-persistent-deployment-time-adaptation.md
@@ -20,7 +21,7 @@ source_notes:
 ---
 # The Automated Software House as the Unit of Training
 
-*A fixed-model training regime for theory-mediated learning*
+*A fixed-model training regime for theory refinement*
 
 > **Draft.** This article may change. Comments and counterexamples are welcome
 > on [the repository's GitHub Discussions page](https://github.com/zby/commonplace/discussions).
@@ -29,12 +30,13 @@ source_notes:
 complete persistent system that keeps changing software for its users. Assume
 an automated one exists. The proposed *fixed-model training regime* trains
 the house through production: experience revises the retained knowledge and
-machinery that affect later work, while the models stay fixed. The proposed
-mediator, what experience revises and later decisions consult, is an
-*explicit project theory*: a written account of the house's *program theory*,
+machinery that affect later work, while the models stay fixed. The object
+that experience refines and later decisions consult is an *explicit project
+theory*: a written account of the house's *program theory*,
 its understanding of the software's purpose, organization, and how to handle
 new requests, stated as design commitments, causal assumptions, and
-invariants.
+invariants. Training the house is therefore *theory refinement*: production
+evidence revises the theory, and the revised theory guides later work.
 
 The regime is attractive on three counts, each still a conjecture. What the
 house learns is retained and usable at the next request, so learning is
@@ -110,16 +112,16 @@ capacity](../notes/a-fixed-model-house-must-write-the-procedures-for-each-new-th
 With models pinned, newly acquired procedures must persist outside their
 parameters.
 
-## Why this is theory-mediated learning
+## Why this is theory refinement
 
-The claim is easiest to show on a concrete case. Consider a hypothetical
-release exporter. It builds a deployment manifest
+That the regime is theory refinement is easiest to show on a concrete case.
+Consider a hypothetical release exporter. It builds a deployment manifest
 listing service identifiers and ports for an installer. Duplicate identifiers
 make the manifest invalid. Initially, the exporter reads only configuration
 files, so Markdown edits receive syntax checks and are exempt from manifest
-checks. The retained explanation says that checks follow executable consumers
-and assumes the configured input list includes every file that can affect the
-manifest.
+checks. The relevant part of the project theory, called the retained
+explanation below, says that checks follow executable consumers and assumes
+the configured input list includes every file that can affect the manifest.
 
 When the exporter starts reading service definitions from named Markdown files,
 the explanation directs the house to revoke their exemptions. This applies an
@@ -141,6 +143,33 @@ The learning loop is:
 
 > **production experience → explicit project theory revision → changes guided
 > by the theory → later production → further evidence**
+
+This loop is [theory
+refinement](../sources/recap-early-work-theory-knowledge-refinement.ingest.md)
+in the established sense: a fallible explicit theory guides inference,
+empirical failure localizes a defect, and the theory itself is revised rather
+than only the answer. What the regime adds is the setting: the theory is
+about a product the house keeps changing, and its evidence is the consequences
+of production rather than a labeled training set.
+
+The theory need not be about the house itself. A product failure, such as a
+broken assumption about tenant identity, is handled by a theory of the
+product. The house must hold and refine a theory of its own production path
+only when the defect or the missing capacity lies there. That happens in four
+situations. A new product theory needs a check the house cannot yet perform,
+so the house must build one. A failure could be due to the product theory, the
+evaluator that admitted the change, the retrieval that never surfaced the
+theory, or the check that was skipped, so diagnosis must tell them apart. A
+revision to an evaluator or admission rule would change how later evidence is
+read, so the house must reason about what the evaluator does. Or the theory
+was present but never found or never applied, which is a failure of the
+house's consumption path rather than of its content. The checking policy above
+is such a case: the refined object is part of the house's production
+machinery, and the same loop revises the producer as well as the product. This
+second-order learning is what the [bootstrap
+article](./bootstrapping-the-first-automated-software-house.md#two-kinds-of-transfer)
+calls learning transfer, and a house that must outgrow its seed cannot do
+without it.
 
 A lesson can move between [representational
 forms](../notes/definitions/representational-form.md): the dependency account
@@ -196,7 +225,8 @@ learning capacity.
 
 ## What the fixed-model training regime buys
 
-The proposed regime offers three practical benefits:
+The three attractions named in the summary rest on three structural properties
+of the regime:
 
 - **Adaptation during production.** [Retained artifacts can change later
   behaviour](../notes/retained-artifacts-enable-persistent-deployment-time-adaptation.md)
@@ -212,8 +242,11 @@ The proposed regime offers three practical benefits:
   *training lineage* — the history of retained changes made while the models
   stay pinned.
 
-These benefits must cover the costs of discovery, retrieval, validation,
-coordination, and maintenance. The experiments below ask whether they do.
+The summary's second attraction, that a correct theory reduces the observations
+needed to adapt, is not a structural property. It is a hypothesis, tested
+below. And all three benefits must cover the costs of discovery, retrieval,
+validation, coordination, and maintenance. The experiments below ask whether
+they do.
 
 ## Governing retained changes
 
@@ -230,7 +263,7 @@ Reconciliation is this regime's counterpart of retraining. It is local to the
 affected theory and its dependents rather than global, and it should be rare,
 but it is where the governing costs concentrate.
 
-Two functions do that governing. **Admission** decides which changes take
+Two functions do the governing. **Admission** decides which changes take
 effect. **Credit assignment** decides
 which earlier theory, test, tool, or policy a later consequence supports or
 counts against. In the checking example, the house must trace the invalid
