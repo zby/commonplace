@@ -49,7 +49,7 @@ The yield conjecture fails if equal-budget local rationales match or beat a spec
 
 Relevant Notes:
 
-- [Theory-mediated self-improvement needs both interpretation and retention](./reflective-theory-refinement-needs-interpretation-and-retention.md) — grounds: gives the interpreter/retained-text split that makes a seed's yield the retention question
+- [Reflective theory refinement needs both interpretation and retention](./reflective-theory-refinement-needs-interpretation-and-retention.md) — grounds: gives the interpreter/retained-text split that makes a seed's yield the retention question
 - [Bottom-up structure inference needs capture at the decision surface, not the state](./structure-inference-needs-capture-at-the-decision-surface.md) — mechanism: explains why contingent decision knowledge must be captured while its context is still live
 - [Commitment, not derivation, creates new ground truth](./commitment-not-derivation-creates-new-ground-truth.md) — extends: develops the selected-alternative category into the commitment/derivation boundary
 - [A bare writing prompt does not determine its intended contribution](./a-bare-writing-prompt-does-not-determine-its-intended-contribution.md) — evidenced-by: gives a compact case where topic and output form do not recover intent

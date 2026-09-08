@@ -194,7 +194,7 @@ Relevant Notes:
 
 - [A research program for learning software factories](../articles/automated-software-houses-with-fixed-llms.md) — context: states the combined program and its proposed interventions
 - [Reflective system](./definitions/reflective-system.md) — grounds: supplies the causally connected self-representation relation inherited from computational reflection
-- [Theory-mediated self-improvement needs interpretation, retention, and independent read-back](./reflective-theory-refinement-needs-interpretation-and-retention.md) — grounds: states the causally co-indexed path the synthesis must realize
+- [Reflective theory refinement needs interpretation, retention, and independent read-back](./reflective-theory-refinement-needs-interpretation-and-retention.md) — grounds: states the causally co-indexed path the synthesis must realize
 - [Holding a program theory means sustaining coherent search under delayed feedback](./program-theory-sustains-search-under-delayed-feedback.md) — extends: applies the theory-guided mechanism to longitudinal software modification and recovery
 - [Learning inside a fixed decomposition inherits its mistakes](./learning-inside-a-fixed-decomposition-inherits-its-mistakes.md) — grounds: explains why target-specific decomposition choices bound reach without making every fixed component defective
 - [The deployed system, not the model alone, is the unit of learning](./the-deployed-system-not-the-model-is-the-unit-of-learning.md) — grounds: places runtime models, artifacts, tools, code, and weights inside one learning boundary

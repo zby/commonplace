@@ -179,7 +179,7 @@ outside.
 
 Relevant Notes:
 
-- [Theory-mediated self-improvement needs interpretation, retention, and independent read-back](./reflective-theory-refinement-needs-interpretation-and-retention.md) — grounds: supplies the causally co-indexed path the two directions are shown to converge on
+- [Reflective theory refinement needs interpretation, retention, and independent read-back](./reflective-theory-refinement-needs-interpretation-and-retention.md) — grounds: supplies the causally co-indexed path the two directions are shown to converge on
 - [Factory learning is experience-responsive retention that improves the factory](./factory-learning-is-experience-responsive-retention-that-improves.md) — grounds: supplies the factory-side starting requirement the second derivation begins from
 - [Discovery lifecycle](./definitions/discovery-lifecycle.md) — defined-in: supplies the six-phase model the first derivation begins from
 - [Holding a program theory means sustaining coherent search under delayed feedback](./program-theory-sustains-search-under-delayed-feedback.md) — grounds: supplies the coherence requirement that forces a held theory into the factory loop

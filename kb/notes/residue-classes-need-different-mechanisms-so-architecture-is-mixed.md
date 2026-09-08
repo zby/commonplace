@@ -134,7 +134,7 @@ progress toward automation.
 Relevant Notes:
 
 - [Warranted transfer out of the human cut leaves people the hardest-to-warrant decisions](./warranted-transfer-leaves-people-the-hardest-to-warrant-decisions.md) — grounds: supplies the conditional selection effect
-- [Theory-mediated self-improvement needs interpretation, retention, and independent read-back](./reflective-theory-refinement-needs-interpretation-and-retention.md) — extends: separates roles on the theory-mediated path
+- [Reflective theory refinement needs interpretation, retention, and independent read-back](./reflective-theory-refinement-needs-interpretation-and-retention.md) — extends: separates roles on the theory-mediated path
 - [Methodological and computational closure track different changes](./methodological-and-computational-closure-track-different-changes.md) — grounds: separates explicit decision content from human-free execution
 - [Explicit retention provides direct targets for selective revision](./only-explicit-retention-is-durable-writable-and-addressable.md) — mechanism: supplies a useful, nonexclusive representation path
 - [Warranted autonomy is bounded by oracle domain](./warranted-autonomy-is-bounded-by-oracle-domain.md) — grounds: keeps warrant separate from operation

@@ -1,11 +1,11 @@
 ---
-description: "Reflective theory-mediated learning requires semantic interpretation, addressable retention, independent outcome read-back, and continuation on one causally co-indexed path; these are distinct functions that need not share one substrate"
+description: "Reflective theory refinement requires semantic interpretation, addressable retention, independent outcome read-back, and continuation on one causally co-indexed path; these are distinct functions that need not share one substrate"
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [foundations, self-improving-systems]
 ---
 
-# Theory-mediated self-improvement needs interpretation, retention, and independent read-back
+# Reflective theory refinement needs interpretation, retention, and independent read-back
 
 [Theory refinement may improve sample efficiency under structured shifts](./theory-refinement-may-improve-sample-efficiency-under-shifts.md)
 regardless of what its theories describe. Reflective theory refinement is the
@@ -60,8 +60,8 @@ outside the technical system.
 ## Evidence forms a ladder
 
 A complete recurrent loop is the strongest evidence, but it should not be used
-as the minimum definition of every theory-mediated improvement. Four claims can
-be distinguished:
+as the minimum definition of every improvement a theory mediated. Four claims
+can be distinguished:
 
 1. **Mediation.** Changing or withholding the retained theory changes a
    proposal, evaluation, recovery step, or realized intervention.
@@ -70,8 +70,8 @@ be distinguished:
 3. **Theory refinement.** The outcome changes the theory's content, scope,
    confidence, status, or operational role. Explicit rejection or principled
    retention after a refuting opportunity also counts as a theory-state change.
-4. **Recurrent theory-mediated self-improvement.** The updated theory state
-   changes a later operation inside the same behavior-determining path.
+4. **Recurrent mediation.** The refined theory state mediates a later
+   operation on the same behavior-determining path.
 
 A contemporaneous [citation at the decision point is a mediation
 trace](./citing-retained-theory-at-the-decision-point-is-a-mediation-trace.md).
@@ -145,9 +145,9 @@ empirical.
 
 ## Scope
 
-- Reflective membership is boundary-relative. A theory of an external target is
-  theory-mediated programming, not reflective self-improvement, unless that
-  target helps determine the modifying system's own behavior.
+- Reflective membership is boundary-relative. Refining a theory of an external
+  target is not the reflective case, unless that target helps determine the
+  modifying system's own behavior.
 - Addressable retention need not mean one document or perfectly atomic claims.
   It means that the revision operation claimed by the experiment has a stable
   target.

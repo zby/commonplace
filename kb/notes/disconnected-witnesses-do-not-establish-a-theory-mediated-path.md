@@ -21,7 +21,7 @@ theory state T0
   -> later operation consuming T1
 ```
 
-This shape composes three existing requirements. [Theory-mediated self-improvement needs interpretation, retention, and independent read-back](./reflective-theory-refinement-needs-interpretation-and-retention.md): the functions must share a causally integrated, co-indexed path even when they use different substrates. [Citing retained theory at the decision point is a mediation trace](./citing-retained-theory-at-the-decision-point-is-a-mediation-trace.md): a contemporaneous record can identify which retained theory a decision claims to have consumed, but citation alone does not establish load-bearing use or outcome read-back. And [history has one chance to become checkable](./history-has-one-chance-to-become-checkable.md): when a nondeterministic production path cannot be re-derived, transient facts needed to identify its joins must be converted into carried records while they remain available.
+This shape composes three existing requirements. [Reflective theory refinement needs interpretation, retention, and independent read-back](./reflective-theory-refinement-needs-interpretation-and-retention.md): the functions must share a causally integrated, co-indexed path even when they use different substrates. [Citing retained theory at the decision point is a mediation trace](./citing-retained-theory-at-the-decision-point-is-a-mediation-trace.md): a contemporaneous record can identify which retained theory a decision claims to have consumed, but citation alone does not establish load-bearing use or outcome read-back. And [history has one chance to become checkable](./history-has-one-chance-to-become-checkable.md): when a nondeterministic production path cannot be re-derived, transient facts needed to identify its joins must be converted into carried records while they remain available.
 
 ## Each join supports a different inference
 
@@ -52,6 +52,6 @@ The exact event schema is an operational choice. This note establishes only what
 
 Relevant Notes:
 
-- [Theory-mediated self-improvement needs interpretation, retention, and independent read-back](./reflective-theory-refinement-needs-interpretation-and-retention.md) — grounds: supplies the distinct functions, evidence ladder, and requirement that they share a co-indexed causal path
+- [Reflective theory refinement needs interpretation, retention, and independent read-back](./reflective-theory-refinement-needs-interpretation-and-retention.md) — grounds: supplies the distinct functions, evidence ladder, and requirement that they share a co-indexed causal path
 - [Citing retained theory at the decision point is a mediation trace](./citing-retained-theory-at-the-decision-point-is-a-mediation-trace.md) — grounds: supplies the observable theory-to-decision edge and bounds what a citation establishes
 - [History has one chance to become checkable](./history-has-one-chance-to-become-checkable.md) — grounds: explains why non-re-derivable joins must be converted into carried evidence while available
