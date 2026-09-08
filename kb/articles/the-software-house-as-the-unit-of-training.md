@@ -9,7 +9,7 @@ source_notes:
   - kb/notes/definitions/behavior-determining-organization.md
   - kb/notes/definitions/representational-form.md
   - kb/notes/definitions/software-house.md
-  - kb/notes/definitions/theory-mediated-learning.md
+  - kb/notes/definitions/theory-refinement.md
   - kb/notes/ephemeral-computation-prevents-accumulation.md
   - kb/notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md
   - kb/notes/retained-artifacts-enable-persistent-deployment-time-adaptation.md

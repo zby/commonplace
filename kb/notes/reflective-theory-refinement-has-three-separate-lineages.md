@@ -8,7 +8,7 @@ tags: [learning-theory, deploy-time-learning, self-improving-systems, foundation
 # Reflective theory refinement has separate structural, epistemic, and implementation lineages
 
 No single predecessor is closest to reflective theory refinement, [theory
-refinement](./definitions/theory-mediated-learning.md) of a theory about the
+refinement](./definitions/theory-refinement.md) of a theory about the
 [learning system itself](./definitions/reflective-system.md) and earlier
 called theory-mediated system learning, on every relevant dimension. A
 similarity claim must say what it compares:
