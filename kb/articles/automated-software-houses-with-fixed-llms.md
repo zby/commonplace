@@ -305,11 +305,11 @@ may be. Its limit is that it "must ignore those self-improvements whose
 effectiveness it cannot prove"
 ([Schmidhuber](../sources/goedel-machines-schmidhuber.ingest.md), §2.4, verbatim).
 
-Both systems require each successor to arise through current machinery and
-permitted inputs. Their update policies differ: the Gödel machine requires a
-proof, while the proposed house can make a fallible change, observe its
-consequences, and recover. They also differ in how the outside world reaches
-an update. A request can influence a Gödel-machine rewrite only if its
+The Gödel machine and the conjectured house share the provenance requirement:
+in each, every successor state arises through the current machinery and the
+permitted inputs. They differ in update policy: the Gödel machine requires a
+proof, while the house can make a fallible change, observe its consequences,
+and recover. They also differ in how the outside world reaches an update. A request can influence a Gödel-machine rewrite only if its
 formalization already assigns that request a utility; the house instead
 interprets the request with its models, checks what it can, and learns the
 rest from later consequences. The Gödel-machine paper does not demonstrate a
@@ -347,5 +347,5 @@ out only that construction.
 The [training article](./the-software-house-as-the-unit-of-training.md) asks
 how such a house should improve. The [bootstrap
 article](./bootstrapping-the-first-automated-software-house.md) asks how to
-reach it from human-agent production, including how it might learn to build
+reach it from human-agent production, including how it might learn to rebuild
 machinery that its seed may inherit from people.
