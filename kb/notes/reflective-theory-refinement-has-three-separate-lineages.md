@@ -69,13 +69,14 @@ learner, though the theory itself is not revised.
 [Theory refinement combining analytical and empirical
 methods](https://doi.org/10.1016/0004-3702(94)90028-0) goes closer to the present
 mechanism by beginning with an imperfect explicit theory, using empirical
-failures to locate defects, and revising the theory rather than learning only
+failures to identify candidate repair locations, and revising the theory rather than learning only
 from scratch.
 
 This family is closest to **how a fallible explicit theory learns**. The theory
 shapes interpretation and search; evidence can count against the theory rather
 than only against one candidate answer; and repair can be localized to the
-represented knowledge that produced the failure.
+represented knowledge implicated by the failure, with evaluation needed to
+check whether a proposed repair improves it.
 
 Its usual target is nevertheless an external classification or problem domain,
 not the purposes and architecture of the learning system itself. Classical
@@ -92,10 +93,14 @@ than proved, and only a codified part regains a computed consequence relation.
 One LLM fills the interpreter, localizer, and
 repair slots that a prover, abduction, and an induction algorithm filled. The
 evidence is production consequences rather than a labeled batch, which is why
-credit assignment and admission become problems the classical systems did not
-have. And among revisions that fit the evidence, acceptance prefers
+credit assignment and admission have less constrained inputs than in the
+classical systems. Those systems already needed diagnostic heuristics and
+candidate evaluation; explicit proofs did not guarantee a unique diagnosis
+or successful repair. And among revisions that fit the evidence, acceptance prefers
 explanatory reach, where the classical test was consistency with the training
-set. Two differences are not fillers. A project theory is partly normative, so
+set. [FORTE](../sources/automated-refinement-first-order-horn-clause-domain-theories.ingest.md)
+seeks a minimally revised theory correct on supplied cases, but its search can
+stop at a local maximum. Two differences are not fillers. A project theory is partly normative, so
 a failure may be resolved by changing the product to fit the theory, where the
 classical loop only ever changed the theory to fit the data. And the slots
 themselves, language, operators, and evaluator, are inside the revisable state,

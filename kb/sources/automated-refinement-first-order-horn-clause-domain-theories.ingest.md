@@ -24,7 +24,22 @@ A scientific paper presenting an implemented learning algorithm, its operators, 
 
 ## Quotes
 
-No source quotes have been retained yet.
+- **Source extract (verbatim):** Given: An incorrect initial theory and a consistent set of positive and negative
+instances.
+ Find: A \minimally revised" theory that is correct on the given instances.
+  - **Source location:** Section 2, Task Definition, Given/Find formulation
+
+- **Source extract (verbatim):** Since the initial theory
+is assumed to be approximately correct, a revised theory should be as semantically
+and syntactically similar to it as possible. Forte tries to ensure this by using operators that make small syntactic changes and attempting to minimize the number
+of operations performed.3
+  - **Source location:** Section 2, minimally revised theory
+
+- **Source extract (verbatim):** This process continues until Forte is unable to generate any revisions which
+improve the theory. At this point, we hope to have developed a theory that is
+correct on the training set. However, since this is a hill-climbing process, Forte
+can be caught in local maxima.
+  - **Source location:** Section 4.2, stopping condition and local maxima
 
 ## Connections Found
 

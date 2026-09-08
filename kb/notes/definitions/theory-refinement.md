@@ -1,14 +1,14 @@
 ---
-description: "Definition — theory refinement is the established loop in which a fallible explicit theory guides inference, a failure localizes a defect, and the theory is revised; the KB widens what counts as a theory and marks recovered guarantees as conjecture"
+description: "Definition — theory refinement revises an existing fallible explicit theory against empirical cases, seeking improved fit with limited changes; the KB extends its representation and subject"
 type: kb/types/definition.md
 tags: [foundations, self-improving-systems, learning-theory]
 ---
 
 # Theory refinement
 
-**Theory refinement** is the learning operation in which a fallible explicit
-theory guides inference, an empirical failure localizes a defect in the
-theory, and the theory is revised rather than relearned from scratch. It is the
+**Theory refinement** is the learning operation that revises an existing
+fallible explicit theory using empirical cases, seeking to correct errors
+while preserving useful prior knowledge rather than learning from scratch. It is the
 revising case of model-based learning: an internal model stands between
 evidence and behavior change, and here the model is a theory. The KB uses the
 term in the established sense of
@@ -25,15 +25,19 @@ incomplete or incorrect, from which conclusions about cases are derived by
 proof. Three inference modes run over it. **Deduction** applies the theory and
 exposes false positives, a proof of a case that should not belong.
 **Abduction** hypothesizes which missing premise would let an unprovable
-positive case be proven, and so localizes incompleteness. **Induction** fills
+positive case be proven, identifying a candidate repair. **Induction** fills
 the gap the abduction identified from the supplied examples. The repair
 operators are named: retract, generalize, specialize, add a rule or an
 antecedent. Acceptance is consistency with the supplied cases.
 
 Richards and Mooney separate the task from FORTE's realization: improving an
-existing fallible theory from empirical cases while preserving what was right
+existing fallible theory from empirical cases while seeking to preserve useful knowledge
 is the concept; Horn clauses, greedy search, and the label format are the
-algorithm. This note follows that separation.
+algorithm. This note follows that separation. Their task seeks a minimally revised theory
+correct on the supplied instances. FORTE approximates minimal revision through
+small edits and few operations; its hill-climbing search can stop before
+training consistency is reached. Neither unique fault identification nor
+preservation of all previously correct behavior follows from the task definition.
 
 ## What the loop requires of a theory
 
@@ -43,10 +47,12 @@ qualify by the same test:
 
 - **Consequences a case can contradict.** The theory says what should hold in
   a case, so the case can fail it.
-- **Defects localizable to a part.** A failure can be attributed to a premise,
-  rule, or scope condition, not only to the theory as a whole.
-- **Parts editable separately.** A revision changes the responsible part and
-  leaves the rest, so what was right is preserved.
+- **Parts available as candidate repair locations.** A failure can guide search
+  over premises, rules, or scope conditions without identifying a unique fault.
+- **Parts editable separately.** Operators can change selected parts rather than
+  replace the whole theory. Evaluation checks whether a candidate corrects
+  errors and preserves behavior on the tested cases; unchanged text alone
+  does not guarantee unchanged consequences.
 
 A theory in this sense is addressable: a stable unit whose assumptions, scope,
 and parts can be inspected and revised individually. Addressability comes in
@@ -54,7 +60,7 @@ degrees. An indivisible document can be replaced but not rescoped.
 
 The three requirements read off the two axes that derive
 [representational form](./representational-form.md). **Localization** supplies
-the second and third: a localized unit has parts to blame and to edit, and
+the second and third: a localized unit has candidate parts to inspect and edit, and
 distributed-parametric state has none, which is why a latent world model is
 excluded below whatever it has learned. **Assigned consequences** decide the
 strength of the first: where a defined consumer fixes what the theory implies,
@@ -77,16 +83,15 @@ Two widenings are the KB's own and should not be read back into the sources:
   [reflective system](./reflective-system.md); it is composed from the two
   terms and defined by neither alone.
 
-## Consequences are computed only for codified parts, and that alone is not the classical loop
+## Computed consequences support diagnosis and evaluation without guaranteeing repair
 
 In the classical setting a proof procedure fixes what the theory implies for a
-case. A contradiction is therefore a fact, blame lands on a nameable rule, and
-acceptance is decidable. For a natural-language theory, what it implies is what
-an interpreter, a model or a person, says it implies. A contradiction can be a
-misreading, the blamed part can be a story, and fit is judged rather than
-checked. Abduction is the most exposed step, since it is where new content
-enters and a plausible post-hoc account is easiest to mistake for a located
-defect.
+case. Disagreement with a supplied label can therefore be checked, and proof
+traces can identify candidate repair locations. A trace does not uniquely
+identify the faulty commitment. FORTE scores candidates against the training
+set, but can stop at a local maximum. For a natural-language theory, an
+interpreter also judges what the theory implies, adding possible misreading
+to the uncertainty already present in diagnosis and repair.
 
 A theory in this KB is a mixed-form object. The parts committed to a
 validator, schema, or test have crossed into
@@ -95,19 +100,15 @@ consequences, so for those parts a contradiction is a fact. The parts still in
 prose have consequences an interpreter derives. Refinement moves parts across
 that boundary as they settle.
 
-Whether the codified parts recover the rest of the classical guarantees is a
-conjecture, not something codification supplies by itself. Localization needs
-the failing check to name the part of the theory it tests, so that a failure
-identifies a premise rather than only a broken artifact; acceptance needs a
-decidable test of the revised part against the cases it must still fit. A
-validator that fails says a check failed, not which commitment was wrong. The
-KB's expectation is that a loop can arrange both for settled parts, since the
-classical systems arranged them for whole theories, and it has not shown it.
-Where no crossing has happened, two things stand in for the proof: withholding
-or perturbing the theory and observing a changed decision is the evidence that
-it shaped one, and whether a model interprets prose theories consistently
-enough for contradiction and blame to mean anything is the empirical
-conjecture argued in
+Codification alone does not supply diagnosis or successful repair. A failed
+check must be connected to the theory commitments it tests before it can
+guide candidate edits. Evaluation then tests the revised theory against the
+failure and other cases; its conclusions are bounded by those checks. The
+KB has not shown that its mixed-form loop arranges these functions reliably.
+Where no crossing has happened, withholding or perturbing the theory and
+observing a changed decision supplies evidence that it shaped that decision.
+Whether a model interprets prose theories consistently enough to support
+useful diagnosis and revision is an empirical question for the pathway in
 [theory refinement may improve sample efficiency under structured shifts](../theory-refinement-may-improve-sample-efficiency-under-shifts.md).
 
 Refining theories nobody computes is the older case, not the exception.
@@ -129,6 +130,10 @@ for it is snapshotted yet.
   each needing its own evidence. A contemporaneous
   [citation at the decision point](../citing-retained-theory-at-the-decision-point-is-a-mediation-trace.md)
   is the cheapest evidence that the theory entered a decision.
+- **Retained rationale is optional.** Rules can expose consequences and editable
+  premises without recording why they were adopted. Retaining supporting
+  evidence or shared assumptions can help diagnosis and coordinated revision;
+  membership depends on the refinement operation.
 - **Any machinery.** An LLM, a program, or a mixture may do the deriving,
   localizing, and revising. Membership is by operation, not by machinery.
 - **Not a success term.** A false theory refines as readily as a true one.
@@ -150,9 +155,6 @@ for it is snapshotted yet.
   discovered behaviorally.
   An inspectable causal model or simulator program is both a world model and a
   theory.
-- **Rules whose reasons are not retained.** With no part to derive from, a
-  correction to one rule reaches none of the others that share its unstated
-  reason.
 - **Applying a theory** and **explanation-based generalization**, which
   regresses a reusable rule from the theory's explanation of one episode in the
   sense of [Mitchell, Keller, and Kedar-Cabelli](../../sources/explanation-based-generalization-unifying-view.ingest.md).
@@ -168,7 +170,7 @@ for it is snapshotted yet.
   artifact.
 - Reserving the term for the full recurrent loop. That the theory shaped a
   decision, or that an outcome bore on it, are reportable at their own strength.
-- Reading the classical guarantees into a prose part. For a natural-language
+- Reading mechanically checked consequences into a prose part. For a natural-language
   theory, "derived" means interpreted until the part is codified.
 - Treating an accepted change as confirmation of the theory that motivated it.
 
@@ -196,7 +198,7 @@ Relevant Notes:
 - [Self-improving system](./self-improving-system.md) — contrasts: an independent condition on whether the change persists as operative improvement
 - [World models assess explanatory-reach through action-conditioned prediction](../world-models-assess-explanatory-reach-through-action-conditioned.md) — contrasts: the model-based case revised by fitting, with no part to blame
 - [An action model matters only through its consumption path](../an-action-model-matters-only-through-its-consumption-path.md) — grounds: why a stored theory nothing consumes is excluded
-- [Three 2026 harnesses retain rules or weights, not a revisable theory](../evidence/three-2026-harnesses-retain-rules-or-weights-not-a-revisable-theory.md) — evidenced-by: worked cases on the near side of the boundary
+- [Three 2026 harnesses expose different repair and retention paths](../evidence/three-2026-harnesses-retain-rules-or-weights-not-a-revisable-theory.md) — evidenced-by: reported repair operations and the limits of evidence about retained rationale
 - [Theory refinement combining analytical and empirical methods](../../sources/theory-refinement-analytical-empirical-methods.ingest.md) — abstracted-from: the classical object, the three inference modes, and consistency as acceptance
 - [Automated refinement of first-order Horn-clause domain theories](../../sources/automated-refinement-first-order-horn-clause-domain-theories.ingest.md) — abstracted-from: the separation of the refinement task from its realization
 - [Explanation-based generalization: a unifying view](../../sources/explanation-based-generalization-unifying-view.ingest.md) — abstracted-from: the established sense of generalizing from a theory without revising it
