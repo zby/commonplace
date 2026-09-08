@@ -115,27 +115,31 @@ mechanism explains it.
 
 Naur argues that program theory is bound to people. His maintenance cases also
 show that possessing documentation does not establish the capacity to use it.
-Both bear on the conjecture.
+Both bear on the automated software house conjecture.
 
 [Naur's compiler case](../sources/programming-as-theory-building.ingest.md)
 reports that full code, annotations, extensive design discussion, and personal
 advice did not give a successor team enough program theory. The case tested
 [one historically bounded package and way of using
 it](../notes/naurs-compiler-case-tests-one-historically-bounded-documentation-and-consumption-system.md).
-It does not isolate whether the failure lay in missing premises, application
-skill, or use of the available knowledge. Whether linked rationale, semantic
-retrieval, and loading relevant material at the decision point improve transfer
-remains open.
+The successors had to find and apply the relevant material through their own
+reading. So the case does not say why the transfer failed. The premises the
+successors needed may have been absent from the package, present but never
+found, or found but not applied. Newer mechanisms address the second and
+third causes: rationale linked to the decisions it affects, semantic
+retrieval, and loading the relevant record at the point where a decision is
+made. Whether they transfer more of the capacity is untested.
 
-The human-only thesis would rule out the conjecture. [Our reading of Naur's
+If program theory is bound to people, no automated house can hold one, and the
+automated software house conjecture fails. [Our reading of Naur's
 argument](../notes/naur-equates-machine-execution-with-formulated-criteria.md)
 identifies a further premise: computation can make these judgments only by
 executing explicitly formulated criteria. But formal execution does not require
 designers to supply a complete project-specific rule for each judgment. A fixed
 LLM may interpret an explanation of tenant isolation without such a rule;
 whether it does so reliably is an empirical question. A successful computational
-witness would challenge the human-only thesis without settling whether the
-judgment's criteria can be formulated.
+witness would show that program theory is not bound to people, without
+settling whether the judgment's criteria can be formulated.
 
 ## How the components could perform the program-theory function
 
