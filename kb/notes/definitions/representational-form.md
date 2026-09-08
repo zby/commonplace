@@ -29,7 +29,7 @@ Two axes generate the categories. **Assigned consequences** — does a defined c
 
 The fourth cell is unoccupied in this domain rather than impossible. Vector symbolic architectures aim at exactly it, binding and bundling being algebraically defined operations over distributed hypervectors. The three-way carve therefore holds while agent systems retain nothing of that shape, and gains a fourth form if they do.
 
-The inspection rule above follows from the axes instead of being stipulated per form: a localized unit with defined semantics can be checked against them (test), a localized unit without them yields its content only to interpretation (read), and a non-localized artifact offers nothing to point at, so only its behavior is observable (probe). [Addressability](../reflection-buys-addressability.md) rides on the localization axis alone, which is why a prompt and a validator are both revisable one item at a time while weights are not.
+The inspection rule above follows from the axes instead of being stipulated per form: a localized unit with defined semantics can be checked against them (test), a localized unit without them yields its content only to interpretation (read), and a non-localized artifact offers nothing to point at, so only its behavior is observable (probe). [Addressability](../reflection-buys-addressability.md) rides on the localization axis alone, which is why a prompt and a validator are both revisable one item at a time while weights are not. [Theory refinement](./theory-refinement.md) needs the localized side for the same reason: the parts it blames and edits are the localization axis, while whether its contradictions are facts or interpretations is the assigned-consequences axis.
 
 Because natural-language and symbolic share the localized side of the table, the pair is referred to jointly as **the localized forms** — the class name reads the localization axis off rather than adding vocabulary. "Readable artifacts" and "the readable pair" remain informal aliases; prefer the derived name where the carve matters.
 
@@ -59,5 +59,6 @@ Relevant Notes:
 - [operative part](./operative-part.md) - unit: representational form classifies the relevant behavior-shaping part, not necessarily the whole stored object
 - [storage substrate](./storage-substrate.md) - contrast: location is separate from representation
 - [codification](./codification.md) - mechanism: movement from natural-language into symbolic form
+- [theory refinement](./theory-refinement.md) - enables: the localized side supplies the parts refinement blames and edits; the assigned-consequences axis fixes whether a contradiction is a fact
 - [opacity is a scale threshold](../opacity-is-a-scale-threshold.md) - caveat: practical opacity is not identical to representational form
 - [Verbalizable Representations Form a Global Workspace in Language Models](../../sources/verbalizable-representations-global-workspace-llms.ingest.md) - evidenced-by: the J-space is a concrete distributed-parametric representation inspected through a derived probe and tested through causal swaps and ablations

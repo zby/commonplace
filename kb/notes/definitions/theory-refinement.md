@@ -52,6 +52,17 @@ A theory in this sense is addressable: a stable unit whose assumptions, scope,
 and parts can be inspected and revised individually. Addressability comes in
 degrees. An indivisible document can be replaced but not rescoped.
 
+The three requirements read off the two axes that derive
+[representational form](./representational-form.md). **Localization** supplies
+the second and third: a localized unit has parts to blame and to edit, and
+distributed-parametric state has none, which is why a latent world model is
+excluded below whatever it has learned. **Assigned consequences** decide the
+strength of the first: where a defined consumer fixes what the theory implies,
+a contradiction is a fact; where it does not, a contradiction is an
+interpretation. The classical systems sat in the symbolic cell, with both axes
+on their side. A natural-language theory keeps localization and gives up
+assigned consequences, which is the exact content of the form departure below.
+
 ## Departures
 
 Two widenings are the KB's own and should not be read back into the sources:
@@ -134,8 +145,9 @@ for it is snapshotted yet.
 
 - **A stored theory nothing consumes**, since
   [a representation matters only through its consumption path](../an-action-model-matters-only-through-its-consumption-path.md).
-- **A latent world model as such.** It is model-based but revised only by
-  fitting: it has no part to blame, and its scope is discovered behaviorally.
+- **A latent world model as such.** It is model-based but non-localized, so
+  it is revised only by fitting: it has no part to blame, and its scope is
+  discovered behaviorally.
   An inspectable causal model or simulator program is both a world model and a
   theory.
 - **Rules whose reasons are not retained.** With no part to derive from, a
