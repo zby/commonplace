@@ -29,7 +29,7 @@ With that split recorded, a new context is checkable before anything is rebuilt:
 
 ## Retained-but-unfaithful is worse than absent
 
-Post-hoc rationalization is the standing failure, and the risk that makes [a misleading rationale worse than none when repair relies on it](./selective-revision-needs-a-faithful-rationale-not-just-a-legible-one.md) also applies when transfer assessment relies on a recorded rationale. With no rationale, the transfer claim is untestable and visibly so; with a plausible but wrong one, the check runs against the stated force, passes, and the force that actually carried the local success is never examined. Retention makes the transfer claim testable; it does not make the test sound. What separates the two is intervention rather than reading — vary the stated force and see whether the decomposition's fit actually degrades.
+Post-hoc rationalization is the standing failure, and the risk that makes [a misleading rationale worse than none when repair relies on it](./revision-guided-by-rationale-needs-faithfulness-not-just-legibility.md) also applies when transfer assessment relies on a recorded rationale. With no rationale, the transfer claim is untestable and visibly so; with a plausible but wrong one, the check runs against the stated force, passes, and the force that actually carried the local success is never examined. Retention makes the transfer claim testable; it does not make the test sound. What separates the two is intervention rather than reading — vary the stated force and see whether the decomposition's fit actually degrades.
 
 ## The claim's force scales with underdetermination
 
@@ -57,7 +57,7 @@ Relevant Notes:
 
 - [A checked outcome licenses retaining an episode, not abstracting its explanation](./checked-outcome-licenses-episode-retention-not-abstraction.md) — extends: names where the process evidence comes from when the thing verified is a design act, whose steps leave no inspectable residue in the product
 - [Abstract an experience into a lesson only when you can state where the lesson stops](./abstract-an-experience-only-when-you-can-state-the-boundary.md) — grounds: transfer needs a statable condition clause, and retained rationale is what supplies one for a decomposition
-- [Revision guided by rationale needs faithfulness, not just legibility](./selective-revision-needs-a-faithful-rationale-not-just-a-legible-one.md) — grounds: the risk of trusting an unfaithful diagnostic guide, applied here to transfer testing
+- [Revision guided by rationale needs faithfulness, not just legibility](./revision-guided-by-rationale-needs-faithfulness-not-just-legibility.md) — grounds: the risk of trusting an unfaithful diagnostic guide, applied here to transfer testing
 - [An accepted edit verifies the change, not the rule](./an-accepted-edit-verifies-the-change-not-the-rule.md) — contrasts: same instance-versus-rule gap with human acceptance as the local oracle, where there is no discarded design alternative to retain
 - [Decomposition heuristics for bounded-context scheduling](./decomposition-heuristics-for-bounded-context-scheduling.md) — grounds: supplies the forces a rationale would record — context fit, verifiability of the boundary, merge cost
 - [Scenario decomposition drives architecture](./scenario-decomposition-drives-architecture.md) — mechanism: the step table is retained rationale in worked form, keeping the per-step context needs the boundaries answer

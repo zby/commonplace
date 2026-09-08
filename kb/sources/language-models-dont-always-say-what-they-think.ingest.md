@@ -32,7 +32,7 @@ Turpin et al. test whether chain-of-thought (CoT) explanations report the factor
 
 ## Connections Found
 
-The paper is direct evidence for [Selective revision needs a faithful rationale, not just a legible one](../notes/selective-revision-needs-a-faithful-rationale-not-just-a-legible-one.md): it demonstrates the target note's predicted failure mode in which an unfaithful rationale can reduce probing while increasing confident errors. It grounds [Reasoning production is not reasoning evaluation](../notes/reasoning-production-is-not-reasoning-evaluation.md) with a concrete process-validity failure, and reinforces why [structured-prompt gains do not establish training-distribution selection](../notes/structured-prompt-gains-do-not-establish-distribution-selection.md): CoT can alter task performance or bias sensitivity without identifying the process that caused the change. It also supplies a correlated-error example for [Error correction works with above-chance oracles and decorrelated checks](../notes/error-correction-works-above-chance-oracles-with-decorrelated-checks.md) and a model-level analogue of [Context contamination operates below an agent's compliance reasoning](../notes/context-contamination-operates-below-an-agents-compliance-reasoning.md). [Towards Faithfully Interpretable NLP Systems](https://aclanthology.org/2020.acl-main.386/) is the conceptual companion.
+The paper is direct evidence for [Selective revision needs a faithful rationale, not just a legible one](../notes/revision-guided-by-rationale-needs-faithfulness-not-just-legibility.md): it demonstrates the target note's predicted failure mode in which an unfaithful rationale can reduce probing while increasing confident errors. It grounds [Reasoning production is not reasoning evaluation](../notes/reasoning-production-is-not-reasoning-evaluation.md) with a concrete process-validity failure, and reinforces why [structured-prompt gains do not establish training-distribution selection](../notes/structured-prompt-gains-do-not-establish-distribution-selection.md): CoT can alter task performance or bias sensitivity without identifying the process that caused the change. It also supplies a correlated-error example for [Error correction works with above-chance oracles and decorrelated checks](../notes/error-correction-works-above-chance-oracles-with-decorrelated-checks.md) and a model-level analogue of [Context contamination operates below an agent's compliance reasoning](../notes/context-contamination-operates-below-an-agents-compliance-reasoning.md). [Towards Faithfully Interpretable NLP Systems](https://aclanthology.org/2020.acl-main.386/) is the conceptual companion.
 
 ## Extractable Value
 
@@ -48,13 +48,13 @@ The experiments use GPT-3.5 and Claude 1.0, 2023-era BIG-Bench Hard and BBQ task
 
 ## Recommended Next Action
 
-Update [Selective revision needs a faithful rationale, not just a legible one](../notes/selective-revision-needs-a-faithful-rationale-not-just-a-legible-one.md) to cite this ingest alongside Jacovi and Goldberg, adding the intervention-based test and the caveat that process structure can improve outputs without making explanations faithful.
+Update [Selective revision needs a faithful rationale, not just a legible one](../notes/revision-guided-by-rationale-needs-faithfulness-not-just-legibility.md) to cite this ingest alongside Jacovi and Goldberg, adding the intervention-based test and the caveat that process structure can improve outputs without making explanations faithful.
 
 ---
 
 Relevant Notes:
 
-- [Selective revision needs a faithful rationale, not just a legible one](../notes/selective-revision-needs-a-faithful-rationale-not-just-a-legible-one.md) -- is-evidence-for: direct behavioral support for the unfaithful-rationale failure mode
+- [Selective revision needs a faithful rationale, not just a legible one](../notes/revision-guided-by-rationale-needs-faithfulness-not-just-legibility.md) -- is-evidence-for: direct behavioral support for the unfaithful-rationale failure mode
 - [Reasoning production is not reasoning evaluation](../notes/reasoning-production-is-not-reasoning-evaluation.md) -- is-evidence-for: process-validity failure despite plausible output
 - [Context contamination operates below an agent's compliance reasoning](../notes/context-contamination-operates-below-an-agents-compliance-reasoning.md) -- is-evidence-for: hidden features steer output without explicit acknowledgement
 - [Structured-prompt gains do not establish training-distribution selection](../notes/structured-prompt-gains-do-not-establish-distribution-selection.md) -- is-evidence-for: changed performance and a structured rationale do not identify the causal mechanism

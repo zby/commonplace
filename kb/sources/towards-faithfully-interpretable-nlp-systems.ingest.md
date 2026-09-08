@@ -32,7 +32,7 @@ Jacovi and Goldberg argue that explanation quality must separate **plausibility*
 
 ## Connections Found
 
-The paper is direct evidence for [Selective revision needs a faithful rationale, not just a legible one](../notes/selective-revision-needs-a-faithful-rationale-not-just-a-legible-one.md): it supplies the faithful/plausible distinction and the warning that utility can increase without validating the explanation's causal truth. It also gives [Reasoning production is not reasoning evaluation](../notes/reasoning-production-is-not-reasoning-evaluation.md) a non-mathematical instance of process validity being distinct from successful output, and it qualifies [Structured output is easier for humans to review](../notes/structured-output-is-easier-for-humans-to-review.md): readability helps a reviewer inspect an artifact but does not establish faithfulness. [Language Models Don't Always Say What They Think](https://proceedings.neurips.cc/paper_files/paper/2023/hash/ed3fea9033a80fea1376299fa7863f4a-Abstract-Conference.html) is the empirical companion, testing this distinction with controlled input interventions.
+The paper is direct evidence for [Selective revision needs a faithful rationale, not just a legible one](../notes/revision-guided-by-rationale-needs-faithfulness-not-just-legibility.md): it supplies the faithful/plausible distinction and the warning that utility can increase without validating the explanation's causal truth. It also gives [Reasoning production is not reasoning evaluation](../notes/reasoning-production-is-not-reasoning-evaluation.md) a non-mathematical instance of process validity being distinct from successful output, and it qualifies [Structured output is easier for humans to review](../notes/structured-output-is-easier-for-humans-to-review.md): readability helps a reviewer inspect an artifact but does not establish faithfulness. [Language Models Don't Always Say What They Think](https://proceedings.neurips.cc/paper_files/paper/2023/hash/ed3fea9033a80fea1376299fa7863f4a-Abstract-Conference.html) is the empirical companion, testing this distinction with controlled input interventions.
 
 ## Extractable Value
 
@@ -48,13 +48,13 @@ This is a conceptual survey and opinion paper, not a new causal evaluation of ex
 
 ## Recommended Next Action
 
-Update [Selective revision needs a faithful rationale, not just a legible one](../notes/selective-revision-needs-a-faithful-rationale-not-just-a-legible-one.md) to cite this ingest where it distinguishes faithfulness from plausibility, and add the graded-faithfulness caveat without weakening the note's controlled faithful-versus-unfaithful test design.
+Update [Selective revision needs a faithful rationale, not just a legible one](../notes/revision-guided-by-rationale-needs-faithfulness-not-just-legibility.md) to cite this ingest where it distinguishes faithfulness from plausibility, and add the graded-faithfulness caveat without weakening the note's controlled faithful-versus-unfaithful test design.
 
 ---
 
 Relevant Notes:
 
-- [Selective revision needs a faithful rationale, not just a legible one](../notes/selective-revision-needs-a-faithful-rationale-not-just-a-legible-one.md) -- is-evidence-for: supplies the target distinction and oversight boundary
+- [Selective revision needs a faithful rationale, not just a legible one](../notes/revision-guided-by-rationale-needs-faithfulness-not-just-legibility.md) -- is-evidence-for: supplies the target distinction and oversight boundary
 - [Reasoning production is not reasoning evaluation](../notes/reasoning-production-is-not-reasoning-evaluation.md) -- is-evidence-for: separates output utility from process validity
 - [Structured output is easier for humans to review](../notes/structured-output-is-easier-for-humans-to-review.md) -- is-evidence-for: readability does not entail faithfulness
 - [Language Models Don't Always Say What They Think](https://proceedings.neurips.cc/paper_files/paper/2023/hash/ed3fea9033a80fea1376299fa7863f4a-Abstract-Conference.html) -- compares-with: controlled behavioral test of the conceptual distinction

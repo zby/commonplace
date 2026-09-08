@@ -207,6 +207,7 @@ plugins:
         'notes/reverse-compression-is-the-failure-mode-where-llm-output-expands-without-adding-information.md': 'notes/reverse-compression-is-when-llm-output-expands-without-adding.md'
         'notes/reviewers-share-the-fields-prior-so-declare-which-claims-to-defend.md': 'notes/reviewers-share-the-fields-prior-so-interpret-findings-by-stance.md'
         'notes/rlm-achieves-the-clean-scheduler-model-but-opts-out-of-accumulation.md': 'notes/rlm-has-the-model-write-ephemeral-orchestrators-over-sub-agents.md'
+        'notes/selective-revision-needs-a-faithful-rationale-not-just-a-legible-one.md': 'notes/revision-guided-by-rationale-needs-faithfulness-not-just-legibility.md'
         'notes/self-modification-requires-search-evaluation-and-retention.md': 'notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md'
         'notes/skills-derive-from-methodology-through-distillation.md': 'notes/skills-derive-from-methodology.md'
         'notes/stale-indexes-are-worse-than-no-indexes.md': 'notes/indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more.md'
