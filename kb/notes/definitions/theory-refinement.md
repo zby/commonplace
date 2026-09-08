@@ -198,7 +198,7 @@ Relevant Notes:
 - [Self-improving system](./self-improving-system.md) — contrasts: an independent condition on whether the change persists as operative improvement
 - [World models assess explanatory-reach through action-conditioned prediction](../world-models-assess-explanatory-reach-through-action-conditioned.md) — contrasts: the model-based case revised by fitting, with no part to blame
 - [An action model matters only through its consumption path](../an-action-model-matters-only-through-its-consumption-path.md) — grounds: why a stored theory nothing consumes is excluded
-- [Three 2026 harnesses expose different repair and retention paths](../evidence/three-2026-harnesses-retain-rules-or-weights-not-a-revisable-theory.md) — evidenced-by: reported repair operations and the limits of evidence about retained rationale
+- [Three 2026 harnesses expose different repair and retention paths](../evidence/three-2026-harnesses-retain-editable-rules-or-weights-not-rationale.md) — evidenced-by: reported repair operations and the limits of evidence about retained rationale
 - [Theory refinement combining analytical and empirical methods](../../sources/theory-refinement-analytical-empirical-methods.ingest.md) — abstracted-from: the classical object, the three inference modes, and consistency as acceptance
 - [Automated refinement of first-order Horn-clause domain theories](../../sources/automated-refinement-first-order-horn-clause-domain-theories.ingest.md) — abstracted-from: the separation of the refinement task from its realization
 - [Explanation-based generalization: a unifying view](../../sources/explanation-based-generalization-unifying-view.ingest.md) — abstracted-from: the established sense of generalizing from a theory without revising it

@@ -149,6 +149,7 @@ plugins:
         'notes/epiplexity-eli5.md': 'notes/epiplexity-by-example-what-entropy-and-complexity-miss.md'
         'notes/evaluation-index.md': 'notes/evaluation-README.md'
         'notes/evidence/five-reported-self-improvement-paths-expose-bounded-redesign-surfaces.md': 'notes/evidence/six-reported-self-improvement-paths-expose-bounded-redesign-surfaces.md'
+        'notes/evidence/three-2026-harnesses-retain-rules-or-weights-not-a-revisable-theory.md': 'notes/evidence/three-2026-harnesses-retain-editable-rules-or-weights-not-rationale.md'
         'notes/evolving-understanding-needs-re-distillation-not-composition.md': 'notes/evolving-understanding-needs-holistic-rewrite-not-composition.md'
         'notes/execution-traces-are-observational-byproducts-not-default-handoff-artifacts.md': 'notes/session-history-should-not-be-the-default-next-context.md'
         'notes/execution-traces-may-be-worth-storing-but-should-not-be-default-next-context.md': 'notes/session-history-should-not-be-the-default-next-context.md'
