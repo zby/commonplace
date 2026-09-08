@@ -28,7 +28,7 @@ No source quotes have been retained yet.
 
 ## Connections Found
 
-FORTE is a technical basis for the classical refinement mechanism in [the theory-refinement lineage note](../notes/theory-mediated-learning-joins-self-modeling-and-theory-refinement.md): explicit fallible rules shape proof diagnosis and are themselves revised against examples. It also provides a concrete comparison for [theory-mediated learning](../notes/definitions/theory-mediated-learning.md). In its debugging application the revised theory is the program; this differs from revising a theory of purposes and organization that guides edits to a distinct program. Program repair therefore broadens the lineage beyond external classification without establishing reflective self-modification. The [fixed-decomposition analysis](../notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md) limits the experimental reading: FORTE varies clauses and, in its path-finding ablation, an operator capability; it does not learn its representation, verifier, or protected background predicates.
+FORTE is a technical basis for the classical refinement mechanism in [the theory-refinement lineage note](../notes/reflective-theory-refinement-has-three-separate-lineages.md): explicit fallible rules shape proof diagnosis and are themselves revised against examples. It also provides a concrete comparison for [our account of theory use](../notes/definitions/theory-mediated-learning.md). In its debugging application the revised theory is the program; this differs from revising a theory of purposes and organization that guides edits to a distinct program. Program repair therefore broadens the lineage beyond external classification without establishing reflective self-modification. The [fixed-decomposition analysis](../notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md) limits the experimental reading: FORTE varies clauses and, in its path-finding ablation, an operator capability; it does not learn its representation, verifier, or protected background predicates.
 
 ## Extractable Value
 
@@ -54,4 +54,4 @@ Recursive repair depends on sufficiently complete small examples. Deriving examp
 
 ## Recommended Next Action
 
-Revise [the theory-refinement lineage note](../notes/theory-mediated-learning-joins-self-modeling-and-theory-refinement.md) to add a bounded comparison of executable-theory repair and refinement of a theory guiding separate software changes, using FORTE's debugging results and component-contract failure to state what transfers and what remains untested.
+Revise [the theory-refinement lineage note](../notes/reflective-theory-refinement-has-three-separate-lineages.md) to add a bounded comparison of executable-theory repair and refinement of a theory guiding separate software changes, using FORTE's debugging results and component-contract failure to state what transfers and what remains untested.
