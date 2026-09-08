@@ -14,15 +14,15 @@ Nothing published yet.
 
 ## In draft
 
-Five drafts comprise three main articles and two supplements.
+Five drafts comprise three main articles and two supplements. The three main
+articles play different roles: the first sets the stage for the second, the
+second makes the central proposal, and the third describes Commonplace's
+attempt to reach it. Read them in that order, or start with the second if time
+is short and go back to the first when a term or condition needs its source.
 
-Read the main articles in order for the existence claim, learning proposal, and
-bootstrap program. Their component experiments can begin before a complete
-automated house exists.
-
-- [The Automated Software House Conjecture: Open-ended software development with fixed LLMs](./automated-software-houses-with-fixed-llms.md) — the system boundary, program theory, and four conditions a concrete witness house must meet.
-- [The Automated Software House as the Unit of Training: A fixed-model training regime for theory-mediated learning](./the-software-house-as-the-unit-of-training.md) — how production might train the whole house while model parameters stay fixed, and experiments comparing explicit project theory with other uses of the same evidence.
-- [Bootstrapping the First Automated Software House: A research program from human-agent production to human-free internal operation](./bootstrapping-the-first-automated-software-house.md) — Commonplace as a seed, separate operational and learning transfers, and an example of a component trial.
+- [The Automated Software House Conjecture: Open-ended software development with fixed LLMs](./automated-software-houses-with-fixed-llms.md) — sets the stage for the second article. It fixes the terms the proposal is stated in: the software house as the system boundary and program theory as the capacity under test. It states the four conditions a concrete witness house must meet, which the third article and the comparison supplement take as their acceptance criteria. And it argues that the target is not ruled out in advance: Naur's claim that program theory belongs only to people rests on an extra premise, and existing constructions already show parts of the conjecture working, though none shows all four conditions together.
+- [The Automated Software House as the Unit of Training: A fixed-model training regime for theory-mediated learning](./the-software-house-as-the-unit-of-training.md) — the central article. It proposes a learning paradigm in which the house learns from production while every model weight stays fixed: experience revises the house's retained theory and machinery instead of its parameters. The article argues that this is compatible with the Bitter Lesson because computation, not people, produces the retained structure, and it states the hypotheses that would test the regime against weight adaptation. The regime is attractive on three counts, each still a conjecture. It supports continual learning in an obvious way: what the house learns is added to a retained store and is available at the next request. A new fact that contradicts current theory still forces reconciliation, which is this regime's counterpart of retraining, but reconciliation is local to the affected theory and should be rare. It may adapt from fewer observations, because a correct theory says which new cases matter. And it learns in a legible substrate: a particular assumption, rule, or test can be inspected, challenged, and rolled back without reverting unrelated learning.
+- [Bootstrapping the First Automated Software House: A research program from human-agent production to human-free internal operation](./bootstrapping-the-first-automated-software-house.md) — the attempt. It takes Commonplace as a human-agent seed and transfers production decisions to computation one bounded class at a time, testing separately whether computation now makes each decision and whether the house learns to revise the machinery that makes it. This is the least developed of the three: it has readiness and stop conditions and one worked component trial, but the program beyond that first trial is still a sketch.
 
 The supplements develop two parts of the conjecture:
 

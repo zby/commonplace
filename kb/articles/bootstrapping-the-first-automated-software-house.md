@@ -26,23 +26,20 @@ source_notes:
 **TL;DR.** A *software house* is the complete persistent system that keeps
 changing software for its users. This bootstrap program starts with a house
 that includes people and transfers bounded classes of production decisions to
-computation. Each trial separately tests whether computation now makes the
-decisions and whether production evidence teaches the house to build or revise
-the machinery that makes them. Evidence determines which transfer to try next.
+computation, one trial at a time. Each trial tests two things separately:
+whether computation now makes the decisions, and whether production evidence
+teaches the house to build or revise the machinery that makes them.
 Transferring the best-supported decisions first should leave people the
 hardest-to-warrant ones, and what those still need identifies the functions
 the house must grow.
 
-Commonplace offers one starting point: agents use and revise retained project
-knowledge, while people still supply decisive judgments. The target is a
-witness house: a concrete system demonstrating the [conjecture's four
-conditions](./automated-software-houses-with-fixed-llms.md#what-a-witness-house-must-show).
-During its run, model weights, adapters, embedding models, parametric routers,
-and parametric critics all stay fixed, and computation makes every internal
-production decision throughout the observed operation. The conjecture's
-eligibility cutoff is 2026-09-02; the bootstrap may use newer models before
-witness testing. The program records failures, interventions, and roles that
-return to people against independent outcome and cost measures.
+Commonplace is the starting point: agents use and revise retained project
+knowledge while people still supply decisive judgments. The target is a
+witness house meeting the [conjecture's four
+conditions](./automated-software-houses-with-fixed-llms.md#what-a-witness-house-must-show),
+learning under the [fixed-model
+regime](./the-software-house-as-the-unit-of-training.md) with its models
+held fixed throughout the observed run.
 
 ## The starting point
 
@@ -56,6 +53,10 @@ The [conjecture article](./automated-software-houses-with-fixed-llms.md)
 distinguishes these roles from external inputs. Users may supply requirements,
 facts, observed outcomes, and acceptance judgments about visible behaviour.
 An automated house performs every internal production role computationally.
+During a witness run, model weights, adapters, embedding models, parametric
+routers, and parametric critics all stay fixed. The conjecture's eligibility
+cutoff for those models is 2026-09-02; the bootstrap may use newer models
+before witness testing.
 
 ## Two kinds of transfer
 

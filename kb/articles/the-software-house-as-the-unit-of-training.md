@@ -28,20 +28,21 @@ source_notes:
 **TL;DR.** A [software house](../notes/definitions/software-house.md) is the
 complete persistent system that keeps changing software for its users. Assume
 an automated one exists. The proposed *fixed-model training regime* trains
-the house through production: experience changes retained knowledge and
-machinery that affect later work, while distributed-parametric models stay
-fixed. This pins the parameters of LLMs, embedding models, and parametric
-routers and critics, including their adapters.
+the house through production: experience revises the retained knowledge and
+machinery that affect later work, while the models stay fixed. The proposed
+mediator, what experience revises and later decisions consult, is an
+*explicit project theory*: a written account of the house's *program theory*,
+its understanding of the software's purpose, organization, and how to handle
+new requests, stated as design commitments, causal assumptions, and
+invariants.
 
-The house's *program theory* is its understanding of the software's purpose,
-organization, and how to handle new requests. The regime's proposed mediator —
-what experience revises and later decisions consult — is an *explicit project
-theory*: one possible written carrier of that understanding, stating design
-commitments, causal assumptions, and invariants. For example, a house whose
-theory explains why some files need product checks can adapt its checking
-policy when dependencies change. Whether this improves diagnosis, transfer, and sample
-efficiency compared with other uses of the same evidence is an empirical
-hypothesis.
+The regime is attractive on three counts, each still a conjecture. What the
+house learns is retained and usable at the next request, so learning is
+continual. A correct theory may say which new cases matter, so adaptation may
+need fewer observations. And each learned assumption, rule, or test can be
+inspected, challenged, and rolled back on its own. Whether these gains cover
+the regime's costs, and whether an explicit theory does better than other uses
+of the same evidence, are the article's empirical hypotheses.
 
 ## The fixed-model premise
 
@@ -65,7 +66,8 @@ The house may begin from a human-built seed or emerge from the
 Training changes its surrounding state and machinery. The rule is by
 representational form: the house may revise both the natural-language and the
 symbolic forms of its own definition; only its distributed-parametric models
-are pinned.
+are pinned. That pins the parameters of LLMs, embedding models, and parametric
+routers and critics, including their adapters.
 
 Derived indexes may be regenerated from mutable records under pinned
 construction algorithms and embedding models. Their vectors can change as the
@@ -219,6 +221,14 @@ coordination, and maintenance. The experiments below ask whether they do.
 writes](../notes/continual-learning-requires-governing-behaviour-changing-writes.md):
 the house must evaluate a revision, decide which later behaviour it may
 control, coordinate affected components, and retain or reject it.
+
+A fact that fits the current theory is the cheap case: it is written to the
+retained store and takes effect at the next request. A fact that contradicts
+the current theory forces reconciliation: the house must decide which
+commitment gives way, revise it, and re-check what depended on it.
+Reconciliation is this regime's counterpart of retraining. It is local to the
+affected theory and its dependents rather than global, and it should be rare,
+but it is where the governing costs concentrate.
 
 Two functions do that governing. **Admission** decides which changes take
 effect. **Credit assignment** decides

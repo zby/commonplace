@@ -21,20 +21,19 @@ source_notes:
 > on [the repository's GitHub Discussions page](https://github.com/zby/commonplace/discussions).
 
 **TL;DR.** A *software house* is the complete persistent system that keeps
-changing software for its users. We conjecture that an automated software
-house is possible with today's LLM weights: a house in which computation
-performs every production decision can sustain coherent change as
-requirements and operating conditions develop, using only LLMs and other
-distributed-parametric models available by 2026-09-02 and held fixed. The
-house learns by revising its retained knowledge and production machinery,
-not its models, and may begin from a human-built seed.
+changing software for its users. We conjecture that an automated one is
+possible with today's LLM weights held fixed: computation performs every
+production decision, and the house learns by revising its retained knowledge
+and production machinery rather than its models. The central test is whether
+the house can apply and revise its *program theory*, its understanding of the
+software's purpose, organization, and how to handle new requests. This article
+fixes the system boundary and the four conditions a witness house must meet,
+and argues that the target is not ruled out in advance.
 
-The central test is whether the house can apply and revise its *program
-theory*: its understanding of the software's purpose, organization, and how to
-handle new requests. An *explicit project theory* is one possible written
-carrier of that understanding: an account of design commitments, causal
-assumptions, and invariants. Possessing the account does not establish that the
-house can use it.
+The existence claim matters because such a house could learn in the way the
+[companion article](./the-software-house-as-the-unit-of-training.md) proposes:
+continually, from its own production, in a substrate that can be inspected and
+revised piece by piece.
 
 ## Claim
 
