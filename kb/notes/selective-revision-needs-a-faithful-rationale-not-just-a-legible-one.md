@@ -42,7 +42,7 @@ This gives the property an operational shape rather than a rhetorical one: edit 
 
 Relevant Notes:
 
-- [Theory-mediated learning may improve sample efficiency under structured shifts](./theory-refinement-may-improve-sample-efficiency-under-shifts.md) — grounds: the selective-revision advantage this note states the condition on
+- [Theory refinement may improve sample efficiency under structured shifts](./theory-refinement-may-improve-sample-efficiency-under-shifts.md) — grounds: the selective-revision advantage this note states the condition on
 - [Reflection makes retained lessons second-order: a lesson can reject or rescope a prior commitment](./reflection-makes-retained-lessons-second-order.md) — mechanism: the reject/rescope/revise operations a rationale makes available
 - [Abstract an experience into a lesson only when you can state where the lesson stops](./abstract-an-experience-only-when-you-can-state-the-boundary.md) — grounds: the applicability conditions a rationale has to record for rescoping to have a target
 - [Reach-assessment](./definitions/reach-assessment.md) — grounds: the capability that tells a sound rationale from a plausible one, which reading does not supply

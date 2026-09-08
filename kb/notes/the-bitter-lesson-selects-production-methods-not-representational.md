@@ -91,7 +91,7 @@ Relevant Notes:
 - [Treat continual learning as representational-form coevolution](./treat-continual-learning-as-representational-form-coevolution.md) — extends: the coevolution frame and per-class fragment inventory this note reads through the two-axis carve
 - [The readable-artifact loop is the tractable unit for continual learning](./readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md) — grounds: the bounded-validation-radius factoring that makes the localized loop a coherent target
 - [An experiment identifies only the contrast it actually runs](./an-experiment-identifies-only-the-contrast-it-actually-runs.md) — grounds: the precise reading of the strongest fourth-quadrant fragment
-- [Theory-mediated learning may improve sample efficiency under structured shifts](./theory-refinement-may-improve-sample-efficiency-under-shifts.md) — extends: the open bet on the proposal operator being theory-formation
+- [Theory refinement may improve sample efficiency under structured shifts](./theory-refinement-may-improve-sample-efficiency-under-shifts.md) — extends: the open bet on the proposal operator being theory-formation
 - [Sutton, The Bitter Lesson (original essay)](http://www.incompleteideas.net/IncIdeas/BitterLesson.html) — abstracted-from: the production-method opposition is Sutton's own carve; the orthogonality claim is this note's extension
 - [Symbolic Learning Enables Self-Evolving Agents](https://arxiv.org/pdf/2406.18532) — evidenced-by: prompts, tools, and their composition searched as learnables — a fourth-quadrant fragment
 - [Memento-Skills: Let Agents Design Agents](https://arxiv.org/pdf/2603.18743) — evidenced-by: structured Markdown skills as continually rewritten persistent memory — a fourth-quadrant fragment

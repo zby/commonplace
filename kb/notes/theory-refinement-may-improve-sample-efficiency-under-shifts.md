@@ -1,11 +1,11 @@
 ---
-description: "Conjecture: learning that discovers, assesses, and revises addressable theories may need fewer target observations when a shift preserves the structure a theory names"
+description: "Conjecture: theory refinement, learning that discovers, assesses, and revises addressable theories, may need fewer target observations when a shift preserves the structure a theory names"
 type: kb/types/note.md
 traits: [title-as-claim, has-external-sources]
 tags: [learning-theory, discovery]
 ---
 
-# Theory-mediated learning may improve sample efficiency under structured shifts
+# Theory refinement may improve sample efficiency under structured shifts
 
 When a task changes, a learner can adapt by fitting new behavior directly to new observations. It can also learn model-based: infer a model that explains the observations, then reuse or revise that model when the task changes. Under shifts that preserve some underlying structure, the second route may need fewer target observations.
 

@@ -35,7 +35,7 @@ The limit is symmetrical. Nothing here shows that adding such an object would ha
 
 Relevant Notes:
 
-- [Theory-mediated learning may improve sample efficiency under structured shifts](../theory-refinement-may-improve-sample-efficiency-under-shifts.md) — defined-in: the theory-mediated property and the rule-versus-theory contrast the grid turns on
+- [Theory refinement may improve sample efficiency under structured shifts](../theory-refinement-may-improve-sample-efficiency-under-shifts.md) — defined-in: the theory-mediated property and the rule-versus-theory contrast the grid turns on
 - [Reflective system](../definitions/reflective-system.md) — defined-in: the reflective property
 - [Self-improving system](../definitions/self-improving-system.md) — defined-in: the self-improving property
 - [Representational form](../definitions/representational-form.md) — defined-in: the axis on which Apodex sits at the parametric end

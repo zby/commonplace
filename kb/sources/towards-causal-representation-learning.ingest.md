@@ -58,7 +58,7 @@ The paper reviews why causal models matter for machine learning: they add the no
 
 ## Connections Found
 
-The source connects to [reach assessment](../notes/definitions/reach-assessment.md) and [Formal symbolic systems assess reach only through causal and proof obligations](../notes/formal-systems-assess-explanatory-reach-through-causal-and-proof.md) as the broad causal-model grounding for intervention and counterfactual reach. It also supports [Theory-mediated learning may improve sample efficiency under structured shifts](../notes/theory-refinement-may-improve-sample-efficiency-under-shifts.md), because the note's transfer mechanism depends on reusable causal mechanisms that survive structured shifts.
+The source connects to [reach assessment](../notes/definitions/reach-assessment.md) and [Formal symbolic systems assess reach only through causal and proof obligations](../notes/formal-systems-assess-explanatory-reach-through-causal-and-proof.md) as the broad causal-model grounding for intervention and counterfactual reach. It also supports [Theory refinement may improve sample efficiency under structured shifts](../notes/theory-refinement-may-improve-sample-efficiency-under-shifts.md), because the note's transfer mechanism depends on reusable causal mechanisms that survive structured shifts.
 
 ## Extractable Value
 
