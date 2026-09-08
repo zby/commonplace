@@ -51,17 +51,13 @@ of the same evidence, are the article's empirical hypotheses.
 The [companion article](./automated-software-houses-with-fixed-llms.md)
 conjectures that an automated software house can operate practically with
 distributed-parametric models available by the conjecture's cutoff, 2026-09-02,
-and held fixed. Here that
-house is the starting point. Computation performs every internal production role, including
-implementation, diagnosis, and choosing which revisions take effect. Users
-supply requirements, facts, feedback, and acceptance judgments about visible
-behaviour from outside the production boundary.
-
-Which side of the boundary a contribution falls on turns on the decision
-supplied: users may say what the product
-should do or report what it did. Asking them to diagnose its implementation,
-choose an internal design, or select a retained revision assigns them an
-internal production role. This boundary applies during the run.
+and held fixed. Here that house is the starting point. Computation performs
+every internal production role, including implementation, diagnosis, and
+choosing which revisions take effect. Users supply requirements, facts,
+feedback, and acceptance judgments about visible behaviour from outside the
+production boundary; the [conjecture article's boundary
+section](./automated-software-houses-with-fixed-llms.md#the-boundary) says
+which acts fall on which side.
 
 The house may begin from a human-built seed or emerge from the
 [bootstrap program](./bootstrapping-the-first-automated-software-house.md).
@@ -70,11 +66,6 @@ representational form: the house may revise both the natural-language and the
 symbolic forms of its own definition; only its distributed-parametric models
 are pinned. That pins the parameters of LLMs, embedding models, and parametric
 routers and critics, including their adapters.
-
-Derived indexes may be regenerated from mutable records under pinned
-construction algorithms and embedding models. Their vectors can change as the
-records change while the model parameters stay fixed. This permits a derived
-representation of revised knowledge, not a separately trained model.
 
 The experiments below do not wait for a complete automated house. They test
 its learning mechanisms in bounded components.
@@ -104,13 +95,11 @@ represented to preserve isolation. A lesson can be stated in a theory,
 enforced by tests, compiled into a tool, or embodied in product code.
 
 Production can expose failures in both retained knowledge and executable
-machinery. The regime therefore trains a house that can revise both, rather
-than limiting learning to a text store. Existing general operations may suffice
-for a new theory. When they cannot apply, check, or revise it reliably within
-the budget, [the house must supply the missing
-capacity](../notes/a-fixed-model-house-must-write-the-procedures-for-each-new-theory.md).
-With models pinned, newly acquired procedures must persist outside their
-parameters.
+machinery, so the regime trains a house that can revise both. When existing
+operations cannot apply, check, or revise a new theory reliably, [the house
+must supply the missing
+capacity](../notes/a-fixed-model-house-must-write-the-procedures-for-each-new-theory.md),
+and with models pinned that capacity must persist outside their parameters.
 
 ## Why this is theory refinement
 
@@ -148,36 +137,50 @@ This loop is [theory
 refinement](../sources/recap-early-work-theory-knowledge-refinement.ingest.md)
 in the established sense: a fallible explicit theory guides inference,
 empirical failure localizes a defect, and the theory itself is revised rather
-than only the answer. What the regime adds is the setting: the theory is
-about a product the house keeps changing, and its evidence is the consequences
-of production rather than a labeled training set.
+than only the answer. The regime changes the setting: the theory is about a
+product the house keeps changing, and its evidence is the consequences of
+production rather than a labeled training set. It also departs from the
+classical loop in three ways:
+
+- **The theory is partly normative.** The commitment to tenant isolation is
+  not a hypothesis about the product but a rule the house keeps true. A
+  failure may therefore be resolved by changing the product to fit the theory
+  as well as by revising the theory to fit the evidence, and the house must
+  decide which.
+- **Acceptance prefers reach.** Among revisions that fit the evidence, the
+  house prefers those with more explanatory reach, those that would also
+  handle cases the failure did not exhibit. That is why the example prefers a
+  revised dependency account over an exception for the failing filename.
+- **The refinement machinery is itself revisable.** The next paragraph says
+  when that is needed.
+
+LLMs are the condition that makes this practical rather than part of the
+claim. They are the first interpreter that can apply and revise theories that
+have not been formalized, and their reliability in doing so is an empirical
+question.
 
 The theory need not be about the house itself. A product failure, such as a
 broken assumption about tenant identity, is handled by a theory of the
 product. The house must hold and refine a theory of its own production path
-only when the defect or the missing capacity lies there. That happens in four
-situations. A new product theory needs a check the house cannot yet perform,
-so the house must build one. A failure could be due to the product theory, the
-evaluator that admitted the change, the retrieval that never surfaced the
-theory, or the check that was skipped, so diagnosis must tell them apart. A
-revision to an evaluator or admission rule would change how later evidence is
-read, so the house must reason about what the evaluator does. Or the theory
-was present but never found or never applied, which is a failure of the
-house's consumption path rather than of its content. The checking policy above
-is such a case: the refined object is part of the house's production
-machinery, and the same loop revises the producer as well as the product. This
-second-order learning is what the [bootstrap
+only when the defect or the missing capacity lies there, which happens in four
+situations:
+
+- A new product theory needs a check the house cannot yet perform, so the
+  house must build one.
+- A failure could be due to the product theory, the evaluator that admitted
+  the change, the retrieval that never surfaced the theory, or the check that
+  was skipped, so diagnosis must tell them apart.
+- A revision to an evaluator or admission rule would change how later evidence
+  is read, so the house must reason about what the evaluator does.
+- The theory was present but never found or never applied, which is a failure
+  of the house's consumption path rather than of its content.
+
+The checking policy above is such a case: the refined object is part of the
+house's production machinery, and the same loop revises the producer as well
+as the product. This second-order learning is what the [bootstrap
 article](./bootstrapping-the-first-automated-software-house.md#two-kinds-of-transfer)
 calls learning transfer, and a house that must outgrow its seed cannot do
 without it.
-
-A lesson can move between [representational
-forms](../notes/definitions/representational-form.md): the dependency account
-may motivate a validator, and later failures may expose a limit in the
-validator's premise. Symbolic artifacts supply exact execution once a
-commitment is settled enough to encode. Until then, the regime relies on fixed
-models to interpret and revise theories expressed in natural language. Their
-reliability in those operations remains an empirical question.
 
 ## What counts as training
 
@@ -188,12 +191,10 @@ change that persists — every product edit changes the starting conditions of
 later work. It requires experience to cause a retained change in the house's
 capacity on later requirements.
 
-After correcting the failing edit in the example, run two *continuations*:
-copies of the house that resume work from identical product snapshots. Retain
-the revised explanation and checking policy in one; restore their earlier
-versions in the other. Better check
-selection on untouched files would demonstrate an acquired capability beyond
-repairing the first failure.
+The instrument for showing that is a *continuation*: a copy of the house that resumes
+work from a product snapshot. Two continuations from the same snapshot, one
+keeping a revision and one with it restored, show what the revision taught on
+work the failure did not touch.
 
 Learning can also be embodied in product code: a patch is then both
 production and training. To measure what it taught, compare implementations
@@ -223,34 +224,14 @@ report the work and period examined. Repeated dependence on people to supply
 a missing ontology, decomposition, or evaluator counts against the proposed
 learning capacity.
 
-## What the fixed-model training regime buys
-
-The three attractions named in the summary rest on three structural properties
-of the regime:
-
-- **Adaptation during production.** [Retained artifacts can change later
-  behaviour](../notes/retained-artifacts-enable-persistent-deployment-time-adaptation.md)
-  without a model-training cycle. A failure can revise a theory or add a test
-  before the next request.
-- **Revision of identified components.** A particular assumption, rule, test,
-  or function can be challenged and often rolled back without reverting
-  unrelated learning. The whole house need not be fully understandable for
-  these local operations to be useful.
-- **Continuity through retained artifacts.** Theory and machinery persist
-  outside a model checkpoint. Their effective use may still depend on the
-  model, so replacing the model requires revalidation and falls outside the
-  *training lineage* — the history of retained changes made while the models
-  stay pinned.
-
-The summary's second attraction, that a correct theory reduces the observations
-needed to adapt, is not a structural property. It is a hypothesis, tested
-below. And all three benefits must cover the costs of discovery, retrieval,
-validation, coordination, and maintenance. The experiments below ask whether
-they do.
-
 ## Governing retained changes
 
-[Continual learning requires governing behaviour-changing
+The attractions named in the summary come from [retained artifacts changing
+later behaviour](../notes/retained-artifacts-enable-persistent-deployment-time-adaptation.md)
+without a training cycle. They must cover the costs of discovery, retrieval,
+validation, coordination, and maintenance; the experiments below ask whether
+they do, and this section says where those costs concentrate. [Continual
+learning requires governing behaviour-changing
 writes](../notes/continual-learning-requires-governing-behaviour-changing-writes.md):
 the house must evaluate a revision, decide which later behaviour it may
 control, coordinate affected components, and retain or reject it.
@@ -286,8 +267,9 @@ retained](../notes/the-bitter-lesson-selects-production-methods-not-representati
 In this regime, computation forms and revises theories, searches over programs
 and tools, constructs evaluators, and selects changes from production
 evidence. These artifacts are learned products. Compatibility is assessed over
-the training lineage; the seed may be human-built, but subsequent
-project-specific structure must be produced or revised by computation.
+the *training lineage*, the history of retained changes made while the models
+stay pinned; the seed may be human-built, but subsequent project-specific
+structure must be produced or revised by computation.
 
 This is structural compatibility, not evidence of a scaling advantage. Search,
 validation, and credit assignment over artifacts may scale poorly, or weight
@@ -388,21 +370,15 @@ regime, beyond this component trial.
 
 An alternative retains worked cases rather than a general explanation: the
 request, the accepted change, and the evidence and judgment behind acceptance.
-The fixed model may infer an explanation from those cases at use time, not
-merely imitate similar cases. The comparison concerns what is retained, not
-which reasoning mechanism the model is allowed to use.
-
-When an explanation is reconstructed and discarded, that derivation is
-[ephemeral](../notes/ephemeral-computation-prevents-accumulation.md), but the
-retained cases can still carry learning. Keeping an explicit theory may save
-repeated derivation and expose assumptions for targeted revision. Constructing
-and revising it trains the house without changing model parameters.
-
-A retained theory can also omit relevant details or repeatedly activate a
-mistaken abstraction. [Retained cases can preserve evidence for re-examining
-it](../notes/retaining-the-episode-keeps-a-distilled-rule-re-derivable.md),
-although storing them does not guarantee successful reconstruction. Neither
-form determines transfer or recovery by itself.
+The fixed model may infer an explanation from those cases at use time; the
+comparison concerns what is retained, not what the model may reason about.
+Each form has a cost the other avoids. An explanation reconstructed and
+discarded is [ephemeral
+work](../notes/ephemeral-computation-prevents-accumulation.md) repeated on
+every use, while a retained theory can omit a relevant detail or keep
+activating a mistaken abstraction, and [retained cases preserve the evidence
+for re-examining
+it](../notes/retaining-the-episode-keeps-a-distilled-rule-re-derivable.md).
 
 A fifth treatment could retain a curated set of worked cases, rather than the
 raw-record treatment's uncurated history. Compare it with explicit theory under
@@ -424,7 +400,10 @@ learning through tests, tools, and search is also learning by the house.
 
 Even successful component tests leave the whole-house proposal dependent on
 reliable theory use, credit assignment, validation, and admission working
-together. Parametric and hybrid regimes remain alternatives.
+together. Retained theory and machinery persist outside a model checkpoint,
+but their effective use may still depend on the model, so replacing the model
+requires revalidation and starts a new training lineage. Parametric and hybrid
+regimes remain alternatives.
 
 The [comparison supplement](./nearest-existing-constructions-to-a-witness-house.md#the-test-for-explicit-project-theory-from-the-training-article)
 distinguishes existing evidence for program-theory use from this proposed test

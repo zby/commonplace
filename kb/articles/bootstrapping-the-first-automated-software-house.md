@@ -45,12 +45,10 @@ regime](./the-software-house-as-the-unit-of-training.md).
 In a human-agent [software house](../notes/definitions/software-house.md),
 agents may write and test much of the code while people diagnose shared causes,
 revise design assumptions, choose among passing candidates, and approve new
-evaluators. These are internal production roles: work the house depends on to
-evolve software, whoever performs it.
-
-The [conjecture article](./automated-software-houses-with-fixed-llms.md)
-distinguishes these roles from external inputs. Users may supply requirements,
-facts, observed outcomes, and acceptance judgments about visible behaviour.
+evaluators. These are internal production roles in the [conjecture
+article's sense](./automated-software-houses-with-fixed-llms.md#the-boundary):
+work the house depends on to evolve software, whoever performs it, as distinct
+from the requirements, facts, outcomes, and acceptance judgments users supply.
 An automated house performs every internal production role computationally.
 During a witness run, model weights, adapters, embedding models, parametric
 routers, and parametric critics all stay fixed. The conjecture's eligibility
@@ -70,19 +68,18 @@ boundary: the decisions being assessed.
 The difference shows in a simple case. A validator that a person wrote can
 complete operational transfer: computation now makes the decision. Learning
 transfer requires the house to have produced or revised the validator's
-criterion and machinery from its own experience.
+criterion and machinery from its own experience. In the training article's
+terms, learning transfer is [theory refinement turned on the house's own
+production path](./the-software-house-as-the-unit-of-training.md#why-this-is-theory-refinement):
+the refined object is a check, evaluator, or procedure rather than the
+product.
 
-The conjecture allows that: it permits a human-built seed, provided the house
-applies its program theory, revises coherently, and continues reliably without
-human production decisions. Program theory here means understanding the
-software's purpose, organization, and how to handle new requests. An explicit
-project theory is one possible written carrier of that understanding, stating
-design commitments, causal assumptions, and invariants; the conjecture also
-permits reconstructing understanding from records. The separate proposal to
-[train the house from
-production](./the-software-house-as-the-unit-of-training.md) asks a further
-question: whether the house's own process can also produce the project-specific
-machinery. The bootstrap aims at both transfers.
+The conjecture allows a human-built seed, provided the house applies its
+[program theory](./automated-software-houses-with-fixed-llms.md#why-the-claim-is-not-trivial),
+revises coherently, and continues reliably without human production
+decisions. The [training article](./the-software-house-as-the-unit-of-training.md)
+asks the further question of whether the house's own process can also produce
+the project-specific machinery. The bootstrap aims at both transfers.
 
 ## Commonplace as a seed instance
 
