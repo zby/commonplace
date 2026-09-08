@@ -98,7 +98,7 @@ Relevant Notes:
 - [Representational form](./representational-form.md) — grounds: the axis that fixes assessment route without fixing whether mediation obtains
 - [Reflective system](./reflective-system.md) — contrasts: an independent condition on what the theory is about
 - [World models assess explanatory-reach through action-conditioned prediction](../world-models-assess-explanatory-reach-through-action-conditioned.md) — contrasts: the familiar model-based case that lacks the three properties of a theory
-- [Theory-mediated system learning combines runtime self-modeling with empirical theory refinement](../reflective-theory-refinement-has-three-separate-lineages.md) — extends: places the reflective case against its lineages
+- [Reflective theory refinement has separate structural, epistemic, and implementation lineages](../reflective-theory-refinement-has-three-separate-lineages.md) — extends: places the reflective case against its lineages
 - [Three 2026 harnesses retain rules or weights, not a revisable theory](../evidence/three-2026-harnesses-retain-rules-or-weights-not-a-revisable-theory.md) — evidenced-by: worked cases on the near side of the boundary
 - [Explanation-based generalization: a unifying view](../../sources/explanation-based-generalization-unifying-view.ingest.md) — abstracted-from: the established sense of generalizing from a theory without revising it
 - [Theory refinement combining analytical and empirical methods](../../sources/theory-refinement-analytical-empirical-methods.ingest.md) — abstracted-from: the established sense of revising a fallible explicit theory from empirical failure

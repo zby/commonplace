@@ -1,11 +1,11 @@
 ---
-description: "Reflective theory refinement (earlier: theory-mediated system learning) joins runtime self-modeling with classical refinement of fallible explicit theories; Workspace Optimization is an implementation analogy, not the closest antecedent"
+description: "No single predecessor is closest to reflective theory refinement: runtime self-modeling supplies the self-target, classical theory refinement the mechanism with different fillers, and Workspace Optimization only an implementation analogy"
 type: kb/types/note.md
 traits: [title-as-claim, synthesis, has-external-sources]
 tags: [learning-theory, deploy-time-learning, self-improving-systems, foundations]
 ---
 
-# Theory-mediated system learning combines runtime self-modeling with empirical theory refinement
+# Reflective theory refinement has separate structural, epistemic, and implementation lineages
 
 No single predecessor is closest to reflective theory refinement, [theory
 refinement](./definitions/theory-mediated-learning.md) of a theory about the
@@ -81,6 +81,26 @@ not the purposes and architecture of the learning system itself. Classical
 theory refinement therefore supplies the epistemic half of the proposed path
 without supplying its reflective self-target.
 
+The mechanism is the same in both, slot for slot: a theory language, an
+interpreter that applies the theory, an evidence source, a failure localizer,
+repair operators, and an acceptance test. The [proposed
+regime](../articles/the-software-house-as-the-unit-of-training.md) changes the
+fillers. The language is open-ended natural language and mixed forms rather
+than a fixed rule language. One LLM fills the interpreter, localizer, and
+repair slots that a prover, abduction, and an induction algorithm filled. The
+evidence is production consequences rather than a labeled batch, which is why
+credit assignment and admission become problems the classical systems did not
+have. And among revisions that fit the evidence, acceptance prefers
+explanatory reach, where the classical test was consistency with the training
+set. Two differences are not fillers. A project theory is partly normative, so
+a failure may be resolved by changing the product to fit the theory, where the
+classical loop only ever changed the theory to fit the data. And the slots
+themselves, language, operators, and evaluator, are inside the revisable state,
+where the classical systems fixed them outside learning. What the field
+already had, and this program should not claim as new, is recurrent use of
+the refined theory, incremental refinement, localized repair, a bounded
+sample-efficiency result, and a human-engineered seed.
+
 ## Workspace Optimization supplies a contemporary implementation analogy
 
 [Workspace
@@ -141,9 +161,9 @@ Different neighbors imply different baselines:
 - a **runtime self-model or architecture-based adaptation baseline** tests what
   claim-addressable natural-language program theory adds beyond an explicit
   but designer-supplied system model;
-- an **explicit theory-refinement baseline** tests whether the proposed
-  long-horizon self-modification setting adds more than classical correction of
-  a fallible domain theory;
+- a **classical theory-refinement baseline**, with its language, operators,
+  and evaluator fixed, tests what the regime's fillers add: an open-ended
+  theory language, reach-preferred acceptance, and a revisable update space;
 - a **Workspace Optimization baseline** tests the value of a program self-theory
   against editable external state, local failure attribution, and replay; and
 - direct search, parametric adaptation, meta-learning, and stronger models test
