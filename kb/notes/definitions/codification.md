@@ -34,6 +34,8 @@ Structured Markdown, YAML, or JSON is not automatically codification. It becomes
 
 Numerical content does not by itself require codification. An exact numerical claim can be stated and tested in natural language; it needs symbolic form only when its consequences must be assigned by a formal consumer, such as mechanically repeatable computation or acceptance.
 
+The same crossing is what gives a part of a retained theory a computed consequence relation. Under [theory refinement](./theory-refinement.md), a prose part's consequences are whatever its interpreter derives, and a codified part's are fixed by its consumer, so a contradiction there is a fact. Codification settles that much; whether the codified part also recovers mechanical localization and acceptance is left open in that definition.
+
 ## Misuse Cases
 
 - Calling every clearer instruction "codified" even though the consumer is still an LLM interpreting natural language.

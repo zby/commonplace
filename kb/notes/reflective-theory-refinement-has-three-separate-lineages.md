@@ -63,8 +63,9 @@ defect when a component is warranted general machinery over the declared reach.
 
 [Explanation-based
 generalization](https://doi.org/10.1023/A:1022691120807) is an established case
-of theory-mediated learning: background theory determines what can be inferred
-from an experience rather than merely accompanying an empirical learner.
+of learning guided by an explicit theory: background theory determines what can
+be inferred from an experience rather than merely accompanying an empirical
+learner, though the theory itself is not revised.
 [Theory refinement combining analytical and empirical
 methods](https://doi.org/10.1016/0004-3702(94)90028-0) goes closer to the present
 mechanism by beginning with an imperfect explicit theory, using empirical
@@ -86,7 +87,9 @@ interpreter that applies the theory, an evidence source, a failure localizer,
 repair operators, and an acceptance test. The [proposed
 regime](../articles/the-software-house-as-the-unit-of-training.md) changes the
 fillers. The language is open-ended natural language and mixed forms rather
-than a fixed rule language. One LLM fills the interpreter, localizer, and
+than a fixed rule language, so what the theory implies is interpreted rather
+than proved, and only a codified part regains a computed consequence relation.
+One LLM fills the interpreter, localizer, and
 repair slots that a prover, abduction, and an induction algorithm filled. The
 evidence is production consequences rather than a labeled batch, which is why
 credit assignment and admission become problems the classical systems did not
@@ -172,9 +175,9 @@ Different neighbors imply different baselines:
 
 A result showing only persistent artifact editing, fast adaptation, modular
 reuse, or prediction-error correction would not identify the full mechanism.
-The discriminating result must connect theory mediation, change to the modifying
-system, empirical read-back, selective theory revision, and later changed
-modification on one traceable path.
+The discriminating result must connect theory use in the decision, change to the
+modifying system, empirical read-back, selective theory revision, and later
+changed modification on one traceable path.
 
 ## Scope
 

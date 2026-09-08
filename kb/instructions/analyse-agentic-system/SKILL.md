@@ -178,12 +178,14 @@ Keep these distinctions:
   policy, best effort, deployment guarantee, or no claimed guarantee.
 - **Theory refinement** is the established loop in which a retained theory
   guides a decision, an outcome localizes a defect, and the theory is revised.
-  A **theory** says why, is a stable unit whose assumptions and scope can be
-  inspected, and is revised by reasoning. Retained guidance on a revision
+  A **theory** has consequences a case can contradict, defects localizable to
+  a part, and parts editable separately. Retained guidance on a revision
   route is therefore a theory, a **rule whose reasons are not retained**,
   **parameters**, or none; a retained reason counts only where a later
   consumer reads it, and a theory counts only where it is on the causal path
-  of a decision. The other operations on a theory are **applying** it and
+  of a decision. For a natural-language theory the consequence relation is
+  the interpreter's: record a contradiction as a judgment unless a codified
+  check produced it. The other operations on a theory are **applying** it and
   **explanation-based generalization**, regressing a reusable rule from its
   explanation of one episode without revising it. **Reflective theory
   refinement** is theory refinement whose theory describes behavior-determining
@@ -492,7 +494,8 @@ A failed run reports its failure reason and does not use the handoff command.
 - [Agent memory is a crosscutting concern, not a separable niche](../../notes/agent-memory-is-a-crosscutting-concern-not-a-separable-niche.md) — rests-on: why memory is a mandatory lens
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) — rests-on: the retention, read-back, presence, and activation distinctions
 - [Behavioral authority](../../notes/definitions/behavioral-authority.md) — rests-on: the consumer, channel, force, and horizon record
-- [Theory refinement may improve sample efficiency under structured shifts](../../notes/theory-refinement-may-improve-sample-efficiency-under-shifts.md) — rests-on: what makes retained guidance a theory rather than a rule, and why the revising loop is the one worth recording
+- [Theory refinement](../../notes/definitions/theory-refinement.md) — rests-on: the loop, what it requires of a theory, and the interpreted consequence relation of the prose case
+- [Theory refinement may improve sample efficiency under structured shifts](../../notes/theory-refinement-may-improve-sample-efficiency-under-shifts.md) — rests-on: why the revising loop is the one worth recording
 - [Theory refinement combining analytical and empirical methods](../../sources/theory-refinement-analytical-empirical-methods.ingest.md) — rests-on: the established sense of theory refinement used in step 3
 - [Reflective theory refinement needs interpretation, retention, and independent read-back](../../notes/reflective-theory-refinement-needs-interpretation-and-retention.md) — rests-on: the four links of a refinement path, each carrying its own conclusion status
 - [Reflective system](../../notes/definitions/reflective-system.md) — rests-on: the self-representation condition that makes a refinement route reflective
