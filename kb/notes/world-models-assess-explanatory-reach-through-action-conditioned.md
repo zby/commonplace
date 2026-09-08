@@ -19,6 +19,10 @@ The [formalization boundary](./formal-systems-assess-explanatory-reach-through-c
 
 So world models belong beside causal/proof obligations, not inside them. If a system's commitment is stored in natural-language form, semantic judgment is still needed. If it is stored as a symbolic causal or proof artifact, formal machinery can carry the assessment. If it is stored as a learned predictive artifact, action-conditioned prediction and shift testing can carry part of the assessment.
 
+## Reach can be assessed, but nothing can be localized
+
+A learned world model and a retained theory are both model-based learning: an internal model stands between evidence and behavior change. Since the predictor can assess reach, reach-assessment does not separate them. What separates them is the localization axis of [representational form](./definitions/representational-form.md). A failed rollout says the predictor is wrong somewhere, not which commitment is wrong, and the only repair is more fitting. A theory's failure can be attributed to a part, and the repair edits that part while leaving the rest, which is what [theory refinement](./definitions/theory-refinement.md) requires of its object. The choice between retaining a theory and training a predictor is therefore not a choice about who can judge reach. It is a choice about whether a later correction must reach one commitment without disturbing the others, which is the bet the [sample-efficiency conjecture](./theory-refinement-may-improve-sample-efficiency-under-shifts.md) makes. An inspectable causal model or simulator program is both a world model and a theory, and sits on the localized side.
+
 ---
 
 Relevant Notes:
@@ -26,6 +30,7 @@ Relevant Notes:
 - [Reach-assessment](./definitions/reach-assessment.md) — extends: adds the distributed-parametric route through learned predictors
 - [Representational form](./definitions/representational-form.md) — grounds: the natural-language/symbolic/distributed-parametric split that decides which assessment route is available
 - [Formal symbolic systems assess explanatory-reach only through causal and proof obligations](./formal-systems-assess-explanatory-reach-through-causal-and-proof.md) — contrasts: symbolic route through explicit causal/proof obligations rather than learned latent prediction
+- [Theory refinement](./definitions/theory-refinement.md) — contrasts: the model-based case whose object has parts to blame and edit; a world model has none
 - [Theory refinement may improve sample efficiency under structured shifts](./theory-refinement-may-improve-sample-efficiency-under-shifts.md) — extends: stakes the measurable payoff of reusable structure surviving a shift
 - [Meta V-JEPA world-model framing](../sources/meta-v-jepa-world-model.ingest.md) — evidenced-by: LeCun/JEPA framing of latent predictive world models while planning remains future work
 - [Meta V-JEPA 2 world model release](../sources/meta-v-jepa-2-world-model.ingest.md) — evidenced-by: action-conditioned prediction used for planning and control
