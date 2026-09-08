@@ -72,8 +72,8 @@ memory boundary warrants short sections with explicit limits.
   trace-fed transformation, including compaction, for a later consuming route.
   For each derived behavior-shaping artifact, state whether it retains the
   reason for what it prescribes and whether any later route reads that reason;
-  the parent classifies the retained guidance as theory, rule, or parameters
-  from this.
+  the parent records this on the theory route, where a rationale a later
+  route reads can guide diagnosis.
 - **Read-back:** trace retained material through selection and delivery to a
   named later consumer. Separate availability, delivery, activation and
   demonstrated benefit. For pull, identify the requesting consumer role and

@@ -178,12 +178,14 @@ Keep these distinctions:
   policy, best effort, deployment guarantee, or no claimed guarantee.
 - **Theory refinement** is the established loop in which a retained theory
   guides a decision, an outcome localizes a defect, and the theory is revised.
-  A **theory** has consequences a case can contradict, defects localizable to
-  a part, and parts editable separately. Retained guidance on a revision
-  route is therefore a theory, a **rule whose reasons are not retained**,
-  **parameters**, or none; a retained reason counts only where a later
-  consumer reads it, and a theory counts only where it is on the causal path
-  of a decision. For a natural-language theory the consequence relation is
+  A **theory** has consequences a case can contradict, parts available as
+  candidate repair locations, and parts editable separately. Retained
+  guidance on a revision route is therefore a theory, **parameters**, or
+  none. A rule set with no recorded rationale is a theory; record its
+  structure, since a revision reaches only the rules that share the revised
+  premise, and a flat list shares none. Where a rationale is retained, record
+  whether a later consumer reads it. A theory counts only where it is on the
+  causal path of a decision. For a natural-language theory the consequence relation is
   the interpreter's: record a contradiction as a judgment unless a codified
   check produced it. The other operations on a theory are **applying** it and
   **explanation-based generalization**, regressing a reusable rule from its
@@ -288,8 +290,8 @@ that specialist pass in the coordinator's context.
    theory, the theory state changed in response, and the changed state guided
    a later operation. A link without evidence is `uninspected`, not inferred
    from its neighbours. A retained prediction, rationale, or expected outcome
-   is a model assertion; it makes the retained material a theory only when a
-   later route reads it.
+   is a model assertion; record whether a later route reads it, since it can
+   guide diagnosis only then.
 
 ### 5. Run both lenses
 
