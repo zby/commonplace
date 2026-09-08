@@ -17,7 +17,7 @@ source_notes:
   - kb/notes/retaining-the-episode-keeps-a-distilled-rule-re-derivable.md
   - kb/notes/the-bitter-lesson-selects-production-methods-not-representational.md
   - kb/notes/the-deployed-system-not-the-model-is-the-unit-of-learning.md
-  - kb/notes/theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md
+  - kb/notes/theory-refinement-may-improve-sample-efficiency-under-shifts.md
 ---
 # The Automated Software House as the Unit of Training
 
@@ -362,7 +362,7 @@ the house. Measure that misdirection separately from recovery after revision,
 because rapid recovery can erase the initial loss in a whole-run score.
 
 **The sample-efficiency hypothesis.** Correct theory may [reduce the new
-observations needed to adapt](../notes/theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md)
+observations needed to adapt](../notes/theory-refinement-may-improve-sample-efficiency-under-shifts.md)
 by letting one discovered dependency change checking decisions for several
 files. Count inspected new cases and feedback used in recovery, alongside
 missed defects, unnecessary checks, collateral regressions, rollback, and total

@@ -7,7 +7,7 @@ tags: [self-improving-systems]
 
 # Three 2026 harnesses retain rules or weights, not a revisable theory
 
-Three systems reported in August 2026 each carry two of three independent properties of a learning system — [theory-mediated](../theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md), [reflective](../definitions/reflective-system.md), and [self-improving](../definitions/self-improving-system.md) — and lack the third in an instructive way. The bounded inference is this: the two artifact-based loops (Prime Agent, Recuris) are reflective and self-improving but not theory-mediated, because what they retain is a rule set whose reasons are not retained, so improvement can accumulate but a revision to one rule reaches none of the others that share its unstated reason; the weight-based system (Apodex 1.1) is not a deployment-time loop at all and marks the parametric end of the [representational-form](../definitions/representational-form.md) axis. The inference rests on the papers' own descriptions of their retained state, quoted below, not on reproduced results.
+Three systems reported in August 2026 each carry two of three independent properties of a learning system — [theory-mediated](../theory-refinement-may-improve-sample-efficiency-under-shifts.md), [reflective](../definitions/reflective-system.md), and [self-improving](../definitions/self-improving-system.md) — and lack the third in an instructive way. The bounded inference is this: the two artifact-based loops (Prime Agent, Recuris) are reflective and self-improving but not theory-mediated, because what they retain is a rule set whose reasons are not retained, so improvement can accumulate but a revision to one rule reaches none of the others that share its unstated reason; the weight-based system (Apodex 1.1) is not a deployment-time loop at all and marks the parametric end of the [representational-form](../definitions/representational-form.md) axis. The inference rests on the papers' own descriptions of their retained state, quoted below, not on reproduced results.
 
 ## Prime Agent: reflective and self-improving, with no gate and no theory
 
@@ -29,13 +29,13 @@ The working-memory and trigger components are reflective control state, and the 
 
 Read together, the three sharpen what a theory-mediated arrangement is for. Prime Agent has the persistence machinery and no evaluator. Recuris has the evaluator and the persistence, and its retained state is a set of rules whose reasons are not retained, so improvement accumulates without any handle for revising it as a whole. Apodex retains everything in a form that cannot be addressed at all. The missing ingredient in the two artifact-based systems is not more retention or a better gate but a retained object from which the patches are derived and against which the next failure is read.
 
-The limit is symmetrical. Nothing here shows that adding such an object would have improved either system; the [theory-mediated learning conjecture](../theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md) predicts a gain only under structured shifts and only when the evaluator selects for reach rather than fit, and the one system in this project that runs the arrangement has [not yet traced a later improvement to an earlier retained theory](./commonplace-as-a-reflective-system.md). The comparison locates the three systems on the grid; it does not rank them.
+The limit is symmetrical. Nothing here shows that adding such an object would have improved either system; the [theory-mediated learning conjecture](../theory-refinement-may-improve-sample-efficiency-under-shifts.md) predicts a gain only under structured shifts and only when the evaluator selects for reach rather than fit, and the one system in this project that runs the arrangement has [not yet traced a later improvement to an earlier retained theory](./commonplace-as-a-reflective-system.md). The comparison locates the three systems on the grid; it does not rank them.
 
 ---
 
 Relevant Notes:
 
-- [Theory-mediated learning may improve sample efficiency under structured shifts](../theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md) — defined-in: the theory-mediated property and the rule-versus-theory contrast the grid turns on
+- [Theory-mediated learning may improve sample efficiency under structured shifts](../theory-refinement-may-improve-sample-efficiency-under-shifts.md) — defined-in: the theory-mediated property and the rule-versus-theory contrast the grid turns on
 - [Reflective system](../definitions/reflective-system.md) — defined-in: the reflective property
 - [Self-improving system](../definitions/self-improving-system.md) — defined-in: the self-improving property
 - [Representational form](../definitions/representational-form.md) — defined-in: the axis on which Apodex sits at the parametric end

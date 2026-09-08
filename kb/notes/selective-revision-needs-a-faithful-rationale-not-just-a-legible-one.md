@@ -7,7 +7,7 @@ tags: [learning-theory, discovery, evaluation]
 
 # Selective revision needs a faithful rationale, not just a legible one
 
-Under structured shifts, a retained theory with genuine explanatory reach can be worth more than an equivalent pile of cases because [one theory-level revision can change many downstream conclusions at once](./theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md). That operation needs something the theory's claim does not contain. To narrow "skip integration tests when only documentation files changed" at the premise that actually broke, rather than deleting it, the system must have on hand *why* it held the theory: which observations supported it, which assumptions it rested on, where it was expected to stop. That record is the theory's **rationale**.
+Under structured shifts, a retained theory with genuine explanatory reach can be worth more than an equivalent pile of cases because [one theory-level revision can change many downstream conclusions at once](./theory-refinement-may-improve-sample-efficiency-under-shifts.md). That operation needs something the theory's claim does not contain. To narrow "skip integration tests when only documentation files changed" at the premise that actually broke, rather than deleting it, the system must have on hand *why* it held the theory: which observations supported it, which assumptions it rested on, where it was expected to stop. That record is the theory's **rationale**.
 
 So the rationale is not commentary attached to a theory. It is the surface revision operates on. A theory without one can be deleted and re-derived; it cannot be repaired.
 
@@ -42,7 +42,7 @@ This gives the property an operational shape rather than a rhetorical one: edit 
 
 Relevant Notes:
 
-- [Theory-mediated learning may improve sample efficiency under structured shifts](./theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md) — grounds: the selective-revision advantage this note states the condition on
+- [Theory-mediated learning may improve sample efficiency under structured shifts](./theory-refinement-may-improve-sample-efficiency-under-shifts.md) — grounds: the selective-revision advantage this note states the condition on
 - [Reflection makes retained lessons second-order: a lesson can reject or rescope a prior commitment](./reflection-makes-retained-lessons-second-order.md) — mechanism: the reject/rescope/revise operations a rationale makes available
 - [Abstract an experience into a lesson only when you can state where the lesson stops](./abstract-an-experience-only-when-you-can-state-the-boundary.md) — grounds: the applicability conditions a rationale has to record for rescoping to have a target
 - [Reach-assessment](./definitions/reach-assessment.md) — grounds: the capability that tells a sound rationale from a plausible one, which reading does not supply

@@ -25,7 +25,7 @@ Relevant Notes:
 - [First-principles reasoning selects for explanatory-reach](./first-principles-reasoning-selects-for-explanatory-reach-over.md) — grounds: the reach axis — why a governing theory must be explicit to generalise beyond its source cases
 - [Only explicit retention is durable, writable, and addressable](./only-explicit-retention-is-durable-writable-and-addressable.md) — grounds: the addressability axis — the form-level trade space this note defers to
 - [Verifiability gradient](./verifiability-gradient.md) — grounds: the verifiability axis across forms, from loose natural language to deterministic code
-- [Theory-mediated learning may improve sample efficiency under shifts](./theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md) — grounds: the sample-efficiency axis foregrounded by the sparse deployment loop
+- [Theory-mediated learning may improve sample efficiency under shifts](./theory-refinement-may-improve-sample-efficiency-under-shifts.md) — grounds: the sample-efficiency axis foregrounded by the sparse deployment loop
 - [Representational form](./definitions/representational-form.md) — defines: the three forms this note ranges over and how form sets the default review method
 - [Treat continual learning as representational-form coevolution](./treat-continual-learning-as-representational-form-coevolution.md) — extends: owns the general cross-form trade space and how the parametric, natural-language, and symbolic loops relate
 - [The deployed system, not the model alone, is the unit of learning](./the-deployed-system-not-the-model-is-the-unit-of-learning.md) — sharpens: the unit those cross-form writes range over is the whole deployed system, not the model alone

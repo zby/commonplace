@@ -91,7 +91,7 @@ Relevant Notes:
 - [World models assess explanatory-reach through action-conditioned prediction](../world-models-assess-explanatory-reach-through-action-conditioned.md) — extends: develops the distributed-parametric route and its shift boundary
 - [First-principles reasoning selects for explanatory-reach over adaptive fit](../first-principles-reasoning-selects-for-explanatory-reach-over.md) — grounds: supplies the four-part negative test for natural-language commitments
 - [Abstract an experience into a lesson only when you can state where the lesson stops](../abstract-an-experience-only-when-you-can-state-the-boundary.md) — grounds: identifies boundary selection as judgment rather than mechanical derivation
-- [Theory-mediated learning may improve sample efficiency under structured shifts](../theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md) — extends: makes reach-assessment the load-bearing condition of the proposed sample-efficiency payoff
+- [Theory-mediated learning may improve sample efficiency under structured shifts](../theory-refinement-may-improve-sample-efficiency-under-shifts.md) — extends: makes reach-assessment the load-bearing condition of the proposed sample-efficiency payoff
 
 Derived into:
 

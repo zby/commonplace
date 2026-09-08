@@ -8,7 +8,7 @@ tags: [foundations, self-improving-systems]
 # Theory-mediated self-improvement needs interpretation, retention, and independent read-back
 
 [Theory-mediated learning may improve sample efficiency under structured
-shifts](./theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md)
+shifts](./theory-refinement-may-improve-sample-efficiency-under-shifts.md)
 regardless of what its theories describe. Reflective theory refinement is the
 narrower case in which the retained theory describes
 behavior-determining organization inside the declared system boundary and
@@ -174,7 +174,7 @@ empirical.
 
 Relevant Notes:
 
-- [Theory-mediated learning may improve sample efficiency under structured shifts](./theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md) — grounds: supplies the general conjecture specialized here
+- [Theory-mediated learning may improve sample efficiency under structured shifts](./theory-refinement-may-improve-sample-efficiency-under-shifts.md) — grounds: supplies the general conjecture specialized here
 - [Reflective system](./definitions/reflective-system.md) — defined-in: supplies the causal self-representation condition for reflective membership
 - [Reach-assessment](./definitions/reach-assessment.md) — contrasts: names the epistemic judgment kept separate from semantic interpretation
 - [Reflection buys addressability](./reflection-buys-addressability.md) — grounds: explains the retention affordance without supplying correctness

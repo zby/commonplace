@@ -71,7 +71,7 @@ the theory with a plausible wrong one adds a particular pattern of errors
 relative to a matched baseline, bending successive changes in the direction
 that the wrong theory predicts, as
 [broad negative transfer from a broad wrong
-theory](./theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md)
+theory](./theory-refinement-may-improve-sample-efficiency-under-shifts.md)
 predicts. If that effect appears beyond the baseline's existing biases,
 replacement discriminates better than withholding alone: the change in error
 pattern would show how the theory was steering. The prediction has not been
@@ -192,5 +192,5 @@ Relevant Notes:
 - [Open-ended improvement must allocate search before decisive evaluation is available](./open-ended-improvement-allocates-search-before-evaluation.md) — grounds: establishes the prior allocation problem that makes program theory useful before the strongest evidence exists
 - [A failure explanation becomes search control only when it changes a later branch decision](./failure-explanation-changes-later-branch-decisions.md) — mechanism: makes outcome read-back operative by requiring retained failure interpretation to change a later branch choice
 - [A search controller is tested by what it brings to stronger evaluation](./a-search-controller-is-tested-by-what-it-brings-to-stronger-evaluation.md) — extends: supplies a matched downstream evaluation design for separating theory-guided routing from generic search without assuming exhaustive counterfactual search
-- [Theory-mediated learning may improve sample efficiency under shifts](./theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md) — extends: predicts the directional negative transfer that makes a wrong-theory arm the discriminating test
+- [Theory-mediated learning may improve sample efficiency under shifts](./theory-refinement-may-improve-sample-efficiency-under-shifts.md) — extends: predicts the directional negative transfer that makes a wrong-theory arm the discriminating test
 - [The 2026-08-30 Commonplace revision used retained theory to guide computational search](./evidence/commonplace-revision-used-theory-guided-computational-search.md) — evidenced-by: records one human-inclusive case while preserving the missing ablation and longitudinal-track-record limits

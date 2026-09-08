@@ -31,7 +31,7 @@ Classical theory refinement is therefore an instance of this term, and the
 [software house regime](../../articles/the-software-house-as-the-unit-of-training.md)
 is theory refinement with different fillers in the same slots. The payoff is
 argued in [theory-mediated learning may improve sample efficiency under
-structured shifts](../theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md).
+structured shifts](../theory-refinement-may-improve-sample-efficiency-under-shifts.md).
 
 ## Scope
 
@@ -91,7 +91,7 @@ theory refinement*, formerly *theory-mediated system learning*, composes
 
 Relevant Notes:
 
-- [Theory-mediated learning may improve sample efficiency under structured shifts](../theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md) — extends: the payoff conjecture and the test that would decide it
+- [Theory-mediated learning may improve sample efficiency under structured shifts](../theory-refinement-may-improve-sample-efficiency-under-shifts.md) — extends: the payoff conjecture and the test that would decide it
 - [Theory-mediated self-improvement needs interpretation, retention, and independent read-back](../theory-mediated-self-improvement-needs-interpretation-and-retention.md) — extends: the evidence ladder whose first rung this definition names
 - [Disconnected witnesses do not establish a full causal path through theory](../disconnected-witnesses-do-not-establish-a-theory-mediated-path.md) — extends: what separate links must share before they compose into one path
 - [Citing retained theory at the decision point is a mediation trace](../citing-retained-theory-at-the-decision-point-is-a-mediation-trace.md) — mechanism: the cheapest checkable evidence for mediation

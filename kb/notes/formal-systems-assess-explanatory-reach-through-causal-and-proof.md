@@ -50,7 +50,7 @@ Relevant Notes:
 - [Reach-assessment](./definitions/reach-assessment.md) — defined-in: vocabulary this note develops into causal and proof obligations
 - [Representational form](./definitions/representational-form.md) — grounds: explains why natural-language, symbolic, and parametric commitments expose different review methods
 - [Gödel machines are a proof-governed case of reflective self-modification](./goedel-machines-are-a-proof-governed-case-of-self-modification.md) — exemplifies: proof-gated acceptance of a symbolic self-rewrite
-- [Theory-mediated learning may improve sample efficiency under structured shifts](./theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md) — extends: puts the formal routes developed here alongside the natural-language route, as two ways of discharging the same assessment
+- [Theory-mediated learning may improve sample efficiency under structured shifts](./theory-refinement-may-improve-sample-efficiency-under-shifts.md) — extends: puts the formal routes developed here alongside the natural-language route, as two ways of discharging the same assessment
 - [Warranted autonomy is bounded by oracle domain](./warranted-autonomy-is-bounded-by-oracle-domain.md) — grounds: formal guarantees remain bounded by the oracle or axiomatization that produces them
 - [Schmidhuber, Gödel Machines](../sources/goedel-machines-schmidhuber.ingest.md) — evidenced-by: proof-gated host architecture and its unprovable-improvement limitation
 - [Causal inference using invariant prediction](../sources/causal-inference-using-invariant-prediction.ingest.md) — evidenced-by: invariance across environments and interventions as a causal acceptance signal

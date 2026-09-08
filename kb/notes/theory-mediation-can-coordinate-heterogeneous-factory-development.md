@@ -154,5 +154,5 @@ Relevant Notes:
 - [Holding a program theory means sustaining coherent search under delayed feedback](./program-theory-sustains-search-under-delayed-feedback.md) — grounds: explains why a partial and fallible theory can guide search, backtracking, and revision
 - [Factory-learning mechanisms should be compared on the same causal job](./factory-learning-mechanisms-should-be-compared-on-the-same-causal-job.md) — grounds: separates the minimal update relation from the stronger coherent-modification target
 - [Theory-mediated self-improvement needs interpretation and retention](./theory-mediated-self-improvement-needs-interpretation-and-retention.md) — grounds: supplies the causal mediation and retained-revision requirements
-- [Theory-mediated learning may improve sample efficiency under shifts](./theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md) — extends: states the structured-transfer conjecture
+- [Theory-mediated learning may improve sample efficiency under shifts](./theory-refinement-may-improve-sample-efficiency-under-shifts.md) — extends: states the structured-transfer conjecture
 - [Natural-language project state specializes search heuristics](./natural-language-project-state-specializes-search-heuristics.md) — mechanism: explains one way explicit theory can alter an LLM's proposal distribution
