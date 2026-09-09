@@ -75,6 +75,8 @@ allOf:
               type: string
               minLength: 1
           code_revisions: false
+          learning_claims:
+            const: true
           secondary_sources:
             type: array
             minItems: 1
@@ -121,3 +123,23 @@ allOf:
         headings:
           contains:
             const: "## Code Grounding"
+  - if:
+      properties:
+        frontmatter:
+          required:
+            - learning_claims
+    then:
+      properties:
+        headings:
+          contains:
+            const: "## Learning Claims (our opinion)"
+  - if:
+      properties:
+        headings:
+          contains:
+            const: "## Learning Claims (our opinion)"
+    then:
+      properties:
+        frontmatter:
+          required:
+            - learning_claims

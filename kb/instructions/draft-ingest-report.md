@@ -50,9 +50,11 @@ whole artifact rather than assuming the listed failures are exhaustive.
 
 The snapshot and connect report are the complete source and discovery inputs.
 Do not browse the web, rerun connection discovery, or run broad KB searches.
-You may open a durable local artifact explicitly named in the connect report
-only when needed to verify a connection you may keep. Never follow or cite a
-local snapshot link in the durable report.
+Read a conditional instruction linked below when its trigger applies, and any
+definition note that instruction requires. You may also open a durable local
+artifact explicitly named in the connect report only when needed to verify a
+connection you may keep. Never follow or cite a local snapshot link in the
+durable report.
 
 ## Procedure
 
@@ -125,11 +127,19 @@ local snapshot link in the durable report.
    material consequence into `Connections Found`, `Extractable Value`, or
    `Limitations (our opinion)`.
 
-5. Write `output_path` under the ingest-report contract:
+5. If the source's subject or mechanism is learning or adaptation, including
+   a conceptual account with no empirical results, read and apply
+   [Assess learning claims during ingest](./assess-learning-claims-during-ingest.md).
+   Otherwise skip this step and omit the `Learning Claims (our opinion)`
+   section.
+
+6. Write `output_path` under the ingest-report contract:
 
    - classify the source and identify the author signal;
    - summarize it in one decision-oriented paragraph;
    - state its compact role in the current KB;
+   - when step 5 applied, write `Learning Claims (our opinion)` after
+     `Connections Found` and set `learning_claims: true`;
    - list three to seven goal-relative, connection-relative value items, each
      with an effort tag;
    - state genre-appropriate limitations as our opinion; and
@@ -141,7 +151,8 @@ local snapshot link in the durable report.
    Put the snapshot's retained `source`, `captured`, `capture`, optional
    `capture_scope` and `doi`, and flat adapter fields in frontmatter along with
    `snapshot_sha256`. Set `genre` from the closer reading. Record a supplied
-   `occasion` verbatim in frontmatter; omit the field when it is `none`. Do
+   `occasion` verbatim in frontmatter; omit the field when it is `none`. Set
+   `learning_claims: true` when step 5 applied; omit the field otherwise. Do
    not create a `capture_metadata` field. Do not write the removed
    `source_snapshot` or `code_revisions` fields. Do not link to `.snapshots/` or cite a machine-local
    checkout such as `related-systems/`.
@@ -164,7 +175,7 @@ local snapshot link in the durable report.
    classifications, source citations, and evidence boundaries. State what code
    was executed. Do not turn static inspection into a reproduction claim.
 
-6. Recompute the snapshot checksum after writing and require it still to equal
+7. Recompute the snapshot checksum after writing and require it still to equal
    `snapshot_sha256`. Run:
 
    ```bash
@@ -180,7 +191,7 @@ local snapshot link in the durable report.
    connect report, a connected artifact, an index, a collection file, or any
    other library artifact.
 
-7. Return only the validation result and the report's single recommended next
+8. Return only the validation result and the report's single recommended next
    action. Do not return a second analysis or an alternative draft in
    conversation.
 

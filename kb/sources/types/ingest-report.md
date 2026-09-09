@@ -55,6 +55,11 @@ Assess fit relative to the installed KB's goals, local collection contracts, and
   inspected implementation repository. Each item has
   `role: implementation` and a GitHub commit URL containing the full
   40-character SHA. Do not record machine-local checkout paths.
+- When the source's subject or mechanism is learning or adaptation, set
+  `learning_claims: true` and write the `Learning Claims (our opinion)`
+  section; the field and the section are required together. Omit the field
+  otherwise. It marks the ingest for search over learning sources:
+  `rg -l "^learning_claims: true" kb/sources/`.
 - Do not use the removed `original_snapshot`, `source_snapshot`, or
   `code_revisions` path fields.
 - Link to durable KB artifacts and external sources in the report body. Never
@@ -83,6 +88,13 @@ adopted; a collection-local snapshot type does not extend this contract.
   retains exact primary-source wording and human-resolvable locations so a
   later reviewer can judge ordinary source uses without the local snapshot.
 - `Connections Found` summarizes the connection discovery findings and explains how the source fits the current KB, as compact prose naming the source's role (for example: anchor, technical basis, counterpoint, legal disposition, public statement, limitation) rather than a transcribed candidate list. Drop weak, speculative, or duplicate edges; keep only settled, durable judgments. If no casebook notes exist yet, say so plainly instead of substituting a full map of relationships to other already-captured sources, or framing the section as prospective connections for notes that do not exist yet. The generated connect report is working context only; do not cite it, link to it, or name its path in the ingest report.
+- `Learning Claims (our opinion)` is required when the source's subject or
+  mechanism is learning or adaptation, including conceptual accounts, and is
+  omitted otherwise. It is paired with the `learning_claims: true` field. It states the source's mechanism on its own terms, maps
+  its important ideas onto Commonplace concepts, and says what the source
+  adds to, supports, or puts in question in the current account, with each
+  judgment held at the strength of its evidence. Leave partial or missing
+  mappings explicit rather than forcing a classification.
 - `Extractable Value` lists three to seven items, ordered by reach and novelty relative to the installed KB's goals and existing KB connections. When `occasion` is set, items bearing on it come first; if the source does not bear on it, one item says so.
 - `Limitations (our opinion)` states where the source should not be trusted or
   over-generalized. When `capture_scope` is not `full-source`, state what the
@@ -92,7 +104,8 @@ adopted; a collection-local snapshot type does not extend this contract.
 `Classification`, `Summary`, `Quotes`, and `Limitations (our opinion)` are
 observation sections. They follow the general contract regardless of
 `occasion`, because later readers reuse them for jobs the occasion did not
-anticipate.
+anticipate. `Learning Claims (our opinion)`, when present, likewise follows
+the general contract regardless of `occasion`.
 
 ## Quotes Shape
 
@@ -213,4 +226,14 @@ Add this section after `Summary`:
 ## Code Grounding
 
 {Pinned repositories, claim-bearing source citations, inspection result, and execution status}
+```
+
+When the source's subject or mechanism is learning or adaptation, add the
+frontmatter field `learning_claims: true` and this section after
+`Connections Found`:
+
+```markdown
+## Learning Claims (our opinion)
+
+{The source's mechanism on its own terms, its mapping onto Commonplace concepts, and what it adds to, supports, or puts in question, each at the strength of its evidence}
 ```
