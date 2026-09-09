@@ -148,12 +148,21 @@ Open-endedness is a demand on the refinement machinery before it is a demand
 on anything else. Classical machinery is family-fixed: proof over Horn clauses
 derives consequences, four named operators repair, training accuracy
 evaluates, and each works on one representation. A theory from a family
-nobody built machinery for cannot enter that loop at all. The only refinement
-machinery available that is not fixed per family is a model that interprets.
-The first step of the expansion is therefore **substituting a general
-interpreter for family-fixed symbolic machinery**. Natural-language form
-follows from the substitution, because the interpreter consumes prose. Form
-is not a separate departure.
+nobody built machinery for cannot enter that loop at all. Two kinds of
+machinery are not fixed per family. One is a
+[universal theory manipulator](./universal-theory-manipulator.md): a
+Turing-complete representation language whose consequences are computed by
+execution or proof. It is universal in expressivity only. It admits a theory
+once the theory is written in its language, and it supplies no search bias,
+so refinement in it is exact but has no tractability guarantee. The other is
+a general interpreter, a model. It admits theories before a formal language,
+variables, or acceptance test exist for them, and it supplies bias from its
+weights, at the cost of consequences that are interpreted rather than
+computed. The first step of the expansion is **taking the interpreter**, and
+taking it for the first reason: open-ended demands arrive as theories that
+have no formalization yet. Natural-language form follows from that choice,
+because the interpreter consumes prose. It does not follow from open-endedness
+alone, and form is not a separate departure.
 
 The substitution moves the three internal production roles inside at once,
 and it weakens what each of them guaranteed.
@@ -167,12 +176,22 @@ and it weakens what each of them guaranteed.
 The remedy column is the second half of the step. Where reliability matters,
 the interpreted part is moved across the
 [codification](../../notes/definitions/codification.md) boundary into a
-schema, validator, evaluator, or index. That codified part is family-specific:
+schema, validator, evaluator, or index, which is to say onto the manipulator's
+side, as a program. That codified part is family-specific:
 built for the family that needed it and useless for the next. It is the
 machinery the classical systems had from the start, now constructed on
 demand, after the family arrived, from evidence about it. The three theory
 properties in section 3 are recovered per family this way. Section 5 turns the
 construction into the software house.
+
+The manipulator end is a limit, not a destination. In the fully formal case,
+worked out in the manipulator draft from Schmidhuber's Gödel machine, a theory
+is never revised against evidence: observations enter as theorems and change
+conclusions drawn under the axioms, while the axioms change only by proof from
+themselves, and a contradiction with an axiom is an inconsistency rather than
+a repair signal. A builder that reached the end would keep derivation and lose
+refinement. Codifying back therefore moves parts toward the limit without the
+whole theory ever arriving there.
 
 Two things about the step are worth separating from it.
 
@@ -231,11 +250,16 @@ where consequences must be computed rather than interpreted, which is where
 [the scheduler-model separation](../../notes/scheduler-llm-separation-exploits-an-error-correction-asymmetry.md)
 already places exact state and checks.
 
-**Refuter.** A fixed harness general enough that new families never require
-machinery changes. In the terms of section 4, this is the position that the
-interpreter suffices and nothing needs codifying back, so the empirical
-question is how much of what the interpreter does must be codified, and for
-which families. The existing
+**Refuters.** Two positions refute the claim, one per candidate in section
+4. *Interpreter suffices*: a fixed harness around a general interpreter
+handles every new family and nothing needs codifying back. *Manipulator
+suffices*: every new family arrives already formalized, or is formalized by
+fixed machinery, so the builder never writes family-specific programs. Against
+the second, Schmidhuber's closing question, which generally useful theorems a
+person should hand-install as initial bias, is the construction's own author
+placing the formalization and bias for a family outside the formal machinery.
+The empirical question is how much of what the interpreter does must be
+codified, and for which families. The existing
 [open-domain note](../../notes/an-open-domain-theory-builder-becomes-a-software-house-when-new-domains-require-production-machinery-changes.md)
 states this refuter and should remain the claim's home; the reorder promotes
 it from a side link to the load-bearing step and swaps *domain* for *family*

@@ -40,6 +40,10 @@ definition.
   definition of the open-ended automated theory builder, the role table that
   replaces the ladder, the derived software-house claim, the discriminating
   test, and the choices left to the operator.
+- [Universal theory manipulator](./universal-theory-manipulator.md) — draft
+  definition of the fully codified limit of refinement machinery, worked from
+  the Gödel machine paper; the second refuter of the derived claim and the
+  statement of why the limit holds no refinable theory.
 
 ## What closes the workshop
 
@@ -53,6 +57,10 @@ definition.
    decline. Reframes are executed in their own commits, not in this workshop.
 4. The discriminating test named in the proposal has run once, or its
    deferral is recorded with the reason.
+5. The universal theory manipulator definition is accepted into
+   `kb/notes/definitions/`, or declined with a recorded reason. Acceptance
+   requires the Gödel machine ingest re-pinned to the 2026-09-09 snapshot so
+   the draft's Section 6.3 quote can be retained verbatim.
 
 ## Inventory of artifacts the reorder touches
 
@@ -73,12 +81,15 @@ they are decided.
 | `kb/notes/a-fixed-model-house-must-write-the-procedures-for-each-new-theory.md` | house needs procedures per theory | open; states the machinery gap from the house side |
 | `kb/notes/open-ended-theory-learning-and-factory-learning-close-the-same.md` | carries a factory-to-house TODO | open |
 | `kb/notes/broad-software-demands-create-pressure-for-agentic-factory-development.md` | carries a factory-to-house TODO | open |
+| `kb/sources/goedel-machines-schmidhuber.ingest.md` | pinned to a `pdf-read` snapshot whose hash matches no existing file; page-based citations | open: bounded re-ingest to `kb/sources/.snapshots/godel-machines-self-referential-universal-problem-solvers.md` (sha256 579cdb79…a6b4, arXiv v5, pdftotext, no page markers) and retain the quotes the manipulator draft needs |
+| `kb/notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md` | reads the machine as a change loop; carries "snapshot required" markers | open: markers clear once the ingest is re-pinned; content unaffected by the manipulator draft |
 
 ## Evaluation boundary
 
 Evidence is the local KB at commit `c4ef2e2e` plus the two classical
-theory-refinement ingests (EITHER, FORTE). No new external search was run for
-the framing. The discriminating test in the proposal uses this repository's
+theory-refinement ingests (EITHER, FORTE), and from 2026-09-09 the full-text
+snapshot of the Gödel machine paper (arXiv cs/0309048 v5) under
+`kb/sources/.snapshots/`. No new external search was run for the framing. The discriminating test in the proposal uses this repository's
 own git history as its corpus; a result there bears on Commonplace as one
 witness, not on the derived claim in general.
 

@@ -79,8 +79,11 @@ sources. The first forces the second; the third is independent of both.
   revising with procedures fixed to one representation: proof over Horn
   clauses, four named operators, consistency with supplied cases. A theory
   from a family for which no such procedures were built cannot enter that
-  loop. The KB allows a general interpreter, a model, to perform those
-  functions, so that such a theory can. The substitution has a cost, stated
+  loop. A Turing-complete symbolic language with program search is also not
+  fixed per family, but it admits a theory only once the theory is written in
+  it. The KB allows a general interpreter, a model, to perform those
+  functions, so that a theory can enter before its formalization exists. The
+  substitution has a cost, stated
   in the next section: consequences become interpreted rather than computed.
   Its remedy is to codify parts back into a schema, validator, or test, which
   constructs family-specific machinery after the family arrives rather than
