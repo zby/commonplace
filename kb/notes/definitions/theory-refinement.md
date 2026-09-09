@@ -1,5 +1,5 @@
 ---
-description: "Definition — theory refinement revises an existing fallible explicit theory against empirical cases, seeking improved fit with limited changes; the KB extends its representation and subject"
+description: "Definition — theory refinement revises an existing fallible explicit theory against empirical cases, seeking improved fit with limited changes; the KB departs from the classical systems in machinery, hence in form, and in subject"
 type: kb/types/definition.md
 tags: [foundations, self-improving-systems, learning-theory]
 ---
@@ -14,8 +14,9 @@ evidence and behavior change, and here the model is a theory. The KB uses the
 term in the established sense of
 [Ourston and Mooney](../../sources/theory-refinement-analytical-empirical-methods.ingest.md)
 and [Richards and Mooney](../../sources/automated-refinement-first-order-horn-clause-domain-theories.ingest.md),
-and widens what counts as a theory beyond what those systems could compute.
-The widening is stated below as a departure, with what it changes.
+and departs from those systems in the machinery that performs the operation,
+and consequently in what counts as a theory. The departures are stated below,
+with what each changes.
 
 ## The classical object
 
@@ -67,15 +68,28 @@ strength of the first: where a defined consumer fixes what the theory implies,
 a contradiction is a fact; where it does not, a contradiction is an
 interpretation. The classical systems sat in the symbolic cell, with both axes
 on their side. A natural-language theory keeps localization and gives up
-assigned consequences, which is the exact content of the form departure below.
+assigned consequences, which is what the machinery departure below costs.
 
 ## Departures
 
-Two widenings are the KB's own and should not be read back into the sources:
+Three departures are the KB's own and should not be read back into the
+sources. The first forces the second; the third is independent of both.
 
-- **Form.** The theory may be natural language, a program, a causal model, or a
-  mixture, not only a rule set. [Representational form](./representational-form.md)
-  fixes the assessment route, not whether the loop applies.
+- **Machinery.** The classical systems performed deriving, localizing, and
+  revising with procedures fixed to one representation: proof over Horn
+  clauses, four named operators, consistency with supplied cases. A theory
+  from a family for which no such procedures were built cannot enter that
+  loop. The KB allows a general interpreter, a model, to perform those
+  functions, so that such a theory can. The substitution has a cost, stated
+  in the next section: consequences become interpreted rather than computed.
+  Its remedy is to codify parts back into a schema, validator, or test, which
+  constructs family-specific machinery after the family arrives rather than
+  before.
+- **Form.** Because the interpreter consumes prose, the theory may be natural
+  language, a program, a causal model, or a mixture, not only a rule set. This
+  follows from the machinery departure and is not a separate one.
+  [Representational form](./representational-form.md) fixes the assessment
+  route, not whether the loop applies.
 - **Subject.** The theory may describe the learner's own behavior-determining
   organization. The classical papers say their theory is external.
   **Reflective theory refinement** is theory refinement whose theory is a
@@ -135,7 +149,8 @@ for it is snapshotted yet.
   evidence or shared assumptions can help diagnosis and coordinated revision;
   membership depends on the refinement operation.
 - **Any machinery.** An LLM, a program, or a mixture may do the deriving,
-  localizing, and revising. Membership is by operation, not by machinery.
+  localizing, and revising, as the machinery departure allows. Membership is
+  by operation, not by machinery.
 - **Not a success term.** A false theory refines as readily as a true one.
   Whether a theory earns its scope is [reach-assessment](./reach-assessment.md),
   which the loop neither supplies nor presupposes. Among revisions that fit the
