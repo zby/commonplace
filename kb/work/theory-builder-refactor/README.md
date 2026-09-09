@@ -44,6 +44,13 @@ definition.
   definition of the fully codified limit of refinement machinery, worked from
   the Gödel machine paper; the second refuter of the derived claim and the
   statement of why the limit holds no refinable theory.
+- [Theory refinement as an interface](./theory-refinement-interface.md) —
+  working document: the five operations (derive, compare, locate, revise,
+  evaluate) as the contract a theory plus its machinery implements, mapped
+  onto the definition's three properties; per-implementation table; the
+  addressability scale; apply for the builder; which classical results
+  transfer and which only as hypotheses; seven open questions. Stays here
+  until worked out.
 
 ## What closes the workshop
 
