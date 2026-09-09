@@ -228,6 +228,7 @@ plugins:
         'notes/theory-mediated-learning-may-improve-sample-efficiency-under-shifts.md': 'notes/theory-refinement-may-improve-sample-efficiency-under-shifts.md'
         'notes/theory-mediated-self-improvement-needs-interpretation-and-retention.md': 'notes/reflective-theory-refinement-needs-interpretation-and-retention.md'
         'notes/theory-mediated-system-learning-combines-runtime-self-modeling-with-theory-refinement.md': 'notes/reflective-theory-refinement-has-three-separate-lineages.md'
+        'notes/theory-mediation-can-coordinate-heterogeneous-factory-development.md': 'notes/addressable-theory-can-coordinate-heterogeneous-factory-development.md'
         'notes/tool-loop-index.md': 'notes/tool-loop-README.md'
         'notes/trace-derived-learning-techniques-in-related-systems.md': 'agent-memory-systems/README.md'
         'notes/traditional-debugging-intuitions-break-when-tool-loops-can-recover.md': 'notes/final-task-success-does-not-establish-intended-path-health.md'
