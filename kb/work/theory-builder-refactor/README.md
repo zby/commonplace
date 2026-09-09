@@ -51,6 +51,12 @@ definition.
   addressability scale; apply for the builder; which classical results
   transfer and which only as hypotheses; seven open questions. Stays here
   until worked out.
+- [Note draft: theory refinement is an interface of five operations](./note-draft-theory-refinement-is-an-interface.md)
+  — a cp-skill-write draft produced before the operator held the framing in
+  the workshop; kept as a candidate because it adds a transfer criterion (a
+  classical result transfers by restatement only when its derivation stays
+  inside the five operations) and a per-part addressability profile. To be
+  merged with or dropped against the working document above.
 
 ## What closes the workshop
 
