@@ -247,7 +247,7 @@ connected path](./reflective-theory-refinement-needs-interpretation-and-retentio
 - The model names and proposed mappings are research leads. They require
   source grounding before they support a design decision or historical claim.
 - Most candidate families assume a fixed search space or exact failure signal.
-  A theory-mediated system may revise the representation, successor generator,
+  A theory-refining system may revise the representation, successor generator,
   evaluator, and search space together.
 - Budgeted search does not by itself establish that the retained state is a
   theory, that a failure was attributed correctly, or that later work consumed

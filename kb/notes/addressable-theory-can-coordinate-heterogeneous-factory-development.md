@@ -5,7 +5,7 @@ traits: [title-as-claim, has-comparison]
 tags: [foundations, learning-theory, self-improving-systems]
 ---
 
-# Theory mediation can coordinate heterogeneous factory development
+# An addressable theory can coordinate heterogeneous factory development
 
 > TODO! remove or update to use software house instead of software factory
 
@@ -51,7 +51,7 @@ The relevant self-knowledge is therefore not a complete theory of the model's in
 
 ## A useful theory can be weak and fallible
 
-Theory mediation does not require a complete account that deductively yields the right factory change. Real software development commonly proceeds from partial and sometimes mistaken understanding. A developer uses that understanding to choose a promising change, inspects the result, encounters conflicts, backtracks, and revises both the program and the understanding of it.
+Guiding factory development by a theory does not require a complete account that deductively yields the right factory change. Real software development commonly proceeds from partial and sometimes mistaken understanding. A developer uses that understanding to choose a promising change, inspects the result, encounters conflicts, backtracks, and revises both the program and the understanding of it.
 
 A computational theory-holder should be judged by the same longitudinal standard. A weak theory can still be operative when it narrows search, identifies commitments worth preserving, interprets failure, or tells recovery what to restore or revise. Backtracking is not evidence that theory was absent; it is one way a fallible theory remains corrigible under incomplete information.
 
@@ -79,13 +79,13 @@ The theory can shape a generate-and-verify process by controlling:
 
 Blind or stochastic exploration can remain inside the process. A learned policy can propose candidates. Program search can construct executable machinery. Code can perform exact transformations and tests. Trajectories can preserve evidence about earlier decisions. These mechanisms may construct, revise, apply, compile, or implicitly embody project theory rather than simply compete with it.
 
-The theory-mediated claim is causal: addressable theory changes search, diagnosis, evaluation, recovery, or revision. The serious functional rival is a system that sustains coherent modification without any project-specific state performing the mapping, justification, and integration functions assigned to program theory.
+The claim is causal: an addressable theory changes search, diagnosis, evaluation, recovery, or revision. The serious functional rival is a system that sustains coherent modification without any project-specific state performing the mapping, justification, and integration functions assigned to program theory.
 
 The [scheduler–LLM separation](./scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) gives the complementary implementation principle: semantic interpretation can remain model-mediated while exact progression, bookkeeping, and stabilized invariants move into software. Theory can guide which invariants should be codified without requiring the LLM to execute them unreliably on every run.
 
 ## Why versatility is plausible
 
-Theory mediation has four potential advantages for heterogeneous factory learning.
+An addressable theory has four potential advantages for heterogeneous factory learning.
 
 ### Cross-artifact reach
 
@@ -131,9 +131,9 @@ A loss by the natural-language surface would not by itself show that the success
 
 ## Theory content and factory machinery are different roles
 
-A natural-language artifact can be consumed as evidence, advice, an instruction, a constraint, or a generator input. Merely storing a theory beside the factory does not make production theory-mediated. The causal path must show how the theory changes model calls or executable machinery and how later evidence revises the same retained surface.
+A natural-language artifact can be consumed as evidence, advice, an instruction, a constraint, or a generator input. Merely storing a theory beside the factory does not put it on the causal path of production. The causal path must show how the theory changes model calls or executable machinery and how later evidence revises the same retained surface.
 
-Conversely, theory need not remain in natural language forever. Stable claims can be codified into validators, schemas, tools, or workflows. A brittle symbolic rule can be relaxed back into an interpretable hypothesis. Theory mediation describes the learning relation, not a requirement that every useful result remain prose.
+Conversely, theory need not remain in natural language forever. Stable claims can be codified into validators, schemas, tools, or workflows. A brittle symbolic rule can be relaxed back into an interpretable hypothesis. [Theory refinement](./definitions/theory-refinement.md) describes the learning relation, not a requirement that every useful result remain prose.
 
 ## Scope
 
@@ -142,8 +142,8 @@ Conversely, theory need not remain in natural language forever. Stable claims ca
 - The claim about natural-language theory concerns versatility across factory-development decisions, not universal superiority on every task.
 - Natural-language theory is one representational surface inside the deployed system; model weights and symbolic machinery remain essential.
 - A theory of the task alone may be insufficient when decomposition depends on solver limits. A theory of the solver alone may be insufficient when task dependencies determine what must be preserved.
-- Theory mediation can coexist with fixed general machinery and with non-theoretical search at lower levels.
-- Reflection is not required for every theory-mediated factory change. It is claimed only when a causally connected representation of selected aspects of the same system participates in operation or revision.
+- Theory-guided development can coexist with fixed general machinery and with non-theoretical search at lower levels.
+- Reflection is not required for every theory-guided factory change. It is claimed only when a causally connected representation of selected aspects of the same system participates in operation or revision.
 - Greenfield's **factory specialization** remains a particular operation on reusable factory structure; it is not a synonym for acquiring family-specific production knowledge from evidence.
 
 ---

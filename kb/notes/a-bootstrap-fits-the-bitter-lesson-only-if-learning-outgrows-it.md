@@ -53,7 +53,7 @@ prediction.
 
 ## The Bitter Lesson creates immediate pressure to use computation
 
-If theory-mediated learning is a sound conjecture, the lesson still recommends
+If learning by theory refinement is a sound conjecture, the lesson still recommends
 using computation as early as possible to search over theories, methods,
 programs, and evaluation machinery. It gives no reason to complete a
 hand-designed theory first and automate it afterward.

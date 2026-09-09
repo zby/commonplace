@@ -103,7 +103,7 @@ The initial decision may be weakly warranted. The modification process earns
 warrant through a track record under refuting exposure, including its capacity
 to detect mistakes and recover from them. Outcomes must be read back against
 the theory and affect later operation, as required by a
-[causally co-indexed theory-mediated path](./reflective-theory-refinement-needs-interpretation-and-retention.md).
+[causally co-indexed refinement path](./reflective-theory-refinement-needs-interpretation-and-retention.md).
 
 ## The bearer test and the hardest residual coincide
 

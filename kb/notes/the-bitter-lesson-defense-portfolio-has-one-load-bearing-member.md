@@ -29,7 +29,7 @@ scales, or establish that Commonplace has found the right path.
 The program currently has a reason to try theory-guided bootstrapping, but not a
 proof that it is necessary or optimal.
 
-A theory-mediated system must select among claims. Individual claims can often
+A theory-refining system must select among claims. Individual claims can often
 be checked for factual truth, formal validity, local consistency, or bounded
 predictive success. Those checks do not fully determine whether a claim fits a
 larger working theory. Fit is relational: a true claim may be irrelevant,

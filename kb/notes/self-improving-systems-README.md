@@ -36,7 +36,7 @@ A [self-improving](./definitions/self-improving-system.md) pathway is [reflectiv
 - [Repeatable operative revision](./a-repeatable-operative-path-keeps-a-redesign-class-open-to-revision.md) — complete addressability covers governing machinery; continuity keeps its revision path usable.
 - [Reflection makes retained lessons second-order](./reflection-makes-retained-lessons-second-order.md) — an addressable lesson can reject or rescope a represented prior commitment.
 - [Retrieval misses are path-local](./a-retrieval-miss-is-a-local-reflective-path-failure.md) — a lesson cannot shape a task that does not surface it.
-- Payoff hypotheses, still open: [theory-mediated sample efficiency](./reflective-theory-refinement-needs-interpretation-and-retention.md), and [faithfulness in revision guided by rationale](./revision-guided-by-rationale-needs-faithfulness-not-just-legibility.md).
+- Payoff hypotheses, still open: [sample efficiency from theory refinement](./reflective-theory-refinement-needs-interpretation-and-retention.md), and [faithfulness in revision guided by rationale](./revision-guided-by-rationale-needs-faithfulness-not-just-legibility.md).
 
 ### Governance and computational allocation
 

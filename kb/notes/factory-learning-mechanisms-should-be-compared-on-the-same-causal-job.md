@@ -23,7 +23,7 @@ production experience
 
 This is experience-responsive retention, the causal job every factory-learning mechanism must perform. It does not by itself establish the harder capacity to modify a long-lived program coherently when local acceptance criteria do not exhaust its purpose and organization. A mechanism can change later production and still fail that test.
 
-Not every mechanism exposes all of these steps as separate components. A direct optimizer may combine proposal and selection in one update. A trajectory-reuse system may retrieve an earlier procedure without constructing a new artifact. A theory-mediated process may guide search before a candidate exists. The comparison should preserve these architectural differences while asking whether the same downstream transition was achieved.
+Not every mechanism exposes all of these steps as separate components. A direct optimizer may combine proposal and selection in one update. A trajectory-reuse system may retrieve an earlier procedure without constructing a new artifact. A theory-refining process may guide search before a candidate exists. The comparison should preserve these architectural differences while asking whether the same downstream transition was achieved.
 
 ## Live mechanism families
 
@@ -34,7 +34,7 @@ Not every mechanism exposes all of these steps as separate components. A direct 
 | Program search | Symbolic programs, schemas, workflows, evaluators, or tool compositions | Produces executable and testable machinery | Search spaces and evaluators can encode decisive human-supplied family knowledge |
 | Learned construction or selection policy | Parametric or artifact-based policy for choosing or building machinery | Amortizes repeated decisions and can improve with scale | Hidden credit assignment, distribution shift, and limited inspectability |
 | Direct optimization | Weights, adapters, continuous policies, scores, or other directly updated state | Can integrate large amounts of feedback without explicit hand decomposition | Update cost, catastrophic interference, weak localization, and difficulty coordinating heterogeneous artifacts |
-| Theory mediation | Addressable project-specific claims about tasks, solvers, failures, interventions, evidence, and scope | Makes the theory-bearing function explicit, selectively revisable, and usable across several artifact kinds | Plausible rationalization, interpretation error, maintenance cost, and dependence on model reading and application |
+| Theory refinement | Addressable project-specific claims about tasks, solvers, failures, interventions, evidence, and scope | Makes the theory-bearing function explicit, selectively revisable, and usable across several artifact kinds | Plausible rationalization, interpretation error, maintenance cost, and dependence on model reading and application |
 | Mixed mechanisms | Different forms and update methods at different layers or timescales | Matches mechanisms to the structure and verifiability of each subproblem | Cross-layer inconsistency and opaque responsibility for failures |
 
 The table is a working comparison, not an exhaustive taxonomy. A concrete system can instantiate several rows at once.
@@ -65,7 +65,7 @@ No single dimension settles the comparison. A mechanism can be cheap but narrow,
 
 ## Representation and production method are orthogonal
 
-The same representational form can be produced by different learning mechanisms. A person can write a prompt; an optimizer can search for one; a theory-mediated agent can derive one from an explanation. All three results are natural-language artifacts, but the production methods and evidence paths differ.
+The same representational form can be produced by different learning mechanisms. A person can write a prompt; an optimizer can search for one; an agent holding a theory can derive one from an explanation. All three results are natural-language artifacts, but the production methods and evidence paths differ.
 
 Likewise, symbolic software can be handcrafted, generated from a supplied schema, selected through search, learned from trajectories, or revised through theory. Parametric state can encode either general machinery or target-specific family knowledge. The [Bitter Lesson production-method distinction](./the-bitter-lesson-selects-production-methods-not-representational.md) therefore applies directly: the carrier does not determine whether useful structure was found by a scalable computational method.
 
@@ -108,7 +108,7 @@ A theory-surface intervention tests whether making project theory explicit and a
 - The program's scoped claim that open-ended coherent modification requires a project-theory function is a stronger adequacy condition, not part of the minimal retention condition.
 - Readability, addressability, exact execution, and parametric compression are properties with costs and benefits, not rankings.
 - Mixed mechanisms are the default serious alternative to any single update method.
-- Natural-language theory mediation earns support only through comparative causal and outcome evidence; indispensability attaches to the theory-bearing function, not automatically to this carrier.
+- Natural-language theory refinement earns support only through comparative causal and outcome evidence; indispensability attaches to the theory-bearing function, not automatically to this carrier.
 
 ---
 

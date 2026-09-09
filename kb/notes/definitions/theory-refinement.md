@@ -179,8 +179,10 @@ for it is snapshotted yet.
 *Theory refinement* is the noun and *refine* the verb. *Reflective theory
 refinement* composes with *reflective system*. *Theory-mediated learning* and
 *theory-mediated system learning* are retired names for the genus and for the
-reflective case. Where a note still uses *theory-mediated* as an adjective, it
-means that a theory in this sense is on the causal path of the decision.
+reflective case; notes were rewritten to the current terms on 2026-09-09, and
+the old names remain only in historical and evidence records. *Mediation* is
+kept as the name of the first join on the evidence ladder: a theory in this
+sense is on the causal path of a decision.
 
 ---
 

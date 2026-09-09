@@ -15,8 +15,8 @@ own organization. The other asks how [a software factory learns from its product
 the same loop reached from opposite ends: each, pushed to where it stops being
 satisfiable on its own terms, requires what the other supplies.
 
-The shared loop is the causally co-indexed path that [theory-mediated
-self-improvement needs interpretation, retention, and independent
+The shared loop is the causally co-indexed path that [reflective theory
+refinement needs interpretation, retention, and independent
 read-back](./reflective-theory-refinement-needs-interpretation-and-retention.md)
 already names: a theory about the system's own
 [behavior-determining organization](./definitions/behavior-determining-organization.md)

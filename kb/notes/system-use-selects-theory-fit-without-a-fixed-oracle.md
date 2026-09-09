@@ -36,7 +36,7 @@ A system can reward its own misconceptions. Earlier design choices may already a
 
 For that reason, [system use provides evidence of theory fit and causal usefulness, not independent warrant](./system-use-provides-evidence-of-theory-fit-not-independent-warrant.md). Rival formulations, withholding or perturbation, held-out demands, transfer, delayed outcomes, and independent factual or formal checks are ways to make the selection environment less self-sealing.
 
-The same limitation applies to blame assignment. A failed modification may reflect a false theory, a misapplied theory, a missing premise, a bad implementation, or a weak evaluator. System use exposes the failure but does not identify its cause automatically. The theory-mediated path must retain enough structure for later read-back to assign credit or blame at the granularity the evidence supports.
+The same limitation applies to blame assignment. A failed modification may reflect a false theory, a misapplied theory, a missing premise, a bad implementation, or a weak evaluator. System use exposes the failure but does not identify its cause automatically. The refinement path must retain enough structure for later read-back to assign credit or blame at the granularity the evidence supports.
 
 ## Why "initial" matters
 

@@ -60,7 +60,7 @@ outside the technical system.
 ## Evidence forms a ladder
 
 A complete recurrent loop is the strongest evidence, but it should not be used
-as the minimum definition of every improvement a theory mediated. Four claims
+as the minimum definition of every improvement a theory guided. Four claims
 can be distinguished:
 
 1. **Mediation.** Changing or withholding the retained theory changes a
@@ -80,7 +80,7 @@ that the theory was load-bearing. Withholding, replacing, or perturbing the
 theory and observing a changed decision is stronger evidence.
 
 A useful change may reach the first or second level without reaching the fourth.
-That is still evidence about theory-mediated operation. It should not be
+That is still evidence about theory-guided operation. It should not be
 reported as recurrent self-improvement until the later-use link exists.
 
 ## The current LLM-plus-artifact realization
