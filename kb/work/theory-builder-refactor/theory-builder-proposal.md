@@ -142,59 +142,70 @@ It does not say the builder learns, improves, is reflective, or is a software
 house. Each of those is a separate condition with its own evidence. The
 derived claim in section 5 connects the last one.
 
-## 4. The role table that replaces the ladder
+## 4. The machinery departure, and the table that replaces the ladder
 
-The ChatGPT ladder has four rungs. Its first three vary one thing, how many
-production roles sit inside the computational boundary, and its fourth varies
-a different thing, whether the builder's theories act and the consequences
-return. These are independent axes, so the ladder should be a table.
+Open-endedness is a demand on the refinement machinery before it is a demand
+on anything else. Classical machinery is family-fixed: proof over Horn clauses
+derives consequences, four named operators repair, training accuracy
+evaluates, and each works on one representation. A theory from a family
+nobody built machinery for cannot enter that loop at all. The only refinement
+machinery available that is not fixed per family is a model that interprets.
+The first step of the expansion is therefore **substituting a general
+interpreter for family-fixed symbolic machinery**. Natural-language form
+follows from the substitution, because the interpreter consumes prose. Form
+is not a separate departure.
 
-**Axis A, role allocation.** The classical systems left five things outside
-the automated step. Each is a production role; a level is defined by which
-roles move inside.
+The substitution moves the three internal production roles inside at once,
+and it weakens what each of them guaranteed.
 
-| Role | EITHER / FORTE | Commonplace today | Automated open-ended builder |
-|---|---|---|---|
-| Representation and consequence procedure | supplied (Horn clauses, proof) | mixed: schemas and validators inside, prose interpretation by model, new schemas by operator with agents | inside, including construction for new families |
-| Repair operators | supplied (retract, generalize, specialize, add) | mixed: full-pass repairs by agents, new repair kinds by operator | inside |
-| Evaluator and evidence procedure | supplied (training-set accuracy) | mixed: gates and critique inside, new criteria by operator with agents | inside |
-| Initial theory | supplied by an expert | operator and agents | either; a user may still supply one |
-| Cases and evidence | supplied | operator, sources, operating consequences | users and consequences; may remain outside |
+| Role | Classical (EITHER, FORTE) | After substitution | What is lost | Remedy |
+|---|---|---|---|---|
+| Representation and consequence procedure | Horn clauses; proof | prose or mixed form; consequences interpreted | a contradiction is a judgment, not a fact | codify the parts whose consequences must be facts: schema, validator, test |
+| Repair operators | retract, generalize, specialize, add antecedent or rule | edits to prose parts, proposed by the interpreter | no trace localizes candidate faults; the repair set is open | codified parts recover localization for themselves; for prose parts, withholding and perturbation tests |
+| Evaluator and evidence procedure | consistency with supplied cases | interpreted contradiction with cases, plus whatever checks exist | fit alone, and judged rather than computed | codified checks for fit; reach-assessment as the ordering among revisions that fit |
 
-The bottom two rows are legitimately user-side under the boundary rule in
-section 3. The top three are the internal production roles. Classical theory
-refinement automated the step between them and left all three supplied. The
-reorder's postulate is that all three move inside, including their
-construction for families not anticipated when the builder was built.
+The remedy column is the second half of the step. Where reliability matters,
+the interpreted part is moved across the
+[codification](../../notes/definitions/codification.md) boundary into a
+schema, validator, evaluator, or index. That codified part is family-specific:
+built for the family that needed it and useless for the next. It is the
+machinery the classical systems had from the start, now constructed on
+demand, after the family arrived, from evidence about it. The three theory
+properties in section 3 are recovered per family this way. Section 5 turns the
+construction into the software house.
 
-A consequence the ChatGPT summary misses: **natural-language form does not
-by itself move any row inside.** A model can write a natural-language theory
-that has none of the three theory properties. Interpretation gives it
-consequences only as an interpreter's judgment, not as a computed fact
-([codification](../../notes/definitions/codification.md) is the crossing that
-changes that). So the builder's first job on an unanticipated family is
-constructing addressability for it: a schema that localizes parts, a
-consequence procedure that makes contradictions checkable, an evaluator that
-scores repairs. That construction is the top three rows, and it is what
-section 5 turns into software production.
+Two things about the step are worth separating from it.
 
-**Axis B, loop closure.** Whether the builder's current theory shapes what it
-does, whether the consequences return as evidence, and whether the revised
-theory shapes later action. This is theory refinement run as a closed loop,
-and the KB already has the vocabulary for it: the
-[discovery lifecycle](../../notes/definitions/discovery-lifecycle.md) names the
-phases, and reflective theory refinement names the case where the theory is
-about the builder's own organization. The ChatGPT summary's fourth rung adds
-no fourth concept; it is this axis, and this workshop uses the existing terms
-for it. Evidence on this axis is governed by the existing standards: separate
-links on the
+**Loop closure is already inside the step.** The classical systems ran once,
+offline, over supplied cases. The builder's theories guide the actions that
+produce its cases, so consequences return to the theory that guided them.
+This is what the retired phrase *theory-mediated* meant, a theory on the
+causal path of a decision, and it requires no self-application. The evidence
+standards for it are the existing ones: separate links on the
 [evidence ladder](../../notes/reflective-theory-refinement-needs-interpretation-and-retention.md#evidence-forms-a-ladder),
 and [witnesses that identify the joins of one causal path](../../notes/disconnected-witnesses-do-not-establish-a-causal-path-through-theory.md).
 
-The two axes are independent in both directions. FORTE inside a control loop
-would be closed on axis B with every production role supplied on axis A.
-Commonplace's full improvement pass is far along axis A for the families it
-already knows and closed on axis B only where a decision cites retained theory.
+**Reflection is a second step, not part of this one.** Applying the same
+operation to a theory of the builder's own organization is what brings in
+operative retention, since the consequences that could defeat such a theory
+are the consequences of acting on it. The
+[discovery lifecycle](../../notes/definitions/discovery-lifecycle.md) names
+the phases and reflective theory refinement names the case. Section 5 says
+where the derived claim depends on it.
+
+**Where systems stand.** The role question is no longer how many roles sit
+inside, since substitution puts all three inside at once. It is who constructs
+the codified parts.
+
+| System | Interpreter | Codified parts | Who constructs codified parts for a new family |
+|---|---|---|---|
+| EITHER, FORTE | none; everything symbolic | all of it, fixed in advance | people, before the system runs |
+| Commonplace today | model, for prose parts | schemas, validators, gates, indexes | the operator, with agents, after the family arrives |
+| Automated open-ended builder | model, for prose parts | as needed per family | the builder, from evidence about the family |
+
+The ChatGPT ladder's four rungs map onto this as: rung one, the classical
+column; rungs two and three, the last column with and without an operator;
+rung four, loop closure, which is inside the step and adds no fourth concept.
 
 ## 5. The derived claim
 
@@ -205,10 +216,14 @@ Constructing and maintaining representations, consequence procedures,
 evaluators, indexes, and validators, under continuing responsibility to users
 for the theories they serve, meets the software-house definition. The builder
 then contains a software house whose users are the builder's users and whose
-software is the builder's production machinery.
+software is the builder's production machinery. Maintaining that machinery
+against later consequences is a theory of the builder's own organization
+under revision, so the derived claim runs through the reflective second step
+even though the first step does not.
 
 **What it depends on.** Two premises. First, that new families arrive often
-enough that a fixed machinery set built in advance does not cover them; this is
+enough that a fixed machinery set built in advance does not cover them, so
+codification back recurs; this is
 [broad demands create pressure to construct machinery](../../notes/broad-software-demands-create-pressure-for-agentic-factory-development.md),
 restated for theories. Second, that the machinery a new family needs is
 software in the ordinary sense, not a new prompt. The second premise holds
@@ -217,7 +232,10 @@ where consequences must be computed rather than interpreted, which is where
 already places exact state and checks.
 
 **Refuter.** A fixed harness general enough that new families never require
-machinery changes. The existing
+machinery changes. In the terms of section 4, this is the position that the
+interpreter suffices and nothing needs codifying back, so the empirical
+question is how much of what the interpreter does must be codified, and for
+which families. The existing
 [open-domain note](../../notes/an-open-domain-theory-builder-becomes-a-software-house-when-new-domains-require-production-machinery-changes.md)
 states this refuter and should remain the claim's home; the reorder promotes
 it from a side link to the load-bearing step and swaps *domain* for *family*

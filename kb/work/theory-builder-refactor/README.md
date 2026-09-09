@@ -66,8 +66,9 @@ they are decided.
 | `kb/articles/the-software-house-as-the-unit-of-training.md` | house is the trained unit; theory refinement is the mechanism | open |
 | `kb/articles/nearest-existing-constructions-to-a-witness-house.md` | witness-house lens | open |
 | `kb/notes/an-open-domain-theory-builder-becomes-a-software-house-when-new-domains-require-production-machinery-changes.md` | already the derived step | open (candidate home for closing condition 2) |
-| `kb/notes/definitions/theory-refinement.md` | genus definition | keep; the proposal depends on its three theory properties and uses its term throughout |
+| `kb/notes/definitions/theory-refinement.md` | genus definition; departures listed as form, then subject | keep, with one edit pending: promote machinery (general interpreter for family-fixed symbolic machinery) to the first departure and demote form to its consequence; the existing "any machinery" scope bullet and the codification section already carry the content |
 | `kb/notes/definitions/software-house.md` | complete persistent producer | keep; the proposal copies its structure |
+| `kb/notes/definitions/codification.md` | the natural-language to symbolic crossing | keep unchanged; codification back is this crossing per family, not a new term |
 | `kb/notes/universal-software-factory-needs-a-declared-universality-axis.md` | four universality axes | keep; supplies the rule that *universal* needs a declared axis |
 | `kb/notes/a-fixed-model-house-must-write-the-procedures-for-each-new-theory.md` | house needs procedures per theory | open; states the machinery gap from the house side |
 | `kb/notes/open-ended-theory-learning-and-factory-learning-close-the-same.md` | carries a factory-to-house TODO | open |
