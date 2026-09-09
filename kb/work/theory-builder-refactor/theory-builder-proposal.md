@@ -189,7 +189,7 @@ no fourth concept; it is this axis, and this workshop uses the existing terms
 for it. Evidence on this axis is governed by the existing standards: separate
 links on the
 [evidence ladder](../../notes/reflective-theory-refinement-needs-interpretation-and-retention.md#evidence-forms-a-ladder),
-and [witnesses that identify the joins of one causal path](../../notes/disconnected-witnesses-do-not-establish-a-theory-mediated-path.md).
+and [witnesses that identify the joins of one causal path](../../notes/disconnected-witnesses-do-not-establish-a-causal-path-through-theory.md).
 
 The two axes are independent in both directions. FORTE inside a control loop
 would be closed on axis B with every production role supplied on axis A.

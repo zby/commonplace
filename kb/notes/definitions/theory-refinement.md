@@ -189,7 +189,7 @@ Relevant Notes:
 - [Theory refinement may improve sample efficiency under structured shifts](../theory-refinement-may-improve-sample-efficiency-under-shifts.md) — extends: the payoff conjecture, and the test that would decide whether a model interprets prose theories reliably enough
 - [Reflective theory refinement needs interpretation, retention, and independent read-back](../reflective-theory-refinement-needs-interpretation-and-retention.md) — extends: the evidence ladder and the functions the reflective case must keep separate
 - [Reflective theory refinement has separate structural, epistemic, and implementation lineages](../reflective-theory-refinement-has-three-separate-lineages.md) — extends: the slot-for-slot comparison between the classical loop and the KB's fillers
-- [Disconnected witnesses do not establish a full causal path through theory](../disconnected-witnesses-do-not-establish-a-theory-mediated-path.md) — extends: what separate links must share before they compose into one refinement path
+- [Disconnected witnesses do not establish a full causal path through theory](../disconnected-witnesses-do-not-establish-a-causal-path-through-theory.md) — extends: what separate links must share before they compose into one refinement path
 - [Citing retained theory at the decision point is a mediation trace](../citing-retained-theory-at-the-decision-point-is-a-mediation-trace.md) — mechanism: the cheapest checkable evidence that a theory entered a decision
 - [Codification](./codification.md) — grounds: the crossing that gives a part of a theory a computed consequence relation
 - [Representational form](./representational-form.md) — grounds: the axis that fixes the assessment route without fixing whether the loop applies
