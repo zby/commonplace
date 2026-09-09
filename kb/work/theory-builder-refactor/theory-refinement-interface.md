@@ -138,6 +138,139 @@ repaired through the interpreter, scored on the same cases. That is the
 discriminating test for the form departure the proposal names and the KB
 does not yet have.
 
+## Commonplace as the interpreted implementation
+
+Read from the pass and review instructions on 2026-09-09
+(`kb/instructions/run-full-improvement-pass-on-note.md`,
+`kb/instructions/premise-decomposition-gate.md`, the gate catalog under
+`kb/instructions/review-gates/`, `kb/reference/README-REVIEW-SYSTEM.md`). For
+each operation: what performs it, what record shows it ran, where it is
+already mechanical, and which classical result then applies. The interpreted
+implementation has an obligation the classical one did not: each operation
+can run and be wrong, so the record has to show not only that it ran but
+that it was right, and the last column says how far that is met.
+
+### Derive
+
+- **Performed by.** A model reading the note against a criterion, a case, or
+  a neighbouring note: every review pair, every connect run, every
+  improvement pass begins here. For codified parts, `commonplace-validate`
+  and quote verification derive mechanically: this field must have that
+  form, this span must occur in that ingest, this note may cite at most five
+  sources without a paired quote.
+- **Record.** The review store pairs a pinned note snapshot with a pinned
+  criterion, so the fact that a derivation was requested against exactly this
+  text is recorded. What was derived survives only as the report's prose.
+  Outside review, the citation at the decision point is the record that a
+  theory entered a derivation at all.
+- **Classical result that applies.** None directly; derive is where the
+  guarantee is lost rather than where a result transfers.
+- **Was it right?** Not checked as a rule. Withholding or perturbation, the
+  test the mediation-trace note names, is not part of any routine flow.
+
+### Compare
+
+- **Performed by.** Gates, the closed-ended verdict criteria that return pass,
+  warn, or fail, and critique, the open-ended report criterion. The premise
+  decomposition gate compares premise by premise, returning holds, doubtful,
+  or defeated with the counterexample stated. Mechanical compare is the
+  validator's fail and warn.
+- **Record.** The pair result with its outcome, snapshot-anchored; the
+  freshness baseline pins which note text and which criterion text the
+  outcome is about.
+- **Classical result that applies.** Acceptance is fit with the tested cases,
+  and here the tested cases are the criteria. This is the largest departure
+  from the classical setting and it is easy to miss: most of what Commonplace
+  compares a theory against is reviewer judgment under a quality criterion,
+  not an observation of the world. Empirical compare, against a source or an
+  operating consequence, happens through ingests, evidence notes, and log
+  entries, and none of those runs through the gate pipeline.
+- **Was it right?** Model partition and rerun give a stability check, and a
+  criterion is itself a text that can be reviewed. There is no held-out
+  comparison.
+
+### Locate
+
+- **Performed by.** The premise decomposition gate names the premise and
+  routes the failure local or global; the pass synthesis then answers the
+  decision table: fit fails, rehome; a claim change is required, revise;
+  otherwise keep with body edits. Validators locate mechanically by line for
+  links, quotes, and schema.
+- **Record.** The gate's report and the packet's routed attention; the
+  decision table answer is written into the packet.
+- **Classical result that applies.** No unique fault. FORTE's trace and the
+  premise list do the same job: they narrow to candidates. The bite rule from
+  the sixth Popperian episode, that a defeated premise bites only if its
+  counterexample meets the note's antecedent under the note's own
+  definitions, is a locate correction the classical systems did not need,
+  because a proof cannot equivocate on a term.
+- **Was it right?** Only through the bite rule and the closing cycle. No
+  routine test that the located part was load-bearing.
+
+### Revise
+
+- **Performed by.** Body edits in a keep pass, restricted to remove,
+  compress, add, and keep, with title and thesis untouchable; anything larger
+  is handed back to an author. Codification is the other revise path: a
+  settled claim moves into a validator, a schema field, or a type contract.
+- **Record.** The packet's body-edit list, the version guard that refuses to
+  edit if any input changed since the packet was written, and the commit.
+- **Classical result that applies.** The operator set maps loosely: remove
+  and compress are retractions, add is an added antecedent, rescoping is
+  specialization. The update space is open where FORTE's was fixed, so
+  nothing guarantees the revision stays where the evaluator can check it.
+- **Was it right?** Deferred to evaluate.
+
+### Evaluate
+
+- **Performed by.** The closing cycle: every bundle and critique rerun on the
+  final capture, then one question, whether the selected update was
+  strengthened, preserved, weakened, changed, or made undetermined, and one
+  status, ready, repair-needed once, or hand-back. Beyond the pass:
+  reach-assessment, the user-verified attestation, and system use, which the
+  KB treats as evidence of fit and not as independent warrant.
+- **Record.** The closing reports and the closing status in the packet.
+- **Classical result that applies.** Hill-climbing on the tested cases can stop
+  at a local maximum, and Commonplace has already exhibited it. The log's
+  entry for the pass that narrowed a defeated universal title into an
+  analytic one, which then passed every closing gate, is a local maximum of
+  the gate set in the classical sense, and the refuter and citer guards that
+  came out of it are the response. Fit with the tested cases is the floor;
+  reach is the ordering; no held-out case is run as a rule.
+- **Was it right?** The refuter guard (after narrowing, name a case that would
+  still refute the claim) and the citer guard (a repair that drops what
+  inbound citers import has repaired the wrong thing) are the checks, and
+  they were applied by hand, not wired.
+
+### Apply
+
+- **Performed by.** Skills and instructions that consume notes, ADRs that
+  implement them, workshops that cite them, commits that name the ADR.
+- **Record.** The citation at the decision point, including the commit
+  trailer that names the decision.
+- **Shared case.** Rarely closed. The evidence note on a revision that used
+  theory-guided computational search is one witness that a retained theory
+  entered a change; the disconnected-witnesses standard says what more a
+  full path needs, and no routine flow produces it.
+
+### The profile
+
+| Operation | Mechanical | Interpreted | Record that it ran | Record that it was right |
+|---|---|---|---|---|
+| Derive | validators, quote verification | every model read | pinned pair; citation | none routine |
+| Compare | validator fail/warn | gates, critique, premise gate | outcome in the store | partition rerun only |
+| Locate | line-level for links, quotes, schema | premise gate, decision table | packet | bite rule; closing cycle |
+| Revise | codification into validators and types | body edits; author hand-back | edit list, guard, commit | deferred |
+| Evaluate | validators on the final capture | closing cycle; reach-assessment; user verification | closing reports, status | refuter and citer guards, by hand |
+| Apply | none | consumers of notes | citation trailer | disconnected-witnesses standard, not routine |
+
+Two things stand out. Most cases are criteria, not observations, so the
+loop as run is a quality loop over the theory's expression more than an
+empirical loop over its content; the empirical compare exists but bypasses
+the machinery. And the one classical failure mode Commonplace has documented
+in itself is the one the interface predicts for any evaluate over a fixed
+case set, which is some evidence that the placement is right.
+
 ## Open questions to work out here
 
 1. **Is compare a separate operation?** The definition folds it into the
@@ -167,3 +300,8 @@ does not yet have.
    transfers. Which of it the program needs, and for which claim, is not yet
    decided. Listing results we will not use is the storage-without-consumption
    pattern the KB warns against.
+8. **Cases that are criteria.** The compare operation mostly runs against
+   quality criteria, not observations. Whether that is a second, legitimate
+   case type for the interface or a sign that the empirical loop is missing
+   from the machinery decides how much of the classical work applies to
+   Commonplace as it runs today.
