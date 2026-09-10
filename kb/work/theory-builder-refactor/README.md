@@ -2,22 +2,29 @@
 
 ## Goal
 
-Reorder the KB's research program so that the automated theory builder is the
-postulate and the automated software house is a derived requirement. Today the
-[automated software house conjecture](../../articles/automated-software-houses-with-fixed-llms.md)
-is the head of the program, and theory refinement appears as the mechanism by
-which the house learns ([training article](../../articles/the-software-house-as-the-unit-of-training.md)).
-The reordered program starts from a persistent, automated system that develops
-and revises theories it did not anticipate, and asks whether sufficient
-open-endedness forces that system to contain something that meets the
-[software house](../../notes/definitions/software-house.md) definition.
+Refactor the research program around a new autonomous learning paradigm whose
+learner is a **reflective theory builder**.
 
-The reorder is not a new claim. The derived step already exists as
-[an open-domain theory builder becomes a software house when new domains
-require production-machinery changes](../../notes/an-open-domain-theory-builder-becomes-a-software-house-when-new-domains-require-production-machinery-changes.md).
-What changes is which end is load-bearing, and the novelty claim that follows:
-automatic theory refinement is old (EITHER, FORTE); acquiring the
-theory-family-specific refinement machinery is the proposed advance.
+The builder's primary work is to develop and revise explicit, fallible theories
+about externally supplied subjects. That work also tests the adequacy of the
+builder's current theory-building machinery. When a failure is attributed to
+that machinery, the builder can revise a theory of its own theory-building
+organization and change the machinery used for later theory work.
+
+The target is an **autonomous reflective theory builder**: the same loop with
+all internal theory-building, diagnosis, evaluation, machinery-revision, and
+successor-selection roles performed computationally. Commonplace is a current
+human-inclusive instance of the broader pattern; the operator still performs
+important roles in the reflective loop.
+
+Automatic theory refinement and fallible theories are prior art. The proposed
+advance is the autonomous combination: external theory work, reflective
+revision of the theory builder, and acquisition of missing theory-building
+machinery as new theory families expose limitations of the current machinery.
+
+Whether sufficiently broad theory building requires the system to become a
+[software house](../../notes/definitions/software-house.md) is now a side
+conjecture, not a premise or load-bearing consequence of the learning paradigm.
 
 ## Who posed it
 
@@ -34,46 +41,47 @@ README, then write a proposal for the theory builder the program needs, under
 whatever adjective fits, copying the good parts of the software-house
 definition.
 
+On 2026-09-10 the workshop direction changed: the research target became the
+autonomous reflective theory builder described above, with external theory
+refinement kept as the useful task and the test of whether the current
+machinery has sufficient reach. Software-house capability was demoted to a
+side conjecture.
+
 ## Working artifacts
 
-- [Theory-builder proposal](./theory-builder-proposal.md) — the draft
-  definition of the open-ended automated theory builder, the role table that
-  replaces the ladder, the derived software-house claim, the discriminating
-  test, and the choices left to the operator.
-- [Universal theory manipulator](./universal-theory-manipulator.md) — draft
-  definition of the fully codified limit of refinement machinery, worked from
-  the Gödel machine paper; the second refuter of the derived claim and the
-  statement of why the limit holds no refinable theory.
+- [Theory builder](./theory-builder.md) — minimal definition of the system that
+  develops and revises theories for external subjects.
+- [Reflective theory builder](./reflective-theory-builder.md) — adds a revisable
+  theory of the builder's own theory-building organization and machinery
+  change driven by that self-theory.
+- [Autonomous reflective theory builder](./autonomous-reflective-theory-builder.md)
+  — the target learner, with all internal roles computational.
+- [Theory-builder proposal](./theory-builder-proposal.md) — the earlier draft
+  around an open-ended automated theory builder; retained for material to
+  reconcile with the new direction.
+- [Universal theory manipulator](./universal-theory-manipulator.md) — earlier
+  draft of a fully codified limit; no longer load-bearing and requires review
+  before any promotion.
 - [Theory refinement as an interface](./theory-refinement-interface.md) —
-  working document: the five operations (derive, compare, locate, revise,
-  evaluate) as the contract a theory plus its machinery implements, mapped
-  onto the definition's three properties; per-implementation table; the
-  addressability scale; apply for the builder; which classical results
-  transfer and which only as hypotheses; seven open questions. Stays here
-  until worked out.
+  working document: derive, compare, locate, revise, and evaluate as a useful
+  decomposition of theory refinement; its relationship to the established
+  theory-refinement literature still needs tightening.
 - [Note draft: theory refinement is an interface of five operations](./note-draft-theory-refinement-is-an-interface.md)
-  — a cp-skill-write draft produced before the operator held the framing in
-  the workshop; kept as a candidate because it adds a transfer criterion (a
-  classical result transfers by restatement only when its derivation stays
-  inside the five operations) and a per-part addressability profile. To be
-  merged with or dropped against the working document above.
+  — candidate material for that reconciliation.
 
 ## What closes the workshop
 
-1. A definition of the theory builder is accepted into
-   `kb/notes/definitions/`, or the operator declines it with a recorded
-   reason.
-2. The derived claim (open-endedness forces a software house) has one home in
-   `kb/notes/`, reconciled with the existing open-domain note rather than
-   duplicated beside it.
-3. Every artifact in the inventory below has a disposition: reframe, keep, or
+1. The definitions of theory builder, reflective theory builder, and autonomous
+   reflective theory builder are accepted into `kb/notes/definitions/`, or the
+   operator declines them with a recorded reason.
+2. The research-program articles are given dispositions under the new ordering:
+   autonomous reflective theory building is the learning target; software-house
+   capability is a side conjecture.
+3. The theory-refinement interface material is reconciled with the established
+   theory-refinement literature without claiming the generic refinement loop,
+   fallibility, or revision search as new.
+4. Every artifact in the inventory below has a disposition: reframe, keep, or
    decline. Reframes are executed in their own commits, not in this workshop.
-4. The discriminating test named in the proposal has run once, or its
-   deferral is recorded with the reason.
-5. The universal theory manipulator definition is accepted into
-   `kb/notes/definitions/`, or declined with a recorded reason. Acceptance
-   requires the Gödel machine ingest re-pinned to the 2026-09-09 snapshot so
-   the draft's Section 6.3 quote can be retained verbatim.
 
 ## Inventory of artifacts the reorder touches
 
@@ -82,29 +90,31 @@ they are decided.
 
 | Artifact | Current head | Disposition |
 |---|---|---|
-| `kb/articles/automated-software-houses-with-fixed-llms.md` | software house first | open |
+| `kb/articles/automated-software-houses-with-fixed-llms.md` | software house first | open; side-conjecture candidate |
 | `kb/articles/bootstrapping-the-first-automated-software-house.md` | software house first | open |
-| `kb/articles/the-software-house-as-the-unit-of-training.md` | house is the trained unit; theory refinement is the mechanism | open |
+| `kb/articles/the-software-house-as-the-unit-of-training.md` | house is the trained unit; theory refinement is the mechanism | open; learning-paradigm framing should move to reflective theory builder |
 | `kb/articles/nearest-existing-constructions-to-a-witness-house.md` | witness-house lens | open |
-| `kb/notes/an-open-domain-theory-builder-becomes-a-software-house-when-new-domains-require-production-machinery-changes.md` | already the derived step | open (candidate home for closing condition 2) |
+| `kb/notes/an-open-domain-theory-builder-becomes-a-software-house-when-new-domains-require-production-machinery-changes.md` | software-house consequence | keep as conditional side conjecture; wording still needs reconciliation |
 | `kb/notes/definitions/theory-refinement.md` | genus definition; departures listed as form, then subject | reframed 2026-09-09: machinery is the first departure, form its consequence, subject independent |
-| `kb/notes/definitions/software-house.md` | complete persistent producer | keep; the proposal copies its structure |
-| `kb/notes/definitions/codification.md` | the natural-language to symbolic crossing | keep unchanged; codification back is this crossing per family, not a new term |
+| `kb/notes/definitions/software-house.md` | complete persistent producer | keep; no longer the head of the research program |
+| `kb/notes/definitions/codification.md` | the natural-language to symbolic crossing | keep unchanged |
 | `kb/notes/universal-software-factory-needs-a-declared-universality-axis.md` | four universality axes | keep; supplies the rule that *universal* needs a declared axis |
-| `kb/notes/a-fixed-model-house-must-write-the-procedures-for-each-new-theory.md` | house needs procedures per theory | open; states the machinery gap from the house side |
+| `kb/notes/a-fixed-model-house-must-write-the-procedures-for-each-new-theory.md` | house needs procedures per theory | open; useful machinery-gap analysis, but not every new family must require new code |
 | `kb/notes/open-ended-theory-learning-and-factory-learning-close-the-same.md` | carries a factory-to-house TODO | open |
 | `kb/notes/broad-software-demands-create-pressure-for-agentic-factory-development.md` | carries a factory-to-house TODO | open |
-| `kb/sources/goedel-machines-schmidhuber.ingest.md` | pinned to a `pdf-read` snapshot whose hash matches no existing file; page-based citations | open: bounded re-ingest to `kb/sources/.snapshots/godel-machines-self-referential-universal-problem-solvers.md` (sha256 579cdb79…a6b4, arXiv v5, pdftotext, no page markers) and retain the quotes the manipulator draft needs |
-| `kb/notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md` | reads the machine as a change loop; carries "snapshot required" markers | open: markers clear once the ingest is re-pinned; content unaffected by the manipulator draft |
+| `kb/sources/goedel-machines-schmidhuber.ingest.md` | pinned to a `pdf-read` snapshot whose hash matches no existing file; page-based citations | open; no longer needed to establish a universal-manipulator limit |
+| `kb/notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md` | reads the machine as a change loop; carries "snapshot required" markers | open |
 
 ## Evaluation boundary
 
 Evidence is the local KB at commit `c4ef2e2e` plus the two classical
 theory-refinement ingests (EITHER, FORTE), and from 2026-09-09 the full-text
 snapshot of the Gödel machine paper (arXiv cs/0309048 v5) under
-`kb/sources/.snapshots/`. No new external search was run for the framing. The discriminating test in the proposal uses this repository's
-own git history as its corpus; a result there bears on Commonplace as one
-witness, not on the derived claim in general.
+`kb/sources/.snapshots/`. The 2026-09-10 reframing also uses the literature
+check recorded in the operator session: fallible theories, generic theory
+refinement, and search over candidate revisions are prior art. The workshop
+therefore treats the autonomous reflective composition as the research target,
+not those ingredients individually.
 
 ## Coordination
 
