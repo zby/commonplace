@@ -11,11 +11,13 @@ builder's current theory-building machinery. When a failure is attributed to
 that machinery, the builder can revise a theory of its own theory-building
 organization and change the machinery used for later theory work.
 
-The target is an **autonomous reflective theory builder**: the same loop with
-all internal theory-building, diagnosis, evaluation, machinery-revision, and
-successor-selection roles performed computationally. Commonplace is a current
-human-inclusive instance of the broader pattern; the operator still performs
-important roles in the reflective loop.
+The target is a theory builder meeting three independent conditions:
+**reflective** (it refines a theory of its own theory-building machinery),
+**autonomous** (every internal theory-building role is computational, with
+the autonomy warranted by its evaluators), and **open-ended** (it acquires
+refinement machinery for theory families it did not hold machinery for when
+they arrived). Commonplace today is a reflective, non-autonomous instance;
+the operator still performs diagnosis, admission, and successor selection.
 
 Automatic theory refinement and fallible theories are prior art. The proposed
 advance is the autonomous combination: external theory work, reflective
@@ -49,13 +51,17 @@ side conjecture.
 
 ## Working artifacts
 
-- [Theory builder](./theory-builder.md) — minimal definition of the system that
-  develops and revises theories for external subjects.
-- [Reflective theory builder](./reflective-theory-builder.md) — adds a revisable
-  theory of the builder's own theory-building organization and machinery
-  change driven by that self-theory.
-- [Autonomous reflective theory builder](./autonomous-reflective-theory-builder.md)
-  — the target learner, with all internal roles computational.
+- [Theory builder](./theory-builder.md) — the base definition with the
+  boundary rule, persistence, and evaluation clauses copied from the
+  software-house definition, the three independent conditions, and the
+  open-ended condition (machinery acquisition for new theory families).
+- [Reflective theory builder](./reflective-theory-builder.md) — the reflective
+  condition, composed from reflective theory refinement, behavior-determining
+  organization, and reflective system.
+- [Autonomous theory builder](./autonomous-theory-builder.md) — the autonomy
+  condition, defined as computational closure of the theory-building pathway;
+  the target is warranted autonomy. Renamed from *autonomous reflective theory
+  builder* on 2026-09-10 so that autonomy is independent of reflection.
 - [Theory-builder proposal](./theory-builder-proposal.md) — the earlier draft
   around an open-ended automated theory builder; retained for material to
   reconcile with the new direction.
@@ -71,9 +77,10 @@ side conjecture.
 
 ## What closes the workshop
 
-1. The definitions of theory builder, reflective theory builder, and autonomous
-   reflective theory builder are accepted into `kb/notes/definitions/`, or the
-   operator declines them with a recorded reason.
+1. The definitions of theory builder (with its open-ended condition),
+   reflective theory builder, and autonomous theory builder are accepted into
+   `kb/notes/definitions/`, or the operator declines them with a recorded
+   reason.
 2. The research-program articles are given dispositions under the new ordering:
    autonomous reflective theory building is the learning target; software-house
    capability is a side conjecture.
