@@ -49,6 +49,16 @@ refinement kept as the useful task and the test of whether the current
 machinery has sufficient reach. Software-house capability was demoted to a
 side conjecture.
 
+On 2026-09-12 the operator relayed a ChatGPT conversation proposing an
+"automated-scientist" outer ontology (propose/maintain theories, derive
+consequences, choose discriminating inquiry, obtain evidence, theory
+refinement as the inner loop) on top of theory refinement, on the ground that
+the five-operation interface says nothing about where cases come from. The
+agent's assessment found the outer loop already present as
+[discovery lifecycle](../../notes/definitions/discovery-lifecycle.md) and the
+missing piece narrower than a new ontology: one operation, inquiry selection,
+inside the phase that definition deliberately leaves undecomposed.
+
 ## Working artifacts
 
 - [Theory builder](./theory-builder.md) — the base definition with the
@@ -74,6 +84,11 @@ side conjecture.
   theory-refinement literature still needs tightening.
 - [Note draft: theory refinement is an interface of five operations](./note-draft-theory-refinement-is-an-interface.md)
   — candidate material for that reconciliation.
+- [Discovery lifecycle already supplies the outer loop](./discovery-lifecycle-already-supplies-the-outer-loop.md)
+  — working document: proposes adding **Inquire** as a sixth interface
+  operation rather than importing a separate outer ontology; maps the
+  interface's five operations onto discovery lifecycle's phases; not yet
+  applied to `theory-refinement-interface.md` itself.
 
 ## What closes the workshop
 
