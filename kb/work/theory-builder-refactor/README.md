@@ -65,8 +65,23 @@ seed objective, and that *fallible theory* needs its own definition before
 the closure bound can be stated. The operator directed that the conclusions
 be recorded as a proposal rather than applied to the definitions.
 
+The operator then asked to differentiate the research approach from the Gödel
+machine. The working comparison below separates proof-governed switching from
+empirical theory-guided revision, while leaving the general definitions open.
+
 ## Working artifacts
 
+- [Semantic work and the ideal interpreter](./semantic-work-and-the-ideal-interpreter.md)
+  — latest framing, 2026-09-14: the operator made the ideal interpreter
+  central and proposed treating open-endedness as implicit in its conceptual
+  capacity. Summarizes the discussion and tests a bounded definition of
+  semantic work against ambiguity, open mathematical problems (including P
+  versus NP), undecidability, self-reference, and the risk of assuming all
+  problem-solving. Includes a working definition of a resource-bounded ideal
+  interpreter: explicit starting repertoire and costs, faithful interpretation,
+  and fallible extensions. Records the question of how far fresh computation
+  can extend prior work. Revisions to the theory-builder definitions remain
+  pending.
 - [Theory builder](./theory-builder.md) — the base definition with the
   boundary rule, persistence, and evaluation clauses copied from the
   software-house definition, the three independent conditions, and the
@@ -78,6 +93,9 @@ be recorded as a proposal rather than applied to the definitions.
   condition, defined as computational closure of the theory-building pathway;
   the target is warranted autonomy. Renamed from *autonomous reflective theory
   builder* on 2026-09-10 so that autonomy is independent of reflection.
+- [Gödel-machine comparison](./goedel-machine-comparison.md) — working account
+  of the grounds for machinery changes, the role of fallible self-theories,
+  and the research question this distinction leaves to evaluation.
 - [Proposal: warrant-bounded open-endedness and a fallible-theory definition](./proposal-warrant-bounded-open-endedness.md)
   — 2026-09-14 proposal for the next revision of the three definitions:
   extension as seed diff, the two limits inherited from the Gödel machine
