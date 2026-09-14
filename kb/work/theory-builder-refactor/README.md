@@ -2,35 +2,63 @@
 
 ## Goal
 
-Refactor the research program around a new autonomous learning paradigm whose
-learner is a **reflective theory builder**.
+Refactor the research program around one conjecture and the vocabulary
+needed to state and test it.
 
-The builder's primary work is to develop and revise explicit, fallible theories
-about externally supplied subjects. That work also tests the adequacy of the
-builder's current theory-building machinery. When a failure is attributed to
-that machinery, the builder can revise a theory of its own theory-building
-organization and change the machinery used for later theory work.
+> **Conjecture.** A learning methodology expressed in natural-language and
+> symbolic form is
+> [actionable](../../notes/definitions/actionable-methodology.md) for a
+> computational operator across practical areas: executed without a person in
+> its internal roles, it develops and retains the theories and procedures new
+> areas need, with the retained results warranted by its own evaluators at
+> reliability comparable to a human-staffed builder, and without a separately
+> designed learning method per area. It does not promise success on every
+> problem or within every budget.
 
-The target is a theory builder of fallible theories, whose interpretive roles
-are specified against a resource-bounded ideal interpreter, meeting two
-independent conditions: **reflective** (it refines a theory of its own
-theory-building machinery) and **autonomous** (every internal theory-building
-role is computational, with the autonomy warranted by its evaluators).
-Extension of the machinery is not a third condition; it is the quantity the
-research question measures: under a stated budget, how far can the builder
-extend its seed, and does retaining useful extensions make later advances
-easier? Commonplace today is a reflective, non-autonomous instance; the
-operator still performs diagnosis, admission, and successor selection.
+The conjecture denies two rivals. The first is per-area learning: each new
+area needs its own designed learner. The second is no methodology: direct
+search over raw records, or model adaptation, reaches the same results at
+comparable total cost. Its empirical content is a count: doctrine edits per
+new area, with authorship. An extension the methodology produced from
+evidence counts for it; one a person wrote counts against it, even if the
+person is inside the boundary.
 
+The system that executes the methodology is a [theory builder](./theory-builder.md)
+of [fallible theories](./fallible-theory.md), whose interpretive roles are
+specified against a
+[resource-bounded ideal interpreter](./resource-bounded-ideal-interpreter.md).
+Reflection and machinery extension are the mechanisms by which the
+methodology improves itself and acquires what new areas need. Autonomy is
+the condition the conjecture asserts, and it must be
+[warranted](./autonomous-theory-builder.md). The methodology's own content
+stays readable; it may govern a weight update as one operation it decides on
+and checks, and the interpreter's realization rule covers what it cannot
+inspect. *Methodology* names the content; *doctrine* names its installed,
+binding form as system-definition artifacts.
+
+Two routes develop the conjecture, and they are the two layers of the
+definitions. **Specify first:** state the methodology's operations, the
+semantic work they require, and the routes by which natural-language claims
+earn warrant without a person, using the ideal interpreter to separate the
+methodology's requirements from an implementation's limits. **Bootstrap
+through use:** start from Commonplace, run it on substantive tasks, let
+failures drive changes to its learning procedures, and transfer internal
+human roles to computational ones as each becomes ready, assessing
+reliability as they move. The second route can discover what the first tries
+to specify, and both score on the same evidence: whether the bootstrap
+accumulates reusable learning capability across areas, or each new area
+keeps needing substantial human design.
+
+Commonplace today is the starting system: human-inclusive, reflective, not
+autonomous. Its current doctrine, this repository's instructions, collection
+contracts, type specs, review system, and skills, is the seed methodology.
 Automatic theory refinement, fallible theories, and, in the Gödel machine,
-reflection with autonomy and in-principle extension are prior art. The
-proposed advance is the combination over fallible theories: external theory
-work, reflective revision of the theory builder, and extension warranted by
-evidence rather than proof, at a cost comparable to a human-staffed builder.
+reflection with autonomy and in-principle extension are prior art; the
+conjecture is about the readable methodology, warranted and broad.
 
 Whether sufficiently broad theory building requires the system to become a
-[software house](../../notes/definitions/software-house.md) is now a side
-conjecture, not a premise or load-bearing consequence of the learning paradigm.
+[software house](../../notes/definitions/software-house.md) remains a side
+conjecture, not a premise or load-bearing consequence.
 
 ## Operator direction
 
@@ -53,6 +81,13 @@ proof from its previous assumptions.
 The five definition drafts were rewritten in commit `991e5bf7`. They are the
 current candidates, not accepted library definitions. This cleanup gives them
 one reading order and records conflicts still requiring substantive review.
+
+Later on 2026-09-14, after a parallel session reframed the target as a
+broadly applicable learning methodology in natural-language and symbolic
+form, the operator directed that the workshop goal be revised first. The
+goal now states the conjecture, its two rivals, its empirical measure, and
+the two development routes; the definitions are its vocabulary, and
+reflection and extension are its mechanisms rather than its target.
 
 ## Read the current definitions in this order
 
@@ -125,8 +160,9 @@ The experiment workshop below continues to own comparative experiment design.
    with a recorded reason. Fallible theory needs the AGM and formal-learning
    ingests first, under closing condition 3.
 2. The research-program articles are given dispositions under the new ordering:
-   autonomous reflective theory building is the learning target; software-house
-   capability is a side conjecture.
+   the learning-methodology conjecture is the head of the program, the theory
+   builder is the system that executes it, and software-house capability is a
+   side conjecture.
 3. The theory-refinement interface material is reconciled with the established
    theory-refinement literature without claiming the generic refinement loop,
    fallibility, or revision search as new.
