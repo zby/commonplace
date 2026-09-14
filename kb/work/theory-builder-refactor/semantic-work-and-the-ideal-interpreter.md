@@ -8,8 +8,10 @@
 > NP, as required tests of the definition. A further discussion asked how far
 > an LLM can extend computations absorbed during training; the operator asked
 > to record the resulting resource-bounded ideal-interpreter definition here.
-> The proposed definition and its limits are
-> an assessment to review, not accepted library definitions.
+> This file owns the semantic-work definition, rationale, and stress tests.
+> The current interpreter definition is in
+> [resource-bounded ideal interpreter](./resource-bounded-ideal-interpreter.md).
+> Neither is an accepted library definition.
 
 ## Direction from the discussion
 
@@ -36,8 +38,9 @@ an implementation must establish its actual costs and capabilities.
 The [warrant-bounded proposal](./proposal-warrant-bounded-open-endedness.md)
 introduced the ideal interpreter in section 6. This document brings it to the
 front of the investigation. The [current definitions](./theory-builder.md)
-still list three independent conditions; they have not yet been rewritten
-around this direction. The seed-objective closure claim remains a separate
+now use the interpreter and fallible theory, with reflection and autonomy as
+the two conditions and extension as a measured quantity. The seed-objective
+closure claim remains a separate
 unsettled argument, not a premise needed to define semantic work.
 
 ## Candidate definition
@@ -153,37 +156,12 @@ not hide the difference between faithful reading and conjectural invention.
 
 ## Working definition: resource-bounded ideal interpreter
 
-> Sharpened by the operator and moved to
-> [resource-bounded ideal interpreter](./resource-bounded-ideal-interpreter.md)
-> later on 2026-09-14. This section remains the discussion record.
-
-> A **resource-bounded ideal interpreter** faithfully interprets
-> representations within a declared scope, using its available knowledge and
-> procedures. It can undertake further reasoning and propose new
-> representations or procedures, but this work consumes resources and need
-> not succeed. When the available information or resources are insufficient,
-> interpretation may remain unresolved.
-
-The idealization concerns fidelity to represented meaning. It does not supply
-missing evidence, undiscovered proofs, or successful new concepts. For an
-ambiguous input, fidelity can mean preserving the alternatives. The declared
-scope and success conditions must say which interpretive tasks the component
-can complete; permission to leave work unresolved does not replace that
-positive requirement. This remains a working abstraction, not a proof that
-the stipulated fidelity is computationally realizable.
-
-Three commitments make the resource bound substantive:
-
-- **Starting repertoire:** identify the knowledge, concepts, and procedures
-  already available to the interpreter. Fixed weights are one possible part
-  of this repertoire, not its required form.
-- **Resource budget:** applying existing procedures, searching, interpreting,
-  and developing new procedures all incur costs. A semantic call cannot hide
-  arbitrary computation as a free primitive.
-- **Fallible extensions:** new concepts, explanations, and procedures remain
-  candidates requiring assessment. Faithfully understanding a proposal does
-  not establish its adequacy. Retaining an assessed extension changes the
-  repertoire available for later work.
+The operator's sharpened definition is maintained in
+[resource-bounded ideal interpreter](./resource-bounded-ideal-interpreter.md).
+It performs the same kinds of semantic work as the ideal interpreter, using
+its current knowledge and procedures within a computational budget. Removing
+the budget does not grant a guarantee of successful discovery. This section
+keeps the motivation; the definition file owns the fidelity and budget clauses.
 
 ### Motivation: how far beyond previously performed work?
 
@@ -209,8 +187,9 @@ no shortcut over the missing work.
 The resulting research question is: under a stated resource budget, how far
 can a builder extend its starting repertoire, and can retaining useful
 extensions make subsequent advances easier? Interpretation is idealized;
-discovery remains resource-dependent and fallible. This definition records
-the latest direction without yet rewriting the theory-builder definitions.
+discovery remains resource-dependent and fallible. The builder definitions
+now use this framing; their remaining conflicts are listed in the
+[workshop review plan](./README.md#next-review-reconcile-the-definitions).
 
 ## Paradoxes and overreach to avoid
 
@@ -305,6 +284,20 @@ The absence of a known solution to P versus NP licenses neither of those
 classifications. For such a task, unresolved is a report of the present
 result, not a theorem that no resolution is possible.
 
+The operator's subsequent clarification concerns independence from axioms.
+If a sentence is independent of a consistent classical theory, neither the
+sentence nor its negation is provable in that theory. Adding either one,
+separately, gives a consistent extension. A builder may investigate those
+extensions and grounds for adopting a new axiom. Adoption changes the
+assumptions; it is not a proof from the original assumptions and does not by
+itself establish truth about the intended subject.
+([Petrakis, Logic, §4.11](https://www.mathematik.uni-muenchen.de/~petrakis/LogicLectureNotes.pdf))
+Algorithmic undecidability instead excludes a terminating correct procedure
+for every instance of a decision problem. Investigating stronger axioms can
+settle further individual cases without supplying such a universal procedure.
+The interpreter contract should permit axiom proposals while preserving this
+distinction and their status as proposals.
+
 There is a separate cost trap. Suppose the ideal worker can decide every
 Boolean satisfiability instance correctly in one uncharged semantic call.
 Our model would then assume an efficient SAT oracle. That would not establish
@@ -357,6 +350,7 @@ implementation of some of those operations.
 | A new concept introduced after an operating failure | A change with testable consequences versus a new label for the same account. |
 | A precisely understood but unresolved program property | Understanding the question versus having a decision procedure for it. |
 | P versus NP and the Riemann hypothesis | Precise understanding and conceptual exploration versus a guaranteed mathematical resolution. |
+| A sentence independent of specified axioms | Investigating consistent axiom extensions versus proving the sentence from the original axioms. |
 | Two worlds consistent with the available observations | Correctly conditional reasoning versus invented factual certainty. |
 | A self-description that praises its own evaluator | A represented claim versus independent support for that claim. |
 | A sound conceptual proposal that cannot be deployed | Semantic progress versus successful operational extension. |

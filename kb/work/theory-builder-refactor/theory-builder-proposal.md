@@ -1,8 +1,10 @@
 # Proposal: the open-ended automated theory builder
 
-> **Status:** Agent proposal, 2026-09-09, awaiting operator adoption. It
-> reorders claims the KB already holds; the only new content is the
-> definition's structure, the role table, and the discriminating test.
+> **Status:** Earlier agent proposal, 2026-09-09; superseded as the workshop
+> framing. Use the [current definitions and review plan](./README.md) first.
+> Retained for its role mappings and discriminating cases. Its theory-family
+> requirement, open-endedness definition, and operator-choice list are not
+> current instructions.
 
 ## 1. What the reorder is for
 

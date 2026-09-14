@@ -1,19 +1,12 @@
 # Proposal: warrant-bounded open-endedness and a fallible-theory definition
 
-> **Status:** Proposal for changes to the workshop definitions, 2026-09-14,
-> from the operator session of that date. It does not modify
-> [theory builder](./theory-builder.md),
-> [reflective theory builder](./reflective-theory-builder.md), or
-> [autonomous theory builder](./autonomous-theory-builder.md). It records what
-> the session concluded, the edits those conclusions imply, and the choices
-> left open. Nothing here is accepted until the operator adopts it.
->
-> **Superseded in part, later on 2026-09-14.** The definitions were rewritten
-> after the operator sharpened the ideal interpreter: open-endedness became
-> extension as the measured quantity in [theory builder](./theory-builder.md#extension),
-> and section 4 became [fallible theory](./fallible-theory.md). Sections 2
-> and 8 are therefore superseded; sections 3, 5, 6, and 7 remain the argument
-> record, and section 3's closure claim is carried as unsettled.
+> **Status:** Earlier proposal, 2026-09-14; retained as an argument record.
+> The [current definitions and review plan](./README.md) supersede its edit
+> list and operator-choice list. Open-endedness became measured extension;
+> separate fallible-theory and resource-bounded-interpreter drafts now exist.
+> The closure, evaluator-revision, and oracle claims below remain arguments
+> to assess, not established premises. The conjecture that reflection lowers
+> extension cost remains untested.
 
 ## Why this proposal exists
 

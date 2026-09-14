@@ -32,112 +32,90 @@ Whether sufficiently broad theory building requires the system to become a
 [software house](../../notes/definitions/software-house.md) is now a side
 conjecture, not a premise or load-bearing consequence of the learning paradigm.
 
-## Who posed it
+## Operator direction
 
-The operator, on 2026-09-09, from a summary of a ChatGPT discussion. The
-summary proposed a four-level ladder: classical theory refinement, universal
-theory refinement, automatic universal theory refinement, and a fourth rung
-for refinement embedded in a closed action-and-consequence loop. The agent's
-assessment in the same session found the ladder mixed two axes (role
-allocation and loop closure), found *universal* unstable as a term, and found
-that natural-language form alone does not make a theory refinable. The
-workshop uses the KB's term, theory refinement, throughout; the summary's own
-names are not carried in. The operator then commissioned this workshop: start from this
-README, then write a proposal for the theory builder the program needs, under
-whatever adjective fits, copying the good parts of the software-house
-definition.
+Commissioned by the operator on 2026-09-09; reframed on 2026-09-10 around
+reflective theory building, with software-house capability a side conjecture.
+On 2026-09-14 the operator directed that definitions come first, removed the
+theory-family requirement, and made fixed models optional. The later
+interpreter discussion replaced open-endedness as a separate condition with
+the question of extension under a resource budget.
 
-On 2026-09-10 the workshop direction changed: the research target became the
-autonomous reflective theory builder described above, with external theory
-refinement kept as the useful task and the test of whether the current
-machinery has sufficient reach. Software-house capability was demoted to a
-side conjecture.
+The current working abstraction idealizes faithful interpretation while
+leaving conceptual development resource-dependent and fallible. The operator's
+question is how far a builder can proceed beyond its available knowledge and
+procedures, not merely whether it can produce a new result. The proposed
+warrant closure of the seed remains contested. The most recent discussion
+also distinguishes independence from axioms from algorithmic undecidability:
+a builder may investigate new axioms without treating their adoption as a
+proof from its previous assumptions.
 
-On 2026-09-14 the operator directed that the definitions come first and that
-they drop the theory-family requirement. Open-endedness concerns extensions
-that need not be specified in advance, without promising success on every
-future demand. Fixed models are a feature of some theory builders, not a
-condition on the general definitions; model training and replacement remain
-available. The definitions below incorporate this direction. The earlier
-proposal and interface drafts still require reconciliation.
+The five definition drafts were rewritten in commit `991e5bf7`. They are the
+current candidates, not accepted library definitions. This cleanup gives them
+one reading order and records conflicts still requiring substantive review.
 
-Later on 2026-09-14 the operator reviewed that revision. The session
-concluded that bare open-endedness is cheap (exhaustive search qualifies),
-that the Gödel machine meets all three bare conditions, that the target is
-therefore resource-bounded and bounded by a warrant closure rooted in the
-seed objective, and that *fallible theory* needs its own definition before
-the closure bound can be stated. The operator directed that the conclusions
-be recorded as a proposal rather than applied to the definitions.
+## Read the current definitions in this order
 
-The operator then asked to differentiate the research approach from the Gödel
-machine. The working comparison below separates proof-governed switching from
-empirical theory-guided revision, while leaving the general definitions open.
+1. [Resource-bounded ideal interpreter](./resource-bounded-ideal-interpreter.md)
+   — faithful interpretation, attempted conceptual development, starting
+   knowledge and procedures, and a computational budget.
+2. [Fallible theory](./fallible-theory.md) — the current candidate account of
+   warrant, retention, and revision. Its additional policy clauses require
+   review before they can define fallibility generally.
+3. [Theory builder](./theory-builder.md) — the persistent system, its boundary,
+   seed, internal roles, and the proposed measure of extension.
+4. [Reflective theory builder](./reflective-theory-builder.md) — revision of a
+   causally connected theory of the builder's own machinery.
+5. [Autonomous theory builder](./autonomous-theory-builder.md) — computational
+   performance of every internal role; reliability remains separately assessed.
 
-Later still on 2026-09-14 the operator sharpened the resource-bounded ideal
-interpreter to one sentence and asked for the definitions to be cleaned up
-around the settled direction. The three definitions were rewritten: the
-builder's theories are fallible theories, its interpretive roles are
-specified against the ideal interpreter, open-endedness is replaced by
-extension as the measured quantity, and the Gödel machine enters every file
-as the contrast case. Two definition drafts were added, fallible theory and
-resource-bounded ideal interpreter. The warrant-closure claim is carried as
-unsettled, not as a premise.
-
-## Working artifacts
+## Supporting work
 
 - [Semantic work and the ideal interpreter](./semantic-work-and-the-ideal-interpreter.md)
-  — latest framing, 2026-09-14: the operator made the ideal interpreter
-  central and proposed treating open-endedness as implicit in its conceptual
-  capacity. Summarizes the discussion and tests a bounded definition of
-  semantic work against ambiguity, open mathematical problems (including P
-  versus NP), undecidability, self-reference, and the risk of assuming all
-  problem-solving. Includes a working definition of a resource-bounded ideal
-  interpreter: explicit starting repertoire and costs, faithful interpretation,
-  and fallible extensions. Records the question of how far fresh computation
-  can extend prior work. Revisions to the theory-builder definitions remain
-  pending.
-- [Resource-bounded ideal interpreter](./resource-bounded-ideal-interpreter.md)
-  — the operator's one-sentence definition with the faithful-interpretation
-  clauses, what the budget covers, what the idealization does not supply,
-  and the realization rule for weights versus retained artifacts.
-- [Fallible theory](./fallible-theory.md) — the three clauses fallibility
-  adds to a theory (warrant per claim and scope, retention at partial warrant
-  as a frontier, revision licensed against an unchanged objective), warrant
-  as a relation, the objective clause, and boundary cases. Literature checks
-  pending.
-- [Theory builder](./theory-builder.md) — the base definition with the
-  boundary rule, persistence, and evaluation clauses copied from the
-  software-house definition, the interpretation and seed clauses, the two
-  independent conditions, and extension as the measured quantity.
-- [Reflective theory builder](./reflective-theory-builder.md) — the reflective
-  condition, composed from reflective theory refinement, behavior-determining
-  organization, and reflective system.
-- [Autonomous theory builder](./autonomous-theory-builder.md) — the autonomy
-  condition, defined as computational closure of the theory-building pathway;
-  the target is warranted autonomy. Renamed from *autonomous reflective theory
-  builder* on 2026-09-10 so that autonomy is independent of reflection.
-- [Gödel-machine comparison](./goedel-machine-comparison.md) — working account
-  of the grounds for machinery changes, the role of fallible self-theories,
-  and the research question this distinction leaves to evaluation.
-- [Proposal: warrant-bounded open-endedness and a fallible-theory definition](./proposal-warrant-bounded-open-endedness.md)
-  — 2026-09-14 proposal for the next revision of the three definitions:
-  extension as seed diff, the two limits inherited from the Gödel machine
-  (cost and warrant closure), the fallible-theory clauses to define first,
-  the sandbox and ideal-interpreter assessments, and the ordered edit list.
-  Sections 2 and 8 are superseded by the definitions as rewritten later the
-  same day; sections 3 to 7 remain the argument record.
-- [Theory-builder proposal](./theory-builder-proposal.md) — the earlier draft
-  around an open-ended automated theory builder; retained for material to
-  reconcile with the new direction.
-- [Universal theory manipulator](./universal-theory-manipulator.md) — earlier
-  draft of a fully codified limit; no longer load-bearing and requires review
-  before any promotion.
-- [Theory refinement as an interface](./theory-refinement-interface.md) —
-  working document: derive, compare, locate, revise, and evaluate as a useful
-  decomposition of theory refinement; its relationship to the established
-  theory-refinement literature still needs tightening.
-- [Note draft: theory refinement is an interface of five operations](./note-draft-theory-refinement-is-an-interface.md)
-  — candidate material for that reconciliation.
+  owns the semantic-work definition, rationale, mathematical stress tests,
+  and unresolved specification questions. The separate interpreter file owns
+  the current interpreter definition.
+- [Gödel-machine comparison](./goedel-machine-comparison.md) owns the comparison
+  of proof-governed switching with empirical theory-guided revision. Its
+  cautions need reconciling with the stronger exclusions in the definitions.
+- [Theory refinement as an interface](./theory-refinement-interface.md) owns
+  the investigation of derive, compare, locate, revise, and evaluate. It
+  requires reconciliation with the interpreter's role and established
+  refinement literature before promotion.
+
+## Earlier drafts and argument records
+
+These files supply material to assess, not a second set of current definitions
+or an edit plan to execute unchanged.
+
+| File | Remaining use |
+|---|---|
+| [Warrant-bounded proposal](./proposal-warrant-bounded-open-endedness.md) | Argument record for the contested closure claim, evaluator revision, and the conjecture that reflection lowers search cost. Its old edit list is superseded. |
+| [Original theory-builder proposal](./theory-builder-proposal.md) | Recover useful role mappings and discriminating cases; its theory-family and open-endedness framing is superseded. |
+| [Universal theory manipulator](./universal-theory-manipulator.md) | Earlier formal limit case; assess whether anything is needed beyond the Gödel-machine comparison before retiring it. |
+| [Interface note draft](./note-draft-theory-refinement-is-an-interface.md) | Candidate prose for the interface investigation; merge useful material into its eventual output rather than promote both accounts. |
+
+## Next review: reconcile the definitions
+
+The next pass should resolve these specific conflicts before expanding the
+formalization or promoting definitions. The entries below identify review
+questions; they do not silently adopt replacements for the current drafts.
+
+| Issue | What must be resolved |
+|---|---|
+| Interpreter's scope and guarantees | The interpreter says budget exhaustion is its only failure, but conceptual development may fail and scope is conditional. Specify the guarantee for completed interpretation separately from discovery, and assess completion as well as fidelity so abstention cannot make evaluation vacuous. |
+| Extension and model weights | The builder requires an artifact diff and excludes changes to existing slots, while both the builder and interpreter permit learning in weights. Define extension through demonstrated capability under a stated budget; settle how artifacts and probes establish the change. |
+| Fallibility and warrant policy | Distinguish the property of being fallible from the proposed policy for retaining and consuming claims. The cited [warrant note](../../notes/theory-warrant-tracked-at-the-finest-granularity-evidence-licenses.md) permits joint model or conjunction support. Check the draft's per-claim-only rule, always-untested-scope claim, and assertion that warranted revisions automatically chain. Distinguish actual warrant from an evaluator's judgment of it. |
+| Objectives and closure | The autonomy draft infers that removing people prevents licensed objective change, while the comparison leaves this disputed. The [objective note](../../notes/revising-an-improvement-objective-is-licensed-from-outside-it.md) distinguishes an outside comparison level from the system boundary and reports no terminal-objective revision in Commonplace. Establish what follows before using seed closure as a definition premise. |
+| Gödel-machine boundary cases | Reconcile the claim that its axioms are retained by proof and never revised against evidence with the comparison's account of observations and licensed axiom changes. Separate initial assumptions, proof-governed switching, and empirical adequacy; do not make an exclusion depend on unsupported impossibility claims. |
+
+After that review, work through one bounded positive case and one failure
+case using the semantic-work checks. Specify the starting repertoire, task,
+budget, completed result, proposed extension, and grounds for retaining it.
+Use existing work on belief revision, belief bases, truth maintenance, and
+formal learning to check the proposed concepts before claiming novelty.
+Source checks must distinguish convergence guarantees from current warrant.
+The experiment workshop below continues to own comparative experiment design.
 
 ## What closes the workshop
 
@@ -157,8 +135,8 @@ unsettled, not as a premise.
 
 ## Inventory of artifacts the reorder touches
 
-The proposal names how each would change. Dispositions are recorded here as
-they are decided.
+Dispositions are recorded here as they are decided. Earlier proposals supply
+possible changes, not settled instructions for the library.
 
 | Artifact | Current head | Disposition |
 |---|---|---|
@@ -167,16 +145,15 @@ they are decided.
 | `kb/articles/the-software-house-as-the-unit-of-training.md` | house is the trained unit; theory refinement is the mechanism | open; learning-paradigm framing should move to reflective theory builder |
 | `kb/articles/nearest-existing-constructions-to-a-witness-house.md` | witness-house lens | open |
 | `kb/notes/an-open-domain-theory-builder-becomes-a-software-house-when-new-domains-require-production-machinery-changes.md` | software-house consequence | keep as conditional side conjecture; wording still needs reconciliation |
-| `kb/notes/definitions/theory-refinement.md` | genus definition; departures listed as form, then subject | reframed 2026-09-09: machinery is the first departure, form its consequence, subject independent |
+| `kb/notes/definitions/theory-refinement.md` | machinery departure, with remaining family wording | reframed 2026-09-09; second pass pending to align family wording with the accepted extension definition |
 | `kb/notes/definitions/software-house.md` | complete persistent producer | keep; no longer the head of the research program |
 | `kb/notes/definitions/codification.md` | the natural-language to symbolic crossing | keep unchanged |
 | `kb/notes/universal-software-factory-needs-a-declared-universality-axis.md` | four universality axes | keep; supplies the rule that *universal* needs a declared axis |
 | `kb/notes/a-fixed-model-house-must-write-the-procedures-for-each-new-theory.md` | house needs procedures per theory | open; useful machinery-gap analysis, but not every new family must require new code |
 | `kb/notes/open-ended-theory-learning-and-factory-learning-close-the-same.md` | carries a factory-to-house TODO | open |
 | `kb/notes/broad-software-demands-create-pressure-for-agentic-factory-development.md` | carries a factory-to-house TODO | open |
-| `kb/sources/goedel-machines-schmidhuber.ingest.md` | pinned to a `pdf-read` snapshot whose hash matches no existing file; page-based citations | keep; needed as the contrast case in every definition (reflection, autonomy, and in-principle extension without fallible theories); fix the snapshot hash rather than retire |
-| `kb/notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md` | reads the machine as a change loop; carries "snapshot required" markers | keep; its "three different limits" section supplies the two limits on extension; resolve the markers |
-| `kb/notes/definitions/theory-refinement.md` (second pass) | machinery departure still worded as "family-specific machinery after the family arrives" | open; needs the family wording reframed as extension once the definitions are accepted |
+| `kb/sources/goedel-machines-schmidhuber.ingest.md` | pinned to a `pdf-read` snapshot whose hash matches no existing file; page-based citations | keep for the comparison; verify the retained snapshot and repair the ingest references before promotion |
+| `kb/notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md` | reads the machine as a change loop; carries "snapshot required" markers | keep; resolve source markers and assess which formal limits transfer to the proposed builder |
 
 ## Evaluation boundary
 
@@ -187,7 +164,9 @@ snapshot of the Gödel machine paper (arXiv cs/0309048 v5) under
 check recorded in the operator session: fallible theories, generic theory
 refinement, and search over candidate revisions are prior art. The workshop
 therefore treats the autonomous reflective composition as the research target,
-not those ingredients individually.
+not those ingredients individually. The 2026-09-14 semantic-work document
+also records direct sources for the mathematical and logical stress tests.
+The retained literature checks for the new definitions remain incomplete.
 
 ## Coordination
 
@@ -203,9 +182,6 @@ not those ingredients individually.
 - [operator-led-article-clarification](../operator-led-article-clarification/README.md)
   edits the three articles for readability. Reframing their heads is a content
   change and must not be mixed into clarification commits.
-- The work index lists a `reachability-working-paper-publication` workshop
-  whose directory no longer exists. Not this workshop's problem; noted so a
-  later triage does not look for it here.
 
 Write scope while open: this directory only. Library edits happen in separate
 commits once a disposition is recorded above.

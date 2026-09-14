@@ -7,7 +7,11 @@ tags: [foundations, self-improving-systems, learning-theory]
 
 # Theory refinement is an interface of five operations, not a representation
 
-> **Status:** Draft note produced by cp-skill-write on 2026-09-09 before the operator asked that the interface framing stay in the workshop. Held here as a candidate alongside [theory-refinement-interface.md](./theory-refinement-interface.md); not a library artifact.
+> **Status:** Candidate prose produced on 2026-09-09 before the operator asked
+> that the interface framing stay in the workshop. The working investigation
+> is [theory refinement as an interface](./theory-refinement-interface.md).
+> Reconcile useful material into that investigation's eventual output; this
+> is not a separate promotion target or a library artifact.
 
 [Theory refinement](../../notes/definitions/theory-refinement.md) — revising an existing
 fallible explicit theory against empirical cases — is specified by what one

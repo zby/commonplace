@@ -6,11 +6,11 @@ tags: [foundations, learning-theory, self-improving-systems]
 
 # Universal theory manipulator
 
-> **Status:** Workshop draft, 2026-09-09, staged for `kb/notes/definitions/`.
-> Ideal type: it fixes a limit case and claims no construction. The Gödel
-> machine is cited as the worked instance through its ingest; verbatim quotes
-> beyond the one the ingest retains need the ingest re-pinned to the
-> 2026-09-09 snapshot first.
+> **Status:** Earlier limit-case draft, 2026-09-09; no longer a promotion
+> target under the [current framing](./README.md). Retained to assess whether
+> it adds anything needed beyond the [Gödel-machine comparison](./goedel-machine-comparison.md).
+> Its claims about the Gödel machine require source review; the ingest also
+> needs its snapshot references repaired before this material is reused.
 
 A **universal theory manipulator** is refinement machinery at the fully
 codified limit. Its representation language can express any computable
