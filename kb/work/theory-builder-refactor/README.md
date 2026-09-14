@@ -57,6 +57,14 @@ condition on the general definitions; model training and replacement remain
 available. The definitions below incorporate this direction. The earlier
 proposal and interface drafts still require reconciliation.
 
+Later on 2026-09-14 the operator reviewed that revision. The session
+concluded that bare open-endedness is cheap (exhaustive search qualifies),
+that the Gödel machine meets all three bare conditions, that the target is
+therefore resource-bounded and bounded by a warrant closure rooted in the
+seed objective, and that *fallible theory* needs its own definition before
+the closure bound can be stated. The operator directed that the conclusions
+be recorded as a proposal rather than applied to the definitions.
+
 ## Working artifacts
 
 - [Theory builder](./theory-builder.md) — the base definition with the
@@ -70,6 +78,12 @@ proposal and interface drafts still require reconciliation.
   condition, defined as computational closure of the theory-building pathway;
   the target is warranted autonomy. Renamed from *autonomous reflective theory
   builder* on 2026-09-10 so that autonomy is independent of reflection.
+- [Proposal: warrant-bounded open-endedness and a fallible-theory definition](./proposal-warrant-bounded-open-endedness.md)
+  — 2026-09-14 proposal for the next revision of the three definitions:
+  extension as seed diff, the two limits inherited from the Gödel machine
+  (cost and warrant closure), the fallible-theory clauses to define first,
+  the sandbox and ideal-interpreter assessments, and the ordered edit list.
+  Not applied.
 - [Theory-builder proposal](./theory-builder-proposal.md) — the earlier draft
   around an open-ended automated theory builder; retained for material to
   reconcile with the new direction.
