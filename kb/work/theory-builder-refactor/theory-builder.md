@@ -1,7 +1,8 @@
 # Theory builder
 
-> **Status:** Workshop definition, 2026-09-10; revised 2026-09-10 after the
-> boundary-case, duplication, and independence checks. The boundary rule,
+> **Status:** Workshop definition, 2026-09-10; revised 2026-09-14 to define
+> open-endedness through machinery extension and leave model changes open.
+> The boundary rule,
 > persistence clause, and evaluation clause are copied from the
 > [software house](../../notes/definitions/software-house.md) definition,
 > because they are not specific to software.
@@ -27,15 +28,22 @@ The theory builder includes the theories whose revision it remains
 responsible for, the machinery it uses, and every person or computational
 component that fills an internal theory-building role. The machinery includes
 representations and their consequence procedures, repair operators,
-evaluators and evidence procedures, indexes, validators, and the records from
-which any of these can be reconstructed.
+evaluators and evidence procedures, models, retained instructions, tools,
+indexes, validators, and the records from which any of these can be
+reconstructed.
+
+The builder may change its machinery through retained instructions, new tools,
+changes to model weights, model replacement, or combinations of these. Fixed
+models are a constraint on particular builders or studies. Neither this
+definition nor the conditions below require that constraint.
 
 Users remain outside the builder when they supply questions, cases, evidence,
 preferences, acceptance judgments, or later demands. A person is inside the
 builder only when the system depends on them for an internal theory-building
-role: interpreting what a theory implies, choosing which part to blame or
-revise, evaluating a candidate revision, selecting the retained successor, or
-repairing the machinery. The same person can occupy both positions in
+role: constructing a first theory, interpreting what a theory implies,
+choosing which part to blame or revise, producing a candidate revision,
+evaluating a candidate theory, selecting the theory to retain, or extending
+and repairing the machinery. The same person can occupy both positions in
 different interactions. The boundary follows the role, not the person. An
 attribution must therefore declare the boundary it was assessed against.
 
@@ -62,30 +70,31 @@ two, and each is defined against the same declared boundary.
   organization. See [reflective theory builder](./reflective-theory-builder.md).
 - **Autonomous.** Every internal theory-building role is computational. See
   [autonomous theory builder](./autonomous-theory-builder.md).
-- **Open-ended.** The builder handles theory families for which it holds no
-  refinement machinery when the demand arrives. Defined below.
+- **Open-ended.** The builder can extend its theory-building machinery as
+  demands arise, without requiring the needed extensions to be specified in
+  advance. Defined below.
 
 ## Open-ended theory builder
 
-An **open-ended theory builder** handles whatever reasonable theories,
-questions, cases, and consequences arise as work continues, without their
-being listed in advance, including demands that change what it is responsible
-for and **theory families** for which it holds no refinement machinery when
-the demand arrives. A theory family is a kind of theory for which the
-builder's retained machinery cannot derive consequences, localize faults, or
-edit parts. A new domain may or may not bring a new family, and a new family
-can arrive inside an old domain. *Reasonable* is left informal, in the sense
-the [conjecture article](../../articles/automated-software-houses-with-fixed-llms.md#claim)
-already uses. The working standard is comparative: given the same demands and
-resources, the builder does at least as well as one with people in its
-internal theory-building roles.
+An **open-ended theory builder** can extend its theory-building machinery in
+response to demands encountered during its continuing work, without requiring
+the needed extensions to be specified in advance.
 
-The declared universality axis, in the terms of
-[universal software factory needs a declared universality axis](../../notes/universal-software-factory-needs-a-declared-universality-axis.md),
-is refinement-machinery acquisition reach: from permitted evidence, can the
-builder determine, construct, and retain the family-specific machinery a new
-family needs. Open-endedness is therefore a condition on machinery
-acquisition, not on subject matter or on who performs the roles.
+When current machinery is inadequate, the builder determines what additional
+capability is needed, constructs or adopts machinery that supplies it, and
+retains it for later theory work. A new subject may be handled with existing
+machinery; work on a familiar subject may expose a need for an extension.
+Installing a predetermined extension alone does not establish open-endedness.
+
+Open-endedness does not guarantee that every demand can be met. An evaluation
+establishes particular demonstrated extensions under stated conditions; it
+does not establish unrestricted future capability. The breadth and reliability
+of acquisition, and performance relative to a builder with people in its
+internal roles, are questions for evaluation.
+
+Open-endedness is independent of who performs those roles and of whether
+machinery changes are guided by a theory of the builder itself. Autonomy and
+reflection supply those separate conditions.
 
 ## Exclusions
 
@@ -101,7 +110,7 @@ acquisition, not on subject matter or on who performs the roles.
 
 - **FORTE** is not a theory builder: it revises a supplied theory in one
   offline run and holds no continuing responsibility for it. Its machinery is
-  computational and family-fixed.
+  computational and specified before the run.
 - **Commonplace today**, with the operator inside the boundary, is a theory
   builder. Which of the three conditions it meets is assessed in the
   condition definitions.

@@ -14,15 +14,15 @@ organization and change the machinery used for later theory work.
 The target is a theory builder meeting three independent conditions:
 **reflective** (it refines a theory of its own theory-building machinery),
 **autonomous** (every internal theory-building role is computational, with
-the autonomy warranted by its evaluators), and **open-ended** (it acquires
-refinement machinery for theory families it did not hold machinery for when
-they arrived). Commonplace today is a reflective, non-autonomous instance;
+the autonomy warranted by its evaluators), and **open-ended** (it can extend
+its theory-building machinery as demands arise, without requiring the needed
+extensions to be specified in advance). Commonplace today is a reflective, non-autonomous instance;
 the operator still performs diagnosis, admission, and successor selection.
 
 Automatic theory refinement and fallible theories are prior art. The proposed
 advance is the autonomous combination: external theory work, reflective
 revision of the theory builder, and acquisition of missing theory-building
-machinery as new theory families expose limitations of the current machinery.
+machinery as new demands expose limitations of the current machinery.
 
 Whether sufficiently broad theory building requires the system to become a
 [software house](../../notes/definitions/software-house.md) is now a side
@@ -49,12 +49,20 @@ refinement kept as the useful task and the test of whether the current
 machinery has sufficient reach. Software-house capability was demoted to a
 side conjecture.
 
+On 2026-09-14 the operator directed that the definitions come first and that
+they drop the theory-family requirement. Open-endedness concerns extensions
+that need not be specified in advance, without promising success on every
+future demand. Fixed models are a feature of some theory builders, not a
+condition on the general definitions; model training and replacement remain
+available. The definitions below incorporate this direction. The earlier
+proposal and interface drafts still require reconciliation.
+
 ## Working artifacts
 
 - [Theory builder](./theory-builder.md) — the base definition with the
   boundary rule, persistence, and evaluation clauses copied from the
   software-house definition, the three independent conditions, and the
-  open-ended condition (machinery acquisition for new theory families).
+  open-ended condition (machinery extensions need not be specified in advance).
 - [Reflective theory builder](./reflective-theory-builder.md) — the reflective
   condition, composed from reflective theory refinement, behavior-determining
   organization, and reflective system.

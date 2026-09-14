@@ -1,7 +1,7 @@
 # Reflective theory builder
 
-> **Status:** Workshop definition, 2026-09-10; revised 2026-09-10 to compose
-> existing terms instead of restating them.
+> **Status:** Workshop definition, 2026-09-10; revised 2026-09-14 to align
+> the independence clause with open-endedness as machinery extension.
 
 A **reflective theory builder** is a [theory builder](./theory-builder.md) that
 performs [reflective theory refinement](../../notes/definitions/theory-refinement.md#departures)
@@ -23,8 +23,10 @@ external theory-building competence; it is not a requirement to build
 theories only about the builder itself.
 
 The condition is independent of [autonomy](./autonomous-theory-builder.md)
-and of open-endedness. A reflective builder may depend on a person for the
-diagnosis or the machinery change, and may hold family-fixed machinery.
+and of [open-endedness](./theory-builder.md#open-ended-theory-builder). A
+reflective builder may depend on a person for diagnosis or machinery changes.
+It may revise its self-theory and machinery while remaining limited to
+extensions specified in advance.
 
 ## Boundary cases
 
