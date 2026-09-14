@@ -153,6 +153,10 @@ not hide the difference between faithful reading and conjectural invention.
 
 ## Working definition: resource-bounded ideal interpreter
 
+> Sharpened by the operator and moved to
+> [resource-bounded ideal interpreter](./resource-bounded-ideal-interpreter.md)
+> later on 2026-09-14. This section remains the discussion record.
+
 > A **resource-bounded ideal interpreter** faithfully interprets
 > representations within a declared scope, using its available knowledge and
 > procedures. It can undertake further reasoning and propose new

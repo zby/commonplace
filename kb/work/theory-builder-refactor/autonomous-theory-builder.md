@@ -1,7 +1,8 @@
 # Autonomous theory builder
 
-> **Status:** Workshop definition, 2026-09-10; revised 2026-09-14 to cover
-> first-theory construction and align the boundary cases with persistence.
+> **Status:** Workshop definition, 2026-09-10; revised 2026-09-14 in a later
+> session to drop the reference to open-endedness, add the objective
+> consequence, and add the Gödel machine as a boundary case.
 
 An **autonomous theory builder** is a [theory builder](./theory-builder.md)
 whose theory-building pathway is
@@ -22,21 +23,39 @@ each consequential role as human, computational, or joint, and declare the
 seed and its construction separately from interventions during the assessed
 run.
 
-Autonomy is independent of [reflection](./reflective-theory-builder.md) and of
-[open-endedness](./theory-builder.md#open-ended-theory-builder). Computational
-performance of a role does not establish its reliability. The research target
-is **warranted** autonomy in the sense of
+Autonomy is independent of [reflection](./reflective-theory-builder.md) and
+of [extension](./theory-builder.md#extension). Computational performance of
+a role does not establish its reliability. The research target is
+**warranted** autonomy in the sense of
 [warranted autonomy is bounded by oracle domain](../../notes/warranted-autonomy-is-bounded-by-oracle-domain.md):
 the builder's evaluators cover the revisions it accepts with the required
 confidence. Reduction of human presence alone is not the target.
+
+## The objective
+
+With no person inside the boundary, no change to the terminal objective is
+licensed, since
+[revising an improvement objective is licensed from outside it or is not improvement](../../notes/revising-an-improvement-objective-is-licensed-from-outside-it.md).
+The objective may still change unlicensed, including through a conceptual
+revision of its terms, which the
+[objective clause](./fallible-theory.md#the-objective-clause) of fallible
+theory treats as an objective change. Warranted extension is then bounded by
+what evaluators judged against the seed objective can warrant. Whether that
+bound is a closure over the seed objective and admitted evidence is
+unsettled; the fallible-theory definition records the question. Commonplace
+today escapes the question only because the operator licenses objective
+changes from outside the boundary.
 
 ## Boundary cases
 
 - **FORTE** performs its refinement procedure computationally. It is not an
   autonomous theory builder because it does not meet the base definition's
   persistence condition.
+- **The Gödel machine** is autonomous: every role it performs is
+  computational, and its autonomy is warranted within its proof surface. It
+  is not a theory builder, by the base definition's theory clause.
 - **Commonplace today** is not autonomous: the operator performs diagnosis,
   admission, and successor selection for library changes, and these are
   internal roles under the role rule.
-- **The research target** is an autonomous, reflective, open-ended theory
-  builder, with the autonomy warranted.
+- **The research target** is an autonomous, reflective theory builder with
+  the autonomy warranted.

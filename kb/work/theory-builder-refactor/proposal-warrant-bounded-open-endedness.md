@@ -7,6 +7,13 @@
 > [autonomous theory builder](./autonomous-theory-builder.md). It records what
 > the session concluded, the edits those conclusions imply, and the choices
 > left open. Nothing here is accepted until the operator adopts it.
+>
+> **Superseded in part, later on 2026-09-14.** The definitions were rewritten
+> after the operator sharpened the ideal interpreter: open-endedness became
+> extension as the measured quantity in [theory builder](./theory-builder.md#extension),
+> and section 4 became [fallible theory](./fallible-theory.md). Sections 2
+> and 8 are therefore superseded; sections 3, 5, 6, and 7 remain the argument
+> record, and section 3's closure claim is carried as unsettled.
 
 ## Why this proposal exists
 

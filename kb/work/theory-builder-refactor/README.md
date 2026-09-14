@@ -11,18 +11,22 @@ builder's current theory-building machinery. When a failure is attributed to
 that machinery, the builder can revise a theory of its own theory-building
 organization and change the machinery used for later theory work.
 
-The target is a theory builder meeting three independent conditions:
-**reflective** (it refines a theory of its own theory-building machinery),
-**autonomous** (every internal theory-building role is computational, with
-the autonomy warranted by its evaluators), and **open-ended** (it can extend
-its theory-building machinery as demands arise, without requiring the needed
-extensions to be specified in advance). Commonplace today is a reflective, non-autonomous instance;
-the operator still performs diagnosis, admission, and successor selection.
+The target is a theory builder of fallible theories, whose interpretive roles
+are specified against a resource-bounded ideal interpreter, meeting two
+independent conditions: **reflective** (it refines a theory of its own
+theory-building machinery) and **autonomous** (every internal theory-building
+role is computational, with the autonomy warranted by its evaluators).
+Extension of the machinery is not a third condition; it is the quantity the
+research question measures: under a stated budget, how far can the builder
+extend its seed, and does retaining useful extensions make later advances
+easier? Commonplace today is a reflective, non-autonomous instance; the
+operator still performs diagnosis, admission, and successor selection.
 
-Automatic theory refinement and fallible theories are prior art. The proposed
-advance is the autonomous combination: external theory work, reflective
-revision of the theory builder, and acquisition of missing theory-building
-machinery as new demands expose limitations of the current machinery.
+Automatic theory refinement, fallible theories, and, in the Gödel machine,
+reflection with autonomy and in-principle extension are prior art. The
+proposed advance is the combination over fallible theories: external theory
+work, reflective revision of the theory builder, and extension warranted by
+evidence rather than proof, at a cost comparable to a human-staffed builder.
 
 Whether sufficiently broad theory building requires the system to become a
 [software house](../../notes/definitions/software-house.md) is now a side
@@ -69,6 +73,16 @@ The operator then asked to differentiate the research approach from the Gödel
 machine. The working comparison below separates proof-governed switching from
 empirical theory-guided revision, while leaving the general definitions open.
 
+Later still on 2026-09-14 the operator sharpened the resource-bounded ideal
+interpreter to one sentence and asked for the definitions to be cleaned up
+around the settled direction. The three definitions were rewritten: the
+builder's theories are fallible theories, its interpretive roles are
+specified against the ideal interpreter, open-endedness is replaced by
+extension as the measured quantity, and the Gödel machine enters every file
+as the contrast case. Two definition drafts were added, fallible theory and
+resource-bounded ideal interpreter. The warrant-closure claim is carried as
+unsettled, not as a premise.
+
 ## Working artifacts
 
 - [Semantic work and the ideal interpreter](./semantic-work-and-the-ideal-interpreter.md)
@@ -82,10 +96,19 @@ empirical theory-guided revision, while leaving the general definitions open.
   and fallible extensions. Records the question of how far fresh computation
   can extend prior work. Revisions to the theory-builder definitions remain
   pending.
+- [Resource-bounded ideal interpreter](./resource-bounded-ideal-interpreter.md)
+  — the operator's one-sentence definition with the faithful-interpretation
+  clauses, what the budget covers, what the idealization does not supply,
+  and the realization rule for weights versus retained artifacts.
+- [Fallible theory](./fallible-theory.md) — the three clauses fallibility
+  adds to a theory (warrant per claim and scope, retention at partial warrant
+  as a frontier, revision licensed against an unchanged objective), warrant
+  as a relation, the objective clause, and boundary cases. Literature checks
+  pending.
 - [Theory builder](./theory-builder.md) — the base definition with the
   boundary rule, persistence, and evaluation clauses copied from the
-  software-house definition, the three independent conditions, and the
-  open-ended condition (machinery extensions need not be specified in advance).
+  software-house definition, the interpretation and seed clauses, the two
+  independent conditions, and extension as the measured quantity.
 - [Reflective theory builder](./reflective-theory-builder.md) — the reflective
   condition, composed from reflective theory refinement, behavior-determining
   organization, and reflective system.
@@ -101,7 +124,8 @@ empirical theory-guided revision, while leaving the general definitions open.
   extension as seed diff, the two limits inherited from the Gödel machine
   (cost and warrant closure), the fallible-theory clauses to define first,
   the sandbox and ideal-interpreter assessments, and the ordered edit list.
-  Not applied.
+  Sections 2 and 8 are superseded by the definitions as rewritten later the
+  same day; sections 3 to 7 remain the argument record.
 - [Theory-builder proposal](./theory-builder-proposal.md) — the earlier draft
   around an open-ended automated theory builder; retained for material to
   reconcile with the new direction.
@@ -117,10 +141,11 @@ empirical theory-guided revision, while leaving the general definitions open.
 
 ## What closes the workshop
 
-1. The definitions of theory builder (with its open-ended condition),
-   reflective theory builder, and autonomous theory builder are accepted into
-   `kb/notes/definitions/`, or the operator declines them with a recorded
-   reason.
+1. The definitions of theory builder, reflective theory builder, autonomous
+   theory builder, fallible theory, and resource-bounded ideal interpreter
+   are accepted into `kb/notes/definitions/`, or the operator declines them
+   with a recorded reason. Fallible theory needs the AGM and formal-learning
+   ingests first, under closing condition 3.
 2. The research-program articles are given dispositions under the new ordering:
    autonomous reflective theory building is the learning target; software-house
    capability is a side conjecture.
@@ -149,8 +174,9 @@ they are decided.
 | `kb/notes/a-fixed-model-house-must-write-the-procedures-for-each-new-theory.md` | house needs procedures per theory | open; useful machinery-gap analysis, but not every new family must require new code |
 | `kb/notes/open-ended-theory-learning-and-factory-learning-close-the-same.md` | carries a factory-to-house TODO | open |
 | `kb/notes/broad-software-demands-create-pressure-for-agentic-factory-development.md` | carries a factory-to-house TODO | open |
-| `kb/sources/goedel-machines-schmidhuber.ingest.md` | pinned to a `pdf-read` snapshot whose hash matches no existing file; page-based citations | open; no longer needed to establish a universal-manipulator limit |
-| `kb/notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md` | reads the machine as a change loop; carries "snapshot required" markers | open |
+| `kb/sources/goedel-machines-schmidhuber.ingest.md` | pinned to a `pdf-read` snapshot whose hash matches no existing file; page-based citations | keep; needed as the contrast case in every definition (reflection, autonomy, and in-principle extension without fallible theories); fix the snapshot hash rather than retire |
+| `kb/notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md` | reads the machine as a change loop; carries "snapshot required" markers | keep; its "three different limits" section supplies the two limits on extension; resolve the markers |
+| `kb/notes/definitions/theory-refinement.md` (second pass) | machinery departure still worded as "family-specific machinery after the family arrives" | open; needs the family wording reframed as extension once the definitions are accepted |
 
 ## Evaluation boundary
 
