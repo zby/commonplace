@@ -60,6 +60,15 @@ Whether sufficiently broad theory building requires the system to become a
 [software house](../../notes/definitions/software-house.md) remains a side
 conjecture, not a premise or load-bearing consequence.
 
+The general definitions are kept because they show the difficulties. The
+research-program articles work in a special case, the
+[externally tested theory builder](./externally-tested-theory-builder.md),
+whose evidence interface supplies a falsifier, an objective, and an outcome
+level from outside the boundary. The automated software house is its paradigm
+instance. Each of those three supplied items is what one general definition
+must otherwise construct, so the special case is where the articles' relative
+simplicity comes from, not an assumption they hide.
+
 ## Operator direction
 
 Commissioned by the operator on 2026-09-09; reframed on 2026-09-10 around
@@ -89,6 +98,23 @@ goal now states the conjecture, its two rivals, its empirical measure, and
 the two development routes; the definitions are its vocabulary, and
 reflection and extension are its mechanisms rather than its target.
 
+On 2026-09-15 the operator asked why the workshop grew more complicated than
+the articles. The finding: the articles' software house has an evidence
+interface that supplies the falsifier, the objective, and an independent
+outcome level, and the general definitions (fallible theory, the objective
+clause, the ideal interpreter) exist to replace each of those. The operator
+directed that the general case be kept, because it shows the difficulties,
+and a special case added for the simplified situation. That special case is
+the externally tested theory builder.
+
+Also on 2026-09-15 the operator supplied an external literature review of
+the reframing and asked for an independent judgement and an ingest list. The
+[ingest plan](./ingest-plan-from-astra-review.md) records both. Its three
+proposals for the conjecture (split sufficiency from comparison, demote the
+doctrine-edit count to a diagnostic, remove the Gödel-machine exclusions and
+closure claims from the definitions) await the operator's decision and are
+not applied. The priority-1 ingests precede the definitions review below.
+
 ## Read the current definitions in this order
 
 1. [Resource-bounded ideal interpreter](./resource-bounded-ideal-interpreter.md)
@@ -103,6 +129,11 @@ reflection and extension are its mechanisms rather than its target.
    causally connected theory of the builder's own machinery.
 5. [Autonomous theory builder](./autonomous-theory-builder.md) — computational
    performance of every internal role; reliability remains separately assessed.
+6. [Externally tested theory builder](./externally-tested-theory-builder.md)
+   — the special case whose evidence interface supplies a falsifier, an
+   objective, and an outcome level from outside; the automated software house
+   is its instance, and the table there maps each supplied item to the general
+   definition it makes unnecessary.
 
 ## Supporting work
 
@@ -117,6 +148,11 @@ reflection and extension are its mechanisms rather than its target.
   the investigation of derive, compare, locate, revise, and evaluate. It
   requires reconciliation with the interpreter's role and established
   refinement literature before promotion.
+- [Ingest plan from the Astra review](./ingest-plan-from-astra-review.md)
+  owns the judgement of the external literature review and the prioritized
+  list of sources to ingest: introspective multistrategy learning, EURISKO,
+  adaptive data analysis, problem-solving-method construction, automated
+  science, belief bases, and the contemporary rivals.
 
 ## Earlier drafts and argument records
 
@@ -133,7 +169,9 @@ or an edit plan to execute unchanged.
 ## Next review: reconcile the definitions
 
 The next pass should resolve these specific conflicts before expanding the
-formalization or promoting definitions. The entries below identify review
+formalization or promoting definitions. It runs after the priority-1
+ingests in the [ingest plan](./ingest-plan-from-astra-review.md), which bear
+on the fallibility, closure, and extension rows. The entries below identify review
 questions; they do not silently adopt replacements for the current drafts.
 
 | Issue | What must be resolved |
@@ -142,6 +180,7 @@ questions; they do not silently adopt replacements for the current drafts.
 | Extension and model weights | The builder requires an artifact diff and excludes changes to existing slots, while both the builder and interpreter permit learning in weights. Define extension through demonstrated capability under a stated budget; settle how artifacts and probes establish the change. |
 | Fallibility and warrant policy | Distinguish the property of being fallible from the proposed policy for retaining and consuming claims. The cited [warrant note](../../notes/theory-warrant-tracked-at-the-finest-granularity-evidence-licenses.md) permits joint model or conjunction support. Check the draft's per-claim-only rule, always-untested-scope claim, and assertion that warranted revisions automatically chain. Distinguish actual warrant from an evaluator's judgment of it. |
 | Objectives and closure | The autonomy draft infers that removing people prevents licensed objective change, while the comparison leaves this disputed. The [objective note](../../notes/revising-an-improvement-objective-is-licensed-from-outside-it.md) distinguishes an outside comparison level from the system boundary and reports no terminal-objective revision in Commonplace. Establish what follows before using seed closure as a definition premise. |
+| Evidence interface | The special case makes the interface a parameter every builder has. Decide whether the general [theory-builder](./theory-builder.md) definition should require an evaluation to declare the interface, alongside the boundary and the seed, so that the closure question and the interpreter's scope are read relative to it. The conjecture's per-area count already needs a per-area outcome measure, which is the interface. |
 | Gödel-machine boundary cases | Reconcile the claim that its axioms are retained by proof and never revised against evidence with the comparison's account of observations and licensed axiom changes. Separate initial assumptions, proof-governed switching, and empirical adequacy; do not make an exclusion depend on unsupported impossibility claims. |
 
 After that review, work through one bounded positive case and one failure
@@ -155,10 +194,11 @@ The experiment workshop below continues to own comparative experiment design.
 ## What closes the workshop
 
 1. The definitions of theory builder, reflective theory builder, autonomous
-   theory builder, fallible theory, and resource-bounded ideal interpreter
-   are accepted into `kb/notes/definitions/`, or the operator declines them
-   with a recorded reason. Fallible theory needs the AGM and formal-learning
-   ingests first, under closing condition 3.
+   theory builder, fallible theory, resource-bounded ideal interpreter, and
+   externally tested theory builder are accepted into
+   `kb/notes/definitions/`, or the operator declines them with a recorded
+   reason. Fallible theory needs the AGM and formal-learning ingests first,
+   under closing condition 3.
 2. The research-program articles are given dispositions under the new ordering:
    the learning-methodology conjecture is the head of the program, the theory
    builder is the system that executes it, and software-house capability is a
@@ -176,9 +216,9 @@ possible changes, not settled instructions for the library.
 
 | Artifact | Current head | Disposition |
 |---|---|---|
-| `kb/articles/automated-software-houses-with-fixed-llms.md` | software house first | open; side-conjecture candidate |
-| `kb/articles/bootstrapping-the-first-automated-software-house.md` | software house first | open |
-| `kb/articles/the-software-house-as-the-unit-of-training.md` | house is the trained unit; theory refinement is the mechanism | open; learning-paradigm framing should move to reflective theory builder |
+| `kb/articles/automated-software-houses-with-fixed-llms.md` | software house first | open; candidate: keep as the special case, an autonomous externally tested theory builder, with the four witness conditions as its outcome-level evaluation |
+| `kb/articles/bootstrapping-the-first-automated-software-house.md` | software house first | open; candidate: keep as the bootstrap of the special case |
+| `kb/articles/the-software-house-as-the-unit-of-training.md` | house is the trained unit; theory refinement is the mechanism | open; learning-paradigm framing should move to reflective theory builder; its "assume an automated one exists" premise is the special case's interface, not a hidden assumption |
 | `kb/articles/nearest-existing-constructions-to-a-witness-house.md` | witness-house lens | open |
 | `kb/notes/an-open-domain-theory-builder-becomes-a-software-house-when-new-domains-require-production-machinery-changes.md` | software-house consequence | keep as conditional side conjecture; wording still needs reconciliation |
 | `kb/notes/definitions/theory-refinement.md` | machinery departure, with remaining family wording | reframed 2026-09-09; second pass pending to align family wording with the accepted extension definition |
