@@ -107,6 +107,14 @@ directed that the general case be kept, because it shows the difficulties,
 and a special case added for the simplified situation. That special case is
 the externally tested theory builder.
 
+Also on 2026-09-15 the operator supplied an external literature review of
+the reframing and asked for an independent judgement and an ingest list. The
+[ingest plan](./ingest-plan-from-astra-review.md) records both. Its three
+proposals for the conjecture (split sufficiency from comparison, demote the
+doctrine-edit count to a diagnostic, remove the Gödel-machine exclusions and
+closure claims from the definitions) await the operator's decision and are
+not applied. The priority-1 ingests precede the definitions review below.
+
 ## Read the current definitions in this order
 
 1. [Resource-bounded ideal interpreter](./resource-bounded-ideal-interpreter.md)
@@ -140,6 +148,11 @@ the externally tested theory builder.
   the investigation of derive, compare, locate, revise, and evaluate. It
   requires reconciliation with the interpreter's role and established
   refinement literature before promotion.
+- [Ingest plan from the Astra review](./ingest-plan-from-astra-review.md)
+  owns the judgement of the external literature review and the prioritized
+  list of sources to ingest: introspective multistrategy learning, EURISKO,
+  adaptive data analysis, problem-solving-method construction, automated
+  science, belief bases, and the contemporary rivals.
 
 ## Earlier drafts and argument records
 
@@ -156,7 +169,9 @@ or an edit plan to execute unchanged.
 ## Next review: reconcile the definitions
 
 The next pass should resolve these specific conflicts before expanding the
-formalization or promoting definitions. The entries below identify review
+formalization or promoting definitions. It runs after the priority-1
+ingests in the [ingest plan](./ingest-plan-from-astra-review.md), which bear
+on the fallibility, closure, and extension rows. The entries below identify review
 questions; they do not silently adopt replacements for the current drafts.
 
 | Issue | What must be resolved |
