@@ -1,17 +1,18 @@
 # Plan: adopt tentative theory across the KB
 
-> **Status:** Deferred migration plan, 2026-09-17. The operator requested the
-> workshop terminology change now and a plan for the rest of the KB after
-> adoption of the workshop conclusions. The workshop change is complete;
-> this plan does not authorize starting the wider migration early.
+> **Status:** Migration plan, ready to execute as of 2026-09-17. The
+> trigger has fired: the operator adopted the workshop conclusions the same
+> day, recorded in the README's [Adoption section](./README.md#adoption)
+> (commit `28a2ea8d`), and step 1 below was executed with the promotion
+> commit `1b995707`. Execution starts at step 2. The operator is handing
+> this to a Codex session.
 
 ## Adoption trigger and intended result
 
-Start when the operator adopts the workshop conclusions and the
-[README's dispositions](./README.md#what-closes-the-workshop) record the
-accepted vocabulary, definition destinations, and treatment of retention
-policy. If those conclusions change the meaning or scope of the term,
-revise this plan against that decision before editing the library.
+The trigger was the operator's adoption of the workshop conclusions,
+recorded in the README's [Adoption section](./README.md#adoption). The
+conclusions did not change the meaning or scope of the term: tentative
+theory is Popper's status, borrowed as is, applied to an addressable theory.
 
 The intended result is one consistent use of **tentative theory** for the
 theory-refinement object held open to criticism and revision. Its structure
@@ -20,40 +21,29 @@ objective preservation, and warrant for revision sequences belong to the
 adopted policies or explicit research limitations. They are not imported
 into the vocabulary through a rename.
 
-## 1. Establish the durable vocabulary destination
+## 1. Establish the durable vocabulary destination (done)
 
-Read the destination collection and type contracts. Prefer a short borrowed
-term section in [Theory refinement](../../notes/definitions/theory-refinement.md)
-over a second definition of the same structural object. The adoption
-decision may instead choose a separate entry if navigation requires one;
-settle that destination before changing inbound references. If the term is
-registered in the root vocabulary, link that entry to the same destination.
-
-Carry over the bounded grounding from the
-[workshop entry](../../notes/definitions/theory-refinement.md#tentative-theory): Popper's
+Executed in commit `1b995707`. The destination is the
+[Tentative theory section](../../notes/definitions/theory-refinement.md#tentative-theory)
+of the theory-refinement definition, grounded in Popper's
 [1966 schema](../../sources/popper-a-realist-view-of-logic-physics-and-history-1966.ingest.md#quotes)
 and the retained passages in
 [*Conjectures and Refutations*](../../sources/popper-conjectures-and-refutations.ingest.md#quotes).
-Make clear that tentativeness is not a waiting period before establishment
-as true. Preserve the qualified fault-localization account: a failed test
-may implicate several premises, but identifying the fault is not always
-impossible. The library already has that qualification; do not duplicate it.
+The root vocabulary in `AGENTS.md` has a **Tentative theory** entry
+pointing there. The same commit narrowed the definition's stipulation that
+the three loop properties define *theory* to **addressable theory** and
+recorded both terms under its Word forms.
 
-Narrow the stipulation in [Theory refinement](../../notes/definitions/theory-refinement.md)
-that the three loop properties are "the definition of a theory". The
-properties are what refinement requires of a theory's representation; a
-theory that supplies them is **addressable**, a term the definition already
-uses and grades. *Theory* keeps its ordinary sense, and the tentative-theory
-entry then reads: an addressable theory held tentatively. This removes an
-ontological claim the program does not need and keeps the addressability
-precondition, which it does. Adopted by the operator on 2026-09-17 from an
-external review; execute it in the same commit as the vocabulary destination.
+The former retention-policy obligations now live as the first obligation
+and the open questions of
+[a claim without external assessment carries three obligations](../../notes/a-claim-without-external-assessment-carries-three-obligations.md);
+none was promoted as a rule. The migration does not revisit them.
 
-Every policy obligation in the [policy draft](../../notes/a-claim-without-external-assessment-carries-three-obligations.md)
-must receive a disposition: promote the accepted rule to the appropriate
-library artifact, delimit the research claim, or explain why the obligation
-does not apply to the assessed use. Do not preserve rejected clauses merely
-to make a global substitution possible.
+Two rules from this step still bind the rest: the library carries the
+fault-localization qualification once, in the theory-refinement definition,
+so do not duplicate it into migrated files; and an inbound reference to the
+old workshop entry or to the deleted `fallible-theory.md` resolves to the
+section above, never to `kb/work/`.
 
 ## 2. Refresh and classify the candidate inventory
 
@@ -74,6 +64,20 @@ that adjective indiscriminately.
 
 The 2026-09-17 scan found sixteen candidate files outside this workshop.
 This is a starting inventory, not a closed list for the later execution.
+A re-scan at hand-off, after the promotion commits, matches 66 files on
+`fallib` outside the snapshot store. Most are not candidates: retained
+reports under `kb/reports/retained/` and review state under
+`kb/reports/state/` are frozen records; source ingests carry source-side
+wording, verbatim quotes, and occasion fields; workshop packets, staging
+copies, and evidence snapshots under `kb/work/` are records of past runs;
+and this workshop's own README, warrant-bounded proposal, and this plan
+mention the old term as history. Classify before editing, and expect the
+live candidate set to be near the table below plus the notes the scan
+adds: the consumption-channel, retrieval-miss, codify-versus-LLM,
+proposal-selection-loop, closure, open-ended-construction, project-theory,
+residue-classes, vocabulary-collisions, and why-notes-have-types notes,
+each of which may use *fallible* as the ordinary adjective and needs the
+classification rule above, not a substitution.
 
 | Candidate | Planned treatment |
 |---|---|
@@ -84,7 +88,7 @@ This is a starting inventory, not a closed list for the later execution.
 | [Theory and capacity building](../../notes/theory-and-capacity-building-make-the-same-kind-of-commitment.md) | Update the related-note description that uses the old terminology. |
 | [Cost-sensitive formalisms](../../notes/cost-sensitive-formalisms-for-fallible-theory-search.md) | Update title and description and rename the file to match the adopted title. Handle relocation separately as described below. |
 | [The software house as the unit of training](../../articles/the-software-house-as-the-unit-of-training.md) | Update the theory-refinement passage as part of the article's adopted disposition; coordinate with its readability workshop. |
-| [Active workshops](../README.md) | Update this workshop's description while it remains active; remove its entry when the workshop closes. |
+| [Active workshops](../README.md) | Done at hand-off: the entry no longer uses the old term. Remove the entry when the workshop closes. |
 
 Eight source reports also contain candidate wording in their **Commonplace
 analysis**: [EITHER](../../sources/theory-refinement-analytical-empirical-methods.ingest.md),
