@@ -1,10 +1,10 @@
 # Theory builder
 
-> **Status:** Workshop definition, 2026-09-10; revised 2026-09-14 in a later
-> session to place the interpreter and tentative theory under the builder,
-> replace the open-ended condition with extension as the measured quantity,
-> and add the Gödel machine as a boundary case. The boundary rule,
-> persistence clause, and evaluation clause are copied from the
+> **Status:** Workshop definition, 2026-09-10; revised 2026-09-17 against the
+> [main-path episodes](./main-path-episodes.md) to declare the evidence
+> interface and measure extension through later capability under a budget.
+> The episodes are illustrative, not measured results. The boundary rule,
+> persistence clause, and evaluation clause are adapted from the
 > [software house](../../notes/definitions/software-house.md) definition,
 > because they are not specific to software.
 
@@ -25,15 +25,18 @@ operations, and refinement remains the one the KB's evidence standards cover.
 
 ## Interpretation
 
-The internal roles that read theories, cases, and consequences, such as
-interpreting what a theory implies, choosing which part to blame, and judging
-whether a case contradicts a consequence, are specified against the
-[resource-bounded ideal interpreter](./resource-bounded-ideal-interpreter.md).
-The builder's interpreter is a component. The ideal says what faithful
-performance of those roles would be within a budget, and an evaluation scores
-the actual interpreter against it on the tasks it completed within budget.
-Errors in interpreting a theory are thereby separated from errors in the
-theory, which fallibility covers.
+The builder must interpret theories, cases, and consequences to derive
+predictions, identify candidate faults, and assess revisions. Its
+interpreter is a component of the builder. These roles can fail, and a failed
+outcome does not by itself distinguish an interpretation error from a theory
+error.
+
+The [resource-bounded ideal interpreter](./resource-bounded-ideal-interpreter.md)
+is a proposed standard for investigating that distinction. Its fidelity and
+completion guarantees remain open. An externally assessed outcome comparison
+can record a failure without first attributing it to either source. The
+ideal is therefore deferred from the main comparison; a claim about the
+internal cause of a failure still needs evidence for that attribution.
 
 ## Boundary
 
@@ -70,6 +73,39 @@ and repairing the machinery. The same person can occupy both positions in
 different interactions. The boundary follows the role, not the person. An
 attribution must therefore declare the boundary it was assessed against.
 
+## Evidence interface
+
+An **evidence interface** declares how cases, consequences, and acceptance
+judgments reach the builder, what they can assess, and under which
+assumptions. It is a parameter of every assessed builder, alongside its
+boundary and seed. If a judgment is made internally or no assessment exists
+for a claim, say so; declaring an interface does not supply the missing
+evidence.
+
+Retain the declaration as a versioned artifact. State both its competence
+and applicability assumptions: which claims it can assess, and what must
+hold for that assessment to apply. This design draws on the
+[competence-and-assumptions account (snapshot required)](../../sources/knowledge-engineering-principles-and-methods.ingest.md)
+and [explicit interface mappings (snapshot required)](../../sources/upml-framework-for-knowledge-system-reuse.ingest.md).
+It does not assume that naming the fields makes the interface reliable.
+
+| Field | Declaration |
+|---|---|
+| Assessed claim and scope | Product or theory, claimed capability, task population, exclusions, horizon, and applicability assumptions |
+| Task supply and acquisition | Who selects cases, sampling and inclusion rules, passive input or active probes, and acquisition cost |
+| Consequences and acceptance | Observable outcomes, objective, judges, what they see, and who may change acceptance requirements |
+| Consumption | Version of the product or theory delivered, consumer configuration, and evidence of what later work actually used |
+| Feedback | What returns to the builder, its delay and cost, and which roles can access it |
+| Evaluation protocol | Seed baseline, comparable conditions and budgets, stopping rule, success criteria, and uncertainty reporting |
+| Exposure and renewal | Evidence used to construct or select revisions, evidence reserved for assessment, prior exposure, and how evidence is renewed or reused |
+
+The [externally tested case](./externally-tested-theory-builder.md) fixes
+where outcome assessment occurs while permitting internal diagnosis and
+active testing. Commonplace's
+[downstream protocol](./commonplace-evidence-protocol.md) instantiates these
+fields as a proposed study; its unfilled parameters and lack of a run remain
+explicit.
+
 ## Persistence
 
 Persistence means continuity of responsibility for the theories across
@@ -84,11 +120,12 @@ the machinery available to later work.
 
 ## Evaluation
 
-An evaluation examines particular demands over a particular period. Those
-limits bound what its evidence establishes; they do not define the builder's
-future responsibilities. The tasks an evaluation ran bound what it
-establishes about interpretive fidelity and about extension. The interpreter
-does not declare its own scope; the evaluation does.
+An evaluation examines particular demands over a particular period under
+the declared interface and budget. Those limits bound what its evidence
+establishes; they do not define the builder's future responsibilities.
+Outcome performance, interpretive fidelity, and the causal effect of a
+retained theory are different claims and may require different comparisons.
+Neither an outcome success nor an internal approval establishes all three.
 
 ## Independent conditions
 
@@ -105,21 +142,30 @@ research question measures, defined next.
 
 ## Extension
 
-An **extension** is machinery retained after the seed that supplies a
-capability the seed's retained machinery did not have. It is judged by a diff
-of retained artifacts against the seed, not by what the builder could reach
-in principle: any builder containing a general constructor reaches any
-machinery in principle, so reachability distinguishes nothing. Activating a
-component the seed already retained, or changing a value in a slot the seed
-already had, is not extension, because the capability was already held. How
-the extension is produced is unrestricted: a person, a model, or a search
-procedure over programs. Exhaustive search qualifies.
+An **extension** is a retained change to the machinery that demonstrates a
+capability beyond what the seed delivered on a stated demand under a stated
+budget. Establish it through a comparable seed baseline under that budget
+and later work that consumes the retained change. This is a bounded
+comparative claim about demonstrated capability; it does not prove that the
+seed could never have supplied it.
 
-Bare extension is therefore cheap. What an evaluation establishes is the
-record of demonstrated extensions: for each, the demand that exposed the gap,
-the artifact added, a later episode of theory work that consumed it, and what
-it cost in computation, elapsed time, and evidence. An evaluation does not
-establish that every future demand can be met.
+A single seed failure followed by a candidate success does not establish
+extension. The evaluation protocol must state how its comparisons support
+the difference, accounting for variation in tasks, consumers, and execution.
+Record the seed and successor, retained change, later consumption, measured
+effect, and cost in computation, elapsed time, evidence, and internal human
+work. Declare both the budget for producing the change and the budget for
+later tasks. Merely installing a change does not show that later work used
+it, and consumption alone does not show that it caused the improvement.
+
+A new artifact, a rewrite of an existing prompt or procedure, or a change to
+model weights can each qualify under this criterion. Artifact differences
+identify what changed; outcome comparisons and consumption evidence establish
+the demonstrated extension. Probe weight changes through their effects on
+later work under the same criterion. Who produced a change, or whether a
+general constructor could reach it in principle, does not decide whether it
+qualifies. A change proposed for later evaluation remains a candidate
+extension until the required evidence exists.
 
 The research question is: under a stated budget, how far can a builder extend
 its seed, and does retaining useful extensions make later advances easier?
@@ -141,33 +187,29 @@ supply those.
 - A model, a prompt, a retrieval index, an agent harness, or a refinement
   algorithm is not the theory builder merely because the builder uses it.
 - A user is not inside the builder because their evidence changed a theory.
-- A stored theory nothing consumes does not count as a theory the builder is
-  responsible for, since
-  [a representation matters only through its consumption path](../../notes/an-action-model-matters-only-through-its-consumption-path.md).
+- Retaining a theory for inquiry does not establish an extension or license
+  routine reliance. State its intended use and support; an extension claim
+  needs an observed
+  [consumption path](../../notes/an-action-model-matters-only-through-its-consumption-path.md).
 - Persistence is not evidence that the builder retained experience or learned.
 
 ## Boundary cases
 
-- **FORTE** is not a theory builder: it revises a supplied theory in one
-  offline run and holds no continuing responsibility for it. Its machinery is
-  computational and specified before the run.
-- **The Gödel machine** is persistent, holds a self-representation, rewrites
-  itself computationally, and can rewrite any part of its code including the
-  searcher. It would meet both conditions and extend without limit in
-  principle. The earlier exclusion by the theory clause remains under
-  [review](./README.md#next-review-reconcile-the-definitions): proof-governed
-  switching does not by itself establish that empirical premises are held
-  beyond criticism. The borrowed term *tentative theory* does not settle
-  that classification. The machine establishes that reflection, autonomy,
-  and in-principle extension are prior art; the
-  [comparison](./goedel-machine-comparison.md) owns the distinction between
-  proof-governed switching and empirical grounds for change.
-- **Commonplace today**, with the operator inside the boundary, is a theory
-  builder. It is reflective and not autonomous; the condition definitions
-  assess this. Its extension record is the ADR set: the review system, the
-  tag-README marks, the premise-decomposition gate, and the collection
-  contracts were each added after a demand exposed a gap and are each
-  consumed by later theory work.
+- **Historical systems** are assessed against their described deployments
+  in the [boundary-case assessment](./boundary-case-assessment.md).
+  Persistence, external assessment, and reflection are separate questions.
+  The Gödel-machine classification remains under review; neither proof-based
+  switching nor an internally represented utility decides it by itself.
+- **Commonplace's note-review loop**, with the operator performing internal
+  roles, is a human-staffed builder. A note's approval is internal evaluation,
+  not independent assessment of its downstream consequences. Its ADRs record
+  machinery changes, but those records alone do not establish extensions
+  under the comparative criterion above.
+- **Commonplace as a KB house** is the arrangement proposed in the
+  [downstream protocol](./commonplace-evidence-protocol.md). No consuming
+  project has yet supplied the records needed to assess it. The three
+  [episodes](./main-path-episodes.md) test the definitions, not the builder's
+  measured capability.
 - **The research target** is a theory builder meeting both conditions, with
   the autonomy warranted, whose extension under a stated budget compares with
   the human-staffed baseline, under the [fixed-model constraint](./README.md#goal).
