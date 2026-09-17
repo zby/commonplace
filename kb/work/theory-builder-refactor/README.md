@@ -113,7 +113,10 @@ the reframing and asked for an independent judgement and an ingest list. The
 proposals for the conjecture (split sufficiency from comparison, demote the
 doctrine-edit count to a diagnostic, remove the Gödel-machine exclusions and
 closure claims from the definitions) await the operator's decision and are
-not applied. The priority-1 ingests precede the definitions review below.
+not applied. On 2026-09-17, all fifteen listed sources were ingested. The
+operator supplied Hansson's full-text PDF to resolve the final access
+blocker. The ingest plan links all reports. The source inputs for the
+definitions review below are ready.
 
 ## Read the current definitions in this order
 
@@ -150,7 +153,7 @@ not applied. The priority-1 ingests precede the definitions review below.
   refinement literature before promotion.
 - [Ingest plan from the Astra review](./ingest-plan-from-astra-review.md)
   owns the judgement of the external literature review and the prioritized
-  list of sources to ingest: introspective multistrategy learning, EURISKO,
+  source list and ingest status: introspective multistrategy learning, EURISKO,
   adaptive data analysis, problem-solving-method construction, automated
   science, belief bases, and the contemporary rivals.
 
@@ -169,8 +172,8 @@ or an edit plan to execute unchanged.
 ## Next review: reconcile the definitions
 
 The next pass should resolve these specific conflicts before expanding the
-formalization or promoting definitions. It runs after the priority-1
-ingests in the [ingest plan](./ingest-plan-from-astra-review.md), which bear
+formalization or promoting definitions. The completed priority-1
+ingests in the [ingest plan](./ingest-plan-from-astra-review.md) bear
 on the fallibility, closure, and extension rows. The entries below identify review
 questions; they do not silently adopt replacements for the current drafts.
 

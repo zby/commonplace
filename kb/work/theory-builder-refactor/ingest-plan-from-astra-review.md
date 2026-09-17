@@ -3,10 +3,10 @@
 > **Status:** Workshop record, 2026-09-15. On this date the operator supplied
 > a literature review produced by an external research assistant (Astra) of
 > the workshop's reframing, and asked for an independent judgement and a list
-> of papers to ingest. The review's descriptions of sources are unverified
-> here: none of the recommended sources has a snapshot or ingest in
-> `kb/sources/`, and every claim attributed to a source below is a claim to
-> check on ingest, not a finding. Judgements are the session's own.
+> of papers to ingest. At that point none of the recommended sources had a
+> snapshot or ingest in `kb/sources/`. The descriptions below preserve that
+> review's unverified source claims as questions to check, not findings.
+> Judgements are the session's own. The table now links the completed ingests.
 
 ## Verdict
 
@@ -161,23 +161,23 @@ row names the question the ingest must answer for this workshop, which is
 what the ingest report should lead with. Access notes are for the snapshot
 step; where the canonical source is a book, a paper surrogate is named.
 
-| # | Source | Question the ingest must answer | Lands in |
-|---|---|---|---|
-| 1 | Cox, M. T. and Ram, A. (1999). Introspective multistrategy learning: on the construction of learning strategies. *Artificial Intelligence* 112. | What the failure-to-strategy loop requires of the self-representation; what the learning-goal ablation showed and under what conditions; whether the strategy library is fixed or extensible. | Reflective definition; extension review row; retained-content intervention design. |
-| 1 | Lenat, D. B. and Brown, J. S. (1984). Why AM and EURISKO appear to work. *Artificial Intelligence* 23. | The representation-productivity claim in its own terms; why learning new heuristics was harder than adding heuristics as a subject; what people intervened to do. | Goal ("why now" mechanism); evidence-interface hypothesis. |
-| 1 | Lenat, D. B. (1983). EURISKO: a program that learns new heuristics and domain concepts. *Artificial Intelligence* 21. | Which areas had an external objective and which did not; the reported self-modification failures and credit-assignment pathologies; the human interventions and their consequences. | Boundary cases in all definitions; special-case file. |
-| 1 | Dwork, C., Feldman, V., Hardt, M., Pitassi, T., Reingold, O., and Roth, A. (2015). Generalization in adaptive data analysis and holdout reuse. *NeurIPS 2015* (arXiv 1506.02629). | Why a sequence of evaluations that each guides the next revision invalidates ordinary generalization arguments; what protocols restore it; what this implies for reusing review criteria across revisions. | Fallible-theory clause 3; review-system design; warrant of revision sequences. |
-| 2 | Wielinga, B., Akkermans, H., and Schreiber, G. (1998). A competence theory approach to problem-solving method construction. *International Journal of Human-Computer Studies* 49. | The three construction stages and the commitments each exposes; which stages the framework leaves to the designer. | Semantic-work record; ideal-interpreter scope row; "specify first" route. |
-| 2 | Studer, R., Benjamins, V. R., and Fensel, D. (1998). Knowledge engineering: principles and methods. *Data & Knowledge Engineering* 25. Surrogate for the CommonKADS book. | The domain, inference, and task knowledge layers; the problem-solving method as a reusable unit and its applicability assumptions; the reuse assumption's dependence on human construction. | Doctrine-edit measure (three kinds of change); actionable-methodology definition. |
-| 2 | Fensel, D., Benjamins, V. R., Motta, E., and Wielinga, B. (1999). UPML: a framework for knowledge system reuse. *IJCAI 1999*. Surrogate for "The component model of UPML in a nutshell". | Tasks, methods, domain models, ontologies, adapters; what bridges and refiners make explicit; how far configuration was automated. | Doctrine-edit measure; extension as adapter versus method change. |
-| 2 | Musslick, S. et al. (2024). AutoRA: automated research assistant for closed-loop empirical research. *Journal of Open Source Software* 9(104). | The theorist, experimentalist, and runner roles and their shared state; what users supply; what the framework does not invent. | Evidence interface (active versus passive); interface investigation gap; builder roles. |
-| 2 | Agrawal, L. A. et al. (2025). GEPA: reflective prompt evolution can outperform reinforcement learning. arXiv 2507.19457. | What the natural-language reflection retains and whether it functions as a theory under the workshop's definition; what the comparison with scalar-reward search established. | Rival hypothesis; generic-instruction control design. |
-| 2 | Hu, S., Lu, C., and Clune, J. (2024). Automated design of agentic systems. arXiv 2408.08435 (ICLR 2025). | How the meta-agent's archive is consumed; whether discovered agents transfer across domains; where people intervene. | Extension by procedure acquisition; contemporary comparison set. |
-| 3 | Hansson, S. O. (1992). In defense of base contraction. *Philosophical Studies* 65. | The belief-base versus belief-state distinction and its advantages for repeated change; what a base needs to record. | Fallible-theory retention clauses; closing condition 3. |
-| 3 | Alchourrón, C. E., Gärdenfors, P., and Makinson, D. (1985). On the logic of theory change: partial meet contraction and revision functions. *Journal of Symbolic Logic* 50. | The postulates as a citation for what contraction and revision are; explicitly what they do not supply (discovery, empirical reliability). | Closing condition 3, citation only. |
-| 3 | de Kleer, J. (1986). An assumption-based TMS. *Artificial Intelligence* 28. | Maintaining conclusions relative to assumption sets and recording dependencies; what it does not establish. | Claim-level dependency record; per-claim warrant atomism. |
-| 3 | Russell, S. J. and Subramanian, D. (1995). Provably bounded-optimal agents. *JAIR* 2. | Evaluating a program relative to architecture and environment rather than an ideal reasoner; which classes the results cover. | Resource-bounded framing; interpreter fidelity and coverage. |
-| 3 | A formal learning theory survey (candidate: the Stanford Encyclopedia of Philosophy entry "Formal learning theory"). | Convergence guarantees versus current warrant, the distinction the README's source checks require. | Closing condition 3. |
+| # | Source | Question the ingest must answer | Lands in | Ingest status |
+|---|---|---|---|---|
+| 1 | Cox, M. T. and Ram, A. (1999). Introspective multistrategy learning: on the construction of learning strategies. *Artificial Intelligence* 112. | What the failure-to-strategy loop requires of the self-representation; what the learning-goal ablation showed and under what conditions; whether the strategy library is fixed or extensible. | Reflective definition; extension review row; retained-content intervention design. | [Complete](../../sources/introspective-multistrategy-learning.ingest.md) |
+| 1 | Lenat, D. B. and Brown, J. S. (1984). Why AM and EURISKO appear to work. *Artificial Intelligence* 23. | The representation-productivity claim in its own terms; why learning new heuristics was harder than adding heuristics as a subject; what people intervened to do. | Goal ("why now" mechanism); evidence-interface hypothesis. | [Complete](../../sources/why-am-and-eurisko-appear-to-work.ingest.md) |
+| 1 | Lenat, D. B. (1983). EURISKO: a program that learns new heuristics and domain concepts. *Artificial Intelligence* 21. | Which areas had an external objective and which did not; the reported self-modification failures and credit-assignment pathologies; the human interventions and their consequences. | Boundary cases in all definitions; special-case file. | [Complete](../../sources/eurisko-learns-new-heuristics-and-domain-concepts.ingest.md) |
+| 1 | Dwork, C., Feldman, V., Hardt, M., Pitassi, T., Reingold, O., and Roth, A. (2015). Generalization in adaptive data analysis and holdout reuse. *NeurIPS 2015* (arXiv 1506.02629). | Why a sequence of evaluations that each guides the next revision invalidates ordinary generalization arguments; what protocols restore it; what this implies for reusing review criteria across revisions. | Fallible-theory clause 3; review-system design; warrant of revision sequences. | [Complete](../../sources/generalization-adaptive-data-analysis-holdout-reuse.ingest.md) |
+| 2 | Wielinga, B., Akkermans, H., and Schreiber, G. (1998). A competence theory approach to problem-solving method construction. *International Journal of Human-Computer Studies* 49. | The three construction stages and the commitments each exposes; which stages the framework leaves to the designer. | Semantic-work record; ideal-interpreter scope row; "specify first" route. | [Complete](../../sources/competence-theory-problem-solving-method-construction.ingest.md) |
+| 2 | Studer, R., Benjamins, V. R., and Fensel, D. (1998). Knowledge engineering: principles and methods. *Data & Knowledge Engineering* 25. Surrogate for the CommonKADS book. | The domain, inference, and task knowledge layers; the problem-solving method as a reusable unit and its applicability assumptions; the reuse assumption's dependence on human construction. | Doctrine-edit measure (three kinds of change); actionable-methodology definition. | [Complete](../../sources/knowledge-engineering-principles-and-methods.ingest.md) |
+| 2 | Fensel, D., Benjamins, V. R., Motta, E., and Wielinga, B. (1999). UPML: a framework for knowledge system reuse. *IJCAI 1999*. Surrogate for "The component model of UPML in a nutshell". | Tasks, methods, domain models, ontologies, adapters; what bridges and refiners make explicit; how far configuration was automated. | Doctrine-edit measure; extension as adapter versus method change. | [Complete](../../sources/upml-framework-for-knowledge-system-reuse.ingest.md) |
+| 2 | Musslick, S. et al. (2024). AutoRA: automated research assistant for closed-loop empirical research. *Journal of Open Source Software* 9(104). | The theorist, experimentalist, and runner roles and their shared state; what users supply; what the framework does not invent. | Evidence interface (active versus passive); interface investigation gap; builder roles. | [Complete](../../sources/autora-automated-research-assistant.ingest.md) |
+| 2 | Agrawal, L. A. et al. (2025). GEPA: reflective prompt evolution can outperform reinforcement learning. arXiv 2507.19457. | What the natural-language reflection retains and whether it functions as a theory under the workshop's definition; what the comparison with scalar-reward search established. | Rival hypothesis; generic-instruction control design. | [Complete](../../sources/gepa-reflective-prompt-evolution.ingest.md) |
+| 2 | Hu, S., Lu, C., and Clune, J. (2024). Automated design of agentic systems. arXiv 2408.08435 (ICLR 2025). | How the meta-agent's archive is consumed; whether discovered agents transfer across domains; where people intervene. | Extension by procedure acquisition; contemporary comparison set. | [Complete](../../sources/automated-design-of-agentic-systems.ingest.md) |
+| 3 | Hansson, S. O. (1992). In defense of base contraction. *Synthese* 91(3):239–245 ([publisher record](https://link.springer.com/article/10.1007/BF00413568)). | The belief-base versus belief-state distinction and its advantages for repeated change; what a base needs to record. | Fallible-theory retention clauses; closing condition 3. | [Complete](../../sources/in-defense-of-base-contraction.ingest.md) |
+| 3 | Alchourrón, C. E., Gärdenfors, P., and Makinson, D. (1985). On the logic of theory change: partial meet contraction and revision functions. *Journal of Symbolic Logic* 50. | The postulates as a citation for what contraction and revision are; explicitly what they do not supply (discovery, empirical reliability). | Closing condition 3, citation only. | [Complete](../../sources/logic-of-theory-change-partial-meet-contraction.ingest.md) |
+| 3 | de Kleer, J. (1986). An assumption-based TMS. *Artificial Intelligence* 28. | Maintaining conclusions relative to assumption sets and recording dependencies; what it does not establish. | Claim-level dependency record; per-claim warrant atomism. | [Complete](../../sources/an-assumption-based-tms.ingest.md) |
+| 3 | Russell, S. J. and Subramanian, D. (1995). Provably bounded-optimal agents. *JAIR* 2. | Evaluating a program relative to architecture and environment rather than an ideal reasoner; which classes the results cover. | Resource-bounded framing; interpreter fidelity and coverage. | [Complete](../../sources/provably-bounded-optimal-agents.ingest.md) |
+| 3 | A formal learning theory survey (candidate: the Stanford Encyclopedia of Philosophy entry "Formal learning theory"). | Convergence guarantees versus current warrant, the distinction the README's source checks require. | Closing condition 3. | [Complete](../../sources/formal-learning-theory.ingest.md) |
 
 Already ingested and not repeated: EITHER
 ([ingest](../../sources/theory-refinement-analytical-empirical-methods.ingest.md)),
@@ -186,6 +186,31 @@ the Mooney–Shavlik recap
 ([ingest](../../sources/recap-early-work-theory-knowledge-refinement.ingest.md)),
 DreamCoder (two ingests), the Darwin Gödel Machine, and the Gödel machine
 paper.
+
+## Ingest execution — 2026-09-17
+
+All fifteen sources have full-text ingests, drafted by fresh Sol
+agents after source capture and connection discovery. The table links each
+report. All three priority groups are complete; the definitions review is
+the next workshop step. Each report records its
+row's question as its occasion and recommends one follow-up action.
+
+**Hansson capture:** The operator supplied the full seven-page PDF after
+the web download attempts returned access pages. Its identity and complete
+page range, 239–245, were verified before capture. The
+[publisher record](https://link.springer.com/article/10.1007/BF00413568)
+identifies it as *Synthese* 91(3):239–245, not *Philosophical Studies* 65;
+the table's citation is corrected. The full-text access blocker is resolved.
+
+**Versions and validation:** Lenat–Brown uses the full 26-page 1984 journal
+article, not its shorter 1983 conference predecessor. GEPA uses arXiv v2
+(2026-02-14), ADAS v2 (2025-03-02), and the adaptive-data-analysis paper v2
+(2015-09-25). All ingest reports pass validation without failures or warnings;
+checks also verify source checksums, capture metadata, the exact occasion,
+and the required Quotes section. The snapshots have no validation failures.
+Three preserve capture warnings: one apparent link in Dwork's extracted
+text, five apparent links in ADAS's extracted code, and 27 warnings in the
+SEP capture (relative web links and its capture-time genre).
 
 ## Order of work
 
