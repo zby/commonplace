@@ -28,9 +28,14 @@ The KB needs the term because each supplied item removes an obligation the
 builder must otherwise discharge for itself, and those obligations are where
 the general case's unresolved questions live. In this case an outcome
 comparison with a human-staffed builder under the same demands can proceed
-without first settling the builder's internal warrant policy. The paradigm
-arrangement is a [software house](./software-house.md), whose product
-operation and users' assessment of visible behaviour supply the interface.
+without first settling the builder's internal warrant policy. A
+[software house](./software-house.md) whose production revises a program
+theory is one arrangement that supplies this interface, through product
+operation and users' assessment of visible behaviour; a builder delivering
+knowledge that other agents consume on externally judged tasks is another.
+The two differ in product, in falsifier strength, and in the form of the
+claim a run can support, so the definition names the shared interface, not
+a ranking of arrangements.
 
 The boundary follows roles, not identities. One person can judge outputs in
 one interaction and perform internal diagnosis or revision in another; the
@@ -156,7 +161,7 @@ settling their retention thresholds.
 Relevant Notes:
 
 - [Theory builder](./theory-builder.md) — defined-in: the system this case specializes and the evidence interface it fixes
-- [Software house](./software-house.md) — exemplifies: the paradigm arrangement whose product operation and users supply the interface
+- [Software house](./software-house.md) — exemplifies: one arrangement whose product operation and users supply the interface; a different product and evidence regime from a knowledge-delivering builder
 - [A claim without external assessment carries three obligations](../a-claim-without-external-assessment-carries-three-obligations.md) — extends: the obligations the interface discharges and the general case must meet
 - [Reflective theory builder](./reflective-theory-builder.md) — see-also: reflective work stays inside this case while its consequences face external assessment
 - [Revising an improvement objective is licensed from outside it or is not improvement](../revising-an-improvement-objective-is-licensed-from-outside-it.md) — grounds: why the external objective is what licenses objective change
