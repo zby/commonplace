@@ -104,7 +104,7 @@ establish the expanded claim.
 tasks. Retain the broader claim as an inquiry candidate with its missing
 assessment identified, design a bounded discriminating test, or decline the
 broader claim. Do not consume the internal review pass as external warrant.
-The [general-case obligations](./general-case-obligations.md) identify what
+The [general-case obligations](../../notes/a-claim-without-external-assessment-carries-three-obligations.md) identify what
 additional support a use outside the tested scope would require.
 
 **What follows.** The broader claim lacks external assessment under the

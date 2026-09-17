@@ -19,7 +19,7 @@ downstream outcomes without first assigning each failure to interpretation
 or theory. Either can contribute to a failed product. Diagnosis and a claim
 about the reflective mechanism still need evidence, but they need not assume
 a universally faithful interpreter. The stronger attribution question is
-deferred in the [general-case obligations](./general-case-obligations.md).
+deferred in the [general-case obligations](../../notes/a-claim-without-external-assessment-carries-three-obligations.md).
 
 **Semantic work**, the activity the interpreter performs, is defined in the
 discussion record: establishing, examining, or revising how expressions and
@@ -81,7 +81,7 @@ are attempts: candidates that need assessment and may fail. Faithfully
 understanding a proposal does not establish its adequacy. The semantic role
 does not by itself license assessment or retention of its proposals.
 Assessment is the evaluators' role, and retention belongs to the
-[theory builder](./theory-builder.md#persistence), which is where a retained
+[theory builder](../../notes/definitions/theory-builder.md#persistence), which is where a retained
 extension changes the knowledge and procedures available to later
 interpretation. One implementation may perform several roles; their
 evidential obligations remain distinct.
@@ -168,6 +168,6 @@ identify-without-deciding distinction; the distinction does not establish
 fidelity. Objective drift, a conceptual revision that changes what the
 objective commits to while its text stays fixed, must be reported as a
 change. Whether that change is licensed is addressed by the
-[retention-policy draft's objective clause](./theory-retention-policy.md#the-objective-clause).
+[retention-policy draft's objective clause](../../notes/a-claim-without-external-assessment-carries-three-obligations.md#a-comparison-level-for-changing-an-objective).
 These are requirements for further work, not passed tests or a guarantee
 assumed by the downstream experiment.

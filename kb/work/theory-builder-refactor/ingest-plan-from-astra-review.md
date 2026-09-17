@@ -30,7 +30,7 @@ workshop, which raises confidence in both:
 
 - Its request to remove the Gödel-machine exclusions and the closure claims
   from the definitions matches the [comparison file's](./goedel-machine-comparison.md#consequence-for-the-definitions)
-  own caution and the [special case's](./externally-tested-theory-builder.md#what-remains-for-the-general-case)
+  own caution and the [special case's](../../notes/definitions/externally-tested-theory-builder.md#what-remains-for-the-general-case)
   finding that the closure worry is relative to the evidence interface.
 - Its "connect theory revision to inquiry and observed consequences before
   adding more general definitions" is the evidence-interface point from the
@@ -43,14 +43,14 @@ workshop, which raises confidence in both:
   objective preservation matches the README's
   [retention-policy review row](./README.md#definition-review-dispositions).
   The 2026-09-17 vocabulary change separates the borrowed term from the
-  [policy draft](./theory-retention-policy.md); substantive policy review remains.
+  [policy draft](../../notes/a-claim-without-external-assessment-carries-three-obligations.md); substantive policy review remains.
 
 ## Judgements by section
 
 **1. Introspective multistrategy learning.** Agreed that this is the closest
 predecessor and the first ingest. Its loop (performance failure, explanation
 of the reasoning failure, learning goal, constructed learning strategy) is
-the operative form of what the [reflective definition](./reflective-theory-builder.md)
+the operative form of what the [reflective definition](../../notes/definitions/reflective-theory-builder.md)
 states abstractly: external work as a test of the machinery. Two things to
 check on ingest matter more than the loop itself. First, the reported
 ablation, that removing explicit learning goals impaired learning and that
@@ -58,7 +58,7 @@ arbitrary algorithm ordering could do worse than not learning, is the kind
 of retained-content intervention the training article proposes, and would
 be the earliest evidence that readable methodological content does causal
 work. Second, Meta-AQUA assembled strategies from a supplied algorithm
-library. By the workshop's [extension clause](./theory-builder.md#extension),
+library. By the workshop's [extension clause](../../notes/definitions/theory-builder.md#extension),
 activating a retained component is not extension, so Meta-AQUA extends
 nothing. That is either a correct verdict or a sign the clause is too
 strict; it is a cheap test case for the extension review row.
@@ -108,7 +108,7 @@ establish transfers directly to workshop practice.
 **4. Belief maintenance and adaptive evaluation.** Agreed on all points,
 with one ranking change: the adaptive data analysis result is the most
 important of the four, not the last. The earlier clause, now a question in the
-[retention-policy draft](./theory-retention-policy.md), that warranted revisions chain, and the review system's reuse of the same
+[retention-policy draft](../../notes/a-claim-without-external-assessment-carries-three-obligations.md), that warranted revisions chain, and the review system's reuse of the same
 criteria and evaluators across revisions, are the adaptivity problem
 exactly. Warrant for a revision sequence has to be established under an
 evaluation protocol; a succession of local approvals does not supply it. On
@@ -126,7 +126,7 @@ identifying which conjunct to revise.
 the README already records its inconsistency with learning in weights. The
 review's replacement measure, whether retaining a change makes later theory
 building more capable or cheaper, is already the research question stated in
-the [theory-builder draft](./theory-builder.md#extension). The change is to
+the [theory-builder draft](../../notes/definitions/theory-builder.md#extension). The change is to
 make it the definition of extension rather than a question asked about
 diff-defined extensions. Bounded optimality supplies the framing; DreamCoder
 is already ingested twice and needs no new work.

@@ -16,7 +16,7 @@ The definitions use those distinctions; the
 [boundary assessment](./boundary-case-assessment.md) separates reported source
 evidence from deployment questions the sources do not settle.
 
-The [general-case obligations](./general-case-obligations.md) concern missing
+The [general-case obligations](../../notes/a-claim-without-external-assessment-carries-three-obligations.md) concern missing
 support for a particular claim or use. They do not exclude internal diagnosis
 or active experiments from a builder whose outcomes face external assessment.
 

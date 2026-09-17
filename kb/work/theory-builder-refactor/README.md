@@ -3,7 +3,7 @@
 ## Goal
 
 Define a training methodology for an
-[externally tested theory builder](./externally-tested-theory-builder.md).
+[externally tested theory builder](../../notes/definitions/externally-tested-theory-builder.md).
 Training develops its instructions, knowledge, tools, and orchestration as
 natural-language and symbolic artifacts while model weights stay fixed.
 Commonplace producing a KB and supporting software for consuming projects
@@ -70,15 +70,15 @@ automated continuation. A human supplying an internal role counts as an
 intervention during that run. Neither a low edit count nor a machine-written
 change establishes useful learning. Outcome comparisons, retained changes,
 and later consumption must establish
-[extension](./theory-builder.md#extension). *Methodology* names the content;
+[extension](../../notes/definitions/theory-builder.md#extension). *Methodology* names the content;
 *Commonplace doctrine* names the standing instructions a worker inherits with
 binding force.
 
 The system that executes the methodology is a
-[theory builder](./theory-builder.md) of
-[tentative theories](./tentative-theory.md).
-[Autonomy](./autonomous-theory-builder.md) concerns who performs its internal
-roles. [Reflection](./reflective-theory-builder.md) is a separate mechanism
+[theory builder](../../notes/definitions/theory-builder.md) of
+[tentative theories](../../notes/definitions/theory-refinement.md#tentative-theory).
+[Autonomy](../../notes/definitions/autonomous-theory-builder.md) concerns who performs its internal
+roles. [Reflection](../../notes/definitions/reflective-theory-builder.md) is a separate mechanism
 condition: a causally connected self-theory guides machinery changes, and
 the changes update that theory. Whether that mechanism pays is the
 reflection hypothesis above. The research target requires both conditions;
@@ -96,7 +96,7 @@ doctrine at promotion: **develop Commonplace by using it.** Practical
 demands expose limits in its theories and machinery; reflective revision
 turns them into retained improvements; recorded episodes become evidence
 for the research program. The workshop grounds it: the
-[reflective definition](./reflective-theory-builder.md) makes external work
+[reflective definition](../../notes/definitions/reflective-theory-builder.md) makes external work
 the test of the machinery, the [protocol](./commonplace-evidence-protocol.md)
 says what a recorded episode must contain, and the
 [second episode](./main-path-episodes.md#2-reflective-machinery-revision)
@@ -127,7 +127,7 @@ conjecture, not a premise or load-bearing consequence.
 
 The software-house articles supply the main-path case and its witness
 protocol. The general definitions and
-[general-case obligations](./general-case-obligations.md) remain because
+[general-case obligations](../../notes/a-claim-without-external-assessment-carries-three-obligations.md) remain because
 external outcomes do not warrant every internal theory or use beyond the
 assessed scope. These obligations concern particular claims and uses;
 reasoning about a failure does not move the whole builder outside the main
@@ -200,10 +200,10 @@ orchestration in natural-language and symbolic artifacts. The fixed-weight
 constraint excludes model-weight updates, not training of the builder.
 
 The operator then selected **tentative theory**, Popper's established term,
-for use throughout this workshop. The [vocabulary entry](./tentative-theory.md)
+for use throughout this workshop. The [vocabulary entry](../../notes/definitions/theory-refinement.md#tentative-theory)
 uses the retained schema passage and the newly ingested full
 [*Conjectures and Refutations*](../../sources/popper-conjectures-and-refutations.ingest.md#quotes).
-The [retention-policy draft](./theory-retention-policy.md) now owns the
+The [retention-policy draft](../../notes/a-claim-without-external-assessment-carries-three-obligations.md) now owns the
 proposed conditions on reliance, objective preservation, and revision
 sequences; these are not clauses defining tentativeness. The broader
 conclusions remain under review. The
@@ -236,7 +236,7 @@ implementation, or declined: autonomy stays inside the head conjecture,
 since separating it would make the conjecture true of Commonplace today.
 
 From the same review's follow-up, the operator adopted a lineage clause in
-the [theory-builder definition](./theory-builder.md#persistence): the
+the [theory-builder definition](../../notes/definitions/theory-builder.md#persistence): the
 builder is identified by continuity of responsibility and by each successor
 state being produced through the preceding state's own revision process,
 not by the survival of any component, including the seed methodology. A
@@ -256,20 +256,22 @@ listed in the [implementation review](./implementation-review.md#promotion-and-m
 
 ## Read the current definitions in this order
 
-1. [Theory builder](./theory-builder.md) — persistent responsibility, the
+1. [Theory builder](../../notes/definitions/theory-builder.md) — persistent responsibility, the
    boundary and seed, declared evidence interface, and capability extension.
-2. [Externally tested theory builder](./externally-tested-theory-builder.md)
+2. [Externally tested theory builder](../../notes/definitions/externally-tested-theory-builder.md)
    — the main path, scoped external assessment, and its limits. Read the
    [Commonplace protocol](./commonplace-evidence-protocol.md) and
    [three constructed episodes](./main-path-episodes.md) for the proposed case.
-3. [Reflective theory builder](./reflective-theory-builder.md) and
-   [autonomous theory builder](./autonomous-theory-builder.md) — separate
+3. [Reflective theory builder](../../notes/definitions/reflective-theory-builder.md) and
+   [autonomous theory builder](../../notes/definitions/autonomous-theory-builder.md) — separate
    causal and role conditions; neither alone establishes improvement.
-4. [Tentative theory](./tentative-theory.md) — Popper's borrowed term. The
-   [retention-policy draft](./theory-retention-policy.md) separately owns
-   proposed conditions on support and use.
-5. [General-case obligations](./general-case-obligations.md) — what remains
-   to establish when a particular claim or use lacks external assessment.
+4. [Tentative theory](../../notes/definitions/theory-refinement.md#tentative-theory) — Popper's borrowed term,
+   now a section of the theory-refinement definition beside the addressable
+   theory it qualifies.
+5. [A claim without external assessment carries three obligations](../../notes/a-claim-without-external-assessment-carries-three-obligations.md)
+   — the fence: what remains to establish when a particular claim or use
+   lacks external assessment, with the former retention-policy questions as
+   its open questions.
 6. [Resource-bounded ideal interpreter](./resource-bounded-ideal-interpreter.md)
    — a deferred attribution specification with open fidelity, completion,
    abstention, and realizability questions.
@@ -286,9 +288,11 @@ listed in the [implementation review](./implementation-review.md#promotion-and-m
 - [Boundary-case assessment](./boundary-case-assessment.md) separates each
   deployment's boundary, reported judging, evidence access, and continuing
   responsibility, with verified source identities and access limits.
-- [Theory retention and use](./theory-retention-policy.md) owns the policy
-  questions separated from the borrowed vocabulary, including objective
-  preservation and warrant for revision sequences.
+- The promoted definitions, the tentative-theory section, and the fence note
+  were moved to the library on 2026-09-17; their workshop drafts are
+  deleted and recoverable from git history. The
+  [proposal-warrant-bounded record](./proposal-warrant-bounded-open-endedness.md)
+  stays as the argument record behind the fence's first open question.
 - [KB adoption plan](./tentative-theory-kb-adoption-plan.md) owns the later
   terminology migration, its adoption trigger, candidate inventory, source
   fidelity exceptions, and validation requirements.

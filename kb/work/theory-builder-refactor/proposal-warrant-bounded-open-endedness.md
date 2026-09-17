@@ -4,8 +4,8 @@
 > The [current definitions and review plan](./README.md) supersede its edit
 > list and operator-choice list. Open-endedness became measured extension;
 > The 2026-09-17 terminology update separates the borrowed
-> [tentative-theory vocabulary](./tentative-theory.md) from the
-> [retention-policy draft](./theory-retention-policy.md). The policy proposals
+> [tentative-theory vocabulary](../../notes/definitions/theory-refinement.md#tentative-theory) from the
+> [retention-policy draft](../../notes/a-claim-without-external-assessment-carries-three-obligations.md). The policy proposals
 > below remain an argument record, not the meaning of the borrowed term.
 > The closure, evaluator-revision, and oracle claims below remain arguments
 > to assess, not established premises. The conjecture that reflection lowers
@@ -135,13 +135,13 @@ of its seed objective and admitted evidence.
 
 The [theory-refinement definition](../../notes/definitions/theory-refinement.md)
 supplies the theory's structure. The workshop now uses Popper's
-[tentative theory](./tentative-theory.md) for its provisional status. Neither
+[tentative theory](../../notes/definitions/theory-refinement.md#tentative-theory) for its provisional status. Neither
 supplies the policy needed to evaluate the closure argument in section 3.
 
 The original proposal tried to make three policy clauses define that status:
 retention above a consumption threshold, warrant per claim and scope, and
 revision under an unchanged objective. Their current home is the
-[retention-policy draft](./theory-retention-policy.md). The operator's
+[retention-policy draft](../../notes/a-claim-without-external-assessment-carries-three-obligations.md). The operator's
 requirement against relying on unwarranted claims remains a policy question:
 what support permits which use, and what can be held solely for inquiry?
 It does not exclude conjectured candidates from Popper's vocabulary.
@@ -252,7 +252,7 @@ support.
 1. **Resolve the theory-retention policy** (section 4) separately from
    the borrowed tentative-theory entry. The current README and adoption plan
    supersede this earlier edit list.
-2. **Rewrite the open-ended section** of [theory builder](./theory-builder.md):
+2. **Rewrite the open-ended section** of [theory builder](../../notes/definitions/theory-builder.md):
    extension as seed diff and added capability, mechanism-neutral; the
    declared axis restored as the machinery space assessed by that diff; a
    sentence parallel to the autonomy file, that bare open-endedness is free

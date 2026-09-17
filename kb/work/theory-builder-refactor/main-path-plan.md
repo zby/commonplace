@@ -9,7 +9,7 @@
 ## Purpose
 
 Concentrate the research program on one main path, the
-[externally tested theory builder](./externally-tested-theory-builder.md),
+[externally tested theory builder](../../notes/definitions/externally-tested-theory-builder.md),
 and keep the general case as a boundary that tells an agent when a claim has
 left the main path. The operator chose this on 2026-09-17 after the
 definitions review found that the general definitions exist to replace what
@@ -29,7 +29,7 @@ Operator direction of 2026-09-17, in the order given:
    a claim lacks external assessment, with open questions marked open.
 2. The workshop uses Popper's tentative theory as a borrowed term, with the
    structure left in the theory-refinement definition and the policy clauses
-   moved to [theory retention and use](./theory-retention-policy.md). Done
+   moved to [theory retention and use](../../notes/a-claim-without-external-assessment-carries-three-obligations.md). Done
    in `b7520224`. The later library migration follows the
    [KB adoption plan](./tentative-theory-kb-adoption-plan.md).
 3. Commonplace's product is a knowledge base built for consuming projects.
@@ -77,7 +77,7 @@ absence blocks a scored evaluation, not protocol drafting. The
 |---|---|
 | 1. Observable Commonplace protocol | [Drafted](./commonplace-evidence-protocol.md); run parameters explicit and unfilled; PAST-Bench baseline, controls, and expectation contract added in `ca8a2d95`. |
 | 2. Episodes | [Three constructed cases](./main-path-episodes.md); no empirical results. |
-| 3. Definitions and general-case obligations | Five drafts revised against the episodes and trimmed; [general obligations](./general-case-obligations.md) separated by claim and use. |
+| 3. Definitions and general-case obligations | Five drafts revised against the episodes and trimmed; [general obligations](../../notes/a-claim-without-external-assessment-carries-three-obligations.md) separated by claim and use. |
 | 4. Boundary cases | [Eleven cases assessed](./boundary-case-assessment.md), with primary-source checks and access limits. |
 | 5. Conjecture | [Working hypotheses restated](./README.md#goal); sufficiency, comparison, and reflection evidence separated. |
 | 6. Review and inventory | [Seven review rows and fourteen artifact dispositions](./implementation-review.md) recorded. |

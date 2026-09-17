@@ -1,5 +1,5 @@
 ---
-description: "Definition — theory refinement revises an existing fallible explicit theory against empirical cases, seeking improved fit with limited changes; the KB departs from the classical systems in machinery, hence in form, and in subject"
+description: "Definition — theory refinement revises an existing addressable tentative theory against empirical cases, seeking improved fit with limited changes; the KB departs from the classical systems in machinery, hence in form, and in subject"
 type: kb/types/definition.md
 tags: [foundations, self-improving-systems, learning-theory]
 ---
@@ -7,7 +7,7 @@ tags: [foundations, self-improving-systems, learning-theory]
 # Theory refinement
 
 **Theory refinement** is the learning operation that revises an existing
-fallible explicit theory using empirical cases, seeking to correct errors
+explicit [tentative theory](#tentative-theory) using empirical cases, seeking to correct errors
 while preserving useful prior knowledge rather than learning from scratch. It is the
 revising case of model-based learning: an internal model stands between
 evidence and behavior change, and here the model is a theory. The KB uses the
@@ -43,8 +43,9 @@ preservation of all previously correct behavior follows from the task definition
 ## What the loop requires of a theory
 
 Three properties, implicit in the classical object, are what the loop uses.
-This KB makes them the definition of a **theory**, so that broader forms
-qualify by the same test:
+The KB calls a theory that supplies them **addressable**. The loop requires
+an addressable theory; *theory* otherwise keeps its ordinary sense, and
+broader forms qualify by the same test:
 
 - **Consequences a case can contradict.** The theory says what should hold in
   a case, so the case can fail it.
@@ -55,9 +56,35 @@ qualify by the same test:
   errors and preserves behavior on the tested cases; unchanged text alone
   does not guarantee unchanged consequences.
 
-A theory in this sense is addressable: a stable unit whose assumptions, scope,
-and parts can be inspected and revised individually. Addressability comes in
-degrees. An indivisible document can be replaced but not rescoped.
+Addressability is the property of being such a unit: assumptions, scope, and
+parts can be inspected and revised individually. It comes in degrees. An
+indivisible document can be replaced but not rescoped.
+
+## Tentative theory
+
+A **tentative theory** is an addressable theory put forward as a solution to
+a problem and held open to criticism and revision through attempted error
+elimination. The term is Popper's: `TT` names the tentative theory in his
+`P1 → TT → EE → P2` schema, between an initial problem and the attempted
+error elimination that produces further problems
+([Popper 1966](../../sources/popper-a-realist-view-of-logic-physics-and-history-1966.ingest.md#quotes)).
+In *Conjectures and Refutations* he describes proposing a theory as a
+solution, accepting it provisionally if at all, and criticizing and testing
+it, and he holds that theories remain tentative even when we no longer feel
+able to doubt them
+([Chapters 1 and 15](../../sources/popper-conjectures-and-refutations.ingest.md#quotes)).
+Tentativeness is therefore not a waiting period that ends when a theory is
+established as true; a corroborated theory remains tentative, and changing
+its representational form does not establish its truth.
+
+The KB borrows the status and adds nothing to it. The structural
+requirements come from the loop above; applying Popper's term to that
+object is the KB's use of his vocabulary, not a claim that its machinery or
+acceptance rules are part of his definition. The term does not specify how
+much support permits retention, experimental use, routine reliance, or
+codification; those are policy questions a builder must answer for each
+use, collected as obligations in
+[a claim without external assessment carries three obligations](../a-claim-without-external-assessment-carries-three-obligations.md).
 
 The three requirements read off the two axes that derive
 [representational form](./representational-form.md). **Localization** supplies
@@ -198,7 +225,10 @@ the uncertainty is not a universal bar to diagnosis.
 ## Word forms
 
 *Theory refinement* is the noun and *refine* the verb. *Reflective theory
-refinement* composes with *reflective system*. *Theory-mediated learning* and
+refinement* composes with *reflective system*. *Addressable theory* names a
+theory that supplies the three loop requirements; *tentative theory* is
+Popper's term for its epistemic status, adopted on 2026-09-17 in place of
+the KB's earlier *fallible theory*. *Theory-mediated learning* and
 *theory-mediated system learning* are retired names for the genus and for the
 reflective case; notes were rewritten to the current terms on 2026-09-09, and
 the old names remain only in historical and evidence records. *Mediation* is

@@ -39,7 +39,7 @@ an implementation must establish its actual costs and capabilities.
 
 The [warrant-bounded proposal](./proposal-warrant-bounded-open-endedness.md)
 introduced the ideal interpreter in section 6. This document brings it to the
-front of the investigation. The [current definitions](./theory-builder.md)
+front of the investigation. The [current definitions](../../notes/definitions/theory-builder.md)
 now use the interpreter and tentative theory, with reflection and autonomy as
 the two conditions and extension as a measured quantity. The seed-objective
 closure claim remains a separate

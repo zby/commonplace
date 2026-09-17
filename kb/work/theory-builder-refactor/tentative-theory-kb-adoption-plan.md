@@ -30,7 +30,7 @@ settle that destination before changing inbound references. If the term is
 registered in the root vocabulary, link that entry to the same destination.
 
 Carry over the bounded grounding from the
-[workshop entry](./tentative-theory.md): Popper's
+[workshop entry](../../notes/definitions/theory-refinement.md#tentative-theory): Popper's
 [1966 schema](../../sources/popper-a-realist-view-of-logic-physics-and-history-1966.ingest.md#quotes)
 and the retained passages in
 [*Conjectures and Refutations*](../../sources/popper-conjectures-and-refutations.ingest.md#quotes).
@@ -49,7 +49,7 @@ ontological claim the program does not need and keeps the addressability
 precondition, which it does. Adopted by the operator on 2026-09-17 from an
 external review; execute it in the same commit as the vocabulary destination.
 
-Every policy obligation in the [policy draft](./theory-retention-policy.md)
+Every policy obligation in the [policy draft](../../notes/a-claim-without-external-assessment-carries-three-obligations.md)
 must receive a disposition: promote the accepted rule to the appropriate
 library artifact, delimit the research claim, or explain why the obligation
 does not apply to the assessed use. Do not preserve rejected clauses merely
