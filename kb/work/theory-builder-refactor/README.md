@@ -107,7 +107,7 @@ the tool cumbersome and keeps ordinary engineering from being retold as
 evidence for reflection. Episodes are recorded, not selected: selection
 after outcomes are known is the adaptive-reuse hazard the protocol reserves
 evidence against. An
-[ideal interpreter](../../reference/proposals/resource-bounded-ideal-interpreter.md) is no longer a
+[ideal interpreter](../ideal-interpreter/resource-bounded-ideal-interpreter.md) is no longer a
 prerequisite of the outcome comparison. Its proposed attribution guarantees
 remain open.
 
@@ -272,7 +272,7 @@ listed in the [implementation review](./implementation-review.md#promotion-and-m
    — the fence: what remains to establish when a particular claim or use
    lacks external assessment, with the former retention-policy questions as
    its open questions.
-6. [Resource-bounded ideal interpreter](../../reference/proposals/resource-bounded-ideal-interpreter.md)
+6. [Resource-bounded ideal interpreter](../ideal-interpreter/resource-bounded-ideal-interpreter.md)
    — a deferred attribution specification with open fidelity, completion,
    abstention, and realizability questions.
 
@@ -297,7 +297,7 @@ listed in the [implementation review](./implementation-review.md#promotion-and-m
   terminology migration, its adoption trigger, candidate inventory, source
   fidelity exceptions, and validation requirements.
 - The interpreter specification and the semantic-work record are folded
-  into the [resource-bounded ideal interpreter proposal](../../reference/proposals/resource-bounded-ideal-interpreter.md),
+  into the [resource-bounded ideal interpreter proposal](../ideal-interpreter/resource-bounded-ideal-interpreter.md),
   a deferred attribution device with its stress tests as adoption criteria.
 - The Gödel-machine comparison is folded into
   [Gödel machines are a proof-governed case of self-modification](../../notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md)
@@ -370,7 +370,11 @@ waits for.
   a section of the theory-refinement definition, whose stipulation that the
   three loop properties define *theory* narrows to *addressable theory*.
 - **Not promoted as definitions:** the resource-bounded ideal interpreter
-  stays a deferred attribution device and becomes a design proposal. The
+  stays a deferred attribution device. It was briefly a design proposal and
+  was moved the same day to its own exploratory
+  [workshop](../ideal-interpreter/README.md) on the operator's direction
+  that it is too experimental for anything existing to depend on it; the
+  library definitions no longer name it. The
   retention policy is not promoted as rules; its obligations and open
   questions join the general-case obligations in one note, the fence.
 - **Doctrine edits:** vocabulary entries for the promoted terms, the

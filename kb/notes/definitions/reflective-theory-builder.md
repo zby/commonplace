@@ -88,9 +88,9 @@ performance are separate claims.
   two-way causal connection.
 - A machinery change with no retained account of why; that may be an
   extension, but it is not reflection.
-- An ideal interpreter. The condition does not require one; the
-  self-theory's claims about interpretation are decided by evidence like
-  any other.
+- A standard of faithful interpretation. The condition does not require
+  one; the self-theory's claims about interpretation are decided by
+  evidence like any other.
 
 ## Misuse Cases
 

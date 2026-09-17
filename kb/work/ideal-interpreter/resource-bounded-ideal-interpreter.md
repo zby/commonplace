@@ -1,11 +1,10 @@
----
-description: "Proposal: a resource-bounded ideal interpreter as an attribution device separating errors in interpreting a theory from errors in the theory; the scope to declare, fidelity criteria, completion and abstention, and stress tests before adoption"
-type: ../types/design-proposal.md
-tags: [foundations, learning-theory]
-traits: [has-external-sources]
----
-
 # Resource-bounded ideal interpreter
+
+> **Status:** Exploratory sketch, 2026-09-17. Moved here from the reference
+> proposals frontier with the operator's direction that it is too
+> experimental for anything existing to depend on it. The
+> [workshop README](./README.md) states what a functional definition would
+> need and what closes the work. Nothing below is adopted.
 
 A [theory builder](../../notes/definitions/theory-builder.md) interprets
 theories, cases, and consequences to derive predictions, identify candidate

@@ -144,9 +144,9 @@ supply those.
 - **Interpretation** is a role inside the builder: deriving predictions,
   identifying candidate faults, and assessing revisions. A failed outcome
   does not by itself distinguish an interpretation error from a theory
-  error. A standard for that attribution, a resource-bounded ideal
-  interpreter, is a proposed device and not part of this definition; an
-  outcome comparison records a failure without attributing it.
+  error. No standard for that attribution is part of this definition; an
+  outcome comparison records a failure without attributing it, and a claim
+  about the cause needs its own evidence.
 
 ## Exclusions
 

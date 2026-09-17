@@ -45,8 +45,9 @@ so that workshop can close on promotion while this remains open.
 
 Evidence is the investigation file as moved here, the theory-refinement
 definition and the definitions that depend on it, and the source ingests
-named above. The interpreter proposal in
-[kb/reference/proposals](../../reference/proposals/resource-bounded-ideal-interpreter.md)
-owns the interpretive-fidelity question; this workshop does not reopen it.
+named above. The exploratory
+[ideal-interpreter workshop](../ideal-interpreter/README.md) owns the
+question of modelling the LLM as an interpreter of semantics; this workshop
+does not reopen it, and nothing here may depend on it.
 
 Write scope while open: this directory only.

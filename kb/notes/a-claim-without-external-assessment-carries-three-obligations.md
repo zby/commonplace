@@ -86,13 +86,11 @@ external judge may establish that a task failed while leaving open
 whether the cause was a theory, its interpretation, retrieval, execution,
 or the environment. To assert a particular cause, specify a discriminating
 trace, intervention, or test that could distinguish the alternatives; a
-plausible explanation is a candidate for that test. A standard for
-separating an interpretation error from a theory error, an ideal
-interpreter bounded by resources, is a proposed device whose scope and
-completion conditions remain open. Other failures can be localized with
-ordinary probes without settling those questions. Failed attribution limits
-the causal claim; it does not erase an observed performance difference
-under a sound comparison.
+plausible explanation is a candidate for that test. No adopted standard
+separates an interpretation error from a theory error; failures are
+localized with ordinary probes. Failed attribution limits the causal claim;
+it does not erase an observed performance difference under a sound
+comparison.
 
 ## What stays inside the main path
 
