@@ -1,11 +1,11 @@
 ---
-description: "Exploratory map of backtracking, learning, and complexity models that expose budgets relevant to fallible theory-guided search"
+description: "Exploratory map of backtracking, learning, and complexity models that expose budgets relevant to search guided by tentative theories"
 type: kb/types/note.md
 traits: [has-comparison]
 tags: [learning-theory, computational-model, self-improving-systems]
 ---
 
-# Cost-sensitive formalisms for fallible theory search
+# Cost-sensitive formalisms for tentative theory search
 
 This note is an exploratory catalogue, not a claim that one formalism is the
 right model. Its question is: which formal models expose the costs of a process
@@ -13,7 +13,7 @@ in which a partial project theory orders search, a failed path may cause
 rollback or theory revision, and later search inherits retained effects from
 the failure?
 
-The target is the fallible program theory described in [holding a program
+The target is the [tentative program theory](./definitions/theory-refinement.md#tentative-theory) described in [holding a program
 theory means sustaining coherent search under delayed
 feedback](./program-theory-sustains-search-under-delayed-feedback.md). Ordinary
 nondeterministic reachability hides most of the relevant distinctions. It asks

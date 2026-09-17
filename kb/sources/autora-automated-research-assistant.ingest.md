@@ -43,7 +43,7 @@ On the source's terms, adaptation occurs through a cycle: the experimentalist se
 2. **Represent the loop's handoff as shared research state:** conditions, observations, and models are explicit fields that each component reads and extends, making the evidence path inspectable and components composable. [quick-win]
 3. **Record the user-supplied boundary with the architecture:** users define the empirical problem and select methods, while external systems supply measurement, recruitment, storage, hosting, or simulation. The framework does not establish invention of variables, measurement semantics, environments, or component methods. [quick-win]
 4. **Use AutoRA as evidence for oracle-bounded autonomy:** active selection can expand which evidence the system acquires without escaping the supplied experimental and measurement domain. [just-a-reference]
-5. **Distinguish model discovery from theory refinement:** fitting or replacing a scikit-learn-compatible estimator does not by itself show localized repair of an explicit, fallible theory. [just-a-reference]
+5. **Distinguish model discovery from theory refinement:** fitting or replacing a scikit-learn-compatible estimator does not by itself show localized repair of an explicit tentative theory in the KB’s sense. [just-a-reference]
 
 ## Limitations (our opinion)
 

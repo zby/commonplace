@@ -15,7 +15,7 @@ similarity claim must say what it compares:
 
 - the **object and target** of representation — whether the retained model is
   about the modifying system's own structure, purposes, requirements, or goals;
-- the **learning mechanism** — whether an explicit, fallible theory guides
+- the **learning mechanism** — whether an explicit, [tentative theory](./definitions/theory-refinement.md#tentative-theory) guides
   inference and is itself revised by empirical contradiction; or
 - the **implementation pattern** — whether a contemporary LLM system learns by
   editing persistent code and text around a fixed model.
@@ -49,7 +49,7 @@ environment.
 The remaining gap is learning architecture. Classical runtime-model and
 self-adaptive systems usually begin with a supplied model language, goal or
 requirements vocabulary, monitoring boundary, adaptation operators, and
-evaluation policy. They need not treat the runtime model as a fallible
+evaluation policy. They need not treat the runtime model as a tentative
 explanatory theory whose content and scope are revised by delayed consequences,
 and they generally leave these adaptation-machinery choices outside the
 revision surface. Such choices belong to a [software house's production
@@ -72,7 +72,7 @@ mechanism by beginning with an imperfect explicit theory, using empirical
 failures to identify candidate repair locations, and revising the theory rather than learning only
 from scratch.
 
-This family is closest to **how a fallible explicit theory learns**. The theory
+This family is closest to **how an explicit tentative theory learns**. The theory
 shapes interpretation and search; evidence can count against the theory rather
 than only against one candidate answer; and repair can be localized to the
 represented knowledge implicated by the failure, with evaluation needed to
@@ -147,7 +147,7 @@ addressable theory of a software system's purposes and organization
 ```
 
 Runtime reflection and self-adaptation supply the self-model and causal target.
-Theory refinement supplies the fallible-theory and empirical-repair mechanism.
+Theory refinement supplies the tentative-theory and empirical-repair mechanism.
 LLMs supply a current semantic interpreter and search process over theories that
 have not been fully formalized. Persistent natural-language and symbolic
 artifacts provide addressable working state, while code and runtime carry exact

@@ -1,5 +1,5 @@
 ---
-description: "Holding a program's theory is tested by whether a partial, fallible account of what the program is for keeps modification search, backtracking, and recovery coherent until delayed evidence arrives, not by whether the first change is right"
+description: "Holding a program's theory is tested by whether a partial, tentative account of what the program is for keeps modification search, backtracking, and recovery coherent until delayed evidence arrives, not by whether the first change is right"
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [foundations, self-improving-systems]
@@ -33,7 +33,7 @@ and backtracking are therefore not signs that the theory was missing.
 A theory-holder may inspect the system, construct alternatives, test
 assumptions, make a tentative change, encounter a conflict, reverse course, or
 revise its account of what the program is for. Backtracking is not evidence
-that the theory was absent. It is one way a fallible theory is used under
+that the theory was absent. It is one way a [tentative theory](./definitions/theory-refinement.md#tentative-theory) is used under
 incomplete information.
 
 The theory supplies program-specific control over search:
@@ -184,7 +184,7 @@ Relevant Notes:
 
 - [Naur binds program theory to humans by equating machine execution with formulated criteria](./naur-equates-machine-execution-with-formulated-criteria.md) — grounds: supplies Naur's bearer tests and leaves their satisfaction by a composite empirical
 - [Warranted transfer out of the human cut leaves people the hardest-to-warrant decisions](./warranted-transfer-leaves-people-the-hardest-to-warrant-decisions.md) — grounds: supplies the selection effect and least-warrantable residual identified with coherent modification here
-- [A proposal-selection improvement loop requires search, evaluation, and operative retention](./a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — mechanism: supplies the functions through which a fallible theory guides modification
+- [A proposal-selection improvement loop requires search, evaluation, and operative retention](./a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — mechanism: supplies the functions through which a tentative theory guides modification
 - [Reflective theory refinement needs interpretation, retention, and independent read-back](./reflective-theory-refinement-needs-interpretation-and-retention.md) — extends: requires the same theory to guide change, receive outcome read-back, be revised, and affect later operation
 - [Citing retained theory at the decision point is a mediation trace](./citing-retained-theory-at-the-decision-point-is-a-mediation-trace.md) — enables: records which theory was consumed while leaving load-bearing use open
 - [Design rationale must preserve decision premises its interpreter cannot regenerate](./design-rationale-must-preserve-unregenerable-decision-premises.md) — grounds: identifies program-specific premises generic search cannot reliably reconstruct

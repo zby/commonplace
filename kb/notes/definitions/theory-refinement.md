@@ -32,7 +32,7 @@ operators are named: retract, generalize, specialize, add a rule or an
 antecedent. Acceptance is consistency with the supplied cases.
 
 Richards and Mooney separate the task from FORTE's realization: improving an
-existing fallible theory from empirical cases while seeking to preserve useful knowledge
+existing theory that may be incorrect from empirical cases while seeking to preserve useful knowledge
 is the concept; Horn clauses, greedy search, and the label format are the
 algorithm. This note follows that separation. Their task seeks a minimally revised theory
 correct on the supplied instances. FORTE approximates minimal revision through

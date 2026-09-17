@@ -1,5 +1,5 @@
 ---
-description: "Fallible natural-language project theory may provide an addressable way to coordinate heterogeneous factory development while search, testing, and backtracking construct and revise it"
+description: "Tentative natural-language project theory may provide an addressable way to coordinate heterogeneous factory development while search, testing, and backtracking construct and revise it"
 type: kb/types/note.md
 traits: [title-as-claim, has-comparison]
 tags: [foundations, learning-theory, self-improving-systems]
@@ -49,11 +49,11 @@ A factory-relevant theory may include:
 
 The relevant self-knowledge is therefore not a complete theory of the model's internals. It is a task-relevant theory of the relation among the task, the current solver, and interventions that can make the task tractable.
 
-## A useful theory can be weak and fallible
+## A useful theory can be weak and tentative
 
 Guiding factory development by a theory does not require a complete account that deductively yields the right factory change. Real software development commonly proceeds from partial and sometimes mistaken understanding. A developer uses that understanding to choose a promising change, inspects the result, encounters conflicts, backtracks, and revises both the program and the understanding of it.
 
-A computational theory-holder should be judged by the same longitudinal standard. A weak theory can still be operative when it narrows search, identifies commitments worth preserving, interprets failure, or tells recovery what to restore or revise. Backtracking is not evidence that theory was absent; it is one way a fallible theory remains corrigible under incomplete information.
+A computational theory-holder should be judged by the same longitudinal standard. A weak theory can still be operative when it narrows search, identifies commitments worth preserving, interprets failure, or tells recovery what to restore or revise. Backtracking is not evidence that theory was absent; it is one way a [tentative theory](./definitions/theory-refinement.md#tentative-theory) remains corrigible under incomplete information.
 
 ```text
 partial theory
@@ -151,7 +151,7 @@ Conversely, theory need not remain in natural language forever. Stable claims ca
 Relevant Notes:
 
 - [Naur binds program theory to humans by equating machine execution with formulated criteria](./naur-equates-machine-execution-with-formulated-criteria.md) — grounds: supplies the project-theory functions and reopens their allocation to a computational composite
-- [Holding a program theory means sustaining coherent search under delayed feedback](./program-theory-sustains-search-under-delayed-feedback.md) — grounds: explains why a partial and fallible theory can guide search, backtracking, and revision
+- [Holding a program theory means sustaining coherent search under delayed feedback](./program-theory-sustains-search-under-delayed-feedback.md) — grounds: explains why a partial and tentative theory can guide search, backtracking, and revision
 - [Factory-learning mechanisms should be compared on the same causal job](./factory-learning-mechanisms-should-be-compared-on-the-same-causal-job.md) — grounds: separates the minimal update relation from the stronger coherent-modification target
 - [Reflective theory refinement needs interpretation and retention](./reflective-theory-refinement-needs-interpretation-and-retention.md) — grounds: supplies the causal mediation and retained-revision requirements
 - [Theory refinement may improve sample efficiency under shifts](./theory-refinement-may-improve-sample-efficiency-under-shifts.md) — extends: states the structured-transfer conjecture

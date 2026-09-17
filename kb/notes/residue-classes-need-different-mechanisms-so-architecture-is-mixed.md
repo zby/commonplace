@@ -45,7 +45,7 @@ answer without spelling out every judgment needed to apply it. A model can
 also make a decision whose full criterion is unstated. That can advance
 [computational closure without methodological
 closure](./methodological-and-computational-closure-track-different-changes.md).
-A fallible program theory often guides search, diagnosis, and recovery rather
+A tentative program theory often guides search, diagnosis, and recovery rather
 than determining acceptance by itself, [especially under delayed
 feedback](./program-theory-sustains-search-under-delayed-feedback.md).
 Authority remains a separate practical limit: a plausible judgment is not a
