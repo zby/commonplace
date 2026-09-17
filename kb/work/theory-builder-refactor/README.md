@@ -263,10 +263,14 @@ or an edit plan to execute unchanged.
 
 | File | Remaining use |
 |---|---|
-| [Warrant-bounded proposal](./proposal-warrant-bounded-open-endedness.md) | Argument record for the contested closure claim, evaluator revision, and the conjecture that reflection lowers search cost. Its old edit list is superseded. |
-| [Original theory-builder proposal](./theory-builder-proposal.md) | Recover useful role mappings and discriminating cases; its theory-family and open-endedness framing is superseded. |
-| [Universal theory manipulator](./universal-theory-manipulator.md) | Earlier formal limit case; assess whether anything is needed beyond the Gödel-machine comparison before retiring it. |
-| [Interface note draft](./note-draft-theory-refinement-is-an-interface.md) | Candidate prose for the interface investigation; merge useful material into its eventual output rather than promote both accounts. |
+| [Warrant-bounded proposal](./proposal-warrant-bounded-open-endedness.md) | Argument record for the contested closure claim, evaluator revision, and the conjecture that reflection lowers search cost. The retention policy points here for the closure argument; it stays until that claim has a disposition. |
+
+The original theory-builder proposal, the universal theory manipulator, and
+the interface note draft were retired in the 2026-09-17 cleanup: their
+role mappings and discriminating cases are absorbed into the boundary rule
+and the boundary-case assessment, the Gödel-machine comparison carries the
+proof-governed contrast, and the interface investigation is the single
+account for closing condition 3. All three remain in git history.
 
 ## Definition review dispositions
 

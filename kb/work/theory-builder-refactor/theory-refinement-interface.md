@@ -40,8 +40,9 @@ state that they are one contract.
 
 ## Who implements what
 
-The role table in the [proposal](./theory-builder-proposal.md#4-the-machinery-departure-and-the-table-that-replaces-the-ladder)
-groups the interface into three rows. Ungrouped, per implementation:
+The role table in the original theory-builder proposal, retired from this
+workshop in the cleanup commit and recoverable from git history, grouped the
+interface into three rows. Ungrouped, per implementation:
 
 | Operation | EITHER / FORTE | Universal theory manipulator | General interpreter | Commonplace today |
 |---|---|---|---|---|
@@ -53,8 +54,10 @@ groups the interface into three rows. Ungrouped, per implementation:
 
 Three placements follow.
 
-- **The [universal theory manipulator](./universal-theory-manipulator.md) is
-  derive-only.** It answers what follows from the theory. Compare is available
+- **The universal theory manipulator is derive-only.** (The earlier formal
+  limit case, retired from this workshop; the
+  [Gödel-machine comparison](./goedel-machine-comparison.md) now carries the
+  proof-governed contrast.) It answers what follows from the theory. Compare is available
   only when observations enter as theorems, and even then a disagreement with
   an axiom is an inconsistency, not a located fault. Locate, revise against
   evidence, and evaluate against evidence are absent. This is why the
