@@ -58,4 +58,4 @@ changes from outside the boundary.
   admission, and successor selection for library changes, and these are
   internal roles under the role rule.
 - **The research target** is an autonomous, reflective theory builder with
-  the autonomy warranted.
+  the autonomy warranted, under the [fixed-model constraint](./README.md#goal).

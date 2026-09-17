@@ -54,6 +54,11 @@ The builder may change its machinery through retained instructions, new tools,
 changes to model weights, model replacement, or combinations of these. Fixed
 models are a constraint on particular builders or studies. Neither this
 definition nor the conditions below require that constraint.
+The [workshop's research target](./README.md#goal) does impose it: model
+weights are pinned to versions publicly available as of 2026-09-17, and
+training develops the builder's instructions, knowledge, tools, and
+orchestration as natural-language and symbolic artifacts. The builder is
+the unit being trained; the model weights remain fixed.
 
 Users remain outside the builder when they supply questions, cases, evidence,
 preferences, acceptance judgments, or later demands. A person is inside the
@@ -163,4 +168,4 @@ supply those.
   consumed by later theory work.
 - **The research target** is a theory builder meeting both conditions, with
   the autonomy warranted, whose extension under a stated budget compares with
-  the human-staffed baseline.
+  the human-staffed baseline, under the [fixed-model constraint](./README.md#goal).

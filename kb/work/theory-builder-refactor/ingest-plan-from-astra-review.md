@@ -212,6 +212,28 @@ Three preserve capture warnings: one apparent link in Dwork's extracted
 text, five apparent links in ADAS's extracted code, and 27 warnings in the
 SEP capture (relative web links and its capture-time genre).
 
+## Additional seed-learning sources — 2026-09-17
+
+After a search for better definitions of seed improvers, the operator asked
+to ingest these two papers and add them to this workshop. They supplement
+the fifteen-source Astra list. Both full-text ingests were drafted by fresh
+Sol workers; their reports and snapshots passed validation with no failures
+or warnings. Neither ingest has a task-specific occasion. The questions
+below route their use in the workshop; they do not alter the ingest analyses
+or settle the proposed definitions.
+
+| Source and completed ingest | Question for the definitions review | Lands in |
+|---|---|---|
+| Thórisson (2020), [Seed-Programmed Autonomous General Learning (snapshot required)](../../sources/seed-programmed-autonomous-general-learning.ingest.md) | Which initial knowledge, observables, drives, and learning operations does the seed supply? How does the requirement for overlap between novel phenomena and existing knowledge limit the claim of autonomous generality? What supports cumulative knowledge revision, and what would additionally establish extension of the learning machinery? | Seed in the theory-builder definition; cross-area methodology conjecture; evidence-interface and extension review. |
+| Nivel et al. (2013), [Bounded Recursive Self-Improvement (snapshot required)](../../sources/bounded-recursive-self-improvement.ingest.md) | Which executable models can AERA learn or replace, and which architectural and motivational parts remain protected? What do the dialogue experiments establish about later behavior, and what remains untested about improvement of the learning process itself? | Reflective and autonomous boundary cases; extension review; comparison with Gödel-machine rewrite governance. |
+
+The ingests identify a useful predecessor for learning from a supplied seed,
+but bound its demonstrated achievements to model acquisition and use inside
+a designer-supplied architecture. Use that distinction when assessing the
+workshop's stronger claim that its methodology can acquire and revise the
+machinery new areas require. Neither ingest establishes sustained recursive
+compounding or the workshop's comparative reliability claim.
+
 ## Order of work
 
 1. Ingest the four priority-1 sources. They decide whether the reflective

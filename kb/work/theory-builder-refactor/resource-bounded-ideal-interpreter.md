@@ -98,6 +98,12 @@ rule: read natural-language content, test symbolic artifacts, probe
 parametric ones. Fixed weights are one possible form of the knowledge, not a
 required one, and an extension that lands in weights has no artifact diff and
 needs a probe-based record.
+The [workshop's research target](./README.md#goal) uses only fixed weights
+from model versions publicly available as of 2026-09-17. In that setting,
+probes assess the models' existing capabilities and the effects of changes
+to the builder's instructions, knowledge, tools, and orchestration. Training
+retains those changes in natural-language and symbolic artifacts;
+model-weight updates are outside the assessment.
 
 ## Tests
 

@@ -2,23 +2,47 @@
 
 ## Goal
 
-Refactor the research program around one conjecture and the vocabulary
-needed to state and test it.
+Define a new training methodology for a theory builder, organized around
+one conjecture and the vocabulary needed to state and test it. Training
+develops the builder's instructions, knowledge, tools, and orchestration
+as natural-language and symbolic artifacts while model weights stay fixed.
 
-> **Conjecture.** A learning methodology expressed in natural-language and
+> **Conjecture.** A training methodology expressed in natural-language and
 > symbolic form is
 > [actionable](../../notes/definitions/actionable-methodology.md) for a
-> computational operator across practical areas: executed without a person in
-> its internal roles, it develops and retains the theories and procedures new
-> areas need, with the retained results warranted by its own evaluators at
-> reliability comparable to a human-staffed builder, and without a separately
-> designed learning method per area. It does not promise success on every
+> computational operator using fixed weights from currently publicly available
+> models across practical areas: executed without a person in its internal
+> roles, it develops and retains the theories and procedures new areas need
+> by revising instructions, knowledge, tools, and orchestration in
+> natural-language and symbolic artifacts. Its own evaluators warrant the
+> retained results at reliability comparable to a human-staffed builder.
+> It does this without a separately designed training method per area.
+> It does not promise success on every
 > problem or within every budget.
+
+For this conjecture, “currently publicly available” means available as of
+2026-09-17. An assessment must declare the model versions it uses and keep
+their weights fixed. Public availability includes hosted models; it does not
+require open weights. Model-weight updates and later model releases are
+excluded from the assessment. The particular models remain to be selected;
+this is a constraint on the research target, not on the general definition
+of a theory builder.
+
+The unit being trained is the theory builder. Its learned changes are
+retained in instructions, knowledge, tools, and orchestration, in
+natural-language and symbolic
+[representational forms](../../notes/definitions/representational-form.md).
+The methodology governs how experience and evaluation produce these changes
+and how their effect on later work is assessed. This is the training process
+the workshop aims to define; fixed model weights constrain where learning is
+retained. Both the methodology and its learned results have these artifact
+forms, and the methodology itself can be revised through this process.
 
 The conjecture denies two rivals. The first is per-area learning: each new
 area needs its own designed learner. The second is no methodology: direct
-search over raw records, or model adaptation, reaches the same results at
-comparable total cost. Its empirical content is a count: doctrine edits per
+search over raw records reaches the same results at comparable total cost.
+Computational comparisons share the same model constraint. Its empirical
+content is a count: doctrine edits per
 new area, with authorship. An extension the methodology produced from
 evidence counts for it; one a person wrote counts against it, even if the
 person is inside the boundary.
@@ -31,9 +55,9 @@ Reflection and machinery extension are the mechanisms by which the
 methodology improves itself and acquires what new areas need. Autonomy is
 the condition the conjecture asserts, and it must be
 [warranted](./autonomous-theory-builder.md). The methodology's own content
-stays readable; it may govern a weight update as one operation it decides on
-and checks, and the interpreter's realization rule covers what it cannot
-inspect. *Methodology* names the content; *doctrine* names its installed,
+stays readable. The interpreter's realization rule covers the capabilities
+of the fixed models that it cannot inspect directly. *Methodology* names the
+content; *doctrine* names its installed,
 binding form as system-definition artifacts.
 
 Two routes develop the conjecture, and they are the two layers of the
@@ -118,6 +142,22 @@ operator supplied Hansson's full-text PDF to resolve the final access
 blocker. The ingest plan links all reports. The source inputs for the
 definitions review below are ready.
 
+Also on 2026-09-17, the operator asked to add Thórisson's seed-programming
+paper and Nivel et al.'s bounded recursive self-improvement paper after both
+were ingested. The [additional source record](./ingest-plan-from-astra-review.md#additional-seed-learning-sources--2026-09-17)
+links their reports and identifies questions for the seed, reflection,
+autonomy, and extension review. Adding these inputs does not adopt the
+definition changes proposed during the search.
+
+Later on 2026-09-17, the operator constrained the central question to weights
+pinned to currently public models. The goal above applies that constraint to
+the research target, superseding the earlier optional treatment there. The
+general definitions still admit builders that change weights.
+The operator then clarified that the purpose is to define a new training
+methodology: training changes instructions, knowledge, tools, and
+orchestration in natural-language and symbolic artifacts. The fixed-weight
+constraint excludes model-weight updates, not training of the builder.
+
 ## Read the current definitions in this order
 
 1. [Resource-bounded ideal interpreter](./resource-bounded-ideal-interpreter.md)
@@ -155,7 +195,9 @@ definitions review below are ready.
   owns the judgement of the external literature review and the prioritized
   source list and ingest status: introspective multistrategy learning, EURISKO,
   adaptive data analysis, problem-solving-method construction, automated
-  science, belief bases, and the contemporary rivals.
+  science, belief bases, and the contemporary rivals. Its additional-source
+  section records the later seed-programming and bounded self-improvement
+  ingests and their workshop review questions.
 
 ## Earlier drafts and argument records
 
@@ -180,7 +222,8 @@ questions; they do not silently adopt replacements for the current drafts.
 | Issue | What must be resolved |
 |---|---|
 | Interpreter's scope and guarantees | The interpreter says budget exhaustion is its only failure, but conceptual development may fail and scope is conditional. Specify the guarantee for completed interpretation separately from discovery, and assess completion as well as fidelity so abstention cannot make evaluation vacuous. |
-| Extension and model weights | The builder requires an artifact diff and excludes changes to existing slots, while both the builder and interpreter permit learning in weights. Define extension through demonstrated capability under a stated budget; settle how artifacts and probes establish the change. |
+| Seed and bootstrap claims | Use the [seed-learning ingests](./ingest-plan-from-astra-review.md#additional-seed-learning-sources--2026-09-17) to distinguish the seed as an assessment baseline from a claim that its methodology can acquire what later areas require. Identify supplied observables, operations, representations, and protected machinery. Separate learning task models from changing the learning process; neither alone establishes recursive compounding. |
+| Extension and model weights | The research target fixes weights to currently public models; the general definitions still permit weight learning. The builder's artifact-diff requirement and exclusion of changes to existing slots remain under review. Define extension through demonstrated capability under a stated budget; settle how artifacts and probes establish the change under each scope. |
 | Fallibility and warrant policy | Distinguish the property of being fallible from the proposed policy for retaining and consuming claims. The cited [warrant note](../../notes/theory-warrant-tracked-at-the-finest-granularity-evidence-licenses.md) permits joint model or conjunction support. Check the draft's per-claim-only rule, always-untested-scope claim, and assertion that warranted revisions automatically chain. Distinguish actual warrant from an evaluator's judgment of it. |
 | Objectives and closure | The autonomy draft infers that removing people prevents licensed objective change, while the comparison leaves this disputed. The [objective note](../../notes/revising-an-improvement-objective-is-licensed-from-outside-it.md) distinguishes an outside comparison level from the system boundary and reports no terminal-objective revision in Commonplace. Establish what follows before using seed closure as a definition premise. |
 | Evidence interface | The special case makes the interface a parameter every builder has. Decide whether the general [theory-builder](./theory-builder.md) definition should require an evaluation to declare the interface, alongside the boundary and the seed, so that the closure question and the interpreter's scope are read relative to it. The conjecture's per-area count already needs a per-area outcome measure, which is the interface. |
@@ -245,7 +288,9 @@ refinement, and search over candidate revisions are prior art. The workshop
 therefore treats the autonomous reflective composition as the research target,
 not those ingredients individually. The 2026-09-14 semantic-work document
 also records direct sources for the mathematical and logical stress tests.
-The retained literature checks for the new definitions remain incomplete.
+The retained evidence now also includes the fifteen completed ingests and
+the two seed-learning ingests linked in the [source record](./ingest-plan-from-astra-review.md).
+Their implications for the new definitions still require the review above.
 
 ## Coordination
 
