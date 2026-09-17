@@ -88,7 +88,7 @@ definitions already sit near the task and inference layers, so the import is
 a refinement rather than a new ontology. The competence-theory construction
 paper is the priority: its three stages (competence specification,
 conceptual refinement introducing vocabulary and assumptions, operational
-specification) decompose what the [semantic-work record](../../reference/proposals/resource-bounded-ideal-interpreter.md)
+specification) decompose what the [semantic-work record](../ideal-interpreter/resource-bounded-ideal-interpreter.md)
 currently asks the ideal interpreter to cover, and would let the interpreter
 shrink to a faithful-interpretation contract. Not agreed: importing
 CommonKADS's development process or its library assumption. The research
