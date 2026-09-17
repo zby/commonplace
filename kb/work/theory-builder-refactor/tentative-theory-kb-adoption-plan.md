@@ -39,6 +39,16 @@ as true. Preserve the qualified fault-localization account: a failed test
 may implicate several premises, but identifying the fault is not always
 impossible. The library already has that qualification; do not duplicate it.
 
+Narrow the stipulation in [Theory refinement](../../notes/definitions/theory-refinement.md)
+that the three loop properties are "the definition of a theory". The
+properties are what refinement requires of a theory's representation; a
+theory that supplies them is **addressable**, a term the definition already
+uses and grades. *Theory* keeps its ordinary sense, and the tentative-theory
+entry then reads: an addressable theory held tentatively. This removes an
+ontological claim the program does not need and keeps the addressability
+precondition, which it does. Adopted by the operator on 2026-09-17 from an
+external review; execute it in the same commit as the vocabulary destination.
+
 Every policy obligation in the [policy draft](./theory-retention-policy.md)
 must receive a disposition: promote the accepted rule to the appropriate
 library artifact, delimit the research claim, or explain why the obligation

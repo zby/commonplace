@@ -33,7 +33,14 @@ adoption of the workshop conclusions.
 > comparisons use the same fixed-model constraint and account for both
 > adaptation and task costs.
 
-Neither hypothesis promises success on every problem or within every
+> **Reflection hypothesis.** A builder whose machinery changes pass through
+> a causally connected self-theory acquires extensions that a matched
+> builder without one does not, under the same demands, budget, and
+> external assessment. Better downstream outcomes alone do not test this;
+> the records of a [reflective episode](./main-path-episodes.md#2-reflective-machinery-revision)
+> and a matched builder that retains content without a self-theory do.
+
+None of the hypotheses promises success on every problem or within every
 budget. The [protocol](./commonplace-evidence-protocol.md) records the
 project, reliability target, comparison margin, task population, and budgets
 that must be fixed before a run. No run is reported here. A result on one
@@ -71,11 +78,12 @@ The system that executes the methodology is a
 [theory builder](./theory-builder.md) of
 [tentative theories](./tentative-theory.md).
 [Autonomy](./autonomous-theory-builder.md) concerns who performs its internal
-roles. [Reflection](./reflective-theory-builder.md) remains a separate
-mechanism claim: a causally connected self-theory guides machinery changes,
-and the changes update that theory. Better downstream outcomes alone do not
-establish this mechanism. The research target requires both conditions and
-evidence that the reflective path is exercised.
+roles. [Reflection](./reflective-theory-builder.md) is a separate mechanism
+condition: a causally connected self-theory guides machinery changes, and
+the changes update that theory. Whether that mechanism pays is the
+reflection hypothesis above. The research target requires both conditions;
+the reflective episode's records supply the evidence that the path is
+exercised.
 
 The work combines specification with bootstrap through use. Declare the
 evidence interface and comparison first, then let substantive tasks expose
@@ -197,6 +205,18 @@ consuming project remains unselected. The
 [implementation review](./implementation-review.md) records the seven review
 outcomes, artifact dispositions, and the unresolved refinement-interface
 closing condition.
+
+Later on 2026-09-17 the operator supplied an external review (ChatGPT) of
+the published workshop and adopted two of its recommendations: reflection
+is stated as a subordinate falsifiable hypothesis beside sufficiency and
+comparison, and the theory-refinement definition's stipulation that the
+three loop properties define *theory* is narrowed at promotion to what
+refinement requires of a theory's representation, with *addressable theory*
+naming a theory that supplies them (recorded in the
+[adoption plan](./tentative-theory-kb-adoption-plan.md#1-establish-the-durable-vocabulary-destination)).
+The review's other points were already applied by the main-path
+implementation, or declined: autonomy stays inside the head conjecture,
+since separating it would make the conjecture true of Commonplace today.
 
 ## Read the current definitions in this order
 
