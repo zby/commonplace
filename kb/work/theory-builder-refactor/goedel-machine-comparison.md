@@ -62,12 +62,13 @@ establish that their proposed combination is absent from prior systems.
 
 The current drafts define the builder using tentative theories, keep reflection
 and autonomy as its two conditions, and assess machinery extension under a
-budget. The interpreter now has a
-[separate definition](./resource-bounded-ideal-interpreter.md). This comparison
-supports distinguishing the grounds for accepting changes; it does not yet
-establish the drafts' stronger claims excluding the Gödel machine. Those
-boundary cases require the
-[reconciliation listed in the README](./README.md#next-review-reconcile-the-definitions).
+budget. The interpreter has a
+[deferred specification](./resource-bounded-ideal-interpreter.md). This
+comparison supports distinguishing the grounds for accepting changes; it
+did not establish the earlier drafts' stronger exclusions of the Gödel
+machine. Those exclusions are removed. The
+[boundary assessment](./boundary-case-assessment.md) records the source
+evidence and remaining deployment questions.
 
 Keep acquisition capability separate from the warrant for using an extension.
 Evaluator replacement needs evidence of adequacy, not merely permission from

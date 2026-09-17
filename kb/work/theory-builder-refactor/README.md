@@ -2,23 +2,43 @@
 
 ## Goal
 
-Define a new training methodology for a theory builder, organized around
-one conjecture and the vocabulary needed to state and test it. Training
-develops the builder's instructions, knowledge, tools, and orchestration
-as natural-language and symbolic artifacts while model weights stay fixed.
+Define a training methodology for an
+[externally tested theory builder](./externally-tested-theory-builder.md).
+Training develops its instructions, knowledge, tools, and orchestration as
+natural-language and symbolic artifacts while model weights stay fixed.
+Commonplace producing a KB and supporting software for consuming projects
+is the proposed first arrangement. Downstream outcomes assess the main
+claim; internal approval of a note does not substitute for that assessment.
 
-> **Conjecture.** A training methodology expressed in natural-language and
-> symbolic form is
+The conjecture has two separately testable parts. This is the working
+framing used to implement the [main-path plan](./main-path-plan.md), pending
+adoption of the workshop conclusions.
+
+> **Sufficiency hypothesis.** A training methodology expressed in
+> natural-language and symbolic form is
 > [actionable](../../notes/definitions/actionable-methodology.md) for a
-> computational operator using fixed weights from currently publicly available
-> models across practical areas: executed without a person in its internal
-> roles, it develops and retains the theories and procedures new areas need
-> by revising instructions, knowledge, tools, and orchestration in
-> natural-language and symbolic artifacts. Its own evaluators warrant the
-> retained results at reliability comparable to a human-staffed builder.
-> It does this without a separately designed training method per area.
-> It does not promise success on every
-> problem or within every budget.
+> computational operator using fixed weights from currently public models.
+> Without people performing its internal theory-building roles or designing
+> a new learning method for each area, the builder develops, retains, and
+> uses theories and procedures across declared practical areas. Its later
+> work meets a reliability target under a stated budget and external
+> assessment protocol. An area is a consuming project's domain with an
+> interface that can be declared and observed.
+
+> **Comparative hypothesis.** Under matched demands and declared resources,
+> this methodology produces useful capability gains over the frozen seed
+> and a baseline that searches the raw records without the learned
+> methodology. Its downstream reliability is comparable to a human-staffed
+> builder's under a margin set before assessment. The computational
+> comparisons use the same fixed-model constraint and account for both
+> adaptation and task costs.
+
+Neither hypothesis promises success on every problem or within every
+budget. The [protocol](./commonplace-evidence-protocol.md) records the
+project, reliability target, comparison margin, task population, and budgets
+that must be fixed before a run. No run is reported here. A result on one
+project supports that assessed scope; breadth requires multiple declared
+areas and evidence about transfer between them.
 
 For this conjecture, “currently publicly available” means available as of
 2026-09-17. An assessment must declare the model versions it uses and keep
@@ -38,60 +58,55 @@ the workshop aims to define; fixed model weights constrain where learning is
 retained. Both the methodology and its learned results have these artifact
 forms, and the methodology itself can be revised through this process.
 
-The conjecture denies two rivals. The first is per-area learning: each new
-area needs its own designed learner. The second is no methodology: direct
-search over raw records reaches the same results at comparable total cost.
-Computational comparisons share the same model constraint. Its empirical
-content is a count: doctrine edits per
-new area, with authorship. An extension the methodology produced from
-evidence counts for it; one a person wrote counts against it, even if the
-person is inside the boundary.
+Doctrine edits per new area, with authorship and cost, are a diagnostic of
+automated continuation. A human supplying an internal role counts as an
+intervention during that run. Neither a low edit count nor a machine-written
+change establishes useful learning. Outcome comparisons, retained changes,
+and later consumption must establish
+[extension](./theory-builder.md#extension). *Methodology* names the content;
+*Commonplace doctrine* names the standing instructions a worker inherits with
+binding force.
 
-The system that executes the methodology is a [theory builder](./theory-builder.md)
-of [tentative theories](./tentative-theory.md), whose interpretive roles are
-specified against a
-[resource-bounded ideal interpreter](./resource-bounded-ideal-interpreter.md).
-Reflection and machinery extension are the mechanisms by which the
-methodology improves itself and acquires what new areas need. Autonomy is
-the condition the conjecture asserts, and it must be
-[warranted](./autonomous-theory-builder.md). The methodology's own content
-stays readable. The interpreter's realization rule covers the capabilities
-of the fixed models that it cannot inspect directly. *Methodology* names the
-content; *doctrine* names its installed,
-binding form as system-definition artifacts.
+The system that executes the methodology is a
+[theory builder](./theory-builder.md) of
+[tentative theories](./tentative-theory.md).
+[Autonomy](./autonomous-theory-builder.md) concerns who performs its internal
+roles. [Reflection](./reflective-theory-builder.md) remains a separate
+mechanism claim: a causally connected self-theory guides machinery changes,
+and the changes update that theory. Better downstream outcomes alone do not
+establish this mechanism. The research target requires both conditions and
+evidence that the reflective path is exercised.
 
-Two routes develop the conjecture, and they are the two layers of the
-definitions. **Specify first:** state the methodology's operations, the
-semantic work they require, and the routes by which natural-language claims
-earn warrant without a person, using the ideal interpreter to separate the
-methodology's requirements from an implementation's limits. **Bootstrap
-through use:** start from Commonplace, run it on substantive tasks, let
-failures drive changes to its learning procedures, and transfer internal
-human roles to computational ones as each becomes ready, assessing
-reliability as they move. The second route can discover what the first tries
-to specify, and both score on the same evidence: whether the bootstrap
-accumulates reusable learning capability across areas, or each new area
-keeps needing substantial human design.
+The work combines specification with bootstrap through use. Declare the
+evidence interface and comparison first, then let substantive tasks expose
+product and machinery problems. Retained changes are assessed on later
+work. Internal diagnosis and targeted experiments remain in this path;
+their cost and evidence exposure are recorded. An
+[ideal interpreter](./resource-bounded-ideal-interpreter.md) is no longer a
+prerequisite of the outcome comparison. Its proposed attribution guarantees
+remain open.
 
-Commonplace today is the starting system: human-inclusive, reflective, not
-autonomous. Its current doctrine, this repository's instructions, collection
-contracts, type specs, review system, and skills, is the seed methodology.
-Automatic theory refinement, tentative theories, and, in the Gödel machine,
-reflection with autonomy and in-principle extension are prior art; the
-conjecture is about the readable methodology, warranted and broad.
+Commonplace today is the human-inclusive starting system, not an autonomous
+instance demonstrated under the proposed protocol. This repository's
+instructions, collection contracts, type specs, review system, and skills
+supply its seed methodology. The
+[boundary assessment](./boundary-case-assessment.md) separates prior systems'
+reported evaluations from claims about persistence, reflection, and external
+assessment that their evidence does not settle. The research concerns the
+methodology's composition and performance, not novelty of generic theory
+refinement or tentative theories.
 
 Whether sufficiently broad theory building requires the system to become a
 [software house](../../notes/definitions/software-house.md) remains a side
 conjecture, not a premise or load-bearing consequence.
 
-The general definitions are kept because they show the difficulties. The
-research-program articles work in a special case, the
-[externally tested theory builder](./externally-tested-theory-builder.md),
-whose evidence interface supplies a falsifier, an objective, and an outcome
-level from outside the boundary. The automated software house is its paradigm
-instance. Each supplied item reduces what the general case must specify
-internally, including its retention policy and interpretation standard.
-That is where the articles' relative simplicity comes from.
+The software-house articles supply the main-path case and its witness
+protocol. The general definitions and
+[general-case obligations](./general-case-obligations.md) remain because
+external outcomes do not warrant every internal theory or use beyond the
+assessed scope. These obligations concern particular claims and uses;
+reasoning about a failure does not move the whole builder outside the main
+path.
 
 ## Operator direction
 
@@ -102,7 +117,7 @@ theory-family requirement, and made fixed models optional. The later
 interpreter discussion replaced open-endedness as a separate condition with
 the question of extension under a resource budget.
 
-The current working abstraction idealizes faithful interpretation while
+The 2026-09-14 working abstraction idealized faithful interpretation while
 leaving conceptual development resource-dependent and fallible. The operator's
 question is how far a builder can proceed beyond its available knowledge and
 procedures, not merely whether it can produce a new result. The proposed
@@ -111,14 +126,14 @@ also distinguishes independence from axioms from algorithmic undecidability:
 a builder may investigate new axioms without treating their adoption as a
 proof from its previous assumptions.
 
-The five definition drafts were rewritten in commit `991e5bf7`. They are the
-current candidates, not accepted library definitions. This cleanup gives them
-one reading order and records conflicts still requiring substantive review.
+The five definition drafts were rewritten in commit `991e5bf7`. They remained
+workshop candidates; the main-path implementation below supersedes that
+version of the drafts without promoting them to library definitions.
 
 Later on 2026-09-14, after a parallel session reframed the target as a
 broadly applicable learning methodology in natural-language and symbolic
 form, the operator directed that the workshop goal be revised first. The
-goal now states the conjecture, its two rivals, its empirical measure, and
+goal then stated the conjecture, its two rivals, its empirical measure, and
 the two development routes; the definitions are its vocabulary, and
 reflection and extension are its mechanisms rather than its target.
 
@@ -136,8 +151,9 @@ the reframing and asked for an independent judgement and an ingest list. The
 [ingest plan](./ingest-plan-from-astra-review.md) records both. Its three
 proposals for the conjecture (split sufficiency from comparison, demote the
 doctrine-edit count to a diagnostic, remove the Gödel-machine exclusions and
-closure claims from the definitions) await the operator's decision and are
-not applied. On 2026-09-17, all fifteen listed sources were ingested. The
+closure claims from the definitions) were initially left unapplied. The
+main-path implementation below now uses them as its working framing. On
+2026-09-17, all fifteen listed sources were ingested. The
 operator supplied Hansson's full-text PDF to resolve the final access
 blocker. The ingest plan links all reports. The source inputs for the
 definitions review below are ready.
@@ -170,29 +186,50 @@ conclusions remain under review. The
 terminology change outside this workshop only after those conclusions are
 adopted.
 
+On 2026-09-17 the operator authorized revision and implementation of the
+[main-path plan](./main-path-plan.md). The implementation puts external
+assessment first, keeps internal investigation and active probes within that
+path, and separates outcome evidence from attribution. The working conjecture
+splits sufficiency from comparison, treats doctrine edits as a diagnostic,
+and keeps reflection separate from extension. These drafting choices make
+the proposal reviewable; library adoption remains a later step. The first
+consuming project remains unselected. The
+[implementation review](./implementation-review.md) records the seven review
+outcomes, artifact dispositions, and the unresolved refinement-interface
+closing condition.
+
 ## Read the current definitions in this order
 
-1. [Resource-bounded ideal interpreter](./resource-bounded-ideal-interpreter.md)
-   — faithful interpretation, attempted conceptual development, starting
-   knowledge and procedures, and a computational budget.
-2. [Tentative theory](./tentative-theory.md) — Popper's borrowed term for a
-   theory held open to criticism and revision, using the existing refinement
-   structure. Read the separate [retention-policy draft](./theory-retention-policy.md)
-   for the builder's proposed obligations about support and use.
-3. [Theory builder](./theory-builder.md) — the persistent system, its boundary,
-   seed, internal roles, and the proposed measure of extension.
-4. [Reflective theory builder](./reflective-theory-builder.md) — revision of a
-   causally connected theory of the builder's own machinery.
-5. [Autonomous theory builder](./autonomous-theory-builder.md) — computational
-   performance of every internal role; reliability remains separately assessed.
-6. [Externally tested theory builder](./externally-tested-theory-builder.md)
-   — the special case whose evidence interface supplies a falsifier, an
-   objective, and an outcome level from outside; the automated software house
-   is its instance, and the table there maps each supplied item to the general
-   obligation it reduces.
+1. [Theory builder](./theory-builder.md) — persistent responsibility, the
+   boundary and seed, declared evidence interface, and capability extension.
+2. [Externally tested theory builder](./externally-tested-theory-builder.md)
+   — the main path, scoped external assessment, and its limits. Read the
+   [Commonplace protocol](./commonplace-evidence-protocol.md) and
+   [three constructed episodes](./main-path-episodes.md) for the proposed case.
+3. [Reflective theory builder](./reflective-theory-builder.md) and
+   [autonomous theory builder](./autonomous-theory-builder.md) — separate
+   causal and role conditions; neither alone establishes improvement.
+4. [Tentative theory](./tentative-theory.md) — Popper's borrowed term. The
+   [retention-policy draft](./theory-retention-policy.md) separately owns
+   proposed conditions on support and use.
+5. [General-case obligations](./general-case-obligations.md) — what remains
+   to establish when a particular claim or use lacks external assessment.
+6. [Resource-bounded ideal interpreter](./resource-bounded-ideal-interpreter.md)
+   — a deferred attribution specification with open fidelity, completion,
+   abstention, and realizability questions.
 
 ## Supporting work
 
+- [Main-path plan](./main-path-plan.md) records the authorized sequence and
+  its completion state. The [implementation review](./implementation-review.md)
+  owns the final review dispositions and remaining promotion conditions.
+- [Commonplace evidence protocol](./commonplace-evidence-protocol.md) owns
+  the proposed downstream comparison, records, and unfilled study parameters.
+  [Main-path episodes](./main-path-episodes.md) check the concepts against
+  constructed product repair, machinery repair, and unsupported broader use.
+- [Boundary-case assessment](./boundary-case-assessment.md) separates each
+  deployment's boundary, reported judging, evidence access, and continuing
+  responsibility, with verified source identities and access limits.
 - [Theory retention and use](./theory-retention-policy.md) owns the policy
   questions separated from the borrowed vocabulary, including objective
   preservation and warrant for revision sequences.
@@ -202,10 +239,11 @@ adopted.
 - [Semantic work and the ideal interpreter](./semantic-work-and-the-ideal-interpreter.md)
   owns the semantic-work definition, rationale, mathematical stress tests,
   and unresolved specification questions. The separate interpreter file owns
-  the current interpreter definition.
+  the current deferred specification.
 - [Gödel-machine comparison](./goedel-machine-comparison.md) owns the comparison
   of proof-governed switching with empirical theory-guided revision. Its
-  cautions need reconciling with the stronger exclusions in the definitions.
+  cautions inform the deployment-specific boundary assessment; its argument
+  record is not an independent deployment result.
 - [Theory refinement as an interface](./theory-refinement-interface.md) owns
   the investigation of derive, compare, locate, revise, and evaluate. It
   requires reconciliation with the interpreter's role and established
@@ -230,31 +268,28 @@ or an edit plan to execute unchanged.
 | [Universal theory manipulator](./universal-theory-manipulator.md) | Earlier formal limit case; assess whether anything is needed beyond the Gödel-machine comparison before retiring it. |
 | [Interface note draft](./note-draft-theory-refinement-is-an-interface.md) | Candidate prose for the interface investigation; merge useful material into its eventual output rather than promote both accounts. |
 
-## Next review: reconcile the definitions
+## Definition review dispositions
 
-The next pass should resolve these specific conflicts before expanding the
-formalization or promoting definitions. The completed priority-1
-ingests in the [ingest plan](./ingest-plan-from-astra-review.md) bear
-on the retention-policy, closure, and extension rows. The entries below identify review
-questions; they do not silently adopt replacements for the current drafts.
+The main-path implementation reviewed all seven issues. Details and evidence
+limits are in the [implementation review](./implementation-review.md#seven-review-rows).
+A revised criterion is a design decision, not proof that a builder meets it.
 
-| Issue | What must be resolved |
+| Issue | Current disposition |
 |---|---|
-| Interpreter's scope and guarantees | The interpreter says budget exhaustion is its only failure, but conceptual development may fail and scope is conditional. Specify the guarantee for completed interpretation separately from discovery, and assess completion as well as fidelity so abstention cannot make evaluation vacuous. |
-| Seed and bootstrap claims | Use the [seed-learning ingests](./ingest-plan-from-astra-review.md#additional-seed-learning-sources--2026-09-17) to distinguish the seed as an assessment baseline from a claim that its methodology can acquire what later areas require. Identify supplied observables, operations, representations, and protected machinery. Separate learning task models from changing the learning process; neither alone establishes recursive compounding. |
-| Extension and model weights | The research target fixes weights to currently public models; the general definitions still permit weight learning. The builder's artifact-diff requirement and exclusion of changes to existing slots remain under review. Define extension through demonstrated capability under a stated budget; settle how artifacts and probes establish the change under each scope. |
-| Tentative status and retention policy | The vocabulary is now separate from the [policy draft](./theory-retention-policy.md). Resolve thresholds for candidate retention and consumption, preserve the [warrant note's](../../notes/theory-warrant-tracked-at-the-finest-granularity-evidence-licenses.md) allowance for joint support, and establish what warrants revision sequences under adaptive evaluation. Distinguish actual warrant from an evaluator's judgment of it. Neither universally untested scope nor automatic chaining defines a tentative theory. |
-| Objectives and closure | The autonomy draft infers that removing people prevents licensed objective change, while the comparison leaves this disputed. The [objective note](../../notes/revising-an-improvement-objective-is-licensed-from-outside-it.md) distinguishes an outside comparison level from the system boundary and reports no terminal-objective revision in Commonplace. Establish what follows before using seed closure as a definition premise. |
-| Evidence interface | The special case makes the interface a parameter every builder has. Decide whether the general [theory-builder](./theory-builder.md) definition should require an evaluation to declare the interface, alongside the boundary and the seed, so that the closure question and the interpreter's scope are read relative to it. The conjecture's per-area count already needs a per-area outcome measure, which is the interface. |
-| Gödel-machine boundary cases | Reconcile the claim that its axioms are retained by proof and never revised against evidence with the comparison's account of observations and licensed axiom changes. Separate initial assumptions, proof-governed switching, and empirical adequacy; do not make an exclusion depend on unsupported impossibility claims. |
+| Interpreter's scope and guarantees | Deferred from the outcome comparison; scoped specification revised, fidelity and completion questions open. |
+| Seed and bootstrap claims | Open empirical question; frozen-seed comparison specified, no run performed. |
+| Extension and model weights | Capability criterion revised with budgets, seed comparison, retention, and later consumption; demonstrations pending. Fixed weights constrain this research target only. |
+| Tentative status and retention policy | Vocabulary separation complete; support thresholds, joint support, and adaptive revision-sequence questions remain in the policy draft. |
+| Objectives and closure | Autonomy no longer determines objective governance. Seed closure is not a premise; objective preservation and proxy validity remain obligations in the main path. |
+| Evidence interface | Declaration and proposed protocol implemented; first consuming-project observation pending. |
+| Gödel-machine boundary cases | Categorical exclusions removed; source-specific assessment recorded, deployed qualification remains open. |
 
-After that review, work through one bounded positive case and one failure
-case using the semantic-work checks. Specify the starting repertoire, task,
-budget, completed result, proposed extension, and grounds for retaining it.
-Use existing work on belief revision, belief bases, truth maintenance, and
-formal learning to check the proposed concepts before claiming novelty.
-Source checks must distinguish convergence guarantees from current warrant.
-The experiment workshop below continues to own comparative experiment design.
+The [three episodes](./main-path-episodes.md) check the distinctions against
+specified repertoires, tasks, budgets, feedback, and candidate results. They
+are constructed cases. The refinement-interface investigation remains open;
+its task-level descriptions must be separated from implementation guarantees
+before promotion. The experiment workshop below continues to own its
+component-comparison design.
 
 ## What closes the workshop
 
@@ -268,12 +303,13 @@ The experiment workshop below continues to own comparative experiment design.
    by accepting the term.
 2. The research-program articles are given dispositions under the new ordering:
    the learning-methodology conjecture is the head of the program, the theory
-   builder is the system that executes it, and software-house capability is a
-   side conjecture.
+   builder is the system that executes it, and the software house supplies
+   the chosen externally assessed case. Whether other broad builders must
+   become software houses remains a side conjecture.
 3. The theory-refinement interface material is reconciled with the established
    theory-refinement literature without claiming the generic refinement loop,
    fallibility, or revision search as new.
-4. Every artifact in the inventory below has a disposition: reframe, keep, or
+4. Every artifact in the linked inventory has a disposition: reframe, keep, or
    decline. Reframes are executed in their own commits, not in this workshop.
 5. After adoption, execute the [KB terminology plan](./tentative-theory-kb-adoption-plan.md)
    and record its changed files and justified exceptions in the migration
@@ -281,25 +317,16 @@ The experiment workshop below continues to own comparative experiment design.
 
 ## Inventory of artifacts the reorder touches
 
-Dispositions are recorded here as they are decided. Earlier proposals supply
-possible changes, not settled instructions for the library.
+The [implementation review's inventory](./implementation-review.md#inventory-dispositions)
+records dispositions for all fourteen artifacts. It keeps the software-house
+articles as the chosen case and bootstrap route, preserves the general
+conditional side conjecture, and bounds the later reframes to actual
+whole-producer terminology. The source check resolves the old Gödel snapshot
+identity warning; deployment classification is a separate open question.
 
-| Artifact | Current head | Disposition |
-|---|---|---|
-| `kb/articles/automated-software-houses-with-fixed-llms.md` | software house first | open; candidate: keep as the special case, an autonomous externally tested theory builder, with the four witness conditions as its outcome-level evaluation |
-| `kb/articles/bootstrapping-the-first-automated-software-house.md` | software house first | open; candidate: keep as the bootstrap of the special case |
-| `kb/articles/the-software-house-as-the-unit-of-training.md` | house is the trained unit; theory refinement is the mechanism | open; learning-paradigm framing should move to reflective theory builder; its "assume an automated one exists" premise is the special case's interface, not a hidden assumption |
-| `kb/articles/nearest-existing-constructions-to-a-witness-house.md` | witness-house lens | open |
-| `kb/notes/an-open-domain-theory-builder-becomes-a-software-house-when-new-domains-require-production-machinery-changes.md` | software-house consequence | keep as conditional side conjecture; wording still needs reconciliation |
-| `kb/notes/definitions/theory-refinement.md` | machinery departure, with remaining family wording | reframed 2026-09-09; second pass pending to align family wording with the accepted extension definition |
-| `kb/notes/definitions/software-house.md` | complete persistent producer | keep; no longer the head of the research program |
-| `kb/notes/definitions/codification.md` | the natural-language to symbolic crossing | keep unchanged |
-| `kb/notes/universal-software-factory-needs-a-declared-universality-axis.md` | four universality axes | keep; supplies the rule that *universal* needs a declared axis |
-| `kb/notes/a-fixed-model-house-must-write-the-procedures-for-each-new-theory.md` | house needs procedures per theory | open; useful machinery-gap analysis, but not every new family must require new code |
-| `kb/notes/open-ended-theory-learning-and-factory-learning-close-the-same.md` | carries a factory-to-house TODO | open |
-| `kb/notes/broad-software-demands-create-pressure-for-agentic-factory-development.md` | carries a factory-to-house TODO | open |
-| `kb/sources/goedel-machines-schmidhuber.ingest.md` | pinned to a `pdf-read` snapshot whose hash matches no existing file; page-based citations | keep for the comparison; verify the retained snapshot and repair the ingest references before promotion |
-| `kb/notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md` | reads the machine as a change loop; carries "snapshot required" markers | keep; resolve source markers and assess which formal limits transfer to the proposed builder |
+These dispositions do not by themselves execute library reframes. The
+[adoption plan](./tentative-theory-kb-adoption-plan.md) controls the later
+terminology migration, including source wording and provenance exceptions.
 
 ## Evaluation boundary
 
@@ -314,7 +341,9 @@ not those ingredients individually. The 2026-09-14 semantic-work document
 also records direct sources for the mathematical and logical stress tests.
 The retained evidence now also includes the fifteen completed ingests and
 the two seed-learning ingests linked in the [source record](./ingest-plan-from-astra-review.md).
-Their implications for the new definitions still require the review above.
+The main-path review uses these sources with the limits recorded in the
+[boundary assessment](./boundary-case-assessment.md). Further source checks
+remain necessary for the internal refinement-interface investigation.
 The tentative-theory entry also uses the Popper 1966 essay's retained schema
 and the full-book ingest of *Conjectures and Refutations*. Retained passages
 in the latter support provisional acceptance, continuing tentativeness, and
@@ -336,6 +365,7 @@ the limits of fault localization.
   change and must not be mixed into clarification commits.
 
 Write scope while open: this directory only. Library edits happen in separate
-commits once a disposition is recorded above. The operator's 2026-09-17
+commits after the conclusions and destinations are adopted, using the
+recorded dispositions. The operator's 2026-09-17
 grounding request additionally authorizes the bounded quote append in the
 Popper ingest; it does not start the wider terminology migration.

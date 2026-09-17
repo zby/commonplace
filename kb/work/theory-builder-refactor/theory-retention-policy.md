@@ -4,7 +4,7 @@
 > vocabulary after the operator selected [tentative theory](./tentative-theory.md).
 > This preserves the policy questions raised on 2026-09-14 without making
 > their answers conditions for using Popper's term. The relevant literature
-> is now ingested; the [definitions review](./README.md#next-review-reconcile-the-definitions)
+> is now ingested; the [definitions review](./README.md#definition-review-dispositions)
 > still has to reconcile these proposals before promotion.
 
 The operator's earlier requirement was that the builder should not rely on

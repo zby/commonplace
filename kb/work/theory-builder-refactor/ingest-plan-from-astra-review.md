@@ -7,6 +7,8 @@
 > snapshot or ingest in `kb/sources/`. The descriptions below preserve that
 > review's unverified source claims as questions to check, not findings.
 > Judgements are the session's own. The table now links the completed ingests.
+> The 2026-09-17 [main-path review](./implementation-review.md) records which
+> proposals the current drafts apply and which questions remain open.
 
 ## Verdict
 
@@ -28,7 +30,7 @@ workshop, which raises confidence in both:
 
 - Its request to remove the Gödel-machine exclusions and the closure claims
   from the definitions matches the [comparison file's](./goedel-machine-comparison.md#consequence-for-the-definitions)
-  own caution and the [special case's](./externally-tested-theory-builder.md#what-the-general-case-must-supply-for-itself)
+  own caution and the [special case's](./externally-tested-theory-builder.md#what-remains-for-the-general-case)
   finding that the closure worry is relative to the evidence interface.
 - Its "connect theory revision to inquiry and observed consequences before
   adding more general definitions" is the evidence-interface point from the
@@ -39,7 +41,7 @@ workshop, which raises confidence in both:
 - Its diagnosis that the earlier theory-status draft mixed revisability,
   partial support, consumption permission, evaluator reliability, and
   objective preservation matches the README's
-  [retention-policy review row](./README.md#next-review-reconcile-the-definitions).
+  [retention-policy review row](./README.md#definition-review-dispositions).
   The 2026-09-17 vocabulary change separates the borrowed term from the
   [policy draft](./theory-retention-policy.md); substantive policy review remains.
 

@@ -9,9 +9,11 @@
 > an LLM can extend computations absorbed during training; the operator asked
 > to record the resulting resource-bounded ideal-interpreter definition here.
 > This file owns the semantic-work definition, rationale, and stress tests.
-> The current interpreter definition is in
+> The current deferred interpreter specification is in
 > [resource-bounded ideal interpreter](./resource-bounded-ideal-interpreter.md).
-> Neither is an accepted library definition.
+> The 2026-09-17 [main-path implementation](./main-path-plan.md) no longer
+> makes it a prerequisite of outcome comparison. This file retains the
+> earlier argument; neither account is an accepted library definition.
 
 ## Direction from the discussion
 
@@ -186,10 +188,11 @@ no shortcut over the missing work.
 
 The resulting research question is: under a stated resource budget, how far
 can a builder extend its starting repertoire, and can retaining useful
-extensions make subsequent advances easier? Interpretation is idealized;
-discovery remains resource-dependent and fallible. The builder definitions
-now use this framing; their remaining conflicts are listed in the
-[workshop review plan](./README.md#next-review-reconcile-the-definitions).
+extensions make subsequent advances easier? In this earlier framing,
+interpretation is idealized while discovery remains resource-dependent and
+fallible. The current builder definitions defer the idealization from outcome
+comparison; the [review dispositions](./README.md#definition-review-dispositions)
+record the remaining attribution questions.
 
 ## Paradoxes and overreach to avoid
 
