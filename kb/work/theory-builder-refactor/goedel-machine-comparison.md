@@ -7,7 +7,7 @@
 
 ## The distinction
 
-The proposed builder develops and revises explicit, fallible theories of
+The proposed builder develops and revises explicit, tentative theories of
 external subjects and of its own theory-building machinery. Those theories
 guide changes whose justification can be empirical and whose continued use
 remains open to correction by later evidence. A machinery change need not
@@ -55,12 +55,12 @@ theory-building competence and machinery acquisition compared with empirical
 search that does not retain and use such theories. The
 [experiment workshop](../explanatory-theories-deployment-time-learning/README.md)
 owns the comparison designs. Neither empirical self-modification nor explicit
-fallible theories alone are claimed as new here, and this comparison does not
+tentative theories alone are claimed as new here, and this comparison does not
 establish that their proposed combination is absent from prior systems.
 
 ## Consequence for the definitions
 
-The current drafts define the builder using fallible theories, keep reflection
+The current drafts define the builder using tentative theories, keep reflection
 and autonomy as its two conditions, and assess machinery extension under a
 budget. The interpreter now has a
 [separate definition](./resource-bounded-ideal-interpreter.md). This comparison

@@ -30,6 +30,12 @@ Popper argues that knowledge grows through tentative solutions to problems, crit
 - **Source extract (verbatim):** On the other hand, it should be said that the holistic argument goes much too far. It is possible in quite a few cases to find which hypothesis is responsible for the refutation; or in other words, which part, or group of hypotheses, was necessary for the derivation of the refuted prediction.
   - **Source location:** Chapter 10, subsection 4, section XVI, printed p. 239; paragraph beginning 'This shows that the holistic view of tests'.
 
+- **Source extract (verbatim):** From the point of view here developed all laws, all theories, remain essentially tentative, or conjectural, or hypothetical, even when we feel unable to doubt them any longer. Before a theory has been refuted we can never know in what way it may have to be modified.
+  - **Source location:** Chapter 1, 'Science: Conjectures and Refutations', printed p. 51; paragraph beginning 'From the point of view here developed'.
+
+- **Source extract (verbatim):** Faced with a certain problem, the scientist offers, tentatively, some sort of solution--a theory. This theory science accepts only provisionally, if at all; and it is most characteristic of the scientific method that scientists will spare no pains to criticize and test the theory in question.
+  - **Source location:** Chapter 15, 'What is Dialectic?', section 1, 'Dialectic Explained', printed p. 313; paragraph beginning 'If the method of trial and error is developed'.
+
 ## Connections Found
 
 The source supplies a philosophical anchor for [narrowing bought to survive review is paid for in content](../notes/narrowing-bought-to-survive-review-is-paid-for-in-content.md). Chapter 1's numbered conditions connect informative theories to forbidden outcomes and identify rescue by reinterpretation as a loss of scientific standing. Chapter 10 adds a stronger demand: a successor theory should have testable consequences beyond the facts it was constructed to explain. This supports the note's concern about empty repair; it does not establish the note's account of review incentives or its local witness.

@@ -1,7 +1,7 @@
 # Theory builder
 
 > **Status:** Workshop definition, 2026-09-10; revised 2026-09-14 in a later
-> session to place the interpreter and fallible theory under the builder,
+> session to place the interpreter and tentative theory under the builder,
 > replace the open-ended condition with extension as the measured quantity,
 > and add the Gödel machine as a boundary case. The boundary rule,
 > persistence clause, and evaluation clause are copied from the
@@ -9,7 +9,7 @@
 > because they are not specific to software.
 
 A **theory builder** is the complete persistent system responsible for
-developing and revising [fallible theories](./fallible-theory.md) about
+developing and revising [tentative theories](./tentative-theory.md) about
 subjects it is asked to investigate. It operates in response to questions,
 cases, evidence, requirements, and the consequences that arise when its
 theories are applied. It is not necessarily a program, a model, or a
@@ -126,10 +126,11 @@ its seed, and does retaining useful extensions make later advances easier?
 The comparison basis is a builder with people in its internal roles under the
 same demands and resources. Two limits bound the answer. The first is cost:
 the search for an extension may not finish within budget. The second is
-warrant: an extension is retained under the [fallible-theory](./fallible-theory.md)
-clauses, so it must be warranted for its consumption path by evaluators
-judged against an unchanged objective. Whether that second limit is a closure
-over the seed objective is unsettled; see the fallible-theory definition.
+warrant: the builder must state what support licenses an extension's
+consumption path. The [retention-policy draft](./theory-retention-policy.md)
+proposes checks relative to a declared objective and records the unresolved
+claim that warranted extensions are closed under the seed objective.
+Those policy requirements do not follow from calling a theory tentative.
 
 Extension is independent of who performs the roles and of whether machinery
 changes are guided by a theory of the builder itself. The two conditions
@@ -153,13 +154,14 @@ supply those.
 - **The Gödel machine** is persistent, holds a self-representation, rewrites
   itself computationally, and can rewrite any part of its code including the
   searcher. It would meet both conditions and extend without limit in
-  principle. It is excluded by the theory clause: its axioms are retained by
-  proof and never revised against evidence, so they are not fallible
-  theories. It is the contrast case, the builder with everything but
-  fallibility, and it shows that reflection, autonomy, and in-principle
-  extension are prior art. Its two known limits, proof not found within
-  resources and rewrite not licensable under the axioms, are the two limits
-  on extension above with fallible checks in place of proofs.
+  principle. The earlier exclusion by the theory clause remains under
+  [review](./README.md#next-review-reconcile-the-definitions): proof-governed
+  switching does not by itself establish that empirical premises are held
+  beyond criticism. The borrowed term *tentative theory* does not settle
+  that classification. The machine establishes that reflection, autonomy,
+  and in-principle extension are prior art; the
+  [comparison](./goedel-machine-comparison.md) owns the distinction between
+  proof-governed switching and empirical grounds for change.
 - **Commonplace today**, with the operator inside the boundary, is a theory
   builder. It is reflective and not autonomous; the condition definitions
   assess this. Its extension record is the ADR set: the review system, the

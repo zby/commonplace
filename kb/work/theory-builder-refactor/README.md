@@ -48,7 +48,7 @@ evidence counts for it; one a person wrote counts against it, even if the
 person is inside the boundary.
 
 The system that executes the methodology is a [theory builder](./theory-builder.md)
-of [fallible theories](./fallible-theory.md), whose interpretive roles are
+of [tentative theories](./tentative-theory.md), whose interpretive roles are
 specified against a
 [resource-bounded ideal interpreter](./resource-bounded-ideal-interpreter.md).
 Reflection and machinery extension are the mechanisms by which the
@@ -76,7 +76,7 @@ keeps needing substantial human design.
 Commonplace today is the starting system: human-inclusive, reflective, not
 autonomous. Its current doctrine, this repository's instructions, collection
 contracts, type specs, review system, and skills, is the seed methodology.
-Automatic theory refinement, fallible theories, and, in the Gödel machine,
+Automatic theory refinement, tentative theories, and, in the Gödel machine,
 reflection with autonomy and in-principle extension are prior art; the
 conjecture is about the readable methodology, warranted and broad.
 
@@ -89,9 +89,9 @@ research-program articles work in a special case, the
 [externally tested theory builder](./externally-tested-theory-builder.md),
 whose evidence interface supplies a falsifier, an objective, and an outcome
 level from outside the boundary. The automated software house is its paradigm
-instance. Each of those three supplied items is what one general definition
-must otherwise construct, so the special case is where the articles' relative
-simplicity comes from, not an assumption they hide.
+instance. Each supplied item reduces what the general case must specify
+internally, including its retention policy and interpretation standard.
+That is where the articles' relative simplicity comes from.
 
 ## Operator direction
 
@@ -125,8 +125,8 @@ reflection and extension are its mechanisms rather than its target.
 On 2026-09-15 the operator asked why the workshop grew more complicated than
 the articles. The finding: the articles' software house has an evidence
 interface that supplies the falsifier, the objective, and an independent
-outcome level, and the general definitions (fallible theory, the objective
-clause, the ideal interpreter) exist to replace each of those. The operator
+outcome level. The corresponding general obligations now sit in the
+retention-policy draft, its objective clause, and the ideal interpreter. The operator
 directed that the general case be kept, because it shows the difficulties,
 and a special case added for the simplified situation. That special case is
 the externally tested theory builder.
@@ -158,14 +158,27 @@ methodology: training changes instructions, knowledge, tools, and
 orchestration in natural-language and symbolic artifacts. The fixed-weight
 constraint excludes model-weight updates, not training of the builder.
 
+The operator then selected **tentative theory**, Popper's established term,
+for use throughout this workshop. The [vocabulary entry](./tentative-theory.md)
+uses the retained schema passage and the newly ingested full
+[*Conjectures and Refutations*](../../sources/popper-conjectures-and-refutations.ingest.md#quotes).
+The [retention-policy draft](./theory-retention-policy.md) now owns the
+proposed conditions on reliance, objective preservation, and revision
+sequences; these are not clauses defining tentativeness. The broader
+conclusions remain under review. The
+[KB adoption plan](./tentative-theory-kb-adoption-plan.md) schedules the
+terminology change outside this workshop only after those conclusions are
+adopted.
+
 ## Read the current definitions in this order
 
 1. [Resource-bounded ideal interpreter](./resource-bounded-ideal-interpreter.md)
    — faithful interpretation, attempted conceptual development, starting
    knowledge and procedures, and a computational budget.
-2. [Fallible theory](./fallible-theory.md) — the current candidate account of
-   warrant, retention, and revision. Its additional policy clauses require
-   review before they can define fallibility generally.
+2. [Tentative theory](./tentative-theory.md) — Popper's borrowed term for a
+   theory held open to criticism and revision, using the existing refinement
+   structure. Read the separate [retention-policy draft](./theory-retention-policy.md)
+   for the builder's proposed obligations about support and use.
 3. [Theory builder](./theory-builder.md) — the persistent system, its boundary,
    seed, internal roles, and the proposed measure of extension.
 4. [Reflective theory builder](./reflective-theory-builder.md) — revision of a
@@ -176,10 +189,16 @@ constraint excludes model-weight updates, not training of the builder.
    — the special case whose evidence interface supplies a falsifier, an
    objective, and an outcome level from outside; the automated software house
    is its instance, and the table there maps each supplied item to the general
-   definition it makes unnecessary.
+   obligation it reduces.
 
 ## Supporting work
 
+- [Theory retention and use](./theory-retention-policy.md) owns the policy
+  questions separated from the borrowed vocabulary, including objective
+  preservation and warrant for revision sequences.
+- [KB adoption plan](./tentative-theory-kb-adoption-plan.md) owns the later
+  terminology migration, its adoption trigger, candidate inventory, source
+  fidelity exceptions, and validation requirements.
 - [Semantic work and the ideal interpreter](./semantic-work-and-the-ideal-interpreter.md)
   owns the semantic-work definition, rationale, mathematical stress tests,
   and unresolved specification questions. The separate interpreter file owns
@@ -216,7 +235,7 @@ or an edit plan to execute unchanged.
 The next pass should resolve these specific conflicts before expanding the
 formalization or promoting definitions. The completed priority-1
 ingests in the [ingest plan](./ingest-plan-from-astra-review.md) bear
-on the fallibility, closure, and extension rows. The entries below identify review
+on the retention-policy, closure, and extension rows. The entries below identify review
 questions; they do not silently adopt replacements for the current drafts.
 
 | Issue | What must be resolved |
@@ -224,7 +243,7 @@ questions; they do not silently adopt replacements for the current drafts.
 | Interpreter's scope and guarantees | The interpreter says budget exhaustion is its only failure, but conceptual development may fail and scope is conditional. Specify the guarantee for completed interpretation separately from discovery, and assess completion as well as fidelity so abstention cannot make evaluation vacuous. |
 | Seed and bootstrap claims | Use the [seed-learning ingests](./ingest-plan-from-astra-review.md#additional-seed-learning-sources--2026-09-17) to distinguish the seed as an assessment baseline from a claim that its methodology can acquire what later areas require. Identify supplied observables, operations, representations, and protected machinery. Separate learning task models from changing the learning process; neither alone establishes recursive compounding. |
 | Extension and model weights | The research target fixes weights to currently public models; the general definitions still permit weight learning. The builder's artifact-diff requirement and exclusion of changes to existing slots remain under review. Define extension through demonstrated capability under a stated budget; settle how artifacts and probes establish the change under each scope. |
-| Fallibility and warrant policy | Distinguish the property of being fallible from the proposed policy for retaining and consuming claims. The cited [warrant note](../../notes/theory-warrant-tracked-at-the-finest-granularity-evidence-licenses.md) permits joint model or conjunction support. Check the draft's per-claim-only rule, always-untested-scope claim, and assertion that warranted revisions automatically chain. Distinguish actual warrant from an evaluator's judgment of it. |
+| Tentative status and retention policy | The vocabulary is now separate from the [policy draft](./theory-retention-policy.md). Resolve thresholds for candidate retention and consumption, preserve the [warrant note's](../../notes/theory-warrant-tracked-at-the-finest-granularity-evidence-licenses.md) allowance for joint support, and establish what warrants revision sequences under adaptive evaluation. Distinguish actual warrant from an evaluator's judgment of it. Neither universally untested scope nor automatic chaining defines a tentative theory. |
 | Objectives and closure | The autonomy draft infers that removing people prevents licensed objective change, while the comparison leaves this disputed. The [objective note](../../notes/revising-an-improvement-objective-is-licensed-from-outside-it.md) distinguishes an outside comparison level from the system boundary and reports no terminal-objective revision in Commonplace. Establish what follows before using seed closure as a definition premise. |
 | Evidence interface | The special case makes the interface a parameter every builder has. Decide whether the general [theory-builder](./theory-builder.md) definition should require an evaluation to declare the interface, alongside the boundary and the seed, so that the closure question and the interpreter's scope are read relative to it. The conjecture's per-area count already needs a per-area outcome measure, which is the interface. |
 | Gödel-machine boundary cases | Reconcile the claim that its axioms are retained by proof and never revised against evidence with the comparison's account of observations and licensed axiom changes. Separate initial assumptions, proof-governed switching, and empirical adequacy; do not make an exclusion depend on unsupported impossibility claims. |
@@ -240,11 +259,13 @@ The experiment workshop below continues to own comparative experiment design.
 ## What closes the workshop
 
 1. The definitions of theory builder, reflective theory builder, autonomous
-   theory builder, fallible theory, resource-bounded ideal interpreter, and
-   externally tested theory builder are accepted into
-   `kb/notes/definitions/`, or the operator declines them with a recorded
-   reason. Fallible theory needs the AGM and formal-learning ingests first,
-   under closing condition 3.
+   theory builder, resource-bounded ideal interpreter, and externally tested
+   theory builder, together with the borrowed tentative-theory vocabulary,
+   receive library destinations or are declined with a recorded reason.
+   The vocabulary may be a short section of theory refinement rather than a
+   separate definition. Retention-policy obligations receive explicit
+   dispositions informed by the completed ingests; none are promoted merely
+   by accepting the term.
 2. The research-program articles are given dispositions under the new ordering:
    the learning-methodology conjecture is the head of the program, the theory
    builder is the system that executes it, and software-house capability is a
@@ -254,6 +275,9 @@ The experiment workshop below continues to own comparative experiment design.
    fallibility, or revision search as new.
 4. Every artifact in the inventory below has a disposition: reframe, keep, or
    decline. Reframes are executed in their own commits, not in this workshop.
+5. After adoption, execute the [KB terminology plan](./tentative-theory-kb-adoption-plan.md)
+   and record its changed files and justified exceptions in the migration
+   commits before closing this workshop.
 
 ## Inventory of artifacts the reorder touches
 
@@ -283,7 +307,7 @@ Evidence is the local KB at commit `c4ef2e2e` plus the two classical
 theory-refinement ingests (EITHER, FORTE), and from 2026-09-09 the full-text
 snapshot of the Gödel machine paper (arXiv cs/0309048 v5) under
 `kb/sources/.snapshots/`. The 2026-09-10 reframing also uses the literature
-check recorded in the operator session: fallible theories, generic theory
+check recorded in the operator session: tentative theories, generic theory
 refinement, and search over candidate revisions are prior art. The workshop
 therefore treats the autonomous reflective composition as the research target,
 not those ingredients individually. The 2026-09-14 semantic-work document
@@ -291,6 +315,10 @@ also records direct sources for the mathematical and logical stress tests.
 The retained evidence now also includes the fifteen completed ingests and
 the two seed-learning ingests linked in the [source record](./ingest-plan-from-astra-review.md).
 Their implications for the new definitions still require the review above.
+The tentative-theory entry also uses the Popper 1966 essay's retained schema
+and the full-book ingest of *Conjectures and Refutations*. Retained passages
+in the latter support provisional acceptance, continuing tentativeness, and
+the limits of fault localization.
 
 ## Coordination
 
@@ -308,4 +336,6 @@ Their implications for the new definitions still require the review above.
   change and must not be mixed into clarification commits.
 
 Write scope while open: this directory only. Library edits happen in separate
-commits once a disposition is recorded above.
+commits once a disposition is recorded above. The operator's 2026-09-17
+grounding request additionally authorizes the bounded quote append in the
+Popper ingest; it does not start the wider terminology migration.

@@ -1,7 +1,7 @@
 # Reflective theory builder
 
 > **Status:** Workshop definition, 2026-09-10; revised 2026-09-14 in a later
-> session to make the self-theory a fallible theory read by the interpreter,
+> session to make the self-theory a tentative theory read by the interpreter,
 > separate reflection from extension, and add the Gödel machine as a
 > boundary case.
 
@@ -17,7 +17,7 @@ the machinery update the theory, and revisions of the theory can change the
 machinery. A builder that holds a description of its machinery and consults it
 without that two-way connection is not reflective in this sense.
 
-The self-theory is a [fallible theory](./fallible-theory.md). The
+The self-theory is a [tentative theory](./tentative-theory.md). The
 [interpreter](./resource-bounded-ideal-interpreter.md) reads its claims about
 the machinery faithfully, including claims about the interpreter itself, and
 those claims are decided by evidence, not by being read. A self-theory's own
@@ -45,10 +45,11 @@ extended with no retained account of why is extended and not reflective.
 - **FORTE** is not reflective: its theory is external and its machinery is
   not represented in any theory it refines.
 - **The Gödel machine** is a reflective system, since its axioms describe its
-  own software and its rewrites are causally connected to them, but it is not
-  a reflective theory builder. Its self-representation is a premise of every
-  rewrite and a candidate of none: it is never revised against evidence, so
-  there is no reflective theory refinement.
+  own software and its rewrites are causally connected to them. Whether its
+  proof-governed changes constitute reflective theory refinement remains
+  under [review](./README.md#next-review-reconcile-the-definitions). Calling
+  the relevant theories tentative does not resolve the relation between
+  revising empirical premises and proving that a switch is beneficial.
 - **Commonplace today**, with the operator inside the boundary, is reflective:
   the KB's methodology notes, type specs, and ADRs are a theory of its own
   theory-building machinery, and revisions of them change the validators,

@@ -51,23 +51,25 @@ its consequences and acceptances arrive from outside.
 
 ## What the general case must supply for itself
 
-Each of the three supplied items corresponds to one of the general
-definitions this workshop had to add. Removing the item is what makes the
-definition necessary.
+Each supplied item reduces what the builder must specify internally.
+Removing it exposes an obligation for the general case. These obligations
+do not define what makes a theory tentative.
 
-| Supplied by the interface | Definition the general case needs instead | What the definition costs |
+| Supplied by the interface | Obligation in the general case | What remains to be specified |
 |---|---|---|
-| External falsifier | [Fallible theory](./fallible-theory.md): warrant per claim and scope, a consumption threshold, a frontier of claims below it. The builder must say when a claim counts as contradicted and how much support retention needs. | The warrant-policy clauses now under review, and the literature checks closing condition 3 requires. |
-| External objective | The [objective clause](./fallible-theory.md#the-objective-clause) and the seed-closure question. With no acceptance arriving from outside, the objective is whatever the seed evaluators judge, and no change to it is licensed. | The closure claim, contested in the [Gödel-machine comparison](./goedel-machine-comparison.md), and the autonomy draft's objective section. |
+| External falsifier | The [retention-policy draft](./theory-retention-policy.md): the builder must specify contradiction checks and what support licenses each use. Support can attach to a claim, conjunction, or model and its scope. | Consumption thresholds, dependency handling, and evaluation of revision sequences remain policy questions. |
+| External objective | The [objective clause](./theory-retention-policy.md#the-objective-clause) and the seed-closure question. With no acceptance arriving from outside, the builder must identify what supplies the comparison level for an improvement claim. | The closure claim, contested in the [Gödel-machine comparison](./goedel-machine-comparison.md), and the autonomy draft's objective section. |
 | Independent outcome level | The [resource-bounded ideal interpreter](./resource-bounded-ideal-interpreter.md): a standard for separating an error in interpreting a theory from an error in the theory, since no outcome absorbs both. | The interpreter's scope and guarantee questions, and the semantic-work record's paradox tests. |
 
-In the special case the same questions exist but do not need answering for
-the conjecture. An interpretation error and a theory error both show up as a
+In the special case an outcome-level comparison can assess performance
+without first settling every internal retention-policy question. An
+interpretation error and a theory error both show up as a
 product that fails, and the comparative standard, a human-staffed builder
 under the same demands, scores the failure without attributing it. Evaluator
 warrant is still what predicts performance beyond the tested horizon, which
 is why the training article's four situations of second-order learning
-remain in scope; but the witness does not depend on it.
+remain in scope. An outcome signal alone does not license retaining or
+codifying every internal theory that contributed to it.
 
 The closure worry is the clearest example. The
 [autonomy draft](./autonomous-theory-builder.md#the-objective) infers that
@@ -80,7 +82,7 @@ the interface is stated; they looked contradictory because it was not.
 
 ## What does not simplify
 
-The special case removes definitions, not work. The builder still performs
+The special case supplies external checks; the builder still performs
 every internal role: interpreting what a theory implies, choosing which part
 to blame, producing and selecting revisions, and extending the machinery.
 Credit assignment along the internal path stays hard. A failure may lie in
@@ -132,8 +134,8 @@ where the interface is complete, not that every area has such an interface.
   deletion shows the interface's known weakness, an objective proxied by a
   score the builder can reach without the outcome.
 - **The Gödel machine** has no external objective. Its utility function is
-  an internal formalization, and observations enter through it. It is not a
-  theory builder by the theory clause, and it would not be externally tested
-  if it were.
+  an internal formalization, and observations enter through it. Its
+  classification as a theory builder remains under review; this account of
+  its interface places it outside the externally tested case regardless.
 - **FORTE** has an external falsifier, the supplied examples, and no
   persistence. It is not a theory builder.

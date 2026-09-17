@@ -38,7 +38,7 @@ an implementation must establish its actual costs and capabilities.
 The [warrant-bounded proposal](./proposal-warrant-bounded-open-endedness.md)
 introduced the ideal interpreter in section 6. This document brings it to the
 front of the investigation. The [current definitions](./theory-builder.md)
-now use the interpreter and fallible theory, with reflection and autonomy as
+now use the interpreter and tentative theory, with reflection and autonomy as
 the two conditions and extension as a measured quantity. The seed-objective
 closure claim remains a separate
 unsettled argument, not a premise needed to define semantic work.
@@ -330,8 +330,8 @@ semantic assumption, not a proposal to restore open-endedness as another
 independent condition.
 
 The resulting definition order would be semantic work, the ideal component,
-fallible theory, theory builder, reflection and autonomy, then implementation
-and evaluation. A theory remains fallible under ideal interpretation because
+tentative theory, theory builder, reflection and autonomy, then implementation
+and evaluation. A theory remains tentative under ideal interpretation because
 its empirical commitments can be wrong. A self-theory can guide machinery
 revision without its own acceptance making that revision warranted.
 

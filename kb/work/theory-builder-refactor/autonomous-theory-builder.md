@@ -38,11 +38,14 @@ licensed, since
 [revising an improvement objective is licensed from outside it or is not improvement](../../notes/revising-an-improvement-objective-is-licensed-from-outside-it.md).
 The objective may still change unlicensed, including through a conceptual
 revision of its terms, which the
-[objective clause](./fallible-theory.md#the-objective-clause) of fallible
-theory treats as an objective change. Warranted extension is then bounded by
+[objective clause](./theory-retention-policy.md#the-objective-clause) of the
+policy draft treats as an objective change. Warranted extension is then bounded by
 what evaluators judged against the seed objective can warrant. Whether that
 bound is a closure over the seed objective and admitted evidence is
-unsettled; the fallible-theory definition records the question. Commonplace
+unsettled; the policy draft records the question. This paragraph's inference
+from autonomy to an absence of licensed objective change also remains under
+[review](./README.md#next-review-reconcile-the-definitions); it is not part of
+the meaning of tentative theory. Commonplace
 today escapes the question only because the operator licenses objective
 changes from outside the boundary.
 
@@ -52,8 +55,9 @@ changes from outside the boundary.
   autonomous theory builder because it does not meet the base definition's
   persistence condition.
 - **The Gödel machine** is autonomous: every role it performs is
-  computational, and its autonomy is warranted within its proof surface. It
-  is not a theory builder, by the base definition's theory clause.
+  computational, and its autonomy is warranted within its proof surface. Its
+  classification as a theory builder remains under review in the base
+  definition; the vocabulary change does not decide it.
 - **Commonplace today** is not autonomous: the operator performs diagnosis,
   admission, and successor selection for library changes, and these are
   internal roles under the role rule.

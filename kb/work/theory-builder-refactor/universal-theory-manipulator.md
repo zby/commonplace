@@ -93,7 +93,7 @@ effectiveness it cannot prove"
 So the manipulator is a limit, not a destination. Codifying a part of a theory
 moves it toward the manipulator, where it becomes something assumed true and
 checked rather than something refined. A builder that reached the limit would
-keep derivation and lose refinement. Substantive, fallible theories, the ones
+keep derivation and lose refinement. Substantive, tentative theories, the ones
 that can fit or fail to fit the world, live on the partially codified side,
 where a contradicting case is a repair signal.
 

@@ -115,5 +115,5 @@ Two cases from the review of that record are added. Reflexive fidelity, the
 interpreter reading claims about its own readings, is covered by the
 identify-without-deciding clause. Objective drift, a conceptual revision that
 changes what the objective commits to while its text stays fixed, is not an
-interpreter matter; it is handled by the objective clause of
-[fallible theory](./fallible-theory.md#the-objective-clause).
+interpreter matter; it is addressed by the
+[retention-policy draft's objective clause](./theory-retention-policy.md#the-objective-clause).

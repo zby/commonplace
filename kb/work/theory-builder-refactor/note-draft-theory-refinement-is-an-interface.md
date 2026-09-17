@@ -14,7 +14,7 @@ tags: [foundations, self-improving-systems, learning-theory]
 > is not a separate promotion target or a library artifact.
 
 [Theory refinement](../../notes/definitions/theory-refinement.md) — revising an existing
-fallible explicit theory against empirical cases — is specified by what one
+explicit tentative theory against empirical cases — is specified by what one
 refinement episode must perform, not by the language the theory is written in
 or by the procedures that perform it. Five operations must be performed:
 **derive**, **compare**, **locate**, **revise**, **evaluate**. The theory and

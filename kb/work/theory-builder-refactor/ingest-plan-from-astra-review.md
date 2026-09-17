@@ -36,9 +36,12 @@ workshop, which raises confidence in both:
   reports arrive; the automated-science component adds an active one, where
   the builder chooses what to observe. The interface parameter should carry
   that distinction.
-- Its diagnosis that the fallible-theory draft mixes revisability, partial
-  support, consumption permission, evaluator reliability, and objective
-  preservation matches the README's [fallibility review row](./README.md#next-review-reconcile-the-definitions).
+- Its diagnosis that the earlier theory-status draft mixed revisability,
+  partial support, consumption permission, evaluator reliability, and
+  objective preservation matches the README's
+  [retention-policy review row](./README.md#next-review-reconcile-the-definitions).
+  The 2026-09-17 vocabulary change separates the borrowed term from the
+  [policy draft](./theory-retention-policy.md); substantive policy review remains.
 
 ## Judgements by section
 
@@ -102,8 +105,8 @@ establish transfers directly to workshop practice.
 
 **4. Belief maintenance and adaptive evaluation.** Agreed on all points,
 with one ranking change: the adaptive data analysis result is the most
-important of the four, not the last. The fallible-theory draft's clause that
-warranted revisions chain, and the review system's reuse of the same
+important of the four, not the last. The earlier clause, now a question in the
+[retention-policy draft](./theory-retention-policy.md), that warranted revisions chain, and the review system's reuse of the same
 criteria and evaluators across revisions, are the adaptivity problem
 exactly. Warrant for a revision sequence has to be established under an
 evaluation protocol; a succession of local approvals does not supply it. On
@@ -166,14 +169,14 @@ step; where the canonical source is a book, a paper surrogate is named.
 | 1 | Cox, M. T. and Ram, A. (1999). Introspective multistrategy learning: on the construction of learning strategies. *Artificial Intelligence* 112. | What the failure-to-strategy loop requires of the self-representation; what the learning-goal ablation showed and under what conditions; whether the strategy library is fixed or extensible. | Reflective definition; extension review row; retained-content intervention design. | [Complete](../../sources/introspective-multistrategy-learning.ingest.md) |
 | 1 | Lenat, D. B. and Brown, J. S. (1984). Why AM and EURISKO appear to work. *Artificial Intelligence* 23. | The representation-productivity claim in its own terms; why learning new heuristics was harder than adding heuristics as a subject; what people intervened to do. | Goal ("why now" mechanism); evidence-interface hypothesis. | [Complete](../../sources/why-am-and-eurisko-appear-to-work.ingest.md) |
 | 1 | Lenat, D. B. (1983). EURISKO: a program that learns new heuristics and domain concepts. *Artificial Intelligence* 21. | Which areas had an external objective and which did not; the reported self-modification failures and credit-assignment pathologies; the human interventions and their consequences. | Boundary cases in all definitions; special-case file. | [Complete](../../sources/eurisko-learns-new-heuristics-and-domain-concepts.ingest.md) |
-| 1 | Dwork, C., Feldman, V., Hardt, M., Pitassi, T., Reingold, O., and Roth, A. (2015). Generalization in adaptive data analysis and holdout reuse. *NeurIPS 2015* (arXiv 1506.02629). | Why a sequence of evaluations that each guides the next revision invalidates ordinary generalization arguments; what protocols restore it; what this implies for reusing review criteria across revisions. | Fallible-theory clause 3; review-system design; warrant of revision sequences. | [Complete](../../sources/generalization-adaptive-data-analysis-holdout-reuse.ingest.md) |
+| 1 | Dwork, C., Feldman, V., Hardt, M., Pitassi, T., Reingold, O., and Roth, A. (2015). Generalization in adaptive data analysis and holdout reuse. *NeurIPS 2015* (arXiv 1506.02629). | Why a sequence of evaluations that each guides the next revision invalidates ordinary generalization arguments; what protocols restore it; what this implies for reusing review criteria across revisions. | Retention-policy obligation 3; review-system design; warrant of revision sequences. | [Complete](../../sources/generalization-adaptive-data-analysis-holdout-reuse.ingest.md) |
 | 2 | Wielinga, B., Akkermans, H., and Schreiber, G. (1998). A competence theory approach to problem-solving method construction. *International Journal of Human-Computer Studies* 49. | The three construction stages and the commitments each exposes; which stages the framework leaves to the designer. | Semantic-work record; ideal-interpreter scope row; "specify first" route. | [Complete](../../sources/competence-theory-problem-solving-method-construction.ingest.md) |
 | 2 | Studer, R., Benjamins, V. R., and Fensel, D. (1998). Knowledge engineering: principles and methods. *Data & Knowledge Engineering* 25. Surrogate for the CommonKADS book. | The domain, inference, and task knowledge layers; the problem-solving method as a reusable unit and its applicability assumptions; the reuse assumption's dependence on human construction. | Doctrine-edit measure (three kinds of change); actionable-methodology definition. | [Complete](../../sources/knowledge-engineering-principles-and-methods.ingest.md) |
 | 2 | Fensel, D., Benjamins, V. R., Motta, E., and Wielinga, B. (1999). UPML: a framework for knowledge system reuse. *IJCAI 1999*. Surrogate for "The component model of UPML in a nutshell". | Tasks, methods, domain models, ontologies, adapters; what bridges and refiners make explicit; how far configuration was automated. | Doctrine-edit measure; extension as adapter versus method change. | [Complete](../../sources/upml-framework-for-knowledge-system-reuse.ingest.md) |
 | 2 | Musslick, S. et al. (2024). AutoRA: automated research assistant for closed-loop empirical research. *Journal of Open Source Software* 9(104). | The theorist, experimentalist, and runner roles and their shared state; what users supply; what the framework does not invent. | Evidence interface (active versus passive); interface investigation gap; builder roles. | [Complete](../../sources/autora-automated-research-assistant.ingest.md) |
 | 2 | Agrawal, L. A. et al. (2025). GEPA: reflective prompt evolution can outperform reinforcement learning. arXiv 2507.19457. | What the natural-language reflection retains and whether it functions as a theory under the workshop's definition; what the comparison with scalar-reward search established. | Rival hypothesis; generic-instruction control design. | [Complete](../../sources/gepa-reflective-prompt-evolution.ingest.md) |
 | 2 | Hu, S., Lu, C., and Clune, J. (2024). Automated design of agentic systems. arXiv 2408.08435 (ICLR 2025). | How the meta-agent's archive is consumed; whether discovered agents transfer across domains; where people intervene. | Extension by procedure acquisition; contemporary comparison set. | [Complete](../../sources/automated-design-of-agentic-systems.ingest.md) |
-| 3 | Hansson, S. O. (1992). In defense of base contraction. *Synthese* 91(3):239–245 ([publisher record](https://link.springer.com/article/10.1007/BF00413568)). | The belief-base versus belief-state distinction and its advantages for repeated change; what a base needs to record. | Fallible-theory retention clauses; closing condition 3. | [Complete](../../sources/in-defense-of-base-contraction.ingest.md) |
+| 3 | Hansson, S. O. (1992). In defense of base contraction. *Synthese* 91(3):239–245 ([publisher record](https://link.springer.com/article/10.1007/BF00413568)). | The belief-base versus belief-state distinction and its advantages for repeated change; what a base needs to record. | Theory-retention policy; closing condition 3. | [Complete](../../sources/in-defense-of-base-contraction.ingest.md) |
 | 3 | Alchourrón, C. E., Gärdenfors, P., and Makinson, D. (1985). On the logic of theory change: partial meet contraction and revision functions. *Journal of Symbolic Logic* 50. | The postulates as a citation for what contraction and revision are; explicitly what they do not supply (discovery, empirical reliability). | Closing condition 3, citation only. | [Complete](../../sources/logic-of-theory-change-partial-meet-contraction.ingest.md) |
 | 3 | de Kleer, J. (1986). An assumption-based TMS. *Artificial Intelligence* 28. | Maintaining conclusions relative to assumption sets and recording dependencies; what it does not establish. | Claim-level dependency record; per-claim warrant atomism. | [Complete](../../sources/an-assumption-based-tms.ingest.md) |
 | 3 | Russell, S. J. and Subramanian, D. (1995). Provably bounded-optimal agents. *JAIR* 2. | Evaluating a program relative to architecture and environment rather than an ideal reasoner; which classes the results cover. | Resource-bounded framing; interpreter fidelity and coverage. | [Complete](../../sources/provably-bounded-optimal-agents.ingest.md) |
@@ -238,7 +241,7 @@ compounding or the workshop's comparative reliability claim.
 
 1. Ingest the four priority-1 sources. They decide whether the reflective
    mechanism has a developed predecessor, whether the "why now" mechanism can
-   be stated, and whether clause 3 of fallible theory survives.
+   be stated, and what warrants a sequence under retention-policy obligation 3.
 2. Run the definitions review in the README with those ingests in hand,
    applying the review's three conjecture proposals if the operator accepts
    them.
