@@ -34,7 +34,13 @@ build theories only about the builder itself.
 
 ## Evidence
 
-An assessed reflective episode records one connected path:
+Reflection itself is evidenced by the two-way causal connection, which
+internal records can establish: machinery changes that updated the
+self-theory and self-theory revisions that changed the machinery, as the
+Commonplace boundary case below shows. Whether a reflective episode paid,
+in performance the builder did not assess itself, is a further claim
+evidenced under the [externally tested case](./externally-tested-theory-builder.md)
+by one connected path:
 
 1. Externally assessed work exposes a possible machinery limitation. The
    outcome signal alone does not locate the fault.

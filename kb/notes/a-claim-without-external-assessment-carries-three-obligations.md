@@ -1,5 +1,5 @@
 ---
-description: "When the evidence interface does not assess a claim, the builder must supply a contradiction-and-support rule, a comparison level for objective change, and attribution beyond the outcome; reasoning about a failure does not cross this boundary"
+description: "Without external assessment a claim needs its own contradiction-and-support rule, comparison level for objective change, and attribution when it asserts a cause or lacks an independent outcome level; investigating a failure crosses no boundary"
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [foundations, self-improving-systems, learning-theory]
@@ -14,11 +14,17 @@ conditions. It does not establish each internal theory or every broader
 scope the builder proposes. For a claim the declared interface does not
 assess, the builder must supply for itself what the interface would have
 supplied: what counts as contradiction and what support licenses each use,
-a comparison level when an objective changes, and attribution of a failure
-beyond the observed outcome. Each corresponds to one item the interface
-supplies, so these three are the boundary of the main path: a claim leaves
-it when its consequences face no external assessment, not when the builder
-reasons about a failure.
+in place of the external falsifier; a comparison level when an objective
+changes, in place of the external objective; and a performance measure that
+does not rest on its own evaluators, in place of the independent outcome
+level. The third carries a consequence the interface never supplied,
+attribution. External assessment does not locate a fault, so attribution is
+required whenever a claim asserts a cause, inside or outside the main path.
+Without an independent outcome level it is required for a performance
+claim too, because no outcome then absorbs an interpretation error and a
+theory error together. These three are the boundary of the main path: a
+claim leaves it when its consequences face no external assessment, not
+when the builder reasons about a failure.
 
 The boundary applies to a claim and a proposed use, not to the builder as a
 whole. A builder can work on externally assessed tasks while also retaining
@@ -73,7 +79,10 @@ obligation, not an inference that computation prohibits objective change.
 
 ## Attribution beyond the observed outcome
 
-An external judge may establish that a task failed while leaving open
+This obligation is conditional. It binds a claim that asserts a cause, in
+either case, and it binds a performance claim only when no independent
+outcome level absorbs interpretation and theory errors together. An
+external judge may establish that a task failed while leaving open
 whether the cause was a theory, its interpretation, retrieval, execution,
 or the environment. To assert a particular cause, specify a discriminating
 trace, intervention, or test that could distinguish the alternatives; a

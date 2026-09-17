@@ -92,7 +92,7 @@ needs its own evidence.
 |---|---|
 | External falsifier | A rule for what counts as a contradiction and what support licenses each use |
 | External objective | A comparison level for an objective change when no acceptance arrives from outside |
-| Independent outcome level | Attribution of a failure between interpreting a theory and the theory |
+| Independent outcome level | A performance measure that does not rest on the builder's own evaluators; without it, an interpretation error and a theory error must be separated, since no outcome absorbs both |
 
 A claim whose consequences lack the declared external assessment must say
 so and identify the support its proposed use needs, since
