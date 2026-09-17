@@ -1,0 +1,62 @@
+---
+description: "PAST-Bench separates fresh-session persistence gains from pathway evidence; its Hermes interventions offer bounded tests for memory activation, correction, and evaluation."
+type: kb/sources/types/ingest-report.md
+source: https://arxiv.org/abs/2608.04003
+captured: "2026-09-17"
+ingested: "2026-09-17"
+capture: pdftotext
+capture_scope: full-source
+genre: scientific-paper
+snapshot_sha256: ba73d6621148277bfa09054536211d3161b4092da734335eee99b345db4da315
+domains: [agent-memory, evaluation, deploy-time-learning]
+learning_claims: true
+---
+
+# Ingest: PAST-Bench — retained experience in personal agents
+
+## Classification
+
+Scientific paper by Shuhan Xue, Zixin Ding, Yichen Shen, and colleagues, captured from the arXiv preprint. It introduces a benchmark, reports controlled evaluations, and tests diagnosis-driven runtime interventions. The authors also develop the evaluated Hermes+ extension. Author signal therefore combines experimental detail with an interest in the proposed benchmark and system; this ingest does not establish peer-review status or independent replication.
+
+## Summary
+
+[PAST-Bench](https://arxiv.org/abs/2608.04003) tests whether retained state improves later tasks across 26 synthetic scenarios and 204 episodes covering memory, procedural reuse, information gathering, and updates. Episodes start in fresh sessions; matched evaluations keep the model, runtime configuration, prompt, tools, and grader fixed while allowing or denying access to retained state. Task gains are reported separately from a mechanism-evidence score based on artifacts, retrieval events, and correctness signals. Seven models benefit within the tested Hermes configuration, but framework and capability results vary. Five interventions in Hermes's existing memory, skill, and history interfaces form Hermes+: planning consultation, current-binding rendering, skill routing, retrieval gating, and closeout persistence. With MiniMax-M2.7 fixed, the full treatment improves the mean Update persistence gap from +0.12 to +0.24, while procedural performance falls and the Overall gap change from +0.13 to +0.15 is smaller than run-to-run variation. The contribution is a diagnostic evaluation method and bounded intervention evidence, not a demonstrated general improvement to persistent agents or a comparison establishing the best memory decomposition.
+
+## Quotes
+
+No source quotes have been retained yet.
+
+## Connections Found
+
+The strongest connection is evidence for [Evaluate Memory By Effects, Not By Existence](../notes/agent-memory-requirements/evaluate-memory-by-effects.md). PAST-Bench supplies a concrete fresh-session, persistence-on/off comparison alongside pathway diagnostics. Hermes and nanobot have the same reported Overall gap (+0.13) but different mechanism scores (0.64 and 0.57). This supports keeping downstream effects and observed persistence pathways separate. The mechanism score partly incorporates task correctness, however, and is not an independent test that particular memory content caused a decision.
+
+The paper also gives bounded evidence for [Activate Behavior-Changing Memory Before The Mistake](../notes/agent-memory-requirements/activate-behavior-changing-memory.md) and [Retire, Redact, Supersede, And Relax Memory](../notes/agent-memory-requirements/retire-redact-supersede-relax.md). In the tested Hermes substrate, pre-answer retrieval gating improves Information Gathering, while rendering valid bindings and persisting corrections address stale-state failures. These are tests of runtime changes around existing interfaces. They do not establish that typed bindings or the memory/skill/history split are preferable to alternative representations, and the lifecycle evidence concerns correction and expiry rather than redaction or policy relaxation.
+
+## Learning Claims (our opinion)
+
+The source calls its mechanism online self-evolution: experience changes later behavior through persistent artifacts without retraining the model. Earlier sessions expose facts, procedures, and corrections; later sessions can consume memory records, skills, or session history through the runtime's existing tools. The learning object is external state. The base model and the runtime's available persistence interfaces remain fixed within each matched comparison. Information Gathering is a distinct case: relevant state is preseeded, so it tests consultation rather than acquisition from prior experience.
+
+Relative to [theory refinement](../notes/definitions/theory-refinement.md), remembering a preference or applying a saved procedure is retention and use, not necessarily revision of a fallible theory. Updating an explicit procedure after an error could instantiate refinement if an empirical case guides a localized repair and later behavior tests its consequences. Replacing an obsolete fact after an authoritative correction does not alone establish that operation. The benchmark groups these different changes under self-evolution, so its aggregate score cannot be read as a measure of theory refinement.
+
+There are also two learners to distinguish. Agents write and revise persistent state during task families; the researchers inspect failures and engineer Hermes+'s five runtime changes. The latter is not evidence that agents improved their own learning machinery. Consistent with [Learning inside a fixed decomposition inherits its mistakes](../notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md), the single-component tests compare choices inside the supplied Hermes loop, while alternative persistence partitions remain untested. The reported interference between memory rendering and skill creation makes that boundary consequential: a locally useful mechanism can divert writes from the procedural artifact later tasks need. The source strengthens the case for testing retention, consultation, and outcome separately; it does not require broadening theory refinement to cover every persistent update.
+
+## Extractable Value
+
+- **Matched later-task controls [quick-win].** Enrich the effects requirement with fresh-session persistence-on/off evaluation. Cold-start scores measure initial competence and headroom; they are not the matched no-persistence baseline. Keep prompts, tools, limits, and context policy fixed within each pair, and report absolute performance alongside the persistence gap.
+- **Layered attribution [experiment].** Combine retained-state removal with artifact and retrieval traces, then perturb a specific candidate artifact when content dependence matters. PAST-Bench implements the first two layers; it explicitly leaves deletion, replacement, and corruption tests as stronger future attribution methods. Its mechanism score should remain a diagnostic signal.
+- **Interventions can compete for the same retained experience [deep-dive].** Within Hermes, the full five-mechanism treatment improves Update but reduces Procedural persistence-on performance from 0.55 to 0.38. A focused full-minus-one diagnostic finds better procedural skill creation and reuse after removing E2 memory rendering. This motivates checking where experience is written when combining memory and skill policies; the focused result is not a full-benchmark estimate or proof that typed memory generally harms procedural learning.
+- **Supersession needs later-session testing [experiment].** Correction and exception-expiry families supply a reusable test shape: expose old state, provide an authoritative revision, clear the session, and check both use of the new value and suppression of the old one. The Hermes interventions offer candidate implementations within its existing substrate, not a validated prescription for Commonplace.
+
+## Limitations (our opinion)
+
+The scenarios are synthetic and family-isolated. They do not test months of mixed experience, interference across families, or the upkeep costs of a growing KB. Open-ended scoring uses a fixed MiniMax-M2.7 judge; a blinded 48-sample author audit reports 68.8% judge–human agreement within 0.25 points. That is useful calibration, but it leaves material grading uncertainty and does not test sensitivity to alternative judges.
+
+Mechanism evidence is partly a proxy and partly outcome-derived. Artifact quality uses keyword hits and entry-count changes; recall accuracy and update correctness incorporate content correctness; retention horizon uses near/far task-score ratios. These components cannot establish content-specific causal necessity. Expected substrate and event contracts can also undervalue a semantically valid alternative path. The paper acknowledges that limitation and proposes stronger counterfactual tests.
+
+Hermes+'s aggregate advantage is uncertain: three-run Overall gaps are 0.13 ± 0.04 for Hermes and 0.15 ± 0.06 for Hermes+, and Update variability also increases. Overall persistence-on performance remains 0.66 in both. A larger on/off gap can result from lower persistence-off performance, so the gap alone cannot establish a better deployed agent. Cross-model transfer is uneven, and Hermes+ uses approximately 2.5 times as many tokens per episode in the MiniMax comparison.
+
+The isolated interventions vary runtime mechanisms within Hermes v2026.4.16; they do not compare alternative storage decompositions. Framework comparisons bundle native differences in context handling, loops, and limits despite holding the model fixed. ZeroClaw denotes its Python companion rather than its Rust executable, and Agent-Zero receives a longer timeout. These results characterize the tested adapters and configurations, not current products generally. No implementation code was inspected or executed for this ingest; all experimental outcomes and mechanism descriptions remain paper-reported.
+
+## Recommended Next Action
+
+Update [Evaluate Memory By Effects, Not By Existence](../notes/agent-memory-requirements/evaluate-memory-by-effects.md) with PAST-Bench's matched fresh-session persistence control, preserving the distinction between observed pathway evidence and content-specific causal dependence.
