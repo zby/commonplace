@@ -218,6 +218,17 @@ The review's other points were already applied by the main-path
 implementation, or declined: autonomy stays inside the head conjecture,
 since separating it would make the conjecture true of Commonplace today.
 
+From the same review's follow-up, the operator adopted a lineage clause in
+the [theory-builder definition](./theory-builder.md#persistence): the
+builder is identified by continuity of responsibility and by each successor
+state being produced through the preceding state's own revision process,
+not by the survival of any component, including the seed methodology. A
+change installed from outside that process is an intervention and its
+successor is not credited to the builder. Whether warranted revisions
+compose into a warranted lineage stays the retention policy's open third
+obligation; in the main path the lineage is assessed at the outcome level
+through the evidence interface, which is outside the builder.
+
 ## Read the current definitions in this order
 
 1. [Theory builder](./theory-builder.md) — persistent responsibility, the

@@ -104,9 +104,22 @@ fields as a proposed study.
 ## Persistence
 
 Persistence means continuity of responsibility for the theories across
-demands and consequences. It establishes neither retention nor learning. A
-builder whose fixed machinery suffices for every admitted demand still meets
-this definition. A system that runs once over supplied cases and holds no
+demands and consequences, together with lineage: each successor state of
+the builder is produced through the preceding state's own revision process.
+No particular theory, procedure, evaluator, or part of the seed methodology
+need survive; the builder is identified by responsibility and lineage, not
+by any component. A change installed from outside that process is an
+intervention. It is recorded as one, and the successor it produces is not
+credited to the builder. Whether locally warranted revisions compose into a
+warranted lineage is assessed, not assumed; the
+[retention policy's third obligation](./theory-retention-policy.md#proposed-obligations)
+owns the question. In the [externally tested case](./externally-tested-theory-builder.md)
+the lineage is assessed at the outcome level through the evidence
+interface, which lies outside the builder and is not replaced by it.
+
+Persistence establishes neither retention nor learning. A builder whose
+fixed machinery suffices for every admitted demand still meets this
+definition. A system that runs once over supplied cases and holds no
 continuing responsibility for the result is not persistent in this sense.
 
 Retention is the builder's, not the interpreter's. The interpreter proposes,
@@ -204,6 +217,11 @@ supply those.
 - **Commonplace as a KB house** is the arrangement proposed in the
   [downstream protocol](./commonplace-evidence-protocol.md); no consuming
   project has yet supplied the records needed to assess it.
+- **Total replacement through the builder's own process** is the same
+  builder: a lineage in which every theory, procedure, evaluator, and part
+  of the seed methodology has been revised away still satisfies persistence.
+  An operator installing a different framework in its place starts a new
+  seed and a new assessment.
 - **The research target** is a theory builder meeting both conditions, with
   the autonomy warranted, whose extension under a stated budget compares with
   the human-staffed baseline, under the [fixed-model constraint](./README.md#goal).
