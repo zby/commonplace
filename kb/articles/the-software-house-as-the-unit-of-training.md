@@ -40,7 +40,8 @@ evidence revises the theory, and the revised theory guides later work.
 
 The broader unit is a [theory builder](../notes/definitions/theory-builder.md):
 the persistent system responsible for developing and revising its theories.
-Here the software house supplies the externally assessed case. Training becomes
+This article examines the software house as one externally assessed case,
+a companion to Commonplace delivering knowledge to consuming projects. Training becomes
 [reflective](../notes/definitions/reflective-theory-builder.md) when a theory of
 the house's own production machinery guides changes to that machinery and is
 updated from their consequences. Improving a theory of a product alone does
