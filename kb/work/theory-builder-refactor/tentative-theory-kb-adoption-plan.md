@@ -117,7 +117,7 @@ classification rule above, not a substitution.
 | [Program theory and delayed feedback](../../notes/program-theory-sustains-search-under-delayed-feedback.md) | Update the theory-use wording and relation descriptions; preserve the argument about search and backtracking. |
 | [Addressable theory](../../notes/addressable-theory-can-coordinate-heterogeneous-factory-development.md) | Update the theory-status wording in the body and related-note descriptions. |
 | [Theory and capacity building](../../notes/theory-and-capacity-building-make-the-same-kind-of-commitment.md) | Update the related-note description that uses the old terminology. |
-| [Cost-sensitive formalisms](../../notes/cost-sensitive-formalisms-for-fallible-theory-search.md) | Update title and description and rename the file to match the adopted title. Handle relocation separately as described below. |
+| [Cost-sensitive formalisms](../../notes/cost-sensitive-formalisms-for-tentative-theory-search.md) | Update title and description and rename the file to match the adopted title. Handle relocation separately as described below. |
 | [The software house as the unit of training](../../articles/the-software-house-as-the-unit-of-training.md) | Update the theory-refinement passage as part of the article's adopted disposition; coordinate with its readability workshop. |
 | [Active workshops](../README.md) | Done at hand-off: the entry no longer uses the old term. Remove the entry when the workshop closes. |
 

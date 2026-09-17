@@ -124,6 +124,7 @@ plugins:
         'notes/constraining-and-distillation-both-trade-generality-for-reliability.md': 'notes/constraining-and-extraction-both-trade-generality-for-reliability.md'
         'notes/context-engineering-index.md': 'notes/context-engineering-README.md'
         'notes/continual-learning-open-problem-is-behaviour-not-knowledge.md': 'notes/continual-learning-requires-governing-behaviour-changing-writes.md'
+        'notes/cost-sensitive-formalisms-for-fallible-theory-search.md': 'notes/cost-sensitive-formalisms-for-tentative-theory-search.md'
         'notes/cross-representational-reflection.md': 'notes/reflective-coverage-is-graded-across-representational-forms.md'
         'notes/definitions/actionable-theory.md': 'notes/definitions/actionable-methodology.md'
         'notes/definitions/answerability.md': 'reference/definitions/answerability.md'
