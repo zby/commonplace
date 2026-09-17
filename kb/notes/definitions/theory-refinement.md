@@ -135,9 +135,12 @@ objective and exceeding what any holder has grasped:
 "nobody, neither its creator nor anybody who has tried to grasp it, can have a
 full understanding of all the possibilities inherent in a theory"
 ([Popper 1966](../../sources/popper-a-realist-view-of-logic-physics-and-history-1966.ingest.md),
-verbatim). That a failed prediction does not by itself say which premise to
-give up is the KB's own statement of the underdetermination problem; no source
-for it is snapshotted yet.
+verbatim). A failed prediction need not identify which premise to give up.
+In [Conjectures and Refutations, Chapter 10, section XVI](../../sources/popper-conjectures-and-refutations.ingest.md),
+Popper acknowledges that tests may bear on a large part or all of a theoretical
+system, leaving responsibility for the failure uncertain. He also argues that
+some cases do identify the responsible hypothesis or group of hypotheses;
+the uncertainty is not a universal bar to diagnosis.
 
 ## Scope
 
