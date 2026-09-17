@@ -26,6 +26,10 @@ frontloaded here because it is new and expected to change often; do not copy
 its content into this instruction. The definition governs our use of the term
 but remains open to challenge by the source.
 
+Read [Learning inside a fixed decomposition inherits its mistakes](../notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md)
+for the boundary between improvement within an effective update space and
+evidence for choices fixed outside it.
+
 Write for a reader already acquainted with Commonplace's vocabulary. Use our
 established terms without reteaching them; explain unfamiliar source terms
 and consequential differences in meaning.
@@ -42,6 +46,12 @@ Procedure:
 3. Choose the analytical distinctions that matter for this source and the
    KB's goals. Where relevant, the current account distinguishes using a
    theory from revising it.
+   When they affect the learning judgment, identify the signals and histories
+   available to the learner, the operations it can compose, the mappings its
+   hypothesis class can express, and the representations or partitions fixed
+   outside its effective update space. Separate improvement within that space
+   from evidence for the fixed decomposition. Include only distinctions that
+   affect interpretation or reuse.
 4. Keep each conclusion at the strength of its evidence. A plausible
    mechanism, an observed improvement, and evidence that the mechanism caused
    the improvement support different judgments. Missing evidence leaves a
@@ -52,3 +62,9 @@ Procedure:
    distinctions that change that judgment. Leave unresolved mappings explicit
    rather than forcing a classification or repairing the KB's theory during
    ingest.
+
+---
+
+Relevant Notes:
+
+- [Learning inside a fixed decomposition inherits its mistakes](../notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md) — rests-on: learning assessments distinguish improvements within an effective update space from evidence for choices fixed outside it

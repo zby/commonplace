@@ -11,6 +11,9 @@ argument-hint: "[url-or-file | re_ingest_request] — URL, snapshot path, or str
 
 # Ingest source
 
+Preserve a faithful, reusable account of what a source contributes to the
+installed KB and what its evidence supports.
+
 Ingest one URL-backed primary source into a tracked
 `kb/sources/*.ingest.md` report. The reading copy may already exist as a
 Markdown snapshot under `kb/sources/.snapshots/`.

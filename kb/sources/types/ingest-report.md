@@ -95,7 +95,12 @@ adopted; a collection-local snapshot type does not extend this contract.
   adds to, supports, or puts in question in the current account, with each
   judgment held at the strength of its evidence. Leave partial or missing
   mappings explicit rather than forcing a classification.
-- `Extractable Value` lists three to seven items, ordered by reach and novelty relative to the installed KB's goals and existing KB connections. When `occasion` is set, items bearing on it come first; if the source does not bear on it, one item says so.
+- `Extractable Value` lists distinct, supported contributions worth retaining,
+  ordered by reach and novelty relative to the installed KB's goals and existing
+  KB connections. When `occasion` is set, items bearing on it come first; if the
+  source does not bear on it, one item says so. When no useful contribution is
+  found, write one brief item explaining that judgment with `[just-a-reference]`.
+  A mismatch item also carries `[just-a-reference]`. There is no numeric quota.
 - `Limitations (our opinion)` states where the source should not be trusted or
   over-generalized. When `capture_scope` is not `full-source`, state what the
   retained boundary prevents the ingest from establishing.
@@ -106,6 +111,10 @@ observation sections. They follow the general contract regardless of
 `occasion`, because later readers reuse them for jobs the occasion did not
 anticipate. `Learning Claims (our opinion)`, when present, likewise follows
 the general contract regardless of `occasion`.
+
+When `occasion` is supplied, select and order `Extractable Value`, the role
+stated in `Connections Found`, and `Recommended Next Action` for that purpose
+first, then for the general KB goals.
 
 ## Quotes Shape
 
@@ -138,6 +147,8 @@ than the retained extracts provide.
 ## Extraction Standards
 
 - Base extractable value on what is new relative to the connection context discovered by connect.
+- Keep an irrelevant source's report short. Explain the mismatch and recommend
+  source-only filing or no promotion when appropriate.
 - Favor value that changes, supports, limits, or operationalizes the installed KB's current claims, decisions, policies, practices, or local domain work.
 - Useful value classes include evidence for an existing claim, contradiction or limitation affecting current KB content, reusable method or workflow, data point or empirical result, vocabulary or framing that improves retrieval and discussion, operational warning or failure mode, and candidate artifact to write, update, retire, or review.
 - Mark extractable value items with effort tags: `[quick-win]`, `[experiment]`, `[deep-dive]`, or `[just-a-reference]`.

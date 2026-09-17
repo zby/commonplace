@@ -5,6 +5,9 @@ type: kb/types/instruction.md
 
 # Draft an ingest report
 
+Write a faithful, reusable account of what the source contributes to the
+installed KB and what its evidence supports.
+
 Use this instruction only as the delegated drafting stage of source ingest. The
 caller has already resolved the target, captured the source, guarded its
 checksum, and run connection discovery. You own the analysis and the one output
@@ -51,7 +54,7 @@ whole artifact rather than assuming the listed failures are exhaustive.
 The snapshot and connect report are the complete source and discovery inputs.
 Do not browse the web, rerun connection discovery, or run broad KB searches.
 Read a conditional instruction linked below when its trigger applies, and any
-definition note that instruction requires. You may also open a durable local
+note that instruction requires. You may also open a durable local
 artifact explicitly named in the connect report only when needed to verify a
 connection you may keep. Never follow or cite a local snapshot link in the
 durable report.
@@ -83,48 +86,25 @@ durable report.
    goals and local collection contracts. In the Commonplace source repository,
    "our" means agent-operated KB methodology. In another installed KB, it
    means that project's declared system, work, codebase, policy, product, or
-   domain. Derive capture metadata from the snapshot frontmatter. Do not copy
-   snapshot `type`, `description`, `genre`, or `tags`.
+   domain. The loaded type owns metadata, section contents, and occasion
+   semantics. Derive capture metadata from the snapshot frontmatter and use
+   the connect report as candidate discovery input. Treat its `Maintenance
+   Observations` as non-actionable context. One settled connection is sufficient.
 
-   Preserve snapshot `capture_scope` and `doi` when present. Treat `abstract`,
-   `excerpt`, and `partial-source` as analysis boundaries; never present one as
-   a full reading of the source.
-
-   An `occasion` is the task-specific purpose for this ingest. It governs
-   `Extractable Value`, `Recommended Next Action`, and the role stated in
-   `Connections Found`: select and order for it first, then for the general KB
-   goals. It does not govern `Classification`, `Summary`, or `Limitations`;
-   write those as if no occasion had been given. It is not evidence about the
-   source. If the source does not bear on the occasion, say so in one
-   `Extractable Value` item and let the next action follow from what the source
-   does offer.
-
-   From the connect report, select settled connections, relationship roles,
-   synthesis opportunities, and tensions. Do not transcribe its candidate
-   inventory. Treat `Maintenance Observations` as non-actionable context. Write
-   `Connections Found` as compact prose naming the source's role, such as
-   anchor, technical basis, counterpoint, legal disposition, public statement,
-   or limitation. If no casebook notes yet exist for the target collection,
-   say so plainly instead of mapping relationships among already captured
-   sources or speculating about future note links. Drop weak, duplicate, and
-   speculative connections. One relationship bearing on the source's likely
-   role is sufficient. Never cite, link to, or name the generated connect report
-   in the ingest.
+   Choose analytical emphasis from the source. Continue analysis only when you
+   can name an unresolved question and explain how answering it could materially
+   change the interpretation, evidential scope, useful contribution, or
+   recommended next action. Apply this stopping rule after satisfying the
+   required report sections and evidence checks.
 
 4. For an experiment-bearing source—an intervention, benchmark, ablation,
    controlled study, or other empirical evaluation used as design
-   evidence—read the fixed-decomposition note linked under `Relevant Notes`.
-   Identify:
-
-   - the signals and histories available to condition behavior;
-   - the responses or operations the learner could compose;
-   - the mappings its hypothesis class could express; and
-   - the representations, partitions, and design choices fixed outside its
-     effective update space.
-
-   Separate improvement inside that space from evidence for the fixed
-   decomposition. Attribute an ablation only to the choice it varies. Carry any
-   material consequence into `Connections Found`, `Extractable Value`, or
+   evidence—identify the tested comparison and consequential representations,
+   component boundaries, interfaces, or other design choices held fixed.
+   Distinguish improvement within that decomposition from evidence comparing
+   alternative decompositions. Attribute an ablation only to the choice it
+   varies. Carry material consequences into `Connections Found`,
+   `Extractable Value`, or
    `Limitations (our opinion)`.
 
    When a result materially depends on the tested decomposition, keep that
@@ -139,29 +119,9 @@ durable report.
    Otherwise skip this step and omit the `Learning Claims (our opinion)`
    section.
 
-6. Write `output_path` under the ingest-report contract:
-
-   - classify the source and identify the author signal;
-   - summarize it in one decision-oriented paragraph;
-   - state its compact role in the current KB;
-   - when step 5 applied, write `Learning Claims (our opinion)` after
-     `Connections Found` and set `learning_claims: true`;
-   - list three to seven goal-relative, connection-relative value items, each
-     with an effort tag;
-   - state genre-appropriate limitations as our opinion; and
-   - recommend exactly one specific advisory next action.
-
-   Keep an irrelevant source's report short. Explain the mismatch and recommend
-   source-only filing or no promotion when appropriate.
-
-   Put the snapshot's retained `source`, `captured`, `capture`, optional
-   `capture_scope` and `doi`, and flat adapter fields in frontmatter along with
-   `snapshot_sha256`. Set `genre` from the closer reading. Record a supplied
-   `occasion` verbatim in frontmatter; omit the field when it is `none`. Set
-   `learning_claims: true` when step 5 applied; omit the field otherwise. Do
-   not create a `capture_metadata` field. Do not write the removed
-   `source_snapshot` or `code_revisions` fields. Do not link to `.snapshots/` or cite a machine-local
-   checkout such as `related-systems/`.
+6. Write only `output_path` under the ingest-report contract. Do not create a
+   `capture_metadata` field or cite a machine-local checkout such as
+   `related-systems/`.
 
    Place `retained_quotes` immediately before `## Connections Found`, verbatim.
    Preserve every character, line ending, blank line, heading, and entry in the
@@ -169,12 +129,6 @@ durable report.
    and do not write another Quotes section. In `repair` mode, replace any Quotes
    block in the repair candidate with the supplied value rather than using the
    candidate's version.
-
-   Do not describe whether quotes are retained outside `retained_quotes`.
-   Retention state changes when grounding appends to that block. Use `(snapshot
-   required)` only for a named claim that needs broader source context than the
-   retained extracts supply, never merely because the Quotes block was empty at
-   draft time.
 
    When `code_grounding_context` is `none`, omit `secondary_sources` and the
    `Code Grounding` section. Otherwise apply its pinned commit URLs, claim
@@ -200,9 +154,3 @@ durable report.
 8. Return only the validation result and the report's single recommended next
    action. Do not return a second analysis or an alternative draft in
    conversation.
-
----
-
-Relevant Notes:
-
-- [Learning inside a fixed decomposition inherits its mistakes](../notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md) — rests-on: experiment ingests must separate learning inside an effective update space from evidence for design choices fixed outside it

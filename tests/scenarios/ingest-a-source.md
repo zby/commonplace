@@ -85,6 +85,12 @@ arXiv paper. Fork 2 also inspects commit-pinned checkouts under
 `related-systems/`, then passes the prepared grounding context to Fork 5. This
 adds evidence without adding another skill fork.
 
-**Experiment-bearing source:** Fork 5 additionally reads
+**Experiment-bearing source:** Fork 5 identifies the tested comparison and
+consequential fixed design choices, keeping architectural scope beside results.
+This general check does not require a learning-theory note.
+
+**Learning or adaptation source:** Fork 5 follows the conditional
+`assess-learning-claims-during-ingest.md` instruction, which requires the
+theory-refinement definition and additionally reads
 `kb/notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md` in
 the source checkout or its installed `kb/commonplace/notes/` counterpart.
