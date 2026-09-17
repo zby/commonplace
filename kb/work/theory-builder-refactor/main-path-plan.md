@@ -33,9 +33,11 @@ Operator direction of 2026-09-17, in the order given:
    in `b7520224`. The later library migration follows the
    [KB adoption plan](./tentative-theory-kb-adoption-plan.md).
 3. Commonplace's product is a knowledge base built for consuming projects.
-   Commonplace is then a [software house](../../notes/definitions/software-house.md)
-   whose product is its KB and supporting software, and its evidence
-   interface is that product's use.
+   Commonplace is then an externally tested theory builder whose product is
+   its KB and supporting software and whose evidence interface is that
+   product's use. The [software house](../../notes/definitions/software-house.md)
+   stays the paradigm arrangement of the general case, not a label for
+   Commonplace; the operator declined that label on 2026-09-17.
 
 The research target's fixed model weights remain a constraint on the
 target, not on the general definitions, which still admit weight learning.

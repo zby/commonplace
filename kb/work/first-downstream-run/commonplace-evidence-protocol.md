@@ -1,7 +1,7 @@
 # Commonplace's downstream evidence protocol
 
 > **Status:** Proposed evaluation protocol, 2026-09-17. Implements step 1 of
-> the [main-path plan](../theory-builder-refactor/main-path-plan.md). No consuming-project run has been
+> the [adopted hypotheses](./README.md#adopted-hypotheses). No consuming-project run has been
 > performed. Unfilled study parameters below must be fixed before assessment;
 > this document is not evidence that Commonplace already meets the target.
 
@@ -29,11 +29,14 @@ design variable, not a default: the
 reports lower performance when the solver could read the improvement wiki
 during training, with the authors' hypothesis that direct use made the
 traces less informative for later improvement. Continuing
-responsibility for developing that software makes this a
-[software-house](../../notes/definitions/software-house.md) case. The broader
-[side conjecture](../../notes/an-open-domain-theory-builder-becomes-a-software-house-when-new-domains-require-production-machinery-changes.md)
-is unnecessary as a premise of this experiment; it is not refuted or proved
-by selecting this case.
+responsibility for that release, with the consuming project's judgments
+arriving from outside, is what makes Commonplace an
+[externally tested theory builder](../../notes/definitions/externally-tested-theory-builder.md)
+once observed. Whether producing software for others also makes it a
+[software house](../../notes/definitions/software-house.md) is the
+[side conjecture's](../../notes/an-open-domain-theory-builder-becomes-a-software-house-when-new-domains-require-production-machinery-changes.md)
+question, not a premise of this experiment; selecting this case neither
+refutes nor proves it.
 
 ## Freeze before the first scored episode
 
