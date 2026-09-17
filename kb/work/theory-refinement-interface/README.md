@@ -20,9 +20,9 @@ fallible; codification progressively moves particular operations back from
 interpreted to mechanical. That account describes Commonplace's own
 construction and is a candidate for an article once it is grounded.
 
-Posed by the operator on 2026-09-17 as closing condition 3 of the
-[theory-builder workshop](../theory-builder-refactor/README.md), moved here
-so that workshop can close on promotion while this remains open.
+Posed by the operator on 2026-09-17 as closing condition 3 of
+the theory-builder workshop (adoption recorded in git commit `28a2ea8d`),
+moved here so its promotion and terminology migration can close independently.
 
 ## What closes the workshop
 
