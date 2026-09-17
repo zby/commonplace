@@ -63,6 +63,10 @@ commonplace-x-snapshot = "commonplace.cli.x_snapshot:main"
 [dependency-groups]
 dev = ["properdocs", "pytest", "ruff"]
 
+[tool.uv]
+# Pin the resolution window here so uv.lock does not depend on each machine's user-level uv config.
+exclude-newer = "7 days"
+
 [tool.ruff]
 include = ["src/**/*.py", "tests/**/*.py"]
 
