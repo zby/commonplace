@@ -1,39 +1,65 @@
 # Writing conventions for kb/reference/
 
-<!--
-This is your project's reference collection. The shipped Commonplace
-library has its own conventions at kb/commonplace/reference/COLLECTION.md
-for a worked example. Replace these placeholders with your own decisions.
-Once installed, this contract belongs to your project; Commonplace does not
-synchronize it with later changes to this template or to the worked example.
--->
+These defaults are ready to use. Customize them only when the project needs
+different conventions; no sections require filling in. Use the project's
+declared KB goals and scope to decide which subjects belong here. Do not invent
+project requirements to customize this file.
+
+Once installed, this contract belongs to your project. Commonplace does not
+synchronize it with later template changes.
 
 ## Purpose and scope
 
-<!--
-State directly what artifacts in this collection describe and what belongs
-or does not belong here. A typical reference collection documents the current
-system, architecture, interfaces, and decision history. Write the operative
-conventions in this file in full.
--->
+This collection describes the project's current or recorded past state:
+its structure, terminology, interfaces, policies, and decisions. A project
+may concern a product, research activity, organization, or other domain;
+reference documents describe the particulars readers need to understand it.
+
+Put general claims and explanations in `kb/notes/`, procedures in
+`kb/instructions/`, external-source analyses in `kb/sources/`, and unfinished
+investigations in `kb/work/`.
 
 ## Quality goal
 
-<!-- What makes a reference doc worth keeping here? Example:
-"A reference doc is worth keeping when an agent or new contributor
-needs it to understand or operate the system correctly." -->
+A reference document is worth keeping when it helps a reader understand the
+project accurately or find an authoritative fact. Describe what is established
+and distinguish it from proposals, assumptions, and unknowns. Verify factual
+details against the relevant records or implementation rather than inventing
+missing information.
 
 ## Title and body conventions
 
-<!-- Titles are typically noun phrases naming the subject. How long
-should reference docs run? -->
+- Use a title naming the specific subject, such as "Document review roles"
+  or "Source selection policy".
+- State what the document covers at the start. Organize details around the
+  questions readers need answered; use tables or lists when they help lookup.
+- When describing past state, identify the period or version. Keep current
+  descriptions aligned with the facts they describe.
+- Link to authoritative detail rather than duplicating it unnecessarily.
+- When frontmatter includes a `description`, name the subject and the question
+  this document answers.
 
 ## Outbound links
 
-<!--
-Reference typically links to notes (grounds, rationale) and cites
-sources. See kb/commonplace/reference/link-vocabulary.md.
--->
+Link when following the target helps a reader understand, verify, or use the
+artifact. Put supporting links inline where they matter. Optional footer links
+use `- [title](path) — label: specific reason to follow the link`. Do not add
+links merely to fill a footer or create a reciprocal link.
+
+Use these destinations and labels for connection discovery and authored links:
+
+| Destination | When to search or link | Authorized labels and meanings |
+|---|---|---|
+| `kb/reference/` | Find the surrounding structure, related descriptions, or definitions. | `part-of`: situates the subject in a larger whole; `contains`: identifies a component; `defined-in`: explains a term; `see-also`: gives related context. |
+| `kb/notes/` | Find reasoning behind a described choice or policy. | `rests-on`: identifies a claim the choice depends on; `defined-in`: explains a term; `see-also`: gives related reasoning. |
+| `kb/instructions/` | Find how to act on the described subject. | `procedure`: gives the how-to. |
+| `kb/sources/`, `kb/reports/retained/` | Find evidence for a factual description or decision. | `evidenced-by`: supports or qualifies the description; `see-also`: gives relevant context. |
+| `external` | Cite an identified authoritative record or definition. | `evidenced-by`: supplies evidence; `defined-in`: defines a term; `see-also`: gives relevant context. |
+
+Use relative Markdown links for local targets. Link only to existing artifacts.
+Do not link to temporary work, ignored snapshots, report caches, or local
+report state. Connection discovery does not search the open web; `external`
+authorizes links to already identified targets.
 
 ## Type eligibility
 
