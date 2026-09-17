@@ -108,6 +108,42 @@ reading guidance in the collection README.
   status semantics, and the relocate command in
   [commands](../../reference/commands.md) for the bootstrapping retitle.
 
+## Review findings to carry into the successors
+
+Astra reviewed the conjecture article after the adoption session's reframe
+(2026-09-17). The findings are accepted and bind the companion and, where
+marked, the head; the superseded draft is not patched.
+
+- **Gödel-machine contrast.** The draft says a request can influence a
+  rewrite only if the formalization already assigns it a utility. That is
+  not what the paper supports: the objective can concern future reward and
+  new inputs enter through the formalized operations, as the library's
+  [Gödel-machine note](../../notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md)
+  already says. The supported distinction is proof under the formalization
+  against empirical acceptance and recovery. If the companion keeps a
+  contrast paragraph, it states that distinction and nothing about advance
+  valuation of requests.
+- **"Establishes the conjecture" exceeds the evidence.** The conjecture
+  covers whatever reasonable requests arise; the four conditions assess a
+  declared workload over a finite horizon. In the companion, a witness run
+  supplies evidence for the conjecture under its reported conditions, or
+  establishes a version bounded to them. The head says the same of a
+  downstream run: a finite evaluation supports a bounded claim.
+- **Witness condition 1 leaves explanatory use underdetermined.** A
+  predicted behavioural change after altering a commitment shows causal
+  influence; instruction-following also produces one. The condition itself
+  must require distinguishing explanatory use from instruction-following,
+  by predicted changes on cases not stated verbatim, variation of the
+  consumption path, and accounting for equivalent reconstruction, rather
+  than leaving those controls to a companion experiment. This amends the
+  end state's "four witness conditions unchanged": condition 1 changes in
+  this one respect, and the change is recorded in the companion. The head
+  carries the same requirement in its account of reflection evidence, where
+  the reflective definition already places it.
+- **Editorial.** The reframe's research-program paragraph sits before the
+  claim is explained. In the companion the relation to the theory-builder
+  program is the last section, so the article stands on its own first.
+
 ## Suggested route
 
 Dependencies only; the executor may reorder within them.
