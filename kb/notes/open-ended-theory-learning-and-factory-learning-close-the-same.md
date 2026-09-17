@@ -7,13 +7,17 @@ tags: [foundations, self-improving-systems, learning-theory]
 
 # Open-ended theory learning and factory learning close the same reflective loop
 
-> TODO! remove or update to use software house instead of software factory
-
 Two research directions in this knowledge base look like separate programs. One
 asks how a system acquires, tests, and revises explanatory theories about its
 own organization. The other asks how [a software factory learns from its production experience](./factory-learning-is-experience-responsive-retention-that-improves.md). They are
 the same loop reached from opposite ends: each, pushed to where it stops being
 satisfiable on its own terms, requires what the other supplies.
+
+The [software house](./definitions/software-house.md) is the complete
+persistent producer. Factory learning here concerns its reusable production
+machinery; a Greenfield-style factory can be part of that machinery. The
+reflective theory describes the house's production organization, while a
+product theory describes the software it produces.
 
 The shared loop is the causally co-indexed path that [reflective theory
 refinement needs interpretation, retention, and independent
@@ -25,7 +29,7 @@ its author did not write, read back against the same retained object, revised,
 and consumed again. The convergence claim is that neither starting direction can
 stop short of this whole path.
 
-## From theory learning down to the factory
+## From theory learning down to production machinery
 
 Run the [discovery lifecycle](./definitions/discovery-lifecycle.md) — observe,
 conjecture, derive consequences, test, accept, integrate — on conjectures whose
@@ -52,7 +56,7 @@ The self-directed discovery lifecycle already contains a production-and-revision
 cycle over machinery. It is not adjacent to factory learning; it is factory
 learning with the theory made explicit.
 
-## From the factory up to theory learning
+## From production machinery up to theory learning
 
 Experience-responsive retention as such asks only that production experience
 cause a retained machinery change that later production depends on. Shallow
@@ -67,7 +71,7 @@ allocate search and interpret failures before that evidence exists, since
 [open-ended improvement must allocate search before decisive evaluation is
 available](./open-ended-improvement-allocates-search-before-evaluation.md).
 
-What plays that role is a held theory of the factory's own purposes and
+What plays that role is a held theory of the software house's own purposes and
 organization. Such a theory cannot be a summary of the production record,
 because [commitment, not derivation, creates new ground
 truth](./commitment-not-derivation-creates-new-ground-truth.md): building it
@@ -78,7 +82,7 @@ content cannot be re-derived from the record; it can only be revised.
 A commitment that exceeds its evidence, whose consequences arrive later, and
 that must be revised when those consequences contradict it, is an ampliative
 conjecture under test. Factory learning pushed past patching therefore runs the
-discovery lifecycle over the factory's theory of itself.
+discovery lifecycle over the software house's theory of itself.
 
 ## What the convergence claims
 
@@ -89,7 +93,7 @@ worth making; factory learning supplies the operative retention and the
 independent later consequence that decide whether the theory was right. A system
 holding one half fails in a direction the missing half predicts. A knowledge
 base that conjectures without making theories operative accumulates untested
-claims, because it never buys the consequences that would defeat them. A factory
+claims, because it never buys the consequences that would defeat them. A software house
 that patches without holding a theory accumulates local special cases, because
 nothing in it recognizes which existing organization a new demand should have
 gone through.

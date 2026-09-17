@@ -7,13 +7,11 @@ tags: [foundations, computational-model, self-improving-systems]
 
 # Broad software demands create pressure for agentic factory development
 
-> TODO! remove or update to use software house instead of software factory
-
 A sufficiently broad class of software demands creates practical pressure for an agentic system to construct or revise reusable production machinery instead of relying only on family-specific production knowledge supplied in advance. This is a claim about engineering adequacy and scaling, not an impossibility theorem.
 
 In principle, a fixed universal substrate could interpret every needed program. A large catalog could contain every useful schema, workflow, evaluator, representation, tool, and decomposition. The premise here is weaker: as the covered demands widen, exhaustively anticipating and maintaining all useful family-specific production knowledge becomes increasingly implausible and expensive.
 
-The relevant response is agentic [factory development](./definitions/factory-development.md): the system participates in constructing or revising reusable machinery that later production can use.
+The relevant response is agentic [factory development](./definitions/factory-development.md): the system participates in constructing or revising reusable machinery that later production can use. The [software house](./definitions/software-house.md) is the complete persistent producer; factory development names work on its reusable production machinery.
 
 ## Why breadth exposes missing production knowledge
 

@@ -38,6 +38,15 @@ new requests, stated as design commitments, causal assumptions, and
 invariants. Training the house is therefore *theory refinement*: production
 evidence revises the theory, and the revised theory guides later work.
 
+The broader unit is a [theory builder](../notes/definitions/theory-builder.md):
+the persistent system responsible for developing and revising its theories.
+Here the software house supplies the externally assessed case. Training becomes
+[reflective](../notes/definitions/reflective-theory-builder.md) when a theory of
+the house's own production machinery guides changes to that machinery and is
+updated from their consequences. Improving a theory of a product alone does
+not establish that reflective path. The experiments below separate useful
+outcomes from evidence that the retained theory caused them.
+
 The regime is attractive on three counts, each still a conjecture. What the
 house learns is retained and usable at the next request, so learning is
 continual. A correct theory may say which new cases matter, so adaptation may
@@ -135,7 +144,7 @@ The learning loop is:
 
 This loop is [theory
 refinement](../sources/recap-early-work-theory-knowledge-refinement.ingest.md)
-in the established sense: a fallible explicit theory guides inference,
+in the established sense: an explicit [tentative theory](../notes/definitions/theory-refinement.md#tentative-theory) guides inference,
 empirical failure localizes a defect, and the theory itself is revised rather
 than only the answer. The regime changes the setting: the theory is about a
 product the house keeps changing, and its evidence is the consequences of

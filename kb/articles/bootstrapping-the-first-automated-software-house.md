@@ -24,8 +24,8 @@ source_notes:
 > on [the repository's GitHub Discussions page](https://github.com/zby/commonplace/discussions).
 
 **TL;DR.** A *software house* is the complete persistent system that keeps
-changing software for its users. This bootstrap program starts with a house
-that includes people and transfers bounded classes of production decisions to
+changing software for its users. This bootstrap program starts with human-agent production
+and transfers bounded classes of production decisions to
 computation, one trial at a time. Each trial tests two things separately:
 whether computation now makes the decisions, and whether production evidence
 teaches the house to build or revise the machinery that makes them.
@@ -33,8 +33,13 @@ Transferring the best-supported decisions first should leave people the
 hardest-to-warrant ones, and what those still need identifies the functions
 the house must grow.
 
-Commonplace is the starting point: agents use and revise retained project
-knowledge while people still supply decisive judgments. The target is a
+Commonplace is the starting point. Its product is a knowledge base
+for consuming projects. Agents use and revise retained
+project knowledge while people still supply decisive judgments. This makes it
+a human-inclusive [theory builder](../notes/definitions/theory-builder.md).
+The proposed first assessment asks whether consuming projects do better with
+its retained changes; internal approval of a note is not that outcome evidence.
+The target is a
 witness house meeting the [conjecture's four
 conditions](./automated-software-houses-with-fixed-llms.md#what-a-witness-house-must-show)
 and learning by theory refinement under the [fixed-model

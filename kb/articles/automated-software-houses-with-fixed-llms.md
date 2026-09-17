@@ -35,6 +35,21 @@ The existence claim matters because such a house could learn in the way the
 by refining its program theory from its own production, continually, in a
 substrate that can be inspected and revised piece by piece.
 
+The software house is the chosen case for a broader research question: can a
+methodology expressed in instructions, knowledge, tools, and orchestration
+train an [externally tested theory builder](../notes/definitions/externally-tested-theory-builder.md)
+while model weights stay fixed? Such a builder retains and revises theories;
+external tasks and outcomes test whether those changes improve its later work.
+The software-house case supplies concrete products, user demands, and outcomes
+against which to make that comparison. Whether every broadly capable theory
+builder must become a software house is a separate
+[conditional conjecture](../notes/an-open-domain-theory-builder-becomes-a-software-house-when-new-domains-require-production-machinery-changes.md).
+
+This article keeps its original model cutoff and witness conditions. A broader
+assessment must declare its own model versions, budgets, task population, and
+comparison before observing outcomes; the adopted research framing does not
+establish a successful witness run.
+
 ## Claim
 
 **The automated software house conjecture.** At least one automated [software
