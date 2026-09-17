@@ -29,7 +29,7 @@ Three of the review's recommendations coincide with findings already in this
 workshop, which raises confidence in both:
 
 - Its request to remove the Gödel-machine exclusions and the closure claims
-  from the definitions matches the [comparison file's](./goedel-machine-comparison.md#consequence-for-the-definitions)
+  from the definitions matches the [comparison file's](../../notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md)
   own caution and the [special case's](../../notes/definitions/externally-tested-theory-builder.md#what-remains-for-the-general-case)
   finding that the closure worry is relative to the evidence interface.
 - Its "connect theory revision to inquiry and observed consequences before
@@ -88,7 +88,7 @@ definitions already sit near the task and inference layers, so the import is
 a refinement rather than a new ontology. The competence-theory construction
 paper is the priority: its three stages (competence specification,
 conceptual refinement introducing vocabulary and assumptions, operational
-specification) decompose what the [semantic-work record](./semantic-work-and-the-ideal-interpreter.md)
+specification) decompose what the [semantic-work record](../../reference/proposals/resource-bounded-ideal-interpreter.md)
 currently asks the ideal interpreter to cover, and would let the interpreter
 shrink to a faithful-interpretation contract. Not agreed: importing
 CommonKADS's development process or its library assumption. The research
@@ -96,7 +96,7 @@ problem, stated in this vocabulary, is that the builder must do the
 method-construction work these frameworks assign to designers.
 
 **3. Automated science.** Agreed, and it is the most consequential gap for
-Commonplace itself. The [interface investigation](./theory-refinement-interface.md)
+Commonplace itself. The [interface investigation](../theory-refinement-interface/theory-refinement-interface.md)
 already reports that the routine review loop compares text against reviewer
 criteria and that empirical comparison does not pass through the same
 machinery. The theorist, experimentalist, and experiment-runner separation

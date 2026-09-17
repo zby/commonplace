@@ -37,11 +37,11 @@ adoption of the workshop conclusions.
 > a causally connected self-theory acquires extensions that a matched
 > builder without one does not, under the same demands, budget, and
 > external assessment. Better downstream outcomes alone do not test this;
-> the records of a [reflective episode](./main-path-episodes.md#2-reflective-machinery-revision)
+> the records of a [reflective episode](../first-downstream-run/main-path-episodes.md#2-reflective-machinery-revision)
 > and a matched builder that retains content without a self-theory do.
 
 None of the hypotheses promises success on every problem or within every
-budget. The [protocol](./commonplace-evidence-protocol.md) records the
+budget. The [protocol](../first-downstream-run/commonplace-evidence-protocol.md) records the
 project, reliability target, comparison margin, task population, and budgets
 that must be fixed before a run. No run is reported here. A result on one
 project supports that assessed scope; breadth requires multiple declared
@@ -97,9 +97,9 @@ demands expose limits in its theories and machinery; reflective revision
 turns them into retained improvements; recorded episodes become evidence
 for the research program. The workshop grounds it: the
 [reflective definition](../../notes/definitions/reflective-theory-builder.md) makes external work
-the test of the machinery, the [protocol](./commonplace-evidence-protocol.md)
+the test of the machinery, the [protocol](../first-downstream-run/commonplace-evidence-protocol.md)
 says what a recorded episode must contain, and the
-[second episode](./main-path-episodes.md#2-reflective-machinery-revision)
+[second episode](../first-downstream-run/main-path-episodes.md#2-reflective-machinery-revision)
 shows the loop end to end. A change carries one of three justifications,
 product use, reflective learning, or research evidence, and states which
 when more than one could apply; that keeps research machinery from making
@@ -107,7 +107,7 @@ the tool cumbersome and keeps ordinary engineering from being retold as
 evidence for reflection. Episodes are recorded, not selected: selection
 after outcomes are known is the adaptive-reuse hazard the protocol reserves
 evidence against. An
-[ideal interpreter](./resource-bounded-ideal-interpreter.md) is no longer a
+[ideal interpreter](../../reference/proposals/resource-bounded-ideal-interpreter.md) is no longer a
 prerequisite of the outcome comparison. Its proposed attribution guarantees
 remain open.
 
@@ -115,7 +115,7 @@ Commonplace today is the human-inclusive starting system, not an autonomous
 instance demonstrated under the proposed protocol. This repository's
 instructions, collection contracts, type specs, review system, and skills
 supply its seed methodology. The
-[boundary assessment](./boundary-case-assessment.md) separates prior systems'
+[boundary assessment](../../reports/retained/theory-builder-boundary-cases-20260917.md) separates prior systems'
 reported evaluations from claims about persistence, reflection, and external
 assessment that their evidence does not settle. The research concerns the
 methodology's composition and performance, not novelty of generic theory
@@ -260,8 +260,8 @@ listed in the [implementation review](./implementation-review.md#promotion-and-m
    boundary and seed, declared evidence interface, and capability extension.
 2. [Externally tested theory builder](../../notes/definitions/externally-tested-theory-builder.md)
    — the main path, scoped external assessment, and its limits. Read the
-   [Commonplace protocol](./commonplace-evidence-protocol.md) and
-   [three constructed episodes](./main-path-episodes.md) for the proposed case.
+   [Commonplace protocol](../first-downstream-run/commonplace-evidence-protocol.md) and
+   [three constructed episodes](../first-downstream-run/main-path-episodes.md) for the proposed case.
 3. [Reflective theory builder](../../notes/definitions/reflective-theory-builder.md) and
    [autonomous theory builder](../../notes/definitions/autonomous-theory-builder.md) — separate
    causal and role conditions; neither alone establishes improvement.
@@ -272,7 +272,7 @@ listed in the [implementation review](./implementation-review.md#promotion-and-m
    — the fence: what remains to establish when a particular claim or use
    lacks external assessment, with the former retention-policy questions as
    its open questions.
-6. [Resource-bounded ideal interpreter](./resource-bounded-ideal-interpreter.md)
+6. [Resource-bounded ideal interpreter](../../reference/proposals/resource-bounded-ideal-interpreter.md)
    — a deferred attribution specification with open fidelity, completion,
    abstention, and realizability questions.
 
@@ -281,13 +281,13 @@ listed in the [implementation review](./implementation-review.md#promotion-and-m
 - [Main-path plan](./main-path-plan.md) records the authorized sequence and
   its completion state. The [implementation review](./implementation-review.md)
   owns the final review dispositions and remaining promotion conditions.
-- [Commonplace evidence protocol](./commonplace-evidence-protocol.md) owns
-  the proposed downstream comparison, records, and unfilled study parameters.
-  [Main-path episodes](./main-path-episodes.md) check the concepts against
-  constructed product repair, machinery repair, and unsupported broader use.
-- [Boundary-case assessment](./boundary-case-assessment.md) separates each
-  deployment's boundary, reported judging, evidence access, and continuing
-  responsibility, with verified source identities and access limits.
+- The [Commonplace evidence protocol](../first-downstream-run/commonplace-evidence-protocol.md)
+  and the [three episodes](../first-downstream-run/main-path-episodes.md)
+  moved on 2026-09-17 to the [first-downstream-run workshop](../first-downstream-run/README.md),
+  which owns the run and its records.
+- The [boundary-case assessment](../../reports/retained/theory-builder-boundary-cases-20260917.md)
+  is retained as a frozen report; the library definitions state their own
+  boundary cases and cite it as the exact record.
 - The promoted definitions, the tentative-theory section, and the fence note
   were moved to the library on 2026-09-17; their workshop drafts are
   deleted and recoverable from git history. The
@@ -296,18 +296,15 @@ listed in the [implementation review](./implementation-review.md#promotion-and-m
 - [KB adoption plan](./tentative-theory-kb-adoption-plan.md) owns the later
   terminology migration, its adoption trigger, candidate inventory, source
   fidelity exceptions, and validation requirements.
-- [Semantic work and the ideal interpreter](./semantic-work-and-the-ideal-interpreter.md)
-  owns the semantic-work definition, rationale, mathematical stress tests,
-  and unresolved specification questions. The separate interpreter file owns
-  the current deferred specification.
-- [Gödel-machine comparison](./goedel-machine-comparison.md) owns the comparison
-  of proof-governed switching with empirical theory-guided revision. Its
-  cautions inform the deployment-specific boundary assessment; its argument
-  record is not an independent deployment result.
-- [Theory refinement as an interface](./theory-refinement-interface.md) owns
-  the investigation of derive, compare, locate, revise, and evaluate. It
-  requires reconciliation with the interpreter's role and established
-  refinement literature before promotion.
+- The interpreter specification and the semantic-work record are folded
+  into the [resource-bounded ideal interpreter proposal](../../reference/proposals/resource-bounded-ideal-interpreter.md),
+  a deferred attribution device with its stress tests as adoption criteria.
+- The Gödel-machine comparison is folded into
+  [Gödel machines are a proof-governed case of self-modification](../../notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md)
+  as its grounds-for-change section; the machine's classification stays open.
+- The interface investigation moved to the
+  [theory-refinement-interface workshop](../theory-refinement-interface/README.md),
+  which now owns closing condition 3.
 - [Ingest plan from the Astra review](./ingest-plan-from-astra-review.md)
   owns the judgement of the external literature review and the prioritized
   source list and ingest status: introspective multistrategy learning, EURISKO,
@@ -348,7 +345,7 @@ A revised criterion is a design decision, not proof that a builder meets it.
 | Evidence interface | Declaration and proposed protocol implemented; first consuming-project observation pending. |
 | Gödel-machine boundary cases | Categorical exclusions removed; source-specific assessment recorded, deployed qualification remains open. |
 
-The [three episodes](./main-path-episodes.md) check the distinctions against
+The [three episodes](../first-downstream-run/main-path-episodes.md) check the distinctions against
 specified repertoires, tasks, budgets, feedback, and candidate results. They
 are constructed cases. The refinement-interface investigation remains open;
 its task-level descriptions must be separated from implementation guarantees
@@ -400,9 +397,10 @@ waits for.
    builder is the system that executes it, and the software house supplies
    the chosen externally assessed case. Whether other broad builders must
    become software houses remains a side conjecture.
-3. The theory-refinement interface material is reconciled with the established
-   theory-refinement literature without claiming the generic refinement loop,
-   fallibility, or revision search as new.
+3. Moved out on 2026-09-17: the reconciliation of the theory-refinement
+   interface material with the established literature is now the goal of
+   the [theory-refinement-interface workshop](../theory-refinement-interface/README.md)
+   and no longer blocks this workshop's closure.
 4. Every artifact in the linked inventory has a disposition: reframe, keep, or
    decline. Reframes are executed in their own commits, not in this workshop.
 5. After adoption, execute the [KB terminology plan](./tentative-theory-kb-adoption-plan.md)
@@ -436,7 +434,7 @@ also records direct sources for the mathematical and logical stress tests.
 The retained evidence now also includes the fifteen completed ingests and
 the two seed-learning ingests linked in the [source record](./ingest-plan-from-astra-review.md).
 The main-path review uses these sources with the limits recorded in the
-[boundary assessment](./boundary-case-assessment.md). Further source checks
+[boundary assessment](../../reports/retained/theory-builder-boundary-cases-20260917.md). Further source checks
 remain necessary for the internal refinement-interface investigation.
 The tentative-theory entry also uses the Popper 1966 essay's retained schema
 and the full-book ingest of *Conjectures and Refutations*. Retained passages

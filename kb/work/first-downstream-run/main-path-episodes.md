@@ -1,7 +1,7 @@
 # Three episodes for checking the main-path definitions
 
 > **Status:** Illustrative protocol cases, 2026-09-17. Implements step 2 of
-> the [plan](./main-path-plan.md). These are constructed examples, not run
+> the [plan](../theory-builder-refactor/main-path-plan.md). These are constructed examples, not run
 > results or claims about a selected consuming project. They use the
 > [downstream protocol](./commonplace-evidence-protocol.md).
 

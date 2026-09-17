@@ -1,7 +1,7 @@
 # Commonplace's downstream evidence protocol
 
 > **Status:** Proposed evaluation protocol, 2026-09-17. Implements step 1 of
-> the [main-path plan](./main-path-plan.md). No consuming-project run has been
+> the [main-path plan](../theory-builder-refactor/main-path-plan.md). No consuming-project run has been
 > performed. Unfilled study parameters below must be fixed before assessment;
 > this document is not evidence that Commonplace already meets the target.
 

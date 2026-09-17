@@ -157,7 +157,7 @@ The two reachable sets in section 3 can be studied under a declared policy:
 all reachable states, and those reachable by revisions warranted for a
 particular use. Whether local warrant composes across the sequence, and
 whether the result is closed under the seed objective, remain to be shown.
-The [Gödel-machine comparison](./goedel-machine-comparison.md) disputes the
+The [Gödel-machine comparison](../../notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md) disputes the
 closure inference, and the completed adaptive-evaluation ingest makes the
 evaluation protocol a necessary part of that review.
 
@@ -287,7 +287,7 @@ support.
 
 ## Relation to the Gödel-machine comparison
 
-The [Gödel-machine comparison](./goedel-machine-comparison.md), written in a
+The [Gödel-machine comparison](../../notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md), written in a
 parallel session on the same day, places the distinction in the grounds for
 a machinery change: proof under a formalization against evidence relative to
 an objective. This proposal agrees and adds the two limits that survive the

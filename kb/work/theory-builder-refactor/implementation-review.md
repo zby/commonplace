@@ -7,13 +7,13 @@
 
 ## Implemented work
 
-The [Commonplace protocol](./commonplace-evidence-protocol.md) specifies the
+The [Commonplace protocol](../first-downstream-run/commonplace-evidence-protocol.md) specifies the
 delivered product, task and judging roles, consumption records, feedback,
 assessment separation, comparisons, and still-unfilled study parameters.
-The [three episodes](./main-path-episodes.md) distinguish product repair,
+The [three episodes](../first-downstream-run/main-path-episodes.md) distinguish product repair,
 reflective machinery repair, and a broader claim outside the assessed scope.
 The definitions use those distinctions; the
-[boundary assessment](./boundary-case-assessment.md) separates reported source
+[boundary assessment](../../reports/retained/theory-builder-boundary-cases-20260917.md) separates reported source
 evidence from deployment questions the sources do not settle.
 
 The [general-case obligations](../../notes/a-claim-without-external-assessment-carries-three-obligations.md) concern missing
@@ -35,7 +35,7 @@ or active experiments from a builder whose outcomes face external assessment.
 ## Refinement-interface closing condition
 
 Closing condition 3 remains open. The
-[refinement-interface investigation](./theory-refinement-interface.md)
+[refinement-interface investigation](../theory-refinement-interface/theory-refinement-interface.md)
 proposes derive, compare, locate, revise, and evaluate as a machinery
 contract. The new external evidence interface specifies the origin and
 assessment of outcomes; it does not implement those internal operations or

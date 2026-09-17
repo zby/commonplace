@@ -56,7 +56,7 @@ Three placements follow.
 
 - **The universal theory manipulator is derive-only.** (The earlier formal
   limit case, retired from this workshop; the
-  [Gödel-machine comparison](./goedel-machine-comparison.md) now carries the
+  [Gödel-machine comparison](../../notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md) now carries the
   proof-governed contrast.) It answers what follows from the theory. Compare is available
   only when observations enter as theorems, and even then a disagreement with
   an axiom is an inconsistency, not a located fault. Locate, revise against

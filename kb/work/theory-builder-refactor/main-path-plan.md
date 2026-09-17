@@ -54,7 +54,7 @@ acquisition is a field of the interface, not a boundary.
 
 The operator's remark that the system "does not need to make open-ended
 experiments" is read as an experiment constraint, recorded in the
-[protocol's](./commonplace-evidence-protocol.md) acquisition-mode field,
+[protocol's](../first-downstream-run/commonplace-evidence-protocol.md) acquisition-mode field,
 not as a definitional exclusion of active testing.
 
 ## Decisions still open
@@ -69,16 +69,16 @@ destinations, is what triggers promotion and the terminology migration.
 The first consuming project, exact models, budgets, task population,
 reliability target, comparison margin, and horizon remain run choices. Their
 absence blocks a scored evaluation, not protocol drafting. The
-[Commonplace protocol](./commonplace-evidence-protocol.md) records them.
+[Commonplace protocol](../first-downstream-run/commonplace-evidence-protocol.md) records them.
 
 ## Implementation state
 
 | Step | Result |
 |---|---|
-| 1. Observable Commonplace protocol | [Drafted](./commonplace-evidence-protocol.md); run parameters explicit and unfilled; PAST-Bench baseline, controls, and expectation contract added in `ca8a2d95`. |
-| 2. Episodes | [Three constructed cases](./main-path-episodes.md); no empirical results. |
+| 1. Observable Commonplace protocol | [Drafted](../first-downstream-run/commonplace-evidence-protocol.md); run parameters explicit and unfilled; PAST-Bench baseline, controls, and expectation contract added in `ca8a2d95`. |
+| 2. Episodes | [Three constructed cases](../first-downstream-run/main-path-episodes.md); no empirical results. |
 | 3. Definitions and general-case obligations | Five drafts revised against the episodes and trimmed; [general obligations](../../notes/a-claim-without-external-assessment-carries-three-obligations.md) separated by claim and use. |
-| 4. Boundary cases | [Eleven cases assessed](./boundary-case-assessment.md), with primary-source checks and access limits. |
+| 4. Boundary cases | [Eleven cases assessed](../../reports/retained/theory-builder-boundary-cases-20260917.md), with primary-source checks and access limits. |
 | 5. Conjecture | [Working hypotheses restated](./README.md#goal); sufficiency, comparison, and reflection evidence separated. |
 | 6. Review and inventory | [Seven review rows and fourteen artifact dispositions](./implementation-review.md) recorded. |
 | 7. Promotion and migration | Conditional on adoption; not executed. Workshop closure also requires closing condition 3 to be satisfied or explicitly revised. |
