@@ -351,16 +351,46 @@ its task-level descriptions must be separated from implementation guarantees
 before promotion. The experiment workshop below continues to own its
 component-comparison design.
 
+## Adoption
+
+On 2026-09-17 the operator adopted the workshop's conclusions. This record
+is the trigger the [adoption plan](./tentative-theory-kb-adoption-plan.md#adoption-trigger-and-intended-result)
+waits for.
+
+- **Working framings adopted:** the conjecture is stated as sufficiency,
+  comparative, and reflection hypotheses; the doctrine-edit count is a
+  diagnostic; reflection stays a separate condition; the externally tested
+  theory builder is the main path; Commonplace producing a KB for consuming
+  projects is the first arrangement.
+- **Definition destinations:** theory builder, externally tested theory
+  builder, reflective theory builder, and autonomous theory builder go to
+  `kb/notes/definitions/` in the definition type's shape, with their own
+  boundary cases and no links into this workshop. Tentative theory becomes
+  a section of the theory-refinement definition, whose stipulation that the
+  three loop properties define *theory* narrows to *addressable theory*.
+- **Not promoted as definitions:** the resource-bounded ideal interpreter
+  stays a deferred attribution device and becomes a design proposal. The
+  retention policy is not promoted as rules; its obligations and open
+  questions join the general-case obligations in one note, the fence.
+- **Doctrine edits:** vocabulary entries for the promoted terms, the
+  develop-by-using principle, and the three-layer commit convention, as
+  listed in the [implementation review](./implementation-review.md#promotion-and-migration-readiness).
+- **Article dispositions:** keep all four drafts. Reframe the conjecture
+  article's introduction as the main-path case and the training article's
+  program-level introduction toward the reflective builder; update the
+  bootstrapping article's product statement; leave nearest constructions
+  unchanged. No new head article before the first downstream run.
+- **Other outputs:** the boundary-case assessment becomes a retained report;
+  the Gödel comparison folds into the existing Gödel-machine note; the
+  protocol and episodes move to a workshop for the first downstream run;
+  the interface investigation moves to its own workshop under closing
+  condition 3.
+
 ## What closes the workshop
 
-1. The definitions of theory builder, reflective theory builder, autonomous
-   theory builder, resource-bounded ideal interpreter, and externally tested
-   theory builder, together with the borrowed tentative-theory vocabulary,
-   receive library destinations or are declined with a recorded reason.
-   The vocabulary may be a short section of theory refinement rather than a
-   separate definition. Retention-policy obligations receive explicit
-   dispositions informed by the completed ingests; none are promoted merely
-   by accepting the term.
+1. The adopted definitions and the tentative-theory section are in the
+   library, the fence note and the interpreter proposal exist, and the
+   retention-policy obligations have their recorded dispositions.
 2. The research-program articles are given dispositions under the new ordering:
    the learning-methodology conjecture is the head of the program, the theory
    builder is the system that executes it, and the software house supplies
