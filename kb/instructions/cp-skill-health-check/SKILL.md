@@ -1,10 +1,9 @@
 ---
 name: cp-skill-health-check
-description: Diagnose Commonplace project layout, promoted-skill discovery, user-level uv tool installation, command PATH ownership, and launch-environment failures.
+description: Diagnose Commonplace installation, skill discovery, command PATH, and workflows blocked by unavailable sub-agents, nesting depth, or context isolation.
 type: kb/types/instruction.md
 user-invocable: true
-allowed-tools: Read, Grep, Glob, Bash
-context: fork
+allowed-tools: Read, Grep, Glob, Bash, Task
 argument-hint: "[symptom] — optional description of what is broken"
 ---
 
@@ -12,11 +11,20 @@ argument-hint: "[symptom] — optional description of what is broken"
 
 ## EXECUTE NOW
 
-Use this skill when a Commonplace KB has missing skills, missing or failing `commonplace-*` commands, or commands that work in one shell but not in an IDE or agent runtime. It applies both to installed KBs, where shipped content lives under `kb/commonplace/`, and to the Commonplace source repository, where shipped content lives directly under `kb/`.
+Identify the installation or runtime constraint blocking a Commonplace operation and report the smallest repair supported by evidence.
+
+Use this skill when a Commonplace KB has missing skills, missing or failing `commonplace-*` commands, commands that work in one shell but not in an IDE or agent runtime, or a workflow blocked on sub-agent creation or isolation. It applies both to installed KBs, where shipped content lives under `kb/commonplace/`, and to the Commonplace source repository, where shipped content lives directly under `kb/`.
 
 Target symptom: `$ARGUMENTS`
 
 Do not modify files during diagnosis. Report the evidence and the smallest repair. Apply a repair only when the user asked for one.
+
+Run in the context being diagnosed; do not delegate the health check itself.
+If already invoked in a worker, identify that scope and do not extrapolate its
+capabilities to its parent. For a delegation symptom, run Step 3 after the
+layout and skill checks; run the package checks only if the evidence also
+points to an installation or command failure. For a general health check, run
+all steps.
 
 ## Step 1 — Locate the project and classify the layout
 
@@ -52,7 +60,64 @@ test -f .claude/skills/cp-skill-health-check/SKILL.md && echo ".claude projectio
 
 If the canonical skill exists but the current runtime cannot discover its projection, `commonplace-init` may need to be rerun or the runtime may use another skill-discovery surface. Do not repair a Commonplace source checkout with `commonplace-init`; follow the source repository's `AGENTS.md` instead.
 
-## Step 3 — Check the uv tool installation and command ownership
+## Step 3 — Check delegation, agent depth, and isolation
+
+Inspect the current session's exposed tools, runtime instructions, effective
+settings when available, and any supplied launch error. Record:
+
+- whether a harness worker-launch tool is available and permitted;
+- the current agent depth, the maximum permitted depth, and their counting
+  convention, when exposed;
+- how many additional nested worker levels those values permit;
+- whether launch supports a fresh context without the parent's conversation;
+- available concurrent worker capacity, separately from nesting depth.
+
+Report unexposed values as `unknown`. A configuration file is evidence of
+configured intent, not proof that the running session loaded it. Neither an
+installed agent CLI nor a skill's `allowed-tools` declaration proves that a
+worker-launch tool is available. Do not infer depth from agent names, the
+number of visible chats, or the number of free worker slots.
+
+For a failing workflow, read its operative instructions and map the nesting
+needed from the failing caller: who launches whom, and at which stage. Count
+a skill's `context: fork` only if this runtime actually executes it in a
+child context. Sequential sibling workers reuse a level; do not add their
+count to the required depth. For ingest, the agent executing `cp-skill-ingest`
+must be able to launch a fresh drafting worker; if ingest itself runs in a
+child of the user-facing agent, drafting needs a further level. Compare the
+required nesting with the remaining depth at that caller, not merely at the
+health-check agent. If the caller's depth or runtime behavior is unavailable,
+report that comparison as unresolved.
+
+When a delegation symptom remains unresolved and a harness launch tool is
+available and permitted, make at most one diagnostic worker launch from the
+current context. Use a fresh-context option if supported. Give it only:
+
+```text
+This is a Commonplace worker-launch diagnostic. Reply with
+COMMONPLACE_WORKER_OK and any agent-depth or nesting-limit values explicitly
+exposed in your runtime instructions; report unknown otherwise. Do not read
+files, use tools, invoke skills, spawn workers, or modify anything.
+```
+
+Collect the response and release the worker through the harness when
+supported. Preserve any launch failure verbatim. Success establishes only
+that one child could run from this context at this time; it does not establish
+the maximum depth or prove conversation isolation. Establish isolation from
+the launch API's documented contract and the actual launch arguments; otherwise
+report it as unknown. Do not probe recursively or launch an agent CLI from
+the shell. If probing is unavailable or prohibited, report the evidence gap
+and continue diagnosis.
+
+Classify the evidence as missing launch capability, delegation prohibited,
+depth exhausted, concurrent capacity exhausted, isolation unavailable, another
+launch failure, or unresolved. A missing tool alone does not establish why it
+is missing. Recommend a shallower entry point, enabling supported delegation,
+or waiting for an owned worker slot only when the evidence supports that
+repair. Report the specific workflow stage affected. A diagnosis does not
+authorize changing runtime settings or bypassing the workflow's isolation rule.
+
+## Step 4 — Check the uv tool installation and command ownership
 
 On Linux/macOS:
 
@@ -86,7 +151,7 @@ Classify the result:
 
 Do not use `uv tool install --force` as the default repair for an executable conflict. First identify which installation owns the conflicting name and remove or reorder the stale owner.
 
-## Step 4 — Check legacy project-environment residue
+## Step 5 — Check legacy project-environment residue
 
 Inspect only; do not delete:
 
@@ -104,7 +169,7 @@ export UV_CACHE_DIR="$PWD/.uv-cache"
 
 That exact file is obsolete after the user-level tool works in fresh processes. An edited `.envrc` must be reviewed manually. A `.venv` may hold the project's own dependencies; never classify it as removable merely because Commonplace no longer needs it.
 
-## Step 5 — Check package and validator health
+## Step 6 — Check package and validator health
 
 If this is an installed KB:
 
@@ -121,9 +186,9 @@ uv run pytest -q
 
 Interpretation:
 
-- Command not found: return to step 3.
+- Command not found: return to step 4.
 - Import or dependency error: reinstall the uv tool. For an editable source install, metadata and dependency changes require `uv tool install --reinstall --python ">=3.11" --editable .` even though ordinary source edits do not.
-- Validator runs: the command package is healthy; focus on skill discovery or launch-environment propagation.
+- Validator runs: the command package is healthy; this does not establish worker availability, nesting depth, or isolation support.
 - `uv run pytest` fails before tests start: the source project's dependency environment is unhealthy. `pytest` is a development dependency, not part of the Commonplace command tool.
 
 ## Repair commands
@@ -146,7 +211,7 @@ After `uv tool update-shell`, fully restart the shell, IDE, desktop agent, or se
 
 One uv tool installation supplies one active Commonplace version per OS user. Switching between published and editable sources changes the command implementation for every project under that user.
 
-## Step 6 — Report
+## Step 7 — Report
 
 Use this format:
 
@@ -156,10 +221,18 @@ Commonplace health check:
 - Layout: installed KB / source repo / problem
 - Control-plane file: OK / problem
 - Runtime skills: OK / problem
-- uv tool installation: OK / problem
-- Runtime PATH: OK / problem
-- Command ownership: uv tool / conflict / missing
-- Validator: OK / problem
+- Diagnostic context: failing caller / other context / unknown
+- Worker launch: available / unavailable / prohibited / unknown
+- Agent depth: current / maximum / counting convention, or unknown
+- Remaining nesting levels: number / unknown
+- Workflow nesting required: number and caller / unresolved / not applicable
+- Fresh-context isolation: supported / unavailable / unknown
+- Concurrent worker capacity: available / exhausted / unknown
+- Launch probe: succeeded / failed / not run; reason and scope
+- uv tool installation: OK / problem / not checked
+- Runtime PATH: OK / problem / not checked
+- Command ownership: uv tool / conflict / missing / not checked
+- Validator: OK / problem / not checked
 
 Likely cause:
 <one or two sentences>
@@ -179,9 +252,12 @@ List independent problems in this blocking order:
 
 1. Wrong directory or missing initialized layout.
 2. Missing canonical skill or runtime projection.
-3. uv or the `llm-commonplace` tool is missing.
-4. uv's tool executable directory is absent from the consuming process's `PATH`.
-5. Another executable shadows the uv tool.
-6. Package import, dependency, or validator failure.
+3. Required worker launch, nesting depth, capacity, or isolation is unavailable.
+4. uv or the `llm-commonplace` tool is missing.
+5. uv's tool executable directory is absent from the consuming process's `PATH`.
+6. Another executable shadows the uv tool.
+7. Package import, dependency, or validator failure.
 
-Do not claim the installation is fixed unless the failing check passes in the same launch class that originally failed.
+Do not claim the problem is fixed unless the failing check passes in the same
+launch class and, for delegation failures, at the same caller depth that
+originally failed. Distinguish observed results, configured limits, and unknowns.
