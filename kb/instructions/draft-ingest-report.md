@@ -127,6 +127,12 @@ durable report.
    material consequence into `Connections Found`, `Extractable Value`, or
    `Limitations (our opinion)`.
 
+   When a result materially depends on the tested decomposition, keep that
+   qualification beside the result in `Summary`, `Connections Found`, and
+   `Extractable Value` wherever it appears. Name only architectural details
+   needed to understand the comparison or bound its reuse; an exhaustive
+   decomposition or architectural taxonomy is not required.
+
 5. If the source's subject or mechanism is learning or adaptation, including
    a conceptual account with no empirical results, read and apply
    [Assess learning claims during ingest](./assess-learning-claims-during-ingest.md).
