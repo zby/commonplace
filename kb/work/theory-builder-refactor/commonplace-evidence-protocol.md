@@ -54,8 +54,22 @@ For each episode retain the task and acceptance contract, delivered KB and
 software versions, consumer configuration, budget and usage, output, judge's
 decision and reason, and the feedback returned to the builder. Record which
 KB artifacts were actually retrieved or read before a consequential decision.
-An installed KB is not evidence of consultation; consultation is not yet
-evidence of causal contribution.
+State in advance, per task, an expectation contract: which artifact the
+consumer should consult, what trace would show it, and what a wrong-source
+answer would look like. Score the trace against that contract. An installed
+KB is not evidence of consultation; conformance to the expected pathway is
+evidence of consultation, not of causal contribution, which the matched
+interventions below establish.
+
+Type task families by what the consumer must do with the delivered KB:
+look up a retained commitment, re-execute a retained procedure, consult the
+KB unprompted at the right moment under noise, and use a revised
+commitment without the superseded one leaking. These are the four
+capabilities [PAST-Bench](../../sources/past-bench-personal-agents-pdf.ingest.md)
+tests. The third is the failure in
+[episode 2](./main-path-episodes.md#2-reflective-machinery-revision); the
+fourth is the consumer-side test of every theory revision the builder
+ships.
 
 Judges assess the work against the task contract, rather than accepting it
 because a methodology note passed review. Mask the KB treatment where
@@ -95,12 +109,24 @@ do not credit an easier criterion as an improvement in the builder.
 
 ## Comparisons and what they establish
 
-Use a frozen seed builder as the baseline for an extension claim. Compare
-later work under matched task, consumer, model, and resource conditions;
-repeat or counterbalance conditions as the study design requires. A single
+Use a frozen seed builder as the baseline for an extension claim. The
+baseline for a retained change is the same later task run with that change
+removed, under matched consumer, model, prompt, grader, and resource
+conditions; the seed's score on an earlier task is calibration, not the
+baseline, because a gain between tasks confounds the change with task
+drift, model variance, and scoring noise.
+[PAST-Bench](../../sources/past-bench-personal-agents-pdf.ingest.md)
+separates the two and reports the matched gap as its primary quantity.
+Repeat or counterbalance conditions as the study design requires. A single
 seed failure followed by a candidate success does not establish a new
 capability. Retained changes, their later consumption, and their measured
 effect jointly support a bounded extension claim.
+
+Add control runs that bound the alternative explanations of a gain: the
+task with the retained state removed, with a distractor artifact that
+resembles it, with a stale version of it, and with the wrong mechanism able
+to supply the answer. A gain counts only if it clears what the controls
+explain.
 
 For the comparative hypothesis, also assess direct search over the same raw
 records without the learned methodology. Pin what each condition receives,

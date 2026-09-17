@@ -1,8 +1,9 @@
 # Autonomous theory builder
 
 > **Status:** Workshop definition, 2026-09-10; revised 2026-09-17 against the
-> [main-path episodes](./main-path-episodes.md). Autonomy names who performs
-> internal roles. Reliability and objective governance remain separate.
+> [main-path episodes](./main-path-episodes.md) and trimmed the same day.
+> Autonomy names who performs internal roles. Reliability and objective
+> governance remain separate.
 
 An **autonomous theory builder** is a [theory builder](./theory-builder.md)
 whose theory-building pathway is
@@ -17,25 +18,23 @@ extending and repairing the machinery.
 Users remain outside the builder when they supply questions, cases, evidence,
 requirements, observations, or acceptance judgments. Whether a person's
 judgment is an external acceptance judgment or an internal evaluation is
-decided by the role rule, not by who makes it. A person evaluating a candidate
-theory or selecting its successor performs an internal role; a person judging
-the resulting product against the external task contract does not thereby
-perform either role. Report each consequential role as human, computational,
-or joint, and declare the seed and its construction separately from
-interventions during the assessed run.
+decided by the role rule, not by who makes it: evaluating a candidate theory
+or selecting its successor is internal, and judging the resulting product
+against the external task contract is not. An assessment reports each
+consequential role as human, computational, or joint, and declares the seed
+and its construction separately from interventions during the assessed run.
 
 Autonomy is independent of [reflection](./reflective-theory-builder.md) and
-of [extension](./theory-builder.md#extension). Computational performance of
-a role does not establish its reliability. The research target is
+of [extension](./theory-builder.md#extension), and computational performance
+of a role does not establish its reliability. The research target is
 **warranted** autonomy in the sense of
 [warranted autonomy is bounded by oracle domain](../../notes/warranted-autonomy-is-bounded-by-oracle-domain.md):
 the builder's evaluators cover the revisions it accepts with the required
 confidence. Reduction of human presence alone is not the target.
 
-Computational performance of every internal role does not determine who may
-change the objective or what would warrant that change. The declared evidence
-interface can include externally supplied acceptance judgments while the
-builder remains autonomous. The
+Autonomy does not determine who may change the objective or what would
+warrant that change. The declared evidence interface can include externally
+supplied acceptance judgments while the builder remains autonomous; the
 [retention policy's objective clause](./theory-retention-policy.md#the-objective-clause)
 owns objective governance and its open questions.
 
