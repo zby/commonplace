@@ -1,0 +1,398 @@
+---
+description: "Evidence supplement: theory-builder boundary and lineage, the three hypotheses with refuters, the externally tested evidence interface, the downstream protocol's shape, component experiments, and boundary cases; a first design, not a result"
+type: kb/articles/types/article.md
+status: draft
+byline: Zbigniew Lukasiak
+source_notes:
+  - kb/notes/definitions/theory-builder.md
+  - kb/notes/definitions/externally-tested-theory-builder.md
+  - kb/notes/definitions/reflective-theory-builder.md
+  - kb/notes/definitions/autonomous-theory-builder.md
+  - kb/notes/definitions/actionable-methodology.md
+  - kb/notes/definitions/theory-refinement.md
+  - kb/notes/a-claim-without-external-assessment-carries-three-obligations.md
+  - kb/notes/retained-theory-intervention-isolates-one-explicit-surface.md
+  - kb/notes/theory-refinement-may-improve-sample-efficiency-under-shifts.md
+  - kb/notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md
+  - kb/notes/an-action-model-matters-only-through-its-consumption-path.md
+  - kb/notes/evidence/commonplace-as-a-reflective-system.md
+---
+# How the Theory-Refinement Program Would Be Tested
+
+*Hypotheses, evidence interface, protocol shape, and component experiments: a first design*
+
+> **Draft supplement.** This develops the testing side of [Learning by
+> Theory Refinement with Fixed
+> Models](./learning-by-theory-refinement-with-fixed-models.md). Everything
+> here is a first design that needs much more testing before a scored run,
+> and it may change. Comments and counterexamples are welcome on [the
+> repository's GitHub Discussions
+> page](https://github.com/zby/commonplace/discussions).
+
+**TL;DR.** The lead article proposes that a system can learn by refining
+written theories while its model weights stay fixed. This supplement says
+what would count as evidence. It defines the system under test, states the
+three hypotheses with what would refute each, describes the evidence
+interface that makes outcome comparison possible, gives the shape of the
+first protocol, and specifies component experiments that can run before a
+whole system exists. It also places existing systems against the
+definitions. No run has been performed. The setup is stated so that it can
+be criticized, not because it is settled.
+
+## The system under test
+
+A [theory builder](../notes/definitions/theory-builder.md) is the complete
+persistent system responsible for developing and revising tentative
+theories about the subjects it investigates. The definition matters for
+testing because a claim about a learning method is a claim about this whole
+system, and the components usually named, a model, a harness, a refinement
+algorithm, are each only part of it.
+
+**Boundary.** The builder includes the theories it remains responsible for,
+its machinery, and every person or program that fills an internal
+theory-building role. Machinery means representations and the procedures
+that derive their consequences, repair operators, evaluators, models,
+retained instructions, tools, indexes, validators, and the records from
+which these can be rebuilt. Users are outside when they supply questions,
+cases, evidence, preferences, or acceptance judgments. A person is inside
+only when the system depends on them to construct a first theory, interpret
+one, choose what to blame, produce or evaluate a revision, select what to
+retain, or repair the machinery. The same person can be on both sides in
+different interactions. An assessment therefore declares the boundary it
+was made against and reports each consequential role as human,
+computational, or joint.
+
+**Seed.** The seed is the machinery and theories the builder holds at the
+declared start of an assessment. Interventions during the run, and any
+extension, are measured against it. Fixed models are a constraint on
+particular studies, not part of the definition.
+
+**Persistence and lineage.** Persistence is continuity of responsibility
+across demands, plus lineage: each successor state is produced through the
+preceding state's own revision process. A change installed from outside
+that process is an intervention. It is recorded, and its result is not
+credited to the builder. No particular component need survive; a lineage
+that has revised away every part of its seed is still the same builder.
+Persistence establishes neither retention nor learning.
+
+**Extension.** An extension is a retained change to the machinery that
+demonstrates capability beyond what the seed delivered, on a stated demand
+under a stated budget. The baseline is the same later demand run without
+the retained change under matched conditions. The seed's earlier score on
+an earlier demand is not the baseline, because a gain between episodes
+confounds the change with task drift, model variance, and scoring noise.
+[PAST-Bench](../sources/past-bench-personal-agents-pdf.ingest.md) builds
+its evaluation on this matched ablation. Installing a change is not
+evidence that later work used it, and use is not evidence that it caused an
+improvement; an extension claim needs an observed [consumption
+path](../notes/an-action-model-matters-only-through-its-consumption-path.md)
+and an outcome comparison.
+
+**Two independent conditions.** A builder is
+[reflective](../notes/definitions/reflective-theory-builder.md) when it
+refines a causally connected theory of its own theory-building machinery:
+machinery changes update the theory, and theory revisions change the
+machinery. A builder is
+[autonomous](../notes/definitions/autonomous-theory-builder.md) when
+computation fills every internal role over the assessed horizon. Neither
+implies the other, and neither implies extension, reliability, or the right
+to change the objective. Extension is not a third condition; it is the
+quantity the hypotheses measure.
+
+## The hypotheses
+
+The program adopted three hypotheses on 2026-09-17. They are quoted as
+adopted. "Currently public" means available as of that date; an assessment
+declares its model versions and keeps their weights fixed, and hosted
+models count.
+
+> **Sufficiency hypothesis.** A training methodology expressed in
+> natural-language and symbolic form is
+> [actionable](../notes/definitions/actionable-methodology.md) for a
+> computational operator using fixed weights from currently public models.
+> Without people performing its internal theory-building roles or designing
+> a new learning method for each area, the builder develops, retains, and
+> uses theories and procedures across declared practical areas. Its later
+> work meets a reliability target under a stated budget and external
+> assessment protocol. An area is a consuming project's domain with an
+> interface that can be declared and observed.
+
+Refuted, for the assessed areas and budget, by a builder that reaches the
+target only with a person in an internal role, or only after a new learning
+method is designed for an area, or that fails to reach it. Success on one
+area supports that area; breadth needs several declared areas and evidence
+about transfer between them.
+
+> **Comparative hypothesis.** Under matched demands and declared resources,
+> this methodology produces useful capability gains over the frozen seed
+> and a baseline that searches the raw records without the learned
+> methodology. Its downstream reliability is comparable to a human-staffed
+> builder's under a margin set before assessment. The computational
+> comparisons use the same fixed-model constraint and account for both
+> adaptation and task costs.
+
+Refuted by matched runs in which the frozen seed or the raw-record baseline
+does as well at comparable cost, or in which the human-staffed builder
+exceeds the preset margin. The raw-record baseline is the important
+control: it asks whether the retained methodology adds anything beyond
+access to the same records.
+
+> **Reflection hypothesis.** A builder whose machinery changes pass through
+> a causally connected self-theory acquires extensions that a matched
+> builder without one does not, under the same demands, budget, and
+> external assessment. Better downstream outcomes alone do not test this;
+> the records of a reflective episode and a matched builder that retains
+> content without a self-theory do.
+
+Refuted by a matched builder without a self-theory that acquires the same
+extensions under the same conditions, or by reflective episodes whose
+records show the machinery changes did not pass through the self-theory.
+
+None of the three promises success on every problem or within every
+budget. A finite evaluation supports a bounded claim.
+
+## The evidence interface
+
+Every assessed builder declares an evidence interface: how cases,
+consequences, and acceptance judgments reach it, which claims they can
+assess, and under what assumptions. An [externally tested theory
+builder](../notes/definitions/externally-tested-theory-builder.md) is one
+whose interface supplies three things from outside the boundary, for a
+stated claim and scope:
+
+1. **An external falsifier.** Applying a theory produces consequences
+   judged against an externally supplied outcome contract: a failing test,
+   an invalid release, a rejected answer. The signal says the outcome
+   failed; it does not locate the fault.
+2. **An external objective.** Acceptance requirements are supplied and
+   judged outside the builder. A change to them is declared and assessed
+   separately.
+3. **An outcome level independent of the builder's evaluators.** The
+   builder's approval of its own theory or revision is not the outcome
+   judgment. This is independence of roles, not a guarantee of correct
+   measurement.
+
+With these supplied, an outcome comparison against a human-staffed builder
+can proceed before the builder's internal questions about warrant are
+settled. Internal diagnosis, active probes, and targeted experiments stay
+inside this case as long as the consequences of the resulting change still
+face the external assessment, with their selection and cost recorded.
+
+For a claim the interface does not assess, [the builder owes three things
+for itself](../notes/a-claim-without-external-assessment-carries-three-obligations.md):
+a rule for what counts as a contradiction and what support licenses each
+use; a comparison level when a revision changes the acceptance rule; and a
+performance measure that does not rest on its own evaluators. The third
+carries attribution. External assessment does not locate a fault, so a
+claim that asserts a cause, inside or outside the main path, needs a trace,
+intervention, or test that can discriminate between the theory, its
+interpretation, retrieval, execution, and the environment.
+
+That requirement is where reflection evidence lives. A reflective episode
+is evidenced by one connected path: externally assessed work exposes a
+possible machinery limit; diagnosis revises an identified commitment in the
+self-theory; that revision guides a machinery change whose installation
+updates the self-theory in turn; later work uses the changed machinery and
+its product is assessed externally. A machinery change followed by better
+outcomes does not establish that path. Nor does a predicted behavioural
+change after altering a commitment, on its own: instruction-following
+produces one too. Evidence that a retained theory was used as an
+explanation additionally needs predicted changes on cases the text does not
+state verbatim, variation of the path by which the theory is consumed, and
+an account of whether other records could supply the same understanding.
+The two-way causal connection between Commonplace's methodology notes and
+its validators and skills is recorded in [Commonplace as a reflective
+system](../notes/evidence/commonplace-as-a-reflective-system.md); that
+establishes reflection today with people inside the boundary, not that any
+reflective episode has paid.
+
+## The first arrangement and its protocol
+
+Commonplace producing a knowledge base for a consuming project is the
+first arrangement. The builder includes knowledge-base production,
+diagnosis, revision, evaluation, selection, and machinery maintenance. The
+consumer receives a versioned release and performs its own tasks. Task
+suppliers and output judges are outside. The product is the delivered
+knowledge base together with its validators, skills, and indexes. Whether
+the release includes the builder's own methodology notes and diagnostic
+history, or only the product knowledge base, is a design variable;
+[WikiSkill](../sources/wikiskill-persistent-knowledge-for-skill-evolution.ingest.md)
+reports lower performance when its solver could read the improvement record
+during training, with the authors' hypothesis that direct use made the
+record less informative for later improvement.
+
+The protocol freezes ten declarations before the first scored episode:
+the consuming project and its admissible demands; the seed, pinned at run
+start; the exact model versions for builder and consumer; the task supply
+rule and how omitted or failed tasks are recorded; the outcome contract per
+task and who may change it; budget ceilings for compute, time, evidence,
+and internal human work, equal across compared conditions; the horizon and
+stopping rule, with no stopping when a desired score first appears; the
+reliability target and comparison margin; the feedback fields and their
+delay; and the acquisition mode, a passive stream by default with bounded
+diagnostic probes allowed and charged. Every one of these is currently
+unfilled.
+
+Each episode retains the task and its contract, the delivered versions,
+the consumer's configuration, budget usage, the output, the judge's
+decision and reason, the feedback returned, and which artifacts the
+consumer actually read before a consequential decision. An expectation
+contract stated per task before it runs says which artifact should be
+consulted and what a wrong-source answer would look like. Conformance to
+that pathway is evidence of consultation, not of causal contribution.
+
+Development evidence and assessment evidence are separated. Incoming work
+and disclosed feedback drive development. Before the final comparison the
+candidate release is frozen and assessed on reserved tasks whose outcomes
+have not guided its construction. Once an assessment result is used to
+choose or repair a candidate, it becomes development feedback for that
+candidate's successors. Any later reuse of a fixed holdout needs a stated
+information-release mechanism and an enforced budget; the [adaptive data
+analysis literature](../sources/generalization-adaptive-data-analysis-holdout-reuse.ingest.md)
+is the input, and the protocol does not assume its theorems already apply
+to semantic judgments.
+
+Four comparisons carry the hypotheses. The matched ablation, the same
+later task with a retained change removed, supports an extension claim.
+Control runs bound the alternative explanations of a gain: the task with
+the retained state removed, with a distractor that resembles it, with a
+stale version, and with the wrong mechanism able to supply the answer.
+Direct search over the raw records without the learned methodology tests
+the comparative hypothesis. A human-staffed builder under the same demands
+and resources, with every internal human intervention recorded, supplies
+the reliability comparison. Removing the knowledge base usually removes
+information the task needs, so that comparison measures benefit only;
+measuring the harm of stale or wrong content needs a condition where
+current authoritative evidence stays available while the knowledge-base
+content varies, the split [the Memory Trust
+Gap](../sources/the-memory-trust-gap.ingest.md) makes between its benefit
+and safety suites.
+
+A consumer's rejection is evidence about the combined task, consumer, and
+knowledge-base arrangement, not automatic refutation of a note. Success on a
+selected subset does not establish reliable continuation across the
+admitted workload. No consuming project has been selected and no episode
+has been run.
+
+## Component experiments that can run first
+
+The whole-system protocol waits on a consuming project. The paradigm's
+central mechanism can be tested sooner in a bounded component, using the
+release-exporter case from the lead article. The design separates three
+questions: whether a retained theory influences decisions, whether it
+improves transfer and recovery, and whether it reduces the observations
+needed to learn.
+
+Run paired continuations from the same product snapshot with the same fixed
+models, tools, request sequence, and resource ceilings, and the same source
+observations, which each treatment retains in its own form. Vary that form.
+
+| Retained treatment | What the comparison tests |
+|---|---|
+| An explicit theory with assumptions and scope | Whether a revisable explanation guides useful inference and later updates |
+| Raw records of the same observations | Whether synthesis helps beyond reconstructing an account when needed |
+| A descriptive summary of those observations | Whether the explanatory account helps beyond compact access to the facts |
+| A plausible wrong theory | Whether a specified mistaken premise produces its predicted errors and is corrected after contrary evidence |
+
+Every treatment may revise executable machinery and its tests, and in every
+treatment the model may still build an explanation while reasoning. What
+differs is what survives to the next decision. Publish the treatment texts,
+retained revisions, and the fact inventory they were built from, so a
+reader can inspect the differences.
+
+Test two kinds of change as separate request histories. In the first,
+adding another configured input preserves the theory's account. In the
+second, adding indirect includes breaks its exhaustiveness assumption.
+Include unaffected files in both, and reserve later edits to different
+files for testing transfer.
+
+- **Causal contribution.** A [retained-theory
+  intervention](../notes/retained-theory-intervention-isolates-one-explicit-surface.md)
+  at a selected decision holds everything else fixed and varies the theory
+  text. It should change search, diagnosis, or recovery as predicted, and a
+  wrong theory should add a specific error pattern. That establishes
+  influence. Explanatory guidance additionally requires correct handling of
+  consequences the text does not state and appropriate revision when
+  evidence contradicts it.
+- **Advantage.** The theory treatment should improve check selection and
+  recovery while changes preserve its account. Its advantage may disappear
+  or reverse when an assumption breaks and the theory misdirects. Measure
+  that misdirection separately from recovery, because rapid recovery can
+  erase the initial loss in a whole-run score.
+- **Sample efficiency.** A correct theory may [reduce the observations
+  needed to adapt](../notes/theory-refinement-may-improve-sample-efficiency-under-shifts.md)
+  by letting one discovered dependency change decisions for several files.
+  Count inspected cases and feedback used, beside missed defects,
+  unnecessary checks, regressions, rollbacks, and total cost including
+  theory construction, retrieval, validation, and maintenance.
+
+Report completion and defect counts, resource use, and all paired
+differences per treatment and history, with exact binomial intervals for
+pass rates. Small samples leave wide uncertainty even when every run
+passes. Predeclare the primary comparisons. A fifth treatment retaining
+curated worked cases instead of a general explanation is the natural next
+comparison: an explanation reconstructed and discarded is work repeated on
+every use, while a retained theory can carry a mistaken abstraction
+forward.
+
+A null intervention result does not show the system lacks a theory; it
+may reconstruct the same understanding from other retained state. If the
+controls repeatedly match the theory treatment at lower cost, the advantage
+hypothesis fails in that regime. Neither result settles the whole-system
+hypotheses.
+
+## Boundary cases
+
+The definitions are sharpest at their edges. These placements are readings
+of published sources, not reproduced experiments.
+
+| System | Theory builder? | Externally tested? | Reflective? | Autonomous? |
+|---|---|---|---|---|
+| FORTE, the classical refinement system | No: one offline run over supplied cases, no continuing responsibility | — | No | Not applicable |
+| Schmidhuber's Gödel machine | Open: depends on whether retained content is revised against evidence or by proof alone | Open | Reflective system, yes; reflective builder, open | Every role it has, within its proof surface |
+| Darwin Gödel Machine | No continuing responsibility for any agent | External benchmark with a detected proxy failure | — | — |
+| Commonplace's note-review loop | Yes, human-staffed | No: a note's approval is internal evaluation | Yes, with the operator inside | No |
+| Commonplace producing a KB for a consuming project | Yes | Candidate; observed once release, consumption, and outcome records exist | Yes | No |
+
+The [Gödel machine](../notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md)
+row is the informative one. It is persistent, holds a self-representation,
+and rewrites itself computationally under the same requirement that every
+successor arise through its own machinery. What it does not do is accept a
+change on evidence and recover from a wrong one; it admits a rewrite only
+with a proof. Whether that makes it a theory builder is assessed per
+deployment and stays open.
+
+## Limits
+
+Everything above is design. The freeze table is empty, no consuming
+project has been chosen, and the component experiment has not been run. The
+definitions were tested against constructed episodes to see whether the
+vocabulary can describe a run, and against published systems for their
+edges, and they have already been revised by that. We expect the first
+real run to break something in them; the plan is to revise the definition
+and retain the run record as evidence, not to patch the protocol around it.
+
+Two open questions bound what any result would establish. Whether locally
+warranted revisions compose into a warranted lineage is unsettled, and once
+an evaluation result guides the next revision the ordinary generalization
+argument no longer applies without a reuse protocol. And no standard
+separates an interpretation error from a theory error; an outcome
+comparison records a failure without attributing it, and every causal
+claim needs its own discriminating test.
+
+## Where to go next
+
+The four definitions,
+[theory builder](../notes/definitions/theory-builder.md),
+[externally tested](../notes/definitions/externally-tested-theory-builder.md),
+[reflective](../notes/definitions/reflective-theory-builder.md), and
+[autonomous](../notes/definitions/autonomous-theory-builder.md), carry
+their exclusions, misuse cases, and boundary cases in their own words. The
+[three obligations](../notes/a-claim-without-external-assessment-carries-three-obligations.md)
+note states what the main path's boundary is and keeps the open questions.
+The [software-house
+supplement](./an-automated-software-house-as-an-alternative-test.md)
+gives the alternative arrangement with its own conditions, and the
+[bootstrap supplement](./bootstrapping-the-first-automated-software-house.md)
+says how Commonplace's remaining human roles would transfer to
+computation.
