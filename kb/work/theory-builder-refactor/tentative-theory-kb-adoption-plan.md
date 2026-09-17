@@ -7,6 +7,37 @@
 > commit `1b995707`. Execution starts at step 2. The operator is handing
 > this to a Codex session.
 
+## Mission
+
+**Intent.** Make the library speak with one voice about the status of a
+retained theory: *tentative theory*, Popper's term, applied to an
+addressable theory, with the definition at
+[theory refinement](../../notes/definitions/theory-refinement.md#tentative-theory)
+as the single link target. The rename serves readers who navigate by the
+term; it must not change any claim.
+
+**End state.** Every current KB use of the old term resolves to the adopted
+vocabulary or is recorded as a deliberate survivor with its reason; every
+link that once pointed at the old workshop entry or the deleted
+`fallible-theory.md` points at the section above; the cost-sensitive
+formalisms note is relocated under its new title; validation passes on every
+changed artifact; and the migration commits state what moved, how many, and
+what was kept or deferred.
+
+**Constraints, non-negotiable.** Source snapshots, verbatim quotes, occasion
+fields, bibliographic titles, and capture metadata are never edited.
+Immutable review results and event records keep their wording. *Fallible*
+stays wherever it is the ordinary adjective for an evaluator, interpreter,
+or process. A relocation commit is pure. No library link points into
+`kb/work/`. Coordinate shared files with their active writers.
+
+**Left to the executor.** The order of the groups, the grouping itself, how
+occurrences are classified beyond the rule above, and whether an article's
+wording waits for its adopted reframe. The numbered sections below are the
+author's inventory and suggested route, not a required sequence; where they
+conflict with the live checkout, the checkout wins and the deviation is
+recorded in the commit.
+
 ## Adoption trigger and intended result
 
 The trigger was the operator's adoption of the workshop conclusions,
