@@ -86,6 +86,16 @@ interpreter stays an argument record while its guarantee questions remain
 open; the general retention policy is not promoted as a settled universal
 rule.
 
+Two doctrine edits join the promotion commit, adopted on 2026-09-17 and
+grounded in the [README's Goal](./README.md#goal). In the root instruction
+file, beside the statement that the repository uses its own knowledge
+system: "Develop Commonplace by using it. Practical demands expose limits
+in its theories and machinery; reflective revision turns them into retained
+improvements; recorded episodes become evidence for the research program."
+In its git rules: "A commit states which justification it carries when more
+than one could: product use, reflective learning, or research evidence. A
+research-evidence commit cites the protocol record it feeds."
+
 The [adoption plan](./tentative-theory-kb-adoption-plan.md) owns the library
 terminology sweep and source/provenance exceptions. Its trigger is adoption
 of the conclusions and destinations, not merely completion of workshop

@@ -89,7 +89,24 @@ The work combines specification with bootstrap through use. Declare the
 evidence interface and comparison first, then let substantive tasks expose
 product and machinery problems. Retained changes are assessed on later
 work. Internal diagnosis and targeted experiments remain in this path;
-their cost and evidence exposure are recorded. An
+their cost and evidence exposure are recorded.
+
+This is the project's development principle, adopted on 2026-09-17 for the
+doctrine at promotion: **develop Commonplace by using it.** Practical
+demands expose limits in its theories and machinery; reflective revision
+turns them into retained improvements; recorded episodes become evidence
+for the research program. The workshop grounds it: the
+[reflective definition](./reflective-theory-builder.md) makes external work
+the test of the machinery, the [protocol](./commonplace-evidence-protocol.md)
+says what a recorded episode must contain, and the
+[second episode](./main-path-episodes.md#2-reflective-machinery-revision)
+shows the loop end to end. A change carries one of three justifications,
+product use, reflective learning, or research evidence, and states which
+when more than one could apply; that keeps research machinery from making
+the tool cumbersome and keeps ordinary engineering from being retold as
+evidence for reflection. Episodes are recorded, not selected: selection
+after outcomes are known is the adaptive-reuse hazard the protocol reserves
+evidence against. An
 [ideal interpreter](./resource-bounded-ideal-interpreter.md) is no longer a
 prerequisite of the outcome comparison. Its proposed attribution guarantees
 remain open.
@@ -228,6 +245,14 @@ successor is not credited to the builder. Whether warranted revisions
 compose into a warranted lineage stays the retention policy's open third
 obligation; in the main path the lineage is assessed at the outcome level
 through the evidence interface, which is outside the builder.
+
+From the review's second follow-up, the operator adopted the development
+principle stated in the Goal, develop Commonplace by using it, with the
+three-layer justification for changes. It belongs in the doctrine, beside
+the root instruction's statement that the repository uses its own knowledge
+system, and in the git rules as a one-line commit convention; the workshop
+supplies its grounding. Both edits wait for the promotion commit and are
+listed in the [implementation review](./implementation-review.md#promotion-and-migration-readiness).
 
 ## Read the current definitions in this order
 
