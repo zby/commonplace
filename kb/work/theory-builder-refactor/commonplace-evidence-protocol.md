@@ -21,7 +21,14 @@ Someone who diagnoses a note or writes the builder's repair is filling an
 internal role, even if that person also supplies tasks in another interaction.
 
 Commonplace's product is the delivered KB together with the validators,
-skills, indexes, and other supporting software in that release. Continuing
+skills, indexes, and other supporting software in that release. State
+whether the release includes the builder's own diagnostic memory, its
+methodology notes and revision history, or only the product KB. This is a
+design variable, not a default: the
+[WikiSkill ingest](../../sources/wikiskill-persistent-knowledge-for-skill-evolution.ingest.md)
+reports lower performance when the solver could read the improvement wiki
+during training, with the authors' hypothesis that direct use made the
+traces less informative for later improvement. Continuing
 responsibility for developing that software makes this a
 [software-house](../../notes/definitions/software-house.md) case. The broader
 [side conjecture](../../notes/an-open-domain-theory-builder-becomes-a-software-house-when-new-domains-require-production-machinery-changes.md)
@@ -127,6 +134,17 @@ task with the retained state removed, with a distractor artifact that
 resembles it, with a stale version of it, and with the wrong mechanism able
 to supply the answer. A gain counts only if it clears what the controls
 explain.
+
+Declare, for each with-and-without-KB comparison, what the no-KB condition
+knows. Removing the KB usually removes information the task needs, so that
+comparison measures benefit and cannot measure the harm of stale or wrong
+content. Measuring harm requires a condition in which current authoritative
+evidence stays available to the consumer while the KB content varies. The
+[Memory Trust Gap ingest](../../sources/the-memory-trust-gap.ingest.md)
+separates these as its benefit and safety suites, and reports that a
+consumer can read timestamps correctly and still follow a misleading recency
+cue, so provenance metadata is tested with the consuming model, not assumed
+to work.
 
 For the comparative hypothesis, also assess direct search over the same raw
 records without the learned methodology. Pin what each condition receives,

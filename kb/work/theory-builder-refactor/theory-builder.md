@@ -43,6 +43,14 @@ evaluators and evidence procedures, models, retained instructions, tools,
 indexes, validators, and the records from which any of these can be
 reconstructed. The interpreter's current knowledge and procedures are the
 part of this machinery available to interpretation.
+[WikiSkill](../../sources/wikiskill-persistent-knowledge-for-skill-evolution.ingest.md)
+is an external instance of this list with three layers and three roles:
+immutable traces, a persistent wiki of diagnoses and intervention history,
+and active skills, worked by a maintainer, a proposer, and a solver under a
+score gate. The [independent implementation's review](../../agentic-systems/reviews/wikiskill-stahl-g.md)
+records that the roles are computational while the operator supplies tasks,
+scoring, and rounds, which is the boundary rule below applied to that
+system.
 
 The **seed** is the machinery and theories the builder holds at the declared
 start of an assessment. Extension and interventions during the assessed run

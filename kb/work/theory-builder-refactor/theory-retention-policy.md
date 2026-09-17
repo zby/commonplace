@@ -32,6 +32,15 @@ Being tentative does not itself grant permission to consume a claim.
    and [costly-entrenchment note](../../notes/current-task-fit-alone-does-not-warrant-costly-entrenchment.md)
    supply the current proposals. The builder still needs to decide which
    uses are permitted and how speculative status remains visible.
+   [WikiSkill](../../sources/wikiskill-persistent-knowledge-for-skill-evolution.ingest.md)
+   is the paradigm case of this separation built as a system: a skill is
+   admitted only on strict validation improvement, while the wiki's
+   diagnoses and rejected proposals are retained regardless of outcome and
+   remain available to later proposals. A useful skill does not thereby
+   establish every pattern that motivated it. [RuleMem](../../sources/rulemem-active-rule-memory.ingest.md)
+   shows the failure when the separation is missing: a likelihood-based
+   admission score improves aggregate accuracy, and an admitted rule still
+   overrides explicit contrary evidence.
 3. **State what warrants a revision and a sequence of revisions.** The
    proposal requires evidence that a change corrects errors while preserving
    useful fit on tested cases, relative to a declared objective. Whether
