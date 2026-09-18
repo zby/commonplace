@@ -14,27 +14,36 @@ Nothing published yet.
 
 ## In draft
 
-Five drafts comprise three main articles and two supplements. The three main
-articles play different roles: the first sets the stage for the second, the
-second makes the central proposal, and the third describes Commonplace's
-attempt to reach it. Read them in that order, or start with the second if time
-is short and go back to the first when a term or condition needs its source.
+Six drafts make one series: a lead article and five supplements. The lead
+states the idea and stands on its own. Each supplement develops one part of
+it, so read the lead first and then whichever supplement answers your next
+question. Nothing in the series reports a result; no test has been run.
 
-- [The Automated Software House Conjecture: Open-ended software development with fixed LLMs](./automated-software-houses-with-fixed-llms.md) — sets the stage for the second article. It fixes the terms the proposal is stated in: the software house as the system boundary and program theory as the capacity under test. It states the four conditions a concrete witness house must meet, which the third article and the comparison supplement take as their acceptance criteria. And it argues that the target is not ruled out in advance: Naur's claim that program theory belongs only to people rests on an extra premise, and existing constructions already show parts of the conjecture working, though none shows all four conditions together.
-- [The Automated Software House as the Unit of Training: A fixed-model training regime for theory refinement](./the-software-house-as-the-unit-of-training.md) — the central article. It proposes classical theory refinement as the training regime of a software house: the program theory is refined from production consequences and guides later production, while every weight stays fixed. Three things are new: the theory is partly normative, so a failure may be fixed by changing the product to fit it; among revisions that fit the evidence, those with more explanatory reach are preferred; and the refinement machinery is itself revisable. LLMs are the enabling condition, not the claim. The article argues Bitter Lesson compatibility, since computation produces the retained structure, and states the hypotheses that would test the regime against weight adaptation. Its attractions, each still a conjecture: learning is continual, because what is learned is usable at the next request and a contradicting fact forces only a local reconciliation; adaptation may need fewer observations, because a correct theory says which cases matter; and the substrate is legible, so one assumption or test can be inspected and rolled back on its own.
-- [Bootstrapping the First Automated Software House: A research program from human-agent production to human-free internal operation](./bootstrapping-an-autonomous-theory-builder.md) — the attempt. It takes Commonplace as a human-agent seed and transfers production decisions to computation one bounded class at a time, testing separately whether computation now makes each decision and whether the house learns to revise the machinery that makes it. This is the least developed of the three: it has readiness and stop conditions and one worked component trial, but the program beyond that first trial is still a sketch.
+- [Learning by Theory Refinement with Fixed Models: A research program for systems that learn outside their weights](./learning-by-theory-refinement-with-fixed-models.md) — the lead. It proposes a learning paradigm for systems built around large language models: hold the weights fixed, and let the system learn by refining written theories that it retains outside the model and consults on later work. It works through one case, says how this departs from classical theory refinement, argues that the Bitter Lesson does not rule it out, and states three conjectured attractions: learning is continual, it may need fewer observations, and what is learned can be inspected and reverted piece by piece. The system that carries the paradigm, the hypotheses that would test it, and the first arrangement proposed to test it appear in outline, each pointing to a supplement.
 
-The supplements develop two parts of the conjecture:
+The supplements, in the order a reader is likely to want them:
 
-- [Nearest existing constructions to a witness house](./nearest-existing-constructions-to-a-witness-house.md) — a selective comparison of eighteen constructions against the four conditions, with evidence links and a separate test of explicit project theory.
-- [Transition closure and continuation reliability](./transition-closure-and-continuation-reliability.md) — permitted paths from a seed, continuation reliability as the measure of sustained adequacy, and the Gödel-machine comparison.
+- [How the Theory-Refinement Program Would Be Tested](./testing-the-theory-refinement-program.md) — develops the lead's testing section. It defines the system under test, states the three hypotheses with what would refute each, says what has to come from outside that system for outcomes to be comparable, gives the shape of the first protocol, and specifies component experiments that can run before a whole system exists. It is a first design that needs much more testing before a scored run.
+- [Bootstrapping an Autonomous Theory Builder](./bootstrapping-an-autonomous-theory-builder.md) — develops the lead's first arrangement. It takes Commonplace as a human-staffed starting point and transfers internal decisions to computation one bounded class at a time, testing separately whether computation now makes each decision and whether the system learns to revise the machinery that makes it. It has readiness and stop conditions and one worked trial; the program beyond that trial is still a sketch.
+- [An Automated Software House as a Second Test of Theory Refinement](./an-automated-software-house-as-a-second-test-of-theory-refinement.md) — develops the alternative arrangement the lead mentions. A software house that learns by refining Naur's program theory would give the paradigm a stronger falsifier than a knowledge base does, at the price of a harder claim. It keeps the conjecture, the argument that Naur does not rule it out, the four conditions a witness house must meet, and a comparison of the two arrangements.
+- [Nearest existing constructions to a witness house](./nearest-existing-constructions-to-a-witness-house.md) — develops the software-house supplement's claim that no existing system meets its four conditions together: a selective comparison of eighteen constructions, with evidence links and a separate test of explicit project theory.
+- [Transition closure and continuation reliability](./transition-closure-and-continuation-reliability.md) — develops the requirement, shared by both arrangements, that every change to a system arise through its own machinery: permitted paths from a seed, continuation reliability as the measure of sustained adequacy, and the Gödel-machine comparison.
 
-Six former companion drafts were withdrawn; their addresses redirect to the
-draft that absorbed each one. The two most recent were *The decisions that
+## Superseded
+
+These drafts stay at their addresses so that existing links resolve. Each
+opens with a banner naming its successor and is no longer maintained.
+
+- [The Automated Software House Conjecture](./automated-software-houses-with-fixed-llms.md) — replaced by the software-house supplement above.
+- [The Automated Software House as the Unit of Training](./the-software-house-as-the-unit-of-training.md) — replaced by the lead, with its experiments now in the testing supplement.
+
+Six earlier companion drafts were withdrawn; their addresses redirect to the
+draft that absorbed each one, which in some cases is now one of the
+superseded drafts above. The two most recent were *The decisions that
 stay human, and what would move them*, whose selection argument is now the
-ordering principle of the third draft, and *The Bitter Lesson does not require
-everything to live in weights*, whose rebuttal is a section of the second
-draft and whose account of the Commonplace strategy is the third.
+ordering principle of the bootstrap supplement, and *The Bitter Lesson does
+not require everything to live in weights*, whose rebuttal is now a section
+of the lead.
 
 ---
 
