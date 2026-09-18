@@ -16,6 +16,8 @@ source_notes:
   - kb/notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md
   - kb/notes/an-action-model-matters-only-through-its-consumption-path.md
   - kb/notes/evidence/commonplace-as-a-reflective-system.md
+  - kb/notes/a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md
+  - kb/notes/warranted-autonomy-is-bounded-by-oracle-domain.md
 ---
 # How the Theory-Refinement Program Would Be Tested
 
@@ -39,7 +41,7 @@ under test, states three hypotheses with what would refute each, and says
 what has to come from outside that system for outcomes to be comparable:
 failures it does not judge, an objective it does not set, and an outcome
 level its own evaluators do not decide. It then gives the shape of the
-first protocol, specifies component experiments that can run before a whole
+first protocol, says what a run's path can and cannot show, specifies component experiments that can run before a whole
 system exists, and shows where existing systems fall under the definitions.
 No run has been performed. The setup is stated so that it can be
 criticized, not because it is settled.
@@ -294,6 +296,60 @@ knowledge-base arrangement, not automatic refutation of a note. Success on
 a selected subset does not establish reliable continuation across the
 admitted workload.
 
+## What a run's path can and cannot show
+
+The lineage rule says every successor state must arise through the builder's
+own process. Stated over a whole run, that gives a definition of which states
+the builder could reach, and the definition shows three limits on what a run
+establishes.
+
+Take the builder's mutable state to be everything that can affect an update:
+its product, theories, tools, evaluators, context assembly, and update
+machinery, with model weights fixed. An *admissible path* starts at the seed,
+takes inputs allowed by an input process declared in advance, and at each
+step moves to a successor the current state permits. A state is reachable
+when it occurs on such a path. The path matters, not only the set of inputs:
+if the protocol permits request B only after request A, closing the state set
+under each permitted input separately would wrongly admit a path that starts
+with B. The definition permits self-modification. Rewriting an evaluator
+changes what later gets accepted, and the rewrite is itself a step from the
+preceding state, so the seed need not specify every later decision.
+
+First, a possible path need not be a practical one. If the update process can
+retain arbitrary state, an adequate successor may be reachable and still
+extremely unlikely. The quantity a reliability claim needs is *continuation
+reliability*: starting from an adequate builder, the chance of sustaining
+adequate performance across later demands over the declared horizon within
+the budget. A builder that stays adequate for a few demands and then drifts
+differs from one that sustains adequacy, even if both pass an early
+evaluation. How likely a process is to reach an adequate builder from an
+inadequate seed is a different quantity, and it is the [bootstrap
+supplement's](./bootstrapping-an-autonomous-theory-builder.md) question.
+
+Second, the input process shapes the evaluation. Three things are distinct:
+the set of admissible demand histories, the history realized in one run, and
+the procedure that selects histories. Allowing more histories can enlarge the
+reachable set without making adequate successors more probable, and a
+selection procedure may direct more runs toward failure. The rules may
+respond to the builder's actions and introduce new kinds of work, but they
+are fixed before the run. The evaluator may not widen or narrow the workload
+afterward, and failures stay in the record. The protocol must also say what
+counts as success when the builder is nondeterministic: one successful path,
+all paths, or a probability threshold. One lucky run does not establish
+reliability.
+
+Third, permitted self-modification can suppress adequate successors. The
+policies reachable from the seed may exclude adequate states or make them
+negligibly likely. An evaluator can govern a rewrite of itself, but the
+current machinery must be capable of producing that rewrite, and [a
+methodology governs its own extension only as far as it
+settles](../notes/a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md).
+A human correction during the run breaks the autonomous lineage even if the
+machinery could have produced the same result, because the actual path is
+what was observed. Successful evaluation warrants only [the domain the
+available checks
+cover](../notes/warranted-autonomy-is-bounded-by-oracle-domain.md).
+
 ## Component experiments that can run first
 
 The whole-system protocol waits on a consuming project. The paradigm's
@@ -384,7 +440,19 @@ and rewrites itself computationally under the same requirement that every
 successor arise through its own machinery. It admits a rewrite only on a
 proof from its current axioms, and it has no route for admitting a fallible
 change and recovering from a wrong one. Whether that makes it a theory
-builder is assessed per deployment and stays open.
+builder is assessed per deployment and stays open. The two admission routes
+differ as follows.
+
+| | Gödel machine | Theory builder under this program |
+|---|---|---|
+| Rewrite condition | Proof, under current axioms and utility, that switching pays | A fallible process produces a successor and, where applicable, admits it on evidence |
+| External input | Observations enter through formalized operations; rewrites still require proof | The interpreter uses demands, tool results, and consequences to challenge a theory |
+| Warrant | Conditional proof relative to the encoded formalization | Empirical warrant bounded by evaluators and later exposure |
+| Characteristic failure | A useful change stays unavailable because the proof is not found or not expressible | Harmful successors get enough probability to undermine continued adequacy |
+
+Deductive closure concerns the theorems derivable from the machine's axioms.
+The path definition above concerns reachable states. Neither alone
+establishes reliable operation.
 
 ## Limits
 
@@ -404,6 +472,13 @@ next revision the ordinary generalization argument no longer applies
 without a reuse protocol. Second, no standard separates an interpretation
 error from a theory error. An outcome comparison records a failure without
 attributing it, and every causal claim needs its own discriminating test.
+
+Three further questions are open for any protocol. What evidence would
+establish useful continuation reliability for a given product and risk
+level. How a protocol keeps relevant novelty in the workload while
+preventing removal of failed demands after the fact. And which
+environmental state must be represented inside the builder, and which
+inputs need separately reported provenance and authority.
 
 ## Where to go next
 
