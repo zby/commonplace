@@ -128,8 +128,8 @@ Each is our departure, not something the classical work claims.
   system's to revise. A requirement supplied from outside, such as tenant
   isolation, is not: weakening it would make a failure disappear without
   improving anything, and it changes only when whoever supplied it
-  renegotiates it. The external objective introduced below is what holds
-  that line.
+  renegotiates it. The external objective introduced below records such
+  requirements and who may change them.
 - **The theory may be about the system itself.** The account of which
   checks to run is part of the system's own production machinery. When the
   same loop revises how the system builds, tests, and revises its theories,
@@ -138,7 +138,7 @@ Each is our departure, not something the classical work claims.
 
 Two further choices are the paradigm's own. Among revisions that fit the
 evidence, prefer the one with more reach, the one that would also handle
-cases the failure did not exhibit. That is why the case revises the account of
+cases the failure did not show. That is why the case revises the account of
 what the exporter reads instead of adding an exception for one snippet. And treat the
 whole deployed system as the unit that learns, because [retrieval,
 scheduling, tools, and validators jointly determine behaviour with the
@@ -152,7 +152,7 @@ and with weights fixed that capacity has to persist outside the model.
 ## Why the Bitter Lesson does not rule this out
 
 Rich Sutton's Bitter Lesson says that general methods which scale with
-computation beat methods built from human knowledge. Written theories look
+computation outperform methods built from human knowledge. Written theories look
 like hand-crafted structure, so the objection is natural. The answer turns
 on [how the structure is produced, not the form it is retained
 in](../notes/the-bitter-lesson-selects-production-methods-not-representational.md).
@@ -220,13 +220,13 @@ computation fills every inside role, and
 machinery changes pass through a theory of its own machinery. The two
 conditions are independent. The evidence supplement gives the boundary,
 the seed, and the rule for what counts as the same builder over time in
-full, together with the systems that sit on the edges of the definition.
+full, together with the borderline cases of the definition.
 
 ## What would test it
 
 Fixing the weights is an experimental condition. It rules out parameter
-updates as the source of any improvement, which isolates the proposed
-learning channel for study. It does not by itself attribute an improvement
+updates as the source of any improvement, which isolates learning through
+retained state as the mechanism under study. It does not by itself attribute an improvement
 to retained state: a different task mix, more computation, a human
 intervention, or run-to-run variation could each explain a gain. Attribution
 needs matched comparisons with the retained change removed, which the
@@ -236,7 +236,7 @@ better.
 
 The three attractions above are claims about a mechanism, and they are
 tested in bounded components: matched runs that vary what is retained and
-measure influence, transfer, and observations used. The program's headline
+measure influence, transfer, and observations used. The program's main
 hypotheses are claims about a whole system's performance under external
 assessment. The two levels do not substitute for each other. Better overall
 performance would not show that fewer observations were needed or that a
