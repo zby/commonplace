@@ -68,7 +68,7 @@ extension, are measured against it. Fixed models are a constraint on
 particular studies, not part of the definition.
 
 **Persistence and lineage.** Persistence is continuity of responsibility
-across demands, plus lineage: each successor state is produced through the
+across demands, the tasks and questions put to the builder, plus lineage: each successor state is produced through the
 preceding state's own revision process. A change installed from outside
 that process is an intervention. It is recorded, and its result is not
 credited to the builder. No particular component need survive; a lineage
@@ -90,9 +90,9 @@ and an outcome comparison.
 
 **Two independent conditions.** A builder is
 [reflective](../notes/definitions/reflective-theory-builder.md) when it
-refines a causally connected theory of its own theory-building machinery:
-machinery changes update the theory, and theory revisions change the
-machinery. A builder is
+refines a causally connected theory of its own theory-building machinery,
+its self-theory: machinery changes update the theory, and theory revisions
+change the machinery. A builder is
 [autonomous](../notes/definitions/autonomous-theory-builder.md) when
 computation fills every internal role over the assessed horizon. Neither
 implies the other, and neither implies extension, reliability, or the right
@@ -173,9 +173,9 @@ stated claim and scope:
    measurement.
 
 With these supplied, an outcome comparison against a human-staffed builder
-can proceed before the builder's internal questions about warrant are
-settled. Internal diagnosis, active probes, and targeted experiments stay
-inside this case as long as the consequences of the resulting change still
+can proceed before the builder has settled how much support its internal
+theories need. Internal diagnosis, active probes, and targeted experiments
+stay inside the externally tested case as long as the consequences of the resulting change still
 face the external assessment, with their selection and cost recorded.
 
 For a claim the interface does not assess, [the builder owes three things
@@ -184,7 +184,8 @@ a rule for what counts as a contradiction and what support licenses each
 use; a comparison level when a revision changes the acceptance rule; and a
 performance measure that does not rest on its own evaluators. The third
 carries attribution. External assessment does not locate a fault, so a
-claim that asserts a cause, inside or outside the main path, needs a trace,
+claim that asserts a cause, inside or outside the externally tested case,
+needs a trace,
 intervention, or test that can discriminate between the theory, its
 interpretation, retrieval, execution, and the environment.
 
@@ -284,8 +285,8 @@ questions: whether a retained theory influences decisions, whether it
 improves transfer and recovery, and whether it reduces the observations
 needed to learn.
 
-Run paired continuations from the same product snapshot with the same fixed
-models, tools, request sequence, and resource ceilings, and the same source
+Run paired continuations, copies of the system that resume work from the
+same product snapshot, with the same fixed models, tools, request sequence, and resource ceilings, and the same source
 observations, which each treatment retains in its own form. Vary that form.
 
 | Retained treatment | What the comparison tests |
@@ -350,10 +351,10 @@ of published sources, not reproduced experiments.
 | System | Theory builder? | Externally tested? | Reflective? | Autonomous? |
 |---|---|---|---|---|
 | FORTE, the classical refinement system | No: one offline run over supplied cases, no continuing responsibility | — | No | Not applicable |
-| Schmidhuber's Gödel machine | Open: depends on whether retained content is revised against evidence or by proof alone | Open | Reflective system, yes; reflective builder, open | Every role it has, within its proof surface |
+| Schmidhuber's Gödel machine | Open: depends on whether retained content is revised against evidence or by proof alone | Open | Reflective system, yes; reflective builder, open | Every role it has, within what it can prove |
 | Darwin Gödel Machine | No continuing responsibility for any agent | External benchmark with a detected proxy failure | — | — |
 | Commonplace's note-review loop | Yes, human-staffed | No: a note's approval is internal evaluation | Yes, with the operator inside | No |
-| Commonplace producing a KB for a consuming project | Yes | Candidate; observed once release, consumption, and outcome records exist | Yes | No |
+| Commonplace producing a knowledge base for a consuming project | Yes | Candidate; observed once release, consumption, and outcome records exist | Yes | No |
 
 The [Gödel machine](../notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md)
 row is the informative one. It is persistent, holds a self-representation,
@@ -374,8 +375,9 @@ first real run to show a definition to be wrong somewhere; the plan is to
 revise the definition and retain the run record as evidence, not to adjust
 the protocol so that the definition survives.
 
-Two open questions bound what any result would establish. Whether locally
-warranted revisions compose into a warranted lineage is unsettled, and once
+Two open questions bound what any result would establish. Whether
+revisions that are each justified by their own evidence compose into a
+justified lineage is unsettled, and once
 an evaluation result guides the next revision the ordinary generalization
 argument no longer applies without a reuse protocol. And no standard
 separates an interpretation error from a theory error; an outcome
@@ -391,7 +393,8 @@ The four definitions,
 [autonomous](../notes/definitions/autonomous-theory-builder.md), carry
 their exclusions, misuse cases, and boundary cases in their own words. The
 [three obligations](../notes/a-claim-without-external-assessment-carries-three-obligations.md)
-note states what the main path's boundary is and keeps the open questions.
+note states where the externally tested case ends and keeps the open
+questions.
 The [software-house
 supplement](./an-automated-software-house-as-an-alternative-test.md)
 gives the alternative arrangement with its own conditions, and the
