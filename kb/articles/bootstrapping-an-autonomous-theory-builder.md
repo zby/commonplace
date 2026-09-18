@@ -73,6 +73,15 @@ hypotheses restrict an assessment to models publicly available as of
 
 ## Two kinds of transfer
 
+One example runs through this article. When someone edits a Markdown file,
+something has to decide which checks the edit needs: a syntax check only, or
+also the checks on any program that reads the file. That recurring decision
+is a *decision class*. The procedure that makes it, a *check selector*, and
+the written account of why it selects as it does are *machinery*. Today a
+person may make the decision or write the selector. A [later
+section](#a-possible-early-trial-learning-which-checks-a-markdown-edit-needs)
+develops the example into a trial.
+
 The program measures two kinds of transfer separately. Each trial declares a
 boundary: the decisions being assessed.
 
@@ -81,23 +90,36 @@ boundary: the decisions being assessed.
 | **Operational transfer** | Computation makes the declared internal decisions, including hard cases, without human decisions. External outcomes and costs remain acceptable. |
 | **Learning transfer** | Evidence from the builder's own work causes it to produce or revise the machinery that makes those decisions, and the retained change affects later work. |
 
-The difference shows in a simple case. A validator that a person wrote can
-complete operational transfer: computation now makes the decision. Learning
-transfer requires the builder to have produced or revised the validator's
-criterion and machinery from its own experience. In the lead article's
-terms, learning transfer is [theory refinement turned on the builder's own
-machinery](./learning-by-theory-refinement-with-fixed-models.md#theory-refinement-and-what-is-new-here),
-the reflective case: the refined object is a check, evaluator, or procedure
-rather than the delivered product.
+In the example, a check selector that a person wrote can complete
+operational transfer: computation now selects the checks. Learning transfer
+requires the builder to have produced or revised the selector from its own
+experience, for instance after a missed check led to a failed release. The
+refined object is then a check, evaluator, or procedure rather than the
+delivered product.
+
+Learning transfer is the broader category, and it is not yet reflection. A
+builder could satisfy it by patching its selector directly from failure
+records, with no account of why. The lead article's [reflective
+case](./learning-by-theory-refinement-with-fixed-models.md#theory-refinement-and-what-is-new-here)
+asks for more: a theory of the builder's own machinery, connected to that
+machinery in both directions, so that revising the theory changes the
+machinery and changing the machinery updates the theory. A learning-transfer
+trial supports the reflection hypothesis only when its records show that
+path: the failure led to a revision of an identified part of the written
+account, that revision guided the change to the selector, the installed
+change was reflected back into the account, and later work used the changed
+selector under external assessment. The comparison is a matched builder that
+retains the same failure records and may patch its selector but keeps no
+account.
 
 The program's [hypotheses](./testing-the-theory-refinement-program.md#the-hypotheses)
 allow a human-built seed. The sufficiency hypothesis asks whether a builder
 can then reach a reliability target with no person in an internal role,
 which presupposes operational transfer of every such role. The reflection
 hypothesis asks whether machinery changes that pass through the builder's
-theory of itself yield capabilities a matched builder does not gain.
-Learning-transfer trials are where evidence for it would come from. The
-bootstrap aims at both transfers.
+theory of itself yield capabilities a matched builder does not gain. The
+bootstrap aims at both transfers, and reports separately which
+learning-transfer results also meet the reflective standard.
 
 ## Commonplace as a seed instance
 
@@ -138,10 +160,17 @@ people remain involved, can expose which functions the builder still lacks, and
 their results should guide which responsibilities to transfer and how to group
 them. The next section names those functions.
 
-Measure progress by counting the internal decisions people still make, not the
-people: one operator may stop performing one role while retaining several
-others. The program needs evidence of transfer without assuming a fixed order
-or steady progress at every step.
+Measure progress in internal decisions people still make, not in people: one
+operator may stop performing one role while retaining several others. A raw
+count of decisions is not a stable unit either. Automating hundreds of
+routine approvals while adding one hard evaluator-design responsibility
+would look like progress under a count. So measure over comparable
+workloads, per declared decision class, and report three things for each
+class: how often a person intervened, how much human effort those
+interventions took, and how hard the remaining cases were. Report
+responsibilities that a transfer newly created as their own line, not netted
+against the decisions it removed. The program needs evidence of transfer
+without assuming a fixed order or steady progress at every step.
 
 ## The readiness conditions
 
@@ -204,18 +233,22 @@ exception for the first failing filename.
 
 **Evidence and authority.** A component trial could supply scripted exporter
 changes while the builder inspects source, build configuration, and prior results,
-then revises its *check selector* (the procedure that chooses the checks),
-along with any supporting tests and the retained account. This bounded trial could begin before a
+then revises its check selector,
+along with any supporting tests and the retained account. This bounded trial could begin before an
 autonomous builder exists. Authority over the result is split: an
 independent manifest check, the *reference judgment*, can reject a claimed
 improvement even after the revised selector accepts the edit, and the selector
 being evaluated must not control that check.
 
-**Comparisons depend on the claim.** Operational transfer requires useful check
+**Comparisons depend on the claim.** Operational transfer requires check
 selection within declared outcome and cost limits, without people making the
-transferred decisions. Always running the full suite is the baseline: it omits
-no available check, so a selector must match its measured outcomes at lower
-total cost. The suite itself can still miss defects.
+transferred decisions. A selector that meets those limits has transferred
+the decision, whether or not it is cheaper than the alternative. An
+efficiency advantage is a further claim. Always running the full suite is its
+baseline: the suite omits no available check, so a selector shows an
+advantage only by matching the suite's measured outcomes at lower total cost.
+The suite itself can still miss defects. A trial declares in advance which of
+the two claims it tests and the thresholds for each.
 Learning transfer additionally requires evidence that retained changes improve
 later decisions. One way to isolate that contribution is to run two copies of
 the builder from identical product snapshots, one keeping the revised state and
