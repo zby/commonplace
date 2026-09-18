@@ -166,7 +166,8 @@ on [how the structure is produced, not the form it is retained
 in](../notes/the-bitter-lesson-selects-production-methods-not-representational.md).
 In this paradigm, computation forms and revises the theories, builds the
 tools and evaluators, and selects changes from evidence. People may build
-the seed. After that, project-specific structure is a learned product.
+the seed, the theories and machinery the system starts from. After that,
+project-specific structure is a learned product.
 
 That is compatibility, not a scaling advantage. Search, validation, and
 credit assignment over retained artifacts may scale badly, or adapting
@@ -226,8 +227,8 @@ computation fills every inside role, and
 [reflective](../notes/definitions/reflective-theory-builder.md) when its
 machinery changes pass through a theory of its own machinery. The two
 conditions are independent. The evidence supplement gives the boundary,
-the seed, and the lineage rule in full, together with the systems that sit
-on the edges of the definition.
+the seed, and the rule for what counts as the same builder over time in
+full, together with the systems that sit on the edges of the definition.
 
 ## What would test it
 
@@ -254,18 +255,18 @@ levels. The program states three whole-system hypotheses.
   human-staffed builder's within a preset margin. Refuted by matched runs
   in which the controls do as well.
 - **Reflection.** A builder whose machinery changes pass through a
-  causally connected self-theory acquires extensions that a matched builder
-  without one does not. Better outcomes alone do not test this; the records
+  causally connected self-theory gains capabilities beyond its seed that a
+  matched builder without one does not. Better outcomes alone do not test this; the records
   of a reflective episode against a matched non-reflective builder do.
 
 A finite evaluation supports a bounded claim. None of the hypotheses
 promises success on every problem or within every budget.
 
-The hypotheses are tested through an *externally tested* builder, one whose
-evidence interface supplies from outside a falsifier, an objective, and an
-outcome level independent of the builder's own evaluators. With those
-supplied, outcome comparisons can proceed before the builder's internal
-questions about warrant are settled. Where a claim lacks that external
+The hypotheses are tested through an *externally tested* builder, one that
+receives from outside a falsifier, meaning failures it does not judge
+itself, an objective, and an outcome level independent of its own
+evaluators. With those supplied, outcome comparisons can proceed before
+the builder has settled how much support its internal theories need. Where a claim lacks that external
 assessment, [the builder owes three things for
 itself](../notes/a-claim-without-external-assessment-carries-three-obligations.md):
 a rule for what counts as contradiction and support, a comparison level for
@@ -299,8 +300,9 @@ develops it and compares the two.
 
 ## Open questions
 
-- Whether a succession of locally warranted revisions composes into a
-  warranted lineage, once evaluation results guide later revisions.
+- Whether a succession of revisions, each justified by its own evidence,
+  composes into a justified lineage once evaluation results guide later
+  revisions.
 - What support licenses each kind of reliance on a retained theory:
   guiding an experiment, routine use, compilation into a test.
 - Whether current models interpret prose theories consistently enough for
@@ -317,7 +319,7 @@ The [theory refinement](../notes/definitions/theory-refinement.md) and
 [theory builder](../notes/definitions/theory-builder.md) definitions state
 the paradigm's terms with their exclusions and boundary cases. The [evidence
 supplement](./testing-the-theory-refinement-program.md) develops the
-hypotheses, the evidence interface, the first arrangement's protocol, and
+hypotheses, the external assessment, the first arrangement's protocol, and
 the component experiments. [Nearest existing
 constructions](./nearest-existing-constructions-to-a-witness-house.md)
 compares eighteen existing systems against the software-house conditions.
