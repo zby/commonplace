@@ -328,8 +328,8 @@ hypotheses, the external assessment, the first arrangement's protocol, and
 the component experiments. [Nearest existing
 constructions](./nearest-existing-constructions-to-a-witness-house.md)
 compares eighteen existing systems against the software-house conditions and
-says what that survey shows for the paradigm: its parts have working
-precedents, and its central mechanism has not been tested.
+says what that survey shows for the paradigm: its parts have precedents, and
+the reviewed evidence does not test its central mechanism.
 The evidence supplement also develops the requirement that every change to
 a builder arise through its own machinery, and [what a run under that
 requirement does and does not
