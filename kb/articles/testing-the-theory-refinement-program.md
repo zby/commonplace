@@ -40,11 +40,11 @@ say which part of a system caused it. So the supplement defines the system
 under test, states three hypotheses with what would refute each, and says
 what has to come from outside that system for outcomes to be comparable:
 failures it does not judge, an objective it does not set, and an outcome
-level its own evaluators do not decide. It then gives the shape of the
-first protocol, says what a run's path can and cannot show, specifies component experiments that can run before a whole
-system exists, and shows where existing systems fall under the definitions.
-No run has been performed. The setup is stated so that it can be
-criticized, not because it is settled.
+level its own evaluators do not decide. It then gives the shape of the first
+protocol, says what a run's path can and cannot show, specifies component
+experiments that can run before a whole system exists, and shows where
+existing systems fall under the definitions. No run has been performed. The
+setup is stated so that it can be criticized, not because it is settled.
 
 ## The system under test
 
