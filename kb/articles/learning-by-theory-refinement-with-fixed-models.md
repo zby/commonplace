@@ -104,18 +104,20 @@ Each is our departure, not something the classical work claims.
   classical systems could only refine theories written in the one form
   their procedures handled. A fixed language model can be given an account
   that has not been formalized and asked to apply and revise it, so a
-  theory can enter the loop before anyone has written a checker for it;
-  whether the model does this reliably is one of the open questions at the
-  end. The cost is that consequences
-  are interpreted rather than computed. Whether a case contradicts a prose
-  theory is itself a reading, and two readings can differ. Compiling a part
-  into a schema, validator, or test makes its specified consequences
-  mechanically checkable, which removes that disagreement for those
-  consequences. It does not remove the questions of whether the check
-  represents the theory correctly or measures the right property. Prose can
-  also make a prediction clear enough that an observation plainly
-  contradicts it. Refinement moves parts across the line into code as they
-  settle, and gains checkability, not certainty, by doing so.
+  theory can enter the loop before anyone has written a checker for it.
+  Whether the model does this reliably is one of the open questions at the
+  end.
+
+  The cost is that consequences are interpreted rather than computed.
+  Whether a case contradicts a prose theory is itself a reading, and two
+  readings can differ. Compiling a part into a schema, validator, or test
+  makes its specified consequences mechanically checkable, which removes
+  that disagreement for those consequences. It does not remove the
+  questions of whether the check represents the theory correctly or
+  measures the right property. Prose can also make a prediction clear
+  enough that an observation plainly contradicts it. Refinement moves parts
+  across the line into code as they settle, and gains checkability, not
+  certainty, by doing so.
 - **The theory is partly normative.** The account in the case is not only
   a hypothesis about the exporter. A commitment such as "every query must
   respect the active tenant" is a rule the system keeps true. A failure can
@@ -147,16 +149,6 @@ the system cannot yet perform, [the system has to build
 it](../notes/a-fixed-model-house-must-write-the-procedures-for-each-new-theory.md),
 and with weights fixed that capacity has to persist outside the model.
 
-Fixing the weights is an experimental condition. It rules out parameter
-updates as the source of any improvement, which isolates the proposed
-learning channel for study. It does not by itself attribute an improvement
-to retained state: a different task mix, more computation, a human
-intervention, or run-to-run variation could each explain a gain. Attribution
-needs matched comparisons with the retained change removed, which the
-evidence supplement specifies. Fixing weights is not a recommendation for
-mature systems, and not a claim that learning outside weights is generally
-better.
-
 ## Why the Bitter Lesson does not rule this out
 
 Rich Sutton's Bitter Lesson says that general methods which scale with
@@ -187,9 +179,9 @@ Each is a conjecture, and each has a cost the program must weigh against it.
   gives way, revise it, re-check what depended on it. That reconciliation
   is the paradigm's counterpart of retraining. The edit is local, to an
   identifiable part of the theory, rather than a global refit. Its
-  consequences need not be local: in the case above, one revised assumption
-  changed the checking decision for several files, and that spread is the
-  point. Reconciliation is where the costs of [governing behaviour-changing
+  consequences need not be local, and that spread, one revision changing
+  several later decisions, is the point.
+  Reconciliation is where the costs of [governing behaviour-changing
   writes](../notes/continual-learning-requires-governing-behaviour-changing-writes.md)
   concentrate: admission, coordination, and credit assignment.
 - **Fewer observations.** A correct theory says which new cases matter. In
@@ -232,6 +224,16 @@ full, together with the systems that sit on the edges of the definition.
 
 ## What would test it
 
+Fixing the weights is an experimental condition. It rules out parameter
+updates as the source of any improvement, which isolates the proposed
+learning channel for study. It does not by itself attribute an improvement
+to retained state: a different task mix, more computation, a human
+intervention, or run-to-run variation could each explain a gain. Attribution
+needs matched comparisons with the retained change removed, which the
+evidence supplement specifies. Fixing weights is not a recommendation for
+mature systems, and not a claim that learning outside weights is generally
+better.
+
 The three attractions above are claims about a mechanism, and they are
 tested in bounded components: matched runs that vary what is retained and
 measure influence, transfer, and observations used. The program's headline
@@ -256,8 +258,9 @@ levels. The program states three whole-system hypotheses.
   in which the controls do as well.
 - **Reflection.** A builder whose machinery changes pass through a
   causally connected self-theory gains capabilities beyond its seed that a
-  matched builder without one does not. Better outcomes alone do not test this; the records
-  of a reflective episode against a matched non-reflective builder do.
+  matched builder without one does not. Better outcomes alone do not test
+  this. The records of a reflective episode against a matched
+  non-reflective builder do.
 
 A finite evaluation supports a bounded claim. None of the hypotheses
 promises success on every problem or within every budget.
