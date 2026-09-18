@@ -78,9 +78,8 @@ learning paradigm.
 learning operation that revises an existing explicit theory against
 empirical cases, correcting its errors while preserving what was right,
 instead of learning from scratch. The name comes from the work of Ourston,
-Richards, and Mooney in the late 1980s and 1990s, where the theory was a
-set of logical rules supplied by an expert and the cases were labelled
-examples. Their systems derived consequences from the rules, found where a
+Richards, and Mooney in the early 1990s, where the theory was a set of
+logical rules supplied by an expert and the cases were labelled examples. Their systems derived consequences from the rules, found where a
 wrong consequence came from, and edited that part.
 
 The operation needs a theory of a particular shape. It must have
@@ -103,9 +102,11 @@ Each is our departure, not something the classical work claims.
 
 - **The interpreter is a language model, so the theory can be prose.** The
   classical systems could only refine theories written in the one form
-  their procedures handled. A fixed language model can apply and revise an
-  account that has not been formalized, so a theory can enter the loop
-  before anyone has written a checker for it. The cost is that consequences
+  their procedures handled. A fixed language model can be given an account
+  that has not been formalized and asked to apply and revise it, so a
+  theory can enter the loop before anyone has written a checker for it;
+  whether the model does this reliably is one of the open questions at the
+  end. The cost is that consequences
   are interpreted rather than computed. Whether a case contradicts a prose
   theory is itself a reading, and two readings can differ. Compiling a part
   into a schema, validator, or test makes its specified consequences
@@ -275,15 +276,16 @@ exercised, and we expect it to change under testing before a scored run.
 
 ## The first arrangement
 
-The first system built to test the paradigm is Commonplace, a framework
-for knowledge bases operated by agents. Commonplace produces a knowledge
-base and its supporting software for a consuming project. Agents in that
-project use the knowledge base on their tasks, and the project's own judges
-accept or reject the work. Those judgments are the external falsifier and
-objective. Commonplace revises the delivered product, and when a failure
-exposes a limit in its own methods, it revises those too. Today people
-still perform several inside roles, so it is a human-inclusive builder; how
-those roles would transfer to computation is the [bootstrap
+The first arrangement proposed for testing the paradigm is Commonplace, a
+framework for knowledge bases operated by agents. In the proposed run,
+Commonplace produces a knowledge base and its supporting software for a
+consuming project. Agents in that project use the knowledge base on their
+tasks, and the project's own judges accept or reject the work. Those
+judgments are the external falsifier and objective. Commonplace would
+revise the delivered product, and when a failure exposed a limit in its own
+methods, revise those too. Today people still perform several inside
+roles, so it is a human-inclusive builder; how those roles would transfer
+to computation is the [bootstrap
 supplement's](./bootstrapping-the-first-automated-software-house.md)
 subject. No consuming-project run has been performed. The evidence
 supplement gives the protocol's shape.
