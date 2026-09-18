@@ -45,8 +45,8 @@ A [theory builder](../notes/definitions/theory-builder.md) is the complete
 persistent system responsible for developing and revising tentative
 theories about the subjects it investigates. The definition matters for
 testing because a claim about a learning method is a claim about this whole
-system, and the components usually named, a model, a harness, a refinement
-algorithm, are each only part of it.
+system, and the components usually named (a model, a harness, a refinement
+algorithm) are each only part of it.
 
 **Boundary.** The builder includes the theories it remains responsible for,
 its machinery, and every person or program that fills an internal
@@ -68,12 +68,13 @@ extension, are measured against it. Fixed models are a constraint on
 particular studies, not part of the definition.
 
 **Persistence and lineage.** Persistence is continuity of responsibility
-across demands, the tasks and questions put to the builder, plus lineage: each successor state is produced through the
-preceding state's own revision process. A change installed from outside
-that process is an intervention. It is recorded, and its result is not
-credited to the builder. No particular component need survive; a lineage
-that has revised away every part of its seed is still the same builder.
-Persistence establishes neither retention nor learning.
+across demands (the tasks and questions put to the builder), plus lineage:
+each successor state is produced through the preceding state's own revision
+process. A change installed from outside that process is an intervention.
+It is recorded, and its result is not credited to the builder. No
+particular component need survive. A lineage that has revised away every
+part of its seed is still the same builder. Persistence establishes neither
+retention nor learning.
 
 **Extension.** An extension is a retained change to the machinery that
 demonstrates capability beyond what the seed delivered, on a stated demand
@@ -84,7 +85,7 @@ confounds the change with task drift, model variance, and scoring noise.
 [PAST-Bench](../sources/past-bench-personal-agents-pdf.ingest.md) builds
 its evaluation on this matched ablation. Installing a change is not
 evidence that later work used it, and use is not evidence that it caused an
-improvement; an extension claim needs an observed [consumption
+improvement. An extension claim therefore needs an observed [consumption
 path](../notes/an-action-model-matters-only-through-its-consumption-path.md)
 and an outcome comparison.
 
@@ -194,13 +195,16 @@ is evidenced by one connected path: externally assessed work exposes a
 possible machinery limit; diagnosis revises an identified commitment in the
 self-theory; that revision guides a machinery change whose installation
 updates the self-theory in turn; later work uses the changed machinery and
-its product is assessed externally. A machinery change followed by better
-outcomes does not establish that path. Nor does a predicted behavioural
-change after altering a commitment, on its own: instruction-following
-produces one too. Evidence that a retained theory was used as an
-explanation additionally needs predicted changes on cases the text does not
-state verbatim, variation of the path by which the theory is consumed, and
-an account of whether other records could supply the same understanding.
+its product is assessed externally.
+
+A machinery change followed by better outcomes does not establish that
+path. Nor does a predicted behavioural change after altering a commitment,
+on its own: instruction-following produces one too. Evidence that a
+retained theory was used as an explanation additionally needs predicted
+changes on cases the text does not state verbatim, variation of the path by
+which the theory is consumed, and an account of whether other records could
+supply the same understanding.
+
 The two-way causal connection between Commonplace's methodology notes and
 its validators and skills is recorded in [Commonplace as a reflective
 system](../notes/evidence/commonplace-as-a-reflective-system.md). That
@@ -217,23 +221,29 @@ consumer receives a versioned release and performs its own tasks. Task
 suppliers and output judges are outside. The product is the delivered
 knowledge base together with its validators, skills, and indexes. Whether
 the release includes the builder's own methodology notes and diagnostic
-history, or only the product knowledge base, is a design variable;
+history, or only the product knowledge base, is a design variable.
 [WikiSkill](../sources/wikiskill-persistent-knowledge-for-skill-evolution.ingest.md)
 reports lower performance when its solver could read the improvement record
-during training, with the authors' hypothesis that direct use made the
+during training, and its authors hypothesize that direct use made the
 record less informative for later improvement.
 
 The protocol freezes ten declarations before the first scored episode:
-the consuming project and its admissible demands; the seed, pinned at run
-start; the exact model versions for builder and consumer; the task supply
-rule and how omitted or failed tasks are recorded; the outcome contract per
-task and who may change it; budget ceilings for compute, time, evidence,
-and internal human work, equal across compared conditions; the horizon and
-stopping rule, with no stopping when a desired score first appears; the
-reliability target and comparison margin; the feedback fields and their
-delay; and the acquisition mode, a passive stream by default with bounded
-diagnostic probes allowed and charged. None of these is fixed yet; a few
-have a proposed default.
+
+1. the consuming project and its admissible demands;
+2. the seed, pinned at run start;
+3. the exact model versions for builder and consumer;
+4. the task supply rule and how omitted or failed tasks are recorded;
+5. the outcome contract per task and who may change it;
+6. budget ceilings for compute, time, evidence, and internal human work,
+   equal across compared conditions;
+7. the horizon and stopping rule, with no stopping when a desired score
+   first appears;
+8. the reliability target and comparison margin;
+9. the feedback fields and their delay;
+10. the acquisition mode, a passive stream by default with bounded
+    diagnostic probes allowed and charged.
+
+None of these is fixed yet, though a few have a proposed default.
 
 Each episode retains the task and its contract, the delivered versions,
 the consumer's configuration, budget usage, the output, the judge's
@@ -249,7 +259,7 @@ candidate release is frozen and assessed on reserved tasks whose outcomes
 have not guided its construction. Once an assessment result is used to
 choose or repair a candidate, it becomes development feedback for that
 candidate's successors. Any later reuse of a fixed holdout needs a stated
-information-release mechanism and an enforced budget; the [adaptive data
+information-release mechanism and an enforced budget. The [adaptive data
 analysis literature](../sources/generalization-adaptive-data-analysis-holdout-reuse.ingest.md)
 is the input, and the protocol does not assume its theorems already apply
 to semantic judgments.
@@ -262,19 +272,19 @@ stale version, and with the wrong mechanism able to supply the answer.
 Direct search over the raw records without the learned methodology tests
 the comparative hypothesis. A human-staffed builder under the same demands
 and resources, with every internal human intervention recorded, supplies
-the reliability comparison. Removing the knowledge base usually removes
-information the task needs, so that comparison measures benefit only;
-measuring the harm of stale or wrong content needs a condition where
-current authoritative evidence stays available while the knowledge-base
-content varies, the split [the Memory Trust
-Gap](../sources/the-memory-trust-gap.ingest.md) makes between its benefit
-and safety suites.
+the reliability comparison.
+
+Removing the knowledge base usually removes information the task needs, so
+a comparison that removes it measures benefit only. Measuring the harm of
+stale or wrong content needs a condition where current authoritative
+evidence stays available while the knowledge-base content varies. [The
+Memory Trust Gap](../sources/the-memory-trust-gap.ingest.md) makes this
+split between its benefit and safety suites.
 
 A consumer's rejection is evidence about the combined task, consumer, and
-knowledge-base arrangement, not automatic refutation of a note. Success on a
-selected subset does not establish reliable continuation across the
-admitted workload. No consuming project has been selected and no episode
-has been run.
+knowledge-base arrangement, not automatic refutation of a note. Success on
+a selected subset does not establish reliable continuation across the
+admitted workload.
 
 ## Component experiments that can run first
 
@@ -285,9 +295,10 @@ questions: whether a retained theory influences decisions, whether it
 improves transfer and recovery, and whether it reduces the observations
 needed to learn.
 
-Run paired continuations, copies of the system that resume work from the
-same product snapshot, with the same fixed models, tools, request sequence, and resource ceilings, and the same source
-observations, which each treatment retains in its own form. Vary that form.
+Run paired continuations: copies of the system that resume work from the
+same product snapshot. The copies share the same fixed models, tools,
+request sequence, and resource ceilings, and the same source observations,
+which each treatment retains in its own form. Vary that form.
 
 | Retained treatment | What the comparison tests |
 |---|---|
@@ -301,6 +312,11 @@ treatment the model may still build an explanation while reasoning. What
 differs is what survives to the next decision. Publish the treatment texts,
 retained revisions, and the fact inventory they were built from, so a
 reader can inspect the differences.
+
+A fifth treatment retaining curated worked cases instead of a general
+explanation is the natural next comparison: an explanation reconstructed
+and discarded is work repeated on every use, while a retained theory can
+carry a mistaken abstraction forward.
 
 Test two kinds of change as separate request histories. In the first,
 adding another configured input preserves the theory's account. In the
@@ -331,17 +347,13 @@ files for testing transfer.
 Report completion and defect counts, resource use, and all paired
 differences per treatment and history, with exact binomial intervals for
 pass rates. Small samples leave wide uncertainty even when every run
-passes. Predeclare the primary comparisons. A fifth treatment retaining
-curated worked cases instead of a general explanation is the natural next
-comparison: an explanation reconstructed and discarded is work repeated on
-every use, while a retained theory can carry a mistaken abstraction
-forward.
+passes. Predeclare the primary comparisons.
 
-A null intervention result does not show the system lacks a theory; it
-may reconstruct the same understanding from other retained state. If the
-controls repeatedly match the theory treatment at lower cost, the advantage
-hypothesis fails in that regime. Neither result settles the whole-system
-hypotheses.
+A null intervention result does not show the system lacks a theory,
+because the system may reconstruct the same understanding from other
+retained state. If the controls repeatedly match the theory treatment at
+lower cost, the advantage hypothesis fails in that regime. Neither result
+settles the whole-system hypotheses.
 
 ## Boundary cases
 
@@ -371,18 +383,17 @@ consuming project has been chosen, and the component experiment has not
 been run. The definitions have been checked against constructed episodes,
 to see whether the vocabulary can describe a run, and against published
 systems, for their borderline cases. Neither check is a run. We expect the
-first real run to show a definition to be wrong somewhere; the plan is to
+first real run to show a definition to be wrong somewhere. The plan is to
 revise the definition and retain the run record as evidence, not to adjust
 the protocol so that the definition survives.
 
-Two open questions bound what any result would establish. Whether
+Two open questions bound what any result would establish. First, whether
 revisions that are each justified by their own evidence compose into a
-justified lineage is unsettled, and once
-an evaluation result guides the next revision the ordinary generalization
-argument no longer applies without a reuse protocol. And no standard
-separates an interpretation error from a theory error; an outcome
-comparison records a failure without attributing it, and every causal
-claim needs its own discriminating test.
+justified lineage is unsettled, and once an evaluation result guides the
+next revision the ordinary generalization argument no longer applies
+without a reuse protocol. Second, no standard separates an interpretation
+error from a theory error. An outcome comparison records a failure without
+attributing it, and every causal claim needs its own discriminating test.
 
 ## Where to go next
 
