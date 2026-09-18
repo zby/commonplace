@@ -427,7 +427,7 @@ but their effective use may still depend on the model, so replacing the model
 requires revalidation and starts a new training lineage. Parametric and hybrid
 regimes remain alternatives.
 
-The [comparison supplement](./nearest-existing-constructions-to-a-witness-house.md#the-test-for-explicit-project-theory-from-the-training-article)
+The [comparison supplement](./nearest-existing-constructions-to-a-witness-house.md#the-separate-test-for-an-explicit-theory)
 distinguishes existing evidence for program-theory use from this proposed test
 of a written carrier. The [bootstrap program](./bootstrapping-an-autonomous-theory-builder.md)
 turns the learning proposal into a first trial and a sequence of bounded transfers.

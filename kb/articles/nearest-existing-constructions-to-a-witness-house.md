@@ -1,32 +1,46 @@
 ---
-description: "Eighteen constructions with local review or evidence compared against the automated software house conjecture's four witness conditions, which allow a human-built start; plus the explicit-theory test from the training article"
+description: "Supplement: eighteen existing constructions graded against the software-house supplement's four witness conditions, what the survey shows for learning by theory refinement with fixed models, and the separate test of acquiring an explicit theory"
 type: kb/articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
 source_notes:
   - kb/notes/definitions/representational-form.md
   - kb/notes/definitions/software-house.md
+  - kb/notes/definitions/theory-refinement.md
   - kb/notes/program-theory-sustains-search-under-delayed-feedback.md
 ---
 # Nearest existing constructions to a witness house
 
-> **Draft supplement.** This is the map behind the existing-constructions
-> section of [The Automated Software House
-> Conjecture](./automated-software-houses-with-fixed-llms.md).
+> **Draft supplement.** This is the survey of existing systems behind two
+> claims in the series that starts with [Learning by Theory Refinement with
+> Fixed Models](./learning-by-theory-refinement-with-fixed-models.md): that the paradigm is untested
+> but has working precedents for its parts, and that no existing system
+> meets the four conditions of the [software-house
+> supplement](./an-automated-software-house-as-a-second-test-of-theory-refinement.md).
 > Everything in it may still change, including which systems belong in the
 > comparison and how each row is graded. Comments, corrections, and additional
 > candidates are welcome on [the repository's GitHub Discussions
 > page](https://github.com/zby/commonplace/discussions).
 
-The [automated software house conjecture](./automated-software-houses-with-fixed-llms.md)
-asks whether a [complete persistent producer](../notes/definitions/software-house.md)
-can develop software for users
-across requests not listed in advance, with no human internal production
-decisions during its run. A **witness house** would be a concrete example
-meeting the four conditions below. Its eligible distributed-parametric models
-must have been available by the conjecture's chosen cutoff, 2026-09-02. Their
-parameters remain fixed, including adapters and the parameters of embedding
-models, parametric routers, and parametric critics.
+The series proposes that a system can learn by refining written theories
+while its model weights stay fixed. This supplement asks how close existing
+systems come. It grades them against the strictest statement the series has,
+the four conditions of the [automated software house
+conjecture](./an-automated-software-house-as-a-second-test-of-theory-refinement.md#claim),
+because those conditions are fully specified, while the protocol for the
+series' first arrangement, a knowledge base for consuming projects, is not
+yet fixed. A closing section says what the same evidence shows for the
+paradigm in general.
+
+The conjecture asks whether a [complete persistent
+producer](../notes/definitions/software-house.md) can develop software for
+users across requests not listed in advance, with no human internal
+production decisions during its run. A **witness house** would be a concrete
+example meeting the four conditions below. Its eligible
+distributed-parametric models must have been available by the conjecture's
+chosen cutoff, 2026-09-02. Their parameters remain fixed, including adapters
+and the parameters of embedding models, parametric routers, and parametric
+critics.
 
 This is a selective comparison of eighteen constructions with retained local
 reviews or source analyses. They were chosen for mechanisms relevant to that
@@ -61,9 +75,9 @@ The first two conditions need positive evidence: a run that never challenges
 an assumption does not demonstrate coherent revision. Workload and observation
 limits describe the evaluation, rather than a product family the house must
 stay within. An adequate house can perform the first three functions; the
-fourth asks how reliably it sustains that capacity. The [transition-closure
-supplement](./transition-closure-and-continuation-reliability.md) defines that
-measure. Users may supply requirements, facts, observations, and judgments
+fourth asks how reliably it sustains that capacity. The evidence supplement
+[defines that measure](./testing-the-theory-refinement-program.md#what-a-runs-path-can-and-cannot-show)
+as continuation reliability. Users may supply requirements, facts, observations, and judgments
 about visible behaviour. Supplying implementation diagnosis, internal design,
 or selection of retained revisions instead performs a production role.
 
@@ -265,8 +279,8 @@ fit, without ablation or autonomous successor selection.
 
 ## What a witness run would have to show
 
-Use the conjecture's [four conditions](./automated-software-houses-with-fixed-llms.md#what-a-witness-house-must-show)
-and [protocol declaration](./automated-software-houses-with-fixed-llms.md#boundaries-evidence-and-uncertainty)
+Use the conjecture's [four conditions and the protocol declared before
+testing](./an-automated-software-house-as-a-second-test-of-theory-refinement.md#what-a-witness-house-must-show)
 together. The reviewed mechanisms suggest a maintained user product with
 incrementally revealed requests, delayed consequences that challenge earlier
 assumptions, and untouched later changes that test recovery. Admission,
@@ -277,36 +291,43 @@ written carrier is inconclusive if the house reconstructs equivalent
 understanding from other records; the test must control or measure that route.
 An explicit theory artifact is optional. Acquiring understanding and machinery
 absent from the seed is the further question developed by the
-[training](./the-software-house-as-the-unit-of-training.md) and
-[bootstrap](./bootstrapping-an-autonomous-theory-builder.md) articles.
+[lead article](./learning-by-theory-refinement-with-fixed-models.md) and the
+[bootstrap supplement](./bootstrapping-an-autonomous-theory-builder.md).
 
-## The test for explicit project theory from the training article
+## The separate test for an explicit theory
 
-The table concerns program theory, whatever carries it. The training article
-asks the narrower question of whether an explicit project theory improves learning
-compared with other uses of the same production evidence. Its [component
-experiment](./the-software-house-as-the-unit-of-training.md#testable-hypotheses)
-compares theory, raw records, a descriptive summary, and a plausible wrong
-theory across changes that preserve or break assumptions. It can run before a
-complete witness house exists.
-
-The prediction combines useful transfer while an account applies, specific
-misdirection when it is wrong, and recovery after contrary evidence. Errors
-under a wrong theory establish influence; an advantage also needs better
-transfer or recovery relative to the controls, with observations and total
-cost counted. The training article specifies the treatments and their limits.
+The table concerns program theory, whatever carries it. A narrower question
+is whether an explicit written theory improves learning compared with other
+uses of the same evidence. The evidence supplement's [component
+experiment](./testing-the-theory-refinement-program.md#component-experiments-that-can-run-first)
+compares an explicit theory, raw records, a descriptive summary, and a
+plausible wrong theory across changes that preserve or break the theory's
+assumptions. It can run before a complete witness house exists, and it
+specifies the treatments and their limits.
 
 A supplied theory tests use and revision. To test acquisition, withhold the
 decisive rationale from the seed while retaining the records from which it can
-be synthesized, and count the cost of forming it. A whole-house training claim
-additionally requires these updates and later production to continue without
-internal human decisions.
+be synthesized, and count the cost of forming it. A claim about a whole
+system learning additionally requires these updates and later production to
+continue without internal human decisions.
 
-## What the set shows together
+## What the survey shows for the paradigm
 
-The reviewed work supplies candidate components: retained notes and code,
-scheduled revision, gates capable of rejection, and rollback with failure
-evidence. Product operation is reported with human authority. The next test is
-to combine these mechanisms under the declared production boundary and measure
-whether explicit project theory improves the resulting process in the matched
-comparison.
+The reviewed work supplies candidate components for learning by theory
+refinement: retained notes and code, scheduled revision, gates capable of
+rejection, and rollback with failure evidence. So the parts have working
+precedents. Where a product operates, it is reported with human authority
+over internal decisions.
+
+What the survey does not find is the paradigm's central mechanism under
+test. In the benchmark-driven rows, what is retained is admitted by a score,
+an oracle, or a critic, and the evidence does not test whether a retained
+explanation guided a later decision on a case it did not state. In the
+product rows, people supply the rationale and settle the revisions. The
+evidence reviewed here includes no matched comparison of a retained
+explanation against retained records of the same observations. That is a finding about this reviewed evidence, not about
+what those systems could do.
+
+The next test is therefore the same for both arrangements in the series:
+combine these mechanisms under a declared boundary, and measure in a matched
+comparison whether an explicit theory improves the resulting process.
