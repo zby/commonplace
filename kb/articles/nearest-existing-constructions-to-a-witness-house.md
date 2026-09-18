@@ -190,7 +190,7 @@ retained form and does not itself establish absence of program theory.
 
 The code-inspected [Autogenesis](../agentic-systems/reviews/autogenesis.md)
 protocol covers broad writable forms, but semantic selection is weaker than
-versioning. Its mutation surface excludes model-weight updates without pinning
+versioning. Its mutation surface excludes model-weight updates, but it does not pin
 model lineage. Public implementations are transitional or incomplete, and
 outcomes remain paper reports.
 
@@ -202,7 +202,7 @@ but has no automatic trigger from experience to improvement.
 
 ### Prime Agent
 
-Prime Agent's inspected runtime carries versioned prompts, memories, skills,
+Prime Agent's inspected runtime retains versioned prompts, memories, skills,
 and subagent specifications across trajectories without weight updates. One
 reported case found a specification exploit and "preserved it as a reusable skill"
 ([Prime Agent](../sources/prime-agent-a-self-improving-rlm-harness.ingest.md),
@@ -260,7 +260,7 @@ independent reproduction in the review.
 ### Knowledge-Centric Self-Improvement
 
 Knowledge-Centric Self-Improvement holds software and solver state fixed and
-uses benchmark answers as an oracle. The preprint thereby isolates external
+uses benchmark answers as an oracle. So the preprint isolates external
 knowledge as the learned object: "The only object that changes is the
 curated knowledge base."
 ([Knowledge-Centric Self-Improvement](../sources/knowledge-centric-self-improvement-2607.19592.ingest.md),
@@ -315,7 +315,8 @@ Use the conjecture's [four conditions and the protocol declared before
 testing](./an-automated-software-house-as-a-second-test-of-theory-refinement.md#what-a-witness-house-must-show)
 together. The reviewed mechanisms suggest a maintained user product with
 incrementally revealed requests, delayed consequences that challenge earlier
-assumptions, and untouched later changes that test recovery. Admission,
+assumptions, and later changes, in parts the earlier repair did not modify, that test
+recovery. Admission,
 rollback, and conflict resolution must continue without internal human decisions.
 
 Test causal use of program theory at matched decisions. An intervention on one
@@ -328,7 +329,7 @@ machinery absent from the seed is the further question developed by the
 
 ## The separate test for an explicit theory
 
-The table concerns program theory, whatever carries it. A narrower question
+The table concerns program theory, whatever form holds it. A narrower question
 is whether an explicit written theory improves learning compared with other
 uses of the same evidence. The evidence supplement's [component
 experiment](./testing-the-theory-refinement-program.md#component-experiments-that-can-run-first)
