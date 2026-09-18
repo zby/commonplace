@@ -1,7 +1,10 @@
 ---
 description: "Fixed-model training of the software house through retained theory and machinery, with a checking-policy example and experiments separating causal influence, transfer, and learning cost"
 type: kb/articles/types/article.md
-status: draft
+status: superseded
+superseded_by:
+  - kb/articles/learning-by-theory-refinement-with-fixed-models.md
+  - kb/articles/testing-the-theory-refinement-program.md
 byline: Zbigniew Lukasiak
 source_notes:
   - kb/notes/a-fixed-model-house-must-write-the-procedures-for-each-new-theory.md
@@ -23,8 +26,17 @@ source_notes:
 
 *A fixed-model training regime for theory refinement*
 
-> **Draft.** This article may change. Comments and counterexamples are welcome
-> on [the repository's GitHub Discussions page](https://github.com/zby/commonplace/discussions).
+> **Superseded draft.** This draft is replaced by [Learning by Theory
+> Refinement with Fixed
+> Models](./learning-by-theory-refinement-with-fixed-models.md), which
+> states the learning paradigm without assuming a software house: theory
+> refinement with fixed weights, its departures from the classical
+> operation, the Bitter Lesson argument, and the conjectured attractions.
+> The experiments in "Testable hypotheses" below now live, in shorter form,
+> in [How the Theory-Refinement Program Would Be
+> Tested](./testing-the-theory-refinement-program.md#component-experiments-that-can-run-first).
+> The text below is kept at this address so that existing links resolve. It
+> is no longer maintained.
 
 **TL;DR.** A [software house](../notes/definitions/software-house.md) is the
 complete persistent system that keeps changing software for its users. Assume
