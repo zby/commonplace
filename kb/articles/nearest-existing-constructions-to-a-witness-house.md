@@ -14,7 +14,7 @@ source_notes:
 > **Draft supplement.** This is the survey of existing systems behind two
 > claims in the series that starts with [Learning by Theory Refinement with
 > Fixed Models](./learning-by-theory-refinement-with-fixed-models.md): that the paradigm is untested
-> but its parts have precedents, and that no existing system
+> but its parts have precedents, and that no system in the reviewed evidence
 > meets the four conditions of the [software-house
 > supplement](./an-automated-software-house-as-a-second-test-of-theory-refinement.md).
 > Everything in it may still change, including which systems belong in the
@@ -22,9 +22,20 @@ source_notes:
 > candidates are welcome on [the repository's GitHub Discussions
 > page](https://github.com/zby/commonplace/discussions).
 
-The series proposes that a system can learn by refining written theories
-while its model weights stay fixed. This supplement asks how close existing
-systems come. It grades them against the strictest statement the series has,
+**TL;DR.** The series proposes that a system can learn by refining written
+theories while its model weights stay fixed. The view this survey denies is
+that existing self-improving agent systems already demonstrate that. Across
+eighteen systems, the parts have precedents: retained notes and code,
+scheduled revision, gates that can reject a change, and rollback with
+failure evidence. In the evidence reviewed, no system meets the four
+conditions for an automated software house together, and none tests the
+paradigm's central mechanism, a retained explanation guiding a later
+decision on a case it did not state. Some precedents were inspected in
+code. Others are known only from papers or practitioner reports, and no
+reported outcome was reproduced here. The finding is about the reviewed
+evidence, not about what exists elsewhere.
+
+This supplement grades the systems against the strictest statement the series has,
 the four conditions of the [automated software house
 conjecture](./an-automated-software-house-as-a-second-test-of-theory-refinement.md#claim).
 It uses those conditions because they are fully specified, while the
@@ -213,8 +224,9 @@ ensure sound admission.
 
 Memento-Skills reports learning skills that mix declarative instructions and
 executable code, under benchmark answer oracles. It also trains a router, so
-distributed-parametric models do not all remain fixed. Its optimization ablation leaves
-"no failure attribution, no skill rewriting, and no skill discovery"
+distributed-parametric models do not all remain fixed. Its optimization
+ablation leaves "no failure attribution, no skill rewriting, and no skill
+discovery"
 ([Memento-Skills](../sources/memento-skills-let-agents-design-agents.ingest.md),
 verbatim).
 
@@ -296,14 +308,14 @@ over internal decisions.
 
 What the survey does not find is the paradigm's central mechanism under
 test. In most of the research rows, what is retained is admitted by a score,
-an oracle, a held-out gate, or a critic. The others replay or version changes
-without such a gate, or have no automatic trigger from experience. In none
-of them does the reviewed evidence test whether a retained explanation
-guided a later decision on a case it did not state. In the
+an oracle, a held-out gate, or a critic. The others replay or version
+changes without such a gate, or have no automatic trigger from experience.
+In none of them does the reviewed evidence test whether a retained
+explanation guided a later decision on a case it did not state. In the
 product rows, people supply the rationale and settle the revisions. The
 evidence reviewed here includes no matched comparison of a retained
-explanation against retained records of the same observations. That is a finding about this reviewed evidence, not about
-what those systems could do.
+explanation against retained records of the same observations. That is a
+finding about this reviewed evidence, not about what those systems could do.
 
 The next test is therefore the same for both arrangements in the series:
 combine these mechanisms under a declared boundary, and measure in a matched
@@ -315,9 +327,9 @@ Use the conjecture's [four conditions and the protocol declared before
 testing](./an-automated-software-house-as-a-second-test-of-theory-refinement.md#what-a-witness-house-must-show)
 together. The reviewed mechanisms suggest a maintained user product with
 incrementally revealed requests, delayed consequences that challenge earlier
-assumptions, and later changes, in parts the earlier repair did not modify, that test
-recovery. Admission,
-rollback, and conflict resolution must continue without internal human decisions.
+assumptions, and later changes, in parts the earlier repair did not modify,
+that test recovery. Admission, rollback, and conflict resolution must
+continue without internal human decisions.
 
 Test causal use of program theory at matched decisions. An intervention on one
 written record is inconclusive if the house reconstructs equivalent
