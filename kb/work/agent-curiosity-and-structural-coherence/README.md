@@ -117,12 +117,35 @@ Prospective boundary probing is a parallel curiosity claim. It should begin with
 
 ## Working artifacts
 
+- [Driven by Compression Progress — paper ingest](../../sources/driven-by-compression-progress.ingest.md) — source to examine when comparing the workshop's inquiry process with a compression-progress account of curiosity; applying that account to a note-learning loop remains an open design question.
 - [Breadth-first curiosity-question inventory](./curiosity-question-sources.md) — provisional question-producing moves, local episodes, evidence gaps, and contrasting experiment clusters; explicitly not a type system.
 - [Maintenance-curiosity pilot](./maintenance-curiosity-pilot/README.md) — age-blind temporal-reopening experiment over semantically old notes, with stable controls and open versus supplied-neighborhood conditions.
 - [Local case corpus](./local-case-corpus.md) — a pruned inventory of mechanism-relevant software and prose cases already in the KB and workshops.
 - [Prose fixture candidates](./prose-fixture-candidates.md) — exact frozen passages for testing locally connected but globally misplaced material, including controls and admission gaps.
 - [Hypotheses and experiments](./hypotheses-and-experiments.md) — the provisional process model, rival explanations, and within- and cross-domain interventions that distinguish them.
 - [Focused web-search plan](./web-search-plan.md) — primary-source queues, targeted code and prose queries, capture schema, and stop rules.
+
+## Possible operational output
+
+On 2026-09-18, the operator proposed an automatic learning loop working through existing notes as a possible workshop output. This is a direction to investigate, not an implementation commitment or a replacement for the experiments below.
+
+A candidate loop would select a note and relevant neighbors, originate a consequential question, investigate it, propose a revision or new connection, and evaluate whether the result merits retention. Its outcomes could also be a supported decision to keep the note, a rejected conjecture, or a deferred question. Learning would require retained results to change later answers or inquiry choices; repeatedly rewriting notes would not establish it.
+
+An initial experiment could produce reviewed proposals while preserving the existing notes. Before choosing automation boundaries, determine what counts as progress, how false leads and investigation cost are measured, and whether retained findings improve later cases. The selection policy should be compared with a fixed or random review schedule under the same budget. Automatic acceptance, the progress measure, and the role of compression remain open choices. A tested procedure and an account of its limits could be useful outputs even if unattended revision is not justified.
+
+## Proposed inquiry role for the log
+
+On 2026-09-18, the operator proposed using `kb/log.md` more often to set aside promising observations for later investigation, with curiosity guiding what gets saved. The operator sees its present emphasis as defect-centered and wants to explore a broader purpose. This records a workshop direction; it does not change the log's current contract or prescribe a new category system.
+
+Besides defects, candidate entries could concern unexplained regularities, possible connections between notes, surprising successes, newly available possibilities, or tensions between plausible accounts. The proposed admission rule is: preserve an observation that motivates a consequential question, with enough evidence and context to resume it. Unfamiliarity alone is insufficient. An entry should indicate what answering the question could change, while allowing discoveries whose value extends beyond an immediate repair.
+
+Keep capture lightweight during ordinary work. A possible entry shape is:
+
+> Noticed X while doing Y. This raises question Z, which could change W. Relevant evidence: links. Deferred because …
+
+A smallest discriminating check may be recorded when apparent; a fully designed experiment should not be a prerequisite for saving the observation. Broaden the purpose before deciding whether categories help. The aim is to preserve promising inquiry without turning the log into an unrestricted idea dump or interrupting every active task.
+
+This separates two decisions for the proposed learning loop: what deserves preservation now, and what deserves investigation later. Later selection would consider saved questions alongside existing notes, investigate a bounded subset, and record outcomes including rejection or deferral. New evidence could make an earlier question worth reopening. Whether this produces useful learning at acceptable capture and investigation cost remains to be tested.
 
 ## What closes this workshop
 
