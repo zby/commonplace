@@ -37,7 +37,8 @@ producer](../notes/definitions/software-house.md) can develop software for
 users across requests not listed in advance, with no human internal
 production decisions during its run. A **witness house** would be a concrete
 example meeting the four conditions below. Its eligible
-distributed-parametric models must have been available by the conjecture's
+distributed-parametric models, those whose knowledge is held in trained
+weights, must have been available by the conjecture's
 chosen cutoff, 2026-09-02. Their parameters remain fixed, including adapters
 and the parameters of embedding models, parametric routers, and parametric
 critics.
@@ -46,7 +47,8 @@ This is a selective comparison of eighteen constructions with retained local
 reviews or source analyses. They were chosen for mechanisms relevant to that
 question: retained project knowledge, revision of production machinery,
 automated operation, or causal models guiding adaptation. Rainbow is a contrast
-case in runtime configuration, and Commonplace is the local reference system.
+case in runtime configuration, and Commonplace is included as the authors' own
+system.
 The sample is neither exhaustive nor a ranking of proximity; the negative
 finding applies only to this reviewed evidence, which demonstrates no complete
 witness house. It does not establish that no such house exists elsewhere.
@@ -55,7 +57,7 @@ witness house. It does not establish that no such house exists elsewhere.
 
 **Program theory** is understanding of the software's purpose, organization,
 and how to handle new requests. An **explicit project theory** is one possible
-written carrier: an account of design commitments, causal assumptions, and
+written form: an account of design commitments, causal assumptions, and
 invariants. The table assesses the understanding, not whether a system stores
 that particular artifact. Reliable reconstruction from records is also eligible.
 
@@ -177,7 +179,7 @@ around frozen models. The implementation was not independently inspected here.
 The code-inspected [HyperAgents](../agent-memory-systems/reviews/hyperagents.md)
 release replays patch lineages into the next generation's code. Its retained
 memory is executable but carries no explanation. That is a limit of this
-retained carrier; it does not itself establish absence of program theory.
+retained form; it does not itself establish absence of program theory.
 
 ### Autogenesis
 
@@ -203,8 +205,8 @@ verbatim): persistence and rollback do not themselves ensure sound admission.
 
 ### Memento-Skills
 
-Memento-Skills reports learning mixed-form skills—declarative instructions and
-executable code—under benchmark answer oracles. It also trains a router, so
+Memento-Skills reports learning skills that mix declarative instructions and
+executable code, under benchmark answer oracles. It also trains a router, so
 distributed-parametric models do not all remain fixed. Its optimization ablation leaves
 "no failure attribution, no skill rewriting, and no skill discovery"
 ([Memento-Skills](../sources/memento-skills-let-agents-design-agents.ingest.md),
@@ -287,7 +289,7 @@ assumptions, and untouched later changes that test recovery. Admission,
 rollback, and conflict resolution must continue without internal human decisions.
 
 Test causal use of program theory at matched decisions. An intervention on one
-written carrier is inconclusive if the house reconstructs equivalent
+written record is inconclusive if the house reconstructs equivalent
 understanding from other records; the test must control or measure that route.
 An explicit theory artifact is optional. Acquiring understanding and machinery
 absent from the seed is the further question developed by the
