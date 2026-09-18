@@ -83,7 +83,7 @@ pinned, including adapters, embedding models, and parametric routers and
 critics. The house may change its natural-language and symbolic state,
 including tests, evaluators, workflows, and update machinery. Every
 internal decision and successor must come from the current house, its
-fixed models, and permitted external inputs; an internal human
+fixed models, and permitted external inputs. An internal human
 intervention ends the run. The [transition-closure
 supplement](./transition-closure-and-continuation-reliability.md) develops
 that requirement.
@@ -106,7 +106,7 @@ project-specific commitments do three jobs: they rule out changes that
 break the design, they point diagnosis at the likely cause, and they say
 what a recovery must preserve. In the tenant example, the commitment that
 a person's identity is separate from their organizational membership shows
-where the data model has to change; the commitment to tenant isolation
+where the data model has to change. The commitment to tenant isolation
 says what every change must keep true. Commitments like these could [keep
 the house's search for a design coherent while the consequences of a
 choice are still unknown](../notes/program-theory-sustains-search-under-delayed-feedback.md).
@@ -114,9 +114,9 @@ Passing the test shows that the house has the capacity. Changing the
 commitments and observing what the house does next tests whether this
 mechanism explains it.
 
-Naur argues that program theory is bound to people. In his maintenance
-cases, possessing documentation did not give the successors the capacity
-to use it. Both bear on the conjecture.
+In Naur's maintenance cases, possessing documentation did not give the
+successors the capacity to use it. Naur also argues that program theory
+is bound to people. Both bear on the conjecture.
 
 [Naur's compiler case](../sources/programming-as-theory-building.ingest.md)
 reports that full code, annotations, extensive design discussion, and
@@ -145,15 +145,16 @@ formulated.
 
 ## How the components could perform the program-theory function
 
-The conjectured house combines fixed LLMs, which interpret requests and
-project state and propose judgments and changes; natural-language project
-state, which retains purposes, commitments, explanations, evidence, and
-decisions; and symbolic software, which supplies exact behaviour and
-continuity through the product, tools, schemas, tests, context assembly,
-scheduling, validation, rollback, and retention rules. No component holds
-the program theory alone. A note that is never loaded has no effect. A
-model without enough project state must reconstruct or guess. Software
-executes a decision without supplying all the judgment that selected it.
+The conjectured house combines three components. Fixed LLMs interpret
+requests and project state and propose judgments and changes.
+Natural-language project state retains purposes, commitments,
+explanations, evidence, and decisions. Symbolic software supplies exact
+behaviour and continuity through the product, tools, schemas, tests,
+context assembly, scheduling, validation, rollback, and retention rules.
+No component holds the program theory alone. A note that is never loaded
+has no effect. A model without enough project state must reconstruct or
+guess. Software executes a decision without supplying all the judgment
+that selected it.
 
 Nor does the conjecture fix which form carries the theory. The house may
 retain an explicit project theory, reconstruct understanding from records
@@ -206,7 +207,7 @@ it asked for.
 Two reports make parts of the conjecture concrete. [OpenAI's agent-first
 product account](../sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md)
 describes months of development with agent-generated code,
-repository-local knowledge, and automated checks; people still supplied
+repository-local knowledge, and automated checks. People still supplied
 internal design and production judgments. The [Darwin Gödel Machine
 paper](../sources/darwin-godel-machine-open-ended-evolution-self-improving-agents.ingest.md)
 reports improved coding-benchmark performance through search over retained
@@ -219,8 +220,9 @@ together.
 Schmidhuber's [Gödel machine](../notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md)
 is the nearest formal construction that changes itself under the same
 rule as the conjectured house about where its successor states come from.
-It can rewrite its own code, and its embedded prover admits a rewrite only after proving, from the
-current axioms and utility function, that switching pays. Its limit is that
+It can rewrite its own code, and its embedded prover admits a rewrite only
+after proving, from the current axioms and utility function, that
+switching pays. Its limit is that
 it "must ignore those self-improvements whose effectiveness it cannot prove"
 ([Schmidhuber](../sources/goedel-machines-schmidhuber.ingest.md), §2.4,
 verbatim). The two share the requirement that every successor state arise
@@ -235,7 +237,7 @@ witness conditions.
 
 The program's first arrangement is Commonplace producing a knowledge base
 for consuming projects. Both arrangements test the same paradigm through an
-externally assessed product. They differ along one hinge, Naur's program
+externally assessed product. They differ on one point, Naur's program
 theory, and three consequences follow from it.
 
 **A theory of the product against a theory that is the product.** In the
@@ -287,10 +289,10 @@ objective, and an outcome level it does not judge itself. A software house
 is one arrangement that supplies those three, through product operation
 and users' judgments of visible behaviour. Its conjecture, boundary, and
 conditions were stated before the program was framed in those terms, and
-they are kept here with their own model cutoff. The software house is not the
-program's main path, not its paradigm case, and not a special case of the
-knowledge-base arrangement. It is a different product with a stronger
-falsifier and a harder claim, kept for comparison.
+they are kept here with their own model cutoff. The software house is not
+the program's paradigm case and not a special case of the knowledge-base
+arrangement: it is a different product, with a stronger falsifier and a
+harder claim.
 
 ## Where to go next
 
