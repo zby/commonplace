@@ -44,23 +44,18 @@ is an *autonomous* builder, one whose internal roles are all computational,
 whose work is still judged from outside by the projects that consume its
 product. No transfer trial has been run.
 
-Commonplace is the starting point: a human-inclusive [theory
-builder](../notes/definitions/theory-builder.md), in which agents use and
-revise retained project knowledge while people still supply decisive
-judgments. The proposed first assessment asks whether consuming projects do better with
-its retained changes; internal approval of a note is not that outcome evidence.
-
 ## The starting point
 
-A theory builder's boundary follows roles, not people. Users are outside
-when they supply questions, cases, evidence, preferences, or acceptance
-judgments. An *internal role* is work the builder depends on to develop its
-theories, whoever performs it: constructing a first theory, interpreting
-what a theory implies, choosing what to blame for a failure, producing or
-evaluating a revision, selecting what to retain, and repairing the
-machinery. In a human-inclusive builder, agents may draft and revise much of
-the content while people diagnose shared causes, revise design assumptions,
-choose among passing candidates, and approve new evaluators. An
+The boundary of a [theory builder](../notes/definitions/theory-builder.md)
+follows roles, not people. Users are outside when they supply questions,
+cases, evidence, preferences, or acceptance judgments. An *internal role*
+is work the builder depends on to develop its theories, whoever performs
+it: constructing a first theory, interpreting what a theory implies,
+choosing what to blame for a failure, producing or evaluating a revision,
+selecting what to retain, and repairing the machinery. In a human-inclusive
+builder, agents may draft and revise much of the content while people
+diagnose shared causes, revise design assumptions, choose among passing
+candidates, and approve new evaluators. An
 [autonomous](../notes/definitions/autonomous-theory-builder.md) builder
 performs every internal role computationally. Its product is still judged
 by its users. That outside judgment is part of what makes a builder
@@ -70,6 +65,40 @@ During an assessed run, model weights, adapters, embedding models,
 parametric routers, and parametric critics all stay fixed. The program's
 hypotheses restrict an assessment to models publicly available as of
 2026-09-17; the bootstrap may use newer models before an assessed run.
+
+## Commonplace as a seed instance
+
+Commonplace is the seed, the theories and machinery the program starts
+from. It is a human-inclusive theory builder that combines retained project
+knowledge, computational revision, and checks implemented in code. Notes state claims, scope, evidence, and dependencies.
+Agents load, use, and revise them, but people still supply decisive
+judgments. [Governing behaviour-changing
+writes](../notes/continual-learning-requires-governing-behaviour-changing-writes.md)
+depends partly on people in three ways:
+
+- **Admission: which change takes effect.** The [review
+  system](../reference/README-REVIEW-SYSTEM.md) records verdicts against
+  pinned note and criterion snapshots. Choosing which revision is kept is a
+  separate decision that a verdict does not make. One episode records [the
+  model retrieving theory and producing edits while the operator judged
+  which fitted the research program as a
+  whole](../notes/evidence/commonplace-revision-used-theory-guided-computational-search.md).
+- **Credit assignment: what a later consequence supports or counts against.**
+  The [freshness model](../reference/review-architecture.md) tracks which of
+  a review's inputs have changed since its verdict. Files the note links to
+  count as reading context, not as tracked inputs. Knowing that an input
+  changed does not establish that an earlier change caused a later outcome,
+  so people still help attribute failures.
+- **Authority: what an admitted change may control.** Evidence that bounded
+  reviewers passed unread material led to [a validator rule limiting unquoted
+  source use](../reference/adr/082-grounding-is-bounded-on-the-artifact-by-unquoted-sources.md).
+  People authorized that evidence to become a binding rule for later artifacts.
+
+These three governing decisions are part of what the bootstrap must
+transfer. There has been no externally assessed run, and no demonstration
+that computation alone performs these roles. The proposed first assessment
+asks whether consuming projects do better with Commonplace's retained
+changes. Internal approval of a note is not that outcome evidence.
 
 ## Two kinds of transfer
 
@@ -113,44 +142,13 @@ retains the same failure records and may patch its selector but keeps no
 account.
 
 The program's [hypotheses](./testing-the-theory-refinement-program.md#the-hypotheses)
-allow a human-built seed, the theories and machinery the builder starts
-from. The sufficiency hypothesis asks whether a builder
+allow a human-built seed. The sufficiency hypothesis asks whether a builder
 can then reach a reliability target with no person in an internal role,
 which presupposes operational transfer of every such role. The reflection
 hypothesis asks whether machinery changes that pass through the builder's
 theory of itself yield capabilities a matched builder does not gain. The
 bootstrap aims at both transfers, and reports separately which
 learning-transfer results also meet the reflective standard.
-
-## Commonplace as a seed instance
-
-Commonplace combines retained project knowledge, computational revision, and
-checks implemented in code. Notes state claims, scope, evidence, and
-dependencies; agents load and revise them. But [governing behaviour-changing
-writes](../notes/continual-learning-requires-governing-behaviour-changing-writes.md)
-still depends partly on people in three ways:
-
-- **Admission: which change takes effect.** The [review
-  system](../reference/README-REVIEW-SYSTEM.md) records verdicts against pinned
-  note and criterion snapshots; choosing which revision is kept is a separate
-  decision that a verdict does not make. One episode records [the model
-  retrieving theory and producing edits while the operator judged which
-  fitted the research program as a
-  whole](../notes/evidence/commonplace-revision-used-theory-guided-computational-search.md).
-- **Credit assignment: what a later consequence supports or counts against.**
-  The [freshness model](../reference/review-architecture.md) tracks which of
-  a review's inputs have changed since its verdict; files the note links to
-  count as reading context, not as tracked inputs. Knowing that an input
-  changed does not establish that an earlier change caused a later outcome, so
-  people still help attribute failures.
-- **Authority: what an admitted change may control.** Evidence that bounded
-  reviewers passed unread material led to [a validator rule limiting unquoted
-  source use](../reference/adr/082-grounding-is-bounded-on-the-artifact-by-unquoted-sources.md).
-  People authorized that evidence to become a binding rule for later artifacts.
-
-These three governing decisions are part of what the bootstrap must transfer.
-There has been no externally assessed run, and no demonstration that
-computation alone performs these roles.
 
 ## The bootstrap program
 
@@ -234,29 +232,31 @@ identifies entry points, not everything the exporter reads. Later edits to
 other affected and unaffected files would test whether it learns more than an
 exception for the first failing filename.
 
-**Evidence and authority.** A component trial could supply scripted exporter
-changes while the builder inspects source, build configuration, and prior results,
-then revises its check selector,
-along with any supporting tests and the retained account. This bounded trial could begin before an
+**Evidence and authority.** A component trial could supply scripted
+exporter changes while the builder inspects source, build configuration, and
+prior results, then revises its check selector, along with any supporting
+tests and the retained account. This bounded trial could begin before an
 autonomous builder exists. Authority over the result is split: an
-independent manifest check can reject a claimed
-improvement even after the revised selector accepts the edit, and the selector
-being evaluated must not control that check.
+independent manifest check can reject a claimed improvement even after the
+revised selector accepts the edit, and the selector being evaluated must not
+control that check.
 
 **Comparisons depend on the claim.** Operational transfer requires check
 selection within declared outcome and cost limits, without people making the
 transferred decisions. A selector that meets those limits has transferred
 the decision, whether or not it is cheaper than the alternative. An
-efficiency advantage is a further claim. Always running the full suite is its
-baseline: the suite omits no available check, so a selector shows an
-advantage only by matching the suite's measured outcomes at lower total cost.
-The suite itself can still miss defects. A trial declares in advance which of
-the two claims it tests and the thresholds for each.
-Learning transfer additionally requires evidence that retained changes improve
-later decisions. One way to isolate that contribution is to run two copies of
-the builder from identical product snapshots, one keeping the revised state and
-one with its earlier version restored, on cases the failure did not touch,
-while holding fixed every other place the learned information could be carried.
+efficiency advantage is a further claim. Always running the full suite is
+its baseline: the suite omits no available check, so a selector shows an
+advantage only by matching the suite's measured outcomes at lower total
+cost. The suite itself can still miss defects. A trial declares in advance
+which of the two claims it tests and the thresholds for each.
+
+Learning transfer additionally requires evidence that retained changes
+improve later decisions. One way to isolate that contribution is to run two
+copies of the builder from identical product snapshots, one keeping the
+revised state and one with its earlier version restored, on cases the
+failure did not touch, while holding fixed every other place the learned
+information could be carried.
 
 The trial could also support the [evidence supplement's
 comparison](./testing-the-theory-refinement-program.md#component-experiments-that-can-run-first)
@@ -371,10 +371,10 @@ compare, or stop. Different findings challenge different parts of the approach:
   the same result more cheaply, or reaches it more reliably at comparable total
   cost.
 
-These results alone do not refute the sufficiency hypothesis. They
-show that this approach, under the tested conditions, is not working or is not
-the best use of resources. The records that count as evidence for a transfer
-must be able to show these failures too; a history that can only confirm
+These results alone do not refute the sufficiency hypothesis. They show that
+this approach, under the tested conditions, is not working or is not the
+best use of resources. The records that count as evidence for a transfer
+must be able to show these failures too. A history that can only confirm
 success is the self-confirming evaluation above.
 
 ## Where this leaves the series
