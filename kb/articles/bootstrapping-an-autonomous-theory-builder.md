@@ -113,7 +113,8 @@ retains the same failure records and may patch its selector but keeps no
 account.
 
 The program's [hypotheses](./testing-the-theory-refinement-program.md#the-hypotheses)
-allow a human-built seed. The sufficiency hypothesis asks whether a builder
+allow a human-built seed, the theories and machinery the builder starts
+from. The sufficiency hypothesis asks whether a builder
 can then reach a reliability target with no person in an internal role,
 which presupposes operational transfer of every such role. The reflection
 hypothesis asks whether machinery changes that pass through the builder's
@@ -182,8 +183,8 @@ continuity when the decision or its evidence arrives after the current run.
 If the program transfers its best-supported decisions first, people should
 increasingly be left with the decisions that fail one of these conditions: a
 missing premise, an unsettled criterion, a weak check, or a delayed
-consequence. The [residue
-analysis](../notes/warranted-transfer-leaves-people-the-hardest-to-warrant-decisions.md)
+consequence. The [analysis of which decisions are left
+behind](../notes/warranted-transfer-leaves-people-the-hardest-to-warrant-decisions.md)
 helps identify what those remaining decisions need:
 
 | Why a decision stays human | Possible response |
@@ -201,7 +202,7 @@ to grow before they can move: representation for a missing premise,
 interpretation for an unsettled criterion, verification for a missing check,
 and continuity for a decision that arrives late. Commonplace currently supplies
 these functions with notes, models, code, and retained evidence; a later
-builder need not keep them in separate kinds of carrier.
+builder need not keep them in separate kinds of artifact.
 
 ## A possible early trial: learning which checks a Markdown edit needs
 
@@ -238,7 +239,7 @@ changes while the builder inspects source, build configuration, and prior result
 then revises its check selector,
 along with any supporting tests and the retained account. This bounded trial could begin before an
 autonomous builder exists. Authority over the result is split: an
-independent manifest check, the *reference judgment*, can reject a claimed
+independent manifest check can reject a claimed
 improvement even after the revised selector accepts the edit, and the selector
 being evaluated must not control that check.
 
@@ -274,8 +275,8 @@ selector.
 timing, resource limits, repetitions, and decision thresholds for the claim
 being tested, before using results to judge it. Report failed and incomplete
 runs, variation across repetitions, and the uncertainty of any treatment
-difference. Keep operating cost separate from reference-evaluation cost, while
-reporting both. Fewer checks can still cost more overall once selection and
+difference. Keep operating cost separate from the cost of the independent
+check, while reporting both. Fewer checks can still cost more overall once selection and
 learning are included.
 
 People may prepare the workload and provide outcome evidence. Human diagnosis
@@ -360,7 +361,7 @@ compare, or stop. Different findings challenge different parts of the approach:
 - **Human internal work does not decrease.** Across comparable workloads,
   interventions persist, transferred roles repeatedly reopen, or each transfer
   creates equal or harder human work elsewhere.
-- **Each new request class needs new human design.** A person must supply a new
+- **Each new kind of request needs new human design.** A person must supply a new
   ontology, evaluator, or decomposition as the builder takes on new kinds of
   work.
 - **Evaluation becomes self-confirming.** The builder's approval is the only
