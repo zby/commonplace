@@ -95,11 +95,11 @@ Scan `kb/notes/`, `kb/types/`, `kb/reference/`, `kb/agent-memory-systems/`, `kb/
 | `contradicts` | sym | notes | wants to resolve a disagreement |
 | `contrasts` | sym | notes | wants the neighbouring-shape distinction |
 | `defined-in` | asym | notes/definitions, reference/definitions | reader may not know the term |
-| `evidenced-by` | asym | notes, types, reference, agent-memory, agentic-systems, sources, external | the target observation, case, or source corroborates, qualifies, or bounds this assertion |
-| `derived-from` | asym | reference, agent-memory, agentic-systems, sources | claim is worked out from this source, adding nothing beyond it — see the lineage semantics in `kb/reference/link-vocabulary.md` |
-| `abstracted-from` | asym | reference, agent-memory, agentic-systems, sources | claim generalizes beyond this source; the source is evidence, authority is earned by testing |
+| `evidenced-by` | asym | notes, types, reference, agent-memory-systems, agentic-systems, sources, external | the target observation, case, or source corroborates, qualifies, or bounds this assertion |
+| `derived-from` | asym | reference, agent-memory-systems, agentic-systems, sources | claim is worked out from this source, adding nothing beyond it — see the lineage semantics in `kb/reference/link-vocabulary.md` |
+| `abstracted-from` | asym | reference, agent-memory-systems, agentic-systems, sources | claim generalizes beyond this source; the source is evidence, authority is earned by testing |
 | `operationalized-from` | asym | instructions | procedure adds ordering, defaults, or stopping conditions this methodology note doesn't itself fix; not claim-preserving — see lineage semantics in `kb/reference/link-vocabulary.md` |
-| `see-also` | asym | reference, agent-memory, agentic-systems, sources, instructions | adjacent companion; use sparingly |
+| `see-also` | asym | reference, agent-memory-systems, agentic-systems, sources, instructions | adjacent companion; use sparingly |
 
 ## Source grounding
 

@@ -38,9 +38,11 @@ Collection authors use this page when defining or revising outbound-linking rule
 The architecture is deliberately loose because the link theory is still developing. Invent intra-collection labels your work needs, propose additions to the catalogue, and diverge from suggestions where it makes sense.
 
 Organise the outbound-linking section **per destination**, not per inherited
-content-mode label. A destination is normally a collection path; use the
-reserved token `external` for targets outside the KB. For each destination your
-source links to, declare:
+content-mode label. Name local destinations by their actual directory paths,
+either in full (`kb/agent-memory-systems/`) or relative to `kb/`
+(`agent-memory-systems`). Preserve subdirectory restrictions such as
+`notes/definitions`. Use the reserved token `external` for targets outside the
+KB. For each destination your source links to, declare:
 
 1. **Search guidance** — when the [connect skill](../instructions/cp-skill-connect/SKILL.md) (or an author manually prospecting for links) should search this destination from the source. Concrete triggers work best: *"search when the source asserts a claim without evidence,"* not *"search when relevant."*
 2. **Authorised labels** — the labels writers in the source collection may use for links to this destination. Give each a one-line reader-need context specific to this *source → destination* pairing.

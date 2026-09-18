@@ -91,11 +91,11 @@ Scan `kb/reference/`, `kb/notes/`, `kb/agent-memory-systems/`, `kb/agentic-syste
 | `compares-with` | reference | compare this artifact with a peer on a named design or contract axis |
 | `rests-on` | notes | this design, description, or decision depends on this theoretical claim |
 | `defined-in` | notes/definitions, reference/definitions | reader may not know the term |
-| `derived-from` | sources, agent-memory, agentic-systems | this design choice is worked out from this external source/system, adding nothing beyond it — see the lineage semantics in `link-vocabulary.md` |
-| `abstracted-from` | sources, agent-memory, agentic-systems | this design choice generalizes beyond this external source/system; the source is evidence, not a generator |
-| `evidenced-by` | reference, sources, agent-memory, agentic-systems, external | the target record, source, or system corroborates, qualifies, or bounds this description |
+| `derived-from` | sources, agent-memory-systems, agentic-systems | this design choice is worked out from this external source/system, adding nothing beyond it — see the lineage semantics in `link-vocabulary.md` |
+| `abstracted-from` | sources, agent-memory-systems, agentic-systems | this design choice generalizes beyond this external source/system; the source is evidence, not a generator |
+| `evidenced-by` | reference, sources, agent-memory-systems, agentic-systems, external | the target record, source, or system corroborates, qualifies, or bounds this description |
 | `procedure` | instructions | for how to do this, see this instruction |
-| `see-also` | reference, notes, agent-memory, agentic-systems, sources, instructions, external | adjacent companion; use sparingly |
+| `see-also` | reference, notes, agent-memory-systems, agentic-systems, sources, instructions, external | adjacent companion; use sparingly |
 
 ## Type eligibility
 
