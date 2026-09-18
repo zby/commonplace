@@ -1,7 +1,9 @@
 ---
 description: "Conjecture that an automated software house can sustain open-ended coherent software change with LLMs available by 2026-09-02 and held fixed; system boundary, components that perform the program-theory function, and witness conditions"
 type: kb/articles/types/article.md
-status: draft
+status: superseded
+superseded_by:
+  - kb/articles/an-automated-software-house-as-a-second-test-of-theory-refinement.md
 byline: Zbigniew Lukasiak
 source_notes:
   - kb/notes/code-complements-weight-prompt-with-symbolic-operations.md
@@ -17,8 +19,17 @@ source_notes:
 
 *Open-ended software development with fixed LLMs*
 
-> **Draft.** This article may change. Comments and counterexamples are welcome
-> on [the repository's GitHub Discussions page](https://github.com/zby/commonplace/discussions).
+> **Superseded draft.** This draft is replaced by [An Automated Software
+> House as a Second Test of Theory
+> Refinement](./an-automated-software-house-as-a-second-test-of-theory-refinement.md),
+> which keeps the conjecture, the Naur argument, and the witness conditions
+> in a shorter form. The research program this draft introduced is now
+> introduced by [Learning by Theory Refinement with Fixed
+> Models](./learning-by-theory-refinement-with-fixed-models.md). The text
+> below is kept at this address so that existing links resolve. It is no
+> longer maintained, and the successor differs from it in places: witness
+> condition 1, the Gödel-machine contrast, and what a successful witness run
+> establishes.
 
 **TL;DR.** A *software house* is the complete persistent system that keeps
 changing software for its users. We conjecture that an automated one is
