@@ -19,7 +19,8 @@ source_notes:
 ---
 # How the Theory-Refinement Program Would Be Tested
 
-*Hypotheses, evidence interface, protocol shape, and component experiments: a first design*
+*Hypotheses, evidence interface, protocol shape, and component experiments:
+a first design*
 
 > **Draft supplement.** This develops the testing side of [Learning by
 > Theory Refinement with Fixed
@@ -176,21 +177,23 @@ stated claim and scope:
 With these supplied, an outcome comparison against a human-staffed builder
 can proceed before the builder has settled how much support its internal
 theories need. Internal diagnosis, active probes, and targeted experiments
-stay inside the externally tested case as long as the consequences of the resulting change still
-face the external assessment, with their selection and cost recorded.
+stay inside the externally tested case as long as the consequences of the
+resulting change still face the external assessment, with their selection
+and cost recorded.
 
 For a claim the interface does not assess, [the builder owes three things
-for itself](../notes/a-claim-without-external-assessment-carries-three-obligations.md):
+for
+itself](../notes/a-claim-without-external-assessment-carries-three-obligations.md):
 a rule for what counts as a contradiction and what support licenses each
 use; a comparison level when a revision changes the acceptance rule; and a
 performance measure that does not rest on its own evaluators. The third
-carries attribution. External assessment does not locate a fault, so a
-claim that asserts a cause, inside or outside the externally tested case,
-needs a trace,
-intervention, or test that can discriminate between the theory, its
-interpretation, retrieval, execution, and the environment.
+raises a further requirement: attributing a failure to its cause. External
+assessment does not locate a fault, so a claim that asserts a cause, inside
+or outside the externally tested case, needs a trace, intervention, or test
+that can discriminate between the theory, its interpretation, retrieval,
+execution, and the environment.
 
-That requirement is where reflection evidence lives. A reflective episode
+That requirement is what reflection evidence must satisfy. A reflective episode
 is evidenced by one connected path: externally assessed work exposes a
 possible machinery limit; diagnosis revises an identified commitment in the
 self-theory; that revision guides a machinery change whose installation
@@ -214,18 +217,18 @@ externally assessed work.
 
 ## The first arrangement and its protocol
 
-Commonplace producing a knowledge base for a consuming project is the
-first arrangement. The builder includes knowledge-base production,
-diagnosis, revision, evaluation, selection, and machinery maintenance. The
-consumer receives a versioned release and performs its own tasks. Task
-suppliers and output judges are outside. The product is the delivered
-knowledge base together with its validators, skills, and indexes. Whether
-the release includes the builder's own methodology notes and diagnostic
-history, or only the product knowledge base, is a design variable.
+Commonplace producing a knowledge base for a consuming project is the first
+arrangement. The builder includes knowledge-base production, diagnosis,
+revision, evaluation, selection, and machinery maintenance. The consumer
+receives a versioned release and performs its own tasks. Task suppliers and
+output judges are outside. The product is the delivered knowledge base
+together with its validators, skills, and indexes. Whether the release
+includes the builder's own methodology notes and diagnostic history, or only
+the product knowledge base, is a design variable.
 [WikiSkill](../sources/wikiskill-persistent-knowledge-for-skill-evolution.ingest.md)
 reports lower performance when its solver could read the improvement record
-during training, and its authors hypothesize that direct use made the
-record less informative for later improvement.
+during training, and its authors hypothesize that direct use made the record
+less informative for later improvement.
 
 The protocol freezes ten declarations before the first scored episode:
 
@@ -245,13 +248,13 @@ The protocol freezes ten declarations before the first scored episode:
 
 None of these is fixed yet, though a few have a proposed default.
 
-Each episode retains the task and its contract, the delivered versions,
-the consumer's configuration, budget usage, the output, the judge's
-decision and reason, the feedback returned, and which artifacts the
-consumer actually read before a consequential decision. An expectation
-contract stated per task before it runs says which artifact should be
-consulted and what a wrong-source answer would look like. Conformance to
-that pathway is evidence of consultation, not of causal contribution.
+Each episode retains the task and its contract, the delivered versions, the
+consumer's configuration, budget usage, the output, the judge's decision and
+reason, the feedback returned, and which artifacts the consumer actually
+read before a consequential decision. An expectation contract stated per
+task before it runs says which artifact should be consulted and what a
+wrong-source answer would look like. Conformance to that expected path is
+evidence of consultation, not of causal contribution.
 
 Development evidence and assessment evidence are separated. Incoming work
 and disclosed feedback drive development. Before the final comparison the
@@ -260,19 +263,20 @@ have not guided its construction. Once an assessment result is used to
 choose or repair a candidate, it becomes development feedback for that
 candidate's successors. Any later reuse of a fixed holdout needs a stated
 information-release mechanism and an enforced budget. The [adaptive data
-analysis literature](../sources/generalization-adaptive-data-analysis-holdout-reuse.ingest.md)
-is the input, and the protocol does not assume its theorems already apply
-to semantic judgments.
+analysis
+literature](../sources/generalization-adaptive-data-analysis-holdout-reuse.ingest.md)
+is what to check before designing such reuse, and the protocol does not
+assume its theorems already apply to semantic judgments.
 
-Four comparisons carry the hypotheses. The matched ablation, the same
-later task with a retained change removed, supports an extension claim.
-Control runs bound the alternative explanations of a gain: the task with
-the retained state removed, with a distractor that resembles it, with a
-stale version, and with the wrong mechanism able to supply the answer.
-Direct search over the raw records without the learned methodology tests
-the comparative hypothesis. A human-staffed builder under the same demands
-and resources, with every internal human intervention recorded, supplies
-the reliability comparison.
+Four comparisons supply the evidence for the hypotheses. The matched
+ablation, the same later task with a retained change removed, supports an
+extension claim. Control runs bound the alternative explanations of a gain:
+the task with the retained state removed, with a distractor that resembles
+it, with a stale version, and with the wrong mechanism able to supply the
+answer. Direct search over the raw records without the learned methodology
+tests the comparative hypothesis. A human-staffed builder under the same
+demands and resources, with every internal human intervention recorded,
+supplies the reliability comparison.
 
 Removing the knowledge base usually removes information the task needs, so
 a comparison that removes it measures benefit only. Measuring the harm of
@@ -336,11 +340,12 @@ files for testing transfer.
   recovery while changes preserve its account. Its advantage may disappear
   or reverse when an assumption breaks and the theory misdirects. Measure
   that misdirection separately from recovery, because rapid recovery can
-  erase the initial loss in a whole-run score.
+  hide the initial deficit in a whole-run score.
 - **Sample efficiency.** A correct theory may [reduce the observations
-  needed to adapt](../notes/theory-refinement-may-improve-sample-efficiency-under-shifts.md)
+  needed to
+  adapt](../notes/theory-refinement-may-improve-sample-efficiency-under-shifts.md)
   by letting one discovered dependency change decisions for several files.
-  Count inspected cases and feedback used, beside missed defects,
+  Count inspected cases and feedback used, along with missed defects,
   unnecessary checks, regressions, rollbacks, and total cost including
   theory construction, retrieval, validation, and maintenance.
 
@@ -357,8 +362,8 @@ settles the whole-system hypotheses.
 
 ## Boundary cases
 
-The definitions are sharpest at their edges. These placements are readings
-of published sources, not reproduced experiments.
+Borderline systems show what each definition requires. These placements are
+readings of published sources, not reproduced experiments.
 
 | System | Theory builder? | Externally tested? | Reflective? | Autonomous? |
 |---|---|---|---|---|
@@ -368,7 +373,8 @@ of published sources, not reproduced experiments.
 | Commonplace's note-review loop | Yes, human-staffed | No: a note's approval is internal evaluation | Yes, with the operator inside | No |
 | Commonplace producing a knowledge base for a consuming project | Yes | Candidate; observed once release, consumption, and outcome records exist | Yes | No |
 
-The [Gödel machine](../notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md)
+The [Gödel
+machine](../notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md)
 row is the informative one. It is persistent, holds a self-representation,
 and rewrites itself computationally under the same requirement that every
 successor arise through its own machinery. It admits a rewrite only on a
@@ -397,18 +403,16 @@ attributing it, and every causal claim needs its own discriminating test.
 
 ## Where to go next
 
-The four definitions,
-[theory builder](../notes/definitions/theory-builder.md),
-[externally tested](../notes/definitions/externally-tested-theory-builder.md),
+The four definitions, [theory
+builder](../notes/definitions/theory-builder.md), [externally
+tested](../notes/definitions/externally-tested-theory-builder.md),
 [reflective](../notes/definitions/reflective-theory-builder.md), and
-[autonomous](../notes/definitions/autonomous-theory-builder.md), carry
-their exclusions, misuse cases, and boundary cases in their own words. The
-[three obligations](../notes/a-claim-without-external-assessment-carries-three-obligations.md)
-note states where the externally tested case ends and keeps the open
-questions.
-The [software-house
-supplement](./an-automated-software-house-as-an-alternative-test.md)
-gives the alternative arrangement with its own conditions, and the
-[bootstrap supplement](./bootstrapping-the-first-automated-software-house.md)
-says how Commonplace's remaining human roles would transfer to
-computation.
+[autonomous](../notes/definitions/autonomous-theory-builder.md), state their
+exclusions, misuse cases, and boundary cases. The [three
+obligations](../notes/a-claim-without-external-assessment-carries-three-obligations.md)
+note states where the externally tested case ends and records the open
+questions. The [software-house
+supplement](./an-automated-software-house-as-an-alternative-test.md) gives
+the alternative arrangement with its own conditions, and the [bootstrap
+supplement](./bootstrapping-the-first-automated-software-house.md) says how
+Commonplace's remaining human roles would transfer to computation.
