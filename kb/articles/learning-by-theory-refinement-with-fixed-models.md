@@ -41,23 +41,28 @@ test has been run.
 ## A case
 
 Consider a system that maintains a release exporter. The exporter builds a
-deployment manifest from configuration files. Documentation edits do not
-affect the manifest, so the system checks them for syntax only. The system
-retains a short written account of why: checks follow the files an
-executable consumer reads, and the configured input list names every file
-that can affect the manifest.
+deployment manifest from a configured list of input files. Documentation
+edits do not affect the manifest, so the system checks them for syntax
+only. The system retains a short written account of why, in two parts: an
+edit needs a manifest check when an executable consumer reads the edited
+file, and the configured input list identifies every file the exporter
+reads.
 
 Later the exporter starts reading service definitions from named Markdown
-files. The retained account already says what to do: those files now have
-an executable consumer, so their edits need manifest checks. No new rule was
-written. An existing explanation was applied to a new fact.
+files, and those files are added to the configured list. The retained
+account already says what to do: those files now have an executable
+consumer, so their edits need manifest checks. No new rule was written. An
+existing explanation was applied to a new fact.
 
-Later still, the exporter gains support for included snippets, and a
-snippet outside the configured list carries a service definition. An edit
-to it passes its syntax check, and a release ships with an invalid manifest.
-The account's assumption that the input list was exhaustive has failed. The
-system revises the account: checks must follow the exporter's actual read
-path, including includes. It then applies the revised account to other
+Later still, the exporter gains support for included snippets. A snippet
+that no configured file names directly, but that a configured file
+includes, carries a service definition. An edit to it passes its syntax
+check, and a release ships with an invalid manifest. The account's second
+part has failed: the configured list identifies the exporter's entry
+points, not everything it reads. The system revises that part, and only
+that part: the exporter's inputs are the configured files plus whatever
+they reach through includes. The first part, that checks follow executable
+consumers, stands. The system then applies the revised account to other
 snippets it has not touched.
 
 Three things happened. A written account guided a decision on a case it
@@ -101,15 +106,27 @@ Each is our departure, not something the classical work claims.
   their procedures handled. A fixed language model can apply and revise an
   account that has not been formalized, so a theory can enter the loop
   before anyone has written a checker for it. The cost is that consequences
-  are interpreted rather than computed. A contradiction is then a reading,
-  not a fact, until the relevant part is compiled into a schema, validator,
-  or test. Refinement moves parts across that line as they settle.
+  are interpreted rather than computed. Whether a case contradicts a prose
+  theory is itself a reading, and two readings can differ. Compiling a part
+  into a schema, validator, or test makes its specified consequences
+  mechanically checkable, which removes that disagreement for those
+  consequences. It does not remove the questions of whether the check
+  represents the theory correctly or measures the right property. Prose can
+  also make a prediction clear enough that an observation plainly
+  contradicts it. Refinement moves parts across the line into code as they
+  settle, and gains checkability, not certainty, by doing so.
 - **The theory is partly normative.** The account in the case is not only
   a hypothesis about the exporter. A commitment such as "every query must
   respect the active tenant" is a rule the system keeps true. A failure can
   therefore be resolved by changing the product to fit the theory as well
   as by revising the theory to fit the evidence, and the system must decide
-  which.
+  which. That choice has a constraint. Descriptive assumptions, such as
+  what the configured list identifies, and implementation choices are the
+  system's to revise. A requirement supplied from outside, such as tenant
+  isolation, is not: weakening it would make a failure disappear without
+  improving anything, and it changes only when whoever supplied it
+  renegotiates it. The external objective introduced below is what holds
+  that line.
 - **The theory may be about the system itself.** The account of which
   checks to run is part of the system's own production machinery. When the
   same loop revises how the system builds, tests, and revises its theories,
@@ -118,8 +135,8 @@ Each is our departure, not something the classical work claims.
 
 Two further choices are the paradigm's own. Among revisions that fit the
 evidence, prefer the one with more reach, the one that would also handle
-cases the failure did not exhibit. That is why the case revises the read
-path account instead of adding an exception for one filename. And treat the
+cases the failure did not exhibit. That is why the case revises the account of
+what the exporter reads instead of adding an exception for one snippet. And treat the
 whole deployed system as the unit that learns, because [retrieval,
 scheduling, tools, and validators jointly determine behaviour with the
 model fixed](../notes/the-deployed-system-not-the-model-is-the-unit-of-learning.md).
@@ -130,8 +147,12 @@ it](../notes/a-fixed-model-house-must-write-the-procedures-for-each-new-theory.m
 and with weights fixed that capacity has to persist outside the model.
 
 Fixing the weights is an experimental condition. It rules out parameter
-updates as the source of any improvement, so that whatever the system
-learns is attributable to what it retained. It is not a recommendation for
+updates as the source of any improvement, which isolates the proposed
+learning channel for study. It does not by itself attribute an improvement
+to retained state: a different task mix, more computation, a human
+intervention, or run-to-run variation could each explain a gain. Attribution
+needs matched comparisons with the retained change removed, which the
+evidence supplement specifies. Fixing weights is not a recommendation for
 mature systems, and not a claim that learning outside weights is generally
 better.
 
@@ -160,11 +181,13 @@ Each is a conjecture, and each has a cost the program must weigh against it.
 
 - **Continual learning.** What is learned is usable at the next request. A
   fact that fits the current theory is written down and takes effect. A
-  fact that contradicts it forces a local reconciliation: decide which
-  commitment gives way, revise it, re-check what depended on it. That
-  reconciliation is the paradigm's counterpart of retraining. It is local
-  rather than global, and it is where the costs of [governing
-  behaviour-changing
+  fact that contradicts it forces a reconciliation: decide which commitment
+  gives way, revise it, re-check what depended on it. That reconciliation
+  is the paradigm's counterpart of retraining. The edit is local, to an
+  identifiable part of the theory, rather than a global refit. Its
+  consequences need not be local: in the case above, one revised assumption
+  changed the checking decision for several files, and that spread is the
+  point. Reconciliation is where the costs of [governing behaviour-changing
   writes](../notes/continual-learning-requires-governing-behaviour-changing-writes.md)
   concentrate: admission, coordination, and credit assignment.
 - **Fewer observations.** A correct theory says which new cases matter. In
@@ -175,8 +198,12 @@ Each is a conjecture, and each has a cost the program must weigh against it.
   is bounded to shifts that preserve the structure the theory names. Fewer
   observations need not mean a cheaper method once theory construction,
   retrieval, and maintenance are counted.
-- **Legibility.** Each learned assumption, rule, or test can be inspected,
-  challenged, and rolled back on its own. A learner confined to [a fixed
+- **Legibility.** Each learned assumption, rule, or test is an identifiable
+  target: it can be read, challenged, and named as the thing to revert.
+  Reverting it is not free of consequences, because later changes may have
+  depended on it, so a rollback needs the same dependency check as a
+  revision. What legibility buys is that the target and its dependents can
+  be found, not that they are independent. A learner confined to [a fixed
   decomposition inherits that decomposition's
   mistakes](../notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md);
   a learner that can rewrite its own representations and tools has a wider
@@ -203,8 +230,16 @@ on the edges of the definition.
 
 ## What would test it
 
-The program states three hypotheses, developed in the [evidence
-supplement](./testing-the-theory-refinement-program.md).
+The three attractions above are claims about a mechanism, and they are
+tested in bounded components: matched runs that vary what is retained and
+measure influence, transfer, and observations used. The program's headline
+hypotheses are claims about a whole system's performance under external
+assessment. The two levels do not substitute for each other. Better overall
+performance would not show that fewer observations were needed or that a
+rollback was safe, and a component result would not show that a whole
+system reaches a reliability target. The [evidence
+supplement](./testing-the-theory-refinement-program.md) specifies both
+levels. The program states three whole-system hypotheses.
 
 - **Sufficiency.** A learning methodology written in prose and code is
   enough for a computational builder on fixed public models to develop,
