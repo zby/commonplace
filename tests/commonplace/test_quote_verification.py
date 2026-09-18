@@ -2,6 +2,8 @@
 
 from pathlib import Path
 
+import pytest
+
 from commonplace.lib.quote_verification import (
     ingest_quotes_section,
     normalize_text,
@@ -84,6 +86,83 @@ def test_quotes_in_citation_locators_are_ignored(tmp_path: Path):
     results = verify_note(note)
 
     assert [result.quote for result in results] == ["quoted words"]
+
+
+@pytest.mark.parametrize(
+    "body, quote",
+    [
+        (
+            (
+                'Earlier context ([Source](../sources/source.md)); '
+                'verbatim: "quoted words" [Source](../sources/source.md) '
+                '(additional context).'
+            ),
+            "quoted words",
+        ),
+        (
+            (
+                'The source says "a (conservative) estimate" '
+                '[Source](../sources/source.md), verbatim; '
+                'compare ([Other](../sources/other.md)).'
+            ),
+            "a (conservative) estimate",
+        ),
+        (
+            (
+                'The source says "Ŝ(E) is bounded" '
+                '[Source](../sources/source.md), verbatim; '
+                'compare ([Other](../sources/other.md)).'
+            ),
+            "Ŝ(E) is bounded",
+        ),
+        (
+            (
+                'The conclusion is "quoted words" '
+                '([Source](../sources/source.md), section 2 (discussion), '
+                '"Locator title", verbatim).'
+            ),
+            "quoted words",
+        ),
+        (
+            (
+                'The source says "an unmatched ( in the source" '
+                '[Source](../sources/source.md), verbatim; '
+                'compare ([Other](../sources/other.md)).'
+            ),
+            "an unmatched ( in the source",
+        ),
+    ],
+)
+def test_citation_parentheses_do_not_hide_or_misattribute_quotes(
+    tmp_path: Path, body: str, quote: str
+):
+    note = _write_pair(tmp_path, body, quote)
+    (tmp_path / "sources" / "other.md").write_text("Unrelated text.", encoding="utf-8")
+
+    results = verify_note(note)
+
+    assert [(result.status, result.quote, result.source) for result in results] == [
+        ("match", quote, (tmp_path / "sources" / "source.md").resolve())
+    ]
+
+
+@pytest.mark.parametrize("quote", ["a (conservative) estimate", "Ŝ(E) is bounded"])
+def test_parenthesis_in_quote_does_not_hide_the_next_quote(tmp_path: Path, quote: str):
+    note = _write_pair(
+        tmp_path,
+        f'The source says "{quote}" [Source](../sources/source.md), verbatim; '
+        'also "another claim" [Other](../sources/other.md), verbatim (discussion).',
+        quote,
+    )
+    other = tmp_path / "sources" / "other.md"
+    other.write_text("another claim", encoding="utf-8")
+
+    results = verify_note(note)
+
+    assert [(result.status, result.quote, result.source) for result in results] == [
+        ("match", quote, (tmp_path / "sources" / "source.md").resolve()),
+        ("match", "another claim", other.resolve()),
+    ]
 
 
 def test_marker_does_not_cross_a_sentence_boundary(tmp_path: Path):

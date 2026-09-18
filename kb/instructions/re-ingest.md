@@ -61,6 +61,12 @@ verifies an exact-byte backup outside `kb/`. If the primary and single repair
 attempt both fail, it restores and verifies the incumbent bytes before
 reporting failure.
 
+After accepting the replacement, the skill runs connection discovery on the
+durable ingest and reports inbound-link candidates separately. If that discovery
+fails, the validated replacement remains accepted; carry the discovery failure
+and its retry into the final report and continue the existing-link audit below.
+Discovery candidates do not authorize adding new links during that audit.
+
 The new report reflects the current KB — new notes that didn't exist during the original ingest will appear as connections, and stale connections to deleted/renamed notes will be dropped.
 
 ## Step 2: Confirm the accepted report

@@ -172,12 +172,27 @@ def _mask_link_targets(paragraph: str, links: Sequence[_Link]) -> str:
 
 
 def _citation_ranges(paragraph: str, links: Sequence[_Link]) -> list[tuple[int, int]]:
+    """Find balanced parentheses enclosing links, ignoring link and quote text."""
+    # Inspect every link even when the caller requests just one citation.
+    # Markdown destinations and parentheses quoted from a source are not
+    # citation delimiters.
+    masked = list(paragraph)
+    for match in (*LINK_RE.finditer(paragraph), *DOUBLE_QUOTE_RE.finditer(paragraph)):
+        masked[match.start() : match.end()] = " " * (match.end() - match.start())
+
+    openings: list[int] = []
+    pairs: list[tuple[int, int]] = []
+    for index, char in enumerate(masked):
+        if char == "(":
+            openings.append(index)
+        elif char == ")" and openings:
+            pairs.append((openings.pop(), index + 1))
+
     ranges: list[tuple[int, int]] = []
     for link in links:
-        start = paragraph.rfind("(", 0, link.start)
-        end = paragraph.find(")", link.end)
-        if start >= 0 and end >= 0:
-            ranges.append((start, end + 1))
+        enclosing = [pair for pair in pairs if pair[0] < link.start < link.end < pair[1]]
+        if enclosing:
+            ranges.append(max(enclosing, key=lambda pair: pair[0]))
     return ranges
 
 

@@ -1,5 +1,5 @@
 ---
-description: "Architecture-side evidence that a parametric model's intermediates can be made inspectable and correctable by design rather than by interpretability tooling — but only per-inference, not retained"
+description: "Superseded Concept Bottleneck Models capture: summarized body text was mistaken for source quotations; use the full v3 paper ingest for evidence"
 source: https://arxiv.org/abs/2007.04612
 captured: "2026-07-26"
 capture: web-fetch
@@ -11,6 +11,15 @@ domains: [interpretability, addressability, human-oversight]
 ---
 
 # Ingest: Concept Bottleneck Models
+
+**Superseded capture — do not use as paper evidence.** This observation combines
+an abstract with a summarized body extraction; several retained extracts are
+summary wording rather than quotations from the paper. Use the
+[full v3 paper ingest](./concept-bottleneck-models-paper-v3.ingest.md) for source
+claims. The older analysis below also conflates the low-concept-loss control's
+poorer concept alignment with the separate linear-versus-nonlinear comparison
+at similar initial accuracy. It is retained as the record of that flawed
+observation; its snapshot checksum and Quotes section are unchanged.
 
 ## Classification
 

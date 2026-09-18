@@ -31,7 +31,7 @@ For a KB, the cost of a false positive is "agent re-reads a note unnecessarily."
 
 Possible filters to reduce noise:
 - Only flag notes whose targets changed substantively (exclude commits that only touch whitespace or frontmatter).
-- Only flag notes that link to targets with specific relationship types (e.g. "proposes changes to" is high-risk for staleness; "foundation" is low-risk).
+- Prioritize links whose accompanying claims depend on the target's current design state over links used only for navigation.
 - Weight by note centrality — high-centrality stale notes are higher priority.
 
 ## Scope
@@ -55,8 +55,8 @@ If most staleness comes from notes whose claims drift due to accumulated context
 
 Relevant Notes:
 
-- [Indexes lower recall when they suppress retrieval that would find more](./indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more.md) — foundation: the fallback-suppression risk that motivates detection
+- [Indexes lower recall when they suppress retrieval that would find more](./indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more.md) — grounds: the fallback-suppression risk that motivates detection
 - [quality signals for KB evaluation](./quality-signals-for-kb-evaluation.md) — extends: adds dependency-aware detection alongside age-based heuristics
-- [mechanistic constraints make Popperian KB recommendations actionable](./mechanistic-constraints-make-popperian-kb-recommendations-actionable.md) — motivates: its proposal-pruning pattern is a concrete use case for this detection
+- [mechanistic constraints make Popperian KB recommendations actionable](./mechanistic-constraints-make-popperian-kb-recommendations-actionable.md) — grounds: its proposal-pruning pattern supplies a use case for this detection
 - [traversal improves the graph](./traversal-improvements-should-be-deferred-via-logging-to-avoid-mid.md) — mechanism: traversal is when staleness gets noticed today; this note proposes detecting it before traversal
-- [links](./links-README.md) — foundation: the link graph that provides the dependency structure
+- [links](./links-README.md) — grounds: the link graph that provides the dependency structure

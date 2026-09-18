@@ -16,7 +16,7 @@ LLM output deviates from what the user intended for three distinct reasons — u
 - [out-of-spec-output-is-a-failure-of-the-interpreter-not-the-spec](./out-of-spec-output-is-a-failure-of-the-interpreter-not-the-spec.md) — source 2, interpreter failure: the output falls outside what the spec allows; a property of the interpreter, with the worked failure catalogue
 - [traditional-software-can-bracket-executor-conformance-llm-systems](./traditional-software-can-bracket-executor-conformance-llm-systems.md) — the foundation under the taxonomy: classical stacks can assume executor conformance and unique meaning, LLM systems can assume neither, so error analysis needs three questions where programming needed one
 - [execution-indeterminism-is-a-property-of-the-sampling-process](./execution-indeterminism-is-a-property-of-the-sampling-process.md) — source 3: the same prompt gives different outputs across runs; a property of the sampling process, theoretically eliminable
-- [llm-debugging-starts-with-retry-versus-rewrite-triage](./llm-debugging-starts-with-retry-versus-rewrite-triage.md) — the operational move: which remedy to reach for first, for the two-source case
+- [LLM debugging separates specification gaps, instruction violations, and run-to-run variation](./llm-debugging-starts-with-retry-versus-rewrite-triage.md) — three checks for choosing a debugging move; failure frequency alone cannot identify the defect
 
 ## Error Correction Theory
 

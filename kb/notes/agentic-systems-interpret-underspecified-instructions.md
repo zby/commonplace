@@ -66,7 +66,7 @@ None of these tools eliminates ambiguity entirely. Natural language specs remain
 
 ## Boundaries
 
-Agentic systems interleave LLM components and code. When execution crosses from LLM to code (or back), both phenomena change regime: LLM components carry semantic underspecification and indeterminism, while code is treated as precise and deterministic inside the chosen runtime contract. Each crossing is therefore a natural **checkpoint** — the deterministic side doesn't care how it was reached, only what arguments arrived — which anchors debugging, testing, and refactoring against the mess upstream. See [LLM↔code boundaries are natural checkpoints](./llm-code-boundaries-are-natural-checkpoints.md).
+Agentic systems interleave LLM components and code. Explicit values passed between them provide **checkpoints** for inspecting arguments and results. A deterministic code segment can replay a captured argument when the relevant state is fixed, but an unintended or out-of-spec argument remains wrong after crossing the boundary. See [LLM↔code boundaries are natural checkpoints](./llm-code-boundaries-are-natural-checkpoints.md) for debugging, testing, and refactoring uses and their limits.
 
 Boundaries aren't fixed. As systems evolve, logic moves across them.
 
@@ -111,7 +111,7 @@ The two phenomena create different challenges for testing and debugging.
 
 **Testing**: Execution indeterminism means you can't rely on assertion equality for LLM outputs — you need to run the same input multiple times and check that outputs fall within acceptable bounds. In practice this looks more like sampling and checking invariants than formal hypothesis testing, but the principle holds: you're characterising a distribution, not verifying a point. Semantic underspecification adds a second obligation: verify that the *space* of valid interpretations is acceptable, not just that individual outputs look right. Every piece you constrain escapes both obligations and becomes traditionally testable — because you've committed to one interpretation in a precise language.
 
-**Debugging**: the two phenomena suggest different fixes — retry for indeterminism failures, rewrite the spec for underspecification failures. Mistaking one for the other wastes effort. See [LLM debugging starts with retry-versus-rewrite triage](./llm-debugging-starts-with-retry-versus-rewrite-triage.md).
+**Debugging**: narrowing the specification can exclude unwanted interpretations, while retries expose variation across executions. Failure frequency alone does not distinguish these from a model violating an explicit instruction. [LLM debugging separates specification gaps, instruction violations, and run-to-run variation](./llm-debugging-starts-with-retry-versus-rewrite-triage.md) turns those distinctions into checks for choosing a repair.
 
 ## Design Implications
 
@@ -132,7 +132,7 @@ Relevant Notes:
 - [learning-theory](./learning-theory-README.md) — parent index: learning mechanisms, oracle theory, memory architecture
 - [llm-code-boundaries-are-natural-checkpoints](./llm-code-boundaries-are-natural-checkpoints.md) — splits from this note: the boundary-as-checkpoint argument expanded with debugging, testing, and refactoring applications
 - [progressive-constraining-commits-only-after-patterns-stabilize](./progressive-constraining-commits-only-after-patterns-stabilize.md) — splits from this note: the one-shot vs progressive distinction for LLM code generation as a constraining mode
-- [llm-debugging-starts-with-retry-versus-rewrite-triage](./llm-debugging-starts-with-retry-versus-rewrite-triage.md) — splits from this note: the debugging heuristic derived from the two-phenomena model
+- [LLM debugging separates specification gaps, instruction violations, and run-to-run variation](./llm-debugging-starts-with-retry-versus-rewrite-triage.md) — extends: checks specification adequacy and model conformance separately from failure frequency
 - [constraining](./definitions/constraining.md) — defines the narrowing mechanism this note frames theoretically
 - [codification](./definitions/codification.md) — the constraining gradient from prompt tweaks to deterministic modules
 - [programming-practices-apply-to-prompting](./underspecification-and-indeterminism-complicate-programming-for.md) — applies: typing, testing, and version control transfer to prompting under this framework

@@ -262,8 +262,9 @@ re_ingest_request:
    single-use worker for another task.
 
 6. **Accept or restore.**
-   Any handled failure after the backup is verified, including a worker-launch
-   failure, follows the existing-output restoration branch below.
+   Any handled failure after the backup is verified and before acceptance,
+   including a worker-launch failure, follows the existing-output restoration
+   branch below.
 
    - After a clean primary or repair candidate, accept the replacement. If a
      verified backup exists, delete it only now. Report any backup-cleanup
@@ -278,11 +279,33 @@ re_ingest_request:
      there is no incumbent to restore. Never draft or repair the analysis in the
      parent context.
 
-7. **Report the result.**
+7. **Discover connections for the accepted ingest.**
+   Run this step only after Step 6 accepts a clean primary or repair candidate,
+   including a same-checksum refresh. Invoke `cp-skill-connect` on `output_path`
+   and wait for completion. This is a separate pass from snapshot discovery;
+   keep its report at
+   `kb/reports/cache/connect/sources/<snapshot-slug>.ingest.connect.md`.
+   Require a non-empty report whose `source` is `output_path` and run
+   `commonplace-validate` on that report. Read its `Bidirectional Candidates`
+   and `Reverse-edge Candidates`, including an explicit `None` when there
+   are no candidates. Each proposed inbound link must independently serve a
+   reader need under the linking artifact's collection contract; an outbound
+   ingest link alone does not justify a return link.
+
+   Do not author these candidates into the ingest or other library artifacts.
+   If discovery or report validation fails, keep the accepted ingest, report
+   connection discovery as incomplete, and give `cp-skill-connect <output_path>`
+   as the retry. Do not restore an incumbent or repeat drafting for this failure.
+
+8. **Report the result.**
    - On success, tell the user where the ingest report was saved, that drafting
      was delegated, and the report's recommended next action. For a
      paper-with-code ingest, also report the paper version, checkout paths,
      reviewed commits, execution status, and validation result.
+   - For an accepted ingest, also give the post-ingest connect report path and
+     summarize its inbound-link candidates, or state that none were found.
+     Distinguish a validated ingest from incomplete connection discovery when
+     Step 7 fails; do not report that links were authored.
    - On handled final failure for an existing output, report that the refresh
      failed and the incumbent was restored with its verified SHA-256. Do not
      present the failed candidate as saved output.
