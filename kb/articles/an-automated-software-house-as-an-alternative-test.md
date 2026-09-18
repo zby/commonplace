@@ -27,14 +27,20 @@ source_notes:
 changing software for its users. We conjecture that an automated one is
 possible with LLM weights held fixed: computation performs every production
 decision, and the house learns by revising its retained knowledge and
-machinery rather than its models. Its theory is Peter Naur's *program
-theory*, the understanding of a program's purpose, organization, and how to
-handle new requests. Software fails visibly, so this arrangement gives the
-paradigm a stronger falsifier than a knowledge base does. It also demands a
-harder claim: an existence claim about a whole house, with four conditions a
-witness must meet together. This supplement states the claim, the argument
-that it is not ruled out in advance, the conditions, and the comparison
-with the knowledge-base arrangement that the program pursues first.
+machinery rather than its models. This is a second way to test the
+paradigm of the lead article, learning by theory refinement with fixed
+models, whose first test is a knowledge base. The theory a house refines
+is *program theory*, the term Peter Naur, the computer scientist who argued
+that programming is theory building, used for the understanding of a
+program's purpose, organization, and how to handle new requests. Naur held
+that this understanding is bound to people; an automated house that holds
+one would show otherwise. Software fails visibly, so the house gives the
+paradigm a stronger falsifier, a failure the system does not itself judge,
+than a knowledge base does. It also demands a harder claim: that at least
+one whole house exists that meets four conditions together. This
+supplement states the claim, why it is not ruled out in advance, the four
+conditions, and the comparison with the knowledge base, which the research
+program pursues first.
 
 ## Claim
 
@@ -46,7 +52,8 @@ models available by 2026-09-02, the cutoff chosen for this conjecture, and
 held fixed during the run.
 
 *Operates practically* means that the house, started from a declared seed,
-sustains adequate performance over a stated horizon within a stated budget,
+the product and machinery built before the run, sustains adequate
+performance over a stated horizon within a stated budget,
 reliably rather than by chance. *Open-ended* means that it handles whatever
 reasonable requests and consequences arise as development continues,
 without their being listed in advance, including requests that change what
