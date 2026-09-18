@@ -300,7 +300,7 @@ A different arrangement takes software as the product: an automated
 software house whose theory is Naur's program theory of the software it
 maintains. It offers a stronger falsifier, since software fails visibly, at
 the price of a different and harder claim. The [software-house
-supplement](./an-automated-software-house-as-an-alternative-test.md)
+supplement](./an-automated-software-house-as-a-second-test-of-theory-refinement.md)
 develops it and compares the two.
 
 ## Open questions

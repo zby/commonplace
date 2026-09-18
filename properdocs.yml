@@ -48,6 +48,7 @@ plugins:
         'articles/a-research-program-for-theory-guided-program-modification.md': 'articles/automated-software-houses-with-fixed-llms.md'
         'articles/a-research-program-for-theory-mediated-learning.md': 'articles/automated-software-houses-with-fixed-llms.md'
         'articles/a-research-program-for-theory-mediated-system-learning.md': 'articles/automated-software-houses-with-fixed-llms.md'
+        'articles/an-automated-software-house-as-an-alternative-test.md': 'articles/an-automated-software-house-as-a-second-test-of-theory-refinement.md'
         'articles/atomic-steps-size-the-note-to-its-check.md': 'notes/a-note-is-an-atomic-step-relative-to-the-check-that-reads-it.md'
         'articles/continual-learning-outside-the-weights.md': 'articles/automated-software-houses-with-fixed-llms.md'
         'articles/moving-revision-decisions-into-the-automatic-system.md': 'articles/bootstrapping-the-first-automated-software-house.md'

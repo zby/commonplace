@@ -416,7 +416,7 @@ exclusions, misuse cases, and boundary cases. The [three
 obligations](../notes/a-claim-without-external-assessment-carries-three-obligations.md)
 note states where the externally tested case ends and records the open
 questions. The [software-house
-supplement](./an-automated-software-house-as-an-alternative-test.md) gives
+supplement](./an-automated-software-house-as-a-second-test-of-theory-refinement.md) gives
 the alternative arrangement with its own conditions, and the [bootstrap
 supplement](./bootstrapping-the-first-automated-software-house.md) says how
 Commonplace's remaining human roles would transfer to computation.
