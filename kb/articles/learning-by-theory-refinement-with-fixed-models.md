@@ -328,7 +328,7 @@ hypotheses, the external assessment, the first arrangement's protocol, and
 the component experiments. [Nearest existing
 constructions](./nearest-existing-constructions-to-a-witness-house.md)
 compares eighteen existing systems against the software-house conditions.
-[Transition closure and continuation
-reliability](./transition-closure-and-continuation-reliability.md) develops
-the requirement that every change to a builder arise through its own
-machinery, and what that does and does not establish.
+The evidence supplement also develops the requirement that every change to
+a builder arise through its own machinery, and [what a run under that
+requirement does and does not
+establish](./testing-the-theory-refinement-program.md#what-a-runs-path-can-and-cannot-show).

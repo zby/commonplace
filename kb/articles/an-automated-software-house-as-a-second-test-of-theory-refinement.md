@@ -91,9 +91,8 @@ critics. The house may change its natural-language and symbolic state,
 including tests, evaluators, workflows, and update machinery. Every
 internal decision and successor must come from the current house, its
 fixed models, and permitted external inputs. An internal human
-intervention ends the run. The [transition-closure
-supplement](./transition-closure-and-continuation-reliability.md) develops
-that requirement.
+intervention ends the run. The evidence supplement [develops that
+requirement](./testing-the-theory-refinement-program.md#what-a-runs-path-can-and-cannot-show).
 
 ## Why the claim is not trivial
 
@@ -301,10 +300,10 @@ harder claim.
 [Nearest existing constructions to a witness
 house](./nearest-existing-constructions-to-a-witness-house.md) gives the
 evidence behind the claim that no existing system meets the four conditions
-together. [Transition closure and continuation
-reliability](./transition-closure-and-continuation-reliability.md) develops
-the requirement that every successor state come from the current house and
-what it does not establish. The [software
+together. The evidence supplement's section on [what a run's path can and
+cannot show](./testing-the-theory-refinement-program.md#what-a-runs-path-can-and-cannot-show)
+develops the requirement that every successor state come from the current
+system, and what it does not establish. The [software
 house definition](../notes/definitions/software-house.md) carries the
 boundary rule in its general form, and the [evidence
 supplement](./testing-the-theory-refinement-program.md) states the

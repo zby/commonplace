@@ -398,8 +398,8 @@ The transfer analysis does not depend on the product. Applied to a software
 house, the internal roles are production roles and the target is a house
 meeting the [four witness
 conditions](./an-automated-software-house-as-a-second-test-of-theory-refinement.md#what-a-witness-house-must-show).
-The [transition-closure
-supplement](./transition-closure-and-continuation-reliability.md) defines
-continuation reliability for a system that is already adequate; how
+The evidence supplement [defines continuation
+reliability](./testing-the-theory-refinement-program.md#what-a-runs-path-can-and-cannot-show)
+for a system that is already adequate; how
 human-inclusive operation can lead to such a system is this article's
 separate question.
