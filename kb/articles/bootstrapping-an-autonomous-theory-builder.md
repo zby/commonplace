@@ -63,8 +63,8 @@ the content while people diagnose shared causes, revise design assumptions,
 choose among passing candidates, and approve new evaluators. An
 [autonomous](../notes/definitions/autonomous-theory-builder.md) builder
 performs every internal role computationally. Its product is still judged
-by its users, which is what keeps it [externally
-tested](../notes/definitions/externally-tested-theory-builder.md).
+by its users. That outside judgment is part of what makes a builder
+[externally tested](../notes/definitions/externally-tested-theory-builder.md).
 
 During an assessed run, model weights, adapters, embedding models,
 parametric routers, and parametric critics all stay fixed. The program's
@@ -212,8 +212,10 @@ exporter](./learning-by-theory-refinement-with-fixed-models.md#a-case)
 provides a concrete setting: it produces a deployment manifest for an
 installer, and duplicate service identifiers make that manifest invalid. The
 setting is a small software product because its failures are cheap to
-observe. A decision of the same kind arises in Commonplace whenever a
-Markdown edit could affect code that reads it.
+observe. Commonplace has a rule of this kind today, written by a person:
+edits confined to Markdown notes run the knowledge-base validators and skip
+the code test suite. Whether a result on the exporter carries over to that
+rule is not claimed.
 
 **A change that challenges the checking policy.** Initially, the exporter reads
 only configuration files. Markdown edits receive syntax checks and are exempt
@@ -306,7 +308,7 @@ permanent.
 [Usefulness, autonomy, warrant, and power are separate
 dimensions](../notes/usefulness-autonomy-warrant-and-power-are-separate-dimensions.md),
 and a transfer can raise one while another falls. A self-approving evaluator,
-for example, raises autonomy while hiding declining quality. So state which
+for example, raises autonomy and can hide declining quality. So state which
 dimension changed, and retain independent measures of later success, missed
 failures, and total cost.
 
