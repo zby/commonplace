@@ -315,9 +315,10 @@ with B. The definition permits self-modification. Rewriting an evaluator
 changes what later gets accepted, and the rewrite is itself a step from the
 preceding state, so the seed need not specify every later decision.
 
-First, a possible path need not be a practical one. If the update process can
-retain arbitrary state, an adequate successor may be reachable and still
-extremely unlikely. The quantity a reliability claim needs is *continuation
+First, a possible path need not be a practical one. Call a state *adequate*
+when the builder in that state can do the assessed work to the declared
+target. If the update process can retain arbitrary state, an adequate
+successor may be reachable and still extremely unlikely. The quantity a reliability claim needs is *continuation
 reliability*: starting from an adequate builder, the chance of sustaining
 adequate performance across later demands over the declared horizon within
 the budget. A builder that stays adequate for a few demands and then drifts
@@ -346,8 +347,8 @@ methodology governs its own extension only as far as it
 settles](../notes/a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md).
 A human correction during the run breaks the autonomous lineage even if the
 machinery could have produced the same result, because the actual path is
-what was observed. Successful evaluation warrants only [the domain the
-available checks
+what was observed. Successful evaluation supports claims only within [the
+domain the available checks
 cover](../notes/warranted-autonomy-is-bounded-by-oracle-domain.md).
 
 ## Component experiments that can run first
