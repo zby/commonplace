@@ -218,8 +218,8 @@ together.
 
 Schmidhuber's [Gödel machine](../notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md)
 is the nearest formal construction that changes itself under the same
-provenance requirement as the conjectured house. It can rewrite its own
-code, and its embedded prover admits a rewrite only after proving, from the
+rule as the conjectured house about where its successor states come from.
+It can rewrite its own code, and its embedded prover admits a rewrite only after proving, from the
 current axioms and utility function, that switching pays. Its limit is that
 it "must ignore those self-improvements whose effectiveness it cannot prove"
 ([Schmidhuber](../sources/goedel-machines-schmidhuber.ingest.md), §2.4,
@@ -282,12 +282,12 @@ This supplement does not rely on it in either direction.
 
 The lead article proposes theory refinement with fixed models as a
 learning paradigm and states three hypotheses about a theory builder,
-tested through an evidence interface that supplies a falsifier, an
-objective, and an independent outcome level from outside. A software house
-is one arrangement of that interface, through product operation and users'
-judgments of visible behaviour. Its conjecture, boundary, and conditions
-were stated before the program was framed in those terms, and they are
-kept here with their own model cutoff. The software house is not the
+tested through what the builder receives from outside: a falsifier, an
+objective, and an outcome level it does not judge itself. A software house
+is one arrangement that supplies those three, through product operation
+and users' judgments of visible behaviour. Its conjecture, boundary, and
+conditions were stated before the program was framed in those terms, and
+they are kept here with their own model cutoff. The software house is not the
 program's main path, not its paradigm case, and not a special case of the
 knowledge-base arrangement. It is a different product with a stronger
 falsifier and a harder claim, kept for comparison.
@@ -299,7 +299,8 @@ house](./nearest-existing-constructions-to-a-witness-house.md) gives the
 evidence behind the claim that no existing system meets the four conditions
 together. [Transition closure and continuation
 reliability](./transition-closure-and-continuation-reliability.md) develops
-the provenance requirement and what it does not establish. The [software
+the requirement that every successor state come from the current house and
+what it does not establish. The [software
 house definition](../notes/definitions/software-house.md) carries the
 boundary rule in its general form, and the [evidence
 supplement](./testing-the-theory-refinement-program.md) states the
