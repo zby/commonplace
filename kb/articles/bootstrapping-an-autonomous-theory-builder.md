@@ -21,7 +21,7 @@ source_notes:
 ---
 # Bootstrapping an Autonomous Theory Builder
 
-*A research program from human-inclusive operation to computational internal roles*
+*A research program for moving a system's internal decisions from people to computation*
 
 > **Draft supplement.** This develops the route from Commonplace today to
 > the system that [Learning by Theory Refinement with Fixed
@@ -35,14 +35,18 @@ for developing and revising the written theories it learns by. Commonplace
 is one: it produces a knowledge base for consuming projects, and people
 still fill several of its internal roles. This bootstrap program transfers
 bounded classes of those internal decisions to computation, one trial at a
-time. Each trial tests two things separately: whether computation now makes
-the decisions, and whether the builder's own experience teaches it to build
-or revise the machinery that makes them. Transferring the best-supported
-decisions first should leave people the hardest-to-warrant ones, and what
-those still need identifies the functions the builder must acquire. The target
-is an *autonomous* builder, one whose internal roles are all computational,
-whose work is still judged from outside by the projects that consume its
-product. No transfer trial has been run.
+time. The view it denies is that automating a person's decisions is by
+itself progress toward a system that learns. A person can write the
+procedure that replaces them, and the system has then learned nothing. So
+each trial tests two things separately: whether computation now makes the
+decisions, and whether the builder's own experience teaches it to build or
+revise the machinery that makes them. Transferring the best-supported
+decisions first should leave people the ones hardest to hand over with
+justification, and what those decisions still lack shows what the builder
+has to acquire next. The target is an *autonomous* builder, one whose
+internal roles are all computational, whose work is still judged from
+outside by the projects that consume its product. No transfer trial has
+been run.
 
 ## The starting point
 
@@ -68,11 +72,12 @@ hypotheses restrict an assessment to models publicly available as of
 
 ## Commonplace as a seed instance
 
-Commonplace is the seed, the theories and machinery the program starts
-from. It is a human-inclusive theory builder that combines retained project
-knowledge, computational revision, and checks implemented in code. Notes state claims, scope, evidence, and dependencies.
-Agents load, use, and revise them, but people still supply decisive
-judgments. [Governing behaviour-changing
+Commonplace is the seed, the theories and machinery the program starts from.
+It is a human-inclusive theory builder that combines retained project
+knowledge, computational revision, and checks implemented in code. Notes
+state claims, scope, evidence, and dependencies. Agents load, use, and
+revise them, but people still supply decisive judgments. [Governing
+behaviour-changing
 writes](../notes/continual-learning-requires-governing-behaviour-changing-writes.md)
 depends partly on people in three ways:
 
@@ -254,17 +259,19 @@ which of the two claims it tests and the thresholds for each.
 Learning transfer additionally requires evidence that retained changes
 improve later decisions. One way to isolate that contribution is to run two
 copies of the builder from identical product snapshots, one keeping the
-revised state and one with its earlier version restored, on cases the failure did not involve, while holding fixed every other retained artifact that could hold the
-learned information.
+revised state and one with its earlier version restored, on cases the
+failure did not involve, while holding fixed every other retained artifact
+that could hold the learned information.
 
 The trial could also support the [evidence supplement's
 comparison](./testing-the-theory-refinement-program.md#component-experiments-that-can-run-first)
 of an explicit theory with raw records, a descriptive summary, and a
 plausible wrong theory. Changes that preserve the initial dependency account
-and changes that break it test different predictions: the first should favour
-the theory treatment, while the second may cancel or reverse that advantage
-until the account is revised. Record initial errors separately from recovery
-after feedback, because rapid recovery can hide the initial errors in a whole-run score. Targeted [interventions on retained
+and changes that break it test different predictions: the first should
+favour the theory treatment, while the second may cancel or reverse that
+advantage until the account is revised. Record initial errors separately
+from recovery after feedback, because rapid recovery can hide the initial
+errors in a whole-run score. Targeted [interventions on retained
 theory](../notes/retained-theory-intervention-isolates-one-explicit-surface.md)
 can help distinguish the account's contribution from that of a revised
 selector.
@@ -274,8 +281,8 @@ timing, resource limits, repetitions, and decision thresholds for the claim
 being tested, before using results to judge it. Report failed and incomplete
 runs, variation across repetitions, and the uncertainty of any treatment
 difference. Keep operating cost separate from the cost of the independent
-check, while reporting both. Fewer checks can still cost more overall once selection and
-learning are included.
+check, while reporting both. Fewer checks can still cost more overall once
+selection and learning are included.
 
 People may prepare the workload and provide outcome evidence. Human diagnosis
 or policy repair within the transferred role would defeat a claim of autonomous
@@ -325,11 +332,11 @@ client is internal work that the bootstrap must record and transfer.
 ## What learning transfer must produce
 
 Learning transfer requires evidence that experience produces or revises the
-builder's project-specific machinery. The seed is outgrown when [learning displaces repeated human
-construction of project-specific
+builder's project-specific machinery. The seed is outgrown when [learning
+displaces repeated human construction of project-specific
 knowledge](../notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md)
-as new work arises. This may show up in new theories, checks, decompositions,
-or evaluators, depending on what later work requires.
+as new work arises. This may show up in new theories, checks,
+decompositions, or evaluators, depending on what later work requires.
 
 Not all machinery must be outgrown. General tools such as version control, a
 test runner, or a model client may [stay fixed while their scope remains
