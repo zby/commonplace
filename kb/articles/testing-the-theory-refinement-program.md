@@ -202,9 +202,10 @@ state verbatim, variation of the path by which the theory is consumed, and
 an account of whether other records could supply the same understanding.
 The two-way causal connection between Commonplace's methodology notes and
 its validators and skills is recorded in [Commonplace as a reflective
-system](../notes/evidence/commonplace-as-a-reflective-system.md); that
-establishes reflection today with people inside the boundary, not that any
-reflective episode has paid.
+system](../notes/evidence/commonplace-as-a-reflective-system.md). That
+record supports calling Commonplace reflective today, with people inside
+the boundary. It does not show that any reflective episode improved
+externally assessed work.
 
 ## The first arrangement and its protocol
 
@@ -230,8 +231,8 @@ and internal human work, equal across compared conditions; the horizon and
 stopping rule, with no stopping when a desired score first appears; the
 reliability target and comparison margin; the feedback fields and their
 delay; and the acquisition mode, a passive stream by default with bounded
-diagnostic probes allowed and charged. Every one of these is currently
-unfilled.
+diagnostic probes allowed and charged. None of these is fixed yet; a few
+have a proposed default.
 
 Each episode retains the task and its contract, the delivered versions,
 the consumer's configuration, budget usage, the output, the judge's
@@ -357,20 +358,21 @@ of published sources, not reproduced experiments.
 The [Gödel machine](../notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md)
 row is the informative one. It is persistent, holds a self-representation,
 and rewrites itself computationally under the same requirement that every
-successor arise through its own machinery. What it does not do is accept a
-change on evidence and recover from a wrong one; it admits a rewrite only
-with a proof. Whether that makes it a theory builder is assessed per
-deployment and stays open.
+successor arise through its own machinery. It admits a rewrite only on a
+proof from its current axioms, and it has no route for admitting a fallible
+change and recovering from a wrong one. Whether that makes it a theory
+builder is assessed per deployment and stays open.
 
 ## Limits
 
-Everything above is design. The freeze table is empty, no consuming
-project has been chosen, and the component experiment has not been run. The
-definitions were tested against constructed episodes to see whether the
-vocabulary can describe a run, and against published systems for their
-edges, and they have already been revised by that. We expect the first
-real run to break something in them; the plan is to revise the definition
-and retain the run record as evidence, not to patch the protocol around it.
+Everything above is design. None of the ten declarations is fixed, no
+consuming project has been chosen, and the component experiment has not
+been run. The definitions have been checked against constructed episodes,
+to see whether the vocabulary can describe a run, and against published
+systems, for their borderline cases. Neither check is a run. We expect the
+first real run to show a definition to be wrong somewhere; the plan is to
+revise the definition and retain the run record as evidence, not to adjust
+the protocol so that the definition survives.
 
 Two open questions bound what any result would establish. Whether locally
 warranted revisions compose into a warranted lineage is unsettled, and once
