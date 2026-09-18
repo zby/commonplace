@@ -39,7 +39,7 @@ time. Each trial tests two things separately: whether computation now makes
 the decisions, and whether the builder's own experience teaches it to build
 or revise the machinery that makes them. Transferring the best-supported
 decisions first should leave people the hardest-to-warrant ones, and what
-those still need identifies the functions the builder must grow. The target
+those still need identifies the functions the builder must acquire. The target
 is an *autonomous* builder, one whose internal roles are all computational,
 whose work is still judged from outside by the projects that consume its
 product. No transfer trial has been run.
@@ -196,7 +196,7 @@ helps identify what those remaining decisions need:
 Among ready transfers, value, cost, risk, and dependencies determine what to
 try next. The decisions that are not ready each need a different
 [function](../notes/residue-classes-need-different-mechanisms-so-architecture-is-mixed.md)
-to grow before they can move: representation for a missing premise,
+to be in place before they can transfer: representation for a missing premise,
 interpretation for an unsettled criterion, verification for a missing check,
 and continuity for a decision that arrives late. Commonplace currently supplies
 these functions with notes, models, code, and retained evidence; a later
@@ -254,9 +254,8 @@ which of the two claims it tests and the thresholds for each.
 Learning transfer additionally requires evidence that retained changes
 improve later decisions. One way to isolate that contribution is to run two
 copies of the builder from identical product snapshots, one keeping the
-revised state and one with its earlier version restored, on cases the
-failure did not touch, while holding fixed every other place the learned
-information could be carried.
+revised state and one with its earlier version restored, on cases the failure did not involve, while holding fixed every other retained artifact that could hold the
+learned information.
 
 The trial could also support the [evidence supplement's
 comparison](./testing-the-theory-refinement-program.md#component-experiments-that-can-run-first)
@@ -265,8 +264,7 @@ plausible wrong theory. Changes that preserve the initial dependency account
 and changes that break it test different predictions: the first should favour
 the theory treatment, while the second may cancel or reverse that advantage
 until the account is revised. Record initial errors separately from recovery
-after feedback, because rapid recovery can hide the initial loss in a whole-run
-score. Targeted [interventions on retained
+after feedback, because rapid recovery can hide the initial errors in a whole-run score. Targeted [interventions on retained
 theory](../notes/retained-theory-intervention-isolates-one-explicit-surface.md)
 can help distinguish the account's contribution from that of a revised
 selector.
@@ -286,7 +284,8 @@ operation for that run, while still informing the next trial.
 ## How each trial is specified and evaluated
 
 The example makes explicit what every trial needs before it runs: its decision
-class, workload, boundary, objective, horizon, current human contributions,
+class, workload, boundary, objective, time horizon, current human
+contributions,
 missing functions, separate transfer claims, and measures of outcomes, costs,
 interventions, and reopened roles. Retain failures and reversals as well as
 successes so they can inform the next transfer.
@@ -385,8 +384,8 @@ supplement](./testing-the-theory-refinement-program.md) supplies the
 hypotheses and the protocol under which a consuming project would judge the
 result. This program tests a route toward an autonomous builder by measuring
 changes in the internal decisions and project-specific machinery supplied by
-people. Failed and reopened transfers determine where that route needs
-repair.
+people. Failed and reopened transfers show which parts of the program need
+revision.
 
 The transfer analysis does not depend on the product. Applied to a software
 house, the internal roles are production roles and the target is a house
