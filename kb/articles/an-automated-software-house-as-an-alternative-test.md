@@ -105,7 +105,7 @@ changes depend.
 
 Naur called the understanding needed to choose among such designs, and to
 revise them later, a *program theory*. In this supplement its main
-behavioural test is coherent modification: later requests are handled in
+behavioural test is coherent change: later requests are handled in
 ways that fit the earlier design.
 
 How would a house achieve that? The proposed mechanism is that retained
@@ -165,7 +165,7 @@ that selected it.
 
 Nor does the conjecture fix which form carries the theory. The house may
 retain an explicit project theory, reconstruct understanding from records
-each time, or combine both. What matters is causal use: project-specific
+each time, or combine both. What matters is explanatory use: project-specific
 state changes proposal, evaluation, diagnosis, or recovery, including where
 the relevant implication is not stated verbatim.
 
@@ -190,7 +190,7 @@ coherent revision because nothing went wrong.
 2. **Coherent revision.** Later requests or operating consequences expose
    an inadequacy in the current program theory. The house responds by
    revising the product, retained project state, production machinery, or
-   a combination, and the successor supports coherent later modification.
+   a combination, and the successor supports coherent later change.
 3. **Automated continuation.** The house sustains those capacities through
    subsequent requests and consequences without internal human production
    decisions.
@@ -204,12 +204,23 @@ The witness protocol declares before testing the starting system, the
 boundary and workload with how failures and exclusions are counted, the
 resources including seed-construction effort, and the evaluation with its
 baseline, thresholds, and the interventions used to test condition 1.
-Condition 1 is amended from an earlier statement of these conditions,
-which left the explanatory-use controls to a separate experiment; a
-reviewer pointed out that the condition itself then underdetermined what
-it asked for.
 
-## Existing constructions and a formal contrast
+## A formal contrast and existing constructions
+
+Schmidhuber's [Gödel machine](../notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md)
+is the nearest formal construction to the conjectured house. It can
+rewrite its own code, and its embedded prover admits a rewrite only after
+proving, from the current axioms and utility function, that switching
+pays. Its limit is that it
+"must ignore those self-improvements whose effectiveness it cannot prove"
+([Schmidhuber](../sources/goedel-machines-schmidhuber.ingest.md), §2.4,
+verbatim). The two share the requirement that every successor state arise
+through the current machinery and permitted inputs. They differ in the
+admission route: the Gödel machine admits a change by proof under its
+formalization, while the house admits a fallible change on empirical
+grounds, observes its consequences, and recovers from a wrong one. The
+Gödel-machine paper does not demonstrate a software house meeting the
+witness conditions.
 
 Two reports make parts of the conjecture concrete. [OpenAI's agent-first
 product account](../sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md)
@@ -223,22 +234,6 @@ theory across later product changes. [Nearest existing
 constructions](./nearest-existing-constructions-to-a-witness-house.md)
 maps eighteen systems against the four conditions; none shows all four
 together.
-
-Schmidhuber's [Gödel machine](../notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md)
-is the nearest formal construction that changes itself under the same
-rule as the conjectured house about where its successor states come from.
-It can rewrite its own code, and its embedded prover admits a rewrite only
-after proving, from the current axioms and utility function, that
-switching pays. Its limit is that
-it "must ignore those self-improvements whose effectiveness it cannot prove"
-([Schmidhuber](../sources/goedel-machines-schmidhuber.ingest.md), §2.4,
-verbatim). The two share the requirement that every successor state arise
-through the current machinery and permitted inputs. They differ in the
-admission route: the Gödel machine admits a change by proof under its
-formalization, while the house admits a fallible change on empirical
-grounds, observes its consequences, and recovers from a wrong one. The
-Gödel-machine paper does not demonstrate a software house meeting the
-witness conditions.
 
 ## The comparison with the knowledge-base arrangement
 
@@ -256,7 +251,7 @@ agents read the theory and act on it. There is no second artifact whose
 behaviour tests the theory independently of how it was read.
 
 **Falsifier strength.** Software supplies a falsifier that does not depend
-on interpretation: a failing test, an invalid release, a user who cannot
+on how the theory was read: a failing test, an invalid release, a user who cannot
 complete a task. When a house guided by a program theory ships a broken
 manifest, the theory or its use has failed, whatever the model understood
 the theory to say. A knowledge base's falsifier is a judge rejecting an
