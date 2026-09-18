@@ -114,9 +114,9 @@ Passing the test shows that the house has the capacity. Changing the
 commitments and observing what the house does next tests whether this
 mechanism explains it.
 
-Naur argues that program theory is bound to people. His maintenance cases
-also show that possessing documentation does not establish the capacity to
-use it. Both bear on the conjecture.
+Naur argues that program theory is bound to people. In his maintenance
+cases, possessing documentation did not give the successors the capacity
+to use it. Both bear on the conjecture.
 
 [Naur's compiler case](../sources/programming-as-theory-building.ingest.md)
 reports that full code, annotations, extensive design discussion, and
@@ -126,7 +126,7 @@ it](../notes/naurs-compiler-case-tests-one-historically-bounded-documentation-an
 The successors had to find and apply the relevant material through their
 own reading. So the case does not say why the transfer failed. The premises
 the successors needed may have been absent from the package, present but
-never found, or found but not applied. Newer mechanisms address the second
+never found, or found but not applied. Newer mechanisms target the second
 and third causes: rationale linked to the decisions it affects, semantic
 retrieval, and loading the relevant record at the point where a decision
 is made. Whether they transfer more of the capacity is untested.
