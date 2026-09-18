@@ -14,7 +14,7 @@ source_notes:
 > **Draft supplement.** This is the survey of existing systems behind two
 > claims in the series that starts with [Learning by Theory Refinement with
 > Fixed Models](./learning-by-theory-refinement-with-fixed-models.md): that the paradigm is untested
-> but has working precedents for its parts, and that no existing system
+> but its parts have precedents, and that no existing system
 > meets the four conditions of the [software-house
 > supplement](./an-automated-software-house-as-a-second-test-of-theory-refinement.md).
 > Everything in it may still change, including which systems belong in the
@@ -315,14 +315,17 @@ continue without internal human decisions.
 
 The reviewed work supplies candidate components for learning by theory
 refinement: retained notes and code, scheduled revision, gates capable of
-rejection, and rollback with failure evidence. So the parts have working
-precedents. Where a product operates, it is reported with human authority
+rejection, and rollback with failure evidence. So the parts have precedents,
+some inspected in code and others known only from papers or practitioner
+reports. Where a product operates, it is reported with human authority
 over internal decisions.
 
 What the survey does not find is the paradigm's central mechanism under
-test. In the benchmark-driven rows, what is retained is admitted by a score,
-an oracle, or a critic, and the evidence does not test whether a retained
-explanation guided a later decision on a case it did not state. In the
+test. In most of the research rows, what is retained is admitted by a score,
+an oracle, a held-out gate, or a critic. The others replay or version changes
+without such a gate, or have no automatic trigger from experience. In none
+of them does the reviewed evidence test whether a retained explanation
+guided a later decision on a case it did not state. In the
 product rows, people supply the rationale and settle the revisions. The
 evidence reviewed here includes no matched comparison of a retained
 explanation against retained records of the same observations. That is a finding about this reviewed evidence, not about
