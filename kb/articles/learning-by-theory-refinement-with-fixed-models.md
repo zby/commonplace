@@ -327,7 +327,9 @@ supplement](./testing-the-theory-refinement-program.md) develops the
 hypotheses, the external assessment, the first arrangement's protocol, and
 the component experiments. [Nearest existing
 constructions](./nearest-existing-constructions-to-a-witness-house.md)
-compares eighteen existing systems against the software-house conditions.
+compares eighteen existing systems against the software-house conditions and
+says what that survey shows for the paradigm: its parts have working
+precedents, and its central mechanism has not been tested.
 The evidence supplement also develops the requirement that every change to
 a builder arise through its own machinery, and [what a run under that
 requirement does and does not
