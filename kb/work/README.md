@@ -6,7 +6,6 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
-- [theory-builder-article-series](./theory-builder-article-series/README.md) — migrating the article series to a theory-builder head: a new head article, the software house compressed into a looser companion that keeps the Naur argument, two drafts superseded, and the bootstrapping article relocated to the theory builder
 - [first-downstream-run](./first-downstream-run/README.md) — running the first externally assessed episode of Commonplace as a KB-producing theory builder under the evidence protocol; holds the protocol and the three constructed episodes, and waits on the operator's choice of the first consuming project
 - [ideal-interpreter](./ideal-interpreter/README.md) — exploratory sketch of the LLM modelled as an interpreter of semantics; lacks a functional definition, and nothing in the library may depend on it until one is adopted or the sketch is dropped
 - [theory-refinement-interface](./theory-refinement-interface/README.md) — reconciling the derive, compare, locate, revise, evaluate, and apply interface with the theory-refinement literature, separating task-level descriptions from implementation guarantees; continues the internal interface investigation after the theory-builder workshop closed
