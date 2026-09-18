@@ -29,14 +29,16 @@ source_notes:
 language models: hold the model weights fixed, and let the system learn by
 refining written theories that it retains outside the model and consults on
 later work. What is learned is a *tentative theory*, an explicit and revisable
-account of some subject that guides the system's decisions. Experience refines
-the theory; the refined theory guides later work. This is *theory refinement*,
-an established learning operation, in a new setting. The paradigm is
-attractive on three counts, each still a conjecture: learning is continual,
-it may need fewer observations, and what is learned can be inspected and
-rolled back piece by piece. This article states the paradigm. The supplements
-state how it would be tested, and the first system that would test it. No
-test has been run.
+account of some subject that guides the system's decisions. Experience
+refines the theory, and the refined theory guides later work. This is
+*theory refinement*, an established learning operation, in a new setting.
+The alternatives it is set against are learning by adapting the weights,
+and retaining raw records or summaries of experience without an
+explanation. The paradigm is attractive on three counts, each still a
+conjecture: learning is continual, it may need fewer observations, and what
+is learned can be inspected and rolled back piece by piece. This article
+states the paradigm. The supplements state how it would be tested, and the
+first arrangement proposed to test it. No test has been run.
 
 ## A case
 
