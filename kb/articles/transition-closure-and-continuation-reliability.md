@@ -1,7 +1,9 @@
 ---
 description: "Supplement to the automated software house conjecture: fixed computational semantics allow mutable update policies; transition closure constrains how the house may change but does not establish that it sustains adequacy"
 type: kb/articles/types/article.md
-status: draft
+status: superseded
+superseded_by:
+  - kb/articles/testing-the-theory-refinement-program.md
 byline: Zbigniew Lukasiak
 source_notes:
   - kb/notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md
@@ -10,11 +12,14 @@ source_notes:
 ---
 # Transition closure and continuation reliability
 
-> **Draft supplement.** This develops the transition-closure and Gödel-machine
-> arguments in [The Automated Software House
-> Conjecture](./automated-software-houses-with-fixed-llms.md). It may change.
-> Comments and counterexamples are welcome on [the repository's GitHub
-> Discussions page](https://github.com/zby/commonplace/discussions).
+> **Superseded draft.** The parts of this supplement the series still uses
+> now live in [How the Theory-Refinement Program Would Be
+> Tested](./testing-the-theory-refinement-program.md#what-a-runs-path-can-and-cannot-show):
+> admissible paths from a seed, continuation reliability, the role of the
+> input process, and the comparison with the Gödel machine. They are stated
+> there for any theory builder, not only a software house, and without the
+> formal notation. The text below is kept at this address so that existing
+> links resolve. It is no longer maintained.
 
 **TL;DR.** Every change in an automated software house must arise through its
 current machinery and permitted external inputs, including changes to that
