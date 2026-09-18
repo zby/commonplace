@@ -1,5 +1,5 @@
 ---
-description: "Commonplace as a human-agent seed, separate operational and learning transfers, and an illustrative component trial of learning which checks a Markdown edit needs"
+description: "Supplement: Commonplace as a human-inclusive seed, separate operational and learning transfers of internal theory-building roles to computation, readiness conditions, and an illustrative trial of learning which checks a Markdown edit needs"
 type: kb/articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
@@ -7,7 +7,10 @@ source_notes:
   - kb/notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md
   - kb/notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md
   - kb/notes/continual-learning-requires-governing-behaviour-changing-writes.md
-  - kb/notes/definitions/software-house.md
+  - kb/notes/definitions/autonomous-theory-builder.md
+  - kb/notes/definitions/externally-tested-theory-builder.md
+  - kb/notes/definitions/reflective-theory-builder.md
+  - kb/notes/definitions/theory-builder.md
   - kb/notes/evidence/commonplace-revision-used-theory-guided-computational-search.md
   - kb/notes/holding-the-client-fixed-exports-the-least-warrantable-decisions.md
   - kb/notes/machinery-persists-by-warrant-not-position-in-a-reflective-loop.md
@@ -16,49 +19,57 @@ source_notes:
   - kb/notes/usefulness-autonomy-warrant-and-power-are-separate-dimensions.md
   - kb/notes/warranted-transfer-leaves-people-the-hardest-to-warrant-decisions.md
 ---
-# Bootstrapping the First Automated Software House
+# Bootstrapping an Autonomous Theory Builder
 
-*A research program from human-agent production to human-free internal operation*
+*A research program from human-inclusive operation to computational internal roles*
 
-> **Draft.** This article may change. Comments and counterexamples are welcome
-> on [the repository's GitHub Discussions page](https://github.com/zby/commonplace/discussions).
+> **Draft supplement.** This develops the route from Commonplace today to
+> the system that [Learning by Theory Refinement with Fixed
+> Models](./learning-by-theory-refinement-with-fixed-models.md) would test.
+> It may change. Comments and counterexamples are welcome on [the
+> repository's GitHub Discussions
+> page](https://github.com/zby/commonplace/discussions).
 
-**TL;DR.** A *software house* is the complete persistent system that keeps
-changing software for its users. This bootstrap program starts with human-agent production
-and transfers bounded classes of production decisions to
-computation, one trial at a time. Each trial tests two things separately:
-whether computation now makes the decisions, and whether production evidence
-teaches the house to build or revise the machinery that makes them.
-Transferring the best-supported decisions first should leave people the
-hardest-to-warrant ones, and what those still need identifies the functions
-the house must grow.
+**TL;DR.** A *theory builder* is the complete persistent system responsible
+for developing and revising the written theories it learns by. Commonplace
+is one: it produces a knowledge base for consuming projects, and people
+still fill several of its internal roles. This bootstrap program transfers
+bounded classes of those internal decisions to computation, one trial at a
+time. Each trial tests two things separately: whether computation now makes
+the decisions, and whether the builder's own experience teaches it to build
+or revise the machinery that makes them. Transferring the best-supported
+decisions first should leave people the hardest-to-warrant ones, and what
+those still need identifies the functions the builder must grow. The target
+is an *autonomous* builder, one whose internal roles are all computational,
+whose work is still judged from outside by the projects that consume its
+product. No transfer trial has been run.
 
-Commonplace is the starting point. Its product is a knowledge base
-for consuming projects. Agents use and revise retained
-project knowledge while people still supply decisive judgments. This makes it
-a human-inclusive [theory builder](../notes/definitions/theory-builder.md).
-The proposed first assessment asks whether consuming projects do better with
+Commonplace is the starting point: a human-inclusive [theory
+builder](../notes/definitions/theory-builder.md), in which agents use and
+revise retained project knowledge while people still supply decisive
+judgments. The proposed first assessment asks whether consuming projects do better with
 its retained changes; internal approval of a note is not that outcome evidence.
-The target is a
-witness house meeting the [conjecture's four
-conditions](./automated-software-houses-with-fixed-llms.md#what-a-witness-house-must-show)
-and learning by theory refinement under the [fixed-model
-regime](./the-software-house-as-the-unit-of-training.md).
 
 ## The starting point
 
-In a human-agent [software house](../notes/definitions/software-house.md),
-agents may write and test much of the code while people diagnose shared causes,
-revise design assumptions, choose among passing candidates, and approve new
-evaluators. These are internal production roles in the [conjecture
-article's sense](./automated-software-houses-with-fixed-llms.md#the-boundary):
-work the house depends on to evolve software, whoever performs it, as distinct
-from the requirements, facts, outcomes, and acceptance judgments users supply.
-An automated house performs every internal production role computationally.
-During a witness run, model weights, adapters, embedding models, parametric
-routers, and parametric critics all stay fixed. The conjecture's eligibility
-cutoff for those models is 2026-09-02; the bootstrap may use newer models
-before witness testing.
+A theory builder's boundary follows roles, not people. Users are outside
+when they supply questions, cases, evidence, preferences, or acceptance
+judgments. An *internal role* is work the builder depends on to develop its
+theories, whoever performs it: constructing a first theory, interpreting
+what a theory implies, choosing what to blame for a failure, producing or
+evaluating a revision, selecting what to retain, and repairing the
+machinery. In a human-inclusive builder, agents may draft and revise much of
+the content while people diagnose shared causes, revise design assumptions,
+choose among passing candidates, and approve new evaluators. An
+[autonomous](../notes/definitions/autonomous-theory-builder.md) builder
+performs every internal role computationally. Its product is still judged
+by its users, which is what keeps it [externally
+tested](../notes/definitions/externally-tested-theory-builder.md).
+
+During an assessed run, model weights, adapters, embedding models,
+parametric routers, and parametric critics all stay fixed. The program's
+hypotheses restrict an assessment to models publicly available as of
+2026-09-17; the bootstrap may use newer models before an assessed run.
 
 ## Two kinds of transfer
 
@@ -67,24 +78,26 @@ boundary: the decisions being assessed.
 
 | Claim | What must be shown |
 |---|---|
-| **Operational transfer** | Computation makes the declared production decisions, including hard cases, without human decisions. External outcomes and costs remain acceptable. |
-| **Learning transfer** | Production evidence causes the house to produce or revise the machinery that makes those decisions, and the retained change affects later work. |
+| **Operational transfer** | Computation makes the declared internal decisions, including hard cases, without human decisions. External outcomes and costs remain acceptable. |
+| **Learning transfer** | Evidence from the builder's own work causes it to produce or revise the machinery that makes those decisions, and the retained change affects later work. |
 
 The difference shows in a simple case. A validator that a person wrote can
 complete operational transfer: computation now makes the decision. Learning
-transfer requires the house to have produced or revised the validator's
-criterion and machinery from its own experience. In the training article's
-terms, learning transfer is [theory refinement turned on the house's own
-production path](./the-software-house-as-the-unit-of-training.md#why-this-is-theory-refinement):
-the refined object is a check, evaluator, or procedure rather than the
-product.
+transfer requires the builder to have produced or revised the validator's
+criterion and machinery from its own experience. In the lead article's
+terms, learning transfer is [theory refinement turned on the builder's own
+machinery](./learning-by-theory-refinement-with-fixed-models.md#theory-refinement-and-what-is-new-here),
+the reflective case: the refined object is a check, evaluator, or procedure
+rather than the delivered product.
 
-The conjecture allows a human-built seed, provided the house applies its
-[program theory](./automated-software-houses-with-fixed-llms.md#why-the-claim-is-not-trivial),
-revises coherently, and continues reliably without human production
-decisions. The [training article](./the-software-house-as-the-unit-of-training.md)
-asks the further question of whether the house's own process can also produce
-the project-specific machinery. The bootstrap aims at both transfers.
+The program's [hypotheses](./testing-the-theory-refinement-program.md#the-hypotheses)
+allow a human-built seed. The sufficiency hypothesis asks whether a builder
+can then reach a reliability target with no person in an internal role,
+which presupposes operational transfer of every such role. The reflection
+hypothesis asks whether machinery changes that pass through the builder's
+theory of itself yield capabilities a matched builder does not gain.
+Learning-transfer trials are where evidence for it would come from. The
+bootstrap aims at both transfers.
 
 ## Commonplace as a seed instance
 
@@ -113,15 +126,15 @@ still depends partly on people in three ways:
   People authorized that evidence to become a binding rule for later artifacts.
 
 These three governing decisions are part of what the bootstrap must transfer.
-There has been no witness run or demonstrated acquisition of program theory by
-computation alone.
+There has been no externally assessed run, and no demonstration that
+computation alone performs these roles.
 
 ## The bootstrap program
 
 Bounded decision classes make transfer easier to measure. A trial can focus on
 one class, a bundle of coupled decisions, or a broader redesign when the
 current division of work is itself the problem. Exploratory trials, run while
-people remain involved, can expose which functions the house still lacks, and
+people remain involved, can expose which functions the builder still lacks, and
 their results should guide which responsibilities to transfer and how to group
 them. The next section names those functions.
 
@@ -158,38 +171,42 @@ try next. The decisions that are not ready each need a different
 to grow before they can move: representation for a missing premise,
 interpretation for an unsettled criterion, verification for a missing check,
 and continuity for a decision that arrives late. Commonplace currently supplies
-these functions with notes, models, code, and retained evidence; a final house
-need not keep them in separate kinds of carrier.
+these functions with notes, models, code, and retained evidence; a later
+builder need not keep them in separate kinds of carrier.
 
 ## A possible early trial: learning which checks a Markdown edit needs
 
 This trial would test whether computation can decide which checks a Markdown
-edit needs, and whether experience improves later check selection. The
-[training article's hypothetical release
-exporter](./the-software-house-as-the-unit-of-training.md#why-this-is-theory-refinement)
+edit needs, and whether experience improves later check selection. The [lead
+article's release
+exporter](./learning-by-theory-refinement-with-fixed-models.md#a-case)
 provides a concrete setting: it produces a deployment manifest for an
-installer, and duplicate service identifiers make that manifest invalid.
+installer, and duplicate service identifiers make that manifest invalid. The
+setting is a small software product because its failures are cheap to
+observe. A decision of the same kind arises in Commonplace whenever a
+Markdown edit could affect code that reads it.
 
 **A change that challenges the checking policy.** Initially, the exporter reads
 only configuration files. Markdown edits receive syntax checks and are exempt
-from manifest checks. A retained *dependency account* relates this exemption
-to the build's dependencies and assumes its configured input list is
-exhaustive.
+from manifest checks. A retained *dependency account* has two parts: an edit
+needs a manifest check when an executable consumer reads the edited file, and
+the configured input list identifies every file the exporter reads.
 
-When the exporter starts reading service definitions from named Markdown files,
-the account should lead the house to extend manifest checks to those files. A
-further change introduces indirectly included snippets. An edit to one can pass
-its syntax check yet produce an invalid manifest. Revealing that failure after
-intervening edits would test whether the house traces the consequence to the
-incomplete dependency account. Later edits to other affected and unaffected
-files would test whether it learns more than an exception for the first failing
-filename.
+When the exporter starts reading service definitions from named Markdown files
+added to that list, the account should lead the builder to extend manifest
+checks to those files. A further change introduces snippets that a configured
+file includes. An edit to one can pass its syntax check yet produce an invalid
+manifest. Revealing that failure after intervening edits would test whether
+the builder traces the consequence to the account's second part: the list
+identifies entry points, not everything the exporter reads. Later edits to
+other affected and unaffected files would test whether it learns more than an
+exception for the first failing filename.
 
 **Evidence and authority.** A component trial could supply scripted exporter
-changes while the house inspects source, build configuration, and prior results,
+changes while the builder inspects source, build configuration, and prior results,
 then revises its *check selector* (the procedure that chooses the checks),
 along with any supporting tests and the retained account. This bounded trial could begin before a
-complete automated house exists. Authority over the result is split: an
+autonomous builder exists. Authority over the result is split: an
 independent manifest check, the *reference judgment*, can reject a claimed
 improvement even after the revised selector accepts the edit, and the selector
 being evaluated must not control that check.
@@ -201,13 +218,13 @@ no available check, so a selector must match its measured outcomes at lower
 total cost. The suite itself can still miss defects.
 Learning transfer additionally requires evidence that retained changes improve
 later decisions. One way to isolate that contribution is to run two copies of
-the house from identical product snapshots, one keeping the revised state and
+the builder from identical product snapshots, one keeping the revised state and
 one with its earlier version restored, on cases the failure did not touch,
 while holding fixed every other place the learned information could be carried.
 
-The trial could also support the [training article's
-comparison](./the-software-house-as-the-unit-of-training.md#testable-hypotheses)
-of explicit project theory with raw records, a descriptive summary, and a
+The trial could also support the [evidence supplement's
+comparison](./testing-the-theory-refinement-program.md#component-experiments-that-can-run-first)
+of an explicit theory with raw records, a descriptive summary, and a
 plausible wrong theory. Changes that preserve the initial dependency account
 and changes that break it test different predictions: the first should favour
 the theory treatment, while the second may cancel or reverse that advantage
@@ -240,11 +257,12 @@ successes so they can inform the next transfer.
 
 Record who made each decision, for which request, and when. A person who fixes
 three hard failures each month still holds the diagnosis role. Such
-interventions are allowed and recorded during bootstrapping. After a witness
-run begins, an internal human decision ends that run: the conjecture's
-continuation condition allows none, and the changes retained from then on no
-longer form an autonomous *training lineage*, a history of changes made while
-the models stay pinned and no person decides.
+interventions are allowed and recorded during bootstrapping. During an
+assessed run, an internal human decision is an intervention: it is recorded,
+its result is not credited to the builder, and it defeats a claim of autonomy
+for that run. The changes retained from then on no longer form an autonomous
+*lineage*, a history of successor states each produced by the builder's own
+revision process while the models stay pinned and no person decides.
 
 Transfers can reopen when a new request exceeds a rule's scope or creates a new
 human review role. Record the reopened responsibility and test a response:
@@ -260,20 +278,19 @@ dimension changed, and retain independent measures of later success, missed
 failures, and total cost.
 
 The declared boundary also determines what a comparison can establish. A
-benchmark that treats the house as a worker and holds the client fixed, the
+benchmark that treats the builder as a worker and holds the client fixed, the
 party that chooses the task, writes the brief, and accepts the result, [does
 not test the decisions it leaves with the
 client](../notes/holding-the-client-fixed-exports-the-least-warrantable-decisions.md).
 Which of those decisions matter depends on their kind. Requirements and
 judgments about visible behaviour remain external inputs, so a client may keep
 supplying them. Design, diagnosis, or successor selection supplied by the
-client is internal production work that the bootstrap must record and transfer.
+client is internal work that the bootstrap must record and transfer.
 
-## What the house's training must produce
+## What learning transfer must produce
 
-Learning transfer, the result the house's training must produce, requires
-evidence that experience produces or revises the house's project-specific
-machinery. The seed is outgrown when [learning displaces repeated human
+Learning transfer requires evidence that experience produces or revises the
+builder's project-specific machinery. The seed is outgrown when [learning displaces repeated human
 construction of project-specific
 knowledge](../notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md)
 as new work arises. This may show up in new theories, checks, decompositions,
@@ -303,21 +320,22 @@ compare, or stop. Different findings challenge different parts of the approach:
 
 - **The proposed retained account makes no causal difference.** Interventions
   on the account still fail to change later decisions in the predicted way,
-  even after ruling out the house rebuilding the same understanding from other
-  records (the conjecture article's *equivalent reconstruction*).
-- **Human production work does not decrease.** Across comparable workloads,
+  even after ruling out *equivalent reconstruction*, the builder rebuilding
+  the same understanding from other records.
+- **Human internal work does not decrease.** Across comparable workloads,
   interventions persist, transferred roles repeatedly reopen, or each transfer
   creates equal or harder human work elsewhere.
 - **Each new request class needs new human design.** A person must supply a new
-  ontology, evaluator, or decomposition as the house takes on new kinds of work.
-- **Evaluation becomes self-confirming.** The house's approval is the only
+  ontology, evaluator, or decomposition as the builder takes on new kinds of
+  work.
+- **Evaluation becomes self-confirming.** The builder's approval is the only
   evidence of quality, while external outcomes stop tracking it.
 - **A more direct method performs better at comparable total cost.**
   Reconstruction from raw records, direct search, or model adaptation reaches
   the same result more cheaply, or reaches it more reliably at comparable total
   cost.
 
-These results alone do not refute the conjecture that a house can exist. They
+These results alone do not refute the sufficiency hypothesis. They
 show that this approach, under the tested conditions, is not working or is not
 the best use of resources. The records that count as evidence for a transfer
 must be able to show these failures too; a history that can only confirm
@@ -325,13 +343,21 @@ success is the self-confirming evaluation above.
 
 ## Where this leaves the series
 
-The [conjecture](./automated-software-houses-with-fixed-llms.md) supplies the
-witness conditions; the [training
-proposal](./the-software-house-as-the-unit-of-training.md) supplies the
-learning target. This program tests a route toward both by measuring changes in
-the production decisions and project-specific machinery supplied by people.
-Failed and reopened transfers determine where that route needs repair. The
-[transition-closure
+The [lead article](./learning-by-theory-refinement-with-fixed-models.md)
+supplies the learning paradigm, and the [evidence
+supplement](./testing-the-theory-refinement-program.md) supplies the
+hypotheses and the protocol under which a consuming project would judge the
+result. This program tests a route toward an autonomous builder by measuring
+changes in the internal decisions and project-specific machinery supplied by
+people. Failed and reopened transfers determine where that route needs
+repair.
+
+The transfer analysis does not depend on the product. Applied to a software
+house, the internal roles are production roles and the target is a house
+meeting the [four witness
+conditions](./an-automated-software-house-as-a-second-test-of-theory-refinement.md#what-a-witness-house-must-show).
+The [transition-closure
 supplement](./transition-closure-and-continuation-reliability.md) defines
-continuation reliability for a house that is already adequate; how human-agent
-production can lead to such a house is this article's separate question.
+continuation reliability for a system that is already adequate; how
+human-inclusive operation can lead to such a system is this article's
+separate question.
