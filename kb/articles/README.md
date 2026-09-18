@@ -14,7 +14,7 @@ Nothing published yet.
 
 ## In draft
 
-Six drafts make one series: a lead article and five supplements. The lead
+Five drafts make one series: a lead article and four supplements. The lead
 states the idea and stands on its own. Each supplement develops one part of
 it, so read the lead first and then whichever supplement answers your next
 question. Nothing in the series reports a result; no test has been run.
@@ -26,8 +26,7 @@ The supplements, in the order a reader is likely to want them:
 - [How the Theory-Refinement Program Would Be Tested](./testing-the-theory-refinement-program.md) — develops the lead's testing section. It defines the system under test, states the three hypotheses with what would refute each, says what has to come from outside that system for outcomes to be comparable, gives the shape of the first protocol, and specifies component experiments that can run before a whole system exists. It is a first design that needs much more testing before a scored run.
 - [Bootstrapping an Autonomous Theory Builder](./bootstrapping-an-autonomous-theory-builder.md) — develops the lead's first arrangement. It takes Commonplace as a human-staffed starting point and transfers internal decisions to computation one bounded class at a time, testing separately whether computation now makes each decision and whether the system learns to revise the machinery that makes it. It has readiness and stop conditions and one worked trial; the program beyond that trial is still a sketch.
 - [An Automated Software House as a Second Test of Theory Refinement](./an-automated-software-house-as-a-second-test-of-theory-refinement.md) — develops the alternative arrangement the lead mentions. A software house that learns by refining Naur's program theory would give the paradigm a stronger falsifier than a knowledge base does, at the price of a harder claim. It keeps the conjecture, the argument that Naur does not rule it out, the four conditions a witness house must meet, and a comparison of the two arrangements.
-- [Nearest existing constructions to a witness house](./nearest-existing-constructions-to-a-witness-house.md) — develops the software-house supplement's claim that no existing system meets its four conditions together: a selective comparison of eighteen constructions, with evidence links and a separate test of explicit project theory.
-- [Transition closure and continuation reliability](./transition-closure-and-continuation-reliability.md) — develops the requirement, shared by both arrangements, that every change to a system arise through its own machinery: permitted paths from a seed, continuation reliability as the measure of sustained adequacy, and the Gödel-machine comparison.
+- [Nearest existing constructions to a witness house](./nearest-existing-constructions-to-a-witness-house.md) — the survey behind two claims in the series: that the paradigm's parts have working precedents, and that no existing system meets the software-house supplement's four conditions together. It grades eighteen constructions against those conditions, with evidence links, and closes on what the survey shows for the paradigm: its central mechanism, a retained explanation guiding later decisions, has not been tested in the reviewed evidence.
 
 ## Superseded
 
@@ -36,6 +35,7 @@ opens with a banner naming its successor and is no longer maintained.
 
 - [The Automated Software House Conjecture](./automated-software-houses-with-fixed-llms.md) — replaced by the software-house supplement above.
 - [The Automated Software House as the Unit of Training](./the-software-house-as-the-unit-of-training.md) — replaced by the lead, with its experiments now in the testing supplement.
+- [Transition closure and continuation reliability](./transition-closure-and-continuation-reliability.md) — its path definition, continuation reliability, and Gödel-machine comparison now form a section of the testing supplement, stated for any system and without the formal notation.
 
 Six earlier companion drafts were withdrawn; their addresses redirect to the
 draft that absorbed each one, which in some cases is now one of the
