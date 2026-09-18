@@ -96,7 +96,7 @@ the horizon, even if both pass an early evaluation.
 The conjecture allows a human-built seed, so it does not ask how likely an
 autonomous process is to reach an adequate house from a non-adequate seed.
 How to produce the seed is the [bootstrap
-article's](./bootstrapping-the-first-automated-software-house.md) question.
+article's](./bootstrapping-an-autonomous-theory-builder.md) question.
 An autonomous bootstrap stage could measure this **hitting probability**;
 seed-construction effort is reported separately from operating cost.
 
@@ -179,7 +179,7 @@ afterward, and failures must remain in the record. Sustained adequacy needs its 
 separate from the bootstrap article's question of constructing an adequate house.
 
 The [training](./the-software-house-as-the-unit-of-training.md) and
-[bootstrap](./bootstrapping-the-first-automated-software-house.md) articles ask
+[bootstrap](./bootstrapping-an-autonomous-theory-builder.md) articles ask
 how the house might acquire understanding and machinery absent from the seed.
 The [construction comparison](./nearest-existing-constructions-to-a-witness-house.md)
 assesses the available evidence for the four conditions together.

@@ -128,7 +128,7 @@ the reading guidance in the collection README.
   2026-09-17 (commit `1061ace8` and its follow-up): the
   [conjecture article](../../articles/automated-software-houses-with-fixed-llms.md),
   the [training article](../../articles/the-software-house-as-the-unit-of-training.md),
-  the [bootstrapping article](../../articles/bootstrapping-the-first-automated-software-house.md),
+  the [bootstrapping article](../../articles/bootstrapping-an-autonomous-theory-builder.md),
   and the two supplements. The Naur section is the conjecture article's
   "Why the claim is not trivial", with its two Naur notes in
   `source_notes`.

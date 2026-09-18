@@ -96,7 +96,7 @@ note](./kb/notes/program-theory-sustains-search-under-delayed-feedback.md)
 states the longitudinal test. Two companion articles say [how such a house
 should learn](./kb/articles/the-software-house-as-the-unit-of-training.md)
 and [how the first one would be
-built](./kb/articles/bootstrapping-the-first-automated-software-house.md).
+built](./kb/articles/bootstrapping-an-autonomous-theory-builder.md).
 
 **Deployment-time learning.** Durable changes to prompts, rules, tools, schemas, tests, and code can affect later sessions without updating model weights. Storage is insufficient: later operation must load or enforce the result. Start with [retained system-definition artifacts enable persistent deployment-time adaptation](./kb/notes/retained-artifacts-enable-persistent-deployment-time-adaptation.md) and the [learning theory index](./kb/notes/learning-theory-README.md).
 

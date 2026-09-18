@@ -70,7 +70,7 @@ section](./automated-software-houses-with-fixed-llms.md#the-boundary) says
 which acts fall on which side.
 
 The house may begin from a human-built seed or emerge from the
-[bootstrap program](./bootstrapping-the-first-automated-software-house.md).
+[bootstrap program](./bootstrapping-an-autonomous-theory-builder.md).
 Training changes its surrounding state and machinery. The rule is by
 representational form: the house may revise both the natural-language and the
 symbolic forms of its own definition; only its distributed-parametric models
@@ -188,7 +188,7 @@ situations:
 The checking policy above is such a case: the refined object is part of the
 house's production machinery, and the same loop revises the producer as well
 as the product. This second-order learning is what the [bootstrap
-article](./bootstrapping-the-first-automated-software-house.md#two-kinds-of-transfer)
+article](./bootstrapping-an-autonomous-theory-builder.md#two-kinds-of-transfer)
 calls learning transfer, and a house that must outgrow its seed cannot do
 without it.
 
@@ -327,7 +327,7 @@ first history, adding another configured exporter input preserves the initial
 account of direct inputs. In the second, adding indirect includes breaks its
 assumption that the list is exhaustive. Include unaffected files in both
 histories, and reserve later edits to different files for testing transfer.
-The [bootstrap article](./bootstrapping-the-first-automated-software-house.md#a-possible-early-trial-learning-which-checks-a-markdown-edit-needs)
+The [bootstrap article](./bootstrapping-an-autonomous-theory-builder.md#a-possible-early-trial-learning-which-checks-a-markdown-edit-needs)
 illustrates how this comparison could inform an early transfer trial. A concrete
 protocol should match workloads within repetitions, vary cases and model sampling
 between repetitions, and set its resource limits and decision rules before
@@ -417,5 +417,5 @@ regimes remain alternatives.
 
 The [comparison supplement](./nearest-existing-constructions-to-a-witness-house.md#the-test-for-explicit-project-theory-from-the-training-article)
 distinguishes existing evidence for program-theory use from this proposed test
-of a written carrier. The [bootstrap program](./bootstrapping-the-first-automated-software-house.md)
+of a written carrier. The [bootstrap program](./bootstrapping-an-autonomous-theory-builder.md)
 turns the learning proposal into a first trial and a sequence of bounded transfers.

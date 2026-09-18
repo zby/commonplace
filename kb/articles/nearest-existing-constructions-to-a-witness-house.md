@@ -278,7 +278,7 @@ understanding from other records; the test must control or measure that route.
 An explicit theory artifact is optional. Acquiring understanding and machinery
 absent from the seed is the further question developed by the
 [training](./the-software-house-as-the-unit-of-training.md) and
-[bootstrap](./bootstrapping-the-first-automated-software-house.md) articles.
+[bootstrap](./bootstrapping-an-autonomous-theory-builder.md) articles.
 
 ## The test for explicit project theory from the training article
 

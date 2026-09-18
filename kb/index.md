@@ -28,7 +28,7 @@ note](./notes/program-theory-sustains-search-under-delayed-feedback.md)
 states the longitudinal test. [The software house as the unit of
 training](./articles/the-software-house-as-the-unit-of-training.md) says how
 such a house should learn, and [bootstrapping the first automated software
-house](./articles/bootstrapping-the-first-automated-software-house.md) says
+house](./articles/bootstrapping-an-autonomous-theory-builder.md) says
 how it would be built from a house that still has people inside.
 
 **Deployment-time learning.** Durable changes to behavior-shaping prompts, rules, tools, schemas, tests, and code can affect later sessions without updating model weights. Storage is insufficient: later operation must load or enforce the result. [Deploy-time learning](./notes/retained-artifacts-enable-persistent-deployment-time-adaptation.md) develops this path, while [bounded context](./notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) explains why selective routing remains necessary. The [learning theory index](./notes/learning-theory-README.md) maps the wider thread.

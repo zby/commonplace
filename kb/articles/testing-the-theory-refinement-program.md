@@ -418,5 +418,5 @@ note states where the externally tested case ends and records the open
 questions. The [software-house
 supplement](./an-automated-software-house-as-a-second-test-of-theory-refinement.md) gives
 the alternative arrangement with its own conditions, and the [bootstrap
-supplement](./bootstrapping-the-first-automated-software-house.md) says how
+supplement](./bootstrapping-an-autonomous-theory-builder.md) says how
 Commonplace's remaining human roles would transfer to computation.

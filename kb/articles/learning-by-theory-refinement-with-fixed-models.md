@@ -292,7 +292,7 @@ revise the delivered product, and when a failure exposed a limit in its own
 methods, revise those too. Today people still perform several inside
 roles, so it is a human-inclusive builder; how those roles would transfer
 to computation is the [bootstrap
-supplement's](./bootstrapping-the-first-automated-software-house.md)
+supplement's](./bootstrapping-an-autonomous-theory-builder.md)
 subject. No consuming-project run has been performed. The evidence
 supplement gives the protocol's shape.
 

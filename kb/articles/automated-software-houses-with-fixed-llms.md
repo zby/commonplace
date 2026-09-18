@@ -367,6 +367,6 @@ out only that construction.
 
 The [training article](./the-software-house-as-the-unit-of-training.md) asks
 how such a house should improve. The [bootstrap
-article](./bootstrapping-the-first-automated-software-house.md) asks how to
+article](./bootstrapping-an-autonomous-theory-builder.md) asks how to
 reach it from human-agent production, including how it might learn to rebuild
 machinery that its seed may inherit from people.
