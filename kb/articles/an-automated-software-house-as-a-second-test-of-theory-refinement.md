@@ -1,5 +1,5 @@
 ---
-description: "Supplement: the automated software house conjecture as an alternative test of theory refinement with fixed models; the 2026-09-02 claim, Naur's program theory, four witness conditions, and the knowledge-base comparison"
+description: "Supplement: the automated software house conjecture as a second test of theory refinement with fixed models; the 2026-09-02 claim, Naur's program theory, four witness conditions, and the knowledge-base comparison"
 type: kb/articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
@@ -13,7 +13,7 @@ source_notes:
   - kb/notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md
   - kb/notes/an-open-domain-theory-builder-becomes-a-software-house-when-new-domains-require-production-machinery-changes.md
 ---
-# An Automated Software House as an Alternative Test
+# An Automated Software House as a Second Test of Theory Refinement
 
 *Program theory, the witness conditions, and why software gives a stronger falsifier*
 
