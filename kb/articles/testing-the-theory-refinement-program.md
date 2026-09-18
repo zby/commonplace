@@ -19,8 +19,7 @@ source_notes:
 ---
 # How the Theory-Refinement Program Would Be Tested
 
-*Hypotheses, evidence interface, protocol shape, and component experiments:
-a first design*
+*Hypotheses, external assessment, protocol shape, and component experiments: a first design*
 
 > **Draft supplement.** This develops the testing side of [Learning by
 > Theory Refinement with Fixed
@@ -32,13 +31,18 @@ a first design*
 
 **TL;DR.** The lead article proposes that a system can learn by refining
 written theories while its model weights stay fixed. This supplement says
-what would count as evidence. It defines the system under test, states the
-three hypotheses with what would refute each, describes the evidence
-interface that makes outcome comparison possible, gives the shape of the
-first protocol, and specifies component experiments that can run before a
-whole system exists. It also places existing systems against the
-definitions. No run has been performed. The setup is stated so that it can
-be criticized, not because it is settled.
+what would count as evidence for that. The view it denies is that better
+outcomes after a change are enough: a gain can come from a different task
+mix, more computation, or a person's intervention, and an outcome does not
+say which part of a system caused it. So the supplement defines the system
+under test, states three hypotheses with what would refute each, and says
+what has to come from outside that system for outcomes to be comparable:
+failures it does not judge, an objective it does not set, and an outcome
+level its own evaluators do not decide. It then gives the shape of the
+first protocol, specifies component experiments that can run before a whole
+system exists, and shows where existing systems fall under the definitions.
+No run has been performed. The setup is stated so that it can be
+criticized, not because it is settled.
 
 ## The system under test
 
