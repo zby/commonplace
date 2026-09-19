@@ -123,6 +123,10 @@ Commonplace selection, contract, or implemented classification belong under
 
 Use `kb/notes/evidence/` when a note's primary contribution is what a bounded dataset, experiment, trace cohort, or comparative casebook establishes about the design space. These remain theoretical notes under this collection contract: state both the inference the evidence supports and its limit. The larger theory may still be incomplete, but the evidence artifact must make its own bounded inference. Keep observations whose theory-facing inference is unresolved in `kb/work/`; put first occurrences and pure pattern records without explanation in `kb/log.md`. Put raw captures in `kb/sources/` and descriptions retained to represent a particular system's current or historical state in that system's descriptive collection.
 
+## Proposal placement
+
+Use `kb/notes/proposals/` for finished theory the KB has not decided to import into its vocabulary: frameworks, distinctions, terms, and changes to adopted definitions. Placement follows adoption state, not doubt about the content; a conjecture that needs no new vocabulary is an ordinary note that states its conjectural force. Other notes may point to a proposal but do not cite it as a premise or use its terms as settled vocabulary. The directory's [README](./proposals/README.md) holds the contract: what a proposal must state, and how it is adopted or deleted.
+
 ## What does NOT belong here
 
 - Unadopted system designs → `kb/reference/proposals/` (`design-proposal` type), unless recast as an existential claim per above
