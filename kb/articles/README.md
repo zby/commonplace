@@ -40,6 +40,10 @@ The supplements, in the order a reader is likely to want them:
 - [An Automated Software House as a Second Test of Theory Refinement](./an-automated-software-house-as-a-second-test-of-theory-refinement.md) — develops the alternative arrangement the lead mentions. A software house that learns by refining Naur's program theory would give the paradigm a stronger falsifier than a knowledge base does, at the price of a harder claim. It keeps the conjecture, the argument that Naur does not rule it out, the four conditions a witness house must meet, and a comparison of the two arrangements.
 - [Nearest existing constructions to a witness house](./nearest-existing-constructions-to-a-witness-house.md) — the survey behind two claims in the series: that the paradigm's parts have precedents, and that no existing system meets the software-house supplement's four conditions together. It grades eighteen constructions against those conditions, with evidence links, and closes on what the survey shows for the paradigm: the reviewed evidence does not test its central mechanism, a retained explanation guiding later decisions.
 
+One draft stands outside the series:
+
+- [What an Automated Reviewer Should Measure](./what-an-automated-reviewer-should-measure.md) — a proposal for automated article review. It scores an article by how much it improves a declared model reader's answers to independently written questions, per token, and pairs that measurement with a five-part reading of the text as an untested proxy. It says how a venue could declare the reader for a scientific literature, and it rates value, not correctness. Nothing in it has been run.
+
 ## Superseded
 
 These drafts stay at their addresses so that existing links resolve. Each
