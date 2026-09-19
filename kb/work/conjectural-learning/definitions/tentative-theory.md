@@ -1,13 +1,13 @@
 ---
-description: "Definition — a tentative theory is a theory proposed as a solution to a problem and held open to criticism and revision; Popper's term used with nothing added, so it fixes no storage form, formalization, or edit interface"
+description: "Definition — a tentative theory is a theory proposed as a solution to a problem, which stays open to criticism and revision however well it has survived; Popper's term with nothing added, a status of every theory"
 type: kb/types/definition.md
 tags: [foundations, self-improving-systems, learning-theory]
 ---
 
 # Tentative theory
 
-A **tentative theory** is a theory put forward as a solution to a problem and
-held open to criticism and revision. The term is Popper's: `TT` in his schema
+A **tentative theory** is a theory put forward as a solution to a problem,
+which stays open to criticism and revision however well it has survived. The term is Popper's: `TT` in his schema
 `P1 → TT → EE → P2` stands between a problem and the attempted error
 elimination that leads to new problems
 ([Popper 1966](../../../sources/popper-a-realist-view-of-logic-physics-and-history-1966.ingest.md#quotes)).
@@ -25,6 +25,12 @@ stored or edited. Structural properties have their own term,
   ([Conjectures and Refutations, Chapters 1 and 15](../../../sources/popper-conjectures-and-refutations.ingest.md#quotes)).
   Corroboration does not end the status, and neither does changing the
   theory's representational form.
+- **Independent of the holder.** The status belongs to every theory, whatever
+  a system does with it. Fixed instructions that nothing is permitted to
+  revise are still tentative theories. What such a system lacks is criticism,
+  and that is a fact about the system:
+  [conjectural learning](./conjectural-learning.md) requires it, the status
+  does not.
 - **No required form.** The term does not require symbolic formalization,
   storage outside the model weights, separately editable parts, or a particular consumer. A
   theory that can only be replaced whole is still tentative. Popper applies
@@ -43,8 +49,8 @@ stored or edited. Structural properties have their own term,
 
 ## Exclusions
 
-- **A theory held beyond criticism.** Fixed instructions that nothing is
-  permitted to revise are applied, not held tentatively.
+- **Provisional or hesitant in the everyday sense.** A theory is not tentative
+  because its author is unsure of it or because approval is pending.
 
 ## Misuse Cases
 

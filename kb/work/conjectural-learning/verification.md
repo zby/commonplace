@@ -17,8 +17,8 @@ the workshop. No experiments have been reproduced.
   and now has it.
 - **Consistency.** The audit found no case classified two ways across the
   decision record, the definitions, the note, and the README. It found stale
-  counts, stale pointers, and two uses of *tentative*; the first two kinds
-  are fixed and the third is an open decision in the README.
+  counts, stale pointers, and two uses of *tentative*. All three are fixed;
+  the operator chose the single sense, Popper's status of every theory.
 - **Definition drafts.** Written by the reviewing agent from the current
   library definitions and the retained quotes. It did not re-read the 1966
   and 1963 snapshots.

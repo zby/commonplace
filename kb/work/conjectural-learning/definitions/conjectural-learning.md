@@ -159,8 +159,8 @@ naming it.
   is revised only when it proves its own revision beneficial, as in the
   [Gödel machine](../../../notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md).
   Each change is justified by proof from the theory's premises, and the
-  premises are never exposed to criticism, so the theory is operative without
-  being tentative.
+  premises are never exposed to criticism. The theory is operative and
+  uncriticized.
 
 ## Exclusions
 

@@ -88,7 +88,7 @@ Classification under the drafts as of 2026-09-19.
 | 11 | A theory survives an attempted refutation and the result is recorded | Inside | Criticism is attempted elimination |
 | 12 | One model proposes and criticizes its own theories | Inside | The definition asks less than Popper here |
 | 13 | Criticisms are written down, but placebo text of the same form has the same effect | Not shown to be inside | Content half of membership needs an intervention |
-| 14 | A formulated operative theory is revised only when it proves its own revision beneficial, as in the Gödel machine | Comparison: justification before change | Criticism of content. The machine justifies each switch by proof from its premises and never exposes the premises to criticism, so the theory is operative without being tentative. Test 1: what eliminates differs in kind |
+| 14 | A formulated operative theory is revised only when it proves its own revision beneficial, as in the Gödel machine | Comparison: justification before change | Criticism of content. The machine justifies each switch by proof from its premises and never exposes the premises to criticism, so the theory is operative and uncriticized. Test 1: what eliminates differs in kind |
 
 ## Likely next reversals
 

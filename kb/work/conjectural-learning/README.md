@@ -74,6 +74,12 @@ who decided, and why the earlier formulation was dropped.
   term as that conjecture's baseline. This reverses the earlier direction in
   this list. What still excludes black-box optimization is that criticism
   must be formulated and bear on what the theory says.
+- **One sense for *tentative* (operator, 2026-09-20).** It is Popper's status
+  and belongs to every theory, whatever a system does with it. The drafts had
+  also used it for a way of holding a theory, denying it of fixed
+  instructions and of the Gödel machine's axioms; that added to Popper's
+  term. Those arrangements are now described as never exposed to criticism.
+  No case of the decision record changed class.
 - **The name.** *Theory refinement* leaves the library altogether, so
   *learning by theory refinement* does not survive. The working replacement
   is **conjectural learning**, “or something similar”. *Conjectural* is
@@ -110,14 +116,6 @@ Do not enrich the classical theory-refinement account as an intermediate step.
 ## Open decisions, for the operator
 
 - The final form of the name.
-- One sense for *tentative*. The drafts use it two ways. As Popper's status it
-  belongs to every theory, and `tentative-theory.md` says it adds nothing to
-  his term. As a way of holding a theory it is denied of fixed instructions
-  and of the Gödel machine's axioms (“operative without being tentative”).
-  Either the term becomes relative to a system, which adds to Popper, or the
-  two cases are described as “never exposed to criticism” and the status
-  stays universal. No case changes class either way. The drafting agent
-  recommends the second.
 - Whether an independent critic is required, and whether within-episode
   learning deserves the word: cases 12 and 6 of the decision record.
 - Merging the operation and loop definitions. The drafts assume the merge and
