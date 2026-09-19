@@ -6,6 +6,7 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
+- [conjectural-learning](./conjectural-learning/README.md) — rebuilding the learning paradigm from Popperian epistemology, with classical theory refinement as a restricted computational precedent; source comparison and a proposed ontology precede any article or definition migration
 - [institution-theory-import](./institution-theory-import/README.md) — assessing institution theory and adjacent semantic frameworks for natural-language interpretation, conformance, and constraining; separates useful conceptual imports from an unproved institutional formalization
 - [first-downstream-run](./first-downstream-run/README.md) — providing a template for the first experiment on Commonplace in outside use (operator interventions on one KB-building task, an earlier framework release against a revised one) for an outside experimenter to run; the fuller scored-run protocol and constructed episodes stay as background
 - [ideal-interpreter](./ideal-interpreter/README.md) — exploratory sketch of the LLM modelled as an interpreter of semantics; lacks a functional definition, and nothing in the library may depend on it until one is adopted or the sketch is dropped
