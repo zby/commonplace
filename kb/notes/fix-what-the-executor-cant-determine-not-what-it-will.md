@@ -51,6 +51,20 @@ evidence. An unstated choice is safe only when it is inherited, deliberately
 delegated, or irrelevant to acceptance and coupling. When none applies, the
 omission is a gap rather than discretion.
 
+The QEMU case in [Automated Benchmark Auditing for AI Agents and Large
+Language Models](../sources/automated-benchmark-auditing-ai-agents-llms.ingest.md)
+(Appendix F.1) illustrates this gap. The Terminal-Bench 2 task asks for
+programmatic keyboard control but specifies no monitor protocol, transport,
+or path. The paper reports that the test accepts only a human monitor
+protocol (HMP) interface exposed through a UNIX socket at
+`/tmp/qemu-monitor.sock`. Other interfaces satisfy the visible request but
+fail that test. For an executor working from the prompt without access to
+the hidden acceptance condition, technical competence cannot identify the
+required path. The author must disclose the required interface or make the
+test accept the permitted alternatives. The missing information concerns a
+method detail, but its effect on acceptance makes it the author's
+responsibility to expose.
+
 ## Actor, time, and evidence are separate axes
 
 Delegation changes who holds the judgment. Deferral changes when the judgment
