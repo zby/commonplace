@@ -38,9 +38,9 @@ A system built on a language model has both levels. The weights hold
 dispositions formed by training, a process that changes the carrier. The
 articulated part, which is prose, prompts, and code, holds formulated
 theories. The model that reads them links the two: "all our actions in the
-first world are influenced by our second-world grasp of the third world" (§9,
-p. 371). Mapping the weights onto Popper's lower level is our reading, not
-his claim.
+first world are influenced by our second-world grasp of the third world"
+(1968, §9, p. 371). Mapping the weights onto Popper's lower level is the KB's
+reading, not his claim.
 
 The KB does not deny learning at the lower level. It studies the level where a
 theory can be criticized, replaced, and inspected one at a time, and where a
@@ -60,28 +60,28 @@ change in behavior can be attributed to a change in text.
   through error elimination, and on the scientific level through conscious
   criticism" (1968, §5.2, p. 351). Selecting among variants by outcome alone
   applies the lower-level mechanism to formulated text: the text is treated
-  as a genome, not as a claim. This is not criticism against selection. For
-  Popper all learning is selection and none is instruction; the difference is
-  whether a score eliminates whole variants or an argument eliminates claims.
+  as a genome, not as a claim. This does not oppose criticism to selection.
+  For Popper all learning is selection and none is instruction. The
+  difference is whether a score eliminates whole variants or an argument
+  eliminates claims.
 - **Localization: criticism aimed at a part.** Popper allows a failed test to
   implicate a whole theoretical system and holds only that some cases
   identify the responsible hypotheses
   ([Conjectures and Refutations, Chapter 10, section XVI](../../../sources/popper-conjectures-and-refutations.ingest.md#quotes)).
   The KB keeps the addressed case on practical grounds: a failure that blames
   nothing leaves the successor unconstrained, so little is learned from it.
-  The other case can occur; we do not study it.
+  The other case can occur, but the KB does not study it.
 - **Result: a persisting effect, actually used.** In Popper's schema
   criticism results "as a rule" in a new problem, and a text that could be
   understood is already objective knowledge, read or not. A system's learning
   shows in its later decisions, so the KB requires an effect that persists
   across a declared horizon and a theory on the causal path of decisions.
-
-Two clarifications keep the last narrowing from being misread. Locating what
-was learned in later decisions is not instrumentalism, the view that theories
-are mere instruments for prediction, which Popper criticizes (*Conjectures
-and Refutations*, Chapter 3). Criticism bears on what the theory says, and
-whether a theory deserves its scope is judged separately, by
-[reach-assessment](../../../notes/definitions/reach-assessment.md).
+  Locating what was learned in later decisions is not instrumentalism, the
+  view that theories are mere instruments for prediction, which Popper
+  criticizes (*Conjectures and Refutations*, Chapter 3). Criticism bears on
+  what the theory says, and whether a theory deserves its scope is judged
+  separately, by
+  [reach-assessment](../../../notes/definitions/reach-assessment.md).
 
 In one respect the definition asks less than Popper. He counts competing
 theories and mutual criticism by argument among the indispensable means of
@@ -100,15 +100,15 @@ and each episode reads the theory afresh. Two consequences follow.
   person would absorb as tacit skill. Attribution becomes cleaner, since
   parameter updates are ruled out as a source of change, and reliable
   interpretation of prose becomes the central empirical risk.
-- Background knowledge held in the weights cannot be revised during the
-  interval, where Popper holds any background assumption open to challenge.
-  It can be criticized only through a retained theory about the interpreter,
-  which is the reflective case.
+- Background knowledge held in the weights cannot be revised while the
+  weights are held fixed, whereas Popper holds any background assumption open
+  to challenge. It can be criticized only through a retained theory about the
+  interpreter, which is the reflective case.
 
 Coevolution of weights, prompts, and code reopens the channel. Content from
 criticized theories may be trained into the weights, and changed weights
 read, apply, and criticize the theories differently. The KB admits this as an
-extension of the term and does not pursue it; its experiments hold the
+extension of the term and does not pursue it. Its experiments hold the
 weights fixed. Whether the content of criticism, and not only the form of the
 training intervention, transfers into weights is open. One placebo-controlled
 adapter comparison found no content-specific effect
@@ -124,12 +124,12 @@ experiments measure.
 each failure than selection by outcome.** The reasoning is that a score
 carries few bits, while a criticism says which claim failed and why, so one
 failure can rule out a family of variants, and the reason is retained with
-the survivor. The
-baseline is black-box optimization of articulated text, as in score-driven
-prompt optimizers and evolutionary program search; the
+the survivor. The baseline is black-box optimization of articulated text, as
+in score-driven prompt optimizers and evolutionary program search. The
 [Meta-Agent Challenge](../../../sources/meta-agent-challenge-autonomous-agent-development.ingest.md)
-is an instance that requires no explicit conjecture. The evidence so far does
-not favor the conjecture. Controlled studies of code models have not
+is an instance that requires no explicit conjecture.
+
+The evidence so far does not favor the conjecture. Controlled studies of code models have not
 separated content from form: error content in prompts and in trained adapters
 showed no advantage over placebo content (PoPE), and a full Popperian
 procedure showed none over its labels alone
@@ -147,18 +147,20 @@ differ in what persists.
 | Retained theory | The assembled result | Nothing, but the theory needs maintenance and can go stale |
 
 The conjecture is that cost falls down the table, because the earlier
-arrangements repeat interpretive and inferential work, and that bounded
-context widens the gaps, because the relevant records may not fit together
-and must first be retrieved, selected, or summarized.
+arrangements repeat interpretive and inferential work. It also says that
+bounded context widens the gaps, because the relevant records may not fit
+together and must first be retrieved, selected, or summarized.
 
 The two reconstruction baselines answer different questions. Against raw
 records: does formulated, persisted criticism buy anything? This is the
 primary comparison, because regeneration from raw records needs no criticism
 step: records are stored, retrieved, and handed to the model. The operator
-assesses it to be the dominant approach today; the KB has not established
+assesses it to be the dominant approach today, but the KB has not established
 that. Against retained criticisms: does keeping the assembled theory buy
-anything more? Compare by cost at comparable decision quality and by quality
-under matched budgets, counting maintenance, and vary context capacity or
+anything more?
+
+Compare the arrangements by cost at comparable decision quality and by
+quality under matched budgets, counting maintenance. Vary context capacity or
 record volume to test the claimed widening.
 
 ## Open Questions
@@ -168,7 +170,7 @@ record volume to test the claimed widening.
 - Should independent criticism enter the definition, or stay a separate
   condition?
 - How dominant is regeneration from raw records among current agent memory
-  systems? The KB has not established this.
+  systems?
 
 ---
 
