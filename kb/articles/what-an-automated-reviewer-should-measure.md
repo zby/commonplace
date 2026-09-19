@@ -1,5 +1,5 @@
 ---
-description: "Draft article proposing a criterion for automated article review: score an article by how much it improves a declared model reader's answers to independently written questions, per token, with a five-part text reading as an untested proxy"
+description: "Draft article proposing automated review through a model reader's gain on declared tasks, with gain per token as an efficiency measure and a five-part reading as a candidate proxy for theory revisions"
 type: kb/articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
@@ -11,343 +11,249 @@ source_notes:
   - kb/notes/definitions/learning-by-theory-refinement.md
   - kb/notes/definitions/reach-assessment.md
   - kb/notes/first-principles-reasoning-selects-for-explanatory-reach-over.md
-  - kb/notes/verifiable-subroles-before-reviewer-identity.md
-  - kb/notes/weakly-discriminated-qualities-tend-to-be-underselected.md
   - kb/notes/the-augmentation-automation-boundary-is-discrimination-not-accuracy.md
 ---
 # What an Automated Reviewer Should Measure
 
-*A proposal: score an article by what it teaches a declared reader, per token*
+*A proposal: measure what an article helps a declared reader do*
 
 > **Draft.** This article may change. Comments and counterexamples are welcome
 > on [the repository's GitHub Discussions page](https://github.com/zby/commonplace/discussions).
 
-**TL;DR.** Automated review of articles needs a statement of what makes an
-article valuable that a machine can apply. We propose one. An article's
-value is how much it improves a declared observer's answers about the
-domain, per token of the article. The *declared observer* is a named
-language model together with a named background corpus, and it stands in
-for the readers the article is written for. The questions are written by
-someone other than the author, without sight of the article. The
-alternative we deny is that an article's value is a property of its text,
-which can be judged without saying for whom. Measuring the value costs a
-question set and two model runs per article, so we pair the measurement
-with a cheaper reading of the text alone: read the article as a proposed
-revision of what the field holds, and check whether five things can be
-located in it. Whether that reading tracks the measured value is a
-conjecture. The measure rates value, not correctness. Nothing here has been
-run.
+Suppose an article explains why a familiar experimental method fails under
+certain conditions. Before reading it, a reader predicts the wrong outcome
+for those conditions. After reading it, the reader predicts correctly,
+including for experiments the article never discusses. That improvement
+seems like something a reviewer should care about. Can we measure it?
 
-## A case: review automated the question that had a tool
+Here is a proposal for automated review. Let a language model stand in for
+the intended reader, and give it questions about the domain twice: once
+with the article in context and once without it. Keep its background
+material the same, and score the difference. The questions should represent
+tasks the intended reader cares about, and should be written independently
+of the article.
 
-One reported case has the shape this proposal is about. At NeurIPS, an
-automated screen was deployed that scored submissions for whether they were
-AI-generated, and consequential decisions followed directly from that
-verdict: authors "were told to produce version histories or also be
-desk-rejected" ([thread on conference volume and AI-detector review](../sources/seeing-numbers-of-50k-submissions-for-iclr-2101135922666365032.ingest.md),
-verbatim). At ICLR, a projected jump in submissions prompted the
-expectation that "it'll probably need AI review at that scale" (same
-source, verbatim). The source leaves open whether the human review layer
-scales as well.
+Call the difference *article gain*. It measures one kind of value: how much
+the article helps this reader with these tasks. Report gain per token as
+well, to show how efficiently the article uses the reader's context. For
+articles that, like the one in the example, propose a revision to an
+existing theory, we also suggest a cheaper reading of the text that might
+predict gain. Nothing here has been run; both the experiment and the
+cheaper reading are proposals to be tested.
 
-Three limits bound what this case supports. The two venues are different,
-so nothing here links the NeurIPS deployment to the ICLR projection
-causally. The projection is the thread author's own speculation about a
-submission deadline that had not yet passed. And every figure in the thread
-is relayed secondhand from blogs it does not name, so we use only the
-structure of the case and none of its numbers.
+## Value for whom, and for what?
 
-That structure is a substitution. Whether a text was machine-written was
-not what the review decision needed; the quality of the paper was. The
-source does not say why provenance was the question automated. Our
-interpretation is that a tool for it existed and produced a verdict on each
-submission, while no criterion of article quality was available in a form a
-machine could apply. On that interpretation, submission volume is the load
-and reviewer capacity is what it strains; neither is the gap. The gap is
-that quality had no operational statement, which left substitution as an
-available response under load.
+An expert and a newcomer can learn different amounts from the same
+article. Even readers with the same background may need different things:
+one wants to predict experimental outcomes, another to diagnose failures,
+and another to choose a method. A useful measure has to say which reader
+and which tasks it represents.
 
-Two general arguments predict this. One says that [review automation should
-start from narrow subroles whose outputs can be independently
-checked](../notes/verifiable-subroles-before-reviewer-identity.md), before
-any system is given a reviewer's authority. Here the automated question had
-a tool whose outputs the source does not report being checked, and it was
-not the question the review needed. The other says that [qualities a
-process cannot discriminate tend to be
-underselected](../notes/weakly-discriminated-qualities-tend-to-be-underselected.md).
-Quality with no operational statement is the limiting case, and the process
-selected on what it could discriminate.
+The proposal therefore needs two declarations:
 
-What the case establishes is narrow: a review process under load automated
-a question a machine could answer in place of the question it needed
-answered. The rest of this article proposes a machine-applicable statement
-of the needed question. A paper written by a machine that makes a real,
-checkable contribution is a good paper, and a hand-written padded one is
-not, so the statement says nothing about who wrote the text.
+- **The observer:** a named language model and the background corpus
+  supplied to it. Together they stand in for the intended reader.
+- **The tasks:** the kinds of questions the article is meant to help that
+  observer answer, sampled by a question set written independently of the
+  article.
 
-## The criterion
+Article gain is the improvement in that observer's performance on those
+tasks, so it is relative to both declarations. Because [information value
+is observer-relative](../notes/information-value-is-observer-relative.md),
+an article can produce substantial gain against one background and none
+against another. A tutorial can be valuable for a newcomer even when it
+adds nothing to the literature.
 
-Take the value of an article to be the improvement it produces in a
-declared observer's ability to answer about the domain, rather than a
-property of the text. This applies to a different subject an objective from
-Jürgen Schmidhuber's theory of curiosity and interestingness. He locates
-the quantity in the change rather than the state — "The important thing are
-the improvements of the compressor, not its compression performance per
-se" — and requires that the change be measured against a held-fixed
-baseline: "Note that both the old and the new compressor have to be tested
-on the same data, namely, the history so far"
+The tasks matter just as much. Choosing questions about replication,
+method selection, or practical diagnosis expresses a judgment about what
+counts as useful knowledge. The measurement makes that judgment explicit;
+it does not make it for us.
+
+## The experiment
+
+The experiment has two arms. In one, the model receives the background
+corpus and the questions. In the other, it also receives the article.
+Everything else stays the same: model version, instructions, decoding
+settings, and grading method.
+
+The questions should be about the domain, not about what the article says.
+For the experimental-method example, ask the model to predict outcomes or
+identify conditions in which the method will fail. Asking it to repeat the
+article's explanation would mainly test whether it can find that explanation.
+
+The questions should also be written by someone other than the author,
+without sight of the article. That keeps the question set a sample of the
+declared tasks, including cases beyond the article's own examples, and not
+a sample of what the article happens to cover.
+
+The result is a difference:
+
+> Article gain = score with the article − score without the article.
+
+Gain can be negative: an article can confuse the observer or move it toward
+worse answers. Because a model's answers vary between runs, repeated runs
+would help distinguish a small gain from that variation.
+
+The grader needs as much care as the questions. A persuasive false article
+can score well if the grader rewards the same false answers. Empirical
+outcomes make stronger answer keys where they are available. If a model
+grades the answers, [its ability to distinguish better answers needs
+checking](../notes/the-augmentation-automation-boundary-is-discrimination-not-accuracy.md).
+Even with a sound grader, the measured gain supports a claim about the
+sampled tasks; it does not certify the article's correctness as a whole.
+
+The form of this comparison comes from Jürgen Schmidhuber's theory of
+curiosity and interestingness. He locates the relevant quantity in
+improvement: "The important thing are the improvements of the compressor,
+not its compression performance per se". He also requires a common test:
+"Note that both the old and the new compressor have to be tested on the
+same data, namely, the history so far"
 ([Driven by Compression Progress](../sources/driven-by-compression-progress.ingest.md),
-verbatim). His framework also rejects raw novelty as the measure, on the
-ground that incompressible noise carries maximal Shannon novelty and allows
-no compression progress.
+verbatim). What we borrow is the comparison of two states of an observer on
+the same material: here the article changes the observer's context, while
+the questions stay fixed. Applying the comparison to article review is our
+step. His measure is a saving in description length; ours is a gain in
+answer quality.
 
-Applying that objective to article review rather than to an agent's
-exploration is our step, not his. What carries over is the form: value is
-an improvement and not a state, it is measured against a fixed baseline on
-the same data, and noise has none. What does not carry over is the measure.
-Schmidhuber's quantity is a saving in description length. The quantity here
-is an improvement in answer quality on a question set, which stands in for
-it and is not shown to track it.
+The same comparison is the measure of learning in our research program on
+[learning by theory refinement with fixed
+models](./learning-by-theory-refinement-with-fixed-models.md), applied here
+to one article. The model stays fixed; what changes is the material it can
+use and the performance that follows.
 
-Two changes are needed before the objective carries over.
+## How much gain, at what cost?
 
-**The measurement moves off the article's own history.** Schmidhuber's
-observer compresses the history it has experienced, which for a reader
-would include the article. An article that scored by compressing its own
-text would score for internal consistency. So the evaluated material is an
-externally supplied question set about the domain, authored without sight
-of the article. The article is an intervention on the observer, not part of
-what is measured.
+Context is a scarce resource for a language-model reader, so article length
+belongs in the report:
 
-**The measurement is charged per token.** Context is the scarce resource
-for a language-model reader. Dividing by length prices expansion:
-[reverse compression](../notes/reverse-compression-is-when-llm-output-expands-without-adding.md),
-more text with no additional extractable structure, spreads the same gain
-over more tokens and scores lower. An article with no gain scores zero at
-any length.
+> Gain per token = article gain ÷ article length in tokens.
 
-Three terms name the parts. The *declared observer* is the named model
-together with the named background corpus. *Article gain* is the
-improvement the declared observer shows on the held-out questions when the
-article is in its context. *Gain per token* is article gain divided by the
-article's length in tokens.
+This ratio penalizes [reverse
+compression](../notes/reverse-compression-is-when-llm-output-expands-without-adding.md):
+text that grows without adding useful structure. Padding spreads the same
+gain over more tokens and lowers the ratio.
 
-The resulting criterion is relative by design. Because
-[information value is observer-relative](../notes/information-value-is-observer-relative.md),
-the same article can be worth a great deal against one background corpus
-and nothing against another, and the criterion is undefined until the
-observer is declared. Seen this way, *novel* and *significant* name the
-same quantity with the observer left undeclared, which may be part of why
-they are hard to automate.
+But efficiency alone is not enough. A 100-token article that adds one
+point scores better per token than a 2,000-token article that adds ten.
+A reader with room for either may prefer the larger improvement. The
+report should therefore show both total gain and gain per token. Which
+matters more depends on the reader's context budget and alternatives.
 
-## Reading the article as a proposed revision
+Reporting both also treats supporting detail fairly. A long explanation
+showing where a method remains reliable may lower average gain per token
+while still providing enough additional benefit to justify its length.
 
-Measuring article gain costs a question set and two model runs per article.
-A reviewer reading one article needs something cheaper, and it has to be a
-proxy for article gain rather than a second standard.
+## A cheaper reading for theory revisions
 
-The proposal is to read the article as a proposed
-[theory refinement](../notes/definitions/theory-refinement.md) of the
-observer's background theory. Theory refinement is an established learning
-operation: revise an existing explicit theory against cases, seeking to
-correct error while preserving useful prior knowledge. We call this the
-*refinement reading*. It asks which of five slots are recoverable from the
-text, with a locating quotation for each:
+Running the experiment requires a question set, a grader, and model runs.
+Could a reviewer predict some of the gain by reading the article alone?
 
-| Slot | What the text must make recoverable |
+For articles that propose a theory revision, one candidate is to check
+whether five slots can be filled from the text. We call this the
+*refinement reading*, after [theory
+refinement](../notes/definitions/theory-refinement.md): revising an existing
+theory against cases while preserving useful prior knowledge.
+
+| Slot | What the text should make recoverable |
 |---|---|
-| Addressed part | Which commitment in the declared background the article proposes to change |
-| Contradicting cases | The evidence that the addressed part is wrong, incomplete, or wrongly scoped |
-| Preserved content | What the article claims still holds after the change |
-| Contradictable consequences | What the revised theory forbids, so a later case could contradict it |
-| Reach | Which cases beyond the contradicting ones the revision covers |
+| Addressed part | Which existing commitment the article proposes to change |
+| Contradicting cases | Evidence that the commitment is wrong, incomplete, or wrongly scoped |
+| Preserved content | What still holds after the change |
+| Contradictable consequences | What the revised theory rules out, so later evidence could contradict it |
+| Reach | Which cases beyond the motivating ones the revision covers |
 
-The slots are not section headings and impose no order. The reading asks
-whether each is recoverable, not whether it is announced.
+The slots are things a reviewer should be able to locate, not required
+section headings. A model could quote the passage supporting each slot,
+making its reading open to inspection and disagreement.
 
-Each slot names a condition that article gain is conjectured to depend on,
-which is why the reading is offered as its proxy.
+In the experimental-method example, the addressed part might be the
+commitment that the method works across a certain range of conditions. The
+contradicting cases are the failed experiments, which motivate a narrower
+claim. The preserved content is where the method still works. The
+contradictable consequence is a prediction of where further failures should
+occur, and the reach is that this prediction covers conditions not yet
+tested.
 
-- **Addressed part** says what the gain would be measured against. An
-  article that identifies no commitment to change leaves the reader to
-  guess which background it revises, so a reviewer working from the text
-  cannot say what gain to expect.
-- **Contradicting cases** are what make the change more than a preference.
-  Without them the article proposes a substitution, and a substitution
-  moves the observer's answers with no reason to expect them to improve.
-- **Preserved content** is what keeps a gain on one question set from being
-  a loss on another. Refinement seeks limited change for this reason. An
-  article that discards the background rather than revising it owes the
-  larger argument that a replacement owes.
-- **Contradictable consequences** are what a held-out question can turn on.
-  A theory that forbids nothing gives a held-out question nothing to turn
-  on, so the theory is not expected to show gain however true it is.
-- **Reach** is what separates compression from patching. A revision that
-  covers only its own contradicting cases lengthens the observer's
-  background by roughly what it adds, so its gain is bounded by how often
-  those cases recur. A revision whose consequences extend to unseen cases
-  can also gain on questions nobody wrote it for. This is
-  [explanatory reach](../notes/first-principles-reasoning-selects-for-explanatory-reach-over.md).
-  Judging whether the claimed reach is genuine is a
-  [separate assessment](../notes/definitions/reach-assessment.md), which the
-  reading invokes rather than replaces.
+There is a reason to expect this structure to help. It tells the reader
+what to change, why to change it, what to keep, and what follows. The reach
+slot connects most directly to the experiment: independently written
+questions include cases the article never discusses, and a revision helps
+with those only if it holds beyond the cases that motivated it. That
+property is [explanatory
+reach](../notes/first-principles-reasoning-selects-for-explanatory-reach-over.md);
+[judging whether the claimed reach is
+real](../notes/definitions/reach-assessment.md) takes more than finding a
+passage that asserts it.
 
-The reading is checkable in a weak but useful sense: a model can report
-which slots it found and quote where, and a second model can disagree with
-the quotation rather than with the verdict. It settles nothing about truth:
-an article can fill all five slots with a false theory.
+The conjecture is that articles making these parts recoverable tend to
+produce more gain on relevant tasks. It is not a claim that every useful
+article has this shape. A tutorial can explain an accepted method; a survey
+can make scattered knowledge easier to use; a dataset description can
+supply missing facts. All could improve answers without correcting a
+prior theory. And within theory revisions, the reading does not check
+truth: a false argument can fill all five slots.
 
-## The instrument
+The refinement reading therefore needs testing against measured gain. It
+should also be compared with a simpler alternative: asking a model directly
+how useful the article will be for the declared reader and tasks. If the
+five slots predict no better, there is little reason to insist on them. The
+experiment remains useful even if the refinement reading fails.
 
-A matched run would tell whether the reading tracks article gain, and would
-supply the gain itself where the cost is justified. In a matched run the
-same declared observer answers the same questions with the article in
-context and without it. The run treats the article as a change to what the
-observer retains and measures the change in later behaviour attributable to
-it, with the model held fixed. That is the measure of learning in our
-research program on [learning by theory refinement with fixed
-models](./learning-by-theory-refinement-with-fixed-models.md), applied to
-one article.
+## Could a scientific venue use this?
 
-- **Fixed model.** One model identifier and one decoding configuration
-  across both arms. The criterion is defined relative to an observer, so
-  changing the model changes the quantity rather than estimating it better.
-- **Declared background corpus.** What the observer is assumed already to
-  hold, either supplied in context or named as a condition of the run. This
-  is the other half of the observer and the baseline the gain is measured
-  from.
-- **Externally supplied held-out questions.** Authored by someone other
-  than the article's author, without sight of the article, about the domain
-  rather than about the article. A question set written from the article
-  restates it, so the gain that set shows is built in and uninformative.
-- **Two arms.** The article in context, and nothing in its place, with
-  everything else identical.
-- **Gain per token.** The score difference between the arms, divided by the
-  article's token count.
+A venue would need to say whose tasks it serves. It could declare several
+observers—a specialist, an adjacent-field reader, and a practitioner—and
+report gain for each. Their backgrounds and questions would differ. How the
+venue weighs those results would express its scope.
 
-The instrument measures one thing. It does not establish truth: a
-persuasive false article that moves the observer toward the grader's
-expected answers scores well. Grading against later empirical outcomes
-relaxes this limit for the outcomes sampled, as the next section describes.
-It does not establish transfer: the gain holds for the question set.
-Stratifying questions by their distance from the article's contradicting
-cases is the obvious route to making the reach slot measurable rather than
-read. And the grader is itself a discrimination problem. If a model grades
-the answers, [the reported gain is only as good as the grader's
-discrimination on each
-answer](../notes/the-augmentation-automation-boundary-is-discrimination-not-accuracy.md).
+For research articles, a retrospective test could use empirical answer
+keys: take the literature available before an article as the background
+corpus, and the outcomes of later experiments as the answers. Did the
+article help predict what happened next? Questions about later outcomes
+could test contributions that a contemporary reviewer would have struggled
+to recognize.
 
-## Declaring the observer for a literature
+There are two practical difficulties. First, a model trained on the article
+or the later results already has part of the article or the answers in its
+weights. A clean comparison needs either an older model, or articles and
+outcomes that postdate the model's training data. Second, later research
+may itself have been shaped by the article. Writing the questions without
+sight of the article does not remove that dependence. Such a test can
+measure usefulness for the research that followed, but cannot tell us what
+research would have happened without the article.
 
-A named model and a named corpus are easy to write down and hard to justify
-for a scientific literature. A literature has no single reader: its readers
-differ in background, and they arrive over decades. This section proposes
-how a venue could declare an observer anyway. It splits the declaration
-into three parts, because each fails in a different way. None of it has
-been tried.
+Even a clean retrospective test arrives too late for submission review. Its
+use is to supply cases for testing cheaper review methods, including the
+refinement reading. A useful first study would stay within one domain,
+choose a manageable set of articles, and compare the reading's predictions
+with measured gain.
 
-**The prior is the literature up to a date.** Schmidhuber's baseline is
-"the history so far", quoted above. For a submission, that is the field's
-literature as of the submission date, used as the background corpus,
-together with a model whose training data ends before that date. Such a
-model is an approximation to what the field held on that date, not a record
-of it.
+## What this leaves open
 
-**The questions define the user more than the model does.** The user of an
-article is whoever later has to decide or predict something in the domain.
-Held-out questions drawn from later work stand for that user: the outcomes
-of later experiments, replications, and measurements. This choice changes
-one limit of the instrument. When answers are graded against later
-empirical outcomes, an article that moves the observer toward a false
-theory lowers its score on those outcomes. The instrument then bears on
-correctness for the outcomes sampled, and only for those.
+The largest question is whether a model reader's gain tracks what the
+intended human readers learn. The observer declaration makes the proxy
+inspectable, but does not validate it. The question applies to gain per
+token as well: that measure is motivated by a model reader's limited
+context, and a human reader's cost of reading need not follow token count.
 
-**Plural readers need a panel, and time needs a date on the questions.** A
-venue can declare several observers, such as a specialist, a reader from an
-adjacent field, and a practitioner, and report a gain for each in place of
-one number. How the venue weighs them is a statement of its scope. The date
-of the questions matters as well as the date of the prior: an article can
-show low gain on questions its contemporaries would have asked and high
-gain on questions asked a decade later.
+Question selection remains a substantive judgment. A benchmark dominated
+by familiar tasks may miss an article that enables a new kind of question.
+Reporting the tasks alongside the scores lets readers see what the
+experiment is capable of valuing.
 
-An observer declared this way makes the instrument retrospective, since
-later outcomes do not exist when a submission is reviewed. That is the
-reason for pairing it with the refinement reading. Past articles, with the
-later outcomes they did or did not help predict, are a set of labelled
-cases. The refinement reading would be calibrated against the measured gain
-on those cases and then applied to new submissions.
-
-Three problems are open.
-
-- **Leakage.** Later articles restate the article being scored, so
-  questions drawn from them can be answered from the restatement. The
-  questions have to be about outcomes and not about statements, and an
-  outcome that depends on the article's own method is hard to separate from
-  a restatement.
-- **Contamination.** A model trained after the article appeared holds the
-  article in its weights, so the arm without the article is not without it.
-  Calibration on past articles is then limited to articles later than the
-  model's training data, or to older models.
-- **Question authorship carries the judgment of significance.** Whoever
-  decides which later outcomes count as questions decides what the field
-  values. The declaration makes that judgment explicit and open to audit.
-  It does not remove it.
-
-## Limits
-
-- The observer is a language model under bounded context, standing in for
-  the article's readers. Whether its gain tracks what a human reader gets
-  from the article is untested, and the per-token charge is specific to a
-  reader for whom context is the scarce resource.
-- Exposition is handled by the observer declaration rather than by the
-  criterion. An article teaching something already present in a wider
-  corpus still produces gain against a background corpus that lacks it.
-  Whether that counts as a good article is then a question about which
-  observer a venue declares, and we treat that as the venue's question, not
-  the criterion's.
-- This is a criterion of value, not of admissibility. Correctness, scope,
-  and honesty about limits are separate checks that it neither performs nor
-  replaces, apart from what outcome-graded questions cover.
-- The refinement reading imposes a shape that not every good article has. A
-  survey, a negative result, and a dataset description may fill the slots
-  poorly while producing real gain.
-- Nothing here has been run. The pairing of the reading with the instrument
-  is the part most likely to fail: the reading may be satisfiable by
-  articles that produce no gain, and gain may appear for articles that fill
-  no slot.
-
-## Open questions
-
-- Who grades the held-out answers, and how is the grader's discrimination
-  established before the instrument is trusted? The source for the case
-  above reports a screen whose verdicts were acted on with no appeal, and
-  reports no error rate for it.
-- Does the per-token denominator penalise an article whose length is spent
-  on a large preserved-content argument, the work of showing that the
-  revision keeps what the background already had right?
-- Can the reach slot be turned into a measurement by stratifying the
-  question set by distance from the article's contradicting cases, or does
-  that only move the reach judgment to the question author?
-- Is the refinement reading the right proxy, or one proxy among several?
-- How does an article that changes no commitment but reorganises the
-  background score? Reorganisation can produce gain by making existing
-  structure reachable, which the addressed-part slot does not describe.
-- How is the observer's background theory read off its background corpus,
-  and do commitments the model holds in its weights count as part of it?
-  The addressed-part slot points at a commitment, and the declaration names
-  only a model and a text.
+Correctness, honest reporting, and fit for a venue still need their own
+checks. This proposal concerns the contribution an article makes to a
+reader's ability to answer and act. The first thing to find out is whether
+that contribution can be measured reliably enough to improve review.
 
 ## Where to go next
 
-The argument that the value of a text depends on who reads it is developed
-in [information value is
-observer-relative](../notes/information-value-is-observer-relative.md), and
-[warranted reader update is the objective of substantive
+The argument that a text's value depends on who reads it is developed in
+[information value is
+observer-relative](../notes/information-value-is-observer-relative.md).
+[Warranted reader update is the objective of substantive
 writing](../notes/warranted-reader-update-is-the-objective-of-substantive-writing.md)
-states the writer's side of the same idea: the intended reader's prior is
-the baseline. Article gain is a way to measure that update for a model
-reader. The [theory refinement](../notes/definitions/theory-refinement.md)
-definition gives the operation the refinement reading borrows, and
+states the writer's side: the intended reader's prior is the baseline.
 [Learning by Theory Refinement with Fixed
-Models](./learning-by-theory-refinement-with-fixed-models.md) is the
-research program whose measure of learning the instrument applies.
+Models](./learning-by-theory-refinement-with-fixed-models.md) develops the
+research program behind the experiment.
