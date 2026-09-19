@@ -1,6 +1,6 @@
 # Modern-paper comparison
 
-Coverage: four full papers, two author abstracts, one bibliographic record.
+Coverage: twelve full papers, two author abstracts, one bibliographic record.
 [Sources](./sources.md) records capture and access limits. Source-side details
 below require the ingests' paired snapshots.
 
@@ -21,6 +21,22 @@ Locators: POPPER §§2.3–3, §4, Figure 11, Appendix C; Thomas §§1.3–1.4,
 “Human–LLM interaction,” and “Conclusions,” pp. 4–10; İşcan experimental
 design, Tier 1/Tier 2 results, and limitations. The two IEEE ingests cover only
 the author-lab abstracts.
+
+## 2026 expansion
+
+These are computational precedents and tests of mechanisms, not additional
+requirements for the definition. Links require the captured full papers.
+
+| Source | Contribution to our approach | Evidence boundary |
+|---|---|---|
+| [HEP (snapshot required)](../../sources/hypothesis-evolution-protocol-auditable-ai-scientists.ingest.md) | Persistent natural-language hypotheses, evidence attachments, revision and merging; an implemented alternative to leaving theories implicit in logs | Three materials-simulation tasks; agent-assessed evidence and belief probabilities. Registry persistence is not a test of cross-episode transfer or reconstruction cost |
+| [AHOIS (snapshot required)](../../sources/socratic-agents-autonomous-scientific-discovery.ingest.md) | A critic questions assumptions and causal accounts; revised explanations guide experiments on a physical optical platform | Human correction, guidance, and acquisition remain; absent supplementary details limit critic-ablation assessment. No cross-task retention or machinery-learning result |
+| [PoPE (snapshot required)](../../sources/form-not-content-placebo-controlled-self-repair.ingest.md) | Tests whether error content helps repair beyond the form of the prompt or training intervention | Small-model prompt and adapter comparisons found no content-specific advantage at the public-test screening endpoint; hidden-test confirmation was not run. No equivalence or impossibility result |
+| [AI scientists (snapshot required)](../../sources/ai-scientists-results-without-scientific-reasoning.ingest.md) | Separates successful outputs from evidence use and revision after refutation | Three models and two scaffolds; LLM-annotated ReAct traces have conflicting reported motif rates. Missing graph edges do not establish absent evidence use; broader architectures remain untested |
+| [Selection Without Signal (snapshot required)](../../sources/selection-without-signal-recovery-through-expression.ingest.md) | Separates semantic selection/repair from extraction improvements and compute savings | No established semantic gain in the 26-operator small-code-model survey; external replication covers consensus selection, not every operator. Generation counts do not match all compute costs |
+| [Sound Agentic Science (snapshot required)](../../sources/sound-agentic-science-requires-adversarial-experiments.ingest.md) | Motivates adversarial tests that discriminate rival explanations rather than repeated analysis of accommodating data | Position paper with opposing analyses of one dataset; not an evaluated persistent learning architecture |
+| [FALSIFYBENCH (snapshot required)](../../sources/falsifybench-rule-discovery-games-full-text.ingest.md) | Measures hypothesis changes and test selection turn by turn in rule-discovery games | Twelve models, 1,200 games, LLM oracles with sampled human checks. Negative testing is especially useful for the benchmark's overly narrow hypotheses, not universally optimal |
+| [Meta-Agent Challenge (snapshot required)](../../sources/meta-agent-challenge-autonomous-agent-development.ingest.md) | Agents revise executable agent programs using development feedback; final artifacts run on held-out tasks | Five of 39 configurations exceed baseline means, without a significance claim. The developer remains fixed; no recursive compounding is tested. Development-label leakage qualifies integrity claims |
 
 ## Implications
 
@@ -50,6 +66,21 @@ best-of-eight results but disagree by task: non-separation, not equivalence.
 Best-of-eight success is not successful selection; the same-model selector
 showed no advantage over its random references. Structural controls and
 independent outcomes are needed to identify what criticism actually changes.
+
+**Retain theories, but test their effects separately.** HEP is the closest
+new precedent for retained articulated hypotheses; AHOIS connects criticized
+explanations to physical action. Neither establishes our efficiency conjecture.
+HEP's belief probabilities and lifecycle rules are its design choices, not
+Popperian commitments to import into the definition.
+
+**Measure criticism's contribution.** PoPE motivates content-ablated and
+mismatched-feedback controls; Selection Without Signal motivates matched
+sampling budgets. AI scientists and FALSIFYBENCH motivate inspecting actual
+evidence use and revision alongside outcomes. These are candidate experiment
+controls, not reasons to enlarge the base ontology. Negative findings must
+retain their model, task, intervention, and evaluator limits. MAC adds a
+separate endpoint: changes to agent machinery must improve later development
+before they establish compounding, beyond the generated agent's task score.
 
 The set does not establish reliable general LLM conjectural learning,
 sufficiency of fixed weights, the claimed efficiency advantage of retaining

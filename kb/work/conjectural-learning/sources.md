@@ -1,7 +1,8 @@
 # Source register
 
-Modern-paper coverage, captured and compared on 2026-09-19: four full texts, two author abstracts,
-and one bibliographic-only record; no seven-full-paper synthesis is claimed.
+Modern-paper coverage on 2026-09-19: twelve full texts, two author abstracts,
+and one bibliographic-only record. The 2026 expansion adds seven papers and a
+full-text observation of FALSIFYBENCH, previously captured only as an abstract.
 Each ingest records source metadata and the SHA-256 of its paired snapshot.
 Empty Quotes sections mean detailed source claims require those snapshots.
 
@@ -14,6 +15,23 @@ Empty Quotes sections mean detailed source claims require those snapshots.
 | Zhang et al. 2025, *Exploring the role of large language models in the scientific method: from hypothesis to discovery* | [Ingest](../../sources/llms-scientific-method-hypothesis-to-discovery.ingest.md): publisher version of record, 2025-08-05, 15 pages |
 | Mills & Lewis 2026, *Popperian Expectations for One-Shot Adaptation in Dynamic Environments* | [Conference listing](https://2026.acsos.org/details/acsos-2026-workshops/16/Popperian-Expectations-for-One-Shot-Adaptation-in-Dynamic-Environments): no substantive text, no ingest |
 | İşcan 2026, *Scaffold, Not Vocabulary? A Controlled, Two-Tier, Pre-Registered Study of a Popperian Code-Generation Skill* | [Ingest](../../sources/scaffold-not-vocabulary-popperian-code-generation-skill.ingest.md): arXiv v1, 34 pages |
+
+## 2026 expansion
+
+All eight captures retain full PDF text. Detailed evidence and limitations
+belong in the ingests; [comparison](./comparison.md) keeps only what matters
+to this workshop.
+
+| Paper | Retained analysis and version |
+|---|---|
+| Takahara & Mizoguchi, *Toward Auditable AI Scientists* | [HEP](../../sources/hypothesis-evolution-protocol-auditable-ai-scientists.ingest.md): arXiv 2607.09195v1 |
+| Zeng et al., *Socratic agents for autonomous scientific discovery in high-dimensional physical systems* | [AHOIS](../../sources/socratic-agents-autonomous-scientific-discovery.ingest.md): arXiv 2606.26722v1 main paper; referenced supplement absent |
+| İşcan, *Form, Not Content?* | [PoPE](../../sources/form-not-content-placebo-controlled-self-repair.ingest.md): arXiv 2607.12962v1 |
+| Ríos-García et al., *AI scientists produce results without reasoning scientifically* | [Ingest](../../sources/ai-scientists-results-without-scientific-reasoning.ingest.md): arXiv 2604.18805v1 |
+| İşcan, *Selection Without Signal, Recovery Through Expression* | [Ingest](../../sources/selection-without-signal-recovery-through-expression.ingest.md): arXiv 2606.16999v1 |
+| Fa & Culjak, *Sound Agentic Science Requires Adversarial Experiments* | [Ingest](../../sources/sound-agentic-science-requires-adversarial-experiments.ingest.md): arXiv 2604.22080v2 |
+| Bertolazzi, Tentori & Bernardi, *FALSIFYBENCH* | [Full-text ingest](../../sources/falsifybench-rule-discovery-games-full-text.ingest.md): arXiv 2606.04751v1; the [earlier abstract observation](../../sources/falsifybench-inductive-reasoning-rule-discovery-games.ingest.md) is preserved |
+| Lu et al., *The Meta-Agent Challenge: Are Current Agents Capable of Autonomous Agent Development?* | [Ingest](../../sources/meta-agent-challenge-autonomous-agent-development.ingest.md): arXiv 2606.04455v1 |
 
 ## Access disposition
 
@@ -51,4 +69,4 @@ EITHER and FORTE supply the classical precedent cited in the drafts. AIGS
 Connection reports for the new ingests are in
 `kb/reports/cache/connect/sources/`, named by source slug. No inbound links
 were authored. [Verification](./verification.md) records the checks and the
-one validation false positive.
+known snapshot-validation false positives.
