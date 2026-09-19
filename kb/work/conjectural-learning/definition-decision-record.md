@@ -85,6 +85,7 @@ Classification under the drafts as of 2026-09-19.
 | 11 | A theory survives an attempted refutation and the result is recorded | Inside | Criticism is attempted elimination |
 | 12 | One model proposes and criticizes its own theories | Inside | The definition asks less than Popper here |
 | 13 | Criticisms are written down, but placebo text of the same form has the same effect | Not shown to be inside | Content half of membership needs an intervention |
+| 14 | A formulated operative theory is revised only when it proves its own revision beneficial, as in the Gödel machine | Comparison: justification before change | Criticism of content. The theory is derived from, never argued against, so it is operative without being tentative. Test 1: what eliminates differs in kind |
 
 ## Likely next reversals
 
@@ -111,6 +112,17 @@ Classification under the drafts as of 2026-09-19.
   interventions, the relation-to-Popper section attributes each condition,
   and the three defined terms each serve a claim.
 - **Test 6.** The workshop's bounds now require it of any proposed change.
+- **Case 14, added 2026-09-19 at the operator's direction.** Reading the
+  KB's Gödel-machine notes against the definition showed a rival none of the
+  other cases covers: a theory with rigorous admission and no criticism. Its
+  [axioms](../../notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md)
+  are formulated and operative, observations enter as theorems and cannot
+  count against a premise, and an axiom changes only when the current axioms
+  prove the change beneficial. The classification is of the construction as
+  the paper gives it; a formalization that licenses empirical revision of
+  its own environment assumptions would move part of the criticism inside.
+  That the contrast is Popper's own, justification against criticism, is
+  the drafting agent's reading and is not yet grounded in a retained source.
 - **Left open, as scope decisions for the operator.** Case 12, whether an
   independent critic is required, and case 6, whether within-episode
   learning deserves the word.

@@ -150,6 +150,11 @@ naming it.
   stated reason bears on what the theory says.
 - **Weight adaptation.** Something persists, but nothing is formulated, so
   there is nothing to criticize, replace, or inspect on its own.
+- **Justification before change.** A formulated theory guides decisions and
+  is revised only when it proves its own revision beneficial, as in the
+  [Gödel machine](../../../notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md).
+  The theory is derived from and never argued against, so it is operative
+  without being tentative.
 
 ## Exclusions
 
