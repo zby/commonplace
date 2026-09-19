@@ -10,14 +10,15 @@ the definitions and the goals do not already imply.
   2,443 words, [learning by theory refinement](../../notes/definitions/learning-by-theory-refinement.md)
   1,008, the [three-lineages note](../../notes/reflective-theory-refinement-has-three-separate-lineages.md)
   1,810; together 5,261. The drafts, counted with frontmatter and link
-  footers, as of the system-boundary rework: three definitions 2,658
-  (conjectural learning 1,541, addressable theory 644, tentative theory 473)
-  and one companion note of 1,827; together 4,485. The two replaced
-  definitions shrink from 3,451 words to 2,658 as three. The margin has
-  narrowed with each round: the definition gained the system boundary and the
-  knowing subject, and the note gained a third conjecture. Whether the whole
-  change subtracts depends on how much of the lineages note the companion
-  note replaces; that is still to be shown.
+  footers on 2026-09-20: three definitions 2,800 (conjectural learning 1,681,
+  addressable theory 644, tentative theory 475) and one companion note of
+  1,901; together 4,701. The two replaced definitions shrink from 3,451 words
+  to 2,800 as three. The margin has narrowed with each round: the definition
+  gained the system boundary, the knowing subject, and two named comparisons,
+  and the note gained a third conjecture. These figures go stale with every
+  edit; recount with `wc -w` before relying on them. Whether the whole change
+  subtracts depends on how much of the lineages note the companion note
+  replaces; that is still to be shown.
 - **Retiring *theory refinement* widens the rename.** Names built on it need a
   disposition: *reflective theory refinement*, the sample-efficiency and
   evidence-ladder note titles, the lead article and its supplements, the
@@ -35,8 +36,8 @@ the definitions and the goals do not already imply.
   Popper; keep the structural and implementation comparisons that still do
   work.
 - **Lead article, later and separately.** Open from Popper, then our two
-  conditions, the efficiency conjecture, and the fixed-model study condition.
-  Local editing becomes a possible benefit. Keep the exporter example and the
+  conditions, the three conjectures, and the fixed-model study condition.
+  Local editing becomes the addressability conjecture. Keep the exporter example and the
   maintenance costs.
 - **Minimal-revision bias.** Check whether any retained claim depends on it
   before it goes.

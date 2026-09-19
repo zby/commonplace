@@ -40,8 +40,8 @@ requirements for the definition. Links require the captured full papers.
 
 ## Implications
 
-**Separate epistemology from realization.** The [commission](./README.md)
-rejects symbolic formalization as the general starting point. The papers help
+**Separate epistemology from realization.** The [workshop](./README.md) does
+not take symbolic formalization as its starting point. The papers help
 compare implementations: POPPER starts with a free-form hypothesis and builds
 tests; the expectations abstracts name a formal calculus. Neither arrangement
 defines the general ontology supplied by the [Popper reading](./popper-foundation.md).

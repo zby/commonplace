@@ -1,5 +1,5 @@
 ---
-description: "Definition — conjectural learning is learning in which formulated tentative theories are operative objects within the learning system: used, criticized for what they say, and revised or replaced with effect across a declared horizon"
+description: "Definition — conjectural learning is learning in which formulated tentative theories are operative objects within the learning system: used, criticized for what they say, with the result of that criticism carried across a declared horizon"
 type: kb/types/definition.md
 tags: [foundations, self-improving-systems, learning-theory]
 ---
@@ -19,7 +19,7 @@ under two conditions:
    decision changes that decision
    ([operative change](../../../notes/definitions/operative-change.md)).
 2. **Criticism of what the theory says has an effect that persists across a
-   declared horizon.** Criticism is attempted error elimination: an argument,
+   declared horizon.** Criticism here means an attempt to find an error: an argument,
    or a test of a stated consequence, aimed at something the theory says, and
    itself formulated in language. When the criticism counts against the
    theory, the theory is revised or replaced in response. When the theory
@@ -82,9 +82,11 @@ conjectures they buy, are argued in
 
 ## Scope
 
-- **The horizon is declared, and the claim is relative to it.** A theory
-  revised and reused within one episode supports a within-episode claim.
-  The research program's claims concern horizons that cross episodes.
+- **The horizon is declared, and the claim is relative to it.** The horizon
+  is the boundary the effect has to cross: the end of a decision, an episode,
+  or a task. A theory revised and reused within one episode supports a
+  within-episode claim. The research program's claims concern episode
+  boundaries.
 - **The term classifies by what is formulated and persists.** It makes no
   claim about what happens inside the model. A model may criticize
   conjectures internally while reading raw records, as training may do inside
@@ -142,7 +144,7 @@ naming it.
   [testing supplement](../../../articles/testing-the-theory-refinement-program.md#the-hypotheses).
 
 - **A theory built while reasoning and discarded after the decision.**
-  Nothing of it persists across an episode-crossing horizon.
+  Nothing of it persists across an episode boundary.
 - **Reconstruction from raw records.** Traces, inputs, and outcomes are kept,
   and a theory is rebuilt from them when needed. Evidence persists; the
   effect of criticism does not. The arrangement needs no criticism step.

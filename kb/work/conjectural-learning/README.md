@@ -33,11 +33,11 @@ who decided, and why the earlier formulation was dropped.
   establish a lasting learning effect. Cite Popper's schema, which already
   has a name and an attribution, and define only what we add. The declared
   horizon replaces *uptake*.
-- **Only the formulated part evolves.** We do not oppose Popper's learning
+- **The program evolves only the formulated part.** We do not oppose Popper's learning
   without language; our systems have that level too, in the model weights.
   We choose to evolve prose, prompts, and code. Coevolution with the weights
-  is inside the term but is not the program's primary goal.
-- **Criticism must address what the theory says, and a part of it.** The 2026
+  is inside the term; the program does not pursue it.
+- **Criticism must address what the theory says.** The 2026
   papers showed that the draft admitted cases we do not study: placebo
   studies found form effects without content effects, and score-driven
   program search qualified as conjectural learning. Criticism must therefore
@@ -110,6 +110,14 @@ Do not enrich the classical theory-refinement account as an intermediate step.
 ## Open decisions, for the operator
 
 - The final form of the name.
+- One sense for *tentative*. The drafts use it two ways. As Popper's status it
+  belongs to every theory, and `tentative-theory.md` says it adds nothing to
+  his term. As a way of holding a theory it is denied of fixed instructions
+  and of the Gödel machine's axioms (“operative without being tentative”).
+  Either the term becomes relative to a system, which adds to Popper, or the
+  two cases are described as “never exposed to criticism” and the status
+  stays universal. No case changes class either way. The drafting agent
+  recommends the second.
 - Whether an independent critic is required, and whether within-episode
   learning deserves the word: cases 12 and 6 of the decision record.
 - Merging the operation and loop definitions. The drafts assume the merge and

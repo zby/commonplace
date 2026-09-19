@@ -48,11 +48,14 @@ on how it is written. They do not decide its scope.
    removal leaves the mechanism and changes how well it works is a conjecture
    with a baseline. By this test formulation in language, operative use,
    criticism of content, and persistence across the horizon are definitional.
+   The definition's two numbered conditions bundle these four: the first
+   holds formulation and operative use, the second criticism of content and
+   persistence.
    Addressability of parts, and retaining the theory against rebuilding it
    from retained criticisms, are conjectures. Fixed weights are a study
    condition.
-2. **Every exclusion is a named comparison.** An arrangement outside the term
-   is specified well enough to be run as a baseline. The definition never
+2. **Every arrangement left outside is named.** It is specified well enough
+   to be run as a baseline. The definition never
    settles an empirical question by leaving the rival out.
 3. **Decidable without claims about internals.** Membership rests on
    formulated artifacts and on interventions that vary their content. Nothing
@@ -77,7 +80,7 @@ Classification under the drafts as of 2026-09-19.
 | 3 | Formulated criticisms are retained and a theory is rebuilt from them when needed | Inside | Persistence of the effect of criticism |
 | 4 | Raw records are retained and a theory is rebuilt from them each time | Comparison | No formulated criticism persists; test 3 |
 | 5 | Prompts or programs are varied and selected by score | Comparison | Criticism of content |
-| 6 | A theory is built while reasoning and discarded after the decision | Comparison at a cross-episode horizon; inside for a within-episode claim | Declared horizon |
+| 6 | A theory is built while reasoning and discarded after the decision | Comparison when the declared horizon is an episode boundary; inside for a within-episode claim | Declared horizon |
 | 7 | Weights are adapted and no formulated theory guides decisions | Comparison | Formulation |
 | 8 | Weights, prompts, and code evolve together around a formulated operative theory | Inside. The research program treats it as an extension it does not pursue, since its experiments hold the weights fixed | Both conditions still hold; fixed weights are a study condition under test 1 |
 | 9 | A formulated theory guides decisions and is never criticized | Comparison: the frozen-seed baseline | No criticism; test 2 |

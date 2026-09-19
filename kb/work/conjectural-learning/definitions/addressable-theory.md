@@ -12,7 +12,7 @@ can then guide a search over candidate parts, and an edit can change selected
 parts while the rest stays in place.
 
 The KB needs the term to keep a structural property apart from an epistemic
-status. Every retained theory is a [tentative theory](./tentative-theory.md);
+status. Every theory the KB retains is a [tentative theory](./tentative-theory.md);
 only some are addressable.
 [Conjectural learning](./conjectural-learning.md) does not require it. The
 expected benefit is that criticism can name a part, so a revision keeps what

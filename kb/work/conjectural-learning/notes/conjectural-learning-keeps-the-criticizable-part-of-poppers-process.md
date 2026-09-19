@@ -31,9 +31,9 @@ Without language, the tentative theories are inborn expectations,
 dispositions, and habits, and error elimination acts on the carrier itself:
 the organism dies or is changed together with its theory. With language, a
 formulated theory can be criticized and discarded while its holder survives.
-Scientists "try to let [their false theories] die in their stead"
+Of their false theories, scientists "try to let them die in their stead"
 ([Popper 1968](../../../sources/popper-epistemology-without-a-knowing-subject-1968.ingest.md#quotes),
-§4, p. 347).
+§4, p. 347, verbatim).
 
 A system built on a language model has both levels. The weights hold
 dispositions formed by training, a process that changes the carrier. The
@@ -43,8 +43,8 @@ physical world is the first, the mind the second, and formulated knowledge
 the third, and "all our actions in the first world are influenced by our
 second-world grasp of the third world" (1968, §9, p. 371). Mapping the
 weights onto Popper's lower level is the KB's reading. Both levels are inside
-the learning system: the formulated part is outside the model weights, not
-outside the system.
+the learning system. The formulated part is text, so it can be read and
+criticized apart from the weights.
 
 The KB does not deny learning at the lower level. It studies the level where a
 theory can be criticized, replaced, and inspected one at a time, and where a
@@ -80,15 +80,16 @@ Popper's essay is titled *Epistemology Without a Knowing Subject*, and the
 omission is deliberate. Knowledge in his objective sense does not depend on
 anyone holding it: a book belongs to it if it could in principle be
 understood, and he admits no further requirement (1968, §3, p. 342).
-Criticism results "as a rule" in a new problem, whether or not anyone takes
-the problem up.
+The result of criticism "is as a rule the emergence of a new problem"
+([Popper 1966](../../../sources/popper-a-realist-view-of-logic-physics-and-history-1966.ingest.md#quotes),
+opening section, verbatim), whether or not anyone takes the problem up.
 
 A definition of a system's learning has to put the subject back. It names the
 system whose decisions the theory guides, requires that the system actually
 uses the theory, and requires that the effect of criticism persists for that
-system across a declared horizon. These are additions of a different kind
-from the narrowings. The narrowings select among the cases Popper's process
-covers; the additions tie the process to one system.
+system across a declared horizon. This addition is of a different kind from
+the narrowings. The narrowings select among the cases Popper's process
+covers; the addition ties the process to one system.
 
 Locating what was learned in the system's later decisions is not
 instrumentalism, the view that theories are mere instruments for prediction,
@@ -124,10 +125,11 @@ adapter comparison found no content-specific effect
 
 ## The narrowing bets on three conjectures
 
-The content and efficiency conjectures are tested against some of the
-definition's separate comparisons, the arrangements that fail one of its two
-conditions. The addressability conjecture compares two arrangements that both
-meet them. The split follows one rule: a condition is part of the definition
+The content conjecture, and the efficiency conjecture's comparison with raw
+records, are tested against the definition's separate comparisons, the
+arrangements that fail one of its two conditions. The addressability
+conjecture, and the efficiency conjecture's comparison of retained criticisms
+with a retained theory, compare arrangements that both meet them. The split follows one rule: a condition is part of the definition
 when removing it changes which mechanism does the learning, and it is a
 conjecture when removing it changes only how well the learning works. In an experiment the arrangement compared against is a baseline, and a baseline may match or
 outperform a conjectural learner. That comparison is what the experiments
@@ -211,6 +213,7 @@ Relevant Notes:
 - [Conjectural learning](../definitions/conjectural-learning.md) — defined-in: the term whose boundary this note argues for
 - [Addressable theory](../definitions/addressable-theory.md) — defined-in: the structural property the addressability conjecture is about
 - [An experiment identifies only the contrast it actually runs](../../../notes/an-experiment-identifies-only-the-contrast-it-actually-runs.md) — grounds: why withholding a theory does not test its content
-- [Learning by theory refinement may improve sample efficiency under structured shifts](../../../notes/learning-by-theory-refinement-may-improve-sample-efficiency.md) — see-also: the payoff conjecture under structured shifts, a different question from the two stated here
+- [Learning by theory refinement may improve sample efficiency under structured shifts](../../../notes/learning-by-theory-refinement-may-improve-sample-efficiency.md) — see-also: the payoff conjecture under structured shifts, a different question from the three stated here
 - [Popper, Epistemology without a knowing subject](../../../sources/popper-epistemology-without-a-knowing-subject-1968.ingest.md) — evidenced-by: the two levels, conscious criticism, mutual criticism, and knowledge that needs no holder
-- [Popper, Conjectures and Refutations](../../../sources/popper-conjectures-and-refutations.ingest.md) — evidenced-by: tests that implicate a whole system, and the criticism of instrumentalism
+- [Popper, A realist view of logic, physics, and history](../../../sources/popper-a-realist-view-of-logic-physics-and-history-1966.ingest.md) — evidenced-by: criticism results as a rule in a new problem
+- [Popper, Conjectures and Refutations](../../../sources/popper-conjectures-and-refutations.ingest.md) — evidenced-by: tests that implicate a whole system

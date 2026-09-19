@@ -59,10 +59,10 @@ and [Conjectures and Refutations](../../sources/popper-conjectures-and-refutatio
 were read at the locators in [Popper foundation](./popper-foundation.md).
 [Epistemology Without a Knowing Subject](../../sources/popper-epistemology-without-a-knowing-subject-1968.ingest.md)
 adds the complete 1968 publication, pp. 333–373, from the operator's downloaded
-PDF. Six verified extracts now ground articulation, informal criticism,
-feedback to action, and the distinction between potential intelligibility and
-actual use. This is a third primary Popper observation, separate from the
-seven modern papers.
+PDF. Eight verified extracts now ground formulation in language, informal
+criticism, feedback to action, the distinction between potential
+intelligibility and actual use, conscious criticism, and mutual criticism.
+This is a third primary Popper observation, separate from the modern papers.
 EITHER and FORTE supply the classical precedent cited in the drafts. AIGS
 2024 remains optional historical context and was not needed.
 

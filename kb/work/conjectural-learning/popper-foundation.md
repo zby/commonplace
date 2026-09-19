@@ -6,7 +6,7 @@ it does not demonstrate the implementation's effectiveness.
 
 ## Direct support and its limits
 
-The six retained extracts in [Epistemology Without a Knowing Subject](../../sources/popper-epistemology-without-a-knowing-subject-1968.ingest.md#quotes)
+Six of the eight retained extracts in [Epistemology Without a Knowing Subject](../../sources/popper-epistemology-without-a-knowing-subject-1968.ingest.md#quotes)
 support the following reading of the 1968 publication:
 
 | Part of the approach | Source support | Attribution boundary |
@@ -23,7 +23,7 @@ criticisms are implementation approaches; our preference for the former rests
 on the efficiency conjecture in the companion note. Reconstruction from raw records,
 which hold no criticism, is a separate comparison and not an implementation:
 the [definition draft](./definitions/conjectural-learning.md) classifies by
-what is formulated and persists. Neither passage supplies
+what is formulated and persists. None of these passages supplies
 fixed-model sufficiency or a result for records versus retained theories.
 
 ## Existing primary-source context
