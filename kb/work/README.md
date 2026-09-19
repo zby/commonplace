@@ -6,6 +6,7 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
+- [institution-theory-import](./institution-theory-import/README.md) — assessing institution theory and adjacent semantic frameworks for natural-language interpretation, conformance, and constraining; separates useful conceptual imports from an unproved institutional formalization
 - [first-downstream-run](./first-downstream-run/README.md) — running the first externally assessed episode of Commonplace as a KB-producing theory builder under the evidence protocol; holds the protocol and the three constructed episodes, and waits on the operator's choice of the first consuming project
 - [ideal-interpreter](./ideal-interpreter/README.md) — exploratory sketch of the LLM modelled as an interpreter of semantics; lacks a functional definition, and nothing in the library may depend on it until one is adopted or the sketch is dropped
 - [theory-refinement-interface](./theory-refinement-interface/README.md) — reconciling the derive, compare, locate, revise, evaluate, and apply interface with the theory-refinement literature, separating task-level descriptions from implementation guarantees; continues the internal interface investigation after the theory-builder workshop closed
