@@ -20,20 +20,30 @@ some decisions; a bounded decision budget makes retaining it necessary for
 some; and whether theories are an efficient compression of experience is
 the conjecture a comparison tests.
 
-**What adoption would change.** The
+**Adopted so far (2026-09-19), in plain words and without these terms.** The
 [lead article](../../articles/learning-by-theory-refinement-with-fixed-models.md)
-would state which part of its claim follows from which limit. The
-retained-form comparison in the
+now says that the paradigm claims nothing about what can be learned in
+principle, names the two needs that limits on context and computation
+create, states the compression conjecture, and keeps the records as
+evidence behind the theory; the
+[learning by theory refinement](../definitions/learning-by-theory-refinement.md)
+definition says the same about records. The
 [testing supplement](../../articles/testing-the-theory-refinement-program.md)
-and in
-[the software house as the unit of training](../../articles/the-software-house-as-the-unit-of-training.md)
-would run the trace strategy at a strength its users would accept. The
-three terms would need definitions.
+now specifies the raw-record treatment and names records with a maintained
+index as a further arm. The
+[theory builder](../definitions/theory-builder.md) definition admits a
+builder that regenerates its theories.
+
+**What adoption would still change.** The three terms would get
+definitions, the articles would state the decomposition with them, and the
+retained-form comparison would be split into the arms below, with the two
+quantities from steps 3 and 4 as independent variables.
 
 ## Trigger and cost
 
-Import when the first retained-form comparison is designed, or when the
-lead article needs the argument to answer the trace strategy. Until then
+Import when the first retained-form comparison is designed, or when a note
+or article cannot state which claim follows from which limit without the
+terms. Until then
 the program's conjecture can be stated in plain words without these terms:
 retained theories are an efficient way to compress experience for later
 decisions.
@@ -203,7 +213,10 @@ content and its explicit maintenance add to those alternatives.
 
 **Explanations may serve future cases that differ from past ones.** Lossy
 compression is good or bad relative to the decisions it must later serve.
-An explanation can have consequences for cases never observed. This is
+An explanation can have consequences for cases never observed. Popper makes
+the point about theories in general: a theory's consequences bear on
+situations of which "many of these situations have never been thought of"
+([Popper 1966](../../sources/popper-a-realist-view-of-logic-physics-and-history-1966.ingest.md), verbatim). This is
 [explanatory-reach](../first-principles-reasoning-selects-for-explanatory-reach-over.md),
 and it motivates testing theories against descriptive summaries rather
 than assuming that every compression serves later decisions equally well.
@@ -245,19 +258,37 @@ on its content and how it is used, not merely on its being retained or
 editable. Comparisons should state which mechanisms each arm shares and
 which contribution they isolate.
 
-## Traces stay; they leave the default context
+## A trace records a process; a theory is a product
 
-The position does not oppose retaining traces. The compression is a bet,
-so the theory stays tentative, and the traces are the evidence from which
-it can be derived again when it is suspected. This is already the KB's
-view in
-[preserve evidence without loading history](../agent-memory-requirements/preserve-evidence-without-loading-history.md)
-and
-[retaining the episode keeps a distilled rule re-derivable](../retaining-the-episode-keeps-a-distilled-rule-re-derivable.md).
-It also answers the trace strategy's second strength, that traces improve
-for free when the model improves while a retained theory stays at the
-quality of the model that wrote it: a better model can re-derive or review
-the theory from the same traces.
+Popper separates "the world of thought-processes, and the world of the
+products of thought-processes", and adds: "While the former may stand in
+causal relationships, the latter stand in logical relationships"
+([Popper 1966](../../sources/popper-a-realist-view-of-logic-physics-and-history-1966.ingest.md), verbatim). Applying this to the comparison is our
+reading, not his. A reasoning trace records a process: what was considered,
+in what order, and what happened next. A theory is a product: it has
+consequences, and it can be incompatible with a case or with another theory
+whether or not anyone has noticed. The first requirement of an addressable
+theory, consequences a case can contradict, is a requirement on a product.
+A trace that contains a past theory holds the product inside a process
+record, and using it as a theory means extracting it first. The first-class
+claim below is then the claim that keeping the product extracted, with an
+identity and versions, serves later criticism better than extracting it on
+each use.
+
+Popper's account does not decide between the strategies. His objective
+knowledge is whatever can be "contained in a book; or stored in a library"
+([Popper 1966](../../sources/popper-a-realist-view-of-logic-physics-and-history-1966.ingest.md), verbatim), which covers records as well as theories,
+and he does not consider bounded context, retrieval, or cost. His account
+of consuming theories includes "criticising them, changing them, and often
+even demolishing them, in order to replace them by better ones" (same
+source, verbatim). Replacement stands beside revision there, which agrees
+with treating refinement as a provisional choice that regeneration can
+supplement.
+
+Every retained theory is tentative in Popper's sense, however well it has
+done; that status does not come from the compression being lossy. What the
+lossy compression adds is a reason to keep the records, as the evidence
+from which the theory can be criticized and derived again.
 
 ## When the traces contain past theories
 
@@ -302,10 +333,9 @@ right traces at the right time. The *first-class claim* is that a theory
 kept as an addressable object serves later decisions better than one
 extracted again when needed.
 
-The raw-record treatment "appends
-observations" to an "uncurated history". That is weaker than the trace
-strategy in practice and tests the machinery claim and the first-class
-claim at once. Candidate arms:
+The testing supplement's single raw-record treatment tests the machinery
+claim and the first-class claim at once. Candidate arms that separate
+them:
 
 | Arm | What it isolates |
 |---|---|
@@ -317,8 +347,8 @@ claim at once. Candidate arms:
 Two quantities become independent variables, following steps 3 and 4: how
 much evidence a decision must combine relative to effective context, and
 what reconstruction costs relative to the decision budget. History length
-matters only through them. The existing descriptive-summary and wrong-theory arms stay. If
-the full set is too costly, the articles should say which arm is deferred
+matters only through them. The existing descriptive-summary and
+wrong-theory arms stay. If the full set is too costly, the articles should say which arm is deferred
 and what that leaves untested.
 
 ## Open questions
@@ -364,6 +394,7 @@ and what that leaves untested.
 
 Relevant Notes:
 
+- [Learning by theory refinement](../definitions/learning-by-theory-refinement.md) — defined-in: the paradigm whose advantage over retained traces this framework would test
 - [Theory refinement](../definitions/theory-refinement.md) — defined-in: the operation, the addressable theory, and the tentative-theory status the argument uses
 - [Theory builder](../definitions/theory-builder.md) — defined-in: the persistent system whose retained state the comparison varies
 - [First-principles reasoning selects for explanatory-reach over adaptive fit](../first-principles-reasoning-selects-for-explanatory-reach-over.md) — grounds: why an explanation may serve cases that differ from past ones

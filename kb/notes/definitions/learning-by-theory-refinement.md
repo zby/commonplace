@@ -39,6 +39,17 @@ checks fails on one included snippet, revises the part of the account that
 failed, and afterwards checks snippets it has never seen fail, has
 completed one turn of the loop.
 
+The loop resembles Popper's schema for the growth of theories,
+`P1 → TT → EE → P2`: a problem, a tentative theory, attempted error
+elimination, and a new problem. The resemblance is our reading, and it is
+loose in one respect. In Popper's schema "the result of criticism, or of
+error-elimination, applied to a tentative theory, is as a rule the
+emergence of a new problem"
+([Popper 1966](../../sources/popper-a-realist-view-of-logic-physics-and-history-1966.ingest.md), verbatim),
+not a revised theory. The loop defined here adds what the schema leaves
+open: the theory that survives or replaces the criticized one is retained,
+and it guides the work in which the next problem is met.
+
 ## Scope
 
 - **Not a success term.** A loop that carries a mistaken theory forward is
