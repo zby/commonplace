@@ -25,7 +25,16 @@ Schmidhuber proposes that curiosity and essential aspects of creativity arise fr
 
 ## Quotes
 
-No source quotes have been retained yet.
+- **Source extract (verbatim):** What’s beautiful is not necessarily interesting. A beautiful thing is interesting only as long as it is new, that is, as long as the algorithmic regularity that makes it simple has not yet been fully assimilated by the adaptive observer who is still learning to compress the data better.
+  - **Source location:** Section 2.4, Subjective Interestingness as First Derivative of Subjective Beauty: The Steepness of the Learning Curve (arXiv:0812.4360v2)
+- **Source extract (verbatim):** A visionbased agent that always stays in the dark will experience an extremely compressible, soon totally predictable history of unchanging visual inputs. In front of a screen full of white noise conveying a lot of information and “novelty” and “surprise” in the traditional sense of Boltzmann and Shannon [102], however, it will experience highly unpredictable and fundamentally incompressible data. In both cases the data is boring [72, 88] as it does not allow for further compression progress. Therefore we reject the traditional notion of surprise.
+  - **Source location:** Section 2.6, True Novelty & Surprise vs Traditional Information Theory (arXiv:0812.4360v2)
+- **Source extract (verbatim):** In absence of external reward, or when there is no known way to further increase the expected external reward, our controller essentially tries to maximize true novelty or interestingness, the first derivative of subjective beauty or compressibility, the steepness of the learning curve. It will do its best to select action sequences expected to create observations yielding maximal expected future compression progress, given the limitations of both the compressor and the compressor improvement algorithm.
+  - **Source location:** Section 2.7, Attention / Curiosity / Active Experimentation (arXiv:0812.4360v2)
+- **Source extract (verbatim):** The previous sections only discussed measures of compressor performance, but not of performance improvement, which is the essential issue in our curiosity-oriented context. To repeat the point made above: The important thing are the improvements of the compressor, not its compression performance per se.
+  - **Source location:** Appendix A.5, Measures of Compressor Progress / Learning Progress (arXiv:0812.4360v2)
+- **Source extract (verbatim):** Note that both the old and the new compressor have to be tested on the same data, namely, the history so far.
+  - **Source location:** Appendix A.5, Measures of Compressor Progress / Learning Progress, following equation (5) (arXiv:0812.4360v2)
 
 ## Connections Found
 
