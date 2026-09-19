@@ -7,11 +7,22 @@ tags: [foundations, learning-theory, self-improving-systems]
 
 # Conjectural learning keeps the criticizable part of Popper's process
 
-[Conjectural learning](../definitions/conjectural-learning.md) covers less
-than the learning Popper describes. The definition says when the term
-applies. This note argues for drawing it there: the reason for each
-narrowing, what a fixed interpreter changes, and the two conjectures the
-narrowing bets on.
+Popper describes learning as conjecture followed by attempted error
+elimination, in every organism and at every level.
+[Conjectural learning](../definitions/conjectural-learning.md) keeps one part
+of that process: theories that are written down in language, have parts that
+can be revised one at a time, and are criticized for what they say, with the
+result carried into later work. What it sets aside is learning that needs no
+written criticism: a model that regenerates what it needs from raw records
+each time, or text that is selected by score alone. The KB bets that the kept
+part pays in two ways: criticism of what a theory says learns more from each
+failure, and carrying its results forward costs less than redoing the work.
+Neither bet is established.
+
+The definition says when the term applies. This note gives the reason for
+each narrowing, says what changes when the model that reads the theories
+cannot itself change, and states the two bets with the comparisons that
+would test them.
 
 ## Popper runs one schema at two levels
 
