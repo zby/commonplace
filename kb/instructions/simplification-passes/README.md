@@ -23,7 +23,7 @@ judgment passes stay on the session model.
 - [narrow-overclaims](./narrow-overclaims.md) (judgment) — move claims from what cannot be observed to what can, and mark gaps instead of inventing precision.
 - [opening-and-title](./opening-and-title.md) (judgment) — make the TL;DR read with only its own words and the title state the central contrast literally.
 - [readability-and-flow](./readability-and-flow.md) (judgment) — structural moves and tightening with no change of claim.
-- [plain-wording](./plain-wording.md) (simple) — replace decorative figures with literal statements and unusual words with common ones, after the operator approves the list.
+- [plain-wording](./plain-wording.md) (simple) — replace decorative figures with literal statements and unusual words with common ones, and cut exclusions that deny what the sentence already ruled out, after the operator approves the list.
 - [abstractions](./abstractions.md) (judgment) — per term, either keep a coined or registered abstraction everywhere because one sentence needs its distinction, or replace it with the ordinary word everywhere.
 - [split-out-a-treatment](./split-out-a-treatment.md) (simple) — keep the artifact's passage minimal and put the full argument in a separate file that later passes do not load.
 - [place-external-systems](./place-external-systems.md) (simple) — position named systems against the artifact's criteria by reading generated main-review files, with source ingests identified separately.

@@ -1,5 +1,5 @@
 ---
-description: "Use when an artifact's wording should be simplified: decorative figures replaced with literal statements and unusual words replaced with common ones, without stripping the metaphors that carry the argument or the terms the KB registers"
+description: "Use when an artifact's wording should be simplified: decorative figures made literal, unusual words made common, and redundant exclusions cut, without stripping the metaphors that carry the argument or the terms the KB registers"
 type: kb/types/instruction.md
 effort: simple
 ---
@@ -7,12 +7,12 @@ effort: simple
 # Plain wording
 
 Replace wording that costs the reader effort without carrying meaning: figures
-that display the writer, and unusual words where a common word says the same
-thing.
+that display the writer, unusual words where a common word says the same
+thing, and exclusions that deny what the sentence has already ruled out.
 
 Effort: simple. Listing and marking against a recorded threshold; the operator strikes.
 
-1. List every candidate with a proposed replacement. Do not apply any. Two
+1. List every candidate with a proposed replacement. Do not apply any. Three
    kinds of candidate:
    - A figurative phrase, with a literal statement.
    - An unusual word, with the common word that says the same thing. Unusual
@@ -20,6 +20,10 @@ Effort: simple. Listing and marking against a recorded threshold; the operator s
      or learned words (ameliorate, adumbrate, orthogonal used for
      "independent"), Latin tags (inter alia, mutatis mutandis), and long
      words with a short everyday equivalent (utilize, endeavour, commence).
+   - A redundant exclusion, with the sentence without it. An exclusion is
+     redundant when the positive clause already rules out what it denies: "a
+     candidate, not a settled finding", "outside the term without being
+     denied". Look at "not", "without", "only", and "rather than".
 2. For each figure, ask whether the mapping does work the literal phrase would
    need more words to do. A tradeoff as buying and paying, a successor chain
    as descent, an internal role as being inside: these stay. A dramatic or
@@ -32,9 +36,15 @@ Effort: simple. Listing and marking against a recorded threshold; the operator s
    and say which distinction. Replace every occurrence of a word with the
    same common word; one occurrence swapped and another kept reads as two
    referents.
-4. Return the list marked keep or replace, with the reason in a few words.
+4. For each exclusion, ask whether a reader would actually make the excluded
+   reading. Keep it when they would: the ordinary sense of a technical word
+   ("conjectural" does not mean speculative), a position the KB used to hold,
+   a status readers tend to inflate (not a success term), or a contrast that
+   is the sentence's point. Cut it when it only guards a reading the previous
+   clause closed; it makes the sentence longer and adds nothing.
+5. Return the list marked keep or replace, with the reason in a few words.
    The operator strikes items. Apply only what survives.
-5. When the literal phrase needs a referent the figure did not name (who is
+6. When the literal phrase needs a referent the figure did not name (who is
    charged, what is at fault), do not choose one. Report the phrase as a
    question with the candidate referents.
 
@@ -46,4 +56,4 @@ or the KB's registered words (seed, holding a theory, gradient descent,
 legible, ampliative); a term the artifact itself defines; and quoted text,
 which is never reworded. Whether a registered abstraction should give way
 to the ordinary word is the [abstractions](./abstractions.md) pass's
-question, not this one's.
+question.
