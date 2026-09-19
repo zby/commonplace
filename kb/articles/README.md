@@ -42,7 +42,7 @@ The supplements, in the order a reader is likely to want them:
 
 One draft stands outside the series:
 
-- [What an Automated Reviewer Should Measure](./what-an-automated-reviewer-should-measure.md) — a proposal for automated article review. It scores an article by how much it improves a declared model reader's answers to independently written questions, per token, and pairs that measurement with a five-part reading of the text as an untested proxy. It says how a venue could declare the reader for a scientific literature, and it rates value, not correctness. Nothing in it has been run.
+- [What an Automated Reviewer Should Measure](./what-an-automated-reviewer-should-measure.md) — a proposal for automated article review. It measures an article by *article gain*: how much the article improves a declared model reader's answers to independently written questions about the domain. It asks for both total gain and gain per token, since efficiency and size of improvement can favour different articles. For articles proposing a theory revision, it offers a cheaper reading of the text — five slots a reviewer should be able to fill — as a conjectured predictor of gain. It sketches how a venue might use the measure retrospectively, with later experimental outcomes as answer keys, and gives two reasons such a test is hard to run cleanly. The measure rates value on the sampled tasks, not correctness. Nothing in it has been run.
 
 ## Superseded
 
