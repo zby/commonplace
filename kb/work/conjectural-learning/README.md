@@ -144,6 +144,9 @@ These are not in the drafts and still apply to later experiments and articles.
 
 ## Inputs
 
+[Decision record](./definition-decision-record.md) says what the definition
+is for, the tests a change to it must pass, and the cases to check a change
+against; read it before proposing a change of scope.
 [Sources](./sources.md) records coverage and access limits.
 [Popper foundation](./popper-foundation.md) holds the primary-source reading
 and the attribution boundary. [Comparison](./comparison.md) assesses the
