@@ -35,8 +35,8 @@ prior the baseline but leaves the update unmeasured.
 ## Trigger and cost
 
 Import when the KB first has to rank two candidate articles, or two
-revisions of one article, and cannot say what it is ranking them by; or
-when an open-ended article review needs a criterion whose scoring is
+revisions of one article, and cannot say what it is ranking them by. Import
+also when an open-ended article review needs a criterion whose scoring is
 something other than the reviewer's taste. Until then the collection's
 present question — can a reader state the claims, support, and limits — is
 assumed to do the work. No record yet shows it failing to separate two
@@ -45,9 +45,9 @@ articles the KB had to choose between.
 The cost is four terms, plus an operational burden that falls on every use:
 a declared observer has to be named, and a held-out question set has to
 exist and to have been authored without sight of the article. The
-refinement reading also imposes a shape that not every good article has,
-and adopting it risks penalising exposition, which is the case handled
-under Scope.
+refinement reading also imposes a shape that not every good article has.
+Adopting it risks penalising exposition, which is the case handled under
+Scope.
 
 ## The motivating case: automation went where a surface existed
 
@@ -58,23 +58,28 @@ verdict: authors "were told to produce version histories or also be
 desk-rejected" ([thread on conference volume and AI-detector review](../../sources/seeing-numbers-of-50k-submissions-for-iclr-2101135922666365032.ingest.md),
 verbatim). At ICLR, a projected jump in submissions prompted the
 expectation that "it'll probably need AI review at that scale" (same
-source, verbatim), with the source leaving open whether the human review
-layer scales with it. Three limits on what this case supports: the two
-venues are different, so nothing here links the NeurIPS deployment to the
-ICLR projection causally; the projection is the thread author's own
-speculation about a submission deadline that had not yet passed; and every
-figure in the thread is relayed secondhand from blogs it does not name, so
-only the structural shape is carried here.
+source, verbatim). The source leaves open whether the human review layer
+scales as well.
+
+Three limits bound what this case supports. The two venues are different,
+so nothing here links the NeurIPS deployment to the ICLR projection
+causally. The projection is the thread author's own speculation about a
+submission deadline that had not yet passed. And every figure in the thread
+is relayed secondhand from blogs it does not name, so only the structural
+shape is carried here.
 
 That shape is a substitution. Provenance was not what the review decision
 needed; quality was. The source does not say why provenance was the
 question automated. This note's reading is that a tool for it existed and
 produced a per-instance verdict, while no criterion of article quality was
-available in a form a machine could apply. This is the failure mode
+available in a form a machine could apply.
+
+The case is the failure mode that
 [review automation should target verifiable subroles before reviewer identity](../verifiable-subroles-before-reviewer-identity.md)
-predicts, seen from the side it does not cover: that note says to automate
-narrow subroles that have a checkable surface, and here the only available
-surface belonged to a question nobody was asking. On the same reading it is an instance of
+predicts, seen from the side that note does not cover. The note says to
+automate narrow subroles that have a checkable surface, and here the only
+available surface belonged to a question nobody was asking. On the same
+reading it is an instance of
 [weakly discriminated qualities tend to be underselected](../weakly-discriminated-qualities-tend-to-be-underselected.md):
 quality was weakly discriminated, and the process selected on what it
 could discriminate.
@@ -96,13 +101,15 @@ same data, namely, the history so far"
 ([Driven by Compression Progress](../../sources/driven-by-compression-progress.ingest.md),
 verbatim). His framework also rejects raw novelty as the measure, on the
 ground that incompressible noise carries maximal Shannon novelty and
-affords no progress. Applying that objective to article review rather than
-to an agent's exploration is this note's move, not his. What carries over
-is the form: value is an improvement and not a state, it is measured
-against a fixed baseline on the same data, and noise has none. What does
-not carry over is the measure. Schmidhuber's quantity is a saving in
-description length; the quantity here is answer quality on a question set,
-which stands in for it and is not shown to track it.
+affords no progress.
+
+Applying that objective to article review rather than to an agent's
+exploration is this note's move, not his. What carries over is the form:
+value is an improvement and not a state, it is measured against a fixed
+baseline on the same data, and noise has none. What does not carry over is
+the measure. Schmidhuber's quantity is a saving in description length; the
+quantity here is answer quality on a question set, which stands in for it
+and is not shown to track it.
 
 Two changes are needed to make the transposition work.
 
@@ -111,7 +118,7 @@ observer compresses the history it has experienced, which for a reader
 would include the article. An article that scored by compressing its own
 text would score for internal consistency. So the evaluated material is an
 externally supplied question set about the domain, authored without sight
-of the article; the article is an intervention on the observer, not part of
+of the article. The article is an intervention on the observer, not part of
 what is measured.
 
 **The measurement is charged per token.** Context is the scarce resource
@@ -121,7 +128,7 @@ expansion, so
 — more text with no additional extractable structure — scores at or below
 zero rather than merely failing to score well.
 
-What results is deliberately relative. Because
+The resulting criterion is deliberately relative. Because
 [information value is observer-relative](../information-value-is-observer-relative.md),
 the same article can be worth a great deal against one background corpus
 and nothing against another, and the criterion has no reading until the
@@ -137,10 +144,10 @@ to be a proxy for the same quantity rather than a second standard.
 
 The proposal is to read the article as a proposed
 [theory refinement](../definitions/theory-refinement.md) of the declared
-observer's background — a revision of an existing theory against cases,
-seeking to correct error while preserving useful prior knowledge — and to
-ask which of five slots are recoverable from the text, with a locating
-quotation for each:
+observer's background: a revision of an existing theory against cases,
+seeking to correct error while preserving useful prior knowledge. The
+reading asks which of five slots are recoverable from the text, with a
+locating quotation for each:
 
 | Slot | What the text must make recoverable |
 |---|---|
@@ -150,7 +157,7 @@ quotation for each:
 | Contradictable consequences | What the revised account forbids, so a later case could contradict it |
 | Reach | Which cases beyond the contradicting ones the revision covers |
 
-The slots are not section headings and impose no order; the reading asks
+The slots are not section headings and impose no order. The reading asks
 whether each is recoverable, not whether it is announced.
 
 Each slot names a condition the measured gain is conjectured to depend on,
@@ -165,12 +172,12 @@ independent standard.
   Without them the article proposes a substitution, and a substitution
   moves the observer's answers with no reason to expect them to improve.
 - **Preserved content** is what keeps a gain on one question set from being
-  a loss on another. Refinement seeks limited change for this reason; an
+  a loss on another. Refinement seeks limited change for this reason. An
   article that discards the background rather than revising it owes the
   larger argument that a replacement owes.
 - **Contradictable consequences** are what a held-out question can turn on.
   An account that forbids nothing gives a held-out question nothing to
-  turn on, so it is not expected to show gain however true it is.
+  turn on, so the account is not expected to show gain however true it is.
 - **Reach** is what separates compression from patching. A revision that
   covers only its own contradicting cases lengthens the observer's
   background by roughly what it adds, so its gain is bounded by how often
@@ -183,9 +190,8 @@ independent standard.
 
 The reading is checkable in a weak but useful sense: a model can report
 which slots it found and quote where, and a second model can disagree with
-the quotation rather than with the verdict. It settles nothing about truth.
-An article can fill all five slots with a false theory, and the instrument
-below would then score it well.
+the quotation rather than with the verdict. It settles nothing about truth:
+an article can fill all five slots with a false theory.
 
 ## The instrument
 
@@ -206,7 +212,7 @@ the retained change, with the model held fixed.
 - **Externally supplied held-out questions.** Authored by someone other
   than the article's author, without sight of the article, about the domain
   rather than about the article. A question set written from the article
-  restates it, so the gain it shows is built in and uninformative.
+  restates it, so the gain that set shows is built in and uninformative.
 - **Two arms.** The article in context, and nothing in its place, with
   everything else identical.
 - **Gain per token.** The score difference between the arms, divided by the
@@ -215,10 +221,10 @@ the retained change, with the model held fixed.
 The instrument measures one thing and should not be read as measuring
 others. It does not establish truth: a persuasive false article that moves
 the observer toward the grader's expected answers scores well. It does not
-establish transfer: the gain holds for the question set, and stratifying
+establish transfer: the gain holds for the question set. Stratifying
 questions by their distance from the article's own cases is the obvious
 route to making the reach slot measurable rather than read. And the grader
-is itself a discrimination problem — if a model grades the answers, the
+is itself a discrimination problem. If a model grades the answers, the
 instrument inherits the limit in
 [the augmentation-automation boundary is discrimination not accuracy](../the-augmentation-automation-boundary-is-discrimination-not-accuracy.md),
 and the reported gain is only as good as the grader's per-instance
@@ -245,8 +251,8 @@ discrimination.
 ## Open questions
 
 - Who grades the held-out answers, and how is the grader's discrimination
-  established before the instrument is trusted? The motivating case is
-  precisely a screen acted on before its error rate was known.
+  established before the instrument is trusted? The motivating case is a
+  screen acted on before its error rate was known.
 - Does the per-token denominator penalise an article whose length is
   carrying a large preserved-content argument — the work of showing that
   the revision keeps what the background already had right?
