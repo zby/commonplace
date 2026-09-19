@@ -154,7 +154,7 @@ Where no crossing has happened, withholding or perturbing the theory and
 observing a changed decision supplies evidence that it shaped that decision.
 Whether a model interprets prose theories consistently enough to support
 useful diagnosis and revision is an empirical question for the pathway in
-[theory refinement may improve sample efficiency under structured shifts](../theory-refinement-may-improve-sample-efficiency-under-shifts.md).
+[theory refinement may improve sample efficiency under structured shifts](../learning-by-theory-refinement-may-improve-sample-efficiency.md).
 
 Refining theories nobody computes is the older case, not the exception.
 Scientific theories in prose and mathematics were refined for centuries by
@@ -247,7 +247,7 @@ sense is on the causal path of a decision.
 Relevant Notes:
 
 - [Learning by theory refinement](./learning-by-theory-refinement.md) — extends: the recurrent loop and paradigm built on this operation
-- [Theory refinement may improve sample efficiency under structured shifts](../theory-refinement-may-improve-sample-efficiency-under-shifts.md) — extends: the payoff conjecture, and the test that would decide whether a model interprets prose theories reliably enough
+- [Theory refinement may improve sample efficiency under structured shifts](../learning-by-theory-refinement-may-improve-sample-efficiency.md) — extends: the payoff conjecture, and the test that would decide whether a model interprets prose theories reliably enough
 - [Reflective theory refinement needs interpretation, retention, and independent read-back](../reflective-theory-refinement-needs-interpretation-and-retention.md) — extends: the evidence ladder and the functions the reflective case must keep separate
 - [Reflective theory refinement has separate structural, epistemic, and implementation lineages](../reflective-theory-refinement-has-three-separate-lineages.md) — extends: the slot-for-slot comparison between the classical loop and the KB's fillers
 - [Disconnected witnesses do not establish a full causal path through theory](../disconnected-witnesses-do-not-establish-a-causal-path-through-theory.md) — extends: what separate links must share before they compose into one refinement path

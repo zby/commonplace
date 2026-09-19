@@ -221,7 +221,7 @@ situations of which "many of these situations have never been thought of"
 and it motivates testing theories against descriptive summaries rather
 than assuming that every compression serves later decisions equally well.
 It also agrees with the payoff conjecture in
-[theory refinement may improve sample efficiency under structured shifts](../theory-refinement-may-improve-sample-efficiency-under-shifts.md):
+[theory refinement may improve sample efficiency under structured shifts](../learning-by-theory-refinement-may-improve-sample-efficiency.md):
 the advantage may be largest when later work differs from earlier work
 in structured ways. A mistaken explanation may instead make those decisions
 worse.
@@ -398,5 +398,5 @@ Relevant Notes:
 - [Theory refinement](../definitions/theory-refinement.md) — defined-in: the operation, the addressable theory, and the tentative-theory status the argument uses
 - [Theory builder](../definitions/theory-builder.md) — defined-in: the persistent system whose retained state the comparison varies
 - [First-principles reasoning selects for explanatory-reach over adaptive fit](../first-principles-reasoning-selects-for-explanatory-reach-over.md) — grounds: why an explanation may serve cases that differ from past ones
-- [Theory refinement may improve sample efficiency under structured shifts](../theory-refinement-may-improve-sample-efficiency-under-shifts.md) — extends: the payoff conjecture this framework leaves to the comparison
+- [Theory refinement may improve sample efficiency under structured shifts](../learning-by-theory-refinement-may-improve-sample-efficiency.md) — extends: the payoff conjecture this framework leaves to the comparison
 - [Retaining episode evidence keeps a distilled rule open to re-examination](../retaining-the-episode-keeps-a-distilled-rule-re-derivable.md) — grounds: why the traces stay as evidence behind the theory

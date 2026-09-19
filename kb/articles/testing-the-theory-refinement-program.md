@@ -12,7 +12,7 @@ source_notes:
   - kb/notes/definitions/theory-refinement.md
   - kb/notes/a-claim-without-external-assessment-carries-three-obligations.md
   - kb/notes/retained-theory-intervention-isolates-one-explicit-surface.md
-  - kb/notes/theory-refinement-may-improve-sample-efficiency-under-shifts.md
+  - kb/notes/learning-by-theory-refinement-may-improve-sample-efficiency.md
   - kb/notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md
   - kb/notes/an-action-model-matters-only-through-its-consumption-path.md
   - kb/notes/evidence/commonplace-as-a-reflective-system.md
@@ -410,7 +410,7 @@ files for testing transfer.
   hide the initial deficit in a whole-run score.
 - **Sample efficiency.** A correct theory may [reduce the observations
   needed to
-  adapt](../notes/theory-refinement-may-improve-sample-efficiency-under-shifts.md)
+  adapt](../notes/learning-by-theory-refinement-may-improve-sample-efficiency.md)
   by letting one discovered dependency change decisions for several files.
   Count inspected cases and feedback used, along with missed defects,
   unnecessary checks, regressions, rollbacks, and total cost including

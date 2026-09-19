@@ -7,7 +7,7 @@ tags: [learning-theory, discovery, evaluation]
 
 # Revision guided by rationale needs faithfulness, not just legibility
 
-Under structured shifts, a retained theory with genuine explanatory reach can be worth more than an equivalent pile of cases because [one theory-level revision can change many downstream conclusions at once](./theory-refinement-may-improve-sample-efficiency-under-shifts.md). A recorded **rationale** can guide that revision by naming supporting observations, assumptions, and expected scope. For example, a dependency-based explanation for skipping integration tests can suggest which condition to revise after a documentation file starts affecting a build. When the learner relies on that explanation to locate the defect, a misleading explanation can direct the repair to the wrong part.
+Under structured shifts, a retained theory with genuine explanatory reach can be worth more than an equivalent pile of cases because [one theory-level revision can change many downstream conclusions at once](./learning-by-theory-refinement-may-improve-sample-efficiency.md). A recorded **rationale** can guide that revision by naming supporting observations, assumptions, and expected scope. For example, a dependency-based explanation for skipping integration tests can suggest which condition to revise after a documentation file starts affecting a build. When the learner relies on that explanation to locate the defect, a misleading explanation can direct the repair to the wrong part.
 
 Retained rationale is optional for [theory refinement](./definitions/theory-refinement.md). A learner can diagnose a rule from its consequences, search for a revised condition, and test the candidate without a record of why the rule was adopted. Premises within a rule, evidence supporting it, and the history of its adoption are distinct: repair does not require all three. The claim here concerns the reliability of repair that uses a rationale as its diagnostic guide.
 
@@ -42,7 +42,7 @@ This gives the property an operational test: edit the rationale's stated premise
 
 Relevant Notes:
 
-- [Theory refinement may improve sample efficiency under structured shifts](./theory-refinement-may-improve-sample-efficiency-under-shifts.md) — grounds: the selective-revision payoff whose rationale-guided realization this note examines
+- [Theory refinement may improve sample efficiency under structured shifts](./learning-by-theory-refinement-may-improve-sample-efficiency.md) — grounds: the selective-revision payoff whose rationale-guided realization this note examines
 - [Reflection makes retained lessons second-order: a lesson can reject or rescope a prior commitment](./reflection-makes-retained-lessons-second-order.md) — mechanism: the reject/rescope/revise operations a rationale can help guide
 - [Abstract an experience into a lesson only when you can state where the lesson stops](./abstract-an-experience-only-when-you-can-state-the-boundary.md) — grounds: the applicability conditions a rationale has to record for rescoping to have a target
 - [Reach-assessment](./definitions/reach-assessment.md) — grounds: the capability that tells a sound rationale from a plausible one, which reading does not supply

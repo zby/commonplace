@@ -14,7 +14,7 @@ source_notes:
   - kb/notes/retained-artifacts-enable-persistent-deployment-time-adaptation.md
   - kb/notes/continual-learning-requires-governing-behaviour-changing-writes.md
   - kb/notes/the-bitter-lesson-selects-production-methods-not-representational.md
-  - kb/notes/theory-refinement-may-improve-sample-efficiency-under-shifts.md
+  - kb/notes/learning-by-theory-refinement-may-improve-sample-efficiency.md
   - kb/notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md
   - kb/notes/a-fixed-model-house-must-write-the-procedures-for-each-new-theory.md
   - kb/notes/a-claim-without-external-assessment-carries-three-obligations.md
@@ -290,7 +290,7 @@ cost the program must weigh against it.
   the case above, one discovered dependency changed the checking decision
   for several files. The conjecture that [theory refinement may improve sample
   efficiency under structured
-  shifts](../notes/theory-refinement-may-improve-sample-efficiency-under-shifts.md)
+  shifts](../notes/learning-by-theory-refinement-may-improve-sample-efficiency.md)
   is bounded to shifts that preserve the structure the theory names. Fewer
   observations need not mean a cheaper method once theory construction,
   retrieval, and maintenance are counted.
