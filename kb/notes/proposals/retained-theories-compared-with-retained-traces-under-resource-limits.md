@@ -344,9 +344,9 @@ and what that leaves untested.
 - Does dropping the determinism idealization change step 1? Without it,
   regeneration yields a distribution over theories, which bears on
   stability for consumers but not obviously on reach.
-- Do the adopted hypotheses need rewording if the base definition
-  [admits a regenerating builder](./admitting-a-regenerating-builder-in-the-theory-builder-definition.md),
-  or only the treatment tables?
+- Do the adopted hypotheses need rewording now that the
+  [theory builder](../definitions/theory-builder.md) definition admits a
+  builder that regenerates its theories, or only the treatment tables?
 - Undeveloped: derived state does two jobs. A summary, aggregate, or theory
   substitutes for the history, and the reader does not load the source. An
   index routes into the history, and the reader loads only the part it

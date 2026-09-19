@@ -18,10 +18,16 @@ each only part of it.
 
 A theory here is an [addressable theory](./theory-refinement.md#what-the-loop-requires-of-a-theory):
 a unit with consequences a case can contradict, parts available as candidate
-repair locations, and parts editable separately, in any form. Revision is
-[theory refinement](./theory-refinement.md). Development, constructing a
-first theory where none exists, is in scope for the builder although
-refinement excludes it. The boundary rule, persistence clause, and
+repair locations, and parts editable separately, in any form. The
+definition leaves open how a builder revises its theories. It may refine an
+existing theory against new cases, which is
+[theory refinement](./theory-refinement.md), or regenerate the theory from
+retained records. Which it does is a property of the particular builder,
+and it is what a comparison of retained forms varies. A builder that
+retains its theories and keeps refining them is
+[learning by theory refinement](./learning-by-theory-refinement.md).
+Development, constructing a first theory where none exists, is in scope as
+well. The boundary rule, persistence clause, and
 evaluation clause below are adapted from the
 [software house](./software-house.md) definition, because they are not
 specific to software.
@@ -97,7 +103,9 @@ replaced by it.
 
 Persistence establishes neither retention nor learning. A builder whose
 fixed machinery suffices for every admitted demand still meets this
-definition. A system that runs once over supplied cases and holds no
+definition. So does a builder that regenerates its theories: its continuity
+lies in its records and machinery, and it remains responsible for the
+theories it delivers although it does not retain them. A system that runs once over supplied cases and holds no
 continuing responsibility for the result is not persistent in this sense.
 Retention is the builder's, not the interpreter's: the interpreter
 proposes, the evaluators assess, and the builder retains.
@@ -206,7 +214,8 @@ supply those.
 
 Relevant Notes:
 
-- [Theory refinement](./theory-refinement.md) — defined-in: the revision operation, the addressable theory it requires, and the borrowed tentative-theory status
+- [Theory refinement](./theory-refinement.md) — defined-in: one revision operation a builder may use, the addressable theory it requires, and the borrowed tentative-theory status
+- [Learning by theory refinement](./learning-by-theory-refinement.md) — contrasts: the learning paradigm a particular builder may run; the builder is defined without it
 - [Software house](./software-house.md) — grounds: the boundary, persistence, and evaluation clauses this definition adapts
 - [Externally tested theory builder](./externally-tested-theory-builder.md) — extends: the case in which the evidence interface supplies assessment from outside
 - [Reflective theory builder](./reflective-theory-builder.md) — extends: the first independent condition
