@@ -28,6 +28,11 @@ Keep the provided URL as `source_url`. Verify that
 this through `kb/sources/.gitignore`. If the directory is not ignored, stop
 before writing and report the missing rule.
 
+For PDF and ordinary web captures, keep temporary downloads, extracted bodies,
+and assembly files in a unique directory under `kb/reports/cache/snapshot-web/`. Verify
+that payloads there are ignored before writing; stop and report a missing
+ignore rule. The final snapshot still belongs in `kb/sources/.snapshots/`.
+
 Use Grep to search for an exact frontmatter `source: {source_url}` in existing
 Markdown files in `kb/sources/.snapshots/`. If found, compute the SHA-256 of
 the exact file bytes, tell the user, and stop:
@@ -92,7 +97,8 @@ Run this as one Bash invocation. Retain the printed directory path as
 
 ```bash
 set -e
-snapshot_tmp=$(mktemp -d)
+mkdir -p kb/reports/cache/snapshot-web
+snapshot_tmp=$(mktemp -d kb/reports/cache/snapshot-web/capture.XXXXXX)
 printf 'Snapshot temp: %s\n' "$snapshot_tmp"
 curl -fsSL -o "$snapshot_tmp/source.pdf" "{pdf_url}"
 pdfinfo -isodates "$snapshot_tmp/source.pdf" > "$snapshot_tmp/pdfinfo.txt"
@@ -120,31 +126,45 @@ Set `capture_method` to `pdftotext`, set `body_file` to
 Verify that the HTML capture prerequisites are available:
 
 ```bash
+command -v curl
 command -v trafilatura
 ```
 
-If the command is missing, go to **Step 3**. Do not probe for another HTML
+If either command is missing, go to **Step 3**. Do not probe for another HTML
 converter.
 
-Run this as one Bash invocation to download and extract the page. Retain the
-printed directory path as `{snapshot_tmp}`:
+Create a temporary directory and retain the printed path as `{snapshot_tmp}`:
 
 ```bash
 set -e
-snapshot_tmp=$(mktemp -d)
+mkdir -p kb/reports/cache/snapshot-web
+snapshot_tmp=$(mktemp -d kb/reports/cache/snapshot-web/capture.XXXXXX)
 printf 'Snapshot temp: %s\n' "$snapshot_tmp"
-trafilatura -u "{source_url}" \
-  --markdown --with-metadata --links --no-comments --recall \
-  --backup-dir "$snapshot_tmp/raw" \
-  > "$snapshot_tmp/extracted.md"
 ```
+
+Download with curl in a separate Bash invocation. Substitute the literal
+temporary path and source URL before running:
+
+```bash
+curl -fsSL -o '{snapshot_tmp}/source.html' -A 'Mozilla/5.0' '{source_url}'
+```
+
+If the download fails, go to **Step 3**. Otherwise extract from the saved HTML
+through standard input; do not use Trafilatura's `-u` download option or its
+`-i` URL-list option:
+
+```bash
+trafilatura \
+  --markdown --with-metadata --links --no-comments --recall \
+  < "{snapshot_tmp}/source.html" > "{snapshot_tmp}/extracted.md"
+```
+
+If extraction fails, go to **Step 3**.
 
 Use Read to inspect only the leading metadata and a bounded beginning of
 `extracted.md`. Its leading YAML block, when present, is Trafilatura metadata:
 retain it as input to Step 4 but do not copy that block into the snapshot body.
-Trafilatura also retains its downloaded HTML as a gzip file under
-`{snapshot_tmp}/raw/`. When `gzip` is available, decompress that file within
-`{snapshot_tmp}` and use Grep with bounded output to inspect article-level DOI
+Use Grep with bounded output on `{snapshot_tmp}/source.html` to inspect article-level DOI
 metadata such as `citation_doi`, `dc.identifier`, `prism.doi`, or a JSON-LD
 `doi` property. DOI inspection is best effort: inability to inspect the raw
 HTML does not make an otherwise successful capture fail.
@@ -158,7 +178,8 @@ in_metadata && $0 == "---" { in_metadata = 0; next }
 ' "{snapshot_tmp}/extracted.md" > "{snapshot_tmp}/body.md"
 ```
 
-If `body.md` is empty or contains no substantive main content, go to
+If `body.md` is empty, contains no substantive main content, or contains only
+an access-denied page or browser challenge instead of the article, go to
 **Step 3**.
 
 Set `capture_method` to `trafilatura`, set `body_file` to
@@ -276,7 +297,8 @@ two-line preview.
 - Add analysis or commentary — this is capture, not ingestion
 - Re-emit a complete extracted body through Write or Edit
 - Make model-mediated cleanup a prerequisite for saving a snapshot
-- Save to any directory other than `kb/sources/.snapshots/`
+- Save final snapshots outside `kb/sources/.snapshots/` or temporary
+  download/extraction files outside `kb/reports/cache/snapshot-web/`
 - Install software — if a required tool is missing, bail with an error telling the user what to install
 
 **Always:**
