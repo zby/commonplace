@@ -81,9 +81,18 @@ who decided, and why the earlier formulation was dropped.
   term. Those arrangements are now described as never exposed to criticism.
   No case of the decision record changed class.
 - **The name.** *Theory refinement* leaves the library altogether, so
-  *learning by theory refinement* does not survive. The working replacement
-  is **conjectural learning**, “or something similar”. *Conjectural* is
-  Popper's word for tentative status, not a synonym for speculative.
+  *learning by theory refinement* does not survive. The replacement is
+  **conjectural learning**, fixed by the operator on 2026-09-20 after a day
+  as a working name. *Conjectural* is Popper's word for tentative status, not
+  a synonym for speculative.
+- **Independence of the critic is a degree, not a condition (operator,
+  2026-09-20).** A system can be decorrelated from itself in many ways: a
+  fresh context, a different prompt or role, different evidence, a different
+  model, a person. “Independent critic” therefore names no single
+  arrangement the definition could require, and one model proposing and
+  criticizing stays inside the term. How far the critic's errors are
+  decorrelated from the proposer's is a design dimension, and what it buys is
+  an open question in the companion note.
 - **Definitions first, migration later.**
 
 ## End state and acceptance
@@ -115,9 +124,8 @@ Do not enrich the classical theory-refinement account as an intermediate step.
 
 ## Open decisions, for the operator
 
-- The final form of the name.
-- Whether an independent critic is required, and whether within-episode
-  learning deserves the word: cases 12 and 6 of the decision record.
+- Whether within-episode learning deserves the word: case 6 of the decision
+  record.
 - Merging the operation and loop definitions. The drafts assume the merge and
   supply no term for a single revision episode.
 - Dropping the classical minimal-revision bias. The drafts drop it: criticism

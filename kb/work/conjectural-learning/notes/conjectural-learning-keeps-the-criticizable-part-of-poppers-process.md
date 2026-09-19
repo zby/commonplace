@@ -70,8 +70,13 @@ The two labels are the rows of the definition's table.
 In one respect the definition asks less than Popper. He counts competing
 theories and mutual criticism by argument among the indispensable means of
 scientific growth (1968, §4, p. 347). The definition lets the same model
-propose and criticize, and the same blind spots affect it in both roles.
-Independent assessment is a separate condition, described in
+propose and criticize, and the same blind spots can affect it in both roles.
+It does not require an independent critic, because independence here is a
+degree with many sources. A critic's errors can be made less correlated with
+the proposer's by a fresh context, a different prompt or role, different
+evidence, a different model, or a person. How much decorrelation a system
+has is a design choice within the term. Assessment of outcomes from outside
+the builder is a separate condition, described in
 [externally tested theory builder](../../../notes/definitions/externally-tested-theory-builder.md).
 
 ## The KB adds a knowing subject
@@ -201,8 +206,8 @@ differences.
 
 - Can the middle arrangement be kept distinct in practice? A record that says
   why a claim failed often already contains the revised claim.
-- Should independent criticism be part of the definition, or stay a separate
-  condition?
+- How much does decorrelating the critic from the proposer improve criticism,
+  and which way of decorrelating matters most?
 - How dominant is regeneration from raw records among current agent memory
   systems?
 

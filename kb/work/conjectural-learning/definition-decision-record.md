@@ -86,7 +86,7 @@ Classification under the drafts as of 2026-09-19.
 | 9 | A formulated theory guides decisions and is never criticized | Comparison: the frozen-seed baseline | No criticism; test 2 |
 | 10 | A theory is stored and nothing consumes it | Excluded; as a baseline it is the system run without the theory | Not operative |
 | 11 | A theory survives an attempted refutation and the result is recorded | Inside | Criticism is attempted elimination |
-| 12 | One model proposes and criticizes its own theories | Inside | The definition asks less than Popper here |
+| 12 | One model proposes and criticizes its own theories | Inside | Test 1: decorrelating the critic from the proposer changes how well criticism works, not which mechanism does the learning. Test 3: independence comes in many forms and degrees, so it names no decidable condition. The definition asks less than Popper here |
 | 13 | Criticisms are written down, but placebo text of the same form has the same effect | Not shown to be inside | Content half of membership needs an intervention |
 | 14 | A formulated operative theory is revised only when it proves its own revision beneficial, as in the Gödel machine | Comparison: justification before change | Criticism of content. The machine justifies each switch by proof from its premises and never exposes the premises to criticism, so the theory is operative and uncriticized. Test 1: what eliminates differs in kind |
 
@@ -95,10 +95,10 @@ Classification under the drafts as of 2026-09-19.
 - **Case 3.** The accepted review wording, “retains revisions or
   replacements”, would move it outside. Test 1 keeps it inside, since the
   mechanism is the same and only the cost differs.
-- **Case 12.** Requiring an independent critic would move it outside. By
-  test 1 this is arguably a change of kind, since who eliminates changes.
 - **Case 6.** Whether within-episode learning deserves the word *learning*.
-- **The name.**
+
+Settled since adoption: the name is conjectural learning, and case 12 stays
+inside, because independence of the critic is a degree.
 
 ## Applied on adoption
 
@@ -132,9 +132,9 @@ Classification under the drafts as of 2026-09-19.
   Popper has no quarrel with them. What cannot be justified are its premises
   about the environment and the utility, and those are what it never
   criticizes.
-- **Left open, as scope decisions for the operator.** Case 12, whether an
-  independent critic is required, and case 6, whether within-episode
-  learning deserves the word.
+- **Left open, as a scope decision for the operator.** Case 6, whether
+  within-episode learning deserves the word. Case 12 was settled on
+  2026-09-20: it stays inside.
 
 ## Consequences
 
