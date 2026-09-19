@@ -14,10 +14,10 @@ parts while the rest stays in place.
 The KB needs the term to keep a structural property apart from an epistemic
 status. Every retained theory is a [tentative theory](./tentative-theory.md);
 only some are addressable.
-[Conjectural learning](./conjectural-learning.md) requires an addressable
-theory, because its criticism aims at a part. The expected benefit is keeping
-what still works while changing what failed; whether that benefit arrives is
-an empirical question.
+[Conjectural learning](./conjectural-learning.md) does not require it. The
+expected benefit is that criticism can name a part, so a revision keeps what
+still works while changing what failed; whether that benefit arrives is an
+empirical question.
 
 ## Scope
 
@@ -79,7 +79,7 @@ a preference for minimal revision from them.
 Relevant Notes:
 
 - [Tentative theory](./tentative-theory.md) — contrasts: the epistemic status, which requires no structure
-- [Conjectural learning](./conjectural-learning.md) — extends: the paradigm that requires an addressable theory
+- [Conjectural learning](./conjectural-learning.md) — extends: the paradigm in which addressability is a conjectured benefit
 - [Representational form](../../../notes/definitions/representational-form.md) — grounds: the localization and assigned-consequences axes
 - [Codification](../../../notes/definitions/codification.md) — grounds: the crossing that gives a part computed consequences
 - [Reflection buys addressability](../../../notes/reflection-buys-addressability.md) — extends: what addressability changes about an improvement pathway

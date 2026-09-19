@@ -45,10 +45,10 @@ Chapter 1, IV–V, pp. 45–48, treats conjectured regularities as preceding the
 testing and discusses unconscious, inborn expectations. VI–VII, pp. 49–51,
 contrasts dogmatic adherence with readiness to modify or abandon conjectures.
 Chapter 15, section 1, p. 313, calls a theory a tentative solution to a problem.
-These passages support a broader account than externally stored symbolic
-objects; they do not establish that any particular neural update implements it.
+These passages support a broader account than symbolic objects stored
+outside model weights; they do not establish that any particular neural update implements it.
 
-**Objective content is not external storage.** *Realist View*, section 2,
+**Objective content is not storage outside the weights.** *Realist View*, section 2,
 distinguishes mental processes from logical relations among their products.
 A theory's implications exceed its author's understanding. That independence
 is different from storage outside model weights; the software embodiment

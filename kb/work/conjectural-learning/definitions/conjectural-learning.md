@@ -1,30 +1,37 @@
 ---
-description: "Definition — conjectural learning is Popper's process run by a system in which an addressable tentative theory guides decisions, criticism addresses a part of it, and the effect persists across a declared horizon"
+description: "Definition — conjectural learning is learning in which formulated tentative theories are operative objects within the learning system: used, criticized for what they say, and revised or replaced with effect across a declared horizon"
 type: kb/types/definition.md
 tags: [foundations, self-improving-systems, learning-theory]
 ---
 
 # Conjectural learning
 
-**Conjectural learning** is the learning paradigm in which a system runs
-Popper's process of conjecture and criticism under two conditions:
+**Conjectural learning** is learning in which tentative theories are
+formulated, operative objects within the learning system: the system uses
+them, criticizes what they say, and carries the result of that criticism
+across a declared horizon. It is Popper's process of conjecture and criticism
+under two conditions:
 
-1. **An addressable theory guides decisions.** A
+1. **A formulated theory is operative.** A
    [tentative theory](./tentative-theory.md) is formulated in language,
-   natural or formal, so that its assumptions, scope, and parts can be
-   inspected and revised individually
-   ([addressable theory](./addressable-theory.md)). It is on the causal path
-   of the system's decisions through what it says: a difference in its
-   content that matters to a decision changes that decision.
-2. **Criticism addresses a part of the theory, and the effect of that
-   criticism persists across a declared horizon.** Criticism is attempted
-   error elimination: an argument, or a test of a stated consequence, aimed
-   at something the theory says, and itself formulated in language. When the
-   criticism counts against the theory, it names the part that probably
-   caused the failure, and the revision acts on that part. When the part
-   survives, the result is recorded on that part. In both cases what the
-   criticism says shapes what changes, and the change guides work beyond the
-   declared horizon, such as the next episode or a later task.
+   natural or formal, and is on the causal path of the system's decisions
+   through what it says: a difference in its content that matters to a
+   decision changes that decision
+   ([operative change](../../../notes/definitions/operative-change.md)).
+2. **Criticism of what the theory says has an effect that persists across a
+   declared horizon.** Criticism is attempted error elimination: an argument,
+   or a test of a stated consequence, aimed at something the theory says, and
+   itself formulated in language. When the criticism counts against the
+   theory, the theory is revised or replaced in response. When the theory
+   survives, the result is recorded. In both cases what the criticism says
+   shapes what changes, and the change guides work beyond the declared
+   horizon, such as the next episode or a later task.
+
+The unit is the whole learning system, with a declared boundary. Its prompts,
+files, code, tests, and records are parts of it, as the model weights are.
+Three distinctions stay separate: inside or outside the model weights,
+formulated or latent, and inside or outside the system's boundary. A
+formulated theory is inside the system and outside the weights.
 
 What the system has learned is the change in its later behavior that is
 attributable to the persisted effect of criticism.
@@ -44,8 +51,11 @@ It does not mean speculative or unsupported.
 
 ## Relation to Popper
 
-Conjectural learning is a narrow part of the learning Popper describes. It
-takes four things from him unchanged: the schema, the tentative status of
+Conjectural learning is a narrow part of the learning Popper describes. His
+process of error elimination may also run as adaptation in weights or other
+latent state; conjectural learning is the case where the tentative theories
+themselves are formulated objects of use, criticism, revision, and
+replacement. It takes four things from him unchanged: the schema, the tentative status of
 every theory, criticism that is broader than empirical test, and selection in
 place of instruction. Each row below takes one case he covers and gives the
 part conjectural learning keeps.
@@ -53,9 +63,7 @@ part conjectural learning keeps.
 | | Popper covers | Conjectural learning keeps |
 |---|---|---|
 | Form | Dispositions, expectations, and habits as well as formulated theories | Theories formulated in language |
-| Structure | Any formulated theory, including one that can only be replaced whole | Addressable theories |
 | Elimination | All error elimination, from the death of the carrier to conscious criticism | Criticism of what the theory says |
-| Localization | A failed test may implicate a whole theoretical system | Criticism aimed at a part |
 
 The KB also adds what Popper leaves out on purpose: a knowing subject. His
 criterion for objective knowledge does not depend on anyone holding it, so a
@@ -80,7 +88,7 @@ conjectures they buy, are argued in
   the weights. Such criticism leaves nothing formulated to inspect or to
   criticize in turn, so it falls outside the term.
 - **Inspection can show only half of what membership requires.** Formulated
-  criticisms aimed at parts of a theory can be found by reading the
+  criticisms aimed at what a theory says can be found by reading the
   artifacts. That their content shaped a revision or a decision is a causal
   claim. It needs an intervention that keeps the artifact's form fixed and
   changes only its content: a changed, ablated, or mismatched theory or
@@ -94,19 +102,25 @@ conjectures they buy, are argued in
   outperforms the comparisons below, is a separate question, conjectured in
   the companion note and in
   [learning by theory refinement may improve sample efficiency under structured shifts](../../../notes/learning-by-theory-refinement-may-improve-sample-efficiency.md).
-- **Addressing a part is not minimal revision.** The part may be a core
-  assumption, a representation, an auxiliary assumption, a test, the problem,
-  or learning machinery, and its successor may be bold. The part named as the
-  cause is a candidate.
+- **Addressability is a stronger property, not a condition.** An
+  [addressable theory](./addressable-theory.md) lets criticism name the part
+  that probably caused a failure, and lets a revision act on that part. The
+  KB conjectures that this pays and builds for it, but a theory that is
+  criticized and replaced whole still qualifies.
+- **Revision need not be small.** Criticism may change a core assumption, a
+  representation, an auxiliary assumption, a test, the problem, or learning
+  machinery, and the successor may be bold.
 - **Fixed weights are a study condition.** Holding the weights fixed rules
-  out parameter updates as the source of a change. Declare which models stay
-  fixed, and for how long. Declare the whole learner's boundary too,
-  including human contributions and external services. The term extends to a
+  out parameter updates as the source of a change: durable learned change
+  then occurs outside the model weights and inside the learning system.
+  Declare which models stay fixed, and for how long. Declare the system's
+  boundary too, including the people and hosted services that act inside
+  it. The term extends to a
   system in which weights, prompts, and code evolve together, provided both
   conditions hold; a claim about such a system says whether the effect of
   criticism persisted in the text or in the weights.
 - **The subject and the machinery are unrestricted.** The theory may describe
-  an external subject or the system's own organization; the second is the
+  a subject outside the system or the system's own organization; the second is the
   reflective case, which combines this term with
   [reflective system](../../../notes/definitions/reflective-system.md). A
   model, a program, or a mixture may apply and criticize the theory. The
@@ -128,9 +142,6 @@ conditions, and the research program specifies each as its own comparison.
   formulated reason for a failure bears on what a variant says. Real systems
   fall between this case and conjectural learning. The test is whether a
   stated reason bears on what the theory says.
-- **Unaddressed revision.** A failure is read, and may be described, but no
-  part of the theory is named as the cause; the theory is rewritten or
-  regenerated whole.
 - **Weight adaptation.** Something persists, but nothing is formulated, so
   there is nothing to criticize, replace, or inspect on its own.
 
@@ -161,6 +172,6 @@ conditions, and the research program specifies each as its own comparison.
 Relevant Notes:
 
 - [Tentative theory](./tentative-theory.md) — defined-in: the status of the theory that guides decisions
-- [Addressable theory](./addressable-theory.md) — defined-in: the structural property the first condition requires
-- [Conjectural learning keeps the criticizable part of Popper's process](../notes/conjectural-learning-keeps-the-criticizable-part-of-poppers-process.md) — grounds: the reasons for each narrowing, the added subject, and the two conjectures the comparisons test
+- [Addressable theory](./addressable-theory.md) — extends: the stronger structural property the KB conjectures pays
+- [Conjectural learning keeps the criticizable part of Popper's process](../notes/conjectural-learning-keeps-the-criticizable-part-of-poppers-process.md) — grounds: the reasons for each narrowing, the added subject, and the conjectures the comparisons test
 - [Reflective theory refinement needs interpretation, retention, and independent read-back](../../../notes/reflective-theory-refinement-needs-interpretation-and-retention.md) — extends: the evidence ladder for the parts of the process

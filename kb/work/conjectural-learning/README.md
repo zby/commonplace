@@ -40,11 +40,11 @@ who decided, and why the earlier formulation was dropped.
 - **Criticism must address what the theory says, and a part of it.** The 2026
   papers showed that the draft admitted cases we do not study: placebo
   studies found form effects without content effects, and score-driven
-  program search qualified as conjectural learning. Addressability therefore
-  returned as a requirement, after the second formulation had demoted it to
-  a possible benefit. The requirement is ours, not Popper's, made on
-  practical grounds. Black-box optimization and unaddressed revision became
-  separate comparisons.
+  program search qualified as conjectural learning. Criticism must therefore
+  be formulated and bear on what the theory says, and black-box optimization
+  became a separate comparison. For a while addressability of parts also
+  returned as a requirement; the later direction on the system boundary
+  withdrew that.
 - **Reconstruction splits in two, and we compare against both.** The second
   formulation put all reconstruction from records inside the approach. Raw
   traces hold no criticism, and we cannot know whether a model criticizes
@@ -59,6 +59,21 @@ who decided, and why the earlier formulation was dropped.
   content test asks that relevant differences in content matter; it does not
   demand that different criticisms give different revisions. Artifacts show
   the formulated criticism; the causal dependence needs an intervention.
+- **The system boundary, and addressability again (external review accepted
+  by the operator, 2026-09-19).** The unit is the whole learning system.
+  Prompts, files, code, tests, and records are internal parts of it even
+  though they are outside the model weights, so “external” must not mean
+  “outside the weights”. Three distinctions stay separate: inside or outside
+  the weights, formulated or latent, inside or outside the declared system
+  boundary. In the fixed-model realization durable learned change occurs
+  outside the weights and inside the system. The definition is reworked
+  around the tentative theory as a formulated, operative object that the
+  system uses, criticizes, and revises or replaces. Addressability of parts
+  is no longer definitional: it is a stronger architectural property and the
+  subject of a third conjecture, and unaddressed revision is back inside the
+  term as that conjecture's baseline. This reverses the earlier direction in
+  this list. What still excludes black-box optimization is that criticism
+  must be formulated and bear on what the theory says.
 - **The name.** *Theory refinement* leaves the library altogether, so
   *learning by theory refinement* does not survive. The working replacement
   is **conjectural learning**, “or something similar”. *Conjectural* is
@@ -71,7 +86,7 @@ Stage 1, current: definition drafts in [definitions/](./definitions/) and a
 [companion note draft](./notes/conjectural-learning-keeps-the-criticizable-part-of-poppers-process.md),
 written against the real type contracts, for operator review. The definition
 says when the term applies; the note carries the argument for each narrowing
-and the two conjectures with their baselines. Stage 2: the
+and the three conjectures with their baselines. Stage 2: the
 operator adopts, redirects, or declines them and settles the open decisions.
 Stage 3, under a later commission: migration, from the
 [parked notes](./migration-map.md).
@@ -97,8 +112,8 @@ Do not enrich the classical theory-refinement account as an intermediate step.
 - The final form of the name.
 - Merging the operation and loop definitions. The drafts assume the merge and
   supply no term for a single revision episode.
-- Dropping the classical minimal-revision bias. The drafts drop it: the part
-  a criticism blames may be a core assumption and its successor may be bold.
+- Dropping the classical minimal-revision bias. The drafts drop it: criticism
+  may change a core assumption and the successor may be bold.
   No retained claim has yet been checked for dependence on the bias.
 
 ## Cautions carried from the first candidate

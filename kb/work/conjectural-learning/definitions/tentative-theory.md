@@ -26,7 +26,7 @@ stored or edited. Structural properties have their own term,
   Corroboration does not end the status, and neither does changing the
   theory's representational form.
 - **No required form.** The term does not require symbolic formalization,
-  external storage, separately editable parts, or a particular consumer. A
+  storage outside the model weights, separately editable parts, or a particular consumer. A
   theory that can only be replaced whole is still tentative. Popper applies
   the schema to expectations and behaviour as well as to formulated theories;
   on that wide reading the dispositions held in a model's weights are
