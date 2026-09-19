@@ -94,8 +94,8 @@ consequences a case can contradict. It must have parts that a failure can
 point at as candidate repair locations. And those parts must be editable
 separately. A theory with these properties is *addressable*. The account in
 the case above is addressable: it predicted which edits needed which
-checks, the failure pointed at its exhaustiveness assumption, and that
-assumption was revised on its own.
+checks, the failure pointed at its second part, on what the configured
+list identifies, and that part was revised on its own.
 
 We call the theory a [tentative theory](../notes/definitions/theory-refinement.md#tentative-theory),
 in Karl Popper's sense: put forward as a solution, held open to criticism,
@@ -124,15 +124,16 @@ refine. Adapting the weights is a different paradigm, because what is
 learned there is not a theory with parts that can be inspected and revised.
 Keeping records or summaries of experience and rebuilding an explanation
 when one is needed is a different design, because no explanation is
-retained as an object to revise; a later section compares the two. And
+retained as an object to revise. A later section compares the two. And
 fixed weights are not part of the definition. We hold them fixed to study
 the paradigm, and a system could run the loop and adapt its weights as
 well.
 
 This definition is meant to say what the paradigm is, not yet how to
 measure it. What counts as evidence that the theory guided a decision, or
-that a later change came from the revision, is the evidence supplement's
-subject, and some of those details are still open.
+that a later change came from the revision, is the [evidence
+supplement's](./testing-the-theory-refinement-program.md) subject, and some
+of those details are still open.
 
 ## What is new in the setting
 
@@ -155,8 +156,8 @@ Each is our departure, not something the classical work claims.
   questions of whether the check represents the theory correctly or
   measures the right property. Prose can also make a prediction clear
   enough that an observation plainly contradicts it. Refinement moves parts
-  across the line into code as they settle, and gains checkability, not
-  certainty, by doing so.
+  into code as they settle, and gains checkability, not certainty, by doing
+  so.
 - **The theory is partly normative.** The account in the case is not only
   a hypothesis about the exporter. A commitment such as "every query must
   respect the active tenant" is a rule the system keeps true. A failure can
@@ -175,13 +176,16 @@ Each is our departure, not something the classical work claims.
   the loop is *reflective*. A system that holds a description of itself
   without that two-way connection is not reflective in this sense.
 
-Two further choices are the paradigm's own. Among revisions that fit the
-evidence, prefer the one with more reach, the one that would also handle
-cases the failure did not show. That is why the case revises the account of
-what the exporter reads instead of adding an exception for one snippet. And treat the
-whole deployed system as the unit that learns, because [retrieval,
-scheduling, tools, and validators jointly determine behaviour with the
-model fixed](../notes/the-deployed-system-not-the-model-is-the-unit-of-learning.md).
+Two further choices are the paradigm's own. The first is a preference
+among revisions that fit the evidence: prefer the one with more reach, the
+one that would also handle cases the failure did not show. That is why the
+case revises the account of what the exporter reads instead of adding an
+exception for one snippet.
+
+The second is to treat the whole deployed system as the unit that learns,
+because [retrieval, scheduling, tools, and validators jointly determine
+behaviour with the model
+fixed](../notes/the-deployed-system-not-the-model-is-the-unit-of-learning.md).
 What the paradigm retains includes theories, the records they were derived
 from, procedures, tests, tools, evaluators, and the update process itself. When a new theory needs a check
 the system cannot yet perform, [the system has to build
@@ -213,21 +217,20 @@ them. The model can still build an explanation while it reasons, and it
 discards the explanation afterwards. This is a common design today. While
 a system's experience fits in what the model can use at once, keeping the
 records preserves every recorded detail and commits to no abstraction that
-might be wrong. That does not settle which design works better, because
-reading and interpreting the records again at each decision has a cost that
-a reused theory may save. The paradigm claims nothing about what can be
-learned in principle: a system with unlimited context and computation could
-rebuild every explanation from its records at every decision.
+might be wrong. But reading and interpreting the records again at each
+decision has a cost that a reused theory may save.
 
-Limits on context and computation create two needs, and neither selects
-theories. A decision that depends on more evidence than the model can use
-at once needs intermediate results that stand in for that evidence. And
-when rebuilding those results at every decision costs more than the
-decision's budget allows, the system has to keep and reuse them. Search
-over records, summaries, periodic reconstruction, and retained theories
-are all ways to meet these needs, and a system can combine them: search can
-supply the evidence for a revision, and reconstruction can replace a theory
-that has gone wrong.
+The paradigm claims nothing about what can be learned in principle: a system
+with unlimited context and computation could rebuild every explanation from
+its records at every decision. Limits on context and computation create two
+needs, and neither selects theories. A decision that depends on more
+evidence than the model can use at once needs intermediate results that
+stand in for that evidence. And when rebuilding those results at every
+decision costs more than the decision's budget allows, the system has to
+keep and reuse them. Search over records, summaries, periodic
+reconstruction, and retained theories are all ways to meet these needs, and
+a system can combine them: search can supply the evidence for a revision,
+and reconstruction can replace a theory that has gone wrong.
 
 Retaining and refining theories is our provisional choice among them. The
 conjecture is that theories are an efficient compression of experience for
@@ -241,8 +244,13 @@ needed to resemble, because it says why checks are needed. After the
 snippet failure, the revised account covers snippets the system has not
 touched, without the failure having to be found and interpreted again. A
 system that searches its records before choosing checks might reach the
-same decisions. What it spends on finding and reinterpreting them, and how
-often it misses, is what the comparison has to measure.
+same decisions. Whether the provisional choice pays is a comparison
+the program has to run, against records with good search and not against
+records alone. What the searching system spends on finding and
+reinterpreting its records, and how often it misses, is what that
+comparison has to measure. The evidence supplement's [component
+experiment](./testing-the-theory-refinement-program.md#component-experiments-that-can-run-first)
+is a first design for it.
 
 The paradigm keeps the records as well. A retained theory can carry a
 mistaken abstraction forward, or omit a detail a later case needs, and [the
@@ -252,23 +260,17 @@ They also let a later, better model redo the derivation. What changes is
 what is loaded by default: the theory, with the records consulted when the
 theory is in doubt.
 
-Whether the choice pays is a comparison the program has to run, against
-records with good search and not against records alone. The
-evidence supplement's [component
-experiment](./testing-the-theory-refinement-program.md#component-experiments-that-can-run-first)
-is a first design for it.
-
 ## What the paradigm would buy
 
-The attractions come from [retained artifacts changing later behaviour
-without a training
+The attractions are stated mainly against adapting weights. They come from
+[retained artifacts changing later behaviour without a training
 cycle](../notes/retained-artifacts-enable-persistent-deployment-time-adaptation.md).
-Each is a conjecture, and each has a cost the program must weigh against it.
-They are stated mainly against adapting weights. A system that keeps
-records also takes in new experience without a training cycle, but readable
-records do not by themselves identify the learned assumptions and what
-depends on them, and they count as learning only through their effect on
-later work. The previous section gives the comparison with that design.
+A system that keeps records also takes in new experience without a training
+cycle, but readable records do not by themselves identify the learned
+assumptions and what depends on them, and they count as learning only
+through their effect on later work. The previous section gives the
+comparison with that design. Each attraction is a conjecture, and each has a
+cost the program must weigh against it.
 
 - **Continual learning.** What is learned is usable at the next request. A
   fact that fits the current theory is written down and takes effect. A
@@ -385,7 +387,7 @@ tasks, and the project's own judges accept or reject the work. Those
 judgments are the external falsifier and objective. Commonplace would
 revise the delivered product, and when a failure exposed a limit in its own
 methods, revise those too. Today people still perform several inside
-roles, so it is a human-inclusive builder; how those roles would transfer
+roles, so it is a human-inclusive builder. How those roles would transfer
 to computation is the [bootstrap
 supplement's](./bootstrapping-an-autonomous-theory-builder.md)
 subject. No consuming-project run has been performed. The evidence
@@ -418,18 +420,18 @@ develops it and compares the two.
 ## Where to go next
 
 The [learning by theory
-refinement](../notes/definitions/learning-by-theory-refinement.md),
-[theory refinement](../notes/definitions/theory-refinement.md), and
-[theory builder](../notes/definitions/theory-builder.md) definitions state
-the paradigm's terms with their exclusions and boundary cases. The [evidence
+refinement](../notes/definitions/learning-by-theory-refinement.md), [theory
+refinement](../notes/definitions/theory-refinement.md), and [theory
+builder](../notes/definitions/theory-builder.md) definitions state the
+paradigm's terms with their exclusions and boundary cases. The [evidence
 supplement](./testing-the-theory-refinement-program.md) develops the
 hypotheses, the external assessment, the first arrangement's protocol, and
-the component experiments. [Nearest existing
+the component experiments. It also develops the requirement that every
+change to a builder arise through its own machinery, and [what a run under
+that requirement does and does not
+establish](./testing-the-theory-refinement-program.md#what-a-runs-path-can-and-cannot-show).
+[Nearest existing
 constructions](./nearest-existing-constructions-to-a-witness-house.md)
 compares eighteen existing systems against the software-house conditions and
 says what that survey shows for the paradigm: its parts have precedents, and
 the reviewed evidence does not test its central mechanism.
-The evidence supplement also develops the requirement that every change to
-a builder arise through its own machinery, and [what a run under that
-requirement does and does not
-establish](./testing-the-theory-refinement-program.md#what-a-runs-path-can-and-cannot-show).
