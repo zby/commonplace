@@ -7,6 +7,7 @@ a library claim or system definition.
 
 Current retained sets:
 
+- [Curiosity prompts experiment](./curiosity-prompts-20260310/README.md)
 - [Epistemic-architecture analysis trials](./epistemic-architecture-analysis-trials-20260820/README.md)
 - [Planning and delegation theory](./planning-delegation-theory/README.md)
 - [Simplification-instruction comparison](./simplification-instruction-comparison-20260807/README.md)

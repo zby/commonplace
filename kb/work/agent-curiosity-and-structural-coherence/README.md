@@ -14,7 +14,7 @@ Structural misplacement is the workshop's first controlled case, not its definit
 
 ## Why a new workshop
 
-The earlier [curiosity-prompts experiment](../curiosity-prompts/experiment-report.md) produced an initial lead: a broad curiosity prompt generated valuable investigations but varied across its two trials, while a cost/benefit question found its target in both of its two trials. The sample is too small to establish stable prompt effects. It nevertheless motivated a [Curiosity Pass](../../agent-memory-systems/types/agent-memory-system-review.md#curiosity-pass) for completed agent-memory-system reviews.
+The earlier [curiosity-prompts experiment](../../reports/retained/curiosity-prompts-20260310/captures/experiment-report.md) produced an initial lead: a broad curiosity prompt generated valuable investigations but varied across its two trials, while a cost/benefit question found its target in both of its two trials. The sample is too small to establish stable prompt effects. It nevertheless motivated a [Curiosity Pass](../../agent-memory-systems/types/agent-memory-system-review.md#curiosity-pass) for completed agent-memory-system reviews.
 
 That pass is useful but late and narrow. The task has already been selected, the report has already been written, and the agent has been explicitly told to look for surprises. It tests prompted retrospective inquiry. It does not test whether an agent notices an oddity while acting, keeps it unresolved after a locally successful continuation, forms an investigation or restructuring subgoal, and revises its plan.
 

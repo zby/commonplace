@@ -91,7 +91,7 @@ This blocks a naive transfer from software: duplication, locality, or addition i
 These artifacts may supply later experimental methods, but they are not evidence for locally connected global misplacement and should not be counted toward closure:
 
 - The [linking-foundations retrospective](../linking-foundations/automation-boundary-retrospective.md) records a human-originated question followed by strong agent reasoning once framed.
-- The [Decapod curiosity experiment](../curiosity-prompts/experiment-report.md) suggests that question framing changes what gets investigated, but has only two trials per condition.
+- The [Decapod curiosity experiment](../../reports/retained/curiosity-prompts-20260310/captures/experiment-report.md) suggests that question framing changes what gets investigated, but has only two trials per condition.
 - [Agents Explore but Agents Ignore](../../sources/agents-explore-but-agents-ignore-llms-lack-environmental.ingest.md) separates information surfacing from later interaction in artificial agent tasks.
 - The local [SlopCodeBench practitioner run](../../sources/why-software-factories-fail-slopcodebench-2081797628552270027.ingest.md) is a small lead on iterative code erosion, not its mechanism.
 - The [failure-mode transfer note](../../notes/human-writing-structures-transfer-to-llms-because-failure-modes.md) supplies a cross-domain evaluation rule, not evidence that this particular behavior transfers.

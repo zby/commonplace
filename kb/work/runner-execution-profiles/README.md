@@ -74,6 +74,6 @@ This workshop closes when:
 - [Run a full improvement pass](../../instructions/run-full-improvement-pass-on-note.md) — motivating multi-role workflow.
 - [Run review batches](../../instructions/run-review-batches.md) — current inherited-model rule and review provenance boundary.
 - [Review system](../../reference/README-REVIEW-SYSTEM.md) — model partition as freshness identity rather than execution preference.
-- [Skills vs instructions findings](../skills-vs-instructions/findings.md) — existing evidence that skill frontmatter can carry execution policy while plain instructions cannot.
+- [Skills are instructions plus routing and execution policy](../../notes/skills-are-instructions-plus-routing-and-execution-policy.md) — the retained account of execution policy and its platform-specific boundaries.
 - [Claude Code dynamic workflows](../../agentic-systems/reviews/claude-code-dynamic-workflows.md) — existing runner-specific per-call model surface.
 - [Model partition registry proposal](../../reference/proposals/model-partition-registry.md) — adjacent design that must not be conflated with portable role routing.
