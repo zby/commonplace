@@ -126,8 +126,15 @@ states what that costs.
 self-modification](./goedel-machines-are-a-proof-governed-case-of-self-modification.md),
 and that note develops the licensing axis. The second axis places the same
 construction differently: its axioms describing the machine, its hardware, its
-environment, and its utility function are premises of every rewrite and are
-revised by none of them. Its provenance is pinned to supplied-and-fixed.
+environment, and its utility function are premises of every rewrite. The
+machine may rewrite them, but only by their own license. The paper's examples
+are replacing or augmenting axioms with theorems derivable from the original
+axioms, and changing the utility function only when the new one is provably
+better according to the old
+([Schmidhuber, §6.1 (snapshot required)](../sources/goedel-machines-schmidhuber.ingest.md)).
+No rewrite challenges what the axioms assume about the environment. Its
+provenance sits at the supplied end: the theory changes only with its own
+permission.
 
 The Gödel machine therefore enters as a contrast case, not a maturity endpoint.
 It closes the [proposal-selection improvement
@@ -135,7 +142,8 @@ loop](./a-proposal-selection-loop-requires-search-evaluation-and-retention.md)
 completely — search, reject-capable evaluation, and operative retention are all
 present and mechanized — while leaving the theory-learning loop empty. Its
 self-representation is a premise, not a candidate: the machine can improve
-indefinitely while never revising its account of its own organization.
+indefinitely without exposing its account of its own organization to
+criticism.
 
 That separability makes the convergence claim contentful rather than
 definitional: pin provenance to supplied-and-fixed and the two loops come apart
