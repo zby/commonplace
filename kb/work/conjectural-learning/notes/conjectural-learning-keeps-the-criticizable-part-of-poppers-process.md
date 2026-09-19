@@ -127,7 +127,9 @@ adapter comparison found no content-specific effect
 The content and efficiency conjectures are tested against some of the
 definition's separate comparisons, the arrangements that fail one of its two
 conditions. The addressability conjecture compares two arrangements that both
-meet them. In an experiment the arrangement compared against is a baseline, and a baseline may match or
+meet them. The split follows one rule: a condition is part of the definition
+when removing it changes which mechanism does the learning, and it is a
+conjecture when removing it changes only how well the learning works. In an experiment the arrangement compared against is a baseline, and a baseline may match or
 outperform a conjectural learner. That comparison is what the experiments
 measure.
 

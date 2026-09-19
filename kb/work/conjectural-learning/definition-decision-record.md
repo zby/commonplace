@@ -1,9 +1,9 @@
 # Decision record: what the conjectural-learning definition is for
 
-Status: proposed by the drafting agent on 2026-09-19 at the operator's
-request, after the definition reversed several times in one day. The purpose
-and tests below are for the operator to adopt, change, or reject. Until then
-they record why the drafts stand where they do.
+Status: adopted by the operator on 2026-09-19. Proposed by the drafting agent
+the same day at the operator's request, after the definition reversed several
+times. The drafts were checked against the tests on adoption; the last
+section records what that changed.
 
 ## Context: what kept reversing
 
@@ -33,14 +33,14 @@ argument served a different job:
 The addressability reversals are the first two jobs in conflict. We build
 addressable theories, and we also want to test whether addressability pays.
 
-## Proposed purpose
+## Purpose
 
 The definition names the kind of learning process the research program
 studies, so that the program's conjectures can be stated against it and tested
 fairly. Classifying other systems and the relation to Popper are constraints
 on how it is written. They do not decide its scope.
 
-## Proposed tests for any change to the definition
+## Tests for any change to the definition
 
 1. **Kind, not degree.** A condition belongs in the definition only if
    removing it changes which mechanism does the learning: what eliminates
@@ -80,8 +80,8 @@ Classification under the drafts as of 2026-09-19.
 | 6 | A theory is built while reasoning and discarded after the decision | Comparison at a cross-episode horizon; inside for a within-episode claim | Declared horizon |
 | 7 | Weights are adapted and no formulated theory guides decisions | Comparison | Formulation |
 | 8 | Weights, prompts, and code evolve together around a formulated operative theory | Inside, as an extension | Both conditions still hold |
-| 9 | Instructions are applied and never criticized | Excluded | No criticism |
-| 10 | A theory is stored and nothing consumes it | Excluded | Not operative |
+| 9 | A formulated theory guides decisions and is never criticized | Comparison: the frozen-seed baseline | No criticism; test 2 |
+| 10 | A theory is stored and nothing consumes it | Excluded; as a baseline it is the system run without the theory | Not operative |
 | 11 | A theory survives an attempted refutation and the result is recorded | Inside | Criticism is attempted elimination |
 | 12 | One model proposes and criticizes its own theories | Inside | The definition asks less than Popper here |
 | 13 | Criticisms are written down, but placebo text of the same form has the same effect | Not shown to be inside | Content half of membership needs an intervention |
@@ -96,10 +96,29 @@ Classification under the drafts as of 2026-09-19.
 - **Case 6.** Whether within-episode learning deserves the word *learning*.
 - **The name.**
 
-## Consequences if adopted
+## Applied on adoption
 
-Reviews of the definition are asked to state which test a proposed change
-appeals to and which cases it flips. The decision log in the
+- **Test 1.** The definitional conditions are formulation in language,
+  operative use, criticism of content, and persistence across the declared
+  horizon. Addressability, and retaining the theory against rebuilding it
+  from retained criticisms, are conjectures in the companion note. Fixed
+  weights are a study condition. No change was needed. Case 3 stays inside.
+- **Test 2.** One exclusion was not a named comparison. A theory that is
+  applied and never criticized is now the comparison “a fixed theory”, which
+  is the frozen-seed baseline the testing supplement already uses. The
+  unconsumed theory stays an exclusion and is described as a baseline.
+- **Tests 3 to 5.** No change. Membership rests on artifacts and
+  interventions, the relation-to-Popper section attributes each condition,
+  and the three defined terms each serve a claim.
+- **Test 6.** The workshop's bounds now require it of any proposed change.
+- **Left open, as scope decisions for the operator.** Case 12, whether an
+  independent critic is required, and case 6, whether within-episode
+  learning deserves the word.
+
+## Consequences
+
+Reviews of the definition state which test a proposed change appeals to and
+which cases it flips. The decision log in the
 [README](./README.md#directions-that-changed-the-first-formulation) keeps the
 history; this record keeps the reasons the history should stop repeating.
 At migration the purpose and tests could become an ADR or a short section of

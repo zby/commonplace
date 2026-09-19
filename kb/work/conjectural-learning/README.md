@@ -110,6 +110,8 @@ Do not enrich the classical theory-refinement account as an intermediate step.
 ## Open decisions, for the operator
 
 - The final form of the name.
+- Whether an independent critic is required, and whether within-episode
+  learning deserves the word: cases 12 and 6 of the decision record.
 - Merging the operation and loop definitions. The drafts assume the merge and
   supply no term for a single revision episode.
 - Dropping the classical minimal-revision bias. The drafts drop it: criticism
@@ -141,12 +143,16 @@ These are not in the drafts and still apply to later experiments and articles.
   reinterpretations here.
 - The worker may revise the drafts, choose further probes, and reorganize the
   workshop. The acceptance tests and the operator's directions do not move.
+- A proposed change to the definition states which test of the
+  [decision record](./definition-decision-record.md) it appeals to and which
+  of its cases it flips. A change that flips a case is the operator's
+  decision.
 
 ## Inputs
 
-[Decision record](./definition-decision-record.md) says what the definition
-is for, the tests a change to it must pass, and the cases to check a change
-against; read it before proposing a change of scope.
+[Decision record](./definition-decision-record.md), adopted by the operator,
+says what the definition is for, the tests a change to it must pass, and the
+cases to check a change against.
 [Sources](./sources.md) records coverage and access limits.
 [Popper foundation](./popper-foundation.md) holds the primary-source reading
 and the attribution boundary. [Comparison](./comparison.md) assesses the

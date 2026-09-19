@@ -129,8 +129,14 @@ conjectures they buy, are argued in
 
 ## Separate comparisons
 
-These arrangements may also run Popper's process. Each fails one of the two
-conditions, and the research program specifies each as its own comparison.
+Each arrangement fails one of the two conditions, and each is specified well
+enough to run as a baseline. The definition leaves no rival out without
+naming it.
+
+- **A fixed theory.** A formulated theory guides decisions and is never
+  criticized, as with fixed instructions. No effect of criticism exists to
+  persist. This is the frozen-seed baseline of the
+  [testing supplement](../../../articles/testing-the-theory-refinement-program.md#the-hypotheses).
 
 - **A theory built while reasoning and discarded after the decision.**
   Nothing of it persists across an episode-crossing horizon.
@@ -147,11 +153,10 @@ conditions, and the research program specifies each as its own comparison.
 
 ## Exclusions
 
-- **A theory that is applied and never criticized**, such as fixed
-  instructions. No effect of criticism exists to persist.
 - **A stored theory or record that nothing consumes.** It is not on the
   causal path of decisions;
   [a representation matters only through its consumption path](../../../notes/an-action-model-matters-only-through-its-consumption-path.md).
+  As a baseline it is the same system run without the theory.
 
 ## Misuse Cases
 
