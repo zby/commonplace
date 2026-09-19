@@ -34,7 +34,8 @@ model weights held fixed, so that any learning has to come from what is
 retained. What is learned is a *tentative theory*, an explicit and revisable
 account of some subject that guides the system's decisions. The system
 revises it by *theory refinement*, an established learning operation that
-corrects an existing theory against new cases while keeping what was right.
+seeks to correct an existing theory against new cases while preserving
+useful prior knowledge.
 The setting is new. The paradigm is set against two alternatives: adapting
 the weights, and retaining raw records or summaries of experience without
 an explanation. Its three attractions are each still a conjecture: learning
@@ -82,8 +83,8 @@ paradigm.
 
 [Theory refinement](../notes/definitions/theory-refinement.md) is the
 learning operation that revises an existing explicit theory against
-empirical cases, correcting its errors while preserving what was right,
-instead of learning from scratch. The name comes from the work of Ourston,
+empirical cases, seeking to correct errors while preserving useful prior
+knowledge instead of learning from scratch. The name comes from the work of Ourston,
 Richards, and Mooney in the early 1990s, where the theory was a set of
 logical rules supplied by an expert and the cases were labelled examples. Their systems derived consequences from the rules, found where a
 wrong consequence came from, and edited that part.
@@ -92,7 +93,7 @@ The operation needs a theory of a particular shape. It must have
 consequences a case can contradict. It must have parts that a failure can
 point at as candidate repair locations. And those parts must be editable
 separately. A theory with these properties is *addressable*. The account in
-the case above is addressable: it predicted which edits needed which
+the case above is such a theory: it predicted which edits needed which
 checks, the failure pointed at its second part, on what the configured
 list identifies, and that part was revised on its own.
 
@@ -111,9 +112,9 @@ is the loop built on that operation. A system retains a tentative theory
 outside its model weights. The theory guides its decisions. The outcomes of
 that work refine the theory, part by part. The refined theory guides later
 work. What the system has learned is the change in its later behaviour that
-comes from the change in the retained theory. In the case, the system
-learned that included snippets need manifest checks, and the evidence of
-the learning is that it checks snippets it has never seen fail.
+comes from the change in the retained theory. In the case, the revision
+changes later checking decisions: the system checks included snippets it
+has never seen fail.
 
 The definition has boundaries. It does not require success: a system that
 carries a mistaken theory forward is still learning this way, and whether
@@ -157,7 +158,7 @@ Each is our departure, not something the classical work claims.
   enough that an observation plainly contradicts it. Refinement moves parts
   into code as they settle, and gains checkability, not certainty, by doing
   so.
-- **The theory is partly normative.** The account in the case is not only
+- **The theory is partly normative.** The theory in the case is not only
   a hypothesis about the exporter. A commitment such as "every query must
   respect the active tenant" is a rule the system keeps true. A failure can
   therefore be resolved by changing the product to fit the theory as well
@@ -169,16 +170,18 @@ Each is our departure, not something the classical work claims.
   improving anything, and it changes only when whoever supplied it
   renegotiates it. The external objective introduced below records such
   requirements and who may change them.
-- **The theory may be about the system itself.** The account of which
+- **The theory may be about the system itself.** The theory of which
   checks to run is part of the system's own production machinery. When the
   same loop revises how the system builds, tests, and revises its theories,
-  the loop is *reflective*. A system that holds a description of itself
-  without that two-way connection is not reflective in this sense.
+  the loop is *reflective*: revisions of the self-theory change the machinery,
+  and machinery changes update the self-theory. A system that holds a
+  description of itself without that two-way connection is not reflective
+  in this sense.
 
 Two further choices are the paradigm's own. The first is a preference
 among revisions that fit the evidence: prefer the one with more reach, the
 one that would also handle cases the failure did not show. That is why the
-case revises the account of what the exporter reads instead of adding an
+case revises the theory of what the exporter reads instead of adding an
 exception for one snippet.
 
 The second is to treat the whole deployed system as the unit that learns,
@@ -198,9 +201,9 @@ computation outperform methods built from human knowledge. Written theories look
 like hand-crafted structure, so the objection is natural. The answer turns
 on [how the structure is produced, not the form it is retained
 in](../notes/the-bitter-lesson-selects-production-methods-not-representational.md).
-In this paradigm, computation forms and revises the theories, builds the
-tools and evaluators, and selects changes from evidence. People may build
-the seed, the theories and machinery the system starts from. After that,
+In the autonomous version we aim to build, computation forms and revises
+the theories, builds the tools and evaluators, and selects changes from
+evidence. People may build the seed, the theories and machinery the system starts from. After that,
 project-specific structure is a learned product.
 
 That is compatibility, not a scaling advantage. Search, validation, and
@@ -238,16 +241,17 @@ preserve more of what those decisions depend on than the other forms do.
 
 The case illustrates how a retained theory could help; it does not show
 that records with good search would do worse. When the named Markdown
-files were added, the account applied to a situation that no earlier record
+files were added, the theory applied to a situation that no earlier record
 needed to resemble, because it says why checks are needed. After the
-snippet failure, the revised account covers snippets the system has not
+snippet failure, the revised theory covers snippets the system has not
 touched, without the failure having to be found and interpreted again. A
 system that searches its records before choosing checks might reach the
 same decisions. Whether the provisional choice pays is a comparison
 the program has to run, against records with good search and not against
-records alone. What the searching system spends on finding and
-reinterpreting its records, and how often it misses, is what that
-comparison has to measure. The evidence supplement's [component
+records alone. The comparison must measure costs and decision errors for
+both systems: finding and reinterpreting records, constructing, revising,
+and consulting theories, and mistakes caused by missed evidence or
+misleading theories. The evidence supplement's [component
 experiment](./testing-the-theory-refinement-program.md#component-experiments-that-can-run-first)
 is a first design for it.
 
@@ -284,7 +288,7 @@ cost the program must weigh against it.
   concentrate: admission, coordination, and credit assignment.
 - **Fewer observations.** A correct theory says which new cases matter. In
   the case above, one discovered dependency changed the checking decision
-  for several files. The conjecture that [theory refinement improves sample
+  for several files. The conjecture that [theory refinement may improve sample
   efficiency under structured
   shifts](../notes/theory-refinement-may-improve-sample-efficiency-under-shifts.md)
   is bounded to shifts that preserve the structure the theory names. Fewer
@@ -311,9 +315,9 @@ system responsible for developing and revising tentative theories about the
 subjects it is asked to investigate. Its boundary follows roles. Whoever
 supplies questions, cases, and acceptance judgments is outside. Whoever
 interprets a theory, chooses what to blame, produces or selects a revision,
-or repairs the machinery is inside, person or program. A builder is
+or repairs the machinery is inside, person or software. A builder is
 [autonomous](../notes/definitions/autonomous-theory-builder.md) when
-computation fills every inside role, and
+computation fills every internal role, and
 [reflective](../notes/definitions/reflective-theory-builder.md) when its
 machinery changes pass through a theory of its own machinery. The two
 conditions are independent. The evidence supplement gives the boundary,
@@ -343,35 +347,39 @@ system reaches a reliability target. The [evidence
 supplement](./testing-the-theory-refinement-program.md) specifies both
 levels. The program states three whole-system hypotheses.
 
-- **Sufficiency.** A learning methodology written in prose and code is
-  enough for a computational builder on fixed public models to develop,
+- **Sufficiency.** A training methodology written in prose and code is
+  enough for an autonomous builder on fixed public models to develop,
   retain, and use theories across declared areas, to a reliability target
   under a stated budget and external assessment. Refuted by a builder that
-  needs people in inside roles, or a new learning method per area, to reach
+  needs people in internal roles, or a new learning method per area, to reach
   the target.
-- **Comparison.** Under matched demands and resources, the methodology
-  gains capability over its frozen seed and over a baseline that searches
-  the raw records without it, and its reliability is comparable to a
-  human-staffed builder's within a preset margin. Refuted by matched runs
+- **Comparison.** Under matched demands and resources, the builder using
+  this methodology gains capability over its frozen seed and over a
+  baseline that searches the raw records without the learned methodology.
+  Its reliability is comparable to a human-staffed builder's within a preset
+  margin. Refuted by matched runs
   in which the controls do as well.
-- **Reflection.** A builder whose machinery changes pass through a
-  causally connected self-theory gains capabilities beyond its seed that a
-  matched builder without one does not. Better outcomes alone do not test
-  this. The records of a reflective episode against a matched
+- **Reflection.** A reflective builder gains capabilities beyond its seed
+  that a matched non-reflective builder does not. Better outcomes alone do
+  not test this. The records of a reflective episode against a matched
   non-reflective builder do.
 
 A finite evaluation supports a bounded claim. None of the hypotheses
 promises success on every problem or within every budget.
 
-The hypotheses are tested through an *externally tested* builder, one that
-receives from outside a falsifier, meaning failures it does not judge
-itself, an objective, and an outcome level independent of its own
-evaluators. With those supplied, outcome comparisons can proceed before
-the builder has settled how much support its internal theories need. Where a claim lacks that external
+The hypotheses are tested through an *externally tested* builder. It
+receives three things from outside: a falsifier, an objective, and an
+independent outcome judgment. The falsifier supplies evidence that an
+outcome failed the acceptance requirements. The objective states those
+requirements and who may change them. The outcome judgment does not treat
+the builder's own evaluators' approval as sufficient. With these supplied,
+outcome comparisons can proceed before the builder has settled how much
+support its internal theories need. Where a claim lacks that external
 assessment, [the builder owes three things for
 itself](../notes/a-claim-without-external-assessment-carries-three-obligations.md):
-a rule for what counts as contradiction and support, a comparison level for
-changing an objective, and attribution when it asserts a cause.
+a rule for what counts as contradiction and support, a standard for judging
+whether an objective change is warranted, and attribution when it asserts
+a cause.
 
 The whole experimental setup is a first design. It has been stated but not
 exercised, and we expect it to change under testing before a scored run.
@@ -382,11 +390,12 @@ The first arrangement proposed for testing the paradigm is Commonplace, a
 framework for knowledge bases operated by agents. In the proposed run,
 Commonplace produces a knowledge base and its supporting software for a
 consuming project. Agents in that project use the knowledge base on their
-tasks, and the project's own judges accept or reject the work. Those
-judgments are the external falsifier and objective. Commonplace would
-revise the delivered product, and when a failure exposed a limit in its own
-methods, revise those too. Today people still perform several inside
-roles, so it is a human-inclusive builder. How those roles would transfer
+tasks, and the project's own judges accept or reject the work. Their
+assessments supply the failure signals; the project's acceptance
+requirements supply the objective. Commonplace would revise the delivered
+product, and when a failure exposed a limit in its own
+methods, revise those too. Today people still perform several internal
+roles, so it is not yet an autonomous builder. How those roles would transfer
 to computation is the [bootstrap
 supplement's](./bootstrapping-an-autonomous-theory-builder.md)
 subject. No consuming-project run has been performed. The evidence
@@ -425,12 +434,12 @@ builder](../notes/definitions/theory-builder.md) definitions state the
 paradigm's terms with their exclusions and boundary cases. The [evidence
 supplement](./testing-the-theory-refinement-program.md) develops the
 hypotheses, the external assessment, the first arrangement's protocol, and
-the component experiments. It also develops the requirement that every
-change to a builder arise through its own machinery, and [what a run under
-that requirement does and does not
+the component experiments. It also examines an assessed run in which every
+change to the builder must arise through its own machinery, and [what a
+run under that requirement does and does not
 establish](./testing-the-theory-refinement-program.md#what-a-runs-path-can-and-cannot-show).
 [Nearest existing
 constructions](./nearest-existing-constructions-to-a-witness-house.md)
-compares eighteen existing systems against the software-house conditions and
-says what that survey shows for the paradigm: its parts have precedents, and
-the reviewed evidence does not test its central mechanism.
+compares eighteen existing systems against the requirements for the
+automated software house described above and says what that survey shows
+for the paradigm: its parts have precedents, and the reviewed evidence does not test its central mechanism.
