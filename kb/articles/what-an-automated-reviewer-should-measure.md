@@ -1,5 +1,5 @@
 ---
-description: "Draft article proposing automated review through a model reader's gain on declared tasks, with gain per token as an efficiency measure and a five-part reading as a candidate proxy for theory revisions"
+description: "Draft article proposing observer-relative compression progress as the primary Schmidhuber-derived measure for automated review, with task gain as a separate transfer test, explicit costs, and a five-part reading as a candidate proxy for theory revisions"
 type: kb/articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
@@ -13,144 +13,186 @@ source_notes:
   - kb/notes/first-principles-reasoning-selects-for-explanatory-reach-over.md
   - kb/notes/the-augmentation-automation-boundary-is-discrimination-not-accuracy.md
 ---
+
 # What an Automated Reviewer Should Measure
 
-*A proposal: measure what an article helps a declared reader do*
+*A proposal: measure whether an article improves a declared reader's compression of a domain, then test whether the improvement transfers*
 
 > **Draft.** This article may change. Comments and counterexamples are welcome
 > on [the repository's GitHub Discussions page](https://github.com/zby/commonplace/discussions).
 
 Suppose an article explains why a familiar experimental method fails under
-certain conditions. Before reading it, a reader predicts the wrong outcome
-for those conditions. After reading it, the reader predicts correctly,
-including for experiments the article never discusses. That improvement
-seems like something a reviewer should care about. Can we measure it?
+certain conditions. Before reading it, a reader needs a collection of
+separate exceptions to account for the observed results. After reading it,
+one revised model explains both the successes and the failures and predicts
+what will happen in further experiments. That change seems like something a
+reviewer should care about. Can we measure it?
 
 Here is a proposal for automated review. Let a language model stand in for
-the intended reader, and give it questions about the domain twice: once
-with the article in context and once without it. Keep its background
-material the same, and score the difference. The questions should represent
-tasks the intended reader cares about, and should be written independently
-of the article.
+the intended reader. Give it a fixed body of observations from the article's
+domain, first without the article and then with it. Measure whether the
+article lets the reader predict or encode those observations more compactly.
+Call the difference *article compression progress*.
 
-Call the difference *article gain*. It measures one kind of value: how much
-the article helps this reader with these tasks. Report gain per token as
-well, to show how efficiently the article uses the reader's context. For
-articles that, like the one in the example, propose a revision to an
-existing theory, we also suggest a cheaper reading of the text that might
-predict gain. Nothing here has been run; both the experiment and the
-cheaper reading are proposals to be tested.
+This is the measure suggested most directly by Jürgen Schmidhuber's account
+of interestingness as improvement in an observer's compressor. It is not yet
+a complete measure of article value. Compression of known observations may
+fail to transfer, and a compact false account can fit a selected corpus.
+The reviewer should therefore report three things separately:
 
-## Value for whom, and for what?
+- **Compression progress:** does the article give the observer a better
+  predictive model of a fixed body of domain observations?
+- **Transfer or task gain:** does that changed model improve performance on
+  further cases or tasks?
+- **Cost:** how much context, computation, and evaluation does the article
+  require?
 
-An expert and a newcomer can learn different amounts from the same
-article. Even readers with the same background may need different things:
-one wants to predict experimental outcomes, another to diagnose failures,
-and another to choose a method. A useful measure has to say which reader
-and which tasks it represents.
+Correctness and warrant remain separate checks. Nothing here has been run;
+the measurements and the cheaper reading proposed later are candidates to
+be tested.
 
-The proposal therefore needs two declarations:
+## Value for whom, and over what domain?
 
-- **The observer:** a named language model and the background corpus
-  supplied to it. Together they stand in for the intended reader.
-- **The tasks:** the kinds of questions the article is meant to help that
-  observer answer, sampled by a question set written independently of the
-  article.
+An expert and a newcomer can extract different structure from the same
+article. Even readers with the same background may care about different
+parts of a domain. A useful measure therefore has to declare both the
+observer and the material over which improvement is assessed.
 
-Article gain is the improvement in that observer's performance on those
-tasks, so it is relative to both declarations. Because [information value
-is observer-relative](../notes/information-value-is-observer-relative.md),
-an article can produce substantial gain against one background and none
-against another. A tutorial can be valuable for a newcomer even when it
-adds nothing to the literature.
+- **The observer:** a named language model, instructions, tools, and
+  background corpus. Together they stand in for the intended reader.
+- **The domain evidence:** a fixed collection of observations, cases, or
+  records whose structure the article is supposed to help the observer
+  capture.
+- **The uses:** the later predictions, decisions, diagnoses, or other tasks
+  on which transfer may be tested.
 
-The tasks matter just as much. Choosing questions about replication,
-method selection, or practical diagnosis expresses a judgment about what
-counts as useful knowledge. The measurement makes that judgment explicit;
-it does not make it for us.
+Because [information value is
+observer-relative](../notes/information-value-is-observer-relative.md), an
+article can produce substantial compression progress against one background
+and none against another. A tutorial can reorganize a newcomer's knowledge
+while adding nothing for a specialist.
 
-## The experiment
+The evidence declaration matters just as much. A narrow collection can make
+a parochial regularity look powerful. A corpus containing only familiar
+successes may hide an article's treatment of failures. The measurement does
+not eliminate judgments about scope; it makes the chosen scope inspectable.
 
-The experiment has two arms. In one, the model receives the background
-corpus and the questions. In the other, it also receives the article.
-Everything else stays the same: model version, instructions, decoding
-settings, and grading method.
+## Compression progress
 
-The questions should be about the domain, not about what the article says.
-For the experimental-method example, ask the model to predict outcomes or
-identify conditions in which the method will fail. Asking it to repeat the
-article's explanation would mainly test whether it can find that explanation.
-
-The questions should also be written by someone other than the author,
-without sight of the article. That keeps the question set a sample of the
-declared tasks, including cases beyond the article's own examples, and not
-a sample of what the article happens to cover.
-
-The result is a difference:
-
-> Article gain = score with the article − score without the article.
-
-Gain can be negative: an article can confuse the observer or move it toward
-worse answers. Because a model's answers vary between runs, repeated runs
-would help distinguish a small gain from that variation.
-
-The grader needs as much care as the questions. A persuasive false article
-can score well if the grader rewards the same false answers. Empirical
-outcomes make stronger answer keys where they are available. If a model
-grades the answers, [its ability to distinguish better answers needs
-checking](../notes/the-augmentation-automation-boundary-is-discrimination-not-accuracy.md).
-Even with a sound grader, the measured gain supports a claim about the
-sampled tasks; it does not certify the article's correctness as a whole.
-
-The form of this comparison comes from Jürgen Schmidhuber's theory of
-curiosity and interestingness. He locates the relevant quantity in
-improvement: "The important thing are the improvements of the compressor,
-not its compression performance per se". He also requires a common test:
-"Note that both the old and the new compressor have to be tested on the
-same data, namely, the history so far"
+Schmidhuber's proposal locates interestingness in improvement, not in an
+object's absolute compressibility. In his formulation, old and new
+compressors are tested on the same history. The retained source puts the
+point directly: "The important thing are the improvements of the compressor,
+not its compression performance per se"
 ([Driven by Compression Progress](../sources/driven-by-compression-progress.ingest.md),
-verbatim). What we borrow is the comparison of two states of an observer on
-the same material: here the article changes the observer's context, while
-the questions stay fixed. Applying the comparison to article review is our
-step. His measure is a saving in description length; ours is a gain in
-answer quality.
+verbatim).
 
-The same comparison is the measure of learning in our research program on
-[learning by theory refinement with fixed
-models](./learning-by-theory-refinement-with-fixed-models.md), applied here
-to one article. The model stays fixed; what changes is the material it can
-use and the performance that follows.
+The analogue for article review is:
 
-## How much gain, at what cost?
+> Article compression progress = predictive description length without the
+> article − predictive description length with the article.
 
-Context is a scarce resource for a language-model reader, so article length
-belongs in the report:
+Both arms use the same observer and the same domain evidence. The article is
+the intervention. If it helps the observer assign higher probability to the
+observations, the observations require fewer bits under the corresponding
+predictive code.
 
-> Gain per token = article gain ÷ article length in tokens.
+This is closer to Schmidhuber's measure than replacing description length
+with answer quality. The article itself is not what should be compressed.
+The article is candidate learned structure; the relevant question is whether
+it compresses the domain for this observer.
 
-This ratio penalizes [reverse
+A practical experiment could present a sequence of observations and record
+the probability the model assigns to each next observation. Summed negative
+log probabilities give predictive description length. Where the model
+interface does not expose suitable probabilities, scored predictions can be
+used as an approximation, but then the result is no longer a literal
+compression measure and should not be named as one.
+
+The test distinguishes an article that supplies a reusable regularity from
+one that merely expands the context. But compression progress on a chosen
+corpus is not enough. An article may restate outcomes contained in its text,
+or fit the selected observations with a regularity that fails elsewhere.
+Compression of the evidence already discussed by the article measures
+assimilation of that evidence. Claims about reach require a further test.
+
+## Transfer and task gain
+
+The downstream question is whether the compacted understanding changes what
+the observer can do:
+
+> Task gain = task score with the article − task score without the article.
+
+This is not the operational definition of compression progress. It is a
+separate validation criterion. The empirical conjecture is that compression
+progress produced by a good explanatory article predicts gain on relevant
+later tasks.
+
+An article that contains answers to a benchmark can produce task gain
+without much reusable compression. Conversely, an article that reveals a
+deep regularity may compress a domain before anyone has formulated all the
+tasks on which that regularity will matter. Measuring both lets us study the
+relationship instead of assuming that one substitutes for the other.
+
+Earlier versions of this proposal required questions written without sight
+of the article. That is too strong as a general procedure. For a novel
+article, its contribution may be what makes meaningful questions visible.
+A supposedly independent question writer may produce only familiar tasks
+and systematically miss the new distinction the article introduces.
+
+There are three different designs, and their evidential force should not be
+confused:
+
+1. **An existing independent benchmark** can measure gain immediately, but
+   only for the uses it already represents.
+2. **A preregistered task distribution** can support a prospective study,
+   but usually does not exist for an article already under review.
+3. **Article-informed questions** can test whether the observer understood
+   the article's consequences. They are useful now, but because the article
+   helped select the questions, they cannot by themselves estimate its
+   general value.
+
+The third design becomes stronger when the questions apply the article's
+claims to cases it does not discuss and when their answers come from
+independent evidence. It is best described as a *claim-conditioned transfer
+test*, not as an unbiased sample of reader needs. The reviewer should record
+how the questions were produced and avoid presenting this result as broad
+article gain.
+
+This limitation means that task gain is not currently a universal automatic
+review method. It is applicable where a relevant benchmark, preregistration,
+or independent outcome set exists. Elsewhere it remains a diagnostic and a
+research target.
+
+## Cost is not one ratio
+
+Context is scarce for a language-model reader, so article length belongs in
+the report. Computation, retrieval burden, and the cost of constructing the
+evaluation may matter too. But a single gain-per-token ratio is not a safe
+objective.
+
+A 100-token article that adds one point can beat a 2,000-token article that
+adds ten points on the ratio while contributing much less. Ratios also
+reward extreme compression and become unstable around small gains. Instead,
+report total compression progress or task gain alongside their costs. Where
+several artifacts are compared, show what each achieves under the same
+context budget, or compare their gain-cost trade-offs.
+
+Token count remains a useful cost proxy. It helps expose [reverse
 compression](../notes/reverse-compression-is-when-llm-output-expands-without-adding.md):
-text that grows without adding useful structure. Padding spreads the same
-gain over more tokens and lowers the ratio.
-
-But efficiency alone is not enough. A 100-token article that adds one
-point scores better per token than a 2,000-token article that adds ten.
-A reader with room for either may prefer the larger improvement. The
-report should therefore show both total gain and gain per token. Which
-matters more depends on the reader's context budget and alternatives.
-
-Reporting both also treats supporting detail fairly. A long explanation
-showing where a method remains reliable may lower average gain per token
-while still providing enough additional benefit to justify its length.
+text that grows without making more usable structure available. It is not the
+only cost and need not combine with gain into one number.
 
 ## A cheaper reading for theory revisions
 
-Running the experiment requires a question set, a grader, and model runs.
-Could a reviewer predict some of the gain by reading the article alone?
+Predictive coding experiments and transfer tests need domain evidence,
+scorers, and repeated model runs. Could a reviewer identify textual
+properties likely to produce compression progress before those measurements
+are available?
 
 For articles that propose a theory revision, one candidate is to check
-whether five slots can be filled from the text. We call this the
-*refinement reading*, after [theory
+whether five slots can be filled from the text. We call this the *refinement
+reading*, after [theory
 refinement](../notes/definitions/theory-refinement.md): revising an existing
 theory against cases while preserving useful prior knowledge.
 
@@ -160,91 +202,100 @@ theory against cases while preserving useful prior knowledge.
 | Contradicting cases | Evidence that the commitment is wrong, incomplete, or wrongly scoped |
 | Preserved content | What still holds after the change |
 | Contradictable consequences | What the revised theory rules out, so later evidence could contradict it |
-| Reach | Which cases beyond the motivating ones the revision covers |
+| Claimed reach | Which cases beyond the motivating ones the revision claims to cover |
 
 The slots are things a reviewer should be able to locate, not required
 section headings. A model could quote the passage supporting each slot,
 making its reading open to inspection and disagreement.
 
-In the experimental-method example, the addressed part might be the
-commitment that the method works across a certain range of conditions. The
-contradicting cases are the failed experiments, which motivate a narrower
-claim. The preserved content is where the method still works. The
-contradictable consequence is a prediction of where further failures should
-occur, and the reach is that this prediction covers conditions not yet
-tested.
+In the experimental-method example, the addressed part is the commitment
+that the method works across a range of conditions. The contradicting cases
+are the failed experiments. The preserved content is where the method still
+works. Contradictable consequences identify further conditions under which
+failure is predicted. Claimed reach says how far beyond the observed cases
+the revised account is supposed to apply.
 
-There is a reason to expect this structure to help. It tells the reader
-what to change, why to change it, what to keep, and what follows. The reach
-slot connects most directly to the experiment: independently written
-questions include cases the article never discusses, and a revision helps
-with those only if it holds beyond the cases that motivated it. That
-property is [explanatory
-reach](../notes/first-principles-reasoning-selects-for-explanatory-reach-over.md);
-[judging whether the claimed reach is
-real](../notes/definitions/reach-assessment.md) takes more than finding a
-passage that asserts it.
+The first four slots make the revision legible: what changes, why, what
+survives, and what follows. The fifth records an assertion, not a result.
+[Assessing whether the claimed reach is
+real](../notes/definitions/reach-assessment.md) requires interventions,
+independent cases, proofs, or another check beyond locating the passage.
 
-The conjecture is that articles making these parts recoverable tend to
-produce more gain on relevant tasks. It is not a claim that every useful
-article has this shape. A tutorial can explain an accepted method; a survey
-can make scattered knowledge easier to use; a dataset description can
-supply missing facts. All could improve answers without correcting a
-prior theory. And within theory revisions, the reading does not check
-truth: a false argument can fill all five slots.
+The conjecture is that legible theory revisions tend to produce more
+compression progress, and that revisions with real reach tend to transfer.
+The reading does not establish either. A false argument can fill all five
+slots, and useful tutorials, surveys, and datasets need not have this shape.
+The refinement reading should therefore be tested against measured
+compression progress and transfer where those measurements are possible.
+It should also be compared with the simpler baseline of asking a model
+directly how useful the article will be.
 
-The refinement reading therefore needs testing against measured gain. It
-should also be compared with a simpler alternative: asking a model directly
-how useful the article will be for the declared reader and tasks. If the
-five slots predict no better, there is little reason to insist on them. The
-experiment remains useful even if the refinement reading fails.
+## Compression, learning, and warrant
+
+The comparison also connects to [learning by theory refinement with fixed
+models](./learning-by-theory-refinement-with-fixed-models.md). The model
+weights remain fixed while an added retained artifact changes later
+behaviour. Compression progress asks whether the artifact improves the
+observer's model of evidence. Transfer asks whether that improvement changes
+later work.
+
+That connection does not make every useful article a warranted theory
+revision. Compression progress and task gain measure effects on an observer.
+They do not show that the observer should have changed in that direction. A
+persuasive false article can compress a biased sample or improve performance
+under a mistaken grader.
+
+The broader writing objective is a [warranted reader
+update](../notes/warranted-reader-update-is-the-objective-of-substantive-writing.md).
+This proposal measures parts of the update: improved compression and its
+behavioral consequences. The quality of the evidence and reasoning that
+warrant the update needs its own assessment. These dimensions should remain
+separate until there is evidence for a defensible way to combine them.
 
 ## Could a scientific venue use this?
 
-A venue would need to say whose tasks it serves. It could declare several
-observers—a specialist, an adjacent-field reader, and a practitioner—and
-report gain for each. Their backgrounds and questions would differ. How the
-venue weighs those results would express its scope.
+A venue would need to declare whose understanding and which domain it serves.
+It could use several observers—a specialist, an adjacent-field reader, and a
+practitioner—with different backgrounds and costs.
 
-For research articles, a retrospective test could use empirical answer
-keys: take the literature available before an article as the background
-corpus, and the outcomes of later experiments as the answers. Did the
-article help predict what happened next? Questions about later outcomes
-could test contributions that a contemporary reviewer would have struggled
-to recognize.
+Compression progress may be tested retrospectively on a domain corpus fixed
+by a protocol rather than selected for each article. Transfer may be tested
+against later empirical outcomes. Did the article make those outcomes more
+predictable than the prior literature did? This avoids requiring reviewers
+to invent blind questions, although it introduces other problems.
 
-There are two practical difficulties. First, a model trained on the article
-or the later results already has part of the article or the answers in its
-weights. A clean comparison needs either an older model, or articles and
-outcomes that postdate the model's training data. Second, later research
-may itself have been shaped by the article. Writing the questions without
-sight of the article does not remove that dependence. Such a test can
-measure usefulness for the research that followed, but cannot tell us what
-research would have happened without the article.
+A model trained on the article or the later results already carries some of
+the intervention or answer in its weights. A clean comparison needs an older
+model, or articles and outcomes that postdate the model's training data.
+Later research may also have been shaped by the article. A retrospective
+test can measure usefulness for the research that followed, but cannot tell
+us what would have happened without the article.
 
 Even a clean retrospective test arrives too late for submission review. Its
-use is to supply cases for testing cheaper review methods, including the
-refinement reading. A useful first study would stay within one domain,
-choose a manageable set of articles, and compare the reading's predictions
-with measured gain.
+nearer use is to create evidence for testing cheaper review methods,
+including the refinement reading. A first study could stay within one
+domain, predefine its evidence corpus and outcomes, and compare textual
+predictions with measured compression progress and transfer.
 
 ## What this leaves open
 
-The largest question is whether a model reader's gain tracks what the
-intended human readers learn. The observer declaration makes the proxy
-inspectable, but does not validate it. The question applies to gain per
-token as well: that measure is motivated by a model reader's limited
-context, and a human reader's cost of reading need not follow token count.
+The largest question is whether compression progress in a model observer
+tracks a valuable change in human understanding. The observer declaration
+makes the proxy inspectable but does not validate it.
 
-Question selection remains a substantive judgment. A benchmark dominated
-by familiar tasks may miss an article that enables a new kind of question.
-Reporting the tasks alongside the scores lets readers see what the
-experiment is capable of valuing.
+The second is whether predictive description length is practical for current
+model interfaces and rich scientific observations. Turning an observation
+into a scorable prediction can itself impose a representation that favors
+some theories.
+
+The third is how compression progress relates empirically to transfer. The
+proposal expects a deep regularity to help on further cases, but the
+relationship has to be measured rather than assumed.
 
 Correctness, honest reporting, and fit for a venue still need their own
-checks. This proposal concerns the contribution an article makes to a
-reader's ability to answer and act. The first thing to find out is whether
-that contribution can be measured reliably enough to improve review.
+checks. The immediate research question is narrower: can an article's
+observer-relative compression progress be measured reliably, and does it
+predict useful transfer better than direct model judgment?
 
 ## Where to go next
 
@@ -256,4 +307,4 @@ writing](../notes/warranted-reader-update-is-the-objective-of-substantive-writin
 states the writer's side: the intended reader's prior is the baseline.
 [Learning by Theory Refinement with Fixed
 Models](./learning-by-theory-refinement-with-fixed-models.md) develops the
-research program behind the experiment.
+research program behind the retained-artifact comparison.
