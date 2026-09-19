@@ -57,7 +57,7 @@ stored or edited. Structural properties have their own term,
 
 Relevant Notes:
 
-- [Conjectural learning](./conjectural-learning.md) — extends: the paradigm built on formulated, addressable tentative theories
+- [Conjectural learning](./conjectural-learning.md) — extends: the paradigm built on formulated tentative theories that guide decisions
 - [Addressable theory](./addressable-theory.md) — contrasts: the structural property, separate from the epistemic status
 - [Popper, A realist view of logic, physics, and history](../../../sources/popper-a-realist-view-of-logic-physics-and-history-1966.ingest.md) — evidenced-by: the schema and the place of `TT` in it
 - [Popper, Conjectures and Refutations](../../../sources/popper-conjectures-and-refutations.ingest.md) — evidenced-by: tentativeness as a lasting status

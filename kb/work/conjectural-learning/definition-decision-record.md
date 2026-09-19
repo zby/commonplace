@@ -12,7 +12,7 @@ section records what that changed.
 | Is addressability of parts required? | Required (library) → possible benefit → required again → stronger property and a conjecture |
 | Is reconstruction from records inside the term? | Outside (library) → inside → split: retained criticisms inside, raw records outside |
 | Does a theory used within one episode count? | Outside (library) → inside (first candidate) → relative to a declared horizon |
-| Is learning in the weights covered? | Outside (library) → undetermined (first candidate) → outside, with coevolution as an extension |
+| Is learning in the weights covered? | Outside (library) → undetermined (first candidate) → weight adaptation alone outside; weights evolving together with a formulated operative theory inside |
 | Must criticism produce a revision? | Yes → no: a part that survives counts |
 
 Each reversal followed a good argument. They pulled in different directions

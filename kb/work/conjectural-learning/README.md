@@ -33,10 +33,10 @@ who decided, and why the earlier formulation was dropped.
   establish a lasting learning effect. Cite Popper's schema, which already
   has a name and an attribution, and define only what we add. The declared
   horizon replaces *uptake*.
-- **Only the articulated part evolves.** We do not oppose Popper's learning
+- **Only the formulated part evolves.** We do not oppose Popper's learning
   without language; our systems have that level too, in the model weights.
   We choose to evolve prose, prompts, and code. Coevolution with the weights
-  is an admitted extension, not the primary goal.
+  is inside the term but is not the program's primary goal.
 - **Criticism must address what the theory says, and a part of it.** The 2026
   papers showed that the draft admitted cases we do not study: placebo
   studies found form effects without content effects, and score-driven
@@ -49,7 +49,7 @@ who decided, and why the earlier formulation was dropped.
   formulation put all reconstruction from records inside the approach. Raw
   traces hold no criticism, and we cannot know whether a model criticizes
   internally while rebuilding a theory from them. The term therefore
-  classifies by what is articulated and persists. Reconstruction from
+  classifies by what is formulated and persists. Reconstruction from
   retained criticisms stays inside; reconstruction from raw records is the
   primary comparison, because the operator assesses regeneration from raw
   records to be the dominant approach today, and it needs no criticism. The

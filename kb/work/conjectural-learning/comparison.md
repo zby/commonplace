@@ -68,7 +68,7 @@ showed no advantage over its random references. Structural controls and
 independent outcomes are needed to identify what criticism actually changes.
 
 **Retain theories, but test their effects separately.** HEP is the closest
-new precedent for retained articulated hypotheses; AHOIS connects criticized
+new precedent for retained formulated hypotheses; AHOIS connects criticized
 explanations to physical action. Neither establishes our efficiency conjecture.
 HEP's belief probabilities and lifecycle rules are its design choices, not
 Popperian commitments to import into the definition.
@@ -85,8 +85,11 @@ before they establish compounding, beyond the generated agent's task score.
 The set does not establish reliable general LLM conjectural learning,
 sufficiency of fixed weights, the claimed efficiency advantage of retaining
 theories over reconstructing them from records (including its dependence on
-context limits), or cumulative gains from machinery revision. Reconstruction
-is an implementation approach, not excluded by this evidence limit.
+context limits), or cumulative gains from machinery revision. The
+[definition draft](./definitions/conjectural-learning.md) treats
+reconstruction from retained criticisms as an implementation and
+reconstruction from raw records as a separate comparison; this evidence
+limit settles neither.
 Missing full texts may change particular architecture assessments; abstracts
 and titles supply neither positive nor negative findings about their omitted
 mechanisms. These limits carry into the [definition drafts](./definitions/).

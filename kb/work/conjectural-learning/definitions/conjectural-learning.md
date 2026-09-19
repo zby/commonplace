@@ -118,7 +118,7 @@ conjectures they buy, are argued in
   then occurs outside the model weights and inside the learning system.
   Declare which models stay fixed, and for how long. Declare the system's
   boundary too, including the people and hosted services that act inside
-  it. The term extends to a
+  it. The term also covers a
   system in which weights, prompts, and code evolve together, provided both
   conditions hold; a claim about such a system says whether the effect of
   criticism persisted in the text or in the weights.

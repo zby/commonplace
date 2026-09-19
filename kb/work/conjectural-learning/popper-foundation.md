@@ -20,10 +20,10 @@ Thus articulation is partly inherited, rather than wholly our addition to
 Popper. We specify how to establish causal use and persistence of criticism's
 effects. Retaining a theory and reconstructing it from retained, formulated
 criticisms are implementation approaches; our preference for the former rests
-on the efficiency conjecture in the README. Reconstruction from raw records,
+on the efficiency conjecture in the companion note. Reconstruction from raw records,
 which hold no criticism, is a separate comparison and not an implementation:
 the [definition draft](./definitions/conjectural-learning.md) classifies by
-what is articulated and persists. Neither passage supplies
+what is formulated and persists. Neither passage supplies
 fixed-model sufficiency or a result for records versus retained theories.
 
 ## Existing primary-source context

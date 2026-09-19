@@ -115,8 +115,8 @@ and each episode reads the theory from scratch. Two consequences follow.
 
 Coevolution of weights, prompts, and code reopens the channel. Content from
 criticized theories may be trained into the weights, and changed weights
-read, apply, and criticize the theories differently. The KB accepts this as
-an extension of the term, but its experiments hold the weights fixed. It is
+read, apply, and criticize the theories differently. Such a system is still
+inside the term, but the KB's experiments hold the weights fixed. It is
 open whether what transfers into the weights is the content of the criticism
 and not only the form of the training intervention. One placebo-controlled
 adapter comparison found no content-specific effect
