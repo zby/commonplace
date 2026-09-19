@@ -250,16 +250,76 @@ change, with the model held fixed.
 
 The instrument measures one thing and should not be read as measuring
 others. It does not establish truth: a persuasive false article that moves
-the observer toward the grader's expected answers scores well. It does not
-establish transfer: the gain holds for the question set. Stratifying
-questions by their distance from the article's contradicting cases is the
-obvious route to making the reach slot measurable rather than read. And the
-grader is itself a discrimination problem. If a model grades the answers,
-the instrument inherits the limit in [the augmentation-automation boundary
-is discrimination not
+the observer toward the grader's expected answers scores well. Grading
+against later empirical outcomes relaxes this limit for the outcomes
+sampled, as the next section describes. It does not establish transfer: the
+gain holds for the question set. Stratifying questions by their distance
+from the article's contradicting cases is the obvious route to making the
+reach slot measurable rather than read. And the grader is itself a
+discrimination problem. If a model grades the answers, the instrument
+inherits the limit in [the augmentation-automation boundary is
+discrimination not
 accuracy](../the-augmentation-automation-boundary-is-discrimination-not-accuracy.md),
 and the reported gain is only as good as the grader's per-instance
 discrimination.
+
+## Declaring the observer for a literature
+
+A named model and a named corpus are easy to write down and hard to justify
+for a scientific literature. A literature has no single reader: its readers
+differ in background, and they arrive over decades. This section proposes
+how a venue could declare an observer anyway. It splits the declaration into
+three parts, because each fails in a different way. None of it has been
+tried.
+
+**The prior is the literature up to a date.** Schmidhuber's baseline is "the
+history so far", quoted above. For a submission, that is the field's
+literature as of the submission date, used as the background corpus,
+together with a model whose training data ends before that date. Such a
+model is an approximation to what the field held on that date, not a record
+of it.
+
+**The questions define the user more than the model does.** The user of an
+article is whoever later has to decide or predict something in the domain.
+Held-out questions drawn from later work stand for that user: the outcomes
+of later experiments, replications, and measurements. This choice changes
+one limit of the instrument. When answers are graded against later empirical
+outcomes, an article that moves the observer toward a false theory lowers
+its score on those outcomes. The instrument then bears on correctness for
+the outcomes sampled, and only for those.
+
+**Plural readers need a panel, and time needs a date on the questions.** A
+venue can declare several observers, such as a specialist, a reader from an
+adjacent field, and a practitioner, and report a gain for each in place of
+one number. How the venue weighs them is a statement of its scope. The date
+of the questions matters as well as the date of the prior: an article can
+show low gain on questions its contemporaries would have asked and high gain
+on questions asked a decade later.
+
+An observer declared this way makes the instrument retrospective, since
+later outcomes do not exist when a submission is reviewed. That is the
+reason for the pairing. Past articles, with the later outcomes they did or
+did not help predict, are a set of labelled cases. The refinement reading
+would be calibrated against the measured gain on those cases and then
+applied to new submissions, which is the discipline that [calibrating
+semantic gates against labelled
+fixtures](../../reference/proposals/calibrating-semantic-gates-against-labelled-fixtures.md)
+proposes for the KB's own gates.
+
+Three problems are open.
+
+- **Leakage.** Later articles restate the article being scored, so questions
+  drawn from them can be answered from the restatement. The questions have
+  to be about outcomes and not about statements, and an outcome that depends
+  on the article's own method is hard to separate from a restatement.
+- **Contamination.** A model trained after the article appeared holds the
+  article in its weights, so the arm without the article is not without it.
+  Calibration on past articles is then limited to articles later than the
+  model's training data, or to older models.
+- **Question authorship carries the judgment of significance.** Whoever
+  decides which later outcomes count as questions decides what the field
+  values. The declaration makes that judgment explicit and open to audit. It
+  does not remove it.
 
 ## Scope
 
@@ -274,7 +334,8 @@ discrimination.
   the criterion's.
 - This is a criterion of value, not of admissibility. Correctness, scope,
   and honesty about limits are separate checks that it neither performs nor
-  replaces.
+  replaces. Questions graded against later outcomes bear on correctness for
+  the outcomes sampled and leave the rest of that check where it was.
 - Nothing here has been run. The pairing of the reading with the instrument
   is the part most likely to fail: the reading may be satisfiable by
   articles that produce no gain, and gain may appear for articles that fill
@@ -302,8 +363,6 @@ discrimination.
   corpus, and do commitments the model holds in its weights count as part
   of it? The addressed-part slot points at a commitment, and the
   declaration names only a model and a text.
-- What observer should a venue declare for a scientific literature, whose
-  users differ in background and arrive over decades?
 
 ---
 
@@ -318,6 +377,7 @@ Relevant Notes:
 - [First-principles reasoning selects for explanatory-reach over adaptive fit](../first-principles-reasoning-selects-for-explanatory-reach-over.md) — grounds: why a revision covering only its contradicting cases does not compress
 - [Review automation should target verifiable subroles before reviewer identity](../verifiable-subroles-before-reviewer-identity.md) — contrasts: a case that note warns against, where the automated question had a tool and the needed question had none
 - [Weakly discriminated qualities tend to be underselected](../weakly-discriminated-qualities-tend-to-be-underselected.md) — grounds: why a quality with no operational statement is underselected next to a discriminable substitute under load
+- [Calibrating semantic gates against labelled fixtures](../../reference/proposals/calibrating-semantic-gates-against-labelled-fixtures.md) — see-also: the known-case calibration that the refinement reading would need against past articles
 - [The augmentation-automation boundary is discrimination not accuracy](../the-augmentation-automation-boundary-is-discrimination-not-accuracy.md) — grounds: the limit the instrument inherits from whatever grades its answers
 - [Driven by Compression Progress](../../sources/driven-by-compression-progress.ingest.md) — abstracted-from: the compression-progress objective and its same-data comparison, applied to article review instead of exploration
 - [Thread on conference volume and AI-detector review](../../sources/seeing-numbers-of-50k-submissions-for-iclr-2101135922666365032.ingest.md) — evidenced-by: the reported case of a provenance screen deployed where a quality criterion was missing
