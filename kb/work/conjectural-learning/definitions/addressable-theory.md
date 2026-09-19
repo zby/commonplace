@@ -37,7 +37,7 @@ an empirical question.
   error in diagnosis. A theory in this KB is usually mixed: parts that have
   settled cross into [codification](../../../notes/definitions/codification.md),
   and the rest stays prose.
-- **A located part is a candidate, not a verdict.** A failure rarely
+- **A located part is a candidate.** A failure rarely
   identifies one faulty commitment. Popper notes that a test may bear on a
   large part of a theoretical system, while holding that some cases do
   identify the responsible hypotheses
@@ -55,9 +55,8 @@ set, a proof procedure, and named repair operators. They show that, in such a
 setting, proof traces can connect a discrepancy to candidate repair
 locations. They do not show unique fault identification, and FORTE's search
 can stop before its training cases are consistent. The KB cites them as a
-precedent for repair under addressability and takes nothing else from them:
-not its paradigm, its notion of theory, or a preference for minimal
-revision.
+precedent for repair under addressability. It takes neither its paradigm nor
+a preference for minimal revision from them.
 
 ## Exclusions
 

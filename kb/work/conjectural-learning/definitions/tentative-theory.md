@@ -24,7 +24,7 @@ stored or edited. Structural properties have their own term,
   feel able to doubt it
   ([Conjectures and Refutations, Chapters 1 and 15](../../../sources/popper-conjectures-and-refutations.ingest.md#quotes)).
   Corroboration does not end the status, and neither does changing the
-  theory's representational form. It is not a waiting period.
+  theory's representational form.
 - **No required form.** The term does not require symbolic formalization,
   external storage, separately editable parts, or a particular consumer. A
   theory that can only be replaced whole is still tentative. Popper applies
