@@ -1,8 +1,6 @@
 # Commonplace's downstream evidence protocol
 
-> **Status:** Proposed evaluation protocol, 2026-09-17; revised 2026-09-19
-> to cover a framework release as the product and a confidential consuming
-> project. Tests the
+> **Status:** Proposed evaluation protocol, 2026-09-17. Tests the
 > [adopted hypotheses](./README.md#adopted-hypotheses). No consuming-project run has been
 > performed. Unfilled study parameters below must be fixed before assessment;
 > this document is not evidence that Commonplace already meets the target.
@@ -23,12 +21,7 @@ Someone who diagnoses a note or writes the builder's repair is filling an
 internal role, even if that person also supplies tasks in another interaction.
 
 Commonplace's product is the delivered KB together with the validators,
-skills, indexes, and other supporting software in that release. Where a
-consuming project builds its own KB with the framework, the product is the
-framework release, its consumer is that project's KB-building team of
-people and agents, and the outcome is whether they reach an accepted KB and
-at what cost in their own work. The declaration says which product an
-episode assesses. State
+skills, indexes, and other supporting software in that release. State
 whether the release includes the builder's own diagnostic memory, its
 methodology notes and revision history, or only the product KB. This is a
 design variable, not a default: the
@@ -49,8 +42,7 @@ refutes nor proves it.
 
 | Field | Required declaration | Current state |
 |---|---|---|
-| Consuming project and area | Named project, task population, admissible demands, and exclusions; a confidential project is described by its general kind | Candidate proposed 2026-09-19: an enterprise deployment, pending the enterprise's agreement; examples in the episode file are illustrative |
-| Product assessed | The delivered KB release, or the framework release used to build one | The [first experiment](./first-experiment.md) assesses the framework release |
+| Consuming project and area | Named project, task population, admissible demands, and exclusions | Operator selection pending; examples in the episode file are illustrative |
 | Seed | Builder revision, initial KB release, tools, instructions, and who prepared them | Pin at run start; do not treat a later checkout as the original seed |
 | Models | Exact versions and settings for builder and consumer, held fixed during each comparison | Must be publicly available as of 2026-09-17; versions not yet selected |
 | Task supply | Who selects incoming tasks, inclusion rule, and how omitted or failed tasks are recorded | Consecutive eligible project demands is the proposed default |
@@ -60,7 +52,6 @@ refutes nor proves it.
 | Reliability target | Required performance, uncertainty method, and allowed comparison margin | Set before scoring; no numerical threshold is implied by this protocol |
 | Feedback | Fields, delay, and visibility to builder and consumer | Training feedback and final assessment separated below |
 | Acquisition mode | Passive incoming demands plus any permitted targeted probes | Passive stream is the initial default; bounded diagnostic tests are allowed and charged |
-| Disclosure | For a confidential project: where raw records are retained and for how long, who may audit them, the summarizer's exact model version and settings, the summary prompt's commit hash, and the redaction rule | [Draft prompt](./summary-prompt.md); model is the enterprise's choice among those permitted to read the records |
 
 Pin the completed declaration with the releases and episode records. A
 change to models, population, objective, or budget changes the comparison's
@@ -71,10 +62,7 @@ the design of the protocol or the illustrative episodes.
 
 For each episode retain the task and acceptance contract, delivered KB and
 software versions, consumer configuration, budget and usage, output, judge's
-decision and reason, and the feedback returned to the builder. For a
-confidential project the consuming organization retains these records, and
-only what the [disclosure rules](#confidential-consuming-projects) allow is
-published. Record which
+decision and reason, and the feedback returned to the builder. Record which
 KB artifacts were actually retrieved or read before a consequential decision.
 State in advance, per task, an expectation contract: which artifact the
 consumer should consult, what trace would show it, and what a wrong-source
@@ -104,59 +92,6 @@ Return ordinary operating failures and acceptance feedback to the builder
 for diagnosis and revision. Internal tests, active probes, and experiments
 can guide that revision. Their selection and cost are part of the record.
 The final assessment of the claimed improvement follows the protocol below.
-
-## Confidential consuming projects
-
-A consuming organization may be unable to publish its tasks, KB contents,
-agent transcripts, or judges' reasons. The protocol then separates what is
-retained from what is published.
-
-**Retained inside the organization.** All raw records the protocol
-requires, under the organization's control, for a declared period, with a
-named person able to audit them. They are not committed to this repository
-and are not published.
-
-**Published.**
-
-- The declaration, with the project described by its general kind.
-- Measurements computed by code or counted by a declared rule: outcomes,
-  counts, costs, versions, and the identifiers of public framework
-  artifacts consulted.
-- One automatic summary per episode or run, produced inside the
-  organization by a pinned model from a pinned prompt. The declaration
-  fixes the model version, its settings, and the prompt's commit hash
-  before the first scored episode.
-- A cryptographic hash of each raw record set and of each summary as
-  generated, so an auditor with access can check that a summary was
-  produced from the records it names.
-- The number of redactions per summary.
-
-**Why a pinned summarizer.** A summary written by a participant is
-selected by someone who knows the hoped-for result. A prompt fixed before
-the records exist makes the summary a declared procedure applied to every
-run alike, which anyone with access to the records can repeat. It is not
-bit-reproducible: sampling and model serving can vary, which is why the
-generated text is hashed and the settings are declared.
-
-**What may be done to a summary.** The organization reviews it for
-confidential details before release and may only delete text, marking each
-deletion with its kind. Nothing is added or reworded. If a summary misstates
-the records, the correction is published beside it as a dated note from the
-auditor, not folded into the text.
-
-**What summaries can support.** Outcome comparisons rest on the
-measurements, not on the summaries. The summaries carry the account of each
-episode: what was attempted, where it stopped, what was diagnosed and
-changed. Before publication, the auditor checks a declared sample of summary
-statements against the records and the error count is published. A claim
-about the causal role of a particular artifact still needs the matched
-interventions below, reported as measurements.
-
-**Limits.** A reader outside cannot verify the records. What the
-arrangement offers is a procedure declared in advance, an auditor who can
-be asked, and hashes that fix what was summarized. The summarizer can also
-leak or misreport; the redaction review and the sampled check bound those
-risks and do not remove them.
 
 ## Learning evidence and assessment evidence
 
