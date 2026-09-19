@@ -52,8 +52,10 @@ showed no advantage over its random references. Structural controls and
 independent outcomes are needed to identify what criticism actually changes.
 
 The set does not establish reliable general LLM conjectural learning,
-sufficiency of fixed weights, superiority of retained theories over
-reconstruction from records, or cumulative gains from machinery revision.
+sufficiency of fixed weights, the claimed efficiency advantage of retaining
+theories over reconstructing them from records (including its dependence on
+context limits), or cumulative gains from machinery revision. Reconstruction
+is an implementation approach, not excluded by this evidence limit.
 Missing full texts may change particular architecture assessments; abstracts
 and titles supply neither positive nor negative findings about their omitted
-mechanisms. These limits carry into the [candidate](./candidate-ontology.md).
+mechanisms. These limits carry into the [definition drafts](./definitions/).

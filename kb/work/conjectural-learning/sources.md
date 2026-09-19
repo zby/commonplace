@@ -1,6 +1,6 @@
 # Source register
 
-Captured and compared on 2026-09-19. Four full texts, two author abstracts,
+Modern-paper coverage, captured and compared on 2026-09-19: four full texts, two author abstracts,
 and one bibliographic-only record; no seven-full-paper synthesis is claimed.
 Each ingest records source metadata and the SHA-256 of its paired snapshot.
 Empty Quotes sections mean detailed source claims require those snapshots.
@@ -39,13 +39,16 @@ judgments, not the primary Popper foundation.
 The paired snapshots of [A Realist View](../../sources/popper-a-realist-view-of-logic-physics-and-history-1966.ingest.md)
 and [Conjectures and Refutations](../../sources/popper-conjectures-and-refutations.ingest.md)
 were read at the locators in [Popper foundation](./popper-foundation.md).
-EITHER and FORTE supply the classical exemplars cited in the candidate. AIGS
+[Epistemology Without a Knowing Subject](../../sources/popper-epistemology-without-a-knowing-subject-1968.ingest.md)
+adds the complete 1968 publication, pp. 333–373, from the operator's downloaded
+PDF. Six verified extracts now ground articulation, informal criticism,
+feedback to action, and the distinction between potential intelligibility and
+actual use. This is a third primary Popper observation, separate from the
+seven modern papers.
+EITHER and FORTE supply the classical precedent cited in the drafts. AIGS
 2024 remains optional historical context and was not needed.
 
-All six new ingests used pinned snapshots, pre-ingest connection scans,
-isolated drafting, parent checks, and post-ingest scans. Cache reports are in
-`kb/reports/cache/connect/sources/`, with each ingest's source slug and
-`.connect.md` or `.ingest.connect.md` suffix. No inbound links were authored.
-Their suggested follow-ups are captured in the migration map; consult the
-reports for individual candidates. [Verification](./verification.md) owns
-check results and the snapshot-validation exception.
+Connection reports for the new ingests are in
+`kb/reports/cache/connect/sources/`, named by source slug. No inbound links
+were authored. [Verification](./verification.md) records the checks and the
+one validation false positive.

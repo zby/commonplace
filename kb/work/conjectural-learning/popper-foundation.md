@@ -1,10 +1,33 @@
-# Popperian foundation
+# Popperian support for the current approach
 
-Primary-source reading for the [candidate](./candidate-ontology.md). Locators
-refer to the retained editions; source details require their paired snapshots.
-Computational consequences below are our inferences.
+The [current direction](./README.md#directions-that-changed-the-first-formulation) has direct Popperian
+support for articulation and criticism-guided action. Persistence of criticism's effects across a declared horizon is our operational condition. This grounds the simplification;
+it does not demonstrate the implementation's effectiveness.
 
-## Inherited commitments
+## Direct support and its limits
+
+The six retained extracts in [Epistemology Without a Knowing Subject](../../sources/popper-epistemology-without-a-knowing-subject-1968.ingest.md#quotes)
+support the following reading of the 1968 publication:
+
+| Part of the approach | Source support | Attribution boundary |
+|---|---|---|
+| Articulate theories so they can be criticized | §4, p. 346: descriptive language provides an object for critical discussion; p. 347: scientists try to eliminate false theories in their stead | A direct epistemic reason for articulation, not a requirement for a repository, separately editable parts, or a formal consumer |
+| Work with theories before symbolic formalization | §6, p. 360: mathematical growth includes criticism of guesses and informal proofs, with linguistic formulation | Supports informal critical argument; does not imply that unarticulated states suffice for scientific discussion |
+| Let criticism affect the work that guides action | §9, p. 370: feedback between ourselves and our work can be amplified by self-criticism; p. 371: understanding objective contents influences action | Philosophical support for the relation; our causal-use tests must establish it in a particular system |
+| Retain the effect across a declared horizon | §3, p. 342 distinguishes potential intelligibility from actual understanding | Objective availability alone does not establish use. The horizon and evidence of later use are our additions, not a criterion supplied by this passage |
+
+Thus articulation is partly inherited, rather than wholly our addition to
+Popper. We specify how to establish causal use and persistence of criticism's
+effects. Retaining a theory and reconstructing it from retained records are
+implementation approaches; our preference for the former rests on the
+efficiency conjecture in the README. Neither passage supplies
+fixed-model sufficiency or a result for records versus retained theories.
+
+## Existing primary-source context
+
+The following locators retain the earlier reading of the broader argument;
+detailed checking requires the paired snapshots. Computational consequences
+remain our inferences.
 
 **Problems, tentative solutions, criticism, new problems.**
 [A Realist View of Logic, Physics, and History](../../sources/popper-a-realist-view-of-logic-physics-and-history-1966.ingest.md),
@@ -50,17 +73,5 @@ distinguishes promising theories from new empirical successes. Even an early
 refutation can yield new facts and problems; progress nevertheless needs
 empirical successes too.
 
-## Computational additions
-
-The schema leaves open representation, scheduling, storage, edit operators,
-stopping rules, and admission thresholds. For Commonplace, different targets
-need different assessment: empirical predictions, definitions, procedures,
-and externally imposed requirements are not interchangeable. Validator success
-is not philosophical falsification or proof of truth.
-
-Our proposed implementation keeps reasons for changed tests assessable and
-earlier failures available. It separates changes to a descriptive assumption
-from authorized changes to a requirement. Records, independent checks,
-permissions, budgets, and evidence of faithful interpretation are engineering
-choices. None of this establishes that an LLM realization outperforms
-alternatives or endorses every thesis in Popper's books.
+Storage, edit interfaces, fixed weights, budgets, and permissions are design
+choices. None becomes a Popperian requirement by being useful to our system.

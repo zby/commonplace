@@ -2,64 +2,131 @@
 
 ## Intent
 
-Build a Popperian foundation for the paradigm in
-[Learning by Theory Refinement with Fixed Models](../../articles/learning-by-theory-refinement-with-fixed-models.md).
-Classical theory refinement starts with formalized symbolic theories; our goal
-also includes conjectures expressed directly in natural language and other
-forms. Start from Popper's epistemic process and retain classical refinement
-as a restricted computational precedent.
+Replace the classical theory-refinement import with Popper's epistemic process
+as the foundation of the paradigm in
+[Learning by Theory Refinement with Fixed Models](../../articles/learning-by-theory-refinement-with-fixed-models.md),
+and make the library simpler by doing so.
 
-Commissioned by the operator on 2026-09-19. The symbolic-form restriction is
-the primary motivation; addressability, local repair, and reflection are
-secondary questions. “Conjectural learning” is the working name for an
-operationalization of inherited epistemology, not a claim to invent it.
+The library takes *theory refinement* in the established sense of Ourston and
+Mooney and Richards and Mooney, then lifts that sense's limits by extension:
+[the definition](../../notes/definitions/theory-refinement.md) departs from
+the classical systems in machinery, form, and subject. The operator's judgment
+is that the import buys nothing after those departures. Only the task
+statement survives them, and the library pays for apparatus that manages the
+import: the task/realization separation, the departures section, much of the
+[three-lineages note](../../notes/reflective-theory-refinement-has-three-separate-lineages.md),
+and a separate term for the loop because the borrowed name denotes one
+operation.
 
-## Bounds and discretion
+Commissioned by the operator on 2026-09-19. All directions below are the
+operator's, given the same day.
 
-Apply [intent-framed delegation](../../notes/intent-framed-delegation-is-a-control-regime-not-a-short-prompt.md):
-preserve intent and constraints while choosing means from the evidence.
-Commonplace doctrine supplies the authoring and source workflows. The worker
-may revise the candidate, choose further probes, and reorganize this workshop.
+## Directions that changed the first formulation
 
-- The base definition must not require external/addressable artifacts, fixed
-  weights, or reflection. Revision may replace theories, representations,
-  tests, auxiliaries, problems, or learning machinery.
-- Ground inherited claims in primary Popper passages. Distinguish proposals,
-  implemented mechanisms, and demonstrated outcomes. AIGS is optional context.
-- Write scope: this workshop, source captures/ingests and their connection
-  reports, and the workshop index. Article, library-definition, glossary, and
-  code changes require a later commission. No migration is authorized here.
-- Preserve peer ownership: [interface operations](../theory-refinement-interface/README.md),
+- **Simplification, not a new ontology.** The first candidate defined a
+  general “conjectural learning” with four roles and a coined *uptake*
+  condition. It excluded almost nothing: nine of ten boundary cases were
+  eligible or undetermined, and for an LLM any criticism in context affects
+  the next output, so uptake was satisfied by construction. Cite Popper's
+  schema, which already has a name and an attribution, and define only what
+  we add.
+- **What we add.** An articulated tentative theory on the causal path of
+  decisions, and an effect of criticism that persists across a declared
+  horizon. The horizon replaces *uptake* as what separates learning from
+  in-context reaction.
+- **Articulation is partly Popper's.** His 1968 essay makes a language
+  developed outside the body the object of critical discussion. He claims
+  this for rational criticism, not for learning in general. See
+  [Popper foundation](./popper-foundation.md).
+- **Reconstruction from records is inside the approach.** The effect of
+  criticism may persist through a retained theory or through records from
+  which a theory is reconstructed. Retaining the theory is our preferred
+  implementation on an efficiency conjecture: reconstruction repeats
+  interpretive and inferential work, and bounded context raises that cost
+  because the relevant records may not fit together. The claim is ours and
+  untested. Compare the implementations by cost at comparable decision
+  quality and by quality under matched budgets, counting retained-theory
+  maintenance; vary context capacity or record volume to test the claimed
+  exacerbation. Within-episode discard and weight adaptation stay separately
+  specified comparisons, not cases that lack a paradigm condition.
+- **The name.** *Theory refinement* leaves the library altogether, so
+  *learning by theory refinement* does not survive. The working replacement
+  is **conjectural learning**, “or something similar”. It names our scoped
+  paradigm, which is narrower than Popper's process and than the first
+  candidate's use of the same words. *Conjectural* is Popper's word for
+  tentative status, not a synonym for speculative.
+- **Definitions first, migration later.**
+
+## End state and acceptance
+
+Stage 1, current: definition drafts in [definitions/](./definitions/), written
+against the real `definition` type contract, for operator review. Stage 2: the
+operator adopts, redirects, or declines them and settles the open decisions.
+Stage 3, under a later commission: migration, from the
+[parked notes](./migration-map.md).
+
+The result must leave the library simpler than it found it:
+
+- fewer definitions, or the same number with less departure and attribution
+  apparatus, with an accounting at the migration stage;
+- every retained classical element names what it buys; EITHER and FORTE are
+  expected to survive only as a precedent for connecting a discrepancy to
+  candidate repair locations;
+- a new term enters only for a claim that cannot be stated without it;
+- Popper's claims, our additions, and empirical questions stay
+  distinguishable;
+- the comparison of retention with reconstruction, the causal-use
+  requirement, the evidence ladder, the whole-system learning boundary, and
+  external-requirement authority keep their force.
+
+Do not enrich the classical theory-refinement account as an intermediate step.
+
+## Open decisions, for the operator
+
+- The final form of the name.
+- Merging the operation and loop definitions. The drafts assume the merge and
+  supply no term for a single revision episode.
+- Dropping the classical minimal-revision bias. The drafts drop it and treat
+  addressability as a graded property and a possible benefit, not a
+  membership condition. No retained claim has yet been checked for dependence
+  on the bias.
+
+## Cautions carried from the first candidate
+
+These are not in the drafts and still apply to later experiments and articles.
+
+- Replacing or weakening a failed test requires grounds to doubt its
+  measurement or relevance. Reformulating a problem cannot establish
+  compliance with an unchanged external requirement; state who can authorize
+  a changed requirement. The authority rule is our engineering constraint.
+- A learner whose testing or revision machinery changes is not thereby a
+  [reflective system](../../notes/definitions/reflective-system.md), which
+  requires a causally connected self-representation.
+
+## Bounds
+
+- Write scope: this workshop, source captures and ingests with their
+  connection reports, and the workshop index. Library, article, glossary, and
+  code changes require a later commission.
+- Retained quotes enter an ingest only through the grounding workflow.
+- Peer workshops keep their commissions:
+  [interface operations](../theory-refinement-interface/README.md),
   [component experiments](../explanatory-theories-deployment-time-learning/README.md),
-  and [outside experiment template](../first-downstream-run/README.md).
-  Propose reinterpretations here; do not change their commissions.
+  [outside experiment template](../first-downstream-run/README.md). Propose
+  reinterpretations here.
+- The worker may revise the drafts, choose further probes, and reorganize the
+  workshop. The acceptance tests and the operator's directions do not move.
 
-## State and next decision
+## Inputs
 
-The source-first investigation is complete within the recorded access limits;
-the conceptual replacement is proposed, not adopted. Read by purpose:
-
-| Need | Document |
-|---|---|
-| Source coverage and missing texts | [Sources](./sources.md) |
-| Inherited epistemic commitments | [Popper foundation](./popper-foundation.md) |
-| Modern implementations and evidence | [Comparison](./comparison.md) |
-| Definition, realizations, boundary cases, open choices | [Candidate ontology](./candidate-ontology.md) |
-| Smallest coherent library change | [Migration map](./migration-map.md) |
-| Checks and remaining validation exception | [Verification](./verification.md) |
-
-Next, resolve the candidate's open choices using counterexamples and source
-arguments. Return an explicit choice to the operator where those do not
-select among materially different scopes. Reopen source comparison when new
-full text changes an implementation claim; do not infer missing mechanisms
-from abstracts or delay the Popperian foundation solely for those texts.
+[Sources](./sources.md) records coverage and access limits.
+[Popper foundation](./popper-foundation.md) holds the primary-source reading
+and the attribution boundary. [Comparison](./comparison.md) assesses the
+modern papers; it informs later experiment controls more than the
+definitions. [Verification](./verification.md) records what was checked.
 
 ## Completion
 
-Deliver a defensible minimal ontology, attribution boundary, roles for
-classical refinement and fixed-model learning, reflective extension, and
-coherent migration map. Boundary cases must distinguish process membership,
-persistence, and improvement. Unavailable evidence must have an explicit
-disposition. The operator then adopts, redirects, or declines the proposal;
-consume and close the workshop under its collection contract once the result
-has been promoted or otherwise resolved.
+The operator resolves the drafts and the open decisions; a later commission
+migrates. Close the workshop under its collection contract once the result is
+promoted or otherwise resolved.

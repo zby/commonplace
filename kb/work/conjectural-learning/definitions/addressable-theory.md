@@ -1,0 +1,90 @@
+---
+description: "Definition — an addressable theory is an articulated theory whose assumptions, scope, and parts can be inspected, blamed, and revised individually; a graded structural property, separate from tentative status"
+type: kb/types/definition.md
+tags: [foundations, self-improving-systems, learning-theory]
+---
+
+# Addressable theory
+
+An **addressable theory** is an articulated theory whose assumptions, scope
+conditions, and parts can be inspected and revised individually. A failure
+can then guide a search over candidate parts, and an edit can change selected
+parts while the rest stays in place.
+
+The KB needs the term to keep a structural property apart from an epistemic
+status. Every retained theory is a [tentative theory](./tentative-theory.md);
+only some are addressable, and
+[conjectural learning](./conjectural-learning.md) does not
+require it. What addressability is expected to buy is local criticism and
+repair: keeping what still works while changing what failed. Whether it
+delivers that benefit is an empirical question.
+
+## Scope
+
+- **It comes in degrees.** A theory with separately stated assumptions and
+  scope conditions is more addressable than an undivided document, which can
+  be replaced but not rescoped.
+- **It follows the localization axis.** Of the two axes that derive
+  [representational form](../../../notes/definitions/representational-form.md),
+  localization supplies addressability: natural-language and symbolic
+  artifacts have parts to point at, and distributed-parametric state has
+  none. See [reflection buys addressability](../../../notes/reflection-buys-addressability.md).
+- **How strongly a case can contradict the theory is a separate matter.** It
+  follows the other axis, assigned consequences. Where a defined consumer
+  such as a validator, schema, or test fixes what a part implies, a
+  contradiction is a fact. Where a reader derives the implication, a
+  contradiction is an interpretation, and misreading is one more source of
+  error in diagnosis. A theory in this KB is usually mixed: parts that have
+  settled cross into [codification](../../../notes/definitions/codification.md),
+  and the rest stays prose.
+- **A located part is a candidate, not a verdict.** A failure rarely
+  identifies one faulty commitment. Popper notes that a test may bear on a
+  large part of a theoretical system, while holding that some cases do
+  identify the responsible hypotheses
+  ([Conjectures and Refutations, Chapter 10, section XVI](../../../sources/popper-conjectures-and-refutations.ingest.md#quotes)).
+  Unchanged text also does not guarantee unchanged consequences; a revision
+  is checked against the failure and against other cases.
+
+## Precedent
+
+The classical theory-refinement systems of machine learning,
+[EITHER](../../../sources/theory-refinement-analytical-empirical-methods.ingest.md)
+and [FORTE](../../../sources/automated-refinement-first-order-horn-clause-domain-theories.ingest.md),
+are the fully addressable case with computed consequences: a Horn-clause rule
+set, a proof procedure, and named repair operators. They show that, in such a
+setting, proof traces can connect a discrepancy to candidate repair
+locations. They do not show unique fault identification; FORTE's search can
+also stop before its training cases are consistent. The KB cites them as a
+computational precedent for repair under addressability. It does not take its
+paradigm, its notion of theory, or a preference for minimal revision from
+them.
+
+## Exclusions
+
+- **A latent world model as such.** It is non-localized, so it is revised
+  only by fitting and has no part to blame. An inspectable causal model or
+  simulator program is both a world model and an addressable theory.
+- **Storage location.** A theory kept in a file is not thereby addressable,
+  and addressability does not require a particular store.
+
+## Misuse Cases
+
+- Using *addressable* as a condition on tentative status or on membership in
+  the paradigm.
+- Reading mechanically checked consequences into a prose part. For a
+  natural-language part, "derived" means interpreted until the part is
+  codified.
+- Treating a successful local edit as confirmation of the theory that
+  motivated it.
+
+---
+
+Relevant Notes:
+
+- [Tentative theory](./tentative-theory.md) — contrasts: the epistemic status, which requires no structure
+- [Conjectural learning](./conjectural-learning.md) — extends: the paradigm in which addressability is a possible benefit
+- [Representational form](../../../notes/definitions/representational-form.md) — grounds: the localization and assigned-consequences axes
+- [Codification](../../../notes/definitions/codification.md) — grounds: the crossing that gives a part computed consequences
+- [Reflection buys addressability](../../../notes/reflection-buys-addressability.md) — extends: what addressability changes about an improvement pathway
+- [Theory refinement combining analytical and empirical methods](../../../sources/theory-refinement-analytical-empirical-methods.ingest.md) — evidenced-by: the classical precedent
+- [Automated refinement of first-order Horn-clause domain theories](../../../sources/automated-refinement-first-order-horn-clause-domain-theories.ingest.md) — evidenced-by: the classical precedent and its search limits
