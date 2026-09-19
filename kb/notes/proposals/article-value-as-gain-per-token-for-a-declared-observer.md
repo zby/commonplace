@@ -1,5 +1,5 @@
 ---
-description: "Proposal: score an article by how much it improves a named model's answers to independently written questions, per token, given a named background corpus; a five-slot text reading is offered as an untested proxy; measures value, not correctness; unadopted vocabulary"
+description: "Proposal: score an article by how much it improves a named model's answers to independently written questions, per token, against a named background corpus; a five-slot text reading is an untested proxy; measures value, not correctness"
 type: kb/types/note.md
 traits: [has-external-sources]
 ---
