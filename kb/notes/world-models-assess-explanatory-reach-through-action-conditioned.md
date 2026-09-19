@@ -31,7 +31,7 @@ Relevant Notes:
 - [Representational form](./definitions/representational-form.md) — grounds: the natural-language/symbolic/distributed-parametric split that decides which assessment route is available
 - [Formal symbolic systems assess explanatory-reach only through causal and proof obligations](./formal-systems-assess-explanatory-reach-through-causal-and-proof.md) — contrasts: symbolic route through explicit causal/proof obligations rather than learned latent prediction
 - [Theory refinement](./definitions/theory-refinement.md) — contrasts: the model-based case whose object has parts to blame and edit; a world model has none
-- [Theory refinement may improve sample efficiency under structured shifts](./learning-by-theory-refinement-may-improve-sample-efficiency.md) — extends: stakes the measurable payoff of reusable structure surviving a shift
+- [Learning by learning by theory refinement may improve sample efficiency under structured shifts](./learning-by-theory-refinement-may-improve-sample-efficiency.md) — extends: stakes the measurable payoff of reusable structure surviving a shift
 - [Meta V-JEPA world-model framing](../sources/meta-v-jepa-world-model.ingest.md) — evidenced-by: LeCun/JEPA framing of latent predictive world models while planning remains future work
 - [Meta V-JEPA 2 world model release](../sources/meta-v-jepa-2-world-model.ingest.md) — evidenced-by: action-conditioned prediction used for planning and control
 - [Meta V-JEPA 2 publication abstract](../sources/meta-v-jepa-2-publication.ingest.md) — evidenced-by: reported action-conditioned post-training and zero-shot deployment conditions

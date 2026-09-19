@@ -500,7 +500,7 @@ A failed run reports its failure reason and does not use the handoff command.
 - [Behavioral authority](../../notes/definitions/behavioral-authority.md) — rests-on: the consumer, channel, force, and horizon record
 - [Theory refinement](../../notes/definitions/theory-refinement.md) — rests-on: the operation, what it requires of a theory, and the interpreted consequence relation of the prose case
 - [Learning by theory refinement](../../notes/definitions/learning-by-theory-refinement.md) — rests-on: the recurrent loop built on the operation, which step 3 records when retention and later use are present
-- [Theory refinement may improve sample efficiency under structured shifts](../../notes/learning-by-theory-refinement-may-improve-sample-efficiency.md) — rests-on: why learning by theory refinement is the route worth recording
+- [Learning by learning by theory refinement may improve sample efficiency under structured shifts](../../notes/learning-by-theory-refinement-may-improve-sample-efficiency.md) — rests-on: why learning by theory refinement is the route worth recording
 - [Theory refinement combining analytical and empirical methods](../../sources/theory-refinement-analytical-empirical-methods.ingest.md) — rests-on: the established sense of theory refinement used in step 3
 - [Reflective theory refinement needs interpretation, retention, and independent read-back](../../notes/reflective-theory-refinement-needs-interpretation-and-retention.md) — rests-on: the four links of a refinement path, each carrying its own conclusion status
 - [Reflective system](../../notes/definitions/reflective-system.md) — rests-on: the self-representation condition that makes a refinement route reflective

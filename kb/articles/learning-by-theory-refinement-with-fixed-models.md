@@ -288,7 +288,7 @@ cost the program must weigh against it.
   concentrate: admission, coordination, and credit assignment.
 - **Fewer observations.** A correct theory says which new cases matter. In
   the case above, one discovered dependency changed the checking decision
-  for several files. The conjecture that [theory refinement may improve sample
+  for several files. The conjecture that [learning by theory refinement may improve sample
   efficiency under structured
   shifts](../notes/learning-by-theory-refinement-may-improve-sample-efficiency.md)
   is bounded to shifts that preserve the structure the theory names. Fewer

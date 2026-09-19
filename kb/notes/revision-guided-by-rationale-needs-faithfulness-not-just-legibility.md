@@ -42,7 +42,7 @@ This gives the property an operational test: edit the rationale's stated premise
 
 Relevant Notes:
 
-- [Theory refinement may improve sample efficiency under structured shifts](./learning-by-theory-refinement-may-improve-sample-efficiency.md) — grounds: the selective-revision payoff whose rationale-guided realization this note examines
+- [Learning by learning by theory refinement may improve sample efficiency under structured shifts](./learning-by-theory-refinement-may-improve-sample-efficiency.md) — grounds: the selective-revision payoff whose rationale-guided realization this note examines
 - [Reflection makes retained lessons second-order: a lesson can reject or rescope a prior commitment](./reflection-makes-retained-lessons-second-order.md) — mechanism: the reject/rescope/revise operations a rationale can help guide
 - [Abstract an experience into a lesson only when you can state where the lesson stops](./abstract-an-experience-only-when-you-can-state-the-boundary.md) — grounds: the applicability conditions a rationale has to record for rescoping to have a target
 - [Reach-assessment](./definitions/reach-assessment.md) — grounds: the capability that tells a sound rationale from a plausible one, which reading does not supply

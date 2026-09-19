@@ -5,7 +5,7 @@ traits: [title-as-claim, has-external-sources]
 tags: [learning-theory, discovery]
 ---
 
-# Theory refinement may improve sample efficiency under structured shifts
+# Learning by theory refinement may improve sample efficiency under structured shifts
 
 When a task changes, a learner can adapt by fitting new behavior directly to new observations. It can also learn model-based: infer a model that explains the observations, then reuse or revise that model when the task changes. Under shifts that preserve some underlying structure, the second route may need fewer target observations.
 
