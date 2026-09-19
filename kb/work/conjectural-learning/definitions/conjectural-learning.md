@@ -119,8 +119,9 @@ the research program specifies each as its own comparison.
   and a theory is rebuilt from them when needed. Evidence persists; the
   effect of criticism does not. The arrangement needs no criticism step.
 - **Black-box optimization of articulated text.** Variants of a prompt or
-  program are generated and selected by outcome alone. Nothing reads the
-  variants as claims or records why one failed. Systems lie on a range: the
+  program are generated and selected by outcome alone. A proposer may read
+  the variants, but no formulated reason for a failure bears on what a
+  variant says. Systems lie on a range: the
   test is whether a stated reason bears on what the theory says.
 - **Unaddressed revision.** A failure is read, and may be described, but no
   part of the theory is blamed; the theory is rewritten or regenerated whole.

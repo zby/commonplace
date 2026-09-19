@@ -42,9 +42,9 @@ change in behavior can be attributed to a change in text.
   descriptive language developed outside the body gives critical discussion
   its object, and informal argument is criticized before it is formalized
   (1968, §4 and §6).
-- **Structure: addressable theories.** Criticism needs a part to aim at. A
-  theory that can only be replaced whole is still tentative, but it offers
-  none.
+- **Structure: addressable theories.** Criticism that names a probable cause
+  needs a part to name. A theory that can only be replaced whole is still
+  tentative and can still be criticized as a whole, but it offers no part.
 - **Elimination: criticism of what the theory says.** Popper's schema "works
   through error elimination, and on the scientific level through conscious
   criticism" (1968, §5.2, p. 351). Selecting among variants by outcome alone
@@ -86,7 +86,8 @@ back on the mind that grasps it. With fixed weights that channel is closed,
 and each episode reads the theory afresh. Two consequences follow.
 
 - The articulated part must carry all of the learning, including what a
-  person would absorb as tacit skill. Attribution becomes clean, and reliable
+  person would absorb as tacit skill. Attribution becomes cleaner, since
+  parameter updates are ruled out as a source of change, and reliable
   interpretation of prose becomes the central empirical risk.
 - Background knowledge held in the weights cannot be revised during the
   interval, where Popper holds any background assumption open to challenge.
@@ -109,9 +110,10 @@ and either baseline may match or beat a conjectural learner. That is what the
 experiments measure.
 
 **The content conjecture: criticism of what a theory says learns more from
-each failure than selection by outcome.** A score carries few bits. A
-criticism says which claim failed and why, so one failure can rule out a
-family of variants, and the reason is retained with the survivor. The
+each failure than selection by outcome.** The reasoning is that a score
+carries few bits, while a criticism says which claim failed and why, so one
+failure can rule out a family of variants, and the reason is retained with
+the survivor. The
 baseline is black-box optimization of articulated text, as in score-driven
 prompt optimizers and evolutionary program search; the
 [Meta-Agent Challenge](../../../sources/meta-agent-challenge-autonomous-agent-development.ingest.md)
@@ -140,9 +142,10 @@ and must first be retrieved, selected, or summarized.
 
 The two reconstruction baselines answer different questions. Against raw
 records: does formulated, persisted criticism buy anything? This is the
-primary comparison, because regeneration from raw records is widely used and
-needs no criticism step: records are stored, retrieved, and handed to the
-model. Against retained criticisms: does keeping the assembled theory buy
+primary comparison, because regeneration from raw records needs no criticism
+step: records are stored, retrieved, and handed to the model. The operator
+assesses it to be the dominant approach today; the KB has not established
+that. Against retained criticisms: does keeping the assembled theory buy
 anything more? Compare by cost at comparable decision quality and by quality
 under matched budgets, counting maintenance, and vary context capacity or
 record volume to test the claimed widening.
