@@ -1,5 +1,5 @@
 ---
-description: "Definition — conjectural learning is learning in which formulated tentative theories are operative objects within the learning system: used, criticized for what they say, with the result of that criticism carried across a declared horizon"
+description: "Definition — conjectural learning is learning in which formulated tentative theories are operative objects within the learning system: used, criticized for what they say, with the result of that criticism carried to a declared later use"
 type: kb/types/definition.md
 tags: [foundations, self-improving-systems, learning-theory]
 ---
@@ -9,7 +9,7 @@ tags: [foundations, self-improving-systems, learning-theory]
 **Conjectural learning** is learning in which tentative theories are
 formulated, operative objects within the learning system: the system uses
 them, criticizes what they say, and carries the result of that criticism
-across a declared horizon. It is Popper's process of conjecture and criticism
+up to a declared horizon. It is Popper's process of conjecture and criticism
 under two conditions:
 
 1. **A formulated theory is operative.** A
@@ -18,14 +18,15 @@ under two conditions:
    through what it says: a difference in its content that matters to a
    decision changes that decision
    ([operative change](../../../notes/definitions/operative-change.md)).
-2. **Criticism of what the theory says has an effect that persists across a
+2. **Criticism of what the theory says has an effect that persists up to a
    declared horizon.** Criticism here means an attempt to find an error: an argument,
    or a test of a stated consequence, aimed at something the theory says, and
    itself formulated in language. When the criticism counts against the
    theory, the theory is revised or replaced in response. When the theory
    survives, the result is recorded. In both cases what the criticism says
-   shapes what changes, and the change guides work beyond the declared
-   horizon, such as the next episode or a later task.
+   shapes what changes, and the change guides a later use that the claim
+   declares: a later decision in the same episode, the next episode, or a
+   later task. That later use is the horizon.
 
 The unit is the whole learning system, with a declared boundary. Its prompts,
 files, code, tests, and records are parts of it, as the model weights are.
@@ -74,7 +75,7 @@ text that could be understood already counts, and criticism results as a rule
 in a new problem, taken up or not. A definition of a system's learning has to
 name the system. The theory is on the causal path of that system's decisions,
 the system actually uses it, and the effect of criticism persists for that
-system across the declared horizon.
+system up to the declared horizon.
 
 The reasons for each narrowing and for the addition, and what the KB
 conjectures they buy, are argued in
@@ -82,11 +83,12 @@ conjectures they buy, are argued in
 
 ## Scope
 
-- **The horizon is declared, and the claim is relative to it.** The horizon
-  is the boundary the effect has to cross: the end of a decision, an episode,
-  or a task. A theory revised and reused within one episode supports a
-  within-episode claim. The research program's claims concern episode
-  boundaries.
+- **The later use defines the horizon, and the claim reaches only that far.**
+  Learning is always a claim that something changed now is used later. The
+  claim names that later use, and the definition sets no minimum. A theory
+  revised and reused within one episode supports a within-episode claim and
+  says nothing about the next episode. The research program's claims declare
+  later episodes.
 - **The term classifies by what is formulated and persists.** It makes no
   claim about what happens inside the model. A model may criticize
   conjectures internally while reading raw records, as training may do inside
@@ -143,8 +145,9 @@ naming it.
   persist. This is the frozen-seed baseline of the
   [testing supplement](../../../articles/testing-the-theory-refinement-program.md#the-hypotheses).
 
-- **A theory built while reasoning and discarded after the decision.**
-  Nothing of it persists across an episode boundary.
+- **A theory built while reasoning and discarded after the decision.** It can
+  support a within-episode claim. Nothing of it reaches a later episode, the
+  use the research program's claims declare.
 - **Reconstruction from raw records.** Traces, inputs, and outcomes are kept,
   and a theory is rebuilt from them when needed. Evidence persists; the
   effect of criticism does not. The arrangement needs no criticism step.

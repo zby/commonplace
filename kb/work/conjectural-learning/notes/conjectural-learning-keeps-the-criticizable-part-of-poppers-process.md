@@ -92,7 +92,7 @@ opening section, verbatim), whether or not anyone takes the problem up.
 A definition of a system's learning has to put the subject back. It names the
 system whose decisions the theory guides, requires that the system actually
 uses the theory, and requires that the effect of criticism persists for that
-system across a declared horizon. This addition is of a different kind from
+system up to a declared horizon. This addition is of a different kind from
 the narrowings. The narrowings select among the cases Popper's process
 covers; the addition ties the process to one system.
 

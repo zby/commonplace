@@ -93,6 +93,13 @@ who decided, and why the earlier formulation was dropped.
   criticizing stays inside the term. How far the critic's errors are
   decorrelated from the proposer's is a design dimension, and what it buys is
   an open question in the companion note.
+- **The later use defines the horizon (operator, 2026-09-20).** Learning is
+  always about something used later, and that later use defines the scope of
+  the claim. The definition sets no minimum durability. A theory revised and
+  reused within one episode is conjectural learning for that within-episode
+  claim, and the research program's own claims declare later episodes. A
+  fixed minimum, such as surviving the context in which the criticism
+  happened, was proposed by the drafting agent and rejected.
 - **Definitions first, migration later.**
 
 ## End state and acceptance
@@ -124,8 +131,6 @@ Do not enrich the classical theory-refinement account as an intermediate step.
 
 ## Open decisions, for the operator
 
-- Whether within-episode learning deserves the word: case 6 of the decision
-  record.
 - Merging the operation and loop definitions. The drafts assume the merge and
   supply no term for a single revision episode.
 - Dropping the classical minimal-revision bias. The drafts drop it: criticism

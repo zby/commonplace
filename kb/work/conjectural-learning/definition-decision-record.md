@@ -80,7 +80,7 @@ Classification under the drafts as of 2026-09-19.
 | 3 | Formulated criticisms are retained and a theory is rebuilt from them when needed | Inside | Persistence of the effect of criticism |
 | 4 | Raw records are retained and a theory is rebuilt from them each time | Comparison | No formulated criticism persists; test 3 |
 | 5 | Prompts or programs are varied and selected by score | Comparison | Criticism of content |
-| 6 | A theory is built while reasoning and discarded after the decision | Comparison when the declared horizon is an episode boundary; inside for a within-episode claim | Declared horizon |
+| 6 | A theory is built while reasoning and discarded after the decision | Inside for a claim that declares a later use within the episode; a comparison for a claim that declares a later episode | The later use defines the horizon. The definition sets no minimum; a small claim is a true small claim |
 | 7 | Weights are adapted and no formulated theory guides decisions | Comparison | Formulation |
 | 8 | Weights, prompts, and code evolve together around a formulated operative theory | Inside. The research program treats it as an extension it does not pursue, since its experiments hold the weights fixed | Both conditions still hold; fixed weights are a study condition under test 1 |
 | 9 | A formulated theory guides decisions and is never criticized | Comparison: the frozen-seed baseline | No criticism; test 2 |
@@ -95,10 +95,12 @@ Classification under the drafts as of 2026-09-19.
 - **Case 3.** The accepted review wording, “retains revisions or
   replacements”, would move it outside. Test 1 keeps it inside, since the
   mechanism is the same and only the cost differs.
-- **Case 6.** Whether within-episode learning deserves the word *learning*.
-
-Settled since adoption: the name is conjectural learning, and case 12 stays
-inside, because independence of the critic is a degree.
+Settled since adoption: the name is conjectural learning; case 12 stays
+inside, because independence of the critic is a degree; and case 6 keeps its
+relative classification. A fixed minimum horizon, such as survival past the
+context in which the criticism happened, was considered and rejected.
+Learning is always a claim that something is used later, and that later use
+defines the scope of the claim, so the definition should not set it.
 
 ## Applied on adoption
 
@@ -132,9 +134,8 @@ inside, because independence of the critic is a degree.
   Popper has no quarrel with them. What cannot be justified are its premises
   about the environment and the utility, and those are what it never
   criticizes.
-- **Left open, as a scope decision for the operator.** Case 6, whether
-  within-episode learning deserves the word. Case 12 was settled on
-  2026-09-20: it stays inside.
+- **Settled afterwards.** Case 12 on 2026-09-20: it stays inside. Case 6 on
+  2026-09-20: the later use defines the horizon, with no minimum.
 
 ## Consequences
 
