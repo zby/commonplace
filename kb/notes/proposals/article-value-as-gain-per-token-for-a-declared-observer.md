@@ -1,10 +1,10 @@
 ---
-description: "Proposal: judge an article by the measured gain it gives a declared observer per token, and make that criterion readable from the text by treating the article as a proposed theory refinement; unadopted vocabulary"
+description: "Proposal: score an article by how much it improves a named model's answers to independently written questions, per token, given a named background corpus; a five-slot text reading is offered as an untested proxy; measures value, not correctness; unadopted vocabulary"
 type: kb/types/note.md
-traits: [has-external-sources, title-as-claim]
+traits: [has-external-sources]
 ---
 
-# A good article is compression progress for a declared observer
+# Article value as gain per token for a declared observer
 
 This is a [theory proposal](./README.md): finished, unadopted, and not a
 premise for other notes.
