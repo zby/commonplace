@@ -1,13 +1,13 @@
 ---
-description: "Definition — an addressable theory is an articulated theory whose assumptions, scope, and parts can be inspected, blamed, and revised individually; a graded structural property, separate from tentative status"
+description: "Definition — an addressable theory is a theory formulated in language whose assumptions, scope, and parts can be inspected, blamed, and revised individually; a graded structural property, separate from tentative status"
 type: kb/types/definition.md
 tags: [foundations, self-improving-systems, learning-theory]
 ---
 
 # Addressable theory
 
-An **addressable theory** is an articulated theory whose assumptions, scope
-conditions, and parts can be inspected and revised individually. A failure
+An **addressable theory** is a theory formulated in language whose
+assumptions, scope conditions, and parts can be inspected and revised individually. A failure
 can then guide a search over candidate parts, and an edit can change selected
 parts while the rest stays in place.
 

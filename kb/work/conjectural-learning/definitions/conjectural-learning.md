@@ -69,9 +69,9 @@ are argued in
 - **The horizon is declared, and the claim is relative to it.** A theory
   revised and reused within one episode supports a within-episode claim.
   The research program's claims concern horizons that cross episodes.
-- **The term classifies by what is articulated and persists.** It makes no
+- **The term classifies by what is formulated and persists.** It makes no
   claim about what happens inside the machine. A model may criticize
-  conjectures internally while reading raw traces, as training may inside
+  conjectures internally while reading raw records, as training may inside
   the weights. Such criticism leaves nothing formulated to inspect or to
   criticize in turn, so it is outside the term without being denied.
 - **Inspection shows half of membership.** Formulated criticisms aimed at
@@ -98,8 +98,9 @@ are argued in
   whole learner's boundary, including human contributions and external
   services. The term extends to a system in which weights, prompts, and code
   evolve together, provided both conditions hold; a claim about such a system
-  says through which carrier the effect of criticism persisted.
-- **Any subject, machinery, and carrier.** The theory may describe an
+  says whether the effect of criticism persisted in the text or in the
+  weights.
+- **Any subject and machinery.** The theory may describe an
   external subject or the system's own organization; the second is the
   reflective case, which composes this term with
   [reflective system](../../../notes/definitions/reflective-system.md). A
@@ -118,8 +119,7 @@ the research program specifies each as its own comparison.
 - **Reconstruction from raw records.** Traces, inputs, and outcomes are kept,
   and a theory is rebuilt from them when needed. Evidence persists; the
   effect of criticism does not. The arrangement needs no criticism step.
-- **Black-box optimization of articulated text.** Variants of a prompt or
-  program are generated and selected by outcome alone. A proposer may read
+- **Black-box optimization of prompts and programs.** Variants are generated and selected by outcome alone. A proposer may read
   the variants, but no formulated reason for a failure bears on what a
   variant says. Systems lie on a range: the
   test is whether a stated reason bears on what the theory says.

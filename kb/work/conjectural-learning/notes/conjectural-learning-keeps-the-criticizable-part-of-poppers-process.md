@@ -36,8 +36,7 @@ survives. Scientists "try to let [their false theories] die in their stead"
 
 A system built on a language model has both levels. The weights hold
 dispositions formed by training, a process that changes the carrier. The
-articulated part, which is prose, prompts, and code, holds formulated
-theories. The model that reads them links the two: "all our actions in the
+formulated part, which is prose, prompts, and code, holds the theories. The model that reads them links the two: "all our actions in the
 first world are influenced by our second-world grasp of the third world"
 (1968, §9, p. 371). Mapping the weights onto Popper's lower level is the KB's
 reading, not his claim.
@@ -96,7 +95,7 @@ Popper's scientist changes along with the theories: objective knowledge feeds
 back on the mind that grasps it. With fixed weights that channel is closed,
 and each episode reads the theory afresh. Two consequences follow.
 
-- The articulated part must carry all of the learning, including what a
+- The formulated part must carry all of the learning, including what a
   person would absorb as tacit skill. Attribution becomes cleaner, since
   parameter updates are ruled out as a source of change, and reliable
   interpretation of prose becomes the central empirical risk.
@@ -116,15 +115,17 @@ adapter comparison found no content-specific effect
 
 ## The narrowing bets on two conjectures
 
-Each conjecture has a baseline among the definition's separate comparisons,
-and either baseline may match or beat a conjectural learner. That is what the
+Each conjecture is tested against arrangements that fail one of the
+definition's conditions, its separate comparisons. In an experiment such an
+arrangement is a baseline, and a baseline may match or beat a conjectural
+learner. That is what the
 experiments measure.
 
 **The content conjecture: criticism of what a theory says learns more from
 each failure than selection by outcome.** The reasoning is that a score
 carries few bits, while a criticism says which claim failed and why, so one
 failure can rule out a family of variants, and the reason is retained with
-the survivor. The baseline is black-box optimization of articulated text, as
+the survivor. The baseline is black-box optimization of prompts and programs, as
 in score-driven prompt optimizers and evolutionary program search. The
 [Meta-Agent Challenge](../../../sources/meta-agent-challenge-autonomous-agent-development.ingest.md)
 is an instance that requires no explicit conjecture.
