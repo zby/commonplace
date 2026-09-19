@@ -1,5 +1,5 @@
 ---
-description: "Lead article: theory refinement with fixed model weights as a learning paradigm, its departures from classical refinement, its conjectured attractions, and an outline of the theory builder, hypotheses, and first arrangement"
+description: "Lead article: learning by theory refinement with fixed model weights as a learning paradigm, its departures from classical refinement, its conjectured attractions, and an outline of the theory builder, hypotheses, and first arrangement"
 type: kb/articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak

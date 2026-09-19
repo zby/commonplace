@@ -34,7 +34,7 @@ Not every mechanism exposes all of these steps as separate components. A direct 
 | Program search | Symbolic programs, schemas, workflows, evaluators, or tool compositions | Produces executable and testable machinery | Search spaces and evaluators can encode decisive human-supplied family knowledge |
 | Learned construction or selection policy | Parametric or artifact-based policy for choosing or building machinery | Amortizes repeated decisions and can improve with scale | Hidden credit assignment, distribution shift, and limited inspectability |
 | Direct optimization | Weights, adapters, continuous policies, scores, or other directly updated state | Can integrate large amounts of feedback without explicit hand decomposition | Update cost, catastrophic interference, weak localization, and difficulty coordinating heterogeneous artifacts |
-| Theory refinement | Addressable project-specific claims about tasks, solvers, failures, interventions, evidence, and scope | Makes the theory-bearing function explicit, selectively revisable, and usable across several artifact kinds | Plausible rationalization, interpretation error, maintenance cost, and dependence on model reading and application |
+| [Learning by theory refinement](./definitions/learning-by-theory-refinement.md) | Addressable project-specific claims about tasks, solvers, failures, interventions, evidence, and scope | Makes the theory-bearing function explicit, selectively revisable, and usable across several artifact kinds | Plausible rationalization, interpretation error, maintenance cost, and dependence on model reading and application |
 | Mixed mechanisms | Different forms and update methods at different layers or timescales | Matches mechanisms to the structure and verifiability of each subproblem | Cross-layer inconsistency and opaque responsibility for failures |
 
 The table is a working comparison, not an exhaustive taxonomy. A concrete system can instantiate several rows at once.
@@ -108,7 +108,7 @@ A theory-surface intervention tests whether making project theory explicit and a
 - The program's scoped claim that open-ended coherent modification requires a project-theory function is a stronger adequacy condition, not part of the minimal retention condition.
 - Readability, addressability, exact execution, and parametric compression are properties with costs and benefits, not rankings.
 - Mixed mechanisms are the default serious alternative to any single update method.
-- Natural-language theory refinement earns support only through comparative causal and outcome evidence; indispensability attaches to the theory-bearing function, not automatically to this carrier.
+- The natural-language form of learning by theory refinement earns support only through comparative causal and outcome evidence; indispensability attaches to the theory-bearing function, not automatically to this carrier.
 
 ---
 

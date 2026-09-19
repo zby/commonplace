@@ -191,7 +191,7 @@ concerns when retaining and refining theories serves those decisions well.
 Neither history growth alone nor the need for derived state establishes
 an advantage for theories.
 
-## Why choose theory refinement provisionally
+## Why choose learning by theory refinement provisionally
 
 **Retained theories can save repeated synthesis.** An explanation derived
 from many episodes can be retained and consulted without repeating its
@@ -201,7 +201,7 @@ knowledge. This may cost less than reconstructing it, but bounded context
 does not establish that comparison. Periodic reconstruction or a combined
 strategy may perform better.
 
-An [addressable theory](../definitions/theory-refinement.md#what-the-loop-requires-of-a-theory)
+An [addressable theory](../definitions/theory-refinement.md#what-the-operation-requires-of-a-theory)
 has consequences that evidence can contradict, parts available as candidate
 repair locations, and parts editable separately. These properties make it
 possible to target a revision and inspect what changed. They do not

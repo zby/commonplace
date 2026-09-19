@@ -1,5 +1,5 @@
 ---
-description: "Conjecture: theory refinement, learning that discovers, assesses, and revises addressable theories, may need fewer target observations when a shift preserves the structure a theory names"
+description: "Conjecture: learning by theory refinement, learning that discovers, assesses, and revises addressable theories, may need fewer target observations when a shift preserves the structure a theory names"
 type: kb/types/note.md
 traits: [title-as-claim, has-external-sources]
 tags: [learning-theory, discovery]
@@ -9,7 +9,7 @@ tags: [learning-theory, discovery]
 
 When a task changes, a learner can adapt by fitting new behavior directly to new observations. It can also learn model-based: infer a model that explains the observations, then reuse or revise that model when the task changes. Under shifts that preserve some underlying structure, the second route may need fewer target observations.
 
-This note concerns theory refinement: the case where the model is a theory in the sense of [the definition](./definitions/theory-refinement.md), with consequences a case can contradict and parts available for candidate repairs, and the learner keeps it, reuses it, and revises it when evidence contradicts it. The learner can derive what the theory implies, expose an assumption, compare a rival, or narrow a scope, rather than only reproduce the behavior the model induces. The theory may be natural language, a causal model, a program, or another representation.
+This note concerns [learning by theory refinement](./definitions/learning-by-theory-refinement.md): the case where the model is a theory in the sense of [the definition](./definitions/theory-refinement.md), with consequences a case can contradict and parts available for candidate repairs, and the learner keeps it, reuses it, and revises it when evidence contradicts it. The learner can derive what the theory implies, expose an assumption, compare a rival, or narrow a scope, rather than only reproduce the behavior the model induces. The theory may be natural language, a causal model, a program, or another representation.
 
 The conjectured pathway is:
 
@@ -86,7 +86,7 @@ Removing the explicit reach-based selector therefore need not erase the reuse be
 
 ## Open Questions
 
-- Whether a task family with controlled structured shift can be exhibited where the theory-refinement pathway measurably reaches fixed performance on fewer target observations — and whether one can be exhibited where it measurably fails to.
+- Whether a task family with controlled structured shift can be exhibited where this pathway measurably reaches fixed performance on fewer target observations — and whether one can be exhibited where it measurably fails to.
 - Whether the declared selection policies produce measurably different choices, and how much implicit reach-assessment remains in the source-fit comparator or downstream revision procedure.
 - Whether hybrid pathways — parametric adaptation guided by retrieved explicit theories — dominate both pure pathways, turning the contest into an engineering question about composition.
 - Whether a theory's explanatory-reach can be estimated from its addressable form before any shift tests it, or whether legibility supplies only a handle on reach established some other way.
@@ -98,7 +98,7 @@ Removing the explicit reach-based selector therefore need not erase the reuse be
 
 Relevant Notes:
 
-- [Theory refinement](./definitions/theory-refinement.md) — defined-in: the loop this note's pathway instantiates, what it requires of a theory, and the interpreted consequence relation of the prose case
+- [Theory refinement](./definitions/theory-refinement.md) — defined-in: the operation this note's pathway repeats, what it requires of a theory, and the interpreted consequence relation of the prose case
 - [Reach-assessment](./definitions/reach-assessment.md) — defined-in: the capability that selects the theory whose reach could pay, and which retention does not supply
 - [First-principles reasoning selects for explanatory-reach over adaptive fit](./first-principles-reasoning-selects-for-explanatory-reach-over.md) — grounds: the property that carries the conjectured gain, and the negative test that judges it
 - [Recognition, not linking, is the hard problem in knowledge systems](./recognition-not-linking-is-the-hard-problem-in-knowledge-systems.md) — grounds: theory search turns on recognizing prior observations as instances of a proposed structure, the step that carries the cost

@@ -1,5 +1,5 @@
 ---
-description: "Supplement: the automated software house conjecture as a second test of theory refinement with fixed models; the 2026-09-02 claim, Naur's program theory, four witness conditions, and the knowledge-base comparison"
+description: "Supplement: the automated software house conjecture as a second test of learning by theory refinement with fixed models; the 2026-09-02 claim, Naur's program theory, four witness conditions, and the knowledge-base comparison"
 type: kb/articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
@@ -28,7 +28,8 @@ changing software for its users. We conjecture that an automated one is
 possible with LLM weights held fixed: computation performs every production
 decision, and the house learns by revising its retained knowledge and
 machinery rather than its models. This is a second way to test the
-paradigm of the lead article, learning by theory refinement with fixed
+paradigm of the lead article, [learning by theory
+refinement](../notes/definitions/learning-by-theory-refinement.md) with fixed
 models, whose first test is a knowledge base. The theory a house refines
 is *program theory*, the term Peter Naur, the computer scientist who argued
 that programming is theory building, used for the understanding of a
@@ -283,8 +284,8 @@ This supplement does not rely on it in either direction.
 
 ## Relation to the program
 
-The lead article proposes theory refinement with fixed models as a
-learning paradigm and states three hypotheses about a theory builder,
+The lead article proposes learning by theory refinement with fixed models
+as a learning paradigm and states three hypotheses about a theory builder,
 tested through what the builder receives from outside: a falsifier, an
 objective, and an outcome level it does not judge itself. A software house
 is one arrangement that supplies those three, through product operation

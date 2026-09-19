@@ -16,7 +16,7 @@ learning methodology are questions about this whole system, and the
 components usually named, a model, a harness, a refinement algorithm, are
 each only part of it.
 
-A theory here is an [addressable theory](./theory-refinement.md#what-the-loop-requires-of-a-theory):
+A theory here is an [addressable theory](./theory-refinement.md#what-the-operation-requires-of-a-theory):
 a unit with consequences a case can contradict, parts available as candidate
 repair locations, and parts editable separately, in any form. The
 definition leaves open how a builder revises its theories. It may refine an

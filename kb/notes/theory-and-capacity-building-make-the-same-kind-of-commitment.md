@@ -31,9 +31,9 @@ Neither commitment needs to be correct or permanent; later experience can defeat
 
 Refactoring is the disciplined case on the constructive side: backtracking over a design commitment while preserving the externally observable behavior other commitments depend on. Broader retractions become redesign. At either scale the operation is the same — backtrack over a commitment, propagate the revision through its dependents — and it is part of what [holding a program theory means sustaining coherent search under delayed feedback](./program-theory-sustains-search-under-delayed-feedback.md) demands of a theory-holder. It is also why the current artifact alone can be insufficient for coherent modification: the learner needs enough theory to recognize which visible structures embody commitments and what else depends on them.
 
-## Theory refinement is one causal path between the two forms
+## Learning by theory refinement is one causal path between the two forms
 
-Capacity does not have to be built through theory: search, optimization, and trajectory reuse can turn experience into constructive commitments directly. The theory-refinement hypothesis singles out one path:
+Capacity does not have to be built through theory: search, optimization, and trajectory reuse can turn experience into constructive commitments directly. The hypothesis of [learning by theory refinement](./definitions/learning-by-theory-refinement.md) singles out one path:
 
 ```text
 experience

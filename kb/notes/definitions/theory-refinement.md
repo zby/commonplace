@@ -40,10 +40,10 @@ small edits and few operations; its hill-climbing search can stop before
 training consistency is reached. Neither unique fault identification nor
 preservation of all previously correct behavior follows from the task definition.
 
-## What the loop requires of a theory
+## What the operation requires of a theory
 
-Three properties, implicit in the classical object, are what the loop uses.
-The KB calls a theory that supplies them **addressable**. The loop requires
+Three properties, implicit in the classical object, are what the operation uses.
+The KB calls a theory that supplies them **addressable**. The operation requires
 an addressable theory; *theory* otherwise keeps its ordinary sense, and
 broader forms qualify by the same test:
 
@@ -78,7 +78,7 @@ established as true; a corroborated theory remains tentative, and changing
 its representational form does not establish its truth.
 
 The KB borrows the status and adds nothing to it. The structural
-requirements come from the loop above; applying Popper's term to that
+requirements come from the operation above; applying Popper's term to that
 object is the KB's use of his vocabulary, not a claim that its machinery or
 acceptance rules are part of his definition. The term does not specify how
 much support permits retention, experimental use, routine reliance, or
@@ -119,7 +119,7 @@ sources. The first forces the second; the third is independent of both.
   language, a program, a causal model, or a mixture, not only a rule set. This
   follows from the machinery departure and is not a separate one.
   [Representational form](./representational-form.md) fixes the assessment
-  route, not whether the loop applies.
+  route, not whether the operation applies.
 - **Subject.** The theory may describe the learner's own behavior-determining
   organization. The classical papers say their theory is external.
   **Reflective theory refinement** is theory refinement whose theory is a
@@ -148,7 +148,8 @@ Codification alone does not supply diagnosis or successful repair. A failed
 check must be connected to the theory commitments it tests before it can
 guide candidate edits. Evaluation then tests the revised theory against the
 failure and other cases; its conclusions are bounded by those checks. The
-KB has not shown that its mixed-form loop arranges these functions reliably.
+KB has not shown that the operation arranges these functions reliably over
+a mixed-form theory.
 Where no crossing has happened, withholding or perturbing the theory and
 observing a changed decision supplies evidence that it shaped that decision.
 Whether a model interprets prose theories consistently enough to support
@@ -186,7 +187,7 @@ the uncertainty is not a universal bar to diagnosis.
   by operation, not by machinery.
 - **Not a success term.** A false theory refines as readily as a true one.
   Whether a theory earns its scope is [reach-assessment](./reach-assessment.md),
-  which the loop neither supplies nor presupposes. Among revisions that fit the
+  which the operation neither supplies nor presupposes. Among revisions that fit the
   evidence, reach is preferred.
 - **Independent of subject.** A theory of an external target and a theory of
   the learner's own organization are applied, generalized from, and refined
@@ -229,8 +230,10 @@ the uncertainty is not a universal bar to diagnosis.
 *Theory refinement* is the noun and *refine* the verb. [*Learning by theory
 refinement*](./learning-by-theory-refinement.md) names the recurrent loop
 and the paradigm; the compound is the technical term. *Reflective theory
-refinement* composes with *reflective system*. *Addressable theory* names a
-theory that supplies the three loop requirements; *tentative theory* is
+refinement* composes with *reflective system*. The compound covers the
+recurrent reflective loop as well as a single reflective revision; no
+separate compound is coined for the loop. *Addressable theory* names a
+theory that supplies the three requirements of the operation; *tentative theory* is
 Popper's term for its epistemic status, adopted on 2026-09-17 in place of
 the KB's earlier *fallible theory*. *Theory-mediated learning* and
 *theory-mediated system learning* are retired names for the genus and for the
@@ -250,7 +253,7 @@ Relevant Notes:
 - [Disconnected witnesses do not establish a full causal path through theory](../disconnected-witnesses-do-not-establish-a-causal-path-through-theory.md) — extends: what separate links must share before they compose into one refinement path
 - [Citing retained theory at the decision point is a mediation trace](../citing-retained-theory-at-the-decision-point-is-a-mediation-trace.md) — mechanism: the cheapest checkable evidence that a theory entered a decision
 - [Codification](./codification.md) — grounds: the crossing that gives a part of a theory a computed consequence relation
-- [Representational form](./representational-form.md) — grounds: the axis that fixes the assessment route without fixing whether the loop applies
+- [Representational form](./representational-form.md) — grounds: the axis that fixes the assessment route without fixing whether the operation applies
 - [Reach-assessment](./reach-assessment.md) — contrasts: the judgment that decides whether a theory deserves its scope; refinement does not supply it
 - [Reflective system](./reflective-system.md) — contrasts: an independent condition on what the theory is about
 - [Self-improving system](./self-improving-system.md) — contrasts: an independent condition on whether the change persists as operative improvement

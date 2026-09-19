@@ -1,5 +1,5 @@
 ---
-description: "Theory use, outcome, theory revision, and later use establish theory refinement as one closed loop only when their witnesses identify the joins of the same full causal path"
+description: "Theory use, outcome, theory revision, and later use establish learning by theory refinement only when their witnesses identify the joins of the same full causal path"
 type: kb/types/note.md
 traits: [title-as-claim, synthesis]
 tags: [foundations, self-improving-systems, evaluation]
@@ -7,7 +7,7 @@ tags: [foundations, self-improving-systems, evaluation]
 
 # Disconnected witnesses do not establish a full causal path through theory
 
-A claim that a system learned by [theory refinement](./definitions/theory-refinement.md) as one closed loop, that its theory guided a decision, the consequence revised the theory, and the revision guided later work, is a claim about a connected causal path, not a checklist of events that happened somewhere in the same project. Evidence that a theory existed, a decision occurred, an outcome followed, the theory later changed, and a later operation used some retained state does not by itself show that learning proceeded through that theory. The witnesses must identify the joins that make those events one full causal path.
+A claim of [learning by theory refinement](./definitions/learning-by-theory-refinement.md), that a system's theory guided a decision, the consequence revised the theory, and the revision guided later work, is a claim about a connected causal path, not a checklist of events that happened somewhere in the same project. Evidence that a theory existed, a decision occurred, an outcome followed, the theory later changed, and a later operation used some retained state does not by itself show that learning proceeded through that theory. The witnesses must identify the joins that make those events one full causal path.
 
 The strongest path has this shape:
 
@@ -43,7 +43,7 @@ The exact event schema is an operational choice. This note establishes only what
 
 ## Scope
 
-- A full path is the strongest claim of theory refinement as a recurrent loop, not the minimum evidence for every useful theory-guided change. Mediation, empirical contact, and theory revision remain reportable partial results at their recorded strength.
+- A full path is the strongest claim of learning by theory refinement, not the minimum evidence for every useful theory-guided change. Mediation, empirical contact, and theory revision remain reportable partial results at their recorded strength.
 - Co-indexing establishes identity across witnesses; it does not by itself establish that every link is causal. Interventions, independent exposure, and appropriate controls are still needed for the causal strength claimed.
 - The path may cross model-mediated, symbolic, environmental, and human components. Full-path identity does not imply one substrate or an autonomous technical subsystem.
 - The required identifiers depend on the contrast and inference. Recording more fields cannot repair an experiment that never ran the relevant contrast.
@@ -55,4 +55,5 @@ Relevant Notes:
 - [Reflective theory refinement needs interpretation, retention, and independent read-back](./reflective-theory-refinement-needs-interpretation-and-retention.md) — grounds: supplies the distinct functions, evidence ladder, and requirement that they share a co-indexed causal path
 - [Citing retained theory at the decision point is a mediation trace](./citing-retained-theory-at-the-decision-point-is-a-mediation-trace.md) — grounds: supplies the observable theory-to-decision edge and bounds what a citation establishes
 - [History has one chance to become checkable](./history-has-one-chance-to-become-checkable.md) — grounds: explains why non-re-derivable joins must be converted into carried evidence while available
-- [Theory refinement](./definitions/theory-refinement.md) — defined-in: the revision operation whose closed-loop form this note's full path is evidence for
+- [Learning by theory refinement](./definitions/learning-by-theory-refinement.md) — defined-in: the recurrent loop this note's full path is evidence for
+- [Theory refinement](./definitions/theory-refinement.md) — defined-in: the revision operation the loop repeats
