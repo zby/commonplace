@@ -79,7 +79,7 @@ Classification under the drafts as of 2026-09-19.
 | 5 | Prompts or programs are varied and selected by score | Comparison | Criticism of content |
 | 6 | A theory is built while reasoning and discarded after the decision | Comparison at a cross-episode horizon; inside for a within-episode claim | Declared horizon |
 | 7 | Weights are adapted and no formulated theory guides decisions | Comparison | Formulation |
-| 8 | Weights, prompts, and code evolve together around a formulated operative theory | Inside, as an extension | Both conditions still hold |
+| 8 | Weights, prompts, and code evolve together around a formulated operative theory | Inside. The research program treats it as an extension it does not pursue, since its experiments hold the weights fixed | Both conditions still hold; fixed weights are a study condition under test 1 |
 | 9 | A formulated theory guides decisions and is never criticized | Comparison: the frozen-seed baseline | No criticism; test 2 |
 | 10 | A theory is stored and nothing consumes it | Excluded; as a baseline it is the system run without the theory | Not operative |
 | 11 | A theory survives an attempted refutation and the result is recorded | Inside | Criticism is attempted elimination |

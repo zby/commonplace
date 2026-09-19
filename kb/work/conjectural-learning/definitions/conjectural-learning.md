@@ -30,8 +30,11 @@ under two conditions:
 The unit is the whole learning system, with a declared boundary. Its prompts,
 files, code, tests, and records are parts of it, as the model weights are.
 Three distinctions stay separate: inside or outside the model weights,
-formulated or latent, and inside or outside the system's boundary. A
-formulated theory is inside the system and outside the weights.
+formulated or latent, and inside or outside the system's boundary. The
+definition requires a formulated theory inside the system. It does not say
+where the rest of the learned change is held: with fixed weights all of it
+is outside the weights, and when weights, prompts, and code evolve together
+some of it is in the weights.
 
 What the system has learned is the change in its later behavior that is
 attributable to the persisted effect of criticism.
@@ -148,7 +151,7 @@ naming it.
   formulated reason for a failure bears on what a variant says. Real systems
   fall between this case and conjectural learning. The test is whether a
   stated reason bears on what the theory says.
-- **Weight adaptation.** Something persists, but nothing is formulated, so
+- **Weight adaptation alone.** Something persists, but nothing is formulated, so
   there is nothing to criticize, replace, or inspect on its own.
 - **Justification before change.** A formulated theory guides decisions and
   is revised only when it proves its own revision beneficial, as in the
