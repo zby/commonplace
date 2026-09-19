@@ -17,6 +17,32 @@ conclusions were adopted. Its definitions and article reframes are now in the
 library. This workshop owns the assessment of the adopted hypotheses below;
 the original adoption record remains in git commit `28a2ea8d`.
 
+## Two layers
+
+Early use in an enterprise showed that a run can assess Commonplace at two
+layers, and an episode must say which.
+
+- **Builder layer.** A project's people and agents use the framework to
+  build their own KB. The product is the framework release, and the outcome
+  is whether they reach an accepted KB and what it costs them in their own
+  work.
+- **Product layer.** A project's agents use a finished KB on their tasks,
+  and judges accept or reject that work. The goal statement above and the
+  [three episodes](./main-path-episodes.md) describe this layer.
+
+The enterprise's first finding is at the builder layer: the framework is
+complex and asks the operator to learn a great deal. The current tool work
+responds to it. The [first experiment](./first-experiment.md) measures that
+response on one real task with a matched comparison, and is the smallest
+run that meets this workshop's records requirements. The product layer
+comes after it.
+
+The enterprise's records are confidential. The protocol's
+[disclosure rules](./commonplace-evidence-protocol.md#confidential-consuming-projects)
+keep raw records inside the enterprise and publish only the declaration,
+computed measurements, and automatic summaries from a
+[pinned prompt](./summary-prompt.md) and a pinned model.
+
 ## Adopted hypotheses
 
 > **Sufficiency hypothesis.** A training methodology expressed in
@@ -62,21 +88,27 @@ of a theory builder.
 
 ## What closes the workshop
 
-1. The protocol's freeze table is filled: consuming project and area, seed,
-   models, task supply, outcome contract, budget, horizon, reliability
-   target, feedback, and acquisition mode. The first consuming project is
-   the operator's choice and is the only item nothing else here depends on.
-2. At least one product-revision episode and one reflective episode have
+1. The protocol's freeze table is filled: consuming project and area,
+   product assessed, seed, models, task supply, outcome contract, budget,
+   horizon, reliability target, feedback, acquisition mode, and disclosure.
+   The operator proposed an enterprise deployment as the first consuming
+   project on 2026-09-19; it is settled when the enterprise agrees to the
+   disclosure rules.
+2. The [first experiment](./first-experiment.md) has been run and recorded,
+   or replaced by a simpler one that still has a matched comparison.
+3. At least one product-revision episode and one reflective episode have
    been run and recorded with the release, consumption, outcome, and
    feedback records the protocol requires, including the matched-ablation
    baseline and the control runs.
-3. The recorded episodes are assessed against the
+4. The recorded episodes are assessed against the
    [externally tested](../../notes/definitions/externally-tested-theory-builder.md)
    and [reflective](../../notes/definitions/reflective-theory-builder.md)
    definitions, and whatever the run broke in those definitions is returned
    to the library as a revision, not patched here.
-4. The exact run records are retained under `kb/reports/retained/`, and
-   any transferable finding becomes a note. The protocol either becomes an
+5. The exact run records are retained under `kb/reports/retained/`, or,
+   for a confidential project, the published part of them is: the
+   declaration, measurements, summaries, prompt, and hashes. Any
+   transferable finding becomes a note. The protocol either becomes an
    instruction, if a second run is wanted, or is retained with the records.
 
 ## Evaluation boundary
@@ -87,7 +119,8 @@ they cite, and the records the run produces. The
 records how prior systems fare on the four deployment questions the run
 must answer for Commonplace. No measurement exists yet; the protocol's own
 statement that it is not evidence of a completed run stands until closing
-condition 2 is met.
+condition 2 is met. The enterprise's early reports are development
+feedback: they motivated the current fixes and are not assessment evidence.
 
 ## Coordination
 
@@ -102,4 +135,5 @@ condition 2 is met.
   for matched runs, including the cost of theory maintenance.
 
 Write scope while open: this directory, plus `kb/reports/retained/` for
-exact run records.
+exact run records. Confidential raw records are never written to this
+repository.
