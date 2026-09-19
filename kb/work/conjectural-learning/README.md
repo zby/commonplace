@@ -26,8 +26,8 @@ operator's, given the same day.
 - **Simplification, not a new ontology.** The first candidate defined a
   general “conjectural learning” with four roles and a coined *uptake*
   condition. It excluded almost nothing: nine of ten boundary cases were
-  eligible or undetermined, and for an LLM any criticism in context affects
-  the next output, so uptake was satisfied by construction. Cite Popper's
+  eligible or undetermined, and merely placing criticism in an LLM's context
+  did not establish a lasting learning effect. Cite Popper's
   schema, which already has a name and an attribution, and define only what
   we add.
 - **What we add.** An articulated tentative theory on the causal path of
@@ -38,17 +38,51 @@ operator's, given the same day.
   developed outside the body the object of critical discussion. He claims
   this for rational criticism, not for learning in general. See
   [Popper foundation](./popper-foundation.md).
-- **Reconstruction from records is inside the approach.** The effect of
-  criticism may persist through a retained theory or through records from
-  which a theory is reconstructed. Retaining the theory is our preferred
-  implementation on an efficiency conjecture: reconstruction repeats
-  interpretive and inferential work, and bounded context raises that cost
-  because the relevant records may not fit together. The claim is ours and
-  untested. Compare the implementations by cost at comparable decision
-  quality and by quality under matched budgets, counting retained-theory
-  maintenance; vary context capacity or record volume to test the claimed
-  exacerbation. Within-episode discard and weight adaptation stay separately
-  specified comparisons, not cases that lack a paradigm condition.
+- **Reconstruction splits in two, and we compare against both.** The first
+  direction put all reconstruction from records inside the approach. Once
+  criticism had to address the theory's content, a gap showed: raw traces
+  hold no criticism, and we cannot know whether a model criticizes internally
+  while rebuilding a theory from them. The term therefore classifies by what
+  is articulated and persists, and claims nothing about the machine's
+  insides, as with the weights. Reconstruction from retained criticisms stays
+  inside; reconstruction from raw records is a separate comparison. It is the
+  primary one: the operator's assessment is that regeneration from raw
+  records is now the dominant approach, and it requires no criticism, so the
+  comparison tests whether formulated, persisted criticism buys anything. The
+  comparison with retained criticisms asks what the assembled theory adds.
+  Retaining
+  the theory is our preferred implementation on an efficiency conjecture:
+  the three arrangements persist none, some, or all of the work of conjecture
+  and criticism, cost at comparable decision quality should fall in that
+  order, and bounded context should widen the gaps because the relevant
+  records may not fit together. The claim is ours and untested. Compare by
+  cost at comparable decision quality and by quality under matched budgets,
+  counting retained-theory maintenance; vary context capacity or record
+  volume. Within-episode discard and weight adaptation stay separately
+  specified comparisons.
+- **Only the articulated part evolves.** We do not oppose Popper's learning
+  without language; our systems have that level too, in the model weights,
+  which hold dispositions formed by training. We choose to evolve the
+  articulated part: prose, prompts, and code. With fixed weights the
+  articulated part must carry all of the learning, and background knowledge
+  in the weights can be criticized only through a retained theory about the
+  interpreter. Coevolution of weights, prompts, and code is an admitted
+  extension of the term, with its own section in the draft: both conditions
+  must still hold, and it reopens the feedback from theories to the
+  interpreter that Popper's scientist has. It is not the primary goal.
+- **Criticism must address the theory's content and a part of it.** The new
+  papers showed that the draft admitted two cases we do not study.
+  Black-box optimization of articulated text selects variants by outcome
+  alone; nothing reads them as claims. Unaddressed revision processes a
+  failure but blames no part and rewrites the theory whole. Both are separate
+  comparisons. Conjectural learning therefore requires an addressable theory
+  after all, and criticism that names the part that probably caused the
+  failure. This requirement is ours, not Popper's, and is made on practical
+  grounds. The causal-path test is also about content: a theory of the same
+  form with different content must lead to different decisions, since
+  placebo-controlled studies found form effects without content effects.
+  For Popper all learning is selection, not instruction, so the contrast is
+  what eliminates and what it acts on, not criticism against selection.
 - **The name.** *Theory refinement* leaves the library altogether, so
   *learning by theory refinement* does not survive. The working replacement
   is **conjectural learning**, “or something similar”. It names our scoped
@@ -86,10 +120,9 @@ Do not enrich the classical theory-refinement account as an intermediate step.
 - The final form of the name.
 - Merging the operation and loop definitions. The drafts assume the merge and
   supply no term for a single revision episode.
-- Dropping the classical minimal-revision bias. The drafts drop it and treat
-  addressability as a graded property and a possible benefit, not a
-  membership condition. No retained claim has yet been checked for dependence
-  on the bias.
+- Dropping the classical minimal-revision bias. The drafts drop it: the part
+  a criticism blames may be a core assumption and its successor may be bold.
+  No retained claim has yet been checked for dependence on the bias.
 
 ## Cautions carried from the first candidate
 

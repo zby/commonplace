@@ -13,10 +13,10 @@ parts while the rest stays in place.
 
 The KB needs the term to keep a structural property apart from an epistemic
 status. Every retained theory is a [tentative theory](./tentative-theory.md);
-only some are addressable, and
-[conjectural learning](./conjectural-learning.md) does not
-require it. What addressability is expected to buy is local criticism and
-repair: keeping what still works while changing what failed. Whether it
+only some are addressable.
+[Conjectural learning](./conjectural-learning.md) requires it, because its
+criticism must address the part it blames. What addressability is expected to
+buy is keeping what still works while changing what failed. Whether it
 delivers that benefit is an empirical question.
 
 ## Scope
@@ -69,8 +69,8 @@ them.
 
 ## Misuse Cases
 
-- Using *addressable* as a condition on tentative status or on membership in
-  the paradigm.
+- Using *addressable* as a condition on tentative status. Conjectural
+  learning requires an addressable theory; being tentative does not.
 - Reading mechanically checked consequences into a prose part. For a
   natural-language part, "derived" means interpreted until the part is
   codified.
@@ -82,7 +82,7 @@ them.
 Relevant Notes:
 
 - [Tentative theory](./tentative-theory.md) — contrasts: the epistemic status, which requires no structure
-- [Conjectural learning](./conjectural-learning.md) — extends: the paradigm in which addressability is a possible benefit
+- [Conjectural learning](./conjectural-learning.md) — extends: the paradigm that requires an addressable theory
 - [Representational form](../../../notes/definitions/representational-form.md) — grounds: the localization and assigned-consequences axes
 - [Codification](../../../notes/definitions/codification.md) — grounds: the crossing that gives a part computed consequences
 - [Reflection buys addressability](../../../notes/reflection-buys-addressability.md) — extends: what addressability changes about an improvement pathway

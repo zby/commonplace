@@ -44,6 +44,12 @@ Popper distinguishes physical objects, subjective acts or dispositions, and obje
 - **Source extract (verbatim):** Thus I do admit that in order t o belong t o the third world of objective knowledge, a book should - in principle, or virtually - be capable of being grasped (or decyphered, or understood, or ‘known’) by somebody. But I do not admit more.
   - **Source location:** Section 3, The objectivity and the autonomy of the third world, printed p. 342; paragraph beginning Thus I do admit.
 
+- **Source extract (verbatim):** My schema works through error elimination, and on the scientific level through conscious criticism under the regulative idea of the search for truth.
+  - **Source location:** Section 5.2 on Hegel, printed p. 351; sentence immediately following the evolutionary schema P1→TT→EE→P2, in the contrast with Hegel's dialectic.
+
+- **Source extract (verbatim):** Language, the formulation of problems, the emergence of new problem situations, competing theories, mutual criticism by way of argument, all these are the indispensible means of scientific growth.
+  - **Source location:** Section 4, printed p. 347; paragraph following the two senses of 'knowledge', immediately before the sentences on the descriptive and argumentative functions of human language.
+
 ## Connections Found
 
 The source is a conceptual counterpoint for [theory refinement](../notes/definitions/theory-refinement.md). Its tentative theory is a proposed solution open to criticism; it does not stipulate the separately editable repair locations that Commonplace requires of the object of its refinement operation. That difference matters when reconsidering whether an operational restriction should also restrict the epistemological term.
