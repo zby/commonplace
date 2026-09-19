@@ -140,8 +140,8 @@ The paradigm keeps the operation and changes the setting in three ways.
 Each is our departure, not something the classical work claims.
 
 - **The interpreter is a language model, so the theory can be prose.** The
-  classical systems could only refine theories written in the one form
-  their procedures handled. A fixed language model can be given an account
+  classical systems each refined theories written in the one form their
+  procedures handled. A fixed language model can be given an account
   that has not been formalized and asked to apply and revise it, so a
   theory can enter the loop before anyone has written a checker for it.
   Whether the model does this reliably is one of the open questions at the
@@ -210,7 +210,7 @@ cost. Those comparisons are part of what the program has to run.
 A simpler design keeps the records of past work, such as observations, tool
 output, and outcomes, and has the model search them when a decision needs
 them. The model can still build an explanation while it reasons, and it
-discards the explanation afterwards. This is the common design today. While
+discards the explanation afterwards. This is a common design today. While
 a system's experience fits in what the model can use at once, keeping the
 records preserves every recorded detail and commits to no abstraction that
 might be wrong. That does not settle which design works better, because
