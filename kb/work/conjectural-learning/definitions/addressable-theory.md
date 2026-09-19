@@ -14,10 +14,10 @@ parts while the rest stays in place.
 The KB needs the term to keep a structural property apart from an epistemic
 status. Every retained theory is a [tentative theory](./tentative-theory.md);
 only some are addressable.
-[Conjectural learning](./conjectural-learning.md) requires it, because its
-criticism must address the part it blames. What addressability is expected to
-buy is keeping what still works while changing what failed. Whether it
-delivers that benefit is an empirical question.
+[Conjectural learning](./conjectural-learning.md) requires an addressable
+theory, because its criticism aims at a part. The expected benefit is keeping
+what still works while changing what failed; whether that benefit arrives is
+an empirical question.
 
 ## Scope
 
@@ -53,11 +53,11 @@ and [FORTE](../../../sources/automated-refinement-first-order-horn-clause-domain
 are the fully addressable case with computed consequences: a Horn-clause rule
 set, a proof procedure, and named repair operators. They show that, in such a
 setting, proof traces can connect a discrepancy to candidate repair
-locations. They do not show unique fault identification; FORTE's search can
-also stop before its training cases are consistent. The KB cites them as a
-computational precedent for repair under addressability. It does not take its
-paradigm, its notion of theory, or a preference for minimal revision from
-them.
+locations. They do not show unique fault identification, and FORTE's search
+can stop before its training cases are consistent. The KB cites them as a
+precedent for repair under addressability and takes nothing else from them:
+not its paradigm, its notion of theory, or a preference for minimal
+revision.
 
 ## Exclusions
 
@@ -69,8 +69,6 @@ them.
 
 ## Misuse Cases
 
-- Using *addressable* as a condition on tentative status. Conjectural
-  learning requires an addressable theory; being tentative does not.
 - Reading mechanically checked consequences into a prose part. For a
   natural-language part, "derived" means interpreted until the part is
   codified.

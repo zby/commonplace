@@ -20,20 +20,19 @@ stored or edited. Structural properties have their own term,
 
 ## Scope
 
-- **A status, not a stage.** Popper describes proposing a theory as a
-  solution, accepting it provisionally if at all, and criticizing and testing
-  it; a theory stays tentative even when we no longer feel able to doubt it
+- **A status, not a stage.** A theory stays tentative even when we no longer
+  feel able to doubt it
   ([Conjectures and Refutations, Chapters 1 and 15](../../../sources/popper-conjectures-and-refutations.ingest.md#quotes)).
   Corroboration does not end the status, and neither does changing the
-  theory's representational form.
+  theory's representational form. It is not a waiting period.
 - **No required form.** The term does not require symbolic formalization,
-  external storage, separately editable parts, or a particular consumer.
-  Popper applies the schema to expectations and behaviour as well as to
-  formulated theories. On that wide reading the dispositions held in a
-  model's weights are tentative theories too, though nothing in them is
-  articulated. What language adds, in his account, is an object for
-  critical discussion: see
-  [conjectural learning](./conjectural-learning.md).
+  external storage, separately editable parts, or a particular consumer. A
+  theory that can only be replaced whole is still tentative. Popper applies
+  the schema to expectations and behaviour as well as to formulated theories;
+  on that wide reading the dispositions held in a model's weights are
+  tentative theories too, though nothing in them is articulated.
+  [Conjectural learning](./conjectural-learning.md) covers only the
+  formulated ones.
 - **Criticism is broader than empirical test.** A tentative theory may be
   criticized by argument, by comparison with a rival, or by a failed
   prediction. Only the last gives it empirical support when it survives.
@@ -46,14 +45,9 @@ stored or edited. Structural properties have their own term,
 
 - **A theory held beyond criticism.** Fixed instructions that nothing is
   permitted to revise are applied, not held tentatively.
-- **An addressable theory as such.** Addressability is a structural property
-  some tentative theories have. A theory that can only be replaced whole is
-  still tentative.
 
 ## Misuse Cases
 
-- Reading *tentative* as a waiting period that ends when a theory is
-  established.
 - Treating the term as evidence of quality. A false theory and a true one are
   tentative alike.
 - Importing structure into the term: requiring parts, storage outside model
@@ -63,7 +57,7 @@ stored or edited. Structural properties have their own term,
 
 Relevant Notes:
 
-- [Conjectural learning](./conjectural-learning.md) — extends: the paradigm in which an articulated tentative theory guides decisions and criticism has lasting effect
+- [Conjectural learning](./conjectural-learning.md) — extends: the paradigm built on formulated, addressable tentative theories
 - [Addressable theory](./addressable-theory.md) — contrasts: the structural property, separate from the epistemic status
 - [Popper, A realist view of logic, physics, and history](../../../sources/popper-a-realist-view-of-logic-physics-and-history-1966.ingest.md) — evidenced-by: the schema and the place of `TT` in it
 - [Popper, Conjectures and Refutations](../../../sources/popper-conjectures-and-refutations.ingest.md) — evidenced-by: tentativeness as a lasting status

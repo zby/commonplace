@@ -9,7 +9,13 @@ the definitions and the goals do not already imply.
   2026-09-19: [theory refinement](../../notes/definitions/theory-refinement.md)
   2,443 words, [learning by theory refinement](../../notes/definitions/learning-by-theory-refinement.md)
   1,008, the [three-lineages note](../../notes/reflective-theory-refinement-has-three-separate-lineages.md)
-  1,810. The three drafts total about 2,300.
+  1,810; together 5,261. The drafts, counted with frontmatter and link
+  footers, after a compaction round: three definitions 2,506 (conjectural
+  learning 1,385, addressable theory 645, tentative theory 476) and one
+  companion note of 1,406; together 3,912. The two replaced
+  definitions shrink from 3,451 words to about 2,500 as three. Whether the
+  whole change subtracts depends on how much of the lineages note the
+  companion note replaces; that is still to be shown.
 - **Retiring *theory refinement* widens the rename.** Names built on it need a
   disposition: *reflective theory refinement*, the sample-efficiency and
   evidence-ladder note titles, the lead article and its supplements, the
