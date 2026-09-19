@@ -1,17 +1,18 @@
 # Workshop: the first downstream run
 
-## Goal
+## Current commission
 
 Provide a template for the first experiment on Commonplace in outside use,
 for an outside experimenter to run, and take back whatever results they
 publish. Running the experiment is not this workshop's task.
 
-Posed by the operator on 2026-09-17, when the
-[three hypotheses](../../articles/testing-the-theory-refinement-program.md#the-hypotheses)
-were adopted, as the workshop that would run their first assessment.
-Re-scoped by the operator on 2026-09-19 to providing the template. The
-first intended user is a colleague in an enterprise that uses Commonplace
+The first intended user is a colleague in an enterprise that uses Commonplace
 and wants to publish from that work.
+
+## Prerequisite for any run
+
+Release A is the framework commit the early enterprise trials used. It is
+needed before any run and cannot be reconstructed later.
 
 ## Context
 
@@ -58,9 +59,14 @@ to this repository.
 3. The background files are deleted with the workshop, and the retained
    report's links are pointed at the testing supplement.
 
+## Commission history
+
+The operator posed this workshop on 2026-09-17 to run the first assessment
+of the [three hypotheses](../../articles/testing-the-theory-refinement-program.md#the-hypotheses)
+adopted that day. The operator re-scoped it on 2026-09-19 to providing the
+template.
+
 ## Coordination
 
 [explanatory-theories-deployment-time-learning](../explanatory-theories-deployment-time-learning/README.md)
-owns the component-comparison experiment designs. One thing cannot be
-reconstructed later and is needed before any run: the framework commit the
-early enterprise trials used, which is release A.
+owns the component-comparison experiment designs.
