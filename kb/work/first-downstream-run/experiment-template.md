@@ -1,7 +1,6 @@
 # Experiment template: operator work on one KB-building task
 
 A template for a small experiment that anyone using Commonplace can run.
-Copy it, fill in Part 1 before any run, run, then fill in Parts 2 and 3.
 
 **The question.** Does a revised release of the framework let an agent
 build an accepted knowledge base with less help from a person than an
@@ -11,6 +10,9 @@ earlier release, on the same task, at comparable cost?
 the operator to learn a great deal. Current work moves decisions from the
 operator to the agent. This experiment measures that on one real task. It
 needs no production traffic and no long observation period.
+
+Copy this template, fill in Part 1 before any run, then run the experiment
+and fill in Parts 2 and 3.
 
 ## Part 1. Declaration (fill in before the first run)
 
@@ -71,10 +73,11 @@ that list too.
 acceptance supports the claim for this task, model, and operating system.
 It does not show which fix made the difference; that takes a run with one
 fix removed. It does not show that the finished knowledge base helps the
-people or agents who later use it, which is a separate experiment. If B is
-no better, the list of stops is the most useful output, because it says
-what the agent still could not decide alone. A second task of a different
-kind is the natural next step either way.
+people or agents who later use it, which is a separate experiment.
+
+**Next steps.** If B is no better, the list of stops is the most useful
+output, because it says what the agent still could not decide alone. A
+second task of a different kind is the natural next step either way.
 
 ## Publishing
 
@@ -84,9 +87,11 @@ inputs, knowledge-base contents, transcripts, and the judge's reasons can
 stay private.
 
 If you want to publish an account of each run without its records, one
-option is an automatic summary: run the prompt below, inside your
-organization, on each run's records, with one model version and the same
-settings throughout. Fixing the prompt and model before the runs means
+option is an automatic summary.
+
+To use this option, run the prompt below, inside your organization, on
+each run's records, with one model version and the same settings
+throughout. Fixing the prompt and model before the runs means
 every run is described by the same procedure. If you use it, state the
 model version and this file's commit.
 
