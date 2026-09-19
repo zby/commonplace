@@ -36,6 +36,12 @@ Popper argues that knowledge grows through tentative solutions to problems, crit
 - **Source extract (verbatim):** Faced with a certain problem, the scientist offers, tentatively, some sort of solution--a theory. This theory science accepts only provisionally, if at all; and it is most characteristic of the scientific method that scientists will spare no pains to criticize and test the theory in question.
   - **Source location:** Chapter 15, 'What is Dialectic?', section 1, 'Dialectic Explained', printed p. 313; paragraph beginning 'If the method of trial and error is developed'.
 
+- **Source extract (verbatim):** The way in which knowledge progresses, and especially our scientific knowledge, is by unjustified (and unjustifiable) anticipations, by guesses, by tentative solutions to our problems, by conjectures. These conjectures are controlled by criticism; that is, by attempted refutations, which include severely critical tests. They may survive these tests; but they can never be positively justified: they can neither be established as certainly true nor even as 'probable' (in the sense of the probability calculus).
+  - **Source location:** Preface, printed p. vii; second paragraph, beginning 'The way in which knowledge progresses'.
+
+- **Source extract (verbatim):** But this hope was a residue of the dogmatic way of thinking; in fact nothing can be justified or proved (outside of mathematics and logic). The demand for rational proofs in science indicates a failure to keep distinct the broad realm of rationality and the narrow realm of rational certainty: it is an untenable, an unreasonable demand.
+  - **Source location:** Chapter 1, 'Science: Conjectures and Refutations', section VII, printed p. 51; paragraph continuing across the p. 50 marker, beginning 'The critical attitude, the tradition of free discussion of theories'.
+
 ## Connections Found
 
 The source supplies a philosophical anchor for [narrowing bought to survive review is paid for in content](../notes/narrowing-bought-to-survive-review-is-paid-for-in-content.md). Chapter 1's numbered conditions connect informative theories to forbidden outcomes and identify rescue by reinterpretation as a loss of scientific standing. Chapter 10 adds a stronger demand: a successor theory should have testable consequences beyond the facts it was constructed to explain. This supports the note's concern about empty repair; it does not establish the note's account of review incentives or its local witness.

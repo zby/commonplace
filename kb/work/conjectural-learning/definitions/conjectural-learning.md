@@ -153,8 +153,9 @@ naming it.
 - **Justification before change.** A formulated theory guides decisions and
   is revised only when it proves its own revision beneficial, as in the
   [Gödel machine](../../../notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md).
-  The theory is derived from and never argued against, so it is operative
-  without being tentative.
+  Each change is justified by proof from the theory's premises, and the
+  premises are never exposed to criticism, so the theory is operative without
+  being tentative.
 
 ## Exclusions
 

@@ -85,7 +85,7 @@ Classification under the drafts as of 2026-09-19.
 | 11 | A theory survives an attempted refutation and the result is recorded | Inside | Criticism is attempted elimination |
 | 12 | One model proposes and criticizes its own theories | Inside | The definition asks less than Popper here |
 | 13 | Criticisms are written down, but placebo text of the same form has the same effect | Not shown to be inside | Content half of membership needs an intervention |
-| 14 | A formulated operative theory is revised only when it proves its own revision beneficial, as in the Gödel machine | Comparison: justification before change | Criticism of content. The theory is derived from, never argued against, so it is operative without being tentative. Test 1: what eliminates differs in kind |
+| 14 | A formulated operative theory is revised only when it proves its own revision beneficial, as in the Gödel machine | Comparison: justification before change | Criticism of content. The machine justifies each switch by proof from its premises and never exposes the premises to criticism, so the theory is operative without being tentative. Test 1: what eliminates differs in kind |
 
 ## Likely next reversals
 
@@ -121,8 +121,14 @@ Classification under the drafts as of 2026-09-19.
   prove the change beneficial. The classification is of the construction as
   the paper gives it; a formalization that licenses empirical revision of
   its own environment assumptions would move part of the criticism inside.
-  That the contrast is Popper's own, justification against criticism, is
-  the drafting agent's reading and is not yet grounded in a retained source.
+  The contrast is Popper's own. Conjectures "are controlled by criticism" and
+  "can never be positively justified", and "nothing can be justified or
+  proved (outside of mathematics and logic)"
+  ([Conjectures and Refutations, Preface p. vii and Chapter 1 p. 51](../../sources/popper-conjectures-and-refutations.ingest.md#quotes)).
+  The exception matters here. The machine's proofs are inside logic, and
+  Popper has no quarrel with them. What cannot be justified are its premises
+  about the environment and the utility, and those are what it never
+  criticizes.
 - **Left open, as scope decisions for the operator.** Case 12, whether an
   independent critic is required, and case 6, whether within-episode
   learning deserves the word.
