@@ -131,9 +131,9 @@ Applying that objective to article review rather than to an agent's
 exploration is this note's move, not his. What carries over is the form:
 value is an improvement and not a state, it is measured against a fixed
 baseline on the same data, and noise has none. What does not carry over is
-the measure. Schmidhuber's quantity is a saving in description length; the
-quantity here is answer quality on a question set, which stands in for it
-and is not shown to track it.
+the measure. Schmidhuber's quantity is a saving in description length. The
+quantity here is an improvement in answer quality on a question set, which
+stands in for it and is not shown to track it.
 
 Two changes are needed to make the transposition work.
 
@@ -221,7 +221,7 @@ an article can fill all five slots with a false theory.
 
 A matched run would tell whether the reading tracks the gain, and would
 supply the gain itself where the cost is justified. It treats the article
-as a retained theory and applies the measure that
+as a change to the observer's retained theory and applies the measure that
 [learning by theory refinement](../definitions/learning-by-theory-refinement.md)
 uses for what was learned: the change in later behaviour attributable to
 the retained change, with the model held fixed.
@@ -298,7 +298,7 @@ Relevant Notes:
 - [Information value is observer-relative](../information-value-is-observer-relative.md) — grounds: why the criterion has no reading until an observer is declared
 - [Reverse compression is when LLM output expands without adding information](../reverse-compression-is-when-llm-output-expands-without-adding.md) — grounds: the failure mode the per-token denominator is meant to price
 - [Theory refinement](../definitions/theory-refinement.md) — defined-in: the operation whose anatomy supplies the five slots
-- [Learning by theory refinement](../definitions/learning-by-theory-refinement.md) — defined-in: the measure of what was learned that the instrument applies to an article as the retained theory
+- [Learning by theory refinement](../definitions/learning-by-theory-refinement.md) — defined-in: the measure of what was learned that the instrument applies to an article as a change to the retained theory
 - [Reach-assessment](../definitions/reach-assessment.md) — defined-in: the judgment the reach slot invokes rather than replaces
 - [First-principles reasoning selects for explanatory-reach over adaptive fit](../first-principles-reasoning-selects-for-explanatory-reach-over.md) — grounds: why a revision covering only its own cases does not compress
 - [Review automation should target verifiable subroles before reviewer identity](../verifiable-subroles-before-reviewer-identity.md) — contrasts: the same case from the side where no checkable surface existed for the question being asked
