@@ -9,28 +9,52 @@ traits: [has-external-sources, title-as-claim]
 This is a [theory proposal](./README.md): finished, unadopted, and not a
 premise for other notes.
 
-**What adoption would add.** Four terms and one pairing. The terms are the
-*declared observer* (a named model together with a named background corpus,
-relative to which an article's value is measured), *article gain* (the
-improvement that observer shows on externally supplied held-out questions
-when the article is in its context), *gain per token* (that improvement
-divided by the article's length, which prices the context the article
-occupies), and the *refinement reading* (a five-slot reading of an article
-as a proposed revision of the observer's background theory). The pairing is
-between the last two: the refinement reading is offered as the cheap
-text-only proxy for the measured quantity, and the matched run is offered
-as the instrument that would tell whether the proxy tracks it.
+**What adoption would add.** A criterion of article value, four terms that
+state it, and one pairing. The criterion: an article's value is how much it
+improves a stated model's answers about the domain, per token of the
+article. The alternative it denies is that an article's value is a property
+of the text, which can be judged without saying for whom.
+
+- *Declared observer*: a named model together with a named background
+  corpus. An article's value is measured relative to it.
+- *Article gain*: the improvement the declared observer shows on questions
+  about the domain when the article is in its context. The questions are
+  held out: someone other than the author writes them without seeing the
+  article.
+- *Gain per token*: article gain divided by the article's length in
+  tokens. Context is the observer's scarce resource, so a longer article has
+  to gain more to score the same.
+- *Refinement reading*: a reading of the article as a proposed revision of
+  the observer's background theory. It asks whether five things can be
+  located in the text: the commitment the article changes, the cases against
+  that commitment, what the article keeps, what the revised account forbids,
+  and which further cases it covers.
+
+The pairing joins a proxy to an instrument. The refinement reading is the
+cheap, text-only proxy for the measured gain. The matched run is the
+instrument that measures the gain and would show whether the proxy tracks
+it. In a matched run the same declared observer answers the same questions
+with the article in context and without it.
 
 **What adoption would change.** The [`kb/articles/` contract](../../articles/COLLECTION.md)
 states its quality goal as explanatory clarity with technical depth, and
 asks reviewers whether a technical reader with no KB context can state the
-claims, their support, and their limits. Adoption would add a second,
-observer-relative question — which declared observer, and what gain — and
-would commit the collection to naming a baseline whenever it judges an
-article good. It would also give
+claims, their support, and their limits. Adoption would add a second
+question: for which declared observer, and with what gain? That commits the
+collection to declaring an observer whenever it rates an article's value,
+and to having held-out questions whenever it reports a gain. Adoption would
+also give
 [warranted reader update](../warranted-reader-update-is-the-objective-of-substantive-writing.md)
-a measurable form, since that note already makes the intended reader's
-prior the baseline but leaves the update unmeasured.
+a measurable form for a model reader. That note already makes the intended
+reader's prior the baseline but leaves the update unmeasured. The declared
+observer's background corpus is that baseline made explicit, and article
+gain measures the update.
+
+**What adoption would not establish.** Nothing here has been run. Whether
+the refinement reading tracks the measured gain is a conjecture, and it is
+the part most likely to fail. The gain measures value, not correctness: a
+persuasive false article can score well, and correctness, scope, and honesty
+about limits remain separate checks.
 
 ## Trigger and cost
 
