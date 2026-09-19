@@ -6,7 +6,7 @@ traits: [has-external-sources]
 
 # Article value as gain per token for a declared observer
 
-This is a [theory proposal](./README.md): finished, unadopted, and not a
+This is a [theory proposal](../notes/proposals/README.md): finished, unadopted, and not a
 premise for other notes.
 
 **What adoption would add.** A criterion of article value, four terms that
@@ -37,7 +37,7 @@ show whether the proxy tracks it. In a matched run the same declared
 observer answers the same questions with the article in context and without
 it.
 
-**What adoption would change.** The [`kb/articles/` contract](../../articles/COLLECTION.md)
+**What adoption would change.** The [`kb/articles/` contract](./COLLECTION.md)
 states its quality goal as explanatory clarity with technical depth, and
 asks reviewers whether a technical reader with no KB context can state the
 claims, their support, and their limits. Adoption would add a second
@@ -45,7 +45,7 @@ question: for which declared observer, and with what gain? That commits the
 collection to declaring an observer whenever it rates an article's value,
 and to having held-out questions whenever it reports a gain. Adoption would
 also give
-[warranted reader update](../warranted-reader-update-is-the-objective-of-substantive-writing.md)
+[warranted reader update](../notes/warranted-reader-update-is-the-objective-of-substantive-writing.md)
 a measurable form for a model reader. That note already makes the intended
 reader's prior the baseline but leaves the update unmeasured. The declared
 observer's background corpus is that baseline made explicit, and article
@@ -80,7 +80,7 @@ One reported case has the shape this proposal is about. At NeurIPS, an
 automated screen was deployed that scored submissions for whether they were
 AI-generated, and consequential decisions followed directly from that
 verdict: authors "were told to produce version histories or also be
-desk-rejected" ([thread on conference volume and AI-detector review](../../sources/seeing-numbers-of-50k-submissions-for-iclr-2101135922666365032.ingest.md),
+desk-rejected" ([thread on conference volume and AI-detector review](../sources/seeing-numbers-of-50k-submissions-for-iclr-2101135922666365032.ingest.md),
 verbatim). At ICLR, a projected jump in submissions prompted the
 expectation that "it'll probably need AI review at that scale" (same
 source, verbatim). The source leaves open whether the human review layer
@@ -101,13 +101,13 @@ was available in a form a machine could apply.
 
 The case is one that [review automation should target verifiable subroles
 before reviewer
-identity](../verifiable-subroles-before-reviewer-identity.md) warns against,
+identity](../notes/verifiable-subroles-before-reviewer-identity.md) warns against,
 in a form that note does not address. The note says to automate narrow
 subroles whose outputs can be independently checked. Here the automated
 question had a tool whose outputs the source does not report being checked,
 and it was not the question the review needed. On the same interpretation it
 is an instance of [weakly discriminated qualities tend to be
-underselected](../weakly-discriminated-qualities-tend-to-be-underselected.md):
+underselected](../notes/weakly-discriminated-qualities-tend-to-be-underselected.md):
 quality had no operational statement, which is the limiting case of weak
 discrimination, and the process selected on what it could discriminate.
 
@@ -127,7 +127,7 @@ performance per se" — and requires that the change be measured against a
 held-fixed baseline: "Note that both the old and the new compressor have to
 be tested on the same data, namely, the history so far" ([Driven by
 Compression
-Progress](../../sources/driven-by-compression-progress.ingest.md),
+Progress](../sources/driven-by-compression-progress.ingest.md),
 verbatim). His framework also rejects raw novelty as the measure, on the
 ground that incompressible noise carries maximal Shannon novelty and allows
 no compression progress.
@@ -153,13 +153,13 @@ what is measured.
 **The measurement is charged per token.** Context is the scarce resource for
 the observer this criterion is written for. Dividing by length prices
 expansion: [reverse
-compression](../reverse-compression-is-when-llm-output-expands-without-adding.md),
+compression](../notes/reverse-compression-is-when-llm-output-expands-without-adding.md),
 more text with no additional extractable structure, spreads the same gain
 over more tokens and scores lower. An article with no gain scores zero at
 any length.
 
 The resulting criterion is deliberately relative. Because [information value
-is observer-relative](../information-value-is-observer-relative.md), the
+is observer-relative](../notes/information-value-is-observer-relative.md), the
 same article can be worth a great deal against one background corpus and
 nothing against another, and the criterion is undefined until the observer
 is declared. Seen this way, *novel* and *significant* name the same quantity
@@ -173,7 +173,7 @@ article. A reviewer reading one article needs something cheaper, and it has
 to be a proxy for article gain rather than a second standard.
 
 The proposal is to read the article as a proposed
-[theory refinement](../definitions/theory-refinement.md) of the declared
+[theory refinement](../notes/definitions/theory-refinement.md) of the declared
 observer's background: a revision of an existing theory against cases,
 seeking to correct error while preserving useful prior knowledge. The
 reading asks which of five slots are recoverable from the text, with a
@@ -212,9 +212,9 @@ which is why the reading is offered as its proxy.
   background by roughly what it adds, so its gain is bounded by how often
   those cases recur. A revision whose consequences extend to unseen cases
   can also gain on questions nobody wrote it for. This is
-  [explanatory-reach](../first-principles-reasoning-selects-for-explanatory-reach-over.md),
+  [explanatory-reach](../notes/first-principles-reasoning-selects-for-explanatory-reach-over.md),
   and judging whether the claimed reach is genuine is
-  [reach-assessment](../definitions/reach-assessment.md), which the reading
+  [reach-assessment](../notes/definitions/reach-assessment.md), which the reading
   invokes rather than replaces.
 
 The reading is checkable in a weak but useful sense: a model can report
@@ -228,7 +228,7 @@ A matched run would tell whether the reading tracks article gain, and would
 supply the gain itself where the cost is justified. It treats the article as
 a change to the observer's retained theory and applies the measure that
 [learning by theory
-refinement](../definitions/learning-by-theory-refinement.md) uses for what
+refinement](../notes/definitions/learning-by-theory-refinement.md) uses for what
 was learned: the change in later behaviour attributable to the retained
 change, with the model held fixed.
 
@@ -259,7 +259,7 @@ reach slot measurable rather than read. And the grader is itself a
 discrimination problem. If a model grades the answers, the instrument
 inherits the limit in [the augmentation-automation boundary is
 discrimination not
-accuracy](../the-augmentation-automation-boundary-is-discrimination-not-accuracy.md),
+accuracy](../notes/the-augmentation-automation-boundary-is-discrimination-not-accuracy.md),
 and the reported gain is only as good as the grader's per-instance
 discrimination.
 
@@ -303,7 +303,7 @@ did not help predict, are a set of labelled cases. The refinement reading
 would be calibrated against the measured gain on those cases and then
 applied to new submissions, which is the discipline that [calibrating
 semantic gates against labelled
-fixtures](../../reference/proposals/calibrating-semantic-gates-against-labelled-fixtures.md)
+fixtures](../reference/proposals/calibrating-semantic-gates-against-labelled-fixtures.md)
 proposes for the KB's own gates.
 
 Three problems are open.
@@ -368,16 +368,16 @@ Three problems are open.
 
 Relevant Notes:
 
-- [Warranted reader update is the objective of substantive writing](../warranted-reader-update-is-the-objective-of-substantive-writing.md) — extends: this proposal supplies a measurable form of the reader update that note makes the objective
-- [Information value is observer-relative](../information-value-is-observer-relative.md) — grounds: why the criterion is undefined until an observer is declared
-- [Reverse compression is when LLM output expands without adding information](../reverse-compression-is-when-llm-output-expands-without-adding.md) — grounds: the failure mode the per-token denominator is meant to price
-- [Theory refinement](../definitions/theory-refinement.md) — defined-in: the operation the first four slots are drawn from
-- [Learning by theory refinement](../definitions/learning-by-theory-refinement.md) — defined-in: the measure of what was learned that the instrument applies to an article as a change to the retained theory
-- [Reach-assessment](../definitions/reach-assessment.md) — defined-in: the judgment the reach slot invokes rather than replaces
-- [First-principles reasoning selects for explanatory-reach over adaptive fit](../first-principles-reasoning-selects-for-explanatory-reach-over.md) — grounds: why a revision covering only its contradicting cases does not compress
-- [Review automation should target verifiable subroles before reviewer identity](../verifiable-subroles-before-reviewer-identity.md) — contrasts: a case that note warns against, where the automated question had a tool and the needed question had none
-- [Weakly discriminated qualities tend to be underselected](../weakly-discriminated-qualities-tend-to-be-underselected.md) — grounds: why a quality with no operational statement is underselected next to a discriminable substitute under load
-- [Calibrating semantic gates against labelled fixtures](../../reference/proposals/calibrating-semantic-gates-against-labelled-fixtures.md) — see-also: the known-case calibration that the refinement reading would need against past articles
-- [The augmentation-automation boundary is discrimination not accuracy](../the-augmentation-automation-boundary-is-discrimination-not-accuracy.md) — grounds: the limit the instrument inherits from whatever grades its answers
-- [Driven by Compression Progress](../../sources/driven-by-compression-progress.ingest.md) — abstracted-from: the compression-progress objective and its same-data comparison, applied to article review instead of exploration
-- [Thread on conference volume and AI-detector review](../../sources/seeing-numbers-of-50k-submissions-for-iclr-2101135922666365032.ingest.md) — evidenced-by: the reported case of a provenance screen deployed where a quality criterion was missing
+- [Warranted reader update is the objective of substantive writing](../notes/warranted-reader-update-is-the-objective-of-substantive-writing.md) — extends: this proposal supplies a measurable form of the reader update that note makes the objective
+- [Information value is observer-relative](../notes/information-value-is-observer-relative.md) — grounds: why the criterion is undefined until an observer is declared
+- [Reverse compression is when LLM output expands without adding information](../notes/reverse-compression-is-when-llm-output-expands-without-adding.md) — grounds: the failure mode the per-token denominator is meant to price
+- [Theory refinement](../notes/definitions/theory-refinement.md) — defined-in: the operation the first four slots are drawn from
+- [Learning by theory refinement](../notes/definitions/learning-by-theory-refinement.md) — defined-in: the measure of what was learned that the instrument applies to an article as a change to the retained theory
+- [Reach-assessment](../notes/definitions/reach-assessment.md) — defined-in: the judgment the reach slot invokes rather than replaces
+- [First-principles reasoning selects for explanatory-reach over adaptive fit](../notes/first-principles-reasoning-selects-for-explanatory-reach-over.md) — grounds: why a revision covering only its contradicting cases does not compress
+- [Review automation should target verifiable subroles before reviewer identity](../notes/verifiable-subroles-before-reviewer-identity.md) — contrasts: a case that note warns against, where the automated question had a tool and the needed question had none
+- [Weakly discriminated qualities tend to be underselected](../notes/weakly-discriminated-qualities-tend-to-be-underselected.md) — grounds: why a quality with no operational statement is underselected next to a discriminable substitute under load
+- [Calibrating semantic gates against labelled fixtures](../reference/proposals/calibrating-semantic-gates-against-labelled-fixtures.md) — see-also: the known-case calibration that the refinement reading would need against past articles
+- [The augmentation-automation boundary is discrimination not accuracy](../notes/the-augmentation-automation-boundary-is-discrimination-not-accuracy.md) — grounds: the limit the instrument inherits from whatever grades its answers
+- [Driven by Compression Progress](../sources/driven-by-compression-progress.ingest.md) — abstracted-from: the compression-progress objective and its same-data comparison, applied to article review instead of exploration
+- [Thread on conference volume and AI-detector review](../sources/seeing-numbers-of-50k-submissions-for-iclr-2101135922666365032.ingest.md) — evidenced-by: the reported case of a provenance screen deployed where a quality criterion was missing
