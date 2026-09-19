@@ -38,9 +38,9 @@ Import when the KB first has to rank two candidate articles, or two
 revisions of one article, and cannot say what it is ranking them by; or
 when an open-ended article review needs a criterion whose scoring is
 something other than the reviewer's taste. Until then the collection's
-present question — can a reader state the claims, support, and limits —
-does the work, because it fails clearly on the articles it is meant to
-catch.
+present question — can a reader state the claims, support, and limits — is
+assumed to do the work. No record yet shows it failing to separate two
+articles the KB had to choose between.
 
 The cost is four terms, plus an operational burden that falls on every use:
 a declared observer has to be named, and a held-out question set has to
@@ -74,10 +74,10 @@ available in a form a machine could apply. This is the failure mode
 [review automation should target verifiable subroles before reviewer identity](../verifiable-subroles-before-reviewer-identity.md)
 predicts, seen from the side it does not cover: that note says to automate
 narrow subroles that have a checkable surface, and here the only available
-surface belonged to a question nobody was asking. It also instantiates
-[weakly discriminated qualities tend to be underselected](../weakly-discriminated-qualities-tend-to-be-underselected.md)
-— quality was weakly discriminated, so the process selected on what it
-could discriminate instead.
+surface belonged to a question nobody was asking. On the same reading it is an instance of
+[weakly discriminated qualities tend to be underselected](../weakly-discriminated-qualities-tend-to-be-underselected.md):
+quality was weakly discriminated, and the process selected on what it
+could discriminate.
 
 On that reading, reviewer capacity is the load and not the gap. The gap
 this proposal addresses is that quality had no operational statement, which
@@ -97,7 +97,12 @@ same data, namely, the history so far"
 verbatim). His framework also rejects raw novelty as the measure, on the
 ground that incompressible noise carries maximal Shannon novelty and
 affords no progress. Applying that objective to article review rather than
-to an agent's exploration is this note's move, not his.
+to an agent's exploration is this note's move, not his. What carries over
+is the form: value is an improvement and not a state, it is measured
+against a fixed baseline on the same data, and noise has none. What does
+not carry over is the measure. Schmidhuber's quantity is a saving in
+description length; the quantity here is answer quality on a question set,
+which stands in for it and is not shown to track it.
 
 Two changes are needed to make the transposition work.
 
@@ -120,9 +125,9 @@ What results is deliberately relative. Because
 [information value is observer-relative](../information-value-is-observer-relative.md),
 the same article can be worth a great deal against one background corpus
 and nothing against another, and the criterion has no reading until the
-observer is declared. That is the point: *novel* and *significant* are this
-same quantity with the baseline left out, which is part of why they resist
-automation.
+observer is declared. Read this way, *novel* and *significant* name the
+same quantity with the baseline left out, which may be part of why they
+resist automation.
 
 ## The refinement reading makes the criterion readable from the text
 
@@ -164,8 +169,8 @@ independent standard.
   article that discards the background rather than revising it owes the
   larger argument that a replacement owes.
 - **Contradictable consequences** are what a held-out question can turn on.
-  An account that forbids nothing produces the same answers before and
-  after, so it cannot show gain however true it is.
+  An account that forbids nothing gives a held-out question nothing to
+  turn on, so it is not expected to show gain however true it is.
 - **Reach** is what separates compression from patching. A revision that
   covers only its own contradicting cases lengthens the observer's
   background by roughly what it adds, so its gain is bounded by how often
@@ -200,9 +205,8 @@ the retained change, with the model held fixed.
   from.
 - **Externally supplied held-out questions.** Authored by someone other
   than the article's author, without sight of the article, about the domain
-  rather than about the article. A question set written from the article is
-  a restatement of it, and the gain it shows is both guaranteed and
-  uninformative.
+  rather than about the article. A question set written from the article
+  restates it, so the gain it shows is built in and uninformative.
 - **Two arms.** The article in context, and nothing in its place, with
   everything else identical.
 - **Gain per token.** The score difference between the arms, divided by the
