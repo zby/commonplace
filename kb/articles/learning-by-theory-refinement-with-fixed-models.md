@@ -32,17 +32,16 @@ language models: the system learns by refining written theories that it
 retains outside the model and consults on later work. We study it with the
 model weights held fixed, so that any learning has to come from what is
 retained. What is learned is a *tentative theory*, an explicit and revisable
-account of some subject that guides the system's decisions. Experience
-refines the theory, and the refined theory guides later work. The loop is
-built on *theory refinement*, an established learning operation, in a new
-setting.
-The alternatives it is set against are learning by adapting the weights,
-and retaining raw records or summaries of experience without an
-explanation. The paradigm is attractive on three counts, each still a
-conjecture: learning is continual, it may need fewer observations, and what
-is learned can be inspected and rolled back piece by piece. This article
-states the paradigm. The supplements state how it would be tested, and the
-first arrangement proposed to test it. No test has been run.
+account of some subject that guides the system's decisions. The system
+revises it by *theory refinement*, an established learning operation that
+corrects an existing theory against new cases while keeping what was right.
+The setting is new. The paradigm is set against two alternatives: adapting
+the weights, and retaining raw records or summaries of experience without
+an explanation. Its three attractions are each still a conjecture: learning
+is continual, it may need fewer observations, and each learned part can be
+read, and the part to revert can be found along with what depends on it.
+This article states the paradigm. The supplements state how it would be
+tested and which system would be tested first. No test has been run.
 
 ## A case
 
