@@ -1,5 +1,5 @@
 ---
-description: "Use when an artifact's claims are settled but its sections repeat, interrupt each other, or bury the point a reader would repeat; structural and sentence-level edits with no change of claim"
+description: "Use when an artifact's claims are settled but its sections repeat, interrupt each other, or bury the point a reader would repeat, or its sentences need a second reading; structural and sentence-level edits with no change of claim"
 type: kb/types/instruction.md
 effort: judgment
 ---
@@ -27,12 +27,18 @@ Structural moves, each applied only where the whole read shows the need:
   connective that says how they relate.
 - **Tighten.** Remove words that add no content, semicolon splices, and
   clauses that restate the previous sentence.
+- **Parse on first reading.** Rewrite a sentence the reader has to read
+  twice. Give a pronoun with two possible antecedents its noun. Move a
+  qualifier next to the claim it limits. Turn a noun stack or a
+  nominalization into a verb. Split a sentence that carries two points. Keep
+  a word to one sense within the artifact ("fails the theory" and "fails a
+  condition" read as one relation).
 
 Read the seams after each move. A relocated paragraph's first sentence must
 work in its new place.
 
 Report: each structural move in one line, and the count of sentence-level
-edits. Do not list tightening edits individually.
+edits. Do not list tightening or parsing edits individually.
 
 Preserve: every claim, example, link, and qualification. If a move would
 require choosing between two readings of a sentence, leave it and flag it.
