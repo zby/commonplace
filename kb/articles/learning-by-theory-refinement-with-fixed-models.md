@@ -4,6 +4,7 @@ type: kb/articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
 source_notes:
+  - kb/notes/definitions/learning-by-theory-refinement.md
   - kb/notes/definitions/theory-refinement.md
   - kb/notes/definitions/theory-builder.md
   - kb/notes/definitions/externally-tested-theory-builder.md
@@ -17,6 +18,7 @@ source_notes:
   - kb/notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md
   - kb/notes/a-fixed-model-house-must-write-the-procedures-for-each-new-theory.md
   - kb/notes/a-claim-without-external-assessment-carries-three-obligations.md
+  - kb/notes/retaining-the-episode-keeps-a-distilled-rule-re-derivable.md
 ---
 # Learning by Theory Refinement with Fixed Models
 
@@ -26,12 +28,14 @@ source_notes:
 > on [the repository's GitHub Discussions page](https://github.com/zby/commonplace/discussions).
 
 **TL;DR.** We propose a learning paradigm for systems built around large
-language models: hold the model weights fixed, and let the system learn by
-refining written theories that it retains outside the model and consults on
-later work. What is learned is a *tentative theory*, an explicit and revisable
+language models: the system learns by refining written theories that it
+retains outside the model and consults on later work. We study it with the
+model weights held fixed, so that any learning has to come from what is
+retained. What is learned is a *tentative theory*, an explicit and revisable
 account of some subject that guides the system's decisions. Experience
-refines the theory, and the refined theory guides later work. This is
-*theory refinement*, an established learning operation, in a new setting.
+refines the theory, and the refined theory guides later work. The loop is
+built on *theory refinement*, an established learning operation, in a new
+setting.
 The alternatives it is set against are learning by adapting the weights,
 and retaining raw records or summaries of experience without an
 explanation. The paradigm is attractive on three counts, each still a
@@ -67,14 +71,15 @@ they reach through includes. The first part, that checks follow executable
 consumers, stands. The system then applies the revised account to other
 snippets it has not touched.
 
-Three things happened. A written account guided a decision on a case it
+Four things happened. A written account guided a decision on a case it
 did not mention. A failure contradicted one part of the account, and that
 part was revised rather than the whole account replaced. The revision was
 chosen for what else it would handle, not only for the failure that caused
-it. The rest of this article says why those three things are the core of a
-learning paradigm.
+it. And the revised account went on to guide later decisions. The rest of
+this article says why those four things are the core of a learning
+paradigm.
 
-## Theory refinement, and what is new here
+## Theory refinement
 
 [Theory refinement](../notes/definitions/theory-refinement.md) is the
 learning operation that revises an existing explicit theory against
@@ -98,6 +103,38 @@ and never promoted to a settled truth by surviving tests. The status
 licenses nothing by itself. How much support a theory needs before the
 system relies on it routinely, or compiles it into a test, is a policy the
 system has to set.
+
+## The paradigm defined
+
+[Learning by theory
+refinement](../notes/definitions/learning-by-theory-refinement.md)
+is the loop built on that operation. A system retains a tentative theory
+outside its model weights. The theory guides its decisions. The outcomes of
+that work refine the theory, part by part. The refined theory guides later
+work. What the system has learned is the change in its later behaviour that
+comes from the change in the retained theory. In the case, the system
+learned that included snippets need manifest checks, and the evidence of
+the learning is that it checks snippets it has never seen fail.
+
+The definition has boundaries. It does not require success: a system that
+carries a mistaken theory forward is still learning this way, and whether
+it improved is measured separately. A theory built while reasoning and
+discarded after the decision does not count, because nothing remains to
+refine. Adapting the weights is a different paradigm, because what is
+learned there is not a theory with parts that can be inspected and revised.
+Keeping records or summaries of experience and rebuilding an explanation
+when one is needed is a different design, because no explanation is
+retained as an object to revise; a later section compares the two. And
+fixed weights are not part of the definition. We hold them fixed to study
+the paradigm, and a system could run the loop and adapt its weights as
+well.
+
+This definition is meant to say what the paradigm is, not yet how to
+measure it. What counts as evidence that the theory guided a decision, or
+that a later change came from the revision, is the evidence supplement's
+subject, and some of those details are still open.
+
+## What is new in the setting
 
 The paradigm keeps the operation and changes the setting in three ways.
 Each is our departure, not something the classical work claims.
@@ -145,8 +182,8 @@ what the exporter reads instead of adding an exception for one snippet. And trea
 whole deployed system as the unit that learns, because [retrieval,
 scheduling, tools, and validators jointly determine behaviour with the
 model fixed](../notes/the-deployed-system-not-the-model-is-the-unit-of-learning.md).
-What the paradigm retains includes theories, procedures, tests, tools,
-evaluators, and the update process itself. When a new theory needs a check
+What the paradigm retains includes theories, the records they were derived
+from, procedures, tests, tools, evaluators, and the update process itself. When a new theory needs a check
 the system cannot yet perform, [the system has to build
 it](../notes/a-fixed-model-house-must-write-the-procedures-for-each-new-theory.md),
 and with weights fixed that capacity has to persist outside the model.
@@ -168,12 +205,70 @@ credit assignment over retained artifacts may scale badly, or adapting
 weights on the same evidence may reach the same competence at lower total
 cost. Those comparisons are part of what the program has to run.
 
+## Why not just keep the records
+
+A simpler design keeps the records of past work, such as observations, tool
+output, and outcomes, and has the model search them when a decision needs
+them. The model can still build an explanation while it reasons, and it
+discards the explanation afterwards. This is the common design today. While
+a system's experience fits in what the model can use at once, keeping the
+records preserves every recorded detail and commits to no abstraction that
+might be wrong. That does not settle which design works better, because
+reading and interpreting the records again at each decision has a cost that
+a reused theory may save. The paradigm claims nothing about what can be
+learned in principle: a system with unlimited context and computation could
+rebuild every explanation from its records at every decision.
+
+Limits on context and computation create two needs, and neither selects
+theories. A decision that depends on more evidence than the model can use
+at once needs intermediate results that stand in for that evidence. And
+when rebuilding those results at every decision costs more than the
+decision's budget allows, the system has to keep and reuse them. Search
+over records, summaries, periodic reconstruction, and retained theories
+are all ways to meet these needs, and a system can combine them: search can
+supply the evidence for a revision, and reconstruction can replace a theory
+that has gone wrong.
+
+Retaining and refining theories is our provisional choice among them. The
+conjecture is that theories are an efficient compression of experience for
+later decisions: for the space they take and the upkeep they need, they
+preserve more of what those decisions depend on than the other forms do.
+
+The case illustrates how a retained theory could help; it does not show
+that records with good search would do worse. When the named Markdown
+files were added, the account applied to a situation that no earlier record
+needed to resemble, because it says why checks are needed. After the
+snippet failure, the revised account covers snippets the system has not
+touched, without the failure having to be found and interpreted again. A
+system that searches its records before choosing checks might reach the
+same decisions. What it spends on finding and reinterpreting them, and how
+often it misses, is what the comparison has to measure.
+
+The paradigm keeps the records as well. A retained theory can carry a
+mistaken abstraction forward, or omit a detail a later case needs, and [the
+records are the evidence for re-examining
+it](../notes/retaining-the-episode-keeps-a-distilled-rule-re-derivable.md).
+They also let a later, better model redo the derivation. What changes is
+what is loaded by default: the theory, with the records consulted when the
+theory is in doubt.
+
+Whether the choice pays is a comparison the program has to run, against
+records with good search and not against records alone. The
+evidence supplement's [component
+experiment](./testing-the-theory-refinement-program.md#component-experiments-that-can-run-first)
+is a first design for it.
+
 ## What the paradigm would buy
 
 The attractions come from [retained artifacts changing later behaviour
 without a training
 cycle](../notes/retained-artifacts-enable-persistent-deployment-time-adaptation.md).
 Each is a conjecture, and each has a cost the program must weigh against it.
+They are stated mainly against adapting weights. A system that keeps
+records also takes in new experience without a training cycle, but readable
+records do not by themselves identify the learned assumptions and what
+depends on them, and they count as learning only through their effect on
+later work. The previous section gives the comparison with that design.
 
 - **Continual learning.** What is learned is usable at the next request. A
   fact that fits the current theory is written down and takes effect. A
@@ -317,10 +412,14 @@ develops it and compares the two.
   admitted a change, or a skipped check.
 - Whether the paradigm's total cost, with theory maintenance counted,
   compares well with adapting weights on the same evidence.
+- Whether retained theories serve later decisions better than records with
+  good search, for which decisions, and from what amount of experience.
 
 ## Where to go next
 
-The [theory refinement](../notes/definitions/theory-refinement.md) and
+The [learning by theory
+refinement](../notes/definitions/learning-by-theory-refinement.md),
+[theory refinement](../notes/definitions/theory-refinement.md), and
 [theory builder](../notes/definitions/theory-builder.md) definitions state
 the paradigm's terms with their exclusions and boundary cases. The [evidence
 supplement](./testing-the-theory-refinement-program.md) develops the

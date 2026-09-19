@@ -374,12 +374,18 @@ which each treatment retains in its own form. Vary that form.
 
 Every treatment may revise executable machinery and its tests, and in every
 treatment the model may still build an explanation while reasoning. What
-differs is what survives to the next decision. Publish the treatment texts,
-retained revisions, and the fact inventory they were built from, so a
-reader can inspect the differences.
+differs is what survives to the next decision. The raw-record treatment
+retains observations and outcomes, not the model's reasoning, which would
+carry earlier theories with it. It has the same search tools as the other
+treatments and may consult its records at any decision, so the comparison
+concerns what is retained and not whether the records can be found. Publish
+the treatment texts, retained revisions, and the fact inventory they were
+built from, so a reader can inspect the differences.
 
-A fifth treatment retaining curated worked cases instead of a general
-explanation is the natural next comparison: an explanation reconstructed
+Records with a maintained index are a stronger rival than records with
+generic search, and are a further arm to add once the first comparison has
+run. A treatment retaining curated worked cases instead of a general
+explanation is another natural comparison: an explanation reconstructed
 and discarded is work repeated on every use, while a retained theory can
 carry a mistaken abstraction forward.
 

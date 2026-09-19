@@ -216,15 +216,19 @@ the uncertainty is not a universal bar to diagnosis.
 - Calling a system a theory-refinement system because it retains prose about
   itself. The term names an operation on the causal path of decisions, not an
   artifact.
-- Reserving the term for the full recurrent loop. That the theory shaped a
-  decision, or that an outcome bore on it, are reportable at their own strength.
+- Reserving the term for the full recurrent loop, which has its own name,
+  [learning by theory refinement](./learning-by-theory-refinement.md). That the
+  theory shaped a decision, or that an outcome bore on it, are reportable at
+  their own strength.
 - Reading mechanically checked consequences into a prose part. For a natural-language
   theory, "derived" means interpreted until the part is codified.
 - Treating an accepted change as confirmation of the theory that motivated it.
 
 ## Word forms
 
-*Theory refinement* is the noun and *refine* the verb. *Reflective theory
+*Theory refinement* is the noun and *refine* the verb. [*Learning by theory
+refinement*](./learning-by-theory-refinement.md) names the recurrent loop
+and the paradigm; the compound is the technical term. *Reflective theory
 refinement* composes with *reflective system*. *Addressable theory* names a
 theory that supplies the three loop requirements; *tentative theory* is
 Popper's term for its epistemic status, adopted on 2026-09-17 in place of
@@ -239,6 +243,7 @@ sense is on the causal path of a decision.
 
 Relevant Notes:
 
+- [Learning by theory refinement](./learning-by-theory-refinement.md) — extends: the recurrent loop and paradigm built on this operation
 - [Theory refinement may improve sample efficiency under structured shifts](../theory-refinement-may-improve-sample-efficiency-under-shifts.md) — extends: the payoff conjecture, and the test that would decide whether a model interprets prose theories reliably enough
 - [Reflective theory refinement needs interpretation, retention, and independent read-back](../reflective-theory-refinement-needs-interpretation-and-retention.md) — extends: the evidence ladder and the functions the reflective case must keep separate
 - [Reflective theory refinement has separate structural, epistemic, and implementation lineages](../reflective-theory-refinement-has-three-separate-lineages.md) — extends: the slot-for-slot comparison between the classical loop and the KB's fillers

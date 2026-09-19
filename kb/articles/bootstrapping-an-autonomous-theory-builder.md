@@ -134,7 +134,7 @@ delivered product.
 Learning transfer is the broader category, and it is not yet reflection. A
 builder could satisfy it by patching its selector directly from failure
 records, with no account of why. The lead article's [reflective
-case](./learning-by-theory-refinement-with-fixed-models.md#theory-refinement-and-what-is-new-here)
+case](./learning-by-theory-refinement-with-fixed-models.md#what-is-new-in-the-setting)
 asks for more: a theory of the builder's own machinery, connected to that
 machinery in both directions, so that revising the theory changes the
 machinery and changing the machinery updates the theory. A learning-transfer
