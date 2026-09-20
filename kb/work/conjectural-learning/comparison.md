@@ -46,6 +46,18 @@ compare implementations: POPPER starts with a free-form hypothesis and builds
 tests; the expectations abstracts name a formal calculus. Neither arrangement
 defines the general ontology supplied by the [Popper reading](./popper-foundation.md).
 
+**Keep compression and induction at the implementation layer.** Schmidhuber's
+[compression-progress framework](../../sources/driven-by-compression-progress.ingest.md)
+can guide which regularities to seek and which experiences to explore, and its
+appendix places this machinery in the Solomonoff-style universal-prediction
+lineage. Neither compression progress nor Solomonoff induction requires a
+formulated tentative theory to be criticized for what it says, while a
+conjectural learner could use either as search or conjecture-generation
+machinery. They therefore do not belong in the ontology. Compression remains
+a candidate implementation objective, especially where a bounded call must
+work from a compact view of larger retained state; criticism still determines
+how formulated theories are challenged and revised.
+
 **Criticize the claim-to-test mapping.** POPPER's statistical aggregation
 cannot guarantee that generated tests bear on the intended claim. Zhang also
 warns that translating a hypothesis into a formal language can introduce
