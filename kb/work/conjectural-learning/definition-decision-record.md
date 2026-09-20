@@ -135,7 +135,13 @@ defines the scope of the claim, so the definition should not set it.
   about the environment and the utility, and those are what it never
   criticizes.
 - **Settled afterwards.** Case 12 on 2026-09-20: it stays inside. Case 6 on
-  2026-09-20: the later use defines the horizon, with no minimum.
+  2026-09-20: the later use defines the horizon, with no minimum. The same day
+  the operator settled the remaining adoption decisions: no separate term is
+  kept for a single revision episode, and the classical minimal-revision bias
+  is dropped. Repository search found the bias only in the classical
+  theory-refinement lineage; the addressable-theory draft already says it
+  takes no preference for minimal revision from FORTE. Neither decision flips
+  a boundary case.
 
 ## Consequences
 
