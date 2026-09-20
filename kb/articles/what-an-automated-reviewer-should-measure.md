@@ -1,5 +1,5 @@
 ---
-description: "Automated review through explanatory reach and economy: a reader-relative assessment, article-informed tests, and validation through task gain and predictive coding"
+description: "Automated review with two testable claims: reach and economy indicate reader-relative compression progress, and that progress improves relevant task performance"
 type: kb/articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
@@ -32,11 +32,16 @@ what assumptions does it need? We propose assessing *explanatory reach* and
 *explanatory economy* as evidence of compression progress—capturing more of
 a domain's structure, or capturing the same structure more simply.
 
+The three assessments have different roles. Reach and economy provide
+practical evidence that the reader gains a more compact, reusable account.
+Predictive coding could test whether that judgment corresponds to actual
+compression savings. Task gain asks whether the change helps the reader
+do useful work. These are two claims to test: whether the proxy tracks
+compression progress, and whether that progress pays off on relevant tasks.
+
 The proposal concerns explanatory articles, especially theory revisions.
 It is not a general measure of publication value: a dataset can supply
-important facts without explaining them. Nor is it a direct measurement of
-compression. Reach and economy are candidate proxies whose reliability
-remains to be tested.
+important facts without explaining them.
 
 ## From compression to reach and economy
 
@@ -49,8 +54,9 @@ verbatim). He compares old and new compressors on the same data.
 Applied to the example, compression would mean replacing separate
 exceptions with a mechanism and the case-specific facts still needed to
 explain each result. Omitting inconvenient evidence would not count.
-The object being compressed is the reader's account of the domain, not the
-article itself.
+The observations are what must be encoded; the reader's account supplies
+structure that can make their encoding shorter. The article provides that
+account.
 
 [Explanatory reach](../notes/first-principles-reasoning-selects-for-explanatory-reach-over.md)
 means that an explanation keeps working beyond the cases that produced it
@@ -70,9 +76,9 @@ reach, if it explains the same evidence with fewer independent assumptions.
 The reviewer should identify which improvement the article offers and
 against which prior account.
 
-This use of reach and economy is our proposal, not a result established by
-Schmidhuber's theory. Whether they track compression progress, and whether
-an LLM can assess them, are questions for testing.
+This connection makes reach and economy plausible indicators of compression,
+not established measures of it. Their use in automated review is our
+proposal, not a result established by Schmidhuber's theory.
 
 ## Progress for which reader?
 
@@ -134,8 +140,11 @@ not test the claim. Without evidence, a consequence remains untested.
 
 The report should distinguish claimed reach from reach supported by checks.
 It should identify the assumptions needed, failed checks, and unresolved
-alternatives. The result is an argument the reader can inspect, not just a
-quality score.
+alternatives, then say what has improved over the reader's prior account.
+In the drift example, the proposed improvement is one mechanism replacing
+separate exceptions while handling unfamiliar combinations of drift and
+duration. This is the compression claim that the later experiments would
+examine.
 
 ## Choosing tests after reading the article
 
@@ -157,37 +166,73 @@ and scoring before further results are observed, but does not make
 article-informed questions independent of the article. Neither is a
 prerequisite for criticism now.
 
-## Testing the reviewer
+## Testing the two claims
 
-A first study could ask whether the reach-and-economy assessment predicts
-success on independently checked cases better than simply asking a model how useful an
-article will be. Compare the five-part reconstruction alone, the full
-assessment, and direct judgment. This tests whether the additional review
-work earns its cost.
+The tests should concern the same article, declared reader, and domain.
+First record the reviewer's assessment of the improvement over the prior
+account. Then test its relation to compression and to task performance.
+Neither relation follows automatically from the other.
 
-A retrospective study could use later experimental results to test
-predictions made with and without an article. Such a study must address
-model exposure to the article or results during training. Later research
-may also have been shaped by the article: the test would concern usefulness
-for the research that followed, not what would have happened without it.
+### Does the assessment track compression progress?
 
-Two kinds of measurement could help evaluate the assessment. They answer
-different questions.
+In a domain where predictive coding is feasible, fix a model reader, an
+encoding of observations, and their order. With and without the article,
+measure the probability assigned to each next observation before revealing
+it. Summed negative base-two log probabilities give predictive code lengths:
+higher probability for the observed outcomes means fewer bits.
 
-### Task gain
+That saving treats the article as already available. Net compression must
+also count the added representation. Compare the baseline encoding of the
+observations with the encoding of the added representation plus the
+observations conditional on it, using a common background and specified
+code. Article tokens are not automatically the representation's length
+in bits.
+
+For the drift explanation, this asks whether the mechanism and remaining
+case-specific details encode the experimental results more economically
+than the reader's prior account. Across articles, do favorable assessments
+of reach and economy predict these net savings? Compare the full assessment
+with the five-part reconstruction alone and a direct model judgment of
+compression benefit.
+
+This would test the first claim: whether our practical assessment tracks
+compression progress. We do not yet have a general protocol. Choosing the
+observations, encoding, probabilities, and representation costs is
+substantial work and can favor some accounts over others. Coding experiments
+could calibrate the assessment in suitable domains; they are not required
+for every review.
+
+### Does compression progress improve relevant task performance?
+
+The second claim concerns practical benefit. In the same example, does
+access to the drift explanation help the reader diagnose unfamiliar
+failures or choose when to recalibrate?
 
 > Task gain = task score with the article − task score without the article.
 
-Keep the model, background, instructions, resource budget, and scoring
-method fixed between the two conditions. Repeat runs to assess variation.
-If a model grades the answers, [check its ability to distinguish better
+Keep the model, background, instructions, resource budget, and scoring method
+fixed between the two conditions. Repeat runs to assess variation. If a
+model grades the answers, [check its ability to distinguish better
 answers](../notes/the-augmentation-automation-boundary-is-discrimination-not-accuracy.md).
 
-Article-informed cases can test whether the reader applies the explanation
-beyond its examples. An independent task set tests usefulness within a
-separately chosen scope. Task gain measures the article's effect on that
-performance, not compression: a supplied answer can help without providing
-a reusable explanation.
+Article-informed cases can test the applications the explanation suggests.
+An independent task set tests usefulness within a separately chosen scope.
+Where compression has also been measured, compare its progress with gain
+on tasks that use the learned structure. Where it has not, this tests whether
+the reviewer's assessment predicts usefulness, leaving its compression
+interpretation unconfirmed.
+
+Even a correlation between compression progress and task gain would not show
+that the former caused the latter. Comparisons with an article containing
+only case-specific answers could help distinguish a benefit from reusable
+structure from a benefit from supplied answers. That attribution requires
+additional controls.
+
+The results can disagree. An answer table can improve task scores without
+offering net compression. A compact explanation can improve compression
+while leaving tasks that do not use its structure unchanged. Task gain
+measures usefulness; establishing a payoff from compression requires evidence
+of both compression progress and its use.
 
 Report reading and computation costs alongside gain. A longer article may
 make a compact explanation easier to use, or it may add text without useful
@@ -200,27 +245,11 @@ models](./learning-by-theory-refinement-with-fixed-models.md): retained
 material changes later behaviour while weights remain fixed. It tests one
 artifact's effect, not the whole learning loop.
 
-### Predictive coding
-
-A more direct compression experiment would fix a model reader, an encoding
-of domain observations, and their order. With and without the article,
-measure the probability assigned to each next observation before revealing
-it. Summed negative base-two log probabilities give predictive code lengths:
-higher probability for the observed outcomes means fewer bits.
-
-That saving treats the article as already available. A table containing
-every outcome could score well without offering a compact explanation.
-Net compression must also count the added representation: compare the
-baseline encoding of the observations with the encoding of the added
-representation plus the observations conditional on it. Both sides need a
-common background and a specified code. Article tokens are not automatically
-the representation's length in bits.
-
-We do not yet have a general protocol for this. Choosing the observations,
-encoding, probabilities, and representation costs is substantial work and
-can favor some accounts over others. In suitable domains, predictive coding
-could test whether reach-and-economy judgments track coding savings. It is
-not a measurement every review can currently perform.
+A retrospective study could use later experimental results for both coding
+and task tests. It must address model exposure to the article or results
+during training. Later research may also have been shaped by the article,
+so the study would concern usefulness for the research that followed, not
+what would have happened without it.
 
 ## What the assessment can establish
 
@@ -230,11 +259,12 @@ Checking consequences contributes to warrant, but a favorable reach
 assessment does not certify all of an article's evidence, reasoning, or
 reporting.
 
-The practical proposal is narrower: assess how much explanatory work the
-same structure supports, what assumptions it needs, and what it adds for
-the intended reader. Compression progress motivates that assessment;
-task and coding experiments can test its value. Whether automated reviewers
-can make it reliably remains open.
+The reviewer proposes that an article gives its reader a more compact,
+reusable account. Reach and economy are the practical grounds for that
+judgment. Coding experiments test whether it tracks compression progress;
+task experiments test whether the change is useful. Keeping those claims
+distinct lets us learn whether the reviewer measures what we intend and
+whether that measurement matters.
 
 ## Where to go next
 
