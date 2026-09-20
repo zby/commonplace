@@ -78,3 +78,31 @@ empirical successes too.
 
 Storage, edit interfaces, fixed weights, budgets, and permissions are design
 choices. None becomes a Popperian requirement by being useful to our system.
+
+## Compression and induction belong to the implementation layer
+
+[Schmidhuber's compression-progress framework](../../sources/driven-by-compression-progress.ingest.md)
+rewards improvements in compressing the same history. Solomonoff induction
+instead supplies an ideal Bayesian predictor over computable environments;
+the exact predictor is incomputable
+([Schmidhuber 2009, Appendix A.8](https://arxiv.org/html/0812.4360v2)).
+Neither requires formulated criticism of what a theory says, and
+[conjectural learning](./definitions/conjectural-learning.md) requires
+neither. Its ontology identifies operative tentative theories and the
+persisted effects of criticism, not a compression objective or an inductive
+prior.
+
+At the implementation layer, compression progress can guide conjecture
+generation and experiment selection. Computable predictors inspired by
+Solomonoff can support prediction and search. A compression score or posterior
+probability alone does not supply the criticism our definition requires.
+Using these mechanisms does not require adopting inductive confirmation as
+the foundation of learning. Whether they help is an empirical question.
+
+The [bounded-context orchestration model](../../notes/bounded-context-orchestration-model.md)
+gives compression an engineering motivation: retained state can exceed what
+any one call can use. Derived theories and task-facing views may save
+context and repeated inference without replacing raw records retained when
+economical. Context savings are not by themselves evidence of improved data
+compression. Storage policy and the choice of compression measure remain
+implementation decisions.
