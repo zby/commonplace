@@ -129,13 +129,21 @@ The result must leave the library simpler than it found it:
 
 Do not enrich the classical theory-refinement account as an intermediate step.
 
-## Open decisions, for the operator
+## Adoption decisions settled on 2026-09-20
 
-- Merging the operation and loop definitions. The drafts assume the merge and
-  supply no term for a single revision episode.
-- Dropping the classical minimal-revision bias. The drafts drop it: criticism
-  may change a core assumption and the successor may be bold.
-  No retained claim has yet been checked for dependence on the bias.
+- **No separate operation term.** Conjectural learning names the learning
+  process. A single revision episode is described in ordinary language; no
+  second technical term is introduced only to distinguish one pass from the
+  recurrent loop.
+- **No minimal-revision bias.** Criticism may overturn a core assumption and
+  make dependent local repairs obsolete. A repository search found the
+  minimal-revision preference only in the classical theory-refinement lineage;
+  the addressable-theory draft already declines to import it. The new basis
+  therefore keeps preservation of useful knowledge as a possible benefit,
+  not a rule to minimize syntactic change.
+
+No definition decision remains open before operator adoption. Migration and
+implementation choices remain later work.
 
 ## Cautions carried from the first candidate
 
