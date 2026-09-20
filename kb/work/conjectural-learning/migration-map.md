@@ -39,8 +39,11 @@ the definitions and the goals do not already imply.
   conditions, the three conjectures, and the fixed-model study condition.
   Local editing becomes the addressability conjecture. Keep the exporter example and the
   maintenance costs.
-- **Minimal-revision bias.** Check whether any retained claim depends on it
-  before it goes.
+- **Minimal-revision bias.** Settled before adoption: do not carry it into
+  the new basis. Repository search found the preference only in the classical
+  theory-refinement lineage, and the addressable-theory draft already rejects
+  importing it. During migration, preserve any concrete claim about retaining
+  useful knowledge without turning that into a rule to minimize revision.
 - **Experiment controls.** İşcan motivates separating a procedure's labels
   from the implemented procedure; POPPER motivates checking that a generated
   test bears on the intended claim. Neither supplies results for Commonplace's
