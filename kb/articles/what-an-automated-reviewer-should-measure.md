@@ -1,5 +1,5 @@
 ---
-description: "Draft article proposing assessed explanatory reach and economy as candidate proxies for observer-relative compression progress, with article-informed tests and possible calibration through predictive coding and task gain"
+description: "Automated review through explanatory reach and economy: a reader-relative assessment, article-informed tests, and validation through task gain and predictive coding"
 type: kb/articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
@@ -21,254 +21,220 @@ source_notes:
 > **Draft.** This article may change. Comments and counterexamples are welcome
 > on [the repository's GitHub Discussions page](https://github.com/zby/commonplace/discussions).
 
-Suppose an article explains why a familiar experimental method fails under
-certain conditions. Before reading it, a reader needs separate exceptions
-to account for the observed results. After reading it, one mechanism
-explains both the successes and the failures and predicts what should happen
-in further experiments. The reader has acquired more than another answer:
-the same explanation now does work that previously required several accounts.
+Suppose an article explains why a familiar experimental method sometimes
+fails. Before reading it, a reader needs separate exceptions to account for
+the results. Afterwards, one mechanism explains both successes and failures
+and predicts what should happen in further experiments.
 
-That suggests a proposal for automated review. Ask what an article helps a
-declared reader explain, how far that explanation holds beyond its motivating
-cases, and how much additional machinery it requires. We propose assessing
-*explanatory reach* together with *explanatory economy* as evidence of
-compression progress: a reader capturing more of a domain's structure, or
-capturing the same structure more simply.
+An automated reviewer could look for that change: what does the article
+help its intended reader explain, how far does the explanation extend, and
+what assumptions does it need? We propose assessing *explanatory reach* and
+*explanatory economy* as evidence of compression progress—capturing more of
+a domain's structure, or capturing the same structure more simply.
 
-Compression progress supplies the motivation, not a measurement already
-available for arbitrary articles. Reach and economy are candidate proxies.
-The practical proposal is to examine explanations and test their
-consequences; predictive coding and downstream task performance are possible
-ways to calibrate that assessment. None of these proposals has been tested
-here.
+The proposal concerns explanatory articles, especially theory revisions.
+It is not a general measure of publication value: a dataset can supply
+important facts without explaining them. Nor is it a direct measurement of
+compression. Reach and economy are candidate proxies whose reliability
+remains to be tested.
 
-## Why compression?
+## From compression to reach and economy
 
-Jürgen Schmidhuber locates interestingness in improvement in an observer's
-ability to compress its observations. The retained source states:
-"The important thing are the improvements of the compressor, not its
-compression performance per se"
+Jürgen Schmidhuber locates interestingness in an observer's improving ability
+to compress its observations: "The important thing are the improvements of
+the compressor, not its compression performance per se"
 ([Driven by Compression Progress](../sources/driven-by-compression-progress.ingest.md),
-verbatim). Old and new compressors must be compared on the same data.
+verbatim). He compares old and new compressors on the same data.
 
-For article review, the relevant object is the reader's account of the
-domain, not the article's word count. A longer explanation can help a reader
-replace many unrelated facts with one reusable structure. A shorter article
-can merely omit necessary information.
-
-In the experimental-method example, compression would come from replacing
-separate exceptions with a mechanism and the remaining case-specific facts
-needed to explain each result. Those facts still count: a theory has not
-compressed the evidence by leaving its inconvenient parts unexplained.
-
-Applying this motivation to review is our proposal. It does not follow from
-Schmidhuber's account that explanatory reach is a reliable proxy, or that an
-LLM can assess it. Those are claims the proposed reviewer needs to test.
-
-## Why reach needs economy
+Applied to the example, compression would mean replacing separate
+exceptions with a mechanism and the case-specific facts still needed to
+explain each result. Omitting inconvenient evidence would not count.
+The object being compressed is the reader's account of the domain, not the
+article itself.
 
 [Explanatory reach](../notes/first-principles-reasoning-selects-for-explanatory-reach-over.md)
 means that an explanation keeps working beyond the cases that produced it
-because it captures why the pattern works. The connection to compression is
-reuse: one explanatory structure accounts for several genuinely different
-cases without needing a new assumption for each.
+because it captures why the pattern works. Its connection to compression
+is reuse: the same structure explains different cases without needing a
+separate assumption for each.
 
-Coverage alone is insufficient. A lookup table can cover thousands of cases
-by storing a separate answer for each. A vague statement can appear to cover
-everything while ruling out nothing. Neither establishes the reusable
-structure we are looking for.
+Coverage alone does not establish this. A lookup table stores a separate
+answer for every case. A vague statement can appear to cover everything
+while ruling out nothing. Explanatory economy asks what assumptions,
+parameters, rules, and exceptions an account needs for the work it does.
+Unstated assumptions still count; word count is not a measure of economy.
 
-Explanatory economy asks what commitments, parameters, auxiliary rules, and
-exceptions the account needs for the explanatory work it performs. It is not
-a count of sentences. Leaving an assumption unstated does not eliminate it,
-and a precise longer explanation may require fewer independent commitments
-than a short ambiguous one.
+Reach and economy must be judged together. Broader reach can justify a more
+complex theory. A simpler theory can also represent progress at unchanged
+reach, if it explains the same evidence with fewer independent assumptions.
+The reviewer should identify which improvement the article offers and
+against which prior account.
 
-Reach and economy should be considered together, not forced into a ratio.
-Broader reach can justify a more complex theory. A simpler theory can also
-represent progress without extending reach at all, if it accounts for the
-same evidence with fewer independent assumptions. A review should identify
-which improvement is being claimed and what comparison supports it.
+This use of reach and economy is our proposal, not a result established by
+Schmidhuber's theory. Whether they track compression progress, and whether
+an LLM can assess them, are questions for testing.
 
 ## Progress for which reader?
 
-Because [information value is
-observer-relative](../notes/information-value-is-observer-relative.md), a
-principle with wide reach may teach an expert nothing. A tutorial may give a
-newcomer access to that same principle for the first time.
+A principle with wide reach may teach an expert nothing while changing how
+a newcomer understands a domain. [Information value is
+observer-relative](../notes/information-value-is-observer-relative.md).
 
-The reviewer therefore needs a declared reader and baseline: what the reader
-already knows, which explanations they can use, and what the article adds.
-For a model-reader experiment, specify the model, its background material,
-tools, and resource budget. For a textual review, state the assumed reader
-and the prior account being improved.
+The review therefore needs a baseline: what the intended reader already
+knows and can use. An explanation's reach and economy are not the same as
+an article's contribution. The contribution is what the article makes newly
+available or usable for that reader.
 
-This separates assessing a theory from assessing an article's contribution.
-The first asks whether the explanation has reach and economy. The second
-asks whether the article makes that structure newly available or usable for
-its intended reader. Textual assessment can estimate that change; observing
-the reader use the explanation provides stronger evidence.
+A textual review should state its assumed reader and prior account. An
+experiment using a model as the reader should specify the model, background
+material, tools, and resource budget. Reading the article can suggest what
+the reader will gain; observing the reader use it provides stronger evidence.
 
 ## What the reviewer would do
 
-The reviewer first reconstructs the explanation and its baseline. For an
-article proposing a theory revision, a five-part reading can make that
-reconstruction inspectable:
+First reconstruct the explanation. For a theory revision, five parts make
+the proposed change inspectable:
 
-| Part | What the text should make recoverable |
+| Part | What the reviewer should recover |
 |---|---|
 | Addressed commitment | Which part of the prior account changes |
 | Contradicting cases | What evidence motivates the change |
-| Preserved content | What still holds after the change |
+| Preserved content | What still holds |
 | Contradictable consequences | What the revised account rules out |
-| Claimed reach | Which further cases the account claims to cover |
+| Claimed reach | Which further cases it claims to cover |
 
 This reading follows [theory
 refinement](../notes/definitions/theory-refinement.md): revising a theory
-against cases while preserving useful prior knowledge. The reviewer can
-cite passages for each part and flag missing information. These are not
-required headings, and filling them establishes legibility, not quality.
+against cases while preserving useful prior knowledge. The reviewer should
+cite supporting passages and flag gaps. These are not required headings;
+finding all five parts makes a revision legible but does not establish
+its quality.
 
-The substantive assessment then asks four questions:
+Next assess the explanation:
 
-1. **What does the explanation bring together?** Identify the previously
-   separate cases or commitments it accounts for.
-2. **What else follows from the same commitments?** Derive consequences
-   outside the motivating examples, including where the explanation should
-   stop applying.
-3. **Do those consequences survive checks?** Vary a load-bearing premise,
-   consider a rival explanation, and check against evidence, executable
-   tests, or proof where available.
+1. **What does it bring together?** Identify the previously separate cases
+   or commitments it accounts for.
+2. **What else follows?** Derive consequences beyond the motivating examples,
+   including where the explanation should stop applying.
+3. **Do those consequences survive checks?** Vary a key premise, consider a
+   rival explanation, and check against evidence, executable tests, or proof.
 4. **What extra assumptions were needed?** Record whether each extension
-   reused the explanation or required another case-specific repair.
+   reused the explanation or required a case-specific repair.
 
-For example, suppose the article attributes failures to measurement drift
-during an experiment, rather than to experiment duration itself. A useful
-test would separate duration from drift: consider long experiments with
-stable calibration and short experiments with substantial drift. The
-explanation should constrain the expected failures in both cases. Finding
-more long experiments that failed would not distinguish the mechanism from
-the correlation.
+Suppose the article attributes failures to measurement drift during an
+experiment, rather than to duration itself. A useful test separates the two:
+consider long experiments with stable calibration and short experiments
+with substantial drift. The explanation should constrain the expected
+failures in both. Finding more long experiments that failed would not
+distinguish the proposed mechanism from a correlation.
 
-This is [reach-assessment](../notes/definitions/reach-assessment.md), not just
-checking whether a case meets a stated condition. A model can propose the
-contrasting cases, but inventing their outcomes would not test the claim.
-Where evidence is unavailable, the review should report an untested
-consequence or proposed test.
+This is [reach-assessment](../notes/definitions/reach-assessment.md).
+The model can propose contrasting cases, but inventing their outcomes would
+not test the claim. Without evidence, a consequence remains untested.
 
-The output should distinguish the claimed reach, the reach supported by
-checks, and the assumptions needed to obtain it. It should also record failed
-checks and unresolved alternatives. This gives the reader an argument to
-inspect rather than an unexplained quality score.
+The report should distinguish claimed reach from reach supported by checks.
+It should identify the assumptions needed, failed checks, and unresolved
+alternatives. The result is an argument the reader can inspect, not just a
+quality score.
 
-## The questions need not be blind
+## Choosing tests after reading the article
 
-A reviewer may need to read an article before seeing which questions are
-meaningful. A new explanation can introduce the distinction worth testing,
-as drift versus duration does in the example. Requiring all questions to be
-written without sight of the article would exclude such tests.
+A new explanation can reveal which questions matter, as drift versus
+duration does in the example. The reviewer need not be blind to the article.
+What matters is separating the derivation of a consequence from its check.
 
-The important separation is between deriving a consequence from the article
-and checking it. The article may suggest the experiment; the observed result
-must not be supplied by assuming the article is right. In a formal argument,
-a proof must establish the consequence from explicit premises rather than
-repeat the conclusion.
+The article may suggest an experiment, but its result must not be supplied
+by assuming the article is right. A proof must establish a consequence from
+explicit premises rather than repeat the conclusion. In either case,
+the reviewer should seek failures and distinguish rival explanations,
+not just collect confirmations.
 
-These article-informed tests assess particular claims and boundaries. They
-are not an unbiased sample of everything readers might need. A reviewer
-should expose how cases were selected and look for failures and rival
-explanations, not only easy confirmations.
+Article-informed tests assess particular claims and boundaries. They do
+not sample everything readers might need, so the review should explain how
+cases were selected. An existing independent benchmark can offer a
+comparison within its own scope. Preregistration can fix case selection
+and scoring before further results are observed, but does not make
+article-informed questions independent of the article. Neither is a
+prerequisite for criticism now.
 
-An existing independent benchmark can supply a broader comparison within its
-own scope. Preregistration can fix case selection and scoring before further
-results are observed. Neither is a prerequisite for criticism now, and
-preregistration does not make an article-informed question set independent
-of the article.
+## Testing the reviewer
 
-## Could compression be measured directly?
+A first study could ask whether the reach-and-economy assessment predicts
+success on independently checked cases better than simply asking a model how useful an
+article will be. Compare the five-part reconstruction alone, the full
+assessment, and direct judgment. This tests whether the additional review
+work earns its cost.
 
-Predictive coding is one possible calibration experiment. Fix an observer,
-an encoding of domain observations, and their order. At each step, score the
-probability assigned to the actual next observation, with and without the
-article. Summed negative base-two log probabilities give predictive code
-lengths. Higher probability for the observed outcomes means fewer bits.
+A retrospective study could use later experimental results to test
+predictions made with and without an article. Such a study must address
+model exposure to the article or results during training. Later research
+may also have been shaped by the article: the test would concern usefulness
+for the research that followed, not what would have happened without it.
 
-This is a conditional coding benefit: it treats the supplied article as
-already available. A table containing every outcome could therefore produce
-large savings without supplying a compact explanation.
+Two kinds of measurement could help evaluate the assessment. They answer
+different questions.
 
-To claim net compression, the accounting must also charge for the added
-representation. With a common background and a specified code, compare the
-baseline encoding of the observations with the encoding of the added
-representation plus the observations conditional on it. Article tokens are
-not automatically that representation's length in bits.
-
-We have not specified a workable general protocol for doing this with
-scientific articles. It needs a domain corpus, suitable probabilities, an
-encoding, and a rule for charging the added representation. These choices
-can favor some accounts over others. Predictive coding should therefore
-remain a possible calibration experiment in suitable domains, not a ready
-compression meter that every review is expected to run.
-
-## Does the explanation improve later work?
-
-Task gain supplies a different check:
+### Task gain
 
 > Task gain = task score with the article − task score without the article.
 
-Keep the model, background, instructions, resource budget, and scoring method
-fixed between the two arms, and repeat runs to assess variation. This tests
-whether access to the article helps on the selected tasks. It does not
-measure compression: a supplied answer can improve performance without
-providing a reusable explanation.
+Keep the model, background, instructions, resource budget, and scoring
+method fixed between the two conditions. Repeat runs to assess variation.
+If a model grades the answers, [check its ability to distinguish better
+answers](../notes/the-augmentation-automation-boundary-is-discrimination-not-accuracy.md).
 
-For article-informed cases, the comparison can test whether the observer
-uses the proposed explanation successfully beyond its examples. An
-independent task set can test usefulness within a separately chosen scope.
-Neither result should be generalized beyond the cases and selection process
-that support it. If a model grades the answers, [its discrimination needs
-checking](../notes/the-augmentation-automation-boundary-is-discrimination-not-accuracy.md).
+Article-informed cases can test whether the reader applies the explanation
+beyond its examples. An independent task set tests usefulness within a
+separately chosen scope. Task gain measures the article's effect on that
+performance, not compression: a supplied answer can help without providing
+a reusable explanation.
 
-This connects to [learning by theory refinement with fixed
+Report reading and computation costs alongside gain. A longer article may
+make a compact explanation easier to use, or it may add text without useful
+structure—the failure called [reverse
+compression](../notes/reverse-compression-is-when-llm-output-expands-without-adding.md).
+Gain per token alone would hide the trade-off between total benefit and cost.
+
+This experiment connects to [learning by theory refinement with fixed
 models](./learning-by-theory-refinement-with-fixed-models.md): retained
-material changes later behaviour while model weights remain fixed. The
-review experiment tests one artifact's effect, not the whole learning loop.
+material changes later behaviour while weights remain fixed. It tests one
+artifact's effect, not the whole learning loop.
 
-Reading cost also belongs in the report. Context, computation, and retrieval
-can matter even when the explanation is economical. [Reverse
-compression](../notes/reverse-compression-is-when-llm-output-expands-without-adding.md)
-adds text without adding usable structure, but not every long explanation
-does that. Report benefits and costs separately rather than treating gain
-per token as the objective.
+### Predictive coding
 
-## What would validate the reviewer?
+A more direct compression experiment would fix a model reader, an encoding
+of domain observations, and their order. With and without the article,
+measure the probability assigned to each next observation before revealing
+it. Summed negative base-two log probabilities give predictive code lengths:
+higher probability for the observed outcomes means fewer bits.
 
-The immediate study would ask whether assessments of reach and economy
-predict independently checked transfer better than a simpler model judgment
-of usefulness. It could compare the five-part reconstruction alone, the
-substantive assessment, and direct judgment. That would test whether the
-additional work earns its cost.
+That saving treats the article as already available. A table containing
+every outcome could score well without offering a compact explanation.
+Net compression must also count the added representation: compare the
+baseline encoding of the observations with the encoding of the added
+representation plus the observations conditional on it. Both sides need a
+common background and a specified code. Article tokens are not automatically
+the representation's length in bits.
 
-A retrospective study could use later experimental outcomes to check
-predictions from articles and their prior literature. It must account for
-model exposure to the articles or outcomes during training. Later research
-may itself have been shaped by an article, so the result would concern
-usefulness for the research that followed, not what would have happened
-without it. Where predictive coding is feasible, it could separately test
-whether the reach-and-economy assessment tracks coding savings.
+We do not yet have a general protocol for this. Choosing the observations,
+encoding, probabilities, and representation costs is substantial work and
+can favor some accounts over others. In suitable domains, predictive coding
+could test whether reach-and-economy judgments track coding savings. It is
+not a measurement every review can currently perform.
 
-The scope is explanatory articles, especially theory revisions, not every
-valuable publication. Datasets can supply missing facts; descriptions can
-preserve observations without explaining them. Even within scope, the
-assessment is tentative. The broader objective remains a [warranted reader
+## What the assessment can establish
+
+The broader objective is a [warranted reader
 update](../notes/warranted-reader-update-is-the-objective-of-substantive-writing.md).
-Checking consequences contributes to warrant, but a favorable reach assessment
-does not certify all the article's evidence, reasoning, or reporting.
+Checking consequences contributes to warrant, but a favorable reach
+assessment does not certify all of an article's evidence, reasoning, or
+reporting.
 
-The proposal is therefore to assess how much additional explanatory work the
-same structure supports, at what cost in assumptions, for which reader.
-Whether an automated reviewer can judge that reliably is the first question
-to test.
+The practical proposal is narrower: assess how much explanatory work the
+same structure supports, what assumptions it needs, and what it adds for
+the intended reader. Compression progress motivates that assessment;
+task and coding experiments can test its value. Whether automated reviewers
+can make it reliably remains open.
 
 ## Where to go next
 
