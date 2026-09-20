@@ -202,6 +202,17 @@ quality under matched budgets, counting maintenance cost. Vary context
 capacity or record volume to test whether bounded context widens the
 differences.
 
+## Refinement heuristic: investigate load-bearing criticisms first
+
+Conjectural learning does not prescribe the order in which criticisms are
+investigated or repairs are made. As an implementation heuristic, prefer
+testing criticisms of commitments on which much of the theory depends before
+investing heavily in dependent local repairs. A deeper revision can make
+otherwise valid local fixes obsolete. Addressability helps locate the target;
+dependency and claimed reach help estimate how much later work depends on it.
+This is a search heuristic, not a condition of conjectural learning and not an
+established payoff claim.
+
 ## Open Questions
 
 - Can the middle arrangement be kept distinct in practice? A record that says
