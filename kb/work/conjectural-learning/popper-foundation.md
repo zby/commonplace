@@ -1,7 +1,7 @@
 # Popperian support for the current approach
 
-The [current direction](./README.md#directions-that-changed-the-first-formulation) has direct Popperian
-support for articulation and criticism-guided action. Persistence of criticism's effects across a declared horizon is our operational condition. This grounds the simplification;
+The [current direction](./definition-decision-record.md#settled-decisions) has direct Popperian
+support for articulation and criticism-guided action. An effect of criticism on the system's future use is our operational condition. This grounds the simplification;
 it does not demonstrate the implementation's effectiveness.
 
 ## Direct support and its limits
@@ -14,16 +14,24 @@ support the following reading of the 1968 publication:
 | Articulate theories so they can be criticized | §4, p. 346: descriptive language provides an object for critical discussion; p. 347: scientists try to eliminate false theories in their stead | A direct epistemic reason for articulation, not a requirement for a repository, separately editable parts, or a formal consumer |
 | Work with theories before symbolic formalization | §6, p. 360: mathematical growth includes criticism of guesses and informal proofs, with linguistic formulation | Supports informal critical argument; does not imply that unarticulated states suffice for scientific discussion |
 | Let criticism affect the work that guides action | §9, p. 370: feedback between ourselves and our work can be amplified by self-criticism; p. 371: understanding objective contents influences action | Philosophical support for the relation; our causal-use tests must establish it in a particular system |
-| Retain the effect across a declared horizon | §3, p. 342 distinguishes potential intelligibility from actual understanding | Objective availability alone does not establish use. The horizon and evidence of later use are our additions, not a criterion supplied by this passage |
+| Carry the effect into future use | §3, p. 342 distinguishes potential intelligibility from actual understanding | Objective availability alone does not establish learning by a particular system. Commonplace specifies the evidence of use needed for that attribution |
+
+These are different attribution questions: whether content qualifies as
+objective knowledge, and whether a particular system has learned through
+using it. Popper's discussion of feedback and self-criticism already includes
+the learner. His account of mutual criticism (§4, p. 347) does not by itself
+require an independent critic in every instance of learning. How much
+decorrelating a critic from a proposer helps remains an empirical question.
 
 Thus articulation is partly inherited, rather than wholly our addition to
 Popper. We specify how to establish causal use and persistence of criticism's
 effects. Retaining a theory and reconstructing it from retained, formulated
 criticisms are implementation approaches; our preference for the former rests
-on the efficiency conjecture in the companion note. Reconstruction from raw records,
-which hold no criticism, is a separate comparison and not an implementation:
-the [definition draft](./definitions/conjectural-learning.md) classifies by
-what is formulated and persists. None of these passages supplies
+on the efficiency conjecture in the companion note. Records containing only
+inputs and outcomes supply a comparison of retained content. Indexed traces
+can instead implement retained theories and criticisms. The
+[definition draft](./definitions/conjectural-learning.md) distinguishes content
+and use, not storage format. None of these passages supplies
 fixed-model sufficiency or a result for records versus retained theories.
 
 ## Existing primary-source context

@@ -1,235 +1,121 @@
 ---
-description: "Why conjectural learning narrows Popper's process to formulated theories criticized for what they say, why it adds a knowing subject, what a fixed interpreter changes, and the three conjectures it bets on"
+description: "Commonplace's choice to study a continuing system with retained theories, and the content, addressability, and efficiency conjectures that motivate it"
 type: kb/types/note.md
 traits: [title-as-claim, has-external-sources]
 tags: [foundations, learning-theory, self-improving-systems]
 ---
 
-# Conjectural learning keeps the criticizable part of Popper's process
+# Commonplace studies conjectural learning through retained theories
 
-Popper describes learning as conjecture followed by attempted error
-elimination, in every organism and at every level.
-[Conjectural learning](../definitions/conjectural-learning.md) keeps one part
-of that process: the part where theories are written down in language, used
-in decisions, and criticized for what they say, with the result carried into
-later work. It sets aside learning that needs no written
-criticism: a model that regenerates what it needs from raw records each time,
-or text that is selected by score alone. The KB bets that the kept part pays
-in three ways: a system that criticizes what a theory says learns more from
-each failure than one that selects by outcome, criticism that can name a part
-of the theory learns more than criticism of the whole, and carrying the
-results forward costs less than redoing the work. No bet is established.
+Commonplace chooses to study a continuing system that develops, uses, and
+criticizes formulated theories. It retains the theories and their testing
+record so that what it learns shapes future work. This is our research
+choice. Whether it offers advantages over other approaches is an empirical
+question.
 
-The definition says when the term applies. This note gives the reason for
-each narrowing and for the one addition, says what changes when the model
-that reads the theories cannot itself change, and states the three bets with
-the comparisons that would test them.
+The attraction is that formulated knowledge can itself become an object of
+inquiry. The system can examine what a theory says, challenge its assumptions,
+and use the result when developing further theories. This draws on
+[Popper's account of formulation and criticism](../../../sources/popper-epistemology-without-a-knowing-subject-1968.ingest.md#quotes).
+The [definition](../definitions/conjectural-learning.md) states when the term
+applies; the [foundation](../popper-foundation.md) supplies the fuller
+attribution.
 
-## Popper applies one schema at two levels
+## The continuing system
 
-Without language, the tentative theories are inborn expectations,
-dispositions, and habits, and error elimination acts on the carrier itself:
-the organism dies or is changed together with its theory. With language, a
-formulated theory can be criticized and discarded while its holder survives.
-Of their false theories, scientists "try to let them die in their stead"
-([Popper 1968](../../../sources/popper-epistemology-without-a-knowing-subject-1968.ingest.md#quotes),
-§4, p. 347, verbatim).
+New work begins with what the system has already learned. A failed test may
+prompt revision or replacement. Surviving a serious test adds to the grounds
+for relying on a theory as background for further theories, or for spending
+less effort repeating tests of the same vulnerability. The theory remains
+tentative; its content can stay unchanged while its assessed support and
+future use change.
 
-A system built on a language model has both levels. The weights hold
-dispositions formed by training, a process that changes the carrier. The
-formulated part, which is prose, prompts, and code, holds the theories. The
-model that reads them, the interpreter, links the two. In Popper's terms the
-physical world is the first, the mind the second, and formulated knowledge
-the third, and "all our actions in the first world are influenced by our
-second-world grasp of the third world" (1968, §9, p. 371). Mapping the
-weights onto Popper's lower level is the KB's reading. Both levels are inside
-the learning system. The formulated part is text, so it can be read and
-criticized apart from the weights.
+We choose to retain addressable theories: assumptions, scope, and parts can
+be inspected and revised individually. Indexed traces that expose conjectures,
+criticism, and testing results are an implementation of this retained knowledge,
+not a separate comparison. We also hold model weights fixed in
+the research program. The theories, testing record, and other retained state
+remain parts of the learning system and continue to develop. Fixed weights
+rule out parameter updates as the source of improvement; they do not establish
+that a particular retained change caused it.
 
-The KB does not deny learning at the lower level. It studies the level where a
-theory can be criticized, replaced, and inspected one at a time, and where a
-change in behavior can be attributed to a change in text.
+The broader definition also admits reconstruction from retained criticisms
+and systems whose weights change. Our choice is one arrangement within it.
 
-## Why each narrowing
+## Three conjectures
 
-The two labels are the rows of the definition's table.
+**Content.** An arrangement that formulates criticism of what a theory says
+and supplies it to later steps may yield more learning from a failure than an
+arrangement that generates variants and selects them by score, with no
+formulated reason for a failure. A correct diagnosis can explain why a claim
+failed and direct subsequent search. The intended contrast is the effect of
+formulating and supplying criticism; a model proposing variants may also
+criticize them unobserved. More elaborate criticism need not supply a better
+diagnosis.
 
-- **Form: theories formulated in language.** This is Popper's own point about
-  rational criticism, though not about learning in general. A descriptive
-  language developed outside the body gives critical discussion something to
-  criticize. Informal argument is criticized before it is formalized (1968,
-  §4 and §6).
-- **Elimination: criticism of what the theory says.** Popper's schema "works
-  through error elimination, and on the scientific level through conscious
-  criticism" (1968, §5.2, p. 351). Selecting among variants by outcome alone
-  applies the lower-level mechanism to formulated text: the text is treated
-  as a genome, not as a claim. Both are selection in Popper's sense. The
-  difference is whether a score eliminates whole variants or an argument
-  eliminates claims.
+**Addressability.** Criticism that identifies a suspect assumption or part
+may yield more learning from a failure than criticism that leaves the target
+undivided. Identifying a candidate cause can focus investigation and help
+preserve useful knowledge. The comparison is with criticism directed at the
+theory as a whole, which can still constrain its successor. Both arrangements
+can be conjectural learning. The target of criticism is distinct from edit
+size: a diagnosis of one part can lead to rewriting the whole theory.
+Localization can be mistaken, and a revision may overturn a core assumption.
 
-In one respect the definition asks less than Popper. He counts competing
-theories and mutual criticism by argument among the indispensable means of
-scientific growth (1968, §4, p. 347). The definition lets the same model
-propose and criticize, and the same blind spots can affect it in both roles.
-It does not require an independent critic, because independence here is a
-degree with many sources. A critic's errors can be made less correlated with
-the proposer's by a fresh context, a different prompt or role, different
-evidence, a different model, or a person. How much decorrelation a system
-has is a design choice within the term. Assessment of outcomes from outside
-the builder is a separate condition, described in
-[externally tested theory builder](../../../notes/definitions/externally-tested-theory-builder.md).
+**Efficiency.** Retaining more of the work of conjecture and criticism may
+reduce cost at comparable decision quality. The content conjecture concerns
+the contribution of formulated criticism; the efficiency conjecture concerns
+the cost of retaining versus reconstructing that work. We compare retaining the theory
+and its testing record with two alternatives: rebuilding a theory from
+retained criticisms, and rebuilding from records containing only inputs and
+outcomes. The first asks what keeping the assembled theory buys;
+the second asks what keeping the work of criticism buys. Retention may save
+reconstruction, but still requires retrieval, interpretation, and maintenance.
+Compare total cost at comparable quality and quality under matched budgets.
+Vary record volume or context capacity to test whether bounded context
+increases the benefit.
+An [applicability-index example](../indexing-applicability-example.md) shows
+how an index might save interpretation even when the original call and result
+remain in the trace.
 
-## The KB adds a knowing subject
+## Evidence
 
-Popper's essay is titled *Epistemology Without a Knowing Subject*, and the
-omission is deliberate. Knowledge in his objective sense does not depend on
-anyone holding it: a book belongs to it if it could in principle be
-understood, and he admits no further requirement (1968, §3, p. 342).
-The result of criticism "is as a rule the emergence of a new problem"
-([Popper 1966](../../../sources/popper-a-realist-view-of-logic-physics-and-history-1966.ingest.md#quotes),
-opening section, verbatim), whether or not anyone takes the problem up.
+Reading the artifacts can establish that criticism was formulated. Showing
+that its content affected future use requires causal evidence. Compare
+relevant content with altered or mismatched content while controlling its
+form. Removing the artifact alone cannot distinguish a content effect from
+the effect of supplying text at all. These are ways to investigate membership,
+not additional conditions for belonging to the class; see the
+[evidence ladder](../../../notes/reflective-theory-refinement-needs-interpretation-and-retention.md#evidence-forms-a-ladder)
+and [experimental contrasts](../../../notes/an-experiment-identifies-only-the-contrast-it-actually-runs.md).
+Failure to detect an effect leaves membership unestablished by that test;
+it does not by itself establish absence. Demonstrating the mechanism also
+requires a separate assessment of whether future use improved before it
+establishes learning. Failed attempts can occur within a process that learns;
+an advantage over alternative approaches is a further claim.
 
-A definition of a system's learning has to put the subject back. It names the
-system whose decisions the theory guides, requires that the system actually
-uses the theory, and requires that the effect of criticism persists for that
-system up to a declared horizon. This addition is of a different kind from
-the narrowings. The narrowings select among the cases Popper's process
-covers; the addition ties the process to one system.
+Experiments compare specified arrangements of evidence, criticism, and
+retention. Holding the model fixed does not hold its internal processing
+fixed when its inputs differ. Unobserved criticism in a comparison arm remains
+possible; results establish differences between the tested arrangements, not
+the presence or absence of that internal process. Arrangements designed to
+rule out unobserved criticism, by withholding failures from the proposer or
+by proposing variants without a model, also change the available evidence or
+the proposal mechanism.
 
-Locating what was learned in the system's later decisions is not
-instrumentalism, the view that theories are mere instruments for prediction,
-which Popper criticizes (*Conjectures and Refutations*, Chapter 3).
-Criticism still bears on what the theory says, and whether a theory deserves its scope is
-judged separately, by
-[reach-assessment](../../../notes/definitions/reach-assessment.md).
+## Scope
 
-## A fixed interpreter departs from Popper's scientist
-
-Popper's scientist changes along with the theories: objective knowledge feeds
-back on the mind that grasps it. With fixed weights that channel is closed,
-and each episode reads the theory from scratch. Two consequences follow.
-
-- The formulated part must carry all of the learning, including what a
-  person would absorb as tacit skill. Attributing a change in behavior to a
-  change in text becomes more reliable, since parameter updates are ruled out
-  as a source of change. Whether the model interprets prose reliably becomes
-  the central empirical risk.
-- Background knowledge in the weights cannot be revised while the weights
-  stay fixed, whereas Popper treats any background assumption as open to
-  challenge. It can be criticized only through a retained theory about the
-  interpreter, which is the reflective case.
-
-Coevolution of weights, prompts, and code reopens the channel. Content from
-criticized theories may be trained into the weights, and changed weights
-read, apply, and criticize the theories differently. Such a system is still
-inside the term, but the KB's experiments hold the weights fixed. It is
-open whether what transfers into the weights is the content of the criticism
-and not only the form of the training intervention. One placebo-controlled
-adapter comparison found no content-specific effect
-([PoPE](../../../sources/form-not-content-placebo-controlled-self-repair.ingest.md)).
-
-## The narrowing bets on three conjectures
-
-The content conjecture, and the efficiency conjecture's comparison with raw
-records, are tested against the definition's separate comparisons, the
-arrangements that fail one of its two conditions. The addressability
-conjecture, and the efficiency conjecture's comparison of retained criticisms
-with a retained theory, compare arrangements that both meet them. The split follows one rule: a condition is part of the definition
-when removing it changes which mechanism does the learning, and it is a
-conjecture when removing it changes only how well the learning works. In an experiment the arrangement compared against is a baseline, and a baseline may match or
-outperform a conjectural learner. That comparison is what the experiments
-measure.
-
-**The content conjecture: a system that criticizes what a theory says learns
-more from each failure than one that selects by outcome.** The reasoning is
-that a score carries few bits, while a criticism says which claim failed and
-why, so one failure can rule out a family of variants, and the reason is
-retained with the survivor. The baseline is black-box optimization of prompts
-and programs, as in score-driven prompt optimizers and evolutionary program
-search. The
-[Meta-Agent Challenge](../../../sources/meta-agent-challenge-autonomous-agent-development.ingest.md)
-is one such optimizer, and it requires no explicit conjecture.
-
-The evidence so far does not favor the conjecture. Controlled studies of code
-models have not separated content from form: error content in prompts and in
-trained adapters showed no advantage over placebo content (PoPE), and a full
-Popperian procedure showed none over its labels alone
-([Scaffold, Not Vocabulary?](../../../sources/scaffold-not-vocabulary-popperian-code-generation-skill.ingest.md)).
-Neither study tested equivalence, and neither tested a retained theory reused
-across tasks.
-
-**The addressability conjecture: criticism that can name a part of the theory
-learns more from each failure than criticism of the whole.** An
-[addressable theory](../definitions/addressable-theory.md) has assumptions,
-scope, and parts that can be inspected and revised individually. Popper allows
-a failed test to implicate a whole theoretical system and holds only that
-some cases identify the responsible hypotheses
-([Conjectures and Refutations, Chapter 10, section XVI](../../../sources/popper-conjectures-and-refutations.ingest.md#quotes)).
-The reasoning is that a failure which names no part leaves the successor
-unconstrained, while a named part lets the revision keep what still works.
-The named part is a candidate. The baseline is unaddressed revision: a
-failure is read, and may be described, but the theory is rewritten or
-regenerated whole. That arrangement is conjectural learning too, so this
-comparison is between two implementations of the paradigm. The definition
-does not require addressability; the KB builds for it on this conjecture.
-
-**The efficiency conjecture: persisting more of the work of conjecture and
-criticism costs less at comparable decision quality.** Three arrangements
-differ in what persists.
-
-| Arrangement | Persists | Each episode redoes |
-|---|---|---|
-| Raw records | Evidence only | The criticism and the theory |
-| Retained criticisms | The eliminations | Assembling the theory |
-| Retained theory | The assembled result | Nothing (but the theory needs maintenance and can go stale) |
-
-The conjecture is that cost falls down the table, because the earlier
-arrangements repeat interpretive and inferential work. It also says that
-bounded context widens the cost differences between the arrangements, because
-the relevant records may not all fit in context at once and must first be
-retrieved, selected, or summarized.
-
-The two reconstruction baselines answer different questions. Against raw
-records: does formulated, persisted criticism buy anything? This is the
-primary comparison, because regeneration from raw records needs no criticism
-step: records are stored, retrieved, and handed to the model. The operator
-takes regeneration from raw records to be the dominant approach today, but
-the KB has not established that. Against retained criticisms: does keeping
-the assembled theory buy anything more?
-
-Compare the arrangements by cost at comparable decision quality and by
-quality under matched budgets, counting maintenance cost. Vary context
-capacity or record volume to test whether bounded context widens the
-differences.
-
-## Refinement heuristic: investigate load-bearing criticisms first
-
-Conjectural learning does not prescribe the order in which criticisms are
-investigated or repairs are made. As an implementation heuristic, prefer
-testing criticisms of commitments on which much of the theory depends before
-investing heavily in dependent local repairs. A deeper revision can make
-otherwise valid local fixes obsolete. Addressability helps locate the target;
-dependency and claimed reach help estimate how much later work depends on it.
-This is a search heuristic, not a condition of conjectural learning and not an
-established payoff claim.
-
-## Open Questions
-
-- Can the middle arrangement be kept distinct in practice? A record that says
-  why a claim failed often already contains the revised claim.
-- How much does decorrelating the critic from the proposer improve criticism,
-  and which way of decorrelating matters most?
-- How dominant is regeneration from raw records among current agent memory
-  systems?
+None of these advantages is established. The [paper comparison](../comparison.md)
+records relevant findings and their limits; it supplies no result for this
+continuing system. The conjectures motivate experiments without making our
+choice a prescription for other systems. How much decorrelating the critic
+from the proposer helps, and whether retained criticisms can be kept distinct
+from a reconstructed theory in practice, remain open questions.
 
 ---
 
 Relevant Notes:
 
-- [Conjectural learning](../definitions/conjectural-learning.md) — defined-in: the term whose boundary this note argues for
-- [Addressable theory](../definitions/addressable-theory.md) — defined-in: the structural property the addressability conjecture is about
-- [An experiment identifies only the contrast it actually runs](../../../notes/an-experiment-identifies-only-the-contrast-it-actually-runs.md) — grounds: why withholding a theory does not test its content
-- [Learning by theory refinement may improve sample efficiency under structured shifts](../../../notes/learning-by-theory-refinement-may-improve-sample-efficiency.md) — see-also: the payoff conjecture under structured shifts, a different question from the three stated here
-- [Popper, Epistemology without a knowing subject](../../../sources/popper-epistemology-without-a-knowing-subject-1968.ingest.md) — evidenced-by: the two levels, conscious criticism, mutual criticism, and knowledge that needs no holder
-- [Popper, A realist view of logic, physics, and history](../../../sources/popper-a-realist-view-of-logic-physics-and-history-1966.ingest.md) — evidenced-by: criticism results as a rule in a new problem
-- [Popper, Conjectures and Refutations](../../../sources/popper-conjectures-and-refutations.ingest.md) — evidenced-by: tests that implicate a whole system
+- [Conjectural learning](../definitions/conjectural-learning.md) — defined-in: the process studied
+- [Addressable theory](../definitions/addressable-theory.md) — defined-in: the structural property chosen for this research
+- [Learning by theory refinement may improve sample efficiency under structured shifts](../../../notes/learning-by-theory-refinement-may-improve-sample-efficiency.md) — see-also: the separate conjecture about structured shifts

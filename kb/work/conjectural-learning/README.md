@@ -18,97 +18,17 @@ import: the task/realization separation, the departures section, much of the
 and a separate term for the loop because the borrowed name denotes one
 operation.
 
-Commissioned by the operator on 2026-09-19. All directions below are the
-operator's, given the same day.
-
-## Directions that changed the first formulation
-
-The drafts state the resulting position; this list keeps what they do not:
-who decided, and why the earlier formulation was dropped.
-
-- **Simplification, not a new ontology.** The first candidate defined a
-  general “conjectural learning” with four roles and a coined *uptake*
-  condition. It excluded almost nothing: nine of ten boundary cases were
-  eligible or undetermined, and placing criticism in an LLM's context did not
-  establish a lasting learning effect. Cite Popper's schema, which already
-  has a name and an attribution, and define only what we add. The declared
-  horizon replaces *uptake*.
-- **The program evolves only the formulated part.** We do not oppose Popper's learning
-  without language; our systems have that level too, in the model weights.
-  We choose to evolve prose, prompts, and code. Coevolution with the weights
-  is inside the term; the program does not pursue it.
-- **Criticism must address what the theory says.** The 2026
-  papers showed that the draft admitted cases we do not study: placebo
-  studies found form effects without content effects, and score-driven
-  program search qualified as conjectural learning. Criticism must therefore
-  be formulated and bear on what the theory says, and black-box optimization
-  became a separate comparison. For a while addressability of parts also
-  returned as a requirement; the later direction on the system boundary
-  withdrew that.
-- **Reconstruction splits in two, and we compare against both.** The second
-  formulation put all reconstruction from records inside the approach. Raw
-  traces hold no criticism, and we cannot know whether a model criticizes
-  internally while rebuilding a theory from them. The term therefore
-  classifies by what is formulated and persists. Reconstruction from
-  retained criticisms stays inside; reconstruction from raw records is the
-  primary comparison, because the operator assesses regeneration from raw
-  records to be the dominant approach today, and it needs no criticism. The
-  KB has not established that assessment.
-- **Review corrections, 2026-09-19.** Criticism is attempted elimination, so
-  a part that survives counts, with the result recorded against it. The
-  content test asks that relevant differences in content matter; it does not
-  demand that different criticisms give different revisions. Artifacts show
-  the formulated criticism; the causal dependence needs an intervention.
-- **The system boundary, and addressability again (external review accepted
-  by the operator, 2026-09-19).** The unit is the whole learning system.
-  Prompts, files, code, tests, and records are internal parts of it even
-  though they are outside the model weights, so “external” must not mean
-  “outside the weights”. Three distinctions stay separate: inside or outside
-  the weights, formulated or latent, inside or outside the declared system
-  boundary. In the fixed-model realization durable learned change occurs
-  outside the weights and inside the system. The definition is reworked
-  around the tentative theory as a formulated, operative object that the
-  system uses, criticizes, and revises or replaces. Addressability of parts
-  is no longer definitional: it is a stronger architectural property and the
-  subject of a third conjecture, and unaddressed revision is back inside the
-  term as that conjecture's baseline. This reverses the earlier direction in
-  this list. What still excludes black-box optimization is that criticism
-  must be formulated and bear on what the theory says.
-- **One sense for *tentative* (operator, 2026-09-20).** It is Popper's status
-  and belongs to every theory, whatever a system does with it. The drafts had
-  also used it for a way of holding a theory, denying it of fixed
-  instructions and of the Gödel machine's axioms; that added to Popper's
-  term. Those arrangements are now described as never exposed to criticism.
-  No case of the decision record changed class.
-- **The name.** *Theory refinement* leaves the library altogether, so
-  *learning by theory refinement* does not survive. The replacement is
-  **conjectural learning**, fixed by the operator on 2026-09-20 after a day
-  as a working name. *Conjectural* is Popper's word for tentative status, not
-  a synonym for speculative.
-- **Independence of the critic is a degree, not a condition (operator,
-  2026-09-20).** A system can be decorrelated from itself in many ways: a
-  fresh context, a different prompt or role, different evidence, a different
-  model, a person. “Independent critic” therefore names no single
-  arrangement the definition could require, and one model proposing and
-  criticizing stays inside the term. How far the critic's errors are
-  decorrelated from the proposer's is a design dimension, and what it buys is
-  an open question in the companion note.
-- **The later use defines the horizon (operator, 2026-09-20).** Learning is
-  always about something used later, and that later use defines the scope of
-  the claim. The definition sets no minimum durability. A theory revised and
-  reused within one episode is conjectural learning for that within-episode
-  claim, and the research program's own claims declare later episodes. A
-  fixed minimum, such as surviving the context in which the criticism
-  happened, was proposed by the drafting agent and rejected.
-- **Definitions first, migration later.**
+Commissioned by the operator on 2026-09-19, with further decisions on
+2026-09-20. Current decisions and their rationale are in the
+[decision record](./definition-decision-record.md#settled-decisions).
 
 ## End state and acceptance
 
 Stage 1, current: definition drafts in [definitions/](./definitions/) and a
-[companion note draft](./notes/conjectural-learning-keeps-the-criticizable-part-of-poppers-process.md),
+[companion note draft](./notes/commonplace-studies-conjectural-learning-through-retained-theories.md),
 written against the real type contracts, for operator review. The definition
-says when the term applies; the note carries the argument for each narrowing
-and the three conjectures with their baselines. Stage 2: the
+says when the term applies; the note states our research choice and the three
+conjectures with their baselines. Stage 2: the
 operator adopts, redirects, or declines them and settles the open decisions.
 Stage 3, under a later commission: migration, from the
 [parked notes](./migration-map.md).
@@ -129,25 +49,16 @@ The result must leave the library simpler than it found it:
 
 Do not enrich the classical theory-refinement account as an intermediate step.
 
-## Adoption decisions settled on 2026-09-20
+## Pending work
 
-- **No separate operation term.** Conjectural learning names the learning
-  process. A single revision episode is described in ordinary language; no
-  second technical term is introduced only to distinguish one pass from the
-  recurrent loop.
-- **No minimal-revision bias.** Criticism may overturn a core assumption and
-  make dependent local repairs obsolete. A repository search found the
-  minimal-revision preference only in the classical theory-refinement lineage;
-  the addressable-theory draft already declines to import it. The new basis
-  therefore keeps preservation of useful knowledge as a possible benefit,
-  not a rule to minimize syntactic change.
+The [naming clean-up proposal](./naming-clean-up-proposal.md) and its reviews
+reopen the relation between the term's scope and accessible formulation. That
+question and the reorganization of the reconstruction comparison remain
+pending; the proposal has not been adopted. The
+[indexing example](./indexing-applicability-example.md) records a practical
+retrieval issue for that comparison.
 
-No definition decision remains open before operator adoption. Migration and
-implementation choices remain later work.
-
-## Cautions carried from the first candidate
-
-These are not in the drafts and still apply to later experiments and articles.
+## Constraints on later experiments and articles
 
 - Replacing or weakening a failed test requires grounds to doubt its
   measurement or relevance. Reformulating a problem cannot establish

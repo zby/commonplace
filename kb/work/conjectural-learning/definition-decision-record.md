@@ -1,37 +1,7 @@
 # Decision record: what the conjectural-learning definition is for
 
-Status: adopted by the operator on 2026-09-19. Proposed by the drafting agent
-the same day at the operator's request, after the definition reversed several
-times. The drafts were checked against the tests on adoption; the last
-section records what that changed.
-
-## Context: what kept reversing
-
-| Question | Positions taken, in order |
-|---|---|
-| Is addressability of parts required? | Required (library) → possible benefit → required again → stronger property and a conjecture |
-| Is reconstruction from records inside the term? | Outside (library) → inside → split: retained criticisms inside, raw records outside |
-| Does a theory used within one episode count? | Outside (library) → inside (first candidate) → relative to a declared horizon |
-| Is learning in the weights covered? | Outside (library) → undetermined (first candidate) → weight adaptation alone outside; weights evolving together with a formulated operative theory inside |
-| Must criticism produce a revision? | Yes → no: a part that survives counts |
-
-Each reversal followed a good argument. They pulled in different directions
-because the definition was being asked to do several jobs at once, and each
-argument served a different job:
-
-- **Name what the research program builds and studies.** This pulls toward a
-  narrow term: addressable theories, retained, with fixed weights.
-- **Keep the program's comparisons fair.** A benefit we believe in should be a
-  conjecture with a baseline. Written into the definition it becomes true by
-  stipulation. This pulls conditions out of the term.
-- **Classify systems we did not build.** This needs membership that can be
-  decided from a system's artifacts and interventions on them.
-- **State an honest relation to Popper.** This pulls toward his generality
-  and few additions.
-- **Simplify the library.** This pulls toward fewer terms and shorter text.
-
-The addressability reversals are the first two jobs in conflict. We build
-addressable theories, and we also want to test whether addressability pays.
+Tests adopted by the operator on 2026-09-19; decisions updated through
+2026-09-20. The naming and internal-criticism boundary remains under review.
 
 ## Purpose
 
@@ -47,19 +17,26 @@ on how it is written. They do not decide its scope.
    errors, what they are eliminated from, or what persists. A condition whose
    removal leaves the mechanism and changes how well it works is a conjecture
    with a baseline. By this test formulation in language, operative use,
-   criticism of content, and persistence across the horizon are definitional.
+   criticism of content, and an effect on future use are definitional.
    The definition's two numbered conditions bundle these four: the first
    holds formulation and operative use, the second criticism of content and
-   persistence.
+   its effect on future use.
    Addressability of parts, and retaining the theory against rebuilding it
    from retained criticisms, are conjectures. Fixed weights are a study
-   condition.
+   condition. These distinctions identify the mechanism; learning also
+   requires improvement in future use. Superiority over alternatives remains
+   a conjecture.
 2. **Every arrangement left outside is named.** It is specified well enough
    to be run as a baseline. The definition never
    settles an empirical question by leaving the rival out.
-3. **Decidable without claims about internals.** Membership rests on
-   formulated artifacts and on interventions that vary their content. Nothing
-   depends on what a model does internally.
+   Boundary examples also include arrangements inside the term. An example
+   need not fail a condition or serve as an experimental baseline to clarify
+   the boundary.
+3. **Assessable without claims about internals.** Membership requires
+   formulated artifacts and their causal effects on future use. Interventions
+   on content provide evidence of those effects; performing an intervention
+   is not a membership condition. Insufficient evidence leaves a case
+   unclassified. Nothing depends on what a model does internally.
 4. **Each condition is attributed.** Popper's, ours, or an empirical
    question.
 5. **No term without a claim.** A new term enters only when a claim cannot be
@@ -71,83 +48,89 @@ on how it is written. They do not decide its scope.
 
 ## Cases to check a change against
 
-Classification under the drafts as of 2026-09-19.
+The inside cases assume improvement in future use through the stated process.
+Without improvement they describe attempts to learn; when improvement is
+unestablished, learning remains unestablished.
 
 | # | Case | Class | Settled by |
 |---|---|---|---|
-| 1 | A retained theory with separate parts is criticized and revised part by part | Inside | Both conditions |
-| 2 | A retained prose theory is criticized for what it says and replaced whole | Inside | Test 1; reversed twice |
+| 1 | A retained theory with separate parts is criticized and revised part by part, whether stored in separate documents or exposed through indexed traces | Inside | Both conditions; storage representation does not distinguish the cases |
+| 2 | A retained prose theory is criticized for what it says and replaced whole | Inside | Test 1; addressability is a conjectured benefit |
 | 3 | Formulated criticisms are retained and a theory is rebuilt from them when needed | Inside | Persistence of the effect of criticism |
-| 4 | Raw records are retained and a theory is rebuilt from them each time | Comparison | No formulated criticism persists; test 3 |
+| 4 | Records containing only inputs and outcomes are retained for reconstruction | Comparison of retained content | The records do not retain formulated conjectures or criticism; this does not classify what the reconstructor does |
 | 5 | Prompts or programs are varied and selected by score | Comparison | Criticism of content |
-| 6 | A theory is built while reasoning and discarded after the decision | Inside for a claim that declares a later use within the episode; a comparison for a claim that declares a later episode | The later use defines the horizon. The definition sets no minimum; a small claim is a true small claim |
+| 6 | A theory is built while reasoning and then discarded | Inside if formulated criticism affects future use, before disposal or through a retained result afterward; outside if nothing learned from criticism affects future use | Future use supplies the relevant time span; disposal alone does not settle membership |
 | 7 | Weights are adapted and no formulated theory guides decisions | Comparison | Formulation |
 | 8 | Weights, prompts, and code evolve together around a formulated operative theory | Inside. The research program treats it as an extension it does not pursue, since its experiments hold the weights fixed | Both conditions still hold; fixed weights are a study condition under test 1 |
 | 9 | A formulated theory guides decisions and is never criticized | Comparison: the frozen-seed baseline | No criticism; test 2 |
 | 10 | A theory is stored and nothing consumes it | Excluded; as a baseline it is the system run without the theory | Not operative |
-| 11 | A theory survives an attempted refutation and the result is recorded | Inside | Criticism is attempted elimination |
-| 12 | One model proposes and criticizes its own theories | Inside | Test 1: decorrelating the critic from the proposer changes how well criticism works, not which mechanism does the learning. Test 3: independence comes in many forms and degrees, so it names no decidable condition. The definition asks less than Popper here |
-| 13 | Criticisms are written down, but placebo text of the same form has the same effect | Not shown to be inside | Content half of membership needs an intervention |
+| 11 | A theory survives an attempted refutation, and the recorded result guides later reliance on it or the choice of further tests | Inside | Criticism is attempted elimination; its result can change assessed support and subsequent use without changing the theory's content |
+| 12 | One model proposes and criticizes its own theories | Inside | Test 1: decorrelating the critic from the proposer changes how well criticism works, not which mechanism does the learning. Test 3: independence comes in many forms and degrees, so it names no decidable condition |
+| 13 | Criticisms are written down, but a test detects no difference from placebo text of the same form | Not shown to be inside by that test | The test has not established a content effect; non-detection alone does not establish absence |
 | 14 | A formulated operative theory is revised only when it proves its own revision beneficial, as in the Gödel machine | Comparison: justification before change | Criticism of content. The machine justifies each switch by proof from its premises and never exposes the premises to criticism, so the theory is operative and uncriticized. Test 1: what eliminates differs in kind |
 
-## Likely next reversals
+## Settled decisions
 
-- **Case 3.** The accepted review wording, “retains revisions or
-  replacements”, would move it outside. Test 1 keeps it inside, since the
-  mechanism is the same and only the cost differs.
-Settled since adoption: the name is conjectural learning; case 12 stays
-inside, because independence of the critic is a degree; and case 6 keeps its
-relative classification. A fixed minimum horizon, such as survival past the
-context in which the criticism happened, was considered and rejected.
-Learning is always a claim that something is used later, and that later use
-defines the scope of the claim, so the definition should not set it.
+Operator decisions from 2026-09-19 and 2026-09-20:
 
-## Applied on adoption
+- **Separate the mechanism from its expected benefits.** Formulation,
+  operative use, content-directed criticism, and its effect on future use
+  define the current draft. Addressability and retaining theories rather
+  than rebuilding them from retained criticisms are conjectures. Fixed
+  weights are our study condition; coevolving weights remain eligible.
+  The unit is the whole learning system, including its files, prompts, code,
+  records, and weights. Outside the weights does not mean outside the system.
+- **Learning requires improvement.** This narrows the earlier criterion of
+  attributable behavioral change: versions of cases 1, 2, 3, 6, 8, 11, and 12
+  that change behavior without improving future use describe attempts to
+  learn. Unknown improvement leaves learning unestablished. Superiority over
+  a rival is a separate conjecture. Future use supplies the time span; case
+  6 has no additional duration requirement.
+- **Survival can count.** Case 11 requires the testing record to guide later
+  reliance or further testing. This qualifies its earlier unconditional
+  classification of a recorded pass: a result that changes nothing does not
+  establish learning. Corroboration changes assessed support, not the
+  theory's tentative status, which belongs to every theory.
+- **Compare retained content.** Records containing only inputs and outcomes
+  do not retain conjectures or criticism. This describes the records, not
+  what a reconstructor might do. Traces that preserve those contents belong
+  with retained theories or criticisms; an index exposing them implements
+  the same objects as separate documents. Case 1 includes that implementation,
+  and case 4 no longer sweeps all traces into “raw records”. Indexing is not
+  a membership requirement. The operator's assessment that reconstruction
+  from raw records is dominant remains unestablished by the KB.
+- **Keep content effects distinct from their evidence.** Placebo findings
+  motivate controls; they do not establish semantic effects in Commonplace.
+  Interventions investigate causal use, rather than define membership.
+  Case 13 remains unestablished by its test. Critic independence comes in
+  degrees, so case 12 stays inside; decorrelation is a design question.
+- **Keep attribution precise.** Popper supplies the schema, tentative status,
+  criticism broader than empirical testing, and selection rather than
+  instruction. Commonplace specifies attribution of learning to a particular
+  system; this does not restore a knowing subject missing from Popper's
+  learning process. He also describes self-criticism.
+- **Simplify the vocabulary and revision policy.** The operator chose
+  *conjectural learning* on 2026-09-20, replacing the classical import at
+  migration. No separate term names one revision, and no *uptake* term is
+  needed. Preservation of useful knowledge may be a benefit, but minimal
+  syntactic change is not a rule. Criticism can overturn core assumptions.
+  EITHER and FORTE remain precedents for locating candidate repairs.
 
-- **Test 1.** The definitional conditions are formulation in language,
-  operative use, criticism of content, and persistence across the declared
-  horizon. Addressability, and retaining the theory against rebuilding it
-  from retained criticisms, are conjectures in the companion note. Fixed
-  weights are a study condition. No change was needed. Case 3 stays inside.
-- **Test 2.** One exclusion was not a named comparison. A theory that is
-  applied and never criticized is now the comparison “a fixed theory”, which
-  is the frozen-seed baseline the testing supplement already uses. The
-  unconsumed theory stays an exclusion and is described as a baseline.
-- **Tests 3 to 5.** No change. Membership rests on artifacts and
-  interventions, the relation-to-Popper section attributes each condition,
-  and the three defined terms each serve a claim.
-- **Test 6.** The workshop's bounds now require it of any proposed change.
-- **Case 14, added 2026-09-19 at the operator's direction.** Reading the
-  KB's Gödel-machine notes against the definition showed a rival none of the
-  other cases covers: a theory with rigorous admission and no criticism. Its
-  [axioms](../../notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md)
-  are formulated and operative, observations enter as theorems and cannot
-  count against a premise, and an axiom changes only when the current axioms
-  prove the change beneficial. The classification is of the construction as
-  the paper gives it; a formalization that licenses empirical revision of
-  its own environment assumptions would move part of the criticism inside.
-  The contrast is Popper's own. Conjectures "are controlled by criticism" and
-  "can never be positively justified", and "nothing can be justified or
-  proved (outside of mathematics and logic)"
-  ([Conjectures and Refutations, Preface p. vii and Chapter 1 p. 51](../../sources/popper-conjectures-and-refutations.ingest.md#quotes)).
-  The exception matters here. The machine's proofs are inside logic, and
-  Popper has no quarrel with them. What cannot be justified are its premises
-  about the environment and the utility, and those are what it never
-  criticizes.
-- **Settled afterwards.** Case 12 on 2026-09-20: it stays inside. Case 6 on
-  2026-09-20: the later use defines the horizon, with no minimum. The same day
-  the operator settled the remaining adoption decisions: no separate term is
-  kept for a single revision episode, and the classical minimal-revision bias
-  is dropped. Repository search found the bias only in the classical
-  theory-refinement lineage; the addressable-theory draft already says it
-  takes no preference for minimal revision from FORTE. Neither decision flips
-  a boundary case.
+Case 14 concerns the [Gödel-machine construction](../../notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md)
+as described, whose premises about environment and utility are not exposed
+to criticism. It does not exclude proof from criticism: Popper allows proof
+in logic and mathematics. A construction permitting empirical criticism of
+its environment assumptions would need a different assessment.
 
-## Consequences
+## Pending scope review
 
-Reviews of the definition state which test a proposed change appeals to and
-which cases it flips. The decision log in the
-[README](./README.md#directions-that-changed-the-first-formulation) keeps the
-history; this record keeps the reasons the history should stop repeating.
-At migration the purpose and tests could become an ADR or a short section of
-the companion note, and the cases could become its boundary-case table.
+The [naming clean-up proposal](./naming-clean-up-proposal.md) reopens the
+relation between formulation, observer access, and internal criticism,
+including test 3. The current wording is retained pending that decision;
+opacity alone must not be read as evidence that a stipulated case occurs.
+The reconstruction comparison also awaits reorganization.
+
+The editorial cleanup on 2026-09-20 qualifies the addressability and reflection
+claims and separates testing from test failure (tests 1 and 4). It changes
+none of the 14 current classifications. Reviews must continue to name the
+tests appealed to and the cases a proposal would flip.

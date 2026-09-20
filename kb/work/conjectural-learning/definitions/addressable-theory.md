@@ -1,5 +1,5 @@
 ---
-description: "Definition — an addressable theory is a theory formulated in language whose assumptions, scope, and parts can be inspected, blamed, and revised individually; a graded structural property, separate from tentative status"
+description: "Definition — an addressable theory is a theory formulated in language whose assumptions, scope, and parts can be inspected and revised individually; a graded structural property, separate from tentative status"
 type: kb/types/definition.md
 tags: [foundations, self-improving-systems, learning-theory]
 ---
@@ -22,8 +22,9 @@ empirical question.
 ## Scope
 
 - **It comes in degrees.** A theory with separately stated assumptions and
-  scope conditions is more addressable than an undivided document, which can
-  be replaced but not rescoped.
+  scope conditions is more addressable than an undivided document. Whole
+  replacement can still change a theory's scope; addressability lets the
+  revision target that scope separately.
 - **It follows the localization axis.** Of the two axes that derive
   [representational form](../../../notes/definitions/representational-form.md),
   localization supplies addressability: natural-language and symbolic
@@ -32,11 +33,11 @@ empirical question.
 - **How strongly a case can contradict the theory is a separate matter.** It
   follows the other axis, assigned consequences. Where a defined consumer
   such as a validator, schema, or test fixes what a part implies, a
-  contradiction is a fact. Where a reader derives the implication, a
-  contradiction is an interpretation, and misreading is one more source of
-  error in diagnosis. A theory in this KB is usually mixed: parts that have
-  settled cross into [codification](../../../notes/definitions/codification.md),
-  and the rest stays prose.
+  contradiction can be mechanically checked relative to that encoding.
+  Whether the encoding captures the intended claim remains criticizable.
+  Where a reader derives the implication from prose, that interpretation
+  also enters the diagnosis. See
+  [codification](../../../notes/definitions/codification.md).
 - **A located part is a candidate.** A failure rarely
   identifies one faulty commitment. Popper notes that a test may bear on a
   large part of a theoretical system, while holding that some cases do
@@ -64,7 +65,9 @@ a preference for minimal revision from them.
   only by fitting and has no part to blame. An inspectable causal model or
   simulator program is both a world model and an addressable theory.
 - **Storage location.** A theory kept in a file is not thereby addressable,
-  and addressability does not require a particular store.
+  and addressability does not require a particular store. Traces with an
+  index locating conjectures, their parts, and their testing record can
+  implement the same addressable objects as separate theory documents.
 
 ## Misuse Cases
 

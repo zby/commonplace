@@ -67,7 +67,7 @@ Best-of-eight success is not successful selection; the same-model selector
 showed no advantage over its random references. Structural controls and
 independent outcomes are needed to identify what criticism actually changes.
 
-**Retain theories, but test their effects separately.** HEP is the closest
+**What the retention studies establish.** HEP is the closest
 new precedent for retained formulated hypotheses; AHOIS connects criticized
 explanations to physical action. Neither establishes our efficiency conjecture.
 HEP's belief probabilities and lifecycle rules are its design choices, not
@@ -88,8 +88,9 @@ theories over reconstructing them from records (including its dependence on
 context limits), or cumulative gains from machinery revision. The
 [definition draft](./definitions/conjectural-learning.md) treats
 reconstruction from retained criticisms as an implementation and
-reconstruction from raw records as a separate comparison; this evidence
-limit settles neither.
+reconstruction from records containing only inputs and outcomes as a separate
+comparison of retained content. Indexed traces can implement retained theories
+and criticisms; this evidence limit settles neither comparison.
 Missing full texts may change particular architecture assessments; abstracts
 and titles supply neither positive nor negative findings about their omitted
 mechanisms. These limits carry into the [definition drafts](./definitions/).

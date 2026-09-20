@@ -23,14 +23,14 @@ stored or edited. Structural properties have their own term,
 - **A status, not a stage.** A theory stays tentative even when we no longer
   feel able to doubt it
   ([Conjectures and Refutations, Chapters 1 and 15](../../../sources/popper-conjectures-and-refutations.ingest.md#quotes)).
-  Corroboration does not end the status, and neither does changing the
-  theory's representational form.
+  Corroboration can strengthen the grounds for later reliance without making
+  the theory less tentative in this technical sense. Neither corroboration
+  nor changing the theory's representational form ends the status.
 - **Independent of the holder.** The status belongs to every theory, whatever
   a system does with it. Fixed instructions that nothing is permitted to
-  revise are still tentative theories. What such a system lacks is criticism,
-  and that is a fact about the system:
-  [conjectural learning](./conjectural-learning.md) requires it, the status
-  does not.
+  revise are still tentative theories and can still be criticized. Restrictions
+  on revision and the presence of criticism are separate facts about the
+  system; neither determines tentative status.
 - **No required form.** The term does not require symbolic formalization,
   storage outside the model weights, separately editable parts, or a particular consumer. A
   theory that can only be replaced whole is still tentative. Popper applies
@@ -40,8 +40,9 @@ stored or edited. Structural properties have their own term,
   [Conjectural learning](./conjectural-learning.md) covers only the
   formulated ones.
 - **Criticism is broader than empirical test.** A tentative theory may be
-  criticized by argument, by comparison with a rival, or by a failed
-  prediction. Only the last gives it empirical support when it survives.
+  criticized by argument, by comparison with a rival, or by testing a
+  prediction. A failed prediction counts against it; surviving a serious
+  empirical test can add to its support.
 - **Licenses no particular use.** The term does not say how much support
   permits retention, experimental use, routine reliance, or codification.
   Those are policy questions a builder answers for each use, collected in
