@@ -24,8 +24,9 @@ Markdown snapshot under `kb/sources/.snapshots/`.
 
 The direct output is the `.ingest.md` report in `kb/sources/`, with the local
 snapshot's slug. URL snapshotting and connection discovery may write their own
-local or generated artifacts. Do not directly write any other library
-artifacts.
+local or generated artifacts. The parent may also shorten an unpaired local
+snapshot's filename under Step 1 without changing its bytes. Do not directly
+write any other library artifacts.
 
 The parent agent owns target resolution, snapshotting, checksum guards,
 connection discovery, drafting-worker dispatch, handoff verification, final
@@ -107,6 +108,19 @@ re_ingest_request:
        at the start of the run, and skip the remaining Step 1 bullets.
    - If `$ARGUMENTS` is empty, list recent
      `kb/sources/.snapshots/*.md` files, then ask which one to ingest.
+   - For an ordinary `arxivb.org/abs/<paper-id>` URL, resolve the paper before
+     searching for an existing ingest. arXivBangers is a discovery site with
+     abstracts and automated editorial commentary; the default ingest target
+     is the full paper it links to. Use `https://arxiv.org/abs/<paper-id>` as
+     the canonical target, preserving an explicit version suffix and dropping
+     query strings and fragments. Use that URL for duplicate lookup and
+     `source` metadata, then let `cp-skill-snapshot-web` fetch the full PDF
+     through its arXiv route. Report this resolution to the user. Do not fall
+     back to the arXivBangers abstract if paper capture fails. An explicit
+     request to analyze the arXivBangers page itself keeps the supplied URL;
+     local-snapshot targets and structured re-ingest requests retain their
+     existing source identity. Never repurpose an existing arXivBangers ingest
+     or change its checksum to represent the full paper.
    - For a URL target, first search tracked `kb/sources/*.ingest.md` files for
      an exact frontmatter `source` match. If several match, stop and report the
      duplicate ingests. If one matches, resolve only its name-paired snapshot.
@@ -136,10 +150,16 @@ re_ingest_request:
      completes. Do not hash a JSON, PDF, image, or other companion.
    - Derive `kb/sources/<slug>.ingest.md`. Before connection discovery, require
      the snapshot basename to be at most 63 characters and the derived path's
-     stem (`<slug>.ingest`) to be at most 70 characters. Stop and report the
-     overlong paired paths if either check fails; do not run connection
-     discovery or draft against a name that cannot validate. If URL resolution
-     already found an ingest, require this derived path to equal it. For every
+     stem (`<slug>.ingest`) to be at most 70 characters. If either is overlong
+     and no ingest exists at the derived path or was resolved for this source,
+     choose a shorter descriptive slug automatically. Require both the new
+     snapshot path and new ingest path to be unused; on a collision, choose
+     another short slug. Rename only the local Markdown snapshot, verify its
+     SHA-256 is unchanged, update the resolved paths, and continue without
+     asking the user. Do not stop merely because the initial name is overlong.
+     Never rename an existing ingest or its paired snapshot through this
+     recovery; report overlong existing pairs for explicit relocation. If URL
+     resolution already found an ingest, require this derived path to equal it. For every
      existing output, require the snapshot to be its exact name-paired path,
      require exact frontmatter `source` equality, and require its
      `snapshot_sha256` to equal the snapshot checksum. On a mismatch, stop and

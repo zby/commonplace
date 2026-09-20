@@ -229,7 +229,10 @@ From the bounded excerpts, extractor metadata, and `source_url`, determine:
 - **slug**: Lowercase, hyphenated, max 63 chars. The paired ingest adds
   `.ingest` to the validated stem, so the snapshot basename must reserve those
   seven characters within the 70-character authored-artifact limit. Derive it
-  from the title. Example: `simon-willison-karpathy-claws`.
+  from the title; shorten it to identifying words rather than copying the full
+  title. Check the length before writing. An overlong proposed slug is a
+  naming choice to fix automatically, not a reason to stop or ask the user.
+  Example: `simon-willison-karpathy-claws`.
 
 For academic papers: prefer the title and complete author list printed in the
 paper over `pdfinfo` or Trafilatura metadata.
