@@ -384,7 +384,7 @@ whole-program hypotheses remain untested by it. Existing human-inclusive
 [Commonplace evidence](../../../../../notes/evidence/commonplace-as-a-reflective-system.md)
 establishes narrower paths within stated criteria.
 
-The [software-house supplement](../../../../../articles/an-automated-software-house-as-a-second-test-of-theory-refinement.md)
+The [software-house supplement](../../../../../articles/an-automated-software-house-as-a-second-test-of-conjectural-learning.md)
 considers a different product and evidence interface: an automated software
 house whose retained program theory guides software maintenance. Visible
 software failures provide a different testing opportunity; results there

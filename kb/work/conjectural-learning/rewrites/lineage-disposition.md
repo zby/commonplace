@@ -1,6 +1,6 @@
 # Lineage rewrite: disposition and evidence
 
-Source: [library lineage note](../../../notes/reflective-theory-refinement-has-three-separate-lineages.md),
+Source: [library lineage note](../../../notes/conjectural-learning-has-distinct-precedents.md),
 SHA-256 `327d976fc90189ed588351fcb1ddae79565d0eb391d82b97756e02228a850149`.
 Draft: [staged replacement](./kb/notes/reflective-theory-refinement-has-three-separate-lineages.md).
 Proposed final path: `kb/notes/conjectural-learning-has-distinct-precedents.md`.

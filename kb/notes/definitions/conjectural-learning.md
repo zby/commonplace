@@ -105,7 +105,7 @@ stated in
   establish learning.
   Whether this approach outperforms alternatives is a further question,
   conjectured in the companion note and in
-  [retained theories may improve sample efficiency under structured shifts](../learning-by-theory-refinement-may-improve-sample-efficiency.md).
+  [retained theories may improve sample efficiency under structured shifts](../retained-theories-may-improve-sample-efficiency.md).
 - **Addressability is a stronger property, not a condition.** An
   [addressable theory](./addressable-theory.md) lets criticism name the part
   that probably caused a failure, and lets a revision act on that part. The
@@ -142,7 +142,7 @@ attempts to learn.
 - **A fixed theory.** Outside: a formulated theory guides decisions and is never
   criticized. Fixed instructions left uncriticized are one example. No effect
   of criticism exists to persist. This is the frozen-seed baseline of the
-  [testing supplement](../../articles/testing-the-theory-refinement-program.md#the-hypotheses).
+  [testing supplement](../../articles/testing-the-conjectural-learning-program.md#the-hypotheses).
 
 - **A theory built while reasoning and then discarded.** Inside if
   formulated criticism changes the system's capacity for future action, before
@@ -196,4 +196,4 @@ Relevant Notes:
 - [Tentative theory](./tentative-theory.md) — defined-in: the status of the theory that guides decisions
 - [Addressable theory](./addressable-theory.md) — extends: the stronger structural property the KB conjectures pays
 - [Commonplace studies conjectural learning through retained theories](../commonplace-studies-conjectural-learning-through-retained-theories.md) — extends: the chosen research arrangement and its three conjectures
-- [A complete theory path does not establish improved capacity](../reflective-theory-refinement-needs-interpretation-and-retention.md) — extends: the evidence ladder for the parts of the process
+- [A complete theory path does not establish improved capacity](../a-complete-theory-path-does-not-establish-improved-capacity.md) — extends: the evidence ladder for the parts of the process

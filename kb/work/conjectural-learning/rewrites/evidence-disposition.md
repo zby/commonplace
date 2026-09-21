@@ -9,7 +9,7 @@ unconnected witnesses. No library changes or new research were performed.
 
 | Original | Source SHA-256 | Draft | Intended final destination | Disposition |
 |---|---|---|---|---|
-| [Interpretation, retention, and read-back](../../../notes/reflective-theory-refinement-needs-interpretation-and-retention.md) | `ee79a5fb55740cea0445367a625084c34e77cbacf8b51733663925366205131c` | [A complete theory path does not establish improved capacity](./kb/notes/reflective-theory-refinement-needs-interpretation-and-retention.md) | `kb/notes/a-complete-theory-path-does-not-establish-improved-capacity.md` | Substantial replacement and rename at migration |
+| [Interpretation, retention, and read-back](../../../notes/a-complete-theory-path-does-not-establish-improved-capacity.md) | `ee79a5fb55740cea0445367a625084c34e77cbacf8b51733663925366205131c` | [A complete theory path does not establish improved capacity](./kb/notes/reflective-theory-refinement-needs-interpretation-and-retention.md) | `kb/notes/a-complete-theory-path-does-not-establish-improved-capacity.md` | Substantial replacement and rename at migration |
 | [Disconnected witnesses](../../../notes/disconnected-witnesses-do-not-establish-a-causal-path-through-theory.md) | `b7713d0b52c0a355fbeeda9989677f784f992405254c15bd4d2f8f23e234d61b` | [Disconnected witnesses do not establish a full causal path through theory](./kb/notes/disconnected-witnesses-do-not-establish-a-causal-path-through-theory.md) | `kb/notes/disconnected-witnesses-do-not-establish-a-causal-path-through-theory.md` | Substantial replacement at the same path |
 
 Source hashes identify the complete live file bytes used for drafting. Check

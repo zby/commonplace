@@ -4,7 +4,7 @@
 
 Replace the classical theory-refinement import with Popper's epistemic process
 as the foundation of the paradigm in
-[Learning by Theory Refinement with Fixed Models](../../articles/learning-by-theory-refinement-with-fixed-models.md),
+[Learning by Theory Refinement with Fixed Models](../../articles/conjectural-learning-with-fixed-models.md),
 and make the library simpler by doing so.
 
 The library takes *theory refinement* in the established sense of Ourston and
@@ -14,7 +14,7 @@ the classical systems in machinery, form, and subject. The operator's judgment
 is that the import buys nothing after those departures. Only the task
 statement survives them, and the library pays for apparatus that manages the
 import: the task/realization separation, the departures section, much of the
-[three-lineages note](../../notes/reflective-theory-refinement-has-three-separate-lineages.md),
+[three-lineages note](../../notes/conjectural-learning-has-distinct-precedents.md),
 and a separate term for the loop because the borrowed name denotes one
 operation.
 

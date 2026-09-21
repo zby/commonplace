@@ -62,7 +62,7 @@ tasks and budgets. This supplies evidence of improvement, beyond a ranking
 between two potentially poor learners. Intervene on retained, load-bearing
 content in separate assessment copies; citation alone does not establish
 causal use. Record changed investigation or repair choices and independently
-scored consequences. The [evidence ladder](../../../notes/reflective-theory-refinement-needs-interpretation-and-retention.md#evidence-forms-a-ladder)
+scored consequences. The [evidence ladder](../../../notes/a-complete-theory-path-does-not-establish-improved-capacity.md#evidence-forms-a-ladder)
 separates these links; a changed choice alone is not improved capacity.
 
 ## Reading the possible results

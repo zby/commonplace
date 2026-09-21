@@ -4,7 +4,7 @@ Prepared 2026-09-21 under the [closure plan](../closure-plan.md).
 
 ## Source, destination, and status
 
-- Original: [Learning by theory refinement may improve sample efficiency under structured shifts](../../../notes/learning-by-theory-refinement-may-improve-sample-efficiency.md).
+- Original: [Learning by theory refinement may improve sample efficiency under structured shifts](../../../notes/retained-theories-may-improve-sample-efficiency.md).
 - Source SHA-256: `1c82a7a7acaab785ef5de3a6b62e8cd6a0924475b6fd79f21bca60930ef4e1c7`.
 - Draft: [Retained theories may improve sample efficiency under structured shifts](./kb/notes/learning-by-theory-refinement-may-improve-sample-efficiency.md).
 - Proposed final path: `kb/notes/retained-theories-may-improve-sample-efficiency.md`.

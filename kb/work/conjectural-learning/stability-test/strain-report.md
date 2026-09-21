@@ -36,7 +36,7 @@ unobserved formulation in a model. Controls were checked against the
 [component design](../../explanatory-theories-deployment-time-learning/experiment-design.md),
 the [RSI first experiment](../../schmidhuber-rsi-imports/first-experiment.md),
 the [contrast rule](../../../notes/an-experiment-identifies-only-the-contrast-it-actually-runs.md),
-and the [evidence ladder](../../../notes/reflective-theory-refinement-needs-interpretation-and-retention.md#evidence-forms-a-ladder).
+and the [evidence ladder](../../../notes/a-complete-theory-path-does-not-establish-improved-capacity.md#evidence-forms-a-ladder).
 Neither peer design already states all the required contrasts: the content
 and addressability contrasts need specification, and the retention design
 needs the criticism-only arm and a precise meaning of raw history.

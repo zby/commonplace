@@ -8,7 +8,7 @@ publication, live edit, experiment, or new external research was performed.
 
 ## Source and destination
 
-- Original: [Learning by Theory Refinement with Fixed Models](../../../articles/learning-by-theory-refinement-with-fixed-models.md).
+- Original: [Learning by Theory Refinement with Fixed Models](../../../articles/conjectural-learning-with-fixed-models.md).
 - Source SHA-256: `63e3da875032faede95c4a1cfa32f97b770d99dbf2ce367f11ece12a9cf6af20`.
 - Draft: [Conjectural Learning with Fixed Models](./kb/articles/learning-by-theory-refinement-with-fixed-models.md).
 - Intended final title: **Conjectural Learning with Fixed Models**.

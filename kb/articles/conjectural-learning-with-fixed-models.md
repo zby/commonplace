@@ -12,8 +12,8 @@ source_notes:
   - kb/notes/definitions/reflective-theory-builder.md
   - kb/notes/definitions/externally-tested-theory-builder.md
   - kb/notes/definitions/autonomous-theory-builder.md
-  - kb/notes/reflective-theory-refinement-needs-interpretation-and-retention.md
-  - kb/notes/learning-by-theory-refinement-may-improve-sample-efficiency.md
+  - kb/notes/a-complete-theory-path-does-not-establish-improved-capacity.md
+  - kb/notes/retained-theories-may-improve-sample-efficiency.md
   - kb/notes/the-deployed-system-not-the-model-is-the-unit-of-learning.md
   - kb/notes/retained-artifacts-enable-persistent-deployment-time-adaptation.md
   - kb/notes/continual-learning-requires-governing-behaviour-changing-writes.md
@@ -220,7 +220,7 @@ use, and a readable dependency is not necessarily an independent one.
 A learner confined to a
 [fixed decomposition inherits that decomposition's mistakes](../notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md).
 
-A separate [sample-efficiency conjecture](../notes/learning-by-theory-refinement-may-improve-sample-efficiency.md)
+A separate [sample-efficiency conjecture](../notes/retained-theories-may-improve-sample-efficiency.md)
 asks whether a useful theory reduces target observations after a shift that
 preserves the structure it describes. The exporter case suggests why one
 criticism might change many checking decisions. That benefit is separate
@@ -297,7 +297,7 @@ establishes successful learning or reliability.
 
 A theory cited in a decision record may have been decorative. A changed
 procedure may work for reasons other than the proposed theory. The
-[evidence account](../notes/reflective-theory-refinement-needs-interpretation-and-retention.md)
+[evidence account](../notes/a-complete-theory-path-does-not-establish-improved-capacity.md)
 therefore separates theory mediation, empirical contact, response to
 criticism, and recurrent mediation: respectively, the theory affects a
 decision, an outcome bears on it, formulated criticism changes its content or
@@ -315,7 +315,7 @@ alternatives.
 The program's three whole-system hypotheses were adopted on 2026-09-17.
 They concern performance under external assessment and remain distinct from
 the content, addressability, and efficiency conjectures above. The
-[testing supplement](./testing-the-theory-refinement-program.md#the-hypotheses)
+[testing supplement](./testing-the-conjectural-learning-program.md#the-hypotheses)
 retains their full wording; the following summarizes them. The public models
 in the sufficiency hypothesis are those available as of that adoption date,
 with model versions declared and weights held fixed during assessment.
@@ -384,7 +384,7 @@ whole-program hypotheses remain untested by it. Existing human-inclusive
 [Commonplace evidence](../notes/evidence/commonplace-as-a-reflective-system.md)
 establishes narrower paths within stated criteria.
 
-The [software-house supplement](./an-automated-software-house-as-a-second-test-of-theory-refinement.md)
+The [software-house supplement](./an-automated-software-house-as-a-second-test-of-conjectural-learning.md)
 considers a different product and evidence interface: an automated software
 house whose retained program theory guides software maintenance. Visible
 software failures provide a different testing opportunity; results there
@@ -412,7 +412,7 @@ The [definition](../notes/definitions/conjectural-learning.md) states the
 learning conditions and boundary cases. The
 [research companion](../notes/commonplace-studies-conjectural-learning-through-retained-theories.md)
 separates them from Commonplace's choices. The
-[testing supplement](./testing-the-theory-refinement-program.md)
+[testing supplement](./testing-the-conjectural-learning-program.md)
 develops the independently adopted hypotheses, assessment interface, and
 proposed comparisons. [Nearest existing constructions](./nearest-existing-constructions-to-a-witness-house.md)
 reviews precedents for the companion software-house arrangement; evidence

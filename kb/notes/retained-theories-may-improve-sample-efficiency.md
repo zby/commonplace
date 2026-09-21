@@ -137,7 +137,7 @@ space and testing candidates can produce structure instead of relying only on
 hand-supplied priors; whether that procedure remains competitive is a further
 conjecture. A sufficiently scaled system might perform the useful search
 internally, making external artifacts dispensable. The [retained realization
-must earn its costs](./reflective-theory-refinement-needs-interpretation-and-retention.md#the-current-llm-plus-artifact-realization).
+must earn its costs](./a-complete-theory-path-does-not-establish-improved-capacity.md#the-current-llm-plus-artifact-realization).
 Nothing here establishes its permanent advantage.
 
 ## Cost can erase the gain

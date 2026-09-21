@@ -541,6 +541,6 @@ A failed run reports its failure reason and does not use the handoff command.
 - [Tentative theory](../../notes/definitions/tentative-theory.md) — rests-on: the status of the theory, independent of structure or retention
 - [Conjectural learning](../../notes/definitions/conjectural-learning.md) — rests-on: formulated operative theory, content-directed criticism, and improved capacity
 - [Addressable theory](../../notes/definitions/addressable-theory.md) — rests-on: separately inspectable and editable parts as an additional property
-- [Evidence of theory use does not by itself establish learning](../../notes/reflective-theory-refinement-needs-interpretation-and-retention.md) — rests-on: the separate evidence claims and stronger requirements for later or recurrent use
+- [Evidence of theory use does not by itself establish learning](../../notes/a-complete-theory-path-does-not-establish-improved-capacity.md) — rests-on: the separate evidence claims and stronger requirements for later or recurrent use
 - [Reflective system](../../notes/definitions/reflective-system.md) — rests-on: the causally connected self-representation required for reflection
 - [Self-improving system](../../notes/definitions/self-improving-system.md) — rests-on: the operative, evidence-responsive change the revision-admission records describe

@@ -109,7 +109,7 @@ untested behavior.
 
 The conjecture is that, for some demands, explanatory content preserves more
 of what later decisions need per unit of total cost than competing retained
-forms. [Structured shifts](../learning-by-theory-refinement-may-improve-sample-efficiency.md)
+forms. [Structured shifts](../retained-theories-may-improve-sample-efficiency.md)
 may favor reusable explanations when relevant relations survive while other
 features change. Mistaken abstractions can instead cause negative transfer.
 An aggregate may preserve the information needed for a task exactly; derived

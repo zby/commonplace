@@ -10,7 +10,7 @@ that the definitions and goals do not already imply.
   was deleted, shrunk, merged, moved, and added, with word counts. Baseline on
   2026-09-19: [theory refinement](../../notes/definitions/theory-refinement.md)
   2,443 words, [learning by theory refinement](../../notes/definitions/learning-by-theory-refinement.md)
-  1,008, the [three-lineages note](../../notes/reflective-theory-refinement-has-three-separate-lineages.md)
+  1,008, the [three-lineages note](../../notes/conjectural-learning-has-distinct-precedents.md)
   1,810; together 5,261. At migration, count the candidate definitions and
   companion with `wc -w`, including frontmatter and link footers; also count
   the retained `conjectural-learning-checks.md` and maintenance comment.

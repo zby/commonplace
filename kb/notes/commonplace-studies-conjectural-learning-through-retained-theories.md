@@ -14,7 +14,7 @@ choice. Whether it offers advantages over other approaches is an empirical
 question.
 
 The [definition](./definitions/conjectural-learning.md) states when the term
-applies; the [precedents note](./reflective-theory-refinement-has-three-separate-lineages.md) supplies the fuller
+applies; the [precedents note](./conjectural-learning-has-distinct-precedents.md) supplies the fuller
 attribution.
 
 ## Research program and development path
@@ -129,7 +129,7 @@ relevant content with altered or mismatched content while controlling its
 form. Removing the artifact alone cannot distinguish a content effect from
 the effect of supplying text at all. These are ways to investigate membership,
 not additional conditions for belonging to the class; see the
-[evidence ladder](./reflective-theory-refinement-needs-interpretation-and-retention.md#evidence-forms-a-ladder)
+[evidence ladder](./a-complete-theory-path-does-not-establish-improved-capacity.md#evidence-forms-a-ladder)
 and [experimental contrasts](./an-experiment-identifies-only-the-contrast-it-actually-runs.md).
 Failure to detect an effect leaves membership unestablished by that test;
 it does not by itself establish absence. Demonstrating the mechanism also
@@ -161,4 +161,4 @@ Relevant Notes:
 
 - [Conjectural learning](./definitions/conjectural-learning.md) — defined-in: the process studied
 - [Addressable theory](./definitions/addressable-theory.md) — defined-in: the structural property chosen for this research
-- [Retained theories may improve sample efficiency under structured shifts](./learning-by-theory-refinement-may-improve-sample-efficiency.md) — see-also: the separate conjecture about structured shifts
+- [Retained theories may improve sample efficiency under structured shifts](./retained-theories-may-improve-sample-efficiency.md) — see-also: the separate conjecture about structured shifts

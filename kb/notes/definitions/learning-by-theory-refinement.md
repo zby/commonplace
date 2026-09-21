@@ -32,7 +32,7 @@ The loop has four parts, and each is necessary:
   the loop.
 
 The last three correspond to the claims of the
-[evidence ladder](../reflective-theory-refinement-needs-interpretation-and-retention.md#evidence-forms-a-ladder):
+[evidence ladder](../a-complete-theory-path-does-not-establish-improved-capacity.md#evidence-forms-a-ladder):
 mediation, empirical contact and theory refinement, and recurrent
 mediation. For example, a system whose account of which edits need which
 checks fails on one included snippet, revises the part of the account that
@@ -102,7 +102,7 @@ and it guides the work in which the next problem is met.
 - Treating fixed weights as part of the definition.
 - Reading the term as a claim that the paradigm works or beats the
   alternatives. That is the conjecture in
-  [learning by theory refinement may improve sample efficiency under structured shifts](../learning-by-theory-refinement-may-improve-sample-efficiency.md),
+  [learning by theory refinement may improve sample efficiency under structured shifts](../retained-theories-may-improve-sample-efficiency.md),
   and the definition is neutral on it.
 
 ---
@@ -111,6 +111,6 @@ Relevant Notes:
 
 - [Theory refinement](./theory-refinement.md) — defined-in: the operation the loop is built on, the addressable theory it requires, and the tentative-theory status
 - [Theory builder](./theory-builder.md) — contrasts: the system that carries the loop, defined by responsibility and not by whether or how it learns
-- [Reflective theory refinement needs interpretation, retention, and independent read-back](../reflective-theory-refinement-needs-interpretation-and-retention.md) — extends: the evidence ladder whose claims correspond to the parts of the loop
-- [Learning by learning by theory refinement may improve sample efficiency under structured shifts](../learning-by-theory-refinement-may-improve-sample-efficiency.md) — extends: the payoff conjecture the definition stays neutral on
+- [Reflective theory refinement needs interpretation, retention, and independent read-back](../a-complete-theory-path-does-not-establish-improved-capacity.md) — extends: the evidence ladder whose claims correspond to the parts of the loop
+- [Learning by learning by theory refinement may improve sample efficiency under structured shifts](../retained-theories-may-improve-sample-efficiency.md) — extends: the payoff conjecture the definition stays neutral on
 - [An action model matters only through its consumption path](../an-action-model-matters-only-through-its-consumption-path.md) — grounds: why a stored theory nothing consumes is excluded

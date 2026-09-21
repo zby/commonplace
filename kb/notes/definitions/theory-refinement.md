@@ -154,7 +154,7 @@ Where no crossing has happened, withholding or perturbing the theory and
 observing a changed decision supplies evidence that it shaped that decision.
 Whether a model interprets prose theories consistently enough to support
 useful diagnosis and revision is an empirical question for the pathway in
-[learning by theory refinement may improve sample efficiency under structured shifts](../learning-by-theory-refinement-may-improve-sample-efficiency.md).
+[learning by theory refinement may improve sample efficiency under structured shifts](../retained-theories-may-improve-sample-efficiency.md).
 
 Refining theories nobody computes is the older case, not the exception.
 Scientific theories in prose and mathematics were refined for centuries by
@@ -174,7 +174,7 @@ the uncertainty is not a universal bar to diagnosis.
 
 - **One episode is the minimum unit.** Retaining the theory, refining it, and
   reusing the refined state are separate links on the
-  [evidence ladder](../reflective-theory-refinement-needs-interpretation-and-retention.md#evidence-forms-a-ladder),
+  [evidence ladder](../a-complete-theory-path-does-not-establish-improved-capacity.md#evidence-forms-a-ladder),
   each needing its own evidence. A contemporaneous
   [citation at the decision point](../citing-retained-theory-at-the-decision-point-is-a-mediation-trace.md)
   is the cheapest evidence that the theory entered a decision.
@@ -247,9 +247,9 @@ sense is on the causal path of a decision.
 Relevant Notes:
 
 - [Learning by theory refinement](./learning-by-theory-refinement.md) — extends: the recurrent loop and paradigm built on this operation
-- [Learning by learning by theory refinement may improve sample efficiency under structured shifts](../learning-by-theory-refinement-may-improve-sample-efficiency.md) — extends: the payoff conjecture, and the test that would decide whether a model interprets prose theories reliably enough
-- [Reflective theory refinement needs interpretation, retention, and independent read-back](../reflective-theory-refinement-needs-interpretation-and-retention.md) — extends: the evidence ladder and the functions the reflective case must keep separate
-- [Reflective theory refinement has separate structural, epistemic, and implementation lineages](../reflective-theory-refinement-has-three-separate-lineages.md) — extends: the slot-for-slot comparison between the classical loop and the KB's fillers
+- [Learning by learning by theory refinement may improve sample efficiency under structured shifts](../retained-theories-may-improve-sample-efficiency.md) — extends: the payoff conjecture, and the test that would decide whether a model interprets prose theories reliably enough
+- [Reflective theory refinement needs interpretation, retention, and independent read-back](../a-complete-theory-path-does-not-establish-improved-capacity.md) — extends: the evidence ladder and the functions the reflective case must keep separate
+- [Reflective theory refinement has separate structural, epistemic, and implementation lineages](../conjectural-learning-has-distinct-precedents.md) — extends: the slot-for-slot comparison between the classical loop and the KB's fillers
 - [Disconnected witnesses do not establish a full causal path through theory](../disconnected-witnesses-do-not-establish-a-causal-path-through-theory.md) — extends: what separate links must share before they compose into one refinement path
 - [Citing retained theory at the decision point is a mediation trace](../citing-retained-theory-at-the-decision-point-is-a-mediation-trace.md) — mechanism: the cheapest checkable evidence that a theory entered a decision
 - [Codification](./codification.md) — grounds: the crossing that gives a part of a theory a computed consequence relation
@@ -259,7 +259,7 @@ Relevant Notes:
 - [Self-improving system](./self-improving-system.md) — contrasts: an independent condition on whether the change persists as operative improvement
 - [World models assess explanatory-reach through action-conditioned prediction](../world-models-assess-explanatory-reach-through-action-conditioned.md) — contrasts: the model-based case revised by fitting, with no part to blame
 - [An action model matters only through its consumption path](../an-action-model-matters-only-through-its-consumption-path.md) — grounds: why a stored theory nothing consumes is excluded
-- [Three 2026 harnesses expose different repair and retention paths](../evidence/three-2026-harnesses-retain-editable-rules-or-weights-not-rationale.md) — evidenced-by: reported repair operations and the limits of evidence about retained rationale
+- [Three 2026 harnesses expose different repair and retention paths](../evidence/rules-weights-and-missing-rationale-do-not-settle-conjectural-learning.md) — evidenced-by: reported repair operations and the limits of evidence about retained rationale
 - [Theory refinement combining analytical and empirical methods](../../sources/theory-refinement-analytical-empirical-methods.ingest.md) — abstracted-from: the classical object, the three inference modes, and consistency as acceptance
 - [Automated refinement of first-order Horn-clause domain theories](../../sources/automated-refinement-first-order-horn-clause-domain-theories.ingest.md) — abstracted-from: the separation of the refinement task from its realization
 - [Explanation-based generalization: a unifying view](../../sources/explanation-based-generalization-unifying-view.ingest.md) — abstracted-from: the established sense of generalizing from a theory without revising it

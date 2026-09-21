@@ -13,10 +13,10 @@ source_notes:
   - kb/notes/definitions/tentative-theory.md
   - kb/notes/definitions/addressable-theory.md
   - kb/notes/commonplace-studies-conjectural-learning-through-retained-theories.md
-  - kb/notes/reflective-theory-refinement-needs-interpretation-and-retention.md
+  - kb/notes/a-complete-theory-path-does-not-establish-improved-capacity.md
   - kb/notes/a-claim-without-external-assessment-carries-three-obligations.md
   - kb/notes/retained-theory-intervention-isolates-one-explicit-surface.md
-  - kb/notes/learning-by-theory-refinement-may-improve-sample-efficiency.md
+  - kb/notes/retained-theories-may-improve-sample-efficiency.md
   - kb/notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md
   - kb/notes/an-action-model-matters-only-through-its-consumption-path.md
   - kb/notes/evidence/commonplace-as-a-reflective-system.md
@@ -28,7 +28,7 @@ source_notes:
 *Hypotheses, external assessment, protocol shape, and component experiments: a first design*
 
 > **Draft supplement.** This develops the testing side of [Conjectural
-> Learning with Fixed Models](./learning-by-theory-refinement-with-fixed-models.md). Everything
+> Learning with Fixed Models](./conjectural-learning-with-fixed-models.md). Everything
 > here is a first design that needs much more testing before a scored run,
 > and it may change. Comments and counterexamples are welcome on [the
 > repository's GitHub Discussions
@@ -485,7 +485,7 @@ files for testing transfer.
   hide the initial deficit in a whole-run score.
 - **Sample efficiency.** A correct theory may [reduce the observations
   needed to
-  adapt](../notes/learning-by-theory-refinement-may-improve-sample-efficiency.md)
+  adapt](../notes/retained-theories-may-improve-sample-efficiency.md)
   by letting one discovered dependency change decisions for several files.
   Count inspected cases and feedback used, along with missed defects,
   unnecessary checks, regressions, rollbacks, and total cost including
@@ -589,7 +589,7 @@ exclusions, misuse cases, and boundary cases. The [three
 obligations](../notes/a-claim-without-external-assessment-carries-three-obligations.md)
 note states where the externally tested case ends and records the open
 questions. The [software-house
-supplement](./an-automated-software-house-as-a-second-test-of-theory-refinement.md) gives
+supplement](./an-automated-software-house-as-a-second-test-of-conjectural-learning.md) gives
 the alternative arrangement with its own conditions, and the [bootstrap
 supplement](./bootstrapping-an-autonomous-theory-builder.md) says how
 Commonplace's remaining human roles would transfer to computation.

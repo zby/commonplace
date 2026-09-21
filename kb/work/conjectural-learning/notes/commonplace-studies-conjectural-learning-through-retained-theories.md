@@ -124,7 +124,7 @@ relevant content with altered or mismatched content while controlling its
 form. Removing the artifact alone cannot distinguish a content effect from
 the effect of supplying text at all. These are ways to investigate membership,
 not additional conditions for belonging to the class; see the
-[evidence ladder](../../../notes/reflective-theory-refinement-needs-interpretation-and-retention.md#evidence-forms-a-ladder)
+[evidence ladder](../../../notes/a-complete-theory-path-does-not-establish-improved-capacity.md#evidence-forms-a-ladder)
 and [experimental contrasts](../../../notes/an-experiment-identifies-only-the-contrast-it-actually-runs.md).
 Failure to detect an effect leaves membership unestablished by that test;
 it does not by itself establish absence. Demonstrating the mechanism also
@@ -158,4 +158,4 @@ Relevant Notes:
 
 - [Conjectural learning](../definitions/conjectural-learning.md) — defined-in: the process studied
 - [Addressable theory](../definitions/addressable-theory.md) — defined-in: the structural property chosen for this research
-- [Learning by theory refinement may improve sample efficiency under structured shifts](../../../notes/learning-by-theory-refinement-may-improve-sample-efficiency.md) — see-also: the separate conjecture about structured shifts
+- [Learning by theory refinement may improve sample efficiency under structured shifts](../../../notes/retained-theories-may-improve-sample-efficiency.md) — see-also: the separate conjecture about structured shifts
