@@ -1,10 +1,10 @@
 # Popperian support for the current approach
 
-The [current direction](./definition-decision-record.md#settled-decisions) has direct Popperian
-support for articulation and criticism-guided action. An effect of criticism
-on the system's capacity for future action is our operational condition;
-observed action provides evidence of that capacity. This grounds the simplification;
-it does not demonstrate the implementation's effectiveness.
+Popper directly supports articulation and criticism-guided action.
+[Commonplace's definition](./definitions/conjectural-learning.md) adds an
+effect of criticism on the system's capacity for future action; observed
+action provides evidence of that capacity. The sources do not demonstrate
+the implementation's effectiveness.
 
 ## Direct support and its limits
 
@@ -25,16 +25,10 @@ the learner. His account of mutual criticism (§4, p. 347) does not by itself
 require an independent critic in every instance of learning. How much
 decorrelating a critic from a proposer helps remains an empirical question.
 
-Thus articulation is partly inherited, rather than wholly our addition to
-Popper. We specify how to establish causal use and persistence of criticism's
-effects. Retaining a theory and reconstructing it from retained, formulated
-criticisms are implementation approaches; our preference for the former rests
-on the efficiency conjecture in the companion note. Records containing only
-inputs and outcomes supply a comparison of retained content. Indexed traces
-can instead implement retained theories and criticisms. The
-[definition draft](./definitions/conjectural-learning.md) distinguishes content
-and use, not storage format. None of these passages supplies
-fixed-model sufficiency or a result for records versus retained theories.
+Storage format, fixed-model sufficiency, and the value of retaining theories
+over reconstructing them are implementation questions. The
+[companion's conjectures](./notes/commonplace-studies-conjectural-learning-through-retained-theories.md#three-conjectures)
+state those comparisons; these passages establish no advantage for them.
 
 ## Existing primary-source context
 

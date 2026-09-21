@@ -22,16 +22,12 @@ criticism under two conditions:
    future action.** Criticism here means an attempt to find an error: an argument,
    or a test of a stated consequence, aimed at something the theory says, and
    itself formulated in language. When the criticism counts against the
-   theory, the theory is revised or replaced in response. When the theory
-   survives, the result adds to its record of testing. Surviving a serious
-   test can strengthen the grounds for relying on the theory as background
-   for other theories, or for spending less effort repeating tests of the
-   same vulnerability. This changes its assessed support and how the system
-   would subsequently use it, without changing its content or tentative
-   status. The grounds extend only to what the test actually challenged. In
-   both cases the result changes what the system would later do. A
-   recorded result that no process in the system would consult changes
-   nothing.
+   theory, the theory is revised or replaced in response. When it survives,
+   the testing result can change how the system would rely on it or choose
+   further tests without changing its content or tentative status. The
+   grounds extend only to what the test actually challenged. In both cases
+   the result must change what the system would later do; recording a result
+   alone does not establish that effect.
 
 The unit is the whole learning system, with a declared boundary that includes
 its participating people and services. Prompts, files, code, tests, records,
@@ -63,7 +59,7 @@ It does not mean speculative or unsupported.
 
 ## Relation to Popper
 
-The current draft narrows Popper's process as follows, retaining his schema,
+The definition narrows Popper's process as follows, retaining his schema,
 tentative status, criticism broader than empirical testing, and selection
 rather than instruction:
 
@@ -87,25 +83,17 @@ stated in
 
 ## Scope
 
-- **Learning is a change in capacity for future action.** What improves is what
-  the system as it stands would do when an occasion arises, whether or not
-  one has arisen. A retained result counts only if a process in the system
-  would consume it. A claim identifies the action the improved capacity is
-  for and the evidence of improvement. If it claims that the capacity remains
-  available at a later time, the effect of criticism must persist to that
-  time. Conjectural learning adds no minimum duration.
-- **Formulation is required; observer access is not.** Theories and criticism
-  must be formulated in natural or formal language. A model may formulate and
-  criticize conjectures in text that no observer sees. Whether a particular
-  model performs such formulation internally remains unestablished when the
-  evidence is insufficient. Where evidence does not establish formulation,
-  criticism, causal use, or improvement, membership remains unestablished.
-  Opacity alone establishes neither presence nor absence.
-- **Membership and evidence of membership are distinct.** The theory's
-  content and the result of criticism must change the system's capacity for
-  future action. Observed action provides evidence of that capacity. Whether
-  the causal relation and resulting improvement have been demonstrated is a
-  separate question; an untested case can remain unclassified. The companion's
+- **Persistence follows the claim.** A claim identifies the action the
+  improved capacity is for and the evidence of improvement. If it claims
+  that the capacity remains available at a later time, the effect of
+  criticism must persist to that time. Conjectural learning adds no minimum
+  duration.
+- **Observer access is an evidence question.** A model may formulate and
+  criticize conjectures in language that no observer sees. Where evidence
+  does not establish formulation, criticism, causal use, or improvement,
+  membership remains unestablished. Opacity alone establishes neither
+  presence nor absence. Membership does not require that it has been
+  demonstrated. The companion's
   [evidence discussion](../notes/commonplace-studies-conjectural-learning-through-retained-theories.md#evidence)
   describes how to investigate it.
 - **Improvement does not require a faultless theory.** A theory can remain
@@ -141,11 +129,11 @@ system's capacity for future action; without improvement they describe
 attempts to learn.
 
 - **A theory criticized and replaced whole.** Inside when the criticism
-  bears on its content and the replacement guides later action. Separately
+  bears on its content and the replacement would guide later action. Separately
   editable parts are not required.
 - **Reconstruction from retained criticisms.** Inside when formulated
-  criticisms and their results guide reconstruction of a theory that is
-  subsequently used. The assembled theory need not itself persist.
+  criticisms and their results would guide reconstruction and use of a
+  theory when needed. The assembled theory need not itself persist.
 
 - **A fixed theory.** Outside: a formulated theory guides decisions and is never
   criticized. Fixed instructions left uncriticized are one example. No effect
@@ -179,7 +167,7 @@ attempts to learn.
   premises are never exposed to criticism. The theory is operative and
   uncriticized.
 
-- **A stored theory or record that nothing consumes.** No process in the
+- **A stored theory or record that nothing would consume.** No process in the
   system would consume it, so it is not on the causal path of decisions and
   adds no capacity. A theory that a process would consume when an occasion
   arises is not this case. See
@@ -188,10 +176,6 @@ attempts to learn.
 
 ## Misuse Cases
 
-- Using *theory refinement* or *learning by theory refinement* for the
-  paradigm. Those were the KB's earlier names, taken from the classical
-  theory-refinement systems of machine learning. Those systems remain a
-  precedent for repairing an [addressable theory](./addressable-theory.md).
 - Opposing *criticism* to *selection*. For Popper all learning is selection:
   criticism eliminates, and the successor is a new conjecture. Black-box
   optimization differs in what eliminates and what it acts on: a score acting

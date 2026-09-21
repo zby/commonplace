@@ -65,7 +65,7 @@ near ceiling. Small-model full and labels-only prompts have equal aggregate
 best-of-eight results but disagree by task: non-separation, not equivalence.
 Best-of-eight success is not successful selection; the same-model selector
 showed no advantage over its random references. Structural controls and
-independent outcomes are needed to identify what criticism actually changes.
+independent outcomes are needed to identify the effects of supplied criticism.
 
 **What the retention studies establish.** HEP is the closest
 new precedent for retained formulated hypotheses; AHOIS connects criticized
@@ -73,7 +73,7 @@ explanations to physical action. Neither establishes our efficiency conjecture.
 HEP's belief probabilities and lifecycle rules are its design choices, not
 Popperian commitments to import into the definition.
 
-**Measure criticism's contribution.** PoPE motivates content-ablated and
+**Measure the effect of supplied criticism.** PoPE motivates content-ablated and
 mismatched-feedback controls; Selection Without Signal motivates matched
 sampling budgets. AI scientists and FALSIFYBENCH motivate inspecting actual
 evidence use and revision alongside outcomes. These are candidate experiment
@@ -81,6 +81,8 @@ controls, not reasons to enlarge the base ontology. Negative findings must
 retain their model, task, intervention, and evaluator limits. MAC adds a
 separate endpoint: changes to agent machinery must improve later development
 before they establish compounding, beyond the generated agent's task score.
+These controls compare supplied content and arrangements; they do not
+establish the presence or absence of unobserved criticism inside a model.
 
 The set does not establish reliable general LLM conjectural learning,
 sufficiency of fixed weights, the claimed efficiency advantage of retaining

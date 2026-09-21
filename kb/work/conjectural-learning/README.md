@@ -24,14 +24,12 @@ Commissioned by the operator on 2026-09-19, with further decisions on
 
 ## End state and acceptance
 
-Stage 1, current: definition drafts in [definitions/](./definitions/) and a
-[companion note draft](./notes/commonplace-studies-conjectural-learning-through-retained-theories.md),
-written against the real type contracts, for operator review. The definition
-says when the term applies; the note states our research choice and the three
-conjectures with their baselines. Stage 2: the
-operator adopts, redirects, or declines them and settles the open decisions.
-Stage 3, under a later commission: migration, from the
-[parked notes](./migration-map.md).
+The [definition drafts](./definitions/) and
+[companion note](./notes/commonplace-studies-conjectural-learning-through-retained-theories.md)
+incorporate the settled capacity and observer-access decisions. They remain
+workshop artifacts while the investigations below are pending. The operator
+settles any further scope changes; migration requires a later commission and
+uses the [parked migration notes](./migration-map.md).
 
 The result must leave the library simpler than it found it:
 
@@ -55,9 +53,7 @@ The [Schmidhuber import message](./schmidhuber-import-message.md) frames an
 assessment of the RSI proposals against this ontology, with freedom to reject
 them and no authority to change settled scope.
 
-The capacity and observer-access decisions and their wording review are
-integrated in the [decision record](./definition-decision-record.md#settled-decisions)
-and drafts. Reorganization of the reconstruction comparison remains pending. The
+Reorganization of the reconstruction comparison remains pending. The
 [indexing example](./indexing-applicability-example.md) records a practical
 retrieval issue for that comparison.
 
@@ -94,14 +90,7 @@ retrieval issue for that comparison.
 [Decision record](./definition-decision-record.md), adopted by the operator,
 says what the definition is for, the tests a change to it must pass, and the
 cases to check a change against.
-[Sources](./sources.md) records coverage and access limits.
+[Sources](./sources.md) records coverage, access limits, and verification scope.
 [Popper foundation](./popper-foundation.md) holds the primary-source reading
 and the attribution boundary. [Comparison](./comparison.md) assesses the
-modern papers; it informs later experiment controls more than the
-definitions. [Verification](./verification.md) records what was checked.
-
-## Completion
-
-The operator resolves the drafts and the open decisions; a later commission
-migrates. Close the workshop under its collection contract once the result is
-promoted or otherwise resolved.
+modern papers; it informs later experiment controls more than the definitions.

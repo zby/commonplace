@@ -7,7 +7,8 @@ tags: [foundations, self-improving-systems, learning-theory]
 # Tentative theory
 
 A **tentative theory** is a theory put forward as a solution to a problem,
-which stays open to criticism and revision however well it has survived. The term is Popper's: `TT` in his schema
+which stays open to criticism and revision however well it has survived.
+The term is Popper's: `TT` in his schema
 `P1 → TT → EE → P2` stands between a problem and the attempted error
 elimination that leads to new problems
 ([Popper 1966](../../../sources/popper-a-realist-view-of-logic-physics-and-history-1966.ingest.md#quotes)).
@@ -27,10 +28,10 @@ stored or edited. Structural properties have their own term,
   the theory less tentative in this technical sense. Neither corroboration
   nor changing the theory's representational form ends the status.
 - **Independent of the holder.** The status belongs to every theory, whatever
-  a system does with it. Fixed instructions that nothing is permitted to
-  revise are still tentative theories and can still be criticized. Restrictions
-  on revision and the presence of criticism are separate facts about the
-  system; neither determines tentative status.
+  a system does with it. A theory encoded in fixed instructions remains
+  tentative even if the system is not permitted to revise those instructions.
+  Restrictions on revision and the presence of criticism are separate facts
+  about the system; neither determines tentative status.
 - **No required form.** The term does not require symbolic formalization,
   storage outside the model weights, separately editable parts, or a particular consumer. A
   theory that can only be replaced whole is still tentative. Popper applies

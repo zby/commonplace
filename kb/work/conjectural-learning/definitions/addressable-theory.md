@@ -62,8 +62,9 @@ a preference for minimal revision from them.
 ## Exclusions
 
 - **A latent world model as such.** It is non-localized, so it is revised
-  only by fitting and has no part to blame. An inspectable causal model or
-  simulator program is both a world model and an addressable theory.
+  without separately stated assumptions or claims to target. An inspectable
+  causal model or simulator program can expose those parts and be both a
+  world model and an addressable theory.
 - **Storage location.** A theory kept in a file is not thereby addressable,
   and addressability does not require a particular store. Traces with an
   index locating conjectures, their parts, and their testing record can

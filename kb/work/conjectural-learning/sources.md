@@ -1,8 +1,7 @@
 # Source register
 
-Modern-paper coverage on 2026-09-19: twelve full texts, two author abstracts,
-and one bibliographic-only record. The 2026 expansion adds seven papers and a
-full-text observation of FALSIFYBENCH, previously captured only as an abstract.
+Modern-paper coverage on 2026-09-19, including the expansion below: twelve
+full texts, two author abstracts, and one bibliographic-only record.
 Each ingest records source metadata and the SHA-256 of its paired snapshot.
 Empty Quotes sections mean detailed source claims require those snapshots.
 
@@ -52,7 +51,7 @@ from mechanism and outcome claims. New full-paper captures would be distinct
 observations and reopen those comparisons. These gaps limit implementation
 judgments, not the primary Popper foundation.
 
-## Other evidence and workflow
+## Primary foundations
 
 The paired snapshots of [A Realist View](../../sources/popper-a-realist-view-of-logic-physics-and-history-1966.ingest.md)
 and [Conjectures and Refutations](../../sources/popper-conjectures-and-refutations.ingest.md)
@@ -63,10 +62,31 @@ PDF. Eight verified extracts now ground formulation in language, informal
 criticism, feedback to action, the distinction between potential
 intelligibility and actual use, conscious criticism, and mutual criticism.
 This is a third primary Popper observation, separate from the modern papers.
-EITHER and FORTE supply the classical precedent cited in the drafts. AIGS
-2024 remains optional historical context and was not needed.
+EITHER and FORTE supply the classical precedent cited in the drafts.
+
+## Verification scope and limits
+
+Source claims and identities were checked against the pinned snapshots during
+ingestion. The eight expansion captures were analyzed by fresh source
+workers; that is source analysis, not independent review of the workshop.
+The access search above has not been repeated. No experiments have been
+reproduced.
+
+Eight retained extracts from the 1968 essay and two from *Conjectures and
+Refutations* were added through the grounding workflow and checked against
+the snapshots. The draft quotation audit checked every verbatim quotation
+against retained extracts and locators. The 2026-09-21 capacity and
+observer-access review also checked the relevant 1968 snapshot passages;
+it did not recheck all source claims. Earlier reviews do not certify later
+edits.
+
+Workshop files, expansion ingests, and connection reports passed deterministic
+validation at ingestion. Snapshot validation retains a known
+`validation.schema.body-dates-1` false positive: the bibliography DOI
+`10.1186/1471-2288-13-91` is mistaken for a date in *Scaffold, Not Vocabulary?*,
+*Form, Not Content?*, and *Selection Without Signal*. Captured bytes were
+preserved. Validation supplies no evidence for the workshop's empirical
+conjectures.
 
 Connection reports for the new ingests are in
-`kb/reports/cache/connect/sources/`, named by source slug. No inbound links
-were authored. [Verification](./verification.md) records the checks and the
-known snapshot-validation false positives.
+`kb/reports/cache/connect/sources/`, named by source slug.
