@@ -1,182 +1,183 @@
 ---
-description: "Reflective theory refinement requires semantic interpretation, addressable retention, independent outcome read-back, and continuation on one causally co-indexed path; these are distinct functions that need not share one substrate"
+description: "Mediation, empirical contact, response to criticism, and recurrent mediation support different claims; none alone establishes improved capacity, and retained addressable theory is one realization"
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [foundations, self-improving-systems]
 ---
 
-# Reflective theory refinement needs interpretation, retention, and independent read-back
+# A complete theory path does not establish improved capacity
 
-[Learning by learning by theory refinement may improve sample efficiency under structured shifts](./learning-by-theory-refinement-may-improve-sample-efficiency.md)
-regardless of what its theories describe. Reflective theory refinement is the
-narrower case in which the retained theory describes
-behavior-determining organization inside the declared system boundary and
-participates in changing that organization.
+A theory can guide a useful change without the system learning from criticism
+of that theory. Evidence of theory use, a relevant outcome, a response to
+criticism, and later use support successively more complete accounts of the
+process. [Conjectural learning](./definitions/conjectural-learning.md)
+requires a further result: criticism of a formulated operative theory improves
+the system's capacity for future action. A complete observed sequence can
+still fail to improve that capacity.
 
-The reflective case needs several functions that are easy to collapse into one.
-They should be kept separate because they fail separately:
-
-1. **Reflective membership.** The theory concerns organization that helps
-   determine the system's behavior and lies inside the declared revision path.
-2. **Semantic interpretation.** Some process can state what the theory claims,
-   apply it to a case, derive consequences, and use it to guide a proposal,
-   diagnosis, or recovery step.
-3. **Addressable retention.** The theory persists with enough structure that
-   its content, assumptions, scope, confidence, or status can be revised rather
-   than only regenerated or discarded wholesale.
-4. **Independent exposure and read-back.** Consequences not authored only by
-   the candidate can contradict, qualify, or support the theory and are read
-   back against the same retained object.
-5. **Continuation.** The resulting theory state affects a later operation on
-   the same path.
-
-## The functions share one path, not one substrate
-
-These functions need one causally integrated and co-indexed path. They do not
-need one substrate. A retained artifact may supply addressability, a language
-model may supply semantic interpretation, tests or later demands may supply
-exposure, and a symbolic runtime may supply continuity.
-
-## Interpretation is not reach-assessment
-
-An interpreter can understand and apply a false theory. It can derive the
-consequences the theory claims without having independent grounds for deciding
-whether those consequences hold in the world or whether the theory's scope is
-genuine. Interpretation is therefore a semantic function. [Reach-assessment](./definitions/reach-assessment.md)
-is an epistemic function supplied by evidence, comparison, criticism, or an
-oracle capable of defeating the theory.
-
-Collapsing the two makes a language model appear to warrant whatever it can
-explain. It also hides the evaluator problem inside the word “interpretation.”
-The system needs both: interpretation to make a theory operative and
-independent exposure to correct its use.
-
-The independence requirement is graded rather than absolute. A mechanical test,
-a decorrelated critic, a held-out task, and a later operational failure provide
-different strengths of correction. The relevant question is whether the
-candidate's own rationale can be overturned, not whether every check comes from
-outside the technical system.
+The reflective case adds a separate condition. The theory represents selected
+aspects of the system itself, and that self-representation has a two-way causal
+connection to those aspects inside the declared boundary. As the
+[reflective-system definition](./definitions/reflective-system.md)
+states, this is an architectural capacity; it need not already have been
+exercised. Evidence for a particular reflective learning episode must connect
+the claimed theory use and criticism to that same system path.
 
 ## Evidence forms a ladder
 
-A complete recurrent loop is the strongest evidence, but it should not be used
-as the minimum definition of every improvement a theory guided. Four claims
-can be distinguished:
+Four claims distinguish the links of an empirically tested path:
 
-1. **Mediation.** Changing or withholding the retained theory changes a
-   proposal, evaluation, recovery step, or realized intervention.
+1. **Mediation.** Changing or withholding the theory changes a proposal,
+   evaluation, recovery step, or realized intervention because of what the
+   theory says.
 2. **Empirical contact.** The intervention produces an outcome that bears on
    the theory rather than merely accompanying it.
-3. **Theory refinement.** The outcome changes the theory's content, scope,
-   confidence, status, or operational role. Explicit rejection or principled
-   retention after a refuting opportunity also counts as a theory-state change.
-4. **Recurrent mediation.** The refined theory state mediates a later
-   operation on the same behavior-determining path.
+3. **Response to criticism.** A formulated criticism of the theory uses the
+   outcome to revise its content, scope, assessed support, or operational role.
+   Rejection can qualify. So can survival of an attempted refutation when
+   the result changes how the system would rely on the theory or choose
+   further tests. Recording a pass alone does not establish this effect;
+   surviving does not change the theory's tentative status.
+4. **Recurrent mediation.** The result of that criticism affects a later
+   operation on the same path, through a revised theory, changed reliance,
+   or reconstruction from retained criticism.
 
 A contemporaneous [citation at the decision point is a mediation
 trace](./citing-retained-theory-at-the-decision-point-is-a-mediation-trace.md).
-It identifies the theory the process claims to have used, but it does not show
-that the theory was load-bearing. Withholding, replacing, or perturbing the
-theory and observing a changed decision is stronger evidence.
+It identifies the theory the process claims to have used; it does not establish
+that the content was load-bearing. Withholding, replacing, or perturbing the
+theory and observing a changed decision is stronger evidence, bounded by the
+contrast actually run.
 
-A useful change may reach the first or second level without reaching the fourth.
-That is still evidence about theory-guided operation. It should not be
-reported as recurrent self-improvement until the later-use link exists.
+The ladder separates claims about a process. It is not a universal sequence
+that every instance of learning must traverse: criticism can proceed by
+argument without an empirical intervention. Nor does the fourth level certify
+learning. Changed decisions can be worse. The improvement claim needs evidence
+about the capacity at issue, the criterion of improvement, and why the effect
+is attributable to criticism.
+
+Capacity can improve before an occasion for exercising it arises. Observed
+later action can establish recurrence and provide evidence of capacity, but
+actual exercise is not a condition of learning. A claim of capacity at a later
+time does require the effect of criticism to persist to that time. Later loss
+does not cancel an earlier improvement. Where improvement is unestablished,
+report the observed process at its supported strength.
+
+## The functions share one path, not one substrate
+
+For a claim of recurrent learning through theory, interpretation, criticism,
+persistence of its effect, and later use must belong to one connected causal
+path. [Disconnected witnesses](./disconnected-witnesses-do-not-establish-a-causal-path-through-theory.md)
+do not establish the joins. A theory used in one decision, an unrelated
+criticism, and a later successful operation cannot be combined merely because
+they occurred in the same project.
+
+The functions can use different substrates. A model can interpret a theory,
+a test or later demand can challenge it, an artifact can preserve the result,
+and a symbolic runtime can carry it into later operation. The effect can also
+persist through criticism from which a theory is reconstructed. Neither a
+single carrier nor retention of the assembled theory is required.
+
+## Interpretation is not reach-assessment
+
+An interpreter can understand and apply a false theory. Deriving the
+consequences it claims does not establish that they hold or that its stated
+scope is sound. Interpretation makes content usable;
+[reach-assessment](./definitions/reach-assessment.md)
+judges whether the claimed generality is warranted. Collapsing them makes a
+model appear to warrant whatever it can explain.
+
+Correction requires an opportunity for something the theory says to be
+challenged. Mechanical tests, decorrelated critics, held-out tasks, and later
+operational failures offer different strengths of correction. Their
+independence is an evidence question: can the candidate's rationale be
+overturned? It is not a requirement that another actor supply criticism.
+One model can propose and criticize its own theories; decorrelating proposer
+and critic concerns how well criticism works.
 
 ## The current LLM-plus-artifact realization
 
-Natural-language theories often arrive before a formal language, variables, and
-acceptance test exist. An LLM can interpret those theories across cases that no
-symbolic procedure already covers. A retained artifact gives the theory a
-stable, inspectable address across bounded calls. The pair is therefore a
-practical current realization of semantic interpretation plus addressable
-retention.
+Commonplace studies [retained theories as a research
+arrangement](./commonplace-studies-conjectural-learning-through-retained-theories.md).
+An LLM can interpret natural-language theories before their relevant concepts
+have been fully formalized. An artifact can preserve the theory across bounded
+calls. [Addressability](./definitions/addressable-theory.md) lets
+criticism and revision target particular assumptions, scope conditions, or
+parts. These are separable functions, and none supplies correction or improved
+capacity by itself.
 
-Neither half is sufficient. A model without retained theory re-derives an
-account each episode and cannot reliably accumulate targeted rescoping. A
-retained document that nothing interprets or retrieves is inert. But the pair
-also does not supply independent correction or continuity by itself. Those
-functions must be connected separately.
+This arrangement can accumulate targeted changes without rebuilding the theory
+each episode. Its advantage over reconstruction from retained criticisms or
+from inputs and outcomes is conjectured. A theory criticized and replaced
+whole can still support learning; a stored theory that no process would
+consume cannot. Private linguistic formulation and criticism can also qualify,
+although opacity may leave their presence or effects unestablished.
 
-This is a current engineering claim, not a theorem that natural-language,
-parametric, and symbolic carriers must remain separate. Another substrate could
-supply the same functions, and learned systems may absorb current boundaries.
-What must survive is the causal role and its independently analysable failure
-surface, not the carrier.
+Retained addressable theory must earn its retrieval, maintenance, and
+consistency costs. [A hand-crafted bootstrap fits the Bitter Lesson only when
+learning can outgrow it](./a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md).
+A future model or learned module may supply functions now divided between
+model and artifact. That possibility challenges the chosen realization's
+value, not the need to establish causal use, criticism, and improved capacity.
 
-## What current examples establish
+## What the retained examples establish
 
-[Commonplace is a reflective human-agent system](./evidence/commonplace-as-a-reflective-system.md):
-retained theories are interpreted, revised, and sometimes turned into operative
-instructions, validators, schemas, or code. Humans still supply much of the
-independent assessment, blame assignment, acceptance, and continuity across
-ambiguous cases. It therefore gives evidence for the mechanism and for useful
-human-inclusive theory work, not independent computational theory possession.
+[Commonplace's human-agent pathway](./evidence/commonplace-as-a-reflective-system.md)
+shows operative self-representations being interpreted and changed, including
+changes to instructions, validators, schemas, and code. In its tag-readme case,
+the validator pass establishes consistency of the marks with the declared
+criterion; [the improvement remains a claim](../reference/tag-readme-trace-as-self-improving-loop.md#what-the-mapping-settles-and-what-it-does-not).
+Humans supply decisive assessment and adoption judgments. The evidence
+establishes a bounded connected pathway, not demonstrated improvement in
+capacity, independent computational theory possession, or a general advantage
+for the arrangement.
 
-[Exo](../agentic-systems/reviews/exo.md) provides a stronger technical revision surface:
-it can edit prompts, tools, and executor code, rebuild, and restart. That shows
-reflective membership, operative retention, and continuity over some changes.
-Build success, tests, and post-restart behavior can reject broken candidates,
-but the retained record does not establish that the system independently
-assesses the semantic reach of a self-theory or that a revised theory changes a
-later episode. The missing result is read-back at the strength claimed, not
-mere ability to edit itself.
+The retained [Exo review](../agentic-systems/reviews/exo.md), pinned
+to its inspected checkout, describes editing prompts, tools, and executor
+code, then rebuilding and restarting. That supplies a reflective revision
+surface, retention, and continuation machinery. Build success, tests, and
+post-restart behavior can reject broken candidates. The record does not
+establish independent assessment of a self-theory's semantic reach, a result
+of criticism mediating a later episode, or improved capacity through that
+process. The review did not run a live instance.
 
-A formal proof-governed system could supply the functions inside a formal
-language, as the [Gödel-machine case](./goedel-machines-are-a-proof-governed-case-of-self-modification.md)
-shows in specification. That route pays for mechanical acceptance with a fixed
-formal vocabulary and axiomatized objective. It does not cover self-theories
-whose relevant concepts have not yet been formalized.
-
-## The Bitter Lesson applies to the realization
-
-The present LLM-plus-artifact arrangement receives no permanent exemption.
-Retained theory earns its place only where persistence, selective rescoping,
-inspection, and cross-episode use improve the learning path enough to pay for
-retrieval, maintenance, and consistency costs. [A hand-crafted bootstrap fits
-the Bitter Lesson only when learning can outgrow it](./a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md).
-
-A future model may perform some present theory search internally or move the
-same functions into learned modules. That would replace the carrier without
-refuting the functional requirements above. The research claim is that explicit
-theory is useful working state in the current bootstrap and may remain useful
-where sparse, named revision and external inspection matter. Its persistence is
-empirical.
+The [Gödel-machine construction](./goedel-machines-are-a-proof-governed-case-of-self-modification.md)
+shows in specification how a formal self-representation and proof-governed
+switch can participate in self-modification. Its warrant depends on its
+formalized assumptions and objective; it does not cover concepts absent from
+that formalization. Proof-governed switching alone establishes neither the
+presence nor absence of criticism of theory content in a complete system.
+The construction is not an observed recurrent learning result.
 
 ## Scope
 
-- Reflective membership is boundary-relative. Refining a theory of an external
-  target is not the reflective case, unless that target helps determine the
-  modifying system's own behavior.
-- Addressable retention need not mean one document or perfectly atomic claims.
-  It means that the revision operation claimed by the experiment has a stable
-  target.
-- Independent read-back can be delayed. For coherent program modification, a
-  later demand or maintenance failure may be the strongest available oracle.
-- An unchanged theory after confirming evidence can still have mediated a
-  useful improvement. It establishes less than theory refinement unless the
-  record shows a deliberate theory-state judgment.
+- Reflection is relative to a boundary and represented aspects. Learning
+  about an external target need not be reflective unless that target helps
+  determine the modifying system's own behavior; the two-way causal connection
+  must still hold.
+- Retaining an addressable theory is an explicit premise of the chosen
+  arrangement, not a condition of conjectural learning.
+- Criticism can be delayed. A later demand or maintenance failure may provide
+  the relevant challenge, and claims must stay within what it tested.
+- Identity across records helps establish a connected path; it does not
+  independently establish causation or improvement.
 
 ## Open Questions
 
-- What intervention best distinguishes load-bearing theory use from a plausible
+- What interventions best distinguish load-bearing theory use from plausible
   post-hoc citation?
-- How much structural addressability is needed for selective rescoping rather
-  than whole-document replacement?
-- What kinds of decorrelated criticism are strong enough to count as
-  independent read-back for self-directed theories?
-- Can a computational composite sustain the full recurrent loop across novel
-  modification demands and delayed evidence without exporting the decisive
-  interpretation or acceptance to a person?
+- When does addressing particular parts improve capacity or cost compared
+  with whole replacement or reconstruction?
+- How much does decorrelating criticism improve assessment of self-theories?
+- Can a computational system sustain recurrent learning across novel demands
+  and delayed evidence without a person supplying decisive assessment?
 
 ---
 
 Relevant Notes:
 
-- [Learning by learning by theory refinement may improve sample efficiency under structured shifts](./learning-by-theory-refinement-may-improve-sample-efficiency.md) — grounds: supplies the general conjecture specialized here
-- [Reflective system](./definitions/reflective-system.md) — defined-in: supplies the causal self-representation condition for reflective membership
-- [Reach-assessment](./definitions/reach-assessment.md) — contrasts: names the epistemic judgment kept separate from semantic interpretation
-- [Reflection buys addressability](./reflection-buys-addressability.md) — grounds: explains the retention affordance without supplying correctness
-- [Citing retained theory at the decision point is a mediation trace](./citing-retained-theory-at-the-decision-point-is-a-mediation-trace.md) — enables: records the claimed first link while leaving causal importance open
-- [Holding a program theory means sustaining coherent search under delayed feedback](./program-theory-sustains-search-under-delayed-feedback.md) — extends: applies the functions to longitudinal program modification and recovery
-- [A hand-crafted bootstrap fits the Bitter Lesson only if learning can outgrow it](./a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md) — extends: bounds the current representational realization as provisional bootstrap state
+- [Conjectural learning](./definitions/conjectural-learning.md) — defined-in: the improvement and criticism conditions kept distinct from process evidence
+- [Reflective system](./definitions/reflective-system.md) — defined-in: the architectural capacity that a reflective learning claim additionally requires
+- [Reflection buys addressability](./reflection-buys-addressability.md) — grounds: explicit retention makes particular claims available for criticism without supplying correctness
+- [Disconnected witnesses do not establish a full causal path through theory](./disconnected-witnesses-do-not-establish-a-causal-path-through-theory.md) — extends: what joins evidence of recurrent use must identify
+- [Holding a program theory means sustaining coherent search under delayed feedback](./program-theory-sustains-search-under-delayed-feedback.md) — extends: applies the retained arrangement to longitudinal program modification and recovery

@@ -1,231 +1,135 @@
 ---
-description: "No single predecessor is closest to reflective theory refinement: runtime self-modeling supplies the self-target, classical theory refinement the mechanism with different fillers, and Workspace Optimization only an implementation analogy"
+description: "Conjecture and criticism, causal self-representation, and persistent artifact editing supply different precedents; similarity on one does not establish the others"
 type: kb/types/note.md
 traits: [title-as-claim, synthesis, has-external-sources]
 tags: [learning-theory, deploy-time-learning, self-improving-systems, foundations]
 ---
 
-# Reflective theory refinement has separate structural, epistemic, and implementation lineages
+# Conjectural learning has distinct epistemic, structural, and implementation precedents
 
-No single predecessor is closest to reflective theory refinement, [theory
-refinement](./definitions/theory-refinement.md) of a theory about the
-[learning system itself](./definitions/reflective-system.md) and earlier
-called theory-mediated system learning, on every relevant dimension. A
-similarity claim must say what it compares:
+A system can criticize a theory of an external subject without representing
+itself. It can use a causally connected self-representation without learning.
+It can also edit persistent files without formulating criticism of what a
+theory says. These possibilities separate three questions when comparing
+systems: how errors are criticized, what the representation is about, and
+how changes persist and affect operation. A precedent for one does not
+establish the others.
 
-- the **object and target** of representation — whether the retained model is
-  about the modifying system's own structure, purposes, requirements, or goals;
-- the **learning mechanism** — whether an explicit, [tentative theory](./definitions/theory-refinement.md#tentative-theory) guides
-  inference and is itself revised by empirical contradiction; or
-- the **implementation pattern** — whether a contemporary LLM system learns by
-  editing persistent code and text around a fixed model.
+[Conjectural learning](./definitions/conjectural-learning.md) names
+the learning process. [Reflection](./definitions/reflective-system.md)
+adds a relation between a system and a representation of itself. Retained
+text and code around a fixed model supply one implementation. Keeping these
+questions separate makes both attribution and experiment design more precise.
 
-These dimensions identify different neighboring lineages. Collapsing them into
-one ranking makes a recent system look closest because its software stack
-resembles the current implementation, even when older work matches the
-scientific question more directly.
+## Popper supplies the epistemic basis
 
-## Runtime self-modeling and self-adaptation supply the structural lineage
+Popper's schema, `P1 → TT → EE → P2`, describes problems, tentative theories,
+attempted error elimination, and the further problems that result. Criticism
+can replace a theory or expose a new problem; the schema does not prescribe
+local edits or a repository layout
+([A Realist View of Logic, Physics, and History](../sources/popper-a-realist-view-of-logic-physics-and-history-1966.ingest.md#quotes)).
+His treatment of linguistic formulation and criticism includes informal
+arguments before symbolic formalization
+([Epistemology Without a Knowing Subject](../sources/popper-epistemology-without-a-knowing-subject-1968.ingest.md#quotes)).
 
-[Computational reflection](../sources/maes-computational-reflection-1988.ingest.md)
-introduced the central structural relation: a computational process operates
-through a causally connected representation of selected aspects of itself.
-[Models@run.time](https://doi.org/10.1109/MC.2009.326) developed runtime models
-of a system's structure, behavior, or goals as machinery for inspection and
-adaptation. [Requirements
-reflection](https://doi.org/10.1145/1810295.1810329) proposed making
-requirements first-class runtime entities so that a system could reason about,
-explain, and modify them while it operates. Architecture-based systems such as
-[Rainbow](https://doi.org/10.1109/MC.2004.175) used explicit architectural
-models to monitor and adapt a running system.
+Commonplace adds the conditions for attributing this learning to a particular
+system: a formulated theory must guide decisions through its content, and
+criticism must improve the system's capacity for future action. Artifact
+availability alone does not establish those conditions. Neither does a changed
+decision establish improvement. The epistemic basis therefore leaves work
+for a concrete account of consumption, consequences, and persistence.
 
-This family is closest to **what the theory is about and what it changes**. The
-represented object is the running system's own organization, requirements, or
-goals, and the representation lies on a causal path into changes to that system.
-That is closer to a retained program theory governing modification of the
-behavior-determining system than a theory whose primary object is an external
-environment.
+EITHER and FORTE retain a narrower role as precedents for connecting failed
+consequences to candidate repair locations. Their proof-guided repair shows
+what [addressability](./definitions/addressable-theory.md#precedent)
+can make possible under a supplied representation. It does not define every
+tentative theory, require small revisions, or establish the same capability
+for interpreted prose.
 
-The remaining gap is learning architecture. Classical runtime-model and
-self-adaptive systems usually begin with a supplied model language, goal or
-requirements vocabulary, monitoring boundary, adaptation operators, and
-evaluation policy. They need not treat the runtime model as a tentative
-explanatory theory whose content and scope are revised by delayed consequences,
-and they generally leave these adaptation-machinery choices outside the
-revision surface. Such choices belong to a [software house's production
-machinery](./definitions/software-house.md) when they participate in the
-complete producer, whether or not the house uses a Greenfield-style factory.
-Their fixed placement limits claimed production reach when they carry required
-task- or product-scope-specific production knowledge. It is not an inherent
-defect when a component is warranted general machinery over the declared reach.
+## Reflection supplies the structural relation
 
-## Theory refinement supplies the epistemic lineage
+Computational reflection supplies the causally connected self-representation
+relation inherited by the [reflective-system definition](./definitions/reflective-system.md#provenance-and-departures).
+Runtime models and requirements representations give concrete ways to expose
+selected aspects of a system to its own operation.
 
-[Explanation-based
-generalization](https://doi.org/10.1023/A:1022691120807) is an established case
-of learning guided by an explicit theory: background theory determines what can
-be inferred from an experience rather than merely accompanying an empirical
-learner, though the theory itself is not revised.
-[Theory refinement combining analytical and empirical
-methods](https://doi.org/10.1016/0004-3702(94)90028-0) goes closer to the present
-mechanism by beginning with an imperfect explicit theory, using empirical
-failures to identify candidate repair locations, and revising the theory rather than learning only
-from scratch.
+In Rainbow, probes and gauges update an architectural model; a constraint
+evaluator triggers adaptation through supplied strategies and effectors.
+Its specified types, properties, operators, and strategies determine the
+available adaptations. That is a working model-to-system path, not evidence
+that the system learns those choices
+([Rainbow (snapshot required)](../sources/rainbow-architecture-based-self-adaptation.ingest.md),
+architecture-layer infrastructure and architectural style).
+Requirements Reflection proposes runtime requirements objects synchronized
+with an architectural representation. The synchronization is a design
+challenge in that paper, not an evaluated learning mechanism
+([Requirements Reflection (snapshot required)](../sources/requirements-reflection-runtime-entities.ingest.md),
+challenges 1–2).
 
-This family is closest to **how an explicit tentative theory learns**. The theory
-shapes interpretation and search; evidence can count against the theory rather
-than only against one candidate answer; and repair can be localized to the
-represented knowledge implicated by the failure, with evaluation needed to
-check whether a proposed repair improves it.
+These comparisons matter when the theory concerns the modifying system's
+organization. A runtime self-model can be causally operative while its
+assumptions are never criticized. Conversely, conjectural learning about an
+external subject need not be reflective. Improving an adaptation outcome
+does not by itself establish learning of the model or its revision machinery.
 
-Its usual target is nevertheless an external classification or problem domain,
-not the purposes and architecture of the learning system itself. Classical
-theory refinement therefore supplies the epistemic half of the proposed path
-without supplying its reflective self-target.
+## Persistent workspaces supply an implementation comparison
 
-The mechanism is the same in both, slot for slot: a theory language, an
-interpreter that applies the theory, an evidence source, a failure localizer,
-repair operators, and an acceptance test. The [proposed
-regime](../articles/the-software-house-as-the-unit-of-training.md) changes the
-fillers. The language is open-ended natural language and mixed forms rather
-than a fixed rule language, so what the theory implies is interpreted rather
-than proved, and only a codified part regains a computed consequence relation.
-One LLM fills the interpreter, localizer, and
-repair slots that a prover, abduction, and an induction algorithm filled. The
-evidence is production consequences rather than a labeled batch, which is why
-credit assignment and admission have less constrained inputs than in the
-classical systems. Those systems already needed diagnostic heuristics and
-candidate evaluation; explicit proofs did not guarantee a unique diagnosis
-or successful repair. And among revisions that fit the evidence, acceptance prefers
-explanatory reach, where the classical test was consistency with the training
-set. [FORTE](../sources/automated-refinement-first-order-horn-clause-domain-theories.ingest.md)
-seeks a minimally revised theory correct on supplied cases, but its search can
-stop at a local maximum. Two differences are not fillers. A project theory is partly normative, so
-a failure may be resolved by changing the product to fit the theory, where the
-classical loop only ever changed the theory to fit the data. And the slots
-themselves, language, operators, and evaluator, are inside the revisable state,
-where the classical systems fixed them outside learning. What the field
-already had, and this program should not claim as new, is recurrent use of
-the refined theory, incremental refinement, localized repair, a bounded
-sample-efficiency result, and a human-engineered seed.
+Workspace Optimization keeps model weights fixed while revising typed code
+and role context. Prediction failures are routed to responsible surfaces,
+and replay supplies feedback on earlier transitions after edits. Its DreamTeam
+implementation uses a supplied role decomposition and evaluation machinery
+([Workspace Optimization (snapshot required)](../sources/workspace-optimization-how-to-train-your-agent.ingest.md),
+§§2–4 and Appendix B).
 
-## Workspace Optimization supplies a contemporary implementation analogy
+This is a concrete comparison for keeping learned changes in artifacts that
+later calls consume. It does not establish learning of a continuing system's
+own improvement procedure. The retained source reports adaptation within game
+runs; it does not demonstrate the cross-session recurrent self-theory claim.
+The benefit of the complete arrangement also does not isolate the effect of
+criticism, addressability, or retaining an assembled theory.
 
-[Workspace
-Optimization](../sources/workspace-optimization-how-to-train-your-agent.ingest.md)
-is unusually close to the present implementation pattern. It keeps the
-foundation model fixed while making surrounding code and text editable, routes
-prediction failures toward responsible artifacts, and replays prior transitions
-after edits. Its persistent workspace is inspectable, executable, and consumed
-by later model calls.
+Fixed weights constrain where learned changes persist. They do not hold model
+processing fixed across different inputs, establish content use, or show that
+explicit artifacts outperform reconstruction. Those are separate comparisons
+of [the arrangements actually run](./an-experiment-identifies-only-the-contrast-it-actually-runs.md).
 
-That makes it a strong precedent for non-weight learning surfaces, local credit
-assignment, and counterexample-driven artifact repair. It does not make it the
-overall closest antecedent to the research program. Its explicit theory
-primarily models an external game environment within one run. Its role
-decomposition, validation, and adoption policy remain supplied, and the
-reported result does not establish cross-session recurrence of a revised theory
-of the behavior-determining system itself.
+## Research positioning and comparison
 
-Workspace Optimization should therefore be described as a **close contemporary
-LLM-agent implementation analogue**, not ranked above the runtime
-self-modeling, self-adaptation, and theory-refinement traditions.
+Commonplace's [research arrangement](./commonplace-studies-conjectural-learning-through-retained-theories.md#research-program-and-development-path)
+pursues recursive self-improvement within Schmidhuber's broad program, using
+interpreted methodology and selective codification. This states the research
+objective and chosen realization. It does not replace the Popperian account
+of criticism or the structural condition for reflection, and it supplies no
+result showing that the combined arrangement works.
 
-## The proposed program joins the lineages
-
-Reflective theory refinement proposes one causally co-indexed longitudinal
-path:
-
-```text
-addressable theory of a software system's purposes and organization
-  -> theory-guided search, diagnosis, and modification
-  -> change to the behavior-determining system
-  -> independent or delayed consequence
-  -> read-back against the same theory
-  -> explicit theory revision
-  -> changed later modification
-```
-
-Runtime reflection and self-adaptation supply the self-model and causal target.
-Theory refinement supplies the tentative-theory and empirical-repair mechanism.
-LLMs supply a current semantic interpreter and search process over theories that
-have not been fully formalized. Persistent natural-language and symbolic
-artifacts provide addressable working state, while code and runtime carry exact
-transitions, checks, and continuity.
-
-The further ambition is that required task- or product-scope-specific decompositions,
-evaluators, and improvement methods can be computationally acquired or
-challenged rather than supplied anew by people as the demand class widens. The
-ambition does not require every general algorithm, runtime, interface, or
-trusted kernel to modify itself. No source above establishes the complete
-evidence-to-production-knowledge transition, and the current program has not yet
-demonstrated it either. The combination is the research target, not a settled
-novelty result.
-
-## Consequences for comparison and experiment
-
-Different neighbors imply different baselines:
-
-- a **runtime self-model or architecture-based adaptation baseline** tests what
-  claim-addressable natural-language program theory adds beyond an explicit
-  but designer-supplied system model;
-- a **classical theory-refinement baseline**, with its language, operators,
-  and evaluator fixed, tests what the regime's fillers add: an open-ended
-  theory language, reach-preferred acceptance, and a revisable update space;
-- a **Workspace Optimization baseline** tests the value of a program self-theory
-  against editable external state, local failure attribution, and replay; and
-- direct search, parametric adaptation, meta-learning, and stronger models test
-  whether explicit theory is needed at all for the observed recovery or
-  transfer.
-
-A result showing only persistent artifact editing, fast adaptation, modular
-reuse, or prediction-error correction would not identify the full mechanism.
-The discriminating result must connect theory use in the decision, change to the
-modifying system, empirical read-back, selective theory revision, and later
-changed modification on one traceable path.
+A comparison should therefore name which question it asks. A runtime-model
+comparison concerns the additional contribution of learning through criticism.
+An editable-workspace comparison concerns the supplied theory and its use
+beyond persistence and repair. A retention comparison concerns which work is
+kept rather than reconstructed. None can inherit the conclusion of another
+merely because the systems share some machinery.
 
 ## Scope
 
-- This note positions the program; it is not a complete literature review or a
-  priority claim over every historical source.
-- "Closest" is meaningful only after the comparison axis is stated. Structural
-  precursor, epistemic mechanism, implementation analogue, and experimental
-  competitor are different relations.
-- A runtime requirements or architectural model is not automatically a program
-  theory in the present sense. The comparison concerns its self-target and
-  causal role, not an identity of concepts.
-- A theory-refinement system is not automatically reflective. Explicit theory
-  revision can concern a world outside the learner.
-- Supplied adaptation machinery bounds the demonstrated reach when it embeds
-  target-specific production knowledge. Human provenance or fixedness alone does
-  not show that scoped learning or computational closure is incomplete.
-- The proposed synthesis may turn out not to outperform simpler combinations of
-  runtime models, direct search, artifact repair, and parametric adaptation.
+These are bounded conceptual and implementation precedents, not a priority
+claim or an exhaustive ranking of earlier systems. A full recurrent reflective
+claim needs connected evidence of theory use, consequences, criticism, and
+later influence, plus evidence of improved capacity. Partial findings remain
+reportable at their own strength. Neither their combination nor resemblance
+to a predecessor establishes superiority over simpler arrangements.
 
-## Open Questions
-
-- What is the strongest implementation of requirements reflection or
-  Models@run.time that can serve as a programming-agent baseline?
-- Can a theory-refinement treatment be made information- and compute-comparable
-  to the proposed retained-theory treatment?
-- Does natural-language theory provide value beyond a structured runtime model
-  when both expose the same purposes and dependencies?
-- Which part of Workspace Optimization's advantage comes from editable state,
-  local ownership, replay, or theory-level organization?
-- Which supplied adaptation choices carry task-specific competence that the
-  learning process must acquire, and which are warranted general machinery over
-  the declared reach?
+The precedents already supply recurrent use of revised theories, incremental
+revision, localized repair, a bounded sample-efficiency result, and
+human-engineered seeds. This program must not claim those features as new.
+Fixed supplied machinery is not inherently defective when it is warranted
+general machinery over the declared reach.
 
 ---
 
 Relevant Notes:
 
-- [A research program for learning software factories](../articles/automated-software-houses-with-fixed-llms.md) — context: states the combined program and its proposed interventions
-- [Reflective system](./definitions/reflective-system.md) — grounds: supplies the causally connected self-representation relation inherited from computational reflection
-- [Reflective theory refinement needs interpretation, retention, and independent read-back](./reflective-theory-refinement-needs-interpretation-and-retention.md) — grounds: states the causally co-indexed path the synthesis must realize
-- [Holding a program theory means sustaining coherent search under delayed feedback](./program-theory-sustains-search-under-delayed-feedback.md) — extends: applies the theory-guided mechanism to longitudinal software modification and recovery
-- [Learning inside a fixed decomposition inherits its mistakes](./learning-inside-a-fixed-decomposition-inherits-its-mistakes.md) — grounds: explains why target-specific decomposition choices bound reach without making every fixed component defective
-- [The deployed system, not the model alone, is the unit of learning](./the-deployed-system-not-the-model-is-the-unit-of-learning.md) — grounds: places runtime models, artifacts, tools, code, and weights inside one learning boundary
-- [Broad software demands create pressure for agentic factory development](./broad-software-demands-create-pressure-for-agentic-factory-development.md) — extends: states the production-knowledge acquisition burden that the further ambition requires
-- [Workspace Optimization](../sources/workspace-optimization-how-to-train-your-agent.ingest.md) — exemplifies: supplies the contemporary editable-workspace implementation analogy and its bounded evidence
-- [Maes, Computational Reflection](../sources/maes-computational-reflection-1988.ingest.md) — abstracted-from: supplies the causal self-representation lineage
+- [Conjectural learning](./definitions/conjectural-learning.md) — defined-in: the epistemic process and system-attribution conditions
+- [Reflective system](./definitions/reflective-system.md) — grounds: causal self-representation is separate from learning
+- [Addressable theory](./definitions/addressable-theory.md) — contrasts: a structural property whose expected benefit is empirical
+- [Machinery persists by warrant, not position in a reflective loop](./machinery-persists-by-warrant-not-position-in-a-reflective-loop.md) — grounds: supplied machinery is assessed by its warrant over the declared reach
+- [Learning inside a fixed decomposition inherits its mistakes](./learning-inside-a-fixed-decomposition-inherits-its-mistakes.md) — extends: learning within supplied choices does not establish their adequacy

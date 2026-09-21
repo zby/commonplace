@@ -1,5 +1,5 @@
 ---
-description: "Theory use, outcome, theory revision, and later use establish learning by theory refinement only when their witnesses identify the joins of the same full causal path"
+description: "Evidence of recurrent learning through theory must identify the joins of one causal path; connected use and criticism still need separate evidence of improved capacity"
 type: kb/types/note.md
 traits: [title-as-claim, synthesis]
 tags: [foundations, self-improving-systems, evaluation]
@@ -7,53 +7,115 @@ tags: [foundations, self-improving-systems, evaluation]
 
 # Disconnected witnesses do not establish a full causal path through theory
 
-A claim of [learning by theory refinement](./definitions/learning-by-theory-refinement.md), that a system's theory guided a decision, the consequence revised the theory, and the revision guided later work, is a claim about a connected causal path, not a checklist of events that happened somewhere in the same project. Evidence that a theory existed, a decision occurred, an outcome followed, the theory later changed, and a later operation used some retained state does not by itself show that learning proceeded through that theory. The witnesses must identify the joins that make those events one full causal path.
+A claim that a theory guided a decision, its consequence informed criticism,
+and the result guided later work concerns a connected causal path. Evidence
+that a theory existed, a decision occurred, an outcome followed, a theory
+changed, and later work used retained state does not by itself connect those
+events. The witnesses must identify the joins. Even a connected path establishes
+[conjectural learning](./definitions/conjectural-learning.md) only
+when criticism improves the system's capacity for future action.
 
-The strongest path has this shape:
+For an empirical recurrent claim, the path has this shape:
 
 ```text
-theory state T0
-  -> decision or search consuming T0
+theory T0
+  -> decision or search using what T0 says
   -> realized change
   -> independent or delayed consequence
-  -> read-back against T0
-  -> revised theory state T1
-  -> later operation consuming T1
+  -> formulated criticism read against T0
+  -> result affecting theory, reliance, or further test choices
+  -> later operation using that result
 ```
 
-This shape composes three existing requirements. [Reflective theory refinement needs interpretation, retention, and independent read-back](./reflective-theory-refinement-needs-interpretation-and-retention.md): the functions must share a causally integrated, co-indexed path even when they use different substrates. [Citing retained theory at the decision point is a mediation trace](./citing-retained-theory-at-the-decision-point-is-a-mediation-trace.md): a contemporaneous record can identify which retained theory a decision claims to have consumed, but citation alone does not establish load-bearing use or outcome read-back. And [history has one chance to become checkable](./history-has-one-chance-to-become-checkable.md): when a nondeterministic production path cannot be re-derived, transient facts needed to identify its joins must be converted into carried records while they remain available.
+The theory may be revised, rejected, or retained after a serious attempt to
+refute it. Survival can change reliance without changing theory text or its
+tentative status. The result can persist in a theory and testing record or in
+criticism used to reconstruct a theory. The path tracks the effect of
+criticism rather than requiring a new document version at each turn.
+
+This shape composes three requirements. [A complete theory path does not establish improved capacity](./reflective-theory-refinement-needs-interpretation-and-retention.md)
+separates mediation, empirical contact, response to criticism, and recurrent
+mediation. [Citing retained theory at the decision point is a mediation
+trace](./citing-retained-theory-at-the-decision-point-is-a-mediation-trace.md)
+identifies the theory a decision claims to have used, while leaving
+load-bearing use and criticism open. [History has one chance to become
+checkable](./history-has-one-chance-to-become-checkable.md)
+explains why facts needed to identify non-re-derivable joins must be carried
+forward while they remain available.
 
 ## Each join supports a different inference
 
-The first join identifies **mediation**: which theory state entered the decision whose behavior is being attributed to theory. A retrieval log or later citation to a generally relevant theory is weaker because it need not identify what governed the decision. Withholding, replacement, or perturbation can provide stronger causal evidence for this link.
+The first join identifies **mediation**: which theory content entered the
+decision whose behavior is attributed to theory. A retrieval log or later
+citation to a relevant theory need not identify what governed the decision.
+Withholding, replacement, or perturbation can supply stronger causal evidence,
+within the contrast actually run.
 
-The middle joins identify **empirical contact and theory learning**: which realized change produced the consequence, and whether that consequence was read back against the theory state that helped guide the change. A failure followed by an unrelated theory edit is not evidence that the failure revised that theory. Likewise, an accepted change does not by itself verify the theory that motivated it.
+The middle joins identify **empirical contact and response to criticism**:
+which change produced the consequence, how that consequence challenged what
+the theory said, and what the criticism changed. A failure followed by an
+unrelated edit does not show that the failure revised the theory. Acceptance
+of a change does not verify the theory that motivated it. A recorded pass
+without any effect on future reliance or testing does not establish learning.
 
-The final join identifies **recurrence**: whether the revised theory state, rather than merely a descendant repository state, affected a later operation. Git ancestry can establish that later work descended from an earlier commit. It cannot by itself establish which retained theory the later decision consumed or whether the relevant revision was load-bearing.
+The final join identifies **recurrence**: whether the result of criticism
+affected later operation. Git ancestry can establish that work descends from
+an earlier commit. It cannot by itself establish which theory or criticism
+the later decision used, or whether its content was load-bearing. A reconstructed
+theory needs the same causal account of how retained criticism affected it.
 
-The evidence levels therefore compose only when their identities compose. Separate demonstrations of mediation, an empirical outcome, a theory edit, and later work can each be valid partial results while failing to establish the full recurrent refinement path.
+The evidence levels compose only when their identities compose. Separate
+valid demonstrations of mediation, an outcome, a response to criticism, and
+later work can remain partial results. A reflective claim additionally needs
+the theory to be a causally connected self-representation of the same system
+aspects along the claimed path; self-description elsewhere in the project
+cannot supply that connection.
 
-## Recording follows from the evidential shape
+## Recording follows from the evidential claim
 
-The required record is determined by the claim rather than by a universal logging schema. To support a record-based full-path claim, the retained evidence must let a reviewer associate the relevant episode, supplied theory-state version, decision or search branch, realized change, consequence, theory-state revision, and later claimed use. Actor or operator interventions must be retained where they determine one of those joins.
+For a record-based full-path claim, a reviewer must be able to associate the
+episode, supplied theory content, decision or search branch, realized change,
+consequence, criticism, its result, and later use. Where retained theory is
+versioned, versions can help identify the content. Where reconstruction is
+claimed, the evidence must instead identify what criticism was retained and
+how it informed the reconstructed theory. Actor or operator interventions
+must be retained where they determine a join.
 
-For deterministic or otherwise re-derivable operations, some joins may be reconstructed by replay. For nondeterministic LLM production, omitted prompts, supplied theory components, rejected alternatives, or operator interventions generally cannot be recovered from the final artifact. Production-time recording is therefore a consequence of the full-path evidence requirement in those cases, not the theory claim itself.
+Some deterministic or otherwise re-derivable joins can be reconstructed by
+replay. For nondeterministic LLM production, omitted prompts, supplied theory
+parts, rejected alternatives, or operator interventions generally cannot be
+recovered from the final artifact. Recording follows from relying on that
+history as evidence; it is not a membership condition of learning. Private
+linguistic formulation may occur without a visible record, leaving an
+observer unable to classify the process. Opacity alone establishes neither
+presence nor absence.
 
-The exact event schema is an operational choice. This note establishes only what a record must make identifiable if it is later used as evidence for the full causal claim.
+The exact event schema is an operational choice. Recording more fields cannot
+repair an experiment that never ran the contrast its causal claim requires.
 
 ## Scope
 
-- A full path is the strongest claim of learning by theory refinement, not the minimum evidence for every useful theory-guided change. Mediation, empirical contact, and theory revision remain reportable partial results at their recorded strength.
-- Co-indexing establishes identity across witnesses; it does not by itself establish that every link is causal. Interventions, independent exposure, and appropriate controls are still needed for the causal strength claimed.
-- The path may cross model-mediated, symbolic, environmental, and human components. Full-path identity does not imply one substrate or an autonomous technical subsystem.
-- The required identifiers depend on the contrast and inference. Recording more fields cannot repair an experiment that never ran the relevant contrast.
+- The final observed-use link is required for a claim of observed recurrence,
+  not for every claim of learning. Capacity can improve before an occasion
+  for exercising it arises; a claim about later capacity requires persistence
+  of the effect to that time, not an arbitrary minimum duration.
+- Connecting the mechanism's steps does not establish improved capacity.
+  A learning claim must identify what capacity improved, by what criterion,
+  and why the improvement is attributable to criticism. A fully connected
+  path can still worsen decisions.
+- The diagram covers an empirical path. Formulated criticism by argument can
+  also support learning without an intervention-outcome sequence.
+- Identity across witnesses does not establish that each link is causal.
+  Interventions and appropriate controls are needed at the strength claimed.
+- The path can cross model, symbolic, environmental, and human components.
+  Its identity implies neither one substrate nor computational autonomy.
 
 ---
 
 Relevant Notes:
 
-- [Reflective theory refinement needs interpretation, retention, and independent read-back](./reflective-theory-refinement-needs-interpretation-and-retention.md) — grounds: supplies the distinct functions, evidence ladder, and requirement that they share a co-indexed causal path
-- [Citing retained theory at the decision point is a mediation trace](./citing-retained-theory-at-the-decision-point-is-a-mediation-trace.md) — grounds: supplies the observable theory-to-decision edge and bounds what a citation establishes
-- [History has one chance to become checkable](./history-has-one-chance-to-become-checkable.md) — grounds: explains why non-re-derivable joins must be converted into carried evidence while available
-- [Learning by theory refinement](./definitions/learning-by-theory-refinement.md) — defined-in: the recurrent loop this note's full path is evidence for
-- [Theory refinement](./definitions/theory-refinement.md) — defined-in: the revision operation the loop repeats
+- [A complete theory path does not establish improved capacity](./reflective-theory-refinement-needs-interpretation-and-retention.md) — grounds: separates process evidence from improved capacity and the retained realization from the genus
+- [Citing retained theory at the decision point is a mediation trace](./citing-retained-theory-at-the-decision-point-is-a-mediation-trace.md) — grounds: supplies the observable theory-to-decision edge and bounds what citation establishes
+- [History has one chance to become checkable](./history-has-one-chance-to-become-checkable.md) — grounds: explains why non-re-derivable joins need carried evidence
+- [Conjectural learning](./definitions/conjectural-learning.md) — defined-in: the learning claim that also requires improved capacity
+- [Reflective system](./definitions/reflective-system.md) — defined-in: the same-system causal connection needed for a reflective claim

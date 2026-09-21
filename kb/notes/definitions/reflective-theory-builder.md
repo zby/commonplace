@@ -1,5 +1,5 @@
 ---
-description: "Definition — a reflective theory builder refines a causally connected theory of its own theory-building machinery; independent of autonomy and extension, evidenced by an episode from external failure to a tested machinery change"
+description: "Definition — a reflective theory builder revises a causally connected theory of its own theory-building machinery; independent of autonomy, successful learning, and extension"
 type: kb/types/definition.md
 tags: [foundations, self-improving-systems, learning-theory]
 ---
@@ -7,8 +7,7 @@ tags: [foundations, self-improving-systems, learning-theory]
 # Reflective theory builder
 
 A **reflective theory builder** is a [theory builder](./theory-builder.md)
-that performs [reflective theory refinement](./theory-refinement.md#departures)
-on a theory of its own
+that revises a theory of its own
 [behavior-determining organization](./behavior-determining-organization.md),
 where the organization in question is the machinery that determines how its
 theories are built, tested, and revised. The self-theory must be a causally
@@ -20,10 +19,12 @@ that two-way connection is not reflective in this sense. The KB needs the
 term because a readable self-theory doing causal work is what separates a
 methodology-driven builder from systems that retain content without one.
 
-The self-theory is a [tentative theory](./theory-refinement.md#tentative-theory).
-Its claims about the machinery, including its interpreters, are decided by
-evidence, not by being read, and its own acceptance of a machinery change
-does not make the change warranted.
+The self-theory is both a [tentative theory](./tentative-theory.md)
+and an [addressable theory](./addressable-theory.md), as required
+by the builder definition.
+Its claims about the machinery, including its interpreters, remain open to
+criticism. Reading them does not establish them, and the self-theory's own
+acceptance of a machinery change does not make the change warranted.
 
 Work on external theories is both useful work and a test of the current
 machinery. When that work exposes a machinery limitation, the builder may
@@ -64,6 +65,12 @@ performance are separate claims.
 
 ## Scope
 
+- **Independent of successful learning.** A builder can revise its
+  self-theory and machinery without improving its capacity for future
+  action. Reflection names the causally connected self-representation and
+  revision; [conjectural learning](./conjectural-learning.md) additionally
+  requires improved capacity attributable to criticism. A failed reflective
+  revision does not remove the builder's reflective character.
 - **Independent of autonomy.** A reflective builder may depend on a person
   for diagnosis or machinery changes; see
   [autonomous theory builder](./autonomous-theory-builder.md).
@@ -86,8 +93,9 @@ performance are separate claims.
 
 - A builder that holds and consults a description of its machinery with no
   two-way causal connection.
-- A machinery change with no retained account of why; that may be an
-  extension, but it is not reflection.
+- A machinery change without a causally connected self-theory; that may be
+  an extension, but it does not establish reflection. Missing historical
+  rationale alone does not establish that the self-theory is absent.
 - A standard of faithful interpretation. The condition does not require
   one; the self-theory's claims about interpretation are decided by
   evidence like any other.
@@ -101,12 +109,12 @@ performance are separate claims.
   for the change.
 - Treating a self-description, a successful machinery change, or a
   computational proof as sufficient on its own to establish reflective
-  theory refinement.
+  theory building.
 
 ## Boundary cases
 
 - **FORTE** is not reflective: its theory is external and its machinery is
-  not represented in any theory it refines.
+  not represented in the supplied theory it revises.
 - **Commonplace today**, with the operator inside the boundary, is
   reflective: the KB's methodology notes, type specs, and ADRs are a theory
   of its own theory-building machinery, and revisions of them change the
@@ -114,10 +122,13 @@ performance are separate claims.
   for the two-way connection is in
   [Commonplace as a reflective system](../evidence/commonplace-as-a-reflective-system.md).
 - **The Gödel machine** is a reflective system, since its axioms describe
-  its own software and its rewrites are causally connected to them. Whether
-  it is a reflective theory builder turns on whether that
-  self-representation is revised against evidence rather than serving only
-  as a premise of proofs; that classification stays open.
+  its own software and its rewrites are causally connected to them. Its
+  classification as a reflective theory builder stays open with the
+  [builder boundary case](./theory-builder.md#boundary-cases). Proof-governed
+  switching alone does not show whether its self-theory is criticized, and
+  deductive criticism is not excluded from conjectural learning. A sharper
+  classification needs an account of the theory and its revision in the
+  assessed system.
 
 ---
 
@@ -126,7 +137,9 @@ Relevant Notes:
 - [Theory builder](./theory-builder.md) — defined-in: the system this condition qualifies
 - [Reflective system](./reflective-system.md) — grounds: the causally connected self-representation the self-theory must be
 - [Behavior-determining organization](./behavior-determining-organization.md) — grounds: what the self-theory is about
-- [Theory refinement](./theory-refinement.md) — grounds: reflective theory refinement as the operation performed on the self-theory
+- [Tentative theory](./tentative-theory.md) — defined-in: the status of the self-theory
+- [Addressable theory](./addressable-theory.md) — defined-in: the structural condition inherited from the builder definition
+- [Conjectural learning](./conjectural-learning.md) — contrasts: improved capacity is required for learning, not for reflection
 - [Autonomous theory builder](./autonomous-theory-builder.md) — contrasts: the independent condition on who performs the roles
 - [Externally tested theory builder](./externally-tested-theory-builder.md) — see-also: reflective work stays inside that case
 - [Commonplace as a reflective system](../evidence/commonplace-as-a-reflective-system.md) — evidenced-by: the two-way connection in the boundary case

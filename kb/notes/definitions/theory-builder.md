@@ -7,7 +7,7 @@ tags: [foundations, self-improving-systems, learning-theory]
 # Theory builder
 
 A **theory builder** is the complete persistent system responsible for
-developing and revising [tentative theories](./theory-refinement.md#tentative-theory)
+developing and revising [tentative theories](./tentative-theory.md)
 about subjects it is asked to investigate. It operates in response to
 questions, cases, evidence, requirements, and the consequences that arise
 when its theories are applied. It is not necessarily a program, a model, or
@@ -16,21 +16,26 @@ learning methodology are questions about this whole system, and the
 components usually named, a model, a harness, a refinement algorithm, are
 each only part of it.
 
-A theory here is an [addressable theory](./theory-refinement.md#what-the-operation-requires-of-a-theory):
-a unit with consequences a case can contradict, parts available as candidate
-repair locations, and parts editable separately, in any form. The
-definition leaves open how a builder revises its theories. It may refine an
-existing theory against new cases, which is
-[theory refinement](./theory-refinement.md), or regenerate the theory from
-retained records. Which it does is a property of the particular builder,
-and it is what a comparison of retained forms varies. A builder that
-retains its theories and keeps refining them is
-[learning by theory refinement](./learning-by-theory-refinement.md).
-Development, constructing a first theory where none exists, is in scope as
-well. The boundary rule, persistence clause, and
-evaluation clause below are adapted from the
-[software house](./software-house.md) definition, because they are not
-specific to software.
+A theory here must also be an [addressable theory](./addressable-theory.md):
+its assumptions, scope conditions, and parts can be inspected and revised
+individually, in any form that supplies these conditions. Its consequences
+must be capable of being contradicted by a case. These are conditions of this
+builder definition; tentative status alone supplies neither.
+
+The definition leaves open how a builder revises its theories. It may revise
+an existing theory in response to criticism or reconstruct one from retained
+records. A comparison of retained forms can vary this choice. Constructing a
+first theory is also in scope. Responsibility for this work does not establish [conjectural learning](./conjectural-learning.md),
+which requires an improvement in the system's capacity for future action
+attributable to criticism of an operative formulated theory. A builder can
+attempt that process without succeeding. Conversely, conjectural learning
+does not require separately editable theory parts or continuing
+responsibility across demands, so it does not by itself establish builder
+membership.
+
+The boundary rule, persistence clause, and evaluation clause below are
+adapted from the [software house](./software-house.md) definition, because
+they are not specific to software.
 
 ## Boundary
 
@@ -139,7 +144,8 @@ supply those.
 
 - **Two independent conditions** qualify a theory builder, each defined
   against the same declared boundary. A [reflective theory builder](./reflective-theory-builder.md)
-  refines a theory of its own theory-building organization. An
+  revises a causally connected theory of its own theory-building
+  organization. An
   [autonomous theory builder](./autonomous-theory-builder.md) performs
   every internal role computationally. Extension is not a third condition;
   it is the quantity a research question measures.
@@ -187,15 +193,18 @@ supply those.
 
 ## Boundary cases
 
-- **FORTE** is not a theory builder: it revises a supplied theory in one
-  offline run and holds no continuing responsibility for it.
+- **FORTE in a single supplied-theory revision invocation** is not a
+  theory builder: the invocation holds no continuing responsibility for the
+  result. This does not classify a larger system that uses FORTE.
 - **The Gödel machine** is persistent, holds a self-representation, and
-  rewrites itself computationally. Whether it is a theory builder turns on
-  whether its retained content is revised against evidence rather than by
-  proof alone, which is assessed per deployment and remains open; an
-  internally represented utility does not by itself decide it, as
-  [Gödel machines are a proof-governed case of self-modification](../goedel-machines-are-a-proof-governed-case-of-self-modification.md)
-  records.
+  rewrites itself computationally. Its classification as a theory builder
+  remains open. The existing comparison asks whether its retained theories
+  are revised against evidence, rather than only used as premises that
+  license rewrites; the [proof-governed construction](../goedel-machines-are-a-proof-governed-case-of-self-modification.md)
+  alone does not answer that deployment question. Proof-governed switching
+  neither establishes nor excludes criticism elsewhere in the complete
+  system. An internally represented utility does not by itself decide the
+  classification.
 - **Commonplace's note-review loop**, with the operator performing internal
   roles, is a human-staffed theory builder. A note's approval is internal
   evaluation, not independent assessment of its downstream consequences.
@@ -214,8 +223,9 @@ supply those.
 
 Relevant Notes:
 
-- [Theory refinement](./theory-refinement.md) — defined-in: one revision operation a builder may use, the addressable theory it requires, and the borrowed tentative-theory status
-- [Learning by theory refinement](./learning-by-theory-refinement.md) — contrasts: the learning paradigm a particular builder may run; the builder is defined without it
+- [Tentative theory](./tentative-theory.md) — defined-in: the epistemic status of the theories a builder develops
+- [Addressable theory](./addressable-theory.md) — defined-in: the structural condition this builder definition retains
+- [Conjectural learning](./conjectural-learning.md) — contrasts: the learning process a builder may attempt; successful learning and builder membership have different conditions
 - [Software house](./software-house.md) — grounds: the boundary, persistence, and evaluation clauses this definition adapts
 - [Externally tested theory builder](./externally-tested-theory-builder.md) — extends: the case in which the evidence interface supplies assessment from outside
 - [Reflective theory builder](./reflective-theory-builder.md) — extends: the first independent condition
