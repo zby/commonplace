@@ -6,6 +6,7 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
+- [unattended-processing-failure-modes](./unattended-processing-failure-modes/README.md) — cataloguing observable failure modes of chat-tuned models in unattended Commonplace processing, each admitted by a recorded instance and paired with a system-level countermeasure and a regression check; first entries are premature polishing (repair ordering), format-driven fabrication, and finding deference; the post-training cause stays a tentative frame
 - [schmidhuber-rsi-imports](./schmidhuber-rsi-imports/README.md) — assessing five RSI imports for natural-language procedures and semantic judgment: learning improvement procedures, directing search, alternative starting points, delayed credit, and full learning costs; includes a first experiment sketch
 - [institution-theory-import](./institution-theory-import/README.md) — assessing institution theory and adjacent semantic frameworks for natural-language interpretation, conformance, and constraining; separates useful conceptual imports from an unproved institutional formalization
 - [first-downstream-run](./first-downstream-run/README.md) — providing a template for the first experiment on Commonplace in outside use (operator interventions on one KB-building task, an earlier framework release against a revised one) for an outside experimenter to run; the fuller scored-run protocol and constructed episodes stay as background
