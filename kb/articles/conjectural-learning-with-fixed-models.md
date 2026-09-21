@@ -19,7 +19,7 @@ source_notes:
   - kb/notes/continual-learning-requires-governing-behaviour-changing-writes.md
   - kb/notes/the-bitter-lesson-selects-production-methods-not-representational.md
   - kb/notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md
-  - kb/notes/a-fixed-model-house-must-write-the-procedures-for-each-new-theory.md
+  - kb/notes/a-fixed-model-house-must-retain-missing-procedures-for-theory-use.md
   - kb/notes/a-claim-without-external-assessment-carries-three-obligations.md
   - kb/notes/retaining-the-episode-keeps-a-distilled-rule-re-derivable.md
 ---
@@ -150,7 +150,7 @@ validator, test, or program. The specified consequences then become
 mechanically checkable. Whether the encoding captures the intended claim
 and the test measures the right property remains open to criticism.
 When a new theory needs a check the system lacks, [building that
-check](../notes/a-fixed-model-house-must-write-the-procedures-for-each-new-theory.md)
+check](../notes/a-fixed-model-house-must-retain-missing-procedures-for-theory-use.md)
 is part of the work.
 
 ## Three conjectures about the mechanism

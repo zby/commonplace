@@ -104,7 +104,7 @@ representation shared by both.
 ## Scope
 
 These heuristics guide a comparative design decision; they do not prove a
-universal preference for code or models. A [fixed-model house](./a-fixed-model-house-must-write-the-procedures-for-each-new-theory.md)
+universal preference for code or models. A [fixed-model house](./a-fixed-model-house-must-retain-missing-procedures-for-theory-use.md)
 needs new machinery when its current operations are inadequate under the
 required reliability and budget. Existing general machinery may already
 supply what a new theory needs.
@@ -123,4 +123,4 @@ Relevant Notes:
 - [Oracle strength spectrum](./oracle-strength-spectrum.md) — grounds: compares available checking evidence
 - [Codification](./definitions/codification.md) — defined-in: names the crossing to symbolic consumption
 - [Discarding all experience-dependent state prevents cross-run accumulation](./ephemeral-computation-prevents-accumulation.md) — contrasts: execution form does not decide whether learning persists
-- [A fixed-model house must retain missing procedures for theory use](./a-fixed-model-house-must-write-the-procedures-for-each-new-theory.md) — extends: connects the allocation decision to learning new theory-use capacity
+- [A fixed-model house must retain missing procedures for theory use](./a-fixed-model-house-must-retain-missing-procedures-for-theory-use.md) — extends: connects the allocation decision to learning new theory-use capacity

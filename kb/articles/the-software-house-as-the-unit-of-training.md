@@ -7,7 +7,7 @@ superseded_by:
   - kb/articles/testing-the-conjectural-learning-program.md
 byline: Zbigniew Lukasiak
 source_notes:
-  - kb/notes/a-fixed-model-house-must-write-the-procedures-for-each-new-theory.md
+  - kb/notes/a-fixed-model-house-must-retain-missing-procedures-for-theory-use.md
   - kb/notes/continual-learning-requires-governing-behaviour-changing-writes.md
   - kb/notes/definitions/behavior-determining-organization.md
   - kb/notes/definitions/representational-form.md
@@ -116,7 +116,7 @@ Production can expose failures in both retained knowledge and executable
 machinery, so the regime trains a house that can revise both. When existing
 operations cannot apply, check, or revise a new theory reliably, [the house
 must supply the missing
-capacity](../notes/a-fixed-model-house-must-write-the-procedures-for-each-new-theory.md),
+capacity](../notes/a-fixed-model-house-must-retain-missing-procedures-for-theory-use.md),
 and with models pinned that capacity must persist outside their parameters.
 
 ## Why this is theory refinement
