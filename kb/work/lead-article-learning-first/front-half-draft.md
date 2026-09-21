@@ -8,9 +8,9 @@ accepted; the notes list the source for each section.
 
 # Conjectural Learning with Fixed Models *(title open — see notes)*
 
-Most learning from mistakes follows one pattern. We act on an idea of how
-things work. Something goes wrong. We ask what the idea got wrong, and we
-change the idea, not only the one action.
+Most learning from mistakes follows one loop. We act on an idea of how things
+work. Something goes wrong. We ask what the idea got wrong, and we change the
+idea, not only the one action.
 
 In Popper's account, a research community runs the same loop at a larger
 scale. Scientists propose theories, others try to refute them, and the
@@ -23,21 +23,21 @@ and revise. Whether such a system learns depends on what it keeps and on
 whether criticism improves what it can do later.
 
 We call the loop *conjectural learning*. This article says what counts as
-learning of this kind, and then states two bets behind Commonplace, a
-framework for knowledge bases operated by agents. First, computation can run
-the whole loop, with no person proposing, criticizing, or revising theories
-inside it. If so, the theories such a system keeps are a learned product, not
-hand-built knowledge of the kind Rich Sutton's Bitter Lesson warns against.
-Second, the loop is easier when the system writes code as well as prose. Both
-bets are untested, and the article ends with what would show them wrong.
+conjectural learning, then states two bets behind Commonplace, a framework
+for knowledge bases operated by agents. First, computation can run the whole
+loop, with no person proposing, criticizing, or revising theories inside it.
+If so, the theories such a system keeps are a learned product, not hand-built
+knowledge of the kind Rich Sutton's Bitter Lesson warns against. Second, the
+loop is easier when the system writes code as well as prose. Both bets are
+untested, and the article ends with what would show them wrong.
 
 ## A case
 
-Consider a system that maintains a command-line tool. The project's full
-test suite is slow, so the system runs it only on changes that can affect
-the released program. A change that edits only files under `docs/` gets a
-formatting check instead. The system retains a written account of why, in
-two parts:
+Consider a system that maintains a command-line tool. The project's full test
+suite is slow, so the system runs it only on changes that can affect the
+released program. A change that edits only files under `docs/` gets a
+formatting check instead. The system keeps a written account of why, in two
+parts:
 
 - **Rule.** A change needs the full test suite when the released program
   depends on a file the change edits.
@@ -46,10 +46,10 @@ two parts:
 
 One day a change edits a page under `docs/help/`. The tool's `help` command
 prints these pages, which are bundled into each release, and it expects each
-page to start with a title line. The edit removed one. The change passes the
-formatting check, and in the next release the `help` command fails. The full
-suite includes a test that loads every help page, but by the account nothing
-depended on the page, so the suite never ran.
+page to start with a title line. The edit removes that line. The change
+passes the formatting check, and in the next release the `help` command
+fails. The full suite includes a test that loads every help page, but by the
+account nothing depended on the page, so the suite never ran.
 
 The system investigates and formulates a criticism: `docs/` says where a
 file is kept, not whether the program depends on it. It revises the Map:
@@ -73,26 +73,28 @@ This is a hypothetical example of the mechanism, not an experimental result.
 
 Two conditions make the case an instance of conjectural learning.
 
-First, a formulated theory guides decisions through what it says. If the Map
-had said something different, the system would have run different checks.
+First, a formulated theory guides decisions through what it says. The written
+account is such a theory: if the Map had said something different, the system
+would have run different checks.
 
 Second, criticism of what the theory says improves what the system can do
 later. The criticism of the Map changed which checks the system would choose
 for files it had not yet seen. That improvement exists before the next such
-change arrives; later decisions are evidence of it.
+change arrives. Later decisions are evidence of it.
 
 Writing a theory down does not meet these conditions, and neither does
 changing one decision or applying a theory to new facts. If the project later
 adds a tutorial that the tool also loads, the revised account already says
-what to check. It guided a new decision, but no criticism was involved.
+what to check. The account guides a new decision, but no criticism is
+involved.
 
 The learner is the whole system: its people, models, code, files, and
-records. A research community meets both conditions. Its theories decide
-which experiments are run, and criticism of them improves its later
-predictions and tests. No single member has to hold the whole theory or
-supply all the criticism. The members' brains change throughout, and we still
-describe what the community learned by its theories. In the same way, the
-definition does not depend on whether a model's weights change.
+records. A research community is such a system, and it meets both conditions.
+Its theories decide which experiments are run, and criticism of them improves
+its later predictions and tests. No single member has to hold the whole
+theory or supply all the criticism. The members' brains change throughout,
+and we still describe what the community learned by its theories. In the same
+way, the definition does not depend on whether a model's weights change.
 
 The definition covers less than Popper's schema, which he applied to all
 life. An amoeba perishes with its mistaken expectations; scientists “try to
@@ -117,14 +119,14 @@ what the builder keeps outside the models: theories, records, the
 methodology, and code. This is a condition of our study, not of conjectural
 learning.
 
-We have two reasons for the bet. Models can follow a methodology written in
-prose. Agent instructions and skills are already methodologies of this kind,
-and models apply them to cases their authors did not list.
+We have two reasons for the bet. First, models can follow a methodology
+written in prose. Agent instructions and skills are already methodologies of
+this kind, and models apply them to cases their authors did not list.
 
-The methodology also does not have to be complete at the start. It is itself
-a tentative theory. The builder uses it, failures expose its limits, and
-criticism revises it, along with the machinery that applies it. People write
-the first version, and the builder is meant to revise it.
+Second, the methodology does not have to be complete at the start. It is
+itself a tentative theory. The builder uses it, failures expose its limits,
+and criticism revises it, along with the machinery that applies it. People
+write the first version, and the builder is meant to revise it.
 
 The standing objection is that a scientist's skill is tacit and cannot be
 written down. A model brings much unwritten competence from pretraining, and
@@ -134,14 +136,14 @@ is what the bet risks.
 ## Why the methodology must be precise
 
 A human scientist learns much of the craft by apprenticeship. A model with
-fixed weights has the text it is given and what pretraining left in it. The
-methodology carries the rest, and its precision matters for two reasons.
+fixed weights has the text it is given and what pretraining left in it.
+The methodology carries the rest, and its precision matters for two reasons.
 
-A vague term is read differently from one call to the next. After a failure,
-the builder then cannot tell whether the theory was wrong or the model
+First, a vague term is read differently from one call to the next. After a
+failure, the builder cannot tell whether the theory was wrong or the model
 misread it.
 
-A methodology can also be criticized only where it says something definite
+Second, a methodology can be criticized only where it says something definite
 enough to be wrong. The builder can revise a part of its methodology only if
 criticism can name that part.
 
@@ -150,32 +152,32 @@ effort on definitions of *theory*, *criticism*, *tentative*, *addressable*,
 and the internal roles, and why it holds to one term per concept. For a
 model, a new word reads as a new thing.
 
-This differs from an expert system, which encoded a domain's conclusions by
-hand for a fixed interpreter. The methodology describes how to learn, not
-what is true in any domain, and the builder can revise it. The vocabulary of
-each new area is the builder's job. If a person has to supply it for every
-area, the first bet has failed.
+Such a methodology differs from an expert system, which encoded a domain's
+conclusions by hand for a fixed interpreter. The methodology describes how to
+learn, not what is true in any domain, and the builder can revise it. The
+vocabulary of each new area is the builder's job. If a person has to supply
+it for every area, the first bet has failed.
 
 ## The second bet: code as well as prose
 
 The second bet is that the loop runs more cheaply and more reliably when the
 builder also writes code that operates its knowledge. We do not claim that
-prose alone could not carry the loop, only that this way is easier.
-
-Science does the same. Much of its knowledge is kept in mathematical
-notation, and a calculation in that notation is carried out by rule, much as
-a computer runs code. It gives the same result whoever performs it. People
-also rely on procedural memory: a practised skill runs without being reasoned
-through on each use.
+prose alone could not carry the loop, only that the loop is easier with code.
 
 In the case, applying the revised Map means finding, for every change, the
 files that the source code and build configuration reference. A model can do
 this by reading the source each time. Code does it the same way each time at
-low cost. The pattern is general: exact steps such as traversal, counting,
-and state tracking have one correct result, which code delivers without the
-variation a model brings to each reading, while judgments about meaning stay
-with the model
+low cost. The pattern is general. Exact steps such as traversal, counting,
+and state tracking have one correct result, and code delivers it without the
+variation a model brings to each reading. Judgments about meaning stay with
+the model
 ([scheduler–LLM separation exploits an error-correction asymmetry](../../notes/scheduler-llm-separation-exploits-an-error-correction-asymmetry.md)).
+
+Science does the same. Much of its knowledge is kept in mathematical
+notation, and a calculation in that notation is carried out by rule, much as
+a computer runs code. The calculation gives the same result whoever performs
+it. People also rely on procedural memory: a practised skill runs without
+being reasoned through on each use.
 
 So the builder writes and maintains code as well as theories. The code stays
 open to criticism: whether it runs is a separate question from whether it
@@ -187,11 +189,11 @@ The Bitter Lesson says that general methods which scale with computation
 outperform methods built on human knowledge. A builder that keeps written
 theories and code looks like the second kind.
 
-The lesson's axis, however, is how content is produced, not the form it is
+But the Bitter Lesson is about how content is produced, not the form it is
 kept in. The hand-designed features in Sutton's examples were built by people
 as the solution, and the method never learned to replace them. A theory that
 the builder proposed, criticized, and revised is a product of search and
-selection. It happens to be readable. The same holds for code the builder
+selection that happens to be readable. The same holds for code the builder
 wrote and tested.
 
 This is where the first bet matters. With people in the internal roles, the
@@ -202,8 +204,8 @@ retained theories a learned product.
 Automation is necessary for this compatibility, not sufficient. Two
 conditions remain open.
 
-The starting methodology must be outgrown. People wrote its first version
-and its definitions. The arrangement fits the lesson only if the builder
+The starting methodology must be outgrown. People wrote its first version and
+its definitions. The arrangement fits the Bitter Lesson only if the builder
 acquires what each new area requires without people supplying it area by
 area.
 
