@@ -34,7 +34,7 @@ Required frontmatter:
 | `report-status` | `complete` or `blocked` |
 | `canonical-register-sha256` | SHA-256 of the exact commissioned `memory-input.md` |
 | `worker-model` | Actual worker model identifier, or `unknown` |
-| `method-sha256` | SHA-256 of the specialist `analyse-agent-memory/SKILL.md` used |
+| `method-sha256` | SHA-256 of the specialist instruction `kb/instructions/analyse-agent-memory.md` used |
 | `memory-comparison` | Proposed scope and all fourteen axes using the main-result comparison contract |
 
 A complete report can contain explicit unknown classifications. A blocked

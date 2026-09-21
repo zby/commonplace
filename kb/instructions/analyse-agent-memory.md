@@ -1,11 +1,6 @@
 ---
-name: analyse-agent-memory
-description: "Analyse memory and context routes as a specialist invoked by analyse-agentic-system, returning a typed report for integration into the main result."
+description: "Use in a fresh worker commissioned by analyse-agentic-system to analyse memory and context routes from frozen inputs and return a typed report."
 type: kb/types/instruction.md
-user-invocable: false
-allowed-tools: Read, Write, Grep, Glob, Bash
-context: fork
-argument-hint: "parent run, frozen memory-input.md, and memory-report.md destination"
 ---
 
 # Analyse agent memory
@@ -30,7 +25,7 @@ type, prior system reviews, surveys, matrix outputs, or style exemplars.
 The parent owns canonical IDs, integration, publication and completion. Do not
 publish, modify the parent's input/result, delegate, or stage and commit.
 
-Hash the input and this skill before analysis. Report those identities and
+Hash the input and this instruction before analysis. Report those identities and
 your actual model identity; state `unknown` if the runtime does not expose it.
 Verify input and method hashes again before returning. Changed input requires
 a new handoff from the parent, not silent reconciliation in the worker.
