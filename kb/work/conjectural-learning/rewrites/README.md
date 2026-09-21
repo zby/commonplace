@@ -69,10 +69,10 @@ ingest commentary, bounded consumer edits, relocation, and workshop deletion
 remain for the migration commission.
 
 The [consolidated accounting and validation](./accounting-and-validation.md)
-records the seventeen current candidates and no source drift across the
-fourteen originals. The sixteen replacement bodies have 33,832 words versus
-34,499: 667 fewer. Retaining the 1,112-word checks file makes the full package
-34,944 words, a net increase of 445 before the unapplied companion delta and
+records the seventeen current candidates. One original changed during
+drafting: the analysis skill, and the staged skill is rebased on it. The
+sixteen replacement bodies have 33,835 words versus 34,502: 667 fewer. Retaining the 1,112-word checks file makes the full package
+34,947 words, a net increase of 445 before the unapplied companion delta and
 bounded consumer edits. This record supersedes per-author draft-stage counts.
 
 The core replacement has 5,082 words versus 5,261 in the two old definitions

@@ -16,7 +16,7 @@ SHA-256 over complete original file bytes:
 
 | Original | SHA-256 |
 |---|---|
-| `kb/instructions/analyse-agentic-system/SKILL.md` | `3b8362e20792e361f1f54c6687a97e0b0ed7de743dcc4d4c3e7c5d2f722a862a` |
+| `kb/instructions/analyse-agentic-system/SKILL.md` | `009be45a65185d2646a7545a4b597a0c838c8f16b428618c50051f79aefdb096` (rebased 2026-09-21 on library commit `281532ed`; drafting began from `3b8362e2…`) |
 | `kb/types/agentic-system-analysis-result.md` | `73f20334e9d288dc0b32647a4eaef60bcebaa73da6b4eb2708e3439c19c01f80` |
 
 Recheck originals before promotion. No schema, validator, result instance,

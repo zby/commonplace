@@ -64,8 +64,9 @@ record remaining migration and closure work. The [closure plan](./closure-plan.m
 continues to govern promotion and cleanup.
 
 The [accounting record](./rewrites/accounting-and-validation.md) now covers
-seventeen candidates, including the retained checks, with no drift in the
-fourteen originals. The replacement bodies are 667 words shorter; adding the
+seventeen candidates, including the retained checks. One original, the
+analysis skill, changed in the library during drafting; the staged skill is
+rebased on it. The replacement bodies are 667 words shorter; adding the
 1,112-word checks file makes the full package 445 words longer before bounded
 promotion edits. The core defines three concepts instead of four, in three
 definition files instead of two; these are separate simplification measures.

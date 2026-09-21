@@ -9,7 +9,12 @@ remain unapplied and are not included.
 
 ## Source drift and current candidates
 
-All fourteen originals still match their recorded source hashes. The initial
+Thirteen originals still match the source hashes recorded when drafting began.
+The analysis skill changed in the library on 2026-09-21 (`281532ed`, agent
+memory analysis became a parent-commissioned instruction). The staged skill was
+rebased on that version: its memory-specialist paragraph now matches the
+library, and it differs only in the five ontology hunks. The skill row below
+records the rebased original. The initial
 per-author counts and independent-review hashes describe earlier draft bytes;
 current candidate hashes below supersede them for accounting.
 
@@ -25,7 +30,7 @@ current candidate hashes below supersede them for accounting.
 | `kb/notes/definitions/theory-builder.md` | `29829e95a7c1ae0972b700a90e593a0c254e7a48a5b57eedece1a31aca74ddcd` | 1,903 | `rewrites/kb/notes/definitions/theory-builder.md` | `a7a600dcc0f66e3db7eb2db7474800ab7eed9304e76e6ed4a4157933dd7a9f09` | 1,978 |
 | `kb/notes/definitions/reflective-theory-builder.md` | `f0d22844207f280063e7ca6867a45562d2d858a3ec15f1ecc381555017efc2c2` | 1,000 | `rewrites/kb/notes/definitions/reflective-theory-builder.md` | `354c47cc9de1751fd661b49ddcafe2e11b5a0b29313b668ae6b1ca3f925d61b5` | 1,104 |
 | `kb/notes/evidence/three-2026-harnesses-retain-editable-rules-or-weights-not-rationale.md` | `b699380802792af88112f5d30833498d731c18d37c02f1290f49150572185885` | 1,264 | `rewrites/kb/notes/evidence/three-2026-harnesses-retain-editable-rules-or-weights-not-rationale.md` | `6775688e7f69bd7bb5f462a4edd45d3993b24b9961c26b0eb5af574268b5c778` | 1,489 |
-| `kb/instructions/analyse-agentic-system/SKILL.md` | `3b8362e20792e361f1f54c6687a97e0b0ed7de743dcc4d4c3e7c5d2f722a862a` | 4,318 | `rewrites/kb/instructions/analyse-agentic-system/SKILL.md` | `95e47049137c860e9ec8dd52d924218be2f94ca892b2fa41e4938c7769f5dd07` | 4,632 |
+| `kb/instructions/analyse-agentic-system/SKILL.md` | `009be45a65185d2646a7545a4b597a0c838c8f16b428618c50051f79aefdb096` | 4,321 | `rewrites/kb/instructions/analyse-agentic-system/SKILL.md` | `7ebf26d554308db149d93390d3d77b3909f16d36f9fdcba6b83c9187de99592b` | 4,635 |
 | `kb/types/agentic-system-analysis-result.md` | `73f20334e9d288dc0b32647a4eaef60bcebaa73da6b4eb2708e3439c19c01f80` | 3,783 | `rewrites/kb/types/agentic-system-analysis-result.md` | `1a760014f9a2007c29d7ae1e94599da9f8022875848142673bfea3c9d3f9f2bd` | 3,976 |
 | `kb/articles/learning-by-theory-refinement-with-fixed-models.md` | `63e3da875032faede95c4a1cfa32f97b770d99dbf2ce367f11ece12a9cf6af20` | 3,753 | `rewrites/kb/articles/learning-by-theory-refinement-with-fixed-models.md` | `2e7ca1c2fede9e2c7b74a6c99d1c77426f57c48af828391fb7c483b826fad99d` | 3,181 |
 | `kb/articles/testing-the-theory-refinement-program.md` | `f9736b8227d5150112b5f06da1c16f1aa625c8cd44441d0e7770d0529d371a29` | 4,178 | `rewrites/kb/articles/testing-the-theory-refinement-program.md` | `7da720a1de64e596a669134e101fdecaf8a79a6be51275f5859c893988830640` | 5,089 |
@@ -45,9 +50,9 @@ the library, not an additional definition or disposable scaffolding.
 | Core baseline: two old definitions plus lineage | 5,261 |
 | Three new definitions, research companion, and new lineage | 5,082 |
 | Core including the retained checks | 6,194 |
-| All fourteen originals | 34,499 |
-| Sixteen replacement bodies before checks | 33,832 |
-| Full seventeen-file candidate package | 34,944 |
+| All fourteen originals | 34,502 |
+| Sixteen replacement bodies before checks | 33,835 |
+| Full seventeen-file candidate package | 34,947 |
 | Net library word change, including checks | **+445** |
 
 The sixteen replacement bodies are 667 words shorter than the

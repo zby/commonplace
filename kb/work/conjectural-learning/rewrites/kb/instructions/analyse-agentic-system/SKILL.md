@@ -342,10 +342,11 @@ and depth, exclusions, and the question the report must answer. Records are
 source-checkable seeds, not accepted conclusions. Do not supply legacy reviews
 or precomputed memory classifications. Hash the complete input file.
 
-Invoke [Analyse agent memory](../../../../../../instructions/analyse-agent-memory.md) in a fresh
-sub-agent context with that input and `<run-id>/memory-report.md` as its sole
-output. The worker owns source-native memory analysis and the proposed
-`memory-comparison` profile. Its typed report is the substantive handoff.
+Launch a fresh sub-agent to execute the standalone
+[Analyse agent memory](../../../../../../instructions/analyse-agent-memory.md) instruction with that input
+and `<run-id>/memory-report.md` as its sole output. The worker owns source-native
+memory analysis and the proposed `memory-comparison` profile. Its typed report
+is the substantive handoff.
 Off-band messages may carry progress or access problems; all findings and
 integration issues must be retained in the report. Check its run, source,
 boundary, input hash, completion status, and source anchors before integration.
