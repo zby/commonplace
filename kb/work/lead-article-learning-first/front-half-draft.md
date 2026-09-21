@@ -6,14 +6,14 @@ accepted; the notes list the source for each section.
 
 ---
 
-# Conjectural Learning with Fixed Models *(title open — see notes)*
+# Automating Conjectural Learning with Fixed Models *(working title — see notes)*
 
 Most learning from mistakes follows one loop. We act on an idea of how things
 work. Something goes wrong. We ask what the idea got wrong, and we change the
 idea, not only the one action.
 
-In Popper's account, a research community runs the same loop at a larger
-scale. Scientists propose theories, others try to refute them, and the
+As the philosopher Karl Popper described it, a research community runs the
+same loop at a larger scale. Scientists propose theories, others try to refute them, and the
 theories that survive guide the next experiments.
 
 Current work puts language models into this loop. Agent memory systems have a
@@ -62,10 +62,9 @@ The Rule survives.
 What the system keeps from the failure matters. A record containing only
 “this change, then a failed release” says which change failed. A lesson such
 as “run the full suite on changes under `docs/help/`” prevents a repeat. The
-criticism says why the decision was wrong. So the revised account also sends
-changes to the other help pages through the full suite, and changes to the
-README that the packaging step reads, though none of those files has caused a
-failure.
+criticism says why the decision was wrong. So the revised account also covers files the lesson does not mention, such
+as the README that the packaging step reads, though that file has never
+caused a failure.
 
 This is a hypothetical example of the mechanism, not an experimental result.
 
@@ -129,8 +128,7 @@ and criticism revises it, along with the machinery that applies it. People
 write the first version, and the builder is meant to revise it.
 
 The standing objection is that a scientist's skill is tacit and cannot be
-written down. A model brings much unwritten competence from pretraining, and
-what is still missing is a problem for the same loop. Whether that is enough
+written down. A model brings much unwritten competence from pretraining, and the same loop can find and supply what is still missing. Whether that is enough
 is what the bet risks.
 
 ## Why the methodology must be precise
@@ -161,7 +159,7 @@ it for every area, the first bet has failed.
 ## The second bet: code as well as prose
 
 The second bet is that the loop runs more cheaply and more reliably when the
-builder also writes code that operates its knowledge. We do not claim that
+builder also writes code that applies its knowledge. We do not claim that
 prose alone could not carry the loop, only that the loop is easier with code.
 
 In the case, applying the revised Map means finding, for every change, the
@@ -201,7 +199,7 @@ loop scales with staff. With computation in every role, more computation
 buys more conjecture and more criticism. Full automation is what makes the
 retained theories a learned product.
 
-Automation is necessary for this compatibility, not sufficient. Two
+That is necessary for compatibility with the Bitter Lesson, not sufficient. Two
 conditions remain open.
 
 The starting methodology must be outgrown. People wrote its first version and
@@ -212,7 +210,7 @@ area.
 The search must scale. Assigning credit across a large body of
 interdependent text and code is an open problem. Weight training, or a model
 that rebuilds the same content when needed, may do the same job at lower
-cost. The retained arrangement has to earn its place against those
+cost. Keeping written theories and code has to earn its place against those
 alternatives.
 
 *(Continues with: what would show the bets wrong — the three adopted
@@ -403,6 +401,12 @@ is about a different question. Left out until someone argues it in a note.
 | The first arrangement; Open questions; Where to go next | Kept, shortened. |
 
 ## Title
+
+Working title (operator, 2026-09-21): **Automating Conjectural Learning with
+Fixed Models**. It names the first bet and keeps the series' anchor term;
+slug `automating-conjectural-learning-with-fixed-models`, 49 characters. The
+second bet is not in the title, which is acceptable because it is secondary
+and the opening states both.
 
 "Conjectural Learning with Fixed Models" names the study condition. The
 front half now gives fixed weights one paragraph, in the first bet, so the
