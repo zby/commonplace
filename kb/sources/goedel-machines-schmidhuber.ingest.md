@@ -121,6 +121,11 @@ The default `u` is expected cumulative future reward, `u(s, Env) = E_µ[ Σ_{τ=
 
 ## Limitations (our opinion)
 
+The retained snapshot omits the paper's front matter and references. It also
+trims unrecoverable figure-label text, as recorded in the paired snapshot's
+capture note. Claims that depend on those omitted parts cannot be checked from
+this observation.
+
 Editorial judgment. The lens for a scientific paper is *what was not tested* — and here the honest answer is **nothing**. There are no experiments, no baselines, no implementation, and in the two decades since v1 no working Gödel machine has been built. Every claim is a claim about a construction, never evidence about a system that runs. The paper's own Section 4.4 concedes that whether a given initial problem solver can be improved in a provably good way is generally not known in advance (printed pp. 12–13; PDF pp. 13–14).
 
 The Global Optimality Theorem is close to analytic. Its proof amounts to: if you proved that switching now beats continuing to search, then switching now beats continuing to search. The "no local maxima" headline is real but is purchased entirely by loading the future-alternatives quantifier into the target theorem — that is, by making the theorem *harder to prove*, not by making the search cleverer. All the difficulty is displaced into `A` and into provability, exactly where Sections 2.4 and 4.4 and the closing question concede it sits. The claim is also easy to vary: swap `u`, `A`, or the initial searcher and the guarantee changes shape while the theorem survives untouched, which suggests the theorem carries less weight than its billing.

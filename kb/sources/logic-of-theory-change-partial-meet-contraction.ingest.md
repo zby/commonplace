@@ -33,7 +33,7 @@ The paper is a technical basis for separating formal theory change from epistemi
 
 ## Learning Claims (our opinion)
 
-On the paper's terms, adaptation is an operation over a theory already closed under a fixed consequence relation. Contraction removes a proposition while preserving selected maximal portions of the prior theory; revision first contracts enough to accommodate the new proposition and then adds it. Relative to [Theory refinement](../notes/definitions/theory-refinement.md), this supplies a rigorous family of change operators and preservation constraints, but only a partial mapping. AGM's selection function expresses which remainder sets are preferred without explaining how evidence diagnoses a fault, generates candidate repairs, or selects among them. Its representation theorems establish equivalence between postulates and formal constructions, not that either construction learns reliable theories from empirical cases.
+On the paper's terms, adaptation is an operation over a theory already closed under a fixed consequence relation. Contraction removes a proposition while preserving selected maximal portions of the prior theory; revision first contracts enough to accommodate the new proposition and then adds it. Relative to [Conjectural learning](../notes/definitions/conjectural-learning.md), this supplies a rigorous family of change operators and preservation constraints, but only a partial mapping. AGM's selection function expresses which remainder sets are preferred without explaining how evidence diagnoses a fault, generates candidate repairs, or selects among them. Its representation theorems establish equivalence between postulates and formal constructions, not that either construction learns reliable theories from empirical cases.
 
 ## Extractable Value
 
@@ -45,7 +45,7 @@ On the paper's terms, adaptation is an operation over a theory already closed un
 
 ## Limitations (our opinion)
 
-The paper is formal rather than empirical. Its conclusions depend on an abstract consequence operation with stated logical properties and on a selection function whose substantive basis is left outside the representation theorem. It does not test whether agents can identify faulty commitments, choose useful remainder sets, interpret natural-language consequences consistently, or improve prediction and action after revision. The framework therefore cannot by itself support claims about discovery, empirical reliability, or successful theory refinement. Its closed-theory setting also does not transfer directly to Commonplace's mixed-form, partly interpreted theories without specifying how consequences and editable parts are determined.
+The paper is formal rather than empirical. Its conclusions depend on an abstract consequence operation with stated logical properties and on a selection function whose substantive basis is left outside the representation theorem. It does not test whether agents can identify faulty commitments, choose useful remainder sets, interpret natural-language consequences consistently, or improve prediction and action after revision. The framework therefore cannot by itself support claims about discovery, empirical reliability, or successful conjectural learning. Its closed-theory setting also does not transfer directly to Commonplace's mixed-form, partly interpreted theories without specifying how consequences and editable parts are determined.
 
 ## Recommended Next Action
 

@@ -39,7 +39,7 @@ Explanation-based generalization (EBG) takes a goal concept, one positive exampl
 
 ## Connections Found
 
-This source is a technical anchor and boundary for the EBG portion of [reflective theory refinement's lineages](../notes/reflective-theory-refinement-has-three-separate-lineages.md): it establishes theory-guided inference and example-guided operationalization, while treating improvement of imperfect theories as further research. That supports a precursor relation on how supplied knowledge guides learning, without attributing empirical theory repair or a reflective self-target to EBG. It also supports [learning beyond generality](../notes/learning-is-not-only-about-generality.md), since making an entailed consequence usable can matter without adding independent knowledge. Its compilation remains within symbolic [representational form](../notes/definitions/representational-form.md); it therefore provides a comparison boundary for [codification](../notes/definitions/codification.md), whose registered meaning requires a natural-language-to-symbolic crossing.
+This source is a technical anchor and boundary for the EBG portion of [reflective theory refinement's lineages](../notes/conjectural-learning-has-distinct-precedents.md): it establishes theory-guided inference and example-guided operationalization, while treating improvement of imperfect theories as further research. That supports a precursor relation on how supplied knowledge guides learning, without attributing empirical theory repair or a reflective self-target to EBG. It also supports [learning beyond generality](../notes/learning-is-not-only-about-generality.md), since making an entailed consequence usable can matter without adding independent knowledge. Its compilation remains within symbolic [representational form](../notes/definitions/representational-form.md); it therefore provides a comparison boundary for [codification](../notes/definitions/codification.md), whose registered meaning requires a natural-language-to-symbolic crossing.
 
 ## Extractable Value
 
@@ -61,4 +61,4 @@ The full-paper text extraction contains damaged mathematical notation and omits 
 
 ## Recommended Next Action
 
-Revise the EBG paragraph in [reflective theory refinement's lineages](../notes/reflective-theory-refinement-has-three-separate-lineages.md) to identify EBG as proof-guided operationalization under a supplied theory, explicitly separating that precursor from empirical theory refinement.
+Revise the EBG paragraph in [reflective theory refinement's lineages](../notes/conjectural-learning-has-distinct-precedents.md) to identify EBG as proof-guided operationalization under a supplied theory, explicitly separating that precursor from empirical theory refinement.

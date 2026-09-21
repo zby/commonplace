@@ -33,7 +33,7 @@ UPML is a technical basis for distinguishing reusable method content from the ad
 
 ## Learning Claims (our opinion)
 
-UPML uses *refinement* for structured specialization along predefined relations, not for [theory refinement](../notes/definitions/theory-refinement.md) against empirical cases. A sequence of refiners can turn a generic task or problem-solving method into a more specific one, but the paper does not describe failures that contradict a theory, repair operators chosen from those failures, or evaluation of a revised theory against cases. Bridges instead adapt separately specified components by mapping terminology and assumptions. These mechanisms support inspectable, localized adaptation, but the paper provides architectural definitions and tool descriptions rather than evidence that either mechanism learns or that automatic bridge generation succeeds.
+UPML uses *refinement* for structured specialization along predefined relations, not for [conjectural learning](../notes/definitions/conjectural-learning.md) against empirical cases. A sequence of refiners can turn a generic task or problem-solving method into a more specific one, but the paper does not describe failures that contradict a theory, repair operators chosen from those failures, or evaluation of a revised theory against cases. Bridges instead adapt separately specified components by mapping terminology and assumptions. These mechanisms support inspectable, localized adaptation, but the paper provides architectural definitions and tool descriptions rather than evidence that either mechanism learns or that automatic bridge generation succeeds.
 
 ## Extractable Value
 
