@@ -67,6 +67,7 @@ plugins:
         'articles/what-makes-a-system-self-improving.md': 'articles/learning-by-theory-refinement-with-fixed-models.md'
         'articles/what-makes-human-inclusive-self-revision-non-trivial.md': 'articles/bootstrapping-an-autonomous-theory-builder.md'
         'articles/when-systems-learn-theories-about-themselves.md': 'articles/learning-by-theory-refinement-with-fixed-models.md'
+        'instructions/analyse-agent-memory/SKILL.md': 'instructions/analyse-agent-memory.md'
         'instructions/ground-source-dependent-claims.md': 'instructions/cp-skill-ground/SKILL.md'
         'instructions/report-high-impact-simplification-opportunities.md': 'instructions/run-compression-bundle-on-note.md'
         'instructions/run-review-batches-on-note.md': 'instructions/run-review-batches.md'

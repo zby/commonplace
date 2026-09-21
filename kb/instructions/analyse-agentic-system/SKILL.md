@@ -309,7 +309,7 @@ and depth, exclusions, and the question the report must answer. Records are
 source-checkable seeds, not accepted conclusions. Do not supply legacy reviews
 or precomputed memory classifications. Hash the complete input file.
 
-Invoke [Analyse agent memory](../analyse-agent-memory/SKILL.md) in a fresh
+Invoke [Analyse agent memory](../analyse-agent-memory.md) in a fresh
 sub-agent context with that input and `<run-id>/memory-report.md` as its sole
 output. The worker owns source-native memory analysis and the proposed
 `memory-comparison` profile. Its typed report is the substantive handoff.
