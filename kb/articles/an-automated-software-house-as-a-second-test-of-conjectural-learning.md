@@ -15,7 +15,8 @@ source_notes:
 ---
 # An Automated Software House as a Second Test of Conjectural Learning
 
-*Program theory, the witness conditions, and why software gives a stronger falsifier*
+*Program theory, the witness conditions, and why software gives a stronger
+falsifier*
 
 > **Draft supplement.** This develops one alternative arrangement for
 > testing conjectural learning with fixed models, the program introduced in
@@ -28,22 +29,21 @@ source_notes:
 changing software for its users. We conjecture that an automated one is
 possible with LLM weights held fixed: computation performs every production
 decision, and the house learns by criticizing and revising its retained
-knowledge and machinery rather than its models. This is a second
-arrangement for testing [conjectural
-learning](../notes/definitions/conjectural-learning.md) with fixed models,
-the program of the lead article, whose first arrangement is a knowledge
-base. The theory a house criticizes and revises
-is *program theory*, the term Peter Naur, the computer scientist who argued
-that programming is theory building, used for the understanding of a
-program's purpose, organization, and how to handle new requests. Naur held
-that this understanding is bound to people; an automated house that holds
-one would show otherwise. Software fails visibly, so the house gives the
-program a stronger falsifier, a failure that does not depend on how the
-theory was read, than a knowledge base does. It also demands a harder claim: that at least
-one whole house exists that meets four conditions together. This
-supplement states the claim, why it is not ruled out in advance, the four
-conditions, and the comparison with the knowledge base, which the research
-program pursues first.
+knowledge and machinery rather than its models. This is a second arrangement
+for testing [conjectural
+learning](../notes/definitions/conjectural-learning.md) with fixed models, the
+program of the lead article, whose first arrangement is a knowledge base. The
+theory a house criticizes and revises is *program theory*, the term Peter Naur,
+the computer scientist who argued that programming is theory building, used for
+the understanding of a program's purpose, organization, and how to handle new
+requests. Naur held that this understanding is bound to people; an automated
+house that holds one would show otherwise. Software fails visibly, so the house
+gives the program a stronger falsifier, a failure that does not depend on how
+the theory was read, than a knowledge base does. It also demands a harder
+claim: that at least one whole house exists that meets four conditions
+together. This supplement states the claim, why it is not ruled out in advance,
+the four conditions, and the comparison with the knowledge base, which the
+research program pursues first.
 
 ## Claim
 
@@ -287,13 +287,21 @@ This supplement does not rely on it in either direction.
 ## Relation to the program
 
 The lead article proposes studying conjectural learning with fixed models
-through a retained-theory arrangement and states three hypotheses about a theory builder,
-tested through what the builder receives from outside: a falsifier, an
-objective, and an outcome level it does not judge itself. A software house
-is one arrangement that supplies those three, through product operation
-and users' judgments of visible behaviour. Its conjecture, boundary, and
-conditions were stated before the program was framed in those terms, and
-they are kept here with their own model cutoff. The software house is neither
+through a retained-theory arrangement and states three hypotheses about a
+theory builder, tested through what the builder receives from outside: a
+falsifier, an objective, and an outcome level it does not judge itself. A
+software house is one arrangement that supplies those three, through product
+operation and users' judgments of visible behaviour. Its conjecture, boundary,
+and conditions were stated before the program was framed in those terms, and
+they are kept here with their own model cutoff. The four conditions therefore
+define a witness to the software-house conjecture; they do not restate the
+learning definition. A witness house counts as evidence for conjectural
+learning only if its records also show formulated criticism bearing on what the
+program theory says. A house that met all four conditions through
+outcome-driven repair alone would confirm the conjecture without testing
+conjectural learning, and would show that the result does not need it.
+
+The software house is neither
 the program's first arrangement, the knowledge base, nor a special case of
 it: it is a different product, with a stronger falsifier and a
 harder claim.

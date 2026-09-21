@@ -222,14 +222,15 @@ use, and a readable dependency is not necessarily an independent one.
 A learner confined to a
 [fixed decomposition inherits that decomposition's mistakes](../notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md).
 
-A separate [sample-efficiency conjecture](../notes/retained-theories-may-improve-sample-efficiency.md)
-asks whether a useful theory reduces target observations after a shift that
+A separate [sample-efficiency
+conjecture](../notes/retained-theories-may-improve-sample-efficiency.md) asks
+whether a useful theory reduces target observations after a shift that
 preserves the structure it describes. The exporter case suggests why one
-criticism might change many checking decisions. That benefit is separate
-from whether a selector can choose useful theories by judging how far their
-explanations hold beyond the observed cases. Both are separate from total cost. Construction, prior
-evidence, retrieval, validation, maintenance, and mistakes must be counted
-symmetrically across the compared systems.
+criticism might change many checking decisions. That benefit is separate from
+whether a selector can choose useful theories by judging how far their
+explanations hold beyond the observed cases. Both are separate from total cost.
+Construction, prior evidence, retrieval, validation, maintenance, and mistakes
+must be counted symmetrically across the compared systems.
 
 Rich Sutton's Bitter Lesson says that general methods which scale with
 computation outperform methods built from human knowledge. Written theories

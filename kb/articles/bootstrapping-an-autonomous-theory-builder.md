@@ -21,7 +21,8 @@ source_notes:
 ---
 # Bootstrapping an Autonomous Theory Builder
 
-*A research program for moving a system's internal decisions from people to computation*
+*A research program for moving a system's internal decisions from people to
+computation*
 
 > **Draft supplement.** This develops the route from Commonplace today to
 > the system that [Conjectural Learning with Fixed
@@ -30,24 +31,23 @@ source_notes:
 > repository's GitHub Discussions
 > page](https://github.com/zby/commonplace/discussions).
 
-**TL;DR.** A *theory builder* is the complete persistent system responsible
-for developing and revising addressable tentative theories about the
-subjects it investigates. This responsibility does not itself establish
-successful learning. Commonplace is one: it produces a knowledge base for consuming projects, and people
-still fill several of its internal roles. This bootstrap program transfers
-bounded classes of those internal decisions to computation, one trial at a
-time. The view it denies is that automating a person's decisions is by
-itself progress toward a system that learns. A person can write the
-procedure that replaces them, and the system has then learned nothing. So
-each trial tests two things separately: whether computation now makes the
-decisions, and whether the builder's own experience teaches it to build or
-revise the machinery that makes them. Transferring the best-supported
-decisions first should leave people the ones hardest to hand over with
-justification, and what those decisions still lack shows what the builder
-has to acquire next. The target is an *autonomous* builder, one whose
-internal roles are all computational, whose work is still judged from
-outside by the projects that consume its product. No transfer trial has
-been run.
+**TL;DR.** A *theory builder* is the complete persistent system responsible for
+developing and revising addressable tentative theories about the subjects it
+investigates. This responsibility does not itself establish successful
+learning. Commonplace is one: it produces a knowledge base for consuming
+projects, and people still fill several of its internal roles. This bootstrap
+program transfers bounded classes of those internal decisions to computation,
+one trial at a time. The view it denies is that automating a person's decisions
+is by itself progress toward a system that learns. A person can write the
+procedure that replaces them, and the system has then learned nothing. So each
+trial tests two things separately: whether computation now makes the decisions,
+and whether the builder's own experience teaches it to build or revise the
+machinery that makes them. Transferring the best-supported decisions first
+should leave people the ones hardest to hand over with justification, and what
+those decisions still lack shows what the builder has to acquire next. The
+target is an *autonomous* builder, one whose internal roles are all
+computational, whose work is still judged from outside by the projects that
+consume its product. No transfer trial has been run.
 
 ## The starting point
 

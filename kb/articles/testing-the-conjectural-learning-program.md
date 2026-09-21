@@ -25,7 +25,8 @@ source_notes:
 ---
 # Testing the conjectural-learning program
 
-*Hypotheses, external assessment, protocol shape, and component experiments: a first design*
+*Hypotheses, external assessment, protocol shape, and component experiments: a
+first design*
 
 > **Draft supplement.** This develops the testing side of [Conjectural
 > Learning with Fixed Models](./conjectural-learning-with-fixed-models.md). Everything
@@ -55,21 +56,24 @@ setup is stated so that it can be criticized, not because it is settled.
 
 The program studies a [theory builder](../notes/definitions/theory-builder.md):
 the complete persistent system responsible for developing and revising
-addressable tentative theories about the subjects it investigates. Addressable
+addressable tentative theories about the subjects it investigates.
+[Addressable](../notes/definitions/addressable-theory.md)
 means its assumptions, scope conditions, and parts can be inspected and
-revised individually. Tentative means open to criticism, however well tested.
+revised individually. [Tentative](../notes/definitions/tentative-theory.md)
+means open to criticism, however well tested.
 A model, harness, or revision algorithm is a component of that whole system.
 
 [Conjectural learning](../notes/definitions/conjectural-learning.md) is broader
 than the arrangement this program chose for studying it, and it is a separate
-classification from theory builder: neither implies the other. It requires a theory formulated in natural or formal
-language to guide decisions through what it says, and formulated criticism
-of that content to improve the system's capacity for future action. Criticism
-may revise or replace the theory, or change reliance and further testing when
-the theory survives. Whole replacement, reconstruction from retained criticism,
-and private linguistic formulation can qualify. Addressable parts, retention
-of the assembled theory, continuing responsibility for a body of theories,
-and fixed weights are not learning conditions.
+classification from theory builder: neither implies the other. It requires a
+theory formulated in natural or formal language to guide decisions through what
+it says, and formulated criticism of that content to improve the system's
+capacity for future action. Criticism may revise or replace the theory, or
+change reliance and further testing when the theory survives. Whole
+replacement, reconstruction from retained criticism, and private linguistic
+formulation can qualify. Addressable parts, retention of the assembled theory,
+continuing responsibility for a body of theories, and fixed weights are not
+learning conditions.
 
 Capacity means what the system as it stands would do when an occasion arises;
 it can improve before that occasion occurs. Observed action is evidence about
@@ -357,13 +361,13 @@ changes what later gets accepted, and the rewrite is itself a step from the
 preceding state, so the seed need not specify every later decision.
 
 First, a possible path need not be a practical one. Call a state *adequate*
-when the builder in that state can do the assessed work to the declared
-target. If the update process can retain arbitrary state, an adequate
-successor may be reachable and still extremely unlikely. The quantity a reliability claim needs is *continuation
-reliability*: starting from an adequate builder, the chance of sustaining
-adequate performance across later demands over the declared horizon within
-the budget. A builder that stays adequate for a few demands and then drifts
-differs from one that sustains adequacy, even if both pass an early
+when the builder in that state can do the assessed work to the declared target.
+If the update process can retain arbitrary state, an adequate successor may be
+reachable and still extremely unlikely. The quantity a reliability claim needs
+is *continuation reliability*: starting from an adequate builder, the chance of
+sustaining adequate performance across later demands over the declared horizon
+within the budget. A builder that stays adequate for a few demands and then
+drifts differs from one that sustains adequacy, even if both pass an early
 evaluation. How likely a process is to reach an adequate builder from an
 inadequate seed is a different quantity, and it is the [bootstrap
 supplement's](./bootstrapping-an-autonomous-theory-builder.md) question.
@@ -500,13 +504,13 @@ differences per treatment and history, with exact binomial intervals for
 pass rates. Small samples leave wide uncertainty even when every run
 passes. Predeclare the primary comparisons.
 
-A null intervention result does not show the system lacks a theory,
-because the system may reconstruct the same understanding from other
-retained state. If the reconstruction-from-criticism comparison repeatedly matches the theory treatment
-at lower cost, the retention advantage fails for that contrast and regime.
-This says nothing by itself about the addressability conjecture or the
-conjecture about selecting a theory by estimated explanatory-reach.
-Neither result settles the whole-system hypotheses.
+A null intervention result does not show the system lacks a theory, because the
+system may reconstruct the same understanding from other retained state. If the
+reconstruction-from-criticism comparison repeatedly matches the theory
+treatment at lower cost, the retention advantage fails for that contrast and
+regime. This says nothing by itself about the addressability conjecture or the
+conjecture about selecting a theory by estimated explanatory-reach. Neither
+result settles the whole-system hypotheses.
 
 ## Boundary cases
 

@@ -31,8 +31,8 @@ eighteen systems, the parts have precedents: retained notes and code,
 scheduled revision, gates that can reject a change, and rollback with
 failure evidence. In the evidence reviewed, no system meets the four
 conditions for an automated software house together, and none tests the
-arrangement's central mechanism, a retained explanation guiding a later
-decision on a case it did not state. Some precedents were inspected in
+first half of the arrangement's mechanism, a retained explanation guiding a
+later decision on a case it did not state. Some precedents were inspected in
 code. Others are known only from papers or practitioner reports, and no
 reported outcome was reproduced here. The finding is about the reviewed
 evidence, not about what exists elsewhere.
@@ -303,22 +303,26 @@ fit, without ablation or autonomous successor selection.
 ## What the survey shows for the retained-theory arrangement
 
 The reviewed work supplies candidate components for conjectural learning
-through retained theories: retained notes and code, scheduled revision, gates capable of
-rejection, and rollback with failure evidence. So the parts have precedents,
+through retained theories: retained notes and code, scheduled revision, gates
+that can reject a change, and rollback with failure evidence. A gate rejects
+a change by its outcome; it does not criticize what a retained explanation
+says. So the parts have precedents,
 some inspected in code and others known only from papers or practitioner
 reports. Where a product operates, it is reported with human authority
 over internal decisions.
 
-What the survey does not find is the arrangement's central mechanism under
-test. In most of the research rows, what is retained is admitted by a score,
-an oracle, a held-out gate, or a critic. The others replay or version
-changes without such a gate, or have no automatic trigger from experience.
-In none of them does the reviewed evidence test whether a retained
-explanation guided a later decision on a case it did not state. In the
-product rows, people supply the rationale and settle the revisions. The
-evidence reviewed here includes no matched comparison of a retained
-explanation against retained records of the same observations. That is a
-finding about this reviewed evidence, not about what those systems could do.
+What the survey does not find is the arrangement's mechanism under test. The
+mechanism has two halves: a retained explanation guides a later decision on a
+case it did not state, and criticism of what the explanation says improves
+later decisions. In most of the research rows, what is retained is admitted by
+a score, an oracle, a held-out gate, or a critic. The others replay or version
+changes without such a gate, or have no automatic trigger from experience. In
+none of them does the reviewed evidence test the first half, so none tests the
+second half either, which depends on it. In the product rows, people supply the
+rationale and settle the revisions. The evidence reviewed here includes no
+matched comparison of a retained explanation against retained records of the
+same observations. That is a finding about this reviewed evidence, not about
+what those systems could do.
 
 The next test is therefore the same for both arrangements in the series:
 combine these mechanisms under a declared boundary, and measure in a matched
@@ -339,7 +343,6 @@ written record is inconclusive if the house reconstructs equivalent
 understanding from other records, so the test must control or measure that
 route. An explicit theory artifact is optional. Acquiring understanding and
 machinery absent from the seed is the further question developed by the
-[lead article](./conjectural-learning-with-fixed-models.md) and the
 [bootstrap supplement](./bootstrapping-an-autonomous-theory-builder.md).
 
 ## The separate test for an explicit theory
