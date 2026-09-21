@@ -78,6 +78,27 @@ Repeated prose date: 2026-04-09
     assert document.body_dates == ("2026-04-09",)
 
 
+def test_parse_document_excludes_date_shaped_tails_of_longer_tokens() -> None:
+    document, error = parse_document(
+        """# Title
+
+Cited as https://doi.org/10.1186/1471-2288-13-91 in the bibliography.
+See [the record](./records/run-2026-04-10.md) and https://example.org/2026-04-11/post.
+Reviewed on 2026-04-09. Range (2026-04-12) ends: 2026-04-13, as planned.
+Run AAS-2026-04-14-example-01 covered the deletions of 2026-04-15/16.
+"""
+    )
+
+    assert error is None
+    assert document is not None
+    assert document.body_dates == (
+        "2026-04-09",
+        "2026-04-12",
+        "2026-04-13",
+        "2026-04-15",
+    )
+
+
 def test_find_markdown_links_with_text_keeps_code_formatted_link_text() -> None:
     links = find_markdown_links_with_text(
         "Reference [`examples/`](../examples/) and `[ignored](./ignored.md)`."

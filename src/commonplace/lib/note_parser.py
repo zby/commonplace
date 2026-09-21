@@ -12,7 +12,9 @@ _BODY_HEADING_RE = re.compile(r"^(#{1,6})\s+(.+?)\s*$", re.MULTILINE)
 _FENCED_CODE_RE = re.compile(r"```.*?```", re.DOTALL)
 _INLINE_CODE_RE = re.compile(r"`[^`\n]+`")
 _LINK_RE = re.compile(r"\[([^\]]+)\]\(([^)]+)\)")
-_DATE_RE = re.compile(r"\b\d{4}-\d{2}-\d{2}\b")
+# A date stands alone: not the tail of a longer hyphenated, slashed, or dotted
+# token such as the DOI 10.1186/1471-2288-13-91.
+_DATE_RE = re.compile(r"(?<![\w/.-])\d{4}-\d{2}-\d{2}(?![\w-])")
 
 
 @dataclass(frozen=True)
