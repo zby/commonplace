@@ -176,30 +176,61 @@ Keep these distinctions:
   Epistemic and operational authority remain separate.
 - **Guarantee strength** is separate from evidence status: invariant, protocol,
   policy, best effort, deployment guarantee, or no claimed guarantee.
-- **Theory refinement** is the established learning operation in which a
-  retained theory guides a decision, an outcome localizes a defect, and the
-  theory is revised. Repeated, with the revised theory guiding later work,
-  it is **learning by theory refinement**.
-  A **theory** has consequences a case can contradict, parts available as
-  candidate repair locations, and parts editable separately. Retained
-  guidance on a revision route is therefore a theory, **parameters**, or
-  none. A rule set with no recorded rationale is a theory; record its
-  structure, since a revision reaches only the rules that share the revised
-  premise, and a flat list shares none. Where a rationale is retained, record
-  whether a later consumer reads it. A theory counts only where it is on the
-  causal path of a decision. For a natural-language theory the consequence relation is
-  the interpreter's: record a contradiction as a judgment unless a codified
-  check produced it. The other operations on a theory are **applying** it and
-  **explanation-based generalization**, regressing a reusable rule from its
-  explanation of one episode without revising it. **Reflective theory
-  refinement** is theory refinement whose theory describes behavior-determining
-  organization inside the declared boundary. Among revisions that fit the
-  evidence, reach is preferred; do not write "reach rather than fit".
+- **Formulated tentative theories** are proposed solutions stated in natural
+  or formal language. Record what a theory says and which decisions depend
+  on that content; storage, citation, or delivery alone does not establish
+  operative use. Describe applying a theory, deriving a consequence or rule,
+  criticizing it, revising or replacing it, and retaining or reconstructing
+  it in ordinary terms. Derivation under an unchanged theory does not by
+  itself establish criticism or learning. For prose, record a contradiction
+  as an interpretation unless a codified check produced it.
+- **Criticism** is a formulated attempt to find an error in what the theory
+  says, by argument or a test of a stated consequence. A score selecting
+  variants does not alone establish this. Record the claim challenged and
+  the result. A theory can survive criticism: the result may change later
+  reliance or test selection without changing its content.
+- **Conjectural learning** requires improved capacity for future action
+  attributable to criticism of an operative formulated theory. Record the
+  capacity, assessment boundary, evidence of improvement, and causal limits.
+  The capacity need not already have been exercised; a claim that it remains
+  available later requires the effect to persist to that time. Revision,
+  retention, or a connected route alone does not establish learning.
+- **Addressability and retention** are separate findings. Record the degree
+  to which assumptions, scope conditions, and parts can be inspected and
+  revised individually, and the boundary over which that judgment holds.
+  Record separately what persists: theories, formulated criticisms,
+  input/outcome records, parameters, or other source-native material. Whole
+  replacement and reconstruction can support conjectural learning. Storage
+  form does not decide retained content or the process used to reconstruct it.
+- **Rationale and criticism** are separate findings. Rules can express a
+  theory without preserving why they were adopted. Record what a rule set
+  claims and how its structure exposes assumptions, scope conditions, and
+  parts; do not classify it from the storage label alone. Missing
+  historical rationale does not establish absent formulated criticism of
+  their content. Where rationale persists, record whether a later route reads
+  it. Inaccessible model processing leaves formulation or criticism
+  unestablished unless other evidence supports an inference; opacity alone
+  establishes neither presence nor absence.
+- **Reflection** requires a causally connected self-representation of selected
+  aspects inside the declared system boundary. Changes in those aspects can
+  update the representation, and operations mediated through it can affect
+  later system behavior. Subject matter alone does not establish that path;
+  direct modification of the represented machinery is not required. A
+  reflective theory builder additionally revises a self-theory of its
+  theory-building organization. Reflection and improved capacity are separate
+  claims.
+- **Revision selection** prefers reach among revisions that fit the evidence;
+  do not write "reach rather than fit". This preference applies whether or
+  not the route is reflective.
 
-On a theory route, never upgrade a citation of retained theory to load-bearing
-use, a theory edit after an outcome to a read-back against the theory that
-guided the change, or a revised theory to its later use. Each link carries its
-own conclusion status.
+On a theory route, give each claim its own conclusion status: formulation,
+operative use, content-directed criticism, the resulting revision or changed
+reliance, and any improved capacity attributable to criticism. For a claim
+about later or recurrent use, also trace what persisted and the later consumer.
+Never infer a missing link from its neighbours or upgrade a citation to use,
+an edit following an outcome to criticism, or later use to improvement.
+The existing `trace_learning` comparison axis describes its specified memory
+write route; its value alone does not establish conjectural learning.
 
 Describe every external mechanism in source-native terms before mapping it to
 Commonplace ontology. Explain the fit and mark partial or unresolved mappings.
@@ -285,15 +316,17 @@ that specialist pass in the coordinator's context.
    improvement and whether operation serves open requests, bounded experiments or curricula,
    or multiple modes; attach oracle use to the applicable mode. Unknowns and
    inapplicable steps remain explicit, without assigning an autonomy grade.
-   On each admitting route, name the retained guidance that shaped the
-   proposal and classify it under step 3. For a theory, record the operation
-   performed on it and a separate conclusion status for each link of a
-   refinement path: the theory entered the decision, the outcome bore on the
-   theory, the theory state changed in response, and the changed state guided
-   a later operation. A link without evidence is `uninspected`, not inferred
-   from its neighbours. A retained prediction, rationale, or expected outcome
-   is a model assertion; record whether a later route reads it, since it can
-   guide diagnosis only then.
+   On each admitting route, name the guidance that shaped the proposal and
+   classify its content, retention, and operation under step 3. For a theory,
+   record separately its formulation, operative use, content-directed
+   criticism, the resulting revision or changed reliance, and any supported
+   improvement in capacity. Give each finding its own conclusion status.
+   A link without evidence is `uninspected`, not inferred from its neighbours.
+   When later or recurrent use is claimed, identify what persisted and its
+   later consumer. A retained prediction, rationale, or expected outcome is
+   a model assertion; record whether a later route reads it. Its presence
+   does not establish criticism, and its absence does not exclude criticism
+   formulated during the operation.
 
 ### 5. Run both lenses
 
@@ -350,6 +383,11 @@ mechanisms, scenario-relative assessment, limitations, and evidence or system
 changes that would alter the assessment. Do not concatenate lens reports or add
 a product ranking, generic adoption advice, system-wide epistemic grade,
 Commonplace delta, transfer recommendation, or universal maturity model.
+Where the runtime account supports them, state separately whether criticism
+of an operative formulated theory improved the system's capacity for future
+action, whether the system is reflective, and whether it is self-improving at
+the declared boundary. Give each property its own evidence status. They are
+independent properties, not a grade or a ladder.
 
 ### 7. Write and validate the exact result
 
@@ -480,8 +518,9 @@ A failed run reports its failure reason and does not use the handoff command.
 - Component fixity, material revision admission, decision roles, improvement
   triggers, operating modes and answer-oracle access are recorded or carry
   explicit `uninspected` or `inapplicable` reasons.
-- Every admitting route classifies its retained guidance under step 3; a
-  theory route names the operation and gives each link its own status.
+- Every admitting route classifies its guidance and retention under step 3;
+  a theory route names the operations and gives each claim its own status,
+  including improved capacity when conjectural learning is claimed.
 - Both lenses and both scoping records exist; thin evidence produces a bounded
   brief result, not a skipped lens.
 - Source-native mechanisms remain visible beneath Commonplace mappings, and no
@@ -499,10 +538,9 @@ A failed run reports its failure reason and does not use the handoff command.
 - [Agent memory is a crosscutting concern, not a separable niche](../../notes/agent-memory-is-a-crosscutting-concern-not-a-separable-niche.md) — rests-on: why memory is a mandatory lens
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) — rests-on: the retention, read-back, presence, and activation distinctions
 - [Behavioral authority](../../notes/definitions/behavioral-authority.md) — rests-on: the consumer, channel, force, and horizon record
-- [Theory refinement](../../notes/definitions/theory-refinement.md) — rests-on: the operation, what it requires of a theory, and the interpreted consequence relation of the prose case
-- [Learning by theory refinement](../../notes/definitions/learning-by-theory-refinement.md) — rests-on: the recurrent loop built on the operation, which step 3 records when retention and later use are present
-- [Learning by learning by theory refinement may improve sample efficiency under structured shifts](../../notes/learning-by-theory-refinement-may-improve-sample-efficiency.md) — rests-on: why learning by theory refinement is the route worth recording
-- [Theory refinement combining analytical and empirical methods](../../sources/theory-refinement-analytical-empirical-methods.ingest.md) — rests-on: the established sense of theory refinement used in step 3
-- [Reflective theory refinement needs interpretation, retention, and independent read-back](../../notes/reflective-theory-refinement-needs-interpretation-and-retention.md) — rests-on: the four links of a refinement path, each carrying its own conclusion status
-- [Reflective system](../../notes/definitions/reflective-system.md) — rests-on: the self-representation condition that makes a refinement route reflective
+- [Tentative theory](../../notes/definitions/tentative-theory.md) — rests-on: the status of the theory, independent of structure or retention
+- [Conjectural learning](../../notes/definitions/conjectural-learning.md) — rests-on: formulated operative theory, content-directed criticism, and improved capacity
+- [Addressable theory](../../notes/definitions/addressable-theory.md) — rests-on: separately inspectable and editable parts as an additional property
+- [Evidence of theory use does not by itself establish learning](../../notes/reflective-theory-refinement-needs-interpretation-and-retention.md) — rests-on: the separate evidence claims and stronger requirements for later or recurrent use
+- [Reflective system](../../notes/definitions/reflective-system.md) — rests-on: the causally connected self-representation required for reflection
 - [Self-improving system](../../notes/definitions/self-improving-system.md) — rests-on: the operative, evidence-responsive change the revision-admission records describe

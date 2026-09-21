@@ -20,11 +20,13 @@ placed after `Connections Found` under the ingest-report type contract, with
 its paired `learning_claims: true` frontmatter field, and does not authorize
 further source collection.
 
-Read [Theory refinement](../notes/definitions/theory-refinement.md) as the
-current comparison basis. The definition is loaded at execution rather than
-frontloaded here because it is new and expected to change often; do not copy
-its content into this instruction. The definition governs our use of the term
-but remains open to challenge by the source.
+Read [Conjectural learning](../notes/definitions/conjectural-learning.md) as
+the current comparison basis for learning membership. When localization or
+selective repair matters, also read
+[Addressable theory](../notes/definitions/addressable-theory.md). Load these
+definitions at execution rather than copying their content into this
+instruction. They govern our use of the terms but remain open to challenge
+by the source.
 
 Read [Learning inside a fixed decomposition inherits its mistakes](../notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md)
 for the boundary between improvement within an effective update space and

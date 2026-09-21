@@ -57,7 +57,19 @@ Open each analysis with a one-line **evidence basis**: what it is grounded in â€
 
 State the external mechanism in its own operational terms before applying a Commonplace concept. Explain why the concept fits and qualify partial or unresolved mappings. Commonplace chooses the analytical distinctions; it is not the comparison target, and a reader must be able to reject a mapping without losing the external-system account.
 
-Describe a learning pathway in the KB's established terms. **Theory refinement** names the loop in which a retained theory guides a decision, an outcome localizes a defect, and the theory is revised; **reflective theory refinement** is that loop over a theory of the system's own organization inside the declared boundary. A route that retains only parameters is neither; a rule set without recorded rationale is a theory whose revisions reach only the revised rule. Link the defining notes with `rests-on` or `defined-in`.
+Describe a learning pathway through formulated theory, operative use,
+criticism of its content, and any improvement in capacity for future
+action attributable to that criticism. These establish conjectural learning
+only at the strength supported by the evidence. Addressability and retention
+are separate properties. Record the degree and boundary of addressability;
+whole replacement or reconstruction can qualify, while stored rules or
+parameters alone do not classify the process. Missing
+historical rationale does not establish absent criticism; inaccessible model
+processing remains unestablished. Reflection additionally requires a
+causally connected self-representation of selected aspects inside the
+declared system boundary: changes in those aspects can update the
+representation, and operations mediated through it can affect later
+behavior. Link the defining notes with `rests-on` or `defined-in`.
 
 Current differences from Commonplace, borrowable ideas, and watch items are not part of the durable analysis. They depend on a current Commonplace baseline and interest brief. Produce them, when separately requested, as living transfer state under `kb/reports/state/agentic-system-transfer/`; never feed that scan back into the stable analysis or a public corpus comparison. Keep unresolved candidate judgments until disposition, then replace or delete the state report under its owning workflow.
 

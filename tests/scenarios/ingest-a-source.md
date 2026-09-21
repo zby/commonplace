@@ -91,6 +91,8 @@ This general check does not require a learning-theory note.
 
 **Learning or adaptation source:** Fork 5 follows the conditional
 `assess-learning-claims-during-ingest.md` instruction, which requires the
-theory-refinement definition and additionally reads
+`kb/notes/definitions/conjectural-learning.md` definition and, when
+localization or selective repair matters,
+`kb/notes/definitions/addressable-theory.md`. It additionally reads
 `kb/notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md` in
 the source checkout or its installed `kb/commonplace/notes/` counterpart.

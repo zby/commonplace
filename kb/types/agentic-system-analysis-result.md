@@ -244,7 +244,45 @@ Component and operative-object records preserve source-native identity, represen
 
 Route records preserve endpoints, progression, owner, context/state/action effects, applicable status fields, and evidence. For materially distinct mechanisms admitting changes to the product, retained knowledge or instructions, capabilities, or production machinery, record trigger, proposed change, admission, rejection ability, and rollback or recovery. Group writes governed by the same mechanism. Routine logs, counters and unchanged checkpoint persistence need no separate revision account unless they alter later decisions or recovery. Memory revision findings use the integrated specialist records.
 
-Each admitting route also names the retained guidance that shaped the proposal: a theory (consequences a case can contradict, parts available as candidate repair locations, parts editable separately), parameters, or none. A rule set with no recorded rationale is a theory; the record states its structure, since a revision reaches only the rules sharing the revised premise. Where a rationale is retained, the record states whether a later route reads it. For a theory, the record names the operation performed on it (application, explanation-based generalization, or theory refinement) and gives a separate conclusion status to each link of a refinement path: the theory entered the decision, the outcome bore on the theory, the theory state changed in response, and the changed state guided a later operation. The record states whether the theory describes organization inside the declared boundary, which makes the route reflective theory refinement, or an external target. The producing skill's step 3 defines these terms.
+Each admitting route names the guidance that shaped the proposal, what it
+says, and what persists: formulated theories, criticisms, input/outcome
+records, parameters, or other source-native material. It describes applying,
+deriving from, criticizing, revising or replacing, and retaining or
+reconstructing a theory in ordinary terms. Record the degree to which its
+assumptions, scope conditions, and parts are individually inspectable and
+revisable, and the boundary over which that addressability judgment holds.
+Addressability is recorded separately from formulation, operative use, and
+retention. A rule set can express a theory without retaining its historical
+rationale. Record what it claims and how its structure exposes assumptions,
+scope conditions, and parts; do not classify it from the storage label alone.
+Missing rationale does not establish absent formulated criticism of its
+content. Where rationale is retained, the record states whether a later route
+reads it.
+
+A theory route gives separate conclusion statuses and evidence for
+formulation, operative use, content-directed criticism, its resulting
+revision or changed reliance, and any improved capacity attributable to
+criticism. A theory can survive criticism without a text change. A
+conjectural-learning claim identifies the improved capacity for future
+action, its assessment boundary, and the evidence supporting attribution;
+revision, retention, or connected steps alone do not establish it. Capacity
+need not already have been exercised. A claim about later capacity traces
+persistence to that time; a claim about later or recurrent use traces the
+retained result and its consumer. Whole replacement and reconstruction do
+not by themselves exclude learning. The `trace_learning` comparison axis
+retains its specified memory-write meaning; its value alone does not
+establish conjectural learning.
+
+The record distinguishes absent formulation or criticism from inaccessible
+model processing: opacity alone establishes neither presence nor absence.
+For reflection it identifies selected aspects inside the declared system
+boundary, their self-representation, and the two-way causal path: aspect
+changes can update the representation, and representation-mediated operations
+can affect later behavior. Direct modification of represented machinery is
+not required. Revising a self-theory of theory-building organization is the
+more specific reflective-builder claim. Reflection and improved capacity
+remain separate claims. The producing skill's step 3 supplies the matching
+vocabulary.
 
 Claim records preserve claimed operation and source. An evidenced absence carries an `absent` conclusion status, searched boundary, evidence, and the conclusion it supports or prevents. A behavioral-authority path records consumer, channel, force, and horizon.
 
@@ -276,7 +314,7 @@ The lens sections annotate canonical IDs. They do not reproduce the shared inven
 
 ### Bounded synthesis
 
-`## Bounded synthesis` gives the evidence basis and boundary, architectural characterization and claimed work, runtime map, only the discriminating mechanisms this target needs, scenario-relative assessment, and concrete evidence or system changes that would alter the assessment. Where the runtime account supports it, the synthesis states separately whether the system retains a revisable theory on its decision path, whether it is reflective, and whether it is self-improving at the declared boundary, each at its own evidence status; these are three independent properties, not a grade or a ladder. It is organized around the system's operational progression, not as concatenated lens reports. It gives no product ranking, generic adoption advice, system-wide epistemic grade, Commonplace delta, or transfer recommendation.
+`## Bounded synthesis` gives the evidence basis and boundary, architectural characterization and claimed work, runtime map, only the discriminating mechanisms this target needs, scenario-relative assessment, and concrete evidence or system changes that would alter the assessment. Where the runtime account supports it, the synthesis states separately whether criticism of an operative formulated theory improved the system's capacity for future action, whether the system is reflective, and whether it is self-improving at the declared boundary, each at its own evidence status; these are three independent properties, not a grade or a ladder. It is organized around the system's operational progression, not as concatenated lens reports. It gives no product ranking, generic adoption advice, system-wide epistemic grade, Commonplace delta, or transfer recommendation.
 
 ### Limitations
 
