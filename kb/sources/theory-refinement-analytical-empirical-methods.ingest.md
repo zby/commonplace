@@ -29,9 +29,9 @@ No source quotes have been retained yet.
 
 ## Connections Found
 
-The paper is a historical technical basis for [the lineage account for reflective theory refinement](../notes/conjectural-learning-has-distinct-precedents.md): an explicit tentative theory, in the KB’s vocabulary, shapes inference and repair, but the theory represents an external classification domain rather than the learner's own software organization. It is also evidence for [diagnostic richness constraining outer-loop learning](../notes/diagnostic-richness-constrains-outer-loop-learning-quality.md), because complete and partial proof structures nominate repair sites and restrict the examples passed to induction instead of merely scoring finished candidates.
+The paper is a historical technical basis for [Conjectural learning has distinct precedents](../notes/conjectural-learning-has-distinct-precedents.md): an explicit tentative theory, in the KB’s vocabulary, shapes inference and repair, but the theory represents an external classification domain rather than the learner's own software organization. It is also evidence for [diagnostic richness constraining outer-loop learning](../notes/diagnostic-richness-constrains-outer-loop-learning-quality.md), because complete and partial proof structures nominate repair sites and restrict the examples passed to induction instead of merely scoring finished candidates.
 
-Its learning curves provide bounded evidence for the intermediate premise in [learning by theory refinement may improve sample efficiency](../notes/retained-theories-may-improve-sample-efficiency.md), not for controlled-shift reuse or total learning cost. Its fixed observables, category partition, Horn language, repair operators, inductive learner, and batch objective also make it a concrete case of [learning inside a fixed decomposition](../notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md): improvement validates the compound setup in the tested domains but does not isolate or vindicate those fixed choices.
+Its learning curves provide bounded evidence for the intermediate premise in [Retained theories may improve sample efficiency under structured shifts](../notes/retained-theories-may-improve-sample-efficiency.md), not for controlled-shift reuse or total learning cost. Its fixed observables, category partition, Horn language, repair operators, inductive learner, and batch objective also make it a concrete case of [learning inside a fixed decomposition](../notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md): improvement validates the compound setup in the tested domains but does not isolate or vindicate those fixed choices.
 
 ## Extractable Value
 
@@ -53,4 +53,4 @@ Finally, the source studies a theory of an external problem domain, not a causal
 
 ## Recommended Next Action
 
-Update [the lineage account for reflective theory refinement](../notes/conjectural-learning-has-distinct-precedents.md) to replace its direct DOI citation with a `(snapshot required)` link to this ingest and expand the EITHER case with the proof-guided repair mechanism, fixed Horn update space, and absence of reflective or later-learning evidence.
+Update [Conjectural learning has distinct precedents](../notes/conjectural-learning-has-distinct-precedents.md) to replace its direct DOI citation with a `(snapshot required)` link to this ingest and expand the EITHER case with the proof-guided repair mechanism, fixed Horn update space, and absence of reflective or later-learning evidence.
