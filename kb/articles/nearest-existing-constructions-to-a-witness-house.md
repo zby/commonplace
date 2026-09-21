@@ -1,5 +1,5 @@
 ---
-description: "Supplement: eighteen existing constructions graded against the software-house supplement's four witness conditions, what the survey shows for conjectural learning with fixed models, and the separate test of acquiring an explicit theory"
+description: "Supplement: eighteen existing constructions graded against the software-house supplement's four witness conditions, what the survey shows for the retained-theory arrangement, and the separate test for an explicit theory"
 type: kb/articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
@@ -7,6 +7,8 @@ source_notes:
   - kb/notes/definitions/representational-form.md
   - kb/notes/definitions/software-house.md
   - kb/notes/definitions/addressable-theory.md
+  - kb/notes/definitions/conjectural-learning.md
+  - kb/notes/commonplace-studies-conjectural-learning-through-retained-theories.md
   - kb/notes/program-theory-sustains-search-under-delayed-feedback.md
 ---
 # Nearest existing constructions to a witness house
@@ -85,12 +87,13 @@ Each column asks about one of the conjecture's conditions:
   and consequences, with pinned distributed-parametric models and no internal
   human production decisions.
 - **Practical reliability:** evaluation supports useful success in sustaining
-  adequacy within the declared horizon and budget.
+  adequacy within the declared horizon and budget, against a human-agent
+  house given the same requests and resources.
 
-The first two conditions need positive evidence: a run that never challenges
+Each condition needs positive evidence: a run that never challenges
 an assumption does not demonstrate coherent revision. An adequate house can
 perform the first three functions. The fourth asks how reliably it sustains
-that capacity. The evidence supplement
+that capacity. The testing supplement
 [defines that measure](./testing-the-conjectural-learning-program.md#what-a-runs-path-can-and-cannot-show)
 as continuation reliability. Workload and observation limits describe the
 evaluation, rather than a product family the house must stay within.
@@ -343,9 +346,10 @@ machinery absent from the seed is the further question developed by the
 
 The table concerns program theory, whatever form holds it. A narrower question
 is whether an explicit written theory improves learning compared with other
-uses of the same evidence. The evidence supplement's [component
+uses of the same evidence. The testing supplement's [component
 experiment](./testing-the-conjectural-learning-program.md#component-experiments-that-can-run-first)
-compares an explicit theory, raw records, a descriptive summary, and a
+compares an explicit theory, retained criticisms used to reconstruct one,
+records containing only inputs and outcomes, a descriptive summary, and a
 plausible wrong theory across changes that preserve or break the theory's
 assumptions. It can run before a complete witness house exists, and it
 specifies the treatments and their limits.

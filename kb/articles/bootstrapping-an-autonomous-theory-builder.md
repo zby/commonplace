@@ -123,18 +123,18 @@ boundary: the decisions being assessed.
 | Claim | What must be shown |
 |---|---|
 | **Operational transfer** | Computation makes the declared internal decisions, including hard cases, without human decisions. External outcomes and costs remain acceptable. |
-| **Learning transfer** | Evidence from the builder's own work causes it to produce or revise the machinery that makes those decisions, and the retained change affects later work. |
+| **Learning transfer** | Evidence from the builder's own work causes it to produce or revise the machinery that makes those decisions, and the retained change improves later decisions. |
 
 In the example, a check selector that a person wrote can complete
 operational transfer: computation now selects the checks. Learning transfer
 requires the builder to have produced or revised the selector from its own
 experience, for instance after a missed check led to a failed release. The
-refined object is then a check, evaluator, or procedure rather than the
+revised object is then a check, evaluator, or procedure rather than the
 delivered product.
 
 Learning transfer is the broader category, and it is not yet reflection. A
 builder could satisfy it by patching its selector directly from failure
-records, with no account of why. The lead article's [reflective
+records, with no retained account of why. The lead article's [reflective
 case](./conjectural-learning-with-fixed-models.md#reflection-and-autonomy)
 asks for more: a theory of the builder's own machinery, connected to that
 machinery in both directions, so that revising the theory changes the
@@ -152,7 +152,8 @@ allow a human-built seed. The sufficiency hypothesis asks whether a builder
 can then reach a reliability target with no person in an internal role,
 which presupposes operational transfer of every such role. The reflection
 hypothesis asks whether machinery changes that pass through the builder's
-theory of itself yield capabilities a matched builder does not gain. The
+theory of itself yield extensions, retained machinery changes that show
+capability beyond the seed, which a matched builder does not acquire. The
 bootstrap aims at both transfers, and reports separately which
 learning-transfer results also meet the reflective standard.
 
@@ -264,9 +265,10 @@ revised state and one with its earlier version restored, on cases the
 failure did not involve, while holding fixed every other retained artifact
 that could hold the learned information.
 
-The trial could also support the [evidence supplement's
+The trial could also support the [testing supplement's
 comparison](./testing-the-conjectural-learning-program.md#component-experiments-that-can-run-first)
-of an explicit theory with raw records, a descriptive summary, and a
+of a retained theory with retained criticisms used to reconstruct one,
+records containing only inputs and outcomes, a descriptive summary, and a
 plausible wrong theory. Changes that preserve the initial dependency account
 and changes that break it test different predictions: the first should
 favour the theory treatment, while the second may cancel or reverse that
@@ -305,7 +307,7 @@ assessed run, an internal human decision is an intervention: it is recorded,
 its result is not credited to the builder, and it defeats a claim of autonomy
 for that run. The changes retained from then on no longer form an autonomous
 *lineage*, a history of successor states each produced by the builder's own
-revision process while the models stay pinned and no person decides.
+revision process while no person decides.
 
 Transfers can reopen when a new request exceeds a rule's scope or creates a new
 human review role. Record the reopened responsibility and test a response:
@@ -333,7 +335,8 @@ client is internal work that the bootstrap must record and transfer.
 ## What learning transfer must produce
 
 Learning transfer requires evidence that experience produces or revises the
-builder's project-specific machinery. The seed is outgrown when [learning
+builder's project-specific machinery and that the change improves its later
+decisions. The seed is outgrown when [learning
 displaces repeated human construction of project-specific
 knowledge](../notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md)
 as new work arises. This may show up in new theories, checks,
@@ -354,7 +357,8 @@ computational without fixing the order in which they transfer. The loop is not
 the only option. Other update architectures let reward, error, gradients, or a
 viability filter (a change stays if the system still works) drive changes
 without a separate admission event. What the endpoint requires of any
-architecture is the same: an evidence-caused change that takes effect.
+architecture is the same: an evidence-caused change that takes effect and
+improves later decisions.
 
 ## Stop or redirect conditions
 
@@ -387,7 +391,7 @@ success is the self-confirming evaluation above.
 ## Where this leaves the series
 
 The [lead article](./conjectural-learning-with-fixed-models.md)
-supplies the learning definition and the research arrangement, and the [evidence
+supplies the learning definition and the research arrangement, and the [testing
 supplement](./testing-the-conjectural-learning-program.md) supplies the
 hypotheses and the protocol under which a consuming project would judge the
 result. This program tests a route toward an autonomous builder by measuring
@@ -399,7 +403,7 @@ The transfer analysis does not depend on the product. Applied to a software
 house, the internal roles are production roles and the target is a house
 meeting the [four witness
 conditions](./an-automated-software-house-as-a-second-test-of-conjectural-learning.md#what-a-witness-house-must-show).
-The evidence supplement [defines continuation
+The testing supplement [defines continuation
 reliability](./testing-the-conjectural-learning-program.md#what-a-runs-path-can-and-cannot-show)
 for a system that is already adequate; how
 human-inclusive operation can lead to such a system is this article's

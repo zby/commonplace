@@ -39,8 +39,9 @@ interpret retained, separately revisable theories while their weights stay
 fixed. Whether retaining those theories improves learning enough to pay for
 their upkeep remains an empirical question. This article explains the
 process, the chosen arrangement, and the research hypotheses it motivates.
-The arrangement is compared with adapting model weights and with retaining
-records or summaries without retaining formulated theories and criticisms.
+The arrangement is compared with adapting model weights, with rebuilding a
+theory from retained criticisms, and with rebuilding one from records that
+contain only inputs and outcomes.
 
 ## A case
 
@@ -133,8 +134,8 @@ which retained change caused the improvement or hold the model's processing
 fixed across different inputs.
 
 The program pursues recursive self-improvement: improving the machinery that
-performs later improvement. This places it within
-[Schmidhuber's broad survey of systems that modify their own learning processes](../sources/recursive-self-improvement-since-1987.ingest.md).
+performs later improvement. This places it within the broad research program
+that [Schmidhuber surveys: systems that modify their own learning processes](../sources/recursive-self-improvement-since-1987.ingest.md).
 Its chosen development path starts with an incomplete
 methodology expressed in language. Models interpret it, experience exposes
 its limits, and criticism guides changes to the methodology and the machinery
@@ -202,7 +203,8 @@ consequences through shared assumptions, so revisions and rollbacks require
 checking what depends on the changed part.
 
 Records remain useful even when theories are retained. They can expose an
-omitted detail or allow a mistaken abstraction to be reconstructed, and
+omitted detail or allow a mistaken abstraction to be re-examined and
+corrected, and
 [a later model can re-examine the derivation](../notes/retaining-episode-evidence-keeps-a-distilled-rule-open-to.md).
 Bounded context creates a need to select or summarize evidence; it does not
 by itself select theories as the best retained form. Search, summaries,
@@ -324,7 +326,7 @@ with model versions declared and weights held fixed during assessment.
   autonomous builder to develop, retain, and use theories and procedures
   across declared practical areas, meeting a reliability target under a
   budget and external assessment. Needing a person in an internal role or
-  a new learning method for each area, or failing the target, refutes the
+  a new learning method for any area, or failing the target, refutes the
   assessed claim.
 - **Comparison.** Under matched demands and resources, that methodology
   produces useful capability gains over the frozen seed and a baseline

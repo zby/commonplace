@@ -32,14 +32,14 @@ knowledge and machinery rather than its models. This is a second
 arrangement for testing [conjectural
 learning](../notes/definitions/conjectural-learning.md) with fixed models,
 the program of the lead article, whose first arrangement is a knowledge
-base. The theory a house refines
+base. The theory a house criticizes and revises
 is *program theory*, the term Peter Naur, the computer scientist who argued
 that programming is theory building, used for the understanding of a
 program's purpose, organization, and how to handle new requests. Naur held
 that this understanding is bound to people; an automated house that holds
 one would show otherwise. Software fails visibly, so the house gives the
-program a stronger falsifier, a failure the system does not itself judge,
-than a knowledge base does. It also demands a harder claim: that at least
+program a stronger falsifier, a failure that does not depend on how the
+theory was read, than a knowledge base does. It also demands a harder claim: that at least
 one whole house exists that meets four conditions together. This
 supplement states the claim, why it is not ruled out in advance, the four
 conditions, and the comparison with the knowledge base, which the research
@@ -94,7 +94,7 @@ critics. The house may change its natural-language and symbolic state,
 including tests, evaluators, workflows, and update machinery. Every
 internal decision and successor must come from the current house, its
 fixed models, and permitted external inputs. An internal human
-intervention ends the run. The evidence supplement [develops that
+intervention ends the run. The testing supplement [develops that
 requirement](./testing-the-conjectural-learning-program.md#what-a-runs-path-can-and-cannot-show).
 
 ## Why the claim is not trivial
@@ -293,9 +293,9 @@ objective, and an outcome level it does not judge itself. A software house
 is one arrangement that supplies those three, through product operation
 and users' judgments of visible behaviour. Its conjecture, boundary, and
 conditions were stated before the program was framed in those terms, and
-they are kept here with their own model cutoff. The software house is not
-the program's paradigm case and not a special case of the knowledge-base
-arrangement: it is a different product, with a stronger falsifier and a
+they are kept here with their own model cutoff. The software house is neither
+the program's first arrangement, the knowledge base, nor a special case of
+it: it is a different product, with a stronger falsifier and a
 harder claim.
 
 ## Where to go next
@@ -303,11 +303,11 @@ harder claim.
 [Nearest existing constructions to a witness
 house](./nearest-existing-constructions-to-a-witness-house.md) gives the
 evidence behind the claim that no existing system meets the four conditions
-together. The evidence supplement's section on [what a run's path can and
+together. The testing supplement's section on [what a run's path can and
 cannot show](./testing-the-conjectural-learning-program.md#what-a-runs-path-can-and-cannot-show)
 develops the requirement that every successor state come from the current
 system, and what it does not establish. The [software
 house definition](../notes/definitions/software-house.md) carries the
-boundary rule in its general form, and the [evidence
+boundary rule in its general form, and the [testing
 supplement](./testing-the-conjectural-learning-program.md) states the
 knowledge-base arrangement's protocol for the comparison above.

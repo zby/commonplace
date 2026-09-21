@@ -60,14 +60,16 @@ means its assumptions, scope conditions, and parts can be inspected and
 revised individually. Tentative means open to criticism, however well tested.
 A model, harness, or revision algorithm is a component of that whole system.
 
-[Conjectural learning](../notes/definitions/conjectural-learning.md) is broader than this
-chosen arrangement. It requires a theory formulated in natural or formal
+[Conjectural learning](../notes/definitions/conjectural-learning.md) is broader
+than the arrangement this program chose for studying it, and it is a separate
+classification from theory builder: neither implies the other. It requires a theory formulated in natural or formal
 language to guide decisions through what it says, and formulated criticism
 of that content to improve the system's capacity for future action. Criticism
 may revise or replace the theory, or change reliance and further testing when
 the theory survives. Whole replacement, reconstruction from retained criticism,
 and private linguistic formulation can qualify. Addressable parts, retention
-of the assembled theory, and fixed weights are not learning conditions.
+of the assembled theory, continuing responsibility for a body of theories,
+and fixed weights are not learning conditions.
 
 Capacity means what the system as it stands would do when an occasion arises;
 it can improve before that occasion occurs. Observed action is evidence about
@@ -133,7 +135,9 @@ quantity the hypotheses measure.
 The program adopted three hypotheses on 2026-09-17. They are quoted as
 adopted. "Currently public" means available as of that date; an assessment
 declares its model versions and keeps their weights fixed, and hosted
-models count.
+models count. "Training" in the first hypothesis means retained changes to
+the builder's instructions, knowledge, tools, and orchestration, not changes
+to model weights.
 
 > **Sufficiency hypothesis.** A training methodology expressed in
 > natural-language and symbolic form is
@@ -500,7 +504,8 @@ A null intervention result does not show the system lacks a theory,
 because the system may reconstruct the same understanding from other
 retained state. If the reconstruction-from-criticism comparison repeatedly matches the theory treatment
 at lower cost, the retention advantage fails for that contrast and regime.
-This says nothing by itself about the addressability or selector conjecture.
+This says nothing by itself about the addressability conjecture or the
+conjecture about selecting a theory by estimated explanatory-reach.
 Neither result settles the whole-system hypotheses.
 
 ## Boundary cases
@@ -580,7 +585,12 @@ inputs need separately reported provenance and authority.
 
 ## Where to go next
 
-The four definitions, [theory
+The [conjectural learning](../notes/definitions/conjectural-learning.md)
+definition states the term's conditions, exclusions, and boundary examples,
+and its [companion
+note](../notes/commonplace-studies-conjectural-learning-through-retained-theories.md)
+states the chosen arrangement and its three mechanism conjectures. The four
+builder definitions, [theory
 builder](../notes/definitions/theory-builder.md), [externally
 tested](../notes/definitions/externally-tested-theory-builder.md),
 [reflective](../notes/definitions/reflective-theory-builder.md), and
