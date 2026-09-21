@@ -44,7 +44,7 @@ to this repository.
   [main-path-episodes.md](./main-path-episodes.md) — background, unchanged
   since 2026-09-17: the fuller design for a later scored run at the product
   layer, and three constructed episodes that checked the definitions. The
-  [testing supplement](../../articles/testing-the-theory-refinement-program.md#the-first-arrangement-and-its-protocol)
+  [testing supplement](../../articles/testing-the-conjectural-learning-program.md#the-first-arrangement-and-its-protocol)
   carries their substance. They are not needed to use the template, and
   stay because the retained
   [boundary-case report](../../reports/retained/theory-builder-boundary-cases-20260917.md)
@@ -62,7 +62,7 @@ to this repository.
 ## Commission history
 
 The operator posed this workshop on 2026-09-17 to run the first assessment
-of the [three hypotheses](../../articles/testing-the-theory-refinement-program.md#the-hypotheses)
+of the [three hypotheses](../../articles/testing-the-conjectural-learning-program.md#the-hypotheses)
 adopted that day. The operator re-scoped it on 2026-09-19 to providing the
 template.
 

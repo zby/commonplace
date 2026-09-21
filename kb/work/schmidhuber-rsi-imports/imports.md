@@ -97,7 +97,7 @@ budgets. Keep unlike costs visible rather than forcing them into an arbitrary
 single score.
 
 **Existing coverage and remaining question.** The
-[current retention research](../conjectural-learning/notes/commonplace-studies-conjectural-learning-through-retained-theories.md)
+[current retention research](../../notes/commonplace-studies-conjectural-learning-through-retained-theories.md)
 and compounding protocol already include these costs. Import the papers as
 mechanistic precedents and sharpen a concrete accounting practice only where
 current experiments omit consequential work. A new ledger is not itself an

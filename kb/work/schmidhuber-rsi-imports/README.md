@@ -70,8 +70,8 @@ encoding exists; its interpretation and judgment also remain open to criticism.
 The connection to Popper follows from our choice to develop the methodology
 through explicit conjecture and criticism. Natural-language representation
 alone does not supply that process, and formal systems can implement it too.
-The [Popper foundation](../conjectural-learning/popper-foundation.md) owns the
-source account. The [research companion](../conjectural-learning/notes/commonplace-studies-conjectural-learning-through-retained-theories.md#research-program-and-development-path)
+The [precedents note](../../notes/conjectural-learning-has-distinct-precedents.md) owns the
+source account. The [research companion](../../notes/commonplace-studies-conjectural-learning-through-retained-theories.md#research-program-and-development-path)
 states the adopted arrangement; the [ontology assessment](./ontology-assessment.md)
 records why it needs no new membership conditions.
 
@@ -116,9 +116,10 @@ them only if a concrete use supplies the required conditions.
 
 ## Coordination
 
-- [Conjectural learning](../conjectural-learning/README.md) owns the current
-  foundation and terminology revision. This workshop supplies mechanisms
-  and evidence questions; it does not settle that workshop's open definitions.
+- [Conjectural learning](../../notes/definitions/conjectural-learning.md) supplies
+  the settled definition, with its maintained [checks](../../notes/definitions/conjectural-learning-checks.md).
+  This workshop supplies mechanisms and evidence questions; it does not alter
+  the definition or its cases.
 - [Theory-mediated learning experiments](../explanatory-theories-deployment-time-learning/README.md)
   owns component-comparison designs. Check its controls before elaborating
   the experiment sketch; hand over shared design changes rather than creating

@@ -2,8 +2,8 @@
 
 Assessment requested and its resulting revisions approved by the operator on
 2026-09-21. The research positioning is integrated in the
-[companion](../conjectural-learning/notes/commonplace-studies-conjectural-learning-through-retained-theories.md#research-program-and-development-path)
-and [decision record](../conjectural-learning/definition-decision-record.md#settled-decisions).
+[companion](../../notes/commonplace-studies-conjectural-learning-through-retained-theories.md#research-program-and-development-path)
+and maintained [definition checks](../../notes/definitions/conjectural-learning-checks.md).
 The Gödel-machine attribution is qualified in case 14 and the definition.
 No new membership condition or base term is adopted.
 
@@ -82,7 +82,7 @@ The retained source analysis allows observation inputs and formally licensed
 revisions to represented machinery, and leaves the theory-builder
 classification dependent on the deployment.
 
-The definition and decision record now distinguish the stipulated example
+The definition and its checks distinguish the stipulated example
 from the source family. Deductive criticism remains eligible. Classifying a
 particular Gödel-machine system would require evidence about its full process;
 this assessment supplies no categorical classification of that family.
@@ -95,6 +95,6 @@ remain unchanged. The case-14 correction follows test 4's attribution rule;
 under test 6, none of the fourteen numbered cases changes class.
 
 The ontology assessment is complete. The RSI workshop retains the five
-mechanism assessments and concrete experiment design. The conjectural-learning
-workshop retains its pending reconstruction comparison and later migration.
-No experiment execution or library migration is commissioned by this record.
+mechanism assessments and concrete experiment design. The library definitions,
+companion, and precedents retain the adopted ontology. No experiment execution
+is commissioned by this record.

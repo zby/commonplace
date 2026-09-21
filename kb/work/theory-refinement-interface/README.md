@@ -37,14 +37,16 @@ moved here so its promotion and terminology migration can close independently.
    assumption-based TMS, and the knowledge-engineering method-construction
    papers, and each is kept, narrowed, or dropped with the reason recorded.
 3. The reconciled account is either folded into the
-   [theory-refinement definition](../../notes/definitions/theory-refinement.md)
-   as the section on machinery, or promoted as its own note with the
-   definition linking it, and the investigation file is deleted.
+   [addressable-theory definition](../../notes/definitions/addressable-theory.md)
+   as a section on the classical repair interface, or promoted as its own note
+   with the definition linking it. It does not define membership in
+   [conjectural learning](../../notes/definitions/conjectural-learning.md).
+   The investigation file is then deleted.
 
 ## Evaluation boundary
 
-Evidence is the investigation file as moved here, the theory-refinement
-definition and the definitions that depend on it, and the source ingests
+Evidence is the investigation file as moved here, the addressable-theory
+definition, the conjectural-learning definition, and the source ingests
 named above. The exploratory
 [ideal-interpreter workshop](../ideal-interpreter/README.md) owns the
 question of modelling the LLM as an interpreter of semantics; this workshop

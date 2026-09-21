@@ -28,15 +28,17 @@ and then say which results carry over and under what conditions.
 
 ## The same contract from the theory's side
 
-The [theory refinement](../../notes/definitions/theory-refinement.md)
-definition does not list operations. It lists three properties a theory must
-have: consequences a case can contradict, parts available as candidate repair
-locations, and parts editable separately. These are the interface seen from
-the theory's side. Derive and compare need the first; locate needs the second;
-revise and evaluate need the third. Neither list replaces the other. The
-properties say what the theory must be like; the operations say what the
-machinery must do with it. A note that eventually leaves this workshop should
-state that they are one contract.
+The [addressable-theory](../../notes/definitions/addressable-theory.md)
+definition supplies the structural properties this investigation compares
+with the classical repair interface: parts are available as candidate repair
+locations and can be revised separately, while assigned consequences determine
+whether a contradiction can be mechanically checked. Derive and compare need
+consequences; locate needs addressable parts; revise and evaluate need an
+editable representation and machinery that can test the result. The working
+hypothesis is that these are two views of one classical repair contract. A note
+that eventually leaves this workshop should test and state that relation. These
+properties do not define membership in
+[conjectural learning](../../notes/definitions/conjectural-learning.md).
 
 ## Who implements what
 
@@ -296,9 +298,10 @@ case set, which is some evidence that the placement is right.
 5. **Apply and the shared case.** Whether apply belongs in the interface or
    beside it, and how loop closure is stated as a constraint on which case
    compare receives.
-6. **Where the interface is written.** As a section of the theory-refinement
-   definition, stating the two views of one contract, or as its own note with
-   the definition linking it. The definition is already long.
+6. **Where the interface is written.** As a section of the addressable-theory
+   definition, stating the two views of one classical repair contract, or as
+   its own note with the definition linking it. Either placement must keep the
+   interface separate from conjectural-learning membership.
 7. **Which classical results we actually want.** The list above is what
    transfers. Which of it the program needs, and for which claim, is not yet
    decided. Listing results we will not use is the storage-without-consumption
