@@ -6,6 +6,7 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
+- [lead-article-learning-first](./lead-article-learning-first/README.md) — restructuring the lead conjectural-learning article around a new argument: the learning as ordinary (everyday, science, the docs-only case), the bet that computation can run the whole loop given a precise description, the need for code as well as prose, and conditional Bitter Lesson compatibility; holds a front-half draft and the fate of displaced sections
 - [unattended-processing-failure-modes](./unattended-processing-failure-modes/README.md) — cataloguing observable failure modes of chat-tuned models in unattended Commonplace processing, each admitted by a recorded instance and paired with a system-level countermeasure and a regression check; first entries are premature polishing (repair ordering), format-driven fabrication, and finding deference; the post-training cause stays a tentative frame
 - [schmidhuber-rsi-imports](./schmidhuber-rsi-imports/README.md) — assessing five RSI imports for natural-language procedures and semantic judgment: learning improvement procedures, directing search, alternative starting points, delayed credit, and full learning costs; includes a first experiment sketch
 - [institution-theory-import](./institution-theory-import/README.md) — assessing institution theory and adjacent semantic frameworks for natural-language interpretation, conformance, and constraining; separates useful conceptual imports from an unproved institutional formalization
