@@ -46,7 +46,7 @@ experiment without being ready for routine use or codification, because
 and [current task fit alone does not warrant costly entrenchment](./current-task-fit-alone-does-not-warrant-costly-entrenchment.md).
 Candidates below a use threshold can remain targets for inquiry; storing
 them does not make them accepted theory, and calling a theory
-[tentative](./definitions/theory-refinement.md#tentative-theory) does not
+[tentative](./definitions/tentative-theory.md) does not
 license any use.
 [WikiSkill](../sources/wikiskill-persistent-knowledge-for-skill-evolution.ingest.md)
 is the paradigm case of this separation built as a system: a skill is

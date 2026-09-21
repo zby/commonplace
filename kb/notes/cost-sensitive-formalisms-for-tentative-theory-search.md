@@ -13,7 +13,7 @@ in which a partial project theory orders search, a failed path may cause
 rollback or theory revision, and later search inherits retained effects from
 the failure?
 
-The target is the [tentative program theory](./definitions/theory-refinement.md#tentative-theory) described in [holding a program
+The target is the [tentative program theory](./definitions/tentative-theory.md) described in [holding a program
 theory means sustaining coherent search under delayed
 feedback](./program-theory-sustains-search-under-delayed-feedback.md). Ordinary
 nondeterministic reachability hides most of the relevant distinctions. It asks
@@ -221,7 +221,7 @@ search, evaluation, and operative-retention
 functions](./a-proposal-selection-loop-requires-search-evaluation-and-retention.md)
 with distinct resource measures. It would also preserve the requirement that
 theory use, consequence, revision, and later use remain on [one causally
-connected path](./reflective-theory-refinement-needs-interpretation-and-retention.md).
+connected path](./a-complete-theory-path-does-not-establish-improved-capacity.md).
 
 ## Complexity questions
 
@@ -259,6 +259,6 @@ Relevant Notes:
 
 - [Holding a program theory means sustaining coherent search under delayed feedback](./program-theory-sustains-search-under-delayed-feedback.md) — grounds: supplies the partial-theory, search, backtracking, delayed-evidence, and revision target being formalized
 - [A proposal-selection improvement loop requires search, evaluation, and operative retention](./a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — grounds: supplies the distinct functions to which resource budgets may attach
-- [Reflective theory refinement needs interpretation, retention, and independent read-back](./reflective-theory-refinement-needs-interpretation-and-retention.md) — grounds: supplies the connected causal path a cost model must preserve
-- [Learning by learning by theory refinement may improve sample efficiency under structured shifts](./learning-by-theory-refinement-may-improve-sample-efficiency.md) — extends: supplies the possible gain and broad-wrong-theory cost that a budgeted model could measure
+- [A complete theory path does not establish improved capacity](./a-complete-theory-path-does-not-establish-improved-capacity.md) — grounds: supplies the connected causal path a cost model must preserve
+- [Retained theories may improve sample efficiency under structured shifts](./retained-theories-may-improve-sample-efficiency.md) — extends: supplies the possible gain and broad-wrong-theory cost that a budgeted model could measure
 - [Gödel machines are a proof-governed case of reflective self-modification](./goedel-machines-are-a-proof-governed-case-of-self-modification.md) — contrasts: supplies the proof-gated case whose acceptance and failure costs differ from fallible empirical search

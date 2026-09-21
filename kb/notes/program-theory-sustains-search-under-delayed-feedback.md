@@ -33,7 +33,7 @@ and backtracking are therefore not signs that the theory was missing.
 A theory-holder may inspect the system, construct alternatives, test
 assumptions, make a tentative change, encounter a conflict, reverse course, or
 revise its account of what the program is for. Backtracking is not evidence
-that the theory was absent. It is one way a [tentative theory](./definitions/theory-refinement.md#tentative-theory) is used under
+that the theory was absent. It is one way a [tentative theory](./definitions/tentative-theory.md) is used under
 incomplete information.
 
 The theory supplies program-specific control over search:
@@ -71,7 +71,7 @@ the theory with a plausible wrong one adds a particular pattern of errors
 relative to a matched baseline, bending successive changes in the direction
 that the wrong theory predicts, as
 [broad negative transfer from a broad wrong
-theory](./learning-by-theory-refinement-may-improve-sample-efficiency.md)
+theory](./retained-theories-may-improve-sample-efficiency.md)
 predicts. If that effect appears beyond the baseline's existing biases,
 replacement discriminates better than withholding alone: the change in error
 pattern would show how the theory was steering. The prediction has not been
@@ -103,7 +103,7 @@ The initial decision may be weakly warranted. The modification process earns
 warrant through a track record under refuting exposure, including its capacity
 to detect mistakes and recover from them. Outcomes must be read back against
 the theory and affect later operation, as required by a
-[causally co-indexed refinement path](./reflective-theory-refinement-needs-interpretation-and-retention.md).
+[causally co-indexed theory path](./a-complete-theory-path-does-not-establish-improved-capacity.md).
 
 ## The bearer test and the hardest residual coincide
 
@@ -185,12 +185,12 @@ Relevant Notes:
 - [Naur binds program theory to humans by equating machine execution with formulated criteria](./naur-equates-machine-execution-with-formulated-criteria.md) — grounds: supplies Naur's bearer tests and leaves their satisfaction by a composite empirical
 - [Warranted transfer out of the human cut leaves people the hardest-to-warrant decisions](./warranted-transfer-leaves-people-the-hardest-to-warrant-decisions.md) — grounds: supplies the selection effect and least-warrantable residual identified with coherent modification here
 - [A proposal-selection improvement loop requires search, evaluation, and operative retention](./a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — mechanism: supplies the functions through which a tentative theory guides modification
-- [Reflective theory refinement needs interpretation, retention, and independent read-back](./reflective-theory-refinement-needs-interpretation-and-retention.md) — extends: requires the same theory to guide change, receive outcome read-back, be revised, and affect later operation
+- [A complete theory path does not establish improved capacity](./a-complete-theory-path-does-not-establish-improved-capacity.md) — extends: states the narrower longitudinal evidence claim: theory use, a response to criticism, and its result must affect later operation on one connected path; the theory text need not be revised
 - [Citing retained theory at the decision point is a mediation trace](./citing-retained-theory-at-the-decision-point-is-a-mediation-trace.md) — enables: records which theory was consumed while leaving load-bearing use open
 - [Design rationale must preserve decision premises its interpreter cannot regenerate](./design-rationale-must-preserve-unregenerable-decision-premises.md) — grounds: identifies program-specific premises generic search cannot reliably reconstruct
 - [A repeatable operative path keeps a redesign class open to revision](./a-repeatable-operative-path-keeps-a-redesign-class-open-to-revision.md) — extends: supplies continuity and executable recovery across later episodes
 - [Open-ended improvement must allocate search before decisive evaluation is available](./open-ended-improvement-allocates-search-before-evaluation.md) — grounds: establishes the prior allocation problem that makes program theory useful before the strongest evidence exists
 - [A failure explanation becomes search control only when it changes a later branch decision](./failure-explanation-changes-later-branch-decisions.md) — mechanism: makes outcome read-back operative by requiring retained failure interpretation to change a later branch choice
 - [A search controller is tested by what it brings to stronger evaluation](./a-search-controller-is-tested-by-what-it-brings-to-stronger-evaluation.md) — extends: supplies a matched downstream evaluation design for separating theory-guided routing from generic search without assuming exhaustive counterfactual search
-- [Learning by learning by theory refinement may improve sample efficiency under shifts](./learning-by-theory-refinement-may-improve-sample-efficiency.md) — extends: predicts the directional negative transfer that makes a wrong-theory arm the discriminating test
+- [Retained theories may improve sample efficiency under structured shifts](./retained-theories-may-improve-sample-efficiency.md) — extends: predicts the directional negative transfer that makes a wrong-theory arm the discriminating test
 - [The 2026-08-30 Commonplace revision used retained theory to guide computational search](./evidence/commonplace-revision-used-theory-guided-computational-search.md) — evidenced-by: records one human-inclusive case while preserving the missing ablation and longitudinal-track-record limits

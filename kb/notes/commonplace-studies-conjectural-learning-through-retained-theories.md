@@ -14,7 +14,7 @@ choice. Whether it offers advantages over other approaches is an empirical
 question.
 
 The [definition](./definitions/conjectural-learning.md) states when the term
-applies; the [precedents](./reflective-theory-refinement-has-three-separate-lineages.md) supplies the fuller
+applies; the [precedents note](./reflective-theory-refinement-has-three-separate-lineages.md) supplies the fuller
 attribution.
 
 ## Research program and development path

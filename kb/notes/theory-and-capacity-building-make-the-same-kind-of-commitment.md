@@ -31,9 +31,9 @@ Neither commitment needs to be correct or permanent; later experience can defeat
 
 Refactoring is the disciplined case on the constructive side: backtracking over a design commitment while preserving the externally observable behavior other commitments depend on. Broader retractions become redesign. At either scale the operation is the same — backtrack over a commitment, propagate the revision through its dependents — and it is part of what [holding a program theory means sustaining coherent search under delayed feedback](./program-theory-sustains-search-under-delayed-feedback.md) demands of a theory-holder. It is also why the current artifact alone can be insufficient for coherent modification: the learner needs enough theory to recognize which visible structures embody commitments and what else depends on them.
 
-## Learning by theory refinement is one causal path between the two forms
+## Conjectural learning is one causal path between the two forms
 
-Capacity does not have to be built through theory: search, optimization, and trajectory reuse can turn experience into constructive commitments directly. The hypothesis of [learning by theory refinement](./definitions/learning-by-theory-refinement.md) singles out one path:
+Capacity does not have to be built through theory: search, optimization, and trajectory reuse can turn experience into constructive commitments directly. [Conjectural learning](./definitions/conjectural-learning.md) singles out one path when formulating and criticizing theory causes improved capacity:
 
 ```text
 experience
@@ -44,7 +44,7 @@ experience
   -> theory revision
 ```
 
-Its value is empirical: if direct use of retained experience produces comparable capacity at comparable cost, the path loses support. What the path requires in order to run is stated in [reflective theory refinement needs interpretation and retention](./reflective-theory-refinement-needs-interpretation-and-retention.md).
+Its value is empirical: if direct use of retained experience produces comparable capacity at comparable cost, the path loses support. The [retained-theory arrangement](./commonplace-studies-conjectural-learning-through-retained-theories.md) studied by Commonplace also asks whether theory use, criticism, and the result of criticism affect later operation on one connected path. The theory can survive criticism without a text revision, and this narrower causal path does not define conjectural learning.
 
 The reverse path runs regardless. A constructive commitment creates machinery, the machinery produces new experience, and that experience can support, narrow, or defeat the theory that guided the construction. The two kinds of commitment can co-evolve without collapsing into one kind of retained state.
 
@@ -69,4 +69,4 @@ Relevant Notes:
 - [Design rationale must preserve decision premises its interpreter cannot regenerate](./design-rationale-must-preserve-unregenerable-decision-premises.md) — grounds: why the premises behind constructive commitments must themselves be retained
 - [Project-theory possession requires comparing new demands with existing organization](./project-theory-relates-new-demands-to-existing-organization.md) — extends: develops the historical component into a bearer test for open-ended modification
 - [Holding a program theory means sustaining coherent search under delayed feedback](./program-theory-sustains-search-under-delayed-feedback.md) — extends: places backtracking over commitments inside search guided by a tentative theory
-- [Reflective theory refinement needs interpretation, retention, and independent read-back](./reflective-theory-refinement-needs-interpretation-and-retention.md) — extends: states the functional requirements of the mediated causal path
+- [A complete theory path does not establish improved capacity](./a-complete-theory-path-does-not-establish-improved-capacity.md) — extends: states the functional requirements and evidential limit of the mediated causal path

@@ -105,7 +105,7 @@ stated in
   establish learning.
   Whether this approach outperforms alternatives is a further question,
   conjectured in the companion note and in
-  [learning by theory refinement may improve sample efficiency under structured shifts](../learning-by-theory-refinement-may-improve-sample-efficiency.md).
+  [retained theories may improve sample efficiency under structured shifts](../learning-by-theory-refinement-may-improve-sample-efficiency.md).
 - **Addressability is a stronger property, not a condition.** An
   [addressable theory](./addressable-theory.md) lets criticism name the part
   that probably caused a failure, and lets a revision act on that part. The

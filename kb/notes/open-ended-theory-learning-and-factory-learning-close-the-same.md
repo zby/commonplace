@@ -19,9 +19,9 @@ machinery; a Greenfield-style factory can be part of that machinery. The
 reflective theory describes the house's production organization, while a
 product theory describes the software it produces.
 
-The shared loop is the causally co-indexed path that [reflective theory
-refinement needs interpretation, retention, and independent
-read-back](./reflective-theory-refinement-needs-interpretation-and-retention.md)
+The shared loop is the causally co-indexed path that [a complete theory path
+does not establish improved
+capacity](./a-complete-theory-path-does-not-establish-improved-capacity.md)
 already names: a theory about the system's own
 [behavior-determining organization](./definitions/behavior-determining-organization.md)
 is posited, interpreted into a change, made operative, exposed to consequences
@@ -191,7 +191,7 @@ outside.
 
 Relevant Notes:
 
-- [Reflective theory refinement needs interpretation, retention, and independent read-back](./reflective-theory-refinement-needs-interpretation-and-retention.md) — grounds: supplies the causally co-indexed path the two directions are shown to converge on
+- [A complete theory path does not establish improved capacity](./a-complete-theory-path-does-not-establish-improved-capacity.md) — grounds: supplies the causally co-indexed path the two directions are shown to converge on
 - [Factory learning is experience-responsive retention that improves the factory](./factory-learning-is-experience-responsive-retention-that-improves.md) — grounds: supplies the factory-side starting requirement the second derivation begins from
 - [Discovery lifecycle](./definitions/discovery-lifecycle.md) — defined-in: supplies the six-phase model the first derivation begins from
 - [Holding a program theory means sustaining coherent search under delayed feedback](./program-theory-sustains-search-under-delayed-feedback.md) — grounds: supplies the coherence requirement that forces a held theory into the factory loop
@@ -202,4 +202,4 @@ Relevant Notes:
 - [Open-ended improvement must allocate search before decisive evaluation is available](./open-ended-improvement-allocates-search-before-evaluation.md) — grounds: the prior-allocation condition that a held theory is proposed to meet
 - [Learning inside a fixed decomposition inherits its mistakes](./learning-inside-a-fixed-decomposition-inherits-its-mistakes.md) — extends: what the supplied-provenance end of the second axis costs under empirical licensing
 - [Revising an improvement objective is licensed from outside it or is not improvement](./revising-an-improvement-objective-is-licensed-from-outside-it.md) — grounds: why a supplied utility function is unrevisable from inside the construction that serves it
-- [Reflective theory refinement has separate structural, epistemic, and implementation lineages](./reflective-theory-refinement-has-three-separate-lineages.md) — extends: positions the same program against its runtime-reflection and theory-refinement lineages
+- [Conjectural learning has distinct precedents](./conjectural-learning-has-distinct-precedents.md) — extends: distinguishes the program's epistemic, structural, and implementation precedents

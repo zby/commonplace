@@ -53,7 +53,7 @@ The relevant self-knowledge is therefore not a complete theory of the model's in
 
 Guiding factory development by a theory does not require a complete account that deductively yields the right factory change. Real software development commonly proceeds from partial and sometimes mistaken understanding. A developer uses that understanding to choose a promising change, inspects the result, encounters conflicts, backtracks, and revises both the program and the understanding of it.
 
-A computational theory-holder should be judged by the same longitudinal standard. A weak theory can still be operative when it narrows search, identifies commitments worth preserving, interprets failure, or tells recovery what to restore or revise. Backtracking is not evidence that theory was absent; it is one way a [tentative theory](./definitions/theory-refinement.md#tentative-theory) remains corrigible under incomplete information.
+A computational theory-holder should be judged by the same longitudinal standard. A weak theory can still be operative when it narrows search, identifies commitments worth preserving, interprets failure, or tells recovery what to restore or revise. Backtracking is not evidence that theory was absent; it is one way a [tentative theory](./definitions/tentative-theory.md) remains corrigible under incomplete information.
 
 ```text
 partial theory
@@ -133,7 +133,7 @@ A loss by the natural-language surface would not by itself show that the success
 
 A natural-language artifact can be consumed as evidence, advice, an instruction, a constraint, or a generator input. Merely storing a theory beside the factory does not put it on the causal path of production. The causal path must show how the theory changes model calls or executable machinery and how later evidence revises the same retained surface.
 
-Conversely, theory need not remain in natural language forever. Stable claims can be codified into validators, schemas, tools, or workflows. A brittle symbolic rule can be relaxed back into an interpretable hypothesis. [Theory refinement](./definitions/theory-refinement.md) describes the learning relation, not a requirement that every useful result remain prose.
+Conversely, theory need not remain in natural language forever. Stable claims can be codified into validators, schemas, tools, or workflows. A brittle symbolic rule can be relaxed back into an interpretable hypothesis. [Addressability](./definitions/addressable-theory.md) describes the property this narrower conjecture requires, not a requirement that every useful result remain prose.
 
 ## Scope
 
@@ -153,6 +153,6 @@ Relevant Notes:
 - [Naur binds program theory to humans by equating machine execution with formulated criteria](./naur-equates-machine-execution-with-formulated-criteria.md) — grounds: supplies the project-theory functions and reopens their allocation to a computational composite
 - [Holding a program theory means sustaining coherent search under delayed feedback](./program-theory-sustains-search-under-delayed-feedback.md) — grounds: explains why a partial and tentative theory can guide search, backtracking, and revision
 - [Factory-learning mechanisms should be compared on the same causal job](./factory-learning-mechanisms-should-be-compared-on-the-same-causal-job.md) — grounds: separates the minimal update relation from the stronger coherent-modification target
-- [Reflective theory refinement needs interpretation and retention](./reflective-theory-refinement-needs-interpretation-and-retention.md) — grounds: supplies the causal mediation and retained-revision requirements
-- [Learning by learning by theory refinement may improve sample efficiency under shifts](./learning-by-theory-refinement-may-improve-sample-efficiency.md) — extends: states the structured-transfer conjecture
+- [A complete theory path does not establish improved capacity](./a-complete-theory-path-does-not-establish-improved-capacity.md) — grounds: supplies the causal mediation requirements for the retained path studied here
+- [Retained theories may improve sample efficiency under structured shifts](./retained-theories-may-improve-sample-efficiency.md) — extends: states the structured-transfer conjecture
 - [Natural-language project state specializes search heuristics](./natural-language-project-state-specializes-search-heuristics.md) — mechanism: explains one way explicit theory can alter an LLM's proposal distribution
