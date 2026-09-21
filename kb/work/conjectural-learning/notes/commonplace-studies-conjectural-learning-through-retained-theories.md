@@ -81,7 +81,7 @@ remain in the trace.
 ## Evidence
 
 Reading the artifacts can establish that criticism was formulated. Showing
-that its content affected future use requires causal evidence. Compare
+that its content affected later action requires causal evidence. Compare
 relevant content with altered or mismatched content while controlling its
 form. Removing the artifact alone cannot distinguish a content effect from
 the effect of supplying text at all. These are ways to investigate membership,
@@ -90,9 +90,11 @@ not additional conditions for belonging to the class; see the
 and [experimental contrasts](../../../notes/an-experiment-identifies-only-the-contrast-it-actually-runs.md).
 Failure to detect an effect leaves membership unestablished by that test;
 it does not by itself establish absence. Demonstrating the mechanism also
-requires a separate assessment of whether future use improved before it
-establishes learning. Failed attempts can occur within a process that learns;
-an advantage over alternative approaches is a further claim.
+requires a separate assessment of whether the system's capacity for future
+action improved before it establishes learning. Observed action provides
+evidence of that capacity; lack of exercise alone establishes neither its
+presence nor its absence. Failed attempts can occur within a process that
+learns; an advantage over alternative approaches is a further claim.
 
 Experiments compare specified arrangements of evidence, criticism, and
 retention. Holding the model fixed does not hold its internal processing

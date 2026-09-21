@@ -1,18 +1,16 @@
 ---
-description: "Definition — conjectural learning is learning in which formulated tentative theories are operative objects within the learning system: used, criticized for what they say, with the result of that criticism carried into future use"
+description: "Definition — conjectural learning is learning in which formulated tentative theories are operative in the learning system: used, criticized for what they say, with the result changing the system's capacity for future action"
 type: kb/types/definition.md
 tags: [foundations, self-improving-systems, learning-theory]
 ---
 
 # Conjectural learning
 
-Draft boundary under review: see the [naming clean-up proposal](../naming-clean-up-proposal.md).
-
 **Conjectural learning** is learning in which tentative theories are
 formulated, operative objects within the learning system: the system uses
 them, criticizes what they say, and carries the result of that criticism
-into future use. It is Popper's process of conjecture and criticism
-under two conditions:
+into its capacity for future action. It is Popper's process of conjecture and
+criticism under two conditions:
 
 1. **A formulated theory is operative.** A
    [tentative theory](./tentative-theory.md) is formulated in language,
@@ -20,19 +18,20 @@ under two conditions:
    through what it says: a difference in its content that matters to a
    decision changes that decision
    ([operative change](../../../notes/definitions/operative-change.md)).
-2. **Criticism of what the theory says affects future use.** Criticism here
-   means an attempt to find an error: an argument,
+2. **Criticism of what the theory says changes the system's capacity for
+   future action.** Criticism here means an attempt to find an error: an argument,
    or a test of a stated consequence, aimed at something the theory says, and
    itself formulated in language. When the criticism counts against the
    theory, the theory is revised or replaced in response. When the theory
    survives, the result adds to its record of testing. Surviving a serious
    test can strengthen the grounds for relying on the theory as background
    for other theories, or for spending less effort repeating tests of the
-   same vulnerability. This changes its assessed support and subsequent use
-   without changing its content or tentative status. The grounds extend only
-   to what the test actually challenged. In both cases the result guides
-   future use. Recording a result without using it does not establish
-   learning by the system.
+   same vulnerability. This changes its assessed support and how the system
+   would subsequently use it, without changing its content or tentative
+   status. The grounds extend only to what the test actually challenged. In
+   both cases the result changes what the system would later do. A
+   recorded result that no process in the system would consult changes
+   nothing.
 
 The unit is the whole learning system, with a declared boundary that includes
 its participating people and services. Prompts, files, code, tests, records,
@@ -40,10 +39,14 @@ and model weights can all be internal parts. Location inside or outside the
 weights, formulated or latent content, and the system boundary are separate
 distinctions. Fixed weights are a study condition, not a definitional one.
 
-Learning requires improvement in future use attributable to the persisted
-effect of criticism. Exercising the process without that improvement is an
-attempt to learn. Individual criticisms and revisions can fail within a
-process that does produce learning.
+Learning is an improvement in the system's capacity for future action: what the
+system as it stands would do when an occasion arises. The occasion need not
+have arisen; observed action provides evidence of the capacity. Action
+includes developing and testing further theories, and decisions about what
+to rely on or investigate next. The improvement must be attributable to the
+persisted effect of criticism. Exercising the process without that
+improvement is an attempt to learn. Individual criticisms and revisions can
+fail within a process that does produce learning.
 
 The effect can persist in retained theories and their testing records, or in
 retained criticisms used to reconstruct theories. Indexed traces can retain
@@ -70,9 +73,10 @@ rather than instruction:
 | Elimination | All error elimination, from the death of the carrier to conscious criticism | Criticism of what the theory says |
 
 Popper's criterion for objective knowledge does not require actual use by a
-particular system. Establishing that the system learned does: the theory
-must guide its decisions, and criticism must affect its future use.
-Commonplace specifies these attribution conditions. Popper also describes
+particular system. Attributing learning to a system requires more than
+available content: the theory must guide its decisions, and criticism must
+change its capacity for future action. Observed action provides evidence of
+that capacity. Commonplace specifies these attribution conditions. Popper also describes
 self-criticism and feedback between people and their work
 ([1968, §9](../../../sources/popper-epistemology-without-a-knowing-subject-1968.ingest.md#quotes));
 the distinction concerns what establishes learning by this system.
@@ -83,24 +87,31 @@ stated in
 
 ## Scope
 
-- **Learning concerns future improvement.** The relevant time span comes
-  from the future use that the learning is meant to improve. Conjectural
-  learning adds no separate temporal condition. A claim about its effects
-  identifies that use and the evidence of what improved.
-- **The term classifies by what is formulated and persists.** It makes no
-  claim about what happens inside the model. A model may criticize
-  conjectures internally while reading raw records, as training may do inside
-  the weights. Such criticism leaves nothing formulated to inspect or to
-  criticize in turn, so it falls outside the term.
+- **Learning is a change in capacity for future action.** What improves is what
+  the system as it stands would do when an occasion arises, whether or not
+  one has arisen. A retained result counts only if a process in the system
+  would consume it. A claim identifies the action the improved capacity is
+  for and the evidence of improvement. If it claims that the capacity remains
+  available at a later time, the effect of criticism must persist to that
+  time. Conjectural learning adds no minimum duration.
+- **Formulation is required; observer access is not.** Theories and criticism
+  must be formulated in natural or formal language. A model may formulate and
+  criticize conjectures in text that no observer sees. Whether a particular
+  model performs such formulation internally remains unestablished when the
+  evidence is insufficient. Where evidence does not establish formulation,
+  criticism, causal use, or improvement, membership remains unestablished.
+  Opacity alone establishes neither presence nor absence.
 - **Membership and evidence of membership are distinct.** The theory's
-  content and the result of criticism must affect future use. Whether that
-  causal relation and resulting improvement have been demonstrated is a
+  content and the result of criticism must change the system's capacity for
+  future action. Observed action provides evidence of that capacity. Whether
+  the causal relation and resulting improvement have been demonstrated is a
   separate question; an untested case can remain unclassified. The companion's
   [evidence discussion](../notes/commonplace-studies-conjectural-learning-through-retained-theories.md#evidence)
   describes how to investigate it.
 - **Improvement does not require a faultless theory.** A theory can remain
-  mistaken in some respects while supporting improved future use. A revision
-  that merely changes behavior does not by itself establish learning.
+  mistaken in some respects while supporting an improved capacity for
+  future action. A revision that merely changes behavior does not by itself
+  establish learning.
   Whether this approach outperforms alternatives is a further question,
   conjectured in the companion note and in
   [learning by theory refinement may improve sample efficiency under structured shifts](../../../notes/learning-by-theory-refinement-may-improve-sample-efficiency.md).
@@ -125,11 +136,12 @@ stated in
 
 These examples show where the term applies and where it does not. Some also
 serve as experimental baselines; a baseline can lie on either side of the
-boundary. The inside cases assume that the stated process improves future
-use; without improvement they describe attempts to learn.
+boundary. The inside cases assume that the stated process improves the
+system's capacity for future action; without improvement they describe
+attempts to learn.
 
 - **A theory criticized and replaced whole.** Inside when the criticism
-  bears on its content and the replacement guides later use. Separately
+  bears on its content and the replacement guides later action. Separately
   editable parts are not required.
 - **Reconstruction from retained criticisms.** Inside when formulated
   criticisms and their results guide reconstruction of a theory that is
@@ -141,9 +153,10 @@ use; without improvement they describe attempts to learn.
   [testing supplement](../../../articles/testing-the-theory-refinement-program.md#the-hypotheses).
 
 - **A theory built while reasoning and then discarded.** Inside if
-  formulated criticism affects future use before the theory is discarded,
-  or through a retained result afterward. Outside if the theory is merely
-  applied and nothing learned from criticism affects future use.
+  formulated criticism changes the system's capacity for future action, before
+  the theory is discarded or through a retained result afterward. Outside if
+  the theory is merely applied and nothing learned from criticism changes
+  that capacity.
 - **Records retaining only inputs and outcomes.** These supply evidence for
   reconstruction without retaining formulated conjectures or criticism.
   This is a comparison of retained content, not a claim about what the
@@ -155,8 +168,10 @@ use; without improvement they describe attempts to learn.
   formulated reason for a failure bears on what a variant says. Real systems
   fall between this case and conjectural learning. The test is whether a
   stated reason bears on what the theory says.
-- **Weight adaptation alone.** Something persists, but nothing is formulated, so
-  there is nothing to criticize, replace, or inspect on its own.
+- **Weight adaptation alone.** Something persists, but by stipulation nothing
+  is formulated, so there is nothing to criticize, replace, or inspect on its
+  own. A system whose weights adapt and whose formulations are unknown is a
+  different case, and it stays unclassified.
 - **Justification before change.** A formulated theory guides decisions and
   is revised only when it proves its own revision beneficial, as in the
   [Gödel machine](../../../notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md).
@@ -164,8 +179,10 @@ use; without improvement they describe attempts to learn.
   premises are never exposed to criticism. The theory is operative and
   uncriticized.
 
-- **A stored theory or record that nothing consumes.** It is not on the
-  causal path of decisions;
+- **A stored theory or record that nothing consumes.** No process in the
+  system would consume it, so it is not on the causal path of decisions and
+  adds no capacity. A theory that a process would consume when an occasion
+  arises is not this case. See
   [a representation matters only through its consumption path](../../../notes/an-action-model-matters-only-through-its-consumption-path.md).
   As a baseline it is the same system run without the theory.
 

@@ -35,8 +35,10 @@ stored or edited. Structural properties have their own term,
   storage outside the model weights, separately editable parts, or a particular consumer. A
   theory that can only be replaced whole is still tentative. Popper applies
   the schema to expectations and behaviour as well as to formulated theories;
-  on that wide reading the dispositions held in a model's weights are
-  tentative theories too, though nothing in them is formulated.
+  on that wide reading the dispositions held in a model's weights count as
+  tentative theories too. Applying his account of dispositions to weights is
+  our interpretation, not a finding about any particular model, and it does
+  not establish that nothing in a model is formulated.
   [Conjectural learning](./conjectural-learning.md) covers only the
   formulated ones.
 - **Criticism is broader than empirical test.** A tentative theory may be

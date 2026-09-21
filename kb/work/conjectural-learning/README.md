@@ -19,7 +19,7 @@ and a separate term for the loop because the borrowed name denotes one
 operation.
 
 Commissioned by the operator on 2026-09-19, with further decisions on
-2026-09-20. Current decisions and their rationale are in the
+2026-09-20 and 2026-09-21. Current decisions and their rationale are in the
 [decision record](./definition-decision-record.md#settled-decisions).
 
 ## End state and acceptance
@@ -51,10 +51,13 @@ Do not enrich the classical theory-refinement account as an intermediate step.
 
 ## Pending work
 
-The [naming clean-up proposal](./naming-clean-up-proposal.md) and its reviews
-reopen the relation between the term's scope and accessible formulation. That
-question and the reorganization of the reconstruction comparison remain
-pending; the proposal has not been adopted. The
+The [Schmidhuber import message](./schmidhuber-import-message.md) frames an
+assessment of the RSI proposals against this ontology, with freedom to reject
+them and no authority to change settled scope.
+
+The capacity and observer-access decisions and their wording review are
+integrated in the [decision record](./definition-decision-record.md#settled-decisions)
+and drafts. Reorganization of the reconstruction comparison remains pending. The
 [indexing example](./indexing-applicability-example.md) records a practical
 retrieval issue for that comparison.
 
