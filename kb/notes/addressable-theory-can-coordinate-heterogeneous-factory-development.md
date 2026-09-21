@@ -64,7 +64,7 @@ partial theory
   -> changed theory and later search
 ```
 
-A theory that never risks revision is not made stronger by surviving only the evidence it selected for itself. Independent tests, later demands, rival explanations, and negative transfer are needed to turn plausible guidance into learning.
+A theory that never risks revision is not made stronger by surviving only the evidence it selected for itself. Independent tests, later demands, rival explanations, and negative transfer can challenge plausible guidance and support this longitudinal claim. Learning requires that criticism improve capacity for future action; these are possible criticism and evidence routes, not a mandatory set of tests or a requirement for a separate critic.
 
 ## Theory guides search; it does not replace it
 

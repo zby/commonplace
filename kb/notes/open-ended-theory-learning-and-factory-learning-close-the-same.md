@@ -1,5 +1,5 @@
 ---
-description: "Derives one reflective loop from both open-ended theory learning and software-factory learning, and places the Gödel machine by transition licensing and theory provenance"
+description: "In the retained self-directed arrangement, theory learning and software-factory learning require one connected reflective path; proof-governed switching alone does not settle criticism"
 type: kb/types/note.md
 traits: [title-as-claim, synthesis, has-comparison]
 tags: [foundations, self-improving-systems, learning-theory]
@@ -7,7 +7,8 @@ tags: [foundations, self-improving-systems, learning-theory]
 
 # Open-ended theory learning and factory learning close the same reflective loop
 
-Two research directions in this knowledge base look like separate programs. One
+Two research directions in the retained self-directed arrangement studied here
+look like separate programs. One
 asks how a system acquires, tests, and revises explanatory theories about its
 own organization. The other asks how [a software factory learns from its production experience](./factory-learning-is-experience-responsive-retention-that-improves.md). They are
 the same loop reached from opposite ends: each, pushed to where it stops being
@@ -24,10 +25,13 @@ does not establish improved
 capacity](./a-complete-theory-path-does-not-establish-improved-capacity.md)
 already names: a theory about the system's own
 [behavior-determining organization](./definitions/behavior-determining-organization.md)
-is posited, interpreted into a change, made operative, exposed to consequences
-its author did not write, read back against the same retained object, revised,
-and consumed again. The convergence claim is that neither starting direction can
-stop short of this whole path.
+is posited, interpreted into a change, made operative, and exposed to consequences
+its author did not write. Criticism of the theory then affects later use through
+revision, reconstruction, or changed reliance on unchanged content. The
+convergence claim concerns this recurrent empirical arrangement. A connected
+path still needs evidence of improved capacity before it establishes learning;
+retention and recurrence are not universal conditions of
+[conjectural learning](./definitions/conjectural-learning.md).
 
 ## From theory learning down to production machinery
 
@@ -36,14 +40,15 @@ conjecture, derive consequences, test, accept, integrate — on conjectures whos
 object is the conjecturing system's own organization. Two of its phases then
 have only one affordable realization.
 
-**Testing needs operative retention.** For a theory about an external domain,
+**This longitudinal test needs persistent effects.** For a theory about an external domain,
 the discriminating consequences can be gathered by observing that domain without
 touching the observer. For a theory about the system's own organization, the
 consequences that bear on it are largely the consequences of acting on it: what
 a change guided by the theory costs when a later demand arrives. So the theory
-must already be operative—retained, and acted on by later work—before the
-evidence that could defeat it exists. The test phase does not precede operative
-retention; it depends on it.
+must already have guided an operative change before that later evidence exists.
+The change must persist to the claimed horizon; the assembled theory need not.
+It may be reconstructed from retained criticism. This test phase depends on
+operative effects, without making retention of the theory a learning condition.
 
 **Integration is a machinery change.** The lifecycle's final phase reconnects
 prior evidence under the accepted claim and updates the artifacts that use it.
@@ -132,18 +137,19 @@ are replacing or augmenting axioms with theorems derivable from the original
 axioms, and changing the utility function only when the new one is provably
 better according to the old
 ([Schmidhuber, §6.1 (snapshot required)](../sources/goedel-machines-schmidhuber.ingest.md)).
-No rewrite challenges what the axioms assume about the environment. Its
-provenance sits at the supplied end: the theory changes only with its own
-permission.
+That admission rule supplies no evidence that the environmental assumptions
+themselves were criticized. It licenses the admitted rewrite from supplied
+premises; it does not classify every epistemic process in a complete deployment.
 
 The Gödel machine therefore enters as a contrast case, not a maturity endpoint.
 It closes the [proposal-selection improvement
 loop](./a-proposal-selection-loop-requires-search-evaluation-and-retention.md)
 completely — search, reject-capable evaluation, and operative retention are all
-present and mechanized — while leaving the theory-learning loop empty. Its
-self-representation is a premise, not a candidate: the machine can improve
-indefinitely without exposing its account of its own organization to
-criticism.
+present in the construction. If its premises are never criticized, as
+stipulated in the proof-only comparison case, that process does not establish
+conjectural learning. The switching rule alone does not establish the absence
+of criticism elsewhere in a complete system. Its guarantee remains conditional
+on the formalization and the availability of the required proof.
 
 That separability makes the convergence claim contentful rather than
 definitional: pin provenance to supplied-and-fixed and the two loops come apart
@@ -181,9 +187,8 @@ outside.
 - Is there a constructible system at the proof-licensed, acquired-provenance
   corner, or does proof licensing force supplied provenance in practice by
   requiring the theory to be axiomatized before it can license anything?
-- What is the weakest evidence that a system revised its own theory rather than
-  regenerating a different one, given that only revision preserves the
-  addressability the loop depends on?
+- What evidence distinguishes revision from reconstruction of a theory, and
+  when does that difference matter if both expose addressable theories?
 - Can either derivation be run with a human removed from the acceptance step
   without collapsing to the fixed-provenance corner?
 
@@ -197,7 +202,7 @@ Relevant Notes:
 - [Holding a program theory means sustaining coherent search under delayed feedback](./program-theory-sustains-search-under-delayed-feedback.md) — grounds: supplies the coherence requirement that forces a held theory into the factory loop
 - [Commitment, not derivation, creates new ground truth](./commitment-not-derivation-creates-new-ground-truth.md) — grounds: why an acquired factory theory is ampliative and revisable rather than recomputable
 - [Gödel machines are a proof-governed case of reflective self-modification](./goedel-machines-are-a-proof-governed-case-of-self-modification.md) — contrasts: develops the licensing axis and supplies the construction this note re-places on the provenance axis
-- [A proposal-selection improvement loop requires search, evaluation, and operative retention](./a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — contrasts: the loop the Gödel machine closes completely while leaving the theory-learning loop empty
+- [A proposal-selection improvement loop requires search, evaluation, and operative retention](./a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — contrasts: the loop supplied by the Gödel-machine construction without thereby classifying criticism in a complete deployment
 - [Improvements outside the admitted formal language need a pre-formal stage somewhere](./unformalized-improvements-need-a-pre-formal-stage-in-the-loop.md) — mechanism: theory provenance decides whether that stage sits inside the loop or at design time
 - [Open-ended improvement must allocate search before decisive evaluation is available](./open-ended-improvement-allocates-search-before-evaluation.md) — grounds: the prior-allocation condition that a held theory is proposed to meet
 - [Learning inside a fixed decomposition inherits its mistakes](./learning-inside-a-fixed-decomposition-inherits-its-mistakes.md) — extends: what the supplied-provenance end of the second axis costs under empirical licensing
