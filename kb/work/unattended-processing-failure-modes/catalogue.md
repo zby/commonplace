@@ -15,7 +15,7 @@ Admission rule and entry status are defined in the [README](./README.md). Each a
 **The ordering rule, and why it is not "deepest first".** Two effects compete.
 
 - *Invalidated-work cost.* A deeper repair may replace the region a shallower repair touched. The shallower repair is then wasted.
-- *Preparatory value.* Some local changes make the later structural repair more reliable: standardizing a term, removing a duplicated passage, flattening an unnecessary nesting. The observable effect is a reduction in the number of simultaneous inconsistencies or distinctions the structural transformation has to carry. A transformation over a text that uses one term for one concept has fewer ways to go wrong than the same transformation over a text that uses three.
+- *Preparatory value.* Some local changes make the later structural repair more reliable: standardizing a term, removing a duplicated passage, flattening an unnecessary nesting. The observable effect is a reduction in the number of simultaneous inconsistencies or distinctions the structural transformation has to carry. A transformation over a text that uses one term for one concept has fewer ways to go wrong than the same transformation over a text that uses three. This is the context-complexity effect of [soft degradation](../../notes/soft-degradation-often-binds-before-the-hard-cap-when-evidence-fits.md) applied to editing: complexity and interference constrain usable context before volume does, so removing distinctions the transformation does not need leaves more of the budget for the ones it does. That the effect is large enough to matter for a single-note repair is untested; the regression check below is designed to measure it.
 
 So the rule is:
 
