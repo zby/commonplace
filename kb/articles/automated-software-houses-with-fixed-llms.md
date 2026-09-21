@@ -3,7 +3,7 @@ description: "Conjecture that an automated software house can sustain open-ended
 type: kb/articles/types/article.md
 status: superseded
 superseded_by:
-  - kb/articles/an-automated-software-house-as-a-second-test-of-theory-refinement.md
+  - kb/articles/an-automated-software-house-as-a-second-test-of-conjectural-learning.md
 byline: Zbigniew Lukasiak
 source_notes:
   - kb/notes/code-complements-weight-prompt-with-symbolic-operations.md
@@ -20,12 +20,12 @@ source_notes:
 *Open-ended software development with fixed LLMs*
 
 > **Superseded draft.** This draft is replaced by [An Automated Software
-> House as a Second Test of Theory
-> Refinement](./an-automated-software-house-as-a-second-test-of-theory-refinement.md),
+> House as a Second Test of Conjectural
+> Learning](./an-automated-software-house-as-a-second-test-of-conjectural-learning.md),
 > which keeps the conjecture, the Naur argument, and the witness conditions
 > in a shorter form. The research program this draft introduced is now
-> introduced by [Learning by Theory Refinement with Fixed
-> Models](./learning-by-theory-refinement-with-fixed-models.md). The text
+> introduced by [Conjectural Learning with Fixed
+> Models](./conjectural-learning-with-fixed-models.md). The text
 > below is kept at this address so that existing links resolve. It is no
 > longer maintained, and the successor differs from it in places: witness
 > condition 1, the Gödel-machine contrast, and what a successful witness run

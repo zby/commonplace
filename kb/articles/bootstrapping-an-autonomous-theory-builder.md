@@ -24,14 +24,15 @@ source_notes:
 *A research program for moving a system's internal decisions from people to computation*
 
 > **Draft supplement.** This develops the route from Commonplace today to
-> the system that [Learning by Theory Refinement with Fixed
-> Models](./learning-by-theory-refinement-with-fixed-models.md) would test.
+> the system that [Conjectural Learning with Fixed
+> Models](./conjectural-learning-with-fixed-models.md) would test.
 > It may change. Comments and counterexamples are welcome on [the
 > repository's GitHub Discussions
 > page](https://github.com/zby/commonplace/discussions).
 
 **TL;DR.** A *theory builder* is the complete persistent system responsible
-for developing and revising the written theories it learns by. Commonplace
+for developing and revising addressable tentative theories. This responsibility
+does not itself establish successful learning. Commonplace
 is one: it produces a knowledge base for consuming projects, and people
 still fill several of its internal roles. This bootstrap program transfers
 bounded classes of those internal decisions to computation, one trial at a
@@ -134,7 +135,7 @@ delivered product.
 Learning transfer is the broader category, and it is not yet reflection. A
 builder could satisfy it by patching its selector directly from failure
 records, with no account of why. The lead article's [reflective
-case](./learning-by-theory-refinement-with-fixed-models.md#what-is-new-in-the-setting)
+case](./conjectural-learning-with-fixed-models.md#reflection-and-autonomy)
 asks for more: a theory of the builder's own machinery, connected to that
 machinery in both directions, so that revising the theory changes the
 machinery and changing the machinery updates the theory. A learning-transfer
@@ -146,7 +147,7 @@ selector under external assessment. The comparison is a matched builder that
 retains the same failure records and may patch its selector but keeps no
 account.
 
-The program's [hypotheses](./testing-the-theory-refinement-program.md#the-hypotheses)
+The program's [hypotheses](./testing-the-conjectural-learning-program.md#the-hypotheses)
 allow a human-built seed. The sufficiency hypothesis asks whether a builder
 can then reach a reliability target with no person in an internal role,
 which presupposes operational transfer of every such role. The reflection
@@ -212,7 +213,7 @@ builder need not keep them in separate kinds of artifact.
 This trial would test whether computation can decide which checks a Markdown
 edit needs, and whether experience improves later check selection. The [lead
 article's release
-exporter](./learning-by-theory-refinement-with-fixed-models.md#a-case)
+exporter](./conjectural-learning-with-fixed-models.md#a-case)
 provides a concrete setting: it produces a deployment manifest for an
 installer, and duplicate service identifiers make that manifest invalid. The
 setting is a small software product because its failures are cheap to
@@ -264,7 +265,7 @@ failure did not involve, while holding fixed every other retained artifact
 that could hold the learned information.
 
 The trial could also support the [evidence supplement's
-comparison](./testing-the-theory-refinement-program.md#component-experiments-that-can-run-first)
+comparison](./testing-the-conjectural-learning-program.md#component-experiments-that-can-run-first)
 of an explicit theory with raw records, a descriptive summary, and a
 plausible wrong theory. Changes that preserve the initial dependency account
 and changes that break it test different predictions: the first should
@@ -385,9 +386,9 @@ success is the self-confirming evaluation above.
 
 ## Where this leaves the series
 
-The [lead article](./learning-by-theory-refinement-with-fixed-models.md)
+The [lead article](./conjectural-learning-with-fixed-models.md)
 supplies the learning paradigm, and the [evidence
-supplement](./testing-the-theory-refinement-program.md) supplies the
+supplement](./testing-the-conjectural-learning-program.md) supplies the
 hypotheses and the protocol under which a consuming project would judge the
 result. This program tests a route toward an autonomous builder by measuring
 changes in the internal decisions and project-specific machinery supplied by
@@ -397,9 +398,9 @@ revision.
 The transfer analysis does not depend on the product. Applied to a software
 house, the internal roles are production roles and the target is a house
 meeting the [four witness
-conditions](./an-automated-software-house-as-a-second-test-of-theory-refinement.md#what-a-witness-house-must-show).
+conditions](./an-automated-software-house-as-a-second-test-of-conjectural-learning.md#what-a-witness-house-must-show).
 The evidence supplement [defines continuation
-reliability](./testing-the-theory-refinement-program.md#what-a-runs-path-can-and-cannot-show)
+reliability](./testing-the-conjectural-learning-program.md#what-a-runs-path-can-and-cannot-show)
 for a system that is already adequate; how
 human-inclusive operation can lead to such a system is this article's
 separate question.

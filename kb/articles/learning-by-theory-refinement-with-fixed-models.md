@@ -1,445 +1,419 @@
 ---
-description: "Lead article: learning by theory refinement with fixed model weights as a learning paradigm, its departures from classical refinement, its conjectured attractions, and an outline of the theory builder, hypotheses, and first arrangement"
+description: "Lead article on conjectural learning, Commonplace's retained addressable fixed-model study arrangement, its mechanism conjectures, and the distinct externally assessed theory-builder hypotheses"
 type: kb/articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
 source_notes:
-  - kb/notes/definitions/learning-by-theory-refinement.md
-  - kb/notes/definitions/theory-refinement.md
+  - kb/notes/definitions/conjectural-learning.md
+  - kb/notes/definitions/tentative-theory.md
+  - kb/notes/definitions/addressable-theory.md
+  - kb/notes/commonplace-studies-conjectural-learning-through-retained-theories.md
   - kb/notes/definitions/theory-builder.md
-  - kb/notes/definitions/externally-tested-theory-builder.md
   - kb/notes/definitions/reflective-theory-builder.md
+  - kb/notes/definitions/externally-tested-theory-builder.md
   - kb/notes/definitions/autonomous-theory-builder.md
+  - kb/notes/reflective-theory-refinement-needs-interpretation-and-retention.md
+  - kb/notes/learning-by-theory-refinement-may-improve-sample-efficiency.md
   - kb/notes/the-deployed-system-not-the-model-is-the-unit-of-learning.md
   - kb/notes/retained-artifacts-enable-persistent-deployment-time-adaptation.md
   - kb/notes/continual-learning-requires-governing-behaviour-changing-writes.md
   - kb/notes/the-bitter-lesson-selects-production-methods-not-representational.md
-  - kb/notes/learning-by-theory-refinement-may-improve-sample-efficiency.md
   - kb/notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md
   - kb/notes/a-fixed-model-house-must-write-the-procedures-for-each-new-theory.md
   - kb/notes/a-claim-without-external-assessment-carries-three-obligations.md
   - kb/notes/retaining-the-episode-keeps-a-distilled-rule-re-derivable.md
 ---
-# Learning by Theory Refinement with Fixed Models
 
-*A research program for systems that learn outside their weights*
+# Conjectural Learning with Fixed Models
 
-> **Draft.** This article may change. Comments and counterexamples are welcome
-> on [the repository's GitHub Discussions page](https://github.com/zby/commonplace/discussions).
+> **Draft.** The claims and structure of this article may change. Comments
+> and counterexamples are welcome on
+> [the repository's GitHub Discussions page](https://github.com/zby/commonplace/discussions).
 
-**TL;DR.** We propose a learning paradigm for systems built around large
-language models: the system learns by refining written theories that it
-retains outside the model and consults on later work. We study it with the
-model weights held fixed, so that any learning has to come from what is
-retained. What is learned is a *tentative theory*, an explicit and revisable
-account of some subject that guides the system's decisions. The system
-revises it by *theory refinement*, an established learning operation that
-seeks to correct an existing theory against new cases while preserving
-useful prior knowledge.
-The setting is new. The paradigm is set against two alternatives: adapting
-the weights, and retaining raw records or summaries of experience without
-an explanation. Its three attractions are each still a conjecture: learning
-is continual, it may need fewer observations, and each learned part can be
-read, and the part to revert can be found along with what depends on it.
-This article states the paradigm. The supplements state how it would be
-tested and which system would be tested first. No test has been run.
+A system can learn by formulating theories, using them to make decisions,
+and criticizing what they say. It learns when the result of that criticism
+improves its capacity for future action. We call this *conjectural learning*,
+a specification of Popper's process of conjecture and criticism for a
+learning system. Commonplace studies one arrangement: language models
+interpret retained, separately revisable theories while their weights stay
+fixed. Whether retaining those theories improves learning enough to pay for
+their upkeep remains an empirical question. This article explains the
+process, the chosen arrangement, and the research hypotheses it motivates.
+The arrangement is compared with adapting model weights and with retaining
+records or summaries without retaining formulated theories and criticisms.
 
 ## A case
 
 Consider a system that maintains a release exporter. The exporter builds a
 deployment manifest from a configured list of input files. Documentation
 edits do not affect the manifest, so the system checks them for syntax
-only. The system retains a short written account of why, in two parts: an
-edit needs a manifest check when an executable consumer reads the edited
-file, and the configured input list identifies every file the exporter
-reads.
+only. It retains a written account of why, in two parts: an edit needs a
+manifest check when an executable consumer reads the edited file, and the
+configured input list identifies every file the exporter reads.
 
 Later the exporter starts reading service definitions from named Markdown
-files, and those files are added to the configured list. The retained
-account already says what to do: those files now have an executable
-consumer, so their edits need manifest checks. No new rule was written. An
-existing explanation was applied to a new fact.
+files, and those files are added to the configured list. The account already
+says what to do: the files now have an executable consumer, so their edits
+need manifest checks. This is application of an existing theory to new facts.
+It does not by itself show learning from criticism.
 
 Later still, the exporter gains support for included snippets. A snippet
-that no configured file names directly, but that a configured file
-includes, carries a service definition. An edit to it passes its syntax
-check, and a release ships with an invalid manifest. The account's second
-part has failed: the configured list identifies the exporter's entry
-points, not everything it reads. The system revises that part, and only
-that part: the exporter's inputs are the configured files plus whatever
-they reach through includes. The first part, that checks follow executable
-consumers, stands. The system then applies the revised account to other
-snippets it has not touched.
+that a configured file includes carries a service definition, but the
+configured list does not name the snippet directly. An edit to it passes
+its syntax check, and a release ships with an invalid manifest. The system
+investigates and formulates a criticism: the configured list identifies the
+exporter's entry points, not everything it reads. It revises the second
+part of its account to include every file reachable through includes. The
+first part, that checks follow executable consumers, survives. The revised
+account then guides checks on other snippets that have never caused a failure.
 
-Four things happened. A written account guided a decision on a case it
-did not mention. A failure contradicted one part of the account, and that
-part was revised rather than the whole account replaced. The revision was
-chosen for what else it would handle, not only for the failure that caused
-it. And the revised account went on to guide later decisions. The rest of
-this article says why those four things are the core of a learning
-paradigm.
+This is a hypothetical example of the mechanism, not an experimental result.
+The criticism names why the earlier decision was wrong and changes what the
+system would check next. If that change improves its ability to choose
+appropriate checks, it has learned. The improvement can exist before another
+snippet edit arrives; later decisions provide evidence of it. Revising one
+part makes the example easy to inspect, but replacing the whole account
+could achieve the same kind of learning.
 
-## Theory refinement
+## Conjecture, criticism, and improved capacity
 
-[Theory refinement](../notes/definitions/theory-refinement.md) is the
-learning operation that revises an existing explicit theory against
-empirical cases, seeking to correct errors while preserving useful prior
-knowledge instead of learning from scratch. The name comes from the work of Ourston,
-Richards, and Mooney in the early 1990s, where the theory was a set of
-logical rules supplied by an expert and the cases were labelled examples. Their systems derived consequences from the rules, found where a
-wrong consequence came from, and edited that part.
+Popper describes knowledge developing through problems, tentative theories,
+attempted error elimination, and further problems: `P1 → TT → EE → P2`.
+A [tentative theory](../notes/definitions/tentative-theory.md) is a proposed
+solution that remains open to criticism however well it has survived.
+Tentative does not mean unsupported, and corroboration does not end that
+status. Criticism can be an argument, a comparison with a rival, or a test
+of a stated consequence; it need not be an empirical experiment.
 
-The operation needs a theory of a particular shape. It must have
-consequences a case can contradict. It must have parts that a failure can
-point at as candidate repair locations. And those parts must be editable
-separately. A theory with these properties is *addressable*. The account in
-the case above is such a theory: it predicted which edits needed which
-checks, the failure pointed at its second part, on what the configured
-list identifies, and that part was revised on its own.
+[Conjectural learning](../notes/definitions/conjectural-learning.md) attributes
+learning to a system when a formulated theory guides decisions through what
+it says and formulated criticism improves the system's capacity for future
+action. Merely writing a theory, changing a decision, or recording a passing
+test does not establish improvement.
+Popper supplies the process and the theory's status; Commonplace supplies
+these conditions for attributing learning to a particular system.
 
-We call the theory a [tentative theory](../notes/definitions/theory-refinement.md#tentative-theory),
-in Karl Popper's sense: put forward as a solution, held open to criticism,
-and never promoted to a settled truth by surviving tests. The status
-licenses nothing by itself. How much support a theory needs before the
-system relies on it routinely, or compiles it into a test, is a policy the
-system has to set.
+When criticism counts against a theory, the system revises or replaces it.
+When a theory survives an attempted refutation, the testing result may
+instead improve how the system would rely on it or choose further tests.
+The text can remain unchanged. Either way, the effect of criticism must
+persist for as long as the capacity claim extends. A later loss does not
+undo an earlier improvement.
 
-## The paradigm defined
+The learning system includes its participating people, services, models,
+files, tools, and records. Retaining the assembled theory is one way for
+criticism to have a continuing effect. Retaining criticism and reconstructing
+a theory when needed is another. Even a theory formulated during reasoning
+and then discarded can qualify if criticism improves capacity before disposal
+or through a result that persists afterward.
 
-[Learning by theory
-refinement](../notes/definitions/learning-by-theory-refinement.md)
-is the loop built on that operation. A system retains a tentative theory
-outside its model weights. The theory guides its decisions. The outcomes of
-that work refine the theory, part by part. The refined theory guides later
-work. What the system has learned is the change in its later behaviour that
-comes from the change in the retained theory. In the case, the revision
-changes later checking decisions: the system checks included snippets it
-has never seen fail.
+Visibility is a separate question. A model might formulate and criticize a
+theory privately. Opaque processing leaves classification open when the
+evidence is insufficient; the absence of a visible theory does not prove
+that no such process occurred. Nor does weight adaptation determine the
+answer. A system can change its weights while formulated theories and
+criticism guide its decisions.
 
-The definition has boundaries. It does not require success: a system that
-carries a mistaken theory forward is still learning this way, and whether
-it improved is measured separately. A theory built while reasoning and
-discarded after the decision does not count, because nothing remains to
-refine. Adapting the weights is a different paradigm, because what is
-learned there is not a theory with parts that can be inspected and revised.
-Keeping records or summaries of experience and rebuilding an explanation
-when one is needed is a different design, because no explanation is
-retained as an object to revise. A later section compares the two. And
-fixed weights are not part of the definition. We hold them fixed to study
-the paradigm, and a system could run the loop and adapt its weights as
-well.
+## The arrangement Commonplace studies
 
-This definition is meant to say what the paradigm is, not yet how to
-measure it. What counts as evidence that the theory guided a decision, or
-that a later change came from the revision, is the [evidence
-supplement's](./testing-the-theory-refinement-program.md) subject, and some
-of those details are still open.
+Commonplace is a framework for knowledge bases operated by agents. Its
+[research arrangement](../notes/commonplace-studies-conjectural-learning-through-retained-theories.md)
+retains theories and testing records across tasks, exposes assumptions and
+parts for separate revision, and holds model weights fixed. A theory with
+that inspectable structure is
+[addressable](../notes/definitions/addressable-theory.md). These choices
+make particular learning paths available for study; they are not conditions
+of conjectural learning in general.
 
-## What is new in the setting
+The unit under study is the [whole deployed system](../notes/the-deployed-system-not-the-model-is-the-unit-of-learning.md).
+With weights fixed, retrieval, scheduling, instructions, tools, and validators
+can still change what the system can do. Holding weights fixed rules out
+parameter updates as the source of an improvement. It does not identify
+which retained change caused the improvement or hold the model's processing
+fixed across different inputs.
 
-The paradigm keeps the operation and changes the setting in three ways.
-Each is our departure, not something the classical work claims.
+The program pursues recursive self-improvement: improving the machinery that
+performs later improvement. This places it within
+[Schmidhuber's broad survey of systems that modify their own learning processes](../sources/recursive-self-improvement-since-1987.ingest.md).
+Its chosen development path starts with an incomplete
+methodology expressed in language. Models interpret it, experience exposes
+its limits, and criticism guides changes to the methodology and the machinery
+that applies it. Popper's process organizes that work; the research question
+is whether the resulting system becomes better at further learning.
 
-- **The interpreter is a language model, so the theory can be prose.** The
-  classical systems each refined theories written in the one form their
-  procedures handled. A fixed language model can be given an account
-  that has not been formalized and asked to apply and revise it, so a
-  theory can enter the loop before anyone has written a checker for it.
-  Whether the model does this reliably is one of the open questions at the
-  end.
+Natural language lets a methodological conjecture be tried before every
+operation has been formalized. It also leaves interpretation to the model.
+A claimed consequence or a diagnosis can depend on a mistaken reading. As
+a part becomes sufficiently clear and useful, the system can
+[codify it](../notes/definitions/codification.md) in a schema,
+validator, test, or program. The specified consequences then become
+mechanically checkable. Whether the encoding captures the intended claim
+and the test measures the right property remains open to criticism.
+When a new theory needs a check the system lacks, [building that
+check](../notes/a-fixed-model-house-must-write-the-procedures-for-each-new-theory.md)
+is part of the work.
 
-  The cost is that consequences are interpreted rather than computed.
-  Whether a case contradicts a prose theory is itself a reading, and two
-  readings can differ. Compiling a part into a schema, validator, or test
-  makes its specified consequences mechanically checkable, which removes
-  that disagreement for those consequences. It does not remove the
-  questions of whether the check represents the theory correctly or
-  measures the right property. Prose can also make a prediction clear
-  enough that an observation plainly contradicts it. Refinement moves parts
-  into code as they settle, and gains checkability, not certainty, by doing
-  so.
-- **The theory is partly normative.** The theory in the case is not only
-  a hypothesis about the exporter. A commitment such as "every query must
-  respect the active tenant" is a rule the system keeps true. A failure can
-  therefore be resolved by changing the product to fit the theory as well
-  as by revising the theory to fit the evidence, and the system must decide
-  which. That choice has a constraint. Descriptive assumptions, such as
-  what the configured list identifies, and implementation choices are the
-  system's to revise. A requirement supplied from outside, such as tenant
-  isolation, is not: weakening it would make a failure disappear without
-  improving anything, and it changes only when whoever supplied it
-  renegotiates it. The external objective introduced below records such
-  requirements and who may change them.
-- **The theory may be about the system itself.** The theory of which
-  checks to run is part of the system's own production machinery. When the
-  same loop revises how the system builds, tests, and revises its theories,
-  the loop is *reflective*: revisions of the self-theory change the machinery,
-  and machinery changes update the self-theory. A system that holds a
-  description of itself without that two-way connection is not reflective
-  in this sense.
+## Three conjectures about the mechanism
 
-Two further choices are the paradigm's own. The first is a preference
-among revisions that fit the evidence: prefer the one with more reach, the
-one that would also handle cases the failure did not show. That is why the
-case revises the theory of what the exporter reads instead of adding an
-exception for one snippet.
+The [research companion](../notes/commonplace-studies-conjectural-learning-through-retained-theories.md#three-conjectures)
+states three proposed benefits. The exporter example shows their possible
+mechanisms without establishing their advantages.
 
-The second is to treat the whole deployed system as the unit that learns,
-because [retrieval, scheduling, tools, and validators jointly determine
-behaviour with the model
-fixed](../notes/the-deployed-system-not-the-model-is-the-unit-of-learning.md).
-What the paradigm retains includes theories, the records they were derived
-from, procedures, tests, tools, evaluators, and the update process itself. When a new theory needs a check
-the system cannot yet perform, [the system has to build
-it](../notes/a-fixed-model-house-must-write-the-procedures-for-each-new-theory.md),
-and with weights fixed that capacity has to persist outside the model.
+**Content.** Formulating and supplying a criticism of what a theory says may
+produce more learning from a failure than generating variants and selecting
+them by score without a supplied reason for failure. “The configured list
+omits included files” directs investigation differently from “this release
+failed.” A correct diagnosis could save search; an elaborate wrong one
+could waste it. A model generating variants may still criticize them
+privately, so the comparison concerns the arrangements actually supplied,
+not a guarantee about hidden processing.
 
-## Why the Bitter Lesson does not rule this out
+**Addressability.** Criticism that identifies a suspect assumption or part
+may produce more learning than criticism directed at an undivided theory.
+In the example, the account of the input list can change while the consumer
+condition remains available. Identifying a part can focus investigation and
+help preserve useful knowledge. It can also locate the fault incorrectly.
+The target of criticism is distinct from edit size: diagnosing one part can
+justify rewriting the whole theory, and criticism can overturn a core
+assumption.
+
+**Efficiency.** Keeping more of the work of conjecture and criticism may
+reduce cost at comparable decision quality. There are two reconstruction
+comparisons. Rebuilding from retained formulated criticisms asks what keeping
+the assembled theory buys. Rebuilding from records containing only inputs
+and outcomes asks what retaining the work of criticism buys. For the exporter,
+the latter system must recover the significance of the snippet failure;
+the former already has the criticism about entry points and includes.
+
+These distinctions concern retained content. A trace that preserves the
+theory, criticism, and testing result can implement the same retained knowledge
+as separate theory documents. Conversely, records containing only inputs and
+outcomes do not determine what their reconstructor will formulate. The
+comparison must give each arrangement competent retrieval and reconstruction
+within declared resources.
+
+## Retention has costs
+
+An assembled theory may save repeated interpretation, but it also requires
+retrieval, applicability checks, revision, validation, and maintenance.
+A false abstraction can misdirect many decisions, and a correct theory that
+retrieval misses supplies no help. A local textual edit can have broad
+consequences through shared assumptions, so revisions and rollbacks require
+checking what depends on the changed part.
+
+Records remain useful even when theories are retained. They can expose an
+omitted detail or allow a mistaken abstraction to be reconstructed, and
+[a later model can re-examine the derivation](../notes/retaining-the-episode-keeps-a-distilled-rule-re-derivable.md).
+Bounded context creates a need to select or summarize evidence; it does not
+by itself select theories as the best retained form. Search, summaries,
+periodic reconstruction, and retained theories can be combined.
+
+The chosen arrangement [makes new knowledge available without another
+weight-training cycle](../notes/retained-artifacts-enable-persistent-deployment-time-adaptation.md)
+and gives readers identifiable assumptions to inspect.
+Whether those properties improve continual learning or make rollback useful
+depends on whether the system [governs which behavior-changing writes become
+operative](../notes/continual-learning-requires-governing-behaviour-changing-writes.md).
+Admission, coordination, and credit
+assignment remain work: a readable explanation does not guarantee faithful
+use, and a readable dependency is not necessarily an independent one.
+A learner confined to a
+[fixed decomposition inherits that decomposition's mistakes](../notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md).
+
+A separate [sample-efficiency conjecture](../notes/learning-by-theory-refinement-may-improve-sample-efficiency.md)
+asks whether a useful theory reduces target observations after a shift that
+preserves the structure it describes. The exporter case suggests why one
+criticism might change many checking decisions. That benefit is separate
+from whether a selector can choose useful theories by judging how far their
+explanations hold beyond the observed cases. Both are separate from total cost. Construction, prior
+evidence, retrieval, validation, maintenance, and mistakes must be counted
+symmetrically across the compared systems.
 
 Rich Sutton's Bitter Lesson says that general methods which scale with
-computation outperform methods built from human knowledge. Written theories look
-like hand-crafted structure, so the objection is natural. The answer turns
-on [how the structure is produced, not the form it is retained
-in](../notes/the-bitter-lesson-selects-production-methods-not-representational.md).
-In the autonomous version we aim to build, computation forms and revises
-the theories, builds the tools and evaluators, and selects changes from
-evidence. People may build the seed, the theories and machinery the system starts from. After that,
-project-specific structure is a learned product.
+computation outperform methods built from human knowledge. Written theories
+receive no exemption from that pressure. The
+relevant distinction is [how structure is produced and revised](../notes/the-bitter-lesson-selects-production-methods-not-representational.md),
+not simply whether it is text or weights. Computational search could produce
+the retained structure, making it a learned product. Search and assessment
+over artifacts might nevertheless scale poorly, and a model could reconstruct
+the same useful content more cheaply. The retained arrangement has to earn
+its place against those alternatives.
 
-That is compatibility, not a scaling advantage. Search, validation, and
-credit assignment over retained artifacts may scale badly, or adapting
-weights on the same evidence may reach the same competence at lower total
-cost. Those comparisons are part of what the program has to run.
+## Requirements and responsibility
 
-## Why not just keep the records
+In the exporter case, the account of what the input list means is a
+descriptive claim. Producing a valid manifest is a requirement. When the
+system fails, it must decide whether its account of the exporter is wrong,
+whether the implementation violates the requirement, or whether its checking
+procedure failed. Changing a descriptive assumption and changing the product
+are different responses.
 
-A simpler design keeps the records of past work, such as observations, tool
-output, and outcomes, and has the model search them when a decision needs
-them. The model can still build an explanation while it reasons, and it
-discards the explanation afterwards. This is a common design today. While
-a system's experience fits in what the model can use at once, keeping the
-records preserves every recorded detail and commits to no abstraction that
-might be wrong. But reading and interpreting the records again at each
-decision has a cost that a reused theory may save.
+Replacing or weakening a failed test requires grounds to doubt its
+measurement or relevance. The failure alone supplies no such grounds.
 
-The paradigm claims nothing about what can be learned in principle: a system
-with unlimited context and computation could rebuild every explanation from
-its records at every decision. Limits on context and computation create two
-needs, and neither selects theories. A decision that depends on more
-evidence than the model can use at once needs intermediate results that
-stand in for that evidence. And when rebuilding those results at every
-decision costs more than the decision's budget allows, the system has to
-keep and reuse them. Search over records, summaries, periodic
-reconstruction, and retained theories are all ways to meet these needs, and
-a system can combine them: search can supply the evidence for a revision,
-and reconstruction can replace a theory that has gone wrong.
+An externally supplied requirement does not become the system's to weaken
+because weakening it would make a failure disappear. Tenant isolation, for
+example, changes only through whoever has authority to renegotiate it. The
+same authority boundary applies when the system rewrites its own evaluators.
+Its ability to modify a test does not establish that the revised test judges
+the required outcome correctly.
 
-Retaining and refining theories is our provisional choice among them. The
-conjecture is that theories are an efficient compression of experience for
-later decisions: for the space they take and the upkeep they need, they
-preserve more of what those decisions depend on than the other forms do.
+For the continuing system responsible for this work, we use the narrower
+term [theory builder](../notes/definitions/theory-builder.md). A builder
+develops and revises addressable tentative theories across demands and
+consequences. It includes its theories, records, machinery, and everyone
+performing an internal theory-building role. A person interpreting a theory,
+choosing a diagnosis, selecting a revision, or repairing the machinery is
+inside that boundary. A person supplying tasks, evidence, requirements, or
+outcome judgments is outside in that role.
 
-The case illustrates how a retained theory could help; it does not show
-that records with good search would do worse. When the named Markdown
-files were added, the theory applied to a situation that no earlier record
-needed to resemble, because it says why checks are needed. After the
-snippet failure, the revised theory covers snippets the system has not
-touched, without the failure having to be found and interpreted again. A
-system that searches its records before choosing checks might reach the
-same decisions. Whether the provisional choice pays is a comparison
-the program has to run, against records with good search and not against
-records alone. The comparison must measure costs and decision errors for
-both systems: finding and reinterpreting records, constructing, revising,
-and consulting theories, and mistakes caused by missed evidence or
-misleading theories. The evidence supplement's [component
-experiment](./testing-the-theory-refinement-program.md#component-experiments-that-can-run-first)
-is a first design for it.
+Continuing responsibility and lineage identify the builder. No particular
+theory or procedure has to survive. A successor produced through the
+builder's process belongs to that lineage; a change installed from outside
+is recorded as an intervention. A builder can reconstruct its theories or
+attempt revisions unsuccessfully. It need not have learned successfully,
+and a conjectural learner need not meet this narrower builder definition.
 
-The paradigm keeps the records as well. A retained theory can carry a
-mistaken abstraction forward, or omit a detail a later case needs, and [the
-records are the evidence for re-examining
-it](../notes/retaining-the-episode-keeps-a-distilled-rule-re-derivable.md).
-They also let a later, better model redo the derivation. What changes is
-what is loaded by default: the theory, with the records consulted when the
-theory is in doubt.
+## Reflection and autonomy
 
-## What the paradigm would buy
+A [reflective builder](../notes/definitions/reflective-theory-builder.md)
+uses a theory of its own machinery with a two-way causal connection:
+machinery changes update that theory, and theory revisions can change the
+machinery. In the exporter example, this would involve an account of how
+the system chooses checks, which a missed check can challenge. Revising that
+account guides a change to the check selector, and the installed change is
+reflected back into the account. Self-description alone does not supply
+this connection.
 
-The attractions are stated mainly against adapting weights. They come from
-[retained artifacts changing later behaviour without a training
-cycle](../notes/retained-artifacts-enable-persistent-deployment-time-adaptation.md).
-A system that keeps records also takes in new experience without a training
-cycle, but readable records do not by themselves identify the learned
-assumptions and what depends on them, and they count as learning only
-through their effect on later work. The previous section gives the
-comparison with that design. Each attraction is a conjecture, and each has a
-cost the program must weigh against it.
-
-- **Continual learning.** What is learned is usable at the next request. A
-  fact that fits the current theory is written down and takes effect. A
-  fact that contradicts it forces a reconciliation: decide which commitment
-  gives way, revise it, re-check what depended on it. That reconciliation
-  is the paradigm's counterpart of retraining. The edit is local, to an
-  identifiable part of the theory, rather than a global refit. Its
-  consequences need not be local, and that spread, one revision changing
-  several later decisions, is the point.
-  Reconciliation is where the costs of [governing behaviour-changing
-  writes](../notes/continual-learning-requires-governing-behaviour-changing-writes.md)
-  concentrate: admission, coordination, and credit assignment.
-- **Fewer observations.** A correct theory says which new cases matter. In
-  the case above, one discovered dependency changed the checking decision
-  for several files. The conjecture that [learning by theory refinement may improve sample
-  efficiency under structured
-  shifts](../notes/learning-by-theory-refinement-may-improve-sample-efficiency.md)
-  is bounded to shifts that preserve the structure the theory names. Fewer
-  observations need not mean a cheaper method once theory construction,
-  retrieval, and maintenance are counted.
-- **Legibility.** Each learned assumption, rule, or test is an identifiable
-  target: it can be read, challenged, and named as the thing to revert.
-  Reverting it is not free of consequences, because later changes may have
-  depended on it, so a rollback needs the same dependency check as a
-  revision. What legibility buys is that the target and its dependents can
-  be found, not that they are independent. A learner confined to [a fixed
-  decomposition inherits that decomposition's
-  mistakes](../notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md);
-  a learner that can rewrite its own representations and tools has a wider
-  space to repair in. Legibility is a property of the retained state, not a
-  guarantee that the model uses it faithfully.
-
-## The system that carries the paradigm
-
-Questions about a learning paradigm are questions about a whole system,
-not about a model. We call that system a [theory
-builder](../notes/definitions/theory-builder.md): the complete persistent
-system responsible for developing and revising tentative theories about the
-subjects it is asked to investigate. Its boundary follows roles. Whoever
-supplies questions, cases, and acceptance judgments is outside. Whoever
-interprets a theory, chooses what to blame, produces or selects a revision,
-or repairs the machinery is inside, person or software. A builder is
-[autonomous](../notes/definitions/autonomous-theory-builder.md) when
-computation fills every internal role, and
-[reflective](../notes/definitions/reflective-theory-builder.md) when its
-machinery changes pass through a theory of its own machinery. The two
-conditions are independent. The evidence supplement gives the boundary,
-the seed, and the rule for what counts as the same builder over time in
-full, together with the borderline cases of the definition.
+A builder is [autonomous](../notes/definitions/autonomous-theory-builder.md)
+when computation performs every internal theory-building role within the
+declared boundary and horizon. Users can still supply tasks and judge
+products. Reflection and autonomy are independent: people may perform a
+reflective diagnosis, while a computational builder may revise its artifacts
+without a causally connected theory of its own machinery. Neither condition
+establishes successful learning or reliability.
 
 ## What would test it
 
-Fixing the weights is an experimental condition. It rules out parameter
-updates as the source of any improvement, which isolates learning through
-retained state as the mechanism under study. It does not by itself attribute an improvement
-to retained state: a different task mix, more computation, a human
-intervention, or run-to-run variation could each explain a gain. Attribution
-needs matched comparisons with the retained change removed, which the
-evidence supplement specifies. Fixing weights is not a recommendation for
-mature systems, and not a claim that learning outside weights is generally
-better.
+A theory cited in a decision record may have been decorative. A changed
+procedure may work for reasons other than the proposed theory. The
+[evidence account](../notes/reflective-theory-refinement-needs-interpretation-and-retention.md)
+therefore separates theory mediation, empirical contact, response to
+criticism, and recurrent mediation: respectively, the theory affects a
+decision, an outcome bears on it, formulated criticism changes its content or
+role, and that result affects later operation. Claiming recurrence requires evidence
+that these steps belong to the same causal path. Even a complete path needs
+separate evidence that capacity improved. Conversely, capacity can improve
+before another opportunity to exercise it arises.
 
-The three attractions above are claims about a mechanism, and they are
-tested in bounded components: matched runs that vary what is retained and
-measure influence, transfer, and observations used. The program's main
-hypotheses are claims about a whole system's performance under external
-assessment. The two levels do not substitute for each other. Better overall
-performance would not show that fewer observations were needed or that a
-rollback was safe, and a component result would not show that a whole
-system reaches a reliability target. The [evidence
-supplement](./testing-the-theory-refinement-program.md) specifies both
-levels. The program states three whole-system hypotheses.
+Changing or withholding the relevant content can strengthen causal
+attribution, but the result remains a comparison of the tested arrangements.
+A change in task mix, computation, human assistance, or model variation can
+otherwise explain a gain. Fixed weights alone remove none of those
+alternatives.
 
-- **Sufficiency.** A training methodology written in prose and code is
-  enough for an autonomous builder on fixed public models to develop,
-  retain, and use theories across declared areas, to a reliability target
-  under a stated budget and external assessment. Refuted by a builder that
-  needs people in internal roles, or a new learning method per area, to reach
-  the target.
-- **Comparison.** Under matched demands and resources, the builder using
-  this methodology gains capability over its frozen seed and over a
-  baseline that searches the raw records without the learned methodology.
-  Its reliability is comparable to a human-staffed builder's within a preset
-  margin. Refuted by matched runs
-  in which the controls do as well.
-- **Reflection.** A reflective builder gains capabilities beyond its seed
-  that a matched non-reflective builder does not. Better outcomes alone do
-  not test this. The records of a reflective episode against a matched
-  non-reflective builder do.
+The program's three whole-system hypotheses were adopted on 2026-09-17.
+They concern performance under external assessment and remain distinct from
+the content, addressability, and efficiency conjectures above. The
+[testing supplement](./testing-the-theory-refinement-program.md#the-hypotheses)
+retains their full wording; the following summarizes them. The public models
+in the sufficiency hypothesis are those available as of that adoption date,
+with model versions declared and weights held fixed during assessment.
 
-A finite evaluation supports a bounded claim. None of the hypotheses
-promises success on every problem or within every budget.
+- **Sufficiency.** A methodology expressed in prose and code enables an
+  autonomous builder to develop, retain, and use theories and procedures
+  across declared practical areas, meeting a reliability target under a
+  budget and external assessment. Needing a person in an internal role or
+  a new learning method for each area, or failing the target, refutes the
+  assessed claim.
+- **Comparison.** Under matched demands and resources, that methodology
+  produces useful capability gains over the frozen seed and a baseline
+  searching raw records without the learned methodology. Its downstream
+  reliability is comparable to a human-staffed builder within a margin set
+  before assessment. Controls doing as well at comparable cost, or a human
+  builder exceeding that margin, refute the assessed claim.
+- **Reflection.** Machinery changes passing through a causally connected
+  self-theory produce extensions that a matched builder without one does
+  not acquire under the same demands, budget, and external assessment.
+  Equal extensions in the control, or records showing that the changes did
+  not pass through the self-theory, refute the assessed claim. An extension
+  here is a retained machinery change that demonstrates capability beyond
+  the seed on a stated demand and budget.
 
-The hypotheses are tested through an *externally tested* builder. It
-receives three things from outside: a falsifier, an objective, and an
-independent outcome judgment. The falsifier supplies evidence that an
-outcome failed the acceptance requirements. The objective states those
-requirements and who may change them. The outcome judgment does not treat
-the builder's own evaluators' approval as sufficient. With these supplied,
-outcome comparisons can proceed before the builder has settled how much
-support its internal theories need. Where a claim lacks that external
-assessment, [the builder owes three things for
-itself](../notes/a-claim-without-external-assessment-carries-three-obligations.md):
-a rule for what counts as contradiction and support, a standard for judging
-whether an objective change is warranted, and attribution when it asserts
-a cause.
+Better downstream outcomes alone do not test the reflection hypothesis. That
+requires records of a reflective episode and a matched builder that retains
+content without a self-theory.
 
-The whole experimental setup is a first design. It has been stated but not
-exercised, and we expect it to change under testing before a scored run.
+These hypotheses require more than a successful component. Better whole-system
+performance does not isolate the contribution of criticism or addressability;
+a component advantage does not establish the whole system's reliability.
+The raw-record baseline in the comparative hypothesis remains the adopted
+whole-program control. The two reconstruction comparisons above refine the
+mechanism questions without silently replacing that hypothesis.
+
+## Assessment from outside the builder
+
+An [externally tested builder](../notes/definitions/externally-tested-theory-builder.md)
+receives three things from outside its declared boundary: evidence of failed
+outcomes, acceptance requirements with an authority for changing them, and
+outcome judgments independent of its own evaluators. “Independent” describes
+the roles; it does not guarantee correct measurement.
+
+The arrangement allows outcome comparisons before every internal theory's
+warrant has been settled. A failed release establishes a product failure,
+not whether the error lay in interpretation, theory, retrieval, or a skipped
+check. A claim about that cause needs its own evidence. Where a broader
+claim lacks external assessment, [the builder must supply its own grounds](../notes/a-claim-without-external-assessment-carries-three-obligations.md)
+for what counts as criticism and support, what licenses an objective change,
+and why a proposed cause is responsible. Finite evaluations support claims
+within their declared tasks, evidence, budgets, and horizons.
 
 ## The first arrangement
 
-The first arrangement proposed for testing the paradigm is Commonplace, a
-framework for knowledge bases operated by agents. In the proposed run,
-Commonplace produces a knowledge base and its supporting software for a
-consuming project. Agents in that project use the knowledge base on their
-tasks, and the project's own judges accept or reject the work. Their
-assessments supply the failure signals; the project's acceptance
-requirements supply the objective. Commonplace would revise the delivered
-product, and when a failure exposed a limit in its own
-methods, revise those too. Today people still perform several internal
-roles, so it is not yet an autonomous builder. How those roles would transfer
-to computation is the [bootstrap
-supplement's](./bootstrapping-an-autonomous-theory-builder.md)
-subject. No consuming-project run has been performed. The evidence
-supplement gives the protocol's shape.
+The proposed first run has Commonplace produce a knowledge base and its
+supporting software for a consuming project. Agents in that project use the
+knowledge on tasks judged by the project's own assessors. Failures can lead
+Commonplace to revise the delivered product and, when diagnosis implicates
+its methods, its own machinery. The consuming project's acceptance
+requirements remain external.
 
-A different arrangement takes software as the product: an automated
-software house whose theory is Naur's program theory of the software it
-maintains. It offers a stronger falsifier, since software fails visibly, at
-the price of a different and harder claim. The [software-house
-supplement](./an-automated-software-house-as-a-second-test-of-theory-refinement.md)
-develops it and compares the two.
+Commonplace currently includes people in internal roles. Moving those roles
+to computation is the [bootstrap supplement's](./bootstrapping-an-autonomous-theory-builder.md)
+subject. The proposed consuming-project run has not been performed, and the
+whole-program hypotheses remain untested by it. Existing human-inclusive
+[Commonplace evidence](../notes/evidence/commonplace-as-a-reflective-system.md)
+establishes narrower paths within stated criteria.
+
+The [software-house supplement](./an-automated-software-house-as-a-second-test-of-theory-refinement.md)
+considers a different product and evidence interface: an automated software
+house whose retained program theory guides software maintenance. Visible
+software failures provide a different testing opportunity; results there
+would support a different bounded claim. It remains a companion arrangement,
+not the replacement for the knowledge-delivery test.
 
 ## Open questions
 
-- Whether a succession of revisions, each justified by its own evidence,
-  composes into a justified lineage once evaluation results guide later
-  revisions.
-- What support licenses each kind of reliance on a retained theory:
-  guiding an experiment, routine use, compilation into a test.
-- Whether current models interpret prose theories consistently enough for
-  diagnosis and repair to work, rather than only for application.
-- How to assign credit across artifacts when a later failure could lie in
-  the theory, the retrieval that never surfaced it, the evaluator that
-  admitted a change, or a skipped check.
-- Whether the paradigm's total cost, with theory maintenance counted,
-  compares well with adapting weights on the same evidence.
-- Whether retained theories serve later decisions better than records with
-  good search, for which decisions, and from what amount of experience.
+The immediate uncertainties are whether current models interpret prose
+reliably enough for diagnosis, whether particular parts can be blamed without
+misleading later revision, and whether a sequence of locally supported
+changes preserves a warranted lineage. The support needed for experimental
+use, routine reliance, and codification may differ. Delayed failures also
+make credit assignment hard: the theory, retrieval, evaluator, or skipped
+check may each be responsible.
+
+The economic question is whether retaining theories beats reconstructing
+them from criticism or from inputs and outcomes at comparable quality, and
+whether the full arrangement compares well with adapting weights. None of
+these choices follows from defining the learning process.
 
 ## Where to go next
 
-The [learning by theory
-refinement](../notes/definitions/learning-by-theory-refinement.md), [theory
-refinement](../notes/definitions/theory-refinement.md), and [theory
-builder](../notes/definitions/theory-builder.md) definitions state the
-paradigm's terms with their exclusions and boundary cases. The [evidence
-supplement](./testing-the-theory-refinement-program.md) develops the
-hypotheses, the external assessment, the first arrangement's protocol, and
-the component experiments. It also examines an assessed run in which every
-change to the builder must arise through its own machinery, and [what a
-run under that requirement does and does not
-establish](./testing-the-theory-refinement-program.md#what-a-runs-path-can-and-cannot-show).
-[Nearest existing
-constructions](./nearest-existing-constructions-to-a-witness-house.md)
-compares eighteen existing systems against the requirements for the
-automated software house described above and says what that survey shows
-for the paradigm: its parts have precedents, and the reviewed evidence does not test its central mechanism.
+The [definition](../notes/definitions/conjectural-learning.md) states the
+learning conditions and boundary cases. The
+[research companion](../notes/commonplace-studies-conjectural-learning-through-retained-theories.md)
+separates them from Commonplace's choices. The
+[testing supplement](./testing-the-theory-refinement-program.md)
+develops the independently adopted hypotheses, assessment interface, and
+proposed comparisons. [Nearest existing constructions](./nearest-existing-constructions-to-a-witness-house.md)
+reviews precedents for the companion software-house arrangement; evidence
+for its parts does not establish the complete proposed system.

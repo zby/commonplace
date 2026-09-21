@@ -1,5 +1,5 @@
 ---
-description: "Evidence supplement: theory-builder boundary and lineage, the three hypotheses with refuters, the externally tested evidence interface, the downstream protocol's shape, component experiments, and boundary cases; a first design, not a result"
+description: "Testing supplement: conjectural learning, preserved whole-program hypotheses and refuters, external assessment, protocol shape, component experiments, reconstruction comparisons, and boundary cases; a first design, not a result"
 type: kb/articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
@@ -9,7 +9,11 @@ source_notes:
   - kb/notes/definitions/reflective-theory-builder.md
   - kb/notes/definitions/autonomous-theory-builder.md
   - kb/notes/definitions/actionable-methodology.md
-  - kb/notes/definitions/theory-refinement.md
+  - kb/notes/definitions/conjectural-learning.md
+  - kb/notes/definitions/tentative-theory.md
+  - kb/notes/definitions/addressable-theory.md
+  - kb/notes/commonplace-studies-conjectural-learning-through-retained-theories.md
+  - kb/notes/reflective-theory-refinement-needs-interpretation-and-retention.md
   - kb/notes/a-claim-without-external-assessment-carries-three-obligations.md
   - kb/notes/retained-theory-intervention-isolates-one-explicit-surface.md
   - kb/notes/learning-by-theory-refinement-may-improve-sample-efficiency.md
@@ -19,21 +23,22 @@ source_notes:
   - kb/notes/a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md
   - kb/notes/warranted-autonomy-is-bounded-by-oracle-domain.md
 ---
-# How the Theory-Refinement Program Would Be Tested
+# Testing the conjectural-learning program
 
 *Hypotheses, external assessment, protocol shape, and component experiments: a first design*
 
-> **Draft supplement.** This develops the testing side of [Learning by
-> Theory Refinement with Fixed
-> Models](./learning-by-theory-refinement-with-fixed-models.md). Everything
+> **Draft supplement.** This develops the testing side of [Conjectural
+> Learning with Fixed Models](./learning-by-theory-refinement-with-fixed-models.md). Everything
 > here is a first design that needs much more testing before a scored run,
 > and it may change. Comments and counterexamples are welcome on [the
 > repository's GitHub Discussions
 > page](https://github.com/zby/commonplace/discussions).
 
-**TL;DR.** The lead article proposes that a system can learn by refining
-written theories while its model weights stay fixed. This supplement says
-what would count as evidence for that. The view it denies is that better
+**TL;DR.** The lead article studies learning through formulated theories: a
+system uses them, criticizes what they say, and improves its capacity for
+future action through the result. Commonplace chooses to retain addressable
+theories while holding model weights fixed. This supplement says what would
+count as evidence for that arrangement. The view it denies is that better
 outcomes after a change are enough: a gain can come from a different task
 mix, more computation, or a person's intervention, and an outcome does not
 say which part of a system caused it. So the supplement defines the system
@@ -48,12 +53,28 @@ setup is stated so that it can be criticized, not because it is settled.
 
 ## The system under test
 
-A [theory builder](../notes/definitions/theory-builder.md) is the complete
-persistent system responsible for developing and revising tentative
-theories about the subjects it investigates. The definition matters for
-testing because a claim about a learning method is a claim about this whole
-system, and the components usually named (a model, a harness, a refinement
-algorithm) are each only part of it.
+The program studies a [theory builder](../notes/definitions/theory-builder.md):
+the complete persistent system responsible for developing and revising
+addressable tentative theories about the subjects it investigates. Addressable
+means its assumptions, scope conditions, and parts can be inspected and
+revised individually. Tentative means open to criticism, however well tested.
+A model, harness, or revision algorithm is a component of that whole system.
+
+[Conjectural learning](../notes/definitions/conjectural-learning.md) is broader than this
+chosen arrangement. It requires a theory formulated in natural or formal
+language to guide decisions through what it says, and formulated criticism
+of that content to improve the system's capacity for future action. Criticism
+may revise or replace the theory, or change reliance and further testing when
+the theory survives. Whole replacement, reconstruction from retained criticism,
+and private linguistic formulation can qualify. Addressable parts, retention
+of the assembled theory, and fixed weights are not learning conditions.
+
+Capacity means what the system as it stands would do when an occasion arises;
+it can improve before that occasion occurs. Observed action is evidence about
+capacity. Claims of capacity at a later time require the effect to persist to
+that time. A builder can attempt learning and fail, while remaining responsible
+for its theories. The following boundary and protocol belong to this program's
+continuing builder, not to every conjectural learner.
 
 **Boundary.** The builder includes the theories it remains responsible for,
 its machinery, and every person or program that fills an internal
@@ -98,7 +119,7 @@ and an outcome comparison.
 
 **Two independent conditions.** A builder is
 [reflective](../notes/definitions/reflective-theory-builder.md) when it
-refines a causally connected theory of its own theory-building machinery,
+revises a causally connected theory of its own theory-building machinery,
 its self-theory: machinery changes update the theory, and theory revisions
 change the machinery. A builder is
 [autonomous](../notes/definitions/autonomous-theory-builder.md) when
@@ -159,6 +180,14 @@ records show the machinery changes did not pass through the self-theory.
 None of the three promises success on every problem or within every
 budget. A finite evaluation supports a bounded claim.
 
+These whole-program hypotheses remain distinct from three mechanism
+conjectures about the chosen arrangement: whether supplied content criticism
+helps, whether separately addressable parts help, and whether retaining the
+work of conjecture and criticism reduces total cost. They also differ from
+the structured-shift conjectures about reusing a useful theory and selecting
+one by estimated explanatory-reach. A component result cannot substitute for
+the sufficiency, comparative, or reflection tests above.
+
 ## The evidence interface
 
 Every assessed builder declares an evidence interface: how cases,
@@ -199,20 +228,28 @@ or outside the externally tested case, needs a trace, intervention, or test
 that can discriminate between the theory, its interpretation, retrieval,
 execution, and the environment.
 
-That requirement is what reflection evidence must satisfy. A reflective episode
-is evidenced by one connected path: externally assessed work exposes a
+For the reflection hypothesis's externally assessed payoff, the record needs
+one connected path: externally assessed work exposes a
 possible machinery limit; diagnosis revises an identified commitment in the
 self-theory; that revision guides a machinery change whose installation
 updates the self-theory in turn; later work uses the changed machinery and
-its product is assessed externally.
+its product is assessed externally. That sequence establishes the claimed
+process only to the strength its evidence supports; an improvement claim
+also needs the outcome comparison. Reflection itself requires the two-way
+causal connection, which internal records can establish without demonstrating
+a performance gain.
 
 A machinery change followed by better outcomes does not establish that
-path. Nor does a predicted behavioural change after altering a commitment,
-on its own: instruction-following produces one too. Evidence that a
+path. A predicted behavioural change after altering a commitment also does
+not establish that path on its
+own: instruction-following produces one too. Evidence that a
 retained theory was used as an explanation additionally needs predicted
 changes on cases the text does not state verbatim, variation of the path by
 which the theory is consumed, and an account of whether other records could
 supply the same understanding.
+
+Surviving criticism can instead change future reliance on an unchanged
+theory; a text edit is not a required sign of learning.
 
 The two-way causal connection between Commonplace's methodology notes and
 its validators and skills is recorded in [Commonplace as a reflective
@@ -353,41 +390,76 @@ cover](../notes/warranted-autonomy-is-bounded-by-oracle-domain.md).
 
 ## Component experiments that can run first
 
-The whole-system protocol waits on a consuming project. The paradigm's
-central mechanism can be tested sooner in a bounded component, using the
-release-exporter case from the lead article. The design separates three
-questions: whether a retained theory influences decisions, whether it
-improves transfer and recovery, and whether it reduces the observations
-needed to learn.
+The whole-system protocol waits on a consuming project. The chosen
+arrangement can be tested sooner in a bounded component, using the
+release-exporter case from the lead article: a rule about configured Markdown
+inputs must respond when indirect includes expose its incomplete dependency
+account. The component design separates influence, useful transfer and
+recovery, and observations needed to adapt. It does not test every condition
+of the whole-program hypotheses.
+
+The [companion account](../notes/commonplace-studies-conjectural-learning-through-retained-theories.md) distinguishes three mechanism conjectures:
+
+| Conjecture | Contrast and limit |
+|---|---|
+| Content | Supplying formulated criticism versus supplying scores without a formulated reason for failure. This compares supplied material, not known presence versus absence of criticism inside a model |
+| Addressability | Criticism can target stated assumptions and parts versus an undivided theory that can be replaced whole. Both can support learning; a diagnosis of one part may still warrant a whole rewrite |
+| Efficiency | Retaining an assembled theory and its testing record versus reconstructing from retained criticism, and separately versus reconstructing from input/outcome records. Compare total cost at comparable quality and quality under matched budgets |
+
+These distinctions identify what the component comparison can answer. They
+supply no result and do not replace the retained design below with a new
+scored protocol.
 
 Run paired continuations: copies of the system that resume work from the
 same product snapshot. The copies share the same fixed models, tools,
 request sequence, and resource ceilings, and the same source observations,
-which each treatment retains in its own form. Vary that form.
+which each treatment retains in its own form. Vary that retained content.
 
 | Retained treatment | What the comparison tests |
 |---|---|
-| An explicit theory with assumptions and scope | Whether a revisable explanation guides useful inference and later updates |
-| Raw records of the same observations | Whether synthesis helps beyond reconstructing an account when needed |
+| An addressable theory with assumptions, scope, and its testing record | Whether retaining the assembled account helps later inference and revision |
+| Formulated criticisms and their results, used to reconstruct a theory | Against the retained theory, what keeping the assembled account buys beyond retaining the work of criticism |
+| Records containing only inputs and outcomes, with no formulated theory or criticism supplied to the model | Against the retained theory, what keeping the work of formulation and criticism buys beyond retaining its source evidence; the model may still formulate and criticize privately while reasoning |
 | A descriptive summary of those observations | Whether the explanatory account helps beyond compact access to the facts |
 | A plausible wrong theory | Whether a specified mistaken premise produces its predicted errors and is corrected after contrary evidence |
 
-Every treatment may revise executable machinery and its tests, and in every
-treatment the model may still build an explanation while reasoning. What
-differs is what survives to the next decision. The raw-record treatment
-retains observations and outcomes, not the model's reasoning, which would
-carry earlier theories with it. It has the same search tools as the other
-treatments and may consult its records at any decision, so the comparison
-concerns what is retained and not whether the records can be found. Publish
-the treatment texts, retained revisions, and the fact inventory they were
-built from, so a reader can inspect the differences.
+The two reconstruction contrasts must remain distinct. Reconstruction from
+formulated criticisms qualifies as conjectural learning when using those
+criticisms to reconstruct a theory improves capacity; it tests what retaining
+the assembled theory buys. Raw records of inputs and outcomes alone do not
+classify the reconstructor, because it may or may not formulate and use
+criticism; that contrast tests what retaining the work of criticism buys.
+A record that retains
+a formulated criticism belongs to the criticism treatment even if stored as
+a trace. Indexed traces that expose the same theories, their parts, and their
+testing records can implement the retained-theory treatment. An index is an
+access mechanism, not a separate learning class.
 
-Records with a maintained index are a stronger rival than records with
-generic search, and are a further arm to add once the first comparison has
-run. A treatment retaining curated worked cases instead of a general
-explanation is another natural comparison: an explanation reconstructed
-and discarded is work repeated on every use, while a retained theory can
-carry a mistaken abstraction forward.
+Every treatment may revise executable machinery and its tests. Replacing or
+weakening a failed test requires grounds to doubt its measurement or relevance.
+Changing a test does not establish compliance with an unchanged external
+requirement; a changed requirement needs authorization from the external
+authority responsible for it.
+
+In every treatment the model may formulate and criticize theories while reasoning.
+Fixed weights do not hold that processing fixed when inputs differ. Records
+containing only inputs and outcomes do not retain criticism, but this does
+not establish its absence in the reconstructor. A measured advantage identifies
+the difference between the tested arrangements, not criticism's contribution
+in isolation; hidden criticism does not make the estimate conservative.
+
+Each treatment has the same search tools and may consult its retained
+material at any decision. Publish the treatment texts, retained revisions,
+and fact inventory so readers can inspect what differs. A descriptive summary
+that includes conjectures or criticism must be classified by that content;
+its label does not decide the comparison. How to keep retained criticisms
+distinct from reconstructed theories in practice remains an execution-design
+question before a scored run.
+
+A treatment retaining curated worked cases remains another possible
+comparison. Retention can save reconstruction while carrying a mistaken
+abstraction forward; reconstruction can also revise a theory and preserve
+the effect of criticism. Neither storage choice settles membership or cost.
 
 Test two kinds of change as separate request histories. In the first,
 adding another configured input preserves the theory's account. In the
@@ -400,9 +472,12 @@ files for testing transfer.
   at a selected decision holds everything else fixed and varies the theory
   text. It should change search, diagnosis, or recovery as predicted, and a
   wrong theory should add a specific error pattern. That establishes
-  influence. Explanatory guidance additionally requires correct handling of
-  consequences the text does not state and appropriate revision when
-  evidence contradicts it.
+  influence within the tested contrast. Explanatory guidance additionally
+  requires correct handling of consequences the text does not state and
+  appropriate response to criticism, including changed reliance when a
+  theory survives. Learning requires a separate assessment of improved
+  capacity attributable to that criticism. A connected recurrent path can
+  supply evidence; recurrence is not a universal minimum duration.
 - **Advantage.** The theory treatment should improve check selection and
   recovery while changes preserve its account. Its advantage may disappear
   or reverse when an assumption breaks and the theory misdirects. Measure
@@ -423,9 +498,10 @@ passes. Predeclare the primary comparisons.
 
 A null intervention result does not show the system lacks a theory,
 because the system may reconstruct the same understanding from other
-retained state. If the controls repeatedly match the theory treatment at
-lower cost, the advantage hypothesis fails in that regime. Neither result
-settles the whole-system hypotheses.
+retained state. If the reconstruction-from-criticism comparison repeatedly matches the theory treatment
+at lower cost, the retention advantage fails for that contrast and regime.
+This says nothing by itself about the addressability or selector conjecture.
+Neither result settles the whole-system hypotheses.
 
 ## Boundary cases
 
@@ -434,28 +510,40 @@ readings of published sources, not reproduced experiments.
 
 | System | Theory builder? | Externally tested? | Reflective? | Autonomous? |
 |---|---|---|---|---|
-| FORTE, the classical refinement system | No: one offline run over supplied cases, no continuing responsibility | — | No | Not applicable |
-| Schmidhuber's Gödel machine | Open: depends on whether retained content is revised against evidence or by proof alone | Open | Reflective system, yes; reflective builder, open | Every role it has, within what it can prove |
-| Darwin Gödel Machine | No continuing responsibility for any agent | External benchmark with a detected proxy failure | — | — |
+| FORTE in one supplied-theory revision invocation | No continuing responsibility in that invocation; a larger deployment is a separate case | — | No self-theory in the supplied domain-theory task | Not applicable |
+| Schmidhuber's Gödel machine | Open: proof-governed switching alone does not settle builder membership | Open | Reflective system, yes; reflective builder, open | Every role it has, within what it can prove |
+| Darwin Gödel Machine | Continuing responsibility for revisable theories unestablished by the bounded search report | Unestablished as an externally tested builder because builder membership is unestablished; the report does include an external benchmark and a detected proxy failure | Unestablished by the bounded report | Unestablished by the bounded report |
 | Commonplace's note-review loop | Yes, human-staffed | No: a note's approval is internal evaluation | Yes, with the operator inside | No |
 | Commonplace producing a knowledge base for a consuming project | Yes | Candidate; observed once release, consumption, and outcome records exist | Yes | No |
 
 The [Gödel
 machine](../notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md)
-row is the informative one. It is persistent, holds a self-representation,
-and rewrites itself computationally under the same requirement that every
-successor arise through its own machinery. It admits a rewrite only on a
-proof from its current axioms, and it has no route for admitting a fallible
-change and recovering from a wrong one. Whether that makes it a theory
-builder is assessed per deployment and stays open. The two admission routes
-differ as follows.
+row separates an admission rule from criticism. The construction is
+persistent, holds a self-representation, and rewrites itself computationally
+under the requirement that each successor arise through its own machinery.
+Its switching route requires a proof under the current formalization. That
+proof does not establish the adequacy of the premises, and proof-governed
+switching alone establishes neither the presence nor absence of criticism
+elsewhere in the complete system. Classification as a theory builder remains
+open; the program does not settle that builder boundary by redefining learning.
 
-| | Gödel machine | Theory builder under this program |
+A narrower stipulated case is outside conjectural learning: an operative
+formulated theory licenses revisions only by proofs from premises that are
+never criticized. The missing condition is criticism of content. Deductive
+criticism can qualify, so this is not an exclusion of proof or a verdict on
+every Gödel-machine deployment. The following table compares admission
+routes, not the membership of all possible builders.
+
+| | Gödel machine's proof-governed route | This program's empirical builder arrangement |
 |---|---|---|
 | Rewrite condition | Proof, under current axioms and utility, that switching pays | A fallible process produces a successor and, where applicable, admits it on evidence |
 | External input | Observations enter through formalized operations; rewrites still require proof | The interpreter uses demands, tool results, and consequences to challenge a theory |
 | Warrant | Conditional proof relative to the encoded formalization | Empirical warrant bounded by evaluators and later exposure |
 | Characteristic failure | A useful change stays unavailable because the proof is not found or not expressible | Harmful successors get enough probability to undermine continued adequacy |
+
+The proof-only route has no way to admit a fallible unproved change and then
+recover empirically if it is wrong. That limits the admission route without
+settling whether a complete Gödel-machine deployment is a theory builder.
 
 Deductive closure concerns the theorems derivable from the machine's axioms.
 The path definition above concerns reachable states. Neither alone
@@ -463,14 +551,17 @@ establishes reliable operation.
 
 ## Limits
 
-Everything above is design. None of the ten declarations is fixed, no
-consuming project has been chosen, and the component experiment has not
+The protocols above remain designs. None of the ten declarations is fixed,
+no consuming project has been chosen, and the component experiment has not
 been run. The definitions have been checked against constructed episodes,
 to see whether the vocabulary can describe a run, and against published
-systems, for their borderline cases. Neither check is a run. We expect the
-first real run to show a definition to be wrong somewhere. The plan is to
-revise the definition and retain the run record as evidence, not to adjust
-the protocol so that the definition survives.
+systems, for their borderline cases. Neither check is a run of this program.
+We expect the first real run to show a definition to be wrong somewhere. The
+plan is to revise the definition and retain the run record as evidence, not
+to adjust the protocol so that the definition survives. A result may challenge
+an empirical assumption or expose an inadequate definition. Changing a
+definition does not turn a failed outcome into a successful one; the run
+record remains evidence against the claim that was tested.
 
 Two open questions bound what any result would establish. First, whether
 revisions that are each justified by their own evidence compose into a

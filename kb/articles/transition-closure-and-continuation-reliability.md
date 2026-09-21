@@ -3,7 +3,7 @@ description: "Supplement to the automated software house conjecture: fixed compu
 type: kb/articles/types/article.md
 status: superseded
 superseded_by:
-  - kb/articles/testing-the-theory-refinement-program.md
+  - kb/articles/testing-the-conjectural-learning-program.md
 byline: Zbigniew Lukasiak
 source_notes:
   - kb/notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md
@@ -13,8 +13,8 @@ source_notes:
 # Transition closure and continuation reliability
 
 > **Superseded draft.** The parts of this supplement the series still uses
-> now live in [How the Theory-Refinement Program Would Be
-> Tested](./testing-the-theory-refinement-program.md#what-a-runs-path-can-and-cannot-show):
+> now live in [Testing the Conjectural-Learning
+> Program](./testing-the-conjectural-learning-program.md#what-a-runs-path-can-and-cannot-show):
 > admissible paths from a seed, continuation reliability, the role of the
 > input process, and the comparison with the Gödel machine. They are stated
 > there for any theory builder, not only a software house, and without the

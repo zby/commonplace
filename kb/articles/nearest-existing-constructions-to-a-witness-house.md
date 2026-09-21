@@ -1,35 +1,35 @@
 ---
-description: "Supplement: eighteen existing constructions graded against the software-house supplement's four witness conditions, what the survey shows for learning by theory refinement with fixed models, and the separate test of acquiring an explicit theory"
+description: "Supplement: eighteen existing constructions graded against the software-house supplement's four witness conditions, what the survey shows for conjectural learning with fixed models, and the separate test of acquiring an explicit theory"
 type: kb/articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
 source_notes:
   - kb/notes/definitions/representational-form.md
   - kb/notes/definitions/software-house.md
-  - kb/notes/definitions/theory-refinement.md
+  - kb/notes/definitions/addressable-theory.md
   - kb/notes/program-theory-sustains-search-under-delayed-feedback.md
 ---
 # Nearest existing constructions to a witness house
 
 > **Draft supplement.** This is the survey of existing systems behind two
-> claims in the series that starts with [Learning by Theory Refinement with
-> Fixed Models](./learning-by-theory-refinement-with-fixed-models.md): that the paradigm is untested
+> claims in the series that starts with [Conjectural Learning with Fixed
+> Models](./conjectural-learning-with-fixed-models.md): that the proposed arrangement is untested
 > but its parts have precedents, and that no system in the reviewed evidence
 > meets the four conditions of the [software-house
-> supplement](./an-automated-software-house-as-a-second-test-of-theory-refinement.md).
+> supplement](./an-automated-software-house-as-a-second-test-of-conjectural-learning.md).
 > Everything in it may still change, including which systems belong in the
 > comparison and how each row is graded. Comments, corrections, and additional
 > candidates are welcome on [the repository's GitHub Discussions
 > page](https://github.com/zby/commonplace/discussions).
 
-**TL;DR.** The series proposes that a system can learn by refining written
-theories while its model weights stay fixed. The view this survey denies is
+**TL;DR.** The series proposes studying conjectural learning through addressable
+written theories while model weights stay fixed. The view this survey denies is
 that existing self-improving agent systems already demonstrate that. Across
 eighteen systems, the parts have precedents: retained notes and code,
 scheduled revision, gates that can reject a change, and rollback with
 failure evidence. In the evidence reviewed, no system meets the four
 conditions for an automated software house together, and none tests the
-paradigm's central mechanism, a retained explanation guiding a later
+arrangement's central mechanism, a retained explanation guiding a later
 decision on a case it did not state. Some precedents were inspected in
 code. Others are known only from papers or practitioner reports, and no
 reported outcome was reproduced here. The finding is about the reviewed
@@ -37,7 +37,7 @@ evidence, not about what exists elsewhere.
 
 This supplement grades the systems against the strictest statement the series has,
 the four conditions of the [automated software house
-conjecture](./an-automated-software-house-as-a-second-test-of-theory-refinement.md#claim).
+conjecture](./an-automated-software-house-as-a-second-test-of-conjectural-learning.md#claim).
 It uses those conditions because they are fully specified, while the
 protocol for the series' first arrangement, a knowledge base for consuming
 projects, is not yet fixed.
@@ -91,7 +91,7 @@ The first two conditions need positive evidence: a run that never challenges
 an assumption does not demonstrate coherent revision. An adequate house can
 perform the first three functions. The fourth asks how reliably it sustains
 that capacity. The evidence supplement
-[defines that measure](./testing-the-theory-refinement-program.md#what-a-runs-path-can-and-cannot-show)
+[defines that measure](./testing-the-conjectural-learning-program.md#what-a-runs-path-can-and-cannot-show)
 as continuation reliability. Workload and observation limits describe the
 evaluation, rather than a product family the house must stay within.
 
@@ -324,7 +324,7 @@ comparison whether an explicit theory improves the resulting process.
 ## What a witness run would have to show
 
 Use the conjecture's [four conditions and the protocol declared before
-testing](./an-automated-software-house-as-a-second-test-of-theory-refinement.md#what-a-witness-house-must-show)
+testing](./an-automated-software-house-as-a-second-test-of-conjectural-learning.md#what-a-witness-house-must-show)
 together. The reviewed mechanisms suggest a maintained user product with
 incrementally revealed requests, delayed consequences that challenge earlier
 assumptions, and later changes, in parts the earlier repair did not modify,
@@ -336,7 +336,7 @@ written record is inconclusive if the house reconstructs equivalent
 understanding from other records, so the test must control or measure that
 route. An explicit theory artifact is optional. Acquiring understanding and
 machinery absent from the seed is the further question developed by the
-[lead article](./learning-by-theory-refinement-with-fixed-models.md) and the
+[lead article](./conjectural-learning-with-fixed-models.md) and the
 [bootstrap supplement](./bootstrapping-an-autonomous-theory-builder.md).
 
 ## The separate test for an explicit theory
@@ -344,7 +344,7 @@ machinery absent from the seed is the further question developed by the
 The table concerns program theory, whatever form holds it. A narrower question
 is whether an explicit written theory improves learning compared with other
 uses of the same evidence. The evidence supplement's [component
-experiment](./testing-the-theory-refinement-program.md#component-experiments-that-can-run-first)
+experiment](./testing-the-conjectural-learning-program.md#component-experiments-that-can-run-first)
 compares an explicit theory, raw records, a descriptive summary, and a
 plausible wrong theory across changes that preserve or break the theory's
 assumptions. It can run before a complete witness house exists, and it

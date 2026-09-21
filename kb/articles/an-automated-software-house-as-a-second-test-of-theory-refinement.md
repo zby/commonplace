@@ -1,5 +1,5 @@
 ---
-description: "Supplement: the automated software house conjecture as a second test of learning by theory refinement with fixed models; the 2026-09-02 claim, Naur's program theory, four witness conditions, and the knowledge-base comparison"
+description: "Supplement: the automated software house conjecture as a second test of conjectural learning with fixed models; the 2026-09-02 claim, Naur's program theory, four witness conditions, and the knowledge-base comparison"
 type: kb/articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
@@ -13,13 +13,13 @@ source_notes:
   - kb/notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md
   - kb/notes/an-open-domain-theory-builder-becomes-a-software-house-when-new-domains-require-production-machinery-changes.md
 ---
-# An Automated Software House as a Second Test of Theory Refinement
+# An Automated Software House as a Second Test of Conjectural Learning
 
 *Program theory, the witness conditions, and why software gives a stronger falsifier*
 
 > **Draft supplement.** This develops one alternative arrangement for
-> testing the paradigm in [Learning by Theory Refinement with Fixed
-> Models](./learning-by-theory-refinement-with-fixed-models.md). It may
+> testing the retained-theory research arrangement in [Conjectural Learning
+> with Fixed Models](./conjectural-learning-with-fixed-models.md). It may
 > change. Comments and counterexamples are welcome on [the repository's
 > GitHub Discussions page](https://github.com/zby/commonplace/discussions).
 
@@ -28,9 +28,9 @@ changing software for its users. We conjecture that an automated one is
 possible with LLM weights held fixed: computation performs every production
 decision, and the house learns by revising its retained knowledge and
 machinery rather than its models. This is a second way to test the
-paradigm of the lead article, [learning by theory
-refinement](../notes/definitions/learning-by-theory-refinement.md) with fixed
-models, whose first test is a knowledge base. The theory a house refines
+retained-theory research arrangement of the lead article, [conjectural
+learning](../notes/definitions/conjectural-learning.md) with fixed models,
+whose first test is a knowledge base. The theory a house refines
 is *program theory*, the term Peter Naur, the computer scientist who argued
 that programming is theory building, used for the understanding of a
 program's purpose, organization, and how to handle new requests. Naur held
@@ -93,7 +93,7 @@ including tests, evaluators, workflows, and update machinery. Every
 internal decision and successor must come from the current house, its
 fixed models, and permitted external inputs. An internal human
 intervention ends the run. The evidence supplement [develops that
-requirement](./testing-the-theory-refinement-program.md#what-a-runs-path-can-and-cannot-show).
+requirement](./testing-the-conjectural-learning-program.md#what-a-runs-path-can-and-cannot-show).
 
 ## Why the claim is not trivial
 
@@ -284,8 +284,8 @@ This supplement does not rely on it in either direction.
 
 ## Relation to the program
 
-The lead article proposes learning by theory refinement with fixed models
-as a learning paradigm and states three hypotheses about a theory builder,
+The lead article proposes studying conjectural learning with fixed models
+through a retained-theory arrangement and states three hypotheses about a theory builder,
 tested through what the builder receives from outside: a falsifier, an
 objective, and an outcome level it does not judge itself. A software house
 is one arrangement that supplies those three, through product operation
@@ -302,10 +302,10 @@ harder claim.
 house](./nearest-existing-constructions-to-a-witness-house.md) gives the
 evidence behind the claim that no existing system meets the four conditions
 together. The evidence supplement's section on [what a run's path can and
-cannot show](./testing-the-theory-refinement-program.md#what-a-runs-path-can-and-cannot-show)
+cannot show](./testing-the-conjectural-learning-program.md#what-a-runs-path-can-and-cannot-show)
 develops the requirement that every successor state come from the current
 system, and what it does not establish. The [software
 house definition](../notes/definitions/software-house.md) carries the
 boundary rule in its general form, and the [evidence
-supplement](./testing-the-theory-refinement-program.md) states the
+supplement](./testing-the-conjectural-learning-program.md) states the
 knowledge-base arrangement's protocol for the comparison above.

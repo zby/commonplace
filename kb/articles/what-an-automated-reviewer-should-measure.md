@@ -7,8 +7,8 @@ source_notes:
   - kb/notes/information-value-is-observer-relative.md
   - kb/notes/reverse-compression-is-when-llm-output-expands-without-adding.md
   - kb/notes/warranted-reader-update-is-the-objective-of-substantive-writing.md
-  - kb/notes/definitions/theory-refinement.md
-  - kb/notes/definitions/learning-by-theory-refinement.md
+  - kb/notes/definitions/addressable-theory.md
+  - kb/notes/definitions/conjectural-learning.md
   - kb/notes/definitions/reach-assessment.md
   - kb/notes/first-principles-reasoning-selects-for-explanatory-reach-over.md
   - kb/notes/the-augmentation-automation-boundary-is-discrimination-not-accuracy.md
@@ -109,9 +109,10 @@ the proposed change inspectable:
 | Contradictable consequences | What the revised account rules out |
 | Claimed reach | Which further cases it claims to cover |
 
-This reading follows [theory
-refinement](../notes/definitions/theory-refinement.md): revising a theory
-against cases while preserving useful prior knowledge. The reviewer should
+This reading treats the prior account as an [addressable
+theory](../notes/definitions/addressable-theory.md): its commitments can be
+inspected and revised separately against cases while useful prior knowledge
+is preserved. The reviewer should
 cite supporting passages and flag gaps. These are not required headings;
 finding all five parts makes a revision legible but does not establish
 its quality.
@@ -240,10 +241,11 @@ structure—the failure called [reverse
 compression](../notes/reverse-compression-is-when-llm-output-expands-without-adding.md).
 Gain per token alone would hide the trade-off between total benefit and cost.
 
-This experiment connects to [learning by theory refinement with fixed
-models](./learning-by-theory-refinement-with-fixed-models.md): retained
-material changes later behaviour while weights remain fixed. It tests one
-artifact's effect, not the whole learning loop.
+This experiment connects to [conjectural learning with fixed
+models](./conjectural-learning-with-fixed-models.md): the research arrangement
+tests whether retained material changes later behaviour while weights remain
+fixed. This experiment tests one artifact's effect, not whether formulation
+and criticism improve the system's capacity across the whole learning loop.
 
 A retrospective study could use later experimental results for both coding
 and task tests. It must address model exposure to the article or results
@@ -274,6 +276,6 @@ develops the reader-relative baseline.
 [Explanatory reach](../notes/first-principles-reasoning-selects-for-explanatory-reach-over.md)
 and [reach-assessment](../notes/definitions/reach-assessment.md) develop the
 property and its assessment.
-[Learning by Theory Refinement with Fixed
-Models](./learning-by-theory-refinement-with-fixed-models.md) develops the
+[Conjectural Learning with Fixed
+Models](./conjectural-learning-with-fixed-models.md) develops the
 research program behind the retained-artifact comparison.

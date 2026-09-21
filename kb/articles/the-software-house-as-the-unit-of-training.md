@@ -3,8 +3,8 @@ description: "Fixed-model training of the software house through retained theory
 type: kb/articles/types/article.md
 status: superseded
 superseded_by:
-  - kb/articles/learning-by-theory-refinement-with-fixed-models.md
-  - kb/articles/testing-the-theory-refinement-program.md
+  - kb/articles/conjectural-learning-with-fixed-models.md
+  - kb/articles/testing-the-conjectural-learning-program.md
 byline: Zbigniew Lukasiak
 source_notes:
   - kb/notes/a-fixed-model-house-must-write-the-procedures-for-each-new-theory.md
@@ -12,7 +12,7 @@ source_notes:
   - kb/notes/definitions/behavior-determining-organization.md
   - kb/notes/definitions/representational-form.md
   - kb/notes/definitions/software-house.md
-  - kb/notes/definitions/theory-refinement.md
+  - kb/notes/definitions/tentative-theory.md
   - kb/notes/ephemeral-computation-prevents-accumulation.md
   - kb/notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md
   - kb/notes/retained-artifacts-enable-persistent-deployment-time-adaptation.md
@@ -20,23 +20,19 @@ source_notes:
   - kb/notes/retaining-the-episode-keeps-a-distilled-rule-re-derivable.md
   - kb/notes/the-bitter-lesson-selects-production-methods-not-representational.md
   - kb/notes/the-deployed-system-not-the-model-is-the-unit-of-learning.md
-  - kb/notes/learning-by-theory-refinement-may-improve-sample-efficiency.md
+  - kb/notes/retained-theories-may-improve-sample-efficiency.md
 ---
 # The Automated Software House as the Unit of Training
 
 *A fixed-model training regime for theory refinement*
 
-> **Superseded draft.** This draft is replaced by [Learning by Theory
-> Refinement with Fixed
-> Models](./learning-by-theory-refinement-with-fixed-models.md), which
-> states the learning paradigm without assuming a software house: theory
-> refinement with fixed weights, its departures from the classical
-> operation, the Bitter Lesson argument, and the conjectured attractions.
-> The experiments in "Testable hypotheses" below now live, in shorter form,
-> in [How the Theory-Refinement Program Would Be
-> Tested](./testing-the-theory-refinement-program.md#component-experiments-that-can-run-first).
+> **Superseded draft.** This draft is replaced by [Conjectural Learning with
+> Fixed Models](./conjectural-learning-with-fixed-models.md), which introduces
+> the learning definition and Commonplace's retained-theory research arrangement.
+> The experiments in "Testable hypotheses" below now live in
+> [Testing the Conjectural-Learning Program](./testing-the-conjectural-learning-program.md#component-experiments-that-can-run-first).
 > The text below is kept at this address so that existing links resolve. It
-> is no longer maintained.
+> is no longer maintained and uses the earlier ontology.
 
 **TL;DR.** A [software house](../notes/definitions/software-house.md) is the
 complete persistent system that keeps changing software for its users. Assume
@@ -157,7 +153,7 @@ The learning loop is:
 
 This loop is [theory
 refinement](../sources/recap-early-work-theory-knowledge-refinement.ingest.md)
-in the established sense: an explicit [tentative theory](../notes/definitions/theory-refinement.md#tentative-theory) guides inference,
+in the established sense: an explicit [tentative theory](../notes/definitions/tentative-theory.md) guides inference,
 empirical failure localizes a defect, and the theory itself is revised rather
 than only the answer. The regime changes the setting: the theory is about a
 product the house keeps changing, and its evidence is the consequences of
@@ -366,7 +362,7 @@ the house. Measure that misdirection separately from recovery after revision,
 because rapid recovery can erase the initial loss in a whole-run score.
 
 **The sample-efficiency hypothesis.** Correct theory may [reduce the new
-observations needed to adapt](../notes/learning-by-theory-refinement-may-improve-sample-efficiency.md)
+observations needed to adapt](../notes/retained-theories-may-improve-sample-efficiency.md)
 by letting one discovered dependency change checking decisions for several
 files. Count inspected new cases and feedback used in recovery, alongside
 missed defects, unnecessary checks, collateral regressions, rollback, and total
