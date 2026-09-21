@@ -65,6 +65,11 @@ between steps; it does not require retaining an assembled theory between
 decisions. A retrieval index can lower the cost of finding evidence without
 itself supplying the required synthesis.
 
+Consulting records when needed also requires detecting that need. A theory
+on the decision path may supply the trigger; a retrieval strategy may instead
+use learned triggers or routine lookups. Comparisons must allow and price
+those mechanisms.
+
 ### Some decision budgets require reuse
 
 Suppose the minimum cost of reconstructing information needed for a decision
@@ -72,6 +77,11 @@ exceeds its computation budget at the required reliability. The decision
 then needs reusable state that avoids that reconstruction, or a change to
 the budget or task requirement. Retention alone is insufficient: maintaining,
 retrieving, and using that state must also fit the budget.
+
+The limits differ: more computation can be bought, making the computation
+budget an economic constraint. For a fixed model, buying more calls does not
+enlarge its context window; synthesis across calls must carry intermediate
+results. The context limit is architectural under that fixed-model condition.
 
 Growing history does not establish this condition. A bounded lookup or a
 fixed recent window may remain adequate. Nor does average cost settle a
@@ -139,6 +149,12 @@ the work retained and consumed, not whether it sits in a file called a
 theory. Supplying the same model weights also does not hold processing fixed
 when the inputs change.
 
+Records with a maintained retrieval index are a stronger rival than records
+with generic retrieval alone. After the first comparison, a further arm
+should test that rival while declaring which content the records retain and
+counting index construction and maintenance. This is a deferred comparison,
+not an addition to the currently commissioned protocol.
+
 Comparisons should count initial construction, retrieval, reconstruction,
 testing, and maintenance, and report cost at comparable quality or quality
 under matched budgets. Content interventions can strengthen attribution to
@@ -159,6 +175,14 @@ not a universal boundary between learning and nonlearning arrangements.
   partially assembled theory in an actual implementation?
 - Which costs or failures should cause a system to revise, reconstruct, or
   combine the two? Neither strategy is a membership condition of learning.
+- When does a learned index itself expose an addressable theory, rather than
+  only route access to records? Retention or editability alone does not decide.
+- How should replay be compared when stochastic choices cannot be reproduced
+  and reconstruction yields a distribution of states rather than the same state?
+- When a prior theory is supplied, what evidence distinguishes revision that
+  uses it from independent reconstruction? Output alone may not distinguish
+  them; a decision-point citation and an intervention removing the prior
+  theory are candidate checks.
 
 ---
 

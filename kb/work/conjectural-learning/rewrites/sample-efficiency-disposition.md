@@ -100,15 +100,14 @@ first evidence note's successor no longer owns a sample-efficiency conjecture;
 its old statistical-payoff inbound links can use this successor as recorded in
 [evidence disposition](./evidence-disposition.md).
 
-## Word accounting and open limits
+## Word accounting before the follow-up example correction
 
 Whole-file whitespace counts, including frontmatter, Markdown, and footer:
-3,315 source words and 3,315 draft words, net zero. For mechanical sequence
-accounting, normalize rebased library-link prefixes back to their original
-spelling, split on whitespace, and compare with `difflib.SequenceMatcher` using
-`autojunk=False`: 2,574 words retained, 741 removed, 741 added. This records
-textual overlap, not a semantic measure. One note remains one note; no defined
-concept is added.
+3,315 source words and 3,346 draft words. Mechanical sequence accounting
+uses `difflib.SequenceMatcher` with `autojunk=False`, including link rebasing:
+2,539 words retained, 776 removed, 807 added. This records textual
+overlap, not a semantic measure. One note remains one note; no defined concept
+is added.
 
 The rewrite removes the classical-operation apparatus and universal retention
 condition, but adds the adopted capacity, opacity, reconstruction, and survival
@@ -116,3 +115,41 @@ qualifications. It does not claim a word-count reduction. No definition scope
 issue or blocker was found. Experimental separation of retained criticism from
 reconstructed theory remains a practical question, already open in the
 companion; this draft does not settle it.
+
+## Second-check corrections, 2026-09-21
+
+Item 5 transfers the old definition's explicit preference, “Among revisions
+that fit the evidence, reach is preferred” (`theory-refinement.md:191`), to
+the opening after the two hypotheses. The successor now states that the
+proposed selection rule prefers explanatory-reach among evidence-fitting
+revisions. The existing reach note supplies the reason for that preference;
+reach-assessment names the proposed capability. The choice is under test and
+is not a condition of conjectural learning or a claim that selection works.
+The companion link now uses its registered “efficiency conjecture” wording
+instead of “total-cost conjecture”. No comparison or protocol changes.
+
+Author check applied all six checks and fourteen cases in
+[the maintained definition checks](../definitions/conjectural-learning-checks.md).
+No case flips: cases 1, 2, 3, 8, 11, and 12 stay inside under their improvement
+assumption; case 6 remains conditional; cases 4, 5, 7, 9, and 14 keep their
+stated comparison roles; case 10 stays excluded; case 13 stays unestablished
+by its test. Opacity does not establish absence, criticism retention remains
+distinct from input/output records, and observed recurrence does not certify
+improvement. No new term or genus condition is introduced. Builder scope
+remains separately narrower through addressability and responsibility; this
+batch does not alter the operator's settled criticism-optional builder scope.
+
+Second-check validation: each changed draft and this disposition passed
+`commonplace-validate --full` by explicit path on 2026-09-21, with no warnings
+or failures. These checks do not authorize migration.
+
+## Follow-up example correction, 2026-09-21
+
+The previous example changed whether a file had an executable consumer, then
+called application of that unchanged condition a revision. Replace it with
+the lead article's hypothetical included-snippet case: criticism overturns
+the assumption that configured inputs enumerate all dependencies. The revised
+account includes indirect dependencies and changes predictions for other
+snippets. No comparative sample-efficiency result is asserted; no definition
+or case classification changes. Current counts supersede the earlier local
+figures in [consolidated accounting](./accounting-and-validation.md).

@@ -6,13 +6,14 @@ snapshot-bound ontology revision, not a new external-system analysis.
 ## Artifact disposition
 
 - Original: `kb/notes/evidence/three-2026-harnesses-retain-editable-rules-or-weights-not-rationale.md`.
-- Draft: [Three 2026 harness reports distinguish repair and retention paths](./kb/notes/evidence/three-2026-harnesses-retain-editable-rules-or-weights-not-rationale.md).
-- Intended final title: **Three 2026 harness reports distinguish repair and retention paths**.
-- Intended final path: `kb/notes/evidence/three-2026-harness-reports-distinguish-repair-and-retention-paths.md`.
+- Draft: [Rules, weights, and missing rationale do not settle conjectural learning](./kb/notes/evidence/three-2026-harnesses-retain-editable-rules-or-weights-not-rationale.md).
+- Intended final title: **Rules, weights, and missing rationale do not settle conjectural learning**.
+- Intended final path: `kb/notes/evidence/rules-weights-and-missing-rationale-do-not-settle-conjectural-learning.md`.
 - Disposition: retain the standalone comparison, rename and replace its
   ontology-dependent prose at migration. The old title's unqualified “not
   rationale” is stronger than the reports' failure to describe retained
-  rationale. The new title states the comparison the evidence supports.
+  rationale. The new title states the inference limit the comparison supports: none of
+  rules, weights, or missing historical rationale settles learning alone.
 - Original SHA-256: `b699380802792af88112f5d30833498d731c18d37c02f1290f49150572185885`.
 
 The staged filename preserves the original path. Final relocation uses the
@@ -123,4 +124,37 @@ rebasing is included.
 
 | Original | Draft | Retained | Removed | Added |
 |---:|---:|---:|---:|---:|
-| 1264 | 1443 | 981 | 283 | 462 |
+| 1264 | 1489 | 986 | 278 | 503 |
+
+## Second-check corrections, 2026-09-21
+
+The title now states the substantive inference limit rather than merely naming
+different paths. Prime Agent's reported self-improving pathway is explicitly
+retained in the definition's improvement-directed sense, distinct from
+demonstrated success; the defined-in edge again has a body use. Apodex's
+original “does not present itself as one” qualification is restored for the
+deployed harness boundary, without classifying the training composite.
+
+The Commonplace comparison still records a connected human-inclusive
+cumulative pathway. Its description now says later changes read and transform
+an earlier result; the tag-readme check establishes mark consistency, not
+demonstrated improvement in capacity. Comparative benefit and productivity
+gains remain unestablished. This qualification follows the existing tag-readme
+trace cited by the evidence-ladder draft, and introduces no new empirical
+classification or source finding. The evidence-ladder footer label follows
+that draft's strengthened title.
+
+Author check applied all six checks and fourteen cases in
+[the maintained definition checks](../definitions/conjectural-learning-checks.md).
+No case flips: cases 1, 2, 3, 8, 11, and 12 stay inside under their improvement
+assumption; case 6 remains conditional; cases 4, 5, 7, 9, and 14 keep their
+stated comparison roles; case 10 stays excluded; case 13 stays unestablished
+by its test. Opacity does not establish absence, criticism retention remains
+distinct from input/output records, and observed recurrence does not certify
+improvement. No new term or genus condition is introduced. Builder scope
+remains separately narrower through addressability and responsibility; this
+batch does not alter the operator's settled criticism-optional builder scope.
+
+Second-check validation: each changed draft and this disposition passed
+`commonplace-validate --full` by explicit path on 2026-09-21, with no warnings
+or failures. These checks do not authorize migration.

@@ -63,15 +63,15 @@ remain verbatim, preserving every existing section fragment.
 
 | Section | Substantive change |
 |---|---|
-| Title, description, lead banner, opening | New paradigm name and staged lead link. Describe the program's retained-addressable-theory arrangement instead of making it the learning genus |
+| Title, description, lead banner, opening | New paradigm name and staged lead link. Describe the program's retained-addressable-theory arrangement instead of making it the learning genus. Name component experiments and boundary cases in the retrieval description |
 | The system under test | State builder addressability separately from tentative status. Define formulated operative theory, content criticism, improved capacity, whole replacement, reconstruction, and private formulation. Capacity may improve before exercise; continuing builder responsibility is narrower than learner membership |
 | The hypotheses | Append a paragraph distinguishing the three mechanism conjectures and the structured-shift reuse/selector hypotheses from the preserved whole-program hypotheses |
 | The evidence interface | Keep external authority intact. Scope the externally assessed reflective path to testing payoff; distinguish causal reflection from successful learning. Surviving criticism can change reliance without a text edit |
 | The first arrangement and its protocol | No substantive change |
 | What a run's path can and cannot show | No substantive change |
-| Component experiments that can run first | Keep exporter example, paired continuation setup, shared models/tools/requests/budgets, descriptive-summary and wrong-theory comparisons, two shift histories, outcomes, costs, intervals, and predeclaration. Separate reconstruction from retained criticism from reconstruction from only inputs/outcomes. Classify indexed traces by content. Explicitly limit inferences about hidden criticism and state that connected recurrence alone does not establish improved capacity |
-| Boundary cases | Scope FORTE to one supplied-theory invocation; keep a larger deployment distinct. Replace the DGM absence claim with unestablished continuing theory responsibility. Keep Gödel builder classification open; distinguish a proof admission rule from stipulated absence of criticism. Permit deductive criticism under the learning definition |
-| Limits | Say protocols remain designs, while preserving existing local evidence. A future result can challenge an empirical assumption or definition; changing a definition cannot turn a failed outcome into success |
+| Component experiments that can run first | Keep exporter example, paired continuation setup, shared models/tools/requests/budgets, descriptive-summary and wrong-theory comparisons, two shift histories, outcomes, costs, intervals, and predeclaration. Separate reconstruction from retained criticism from reconstruction from only inputs/outcomes. State that reconstruction from formulated criticisms is conjectural learning when it improves capacity, while raw input/output records alone do not classify the reconstructor. The raw-record row excludes supplied formulated theory and criticism without pretending to exclude private model reasoning. Classify indexed traces by content. Explicitly limit inferences about hidden criticism and state that connected recurrence alone does not establish improved capacity |
+| Boundary cases | Scope FORTE to one supplied-theory invocation; keep a larger deployment distinct. Replace the DGM absence claim with unestablished continuing theory responsibility, and mark its externally tested, reflective, and autonomous builder properties unestablished rather than inferring them. Keep only the Gödel-machine builder classification open; distinguish its proof admission rule from the stipulated non-criticizing comparison outside conjectural learning. Preserve the fallible-admission and recovery limitation in the admission-route comparison: empirical admission permits a fallible successor and later exposure, while proof-only admission can leave a useful unproved change unavailable |
+| Limits | Say protocols remain designs, while preserving existing local evidence. Restore the commitment to revise a challenged definition while retaining the run record, without adjusting the protocol to protect the definition. A future result can challenge an empirical assumption or definition; changing a definition cannot turn a failed outcome into success |
 | Where to go next | Same destinations, with staged builder links and rebased paths |
 
 The mechanism-conjecture table explains content, addressability, and total
@@ -123,7 +123,7 @@ references and must be rewritten before library promotion.
 | Three `../definitions/` workshop definitions | `kb/notes/definitions/conjectural-learning.md`, `tentative-theory.md`, `addressable-theory.md` |
 | Existing workshop companion | `kb/notes/commonplace-studies-conjectural-learning-through-retained-theories.md` |
 | Builder and reflective-builder drafts | Their existing `kb/notes/definitions/` paths |
-| Evidence-ladder draft | `kb/notes/evidence-of-theory-use-does-not-by-itself-establish-learning.md` |
+| Evidence-ladder draft | `kb/notes/a-complete-theory-path-does-not-establish-improved-capacity.md` |
 | Sample-efficiency draft | `kb/notes/retained-theories-may-improve-sample-efficiency.md` |
 | Lead draft | `kb/articles/conjectural-learning-with-fixed-models.md` |
 
@@ -168,11 +168,15 @@ declarations, entire run-path section, and all original level-two headings.
 These checks compare links without their rebased destinations where needed.
 No software tests or experiments were run for this Markdown-only draft.
 
-The remaining limitation is the existing open builder boundary, stated as
-open in the article. No new scope decision, protocol selection, or publication
+The remaining limitation is the open Gödel-machine builder classification,
+stated as open in the article. No new scope decision, protocol selection, or publication
 approval is implied. Package review and promotion remain the parent task.
 
-## Local change accounting
+## Historical drafting account (superseded)
+
+The following figures describe the initial staged draft before the second-check
+repairs. They are retained only as provenance and are superseded by the
+parent package's consolidated change account.
 
 Whitespace-token counts over complete files, including frontmatter and links;
 retained tokens use `difflib.SequenceMatcher` with `autojunk=False`. Link
@@ -181,3 +185,13 @@ rebasing and lineage-path changes count as textual changes.
 | Original | Draft | Retained | Removed | Added |
 |---:|---:|---:|---:|---:|
 | 4178 | 4865 | 3778 | 400 | 1087 |
+
+## Follow-up failed-test constraint, 2026-09-21
+
+The permission to revise tests in `#component-experiments-that-can-run-first`
+now carries the workshop's requirement for grounds to doubt a failed test's
+measurement or relevance before replacing or weakening it. A changed test
+cannot establish compliance with an unchanged external requirement; changing
+that requirement still needs its external authority. This preserves the
+existing constraint without changing the adopted hypotheses, ten protocol
+declarations, or run-path account.

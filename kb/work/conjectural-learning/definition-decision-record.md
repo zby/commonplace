@@ -12,68 +12,14 @@ on how it is written. They do not decide its scope.
 
 ## Tests for any change to the definition
 
-1. **Kind, not degree.** A condition belongs in the definition only if
-   removing it changes which mechanism does the learning: what eliminates
-   errors, what they are eliminated from, or what persists. A condition whose
-   removal leaves the mechanism and changes how well it works is a conjecture
-   with a baseline. By this test formulation in language, operative use,
-   criticism of content, and an effect on the capacity for future action are
-   definitional.
-   The definition's two numbered conditions bundle these four: the first
-   holds formulation and operative use, the second criticism of content and
-   its effect on the capacity for future action.
-   Addressability of parts, and retaining the theory against rebuilding it
-   from retained criticisms, are conjectures. Fixed weights are a study
-   condition. These distinctions identify the mechanism; learning also
-   requires improvement in that capacity. Superiority over alternatives remains
-   a conjecture.
-2. **Every arrangement left outside is named.** It is specified well enough
-   to be run as a baseline. The definition never
-   settles an empirical question by leaving the rival out.
-   Boundary examples also include arrangements inside the term. An example
-   need not fail a condition or serve as an experimental baseline to clarify
-   the boundary.
-3. **Classification requires evidence for the defining conditions.**
-   Formulated artifacts and interventions on their content can establish
-   formulation, criticism, causal influence, and improved capacity without
-   a complete account of model internals. Performing an intervention is not
-   a membership condition. An empirical classification must be supported by
-   evidence; stipulated examples are classified under their stated
-   assumptions. Where evidence is insufficient, the case remains
-   unclassified. Observer inaccessibility alone establishes neither presence
-   nor absence.
-4. **Each condition is attributed.** Popper's, ours, or an empirical
-   question.
-5. **No term without a claim.** A new term enters only when a claim cannot be
-   stated without it.
-6. **A change reports the cases it flips.** Run the proposed wording against
-   the cases below and say which change class. A change that flips none is
-   wording. A change that flips one is a scope decision for the operator and
-   names the test it appeals to.
+The six adopted tests now live in the [checks beside the definition](./definitions/conjectural-learning-checks.md#tests-for-any-change-to-the-definition).
+Apply that maintained copy when proposing a change.
 
 ## Cases to check a change against
 
-The inside cases assume improvement in the capacity for future action through
-the stated process.
-Without improvement they describe attempts to learn; when improvement is
-unestablished, learning remains unestablished.
-
-| # | Case | Class | Settled by |
-|---|---|---|---|
-| 1 | A retained theory with separate parts is criticized and revised part by part, whether stored in separate documents or exposed through indexed traces | Inside | Both conditions; storage representation does not distinguish the cases |
-| 2 | A retained prose theory is criticized for what it says and replaced whole | Inside | Test 1; addressability is a conjectured benefit |
-| 3 | Formulated criticisms are retained and a theory is rebuilt from them when needed | Inside | Persistence of the effect of criticism |
-| 4 | Records containing only inputs and outcomes are retained for reconstruction | Comparison of retained content | The records do not retain formulated conjectures or criticism; this does not classify what the reconstructor does |
-| 5 | Prompts or programs are varied and selected by score, with no formulated reason for failure bearing on their content | Comparison | Criticism of content, absent by stipulation; this does not classify unknown processing in a model proposer |
-| 6 | A theory is built while reasoning and then discarded | Inside if formulated criticism changes the system's capacity for future action, before disposal or through a retained result afterward; outside if nothing learned from criticism changes that capacity | A claim of later capacity requires persistence to that time; disposal alone does not settle whether capacity improved earlier |
-| 7 | Weights are adapted and no formulated theory guides decisions | Comparison | Formulation, absent by stipulation. An opaque model with no visible theory is a different case; insufficient evidence leaves it unclassified |
-| 8 | Weights, prompts, and code evolve together around a formulated operative theory | Inside. The research program treats it as an extension it does not pursue, since its experiments hold the weights fixed | Both conditions still hold; fixed weights are a study condition under test 1 |
-| 9 | A formulated theory guides decisions and is never criticized | Comparison: the frozen-seed baseline | No criticism; test 2 |
-| 10 | A theory is stored and no process in the system would consume it | Excluded; as a baseline it is the system run without the theory | Not operative, so it adds no capacity. A theory that a process would consume when an occasion arises is not this case |
-| 11 | A theory survives an attempted refutation, and the recorded result guides later reliance on it or the choice of further tests | Inside | Criticism is attempted elimination; its result can change assessed support and subsequent use without changing the theory's content |
-| 12 | One model proposes and criticizes its own theories | Inside | Test 1: decorrelating the critic from the proposer changes how well criticism works, not which mechanism does the learning |
-| 13 | Criticisms are written down, but a test detects no difference from placebo text of the same form | Not shown to be inside by that test | The test has not established a content effect; non-detection alone does not establish absence |
-| 14 | A formulated operative theory licenses revisions only by proof from premises that are never criticized | Comparison: proof-only revision under an uncriticized theory | Criticism of content, absent by stipulation. Proof-governed switching alone does not establish this absence in a complete system. Test 1: what eliminates differs in kind |
+The fourteen numbered cases and their shared assumptions now live in the
+[same checks file](./definitions/conjectural-learning-checks.md#cases-to-check-a-change-against).
+The extraction changes no test, case assumption, or expected classification.
 
 ## Settled decisions
 
@@ -205,3 +151,36 @@ conditions of learning. Under test 6, none of the fourteen cases changes class;
 in particular, cases 2 and 6 need not meet the builder's additional conditions.
 The staged builder definitions remain unchanged. This decision does not
 commission library migration or peer-workshop edits.
+
+## Builder revision and criticism, resolved 2026-09-21
+
+The operator confirmed that criticism is one route for developing or revising
+theories, not a condition of general theory-builder membership. The current
+workshop definition remains unchanged: a builder may revise in response to
+criticism or reconstruct from retained records, and initial construction is
+also in scope. Do not add a general responsibility-to-criticize requirement.
+
+The reflective builder inherits that openness. Its additional condition is
+work on a theory of its own theory-building machinery through the specified
+two-way causal connection. The old library definition imported an
+error-correction requirement by referring to reflective theory refinement.
+Removing that inherited restriction in the staged replacement is deliberate,
+rather than an unrecorded synonym change. The staged reflective definition
+already expresses the approved scope and remains unchanged.
+
+This resolves item 4 of the [second-check fix list](./rewrites/second-check-fix-list.md).
+For an explicit boundary witness, assume a persistent builder otherwise meets
+the builder conditions and revises its addressable self-theory through a
+construction or reconstruction procedure without criticism. If that
+self-theory has the required causal connection to its machinery, it qualifies
+as a reflective builder under the staged definition. It would fail the old
+requirement to perform the error-correcting operation. This is a stipulated
+scope example, not a newly assessed system.
+
+Under tests 1 and 4, builder responsibility, reflection's causal relation, and
+criticism-mediated learning have distinct jobs; the optionality is a
+Commonplace vocabulary decision. Under test 6, none of the fourteen
+conjectural-learning cases changes class. The example above does not establish
+conjectural learning without criticism and improved capacity. The procedure
+records the reflective-builder scope difference explicitly rather than
+treating unchanged learning cases as proof that no other definition changed.

@@ -248,12 +248,16 @@ Each admitting route names the guidance that shaped the proposal, what it
 says, and what persists: formulated theories, criticisms, input/outcome
 records, parameters, or other source-native material. It describes applying,
 deriving from, criticizing, revising or replacing, and retaining or
-reconstructing a theory in ordinary terms. Addressability (individually
-inspectable and revisable assumptions and parts) is recorded separately from
-formulation, operative use, and retention. A rule set can express a theory
-without retaining its historical rationale; missing rationale does not
-establish absent formulated criticism of its content. Where rationale is
-retained, the record states whether a later route reads it.
+reconstructing a theory in ordinary terms. Record the degree to which its
+assumptions, scope conditions, and parts are individually inspectable and
+revisable, and the boundary over which that addressability judgment holds.
+Addressability is recorded separately from formulation, operative use, and
+retention. A rule set can express a theory without retaining its historical
+rationale. Record what it claims and how its structure exposes assumptions,
+scope conditions, and parts; do not classify it from the storage label alone.
+Missing rationale does not establish absent formulated criticism of its
+content. Where rationale is retained, the record states whether a later route
+reads it.
 
 A theory route gives separate conclusion statuses and evidence for
 formulation, operative use, content-directed criticism, its resulting
@@ -310,7 +314,7 @@ The lens sections annotate canonical IDs. They do not reproduce the shared inven
 
 ### Bounded synthesis
 
-`## Bounded synthesis` gives the evidence basis and boundary, architectural characterization and claimed work, runtime map, only the discriminating mechanisms this target needs, scenario-relative assessment, and concrete evidence or system changes that would alter the assessment. Where the runtime account supports it, the synthesis states separately whether the system retains a revisable theory on its decision path, whether it is reflective, and whether it is self-improving at the declared boundary, each at its own evidence status; these are three independent properties, not a grade or a ladder. It is organized around the system's operational progression, not as concatenated lens reports. It gives no product ranking, generic adoption advice, system-wide epistemic grade, Commonplace delta, or transfer recommendation.
+`## Bounded synthesis` gives the evidence basis and boundary, architectural characterization and claimed work, runtime map, only the discriminating mechanisms this target needs, scenario-relative assessment, and concrete evidence or system changes that would alter the assessment. Where the runtime account supports it, the synthesis states separately whether criticism of an operative formulated theory improved the system's capacity for future action, whether the system is reflective, and whether it is self-improving at the declared boundary, each at its own evidence status; these are three independent properties, not a grade or a ladder. It is organized around the system's operational progression, not as concatenated lens reports. It gives no product ranking, generic adoption advice, system-wide epistemic grade, Commonplace delta, or transfer recommendation.
 
 ### Limitations
 

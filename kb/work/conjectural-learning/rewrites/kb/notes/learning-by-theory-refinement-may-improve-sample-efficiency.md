@@ -34,12 +34,16 @@ It contains two separable hypotheses:
 - **Selection:** among candidates with comparable source fit, preferring
   estimated explanatory-reach may select theories that transfer better.
 
+The proposed selection rule prefers [explanatory-reach](../../../../../notes/first-principles-reasoning-selects-for-explanatory-reach-over.md)
+among revisions that fit the evidence. This is an explicit choice under test,
+not a condition of conjectural learning or evidence that the selector works.
+
 [Reach-assessment](../../../../../notes/definitions/reach-assessment.md) is the
 proposed capability behind the second hypothesis. A useful supplied theory
 can deliver the first benefit without being chosen by that selector. Neither
 retention nor a gain from the complete arrangement establishes the selector's
 contribution. These structured-transfer hypotheses remain distinct from the
-[companion's content, addressability, and total-cost conjectures](../../../notes/commonplace-studies-conjectural-learning-through-retained-theories.md).
+[companion's content, addressability, and efficiency conjectures](../../../notes/commonplace-studies-conjectural-learning-through-retained-theories.md).
 
 ## Explanatory-reach supplies the leverage
 
@@ -47,7 +51,22 @@ A theory has [explanatory-reach](../../../../../notes/first-principles-reasoning
 
 A **structured shift** changes surface regularities while preserving enough of this structure for an earlier theory to remain useful. The learner may then need to identify only which premise, parameter, component, or applicability condition changed, rather than infer each target behavior independently. One theory-level revision can change many downstream predictions at once.
 
-For example, a coding agent may observe that several documentation-only changes do not require integration tests. It could retain the correlation-shaped rule "documentation files are safe." Or it could infer the theory "a changed file cannot affect integration behavior when no executed process consumes it." If a build tool later begins reading one documentation file as configuration, one failure can support a precise revision: the exemption applies only to files not consumed by executable tooling. The correlation-shaped rule does not state the dependency condition, but the learner could still discover it from the failure and revise the rule. Retaining the explanation supplies a candidate basis for diagnosis; whether it saves observations compared with reconstructing that basis is part of the conjecture.
+Consider a release exporter whose retained theory says that edits need a
+manifest check when the exporter reads the file, and that its configured input
+list names every file it reads. Adding a documentation file to that list calls
+for applying the existing theory. Later, the exporter gains support for
+included snippets. An edit to an unlisted snippet passes a syntax check but
+produces an invalid manifest. Criticism identifies the false premise: the
+configured list names entry points, not every dependency. The revised theory
+includes files reachable through includes, while preserving the connection
+between executable consumption and checking. It changes the predicted checks
+for other snippets that have never failed.
+
+This hypothetical revision changes a claim, rather than merely deciding
+whether an unchanged condition applies. The retained theory supplies a
+candidate diagnosis; whether it saves observations compared with discovering
+that dependency from a rule such as "documentation files are safe", or
+reconstructing the explanation, remains the conjecture.
 
 This is also the central risk. A broad but wrong theory produces broader negative transfer than a local association does, because it is wrong just as widely as it would have been useful — and [stating where a lesson stops](../../../../../notes/abstract-an-experience-only-when-you-can-state-the-boundary.md) is a judgment, not something the evidence hands over.
 

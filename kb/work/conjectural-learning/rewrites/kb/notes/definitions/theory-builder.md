@@ -18,14 +18,14 @@ each only part of it.
 
 A theory here must also be an [addressable theory](../../../../definitions/addressable-theory.md):
 its assumptions, scope conditions, and parts can be inspected and revised
-individually. Its consequences must be capable of being contradicted by a
-case. These are conditions of this builder definition; tentative status
-alone supplies neither.
+individually, in any form that supplies these conditions. Its consequences
+must be capable of being contradicted by a case. These are conditions of this
+builder definition; tentative status alone supplies neither.
 
 The definition leaves open how a builder revises its theories. It may revise
 an existing theory in response to criticism or reconstruct one from retained
-records. Constructing a first theory is also in scope. Responsibility for
-this work does not establish [conjectural learning](../../../../definitions/conjectural-learning.md),
+records. A comparison of retained forms can vary this choice. Constructing a
+first theory is also in scope. Responsibility for this work does not establish [conjectural learning](../../../../definitions/conjectural-learning.md),
 which requires an improvement in the system's capacity for future action
 attributable to criticism of an operative formulated theory. A builder can
 attempt that process without succeeding. Conversely, conjectural learning
@@ -203,8 +203,8 @@ supply those.
   license rewrites; the [proof-governed construction](../../../../../../notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md)
   alone does not answer that deployment question. Proof-governed switching
   neither establishes nor excludes criticism elsewhere in the complete
-  system.
-
+  system. An internally represented utility does not by itself decide the
+  classification.
 - **Commonplace's note-review loop**, with the operator performing internal
   roles, is a human-staffed theory builder. A note's approval is internal
   evaluation, not independent assessment of its downstream consequences.

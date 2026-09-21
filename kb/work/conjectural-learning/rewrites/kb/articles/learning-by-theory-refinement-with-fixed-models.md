@@ -15,7 +15,10 @@ source_notes:
   - kb/work/conjectural-learning/rewrites/kb/notes/reflective-theory-refinement-needs-interpretation-and-retention.md
   - kb/work/conjectural-learning/rewrites/kb/notes/learning-by-theory-refinement-may-improve-sample-efficiency.md
   - kb/notes/the-deployed-system-not-the-model-is-the-unit-of-learning.md
+  - kb/notes/retained-artifacts-enable-persistent-deployment-time-adaptation.md
+  - kb/notes/continual-learning-requires-governing-behaviour-changing-writes.md
   - kb/notes/the-bitter-lesson-selects-production-methods-not-representational.md
+  - kb/notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md
   - kb/notes/a-fixed-model-house-must-write-the-procedures-for-each-new-theory.md
   - kb/notes/a-claim-without-external-assessment-carries-three-obligations.md
   - kb/notes/retaining-the-episode-keeps-a-distilled-rule-re-derivable.md
@@ -36,6 +39,8 @@ interpret retained, separately revisable theories while their weights stay
 fixed. Whether retaining those theories improves learning enough to pay for
 their upkeep remains an empirical question. This article explains the
 process, the chosen arrangement, and the research hypotheses it motivates.
+The arrangement is compared with adapting model weights and with retaining
+records or summaries without retaining formulated theories and criticisms.
 
 ## A case
 
@@ -80,12 +85,11 @@ Tentative does not mean unsupported, and corroboration does not end that
 status. Criticism can be an argument, a comparison with a rival, or a test
 of a stated consequence; it need not be an empirical experiment.
 
-[Conjectural learning](../../../definitions/conjectural-learning.md)
-keeps this process under two conditions. A theory is formulated in natural
-or formal language and guides decisions through what it says. Formulated
-criticism then changes the system's capacity for future action. Learning
-requires that capacity to improve. Merely writing a theory, changing a
-decision, or recording a passing test does not establish improvement.
+[Conjectural learning](../../../definitions/conjectural-learning.md) attributes
+learning to a system when a formulated theory guides decisions through what
+it says and formulated criticism improves the system's capacity for future
+action. Merely writing a theory, changing a decision, or recording a passing
+test does not establish improvement.
 Popper supplies the process and the theory's status; Commonplace supplies
 these conditions for attributing learning to a particular system.
 
@@ -128,8 +132,10 @@ parameter updates as the source of an improvement. It does not identify
 which retained change caused the improvement or hold the model's processing
 fixed across different inputs.
 
-The program pursues recursive self-improvement within Schmidhuber's broad
-research direction. Its chosen development path starts with an incomplete
+The program pursues recursive self-improvement: improving the machinery that
+performs later improvement. This places it within
+[Schmidhuber's broad survey of systems that modify their own learning processes](../../../../../sources/recursive-self-improvement-since-1987.ingest.md).
+Its chosen development path starts with an incomplete
 methodology expressed in language. Models interpret it, experience exposes
 its limits, and criticism guides changes to the methodology and the machinery
 that applies it. Popper's process organizes that work; the research question
@@ -202,12 +208,17 @@ Bounded context creates a need to select or summarize evidence; it does not
 by itself select theories as the best retained form. Search, summaries,
 periodic reconstruction, and retained theories can be combined.
 
-The chosen arrangement makes new knowledge available without another
-weight-training cycle and gives readers identifiable assumptions to inspect.
+The chosen arrangement [makes new knowledge available without another
+weight-training cycle](../../../../../notes/retained-artifacts-enable-persistent-deployment-time-adaptation.md)
+and gives readers identifiable assumptions to inspect.
 Whether those properties improve continual learning or make rollback useful
-depends on the system that consumes them. Admission, coordination, and credit
+depends on whether the system [governs which behavior-changing writes become
+operative](../../../../../notes/continual-learning-requires-governing-behaviour-changing-writes.md).
+Admission, coordination, and credit
 assignment remain work: a readable explanation does not guarantee faithful
 use, and a readable dependency is not necessarily an independent one.
+A learner confined to a
+[fixed decomposition inherits that decomposition's mistakes](../../../../../notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md).
 
 A separate [sample-efficiency conjecture](../notes/learning-by-theory-refinement-may-improve-sample-efficiency.md)
 asks whether a useful theory reduces target observations after a shift that
@@ -218,7 +229,9 @@ explanations hold beyond the observed cases. Both are separate from total cost. 
 evidence, retrieval, validation, maintenance, and mistakes must be counted
 symmetrically across the compared systems.
 
-Written theories also receive no exemption from the Bitter Lesson. The
+Rich Sutton's Bitter Lesson says that general methods which scale with
+computation outperform methods built from human knowledge. Written theories
+receive no exemption from that pressure. The
 relevant distinction is [how structure is produced and revised](../../../../../notes/the-bitter-lesson-selects-production-methods-not-representational.md),
 not simply whether it is text or weights. Computational search could produce
 the retained structure, making it a learned product. Search and assessment
@@ -234,6 +247,9 @@ system fails, it must decide whether its account of the exporter is wrong,
 whether the implementation violates the requirement, or whether its checking
 procedure failed. Changing a descriptive assumption and changing the product
 are different responses.
+
+Replacing or weakening a failed test requires grounds to doubt its
+measurement or relevance. The failure alone supplies no such grounds.
 
 An externally supplied requirement does not become the system's to weaken
 because weakening it would make a failure disappear. Tenant isolation, for
@@ -283,7 +299,9 @@ A theory cited in a decision record may have been decorative. A changed
 procedure may work for reasons other than the proposed theory. The
 [evidence account](../notes/reflective-theory-refinement-needs-interpretation-and-retention.md)
 therefore separates theory mediation, empirical contact, response to
-criticism, and recurrent mediation. Claiming recurrence requires evidence
+criticism, and recurrent mediation: respectively, the theory affects a
+decision, an outcome bears on it, formulated criticism changes its content or
+role, and that result affects later operation. Claiming recurrence requires evidence
 that these steps belong to the same causal path. Even a complete path needs
 separate evidence that capacity improved. Conversely, capacity can improve
 before another opportunity to exercise it arises.
@@ -321,6 +339,10 @@ with model versions declared and weights held fixed during assessment.
   not pass through the self-theory, refute the assessed claim. An extension
   here is a retained machinery change that demonstrates capability beyond
   the seed on a stated demand and budget.
+
+Better downstream outcomes alone do not test the reflection hypothesis. That
+requires records of a reflective episode and a matched builder that retains
+content without a self-theory.
 
 These hypotheses require more than a successful component. Better whole-system
 performance does not isolate the contribution of criticism or addressability;

@@ -195,15 +195,17 @@ Keep these distinctions:
   The capacity need not already have been exercised; a claim that it remains
   available later requires the effect to persist to that time. Revision,
   retention, or a connected route alone does not establish learning.
-- **Addressability and retention** are separate findings. Record whether
-  assumptions and parts can be inspected and revised individually, and what
-  persists: theories, formulated criticisms, input/outcome records, parameters,
-  or other source-native material. Whole replacement and reconstruction can
-  support conjectural learning. Storage form does not decide retained content
-  or the process used to reconstruct it.
+- **Addressability and retention** are separate findings. Record the degree
+  to which assumptions, scope conditions, and parts can be inspected and
+  revised individually, and the boundary over which that judgment holds.
+  Record separately what persists: theories, formulated criticisms,
+  input/outcome records, parameters, or other source-native material. Whole
+  replacement and reconstruction can support conjectural learning. Storage
+  form does not decide retained content or the process used to reconstruct it.
 - **Rationale and criticism** are separate findings. Rules can express a
-  theory without preserving why they were adopted. Record their claims and
-  structure rather than assuming every rule set is a theory. Missing
+  theory without preserving why they were adopted. Record what a rule set
+  claims and how its structure exposes assumptions, scope conditions, and
+  parts; do not classify it from the storage label alone. Missing
   historical rationale does not establish absent formulated criticism of
   their content. Where rationale persists, record whether a later route reads
   it. Inaccessible model processing leaves formulation or criticism
@@ -216,8 +218,10 @@ Keep these distinctions:
   direct modification of the represented machinery is not required. A
   reflective theory builder additionally revises a self-theory of its
   theory-building organization. Reflection and improved capacity are separate
-  claims. Among revisions that fit the evidence, reach is preferred; do not
-  write "reach rather than fit".
+  claims.
+- **Revision selection** prefers reach among revisions that fit the evidence;
+  do not write "reach rather than fit". This preference applies whether or
+  not the route is reflective.
 
 On a theory route, give each claim its own conclusion status: formulation,
 operative use, content-directed criticism, the resulting revision or changed
@@ -378,6 +382,11 @@ mechanisms, scenario-relative assessment, limitations, and evidence or system
 changes that would alter the assessment. Do not concatenate lens reports or add
 a product ranking, generic adoption advice, system-wide epistemic grade,
 Commonplace delta, transfer recommendation, or universal maturity model.
+Where the runtime account supports them, state separately whether criticism
+of an operative formulated theory improved the system's capacity for future
+action, whether the system is reflective, and whether it is self-improving at
+the declared boundary. Give each property its own evidence status. They are
+independent properties, not a grade or a ladder.
 
 ### 7. Write and validate the exact result
 

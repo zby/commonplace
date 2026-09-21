@@ -12,8 +12,10 @@ that the definitions and goals do not already imply.
   2,443 words, [learning by theory refinement](../../notes/definitions/learning-by-theory-refinement.md)
   1,008, the [three-lineages note](../../notes/reflective-theory-refinement-has-three-separate-lineages.md)
   1,810; together 5,261. At migration, count the candidate definitions and
-  companion with `wc -w`, including frontmatter and link footers; exclude
-  workshop scaffolding. Net savings and the definition count depend on what
+  companion with `wc -w`, including frontmatter and link footers; also count
+  the retained `conjectural-learning-checks.md` and maintenance comment.
+  The checks are not an additional definition. Exclude workshop scaffolding.
+  Net savings and the definition count depend on what
   survives from the existing definitions and lineages note; adoption must
   account for that remainder.
 - **Retiring *theory refinement* widens the rename.** Names built on it need a

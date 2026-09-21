@@ -5,11 +5,11 @@ traits: [title-as-claim]
 tags: [foundations, self-improving-systems]
 ---
 
-# Evidence of theory use does not by itself establish learning
+# A complete theory path does not establish improved capacity
 
 A theory can guide a useful change without the system learning from criticism
 of that theory. Evidence of theory use, a relevant outcome, a response to
-criticism, and later use supports successively more complete accounts of the
+criticism, and later use support successively more complete accounts of the
 process. [Conjectural learning](../../../definitions/conjectural-learning.md)
 requires a further result: criticism of a formulated operative theory improves
 the system's capacity for future action. A complete observed sequence can
@@ -124,11 +124,13 @@ value, not the need to establish causal use, criticism, and improved capacity.
 
 [Commonplace's human-agent pathway](../../../../../notes/evidence/commonplace-as-a-reflective-system.md)
 shows operative self-representations being interpreted and changed, including
-changes to instructions, validators, schemas, and code. Its tag-readme case
-supports improvement within the adopted criterion. Humans supply decisive
-assessment and adoption judgments. The evidence is bounded to that pathway
-and criterion; it establishes neither independent computational theory
-possession nor a general advantage for the arrangement.
+changes to instructions, validators, schemas, and code. In its tag-readme case,
+the validator pass establishes consistency of the marks with the declared
+criterion; [the improvement remains a claim](../../../../../reference/tag-readme-trace-as-self-improving-loop.md#what-the-mapping-settles-and-what-it-does-not).
+Humans supply decisive assessment and adoption judgments. The evidence
+establishes a bounded connected pathway, not demonstrated improvement in
+capacity, independent computational theory possession, or a general advantage
+for the arrangement.
 
 The retained [Exo review](../../../../../agentic-systems/reviews/exo.md), pinned
 to its inspected checkout, describes editing prompts, tools, and executor
@@ -150,10 +152,12 @@ The construction is not an observed recurrent learning result.
 ## Scope
 
 - Reflection is relative to a boundary and represented aspects. Learning
-  about an external target need not be reflective.
+  about an external target need not be reflective unless that target helps
+  determine the modifying system's own behavior; the two-way causal connection
+  must still hold.
 - Retaining an addressable theory is an explicit premise of the chosen
   arrangement, not a condition of conjectural learning.
-- Read-back can be delayed. A later demand or maintenance failure may provide
+- Criticism can be delayed. A later demand or maintenance failure may provide
   the relevant challenge, and claims must stay within what it tested.
 - Identity across records helps establish a connected path; it does not
   independently establish causation or improvement.
@@ -174,5 +178,6 @@ Relevant Notes:
 
 - [Conjectural learning](../../../definitions/conjectural-learning.md) — defined-in: the improvement and criticism conditions kept distinct from process evidence
 - [Reflective system](../../../../../notes/definitions/reflective-system.md) — defined-in: the architectural capacity that a reflective learning claim additionally requires
+- [Reflection buys addressability](../../../../../notes/reflection-buys-addressability.md) — grounds: explicit retention makes particular claims available for criticism without supplying correctness
 - [Disconnected witnesses do not establish a full causal path through theory](./disconnected-witnesses-do-not-establish-a-causal-path-through-theory.md) — extends: what joins evidence of recurrent use must identify
 - [Holding a program theory means sustaining coherent search under delayed feedback](../../../../../notes/program-theory-sustains-search-under-delayed-feedback.md) — extends: applies the retained arrangement to longitudinal program modification and recovery

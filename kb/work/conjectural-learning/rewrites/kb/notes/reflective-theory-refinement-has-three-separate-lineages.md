@@ -118,6 +118,12 @@ later influence, plus evidence of improved capacity. Partial findings remain
 reportable at their own strength. Neither their combination nor resemblance
 to a predecessor establishes superiority over simpler arrangements.
 
+The precedents already supply recurrent use of revised theories, incremental
+revision, localized repair, a bounded sample-efficiency result, and
+human-engineered seeds. This program must not claim those features as new.
+Fixed supplied machinery is not inherently defective when it is warranted
+general machinery over the declared reach.
+
 ---
 
 Relevant Notes:
@@ -125,4 +131,5 @@ Relevant Notes:
 - [Conjectural learning](../../../definitions/conjectural-learning.md) — defined-in: the epistemic process and system-attribution conditions
 - [Reflective system](../../../../../notes/definitions/reflective-system.md) — grounds: causal self-representation is separate from learning
 - [Addressable theory](../../../definitions/addressable-theory.md) — contrasts: a structural property whose expected benefit is empirical
+- [Machinery persists by warrant, not position in a reflective loop](../../../../../notes/machinery-persists-by-warrant-not-position-in-a-reflective-loop.md) — grounds: supplied machinery is assessed by its warrant over the declared reach
 - [Learning inside a fixed decomposition inherits its mistakes](../../../../../notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md) — extends: learning within supplied choices does not establish their adequacy

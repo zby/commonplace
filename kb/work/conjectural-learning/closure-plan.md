@@ -104,6 +104,12 @@ presented to the operator.
 
 ## 4. Apply the reviewed migration under its commission
 
+For the linked evidence-ladder and disconnected-witness drafts, first land
+both reviewed bodies at their current library paths with links rebased. Then
+use `commonplace-relocate-note` to rename the evidence-ladder note to its
+settled destination in a pure relocation commit. This lets the relocation
+update the witness note's old-slug link along with the other consumers.
+
 Once the operator commissions migration against the concrete package, apply
 the staged substantive changes, then bounded terminology and reference updates.
 Check originals against the versions used for drafting so concurrent edits

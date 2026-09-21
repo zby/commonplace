@@ -9,7 +9,9 @@ means the claim belongs only to the retired definition or is superseded.
 
 ## Source boundary
 
-The comparison used these exact source versions:
+The initial comparison used these exact source versions. Working-draft hashes
+and counts below are historical; the [consolidated accounting](./accounting-and-validation.md)
+records the current package after second-check fixes and test retention.
 
 | Role | File | SHA256 | Words |
 |---|---|---:|---:|
@@ -86,7 +88,23 @@ resolves the remaining retention choices as follows:
    original section; the final migration commit will state the new retirement.
    Do not duplicate this chronology in the replacement definitions.
 
-None of these dispositions changes definition scope. The old fragment repairs
+5. **Reach preference among evidence-fitting revisions.** Preserve the choice
+   in the [sample-efficiency successor](./kb/notes/learning-by-theory-refinement-may-improve-sample-efficiency.md),
+   alongside its distinction between selecting a useful theory and reusing
+   one. Reach-assessment explains assessment authority, but does not alone
+   preserve this preference. The operational skill applies the same choice.
+   It adds no membership condition to conjectural learning.
+6. **Codification does not supply diagnosis or successful repair.** Preserve
+   the statement explicitly in `kb/notes/definitions/codification.md` when
+   replacing its reference to the retired definition. The
+   [consumer inventory](./consumer-inventory.md#semantic-repairs-confirmed-during-drafting)
+   contains the exact replacement paragraph, including the need to connect
+   failed checks to theory commitments. Existing links alone were not a home
+   for this claim; the bounded edit remains to be applied at migration.
+
+These two destinations correct the initial table's incomplete Scope and
+computed-consequences routing. None of these dispositions changes definition
+scope. The old fragment repairs
 below still need execution under the later migration commission.
 
 ## Exact inbound fragment repairs

@@ -30,9 +30,9 @@ publication, live edit, experiment, or new external research was performed.
 | Theory refinement | Replace in `#conjecture-criticism-and-improved-capacity` with Popper's schema and tentative status, plus Commonplace's system-attribution conditions. Drop classical operation origin and separately editable repair as genus requirements |
 | The paradigm defined | Rebuild under the same new section: improvement, capacity before exercise, persistence to the claimed horizon, survival changing reliance, reconstruction, private formulation, and changing weights |
 | What is new in the setting | Distribute interpreted prose and codification to `#the-arrangement-commonplace-studies`; normative/descriptive distinction and external requirement authority to `#requirements-and-responsibility`; causal self-representation to `#reflection-and-autonomy`. Drop the “three departures” apparatus |
-| Why the Bitter Lesson does not rule this out | Shorten inside `#retention-has-costs`: learned production is compatible with the method, but does not establish a scaling advantage or permanent need for external artifacts |
+| Why the Bitter Lesson does not rule this out | Shorten inside `#retention-has-costs`: state Sutton's lesson, then explain that learned production is compatible with the method but does not establish a scaling advantage or permanent need for external artifacts |
 | Why not just keep the records | Split between `#three-conjectures-about-the-mechanism` and `#retention-has-costs`. Separate reconstruction from formulated criticism and from inputs/outcomes; preserve competent search, context limits, derivation records, and error/maintenance costs. Drop unsupported prevalence language |
-| What the paradigm would buy | Replace the headline attractions with the companion's content, addressability, and efficiency conjectures. Retain immediate availability, legibility, rollback dependencies, and structured-shift sample efficiency as bounded possible consequences in the cost section |
+| What the paradigm would buy | Replace the headline attractions with the companion's content, addressability, and efficiency conjectures. Retain immediate availability, legibility, rollback dependencies, the fixed-decomposition limit, and structured-shift sample efficiency as bounded possible consequences in the cost section |
 | The system that carries the paradigm | Reframe in `#requirements-and-responsibility` and `#reflection-and-autonomy`: builder responsibility and lineage, role-relative boundary, narrower addressability condition, independent reflection/autonomy. Do not call every conjectural learner a builder |
 | What would test it | Keep heading, separate mechanism evidence from improvement and matched comparisons from mere fixed weights. Preserve the three independently adopted whole-program hypotheses, date-bound public-model condition, and refuters in summary |
 | External testing paragraphs | Move to `#assessment-from-outside-the-builder`: external falsifier, requirements/authority, independent outcome level, unresolved causal attribution, and general-case obligations |
@@ -66,6 +66,11 @@ Popper's attribution and the research positioning within Schmidhuber's RSI
 program are stated through the settled grounded definition and companion.
 No priority claim, new benchmark finding, or empirical result was added.
 Existing Commonplace evidence is kept bounded to its human-inclusive pathway.
+The lead also restores the original comparison with weight adaptation and
+record-only retention, glosses recursive self-improvement on first use, and
+restores the source-note-backed claims about deployment-time adaptation,
+governing behavior-changing writes, and fixed-decomposition mistakes. It also
+defines the four evidence-ladder terms where the reader first encounters them.
 
 ## Incoming paths and anchors
 
@@ -102,7 +107,7 @@ Before promotion:
 - Map staged builder/reflective-builder definitions to their current library
   names under `kb/notes/definitions/`.
 - Map the staged evidence note to
-  `kb/notes/evidence-of-theory-use-does-not-by-itself-establish-learning.md`
+  `kb/notes/a-complete-theory-path-does-not-establish-improved-capacity.md`
   and sample-efficiency note to
   `kb/notes/retained-theories-may-improve-sample-efficiency.md`.
 - Rebase retained live-note and article links from the final article directory.
@@ -117,7 +122,11 @@ Check the source hash before applying the replacement. Update final source
 metadata and link paths together with the article, without changing frozen
 source reports or peer experiment commissions.
 
-## Accounting and unresolved review
+## Historical drafting account and unresolved review
+
+The following figures describe the initial staged draft before the second-check
+repairs. They are retained only as provenance and are superseded by the
+parent package's consolidated change account.
 
 Whole-file whitespace counts, including frontmatter: 3,753 words in the
 original, 3,048 in the draft; 705 fewer words. For mechanical overlap, normalize
@@ -133,3 +142,12 @@ the article follows the explicitly narrower staged builder contract. Package
 review should keep those surfaces consistent without broadening builder
 membership by accident. No new protocol or empirical claim resolves any of
 the open research questions.
+
+## Follow-up failed-test constraint, 2026-09-21
+
+The workshop README's evidential constraint now has a durable destination in
+`#requirements-and-responsibility`: replacing or weakening a failed test
+requires grounds to doubt its measurement or relevance. Failure alone is not
+such a ground. This supplements the retained external-authority rule; neither
+permission to edit a test nor permission to change a requirement supplies
+evidence that the original test was defective.

@@ -22,11 +22,12 @@ in each linked disposition. Draft paths preserve the originals' names under
 | Draft | Final destination | Disposition |
 |---|---|---|
 | Existing three [definitions](../definitions/) and [companion](../notes/commonplace-studies-conjectural-learning-through-retained-theories.md) | `kb/notes/definitions/{conjectural-learning,tentative-theory,addressable-theory}.md`; `kb/notes/commonplace-studies-conjectural-learning-through-retained-theories.md` | [Old-definition remnants](./definition-remnants.md); retire the two old definitions |
+| [Definition checks](../definitions/conjectural-learning-checks.md) | `kb/notes/definitions/conjectural-learning-checks.md` | [Retain beside the definition](./test-retention-plan.md); six checks and fourteen cases, reached through its maintenance comment |
 | [Lineage](./kb/notes/reflective-theory-refinement-has-three-separate-lineages.md) | `kb/notes/conjectural-learning-has-distinct-precedents.md` | [Replacement](./lineage-disposition.md) |
-| [Evidence ladder](./kb/notes/reflective-theory-refinement-needs-interpretation-and-retention.md) | `kb/notes/evidence-of-theory-use-does-not-by-itself-establish-learning.md` | [Replacement and preserved anchors](./evidence-disposition.md) |
+| [Evidence ladder](./kb/notes/reflective-theory-refinement-needs-interpretation-and-retention.md) | `kb/notes/a-complete-theory-path-does-not-establish-improved-capacity.md` | [Replacement and preserved anchors](./evidence-disposition.md) |
 | [Connected witnesses](./kb/notes/disconnected-witnesses-do-not-establish-a-causal-path-through-theory.md) | Same library path | [Substantial edit](./evidence-disposition.md) |
 | [Sample efficiency](./kb/notes/learning-by-theory-refinement-may-improve-sample-efficiency.md) | `kb/notes/retained-theories-may-improve-sample-efficiency.md` | [Separate reuse and selector conjectures](./sample-efficiency-disposition.md) |
-| [Harness evidence](./kb/notes/evidence/three-2026-harnesses-retain-editable-rules-or-weights-not-rationale.md) | `kb/notes/evidence/three-2026-harness-reports-distinguish-repair-and-retention-paths.md` | [Bounded source findings](./harness-evidence-disposition.md) |
+| [Harness evidence](./kb/notes/evidence/three-2026-harnesses-retain-editable-rules-or-weights-not-rationale.md) | `kb/notes/evidence/rules-weights-and-missing-rationale-do-not-settle-conjectural-learning.md` | [Bounded source findings](./harness-evidence-disposition.md) |
 | [Reconstruction proposal](./kb/notes/proposals/retained-theories-compared-with-retained-traces-under-resource-limits.md) | Same library path | [Shorter proposal; vocabulary stays unadopted](./reconstruction-disposition.md) |
 | [Theory builder](./kb/notes/definitions/theory-builder.md) and [reflective builder](./kb/notes/definitions/reflective-theory-builder.md) | Same library paths | [Preserved builder conditions and resolved cross-reference](./builder-disposition.md) |
 | [Analysis skill](./kb/instructions/analyse-agentic-system/SKILL.md) and [result type](./kb/types/agentic-system-analysis-result.md) | Same library paths | [Coordinated vocabulary update](./operational-disposition.md), including the exact bounded collection-contract replacement |
@@ -50,6 +51,15 @@ establish builder membership. The builder's addressability and continuing
 responsibility conditions remain intact. No learning case changes class; see
 the [recorded decision](../definition-decision-record.md#learner-and-builder-cross-reference-resolved-2026-09-21).
 
+The [second check](./second-check-fix-list.md) adds preservation and disposition
+fixes beyond the earlier reviews. Item 4 is resolved: criticism remains one
+route for either builder, with the deliberate scope difference from the old
+reflective definition recorded in the [builder disposition](./builder-disposition.md#criticism-is-one-route-for-either-builder).
+The other numbered and smaller fixes are now staged; the second-check record
+lists their resolutions. The [test-retention decision](./test-retention-plan.md)
+keeps the six checks and fourteen cases beside the definition. The maintained
+copy is staged, and the definition's maintenance comment points to it.
+
 The [consumer inventory](./consumer-inventory.md) maps bounded edits,
 historical preserves, navigation, and exact fragment repairs. Its original
 167-file scan is a discovery snapshot, not an edit count; final names now come
@@ -59,16 +69,18 @@ ingest commentary, bounded consumer edits, relocation, and workshop deletion
 remain for the migration commission.
 
 The [consolidated accounting and validation](./accounting-and-validation.md)
-records clean explicit-path validation of all sixteen candidate bodies and
-no source drift across the fourteen originals. The whole package has 32,859
-words versus 34,499: 1,640 fewer before the unapplied companion delta. This
-record supersedes per-author draft-stage word counts.
+records the seventeen current candidates and no source drift across the
+fourteen originals. The sixteen replacement bodies have 33,832 words versus
+34,499: 667 fewer. Retaining the 1,112-word checks file makes the full package
+34,944 words, a net increase of 445 before the unapplied companion delta and
+bounded consumer edits. This record supersedes per-author draft-stage counts.
 
-The core replacement has 4,999 words versus 5,261 in the two old definitions
-and lineage note: 262 fewer, including the new research companion. It reduces
-four defined concepts to three while increasing definition files from two
-to three. This is not a definition-file reduction. Promotion accounting must
-include the proposed companion link/example delta and bounded consumer edits.
+The core replacement has 5,082 words versus 5,261 in the two old definitions
+and lineage note: 179 fewer, including the new research companion. With the
+checks, it has 6,194 words. It reduces four defined concepts to three while
+increasing definition files from two to three. The checks are not a definition.
+This is neither a definition-file reduction nor a total library word reduction;
+migration review must assess the simplification tradeoff explicitly.
 
 ## Replacements already started
 

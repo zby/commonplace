@@ -1,9 +1,10 @@
 # Builder definition drafts: disposition and acceptance limits
 
 Prepared 2026-09-21 for the conjectural-learning closure plan. These are
-workshop drafts only. They preserve builder membership while removing the
-retired learning terminology. No library promotion, experiment, or source
-reassessment has been performed.
+workshop drafts only. They preserve general builder membership while removing
+the retired learning terminology. The operator deliberately removed the old
+reflective subtype's inherited error-correction restriction, as recorded below.
+No library promotion, experiment, or source reassessment has been performed.
 
 ## Outputs and destinations
 
@@ -50,7 +51,10 @@ scope. A conjectural learner need not meet the builder's addressability or
 continuing-responsibility conditions.
 
 The reflective-builder opening uses ordinary revision language instead of
-composing the retired operation into its definition. Its self-theory remains
+composing the retired operation into its definition. This deliberately drops
+the error-correction requirement inherited through that operation; it is not
+merely a wording substitution. Criticism remains one route for either builder,
+not a membership requirement. Its self-theory remains
 addressable under the builder definition. Reflection still requires the
 causal connection in both directions. A new scope paragraph explicitly
 separates reflective revision from successful learning. The description now
@@ -73,6 +77,24 @@ which explicitly declined an architecture-wide impossibility claim. No new
 finding about FORTE is asserted.
 
 ## Scope limits and acceptance caveats
+
+### Criticism is one route for either builder
+
+The operator resolved second-check item 4 on 2026-09-21: keep the current
+general builder definition, including revision through criticism and
+reconstruction as alternatives. The reflective subtype inherits that openness
+and adds the causally connected self-theory of its own machinery. Do not add
+criticism to either definition as a requirement.
+
+Compared with the original library definition, this deliberately admits a
+builder that meets those conditions while constructing or reconstructing its
+self-theory without criticism. Merely editing a self-description still fails
+the two-way causal-connection condition. No named external system is newly
+classified. Successful conjectural learning still requires criticism and
+improved capacity. The [decision record](../definition-decision-record.md#builder-revision-and-criticism-resolved-2026-09-21)
+states the affected reflective-builder example and confirms that none of the
+fourteen learning cases changes class. Both staged builder bodies are unchanged
+by this resolution.
 
 ### Learning does not imply builder membership
 
@@ -103,7 +125,8 @@ The existing builder account leaves the Gödel-machine case open. Parent
 review preserves that open classification rather than requiring a new
 builder-scope decision for this migration. The old example's contrast between
 evidence and proof must not become an empirical-only membership requirement.
-Neither draft classifies a new member. Tests 4 and 6 would govern a sharper
+Neither draft assigns a new empirical classification to the Gödel machine.
+Tests 4 and 6 would govern a sharper
 attribution; case 14's stipulated absence of criticism remains separate.
 
 The reflective-builder exclusion now names the missing causal self-theory,
@@ -131,7 +154,7 @@ and peer-workshop references. The principal uses are:
 | Autonomous and externally tested builder definitions | Role rule, `#extension`, and `#evidence-interface` survive unchanged; the autonomous Gödel case remains open |
 | Lead article and testing supplement | Whole-system framing survives; stage their learning attribution independently. Testing supplement's proof-versus-evidence row must retain the open classification and case-14 qualification |
 | Bootstrap article | Role transfer survives. Its opening “the written theories it learns by” should say “the addressable tentative theories it remains responsible for,” without presuming successful learning |
-| Gödel-machine comparison note | Keep proof-governed admission distinct from criticism. Its empirical-versus-proof comparison must not become an exhaustive builder membership test; revisit with the unresolved scope clause |
+| Gödel-machine comparison note | Keep proof-governed admission distinct from criticism. Its empirical-versus-proof comparison must not become an exhaustive builder membership test; retain the open deployment classification |
 | Three-obligations note and ideal-interpreter workshop | Evidence-interface and attribution dependencies survive; no new interpretation standard is supplied |
 | Retained-theories/traces proposal | Its claim that builders may reconstruct survives; no reconstruction design is changed |
 | RSI imports workshop | Machinery revision remains admitted without implying successful learning; no experiment change needed |
@@ -165,10 +188,36 @@ this two-definition comparison.
 
 | Draft | Original | Draft | Retained | Removed | Added |
 |---|---:|---:|---:|---:|---:|
-| `theory-builder.md` | 1903 | 2014 | 1733 | 170 | 281 |
-| `reflective-theory-builder.md` | 1000 | 1092 | 921 | 79 | 171 |
+| `theory-builder.md` | 1903 | 1978 | 1744 | 159 | 234 |
+| `reflective-theory-builder.md` | 1000 | 1104 | 913 | 87 | 191 |
 
 Definition files: two before and two after. Defined concepts introduced by
 these two files: theory builder and reflective theory builder remain; their
 existing auxiliary seed, evidence-interface, persistence, and extension
 clauses remain. No new concept or universal learning requirement is added.
+
+## Second-check restorations, 2026-09-21
+
+The general builder definition again allows any representational form meeting
+its addressability conditions, and states that comparison of retained forms
+varies revision versus reconstruction. The Gödel-machine example again says
+an internally represented utility does not decide classification. Its stray
+list-breaking blank line is removed, and the consumer table no longer refers
+to a superseded unresolved scope clause. These restore original qualifications;
+no membership edit is made. The operator's separate resolution that criticism
+is optional for both builder definitions remains untouched.
+
+Author check applied all six checks and fourteen cases in
+[the maintained definition checks](../definitions/conjectural-learning-checks.md).
+No case flips: cases 1, 2, 3, 8, 11, and 12 stay inside under their improvement
+assumption; case 6 remains conditional; cases 4, 5, 7, 9, and 14 keep their
+stated comparison roles; case 10 stays excluded; case 13 stays unestablished
+by its test. Opacity does not establish absence, criticism retention remains
+distinct from input/output records, and observed recurrence does not certify
+improvement. No new term or genus condition is introduced. Builder scope
+remains separately narrower through addressability and responsibility; this
+batch does not alter the operator's settled criticism-optional builder scope.
+
+Second-check validation: each changed draft and this disposition passed
+`commonplace-validate --full` by explicit path on 2026-09-21, with no warnings
+or failures. These checks do not authorize migration.

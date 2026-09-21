@@ -44,3 +44,28 @@ checked against the matching retained full texts:
 The note cites five unquoted tracked sources, within the notes contract's
 bound. No source, snapshot, or peer workshop was changed. This rewrite makes
 no new empirical claim and requires no definition case flip.
+
+## Second-check corrections, 2026-09-21
+
+Item 6 restores the Scope list of features already supplied by the precedents:
+recurrent use, incremental revision, localized repair, a bounded
+sample-efficiency result, and human-engineered seeds. It also restores the
+qualification that fixed supplied machinery can be warranted over its declared
+reach, with the Relevant Notes edge to the existing machinery-warrant note.
+These are retained guards against novelty and architecture overclaims, not new
+source findings.
+
+Author check applied all six checks and fourteen cases in
+[the maintained definition checks](../definitions/conjectural-learning-checks.md).
+No case flips: cases 1, 2, 3, 8, 11, and 12 stay inside under their improvement
+assumption; case 6 remains conditional; cases 4, 5, 7, 9, and 14 keep their
+stated comparison roles; case 10 stays excluded; case 13 stays unestablished
+by its test. Opacity does not establish absence, criticism retention remains
+distinct from input/output records, and observed recurrence does not certify
+improvement. No new term or genus condition is introduced. Builder scope
+remains separately narrower through addressability and responsibility; this
+batch does not alter the operator's settled criticism-optional builder scope.
+
+Second-check validation: each changed draft and this disposition passed
+`commonplace-validate --full` by explicit path on 2026-09-21, with no warnings
+or failures. These checks do not authorize migration.

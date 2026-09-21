@@ -63,11 +63,12 @@ review checks both articles. The consumer and workshop-remnant inventories
 record remaining migration and closure work. The [closure plan](./closure-plan.md)
 continues to govern promotion and cleanup.
 
-All sixteen candidate bodies validate cleanly, and their fourteen original
-source files have not drifted. The [accounting record](./rewrites/accounting-and-validation.md)
-reports 1,640 fewer words across the draft package before bounded promotion
-edits. The core defines three concepts instead of four, in three definition
-files instead of two; these are separate simplification measures.
+The [accounting record](./rewrites/accounting-and-validation.md) now covers
+seventeen candidates, including the retained checks, with no drift in the
+fourteen originals. The replacement bodies are 667 words shorter; adding the
+1,112-word checks file makes the full package 445 words longer before bounded
+promotion edits. The core defines three concepts instead of four, in three
+definition files instead of two; these are separate simplification measures.
 
 The operator approved the learner/builder cross-reference qualification, now
 applied to the conjectural-learning definition. Builder membership retains
@@ -75,6 +76,15 @@ addressability and continuing responsibility; learning alone establishes
 neither. No learning case changes class. The
 [decision record](./definition-decision-record.md#learner-and-builder-cross-reference-resolved-2026-09-21)
 records the resolution.
+
+The operator also resolved [second-check item 4](./rewrites/second-check-fix-list.md):
+criticism remains one route for either builder, and removing the old
+reflective definition's inherited error-correction restriction is deliberate.
+That resolution left the staged builder bodies unchanged. The other
+second-check fixes are now staged, including restored builder qualifications;
+none adds a membership requirement. The [retention decision](./rewrites/test-retention-plan.md)
+keeps the six checks and fourteen cases beside the definition, with a
+maintenance comment pointing to them. Both files will be promoted together.
 
 The [Schmidhuber assessment](../schmidhuber-rsi-imports/ontology-assessment.md)
 is integrated: research positioning belongs in the companion, and the

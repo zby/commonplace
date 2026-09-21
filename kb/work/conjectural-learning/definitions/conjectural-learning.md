@@ -6,6 +6,9 @@ tags: [foundations, self-improving-systems, learning-theory]
 
 # Conjectural learning
 
+<!-- Maintenance: when changing this definition, please apply the checks in
+[conjectural-learning-checks.md](./conjectural-learning-checks.md). -->
+
 **Conjectural learning** is learning in which tentative theories are
 formulated, operative objects within the learning system: the system uses
 them, criticizes what they say, and carries the result of that criticism

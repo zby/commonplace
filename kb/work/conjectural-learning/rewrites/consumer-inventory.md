@@ -61,6 +61,7 @@ searches immediately before migration because this workshop is active.
 | Path and location | Current dependency | Migration action | Destination |
 |---|---|---|---|
 | `AGENTS.md:75` | Tentative theory is incorrectly defined as addressable and links to `theory-refinement.md#tentative-theory` | Replace the vocabulary entry with the settled status definition; remove addressability as a condition; update path | final `kb/notes/definitions/tentative-theory.md` |
+| `AGENTS.md`, Theory builder vocabulary entry | Gloss omits the builder's addressability condition | Say the system develops and revises addressable tentative theories; retain continuing responsibility, lineage, declared boundary, seed, and evidence interface | existing `kb/notes/definitions/theory-builder.md`, using its staged wording |
 | `kb/instructions/assess-learning-claims-during-ingest.md:23-27` | Loads Theory refinement as the single comparison basis | Load Conjectural learning for membership, and Addressable theory only when localization/selective repair matters; keep source-first and challengeable mapping | final conjectural-learning and addressable-theory definitions |
 | `tests/scenarios/ingest-a-source.md:92-96` | Says the conditional instruction requires the theory-refinement definition | Mirror the instruction's final dependency wording and installed counterpart path | same two final definitions, if both remain required |
 | `kb/agentic-systems/COLLECTION.md:60` | Binding collection contract defines theory refinement as a retained localized loop and reflective theory refinement as its self-directed case | Semantic rewrite required: describe conjectural learning, improved capacity, formulation/criticism, and reflective causal self-representation; do not require retained addressable state universally | final conjectural-learning and reflective-system definitions; addressability may remain a separate classification |
@@ -104,12 +105,13 @@ Commonplace prose and must be checked against the settled definitions.
 | Paths and relevant location | Action | Destination or constraint |
 |---|---|---|
 | `kb/notes/a-claim-without-external-assessment-carries-three-obligations.md:49`; `kb/notes/addressable-theory-can-coordinate-heterogeneous-factory-development.md:56`; `kb/notes/cost-sensitive-formalisms-for-tentative-theory-search.md:16`; `kb/notes/program-theory-sustains-search-under-delayed-feedback.md:36` | Reference: replace `theory-refinement.md#tentative-theory` | final tentative-theory definition |
-| `kb/notes/definitions/codification.md:37`; `kb/notes/definitions/representational-form.md:32,62`; `kb/notes/world-models-assess-explanatory-reach-through-action-conditioned.md:24,33` | Semantic: keep computed/interpreted consequences and localization claims, but attribute them to addressability/representational form rather than genus membership | final addressable-theory definition; codification and representational-form central claims stay |
+| `kb/notes/definitions/codification.md:37`; `kb/notes/definitions/representational-form.md:32,62`; `kb/notes/world-models-assess-explanatory-reach-through-action-conditioned.md:24,33` | Semantic: keep computed/interpreted consequences and localization claims, but attribute them to addressability/representational form rather than genus membership. Codification must state the diagnosis/repair limit explicitly, using the replacement paragraph below | final addressable-theory definition; codification and representational-form central claims stay |
 | `kb/notes/revision-guided-by-rationale-needs-faithfulness-not-just-legibility.md:2,10-12,45` | Semantic: retain optional-rationale and rationale-faithfulness claim as a property of the chosen addressable treatment; remove “optional for theory refinement” as genus wording | final addressable-theory definition and companion |
 | `kb/notes/addressable-theory-can-coordinate-heterogeneous-factory-development.md:136,156-157`; `kb/notes/program-theory-sustains-search-under-delayed-feedback.md:74,106,188,195`; `kb/notes/cost-sensitive-formalisms-for-tentative-theory-search.md:224,262-263` | Semantic plus references: retain narrower premise that these notes study addressable retained theories; update evidence/sample note links after names settle | final addressable-theory definition, companion, **unresolved evidence and sample targets** |
 | `kb/notes/factory-learning-mechanisms-should-be-compared-on-the-same-causal-job.md:37,111`; `kb/notes/factory-construction-does-not-establish-knowledge-acquisition.md:70`; `kb/notes/theory-and-capacity-building-make-the-same-kind-of-commitment.md:34-47,72`; `kb/notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md:56,219` | Semantic: replace old paradigm row/path with conjectural learning or with Commonplace's retained-theory arrangement as the sentence requires; learning requires improved capacity | final conjectural-learning definition or companion; update old evidence/sample links |
 | `kb/notes/bitter-lesson-selects-against-unearned-reach-not-against-structure.md:32,70`; `kb/notes/the-bitter-lesson-selects-production-methods-not-representational.md:69,94`; `kb/notes/the-bitter-lesson-defense-portfolio-has-one-load-bearing-member.md:92`; `kb/notes/unformalized-improvements-need-a-pre-formal-stage-in-the-loop.md:60`; `kb/notes/formal-systems-assess-explanatory-reach-through-causal-and-proof.md:53`; `kb/notes/definitions/reach-assessment.md:94`; `kb/notes/continual-learning-requires-governing-behaviour-changing-writes.md:28` | Reference plus wording: these point to the sample-efficiency conjecture, whose contribution survives; remove duplicated “Learning by learning” typo while retargeting | **unresolved sample-efficiency target name** |
-| `kb/notes/citing-retained-theory-at-the-decision-point-is-a-mediation-trace.md:71`; `kb/notes/design-rationale-must-preserve-unregenerable-decision-premises.md:12`; `kb/notes/failure-explanation-changes-later-branch-decisions.md:36`; `kb/notes/naur-equates-machine-execution-with-formulated-criteria.md:140`; `kb/notes/reflection-makes-retained-lessons-second-order.md:26,51`; `kb/notes/residue-classes-need-different-mechanisms-so-architecture-is-mixed.md:137`; `kb/notes/specific-intent-may-out-yield-local-rationales-facts-stay-separate.md:52`; `kb/notes/evidence/commonplace-revision-used-theory-guided-computational-search.md:145`; `kb/notes/definitions/reflective-system.md:88` | Reference: preserve narrower retained-path mechanisms and evidence claims; retarget old evidence-note title | **unresolved evidence-note target name** |
+| `kb/notes/citing-retained-theory-at-the-decision-point-is-a-mediation-trace.md:71`; `kb/notes/design-rationale-must-preserve-unregenerable-decision-premises.md:12`; `kb/notes/failure-explanation-changes-later-branch-decisions.md:36`; `kb/notes/naur-equates-machine-execution-with-formulated-criteria.md:140`; `kb/notes/reflection-makes-retained-lessons-second-order.md:26,51`; `kb/notes/residue-classes-need-different-mechanisms-so-architecture-is-mixed.md:137`; `kb/notes/specific-intent-may-out-yield-local-rationales-facts-stay-separate.md:52`; `kb/notes/evidence/commonplace-revision-used-theory-guided-computational-search.md:145` | Reference: preserve narrower retained-path mechanisms and evidence claims; retarget old evidence-note title | **unresolved evidence-note target name** |
+| `kb/notes/definitions/reflective-system.md:88` | Relabel as well as retarget: "what a claim of observed recurrence needs beyond a two-way connected path: causal connection between theory use, criticism, its result, and later use" | evidence successor `#the-functions-share-one-path-not-one-substrate`; this is not a universal condition of improved capacity |
 | `kb/notes/open-ended-theory-learning-and-factory-learning-close-the-same.md:24,118,194,205` | Semantic plus reference: “formal theory-refinement system” is historical/classical and may remain; current Commonplace convergence and lineage links need successor targets | **unresolved evidence and lineage target names** |
 | `kb/notes/bitter-lesson-selects-against-unearned-reach-not-against-structure.md:32`; `kb/notes/the-bitter-lesson-selects-production-methods-not-representational.md:69` | Semantic guard | Retain theory-space search as a possible mechanism; do not infer conjectural-learning membership without formulated criticism causing improved capacity |
 
@@ -117,6 +119,24 @@ Commonplace prose and must be checked against the settled definitions.
 
 Parent integration adds these semantic repairs to the bounded inventory;
 they are not mechanical title substitutions:
+
+- Replace the final paragraph of `kb/notes/definitions/codification.md`'s
+  Exclusions section with the following, preserving the old definition's
+  diagnosis warning at a durable home:
+
+  ```markdown
+  The same crossing gives a part of a retained theory a computed consequence
+  relation. A prose part's consequences depend on what its interpreter derives;
+  a codified part's consequences are assigned by its formal consumer.
+  Codification alone does not supply diagnosis or successful repair. A failed
+  check must be connected to the theory commitments it tests before it can
+  guide candidate edits. [Addressability](./addressable-theory.md) makes parts
+  available for inspection and separate revision; it does not guarantee that
+  the identified part caused the failure or that the revision repairs it.
+  ```
+
+  The link above is replacement text relative to the destination file, not a
+  workshop-relative link.
 
 - `kb/notes/definitions/reach-assessment.md:94` and
   `kb/notes/discovery-README.md` must distinguish the selector's proposed

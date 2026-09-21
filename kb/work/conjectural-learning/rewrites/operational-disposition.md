@@ -25,11 +25,12 @@ modified. Neither draft adds `user-verified`.
 
 ## Source-to-draft changes
 
-The skill changes only the ontology portion of step 3, its dependent admitting
-route wording in step 4.9, the corresponding Verify item, and the affected
-footer links, apart from link rebasing for the workshop location. The result
-type changes only the admitting-route paragraph under Shared records, apart
-from link rebasing. All frontmatter, headings, and fenced code blocks remain
+The skill changes the ontology portion of step 3, its dependent admitting
+route wording in step 4.9, the synthesis instruction in step 6, the
+corresponding Verify item, and the affected footer links, apart from link
+rebasing for the workshop location. The result type changes the admitting-route
+paragraph under Shared records and the Bounded synthesis contract, apart from
+link rebasing. All frontmatter, headings, and fenced code blocks remain
 byte-identical to their originals. Result fields, controlled values,
 conclusion statuses, epistemic statuses, canonical IDs, schema reference,
 output paths, permissions, specialist handoff, publication, and recovery
@@ -46,12 +47,16 @@ or reconstructing theories. The same account now governs producer and result:
 - Capacity can improve before its next exercise. Later-capacity claims require
   persistence to that time; later-use and recurrent-use claims require their
   corresponding consumer evidence.
-- Addressability and retained content are described separately. Whole
+- Addressability and retained content are described separately. Addressability
+  is graded and recorded with the boundary over which assumptions, scope
+  conditions, and parts are individually inspectable and revisable. Whole
   replacement and reconstruction do not exclude learning. Raw input/outcome
   records do not establish what a reconstructor does internally.
-- Rules can express a theory without preserving why they were adopted. Missing
-  historical rationale does not establish absent formulated content criticism.
-  A rule set is classified by its actual claims, not its storage label.
+- Rules can express a theory without preserving why they were adopted. The
+  producer and type both require the rule set's claims and the structure that
+  exposes assumptions, scope conditions, and parts; its storage label does not
+  classify it. Missing historical rationale does not establish absent
+  formulated content criticism.
 - Unknown model processing remains unknown. Absence needs bounded evidence;
   opacity alone establishes neither formulation nor its absence.
 - Reflection requires a self-representation's causal connection in both
@@ -59,6 +64,11 @@ or reconstructing theories. The same account now governs producer and result:
   successful learning are not requirements. Self-theory revision is scoped
   to the narrower reflective-builder claim. Independent review caught the
   initial draft's overrestriction; the skill and type were corrected together.
+- The general preference for reach among revisions that fit the evidence is
+  stated separately from reflection. The bounded synthesis replaces retained
+  revisable theory as a membership-like property with criticism-caused
+  improvement in capacity for future action. Reflection and self-improvement
+  remain independent properties with separate evidence statuses.
 
 The footer replaces the two retired ontology definitions with the settled
 workshop definitions of tentative theory, conjectural learning, and
@@ -80,8 +90,9 @@ Replace only the second paragraph of **Ontology and local transfer** with:
 > criticism of its content, and any improvement in capacity for future
 > action attributable to that criticism. These establish conjectural learning
 > only at the strength supported by the evidence. Addressability and retention
-> are separate properties: whole replacement or reconstruction can qualify,
-> while stored rules or parameters alone do not classify the process. Missing
+> are separate properties. Record the degree and boundary of addressability;
+> whole replacement or reconstruction can qualify, while stored rules or
+> parameters alone do not classify the process. Missing
 > historical rationale does not establish absent criticism; inaccessible model
 > processing remains unestablished. Reflection additionally requires a
 > causally connected self-representation of selected aspects inside the
@@ -99,6 +110,13 @@ when constructing the exact result. The validator and type-conformance review
 consume the type contract through its existing path. Editing those live files
 would change their next consumers. This task writes only workshop copies, so
 those paths remain unchanged.
+
+The [consumer inventory](./consumer-inventory.md#system-facing-and-operational-consumers)
+already gives the required handling for three named consumers: repair only the
+evidence-note footer in `kb/agentic-systems/reviews/exo.md`; preserve the
+generated WikiSkill projection and its immutable result; and recompute
+`properdocs.yml` redirects only after final slugs settle. This pair does not
+edit or reclassify any of those consumers.
 
 Markdown links are rebased to existing files from the deep staged paths. The
 result type's procedure link points to the staged skill. Root-relative
@@ -164,6 +182,9 @@ or publication was attempted. Deterministic success does not substitute for
 migration review of the classification prose.
 
 ## Local change accounting
+
+The table below records the pre-second-check draft. Parent integration must
+recompute it after the fixes described above; it is not current accounting.
 
 Whitespace-token counts over complete files, including frontmatter and links;
 retained tokens use `difflib.SequenceMatcher` with `autojunk=False`. Rebasing

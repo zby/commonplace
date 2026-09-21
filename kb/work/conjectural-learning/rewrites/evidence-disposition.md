@@ -9,7 +9,7 @@ unconnected witnesses. No library changes or new research were performed.
 
 | Original | Source SHA-256 | Draft | Intended final destination | Disposition |
 |---|---|---|---|---|
-| [Interpretation, retention, and read-back](../../../notes/reflective-theory-refinement-needs-interpretation-and-retention.md) | `ee79a5fb55740cea0445367a625084c34e77cbacf8b51733663925366205131c` | [Evidence of theory use does not by itself establish learning](./kb/notes/reflective-theory-refinement-needs-interpretation-and-retention.md) | `kb/notes/evidence-of-theory-use-does-not-by-itself-establish-learning.md` | Substantial replacement and rename at migration |
+| [Interpretation, retention, and read-back](../../../notes/reflective-theory-refinement-needs-interpretation-and-retention.md) | `ee79a5fb55740cea0445367a625084c34e77cbacf8b51733663925366205131c` | [A complete theory path does not establish improved capacity](./kb/notes/reflective-theory-refinement-needs-interpretation-and-retention.md) | `kb/notes/a-complete-theory-path-does-not-establish-improved-capacity.md` | Substantial replacement and rename at migration |
 | [Disconnected witnesses](../../../notes/disconnected-witnesses-do-not-establish-a-causal-path-through-theory.md) | `b7713d0b52c0a355fbeeda9989677f784f992405254c15bd4d2f8f23e234d61b` | [Disconnected witnesses do not establish a full causal path through theory](./kb/notes/disconnected-witnesses-do-not-establish-a-causal-path-through-theory.md) | `kb/notes/disconnected-witnesses-do-not-establish-a-causal-path-through-theory.md` | Substantial replacement at the same path |
 
 Source hashes identify the complete live file bytes used for drafting. Check
@@ -49,8 +49,10 @@ the strength asserted.
 
 ## Source limits retained
 
-- Commonplace supports a bounded human-inclusive pathway and its adopted
-  improvement criterion, not general advantage or computational closure.
+- Commonplace supports a bounded human-inclusive connected pathway. The
+  tag-readme validator pass establishes consistency with the adopted criterion;
+  improvement remains a claim. It does not demonstrate improved capacity,
+  general advantage, or computational closure.
 - Exo remains the inspected-checkout assessment; the review did not run a live
   instance. Rewrite/rebuild/restart machinery does not establish semantic
   reach-assessment, later use of criticism, or capacity improvement.
@@ -86,7 +88,10 @@ survives; `#what-current-examples-establish` becomes
 `#what-the-retained-examples-establish`, with no incoming repository fragment
 found. Migration should route the old first-note path to its successor under
 the library relocation procedure, update current link labels, and preserve
-historical report bodies under their retention rules.
+historical report bodies under their retention rules. Land both evidence and
+disconnected-witnesses replacements at their current library paths before a
+pure `commonplace-relocate-note` rename of the evidence note; that relocation
+then repairs the witnesses note's old-slug link.
 
 Some incoming prose needs more than a label change:
 
@@ -98,8 +103,14 @@ Some incoming prose needs more than a label change:
   old labels say interpretation and retention come “from one substrate.”
   Their useful claim is the division of functions; the successor explicitly
   allows different substrates.
-- `definitions/reflective-system.md`,
-  `program-theory-sustains-search-under-delayed-feedback.md`,
+- `definitions/reflective-system.md:88` needs an explicit relabel at
+  `#the-functions-share-one-path-not-one-substrate`: replace “what an
+  improvement attribution needs beyond a two-way connected path: the same
+  theory at every link of one path” with “what a claim of observed recurrence
+  needs beyond a two-way connected path: causal connection between theory
+  use, criticism, its result, and later use”. This is not a requirement that
+  one immutable theory appear at every link.
+- `program-theory-sustains-search-under-delayed-feedback.md`,
   `failure-explanation-changes-later-branch-decisions.md`,
   `addressable-theory-can-coordinate-heterogeneous-factory-development.md`,
   and the analysis skill use retained/recurrent requirements. Retain those
@@ -121,3 +132,36 @@ failures on 2026-09-21. This is deterministic validation and author review;
 package-level independent review and migration remain outstanding.
 
 No scope blocker or request to change an adopted definition was found.
+
+## Second-check corrections, 2026-09-21
+
+The title now names the strongest limit: a complete observed theory path does
+not establish improved capacity. Item 9 explicitly relabels the reflective-system
+consumer above rather than retaining its claim about every improvement.
+Both retired “read-back” usages become “criticism”; the opening agreement is
+corrected. Scope restores the external-target qualification and the footer
+restores the grounds edge to reflection-buys-addressability. These restore
+original contributions without making retention or recurrence universal.
+
+The Commonplace example was checked against
+`kb/reference/tag-readme-trace-as-self-improving-loop.md#what-the-mapping-settles-and-what-it-does-not`:
+the pass checks mark consistency; improvement remains a claim. The draft no
+longer asserts demonstrated improvement within that criterion. Its connected,
+human-inclusive pathway remains intact. No new empirical classification is
+made. Both replacements land at their current paths before the evidence
+note's pure relocation, as specified above.
+
+Author check applied all six checks and fourteen cases in
+[the maintained definition checks](../definitions/conjectural-learning-checks.md).
+No case flips: cases 1, 2, 3, 8, 11, and 12 stay inside under their improvement
+assumption; case 6 remains conditional; cases 4, 5, 7, 9, and 14 keep their
+stated comparison roles; case 10 stays excluded; case 13 stays unestablished
+by its test. Opacity does not establish absence, criticism retention remains
+distinct from input/output records, and observed recurrence does not certify
+improvement. No new term or genus condition is introduced. Builder scope
+remains separately narrower through addressability and responsibility; this
+batch does not alter the operator's settled criticism-optional builder scope.
+
+Second-check validation: each changed draft and this disposition passed
+`commonplace-validate --full` by explicit path on 2026-09-21, with no warnings
+or failures. These checks do not authorize migration.

@@ -33,13 +33,12 @@ tentative status. The result can persist in a theory and testing record or in
 criticism used to reconstruct a theory. The path tracks the effect of
 criticism rather than requiring a new document version at each turn.
 
-This shape composes three requirements. [Evidence of theory use does not by
-itself establish learning](./reflective-theory-refinement-needs-interpretation-and-retention.md)
+This shape composes three requirements. [A complete theory path does not establish improved capacity](./reflective-theory-refinement-needs-interpretation-and-retention.md)
 separates mediation, empirical contact, response to criticism, and recurrent
 mediation. [Citing retained theory at the decision point is a mediation
 trace](../../../../../notes/citing-retained-theory-at-the-decision-point-is-a-mediation-trace.md)
 identifies the theory a decision claims to have used, while leaving
-load-bearing use and read-back open. [History has one chance to become
+load-bearing use and criticism open. [History has one chance to become
 checkable](../../../../../notes/history-has-one-chance-to-become-checkable.md)
 explains why facts needed to identify non-re-derivable joins must be carried
 forward while they remain available.
@@ -115,7 +114,7 @@ repair an experiment that never ran the contrast its causal claim requires.
 
 Relevant Notes:
 
-- [Evidence of theory use does not by itself establish learning](./reflective-theory-refinement-needs-interpretation-and-retention.md) — grounds: separates process evidence from improved capacity and the retained realization from the genus
+- [A complete theory path does not establish improved capacity](./reflective-theory-refinement-needs-interpretation-and-retention.md) — grounds: separates process evidence from improved capacity and the retained realization from the genus
 - [Citing retained theory at the decision point is a mediation trace](../../../../../notes/citing-retained-theory-at-the-decision-point-is-a-mediation-trace.md) — grounds: supplies the observable theory-to-decision edge and bounds what citation establishes
 - [History has one chance to become checkable](../../../../../notes/history-has-one-chance-to-become-checkable.md) — grounds: explains why non-re-derivable joins need carried evidence
 - [Conjectural learning](../../../definitions/conjectural-learning.md) — defined-in: the learning claim that also requires improved capacity
