@@ -96,4 +96,5 @@ cases to check a change against.
 [Sources](./sources.md) records coverage, access limits, and verification scope.
 [Popper foundation](./popper-foundation.md) holds the primary-source reading
 and the attribution boundary. [Comparison](./comparison.md) assesses the
-modern papers; it informs later experiment controls more than the definitions.
+agent-learning papers and RSI precedents; it informs later experiment controls
+more than the definitions.

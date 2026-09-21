@@ -1,6 +1,8 @@
-# Modern-paper comparison
+# Research comparison
 
-Coverage: twelve full papers, two author abstracts, one bibliographic record.
+Coverage: sixteen papers from retained full-text captures, two author
+abstracts, and one bibliographic record. The RSI retrospective supplies
+program context separately.
 [Sources](./sources.md) records capture and access limits. Source-side details
 below require the ingests' paired snapshots.
 
@@ -38,7 +40,38 @@ requirements for the definition. Links require the captured full papers.
 | [FALSIFYBENCH (snapshot required)](../../sources/falsifybench-rule-discovery-games-full-text.ingest.md) | Measures hypothesis changes and test selection turn by turn in rule-discovery games | Twelve models, 1,200 games, LLM oracles with sampled human checks. Negative testing is especially useful for the benchmark's overly narrow hypotheses, not universally optimal |
 | [Meta-Agent Challenge (snapshot required)](../../sources/meta-agent-challenge-autonomous-agent-development.ingest.md) | Agents revise executable agent programs using development feedback; final artifacts run on held-out tasks | Five of 39 configurations exceed baseline means, without a significance claim. The developer remains fixed; no recursive compounding is tested. Development-label leakage qualifies integrity claims |
 
+## Recursive self-improvement precedents
+
+These original papers supply mechanisms and bounded results for the
+[adopted research direction](./notes/commonplace-studies-conjectural-learning-through-retained-theories.md#research-program-and-development-path).
+The [RSI retrospective](../../sources/recursive-self-improvement-since-1987.ingest.md)
+maps the wider program; it is not an additional experimental result.
+
+| Source | Contribution to our approach | Evidence boundary |
+|---|---|---|
+| [Self-Modifying Policies (snapshot required)](../../sources/reinforcement-learning-self-modifying-policies.ingest.md) | The policy generates its own modifications, so earlier changes can alter later learning and evaluation timing | The navigation experiment improves the tested configuration within supplied instructions, memory, and reward machinery. No matched ablation isolates the contribution of learned modification choices |
+| [Success-Story Algorithm (snapshot required)](../../sources/shifting-inductive-bias-success-story-algorithm.ingest.md) | Earlier changes remain subject to assessment through later reward rates; learning time counts, and retained changes can be withdrawn | Maze and program-learning results are bounded by the supplied language, curriculum, and reward scheme. The historical retention criterion neither establishes each change's causal contribution nor guarantees future improvement |
+| [OOPS (snapshot required)](../../sources/optimal-ordered-problem-solver.ingest.md) | Retained programs reshape later search without merely executing or supplying the later answer; fresh search remains available alongside reuse | The Hanoi transfer depends on the supplied language, curriculum, and bias. Its probability-based speedup explanation is not a matched repeated ablation or evidence of sustained compounding; optimality is relative to the supplied bias and cost accounting |
+| [Gödel machines (snapshot required)](../../sources/goedel-machines-schmidhuber.ingest.md) | A self-rewrite, including changes to the proof searcher, is admitted through proof of utility under an explicit formalization | A formal construction, with no experiment reported. The guarantee depends on the encoded assumptions, utility, and availability of the required proof; the switching rule alone does not classify the complete system's epistemic process |
+
+Locators: Self-Modifying Policies §§2–4, including the evaluation instruction
+in §3; SSA's success-story criterion, experimental sections, and conclusion;
+OOPS §§1.1, 2.1, 5–6; Gödel machines §§3.2, 4, and 6.1.
+Self-Modifying Policies and the SSA paper share SSA machinery. Their rows
+distinguish learning the modification procedure from assessing continued
+retention; they are not independent confirmations of the same result. The
+[Gödel-machine comparison](../../notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md)
+develops the admission-rule distinction.
+
 ## Implications
+
+**Develop the methodology within the RSI program.** These constructions make
+modification of learning procedures, reuse in later search, and assessment
+through downstream consequences concrete. Commonplace investigates those
+concerns using initially underspecified methodology interpreted by LLMs,
+with selective codification as understanding develops. The cited results do
+not test that development path. The [RSI import agenda](../schmidhuber-rsi-imports/imports.md)
+retains the detailed adaptation proposals and their experimental questions.
 
 **Separate epistemology from realization.** The [workshop](./README.md) does
 not take symbolic formalization as its starting point. The papers help
@@ -87,8 +120,8 @@ establish the presence or absence of unobserved criticism inside a model.
 The set does not establish reliable general LLM conjectural learning,
 sufficiency of fixed weights, the claimed efficiency advantage of retaining
 theories over reconstructing them from records (including its dependence on
-context limits), or cumulative gains from machinery revision. The
-[definition draft](./definitions/conjectural-learning.md) treats
+context limits), or sustained compounding from revising Commonplace's
+learning machinery. The [definition draft](./definitions/conjectural-learning.md) treats
 reconstruction from retained criticisms as an implementation and
 reconstruction from records containing only inputs and outcomes as a separate
 comparison of retained content. Indexed traces can implement retained theories

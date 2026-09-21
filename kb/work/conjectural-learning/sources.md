@@ -1,9 +1,14 @@
 # Source register
 
-Modern-paper coverage on 2026-09-19, including the expansion below: twelve
-full texts, two author abstracts, and one bibliographic-only record.
+Comparison coverage through 2026-09-21: sixteen papers from retained full-text
+captures, two author abstracts, and one bibliographic-only record. Versions
+and capture omissions are recorded below. The RSI retrospective supplies
+program context separately from those papers; the Popper sources supply the
+epistemological foundation.
 Each ingest records source metadata and the SHA-256 of its paired snapshot.
 Empty Quotes sections mean detailed source claims require those snapshots.
+
+## Initial agent-learning comparison
 
 | Paper | Retained analysis and scope |
 |---|---|
@@ -31,6 +36,25 @@ to this workshop.
 | Fa & Culjak, *Sound Agentic Science Requires Adversarial Experiments* | [Ingest](../../sources/sound-agentic-science-requires-adversarial-experiments.ingest.md): arXiv 2604.22080v2 |
 | Bertolazzi, Tentori & Bernardi, *FALSIFYBENCH* | [Full-text ingest](../../sources/falsifybench-rule-discovery-games-full-text.ingest.md): arXiv 2606.04751v1; the [earlier abstract observation](../../sources/falsifybench-inductive-reasoning-rule-discovery-games.ingest.md) is preserved |
 | Lu et al., *The Meta-Agent Challenge: Are Current Agents Capable of Autonomous Agent Development?* | [Ingest](../../sources/meta-agent-challenge-autonomous-agent-development.ingest.md): arXiv 2606.04455v1 |
+
+## Recursive self-improvement precedents
+
+Added to the comparison on 2026-09-21. The three empirical papers and the
+Gödel-machine construction supply the mechanism rows; the retrospective
+provides orientation. Detailed claims require the paired snapshots.
+
+| Paper | Retained analysis and scope |
+|---|---|
+| Schmidhuber, Zhao & Schraudolph, *Reinforcement Learning with Self-Modifying Policies* | [Self-Modifying Policies](../../sources/reinforcement-learning-self-modifying-policies.ingest.md): full author manuscript, printing 1997 and identifying a chapter in *Learning to Learn* |
+| Schmidhuber, Zhao & Wiering, *Shifting Inductive Bias with Success-Story Algorithm, Adaptive Levin Search, and Incremental Self-Improvement* | [SSA](../../sources/shifting-inductive-bias-success-story-algorithm.ingest.md): *Machine Learning* 28 (1997), pp. 105–130, full PDF text |
+| Schmidhuber, *Optimal Ordered Problem Solver* | [OOPS](../../sources/optimal-ordered-problem-solver.ingest.md): *Machine Learning* 54 (2004), pp. 211–254, full PDF text |
+| Schmidhuber, *Gödel Machines: Self-Referential Universal Problem Solvers Making Provably Optimal Self-Improvements* | [Gödel machines](../../sources/goedel-machines-schmidhuber.ingest.md): TR IDSIA-19-03 v5, December 2006; body retained, front matter and references omitted, unrecoverable figure-label text trimmed |
+
+[Recursive Self-Improvement Since 1987](../../sources/recursive-self-improvement-since-1987.ingest.md)
+is a full-source capture of Technical Note IDSIA-9-26, 17 September 2026.
+It is the author's retrospective, not independent confirmation of the
+original papers. Self-Modifying Policies and the SSA paper share a mechanism;
+their separate entries do not imply independent replication.
 
 ## Access disposition
 
