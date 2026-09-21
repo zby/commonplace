@@ -21,7 +21,7 @@ source_notes:
   - kb/notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md
   - kb/notes/a-fixed-model-house-must-retain-missing-procedures-for-theory-use.md
   - kb/notes/a-claim-without-external-assessment-carries-three-obligations.md
-  - kb/notes/retaining-the-episode-keeps-a-distilled-rule-re-derivable.md
+  - kb/notes/retaining-episode-evidence-keeps-a-distilled-rule-open-to.md
 ---
 
 # Conjectural Learning with Fixed Models
@@ -203,7 +203,7 @@ checking what depends on the changed part.
 
 Records remain useful even when theories are retained. They can expose an
 omitted detail or allow a mistaken abstraction to be reconstructed, and
-[a later model can re-examine the derivation](../notes/retaining-the-episode-keeps-a-distilled-rule-re-derivable.md).
+[a later model can re-examine the derivation](../notes/retaining-episode-evidence-keeps-a-distilled-rule-open-to.md).
 Bounded context creates a need to select or summarize evidence; it does not
 by itself select theories as the best retained form. Search, summaries,
 periodic reconstruction, and retained theories can be combined.

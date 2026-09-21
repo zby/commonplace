@@ -31,7 +31,7 @@ No source quotes have been retained yet.
 
 The guidance provides a documentation-level example for [active work state being distinct from retrospective memory](../notes/active-work-state-is-not-retrospective-memory-or-chat-history.md): current summaries, operational tags, and next decisions serve different purposes from the longer reasoning trail. This supports the distinction's practical use, but does not establish the note's stronger requirements for closure and evidence gates.
 
-Its instruction to keep concrete evidence inspectable compares with [retaining episode evidence for re-examination](../notes/retaining-the-episode-keeps-a-distilled-rule-re-derivable.md). A changed summary need not replace the premises available for reconsideration. The [discovery lifecycle](../notes/definitions/discovery-lifecycle.md) supplies a useful boundary: organizing support and counterevidence assists inquiry, while a `supported` tag alone supplies neither a named acceptance criterion nor a decision to integrate the claim.
+Its instruction to keep concrete evidence inspectable compares with [retaining episode evidence for re-examination](../notes/retaining-episode-evidence-keeps-a-distilled-rule-open-to.md). A changed summary need not replace the premises available for reconsideration. The [discovery lifecycle](../notes/definitions/discovery-lifecycle.md) supplies a useful boundary: organizing support and counterevidence assists inquiry, while a `supported` tag alone supplies neither a named acceptance criterion nor a decision to integrate the claim.
 
 ## Learning Claims (our opinion)
 

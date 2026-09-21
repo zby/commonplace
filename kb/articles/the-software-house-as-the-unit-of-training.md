@@ -17,7 +17,7 @@ source_notes:
   - kb/notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md
   - kb/notes/retained-artifacts-enable-persistent-deployment-time-adaptation.md
   - kb/notes/retained-theory-intervention-isolates-one-explicit-surface.md
-  - kb/notes/retaining-the-episode-keeps-a-distilled-rule-re-derivable.md
+  - kb/notes/retaining-episode-evidence-keeps-a-distilled-rule-open-to.md
   - kb/notes/the-bitter-lesson-selects-production-methods-not-representational.md
   - kb/notes/the-deployed-system-not-the-model-is-the-unit-of-learning.md
   - kb/notes/retained-theories-may-improve-sample-efficiency.md
@@ -396,7 +396,7 @@ work](../notes/ephemeral-computation-prevents-accumulation.md) repeated on
 every use, while a retained theory can omit a relevant detail or keep
 activating a mistaken abstraction, and [retained cases preserve the evidence
 for re-examining
-it](../notes/retaining-the-episode-keeps-a-distilled-rule-re-derivable.md).
+it](../notes/retaining-episode-evidence-keeps-a-distilled-rule-open-to.md).
 
 A fifth treatment could retain a curated set of worked cases, rather than the
 raw-record treatment's uncurated history. Compare it with explicit theory under

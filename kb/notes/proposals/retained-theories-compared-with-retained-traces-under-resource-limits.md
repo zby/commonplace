@@ -117,7 +117,7 @@ state need not be lossy or smaller than its inputs. No general superiority
 follows from calling theories compression.
 
 Records remain evidence from which a theory can be challenged or rebuilt;
-[retaining episode evidence](../retaining-the-episode-keeps-a-distilled-rule-re-derivable.md)
+[retaining episode evidence](../retaining-episode-evidence-keeps-a-distilled-rule-open-to.md)
 serves that purpose. Retaining more records and more theory also adds
 retrieval, interpretation, maintenance, and consistency costs.
 
@@ -191,4 +191,4 @@ Relevant Notes:
 - [Conjectural learning](../definitions/conjectural-learning.md) — defined-in: learning attribution is distinct from the retained-state arrangement
 - [Addressable theory](../definitions/addressable-theory.md) — defined-in: the optional structural property supporting targeted criticism
 - [Commonplace studies conjectural learning through retained theories](../commonplace-studies-conjectural-learning-through-retained-theories.md) — see-also: the independently stated efficiency conjecture
-- [Retaining episode evidence keeps a distilled rule open to re-examination](../retaining-the-episode-keeps-a-distilled-rule-re-derivable.md) — grounds: records remain evidence behind retained abstractions
+- [Retaining episode evidence keeps a distilled rule open to re-examination](../retaining-episode-evidence-keeps-a-distilled-rule-open-to.md) — grounds: records remain evidence behind retained abstractions

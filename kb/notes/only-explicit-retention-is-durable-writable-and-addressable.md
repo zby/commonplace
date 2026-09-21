@@ -94,7 +94,7 @@ would deny that retained state can support learning.
 Addressability concerns the commitment and the operations the claim actually
 needs. It is not complete transparency of the learner. Retained episodes,
 examples, theories, and programs can supply different information and different
-edit targets; [retaining an episode](./retaining-the-episode-keeps-a-distilled-rule-re-derivable.md)
+edit targets; [retaining an episode](./retaining-episode-evidence-keeps-a-distilled-rule-open-to.md)
 can preserve details that a distilled rule omits. None guarantees that later
 interpretation recovers those details correctly.
 

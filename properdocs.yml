@@ -221,6 +221,7 @@ plugins:
         'notes/reflective-theory-refinement-has-three-separate-lineages.md': 'notes/conjectural-learning-has-distinct-precedents.md'
         'notes/reflective-theory-refinement-needs-interpretation-and-retention.md': 'notes/a-complete-theory-path-does-not-establish-improved-capacity.md'
         'notes/related-systems/related-systems-index.md': 'agent-memory-systems/README.md'
+        'notes/retaining-the-episode-keeps-a-distilled-rule-re-derivable.md': 'notes/retaining-episode-evidence-keeps-a-distilled-rule-open-to.md'
         'notes/retrieval-failure-is-reflection-failure.md': 'notes/a-retrieval-miss-is-a-local-reflective-path-failure.md'
         'notes/reverse-compression-is-the-failure-mode-where-llm-output-expands-without-adding-information.md': 'notes/reverse-compression-is-when-llm-output-expands-without-adding.md'
         'notes/reviewers-share-the-fields-prior-so-declare-which-claims-to-defend.md': 'notes/reviewers-share-the-fields-prior-so-interpret-findings-by-stance.md'
