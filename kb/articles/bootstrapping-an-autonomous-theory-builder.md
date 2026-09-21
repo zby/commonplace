@@ -31,9 +31,9 @@ source_notes:
 > page](https://github.com/zby/commonplace/discussions).
 
 **TL;DR.** A *theory builder* is the complete persistent system responsible
-for developing and revising addressable tentative theories. This responsibility
-does not itself establish successful learning. Commonplace
-is one: it produces a knowledge base for consuming projects, and people
+for developing and revising addressable tentative theories about the
+subjects it investigates. This responsibility does not itself establish
+successful learning. Commonplace is one: it produces a knowledge base for consuming projects, and people
 still fill several of its internal roles. This bootstrap program transfers
 bounded classes of those internal decisions to computation, one trial at a
 time. The view it denies is that automating a person's decisions is by
@@ -387,7 +387,7 @@ success is the self-confirming evaluation above.
 ## Where this leaves the series
 
 The [lead article](./conjectural-learning-with-fixed-models.md)
-supplies the learning paradigm, and the [evidence
+supplies the learning definition and the research arrangement, and the [evidence
 supplement](./testing-the-conjectural-learning-program.md) supplies the
 hypotheses and the protocol under which a consuming project would judge the
 result. This program tests a route toward an autonomous builder by measuring

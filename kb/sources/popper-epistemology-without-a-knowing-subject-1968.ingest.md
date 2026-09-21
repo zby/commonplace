@@ -56,7 +56,7 @@ The source is a conceptual foundation for [tentative theory](../notes/definition
 
 It also clarifies a boundary in [representational form](../notes/definitions/representational-form.md): a theory's content, its linguistic formulation, and a consumer's way of processing that formulation are distinct questions. Section 6 defends criticism of informal mathematical arguments while denying that mathematics is merely a formal language game. This supports distinguishing linguistic criticism from mechanically assigned consequences; it does not show that linguistic formulation is dispensable for scientific criticism.
 
-The unread-book and computer-generated-table examples supply a contrast with [interpretation and retention](../notes/a-complete-theory-path-does-not-establish-improved-capacity.md). Potential intelligibility suffices for the content's objective status in Popper's account. An operative theory and criticism-caused improvement in capacity remain separate requirements for attributing conjectural learning to a system. A retained object can therefore count as objective knowledge without establishing that any particular system learned from it.
+The unread-book and computer-generated-table examples supply a contrast with [the evidence that a system used and criticized a theory](../notes/a-complete-theory-path-does-not-establish-improved-capacity.md). Potential intelligibility suffices for the content's objective status in Popper's account. An operative theory and criticism-caused improvement in capacity remain separate requirements for attributing conjectural learning to a system. A retained object can therefore count as objective knowledge without establishing that any particular system learned from it.
 
 ## Learning Claims (our opinion)
 

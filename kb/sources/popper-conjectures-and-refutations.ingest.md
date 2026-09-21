@@ -59,7 +59,7 @@ Popper's temporary background knowledge is compatible with the distinction in [l
 ## Extractable Value
 
 1. **Repair should face consequences beyond the failures that prompted it.** Chapter 10, section XVIII, explains why fitting the original facts leaves too many possible theories. For KB repair, this suggests assessing whether a revision predicts something independently assessable beyond the repair cases. This extends the narrowing note's existing refuter test; the transfer to prose claims still needs evaluation. [experiment]
-2. **Fault localization is a separate problem from detecting failure.** Chapter 10, sections XV–XVI, supplies primary-source discussion of tests that implicate several assumptions and of separating hypotheses to aid diagnosis. This bears directly on the conjectural-learning definition's statement that failed predictions do not uniquely identify a premise to discard. [quick-win]
+2. **Fault localization is a separate problem from detecting failure.** Chapter 10, sections XV–XVI, supplies primary-source discussion of tests that implicate several assumptions and of separating hypotheses to aid diagnosis. This bears directly on the addressable-theory definition's statement that a located part is only a candidate: a failure rarely identifies one faulty commitment. That definition now cites this chapter. [quick-win]
 3. **Promising and successful are different judgments.** Chapter 10 distinguishes formal candidacy requirements from passing new severe tests. Merely attaching an untested prediction can manufacture apparent testability, so a checklist of possible falsifiers is insufficient evidence of progress. A refuted candidate can nevertheless have exploratory value. [just-a-reference]
 
 ## Limitations (our opinion)
@@ -72,4 +72,4 @@ The complete book is captured, but this analysis concentrates on the preface and
 
 ## Recommended Next Action
 
-Update [Conjectural learning](../notes/definitions/conjectural-learning.md) with source support from Chapter 10, sections XV–XVI, for its statement that a failed prediction may implicate several premises without uniquely locating the fault.
+Done: [Addressable theory](../notes/definitions/addressable-theory.md) cites Chapter 10, section XVI, for its statement that a failed prediction may implicate several commitments without uniquely locating the fault.

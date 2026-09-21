@@ -63,9 +63,9 @@ proximity.
 
 The reviewed evidence demonstrates no complete witness house. That negative
 finding applies only to this reviewed evidence and does not establish that
-no such house exists elsewhere. [What the survey shows for the
-paradigm](#what-the-survey-shows-for-the-paradigm) says what the same
-evidence shows for the paradigm in general.
+no such house exists elsewhere. [What the survey shows for the retained-theory
+arrangement](#what-the-survey-shows-for-the-retained-theory-arrangement) says
+what the same evidence shows for that arrangement in general.
 
 ## How to read the table
 
@@ -297,16 +297,16 @@ note](../notes/evidence/commonplace-revision-used-theory-guided-computational-se
 records theory-guided computational search with the operator selecting global
 fit, without ablation or autonomous successor selection.
 
-## What the survey shows for the paradigm
+## What the survey shows for the retained-theory arrangement
 
-The reviewed work supplies candidate components for learning by theory
-refinement: retained notes and code, scheduled revision, gates capable of
+The reviewed work supplies candidate components for conjectural learning
+through retained theories: retained notes and code, scheduled revision, gates capable of
 rejection, and rollback with failure evidence. So the parts have precedents,
 some inspected in code and others known only from papers or practitioner
 reports. Where a product operates, it is reported with human authority
 over internal decisions.
 
-What the survey does not find is the paradigm's central mechanism under
+What the survey does not find is the arrangement's central mechanism under
 test. In most of the research rows, what is retained is admitted by a score,
 an oracle, a held-out gate, or a critic. The others replay or version
 changes without such a gate, or have no automatic trigger from experience.

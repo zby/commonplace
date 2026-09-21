@@ -18,25 +18,27 @@ source_notes:
 *Program theory, the witness conditions, and why software gives a stronger falsifier*
 
 > **Draft supplement.** This develops one alternative arrangement for
-> testing the retained-theory research arrangement in [Conjectural Learning
-> with Fixed Models](./conjectural-learning-with-fixed-models.md). It may
+> testing conjectural learning with fixed models, the program introduced in
+> [Conjectural Learning with Fixed
+> Models](./conjectural-learning-with-fixed-models.md). It may
 > change. Comments and counterexamples are welcome on [the repository's
 > GitHub Discussions page](https://github.com/zby/commonplace/discussions).
 
 **TL;DR.** A *software house* is the complete persistent system that keeps
 changing software for its users. We conjecture that an automated one is
 possible with LLM weights held fixed: computation performs every production
-decision, and the house learns by revising its retained knowledge and
-machinery rather than its models. This is a second way to test the
-retained-theory research arrangement of the lead article, [conjectural
+decision, and the house learns by criticizing and revising its retained
+knowledge and machinery rather than its models. This is a second
+arrangement for testing [conjectural
 learning](../notes/definitions/conjectural-learning.md) with fixed models,
-whose first test is a knowledge base. The theory a house refines
+the program of the lead article, whose first arrangement is a knowledge
+base. The theory a house refines
 is *program theory*, the term Peter Naur, the computer scientist who argued
 that programming is theory building, used for the understanding of a
 program's purpose, organization, and how to handle new requests. Naur held
 that this understanding is bound to people; an automated house that holds
 one would show otherwise. Software fails visibly, so the house gives the
-paradigm a stronger falsifier, a failure the system does not itself judge,
+program a stronger falsifier, a failure the system does not itself judge,
 than a knowledge base does. It also demands a harder claim: that at least
 one whole house exists that meets four conditions together. This
 supplement states the claim, why it is not ruled out in advance, the four
@@ -238,7 +240,7 @@ together.
 ## The comparison with the knowledge-base arrangement
 
 The program's first arrangement is Commonplace producing a knowledge base
-for consuming projects. Both arrangements test the same paradigm through an
+for consuming projects. Both arrangements test the same program through an
 externally assessed product. They differ on one point, Naur's program
 theory, and three consequences follow from it.
 

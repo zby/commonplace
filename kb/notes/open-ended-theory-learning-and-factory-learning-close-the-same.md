@@ -20,10 +20,10 @@ machinery; a Greenfield-style factory can be part of that machinery. The
 reflective theory describes the house's production organization, while a
 product theory describes the software it produces.
 
-The shared loop is the causally co-indexed path that [a complete theory path
-does not establish improved
-capacity](./a-complete-theory-path-does-not-establish-improved-capacity.md)
-already names: a theory about the system's own
+The shared loop is the causally co-indexed path described in [a complete
+theory path does not establish improved
+capacity](./a-complete-theory-path-does-not-establish-improved-capacity.md#the-functions-share-one-path-not-one-substrate):
+a theory about the system's own
 [behavior-determining organization](./definitions/behavior-determining-organization.md)
 is posited, interpreted into a change, made operative, and exposed to consequences
 its author did not write. Criticism of the theory then affects later use through
