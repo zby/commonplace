@@ -45,34 +45,43 @@ contain only inputs and outcomes.
 
 ## A case
 
-Consider a system that maintains a release exporter. The exporter builds a
-deployment manifest from a configured list of input files. Documentation
-edits do not affect the manifest, so the system checks them for syntax
-only. It retains a written account of why, in two parts: an edit needs a
-manifest check when an executable consumer reads the edited file, and the
-configured input list identifies every file the exporter reads.
+Consider a system that maintains a command-line tool. The project's full
+test suite is slow, so the system runs it only on changes that can affect
+the released program. A change that edits only files under `docs/` gets a
+formatting check instead. The system retains a written account of why, in
+two parts:
 
-Later the exporter starts reading service definitions from named Markdown
-files, and those files are added to the configured list. The account already
-says what to do: the files now have an executable consumer, so their edits
-need manifest checks. This is application of an existing theory to new facts.
-It does not by itself show learning from criticism.
+- **Rule.** A change needs the full test suite when the released program
+  depends on a file the change edits.
+- **Map.** Files under `docs/` are for human readers; the released program
+  depends on none of them.
 
-Later still, the exporter gains support for included snippets. A snippet
-that a configured file includes carries a service definition, but the
-configured list does not name the snippet directly. An edit to it passes
-its syntax check, and a release ships with an invalid manifest. The system
-investigates and formulates a criticism: the configured list identifies the
-exporter's entry points, not everything it reads. It revises the second
-part of its account to include every file reachable through includes. The
-first part, that checks follow executable consumers, survives. The revised
-account then guides checks on other snippets that have never caused a failure.
+One day a change edits a page under `docs/help/`. The tool's `help` command
+prints these pages: they are bundled into each release, and the command
+builds its topic list from the title line that starts each page. The edit
+removed a title line. The change passes the formatting check, and in the
+next release the `help` command fails. The full suite includes a test that
+loads every help page, but by the account nothing depended on the page, so
+the suite never ran.
+
+The system investigates and formulates a criticism: `docs/` says where a
+file is kept, not whether the program depends on it. It revises the Map:
+
+- **Map, revised.** The released program depends on every file that its
+  source code or build configuration references, wherever the file is kept.
+
+The Rule survives. The revised account now sends changes to other referenced
+files under `docs/` through the full suite, though none of those files has
+caused a failure.
+
+A record containing only “this change, then a failed release” says which
+change failed. The criticism says why the decision was wrong, so it changes
+decisions about files that have never caused a failure.
 
 This is a hypothetical example of the mechanism, not an experimental result.
-The criticism names why the earlier decision was wrong and changes what the
-system would check next. If that change improves its ability to choose
-appropriate checks, it has learned. The improvement can exist before another
-snippet edit arrives; later decisions provide evidence of it. Revising one
+If the revised account improves the system's ability to choose appropriate
+checks, the system has learned. The improvement can exist before another
+such change arrives; later decisions provide evidence of it. Revising one
 part makes the example easy to inspect, but replacing the whole account
 could achieve the same kind of learning.
 
@@ -90,9 +99,16 @@ of a stated consequence; it need not be an empirical experiment.
 learning to a system when a formulated theory guides decisions through what
 it says and formulated criticism improves the system's capacity for future
 action. Merely writing a theory, changing a decision, or recording a passing
-test does not establish improvement.
-Popper supplies the process and the theory's status; Commonplace supplies
-these conditions for attributing learning to a particular system.
+test does not establish improvement. Popper supplies the process and the
+theory's status; Commonplace supplies these conditions for attributing
+learning to a particular system.
+
+Applying a theory to new facts does not establish it either. Suppose the
+project in the docs-only case later adds a tutorial under `docs/` that the
+program also loads. The revised account already says that changes to the
+tutorial need the full suite. The account guided a new decision, but no
+criticism was involved, so the episode does not by itself show learning
+from criticism.
 
 When criticism counts against a theory, the system revises or replaces it.
 When a theory survives an attempted refutation, the testing result may
@@ -157,22 +173,21 @@ is part of the work.
 ## Three conjectures about the mechanism
 
 The [research companion](../notes/commonplace-studies-conjectural-learning-through-retained-theories.md#three-conjectures)
-states three proposed benefits. The exporter example shows their possible
+states three proposed benefits. The docs-only case shows their possible
 mechanisms without establishing their advantages.
 
 **Content.** Formulating and supplying a criticism of what a theory says may
 produce more learning from a failure than generating variants and selecting
-them by score without a supplied reason for failure. “The configured list
-omits included files” directs investigation differently from “this release
-failed.” A correct diagnosis could save search; an elaborate wrong one
+them by score without a supplied reason for failure. “A file's directory
+does not show whether the program depends on it” directs investigation
+differently from “this release failed.” A correct diagnosis could save search; an elaborate wrong one
 could waste it. A model generating variants may still criticize them
 privately, so the comparison concerns the arrangements actually supplied,
 not a guarantee about hidden processing.
 
 **Addressability.** Criticism that identifies a suspect assumption or part
 may produce more learning than criticism directed at an undivided theory.
-In the example, the account of the input list can change while the consumer
-condition remains available. Identifying a part can focus investigation and
+In the docs-only case, the Map can change while the Rule remains available. Identifying a part can focus investigation and
 help preserve useful knowledge. It can also locate the fault incorrectly.
 The target of criticism is distinct from edit size: diagnosing one part can
 justify rewriting the whole theory, and criticism can overturn a core
@@ -182,9 +197,10 @@ assumption.
 reduce cost at comparable decision quality. There are two reconstruction
 comparisons. Rebuilding from retained formulated criticisms asks what keeping
 the assembled theory buys. Rebuilding from records containing only inputs
-and outcomes asks what retaining the work of criticism buys. For the exporter,
-the latter system must recover the significance of the snippet failure;
-the former already has the criticism about entry points and includes.
+and outcomes asks what retaining the work of criticism buys. In the docs-only
+case, the latter system must recover the significance of the help-page
+failure; the former already has the criticism that a directory does not show
+dependence.
 
 These distinctions concern retained content. A trace that preserves the
 theory, criticism, and testing result can implement the same retained knowledge
@@ -225,7 +241,7 @@ A learner confined to a
 A separate [sample-efficiency
 conjecture](../notes/retained-theories-may-improve-sample-efficiency.md) asks
 whether a useful theory reduces target observations after a shift that
-preserves the structure it describes. The exporter case suggests why one
+preserves the structure it describes. The docs-only case suggests why one
 criticism might change many checking decisions. That benefit is separate from
 whether a selector can choose useful theories by judging how far their
 explanations hold beyond the observed cases. Both are separate from total cost.
@@ -244,11 +260,11 @@ its place against those alternatives.
 
 ## Requirements and responsibility
 
-In the exporter case, the account of what the input list means is a
-descriptive claim. Producing a valid manifest is a requirement. When the
-system fails, it must decide whether its account of the exporter is wrong,
-whether the implementation violates the requirement, or whether its checking
-procedure failed. Changing a descriptive assumption and changing the product
+In the docs-only case, the Map is a descriptive claim about the project.
+That a release displays its help is a requirement. When the system fails,
+it must decide whether its account of the project is wrong, whether the
+implementation violates the requirement, or whether its checking procedure
+failed. Changing a descriptive assumption and changing the product
 are different responses.
 
 Replacing or weakening a failed test requires grounds to doubt its
@@ -282,7 +298,7 @@ and a conjectural learner need not meet this narrower builder definition.
 A [reflective builder](../notes/definitions/reflective-theory-builder.md)
 uses a theory of its own machinery with a two-way causal connection:
 machinery changes update that theory, and theory revisions can change the
-machinery. In the exporter example, this would involve an account of how
+machinery. In the docs-only case, this would involve an account of how
 the system chooses checks, which a missed check can challenge. Revising that
 account guides a change to the check selector, and the installed change is
 reflected back into the account. Self-description alone does not supply
