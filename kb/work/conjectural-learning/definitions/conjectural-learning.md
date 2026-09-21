@@ -160,12 +160,13 @@ attempts to learn.
   is formulated, so there is nothing to criticize, replace, or inspect on its
   own. A system whose weights adapt and whose formulations are unknown is a
   different case, and it stays unclassified.
-- **Justification before change.** A formulated theory guides decisions and
-  is revised only when it proves its own revision beneficial, as in the
-  [Gödel machine](../../../notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md).
-  Each change is justified by proof from the theory's premises, and the
-  premises are never exposed to criticism. The theory is operative and
-  uncriticized.
+- **Proof-only revision under an uncriticized theory.** A formulated theory
+  guides decisions and licenses revisions only by proof from premises that,
+  by stipulation, are never criticized. This arrangement is outside because
+  criticism is absent. Proof-governed switching is a feature of the
+  [Gödel machine](../../../notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md);
+  that feature alone does not establish the absence of criticism elsewhere
+  in a system. Deductive criticism can qualify.
 
 - **A stored theory or record that nothing would consume.** No process in the
   system would consume it, so it is not on the causal path of decisions and

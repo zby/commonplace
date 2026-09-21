@@ -26,8 +26,9 @@ Commissioned by the operator on 2026-09-19, with further decisions on
 
 The [definition drafts](./definitions/) and
 [companion note](./notes/commonplace-studies-conjectural-learning-through-retained-theories.md)
-incorporate the settled capacity and observer-access decisions. They remain
-workshop artifacts while the investigations below are pending. The operator
+incorporate the settled capacity and observer-access decisions and the adopted
+RSI research positioning. They remain workshop artifacts while the
+investigations below are pending. The operator
 settles any further scope changes; migration requires a later commission and
 uses the [parked migration notes](./migration-map.md).
 
@@ -49,13 +50,15 @@ Do not enrich the classical theory-refinement account as an intermediate step.
 
 ## Pending work
 
-The [Schmidhuber import message](./schmidhuber-import-message.md) frames an
-assessment of the RSI proposals against this ontology, with freedom to reject
-them and no authority to change settled scope.
-
 Reorganization of the reconstruction comparison remains pending. The
 [indexing example](./indexing-applicability-example.md) records a practical
 retrieval issue for that comparison.
+
+The [Schmidhuber assessment](../schmidhuber-rsi-imports/ontology-assessment.md)
+is integrated: research positioning belongs in the companion, and the
+definitions retain their scope with case 14's attribution qualified. The
+[RSI workshop](../schmidhuber-rsi-imports/README.md) continues the mechanism
+comparisons and experiment design.
 
 ## Constraints on later experiments and articles
 

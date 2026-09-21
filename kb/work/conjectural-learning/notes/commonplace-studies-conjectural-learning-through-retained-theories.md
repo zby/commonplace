@@ -1,5 +1,5 @@
 ---
-description: "Commonplace's choice to study a continuing system with retained theories, and the content, addressability, and efficiency conjectures that motivate it"
+description: "Commonplace's RSI research uses interpreted methodology, selective codification, and retained theories; content, addressability, and efficiency remain conjectured benefits"
 type: kb/types/note.md
 traits: [title-as-claim, has-external-sources]
 tags: [foundations, learning-theory, self-improving-systems]
@@ -13,13 +13,51 @@ record so that what it learns shapes future work. This is our research
 choice. Whether it offers advantages over other approaches is an empirical
 question.
 
-The attraction is that formulated knowledge can itself become an object of
-inquiry. The system can examine what a theory says, challenge its assumptions,
-and use the result when developing further theories. This draws on
-[Popper's account of formulation and criticism](../../../sources/popper-epistemology-without-a-knowing-subject-1968.ingest.md#quotes).
 The [definition](../definitions/conjectural-learning.md) states when the term
 applies; the [foundation](../popper-foundation.md) supplies the fuller
 attribution.
+
+## Research program and development path
+
+Commonplace pursues recursive self-improvement within the broad research
+program developed by Schmidhuber. His account includes neural realizations
+of a modifiable learning algorithm
+([RSI retrospective](../../../sources/recursive-self-improvement-since-1987.ingest.md#quotes)).
+Our chosen realization uses natural language as the retained, revisable
+carrier of knowledge and learning procedures, with LLMs supplying
+interpretation and criticism. Retained theories can guide diagnosis, test
+selection, and procedure revision; the research objective includes making
+subsequent improvement work more productive.
+
+We start with an incomplete, criticizable account of how to learn and use it
+through interpretation. The LLM and harness supply executable machinery;
+the methodology need not specify every operation before it can be tried.
+The interpreter supplies judgments where the method leaves choices open.
+This reduces the up-front specification needed to expose a methodological
+conjecture to failure. Whether the resulting judgments support useful
+improvement remains an empirical question.
+
+Popper's epistemology organizes this development process: treat the
+methodology's claims as tentative theories, criticize their content, test
+their consequences, and let the resulting problems guide further work
+([formulation and criticism](../../../sources/popper-epistemology-without-a-knowing-subject-1968.ingest.md#quotes)).
+This follows from our choice to develop the methodology through conjecture
+and criticism. Natural language alone does not make a procedure Popperian;
+an instruction, a theory about its effects, and a criticism have different
+roles even when they share one artifact.
+
+Codify parts when their intended meaning and operation become sufficiently
+clear and the commitment is useful. [Codification](../../../notes/definitions/codification.md)
+assigns consequences through a symbolic consumer; it does not merely make
+prose more precise. Other parts can remain interpreted and criticizable.
+Codification can therefore follow learning, part by part, without making the
+underlying theory true or exempt from criticism. Whether it preserves useful
+behavior while reducing cost or error is a separate question from whether
+the interpreted methodology improves learning.
+
+The [RSI workshop](../../schmidhuber-rsi-imports/README.md) develops the
+mechanism comparisons and experiment sketches for this research direction.
+The direction does not add a membership condition to conjectural learning.
 
 ## The continuing system
 

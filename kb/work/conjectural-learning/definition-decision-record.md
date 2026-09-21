@@ -73,7 +73,7 @@ unestablished, learning remains unestablished.
 | 11 | A theory survives an attempted refutation, and the recorded result guides later reliance on it or the choice of further tests | Inside | Criticism is attempted elimination; its result can change assessed support and subsequent use without changing the theory's content |
 | 12 | One model proposes and criticizes its own theories | Inside | Test 1: decorrelating the critic from the proposer changes how well criticism works, not which mechanism does the learning |
 | 13 | Criticisms are written down, but a test detects no difference from placebo text of the same form | Not shown to be inside by that test | The test has not established a content effect; non-detection alone does not establish absence |
-| 14 | A formulated operative theory is revised only when it proves its own revision beneficial, as in the Gödel machine | Comparison: justification before change | Criticism of content. The machine justifies each switch by proof from its premises and never exposes the premises to criticism, so the theory is operative and uncriticized. Test 1: what eliminates differs in kind |
+| 14 | A formulated operative theory licenses revisions only by proof from premises that are never criticized | Comparison: proof-only revision under an uncriticized theory | Criticism of content, absent by stipulation. Proof-governed switching alone does not establish this absence in a complete system. Test 1: what eliminates differs in kind |
 
 ## Settled decisions
 
@@ -129,11 +129,23 @@ Operator decisions adopted on 2026-09-19 through 2026-09-21:
   revision is not a rule; criticism can overturn core assumptions. EITHER
   and FORTE remain precedents for locating candidate repairs.
 
-Case 14 concerns the [Gödel-machine construction](../../notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md)
-as described, whose premises about environment and utility are not exposed
-to criticism. It does not exclude proof from criticism: Popper allows proof
-in logic and mathematics. A construction permitting empirical criticism of
-its environment assumptions would need a different assessment.
+- **Research positioning within RSI.** Commonplace pursues recursive
+  self-improvement within Schmidhuber's broad research program. The adopted
+  development path starts with underspecified methodology used through LLM
+  interpretation and codifies parts when their operation becomes clear and
+  codification is useful. Popper's epistemology organizes the conjecture and
+  criticism through which that methodology develops. This is a research
+  choice, not a membership condition or an established advantage. The
+  [companion](./notes/commonplace-studies-conjectural-learning-through-retained-theories.md#research-program-and-development-path)
+  states the rationale; the [RSI workshop](../schmidhuber-rsi-imports/README.md)
+  owns the mechanism comparisons and experiment designs.
+
+Case 14 borrows proof-governed switching from the
+[Gödel-machine construction](../../notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md).
+Absence of criticism is a separate stipulation of the example, not a
+conclusion about every system with that switching rule. Deductive criticism
+remains eligible; classification of a complete system requires evidence of
+its process.
 
 ## Scope changes adopted on 2026-09-21
 
@@ -149,6 +161,10 @@ about internal processing without guaranteeing classification of every opaque
 system. It also withdraws the former scope prose's apparent exclusion of
 private linguistic conjecture and criticism. Cases 5 and 7 remain outside by
 stipulation; an opaque model with no visible theory is not that stipulation.
+
+The subsequent RSI assessment changes the research positioning and qualifies
+case 14's source attribution under test 4. It adds no membership condition,
+and no numbered case changes class under test 6.
 
 Pending investigations and migration authority are maintained in the
 [workshop README](./README.md#pending-work).
