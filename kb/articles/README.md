@@ -20,9 +20,7 @@ The deck uses *memory* for the audience-facing term and *natural-language*
 in place of the paper's *prose*. It derives the three representational forms
 from assigned consequences and localization; the terminology and derivation
 are explained in [representational form](../notes/definitions/representational-form.md).
-The slides show the terminology changes with strikeouts. An [alternate
-hosted copy](https://claude.ai/code/artifact/1b676774-3fa9-4539-a05e-023f25a747a6)
-is also available.
+The slides show the terminology changes with strikeouts.
 
 ## In draft
 
