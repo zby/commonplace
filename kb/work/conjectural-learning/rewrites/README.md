@@ -1,0 +1,105 @@
+# Substantial rewrites for conjectural-learning migration
+
+Created at the operator's direction on 2026-09-21 as the drafting subdirectory
+for the [closure plan](../closure-plan.md). Purpose: resolve substantive
+changes here before editing the library. This inventory is the first pass;
+no new replacement bodies have been drafted in this directory yet.
+
+The existing [definition drafts](../definitions/) and
+[companion](../notes/commonplace-studies-conjectural-learning-through-retained-theories.md)
+remain the working basis. Do not fork them into duplicate drafts. The
+[decision record](../definition-decision-record.md) fixes accepted scope.
+Library migration and peer-workshop changes are outside this drafting stage.
+
+## Replacements already started
+
+| Current library document | Disposition to finish |
+|---|---|
+| [Theory refinement](../../../notes/definitions/theory-refinement.md) | Replace the classical operation/departures foundation with the existing conjectural-learning, tentative-theory, and addressable-theory drafts. Account for unique material before retirement: the representational axes and computed versus interpreted consequences have independent homes; repair precedents belong with addressability. Do not keep the obsolete operation just to give old links a destination |
+| [Learning by theory refinement](../../../notes/definitions/learning-by-theory-refinement.md) | Replace with the existing conjectural-learning definition and companion. Its recurrent-retention requirement, exclusions of discarded/reconstructed theories, and “not a success term” clause cannot survive a rename |
+
+## Substantial work to stage
+
+These are semantic rewrites even where much of the old text can remain.
+Final titles and whether a standalone successor is needed are decisions of
+the rewrite, not fixed by the current filename.
+
+| Current document | Why it needs a draft; what to preserve |
+|---|---|
+| [Three lineages](../../../notes/reflective-theory-refinement-has-three-separate-lineages.md) | Replacement or substantial reduction. Its epistemic-lineage and “same mechanism, slot for slot” account depends on the retired import. Rebuild attribution around Popper, retain useful structural and implementation comparisons, and keep RSI research positioning distinct from epistemic ancestry |
+| [Interpretation, retention, and read-back](../../../notes/reflective-theory-refinement-needs-interpretation-and-retention.md) | Rewrite framing and requirements. Preserve the four-level evidence ladder and same-path requirement for recurrent claims; do not make addressable retention or observed recurrence necessary for every learning claim |
+| [Sample efficiency under structured shifts](../../../notes/learning-by-theory-refinement-may-improve-sample-efficiency.md) | Rewrite the pathway and classical-mechanism explanation. Retain separate reuse and selector conjectures, shift conditions, sample versus total cost, and negative transfer. Addressability is a chosen treatment, not genus membership |
+| [Disconnected witnesses](../../../notes/disconnected-witnesses-do-not-establish-a-causal-path-through-theory.md) | Rework learning attribution while preserving the claim about joining causal evidence. A connected path alone does not establish improved capacity; recurrent evidence is not a universal minimum duration |
+| [Three 2026 harnesses](../../../notes/evidence/three-2026-harnesses-retain-editable-rules-or-weights-not-rationale.md) | Rewrite current-ontology classification passages, preserving observations and source boundaries. Missing rationale, hidden formulation, weights, and editable rules do not alone settle criticism or learning. Do not invent new findings about the systems |
+| [Retained theories versus traces proposal](../../../notes/proposals/retained-theories-compared-with-retained-traces-under-resource-limits.md) | Rebuild or retire after preserving useful claims. Review its minimal-revision assumption and storage-based contrasts against the two reconstruction comparisons. Its three proposed terms remain unadopted; the stability test did not establish their necessity |
+| [Theory builder](../../../notes/definitions/theory-builder.md) | Stage the opening and boundary examples: they require an addressable theory and equate retaining/refining with learning. Preserve responsibility, lineage, system boundary, and independence from successful learning. The learner definition does not automatically decide builder membership |
+| [Reflective theory builder](../../../notes/definitions/reflective-theory-builder.md) | Stage its composition and evidence wording. A mechanical replacement of “reflective theory refinement” could add improved capacity as a builder condition. Preserve causal self-representation and distinguish attempted development from successful learning |
+| [Analysis skill](../../../instructions/analyse-agentic-system/SKILL.md) and [analysis result type](../../../types/agentic-system-analysis-result.md) | Draft the vocabulary block and matching result-contract paragraph together. They require localized, separately editable theory and classify the old operation/loop. Preserve conclusion statuses and source-first evidence limits; no pipeline or schema redesign |
+| [Lead article](../../../articles/learning-by-theory-refinement-with-fixed-models.md) | Substantial replacement after the note drafts. Rebuild the paradigm and boundaries, then explain the research arrangement and conjectures. Keep the exporter example and real costs without making local repair definitional |
+| [Testing supplement](../../../articles/testing-the-theory-refinement-program.md) | Stage ontology-dependent sections: test subject, component contrasts, and boundary cases. Separate the two reconstruction comparisons and qualify proof-only classification. Preserve separately adopted whole-program hypotheses and external assessment authority; no new experiment protocol is commissioned |
+
+## Bounded edits and further triage
+
+Keep these out of the full-replacement queue unless reading reveals a deeper
+dependency. Check meaning before updating a link or name.
+
+- [Representational form](../../../notes/definitions/representational-form.md),
+  [codification](../../../notes/definitions/codification.md), and
+  [rationale faithfulness](../../../notes/revision-guided-by-rationale-needs-faithfulness-not-just-legibility.md):
+  revise the application paragraphs; their central distinctions survive.
+- [Addressable theory for heterogeneous development](../../../notes/addressable-theory-can-coordinate-heterogeneous-factory-development.md),
+  [program theory under delayed feedback](../../../notes/program-theory-sustains-search-under-delayed-feedback.md),
+  and [cost-sensitive theory search](../../../notes/cost-sensitive-formalisms-for-tentative-theory-search.md):
+  check theory-property and process claims; addressable retention can remain
+  an explicit premise of their narrower conjectures.
+- [Software-house supplement](../../../articles/an-automated-software-house-as-a-second-test-of-theory-refinement.md),
+  [nearest constructions](../../../articles/nearest-existing-constructions-to-a-witness-house.md),
+  [bootstrap article](../../../articles/bootstrapping-an-autonomous-theory-builder.md),
+  and [reviewer article](../../../articles/what-an-automated-reviewer-should-measure.md):
+  check program framing and dependent sections after the lead and definitions.
+  Preserve independent hypotheses, evidence tables, and central claims unless
+  a specific conflict is found; stage extensive revisions here.
+- `AGENTS.md`'s tentative-theory entry, definition cross-links, navigation,
+  and [ingest learning assessment](../../../instructions/assess-learning-claims-during-ingest.md)
+  need targeted wording or reference updates. The ingest instruction loads
+  its comparison definition rather than copying it. Its corresponding
+  `tests/scenarios/ingest-a-source.md` is a test-input dependency to inspect
+  during migration, not an ordinary KB note.
+
+The read-only scan found 160 matching Markdown files across `kb/` and
+`AGENTS.md`, including 73 source ingests, seven reports, and fourteen files in
+peer workshops. This is discovery scope, not a list of 160 edits. Re-run the
+search at migration; new files and semantic dependencies can change the set.
+
+## Preserve historical and independent material
+
+Source titles and quotations keep their terminology. Distinguish source-native
+description from an ingest's present-day Commonplace commentary before
+deciding a passage needs revision. Retained reports and evidence records stay
+tied to their assessed snapshots; renaming the ontology does not re-run them.
+
+The [old software-house article](../../../articles/automated-software-houses-with-fixed-llms.md)
+and [old training-unit article](../../../articles/the-software-house-as-the-unit-of-training.md)
+are superseded. Their many old terms do not make them current rewrite targets.
+Preserve historical bodies and handle necessary live-link repairs under the
+article lifecycle.
+
+Peer experiment workshops keep their commissions. The interface workshop also
+depends substantively on the classical operation; record that dependency for
+migration without rewriting its investigation here.
+
+## Draft bookkeeping and completion
+
+When work begins on an entry, record source commit or hash, disposition, draft
+path, intended final destination, and review status beside it. Store new bodies
+at `rewrites/<repository-relative source path>`; a source under `kb/notes/`
+gets a draft under `rewrites/kb/notes/`. Adjust links for the actual draft
+location. A replacement may receive a different final name without renaming
+the live artifact prematurely. Do not create empty copies for untouched items.
+
+This subdirectory is ready for migration review when every substantial item
+has a reviewed draft or reasoned merge/retirement, claim destinations and
+target names are fixed, and the bounded-update inventory covers the package.
+A needed definition scope change returns to the operator with affected cases.
+Final closure follows the parent plan; finishing drafts does not authorize
+their promotion.

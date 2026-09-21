@@ -27,10 +27,10 @@ Commissioned by the operator on 2026-09-19, with further decisions on
 The [definition drafts](./definitions/) and
 [companion note](./notes/commonplace-studies-conjectural-learning-through-retained-theories.md)
 incorporate the settled capacity and observer-access decisions and the adopted
-RSI research positioning. They remain workshop artifacts while the
-investigations below are pending. The operator
-settles any further scope changes; migration requires a later commission and
-uses the [parked migration notes](./migration-map.md).
+RSI research positioning. The stability test found no required definition
+changes. The next stage prepares substantial library rewrites inside the
+workshop under the [closure plan](./closure-plan.md). The operator settles
+any further scope changes; applying the migration requires a later commission.
 
 The result must leave the library simpler than it found it:
 
@@ -50,9 +50,17 @@ Do not enrich the classical theory-refinement account as an intermediate step.
 
 ## Pending work
 
-Reorganization of the reconstruction comparison remains pending. The
-[indexing example](./indexing-applicability-example.md) records a practical
-retrieval issue for that comparison.
+The [stability test](./stability-test/strain-report.md) resolves reconstruction
+reorganization as an ontology question: compare retained theory separately
+with reconstruction from criticisms and from inputs and outcomes. The
+[indexing example](./indexing-applicability-example.md) remains a bounded
+applicability example; no experiment design is commissioned.
+
+The operator's next direction is to identify substantial edits and replacements
+and draft them in a workshop subdirectory before migration. The
+[rewrite inventory](./rewrites/README.md) is the first pass; the
+[closure plan](./closure-plan.md) states the drafting order, review conditions,
+and eventual migration and cleanup. New rewrite bodies remain to be written.
 
 The [Schmidhuber assessment](../schmidhuber-rsi-imports/ontology-assessment.md)
 is integrated: research positioning belongs in the companion, and the

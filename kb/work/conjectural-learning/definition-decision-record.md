@@ -166,5 +166,27 @@ The subsequent RSI assessment changes the research positioning and qualifies
 case 14's source attribution under test 4. It adds no membership condition,
 and no numbered case changes class under test 6.
 
-Pending investigations and migration authority are maintained in the
+## Stability test and closure preparation, 2026-09-21
+
+The [stability test](./stability-test/strain-report.md) specified the content,
+addressability, and efficiency conjectures under the settled vocabulary. It
+found no necessary definition changes and no flips among the fourteen cases;
+all six tests retained their force. This is evidence of vocabulary usability,
+not evidence that the conjectured benefits hold.
+
+Reconstruction reorganization is resolved as an ontology question: retaining
+the assembled theory is compared separately with reconstruction from retained
+criticisms and from inputs and outcomes. Indexed traces are classified by
+their retained content. Practical separation of experimental records remains
+an experiment-design question, not a membership condition.
+
+The operator clarified that peer experiment workshops were consulted for
+compatibility, without commissioning parallel changes to their designs, and
+then requested a closure plan starting with substantial rewrites staged inside
+this workshop. The [closure plan](./closure-plan.md) and
+[rewrite inventory](./rewrites/README.md) implement that preparation. The
+definition drafts remain unchanged; applying the library migration still
+requires its later commission.
+
+Pending work and migration authority are maintained in the
 [workshop README](./README.md#pending-work).

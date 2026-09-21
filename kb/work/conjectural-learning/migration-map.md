@@ -1,8 +1,10 @@
-# Migration notes (parked)
+# Migration accounting and constraints
 
-Input for the later migration commission; nothing here is authorized. Find
-consumers by search when the commission starts. These notes record only what
-the definitions and the goals do not already imply.
+Supporting input to the [closure plan](./closure-plan.md). Workshop drafting
+is the current stage; applying changes outside the workshop remains for the
+later migration commission. The [rewrite inventory](./rewrites/README.md)
+records the first consumer scan. These notes retain accounting and constraints
+that the definitions and goals do not already imply.
 
 - **Accounting.** The migration reports definitions before and after, what
   was deleted, shrunk, merged, moved, and added, with word counts. Baseline on
