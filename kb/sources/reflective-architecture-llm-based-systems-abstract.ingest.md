@@ -55,3 +55,5 @@ The authors' broad claim that LLM reflection is merely linguistic is a framing c
 ## Recommended Next Action
 
 Obtain a full-paper capture for a distinct ingest focused on whether observed failures revise EEC expectations or simulation assumptions, and on the experimental comparison supporting the alignment claim.
+
+Access record, 2026-09-19 to 2026-09-21: the IEEE publisher page required JavaScript verification and PDF requests returned HTTP 418. The author page supplied only the abstract and DOI. OpenAlex and Semantic Scholar exposed no open copy, and Crossref supplied only similarity-checking URLs. Searches of the Ontario Tech repository, by exact title and author, of arXiv, and for a PDF found no accessible manuscript. No authors were contacted. This does not establish that no open copy exists.
