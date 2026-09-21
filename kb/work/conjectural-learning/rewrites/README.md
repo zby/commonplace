@@ -2,14 +2,73 @@
 
 Created at the operator's direction on 2026-09-21 as the drafting subdirectory
 for the [closure plan](../closure-plan.md). Purpose: resolve substantive
-changes here before editing the library. This inventory is the first pass;
-no new replacement bodies have been drafted in this directory yet.
+changes here before editing the library. The substantial note and operational
+drafts are complete and independently reviewed; the separate article pass is
+also drafted and reviewed. This is a migration preparation package, not
+an applied migration.
 
 The existing [definition drafts](../definitions/) and
 [companion](../notes/commonplace-studies-conjectural-learning-through-retained-theories.md)
 remain the working basis. Do not fork them into duplicate drafts. The
 [decision record](../definition-decision-record.md) fixes accepted scope.
 Library migration and peer-workshop changes are outside this drafting stage.
+
+## Current drafts and destinations
+
+Source hashes, section dispositions, source limits, and fragment repairs live
+in each linked disposition. Draft paths preserve the originals' names under
+`rewrites/kb/`; the final names below are proposed library destinations.
+
+| Draft | Final destination | Disposition |
+|---|---|---|
+| Existing three [definitions](../definitions/) and [companion](../notes/commonplace-studies-conjectural-learning-through-retained-theories.md) | `kb/notes/definitions/{conjectural-learning,tentative-theory,addressable-theory}.md`; `kb/notes/commonplace-studies-conjectural-learning-through-retained-theories.md` | [Old-definition remnants](./definition-remnants.md); retire the two old definitions |
+| [Lineage](./kb/notes/reflective-theory-refinement-has-three-separate-lineages.md) | `kb/notes/conjectural-learning-has-distinct-precedents.md` | [Replacement](./lineage-disposition.md) |
+| [Evidence ladder](./kb/notes/reflective-theory-refinement-needs-interpretation-and-retention.md) | `kb/notes/evidence-of-theory-use-does-not-by-itself-establish-learning.md` | [Replacement and preserved anchors](./evidence-disposition.md) |
+| [Connected witnesses](./kb/notes/disconnected-witnesses-do-not-establish-a-causal-path-through-theory.md) | Same library path | [Substantial edit](./evidence-disposition.md) |
+| [Sample efficiency](./kb/notes/learning-by-theory-refinement-may-improve-sample-efficiency.md) | `kb/notes/retained-theories-may-improve-sample-efficiency.md` | [Separate reuse and selector conjectures](./sample-efficiency-disposition.md) |
+| [Harness evidence](./kb/notes/evidence/three-2026-harnesses-retain-editable-rules-or-weights-not-rationale.md) | `kb/notes/evidence/three-2026-harness-reports-distinguish-repair-and-retention-paths.md` | [Bounded source findings](./harness-evidence-disposition.md) |
+| [Reconstruction proposal](./kb/notes/proposals/retained-theories-compared-with-retained-traces-under-resource-limits.md) | Same library path | [Shorter proposal; vocabulary stays unadopted](./reconstruction-disposition.md) |
+| [Theory builder](./kb/notes/definitions/theory-builder.md) and [reflective builder](./kb/notes/definitions/reflective-theory-builder.md) | Same library paths | [Preserved builder conditions and resolved cross-reference](./builder-disposition.md) |
+| [Analysis skill](./kb/instructions/analyse-agentic-system/SKILL.md) and [result type](./kb/types/agentic-system-analysis-result.md) | Same library paths | [Coordinated vocabulary update](./operational-disposition.md), including the exact bounded collection-contract replacement |
+| [Lead article](./kb/articles/learning-by-theory-refinement-with-fixed-models.md) | `kb/articles/conjectural-learning-with-fixed-models.md` | [Separate explanatory pass](./lead-article-disposition.md) |
+| [Testing supplement](./kb/articles/testing-the-theory-refinement-program.md) | `kb/articles/testing-the-conjectural-learning-program.md` | [Ontology sections revised; adopted hypotheses and protocol preserved](./testing-article-disposition.md) |
+
+The [independent note/operational review](./package-review.md) checked all six
+tests and fourteen cases. It found two substantive drafting errors, both
+corrected and rechecked: general reflection had been narrowed to direct
+machinery modification, and a harness comparison understated Commonplace's
+bounded cumulative-improvement evidence. No learning case changes class.
+
+The [separate article review](./article-review.md) preserves the exporter,
+external authority, cost account, three dated whole-program hypotheses and
+refuters, and the testing supplement's protocol declarations and section
+anchors. It also checks the proposed companion delta at closure.
+
+The operator approved qualifying the learner/builder cross-reference, and the
+conjectural-learning definition now states that learning alone does not
+establish builder membership. The builder's addressability and continuing
+responsibility conditions remain intact. No learning case changes class; see
+the [recorded decision](../definition-decision-record.md#learner-and-builder-cross-reference-resolved-2026-09-21).
+
+The [consumer inventory](./consumer-inventory.md) maps bounded edits,
+historical preserves, navigation, and exact fragment repairs. Its original
+167-file scan is a discovery snapshot, not an edit count; final names now come
+from this table. The [workshop-remnant dispositions](./workshop-remnants.md)
+cover source retention and removal of temporary links at promotion. Source
+ingest commentary, bounded consumer edits, relocation, and workshop deletion
+remain for the migration commission.
+
+The [consolidated accounting and validation](./accounting-and-validation.md)
+records clean explicit-path validation of all sixteen candidate bodies and
+no source drift across the fourteen originals. The whole package has 32,859
+words versus 34,499: 1,640 fewer before the unapplied companion delta. This
+record supersedes per-author draft-stage word counts.
+
+The core replacement has 4,999 words versus 5,261 in the two old definitions
+and lineage note: 262 fewer, including the new research companion. It reduces
+four defined concepts to three while increasing definition files from two
+to three. This is not a definition-file reduction. Promotion accounting must
+include the proposed companion link/example delta and bounded consumer edits.
 
 ## Replacements already started
 
@@ -18,7 +77,7 @@ Library migration and peer-workshop changes are outside this drafting stage.
 | [Theory refinement](../../../notes/definitions/theory-refinement.md) | Replace the classical operation/departures foundation with the existing conjectural-learning, tentative-theory, and addressable-theory drafts. Account for unique material before retirement: the representational axes and computed versus interpreted consequences have independent homes; repair precedents belong with addressability. Do not keep the obsolete operation just to give old links a destination |
 | [Learning by theory refinement](../../../notes/definitions/learning-by-theory-refinement.md) | Replace with the existing conjectural-learning definition and companion. Its recurrent-retention requirement, exclusions of discarded/reconstructed theories, and “not a success term” clause cannot survive a rename |
 
-## Substantial work to stage
+## Original triage and preservation constraints
 
 These are semantic rewrites even where much of the old text can remain.
 Final titles and whether a standalone successor is needed are decisions of

@@ -28,7 +28,7 @@ The [definition drafts](./definitions/) and
 [companion note](./notes/commonplace-studies-conjectural-learning-through-retained-theories.md)
 incorporate the settled capacity and observer-access decisions and the adopted
 RSI research positioning. The stability test found no required definition
-changes. The next stage prepares substantial library rewrites inside the
+changes. Substantial library rewrites are now staged inside the
 workshop under the [closure plan](./closure-plan.md). The operator settles
 any further scope changes; applying the migration requires a later commission.
 
@@ -56,11 +56,25 @@ with reconstruction from criticisms and from inputs and outcomes. The
 [indexing example](./indexing-applicability-example.md) remains a bounded
 applicability example; no experiment design is commissioned.
 
-The operator's next direction is to identify substantial edits and replacements
-and draft them in a workshop subdirectory before migration. The
-[rewrite inventory](./rewrites/README.md) is the first pass; the
-[closure plan](./closure-plan.md) states the drafting order, review conditions,
-and eventual migration and cleanup. New rewrite bodies remain to be written.
+The [rewrite inventory](./rewrites/README.md) now links staged note, definition,
+operational, and article replacements. Independent review has checked the
+note/operational package against all six tests and fourteen cases; a separate
+review checks both articles. The consumer and workshop-remnant inventories
+record remaining migration and closure work. The [closure plan](./closure-plan.md)
+continues to govern promotion and cleanup.
+
+All sixteen candidate bodies validate cleanly, and their fourteen original
+source files have not drifted. The [accounting record](./rewrites/accounting-and-validation.md)
+reports 1,640 fewer words across the draft package before bounded promotion
+edits. The core defines three concepts instead of four, in three definition
+files instead of two; these are separate simplification measures.
+
+The operator approved the learner/builder cross-reference qualification, now
+applied to the conjectural-learning definition. Builder membership retains
+addressability and continuing responsibility; learning alone establishes
+neither. No learning case changes class. The
+[decision record](./definition-decision-record.md#learner-and-builder-cross-reference-resolved-2026-09-21)
+records the resolution.
 
 The [Schmidhuber assessment](../schmidhuber-rsi-imports/ontology-assessment.md)
 is integrated: research positioning belongs in the companion, and the

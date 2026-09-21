@@ -185,8 +185,23 @@ compatibility, without commissioning parallel changes to their designs, and
 then requested a closure plan starting with substantial rewrites staged inside
 this workshop. The [closure plan](./closure-plan.md) and
 [rewrite inventory](./rewrites/README.md) implement that preparation. The
-definition drafts remain unchanged; applying the library migration still
-requires its later commission.
+definition drafts remained unchanged at that stage; applying the library
+migration still requires its later commission.
 
 Pending work and migration authority are maintained in the
 [workshop README](./README.md#pending-work).
+
+## Learner and builder cross-reference resolved, 2026-09-21
+
+The operator approved qualifying the conjectural-learning definition's claim
+that every system running the process is a theory builder. Builder membership
+keeps its additional conditions: continuing responsibility and addressable
+theories. The definition now states that conjectural learning alone does not
+establish them.
+
+This repairs a cross-reference rather than changing either definition's scope.
+Under tests 1 and 3, addressability and continuing responsibility do not become
+conditions of learning. Under test 6, none of the fourteen cases changes class;
+in particular, cases 2 and 6 need not meet the builder's additional conditions.
+The staged builder definitions remain unchanged. This decision does not
+commission library migration or peer-workshop edits.

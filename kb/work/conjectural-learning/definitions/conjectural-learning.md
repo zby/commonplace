@@ -116,9 +116,10 @@ stated in
   reflective only when the self-representation is causally connected to the
   system it describes; see
   [reflective system](../../../notes/definitions/reflective-system.md). A
-  model, a program, or a mixture may apply and criticize the theory. The
-  system that runs the process is a
-  [theory builder](../../../notes/definitions/theory-builder.md).
+  model, a program, or a mixture may apply and criticize the theory. A
+  persistent system responsible for developing and revising addressable
+  theories is a [theory builder](../../../notes/definitions/theory-builder.md);
+  conjectural learning alone does not establish those additional conditions.
 
 ## Exclusions and boundary examples
 
