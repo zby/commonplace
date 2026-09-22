@@ -6,6 +6,12 @@ tags: [architecture, lifecycle-management]
 
 # Recoverable replacement of an incumbent review
 
+> **Archived** (see [archive README](./README.md)). Retired by
+> [ADR 083](../../adr/083-agentic-analysis-carriers-follow-exact-result-consumers.md),
+> whose validate-before-replace publication never moves the incumbent, so a
+> failed run has nothing to restore. The 2026-08-29 fourteen-step writer state
+> and the restore-obligation forces remain here as design texture only.
+
 The legacy writer discussed below has been retired. Its links name the frozen
 historical implementation. The current [main analysis](../../../instructions/analyse-agentic-system/SKILL.md)
 uses a memory specialist report and validates a candidate before replacement;
