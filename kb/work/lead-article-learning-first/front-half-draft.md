@@ -350,9 +350,9 @@ fold it into a note first, or keep it as the article's own argument.
    theory"), so the amoeba is not simply the failure case. Popper 1968
    p. 372 lists three senses of "to learn" — to discover, to imitate, to
    make habitual — all trial and error; "to make habitual" could ground the
-   second bet's procedural-memory point in Popper. Proposed home: a short
-   paragraph in the definition note's "Relation to Popper" section. The
-   "suffer in our stead" quote was grounded via `cp-skill-ground`.
+   second bet's procedural-memory point in Popper. DONE 2026-09-22: the definition note's "Relation to Popper" section
+   carries Popper's names and the grounded quote, and its boundary examples
+   list the research community as an inside case.
 2. **"Code as well as prose" is a comparative bet, stated briefly (operator,
    2026-09-21).** The operator's direction: it is one of the program's bets
    that adding code will help, the lead should not justify it at length, and

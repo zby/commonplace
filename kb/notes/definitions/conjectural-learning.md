@@ -71,6 +71,15 @@ rather than instruction:
 | Form | Dispositions, expectations, and habits as well as formulated theories | Theories formulated in language |
 | Elimination | All error elimination, from the death of the carrier to conscious criticism | Criticism of what the theory says |
 
+Popper's own names for the two rows are *trial and error*, the general
+method, which "is applied not only by Einstein but, in a more dogmatic
+fashion, by the amoeba also", and the *critical attitude*, "the conscious
+attempt to make our theories, our conjectures, suffer in our stead"
+([Conjectures and Refutations, Chapter 1](../../sources/popper-conjectures-and-refutations.ingest.md#quotes)).
+The critical attitude is trial and error developed consciously, not a
+separate process. Conjectural learning names that variant, under the two
+conditions above; this naming is the KB's reading, not Popper's.
+
 Popper's criterion for objective knowledge does not require actual use by a
 particular system. Attributing learning to a system requires more than
 available content: the theory must guide its decisions, and criticism must
@@ -132,6 +141,17 @@ boundary. The inside cases assume that the stated process improves the
 system's capacity for future action; without improvement they describe
 attempts to learn.
 
+- **A research community.** Inside, in Popper's account of science, with the
+  community as the declared system. Its theories decide which experiments
+  are run and what engineers rely on; criticism of what they say improves
+  its later predictions and its choice of tests. No single member has to
+  hold the whole theory or supply all the criticism, and the members'
+  brains change throughout; the learning is still attributed by the theories
+  and the criticism of them. The instance shows that the unit is the whole
+  system and that weight change in a component does not decide
+  classification. It is the familiar case the
+  [lead article](../../articles/conjectural-learning-with-fixed-models.md)
+  opens with.
 - **A theory criticized and replaced whole.** Inside when the criticism
   bears on its content and the replacement would guide later action. Separately
   editable parts are not required.
