@@ -96,10 +96,9 @@ texts as themselves, lists its source notes, and passes
 
 ## Inputs
 
-- The superseded draft at `2da543f0`, also copied to
-  `/tmp/testing-the-conjectural-learning-program.md` on 2026-09-22: its
-  hypotheses section is reused verbatim; its evidence-interface section,
-  component-experiment design, and limits are material, not structure.
+- The superseded draft at `2da543f0`: its hypotheses section is reused
+  verbatim; its evidence-interface section, component-experiment design,
+  and limits are material, not structure.
 - The lead article's "What would count as learning?" section, for the
   two-part test this supplement operationalizes.
 - The externally-tested-builder definition and the three-obligations note
