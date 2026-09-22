@@ -13,6 +13,7 @@ source_notes:
   - kb/notes/a-fixed-model-house-must-retain-missing-procedures-for-theory-use.md
   - kb/notes/warranted-transfer-leaves-people-the-hardest-to-warrant-decisions.md
   - kb/notes/commonplace-studies-conjectural-learning-through-retained-theories.md
+  - kb/notes/evidence/commonplace-revision-used-theory-guided-computational-search.md
 ---
 
 # Bootstrapping a Fully Automated Learner with Commonplace
@@ -24,8 +25,10 @@ source_notes:
 A fully automated [conjectural learner](./conjectural-learning-with-fixed-models.md)
 does not have to be built in one step. We start with a partially automated
 system in which a human operator and automated machinery learn together,
-and require only that what is learned is retained in the system and changes
-later behaviour. Commonplace is our implementation of this bootstrap.
+and require only that what is learned is retained in the system, changes
+later behaviour, and changes it for the better; the lead article says how
+that last condition is tested. Commonplace is our implementation of this
+bootstrap.
 
 ## Retain learning in the system
 
@@ -63,6 +66,15 @@ An improvement to the learning machinery is reused by the later episodes
 that run through it, so its return grows with reuse. This is the argument of
 [An optimal long-run learning strategy invests in its own machinery](../notes/an-optimal-long-run-learning-strategy-invests-in-its-own-machinery.md).
 
+One recorded episode shows the loop's first half.
+[In a 2026-08-30 revision](../notes/evidence/commonplace-revision-used-theory-guided-computational-search.md),
+the model read the retained project theory, searched over reformulations of
+the research program, and proposed the edits; the operator supplied the
+decisive judgments about which formulation fit; later commits built on the
+revised state rather than reconstructing the old one. That shows retention
+and later use. It does not show a change to the learning machinery, and no
+improvement in later performance was demonstrated.
+
 ## Let the learner build its machinery
 
 We do not assume that
@@ -93,19 +105,22 @@ testing, organizing, and applying knowledge.
 A hand-built start fits the Bitter Lesson
 [only if learning outgrows it](../notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md):
 computation, not the operator, must come to supply the knowledge each new
-demand needs. Automation therefore grows one function at a time. A judgment
-the operator makes repeatedly, once its scope has stabilized, becomes a
-test, a validator, a procedure, or a search objective; the knowledge base
-calls this [codification](../notes/definitions/codification.md). A function
-has moved when computation makes the decision and the change is recorded,
-so that a later reader can see what was transferred and when.
+demand needs. Automation therefore grows one function at a time, by one of two
+routes. A judgment the operator makes repeatedly, once its scope has
+stabilized, can be [codified](../notes/definitions/codification.md) into a
+test, validator, or check with formal semantics. Or it can be delegated to
+the LLM under a retained natural-language procedure, which automates the
+judgment without making it a formal rule. A function has moved when
+computation makes the decision and the change is recorded, so that a later
+reader can see what was transferred, by which route, and when.
 
 What does not move is recorded too. A person still in the loop is named as
 such, and their contribution is not credited to computation. What remains with the operator is
 informative:
 [transfer leaves people the decisions hardest to warrant](../notes/warranted-transfer-leaves-people-the-hardest-to-warrant-decisions.md),
 so the functions that remain with the operator show where machinery is
-still missing.
+missing, or where an objective is unsettled, authority is deliberately
+kept, or transfer is not worth its cost.
 
 ## The bootstrap
 
@@ -114,3 +129,12 @@ machinery learn together is retained, is applied reflectively to the learning pr
 new executable machinery, and moves function by function from the operator
 to that machinery. The aim is to use that process to build the capabilities
 required for fully automated learning.
+
+The hard part is not the recurring judgments. It is the work that currently
+makes improvement possible at all: noticing the next problem, diagnosing it,
+and deciding what would count as better. We conjecture that this process can
+transfer that work too, not only the judgments it has already stabilized.
+The conjecture fails, in the terms of
+[the bootstrap condition](../notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md),
+if the operator's share of that work grows with the system instead of
+shrinking.
