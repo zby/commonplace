@@ -94,11 +94,11 @@ theory or supply all the criticism. The members' brains change throughout,
 and we still describe what the community learned by its theories. In the same
 way, the definition does not depend on whether a model's weights change.
 
-The definition covers less than Popper's schema, which he applied to all
-life. An amoeba perishes with its mistaken expectations; scientists “try to
-let [their false theories] die in their stead”. Conjectural learning names
-only the second kind: theories formulated in language and criticized for
-what they say. The definition note covers the boundary cases.
+Popper calls the general process trial and error and says the amoeba uses
+it too. What distinguishes science is the critical attitude: the conscious
+attempt “to make our theories, our conjectures, suffer in our stead”.
+Conjectural learning names that variant: theories formulated in language and
+criticized for what they say. The definition note covers the boundary cases.
 
 ## The first bet: computation can run the whole loop
 
@@ -335,9 +335,24 @@ destination:
 The article is distilled from the notes, so each of these needs a decision:
 fold it into a note first, or keep it as the article's own argument.
 
-1. **A research community as an instance of the definition**, and the amoeba
-   contrast by name. Proposed home: a short paragraph in the definition note's
-   "Relation to Popper" section. The amoeba sentence needs `cp-skill-ground`.
+1. **A research community as an instance of the definition**, and Popper's
+   own names for the two kinds (operator, 2026-09-22): trial and error is
+   the general method, which "is applied not only by Einstein but, in a more
+   dogmatic fashion, by the amoeba also"; the critical attitude (also "the
+   critical method", "scientific method", "the method of conjecture and
+   refutation") is the consciously critical variant, and conjectural
+   learning names that variant, not a separate kind. Source: Conjectures
+   and Refutations ch. 1, p. 52 of the captured edition, and ch. 15, p. 312
+   ("If the method of trial and error is developed more and more
+   consciously, then it begins to take on the characteristic features of
+   'scientific method'"). The ch. 15 footnote also says the dogmatic
+   attitude has value ("Without it we could never find out what is in a
+   theory"), so the amoeba is not simply the failure case. Popper 1968
+   p. 372 lists three senses of "to learn" — to discover, to imitate, to
+   make habitual — all trial and error; "to make habitual" could ground the
+   second bet's procedural-memory point in Popper. Proposed home: a short
+   paragraph in the definition note's "Relation to Popper" section. The
+   "suffer in our stead" quote was grounded via `cp-skill-ground`.
 2. **"Code as well as prose" is a comparative bet, stated briefly (operator,
    2026-09-21).** The operator's direction: it is one of the program's bets
    that adding code will help, the lead should not justify it at length, and

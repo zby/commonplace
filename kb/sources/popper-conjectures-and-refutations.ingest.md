@@ -42,6 +42,12 @@ Popper argues that knowledge grows through tentative solutions to problems, crit
 - **Source extract (verbatim):** But this hope was a residue of the dogmatic way of thinking; in fact nothing can be justified or proved (outside of mathematics and logic). The demand for rational proofs in science indicates a failure to keep distinct the broad realm of rationality and the narrow realm of rational certainty: it is an untenable, an unreasonable demand.
   - **Source location:** Chapter 1, 'Science: Conjectures and Refutations', section VII, printed p. 51; paragraph continuing across the p. 50 marker, beginning 'The critical attitude, the tradition of free discussion of theories'.
 
+- **Source extract (verbatim):** The method of trial and error is not, of course, simply identical with the scientific or critical approach--with the method of conjecture and refutation. The method of trial and error is applied not only by Einstein but, in a more dogmatic fashion, by the amoeba also. The difference lies not so much in the trials as in a critical and constructive attitude towards errors; errors which the scientist consciously and cautiously tries to uncover in order to refute his theories with searching arguments, including appeals to the most severe experimental tests which his theories and his ingenuity permit him to design.
+  - **Source location:** Chapter 1, 'Science: Conjectures and Refutations', section VII, printed p. 52; paragraph beginning 'The method of trial and error is not, of course'.
+
+- **Source extract (verbatim):** The critical attitude may be described as the conscious attempt to make our theories, our conjectures, suffer in our stead in the struggle for the survival of the fittest.
+  - **Source location:** Chapter 1, 'Science: Conjectures and Refutations', section VII, printed p. 52; paragraph beginning 'The critical attitude may be described as'.
+
 ## Connections Found
 
 The source supplies a philosophical anchor for [narrowing bought to survive review is paid for in content](../notes/narrowing-bought-to-survive-review-is-paid-for-in-content.md). Chapter 1's numbered conditions connect informative theories to forbidden outcomes and identify rescue by reinterpretation as a loss of scientific standing. Chapter 10 adds a stronger demand: a successor theory should have testable consequences beyond the facts it was constructed to explain. This supports the note's concern about empty repair; it does not establish the note's account of review incentives or its local witness.
