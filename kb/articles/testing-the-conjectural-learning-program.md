@@ -399,8 +399,8 @@ cover](../notes/warranted-autonomy-is-bounded-by-oracle-domain.md).
 ## Component experiments that can run first
 
 The whole-system protocol waits on a consuming project. The chosen
-arrangement can be tested sooner in a bounded component, using the
-release-exporter case from the lead article: a rule about configured Markdown
+arrangement can be tested sooner in a bounded component, using a
+bounded release-exporter case: a rule about configured Markdown
 inputs must respond when indirect includes expose its incomplete dependency
 account. The component design separates influence, useful transfer and
 recovery, and observations needed to adapt. It does not test every condition
