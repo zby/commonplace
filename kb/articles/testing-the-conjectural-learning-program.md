@@ -23,15 +23,16 @@ source_notes:
 
 We are only starting to build
 [conjectural learners](./conjectural-learning-with-fixed-models.md), so the
-first testing goal should be modest. We do not yet need to show that such
-systems can learn broadly or indefinitely. We first need to show that
-retained revisions actually cause later improvement.
+first testing goal should be modest. Before asking whether such systems can
+learn broadly or indefinitely, we need to show that retained revisions cause
+later improvement at all.
 
 ## What we need to show
 
 A system has learned only if experience produces a durable change in
-retained state that affects later capacity. The lead article gives the
-causal structure:
+retained state that affects later capacity. Writing notes, reflections, or
+revised rules is not learning until the retained revision changes later
+work. The lead article gives the causal structure:
 
 > K(t) → conjecture and criticism → K(t+1) → different later behaviour
 
@@ -43,9 +44,6 @@ Model weights are held fixed. That is what makes the tests below clean:
 apart from the context of a single run, the retained state is the only place
 the learning can live, so
 [an intervention on it isolates its causal contribution](../notes/retained-theory-intervention-isolates-one-explicit-surface.md).
-
-Writing notes, reflections, or revised rules is not enough. The retained
-revision must matter later.
 
 ## First tests
 
@@ -69,9 +67,6 @@ tests include:
 - **revision** — can later evidence change retained knowledge when it turns
   out to be wrong?
 
-These tests are more informative than measuring whether the system solved
-the task.
-
 ## Separate task success from learning
 
 A system can solve a task without learning anything. It can also learn
@@ -80,9 +75,8 @@ faithfully apply a bad rule: showing that a theory was formulated,
 criticized, revised, and used
 [does not by itself establish improved capacity](../notes/a-complete-theory-path-does-not-establish-improved-capacity.md).
 
-We should therefore distinguish current task performance from the change in
-future capacity caused by retained knowledge. The second is the central
-quantity for testing learning.
+The quantity to measure is therefore not current task performance but the
+change in future capacity caused by retained knowledge.
 
 ## Start with controlled task families
 
@@ -98,7 +92,7 @@ possible. A simple pattern is:
 
 The answers in the task family are fixed outside the system before the run.
 The system's approval of its own revision is not the outcome; the
-[external outcome](../notes/definitions/externally-tested-theory-builder.md)
+[externally fixed answer](../notes/definitions/externally-tested-theory-builder.md)
 is.
 
 People will be inside the early experiments. Their contributions are
@@ -106,15 +100,12 @@ recorded and not credited to computation. In particular, a revision written
 by the operator tests whether retained knowledge is used, not whether the
 system learned.
 
-This lets us test whether later improvement is actually mediated by the
-retained state.
-
 ## Then test accumulation
 
-Single-step learning is only the beginning. A useful learner must eventually
-accumulate many revisions without becoming incoherent, overfitting to recent
-cases, or retaining obsolete knowledge. Long-horizon tests will therefore
-matter, but only after the basic causal mechanism is established.
+A useful learner must eventually accumulate many revisions without becoming
+incoherent, overfitting to recent cases, or retaining obsolete knowledge.
+Long-horizon tests will therefore matter, but only after the basic causal
+mechanism is established.
 
 ## The hypotheses
 
