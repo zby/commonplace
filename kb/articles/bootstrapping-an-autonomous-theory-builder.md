@@ -34,12 +34,12 @@ criticizing results, interpreting evidence, approving changes, or supplying
 missing capabilities. We do not need to decide in advance which functions
 must already be automated.
 
-This works only while the operator keeps contributing, which requires a
+This works only while the operator keeps contributing. That requires a
 system people want to use, so that the judgments they supply are part of
 work they would do anyway. Commonplace is built to be such a system: its operator builds and uses
 the knowledge base for their own work, and
 [that use is the initial selection environment](../notes/system-use-selects-theory-fit-without-a-fixed-oracle.md)
-where no fixed oracle exists.
+where no fixed test of a theory's fit yet exists.
 
 What matters is that successful learning leaves durable changes in the
 system rather than remaining in the operator's head. In Commonplace those
@@ -109,8 +109,8 @@ still missing.
 
 ## The bootstrap
 
-Commonplace is therefore an environment in which human-assisted learning is
-retained, is applied reflectively to the learning process, is turned into
+Commonplace is therefore an environment in which what operator and
+machinery learn together is retained, is applied reflectively to the learning process, is turned into
 new executable machinery, and moves function by function from the operator
 to that machinery. The aim is to use that process to build the capabilities
 required for fully automated learning.
