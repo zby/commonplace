@@ -5,14 +5,18 @@ type: ../types/theory-proposal.md
 
 # Revise the behavioral-authority decomposition
 
+**What adoption would add.** An applicability account for authority paths (the target a path acts on and the condition under which its force activates), stage vocabulary for composed paths (entrance, selection, assembly, consumption, recovery), a force taxonomy that separates force from its delivery mechanism if the survey supports that split, and named boundaries between behavioral authority and five neighboring accounts: authorization and admission, epistemic warrant, provenance and attestation, realization, and dependency closure.
+
+**What adoption would change.** The [behavioral authority](../definitions/behavioral-authority.md) definition; [axes of artifact analysis](../axes-of-artifact-analysis.md), which now treats scope as local metadata outside the authority triple; [a consumption channel delivers force without the history that earned it](../a-consumption-channel-delivers-force-without-the-history-that.md), which would be re-grounded on the revised vocabulary; and, if force values change, the controlled `behavioral_authority` values in the [agentic-system analysis result type](../../types/agentic-system-analysis-result.md) and the comparison-matrix parser that reads them.
+
 The [behavioral authority](../definitions/behavioral-authority.md) definition's core claim — authority attaches to a consumption path, not to bytes — is sound and heavily load-bearing. Its subdivisions are not equally developed: the consumer, channel, and force lists were enumerated rather than derived, and use has exposed three internal misfits. The same cases also exposed neighboring questions about authorization, epistemic warrant, provenance, realization, and dependency closure. This proposal owns the structure of effective artifact consumption, not a general governance or evidence record. A literature survey remains the first gate: [a carve that inherits a tested ontology is in a better position than one chosen freely](../derivation-and-inheritance-give-starting-warrant-earns-scope.md), as the reflective-system definition demonstrated with Maes and Smith.
 
-## Current state (as of 2026-08-04)
+## Current state (as of 2026-09-22)
 
 - The definition records three components: consumer, channel, force, each as a flat example list. Two clarifications were adopted directly as uncontested: authority paths compose (one consumer's act is the next path's channel), and placement within a channel is part of effective force.
-- Dozens of library and workshop files link directly to the definition. Separately, 158 agent-memory review artifacts carry controlled behavioral-authority leads, and the generated comparison matrix currently contains 152 code-grounded rows. The review type and matrix parser make changes to that controlled vocabulary an operative migration, not only a citation update.
+- Dozens of library and workshop files link directly to the definition. The [agentic-system analysis result type](../../types/agentic-system-analysis-result.md) declares `behavioral_authority` as a controlled axis, and the comparison-matrix parser (`src/commonplace/lib/systems_matrix.py`) reads it from the seven retained analysis results, so a change to the force values is an operative migration, not only a citation update. About 160 legacy agent-memory reviews also carry behavioral-authority leads; their collection keeps them as historical records, so they are cited rather than migrated.
 - [Lineage](../definitions/lineage.md) is already an independent artifact-analysis field. It records review-relevant source dependencies and derivation status rather than every production or admission event. The four-field risk account locates security in the behavioral-authority-plus-lineage conjunction without making lineage part of behavioral authority.
-- The authority-failure note is live and builds the contrast between force a channel delivers and force the artifact earned entirely in prose. No general record binds an authorization event to the exact content version, role, scope, and use that a channel would need to check. Such a record would preserve history; it would not itself authorize the event, establish that the content is good, or prove that a consumer checked it.
+- The [authority-failure note](../a-consumption-channel-delivers-force-without-the-history-that.md) is live and builds the contrast between force a channel delivers and force the artifact earned entirely in prose. No general record binds an authorization event to the exact content version, role, scope, and use that a channel would need to check. Such a record would preserve history; it would not itself authorize the event, establish that the content is good, or prove that a consumer checked it.
 - [Axes of artifact analysis](../axes-of-artifact-analysis.md) already records scope as local consumption-path metadata outside the authority triple, so the proposal must decide whether to promote that existing qualifier or change the record itself.
 - A [six-path Commonplace audit](../evidence/six-commonplace-paths-establish-broad-addressability-not-completeness.md) found that consumer, channel, and force can stay constant while the target cohort or activation trigger changes. Its explanatory-reach and tag-validator cases require applicability to identify the authority path, but do not decide whether applicability is a fourth component or a required qualifier. The same audit separates authorization and admission, runtime realization, and dependency closure from behavioral authority itself.
 
@@ -84,7 +88,7 @@ Reuse the existing captured and ingested W3C PROV and in-toto material before ne
 
 ## Forces
 
-- **Migration surface**: authority and lineage are required controlled leads in the agent-memory review type and feed a generated matrix. Changing their controlled values is an operative parser migration; making applicability required re-opens every existing record. Cited from [use tests a decomposition locally](../use-tests-a-decomposition-locally-rationale-makes-transfer-testable.md): the current record's local success does not license it, but replacement must price the evidence already built on it.
+- **Migration surface**: authority and lineage are controlled axes in the analysis result type and feed the generated matrix. Changing their controlled values is an operative parser migration; making applicability required re-opens every retained result. Cited from [use tests a decomposition locally](../use-tests-a-decomposition-locally-rationale-makes-transfer-testable.md): the current record's local success does not license it, but replacement must price the evidence already built on it.
 - **Separation cost**: one use may require an authority record plus authorization, warrant, provenance, realization, and dependency evidence. Keeping the jobs separate increases coordination cost, but merging them creates false entailments exactly where the audit found gaps.
 - **Evidence is not enforcement**: provenance can support an authorization decision but cannot grant force, prove truth, or make a path check it. Any separate admission design must name the policy and consumer that turn retained history into a gate; otherwise richer lineage improves audit only.
 - **Ontology warrant**: a freely chosen replacement carve is no better warranted than the freely chosen current one; the survey exists to make the revision derived or inherited rather than a second free choice ([rationale](../derivation-and-inheritance-give-starting-warrant-earns-scope.md)).
@@ -94,11 +98,17 @@ Reuse the existing captured and ingested W3C PROV and in-toto material before ne
 
 ## Operativity and warrant
 
-A revised definition is consumed by review authors and note writers through the definition-lookup channel with authoring-instruction force. The agent-memory review type and template already require controlled behavioral-authority leads, and the matrix parser consumes them mechanically; changes to their vocabulary become operative through those surfaces. Existing review records are the migration surface.
+A revised definition is consumed by analysis authors and note writers through the definition-lookup channel with authoring-instruction force. The analysis result type requires controlled behavioral-authority values, and the matrix parser consumes them mechanically; changes to that vocabulary become operative through those surfaces. Retained analysis results are the migration surface.
 
 Naming the neighboring records prevents readers from treating effective force as proof of legitimate admission, good reasons, actual execution, or complete propagation. It adds no general authorization, provenance, realization, or dependency consumer. Those mechanisms remain YAGNI until a separate design names a concrete consumer and consequence.
 
 No option adds automated evaluation. Human review of the definition remains the adoption oracle. A future mechanical admission check could establish that retained values match an authorization policy for exact content identity, version, role, and applicability. Its warrant would stop at that equality relation: it would not establish the authorization record's authenticity, the issuer's entitlement, or the substantive quality of the approved content.
+
+## Trigger and cost
+
+The trigger is a claim the KB cannot state with the current definition. Two are already on record: the six-path audit cannot say which of two same-triple paths is being assessed without applicability, and the authority-failure note had to invent entrance-side and consuming-side vocabulary for its countermeasures. A third case of either kind, or the survey completing, is the point to decide.
+
+Adoption commits the KB to maintaining a larger definition that every artifact analysis loads, to a parser and result-type migration if force values change, and to keeping five neighboring accounts distinct in prose that currently runs them together.
 
 ## Adoption criteria
 
@@ -107,7 +117,7 @@ No option adds automated evaluation. Human review of the definition remains the 
 - The chosen account states whether applicability is part of the local record or a required predicate over an individuated path, and it distinguishes both target from activation condition.
 - Any inherited force taxonomy passes the cross-product test against interpretive, mechanical, and parametric delivery or consumption mechanisms instead of treating correlated families as one axis.
 - The chosen decomposition re-derives the current consumer/channel/force lists as instances rather than discarding them.
-- The migration path for existing review records is stated and priced before any record-shape option is adopted.
+- The migration path for retained analysis results and the controlled vocabulary is stated and priced before any record-shape option is adopted.
 - The authority-failure note can be re-grounded on the revised vocabulary without losing any of its three moves (unification, gate-bypass separation, countermeasures-as-one-operation).
 - The chosen account distinguishes the audit's trait-scoped gate and type/trigger-scoped validator paths without conflating applicability with authorization, runtime realization, or dependency closure.
 - Any concrete provenance, admission, execution-attestation, or dependency mechanism is routed to its own proposal with a named consumer rather than smuggled into this vocabulary revision.
