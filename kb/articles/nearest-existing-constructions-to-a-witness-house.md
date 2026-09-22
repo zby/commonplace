@@ -1,5 +1,5 @@
 ---
-description: "Survey: eighteen existing self-improving agent systems sorted by how what they retain is admitted; the parts of a conjectural learner have precedents, but in the reviewed evidence none tests its mechanism"
+description: "Survey of eighteen systems: reported gains from retained knowledge and revised skills, evidence of formulated criticism, human-assisted bootstraps, and the experiments needed to establish autonomous conjectural learning"
 type: kb/articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
@@ -14,49 +14,86 @@ source_notes:
 
 # How existing self-improving systems relate to conjectural learning
 
-> **Draft, work in progress.** This survey is being realigned with the
-> series that starts with
-> [Conjectural Learning with Today's LLMs](./conjectural-learning-with-fixed-models.md).
-> Which systems belong here and how each is placed may change. Comments,
-> corrections, and additional candidates are welcome on
+> **Draft.** The claims, system selection, and comparisons may change.
+> Comments, corrections, and additional candidates are welcome on
 > [the repository's GitHub Discussions page](https://github.com/zby/commonplace/discussions).
 
-Existing self-improving agent systems supply the parts of a conjectural
-learner: retained notes and code, scheduled revision, gates that can reject a
-change, and rollback with failure evidence. In the evidence reviewed here,
-none of eighteen systems tests its mechanism. The mechanism has two halves: a
-retained explanation guides a later decision on a case it did not state, and
-criticism of what the explanation says improves later decisions. What the
-reviewed systems retain is admitted by a score, an oracle, a held-out gate, or
-a critic, which judge an outcome, or by people, who supply the rationale
-themselves. None of them tests the first half, so none tests the second.
+Existing self-improving systems already report gains from retained knowledge
+and revised skills. They also supply mechanisms for diagnosis, criticism,
+revision, and reuse. The question for
+[our conjectural-learning program](./conjectural-learning-with-fixed-models.md)
+is how these mechanisms contribute to the gains: does criticism of a
+formulated theory improve later decisions, and can the whole process run
+without people performing its internal roles?
 
-Some systems were inspected in code; others are known only from papers or
-practitioner reports, and no reported outcome was reproduced here. The finding
-is about the reviewed evidence, not about what these systems could do.
+This survey compares eighteen systems through retained code reviews, papers,
+and practitioner reports. No reported outcome was reproduced here. The
+comparisons identify what each precedent contributes and which experiments
+would resolve the remaining questions.
+
+## Two precedents already test improvement
+
+**Knowledge-Centric Self-Improvement** keeps the solver machinery fixed while
+agents contribute experience to a shared knowledge base: "The only object that
+changes is the curated knowledge base."
+([Knowledge-Centric Self-Improvement](../sources/knowledge-centric-self-improvement-2607.19592.ingest.md),
+verbatim). Agents formulate claims in task forums, support or challenge them
+with evidence, discuss which observations generalize across tasks, and distill
+the results for later agents. Its protocol therefore includes criticism of
+claims as well as benchmark evaluation.
+
+The paper freezes a learned knowledge bundle and transfers it to unseen tasks,
+using a task-conditioned adapter to prepare a memo for each recipient. It
+reports improved zero-shot performance on Polyglot and ARC-AGI-1. This tests
+the value of the retained bundle beyond the tasks that produced it. A further
+comparison would isolate what the criticism contributed to that bundle's
+value.
+
+**Memento-Skills** retains skills containing instructions and code. Its
+comparison removes several parts of skill improvement together: "no failure
+attribution, no skill rewriting, and no skill discovery"
+([Memento-Skills](../sources/memento-skills-let-agents-design-agents.ingest.md),
+verbatim). The full system reports 66.0% accuracy on the unseen GAIA test set,
+against 52.3% for this ablation. That is evidence for the combined improvement
+pipeline; separating failure attribution from rewriting and discovery would
+test the contribution of diagnosis. The system also trains a skill router,
+so its fixed solver weights do not make every component fixed-weight.
+
+Both precedents address parts of the program's first testing goal: retained
+changes improving later performance. Their remaining mechanism questions
+call for narrower comparisons within the successful pipelines.
 
 ## What the comparison asks
 
-[Conjectural learning](../notes/definitions/conjectural-learning.md) needs
-four things of a system. A formulated theory is
+[Conjectural learning](../notes/definitions/conjectural-learning.md) requires
+a formulated theory to be
 [operative](../notes/definitions/operative-change.md): a difference in what it
-says changes a decision. Criticism addresses what the theory says, not only
-whether an outcome passed. The result is retained and stays revisable. And,
-for the automation bet, the loop continues with fixed model weights and no
-person in an internal role.
+says changes a decision. Criticism of what the theory says must improve the
+system's capacity for future action. The effect can persist in a retained
+theory or in criticisms from which the theory is reconstructed.
 
-The second condition is where most systems fall away. A gate that rejects a
-change by its score has judged an outcome; it has not criticized an
-explanation. Writing a note, a skill, or a patch after a failure does not by
-itself show that the note did anything later, and
-[a complete path from theory to use does not establish improved capacity](../notes/a-complete-theory-path-does-not-establish-improved-capacity.md).
+We therefore distinguish how a revision is produced from how it is accepted.
+A system may diagnose a mistaken assumption, revise the theory, and use an
+outcome gate to accept the revision. Testing a stated consequence can itself
+be criticism. The gate alone tells us little about whether the preceding
+process criticized a theory or simply generated another variant. Conversely,
+[observing the whole theory-to-use path does not establish improved capacity](../notes/a-complete-theory-path-does-not-establish-improved-capacity.md);
+that needs an outcome comparison.
+
+The program adds distinct questions to this learning test. Can all internal
+roles run computationally with fixed model weights? Does the learned revision
+transfer to new cases? Does retaining the assembled theory save work compared
+with reconstructing it from the same evidence? A human-assisted system may
+provide evidence of learning before it provides evidence of autonomy, as the
+[bootstrap supplement](./bootstrapping-an-autonomous-theory-builder.md)
+proposes for Commonplace.
 
 ## Where the reviewed systems stand
 
-**People supply the rationale and settle revisions.** These are working
-products, and their reports are the best evidence that retained knowledge
-changes later work. They do not test automation, because the diagnosis is
-human.
+**Human-assisted learning and machinery development.** These systems show
+how people and agents retain knowledge and change their working machinery.
+They are precedents for a bootstrap whose learning system includes the
+operator. Their reports also identify internal roles that remain human.
 
 - [Fluent](../sources/fluent-self-improving-software-factory-2081823472016335059.ingest.md)
   retains product code, expertise, scheduling, rejection, and reuse; people
@@ -83,11 +120,11 @@ human.
   shows retained theory guiding computational search with the operator
   selecting what fit, without ablation. Models are not reliably pinned.
 
-**A score, an oracle, a held-out gate, or a critic admits what is
-retained.** These loops run without people inside and with weights mostly
-fixed, so they are the nearest to the automation bet. What they retain is
-selected by outcome, and no reviewed run isolates whether a retained item
-guided a later decision.
+**Automated revision, selection, and reuse.** These systems automate parts of
+the path from experience to later behavior. The entries distinguish the
+retained change from the mechanism that selects or consumes it. Establishing
+conjectural learning additionally requires tracing a formulated theory and
+its criticism through that path.
 
 - The Darwin Gödel Machine evolves coding agents around frozen models; a
   fixed diagnostician suggests improvements from the parent's logs, and
@@ -99,12 +136,6 @@ guided a later decision.
 - The [Huxley-Gödel Machine](../sources/huxley-godel-machine-human-level-coding-agent-development.ingest.md)
   replaces score with descendant productivity for parent selection, and
   reports that immediate score predicts it poorly.
-- Memento-Skills learns skills mixing instructions and code under answer
-  oracles, and also trains a router, so not all weights stay fixed. Its
-  ablation leaves "no failure attribution, no skill rewriting, and no skill
-  discovery"
-  ([Memento-Skills](../sources/memento-skills-let-agents-design-agents.ingest.md),
-  verbatim).
 - Recuris proposes memory patches from traces and decides each through a
   deterministic paired held-out gate, with the memory coordinates supplied
   in advance: "The memory only grows, and it can afford to."
@@ -118,21 +149,17 @@ guided a later decision.
   curates notes from solver traces into later prompts; the curator prompt is
   the only gate.
 - [Voyager](../agent-memory-systems/reviews/voyager.md) admits executable
-  skills on a critic's success report and overwrites a same-named program
-  rather than revising it.
-- Knowledge-Centric Self-Improvement holds software and solver fixed under a
-  benchmark oracle: "The only object that changes is the curated knowledge
-  base."
-  ([Knowledge-Centric Self-Improvement](../sources/knowledge-centric-self-improvement-2607.19592.ingest.md),
-  verbatim)
+  skills on a critic's success report. Retained skills supply both prompt
+  context and executable code for later tasks.
+- [HyperAgents](../agent-memory-systems/reviews/hyperagents.md) evaluates
+  generated patches and replays selected parent lineages into later
+  generations. The replayed code changes future execution; the reviewed
+  patches do not carry an explanation of why they worked.
 
-**Changes are versioned or replayed without a content gate or a trigger.**
-These supply the persistence and rollback machinery and show what it does
-not guarantee.
+**Machinery for self-modification and recovery.** These systems make changes
+persistent and recoverable, with different limits on what starts or selects
+an improvement.
 
-- [HyperAgents](../agent-memory-systems/reviews/hyperagents.md) replays
-  patch lineages into the next generation; its retained memory is executable
-  and carries no explanation.
 - [Autogenesis](../agentic-systems/reviews/autogenesis.md) can write to many
   forms, but its selection is weaker than its versioning, and public
   implementations are incomplete.
@@ -151,14 +178,23 @@ selects adaptation strategies from a causal model of a running system whose
 vocabulary, goals, and strategies are fixed and supplied. It is a mechanism
 comparison for retained causal models, not a case of learning one.
 
-## What would change the picture
+## The next comparisons
 
-One reviewed run in which withholding or perturbing a retained explanation
-changes a later decision on a case the explanation did not state, and in
-which criticism of that explanation's content, not its score, improves the
-decisions after it. Stronger still, a matched comparison of the retained
-explanation against retained records of the same observations, so that the
-explanation's contribution beyond the records is measured. The
-[testing supplement](./testing-the-conjectural-learning-program.md) states
-these as the first experiments. None of the systems here reports one, and
-that, not any verdict on the systems, is the survey's finding.
+For the knowledge and skill pipelines, vary the formulated criticism while
+keeping the underlying observations and evaluation conditions comparable.
+Then withhold or perturb a retained theory to test how its content affects
+later decisions. This connects two questions that a pipeline-level ablation
+leaves together: what produced the useful revision, and how the revision
+contributed to later improvement.
+
+For the human-assisted systems, record which internal roles people perform
+and test computational replacements under matched demands. For the
+self-modification systems, follow one proposed improvement from its diagnosis
+through selection to later use and measured benefit. These comparisons serve
+the same program at different stages of automation.
+
+Finally, compare retaining an assembled theory with reconstructing it from
+the same episode evidence, counting both cost and decision quality. This
+tests the program's retention advantage; either arrangement may learn. The
+[testing supplement](./testing-the-conjectural-learning-program.md) develops
+these comparisons into controlled task-family experiments.

@@ -8,9 +8,10 @@ source_notes:
   - kb/notes/definitions/operative-change.md
   - kb/notes/definitions/externally-tested-theory-builder.md
   - kb/notes/definitions/actionable-methodology.md
+  - kb/notes/definitions/theory-builder.md
+  - kb/notes/definitions/reflective-theory-builder.md
   - kb/notes/a-complete-theory-path-does-not-establish-improved-capacity.md
   - kb/notes/retained-theory-intervention-isolates-one-explicit-surface.md
-  - kb/notes/retained-theories-may-improve-sample-efficiency.md
   - kb/notes/a-claim-without-external-assessment-carries-three-obligations.md
   - kb/notes/commonplace-studies-conjectural-learning-through-retained-theories.md
 ---
@@ -40,10 +41,11 @@ where K is the retained tentative knowledge. The middle step is what makes
 this conjectural learning rather than caching: the new retained state is a
 theory that was proposed and criticized, not a stored answer.
 
-Model weights are held fixed. That is what makes the tests below clean:
-apart from the context of a single run, the retained state is the only place
-the learning can live, so
-[an intervention on it isolates its causal contribution](../notes/retained-theory-intervention-isolates-one-explicit-surface.md).
+Model weights are held fixed, ruling out weight updates as the source of
+improvement. To identify the contribution of a retained revision, we must
+also specify which other state stays fixed.
+[An intervention isolates the contribution of the state it varies](../notes/retained-theory-intervention-isolates-one-explicit-surface.md);
+other records, code, or people may still carry the lesson.
 
 ## First tests
 
@@ -58,9 +60,10 @@ tests include:
   [operative](../notes/definitions/operative-change.md).
 - **perturbation** — does replacing it with a wrong alternative change
   behaviour in the predicted direction?
-- **reconstruction** — does the retained revision beat re-deriving it from
-  the episode records each time? This is the
-  [efficiency conjecture](../notes/retained-theories-may-improve-sample-efficiency.md)
+- **reconstruction** — does retaining the revision reduce total cost at
+  comparable decision quality relative to re-deriving it from the episode
+  records each time? This is the
+  [efficiency conjecture](../notes/commonplace-studies-conjectural-learning-through-retained-theories.md#three-conjectures)
   in testable form.
 - **transfer** — does the revision help on new cases rather than only
   replaying the original one?
@@ -86,19 +89,31 @@ possible. A simple pattern is:
 1. give the system a family of tasks with some learnable regularity;
 2. let it encounter failures and retain its own revisions;
 3. test it on fresh instances;
-4. compare normal retained knowledge with withheld, reset, or corrupted
-   versions, keeping the episode records available so the reconstruction
-   control can re-derive from them.
+4. compare the revised state with the pre-learning state on matched fresh
+   instances to test whether the experience improved later capacity.
+
+Then withhold or perturb a particular retained revision to test its
+contribution. Separately, compare retaining the assembled theory with
+reconstructing it from the same episode records. Equal performance at
+comparable total cost can show that explicit retention offers no advantage
+under those conditions, even though both systems learned. Count the costs
+of acquiring, maintaining, reconstructing, and using the knowledge.
+
+For each comparison, name the state being varied and hold the remaining
+model, tools, evidence, task conditions, and resource limits fixed. Repeat
+the comparison across tasks and runs to distinguish an effect from sampling
+variation.
 
 The answers in the task family are fixed outside the system before the run.
 The system's approval of its own revision is not the outcome; the
 [externally fixed answer](../notes/definitions/externally-tested-theory-builder.md)
 is.
 
-People will be inside the early experiments. Their contributions are
-recorded and not credited to computation. In particular, a revision written
-by the operator tests whether retained knowledge is used, not whether the
-system learned.
+People will be inside the early experiments. Declare whether the assessed
+learning system includes them, and record their contributions separately
+from computational work. An operator-written revision can contribute to
+learning by the combined human–computational system, but does not establish
+autonomous acquisition by its computational components.
 
 ## Then test accumulation
 
@@ -111,9 +126,15 @@ mechanism is established.
 
 The first tests are component tests. They do not substitute for the three
 whole-program hypotheses the program adopted on 2026-09-17, quoted here as
-adopted. "Currently public" means available as of that date; "training"
-means retained changes to the builder's instructions, knowledge, tools, and
-orchestration, not changes to model weights.
+adopted.
+
+A [builder](../notes/definitions/theory-builder.md) is the persistent
+system responsible for developing and revising theories. Its **seed** is its
+starting knowledge and machinery; a frozen seed retains that starting state.
+An **extension** is a retained machinery change that demonstrates a
+capability gain over the seed. "Currently public" means available as of that
+date; "training" means retained changes to the builder's instructions,
+knowledge, tools, and orchestration, not changes to model weights.
 
 > **Sufficiency hypothesis.** A training methodology expressed in
 > natural-language and symbolic form is
@@ -126,9 +147,10 @@ orchestration, not changes to model weights.
 > assessment protocol. An area is a consuming project's domain with an
 > interface that can be declared and observed.
 
-Refuted by a builder that reaches the target only with a person in an
-internal role, or only after a new learning method is designed for an area,
-or that fails to reach it.
+A builder that requires a person in an internal role, requires a new
+learning method for an area, or fails to reach the target counts against
+the sufficiency of the tested methodology under the declared conditions.
+Such a result does not rule out other methodologies.
 
 > **Comparative hypothesis.** Under matched demands and declared resources,
 > this methodology produces useful capability gains over the frozen seed
@@ -143,6 +165,15 @@ does as well at comparable cost, or in which the human-staffed builder
 exceeds the preset margin. The reconstruction test above is this control at
 component scale.
 
+A **self-theory** is the builder's theory of how its own theory-building
+machinery works. For example, it might assume that searching a note's title
+is enough to retrieve relevant knowledge. Missed notes could prompt it to
+revise that assumption and make retrieval search descriptions too, then
+test whether the change improves later work. This illustrates
+[reflection](../notes/definitions/reflective-theory-builder.md): criticism
+of the self-theory guides a machinery change whose results can further
+correct the self-theory.
+
 > **Reflection hypothesis.** A builder whose machinery changes pass through
 > a causally connected self-theory acquires extensions that a matched
 > builder without one does not, under the same demands, budget, and
@@ -150,9 +181,10 @@ component scale.
 > the records of a reflective episode and a matched builder that retains
 > content without a self-theory do.
 
-Refuted by a matched builder without a self-theory that acquires the same
-extensions, or by reflective episodes whose records show the machinery
-changes did not pass through the self-theory.
+The predicted advantage is absent if a matched builder without a self-theory
+acquires the same extensions. If records instead show that machinery changes
+bypassed the self-theory, the episode did not implement the reflection being
+tested; it cannot establish whether that mechanism adds a benefit.
 
 No run has been performed. Our first goal is simpler than any of the three:
 
