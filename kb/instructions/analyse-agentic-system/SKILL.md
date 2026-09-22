@@ -389,6 +389,10 @@ action, whether the system is reflective, and whether it is self-improving at
 the declared boundary. Give each property its own evidence status. They are
 independent properties, not a grade or a ladder.
 
+For learning and self-improvement findings, lead with the strongest supported
+contribution, including partial results, then state the unresolved question.
+Keep each result at the level of the comparison actually performed.
+
 ### 7. Write and validate the exact result
 
 Write `<run-id>/result.md` using

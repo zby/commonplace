@@ -316,6 +316,8 @@ The lens sections annotate canonical IDs. They do not reproduce the shared inven
 
 `## Bounded synthesis` gives the evidence basis and boundary, architectural characterization and claimed work, runtime map, only the discriminating mechanisms this target needs, scenario-relative assessment, and concrete evidence or system changes that would alter the assessment. Where the runtime account supports it, the synthesis states separately whether criticism of an operative formulated theory improved the system's capacity for future action, whether the system is reflective, and whether it is self-improving at the declared boundary, each at its own evidence status; these are three independent properties, not a grade or a ladder. It is organized around the system's operational progression, not as concatenated lens reports. It gives no product ranking, generic adoption advice, system-wide epistemic grade, Commonplace delta, or transfer recommendation.
 
+For learning and self-improvement findings, the synthesis leads with the strongest supported contribution, including partial results, then states the unresolved question. Each result stays at the level of the comparison actually performed.
+
 ### Limitations
 
 `## Limitations` contains one row per limitation:
