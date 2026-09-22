@@ -20,6 +20,7 @@ Current retained sets:
 - [Codex ingest-session tool-result volume audit](./codex-ingest-session-tool-result-volume-20260831/README.md)
 - [Agentic-system analysis operability replay](./agentic-system-analysis-operability-replay-20260903/README.md)
 - [Theory-builder boundary cases assessed by deployment evidence](./theory-builder-boundary-cases-20260917.md)
+- [Ingest-simplification learning episode](./learning-episodes/2026-09-17-ingest-simplification.md) — operator-identified application of retained delegation methodology, implemented changes, and unresolved effects.
 
 Promote transferable conclusions to the appropriate library collection, but
 keep the report here when a later reader still needs the exact record behind
