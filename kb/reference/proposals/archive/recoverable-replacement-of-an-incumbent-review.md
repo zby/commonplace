@@ -1,13 +1,13 @@
 ---
 description: "Proposal: decide what a failed agent-memory review replacement owes the incumbent it already archived, once the run has passed the point where it can still decline to start"
-type: ../types/design-proposal.md
+type: ../../types/design-proposal.md
 tags: [architecture, lifecycle-management]
 ---
 
 # Recoverable replacement of an incumbent review
 
 The legacy writer discussed below has been retired. Its links name the frozen
-historical implementation. The current [main analysis](../../instructions/analyse-agentic-system/SKILL.md)
+historical implementation. The current [main analysis](../../../instructions/analyse-agentic-system/SKILL.md)
 uses a memory specialist report and validates a candidate before replacement;
 it does not invoke the archived-first writer. The remaining design questions
 below require reassessment against that current workflow.
@@ -24,8 +24,8 @@ This proposal parks the remaining question: what restore obligation a replacemen
 - Step 9 delegates drafting. Steps 12 and 13 run taxonomy and semantic quality assurance, either of which can reject the draft. All three sit after the archive.
 - No step restores the incumbent. The skill has no inverse for the rename or for the three content edits that accompany it.
 - A same-day rerun is handled — the archive target takes a numeric suffix rather than overwriting — so repeated failures accumulate archived copies rather than destroying earlier ones.
-- The [commissioning-surface audit](../../reports/retained/planning-delegation-theory/shared-doctrine-operationalization/commissioning-surface-audit.md) recorded this cohort as *defer*, stating that the fix needs a checked candidate/promotion or exact-restore protocol including staged rename recovery, and that removing duplicated packet text would not address it.
-- [`cp-skill-write-multistage`](../../instructions/cp-skill-write-multistage/SKILL.md) already runs the opposite ordering for a comparable job: workers write isolated candidate files, acceptance binds an exact digest, the parent alone mutates the live target, promotion stops when the live target has drifted, and the run is retained for recovery rather than discarded.
+- The [commissioning-surface audit](../../../reports/retained/planning-delegation-theory/shared-doctrine-operationalization/commissioning-surface-audit.md) recorded this cohort as *defer*, stating that the fix needs a checked candidate/promotion or exact-restore protocol including staged rename recovery, and that removing duplicated packet text would not address it.
+- [`cp-skill-write-multistage`](../../../instructions/cp-skill-write-multistage/SKILL.md) already runs the opposite ordering for a comparable job: workers write isolated candidate files, acceptance binds an exact digest, the parent alone mutates the live target, promotion stops when the live target has drifted, and the run is retained for recovery rather than discarded.
 
 ## Problem
 
