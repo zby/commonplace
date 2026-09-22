@@ -286,6 +286,7 @@ plugins:
         'reference/proposals/report-owned-resolution-for-asynchronous-full-pass-dispositions.md': 'reference/adr/051-full-pass-packets-own-guarded-captures-and-resolutions.md'
         'reference/proposals/review-budget-enforcement-is-separable.md': 'reference/adr/082-grounding-is-bounded-on-the-artifact-by-unquoted-sources.md'
         'reference/proposals/review-link-budget-prices-reviewer-attention.md': 'reference/adr/082-grounding-is-bounded-on-the-artifact-by-unquoted-sources.md'
+        'reference/proposals/revise-behavioral-authority-decomposition.md': 'notes/proposals/revise-behavioral-authority-decomposition.md'
         'reference/proposals/source-claim-grounding-skill-and-evidence-retention.md': 'reference/proposals/archive/source-claim-grounding-skill-and-evidence-retention.md'
         'reference/proposals/source-genre-is-one-open-field-on-the-snapshot.md': 'reference/proposals/archive/source-genre-is-one-open-field-on-the-snapshot.md'
         'reference/proposals/user-level-uv-tool-installation-for-commonplace-commands.md': 'reference/proposals/archive/user-level-uv-tool-installation-for-commonplace-commands.md'

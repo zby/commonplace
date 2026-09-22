@@ -38,7 +38,7 @@ The file places several mechanical checks at different stages of paid ARC action
 
 ## Connections Found
 
-This file is a bounded implementation anchor for [behavioral authority](../notes/definitions/behavioral-authority.md): one execution surface gives applicability, path position, and consequence separate work to do. Per-step prediction syntax applies before batch execution, solve-plan freshness applies at plan entrance, and prediction grading acts after each paid step with surprise and suffix-truncation consequences rather than rollback. The case therefore reinforces the [six-path applicability audit](../notes/evidence/six-commonplace-paths-establish-broad-addressability-not-completeness.md) and supplies the [behavioral-authority decomposition proposal](../reference/proposals/revise-behavioral-authority-decomposition.md) with a worked external case, without selecting an ontology or establishing that the proposed dimensions are complete.
+This file is a bounded implementation anchor for [behavioral authority](../notes/definitions/behavioral-authority.md): one execution surface gives applicability, path position, and consequence separate work to do. Per-step prediction syntax applies before batch execution, solve-plan freshness applies at plan entrance, and prediction grading acts after each paid step with surprise and suffix-truncation consequences rather than rollback. The case therefore reinforces the [six-path applicability audit](../notes/evidence/six-commonplace-paths-establish-broad-addressability-not-completeness.md) and supplies the [behavioral-authority decomposition proposal](../notes/proposals/revise-behavioral-authority-decomposition.md) with a worked external case, without selecting an ontology or establishing that the proposed dimensions are complete.
 
 ## Extractable Value
 
@@ -49,7 +49,7 @@ This file is a bounded implementation anchor for [behavioral authority](../notes
 
 ## Limitations (our opinion)
 
-The capture contains the complete pinned file, but not the imported broker, prediction, rules, or persistence implementations, their tests, CLI wiring, or runtime traces. Static reading can establish the control flow expressed here, not that every branch is reachable, that paid actions are journaled exactly as described, or that deployed ARC runs use this revision. It is also one point-in-time implementation owned by the project author, so later commits may change the behavior. Most importantly, one convenient implementation can illustrate distinctions but cannot establish the completeness or best names of the ontology left open by the [decomposition proposal](../reference/proposals/revise-behavioral-authority-decomposition.md).
+The capture contains the complete pinned file, but not the imported broker, prediction, rules, or persistence implementations, their tests, CLI wiring, or runtime traces. Static reading can establish the control flow expressed here, not that every branch is reachable, that paid actions are journaled exactly as described, or that deployed ARC runs use this revision. It is also one point-in-time implementation owned by the project author, so later commits may change the behavior. Most importantly, one convenient implementation can illustrate distinctions but cannot establish the completeness or best names of the ontology left open by the [decomposition proposal](../notes/proposals/revise-behavioral-authority-decomposition.md).
 
 ## Recommended Next Action
 
