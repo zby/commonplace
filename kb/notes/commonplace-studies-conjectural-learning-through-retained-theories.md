@@ -37,6 +37,29 @@ This reduces the up-front specification needed to expose a methodological
 conjecture to failure. Whether the resulting judgments support useful
 improvement remains an empirical question.
 
+Two differences from earlier realizations may explain why this one could get
+further; both are conjectures, not results. First, the seed. Schmidhuber's
+seed improver must contain, in executable form, all the competence the first
+improvement needs, and the general routes to that competence, program
+enumeration and proof search, are expensive; the realizations that ran stayed
+within bounded domains. With an LLM the seed is a delta over pretrained
+competence: it directs what it need not encode. This difference is shared
+with every LLM-era attempt. Second, the start. An improvement to learning
+machinery
+[pays through the later episodes that reuse it](./an-optimal-long-run-learning-strategy-invests-in-its-own-machinery.md),
+and [a bootstrap is the running system itself](./a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md),
+so starting from a working system supplies that stream from the first day,
+with people supplying the functions not yet automated. Any program could in
+principle close its loop with human judgment. Sustaining that requires a
+system people want to use, so that the judgments are part of work they would
+do anyway; Commonplace has this, because its operators build and use the
+knowledge base for their own work, and
+[that use is the initial selection environment](./system-use-selects-theory-fit-without-a-fixed-oracle.md)
+where no fixed oracle exists. The price is warrant. A proof or a reward-rate
+guarantee certified each accepted change in the earlier realizations. Here
+the interpreter's judgments are hidden, and human contributions must be
+recorded rather than credited to computation.
+
 Popper's epistemology organizes this development process: treat the
 methodology's claims as tentative theories, criticize their content, test
 their consequences, and let the resulting problems guide further work
@@ -162,3 +185,6 @@ Relevant Notes:
 - [Conjectural learning](./definitions/conjectural-learning.md) — defined-in: the process studied
 - [Addressable theory](./definitions/addressable-theory.md) — defined-in: the structural property chosen for this research
 - [Retained theories may improve sample efficiency under structured shifts](./retained-theories-may-improve-sample-efficiency.md) — see-also: the separate conjecture about structured shifts
+- [An optimal long-run learning strategy invests in its own machinery](./an-optimal-long-run-learning-strategy-invests-in-its-own-machinery.md) — grounds: why a working system's stream of episodes makes machinery improvements pay from the first day
+- [A hand-crafted bootstrap fits the Bitter Lesson only if learning can outgrow it](./a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md) — grounds: the bootstrap is the running system, with people supplying functions not yet automated
+- [System use selects theory fit without a fixed oracle](./system-use-selects-theory-fit-without-a-fixed-oracle.md) — grounds: use as the selection environment that a system people want to use can sustain
