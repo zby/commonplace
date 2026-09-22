@@ -65,7 +65,7 @@ that run through it, so its return grows with reuse. This is the argument of
 
 ## Let the learner build its machinery
 
-The learning machinery is not only natural language. We do not assume that
+We do not assume that
 sustained self-improvement is possible through natural-language changes
 alone while the surrounding software stays fixed: a new theory may call for
 new tools, experiments, search procedures, or schedulers, and testing
@@ -101,7 +101,7 @@ has moved when computation makes the decision and the change is recorded,
 so that a later reader can see what was transferred and when.
 
 What does not move is recorded too. A person still in the loop is named as
-such, and their contribution is not credited to computation. The residue is
+such, and their contribution is not credited to computation. What remains with the operator is
 informative:
 [transfer leaves people the decisions hardest to warrant](../notes/warranted-transfer-leaves-people-the-hardest-to-warrant-decisions.md),
 so the functions that remain with the operator show where machinery is
