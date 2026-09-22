@@ -29,7 +29,7 @@ states the idea and stands on its own. Each supplement develops one part of
 it, so read the lead first and then whichever supplement answers your next
 question. Nothing in the series reports a result; no test has been run.
 
-- [Conjectural Learning with Fixed Models](./conjectural-learning-with-fixed-models.md) — the lead. It explains conjectural learning and Commonplace's retained-theory arrangement for studying it with fixed model weights. It works through one case, separates the learning definition from addressability and retention choices, and states conjectures about the benefits of supplied content criticism, addressable theory parts, and retention rather than reconstruction. The system that carries the arrangement, the hypotheses that would test it, and the system proposed for the first test appear in outline, each pointing to a supplement.
+- [Conjectural Learning with Today's LLMs](./conjectural-learning-with-fixed-models.md) — the lead. It states the bet: a fully automated conjectural learner, a Popperian cycle of problem, tentative solution, error elimination, and revised problem over explicit revisable theories, can be built with today's fixed-weight LLMs. It gives the conjectured payoff of explicit learned state and its costs, argues compatibility with the Bitter Lesson, and states the two-part test that would count as learning. Testing, bootstrapping from Commonplace, and the software-house arrangement each point to a supplement.
 
 The supplements, in the order a reader is likely to want them:
 
