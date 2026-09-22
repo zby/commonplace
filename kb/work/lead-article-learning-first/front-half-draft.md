@@ -105,7 +105,8 @@ what they say. The definition note covers the boundary cases.
 A research community shows that the loop works when people fill its roles:
 proposing theories, deriving their consequences, criticizing them, revising
 them, and maintaining the instruments. We call a continuing system that does
-this work a *theory builder*, and these roles its internal roles. People who
+this work a *theory builder*, and these roles its internal roles. The system
+in the case is a small one. People who
 supply tasks or judge the results are outside it.
 
 The bet is that language models can fill every internal role, given a
@@ -150,7 +151,7 @@ and the internal roles, and why it holds to one term per concept. For a
 model, a new word reads as a new thing.
 
 Such a methodology differs from an expert system, which encoded a domain's
-conclusions by hand for a fixed interpreter. The methodology describes how to
+conclusions by hand. The methodology describes how to
 learn, not what is true in any domain, and the builder can revise it. The
 vocabulary of each new area is the builder's job. If a person has to supply
 it for every area, the first bet has failed.
@@ -203,7 +204,7 @@ That is necessary for compatibility with the Bitter Lesson, not sufficient. Two
 conditions remain open.
 
 The starting methodology must be outgrown. People wrote its first version and
-its definitions. The arrangement fits the Bitter Lesson only if the builder
+its definitions. This approach fits the Bitter Lesson only if the builder
 acquires what each new area requires without people supplying it area by
 area.
 
