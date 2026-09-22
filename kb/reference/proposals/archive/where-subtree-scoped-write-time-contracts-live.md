@@ -6,6 +6,13 @@ tags: [kb-maintenance, document-system]
 
 # Where subtree-scoped write-time contracts live
 
+> **Archived** (see [archive README](./README.md)). Adopted by
+> [ADR 084](../../adr/084-kind-rules-live-in-type-specs-and-operations-in-instructions.md):
+> a subdirectory carries no binding rules; kind rules live in the type spec,
+> placement in `COLLECTION.md`, and lifecycle operations in instructions. The
+> 2026-07-25 two-surface state and its commit-log measurements remain here as
+> design texture only.
+
 Commonplace has two write-time contract surfaces, and both are enforced: a type spec binds every artifact declaring that type, a `COLLECTION.md` binds every artifact in that collection, and each is the gate side of a derivable review pair whose text is snapshot-hashed. Neither surface has a scope that fits a clause binding one *subtree* of a collection. The live instance is `kb/reference/proposals/`: seven authoring clauses sit in the area's `README.md`, where no skill reads them and no pair hashes them.
 
 [ADR 041](../../adr/041-collection-conformance-reviews-use-collection-md-as-the-gate.md) named the distortion this produces before the third scope appeared — when one surface has teeth, "clauses migrate to where the machinery is rather than where their scope says they belong." A subtree clause has nowhere with teeth to migrate to, so it does the opposite and settles where nothing consumes it. The design question is whether the two-surface model absorbs subtree scope by reframing it (as collection scope or as a kind), or grows a third surface, or keeps the current honest-but-inert arrangement.
