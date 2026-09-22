@@ -36,8 +36,8 @@ must already be automated.
 
 This works only while the operator keeps contributing, which requires a
 system people want to use, so that the judgments they supply are part of
-work they would do anyway. Commonplace is such a system: its operators build
-and use the knowledge base for their own work, and
+work they would do anyway. Commonplace is built to be such a system: its operator builds and uses
+the knowledge base for their own work, and
 [that use is the initial selection environment](../notes/system-use-selects-theory-fit-without-a-fixed-oracle.md)
 where no fixed oracle exists.
 
@@ -59,8 +59,8 @@ This closes a feedback loop:
 
 > learning → improved learning machinery → greater future learning capacity → further learning
 
-An improvement to the learning machinery is reused by every later episode,
-so its return grows with reuse. This is the argument of
+An improvement to the learning machinery is reused by the later episodes
+that run through it, so its return grows with reuse. This is the argument of
 [An optimal long-run learning strategy invests in its own machinery](../notes/an-optimal-long-run-learning-strategy-invests-in-its-own-machinery.md).
 
 ## Let the learner build its machinery
