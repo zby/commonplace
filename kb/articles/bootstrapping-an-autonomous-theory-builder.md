@@ -1,134 +1,131 @@
 ---
-description: "Rewrite plan for the bootstrap supplement: intent, end state, constraints, inputs, and open choices for a compact article claiming that starting from a working human-agent system is what makes the automation bet tractable"
+description: "Bootstrap supplement: build a fully automated conjectural learner from a partially automated system that retains what operator and machinery learn, applies it reflectively to the learning machinery, and builds new software"
 type: kb/articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
 source_notes:
-  - kb/notes/commonplace-studies-conjectural-learning-through-retained-theories.md
   - kb/notes/an-optimal-long-run-learning-strategy-invests-in-its-own-machinery.md
   - kb/notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md
   - kb/notes/system-use-selects-theory-fit-without-a-fixed-oracle.md
-  - kb/notes/definitions/theory-builder.md
-  - kb/notes/definitions/autonomous-theory-builder.md
   - kb/notes/definitions/reflective-theory-builder.md
-  - kb/notes/definitions/externally-tested-theory-builder.md
-  - kb/notes/machinery-persists-by-warrant-not-position-in-a-reflective-loop.md
-  - kb/notes/usefulness-autonomy-warrant-and-power-are-separate-dimensions.md
-  - kb/notes/warranted-transfer-leaves-people-the-hardest-to-warrant-decisions.md
-  - kb/notes/residue-classes-need-different-mechanisms-so-architecture-is-mixed.md
+  - kb/notes/definitions/codification.md
+  - kb/notes/scheduler-llm-separation-exploits-an-error-correction-asymmetry.md
   - kb/notes/a-fixed-model-house-must-retain-missing-procedures-for-theory-use.md
-  - kb/notes/evidence/commonplace-revision-used-theory-guided-computational-search.md
-  - kb/notes/evidence/commonplace-as-a-reflective-system.md
+  - kb/notes/warranted-transfer-leaves-people-the-hardest-to-warrant-decisions.md
+  - kb/notes/commonplace-studies-conjectural-learning-through-retained-theories.md
 ---
 
-# Bootstrapping an Autonomous Theory Builder
+# Bootstrapping a Fully Automated Learner with Commonplace
 
-> **Rewrite plan, not the article.** The previous draft of this supplement is
-> superseded and stays in git history at commit `14c634dd`. This page holds
-> the plan for its replacement, in the compact form of
-> [Conjectural Learning with Today's LLMs](./conjectural-learning-with-fixed-models.md).
-> Comments on the plan are welcome on
+> **Draft.** The claims and structure of this article may change. Comments
+> and counterexamples are welcome on
 > [the repository's GitHub Discussions page](https://github.com/zby/commonplace/discussions).
 
-## Purpose
+A fully automated [conjectural learner](./conjectural-learning-with-fixed-models.md)
+does not have to be built in one step.
 
-The lead article bets that a fully automated conjectural learner can be built
-with today's fixed-weight LLMs. This supplement exists to say how we get
-there from Commonplace as it is, and to make one claim the lead only points
-at: **starting from a system that already works, with people supplying the
-functions not yet automated, is what makes the bet tractable.** A researcher
-who has read the lead should finish this article knowing why we start where
-we start, what a step toward automation is, how we tell that a step was
-taken, and when we would stop.
+We start with a partially automated system in which a human operator and
+automated machinery learn together. The key requirement is that what is
+learned is retained in the system and changes later behaviour.
 
-## End state
+Commonplace is our implementation of this bootstrap.
 
-A draft of about 1,200 to 1,600 words at this path, bet first, that a
-technical reader with no KB context can restate as four claims:
+## Retain learning in the system
 
-1. **The seed.** An LLM-interpreted methodology is a delta over pretrained
-   competence; it directs what it need not encode. Earlier realizations of
-   recursive self-improvement had to encode that competence executably, and
-   the ones that ran stayed in bounded domains. This difference is shared
-   with every LLM-era attempt and does not by itself distinguish us.
-2. **The start.** A machinery improvement pays through the later episodes
-   that reuse it, and the bootstrap is the running system itself. A working
-   system supplies the episode stream from the first day and is the initial
-   selection environment where no fixed oracle exists. Sustaining human
-   supply of the unautomated functions requires a system people want to
-   use; Commonplace is one, because its operators build and use the
-   knowledge base for their own work. This is what distinguishes the
-   arrangement from a benchmark plus a search loop.
-3. **The program.** Internal roles move to computation one bounded class at
-   a time. Each transfer is tested twice: does computation now make the
-   decision, and does the system learn to revise the machinery that makes
-   it. The second test is reflection: the builder holds a theory of its own
-   machinery, connected in both directions. Readiness conditions say when a
-   class may move; stop or redirect conditions say what would end the
-   program.
-4. **The price.** Earlier realizations certified each change by proof or by
-   reward rate. Here the interpreter's judgments are hidden, the working
-   system works partly because of its people, and every human contribution
-   is recorded rather than credited to computation. Transfer leaves people
-   the decisions hardest to warrant, so the residue must be named, not
-   hidden.
+The operator may initially contribute anywhere in the process: choosing
+problems, criticizing results, interpreting evidence, approving changes, or
+supplying missing capabilities.
 
-The draft carries the draft banner, links each claim to the note that
-develops it, links external texts as themselves, lists its source notes, and
-passes `commonplace-validate`. The articles README entry is rewritten to
-match.
+We do not need to decide in advance which functions must already be
+automated.
 
-## Constraints
+What matters is that successful learning leaves durable changes in the
+system rather than remaining only in the operator's head. In Commonplace,
+those changes can take the form of theories, instructions, schemas,
+validators, tests, code, and other persistent artifacts.
 
-- **Bet first.** State the claim in the first hundred words. No case, no
-  definition walk-through before it. Concrete detail enters only where it
-  makes a mechanism easier to see, and says what it establishes.
-- **Divergence claims stay divergent.** Claims 2 and 3 are the program's
-  bets. State each with its refutation condition; do not narrow them to
-  their sources in review.
-- **Ordinary words.** "Precise description of the work" or "methodology",
-  never "ontology". "Popper's account of science" and "a research
-  community", never "how science works". Define *theory builder*,
-  *autonomous*, and *reflective* where first needed, in one sentence each,
-  linking the definition notes.
-- **Human contributions are recorded, not credited.** Any episode cited as
-  evidence names who decided what.
-- **The second bet, code as well as prose, is in by default and brief.**
-  Operator direction of 2026-09-21: it is one of the program's bets, stated
-  comparatively, that the loop is easier when the builder also writes code
-  that operates its knowledge; not that prose alone would fail. One
-  paragraph in the machinery part of claim 3, resting on the
-  missing-procedures note. The operator may strike it before drafting.
-- **Length.** Under 1,600 words. What does not fit goes back to a note, not
-  into a longer article.
+Two conditions attach to this start. Sustaining the operator's supply of
+the functions not yet automated requires a system people want to use, so
+that the judgments they supply are part of work they would do anyway.
+Commonplace is one: its operators build and use the knowledge base for
+their own work, and
+[that use is the initial selection environment](../notes/system-use-selects-theory-fit-without-a-fixed-oracle.md)
+where no fixed oracle exists. And a hand-built start fits the Bitter Lesson
+[only if learning outgrows it](../notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md):
+computation, not the operator, must come to supply the knowledge each new
+demand needs.
 
-## Inputs
+## Use reflection to improve the learning machinery
 
-- The superseded draft at `14c634dd`: its two-kinds-of-transfer distinction,
-  readiness conditions, stop conditions, and the Markdown-checks trial are
-  reusable material, not a structure to preserve.
-- The research companion's section on the research program and development
-  path, which already states claims 1, 2, and 4 in note form.
-- The machinery-investment, bootstrap-compatibility, and system-use notes
-  for claim 2; the three builder definitions and the warrant note for
-  claim 3; the residue and warranted-transfer notes for claim 4.
-- The two evidence notes for any episode the article cites.
-- The lead article, for the promises this supplement must keep: starting
-  from Commonplace, transferring roles one class at a time, and covering
-  reflection.
+Some of what the system learns can concern its own operation.
 
-## Choices left to the writer
+A recurring failure in review, decomposition, evaluation, or representation
+can become an object of learning. The resulting knowledge can then change
+the machinery used in future learning. A learner that holds such knowledge,
+connected to its machinery in both directions, is what the knowledge base
+calls a [reflective theory builder](../notes/definitions/reflective-theory-builder.md).
 
-- Whether to keep the Markdown-checks trial as the one concrete example, or
-  to use an episode from the evidence notes instead.
-- How much of the readiness and stop conditions to carry as lists versus
-  prose.
-- Section titles and order after the opening bet.
+This creates a reflective feedback loop:
 
-## Verification and stop
+> learning → improved learning machinery → greater future learning capacity → further learning
 
-Validate with `commonplace-validate`. Then check the end-state test by
-reading the draft cold: can the four claims be restated from it? If a claim
-needs support no note supplies, stop and write the note first; the article
-is distilled from the notes. If the second bet cannot be stated in one
-paragraph without overclaiming, leave it out and say so in the commit.
+Because an improvement to learning machinery is reused by every later
+episode, its return grows with reuse. This is the argument developed in
+[An optimal long-run learning strategy invests in its own machinery](../notes/an-optimal-long-run-learning-strategy-invests-in-its-own-machinery.md).
+
+## Move functions from the operator to the machinery
+
+Automation grows one function at a time. A judgment the operator makes
+repeatedly, and whose scope has stabilized, can become a test, a validator,
+a procedure, or a search objective; the knowledge base calls this
+[codification](../notes/definitions/codification.md). A function has moved
+when computation now makes the decision and the change is recorded in the
+system, so that a later reader can see what was transferred and when.
+
+What does not move is named rather than hidden. A person still in the loop
+is recorded as such, and their contribution is not credited to computation.
+The residue is informative:
+[transfer leaves people the decisions hardest to warrant](../notes/warranted-transfer-leaves-people-the-hardest-to-warrant-decisions.md),
+so the functions that remain with the operator say where the machinery is
+still missing.
+
+## Let the learner build its machinery
+
+We do not assume that sustained self-improvement is possible through
+natural-language changes alone while the surrounding software remains
+fixed.
+
+Some new theories may require new executable machinery: tools, experiments,
+validators, search procedures, schedulers, or tests. Testing hypotheses
+reliably or at scale may in particular require exact symbolic computation
+rather than repeated LLM interpretation.
+
+Commonplace therefore uses LLMs not only to revise retained knowledge, but
+also to build and modify the software that operationalizes it.
+
+Commonplace applies a deliberate division of labor between language-model
+reasoning and symbolic software: the LLM can handle semantic interpretation,
+while software handles exact bookkeeping, orchestration, and enforceable
+checks when those tasks are more reliable there. This follows the
+error-correction asymmetry described in
+[Scheduler–LLM separation exploits an error-correction asymmetry](../notes/scheduler-llm-separation-exploits-an-error-correction-asymmetry.md).
+
+The boundary is not fixed. The symbolic machinery is itself part of the
+system and can be changed as learning reveals new requirements. With model
+weights held fixed,
+[procedures the learner acquires must persist outside the weights](../notes/a-fixed-model-house-must-retain-missing-procedures-for-theory-use.md),
+and code is one place they can live.
+
+This leaves open a stronger possibility: sufficiently general learning may
+require the ability to construct new software as new theories create new
+ways of testing, organizing, and applying knowledge.
+
+## The bootstrap
+
+Commonplace is therefore an environment in which human-assisted learning is
+retained, can be applied reflectively to the learning process, can move
+function by function from the operator to the machinery, and can be turned
+into new executable machinery.
+
+The aim is to use that process to build the capabilities required for fully
+automated learning.
