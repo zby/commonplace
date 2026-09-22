@@ -18,11 +18,11 @@ theories that survive guide the next experiments.
 
 Current work puts language models into this loop. Agent memory systems have a
 model write down a lesson after a failed task, and later runs read it.
-Automated-science systems have models propose hypotheses, run experiments,
-and revise. Whether such a system learns depends on what it keeps and on
+Automated-science systems have models propose theories, run experiments,
+and revise them. Whether such a system learns depends on what it keeps and on
 whether criticism improves what it can do later.
 
-We call the loop *conjectural learning*. This article says what counts as
+We call learning by this loop *conjectural learning*. This article says what counts as
 conjectural learning, then states two bets behind Commonplace, a framework
 for knowledge bases operated by agents. First, computation can run the whole
 loop, with no person proposing, criticizing, or revising theories inside it.
@@ -36,8 +36,7 @@ untested, and the article ends with what would show them wrong.
 Consider a system that maintains a command-line tool. The project's full test
 suite is slow, so the system runs it only on changes that can affect the
 released program. A change that edits only files under `docs/` gets a
-formatting check instead. The system keeps a written account of why, in two
-parts:
+formatting check instead. The system keeps a written theory of why, in two parts:
 
 - **Rule.** A change needs the full test suite when the released program
   depends on a file the change edits.
@@ -49,31 +48,31 @@ prints these pages, which are bundled into each release, and it expects each
 page to start with a title line. The edit removes that line. The change
 passes the formatting check, and in the next release the `help` command
 fails. The full suite includes a test that loads every help page, but by the
-account nothing depended on the page, so the suite never ran.
+theory nothing depended on the page, so the suite never ran.
 
 The system investigates and formulates a criticism: `docs/` says where a
-file is kept, not whether the program depends on it. It revises the Map:
+file is stored, not whether the program depends on it. It revises the Map:
 
 - **Map, revised.** The released program depends on every file that its
-  source code or build configuration references, wherever the file is kept.
+  source code or build configuration references, wherever the file is stored.
 
 The Rule survives.
 
 What the system keeps from the failure matters. A record containing only
 “this change, then a failed release” says which change failed. A lesson such
 as “run the full suite on changes under `docs/help/`” prevents a repeat. The
-criticism says why the decision was wrong. So the revised account also covers files the lesson does not mention, such
-as the README that the packaging step reads, though that file has never
+criticism says why the decision was wrong. So the revised theory also covers files the lesson does not mention,
+such as the README that the packaging step reads, though that file has never
 caused a failure.
 
 This is a hypothetical example of the mechanism, not an experimental result.
 
-## What counts as learning
+## What counts as conjectural learning
 
 Two conditions make the case an instance of conjectural learning.
 
-First, a formulated theory guides decisions through what it says. The written
-account is such a theory: if the Map had said something different, the system
+First, a formulated theory guides decisions through what it says. The system's
+written theory is one: if the Map had said something different, the system
 would have run different checks.
 
 Second, criticism of what the theory says improves what the system can do
@@ -83,8 +82,8 @@ change arrives. Later decisions are evidence of it.
 
 Writing a theory down does not meet these conditions, and neither does
 changing one decision or applying a theory to new facts. If the project later
-adds a tutorial that the tool also loads, the revised account already says
-what to check. The account guides a new decision, but no criticism is
+adds a tutorial that the tool also loads, the revised theory already says
+what to check. The theory guides a new decision, but no criticism is
 involved.
 
 The learner is the whole system: its people, models, code, files, and
@@ -107,7 +106,7 @@ A research community shows that the loop works when people fill its roles:
 proposing theories, deriving their consequences, criticizing them, revising
 them, and maintaining the instruments. We call a continuing system that does
 this work a *theory builder*, and these roles its internal roles. People who
-supply tasks or judge the product are outside it.
+supply tasks or judge the results are outside it.
 
 The bet is that language models can fill every internal role, given a
 sufficiently precise written description of the work. We call that
@@ -124,10 +123,10 @@ this kind, and models apply them to cases their authors did not list.
 
 Second, the methodology does not have to be complete at the start. It is
 itself a tentative theory. The builder uses it, failures expose its limits,
-and criticism revises it, along with the machinery that applies it. People
+and criticism revises it, along with the code that applies it. People
 write the first version, and the builder is meant to revise it.
 
-The standing objection is that a scientist's skill is tacit and cannot be
+The standing objection is that a scientist's craft is tacit and cannot be
 written down. A model brings much unwritten competence from pretraining, and the same loop can find and supply what is still missing. Whether that is enough
 is what the bet risks.
 
@@ -159,8 +158,8 @@ it for every area, the first bet has failed.
 ## The second bet: code as well as prose
 
 The second bet is that the loop runs more cheaply and more reliably when the
-builder also writes code that applies its knowledge. We do not claim that
-prose alone could not carry the loop, only that the loop is easier with code.
+builder also writes code that applies its theories. We claim only that the
+loop is easier with code, not that prose alone would fail.
 
 In the case, applying the revised Map means finding, for every change, the
 files that the source code and build configuration reference. A model can do
@@ -171,7 +170,7 @@ variation a model brings to each reading. Judgments about meaning stay with
 the model
 ([scheduler–LLM separation exploits an error-correction asymmetry](../../notes/scheduler-llm-separation-exploits-an-error-correction-asymmetry.md)).
 
-Science does the same. Much of its knowledge is kept in mathematical
+Science does the same. Many of its theories are kept in mathematical
 notation, and a calculation in that notation is carried out by rule, much as
 a computer runs code. The calculation gives the same result whoever performs
 it. People also rely on procedural memory: a practised skill runs without
@@ -195,9 +194,10 @@ selection that happens to be readable. The same holds for code the builder
 wrote and tested.
 
 This is where the first bet matters. With people in the internal roles, the
-loop scales with staff. With computation in every role, more computation
+loop scales with staff. With computation in every internal role, more
+computation
 buys more conjecture and more criticism. Full automation is what makes the
-retained theories a learned product.
+theories the builder keeps a learned product.
 
 That is necessary for compatibility with the Bitter Lesson, not sufficient. Two
 conditions remain open.
@@ -207,8 +207,8 @@ its definitions. The arrangement fits the Bitter Lesson only if the builder
 acquires what each new area requires without people supplying it area by
 area.
 
-The search must scale. Assigning credit across a large body of
-interdependent text and code is an open problem. Weight training, or a model
+The loop must scale. Assigning credit across a large body of
+interdependent prose and code is an open problem. Weight training, or a model
 that rebuilds the same content when needed, may do the same job at lower
 cost. Keeping written theories and code has to earn its place against those
 alternatives.
