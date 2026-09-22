@@ -1,6 +1,6 @@
 ---
 description: "Proposal: where a write-time contract binding less than a whole collection lives — COLLECTION.md fold, local type, nested contracts, or a new area surface; the instance's core since typed"
-type: ../types/design-proposal.md
+type: ../../types/design-proposal.md
 tags: [kb-maintenance, document-system]
 ---
 
@@ -8,14 +8,14 @@ tags: [kb-maintenance, document-system]
 
 Commonplace has two write-time contract surfaces, and both are enforced: a type spec binds every artifact declaring that type, a `COLLECTION.md` binds every artifact in that collection, and each is the gate side of a derivable review pair whose text is snapshot-hashed. Neither surface has a scope that fits a clause binding one *subtree* of a collection. The live instance is `kb/reference/proposals/`: seven authoring clauses sit in the area's `README.md`, where no skill reads them and no pair hashes them.
 
-[ADR 041](../adr/041-collection-conformance-reviews-use-collection-md-as-the-gate.md) named the distortion this produces before the third scope appeared — when one surface has teeth, "clauses migrate to where the machinery is rather than where their scope says they belong." A subtree clause has nowhere with teeth to migrate to, so it does the opposite and settles where nothing consumes it. The design question is whether the two-surface model absorbs subtree scope by reframing it (as collection scope or as a kind), or grows a third surface, or keeps the current honest-but-inert arrangement.
+[ADR 041](../../adr/041-collection-conformance-reviews-use-collection-md-as-the-gate.md) named the distortion this produces before the third scope appeared — when one surface has teeth, "clauses migrate to where the machinery is rather than where their scope says they belong." A subtree clause has nowhere with teeth to migrate to, so it does the opposite and settles where nothing consumes it. The design question is whether the two-surface model absorbs subtree scope by reframing it (as collection scope or as a kind), or grows a third surface, or keeps the current honest-but-inert arrangement.
 
 ## Current state (as of 2026-07-25)
 
-- **Two enforced surfaces, both location- or declaration-derived.** [ADR 038](../adr/038-type-conformance-reviews-use-the-type-spec-as-the-gate.md) puts the type spec on the gate side of a pair derived from the note's `type:`; [ADR 041](../adr/041-collection-conformance-reviews-use-collection-md-as-the-gate.md) puts `COLLECTION.md` on the gate side of a pair derived from the note's location. Editing either stales exactly its cohort through the existing `gate-changed` path.
-- **Areas are explicitly not contract surfaces.** [Collections and types](../collections-and-types.md) states that "subdirectories inside a collection are normally *areas* under the same contract."
+- **Two enforced surfaces, both location- or declaration-derived.** [ADR 038](../../adr/038-type-conformance-reviews-use-the-type-spec-as-the-gate.md) puts the type spec on the gate side of a pair derived from the note's `type:`; [ADR 041](../../adr/041-collection-conformance-reviews-use-collection-md-as-the-gate.md) puts `COLLECTION.md` on the gate side of a pair derived from the note's location. Editing either stales exactly its cohort through the existing `gate-changed` path.
+- **Areas are explicitly not contract surfaces.** [Collections and types](../../collections-and-types.md) states that "subdirectories inside a collection are normally *areas* under the same contract."
 - **`cp-skill-write` reads exactly two contract documents** — the target collection's `COLLECTION.md` (Step 2, hard fail if absent) and the selected type spec (Step 3). No step reads an area `README.md`. `cp-skill-connect` does read a destination's `README.md`, but as a curated navigation head for link prospecting, not as a contract.
-- **One live area contract exists.** `proposals/README.md` carries seven clauses (type and trait, no decision, first version stays conceptual, requirements live in theory, dated current-state anchor, operativity and warrant, unmistakably proposed) plus a lifecycle rule that partial adoption moves content out. [ADR 028](../adr/028-design-proposals-live-in-reference-proposals.md) sited it there deliberately and accepted the cost: "No template or schema enforces the proposal contract yet; review relies on the trait until structure earns codification."
+- **One live area contract exists.** `proposals/README.md` carries seven clauses (type and trait, no decision, first version stays conceptual, requirements live in theory, dated current-state anchor, operativity and warrant, unmistakably proposed) plus a lifecycle rule that partial adoption moves content out. [ADR 028](../../adr/028-design-proposals-live-in-reference-proposals.md) sited it there deliberately and accepted the cost: "No template or schema enforces the proposal contract yet; review relies on the trait until structure earns codification."
 - **The trait routes no gate.** No review gate declares `requires_trait: design-proposal`. The trait's only enforced text is one row in `kb/types/note.md`'s traits table — which *is* gate text, since that spec is the type-conformance gate for every `note`-typed artifact. So a compressed one-sentence version of the proposal contract is enforced against the whole `note` cohort, while the full seven clauses are enforced against nobody.
 - **The collection gate reaches the area only by summary and link.** A proposal's collection-conformance pair resolves to `kb/reference/COLLECTION.md` (`note_collection_md_path` → `collection_for_path`, nearest ancestor). Its "Proposal exception" paragraph restates three clauses — proposals live only under `proposals/`, carry the `design-proposal` trait, description leads with "Proposal:" — and links out for the rest. The README's text is outside the freshness hash.
 - **The gap is measurable in the commit log.** Commit `495dd8d` added the operativity-and-warrant requirement to two contracts at once: `kb/reference/types/adr.md`, which staled the ADR cohort's type-conformance pairs, and `proposals/README.md`, which staled nothing. Commits `d36f8fc` and `685959f` edited the proposals contract alone; no note became stale against either.
@@ -25,7 +25,7 @@ Commonplace has two write-time contract surfaces, and both are enforced: a type 
 
 ## The design space
 
-Options 2 through 5 change [behavior-determining organization](../../notes/definitions/behavior-determining-organization.md); each states what would consume the change, through which channel, with what force.
+Options 2 through 5 change [behavior-determining organization](../../../notes/definitions/behavior-determining-organization.md); each states what would consume the change, through which channel, with what force.
 
 **1. Retain the area README, unenforced (status quo).** The clauses stay documentation that a careful author finds by following the link in `COLLECTION.md` or by opening the directory. Operativity path: partial and already known — the three restated clauses and the `note` traits-table row reach authors through documents the write skill and both conformance gates do read; the remaining four reach only a reader who follows a link, with advisory force. Cost: those four are precisely the clauses that carry the most judgment (first version stays conceptual, requirements live in theory, dated anchor, operativity and warrant), and an author who skips the link is not detectably non-conformant. Benefit: zero machinery, and the area README stays cheap to revise — which is why the contract could be sharpened three times in a month.
 
@@ -57,7 +57,7 @@ The live instance has since been absorbed exactly this way: option 3 shipped for
 
 ## Risks
 
-- **Decorative contract.** The status quo's failure mode is already live: four clauses persist with no consumer, which is inert persistence rather than [operative change](../../notes/definitions/operative-change.md). Time makes this worse, not stable — each revision of an unread contract is effort spent on a document with no channel.
+- **Decorative contract.** The status quo's failure mode is already live: four clauses persist with no consumer, which is inert persistence rather than [operative change](../../../notes/definitions/operative-change.md). Time makes this worse, not stable — each revision of an unread contract is effort spent on a document with no channel.
 - **Clause migration to where the machinery is.** ADR 041's named distortion has a specific form here: the tempting shortcut is to expand the `design-proposal` row in `kb/types/note.md`, since that text is already enforced — which would bind every `note`-typed artifact in the KB with rules for one subtree.
 - **Context cost creep.** Option 2 is free today and gets more expensive per area added; adopting it for `proposals/` sets the precedent that `adr/` and `definitions/` follow.
 - **Silent divergence.** As long as two documents state the same contract, the summary can fall behind the full text with nothing checking, and a reader who trusts the enforced surface gets a partial contract believing it complete.
@@ -66,12 +66,12 @@ The live instance has since been absorbed exactly this way: option 3 shipped for
 
 Relevant Notes:
 
-- [Collections and types](../collections-and-types.md) — part-of: the two-surface write-time contract model this proposal asks whether to extend
-- [ADR 028: design proposals live in kb/reference/proposals](../adr/028-design-proposals-live-in-reference-proposals.md) — part-of: the decision that sited the proposal contract in an area README and accepted that nothing enforces it
-- [ADR 038: type-conformance reviews use the type spec as the gate](../adr/038-type-conformance-reviews-use-the-type-spec-as-the-gate.md) — part-of: the decision that made a type spec's natural-language authoring instructions enforceable, which is what makes option 3 available
-- [ADR 041: collection-conformance reviews use COLLECTION.md as the gate](../adr/041-collection-conformance-reviews-use-collection-md-as-the-gate.md) — part-of: the decision that made the collection surface enforceable and named clause migration toward machinery as the distortion to avoid
-- [Collections never own frontmatter semantics](../collections-never-own-frontmatter-semantics.md) — see-also: the same two surfaces under a different pressure, resolved by sanctioned moves rather than a new surface
-- [Tag scope is declared where membership claims are made](./tag-scope-is-declared-where-membership-claims-are-made.md) — see-also: the sibling open question about which artifact a scoped declaration attaches to
-- [Why directories despite their costs](../../notes/why-directories-despite-their-costs.md) — rests-on: local conventions per subsystem are a directory affordance, and each new directory taxes routing and skills
-- [Methodology enforcement is constraining](../../notes/methodology-enforcement-is-constraining.md) — rests-on: the gradient the options move along, from natural-language instruction an agent may not follow to a gate that always runs
-- [cp-skill-write](../../instructions/cp-skill-write/SKILL.md) — procedure: the write path whose two contract reads decide which surfaces reach an author
+- [Collections and types](../../collections-and-types.md) — part-of: the two-surface write-time contract model this proposal asks whether to extend
+- [ADR 028: design proposals live in kb/reference/proposals](../../adr/028-design-proposals-live-in-reference-proposals.md) — part-of: the decision that sited the proposal contract in an area README and accepted that nothing enforces it
+- [ADR 038: type-conformance reviews use the type spec as the gate](../../adr/038-type-conformance-reviews-use-the-type-spec-as-the-gate.md) — part-of: the decision that made a type spec's natural-language authoring instructions enforceable, which is what makes option 3 available
+- [ADR 041: collection-conformance reviews use COLLECTION.md as the gate](../../adr/041-collection-conformance-reviews-use-collection-md-as-the-gate.md) — part-of: the decision that made the collection surface enforceable and named clause migration toward machinery as the distortion to avoid
+- [Collections never own frontmatter semantics](../../collections-never-own-frontmatter-semantics.md) — see-also: the same two surfaces under a different pressure, resolved by sanctioned moves rather than a new surface
+- [Tag scope is declared where membership claims are made](../tag-scope-is-declared-where-membership-claims-are-made.md) — see-also: the sibling open question about which artifact a scoped declaration attaches to
+- [Why directories despite their costs](../../../notes/why-directories-despite-their-costs.md) — rests-on: local conventions per subsystem are a directory affordance, and each new directory taxes routing and skills
+- [Methodology enforcement is constraining](../../../notes/methodology-enforcement-is-constraining.md) — rests-on: the gradient the options move along, from natural-language instruction an agent may not follow to a gate that always runs
+- [cp-skill-write](../../../instructions/cp-skill-write/SKILL.md) — procedure: the write path whose two contract reads decide which surfaces reach an author
