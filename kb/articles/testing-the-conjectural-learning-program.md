@@ -12,6 +12,7 @@ source_notes:
   - kb/notes/definitions/reflective-theory-builder.md
   - kb/notes/a-complete-theory-path-does-not-establish-improved-capacity.md
   - kb/notes/retained-theory-intervention-isolates-one-explicit-surface.md
+  - kb/notes/retained-theories-may-improve-sample-efficiency.md
   - kb/notes/a-claim-without-external-assessment-carries-three-obligations.md
   - kb/notes/commonplace-studies-conjectural-learning-through-retained-theories.md
 ---
@@ -66,7 +67,9 @@ tests include:
   [efficiency conjecture](../notes/commonplace-studies-conjectural-learning-through-retained-theories.md#three-conjectures)
   in testable form.
 - **transfer** — does the revision help on new cases rather than only
-  replaying the original one?
+  replaying the original one? This is the
+  [sample-efficiency conjecture](../notes/retained-theories-may-improve-sample-efficiency.md)
+  in testable form.
 - **revision** — can later evidence change retained knowledge when it turns
   out to be wrong?
 
@@ -147,10 +150,10 @@ knowledge, tools, and orchestration, not changes to model weights.
 > assessment protocol. An area is a consuming project's domain with an
 > interface that can be declared and observed.
 
-A builder that requires a person in an internal role, requires a new
-learning method for an area, or fails to reach the target counts against
-the sufficiency of the tested methodology under the declared conditions.
-Such a result does not rule out other methodologies.
+Refuted, for the assessed areas and budget, by a builder that reaches the
+target only with a person in an internal role, or only after a new learning
+method is designed for an area, or that fails to reach it. Such a result
+does not rule out other methodologies.
 
 > **Comparative hypothesis.** Under matched demands and declared resources,
 > this methodology produces useful capability gains over the frozen seed
@@ -181,10 +184,11 @@ correct the self-theory.
 > the records of a reflective episode and a matched builder that retains
 > content without a self-theory do.
 
-The predicted advantage is absent if a matched builder without a self-theory
-acquires the same extensions. If records instead show that machinery changes
-bypassed the self-theory, the episode did not implement the reflection being
-tested; it cannot establish whether that mechanism adds a benefit.
+Refuted by a matched builder without a self-theory that acquires the same
+extensions under the same conditions, or by reflective episodes whose
+records show the machinery changes did not pass through the self-theory.
+The second case refutes the claim that this builder is reflective; it does
+not by itself say whether reflection would have helped.
 
 No run has been performed. Our first goal is simpler than any of the three:
 
