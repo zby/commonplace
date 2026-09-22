@@ -11,7 +11,7 @@ This README is navigation only; it states no rules ([ADR 084](../adr/084-kind-ru
 
 ## Lifecycle at a glance
 
-Workshop (`kb/work/`, active exploration, closes) → proposal here (finished, undecided, waits) → ADR (decided and implemented) — or retirement, when a later decision forecloses it. Partial adoption keeps a proposal here with only its undecided part. Procedures:
+Workshop (`kb/work/`, active exploration, closes) → proposal here (finished, undecided, waits) → ADR (decided and implemented) — or retirement, when a later decision forecloses it — or withdrawal, when its problem or trigger lapses with no decision. Partial adoption keeps a proposal here with only its undecided part. Procedures:
 
 - [Refresh a proposal's current state](../../instructions/refresh-a-proposal-current-state.md)
 - [Extract the adopted part of a proposal](../../instructions/extract-adopted-part-of-a-proposal.md)

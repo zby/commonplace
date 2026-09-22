@@ -34,7 +34,7 @@ The forces that would recur if this decision were reverted:
   clauses bind through authoring and review.
 - **Per-directory fixes do not hold.** The proposals rules moved into a
   collection-local type, and a binding archive README appeared one level
-  deeper the next day. At that point one archiving rule was stated in four
+  deeper the same day. At that point one archiving rule was stated in four
   places, each mixing what must hold with how to carry it out.
 - **Nested contracts make composition the whole design.** A nested
   `COLLECTION.md` would need a merge rule for every clause kind (quality goal,
@@ -69,13 +69,15 @@ archiving. A rule that belongs to a directory with no kind to name is a
 placement rule: it goes in `COLLECTION.md` and, when it is mechanical, in the
 validator, as the archive link boundary already is.
 
-**Applied now to design proposals.** The proposal contract moves from
+**Applied now to both proposal directories.** The proposal contract moves from
 `proposals/README.md` into the `design-proposal` type spec. The proposals and
 archive READMEs become navigation. Partial-adoption extraction and
 current-state refresh become instructions beside
-[retire an artifact](../../instructions/retire-artifact.md). This decision
-adopts and retires the proposal "Where subtree-scoped write-time contracts
-live".
+[retire an artifact](../../instructions/retire-artifact.md).
+`kb/notes/proposals/` had the same README-as-contract shape, so its contract
+moves into a collection-local `theory-proposal` type. This decision adopts
+the proposal "Where subtree-scoped write-time contracts live", which is
+archived.
 
 ## Considered alternatives
 
@@ -106,9 +108,7 @@ meets.
 option. Rejected because it makes an unreviewed document operative at write
 time; a README edit would change behavior without re-checking anything.
 
-**Free choices.** `kb/notes/proposals/` had the same README-as-contract
-shape and now follows the same rule, with a collection-local
-`theory-proposal` type. Experiment designs stay in
+**Free choices left open.** Experiment designs stay in
 `kb/reference/proposals/` as design proposals; whether they need a separate
 type is left until protocol records need structure the design-proposal type
 cannot give.

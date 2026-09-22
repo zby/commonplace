@@ -29,9 +29,11 @@ Everything else follows the `kb/notes/` collection contract and the base [note](
 | `tags` | No | Must be empty or absent. |
 | `traits` | No | Review-routing traits, as for `note`. |
 
+The schema enforces the `Proposal` lead and the empty tags; the other clauses are checked by type-conformance review.
+
 ## Lifecycle
 
-| State | What must hold | Procedure |
+| State | What must hold | Enters by |
 |---|---|---|
 | **Live** (`kb/notes/proposals/`) | Every clause above; nothing in it has been adopted. | Promotion from a workshop, or a new proposal written directly |
 | **Partially adopted** (still live) | The adopted part has moved out: terms are definition notes under `kb/notes/definitions/` and, when they are everyday vocabulary, entries in the `AGENTS.md` vocabulary; claims are ordinary notes; the affected definitions, notes, and articles are edited. The adopted part is removed from the proposal. | No dedicated instruction yet; the adoption commit carries the change |

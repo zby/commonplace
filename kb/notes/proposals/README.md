@@ -21,4 +21,4 @@ What binds a proposal is in two places:
 
 Lifecycle at a glance: workshop (`kb/work/`, active, closes) → proposal
 here (finished, undecided, waits) → adoption into definitions and notes, or
-deletion. Git keeps both.
+deletion. Git keeps the deleted text.

@@ -17,7 +17,7 @@ Makes a partially adopted proposal true again: after this, the proposal holds on
 
 ## Steps
 
-1. **Identify the shipped part and its record.** For each option, choice, or clause you believe shipped, find the code, command, or contract that implements it and the decision that carries it: an ADR, or the implementing commit when the change needed no ADR (`git log -S'<identifier>'`; its `Decision:` trailer names the ADR it implements). If the clone is shallow, run `git fetch --unshallow` first. A claim that something shipped with no implementation you can point to is not an adoption; stop and report it.
+1. **Identify the shipped part and its record.** For each option, choice, or clause you believe shipped, find the code, command, or contract that implements it and the decision that carries it: an ADR, or the implementing commit when the change needed no ADR (`git log -S'<identifier>'`; its `Decision:` trailer names the ADR it implements). If the clone is shallow, run `git fetch --unshallow` first. A claim that something shipped with no implementation you can point to is not an adoption; stop and report it. If nothing undecided would remain, stop and use [retire an artifact](./retire-artifact.md) instead.
 
 2. **Make sure the shipped behavior is described outside the proposal.** Search `kb/reference/` for the reference doc that owns the component. If it already describes the behavior, read that text and confirm it matches the implementation. If it does not, add the description there first, in its own commit, following `kb/reference/COLLECTION.md`. Do not describe shipped behavior only in the proposal.
 
@@ -31,9 +31,7 @@ Makes a partially adopted proposal true again: after this, the proposal holds on
 
 5. **Fix inbound references whose context describes the removed part.** Search `rg -n '<proposal-slug>' -g '*.md' kb/` and read each hit. Where a link's context says the shipped part is still open in the proposal, rewrite that context. Leave `kb/work/` and `kb/sources/*.ingest.md` narratives alone; they are dated records.
 
-6. **If nothing undecided remains, stop and switch to [retire an artifact](./retire-artifact.md).**
-
-7. **Commit.** One commit for the proposal edit and the inbound fixes, with a `Decision:` trailer naming the ADR that carries the shipped part.
+6. **Commit.** One commit for the proposal edit and the inbound fixes, with a `Decision:` trailer naming the ADR that carries the shipped part, if there is one.
 
 ## Verify
 

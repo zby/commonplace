@@ -23,12 +23,12 @@ Use a design proposal for a finished but unadopted design: the problem, the opti
 
 | Field | Required | Use |
 |---|---:|---|
-| `description` | Yes | Leads with `Proposal` (`Proposal:`, or `Proposal (adopted):` after adoption) so a reader of `kb/reference/` never mistakes proposed for shipped. |
+| `description` | Yes | Leads with `Proposal:`; an archived adopted proposal may use `Proposal (adopted):`. |
 | `type` | Yes | `../types/design-proposal.md` for proposals under `kb/reference/proposals/`; `../../types/design-proposal.md` once archived. |
 | `tags` | No | Navigation tags. |
 | `traits` | No | Review-routing traits, e.g. `has-external-sources`. |
 
-- The body must carry the dated current-state anchor described above.
+- The schema enforces the `Proposal` lead and the dated current-state heading; the other clauses are checked by type-conformance review.
 - Review separates the artifact's regions. Truth-apt statements remain contestable. Candidate options and selections are reviewed against requirements, constraints, consequences, and trade-offs. The artifact as a whole is also reviewed for proposal-process fitness — problem stated, forces stated, candidate selections marked, adoption criteria named — and claim-title expectations do not apply.
 
 ## Lifecycle
@@ -41,8 +41,8 @@ A proposal is in one of three states, or has been withdrawn. Each transition has
 | **Partially adopted** (still live) | The shipped part is gone from the proposal: shipped behavior is described in reference docs and recorded in an ADR or its implementing commit, and the current-state anchor notes the adoption. A proposal that silently retains shipped content has become a false description. | [Extract the adopted part of a proposal](../../instructions/extract-adopted-part-of-a-proposal.md) |
 | **Archived** (`kb/reference/proposals/archive/`) | Fully adopted, or retired by a later decision that forecloses it. Nothing still current remains: shipped behavior, decision-relevant reasoning, and transferable requirements have left, and what stays is the irreproducible remainder — dated current-state anchors and the measurements the design rested on. An ADR names it by title in prose, with no path and no link. The file is frozen: correct it only for link integrity when something it points at moves. | [Retire an artifact](../../instructions/retire-artifact.md) |
 
-**Withdrawn** is the exit for a live proposal whose problem no longer exists in the system, or whose adoption trigger has lapsed, when no decision forecloses it. The operator decides; the withdrawing commit's body names which condition holds and its evidence. A withdrawn proposal is deleted, not archived, after anything still current has been extracted ([ADR 085](../adr/085-withdrawn-proposals-are-deleted.md)).
+**Withdrawn** is the exit for a live proposal whose problem no longer exists in the system, or whose adoption trigger has lapsed, when no decision forecloses it. The operator decides; the withdrawing commit's body names which condition holds and its evidence. Anything still current is extracted first ([ADR 085](../adr/085-withdrawn-proposals-are-deleted.md)).
 
 When a live proposal's current-state anchor may have gone stale, [refresh the proposal's current state](../../instructions/refresh-a-proposal-current-state.md); a refresh routes shipped or foreclosed content to the procedures above and reports a lapsed trigger to the operator.
 
-**Retirement destination: archive to `kb/reference/proposals/archive/` when the proposal is adopted or retired by a decision; delete when it is withdrawn.** Nothing outside the archive links into it ([ADR 056](../adr/056-adopted-and-retired-proposals-archive-out-of-the-frontier.md)). Archived files keep this type. [Retire an artifact](../../instructions/retire-artifact.md) reads this line to pick its destination.
+**Retirement destination: archive to `kb/reference/proposals/archive/` when the proposal is adopted or retired by a decision; delete when it is withdrawn.** Archived files keep this type ([ADR 056](../adr/056-adopted-and-retired-proposals-archive-out-of-the-frontier.md)). [Retire an artifact](../../instructions/retire-artifact.md) reads this line to pick its destination.
