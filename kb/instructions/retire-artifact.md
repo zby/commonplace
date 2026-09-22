@@ -21,7 +21,7 @@ Two destinations. **Delete** is the default. **Archive** moves the file into a s
 
 1. **Read the target's type spec to find its destination.** Open the file named by the artifact's `type:` frontmatter. If it names an archive directory, the destination is archive and that directory is where the file goes; if it says nothing about retirement, the destination is delete.
 
-   Current assignment — `design-proposal` archives to `kb/reference/proposals/archive/`; every other type deletes.
+   Current assignment — `design-proposal` archives to `kb/reference/proposals/archive/` when adopted or retired by a decision, and deletes when withdrawn; every other type deletes.
 
    If the type spec is silent and you believe archive is right, stop and settle it as a type-level decision rather than deciding per artifact. The test is what survives a complete extraction (steps 2 and 4). Archive when that residue is **irreproducible observation** — dated measurements of a state that no longer exists, which nobody can re-derive at any price. Delete when it is claims: a successor either carries them or falsifies them, and either way nothing is lost.
 

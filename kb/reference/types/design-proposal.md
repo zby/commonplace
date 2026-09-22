@@ -33,7 +33,7 @@ Use a design proposal for a finished but unadopted design: the problem, the opti
 
 ## Lifecycle
 
-A proposal is in one of three states. Each transition has one procedure.
+A proposal is in one of three states, or has been withdrawn. Each transition has one procedure.
 
 | State | What must hold | Enters by |
 |---|---|---|
@@ -41,6 +41,8 @@ A proposal is in one of three states. Each transition has one procedure.
 | **Partially adopted** (still live) | The shipped part is gone from the proposal: shipped behavior is described in reference docs and recorded in an ADR or its implementing commit, and the current-state anchor notes the adoption. A proposal that silently retains shipped content has become a false description. | [Extract the adopted part of a proposal](../../instructions/extract-adopted-part-of-a-proposal.md) |
 | **Archived** (`kb/reference/proposals/archive/`) | Fully adopted, or retired by a later decision that forecloses it. Nothing still current remains: shipped behavior, decision-relevant reasoning, and transferable requirements have left, and what stays is the irreproducible remainder — dated current-state anchors and the measurements the design rested on. An ADR names it by title in prose, with no path and no link. The file is frozen: correct it only for link integrity when something it points at moves. | [Retire an artifact](../../instructions/retire-artifact.md) |
 
-When a live proposal's current-state anchor may have gone stale, [refresh the proposal's current state](../../instructions/refresh-a-proposal-current-state.md); a refresh routes any shipped or foreclosed content to the two procedures above.
+**Withdrawn** is the exit for a live proposal whose problem no longer exists in the system, or whose adoption trigger has lapsed, when no decision forecloses it. The operator decides; the withdrawing commit's body names which condition holds and its evidence. A withdrawn proposal is deleted, not archived, after anything still current has been extracted ([ADR 085](../adr/085-withdrawn-proposals-are-deleted.md)).
 
-**Retirement destination: archive to `kb/reference/proposals/archive/`**, which nothing outside it links into ([ADR 056](../adr/056-adopted-and-retired-proposals-archive-out-of-the-frontier.md)). Archived files keep this type. [Retire an artifact](../../instructions/retire-artifact.md) reads this line to pick its destination.
+When a live proposal's current-state anchor may have gone stale, [refresh the proposal's current state](../../instructions/refresh-a-proposal-current-state.md); a refresh routes shipped or foreclosed content to the procedures above and reports a lapsed trigger to the operator.
+
+**Retirement destination: archive to `kb/reference/proposals/archive/` when the proposal is adopted or retired by a decision; delete when it is withdrawn.** Nothing outside the archive links into it ([ADR 056](../adr/056-adopted-and-retired-proposals-archive-out-of-the-frontier.md)). Archived files keep this type. [Retire an artifact](../../instructions/retire-artifact.md) reads this line to pick its destination.

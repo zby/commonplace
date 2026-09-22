@@ -24,6 +24,7 @@ Makes a live proposal's `## Current state (as of YYYY-MM-DD)` section true on to
    - Part of the proposal has shipped → [extract the adopted part of a proposal](./extract-adopted-part-of-a-proposal.md), then continue here.
    - All of it has shipped, or a later decision forecloses all of it → [retire an artifact](./retire-artifact.md) and stop.
    - A later decision forecloses one option but the question stays open → remove that option, and name the foreclosing ADR in the anchor.
+   - No decision forecloses it, but its problem no longer exists in the system or its adoption trigger has plainly lapsed → stop and report this to the operator with the evidence. Withdrawal is the operator's decision; if they withdraw it, use [retire an artifact](./retire-artifact.md), whose destination for a withdrawn proposal is delete.
 
 4. **Rewrite the anchor.** Correct false facts, remove irrelevant ones, add new ones with their evidence (ADR link, file path, or command), and set the anchor date to today. Keep the anchor to facts the proposal rests on; the change history stays in git.
 
