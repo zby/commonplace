@@ -106,8 +106,9 @@ meets.
 option. Rejected because it makes an unreviewed document operative at write
 time; a README edit would change behavior without re-checking anything.
 
-**Free choices left open.** Whether `kb/notes/proposals/` gets its own type
-under this rule is left to that collection. Experiment designs stay in
+**Free choices.** `kb/notes/proposals/` had the same README-as-contract
+shape and now follows the same rule, with a collection-local
+`theory-proposal` type. Experiment designs stay in
 `kb/reference/proposals/` as design proposals; whether they need a separate
 type is left until protocol records need structure the design-proposal type
 cannot give.
