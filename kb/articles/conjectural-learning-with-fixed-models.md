@@ -123,7 +123,12 @@ mistakes have to be counted on both sides of any comparison with a
 weights-only learner.
 
 These are empirical questions. The important claim is that the paradigm is
-possible.
+possible. The bet sits within the
+[recursive self-improvement program Schmidhuber describes](https://people.idsia.ch/~juergen/recursive-self-improvement.html),
+with natural-language theories interpreted by LLMs in place of program
+rewrites; the knowledge base
+[states that positioning](../notes/commonplace-studies-conjectural-learning-through-retained-theories.md#research-program-and-development-path)
+and what it does not claim.
 
 ## Compatible with the Bitter Lesson
 
