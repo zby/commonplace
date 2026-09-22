@@ -46,7 +46,7 @@ defined to collapse their matches into one ranking.
   mechanisms for attributing failures and accepting or rejecting changes. No
   witness to the
   [reachability
-  conjecture](../../articles/automated-software-houses-with-fixed-llms.md)
+  conjecture](../../articles/an-automated-software-house-as-a-second-test-of-conjectural-learning.md)
   was located in the reviewed corpus.
 
 The report therefore assembles a research heuristic from different systems:
@@ -110,7 +110,7 @@ the components compose or that the conjectured endpoint is reachable.
 ### Reachability-obligation crosswalk
 
 The [reachability
-article](../../articles/automated-software-houses-with-fixed-llms.md)
+article](../../articles/an-automated-software-house-as-a-second-test-of-conjectural-learning.md)
 states four constructive-witness obligations. This crosswalk shows how they
 relate to this report's six endpoint questions and the seven numbered test
 conditions under [Evidence of a reachability

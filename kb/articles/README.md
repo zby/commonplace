@@ -44,20 +44,13 @@ One draft stands outside the series:
 
 ## Superseded
 
-These drafts stay at their addresses so that existing links resolve. Each
-opens with a banner naming its successor and is no longer maintained.
-
-- [The Automated Software House Conjecture](./automated-software-houses-with-fixed-llms.md) — replaced by the software-house supplement above.
-- [The Automated Software House as the Unit of Training](./the-software-house-as-the-unit-of-training.md) — replaced by the lead, with its experiments now in the testing supplement.
-- [Transition closure and continuation reliability](./transition-closure-and-continuation-reliability.md) — its path definition, continuation reliability, and Gödel-machine comparison now form a section of the testing supplement, stated for any system and without the formal notation.
-
-Six earlier companion drafts were withdrawn; their addresses redirect to the
-draft that absorbed each one, which in some cases is now one of the
-superseded drafts above. The two most recent were *The decisions that
-stay human, and what would move them*, whose selection argument is now the
-ordering principle of the bootstrap supplement, and *The Bitter Lesson does
-not require everything to live in weights*, whose rebuttal is now a section
-of the lead.
+Nine earlier drafts have been withdrawn. Each address redirects to the draft
+that absorbed it: the three earliest software-house drafts to the
+software-house supplement, the lead, and the testing supplement; *The
+decisions that stay human, and what would move them* to the bootstrap
+supplement, whose ordering principle its selection argument became; and
+*The Bitter Lesson does not require everything to live in weights* to the
+lead, which carries its rebuttal as a section.
 
 ---
 

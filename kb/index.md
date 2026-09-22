@@ -13,7 +13,7 @@ Two separate pressures keep the design modular. Different collections support di
 ## Threads worth following
 
 **The automated software house conjecture.** The current
-[research program](./articles/automated-software-houses-with-fixed-llms.md)
+[research program](./articles/an-automated-software-house-as-a-second-test-of-conjectural-learning.md)
 asks whether a complete software house can sustain open-ended coherent change
 with current learned components pinned and no human in an internal production
 role. Its starting project theory and production machinery may be written by
@@ -26,7 +26,7 @@ note](./notes/naur-equates-machine-execution-with-formulated-criteria.md)
 reopens the bearer question, while the [coherent-search
 note](./notes/program-theory-sustains-search-under-delayed-feedback.md)
 states the longitudinal test. [The software house as the unit of
-training](./articles/the-software-house-as-the-unit-of-training.md) says how
+training](./articles/conjectural-learning-with-fixed-models.md) says how
 such a house should learn, and [bootstrapping the first automated software
 house](./articles/bootstrapping-an-autonomous-theory-builder.md) says
 how it would be built from a house that still has people inside.
