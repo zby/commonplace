@@ -27,6 +27,10 @@ Apply these moves, each to the sentence that needs it:
 - **Narrow, do not delete.** A weakened sentence keeps its place and its
   link. The reader should still see the point and its limit.
 
+A flagged sentence whose evidence supports it as written stays as written.
+The assessment's flag is a claim to check, not a finding to satisfy; report
+the sentence with the evidence that holds it.
+
 Report each changed sentence as before and after, one line each, with the
 evidence that bounds it.
 

@@ -27,6 +27,11 @@ recommends.
    in one sentence. Recommend only passes whose value against the purpose
    is clear; an item you would not defend is not recommended. Do not edit.
 
+   If the highest-value change is a rewrite or a restructuring of the
+   argument, report that and stop. The passes work on text, and text a
+   rewrite will replace is not worth a pass; recommend passes only over the
+   parts the assessment expects to survive.
+
    Two things the passes cannot own belong in the assessment too. For each
    candidate overclaim, propose whether the sentence is support (may be
    narrowed) or divergence (defend); the divergence items become the
@@ -39,7 +44,17 @@ recommends.
 
 2. **Dispatch each recommended pass as a packet.** Proceed without waiting;
    the report gives the operator the chance to interrupt. Run passes one at a time,
-   since they share one write scope. Each pass file carries an `effort`
+   since they share one write scope. Order them by depth, not by the
+   assessment's ranking: a pass whose edits a later pass would rewrite runs
+   after it. The order that has held is split-out-a-treatment,
+   narrow-overclaims, abstractions, readability-and-flow, plain-wording,
+   opening-and-title. Abstractions runs before the structural moves although
+   it is a wording pass, because one name per thing is what makes a
+   duplicated caveat or two paragraphs on one subject visible; the opening
+   runs last because the TL;DR restates a body the earlier passes have
+   settled. Make the plain-wording list after the structural moves land; a
+   list made against the earlier text names passages that have moved or
+   gone. Each pass file carries an `effort`
    field: `simple` passes run in a fresh worker on a cheaper model or lower
    effort; `judgment` passes run on the session model, in the current
    context or a fresh worker. Use a fresh worker when the pass benefits from
@@ -65,7 +80,11 @@ recommends.
 3. **Integrate.** After each pass read the diff, and read every replaced
    phrase in its full sentence, not in the diff summary; a literal
    replacement can supply a referent the original left implicit and supply
-   the wrong one. Run `commonplace-validate` on the artifact, and commit the
+   the wrong one. List each mapping, contrast, example, price, or link the
+   diff removed and check that the pass report accounts for it; restore what
+   it does not, in the classes [audit-a-prior-pass](./audit-a-prior-pass.md)
+   uses. A pass that narrows or tightens a sentence tends to take its
+   neighbours with it. Run `commonplace-validate` on the artifact, and commit the
    pass alone with a body saying what it was meant to make true. If the operator reverts part of a pass, record the
    threshold they applied in the pass file or a memory, so the next run
    starts from it.
@@ -87,6 +106,7 @@ recommends.
 ## Verify
 
 - Every applied change traces to a recommended pass.
+- Every passage a diff weakened is accounted for by that pass's report.
 - No claim, evidence, or qualification changed unless the operator asked.
 - Each pass has its own commit and validation passed before it.
 - Operator reverts have been recorded as thresholds.
