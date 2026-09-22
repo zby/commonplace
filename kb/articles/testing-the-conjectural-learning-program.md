@@ -1,127 +1,170 @@
 ---
-description: "Rewrite plan for the testing supplement: intent, end state, constraints, inputs, and open choices for a compact pre-registration that a lab could run, with the three adopted hypotheses quoted as adopted"
+description: "Testing supplement: a modest first goal, showing that retained revisions causally improve later capacity and stay revisable; seven controlled tests, a task-family design, and the three adopted whole-program hypotheses"
 type: kb/articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
 source_notes:
   - kb/notes/definitions/conjectural-learning.md
-  - kb/notes/definitions/theory-builder.md
-  - kb/notes/definitions/externally-tested-theory-builder.md
-  - kb/notes/definitions/reflective-theory-builder.md
-  - kb/notes/definitions/autonomous-theory-builder.md
-  - kb/notes/definitions/actionable-methodology.md
   - kb/notes/definitions/operative-change.md
-  - kb/notes/commonplace-studies-conjectural-learning-through-retained-theories.md
+  - kb/notes/definitions/externally-tested-theory-builder.md
+  - kb/notes/definitions/actionable-methodology.md
   - kb/notes/a-complete-theory-path-does-not-establish-improved-capacity.md
-  - kb/notes/a-claim-without-external-assessment-carries-three-obligations.md
   - kb/notes/retained-theory-intervention-isolates-one-explicit-surface.md
   - kb/notes/retained-theories-may-improve-sample-efficiency.md
-  - kb/notes/warranted-autonomy-is-bounded-by-oracle-domain.md
-  - kb/notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md
-  - kb/notes/evidence/commonplace-as-a-reflective-system.md
+  - kb/notes/a-claim-without-external-assessment-carries-three-obligations.md
+  - kb/notes/commonplace-studies-conjectural-learning-through-retained-theories.md
 ---
 
-# Testing the conjectural-learning program
+# Testing Conjectural Learning
 
-> **Rewrite plan, not the article.** The previous draft of this supplement is
-> superseded and stays in git history at commit `2da543f0`. This page holds
-> the plan for its replacement, in the compact form of
-> [Conjectural Learning with Today's LLMs](./conjectural-learning-with-fixed-models.md).
-> Comments on the plan are welcome on
+> **Draft.** The claims and structure of this article may change. Comments
+> and counterexamples are welcome on
 > [the repository's GitHub Discussions page](https://github.com/zby/commonplace/discussions).
 
-## Purpose
+We are only starting to build
+[conjectural learners](./conjectural-learning-with-fixed-models.md), so the
+first testing goal should be modest. We do not yet need to show that such
+systems can learn broadly or indefinitely. We first need to show that
+retained revisions actually cause later improvement.
 
-The lead article ends on a research question and says we think the answer
-is yes. This supplement exists to make that answer refutable by someone who
-is not us. A researcher who has read the lead should finish this article
-knowing exactly what is claimed, what observation would refute each claim,
-what has to come from outside the system for the result to count, and what
-the first experiment is, specified closely enough that a lab could run it on
-its own harness and report a result we would have to accept.
+## What we need to show
 
-## End state
+A system has learned only if experience produces a durable change in
+retained state that affects later capacity. The lead article gives the
+causal structure:
 
-A draft of about 1,200 to 1,600 words at this path, in the form of a
-pre-registration, that a technical reader with no KB context can restate as
-four things:
+> K(t) → conjecture and criticism → K(t+1) → different later behaviour
 
-1. **The system under test and its boundary.** The whole deployed system,
-   with people who perform internal roles counted inside the boundary and
-   recorded; model weights fixed at declared versions; hosted models
-   allowed. Persistence is continuity of responsibility, not survival of
-   any component.
-2. **The three hypotheses, each with its refuter.** Sufficiency,
-   comparative, and reflection, quoted as adopted on 2026-09-17. The
-   refuter stands next to each. The comparative hypothesis names the
-   control that matters: a baseline that searches the raw records without
-   the learned methodology. The two-part learning test from the lead,
-   operative and better, is shown to be what the sufficiency and
-   comparative hypotheses operationalize.
-3. **What must come from outside.** An external falsifier, an external
-   objective, and an outcome level independent of the builder's own
-   evaluators. Without these, a claim carries three obligations the builder
-   must discharge itself, and the article says what they are.
-4. **The first experiment.** One bounded component experiment specified to
-   the point of execution: the intervention on a retained theory, the
-   matched conditions, the budget accounting, the outcome measure, and the
-   three questions it answers, causal contribution, advantage, and sample
-   efficiency. The choices a run must still fix, model version, task
-   sample, and budget, are listed as such, not hidden.
+where K is the retained tentative knowledge. The middle step is what makes
+this conjectural learning rather than caching: the new retained state is a
+theory that was proposed and criticized, not a stored answer.
 
-The article states plainly that no run has been performed. It carries the
-draft banner, links each claim to the note that develops it, links external
-texts as themselves, lists its source notes, and passes
-`commonplace-validate`. The articles README entry is rewritten to match.
+Model weights are held fixed. That is what makes the tests below clean:
+apart from the context of a single run, the retained state is the only place
+the learning can live, so
+[an intervention on it isolates its causal contribution](../notes/retained-theory-intervention-isolates-one-explicit-surface.md).
 
-## Constraints
+Writing notes, reflections, or revised rules is not enough. The retained
+revision must matter later.
 
-- **Refutable first.** Open with what would show the bet wrong, not with
-  definitions. Terms are defined in one sentence where first needed, with
-  the definition note linked.
-- **The hypotheses are quoted as adopted.** Their wording is a program
-  commitment. Quote it; do not paraphrase, tighten, or narrow it. Commentary
-  goes around the quotation.
-- **Honest about people.** Any episode or trial cited names who decided
-  what. Human contributions are recorded, not credited to computation.
-- **Component results do not substitute for whole-program results.** The
-  article says so once, where the first experiment is introduced, and does
-  not hedge it again.
-- **Ordinary words.** "Precise description of the work" or "methodology",
-  never "ontology". Reach, warrant, and oracle are defined if used.
-- **Length.** Under 1,600 words. The admissible-path formalism, the
-  reconstruction comparisons, and the boundary-case table do not fit; what
-  is worth keeping from them goes to a note first, the rest stays in git
-  history.
+## First tests
 
-## Inputs
+The first experiments should make that causal role easy to observe. Useful
+tests include:
 
-- The superseded draft at `2da543f0`: its hypotheses section is reused
-  verbatim; its evidence-interface section, component-experiment design,
-  and limits are material, not structure.
-- The lead article's "What would count as learning?" section, for the
-  two-part test this supplement operationalizes.
-- The externally-tested-builder definition and the three-obligations note
-  for claim 3; the intervention-isolates-one-surface note and the
-  sample-efficiency note for claim 4; the complete-theory-path note for why
-  operative use alone does not establish improvement.
-- The evidence notes for what has and has not been observed in Commonplace.
-- The Schmidhuber workshop's first-experiment sketch under `kb/work/`, for
-  the matched-budget design, read as workshop material and not linked.
+- **retention** — does the revision survive into later work?
+- **use** — does the record of later work show the revision was read and
+  applied?
+- **withholding** — does behaviour change when the retained revision is
+  hidden? A change that passes this test is what the knowledge base calls
+  [operative](../notes/definitions/operative-change.md).
+- **perturbation** — does replacing it with a wrong alternative change
+  behaviour in the predicted direction?
+- **reconstruction** — does the retained revision beat re-deriving it from
+  the episode records each time? This is the
+  [efficiency conjecture](../notes/retained-theories-may-improve-sample-efficiency.md)
+  in testable form.
+- **transfer** — does the revision help on new cases rather than only
+  replaying the original one?
+- **revision** — can later evidence change retained knowledge when it turns
+  out to be wrong?
 
-## Choices left to the writer
+These tests are more informative than measuring whether the system solved
+the task.
 
-- Which of the three component questions the first experiment is specified
-  around, or whether one design serves all three.
-- Whether the Gödel-machine contrast survives as one paragraph or is
-  dropped with a link to its note.
-- Section titles and order after the opening.
+## Separate task success from learning
 
-## Verification and stop
+A system can solve a task without learning anything. It can also learn
+something useful while the current task still fails. And it can retain and
+faithfully apply a bad rule: showing that a theory was formulated,
+criticized, revised, and used
+[does not by itself establish improved capacity](../notes/a-complete-theory-path-does-not-establish-improved-capacity.md).
 
-Validate with `commonplace-validate`. Then read the draft cold and check
-that a reader could run the first experiment from the text plus the listed
-open choices. If the experiment cannot be specified that closely without
-inventing a budget or sample size, say which choices remain and stop there;
-do not fill them. If a claim needs support no note supplies, write the note
-first.
+We should therefore distinguish current task performance from the change in
+future capacity caused by retained knowledge. The second is the central
+quantity for testing learning.
+
+## Start with controlled task families
+
+Early experiments should be small enough that causal attribution is
+possible. A simple pattern is:
+
+1. give the system a family of tasks with some learnable regularity;
+2. let it encounter failures and retain its own revisions;
+3. test it on fresh instances;
+4. compare normal retained knowledge with withheld, reset, or corrupted
+   versions, keeping the episode records available so the reconstruction
+   control can re-derive from them.
+
+The answers in the task family are fixed outside the system before the run.
+The system's approval of its own revision is not the outcome; the
+[external outcome](../notes/definitions/externally-tested-theory-builder.md)
+is.
+
+People will be inside the early experiments. Their contributions are
+recorded and not credited to computation. In particular, a revision written
+by the operator tests whether retained knowledge is used, not whether the
+system learned.
+
+This lets us test whether later improvement is actually mediated by the
+retained state.
+
+## Then test accumulation
+
+Single-step learning is only the beginning. A useful learner must eventually
+accumulate many revisions without becoming incoherent, overfitting to recent
+cases, or retaining obsolete knowledge. Long-horizon tests will therefore
+matter, but only after the basic causal mechanism is established.
+
+## The hypotheses
+
+The first tests are component tests. They do not substitute for the three
+whole-program hypotheses the program adopted on 2026-09-17, quoted here as
+adopted. "Currently public" means available as of that date; "training"
+means retained changes to the builder's instructions, knowledge, tools, and
+orchestration, not changes to model weights.
+
+> **Sufficiency hypothesis.** A training methodology expressed in
+> natural-language and symbolic form is
+> [actionable](../notes/definitions/actionable-methodology.md) for a
+> computational operator using fixed weights from currently public models.
+> Without people performing its internal theory-building roles or designing
+> a new learning method for each area, the builder develops, retains, and
+> uses theories and procedures across declared practical areas. Its later
+> work meets a reliability target under a stated budget and external
+> assessment protocol. An area is a consuming project's domain with an
+> interface that can be declared and observed.
+
+Refuted by a builder that reaches the target only with a person in an
+internal role, or only after a new learning method is designed for an area,
+or that fails to reach it.
+
+> **Comparative hypothesis.** Under matched demands and declared resources,
+> this methodology produces useful capability gains over the frozen seed
+> and a baseline that searches the raw records without the learned
+> methodology. Its downstream reliability is comparable to a human-staffed
+> builder's under a margin set before assessment. The computational
+> comparisons use the same fixed-model constraint and account for both
+> adaptation and task costs.
+
+Refuted by matched runs in which the frozen seed or the raw-record baseline
+does as well at comparable cost, or in which the human-staffed builder
+exceeds the preset margin. The reconstruction test above is this control at
+component scale.
+
+> **Reflection hypothesis.** A builder whose machinery changes pass through
+> a causally connected self-theory acquires extensions that a matched
+> builder without one does not, under the same demands, budget, and
+> external assessment. Better downstream outcomes alone do not test this;
+> the records of a reflective episode and a matched builder that retains
+> content without a self-theory do.
+
+Refuted by a matched builder without a self-theory that acquires the same
+extensions, or by reflective episodes whose records show the machinery
+changes did not pass through the self-theory.
+
+No run has been performed. Our first goal is simpler than any of the three:
+
+> **Show under controlled conditions that retained revisions causally
+> improve later capacity and remain revisable when they turn out to be
+> wrong.**
