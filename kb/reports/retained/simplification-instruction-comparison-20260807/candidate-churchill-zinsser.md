@@ -24,7 +24,7 @@ source_notes:
   - kb/notes/evidence/six-commonplace-paths-establish-broad-addressability-not-completeness.md
   - kb/reference/commonplace-declared-frame.md
   - kb/reference/proposals/ablation-baselines-for-the-declared-objective.md
-  - kb/reference/proposals/revise-behavioral-authority-decomposition.md
+  - kb/notes/proposals/revise-behavioral-authority-decomposition.md
   - kb/reference/tag-readme-trace-observed-causal-connection.md
   - kb/sources/self-harness-harnesses-that-improve-themselves.ingest.md
   - kb/sources/continual-harness-online-adaptation-foundation-agents.ingest.md

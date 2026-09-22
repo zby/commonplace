@@ -45,6 +45,14 @@ the source pin and exact bytes that produced each published review.
 **Write directly to the public path.** Rejected because validation failure
 would damage or remove the last valid review.
 
+**Archive the incumbent first and restore it if the run fails.** Rejected
+because every failure after the archive step would need an exercised inverse,
+and only an exact byte restore could honestly return a human `user-verified`
+attestation that an agent had stripped. Validating a candidate before
+replacement never moves the incumbent, so a failed run has nothing to restore.
+This decision retires the proposal "Recoverable replacement of an incumbent
+review", which weighed this option.
+
 ## Consequences
 
 The skill, schema, validator, and handoff use one small state model. Source

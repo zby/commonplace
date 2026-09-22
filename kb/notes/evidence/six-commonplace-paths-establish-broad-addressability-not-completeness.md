@@ -75,7 +75,7 @@ This gap is stronger than the others for the broader affordance. An uncalibrated
 
 ## What the audit adds to the decomposition
 
-Consumer, channel, and force describe a live local use but do not always identify which use is being assessed. The explanatory-reach and tag-validator cases require **applicability**: the target cohort, aspect, or operation that receives the force and the activation condition under which it acts. Whether applicability becomes a fourth behavioral-authority component or a required qualifier remains open in the [behavioral-authority decomposition proposal](../../reference/proposals/revise-behavioral-authority-decomposition.md), whose prior-art survey precedes any migration of the established record.
+Consumer, channel, and force describe a live local use but do not always identify which use is being assessed. The explanatory-reach and tag-validator cases require **applicability**: the target cohort, aspect, or operation that receives the force and the activation condition under which it acts. Whether applicability becomes a fourth behavioral-authority component or a required qualifier remains open in the [behavioral-authority decomposition proposal](../proposals/revise-behavioral-authority-decomposition.md), whose prior-art survey precedes any migration of the established record.
 
 Three other needs remain adjacent rather than being folded into behavioral authority:
 
@@ -101,4 +101,4 @@ Relevant Notes:
 - [A repeatable operative path keeps a redesign class open to revision](../a-repeatable-operative-path-keeps-a-redesign-class-open-to-revision.md) — extends: supplies the continuity test exercised by the validator and lifecycle cases
 - [Six reported self-improvement paths expose bounded redesign surfaces within supplied methods](./six-reported-self-improvement-paths-expose-bounded-redesign-surfaces.md) — contrasts: applies the same path-relative discipline to six external systems whose research teams remain outside the reported loops
 - [Commonplace as a reflective self-improving system](./commonplace-as-a-reflective-system.md) — see-also: classifies the narrower tag-README episode under the declared human-inclusive frame
-- [Revise the behavioral-authority decomposition](../../reference/proposals/revise-behavioral-authority-decomposition.md) — see-also: owns the unresolved choice between applicability as a field or a required qualifier
+- [Revise the behavioral-authority decomposition](../proposals/revise-behavioral-authority-decomposition.md) — see-also: owns the unresolved choice between applicability as a field or a required qualifier

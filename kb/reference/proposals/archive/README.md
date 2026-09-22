@@ -8,11 +8,9 @@ Nothing here describes a live design question. Everything still current was extr
 
 Three jobs, all deliberate: **re-extraction** (something current was left behind and must be promoted into the frontier), **decision audit** (reconstructing how a choice was reached in more detail than its ADR compresses), and **re-opening** (a foreclosed design becomes live again — which means writing a new proposal in the frontier, not editing one here).
 
-Archived files are frozen. Correct them only for link integrity when something they point at moves.
+This README is the door: nothing else outside the archive links to files in it, so reaching one means coming through the Contents list below. If a job here turns up something still current, it is promoted into the frontier rather than linked to.
 
-This README is the door: nothing else outside the archive links to files in it, so reaching one means coming through the Contents list below. If a job here turns up something still current, promote it into the frontier rather than linking to it.
-
-What must hold of an archived proposal, and why: [`../README.md`](../README.md). How a proposal gets here: [retire an artifact](../../../instructions/retire-artifact.md). Decision record: [ADR 056](../../adr/056-adopted-and-retired-proposals-archive-out-of-the-frontier.md).
+This README is navigation only; it states no rules ([ADR 084](../../adr/084-kind-rules-live-in-type-specs-and-operations-in-instructions.md)). What holds of an archived proposal, including that it is frozen, is in the [design proposal type](../../types/design-proposal.md). How a proposal gets here: [retire an artifact](../../../instructions/retire-artifact.md). Decision record: [ADR 056](../../adr/056-adopted-and-retired-proposals-archive-out-of-the-frontier.md).
 
 ## Contents
 
@@ -30,3 +28,5 @@ What must hold of an archived proposal, and why: [`../README.md`](../README.md).
 - [Review link budget prices reviewer attention](./review-link-budget-prices-reviewer-attention.md) — retired by ADR 082, 2026-08-27. The two-term attention heuristic and its sizing-command split, plus the 337-target offered-cost distribution (p50 7 artifacts / 67 KB, p90 16 / 148 KB, max 35 / 355 KB) that the unidentified α/β ratio was to be derived from.
 - [Exceeding a review budget splits the task](./exceeding-a-review-budget-splits-the-task.md) — retired by ADR 082, 2026-08-27. The four partition options for an over-budget review and the joint-support hazard that ruled out partitioning by link, alongside the review pair's atomicity as it stood before the artifact-side bound.
 - [Review budget enforcement is a separable decision](./review-budget-enforcement-is-separable.md) — retired by ADR 082, 2026-08-27. The fail-versus-disclose question for an exceeded review budget, its four enforcement options, and the density-penalty and erosion forces weighed on each.
+- [Recoverable replacement of an incumbent review](./recoverable-replacement-of-an-incumbent-review.md) — retired by ADR 083, 2026-09-04. The archive-first legacy writer's fourteen-step state, the three restore options, and the `user-verified` attestation force behind recording exact restore as a rejected alternative.
+- [Where subtree-scoped write-time contracts live](./where-subtree-scoped-write-time-contracts-live.md) — adopted by ADR 084, 2026-09-22. The 2026-07-25 state with seven proposal clauses in an unread README, the commits whose contract edits staled nothing, and the five-option space (status quo, COLLECTION.md fold, local type, nested contracts, area surface) behind placing rules by what they bind.

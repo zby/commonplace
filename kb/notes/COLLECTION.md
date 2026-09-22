@@ -125,7 +125,7 @@ Use `kb/notes/evidence/` when a note's primary contribution is what a bounded da
 
 ## Proposal placement
 
-Use `kb/notes/proposals/` for finished theory the KB has not decided to import into its vocabulary: frameworks, distinctions, terms, and changes to adopted definitions. Placement follows adoption state, not doubt about the content; a conjecture that needs no new vocabulary is an ordinary note that states its conjectural force. Other notes may point to a proposal but do not cite it as a premise or use its terms as settled vocabulary. The directory's [README](./proposals/README.md) holds the contract: what a proposal must state, and how it is adopted or deleted.
+Use `kb/notes/proposals/` for finished theory the KB has not decided to import into its vocabulary: frameworks, distinctions, terms, and changes to adopted definitions. Placement follows adoption state, not doubt about the content; a conjecture that needs no new vocabulary is an ordinary note that states its conjectural force. Every artifact under `proposals/` carries the collection-local [`theory-proposal`](./types/theory-proposal.md) type, which states what a proposal must contain and how it is adopted or deleted ([ADR 084](../reference/adr/084-kind-rules-live-in-type-specs-and-operations-in-instructions.md)). Other notes may point to a proposal but do not cite it as a premise or use its terms as settled vocabulary.
 
 ## What does NOT belong here
 

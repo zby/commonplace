@@ -21,7 +21,7 @@ Two destinations. **Delete** is the default. **Archive** moves the file into a s
 
 1. **Read the target's type spec to find its destination.** Open the file named by the artifact's `type:` frontmatter. If it names an archive directory, the destination is archive and that directory is where the file goes; if it says nothing about retirement, the destination is delete.
 
-   Current assignment — `design-proposal` archives to `kb/reference/proposals/archive/`; every other type deletes.
+   Current assignment — `design-proposal` archives to `kb/reference/proposals/archive/` when adopted or retired by a decision, and deletes when withdrawn; every other type deletes.
 
    If the type spec is silent and you believe archive is right, stop and settle it as a type-level decision rather than deciding per artifact. The test is what survives a complete extraction (steps 2 and 4). Archive when that residue is **irreproducible observation** — dated measurements of a state that no longer exists, which nobody can re-derive at any price. Delete when it is claims: a successor either carries them or falsifies them, and either way nothing is lost.
 
@@ -135,5 +135,5 @@ Relevant Notes:
 
 - [Freshness architecture](../reference/freshness-architecture.md) — operates-on: the baseline store step 9 mutates
 - [Commands](../reference/commands.md) — operates-on: the relocation and freshness command surfaces this procedure calls
-- [Proposals](../reference/proposals/README.md) — operates-on: the contract stating which proposals are eligible to archive and what must hold afterwards
+- [Design proposal](../reference/types/design-proposal.md) — operates-on: the type stating which proposals are eligible to archive and what must hold afterwards
 - [Indexes lower recall when they suppress retrieval that would find more](../notes/indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more.md) — rests-on: why a misleading pointer can suppress the fallback that a missing pointer would trigger, which is what steps 3, 6, and 8 guard against

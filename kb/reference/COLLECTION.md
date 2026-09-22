@@ -65,7 +65,7 @@ to read a reference document is a warning most changers will miss.
 
 **Fidelity constraint.** Describe the system as built, even when the implementation deviates from the theory that inspired it. If the system does X but the theory says Y, describe X and note the deviation — the `rests-on` link may carry the qualifier.
 
-**Proposal exception.** Design proposals — finished but unadopted designs — live only under `proposals/` and carry the collection-local `design-proposal` type. A proposal describes a design object faithfully (problem, option space, forces, free choices marked), not shipped behavior; its description leads with "Proposal:" so a reader acting on reference docs never mistakes proposed for shipped. Once adopted or retired, a proposal is extracted and moved to `proposals/archive/`, which nothing outside it links into (ADR 056). Conventions: [proposals/README.md](./proposals/README.md).
+**Proposal exception.** Design proposals — finished but unadopted designs, which describe a design object rather than shipped behavior — live only under `proposals/`, and every artifact there carries the collection-local [`design-proposal`](./types/design-proposal.md) type. Every file directly under `proposals/` is a live, undecided design. Adopted and retired proposals live only under `proposals/archive/`, and no artifact outside it links into it except files under `kb/work/` ([ADR 056](./adr/056-adopted-and-retired-proposals-archive-out-of-the-frontier.md)). What a proposal must be, and the procedure for each lifecycle transition, is stated by its type ([ADR 084](./adr/084-kind-rules-live-in-type-specs-and-operations-in-instructions.md)).
 
 ## Title and description conventions
 

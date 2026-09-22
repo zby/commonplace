@@ -97,6 +97,8 @@ The ordinary writing path composes three files at read time:
 
 There is no generated write-context packet or resolver command. After writing, validation is authoritative for deterministic conformance.
 
+No third file joins this composition. A subdirectory inside a collection carries no binding rules, and a README there is navigation only. A rule that binds one kind of artifact goes in that kind's type spec — collection-local when the kind exists in one collection — and a rule about what may live where goes in `COLLECTION.md`. Lifecycle operations are instructions in `kb/instructions/`, named from the type spec ([ADR 084](./adr/084-kind-rules-live-in-type-specs-and-operations-in-instructions.md)).
+
 ---
 
 Relevant documentation:

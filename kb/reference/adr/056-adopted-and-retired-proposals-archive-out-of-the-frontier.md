@@ -10,6 +10,8 @@ status: accepted
 **Status:** accepted
 **Date:** 2026-07-25
 **Amended by:** [ADR 074](./074-git-is-the-change-history-layer.md) — narrows the git-history argument to consumers without history; decision-audit measurements may live in git
+**Amended by:** [ADR 084](./084-kind-rules-live-in-type-specs-and-operations-in-instructions.md) — the archiving rules are carried by the `design-proposal` type spec and `retire-artifact`, not by the proposals and archive READMEs
+**Amended by:** [ADR 085](./085-withdrawn-proposals-are-deleted.md) — adds withdrawal, by deletion, for proposals whose trigger lapsed with no foreclosing decision
 
 ## Context
 

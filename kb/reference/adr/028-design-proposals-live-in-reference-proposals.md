@@ -9,6 +9,7 @@ status: accepted
 
 **Status:** accepted
 **Date:** 2026-06-12
+**Amended by:** [ADR 084](./084-kind-rules-live-in-type-specs-and-operations-in-instructions.md) — the proposal contract moves from `proposals/README.md` into the `design-proposal` type spec
 
 ## Context
 
