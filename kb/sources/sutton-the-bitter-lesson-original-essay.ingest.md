@@ -22,7 +22,10 @@ Sutton argues that AI methods built around general search and learning eventuall
 
 ## Quotes
 
-No source quotes have been retained yet.
+- **Source extract (verbatim):** methods that continue to scale with increased computation
+  - **Source location:** Penultimate paragraph, beginning “One thing that should be learned”, description of general purpose methods.
+- **Source extract (verbatim):** The two methods that seem to scale arbitrarily in this way are search and learning.
+  - **Source location:** Penultimate paragraph, final sentence; “this way” refers to continuing to scale with increased computation.
 
 ## Connections Found
 
