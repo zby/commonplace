@@ -8,11 +8,9 @@ Nothing here describes a live design question. Everything still current was extr
 
 Three jobs, all deliberate: **re-extraction** (something current was left behind and must be promoted into the frontier), **decision audit** (reconstructing how a choice was reached in more detail than its ADR compresses), and **re-opening** (a foreclosed design becomes live again — which means writing a new proposal in the frontier, not editing one here).
 
-Archived files are frozen. Correct them only for link integrity when something they point at moves.
+This README is the door: nothing else outside the archive links to files in it, so reaching one means coming through the Contents list below. If a job here turns up something still current, it is promoted into the frontier rather than linked to.
 
-This README is the door: nothing else outside the archive links to files in it, so reaching one means coming through the Contents list below. If a job here turns up something still current, promote it into the frontier rather than linking to it.
-
-What must hold of an archived proposal, and why: [`../README.md`](../README.md). How a proposal gets here: [retire an artifact](../../../instructions/retire-artifact.md). Decision record: [ADR 056](../../adr/056-adopted-and-retired-proposals-archive-out-of-the-frontier.md).
+This README is navigation only; it states no rules ([ADR 084](../../adr/084-kind-rules-live-in-type-specs-and-operations-in-instructions.md)). What holds of an archived proposal, including that it is frozen, is in the [design proposal type](../../types/design-proposal.md). How a proposal gets here: [retire an artifact](../../../instructions/retire-artifact.md). Decision record: [ADR 056](../../adr/056-adopted-and-retired-proposals-archive-out-of-the-frontier.md).
 
 ## Contents
 

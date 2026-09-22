@@ -135,5 +135,5 @@ Relevant Notes:
 
 - [Freshness architecture](../reference/freshness-architecture.md) — operates-on: the baseline store step 9 mutates
 - [Commands](../reference/commands.md) — operates-on: the relocation and freshness command surfaces this procedure calls
-- [Proposals](../reference/proposals/README.md) — operates-on: the contract stating which proposals are eligible to archive and what must hold afterwards
+- [Design proposal](../reference/types/design-proposal.md) — operates-on: the type stating which proposals are eligible to archive and what must hold afterwards
 - [Indexes lower recall when they suppress retrieval that would find more](../notes/indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more.md) — rests-on: why a misleading pointer can suppress the fallback that a missing pointer would trigger, which is what steps 3, 6, and 8 guard against
