@@ -41,6 +41,26 @@ static surrogate. These sources distinguish navigation problems and motivate
 agent-side tests. They do not establish LLM-agent behavior or choose a tag
 interface.
 
+## External comparison: Gwern (2026-09-22)
+
+[Gwern’s tag design (snapshot required)](../../sources/gwern-design-of-this-website.ingest.md)
+supplies a concrete alternative to the proposed separation of heads from
+members. Its tag pages can themselves carry tags, but those assignments serve
+as nonrecursive cross-references and may cycle. That mechanism supports
+related-topic navigation without establishing a subtype relation. Commonplace
+could retain the proposed exclusion of heads from membership while exposing
+such routes through explicit links; this comparison does not settle the choice.
+
+Gwern also reuses tag membership to generate bibliographies inside other pages
+and offers compact previews before full listings. Commonplace already separates
+curated heads from generated membership views. The remaining questions are
+whether repeated manual bibliographies justify another derived view and whether
+compact previews improve an agent’s next-read decisions. Browser convenience
+alone does not answer either question. The companion
+[tag-maintenance and browsing proposal](./tag-maintenance-and-derived-browsing.md)
+records the inspected implementation, candidate experiments, and the boundary
+between temporary generated groups and canonical membership changes.
+
 ## Forces
 
 - A tag must be precise enough that writers, readers, and deterministic
