@@ -1,32 +1,24 @@
 ---
-description: Definition — codification is constraining that crosses from natural language into a symbolic artifact with formal semantics or assigned consequences; executable code is the main practical KB case
+description: "Definition — codification is the symbolic region of constraining: a rule or operation is committed to an artifact whose consequences a defined consumer assigns, so readings are excluded rather than disfavored; executable code is the main KB case"
 type: kb/types/definition.md
 tags: [learning-theory, constraining]
 ---
 
 # Codification
 
-The symbolic region of [constraining](./constraining.md): constraining that crosses from natural language into a symbolic artifact with formal semantics or assigned consequences. In the main practical KB case, natural-language instructions become executable code. More generally, the medium changes from natural-language content interpreted by an LLM or human into a symbolic form interpreted by a runtime, parser, validator, type checker, query engine, or other formal consumer. It is a phase transition: the nature of the artifact changes fundamentally.
+Codification is the symbolic region of [constraining](./constraining.md): a rule or operation stated in natural language is committed to a symbolic artifact whose consequences a defined consumer assigns — a runtime, parser, validator, type checker, query engine, or resolver. The consumer changes from a model or human who reinterprets the text on each use to one that applies fixed consequences, so readings outside the committed one are excluded rather than disfavored. Executable code is the main practical KB case. A formal semantics is sufficient but not necessary: most programming languages have none, yet an implementation settles what a program does ([representational form](./representational-form.md)).
 
-This is the KB's internal technical use of the word. It is narrower than ordinary "codification," which can mean putting norms into systematic written form, including legal codes, formal policies, or other precise prose. In this KB, same-form natural-language formalization is constraining, but not codification unless the result is a symbolic artifact whose elements have formal semantics or defined operational consequences.
-
-Codification is not a separate mechanism from constraining; it's what constraining looks like when it goes all the way. The rest of constraining (definitions, conventions, structured sections, clearer descriptions) constrains the interpretation space while staying in natural language. Codification leaves natural-language interpretation for a symbolic medium.
+This is the KB's internal technical use of the word. It is narrower than ordinary "codification," which can mean putting norms into systematic written form, including legal codes, formal policies, or other precise prose. In this KB, making natural language more precise is constraining, but not codification unless the result is a symbolic artifact whose consequences a defined consumer assigns.
 
 ## Scope
 
-Use the term codification when an operation or rule has been committed to a symbolic consumer: code, scripts, schemas, validators, tests, parsers, route tables, grammars, type declarations, query expressions, or other artifacts whose consequences are assigned by a formal system rather than reinterpreted by an LLM each time.
+Use the term when a rule or operation has been committed to a symbolic artifact: code, scripts, schemas, validators, tests, parsers, route tables, grammars, type declarations, query expressions, or other artifacts whose consequences a defined consumer assigns instead of a model reinterpreting them on each use.
 
-Codification may draw on a larger body of recorded reasoning, but it does not have to. When accumulated methodology is worked into a script, the artifact is both source-derived and codified. When a one-off spec is directly translated into a schema, table, or program, it is codification with no larger body of reasoning behind it.
-
-## Codification and source lineage
-
-Codification can also be source-derived. When it draws on accumulated methodology or practice, it transforms source material for a bounded consumer and commits the result to a symbolic medium — the `derived-from` lineage labels carry that relationship. One-shot codification — directly translating a spec into code with no larger body of reasoning behind it — is constraining without source lineage.
-
-Examples: replacing an LLM slug generator with `python-slugify`; moving CSV statistics from LLM arithmetic to Python's `statistics` module; extracting mechanical frontmatter checks from a validation skill into a Python script; turning allowed frontmatter values into a schema enum; or expressing a route decision as a table consumed by a resolver. Executable code is the common case because KB operations often need commands and validators, but the broader point is symbolic commitment: the operation has consequences assigned by the artifact's formal semantics.
+Examples: replacing an LLM slug generator with `python-slugify`; moving CSV statistics from LLM arithmetic to Python's `statistics` module; extracting mechanical frontmatter checks from a validation skill into a Python script; turning allowed frontmatter values into a schema enum; expressing a route decision as a table consumed by a resolver. Executable code is the common case because KB operations often need commands and validators.
 
 ## Exclusions
 
-Writing a convention is not codification when it stays in natural language; it constrains interpretation but keeps the LLM or human as the interpreter. Extracting a skill from methodology notes is not codification when the skill remains natural-language instructions; it is same-medium derivation, [since skills derive from methodology](../skills-derive-from-methodology.md) without a phase change.
+Writing a convention is not codification when it stays in natural language; it constrains interpretation but keeps the model or human as the interpreter. A skill extracted from methodology notes is not codification while its instructions remain natural language, [since skills derive from methodology](../skills-derive-from-methodology.md) without changing representational form.
 
 Turning a rule into legalese, a standards document, or a formal prose policy is not codification in this KB's technical sense. It may be strong constraining, but the artifact still depends on natural-language interpretation.
 
@@ -34,29 +26,33 @@ Structured Markdown, YAML, or JSON is not automatically codification. It becomes
 
 Numerical content does not by itself require codification. An exact numerical claim can be stated and tested in natural language; it needs symbolic form only when its consequences must be assigned by a formal consumer, such as mechanically repeatable computation or acceptance.
 
-The same crossing gives a part of a retained theory a computed consequence
-relation. A prose part's consequences depend on what its interpreter derives;
-a codified part's consequences are assigned by its formal consumer.
-Codification alone does not supply diagnosis or successful repair. A failed
-check must be connected to the theory commitments it tests before it can
-guide candidate edits. [Addressability](./addressable-theory.md) makes parts
-available for inspection and separate revision; it does not guarantee that
-the identified part caused the failure or that the revision repairs it.
+## Codified parts of a theory
+
+The same crossing gives a part of a retained theory a computed consequence relation. A natural-language part's consequences depend on what its interpreter derives; a codified part's consequences are assigned by its consumer. Codification alone does not supply diagnosis or successful repair. A failed check must be connected to the theory commitments it tests before it can guide candidate edits. [Addressability](./addressable-theory.md) makes parts available for inspection and separate revision; it does not guarantee that the identified part caused the failure or that the revision repairs it.
+
+## Codification and relaxing
+
+[Progressive constraining](../progressive-constraining-commits-only-after-patterns-stabilize.md) commits a pattern to code once observed runs show it is stable; committing a single LLM output instead freezes an arbitrary reading. How far codification can go depends on the available checks: [hard oracles make it easier, weak oracles resist it](../oracle-strength-spectrum.md). Every codification is a bet that the committed reading stays right. [Relaxing](../codification-and-relaxing-navigate-the-bitter-lesson-boundary.md) reverses it when the reading turns out to be a wrong proxy, or when a more general component handles the case well enough.
 
 ## Misuse Cases
 
 - Calling every clearer instruction "codified" even though the consumer is still an LLM interpreting natural language.
 - Calling legalistic or policy prose codified in this KB's technical sense just because it is formalized.
 - Calling a natural-language skill codified merely because it has frontmatter. The frontmatter may be symbolic, but the operative guidance can still be natural-language.
-- Treating only executable code as codification. Code is the main practical case, but schemas, grammars, tables, and other symbolic artifacts can also codify when their formal semantics drive behavior.
+- Treating only executable code as codification. Code is the main practical case, but schemas, grammars, tables, and other symbolic artifacts also codify when a defined consumer assigns their consequences.
+- Treating a codified check as a codified requirement. A validator excludes readings only within the predicate it checks; when that predicate is a [proxy](../exact-implementation-does-not-validate-a-requirement.md), the requirement itself remains interpreted.
 
 ---
 
 Relevant Notes:
 
 - [constraining](./constraining.md) — defined-in: codification is the symbolic region of constraining, where readings are excluded rather than disfavored
-- [skills derive from methodology](../skills-derive-from-methodology.md) — contrasts: same-medium derivation, the reshaping that stays natural-language where codification crosses into a symbolic artifact
-- [the verifiability gradient](../verifiability-gradient.md) — the ladder across which codification sits at the far end
-- [spec-mining-as-codification](../spec-mining-as-codification.md) — the operational mechanism: observe behavior, extract patterns, write deterministic code
-- [oracle-strength-spectrum](../oracle-strength-spectrum.md) — operational guidance: hard oracles make codification easier, weak oracles resist it
-- [Harness Engineering (Lopopolo, 2026)](https://openai.com/index/harness-engineering/) — exemplifies: encoding quality standards into linters that replace manual judgment is codification at production scale
+- [representational form](./representational-form.md) — defined-in: what makes an artifact symbolic: a defined consumer assigns its consequences
+- [addressable theory](./addressable-theory.md) — defined-in: parts of a theory available for inspection and separate revision
+- [skills derive from methodology](../skills-derive-from-methodology.md) — contrasts: derivation that stays natural language, where codification changes representational form
+- [progressive constraining commits only after patterns stabilize](../progressive-constraining-commits-only-after-patterns-stabilize.md) — extends: when a pattern is stable enough to codify
+- [spec mining as codification](../spec-mining-as-codification.md) — mechanism: observe behavior, extract patterns, write deterministic code
+- [oracle strength spectrum](../oracle-strength-spectrum.md) — extends: how the available checks limit codification
+- [codification and relaxing navigate the bitter-lesson boundary](../codification-and-relaxing-navigate-the-bitter-lesson-boundary.md) — extends: when to reverse a codification
+- [fixed artifacts split into exact specs and proxy theories](../exact-implementation-does-not-validate-a-requirement.md) — extends: when a codified check stands in for its requirement
+- [the verifiability gradient](../verifiability-gradient.md) — extends: the checks that decide how far constraining can go with confidence
