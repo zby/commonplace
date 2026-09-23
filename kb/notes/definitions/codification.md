@@ -1,12 +1,12 @@
 ---
-description: "Definition — codification is the symbolic region of constraining: a rule or operation is committed to an artifact with formal semantics or, more generally, a unique operational semantics, so readings are excluded, not disfavored"
+description: "Definition — codification is the symbolic region of constraining: a rule or operation is committed to an artifact with formal semantics or, more generally, fixed rules that determine what behavior is permitted"
 type: kb/types/definition.md
 tags: [learning-theory, constraining]
 ---
 
 # Codification
 
-Codification is the symbolic region of [constraining](./constraining.md): a rule or operation stated in natural language is committed to a symbolic artifact with a **unique operational semantics** — one correct behavior, fixed by a runtime, parser, validator, type checker, query engine, or resolver, so that when two consumers disagree, one of them is wrong. The consumer changes from a model or human who reinterprets the text on each use to one bound by that semantics, so readings outside the committed one are excluded rather than disfavored. Executable code is the main practical KB case. The best intuition is formal semantics: the artifact's meaning is fixed by rules rather than by whoever reads it. The criterion is slightly weaker, because most programming languages have no formal semantics, yet their implementations [aim at a unique operational semantics](../agentic-systems-interpret-underspecified-instructions.md).
+Codification is the symbolic region of [constraining](./constraining.md): a rule or operation stated in natural language is committed to a symbolic artifact with a **unique operational semantics**: fixed rules, implemented by a runtime, parser, validator, type checker, query engine, or resolver, determine what behavior is permitted, including any variation they explicitly allow. When two consumers disagree about what those rules permit, one of them is wrong. The consumer changes from a model or human who reinterprets the text on each use to one bound by those rules, so what the artifact permits no longer depends on who reads it, and departures from it are bugs rather than an expected failure rate. Executable code is the main practical KB case. The best intuition is formal semantics: the artifact's meaning is fixed by rules rather than by whoever reads it. The criterion is slightly weaker, because most programming languages have no formal semantics, yet their implementations [aim at a unique operational semantics](../agentic-systems-interpret-underspecified-instructions.md).
 
 This is the KB's internal technical use of the word. It is narrower than ordinary "codification," which can mean putting norms into systematic written form, including legal codes, formal policies, or other precise prose. In this KB, making natural language more precise is constraining, but not codification unless the result is a symbolic artifact with a unique operational semantics.
 
@@ -46,7 +46,7 @@ The same crossing gives a part of a retained theory a computed consequence relat
 
 Relevant Notes:
 
-- [constraining](./constraining.md) — defined-in: codification is the symbolic region of constraining, where readings are excluded rather than disfavored
+- [constraining](./constraining.md) — defined-in: codification is the symbolic region of constraining, where fixed rules settle what the artifact permits
 - [representational form](./representational-form.md) — defined-in: what makes an artifact symbolic: a unique operational semantics, localized in an identifiable unit
 - [addressable theory](./addressable-theory.md) — defined-in: parts of a theory available for inspection and separate revision
 - [skills derive from methodology](../skills-derive-from-methodology.md) — contrasts: derivation that stays natural language, where codification changes representational form

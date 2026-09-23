@@ -12,17 +12,17 @@ Representational form classifies how content is encoded and consumed. This KB us
 
 **Natural-language** content gets its consequences from interpretation by a language model or human. Prompts, reflections, notes, policies, playbooks, and many skills are natural-language.
 
-**Symbolic** content sits in localized units with a unique operational semantics: a parser, interpreter, runtime, schema, validator, route table, or similar consumer fixes one correct behavior. The category is architectural, not a claim about classical symbolic AI.
+**Symbolic** content sits in localized units with a unique operational semantics: fixed rules, implemented by a parser, interpreter, runtime, schema, validator, route table, or similar consumer, determine what behavior is permitted, including any variation they explicitly allow. The category is architectural, not a claim about classical symbolic AI.
 
 **Distributed-parametric** content is numerical state distributed across parameters or dense representations: weights, adapters, embedding spaces, dense-vector indexes, reward models, learned controllers, and similar artifacts.
 
 Form sets the default inspection method: read natural-language content, test or statically check symbolic artifacts, and probe distributed-parametric artifacts behaviorally.
 
-Form also sets how strongly a commitment binds: [constraining](./constraining.md) in natural language biases the interpreter, while symbolic commitment excludes readings. Moves between forms are named operations: [codification](./codification.md) moves content from natural-language into symbolic form, [relaxing](../codification-and-relaxing-navigate-the-bitter-lesson-boundary.md) replaces a constrained component with a more general one, and training moves content into distributed-parametric form.
+Form also sets what a commitment leaves open: [constraining](./constraining.md) in natural language leaves reasonable readings at its edges and depends on an interpreter that fails to comply at some rate, while symbolic commitment settles by fixed rules what is permitted. Moves between forms are named operations: [codification](./codification.md) moves content from natural-language into symbolic form, [relaxing](../codification-and-relaxing-navigate-the-bitter-lesson-boundary.md) replaces a constrained component with a more general one, and training moves content into distributed-parametric form.
 
 ## Derivation
 
-Two axes generate the categories. **Assigned consequences** — does the artifact have a unique operational semantics, so its consumer fixes what it does, or is it reinterpreted on each consumption? A formal semantics is sufficient but not necessary: most programming languages have none, and still sit on this side because their implementations aim at a unique operational semantics, so two consumers disagreeing means one of them is wrong. Natural language has no such adjudicator — two readings can both be reasonable — which is [underspecification](../agentic-systems-interpret-underspecified-instructions.md), not a defect of any particular text. **Localization** — is there an identifiable unit carrying the content, or is it spread across numerical state with no addressable part?
+Two axes generate the categories. **Assigned consequences** — does the artifact have a unique operational semantics — fixed rules that determine what it permits — or is it reinterpreted on each consumption? A formal semantics is sufficient but not necessary: most programming languages have none, and still sit on this side because their implementations aim at a unique operational semantics, so two consumers disagreeing about what the rules permit means one of them is wrong. Natural language has no such adjudicator — two readings can both be reasonable — which is [underspecification](../agentic-systems-interpret-underspecified-instructions.md), not a defect of any particular text. **Localization** — is there an identifiable unit carrying the content, or is it spread across numerical state with no addressable part?
 
 | | localized | non-localized |
 |---|---|---|
@@ -57,7 +57,7 @@ Representational form is also not consumption path. **Prompt** is exact when mat
 Relevant Notes:
 
 - [operative part](./operative-part.md) — defined-in: the unit for splitting mixed artifacts, not necessarily the whole stored object
-- [constraining](./constraining.md) — defined-in: form decides whether a commitment biases the interpreter or excludes readings
+- [constraining](./constraining.md) — defined-in: form decides what a commitment leaves open
 - [codification](./codification.md) — defined-in: the move from natural-language into symbolic form
 - [storage substrate](./storage-substrate.md) — contrasts: where content is stored, separate from how it is encoded
 - [behavioral authority](./behavioral-authority.md) — contrasts: which consumer applies content, through which channel, and with what force
