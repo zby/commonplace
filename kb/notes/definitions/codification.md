@@ -47,7 +47,7 @@ The same crossing gives a part of a retained theory a computed consequence relat
 Relevant Notes:
 
 - [constraining](./constraining.md) — defined-in: codification is the symbolic region of constraining, where readings are excluded rather than disfavored
-- [representational form](./representational-form.md) — defined-in: what makes an artifact symbolic: a defined consumer assigns its consequences
+- [representational form](./representational-form.md) — defined-in: what makes an artifact symbolic: a unique operational semantics, localized in an identifiable unit
 - [addressable theory](./addressable-theory.md) — defined-in: parts of a theory available for inspection and separate revision
 - [skills derive from methodology](../skills-derive-from-methodology.md) — contrasts: derivation that stays natural language, where codification changes representational form
 - [progressive constraining commits only after patterns stabilize](../progressive-constraining-commits-only-after-patterns-stabilize.md) — extends: when a pattern is stable enough to codify

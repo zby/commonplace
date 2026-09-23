@@ -12,7 +12,7 @@ Representational form classifies how a retained artifact's [operative part](./op
 
 **Natural-language** carries behavior-shaping content whose consequences come from interpretation by a language model or human. Prompts, reflections, notes, policies, playbooks, and many skills have natural-language operative parts where their force comes from interpretation.
 
-**Symbolic** carries behavior-shaping content in localized units whose consequences are assigned by a parser, interpreter, runtime, schema, validator, route table, or other defined consumer. The category is architectural, not a claim about classical symbolic AI.
+**Symbolic** carries behavior-shaping content in localized units with a unique operational semantics: a parser, interpreter, runtime, schema, validator, route table, or similar consumer fixes one correct behavior. The category is architectural, not a claim about classical symbolic AI.
 
 **Distributed-parametric** carries behavior-shaping content in numerical state distributed across parameters or dense representations: weights, adapters, embedding spaces, dense-vector indexes, reward models, learned controllers, and similar artifacts.
 
@@ -20,7 +20,7 @@ Form sets the default inspection method: read natural-language content, test or 
 
 ## Derivation
 
-Two axes generate the categories. **Assigned consequences** — does a defined consumer fix what the artifact does, or is it reinterpreted on each consumption? A formal semantics is sufficient but not necessary: most programming languages have none, and still sit on this side because an implementation adjudicates, so two consumers disagreeing means one of them is wrong. Natural language has no such adjudicator — two readings can both be reasonable — which is [underspecification](../agentic-systems-interpret-underspecified-instructions.md), not a defect of any particular text. **Localization** — is there an identifiable unit carrying the content, or is it spread across numerical state with no addressable part?
+Two axes generate the categories. **Assigned consequences** — does the artifact have a unique operational semantics, so its consumer fixes what it does, or is it reinterpreted on each consumption? A formal semantics is sufficient but not necessary: most programming languages have none, and still sit on this side because their implementations aim at a unique operational semantics, so two consumers disagreeing means one of them is wrong. Natural language has no such adjudicator — two readings can both be reasonable — which is [underspecification](../agentic-systems-interpret-underspecified-instructions.md), not a defect of any particular text. **Localization** — is there an identifiable unit carrying the content, or is it spread across numerical state with no addressable part?
 
 | | localized | non-localized |
 |---|---|---|
@@ -44,7 +44,7 @@ Representational form is also not consumption path. **Prompt** is exact when mat
 ## Misuse Cases
 
 - Calling learned weights "opaque" as if opacity were the form. The form is distributed-parametric; opacity is a practical inspection property that also appears at sufficient scale in natural-language and symbolic systems.
-- Calling every YAML or Markdown artifact symbolic. It is symbolic only where a consumer assigns defined consequences to specific fields, values, or structures.
+- Calling every YAML or Markdown artifact symbolic. It is symbolic only where specific fields, values, or structures have a unique operational semantics.
 
 ## Revision rationale
 
