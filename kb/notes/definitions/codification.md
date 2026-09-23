@@ -1,12 +1,12 @@
 ---
-description: "Definition — codification is the symbolic region of constraining: a rule or operation is committed to an artifact whose consequences a defined consumer assigns, so readings are excluded rather than disfavored; executable code is the main KB case"
+description: "Definition — codification is the symbolic region of constraining: a rule or operation is committed to an artifact with formal semantics or, more generally, consequences a defined consumer assigns, so readings are excluded, not disfavored"
 type: kb/types/definition.md
 tags: [learning-theory, constraining]
 ---
 
 # Codification
 
-Codification is the symbolic region of [constraining](./constraining.md): a rule or operation stated in natural language is committed to a symbolic artifact whose consequences a defined consumer assigns — a runtime, parser, validator, type checker, query engine, or resolver. The consumer changes from a model or human who reinterprets the text on each use to one that applies fixed consequences, so readings outside the committed one are excluded rather than disfavored. Executable code is the main practical KB case. A formal semantics is sufficient but not necessary: most programming languages have none, yet an implementation settles what a program does ([representational form](./representational-form.md)).
+Codification is the symbolic region of [constraining](./constraining.md): a rule or operation stated in natural language is committed to a symbolic artifact whose consequences a defined consumer assigns — a runtime, parser, validator, type checker, query engine, or resolver. The consumer changes from a model or human who reinterprets the text on each use to one that applies fixed consequences, so readings outside the committed one are excluded rather than disfavored. Executable code is the main practical KB case. The best intuition is formal semantics: the artifact's meaning is fixed by rules rather than by whoever reads it. The criterion is slightly weaker than that, because most programming languages have no formal semantics, yet an implementation settles what a program does ([representational form](./representational-form.md)).
 
 This is the KB's internal technical use of the word. It is narrower than ordinary "codification," which can mean putting norms into systematic written form, including legal codes, formal policies, or other precise prose. In this KB, making natural language more precise is constraining, but not codification unless the result is a symbolic artifact whose consequences a defined consumer assigns.
 
