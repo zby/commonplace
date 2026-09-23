@@ -20,12 +20,23 @@ attribution.
 ## Research program and development path
 
 Commonplace pursues recursive self-improvement within the broad research
-program developed by Schmidhuber. His account includes neural realizations
-of a modifiable learning algorithm
+program developed by Schmidhuber. His account starts from programs: "True
+RSI is about encoding the initial learning algorithm in a universal
+programming language", whose instructions can modify that code itself
 ([RSI retrospective](../sources/recursive-self-improvement-since-1987.ingest.md#quotes)).
-Our chosen realization uses natural language as the retained, revisable
-carrier of knowledge and learning procedures, with LLMs supplying
-interpretation and criticism. Retained theories can guide diagnosis, test
+His example of such a language is a "recurrent neural network or RNN". On
+this reading a network's weights are a program, and his neural realizations
+let a network rewrite its own weights and so its own learning algorithm.
+
+We extend the same reading one step further: a natural-language prompt that
+an LLM interprets is also a program. The fixed-weight model and harness are
+its interpreter, and the prompt can describe how to revise prompts,
+including itself. Unlike code, such a program has no formal semantics; the
+interpreter's judgments fix what it does where the text leaves choices open.
+This is our interpretation, not Schmidhuber's claim. Our chosen realization
+therefore uses natural language as the retained, revisable carrier of
+knowledge and learning procedures, with LLMs supplying interpretation and
+criticism. Retained theories can guide diagnosis, test
 selection, and procedure revision; the research objective includes making
 subsequent improvement work more productive.
 
