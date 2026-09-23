@@ -36,7 +36,7 @@ The [representational form](./representational-form.md) of the committed choice 
 
 **Natural-language constraining** — definitions, title conventions, structured sections, worked examples, review criteria — biases the interpreter. The consumer is still a model or human who can find another reasonable reading, so disfavored readings become less likely but remain possible.
 
-**[Codification](./codification.md)** — schemas, validators, route tables, deterministic code — excludes readings. A formal consumer assigns the consequences, so readings outside the committed one are rejected rather than disfavored. Codification is constraining that crosses from natural-language into symbolic form, not a separate mechanism.
+**[Codification](./codification.md)** — schemas, validators, route tables, deterministic code — excludes readings. The artifact has a unique operational semantics, so readings outside the committed one are rejected rather than disfavored. Codification is constraining that crosses from natural-language into symbolic form, not a separate mechanism.
 
 Many constraints never need to cross. A definition note narrows a term's meaning and stays natural language.
 
@@ -55,7 +55,7 @@ Constraining is not result selection. [Retaining one LLM output](../selecting-an
 ## Misuse Cases
 
 - Calling every improvement constraining. A change that adds information or makes an operation easier is not constraining unless some reading becomes invalid or dispreferred.
-- Treating constraining as synonymous with codification. Codification is only the region where a formal consumer assigns the consequences.
+- Treating constraining as synonymous with codification. Codification is only the region where the artifact has a unique operational semantics.
 - Treating a natural-language constraint as an exclusion. "The convention forbids X" does not mean X cannot happen; only codification rules readings out.
 - Stating how constrained an artifact is without naming the consumer.
 
@@ -73,7 +73,7 @@ Gradual typing, formal specification, and ontology engineering each narrow inter
 
 Relevant Notes:
 
-- [codification](./codification.md) — defined-in: the symbolic region of constraining, where a formal consumer assigns the consequences
+- [codification](./codification.md) — defined-in: the symbolic region of constraining, where the artifact has a unique operational semantics
 - [representational form](./representational-form.md) — defined-in: the natural-language/symbolic split behind biasing versus excluding
 - [lineage](./lineage.md) — contrasts: source derivation, independent of how constrained an artifact is
 - [agentic systems interpret underspecified instructions](../agentic-systems-interpret-underspecified-instructions.md) — grounds: why natural-language artifacts leave an interpretation space to narrow
