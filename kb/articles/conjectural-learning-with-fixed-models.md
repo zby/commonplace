@@ -1,5 +1,5 @@
 ---
-description: "Lead article: the bet that a fully automated conjectural learner, a Popperian conjecture-and-criticism cycle over explicit revisable theories, can be built from today's fixed-weight LLMs; conjectured payoff, Bitter Lesson fit, learning test"
+description: "Lead article: the bet that a fully automated conjectural learner, a Popperian conjecture-and-criticism cycle over explicit revisable theories, can be built from today's fixed-weight LLMs; three payoffs, three conjectures, Bitter Lesson, learning test"
 type: kb/articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
@@ -16,10 +16,15 @@ source_notes:
   - kb/notes/the-deployed-system-not-the-model-is-the-unit-of-learning.md
   - kb/notes/retained-artifacts-enable-persistent-deployment-time-adaptation.md
   - kb/notes/retaining-episode-evidence-keeps-a-distilled-rule-open-to.md
+  - kb/notes/inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md
+  - kb/notes/revision-guided-by-rationale-needs-faithfulness-not-just-legibility.md
+  - kb/notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md
+  - kb/notes/naur-equates-machine-execution-with-formulated-criteria.md
+  - kb/notes/definitions/constraining.md
+  - kb/notes/definitions/codification.md
   - kb/notes/the-bitter-lesson-selects-production-methods-not-representational.md
   - kb/notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md
   - kb/notes/an-optimal-long-run-learning-strategy-invests-in-its-own-machinery.md
-  - kb/notes/bitter-lesson-selects-against-unearned-reach-not-against-structure.md
 ---
 
 # Conjectural Learning with Today's LLMs
@@ -27,6 +32,11 @@ source_notes:
 > **Draft.** The claims and structure of this article may change. Comments
 > and counterexamples are welcome on
 > [the repository's GitHub Discussions page](https://github.com/zby/commonplace/discussions).
+
+Agent systems already keep notes, decide what is worth keeping, and revise
+what they kept. How far they run without a person depends on how precisely
+those operations are defined, because an interpreter fills in whatever a
+definition leaves open.
 
 We propose a learning paradigm based on
 [Popper's cycle for the growth of knowledge](https://doi.org/10.1016/S0049-237X(08)71204-7):
@@ -53,8 +63,7 @@ today's fixed-weight LLMs**.
 Fully automated means that every internal role in the cycle is performed
 computationally. Users still set the tasks and judge the results; what the
 learner does not need from people is the formulation, criticism, and
-revision of its own theories. The knowledge base states this boundary as the
-definition of an
+revision of its own theories. That boundary is the definition of an
 [autonomous theory builder](../notes/definitions/autonomous-theory-builder.md).
 
 The learner is not the LLM alone. It is a system containing an LLM together
@@ -73,45 +82,136 @@ Current LLMs already appear capable of the main functions the loop requires:
 - revising explicit knowledge,
 - using retained knowledge in later work.
 
-None of these capabilities needs to be perfect. The point of the cycle is
-precisely to expose and correct errors.
+None of these capabilities needs to be perfect. The point of the cycle is to
+expose and correct errors.
+
+## Formalize it, or leave it to people
+
+Self-improving machines are not new. Schmidhuber's
+[program](https://people.idsia.ch/~juergen/recursive-self-improvement.html)
+has pursued them since 1987: policies that modify their own update rules,
+program search that reuses its earlier solutions, and the
+[Gödel machine](https://arxiv.org/abs/cs/0309048), which may rewrite any part
+of its own software — the proof searcher included — once it has proved that
+the rewrite beats carrying on unchanged. These are real learning machines,
+and the Gödel machine's optimality result is a formal theorem.
+
+What they require is that the work be formalized first. The environment, the
+machine, and the utility function enter as axioms, and a change is admitted
+by a proof under them. The paper is blunt about the consequence: the machine
+"must ignore those self-improvements whose effectiveness it cannot prove."
+We read this as
+[a proof-governed case of self-modification](../notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md):
+rigorous relative to its formalization, and silent about whether that
+formalization is adequate, since a valid proof under the wrong premises
+warrants nothing anyone wanted. The seed is costly for the same reason.
+Everything the first improvement needs has to be there already, in executable
+form.
+
+One operation is missing rather than restricted. Proving that a switch is
+beneficial under the current premises is a different thing from revising
+those premises because cases have gone against them, and the second is most
+of what open-ended learning consists of. Schmidhuber's retrospective leaves
+that operation unspecified.
+
+No one has formalized that operation, and that has generally been taken to
+settle the matter. Peter Naur argued the point from the other side: the
+judgments that relate a program to the world cannot be reduced to formulated
+criteria, so the theory of a program is bound to the people who hold it. As
+the knowledge base
+[reconstructs that inference](../notes/naur-equates-machine-execution-with-formulated-criteria.md),
+it needs one further premise — that a computer can make a judgment only by
+executing criteria formulated in advance. Grant the premise and the work
+divides in two. What can be formalized goes to machines; what cannot stays
+with people. Schmidhuber's constructions push the first half as far as it
+goes, and Naur's conclusion is what the second half implies.
+
+The division is not exhaustive, because narrowing what an artifact can be
+taken to mean is a [gradient](../notes/definitions/constraining.md) rather
+than a switch. Defining a term rules out some readings. A convention rules
+out more. A structured document assigns meaning to positions in it. A schema
+or a validator rejects the readings it does not admit. Only the last steps
+cross into a symbolic medium whose consequences a formal consumer assigns,
+which is what we mean by
+[codification](../notes/definitions/codification.md); everything before them
+is still natural language, waiting to be read. The dichotomy takes the far
+end of that gradient for the whole of it.
+
+An LLM is an interpreter for the middle. A definition written precisely
+enough to rule out the readings that would change what it asks for can be
+applied, by a model, to a case nobody anticipated when it was written. That
+is not formalization — nothing assigns the definition consequences, and the
+interpreter's judgment fixes what happens wherever the words leave a choice
+open. But it is not leaving the operation to people either. This is why the
+paradigm below is stated through definitions and why they are worked as hard
+as they are: what it takes for a retained change to count as operative, what
+makes a theory addressable, what a criticism has to do. Each is constrained
+as far as it will go and then left to the interpreter. Parts that settle can
+be codified afterwards, one at a time, as our validators and schemas have
+been; the rest stays open to criticism.
+
+Two costs come with this position. A proof gate fails closed: it refuses
+every change it cannot certify, including the good ones. An interpreter fails
+open. It will apply a definition that contradicts another definition and
+produce plausible work from either, and nothing in the medium announces the
+contradiction, so error correction has to be built rather than inherited.
+Constraining is not free to add either: a definition pinned down harder than
+the thing is understood freezes a wrong reading in place. And against the
+earlier constructions we give up warrant, since a proof certified each
+accepted change there, where here the interpreter's judgments are hidden and
+have to be checked by other means.
 
 ## A distinct learning paradigm
 
 If this works autonomously, conjectural learning is a distinct learning
-paradigm rather than another agent workflow. Its learning happens through
-explicit, criticizable theories rather than only through changes to model
-weights, and that difference is where the paradigm's possible strengths and
-costs come from.
+paradigm rather than another agent workflow, because its learning happens
+through explicit, criticizable theories rather than only through changes to
+model weights. Three payoffs follow from that difference.
 
-We conjecture three advantages. The knowledge base develops each in its
+**Learning without retraining.** New knowledge becomes available
+[without another weight-training cycle](../notes/retained-artifacts-enable-persistent-deployment-time-adaptation.md),
+so the learner adapts at deployment time rather than at the next training
+run.
+
+**Fewer observations after a shift.** A retained theory may
+[reduce the observations needed after a shift](../notes/retained-theories-may-improve-sample-efficiency.md)
+that preserves the structure it describes, which is the sample-efficiency
+advantage most often claimed for explicit knowledge; the note states the
+conditions under which the claim is plausible.
+
+**A learned state that can be read.** What the system has learned is held in
+natural language, so it can be read, diffed, tested, and reverted the way a
+weight update cannot be. Nothing about this requires a human reader:
+[inspectability is a property of the artifact's form, not of who inspects it](../notes/inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md),
+so agents can do the reading at a volume people could not, and what the
+system has learned stays available for oversight without waiting on progress
+in weight interpretability. But
+[a legible artifact need not be the one actually driving behaviour](../notes/revision-guided-by-rationale-needs-faithfulness-not-just-legibility.md),
+which is why the learning test below alters the retained knowledge instead of
+inspecting it: the medium makes the question testable, not settled.
+
+Three further advantages are conjectural, and concern how well the loop
+learns rather than what its form makes possible. The knowledge base develops
+each in its
 [research companion](../notes/commonplace-studies-conjectural-learning-through-retained-theories.md#three-conjectures).
 
-**Criticism carries content.** When a theory fails, the learner formulates
+*Criticism carries content.* When a theory fails, the learner formulates
 why. A stated diagnosis directs the next attempt differently from a bare
 failure signal, and can save search that variant-and-select methods would
 spend. A wrong diagnosis can also waste it; the conjecture is about what a
 supplied reason buys on balance.
 
-**Theories are addressable.** A theory whose assumptions and parts can be
+*Theories are addressable.* A theory whose assumptions and parts can be
 inspected and revised individually lets criticism name a part, and lets a
-revision keep the rest. The knowledge base calls this property
+revision keep the rest. This property is
 [addressability](../notes/definitions/addressable-theory.md). It can focus
 investigation and preserve useful knowledge through a revision; it can also
 locate a fault in the wrong part.
 
-**Retention beats reconstruction.** Keeping the assembled theory, and the
+*Retention beats reconstruction.* Keeping the assembled theory, and the
 criticism that shaped it, spares the learner from rebuilding both from raw
 records every time. Whether that saving holds at comparable decision quality
 is the efficiency question the companion states in two comparisons.
-
-Two further consequences follow directly. New knowledge becomes available
-[without another weight-training cycle](../notes/retained-artifacts-enable-persistent-deployment-time-adaptation.md),
-so the learner adapts at deployment time. And a retained theory may
-[reduce the observations needed after a shift](../notes/retained-theories-may-improve-sample-efficiency.md)
-that preserves the structure it describes, which is the sample-efficiency
-advantage most often claimed for explicit knowledge; the note states the
-conditions under which the claim is plausible.
 
 Explicit state also has costs. A retained theory requires retrieval,
 applicability checks, revision, validation, and maintenance. A false
@@ -122,37 +222,34 @@ that turns out to be wrong. Construction, retrieval, maintenance, and
 mistakes have to be counted on both sides of any comparison with a
 weights-only learner.
 
-These are empirical questions. The important claim is that the paradigm is
-possible. The bet sits within the
-[recursive self-improvement program Schmidhuber describes](https://people.idsia.ch/~juergen/recursive-self-improvement.html),
-with natural-language theories interpreted by LLMs in place of program
-rewrites; the knowledge base
-[states that positioning](../notes/commonplace-studies-conjectural-learning-through-retained-theories.md#research-program-and-development-path)
-and what it does not claim.
+The advantages and the costs are both empirical questions. The claim that
+matters here is that the paradigm is possible; the companion states
+[what the research program claims and what it does not](../notes/commonplace-studies-conjectural-learning-through-retained-theories.md#research-program-and-development-path).
 
 ## Compatible with the Bitter Lesson
 
 [The Bitter Lesson](http://www.incompleteideas.net/IncIdeas/BitterLesson.html)
-does not require learning to happen through any particular internal
-mechanism. It argues for general methods that scale with computation rather
-than continued injection of human-designed knowledge. What loses in Sutton's
-cases is not explicit structure as such. It is
-[a claim whose reach was asserted rather than earned](../notes/bitter-lesson-selects-against-unearned-reach-not-against-structure.md):
-a generalization fitted to the cases its designers had in mind and never
-tested against the cases that could refute it. Human authorship is the usual
-way such claims are produced, not the property the lesson selects against.
+contrasts leveraging human knowledge with leveraging computation through
+search and learning. That is a claim about how a system's
+behaviour-determining content gets made, not about the form the content is
+kept in. Its folk version, *structure loses to weights*, quietly swaps the
+second for the first; the lesson
+[selects production methods, not representational forms](../notes/the-bitter-lesson-selects-production-methods-not-representational.md).
+Sutton appears to hold something close to the folk version himself — in a
+2026 [interview](https://sequoiacap.com/podcast/rich-sutton-and-khurram-javed-why-ai-models-stop-learning-and-how-to-start-it-again)
+he and Khurram Javed argue that forming new concepts needs continued weight
+updating — but that is a separate hypothesis, which our bet runs against and
+the essay does not establish. The essay's own cases separate the two axes:
+what scale displaced included hand-tuned weights as well as hand-written
+feature extractors, so the losing side spanned both forms and the selection
+ran on how the content was produced.
 
-Conjectural learning is compatible with the lesson on both counts. Its
-theories, criticism, tests, and revisions are explicit, but they need not be
-supplied by humans: the lesson
-[selects production methods, not representational forms](../notes/the-bitter-lesson-selects-production-methods-not-representational.md),
-so a theory produced and selected by learning is a learned result whatever
-form it is stored in. And error elimination is the step that earns reach. A
-theory that has survived tests against refuting cases holds across the range
-it claims, and a scalable search that reaches the same range finds the same
-structure rather than replacing it. If the entire loop is automated,
-additional computation buys more alternatives, stronger criticism, more
-tests, and more revision of accumulated knowledge, which is the work the
+Conjectural learning sits on the computation side of that axis. Its theories,
+criticism, tests, and revisions are explicit, but they need not be supplied
+by people: a theory proposed, criticized, and revised by the loop is a
+learned result whatever form it is retained in. And if the entire loop is
+automated, additional computation buys more alternatives, stronger criticism,
+more tests, and more revision of accumulated knowledge, which is the work the
 lesson rewards.
 
 The relevant distinction is therefore not between explicit knowledge and
@@ -164,9 +261,11 @@ machinery, as ours does, fits the lesson
 [only if its learning outgrows that starting state](../notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md):
 computation, not people, must come to supply the task-specific knowledge
 each new demand needs. And because an improvement to the learning machinery
-is reused by every later episode,
-[a long-run strategy should spend part of its effort on the machinery itself](../notes/an-optimal-long-run-learning-strategy-invests-in-its-own-machinery.md),
-directed at the methods that convert additional computation into capability.
+is paid for once and then reused by every later episode,
+[a long-run strategy should spend part of its effort on that machinery](../notes/an-optimal-long-run-learning-strategy-invests-in-its-own-machinery.md).
+That spending is **reflection**: the learner turns its own methods into
+theories it can criticize and revise, and the lesson says which revisions to
+look for — those that convert additional computation into capability.
 
 ## What would count as learning?
 
