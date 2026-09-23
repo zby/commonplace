@@ -6,11 +6,11 @@ tags: [learning-theory, constraining]
 
 # Codification
 
-The far end of the [constraining](./constraining.md) spectrum — the point where constraining the interpretation space crosses from natural language into a symbolic artifact with formal semantics or assigned consequences. In the main practical KB case, natural-language instructions become executable code. More generally, the medium changes from natural-language content interpreted by an LLM or human into a symbolic form interpreted by a runtime, parser, validator, type checker, query engine, or other formal consumer. It is a phase transition: the nature of the artifact changes fundamentally.
+The symbolic region of [constraining](./constraining.md): constraining that crosses from natural language into a symbolic artifact with formal semantics or assigned consequences. In the main practical KB case, natural-language instructions become executable code. More generally, the medium changes from natural-language content interpreted by an LLM or human into a symbolic form interpreted by a runtime, parser, validator, type checker, query engine, or other formal consumer. It is a phase transition: the nature of the artifact changes fundamentally.
 
 This is the KB's internal technical use of the word. It is narrower than ordinary "codification," which can mean putting norms into systematic written form, including legal codes, formal policies, or other precise prose. In this KB, same-form natural-language formalization is constraining, but not codification unless the result is a symbolic artifact whose elements have formal semantics or defined operational consequences.
 
-Codification is not a separate mechanism from constraining; it's what constraining looks like when it goes all the way. Everything below codification on the constraining spectrum (definitions, conventions, structured sections, clearer descriptions) constrains the interpretation space while staying in natural language. Codification leaves natural-language interpretation for a symbolic medium.
+Codification is not a separate mechanism from constraining; it's what constraining looks like when it goes all the way. The rest of constraining (definitions, conventions, structured sections, clearer descriptions) constrains the interpretation space while staying in natural language. Codification leaves natural-language interpretation for a symbolic medium.
 
 ## Scope
 
@@ -54,7 +54,7 @@ the identified part caused the failure or that the revision repairs it.
 
 Relevant Notes:
 
-- [constraining](./constraining.md) — parent mechanism: codification is the far end of the constraining spectrum
+- [constraining](./constraining.md) — defined-in: codification is the symbolic region of constraining, where readings are excluded rather than disfavored
 - [skills derive from methodology](../skills-derive-from-methodology.md) — contrasts: same-medium derivation, the reshaping that stays natural-language where codification crosses into a symbolic artifact
 - [the verifiability gradient](../verifiability-gradient.md) — the ladder across which codification sits at the far end
 - [spec-mining-as-codification](../spec-mining-as-codification.md) — the operational mechanism: observe behavior, extract patterns, write deterministic code
