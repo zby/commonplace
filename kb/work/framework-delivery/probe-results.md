@@ -30,3 +30,13 @@ Setup: the scratch project's `.agents/skills/cp-probe` was a symlink to the pack
 - No permission prompt appeared: the read-only sandbox allows reads outside the project.
 
 Consequences: symlinks from a skill directory into the package work in Codex. Skills should state that links are relative to the skill's own directory. User-level `~/.agents/skills`, a real uv installation, and Codex's own plugin mechanism were not tested.
+
+## uv: a Python-independent install path (2026-09-24)
+
+A minimal hatchling package installed files through `[tool.hatch.build.targets.wheel.shared-data]` (`"data" = "share/sdprobe"`), with uv 0.12.17 on Linux, in an isolated `UV_TOOL_DIR`.
+
+- The files landed in `<uv tool dir>/sdprobe/share/sdprobe/`. That path has no Python version in it, unlike package data under `lib/python3.X/site-packages/`. The command found it as `Path(sys.prefix) / "share" / "sdprobe"`.
+- After `uv tool install --python 3.13 --reinstall` with a new version, the path was unchanged. A symlink made before the change still resolved, and it showed the new content.
+- Under `uv tool install --editable`, the shared-data files were an install-time snapshot: an edit to the source file did not appear in `share/`. Package data in an editable install resolves to the source tree (see results-codex.md, case 7), so for editable installs the commands should read the source tree.
+
+Consequence: serving skills and library from shared-data instead of package data would keep skill links valid across Python changes. That would remove the dangling-link case that Codex drops silently. Not yet tested with a harness, on macOS or Windows, or with the Claude Code link-mode plugin (whose printed path would then be the `share/` directory).
