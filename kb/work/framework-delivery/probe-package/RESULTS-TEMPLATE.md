@@ -20,8 +20,9 @@
 
 | Case | Result (pass / fail / not applicable) | What happened | Prompts or denials |
 |---|---|---|---|
-| 0 Install | | | |
-| 1 Base layer | | | |
+| 0 Install and init | | | |
+| 1a Base layer, file imported | | | |
+| 1b Base layer, file read by the agent | | | |
 | 2 Read permission | | | |
 | 3 Stub skill, run 1 | | | |
 | 3 Stub skill, run 2 | | | |
@@ -32,6 +33,7 @@
 | 5c Python change | | | |
 | 6 Editable install | | | |
 | 7 Skill names | | | |
+| 8 Fresh clone before init | | | |
 
 ## Modifications to the package
 

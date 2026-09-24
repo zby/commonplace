@@ -23,7 +23,7 @@ Today `commonplace-init` copies the library and the skills into every project. T
 
 ## Design
 
-The design, and the alternatives rejected so far, are in [design.md](./design.md). Its core is a proposed change to the install procedure: `commonplace-init` stops copying the library into the project; it writes a stub per skill that redirects to the real skill in the package, and the harness permissions. There is no per-machine setup step. Keep the design only there; this README holds the commission, constraints, and open questions.
+The design, and the alternatives rejected so far, are in [design.md](./design.md). Its core is a proposed change to the install procedure: `commonplace-init` stops copying the library into the project; it writes a stub per skill that redirects to the real skill in the package, a gitignored file giving the library's full paths, and one Claude Code read rule. Agents reach the library by reading files, with no lookup commands. There is no per-machine setup step. Keep the design only there; this README holds the commission, constraints, and open questions.
 
 ## Open questions
 

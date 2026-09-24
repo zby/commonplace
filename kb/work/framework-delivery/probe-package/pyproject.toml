@@ -6,9 +6,8 @@ requires-python = ">=3.11"
 dependencies = []
 
 [project.scripts]
+cp-delivery-probe-init = "cp_delivery_probe.cli:init"
 cp-delivery-probe-library = "cp_delivery_probe.cli:library_root"
-cp-delivery-probe-instruction = "cp_delivery_probe.cli:instruction"
-cp-delivery-probe-install-skills = "cp_delivery_probe.cli:install_skills"
 
 [build-system]
 requires = ["hatchling"]
