@@ -11,7 +11,7 @@ Commonplace is a framework for agent-operated knowledge bases. We are changing h
 
 We cannot test every harness ourselves, and we cannot write a separate install route for each. So the question is not whether our exact files work unchanged in your harness. It is whether **an agent working in your harness, told what the design is for, can make it work there**, adapting where it has to. If it can with no workaround or a small one, the design fits your harness. If it needs a large or repeated workaround, or cannot reach an outcome, we need to know where.
 
-**Report outcomes and the size of each workaround, not its mechanism.** Your agent may build whatever workaround your harness needs. We are designing the system and you are giving feedback on it: a part of the design that works only with a large or repeated workaround is a problem we need to see, even though it works. So tell us whether each outcome was reached and how big the workaround was, in the categories below. You do not have to say how it works, and corporate rules may keep you from sharing more; any field can be answered "confidential".
+**Report outcomes, the size of each workaround, and, where your company's policy allows, how the workaround works.** Your agent may build whatever workaround your harness needs. We are designing the system and you are giving feedback on it: a part of the design that works only with a large or repeated workaround is a problem we need to see, even though it works. So tell us whether each outcome was reached and how big the workaround was, in the categories below. A description of the workaround itself helps most, because it shows what the design should provide; give it if your company's policy allows. If policy forbids a detail, leave it out, and any field can be answered "confidential".
 
 ## What to give the agent
 
@@ -56,10 +56,11 @@ Give the harness name and version, the OS, and the date. Then, for each outcome 
   - *Effort:* one small change (a setting or a line), several changes, or new code or tooling.
   - *Repeated:* once per machine, once per project, every session, or after every upgrade.
   - *Who can do it:* the user, or only an administrator or policy owner.
-- **Instruction loading**, once for the harness: what loads standing instructions at session start — the repository's `AGENTS.md` or `CLAUDE.md`, another file in the repository, a user-level file or setting, a system prompt only an administrator can set, or nothing — and where the agent proposes to put the pointer line. Name the kind of mechanism; its internal details are optional.
+- **Instruction loading**, once for the harness: what loads standing instructions at session start — the repository's `AGENTS.md` or `CLAUDE.md`, another file in the repository, a user-level file or setting, a system prompt only an administrator can set, or nothing — and where the agent proposes to put the pointer line. Name the kind of mechanism, and describe it as far as policy allows.
 - **For an outcome not reached or blocked:** the part of the design where it stopped, from the same list. If it could have been reached only by crossing a boundary (for example, with a hook), say which boundary.
+- **For a workaround, how it works**, as far as your company's policy allows: what the agent changed or built, and where. Omit what policy forbids.
 
-Anything beyond these categories is welcome but optional. A short table is enough.
+A short table is enough for the categories; the workaround descriptions can follow it.
 
 - **If you can write to this repository:** put the reply in `results-<harness>-r5.md` in this workshop and add a line under "Replies" below. If you ran the full protocol and can share details, use [probe-package/RESULTS-TEMPLATE.md](./probe-package/RESULTS-TEMPLATE.md).
 - **If you cannot:** send the reply to the operator. Use neutral labels such as `enterprise-A` for anything internal.
