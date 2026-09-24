@@ -20,10 +20,10 @@ A fix that only hides the copy solves the first problem and not the second. This
 
 ## Current state (as of 2026-09-23)
 
-- `commonplace.scaffold_manifest` copies the source trees `kb/notes`, `kb/reference`, and `kb/instructions` to `kb/commonplace/<collection>/`, and `kb/types` to `kb/types`. It also scaffolds the project's own `kb/notes/` collection, so a project has `kb/notes/` (its own) next to `kb/commonplace/notes/` (the library). [ADR 021](../adr/021-ship-library-content-under-kb-commonplace.md) chose this layout to separate the library from user content, and it kept the library inside the project.
+- `commonplace.scaffold_manifest` copies the source trees `kb/notes`, `kb/reference`, and `kb/instructions` to `kb/commonplace/<collection>/`, and `kb/types` to `kb/types`. It also scaffolds the project's own `kb/notes/` collection, so a project has `kb/notes/` (its own) next to `kb/commonplace/notes/` (the library). [ADR 021](../../reference/adr/021-ship-library-content-under-kb-commonplace.md) chose this layout to separate the library from user content, and it kept the library inside the project.
 - `init_project.py` copies a file only when the target does not exist. An existing file that differs is reported, not replaced. There is no update path for the copy.
 - ADR 021 specified a `.commonplace` version marker and a drift check. `init_project.py` writes neither, so a project records no Commonplace version.
-- The commands come from one user-level uv tool, with one active version per OS user ([ADR 064](../adr/064-install-commonplace-commands-as-a-user-level-uv-tool.md)).
+- The commands come from one user-level uv tool, with one active version per OS user ([ADR 064](../../reference/adr/064-install-commonplace-commands-as-a-user-level-uv-tool.md)).
 - The wheel build (`[tool.hatch.build.targets.wheel.force-include]` in `pyproject.toml`) copies the library trees as they are, with no processing. 132 library files contain `../sources/` links. `kb/sources/` does not ship, so those links dangle in every installed copy.
 - Code hardcodes the copy's project paths: review gates (`review/paths.py`), the critique instruction (`review/critique.py`), and library types (`lib/type_resolver.py`).
 - Review baselines identify criteria by repository-relative paths. `freshness/versioning.py` requires snapshot inputs to resolve inside the repository.
@@ -95,7 +95,7 @@ The skills stay a copy, so the divergence problem applies to them. **Candidate: 
 
 Global types leave `kb/types/`, so their pointers change, and a local schema's `$ref` to a global schema stops resolving.
 
-- **Bare names (candidate).** A global type is named by its bare name, such as `type: note`. A collection-local type keeps its path form (`./`, `../`, or `kb/…`, ending in `.md`). The form alone tells the resolver which kind it has, with no fallback between them. A bare name `X` resolves to `types/X.md` under the library root, which is `kb/types/X.md` in the source repo, so both places write the same pointer. This partly reverses [ADR 018](../adr/018-types-are-path-references-to-instruction-docs.md). ADR 018 objected to names because a name was looked up first in the collection's `types/` and then in `kb/types/`, so one name could mean different files. That guessing does not return: a bare name only ever means a global type. Global types are a small, closed set that the package owns (9 today). Framework validation rules would be keyed by bare name instead of canonical path ([ADR 048](../adr/048-imperative-type-rules-dispatch-by-canonical-path.md)). The migration rewrites about 800 `type:` lines mechanically. A lookup command such as `commonplace-type` is an optional convenience that reports what a pointer resolves to.
+- **Bare names (candidate).** A global type is named by its bare name, such as `type: note`. A collection-local type keeps its path form (`./`, `../`, or `kb/…`, ending in `.md`). The form alone tells the resolver which kind it has, with no fallback between them. A bare name `X` resolves to `types/X.md` under the library root, which is `kb/types/X.md` in the source repo, so both places write the same pointer. This partly reverses [ADR 018](../../reference/adr/018-types-are-path-references-to-instruction-docs.md). ADR 018 objected to names because a name was looked up first in the collection's `types/` and then in `kb/types/`, so one name could mean different files. That guessing does not return: a bare name only ever means a global type. Global types are a small, closed set that the package owns (9 today). Framework validation rules would be keyed by bare name instead of canonical path ([ADR 048](../../reference/adr/048-imperative-type-rules-dispatch-by-canonical-path.md)). The migration rewrites about 800 `type:` lines mechanically. A lookup command such as `commonplace-type` is an optional convenience that reports what a pointer resolves to.
 - **A reserved `kb/types/` prefix.** It would look like a path but name no file in a project, so an agent that opened it would find nothing.
 
 **Schema references.** The validator applies the `note-base` rule to every typed artifact, and a local schema never uses `$ref` outside its own `types/` directory. This drops `note.schema.yaml`'s `status:` ban from local types that do not restate it.
@@ -116,7 +116,7 @@ Relative links into `kb/commonplace/` stop resolving. ADR 021 found project-to-l
 
 These are useful in any layout. They can ship before, after, or without the relocation.
 
-- **A prepared reader copy at build time.** The package build stages the library, replaces links to local ingests with their canonical external source URLs, regenerates navigation, and fails on any unresolved local link. Authored source files, with their grounding under [ADR 073](../adr/073-untracked-source-snapshots-require-ingest-grounding.md), stay unchanged. This fixes today's 132 dangling `../sources/` links.
+- **A prepared reader copy at build time.** The package build stages the library, replaces links to local ingests with their canonical external source URLs, regenerates navigation, and fails on any unresolved local link. Authored source files, with their grounding under [ADR 073](../../reference/adr/073-untracked-source-snapshots-require-ingest-grounding.md), stay unchanged. This fixes today's 132 dangling `../sources/` links.
 - **A recorded version range.** The project records the Commonplace versions it accepts as a PEP 440 specifier, compared with the installed `llm-commonplace` version. This fills ADR 021's missing marker.
 - **The implicit `note-base` rule.** It is useful in the source repo on its own.
 
@@ -163,10 +163,10 @@ Revisit the skill copies when the required harnesses can discover skills from a 
 
 Relevant Notes:
 
-- [ADR 021 — Ship library content under kb/commonplace](../adr/021-ship-library-content-under-kb-commonplace.md) — see-also: the layout this proposal would supersede
-- [ADR 064 — Install Commonplace commands as a user-level uv tool](../adr/064-install-commonplace-commands-as-a-user-level-uv-tool.md) — see-also: the user-level placement this proposal extends to the library and skills
-- [ADR 027 — Package scaffold assets without source-tree symlinks](../adr/027-package-scaffold-assets-without-source-tree-symlinks.md) — see-also: the package-data boundary the library would be served from
-- [Architecture](../architecture.md) — part-of: the installed topology this would change
-- [Collections and types](../collections-and-types.md) — see-also: the type-resolution contract that bare global names would change
-- [ADR 018 — Types are path references to instruction docs](../adr/018-types-are-path-references-to-instruction-docs.md) — see-also: the path-valued type decision bare names would partly reverse
-- [ADR 048 — Imperative type rules dispatch by canonical path](../adr/048-imperative-type-rules-dispatch-by-canonical-path.md) — see-also: the rule-keying bare names would change
+- [ADR 021 — Ship library content under kb/commonplace](../../reference/adr/021-ship-library-content-under-kb-commonplace.md) — see-also: the layout this proposal would supersede
+- [ADR 064 — Install Commonplace commands as a user-level uv tool](../../reference/adr/064-install-commonplace-commands-as-a-user-level-uv-tool.md) — see-also: the user-level placement this proposal extends to the library and skills
+- [ADR 027 — Package scaffold assets without source-tree symlinks](../../reference/adr/027-package-scaffold-assets-without-source-tree-symlinks.md) — see-also: the package-data boundary the library would be served from
+- [Architecture](../../reference/architecture.md) — part-of: the installed topology this would change
+- [Collections and types](../../reference/collections-and-types.md) — see-also: the type-resolution contract that bare global names would change
+- [ADR 018 — Types are path references to instruction docs](../../reference/adr/018-types-are-path-references-to-instruction-docs.md) — see-also: the path-valued type decision bare names would partly reverse
+- [ADR 048 — Imperative type rules dispatch by canonical path](../../reference/adr/048-imperative-type-rules-dispatch-by-canonical-path.md) — see-also: the rule-keying bare names would change

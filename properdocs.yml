@@ -279,6 +279,7 @@ plugins:
         'reference/proposals/harness-capture-for-agentic-analysis-diagnostics.md': 'reference/adr/083-agentic-analysis-carriers-follow-exact-result-consumers.md'
         'reference/proposals/harness-orchestrated-review-sweeps.md': 'reference/proposals/archive/harness-orchestrated-review-sweeps.md'
         'reference/proposals/ingest-source-units-and-supporting-material.md': 'reference/proposals/archive/ingest-source-units-and-supporting-material.md'
+        'reference/proposals/library-served-from-the-installed-package.md': 'work/framework-delivery/design.md'
         'reference/proposals/one-validation-algorithm-over-declared-scopes.md': 'reference/adr/050-validation-runs-share-parsed-artifacts-and-collection-indexes.md'
         'reference/proposals/operational-destinations-for-literature-grounding-findings.md': 'reference/adr/081-literature-disposition-is-explicit-and-claim-grained.md'
         'reference/proposals/packet-owned-captures-for-guarded-operation-transitions.md': 'reference/adr/051-full-pass-packets-own-guarded-captures-and-resolutions.md'

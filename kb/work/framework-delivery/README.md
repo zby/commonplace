@@ -2,7 +2,7 @@
 
 ## Commission
 
-Posed by the operator on 2026-09-23. Decide how Commonplace delivers what agents read — the framework library, global types, review gates, and skills — to installed projects. The selected design is written back into the [library-served-from-the-installed-package proposal](../../reference/proposals/library-served-from-the-installed-package.md), which it will largely replace.
+Posed by the operator on 2026-09-23. Decide how Commonplace delivers what agents read — the framework library, global types, review gates, and skills — to installed projects. The selected design is written back into the [library-served-from-the-installed-package proposal](./design.md), which it will largely replace.
 
 ## Problem
 
