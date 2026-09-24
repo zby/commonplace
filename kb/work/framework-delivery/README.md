@@ -15,12 +15,13 @@ Today `commonplace-init` copies the library and the skills into every project. T
 
 - **Copy GBrain by default** (2026-09-23). GBrain is Commonplace's dominant competitor. Depart from a GBrain method only for a Commonplace-specific reason, and record the reason.
 - **One tree, one channel** (2026-09-24). The uv-installed package is the only tree that commands, agents, and harnesses read. There is no separate plugin tree and no per-project copy. uv is the only release channel. A derived copy is allowed only where a platform cannot read the package in place (Windows is the known case), and it must carry a version stamp and a hash check. This departs from GBrain, whose CLI and plugins install through separate channels and can skew.
+- **One install path on every platform** (2026-09-24). If one platform needs copying, every platform copies; there are no platform-specific install paths. Symlinks are unreliable on Windows, so skills are copied everywhere, with a version stamp and a hash check.
 - **No hooks** (2026-09-24). No harness hooks until hooks are standardised. At least one enterprise user runs their own harness.
 - **Harness-neutral base** (2026-09-24). The design rests on files, a shell, the `commonplace-*` commands, and a project `AGENTS.md`. Agent Skills and harness plugins are optional layers above that base. The base must still let an agent find a library instruction that the user names in conversation, outside any skill.
 
 ## Design
 
-The design, and the alternatives rejected so far, are in [design.md](./design.md). Its core is a proposed change to the install procedure: `commonplace-init` stops copying the library, and a per-user setup command links the skills and writes the harness permissions. Keep the design only there; this README holds the commission, constraints, and open questions.
+The design, and the alternatives rejected so far, are in [design.md](./design.md). Its core is a proposed change to the install procedure: `commonplace-init` stops copying the library, and a per-user setup command copies the skills and writes the harness permissions. Keep the design only there; this README holds the commission, constraints, and open questions.
 
 ## Open questions
 
@@ -28,7 +29,8 @@ The design, and the alternatives rejected so far, are in [design.md](./design.md
 - **The router skill at scale.** It worked with a three-entry index in Codex. Does it still select the right instruction with an index the size of the real library?
 - **The source checkout.** In the source repo the library is `kb/` itself and `.claude/skills/` holds symlinks into `kb/instructions/`. Do the commands and skills behave the same there? The editable install resolved the library into the source tree in both dry runs.
 - **Skill names.** Codex prefixed the linked skills (`cp-delivery-probe:delivery-probe-read`); Claude Code did not. Codex's first run tied the prefix to the tree's `.claude-plugin/plugin.json`. With the plugin layer dropped, the manifest can go. Does Codex then list the bare names?
-- **Windows and macOS.** Not tested. On Windows, link mode is unsupported and symlinks are unreliable. Are directory junctions usable, or is the version-stamped copy needed?
+- **Windows and macOS.** Not tested. Copying everywhere removes the question of Windows links. Does the base layer (commands printing paths under `share/`, and reads of those paths) work on both?
+- **Copied skills.** The probe never needed its copy mode. Do both harnesses discover copied skills, and do the lookup commands flag a stale copy after an upgrade? Would stubs work (see design.md, "Open choices")?
 - **Running sessions.** A running Claude Code session listed skills linked after it started. An upgrade inside a running session was not tested in either harness.
 - **Centrally managed settings.** Claude Code needs user-level permission entries. Can setup write them where settings are managed centrally, or must it print them?
 
