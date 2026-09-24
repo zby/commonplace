@@ -58,6 +58,8 @@ The repository and collection contracts constrain the acceptable contribution cl
 
 Remembered intent may complete a bare request, but it is not meaning contained in that request, a choice licensed by model priors, or evidence that warrants factual claims. Do not add an ad hoc history search to this skill; older interaction history counts only when a memory mechanism supplies it through the retained-intent input.
 
+If the artifact directs someone to act, its practical purpose becomes the stated intent that opens it (see "Directive text" under Universal Mechanics).
+
 When those inputs already determine the choices, proceed without a formal brief. If several materially different contributions still fit, treat that as a specification gap rather than something a stronger model should guess: ask one focused question, or use an exploratory workshop when determining the contribution is itself the work. When the contribution is determined but its claims still need substantial grounding or synthesis, stop and explain why the ordinary path is insufficient. Ask whether the user wants to continue with `cp-skill-write-multistage`, and invoke it only after explicit confirmation.
 
 ### Step 5 - Search Before Writing
@@ -171,6 +173,15 @@ These apply to all typed artifacts regardless of collection.
 **Frontmatter** makes notes queryable. No frontmatter means implicit `text`; any file with frontmatter must include a path-valued `type:`. Most library notes also need `description` (double-quoted, 50-250 chars), plus optional `traits`, `tags`, and `user-verified`. Never grant user verification implicitly.
 
 **Descriptions** are retrieval filters, not summaries. The test: if an agent searched for this note's concept and got 5 results, would this description help pick this one? Paraphrasing the title adds zero retrieval value.
+
+**Directive text.** Apply this whenever an artifact, or a section of one, directs someone else to act: a procedure, skill, plan, request, test protocol, handoff, or message, in any collection.
+
+- State the intent before any particular instruction. Say what the result is for or what decision it feeds, what end state counts as done, and which boundaries bind every route.
+- Then give the particular instructions as a supported route. Fix a step, its order, or its method only when a binding reason requires it, such as a dependency, an external commitment, a coordination need, or results that must compare across executors. Otherwise, say that the executor may take another route to the same end state.
+- Expect partial execution. Say which parts matter most, accept a partial or coarse answer, and state what a missing or negative answer changes.
+- When the answer comes from someone outside your control, ask for the detail the decision needs and no more. Let them withhold the rest, and ask for cost as well as outcome when a costly success would change the decision.
+
+(rationale: [intent-framed delegation](../../notes/intent-framed-delegation-is-a-control-regime-not-a-short-prompt.md))
 
 **Literal language.** Prefer literal wording when a metaphor or idiom would mainly add flourish, interpretation work, or unintended connotations. Keep figurative wording when it is conventional and precise or clarifies the explanation; an available literal alternative alone does not make a metaphor a problem.
 
