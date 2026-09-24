@@ -1,6 +1,10 @@
 # Delivery probe protocol
 
-A shared test for every harness. Each tester starts from this package, runs the same cases, and records the results in the workshop. The goal is to learn whether the framework-delivery design (see `../design.md`) works in your harness, and what it would take to make it work.
+A shared test for every harness, and Level 3 of the [probe request](../probe-request.md).
+
+## Intent
+
+Learn whether the framework-delivery design (`../design.md`) works in your harness, and what it would take to make it work. The cases test the design's assumptions about a harness (`../design.md`, "What the design assumes about a harness") and then its upgrade behaviour. Run as far as your harness and environment allow: cases 0–4 decide whether the design works at all; cases 5–6 test upgrades and install-mode switches; cases 7–8 fill in details. A case you cannot run is a result; record why. The method below is a common baseline so results compare across harnesses. Where your harness needs a different route to the same test, take it and record the change.
 
 ## Rules
 

@@ -73,6 +73,21 @@ Without hooks, nothing refreshes the stubs, the generated file, or the read rule
 - A stub is current when its path points at the current library root and its name and description match the real skill. An upgrade leaves stubs current unless a skill was added, removed, or renamed, or its description changed.
 - Every `commonplace-*` command runs one cheap check: it recomputes init's outputs for the current project and compares them with the files. A missing, extra, or stale stub, a stale generated file, or a read rule for another root produces a warning that names the init command. This is command-time detection: agents run `commonplace-validate` often, so a stale output surfaces at the next command, but a read before that is not caught. Both harnesses tested drop a broken skill without an error, so these checks are the only signal.
 
+### What the design assumes about a harness
+
+A harness may confirm only some of these, and an answer of "unknown" is expected, especially from enterprise harnesses. Each assumption is listed with what a "no" would change, so a partial answer still decides something.
+
+| Assumption | Needed for | If the answer is no |
+|---|---|---|
+| H1. Commonplace can be installed as a user-level uv tool. | Everything | The package can come from an internal package index or a wheel file instead of PyPI; uv supports both. If no user-level Python tool install is allowed at all, this design has no channel, and the operator must choose another. |
+| H2. The agent receives project instructions from a file in the repository (`AGENTS.md` or another name). | The base layer | Init writes the pointer to `library.md` into whatever file the harness reads. If instructions come only from a settings UI, the user pastes one line once per project. |
+| H3. The agent can read files outside the project, at the uv tool directory, by default or through a setting the user can make. | Both layers | Reads outside the project are impossible, so the library would have to sit inside the project. That means a gitignored copy refreshed by init, which breaks the one-tree constraint and was rejected (see [alternatives.md](./alternatives.md)). It would need an operator decision for that harness. |
+| H4. The agent follows a written instruction to read another file by absolute path and act on it. | Both layers (the `library.md` pointer and the stubs) | Neither route works. The fallback is full copies of what the agent must read, which were rejected; operator decision. |
+| H5. The harness discovers Agent Skills from a project directory. | The skills layer only | The base layer still works: the router's index and every skill's `SKILL.md` are ordinary files reachable from `library.md`. Skills lose automatic triggering by description. |
+| H6. The agent can run shell commands. | The `commonplace-*` commands, not delivery | Delivery works; command-time checks and KB maintenance commands do not. |
+
+Claude Code and Codex satisfy H1–H6 on Linux (revision 4 for Claude Code; revisions 1–3 for Codex, with H4 and H5 through symlinks rather than stubs).
+
 ### Skill names
 
 Claude Code lists the stubs under their bare names. Codex prefixed skills with a plugin name while the probe tree carried a plugin manifest; the installed tree no longer has one, so bare names are expected there too, but that is untested.
