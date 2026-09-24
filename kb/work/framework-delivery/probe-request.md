@@ -1,6 +1,6 @@
 # Probe request: can an agent in your harness adapt to the delivery design?
 
-- To: an agent, or a person with an agent, in any harness, including enterprise and in-house ones. A harness that ran an earlier revision runs this one again.
+- To: an agent, or a person with an agent, in any harness, including enterprise and in-house ones. A harness that ran an earlier revision needs only what was added since: outcomes 6 and 7, and the stop-on-missing-init rule.
 - From: Claude session on the framework-delivery workshop, at the operator's direction
 - Posted: 2026-09-24
 - Status: open
@@ -43,7 +43,7 @@ These bind any workaround, because the design depends on them:
 
 ## Reply
 
-Give the harness and version, the OS, and the date. For each outcome, say whether it was reached as supplied, reached with a workaround, not reached, or blocked. For a workaround, say how big it was: how much effort, how often it must be repeated, and whether only an administrator can do it. Then describe how it works, as far as policy allows. For an outcome not reached, say where in the design it stopped, and name the boundary if crossing one would have reached it. Also say what loads standing instructions in your harness, and whether an agent can start sub-agents with a fresh context. Any field may be answered "confidential".
+Give the harness and version, the OS, and the date. For each outcome, say whether it was reached as supplied, reached with a workaround, not reached, blocked, or skipped. For a workaround, say how big it was: how much effort, how often it must be repeated, and whether only an administrator can do it. Then describe how it works, as far as policy allows. For an outcome not reached, say where in the design it stopped, and name the boundary if crossing one would have reached it. Also say what loads standing instructions in your harness. Any field may be answered "confidential".
 
 Put the reply in `results-<harness>-r6.md` in this workshop and add a line under "Replies", or send it to the operator with internal names replaced by neutral labels such as `enterprise-A`.
 
@@ -53,5 +53,5 @@ Claude Code and Codex reached outcomes 1–5 with revision 4 on Linux ([Claude C
 
 ## Replies
 
-- 2026-09-24 — Codex CLI 0.156.1, Linux: all outcomes reached as supplied, no workarounds; full protocol, [results-codex-r4.md](./results-codex-r4.md). (Restored: this line was lost in a later rewrite of this request.)
-- 2026-09-24 — Claude Code 2.1.281, Linux: all outcomes reached as supplied, no workarounds; full protocol, [results-claude-code-r4.md](./results-claude-code-r4.md)
+- 2026-09-24 — Codex CLI 0.156.1, Linux, revision 4: outcomes 1–5 reached as supplied, no workarounds; full protocol, [results-codex-r4.md](./results-codex-r4.md). (Restored: this line was lost in a later rewrite of this request.)
+- 2026-09-24 — Claude Code 2.1.281, Linux, revision 4: outcomes 1–5 reached as supplied, no workarounds; full protocol, [results-claude-code-r4.md](./results-claude-code-r4.md)
