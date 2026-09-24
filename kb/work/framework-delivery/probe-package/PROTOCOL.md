@@ -13,7 +13,7 @@ A shared test for every harness. Each tester starts from this package, runs the 
 
 ## The package
 
-`cp-delivery-probe` is a normal Python package. Its package data under `src/cp_delivery_probe/plugin/` is the only tree:
+`cp-delivery-probe` is a normal Python package. Its `plugin/` directory is the only tree. The wheel installs it as shared data under `<tool environment>/share/cp-delivery-probe/`, a path without a Python version in it. An editable install reads it from the source tree instead. The tree contains:
 
 - `library/instructions/` and `library/types/`: Markdown files, each carrying a token such as `RETIRE-WIDGET-V1`. An agent that followed the file reports the token.
 - `skills/delivery-probe-read/`: a skill that reads two library files. It finds them through the commands below, with relative links only as a fallback when commands cannot run.
@@ -42,23 +42,24 @@ Use a fresh agent session for each case unless the case says otherwise. Copy `te
 2. **Read permission.** If case 1 needed approval to read the library, record the least setting that removes it (a directory allow-list, sandbox mode, or similar), and whether a user-level setting can grant it once for all projects.
 3. **Skills.** If your harness supports Agent Skills, run `cp-delivery-probe-install-skills <your harness's user-level skill dir>` (`--mode link` first). Ask: "Run the delivery-probe-read check." Pass: `SHARED-STEP-V1` and `PROBE-NOTE-TYPE-V1`, read from the installed package. Record whether the agent used the commands or the relative-link fallback, and any failed reads before success. If the harness does not discover linked skills, retry with `--mode copy` and record both outcomes.
 4. **Router skill.** Keep the skills installed. In a fresh session in a project without `AGENTS.md`, ask: "Calibrate the gadget using the delivery-probe procedure." Do not name the skill. Pass: the agent loads `delivery-probe-library` and reports `CALIBRATE-GADGET-V1`.
-5. **Upgrade.** Run `python3 tools/bump.py 2` in your copy, then `uv tool install --python 3.12 --reinstall <copy>`. Repeat cases 1 and 3 in new sessions. Pass: `-V2` tokens. Then reinstall with `--python 3.13`. The install path changes, so symlinked skills dangle. Record what the harness does with them: an error, a silent drop, or a stale copy. Run `cp-delivery-probe-library` and record whether its warning appears. Then run `install-skills <dir>` again, without `--remove`, and record whether a fresh session finds the skills again.
+5. **Upgrade.** Run `python3 tools/bump.py 2` in your copy, then `uv tool install --python 3.12 --reinstall <copy>`. Repeat cases 1 and 3 in new sessions. Pass: `-V2` tokens. Then reinstall with `--python 3.13`. The shared-data path should not change, so `cp-delivery-probe-install-skills <dir> --check` should still report `ok` and a fresh session should still find the skills. Record whether it does. If a link does break, record what the harness does with it (an error, a silent drop, or a stale copy), whether `cp-delivery-probe-library` warns, and whether running `install-skills <dir>` again repairs it.
 6. **Harness plugin (optional).** If your harness has a plugin or extension mechanism, record whether it can serve `cp-delivery-probe-plugin-path`'s directory in place or must copy it. For Claude Code, `claude plugin marketplace add <copy>/claude-marketplace`, then `claude plugin install cp-delivery-probe@cp-delivery-probe-market` from your own terminal. An agent session cannot accept the path command.
-7. **Editable install (optional).** `uv tool install --editable <copy>` and repeat case 1. The library root is then the source tree.
+7. **Editable install (optional).** `uv tool install --editable <copy>` and repeat case 1. The library root is then the source tree. Linked skills still point at `share/`, so the lookup commands report them as pointing elsewhere; run `install-skills <dir>` to repoint them, and do the same after returning to a normal install.
 
 ## Package revisions
 
 - **Revision 1** (commit `90e0ef8a`): skills relied on relative links; `install-skills` refused existing entries. Codex ran this revision ([results](../results-codex.md)).
 - **Revision 2** (2026-09-24): skills and router use the commands first, because agents in Codex misresolved relative links through the skill symlinks. `install-skills` is idempotent and has `--check`. The lookup commands warn about dangling, misdirected, or stale skills, because Codex silently drops dangling skills.
 
+- **Revision 3** (2026-09-24): the plugin tree moved from package data (`lib/python3.X/site-packages/...`) to wheel shared data (`share/cp-delivery-probe/`). The package-data path changes with the tool's Python version, which left Codex's linked skills dangling and silently dropped. The shared-data path does not. The commands read the source tree for editable installs, because shared data is copied at install time.
+
 Record the revision you started from in your results file.
 
 ## Known results (2026-09-24, Linux, uv)
 
-- Package data installs under `<uv tool dir>/cp-delivery-probe/lib/python3.X/site-packages/cp_delivery_probe/plugin/`.
-- A reinstall or `uv tool upgrade` at the same Python version keeps that path, and linked skills see the new content immediately.
-- Changing the tool's Python version changes the path. Symlinked skills dangle until `install-skills` runs again; Codex drops them without an error.
-- An editable install resolves the library to the source tree.
+- Revision 3 installs the tree under `<uv tool dir>/cp-delivery-probe/share/cp-delivery-probe/`. In a dry run, links made under Python 3.12 still passed `--check` after a reinstall on Python 3.13 and read the new version's content.
+- Revisions 1 and 2 used package data under `lib/python3.X/site-packages/`. A same-Python reinstall or `uv tool upgrade` kept that path; a Python change moved it, and Codex silently dropped the dangling skills until `install-skills` ran again.
+- An editable install reads the source tree. Shared data in an editable install is an install-time snapshot, so it is not used there.
 - Claude Code (see `../probe-results.md`) serves the plugin in place through link mode. Codex copies local-marketplace plugins into its cache.
 - A copied skill's relative links point outside the package, so copies depend on the command route.
 

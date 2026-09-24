@@ -1,8 +1,10 @@
 """Commands a harness-neutral agent uses to find the probe library.
 
-The package data under ``plugin/`` is the only tree: skills, the library, and a
-Claude Code plugin manifest. Skills find library files through these commands;
-relative links are only a fallback.
+The plugin tree is the only tree: skills, the library, and a Claude Code plugin
+manifest. A normal install places it under ``<environment>/share/cp-delivery-probe/``,
+a path that survives a change of the tool's Python version. An editable install
+reads it from the source tree, because shared data is copied at install time.
+Skills find library files through these commands; relative links are only a fallback.
 """
 
 from __future__ import annotations
@@ -11,23 +13,31 @@ import argparse
 import os
 import shutil
 import sys
-from importlib.resources import files
 from pathlib import Path
 
 from cp_delivery_probe import __version__
 
-# A skill entry is ours when its link target, or its copy marker, says so.
-# The marker text is independent of the install path, so it survives a move.
-OWNED_TARGET = f"cp_delivery_probe{os.sep}plugin{os.sep}skills{os.sep}"
+SHARE_NAME = "cp-delivery-probe"
+# A skill entry is ours when it links into a tree whose plugin manifest names this
+# package (checked through the link target, so it also works for dangling links whose
+# path says share/cp-delivery-probe), or when it is a copy carrying our marker.
+OWNED_SHARE_PATH = f"share{os.sep}{SHARE_NAME}{os.sep}skills{os.sep}"
 COPY_MARKER = ".cp-delivery-probe-managed"
 DEFAULT_SKILL_DIRS = ["~/.agents/skills", "~/.claude/skills"]
 
 
+def _source_plugin_dir() -> Path:
+    # src/cp_delivery_probe/cli.py -> the package root's plugin/ directory
+    return Path(__file__).resolve().parents[2] / "plugin"
+
+
 def _plugin_dir() -> Path:
-    root = Path(str(files("cp_delivery_probe") / "plugin")).resolve()
+    """The plugin tree: the source tree for an editable install, else shared data."""
+    source = _source_plugin_dir()
+    root = source if (source / ".claude-plugin").is_dir() else Path(sys.prefix) / "share" / SHARE_NAME
     if not root.is_dir():
         sys.exit(f"cp-delivery-probe {__version__}: plugin directory missing at {root}")
-    return root
+    return root.resolve()
 
 
 def _skill_dirs() -> list[Path]:
@@ -39,7 +49,11 @@ def _skill_dirs() -> list[Path]:
 
 def _is_owned(entry: Path) -> bool:
     if entry.is_symlink():
-        return OWNED_TARGET in os.readlink(entry)
+        target = os.readlink(entry)
+        if OWNED_SHARE_PATH in target + os.sep:
+            return True
+        manifest = Path(target).parent.parent / ".claude-plugin" / "plugin.json"
+        return manifest.is_file() and f'"{SHARE_NAME}"' in manifest.read_text()
     return (entry / COPY_MARKER).is_file()
 
 

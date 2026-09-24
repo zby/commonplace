@@ -17,7 +17,7 @@ Run the shared delivery probe in your harness and record what works, what fails,
 2. **Skills layer, where the harness supports Agent Skills.** Setup links (or, failing that, copies) the skills into the harness's user-level skill directory. The skills find library files through the same commands. A router skill indexes the library, so an agent asked for an instruction by name can find it.
 3. **Harness-specific extras, optional.** An example is a plugin mechanism that serves the package in place without copying.
 
-**What to run.** Use the probe package in this workshop, revision 2: [probe-package/PROTOCOL.md](./probe-package/PROTOCOL.md). Copy `probe-package/` to a scratch location, work on the copy, and run cases 0–7 as far as your harness allows. The package is a throwaway called `cp-delivery-probe`. Its commands, skills, and library files are placeholders that carry tokens such as `RETIRE-WIDGET-V1`, so a correct read is easy to check.
+**What to run.** Use the probe package in this workshop, revision 3: [probe-package/PROTOCOL.md](./probe-package/PROTOCOL.md). Copy `probe-package/` to a scratch location, work on the copy, and run cases 0–7 as far as your harness allows. The package is a throwaway called `cp-delivery-probe`. Its commands, skills, and library files are placeholders that carry tokens such as `RETIRE-WIDGET-V1`, so a correct read is easy to check.
 
 **Start from the same code, and record every change.** You may modify your copy when your harness needs it: a different instruction file name, another skill directory, a manifest format, a path convention. Each modification is a finding. Record what you changed, why your harness needed it, and the diff or an exact description.
 
@@ -56,6 +56,7 @@ The details are in [results-codex.md](./results-codex.md), [probe-results.md](./
 - **Codex:**
   - The base layer and user-level skill symlinks worked, with no read approvals.
   - Agents misresolved relative links through the symlinks; revision 2 therefore uses the commands first.
-  - A change of the uv tool's Python version moved the install path, and Codex silently dropped the dangling skills. Revision 2's commands now warn about that, and `install-skills` repairs it.
+  - A change of the uv tool's Python version moved the install path, and Codex silently dropped the dangling skills. Revision 2's commands warn about that, and `install-skills` repairs it.
+  - Revision 3 therefore installs the tree as shared data under the tool environment's `share/` directory, whose path does not include the Python version. Codex has not yet run revision 3.
   - Codex copied local-marketplace plugins into its cache.
 - **Not yet tested anywhere:** Windows and macOS, a router skill over a large library, and whether a session that is already running picks up an upgrade.

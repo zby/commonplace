@@ -17,3 +17,8 @@ build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/cp_delivery_probe"]
+
+# The plugin tree installs as shared data, under <environment>/share/cp-delivery-probe/,
+# a path that does not change with the Python version.
+[tool.hatch.build.targets.wheel.shared-data]
+"plugin" = "share/cp-delivery-probe"
