@@ -52,7 +52,8 @@ Rejected so far, with reasons:
 
 ## Next steps
 
-1. Write a request for agents in other harnesses (operator direction, 2026-09-24) to run the same [probe protocol](./probe-package/PROTOCOL.md) from the same package, modifying their copies where their harness needs it and recording the modifications.
+1. Agents in other harnesses run the shared probe, as requested in [harness-probe-request.md](./harness-probe-request.md): Gemini CLI, OpenCode, Cursor, Goose, GitHub Copilot, a full Claude Code rerun, and enterprise harnesses. Enterprise results may come back through the operator, anonymised.
+2. Update the working design from their results, then write the selected design back into the proposal.
 
 ## Evaluation boundary
 
@@ -77,5 +78,6 @@ Close when the working design, or its replacement, is written back into the prop
 - [probe-results.md](./probe-results.md) — 2026-09-24 probes: a Claude Code link-mode plugin served in place from a package directory, and a Codex skill symlinked into it
 - [probe-package/](./probe-package/PROTOCOL.md) — the shared probe: a throwaway uv package whose data is the plugin-shaped tree, commands for the base layer, a test project, the protocol every harness runs, and a results template. Testers modify a copy and record the modifications
 - [codex-probe-request.md](./codex-probe-request.md) — request to a Codex agent to run the shared probe; Codex appends its reply here
+- [harness-probe-request.md](./harness-probe-request.md) — request to agents in other harnesses, including enterprise ones, to run the shared probe (revision 2)
 - [results-codex.md](./results-codex.md) — Codex's run of the shared probe (2026-09-24), with supplemental findings from its first fixture
 - `results-<harness>.md` — one results file per further harness, from the template
