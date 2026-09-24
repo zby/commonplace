@@ -1,6 +1,6 @@
 # Design: library served from the installed package
 
-This is the workshop's only design document. It replaced the proposal `kb/reference/proposals/library-served-from-the-installed-package.md` on 2026-09-24, so the design is kept in one place while it changes. The probe results it cites are in [results-codex.md](./results-codex.md), [results-claude-code.md](./results-claude-code.md), and [probe-results.md](./probe-results.md).
+This is the workshop's only design document. It replaced the proposal `kb/reference/proposals/library-served-from-the-installed-package.md` on 2026-09-24. It describes the chosen design only; the options rejected along the way, and the evidence behind each, are in [alternatives.md](./alternatives.md).
 
 In this design, *the library* means everything Commonplace owns and a project only reads: the library collections (notes, reference, instructions), the global types and their schemas, the review gates, the critique instruction, the templates, and the promoted skills.
 
@@ -47,35 +47,23 @@ Two layers. The base works without the skills layer.
 
 ### Why stubs
 
-Harnesses discover skills only in their own skill directories, so something has to be written there. Stubs are the smallest thing that works on every platform (operator decision, 2026-09-24). They act like a symlink that costs one extra read each time a skill is used. The alternatives were worse:
+Harnesses discover skills only in their own skill directories, so something has to be written there. A stub is the smallest thing that works the same way on every platform (operator decision, 2026-09-24). It acts like a symlink that costs one extra read each time a skill is used. A stub carries a path specific to one machine; that costs nothing, because stubs are not committed and init reruns after the events that move the path.
 
-- Symlinks avoid the extra read, but they are unreliable on Windows, and the operator ruled out platform-specific install paths.
-- Full copies go stale on every upgrade that changes a skill, and their relative links into the library point nowhere unless each skill looks files up through commands.
-- A stub that calls a lookup command to find its skill works without an absolute path, but it adds a command call and a Claude Code permission rule for every skill use.
+Because the installed tree mirrors `kb/`, a skill's relative link such as `../re-ingest.md` or `../../types/note.md` is correct both in the source checkout and in the installed library. That removes the two-branch wording ("in an installed project use X; in the source checkout use Y"), which exists today only because the two layouts differ.
 
-A stub carries a path specific to one machine. That costs nothing extra: stubs are not committed, and init has to rerun after the events that move the path anyway (below).
-
-The layout condition matters. Because the installed tree mirrors `kb/`, a skill's relative link such as `../re-ingest.md` or `../../types/note.md` is correct both in the source checkout and in the installed library. That removes the two-branch wording ("in an installed project use X; in the source checkout use Y") without adding anything. Today's two layouts, `kb/commonplace/instructions/` and `kb/instructions/`, are the reason the branches exist.
-
-Evidence so far: in both harnesses, an agent that read a library file at its real path followed the file's relative link correctly (`retire-widget` → `shared-step`). The relative-link failures in Codex came from symlinked skills, where the agent resolved `..` against the link's location; a stub has no symlink. In Claude Code, probe revision 4 confirmed the stub route: in five skill sessions and a router session, the agent followed the stub to the real skill and resolved all three kinds of relative link from the real location, with no failed read ([results](./results-claude-code-r4.md)). Not yet tested: stubs in Codex, and whether any skill metadata that a harness reads from the skill directory itself (frontmatter fields beyond name and description, or files such as Codex's `agents/`) must be copied into the stub.
+In Claude Code, probe revision 4 confirmed the route: in five skill sessions and a router session, the agent followed the stub to the real skill and resolved every relative link from the real location, with no failed read ([results](./results-claude-code-r4.md)). Not yet tested: stubs in Codex, and whether a harness reads skill metadata from the skill directory itself (frontmatter fields beyond name and description, or files such as Codex's `agents/`) that init must copy into the stub.
 
 ### Why a generated routing file
 
-An agent outside a skill needs the library root. Earlier revisions got it from a lookup command. The generated file replaces the command (operator decision, 2026-09-24):
-
-- It costs at most one read per session, the same as one command call, and in Claude Code nothing, because `CLAUDE.md` imports it. After that the root stays in context.
-- It needs no shell, and in Claude Code no permission to run a command.
-- Every route starts from a path init wrote, and init's check reports a path that no longer matches the current root.
-
-The file lists entry points, not every instruction. The library has its own navigation (READMEs and the router skill), so the file goes stale only when the root moves, the same event that makes the stubs stale. The path is machine-specific, so the file is gitignored and `AGENTS.md` only points to it.
+An agent outside a skill needs the library root. `library.md` supplies it (operator decision, 2026-09-24). It costs one read per session at most, and nothing in Claude Code, where `CLAUDE.md` imports it; after that the root stays in context. It needs no shell and no command permission. It lists entry points, not every instruction, because the library has its own navigation, so it goes stale only when the root moves. The path is machine-specific, so the file is gitignored and `AGENTS.md` only points to it.
 
 ### Harness permissions are part of init
 
-In Claude Code, reading outside the project needs a permission rule. In `default` permission mode, a fresh session was denied the read of a library file outside the project until the library root was allowed, either as a `Read(//<root>/**)` allow rule or as an entry in `permissions.additionalDirectories`. Init writes the `Read` rule: it covers Claude Code's Grep and Glob as well (per Claude Code's documentation; not probed), and it stays read-only, while `additionalDirectories` adds the directory to the workspace. The rule names this machine's root, so init writes it into the uncommitted `.claude/settings.local.json`. Codex needed no rule: its default sandbox allows the reads. Earlier revisions also needed rules allowing the lookup commands; the generated file removes those.
+In Claude Code, reading outside the project needs a permission rule. Init writes a `Read(//<root>/**)` allow rule for this machine's library root into the uncommitted `.claude/settings.local.json`. Revision 4 showed that this one rule is the only setting Claude Code needs, and that without it the reads are denied. Codex needs no rule: its default sandbox allows the reads.
 
 The read rule, the stubs, and the generated file name the same concrete root. The root is stable across upgrades and Python changes. It changes on a switch between an editable and a normal install, and when the uv tool directory changes. Init rewrites all three in the same run.
 
-A root that the rule does not cover is worse than a denial. In one Claude Code run after a switch to an editable install, the agent was denied the source-tree file. It then followed a symlinked skill's relative link into `share/` and read the stale shared-data snapshot. A second run under the same conditions stopped without an answer. This design removes the denial but keeps a quieter form of the risk. After a switch to an editable install and before init reruns, the stubs and `library.md` still point into `share/`, which uv leaves as a stale snapshot. Revision 4 observed this in Claude Code: a fresh session read the old version with no warning, because no agent route runs a command that could warn. The risk is limited to install-mode switches and uv tool directory changes, which developers make, not to ordinary upgrades, where the path does not move. The developer procedure is therefore: rerun `commonplace-init` immediately after any switch. `commonplace-*` commands and `init --check` report the stale outputs until then.
+**Risk after an install-mode switch.** After a switch to an editable install and before init reruns, the stubs and `library.md` still point into `share/`, which uv leaves as a stale snapshot. Revision 4 observed this in Claude Code: a fresh session read the old version with no warning, because no agent route runs a command that could warn. The risk is limited to install-mode switches and uv tool directory changes, which developers make, not to ordinary upgrades, where the path does not move. The developer procedure is therefore: rerun `commonplace-init` immediately after any switch. `commonplace-*` commands and `init --check` report the stale outputs until then.
 
 ### Keeping init's outputs current
 
@@ -83,11 +71,11 @@ Without hooks, nothing refreshes the stubs, the generated file, or the read rule
 
 - Init is idempotent. On a rerun it overwrites its own stubs, generated file, and read rule, and it leaves the project's own files, skills, and settings alone. This changes today's rule that init never overwrites an existing file; that rule stays for the project's own KB files.
 - A stub is current when its path points at the current library root and its name and description match the real skill. An upgrade leaves stubs current unless a skill was added, removed, or renamed, or its description changed.
-- Every `commonplace-*` command runs one cheap check: it recomputes init's outputs for the current project and compares them with the files. A missing, extra, or stale stub, a stale generated file, or a read rule for another root produces a warning that names the init command. Agents run `commonplace-validate` often, so a stale output surfaces quickly. Both harnesses tested so far drop a broken skill without an error (observed for dangling symlinks), so these checks are the only signal.
+- Every `commonplace-*` command runs one cheap check: it recomputes init's outputs for the current project and compares them with the files. A missing, extra, or stale stub, a stale generated file, or a read rule for another root produces a warning that names the init command. Agents run `commonplace-validate` often, so a stale output surfaces quickly. Both harnesses tested drop a broken skill without an error, so these checks are the only signal.
 
 ### Skill names
 
-Codex listed the probe's symlinked skills with a prefix (`cp-delivery-probe:delivery-probe-read`), and Claude Code listed them under their bare names. Codex's first run tied the prefix to the tree's `.claude-plugin/plugin.json`. The installed tree no longer has a manifest, and stubs sit in the project's own directory, so the bare names should hold in both harnesses. That is inferred, not tested.
+Claude Code lists the stubs under their bare names. Codex prefixed skills with a plugin name while the probe tree carried a plugin manifest; the installed tree no longer has one, so bare names are expected there too, but that is untested.
 
 ## Proposed change to the install procedure
 
@@ -125,8 +113,7 @@ A package criterion gets a logical identifier relative to the library root, such
 
 Global types leave `kb/types/`, so their pointers change, and a local schema's `$ref` to a global schema stops resolving.
 
-- **Bare names (candidate).** A global type is named by its bare name, such as `type: note`. A collection-local type keeps its path form (`./`, `../`, or `kb/…`, ending in `.md`). The form alone tells the resolver which kind it has, with no fallback between them. A bare name `X` resolves to `types/X.md` under the library root, which is `kb/types/X.md` in the source repo, so both places write the same pointer. This partly reverses [ADR 018](../../reference/adr/018-types-are-path-references-to-instruction-docs.md). ADR 018 objected to names because a name was looked up first in the collection's `types/` and then in `kb/types/`, so one name could mean different files. That lookup does not return: a bare name only ever means a global type. Global types are a small, closed set that the package owns (9 today). Framework validation rules would be keyed by bare name instead of canonical path ([ADR 048](../../reference/adr/048-imperative-type-rules-dispatch-by-canonical-path.md)). The migration rewrites about 800 `type:` lines mechanically.
-- **A reserved `kb/types/` prefix.** It would look like a path but name no file in a project, so an agent that opened it would find nothing.
+A global type is named by its bare name, such as `type: note`. A collection-local type keeps its path form (`./`, `../`, or `kb/…`, ending in `.md`). The form alone tells the resolver which kind it has, with no fallback between them. A bare name `X` resolves to `types/X.md` under the library root, which is `kb/types/X.md` in the source repo, so both places write the same pointer. This partly reverses [ADR 018](../../reference/adr/018-types-are-path-references-to-instruction-docs.md). ADR 018 objected to names because a name was looked up first in the collection's `types/` and then in `kb/types/`, so one name could mean different files. That lookup does not return: a bare name only ever means a global type. Global types are a small, closed set that the package owns (9 today). Framework validation rules would be keyed by bare name instead of canonical path ([ADR 048](../../reference/adr/048-imperative-type-rules-dispatch-by-canonical-path.md)). The migration rewrites about 800 `type:` lines mechanically.
 
 **Schema references.** The validator applies the `note-base` rule to every typed artifact, and a local schema never uses `$ref` outside its own `types/` directory. This drops `note.schema.yaml`'s `status:` ban from local types that do not restate it.
 
@@ -154,21 +141,7 @@ These are useful in any layout and can ship before, after, or without the rest.
 
 ## Rejected alternatives
 
-- **A hidden, gitignored copy in the project.** It keeps the divergence. A variant that regenerates the copy when versions differ narrows the divergence to the window after an upgrade, and it silently discards edits to the copy.
-- **A plugin tree published separately from the package** (GBrain's route). It breaks the one-tree constraint.
-- **Hooks,** including a session-start hook that prints the library root. They break the no-hooks constraint.
-- **Instructions served over MCP,** including GBrain's `get_skill`. It needs an MCP server, clients handle MCP instructions unreliably, and tool schemas cost context (see [the survey](./comparable-systems-survey.md)).
-- **Codex plugins from a local marketplace.** Codex copies them into its cache, which breaks the one-tree constraint.
-- **A Claude Code link-mode plugin** (dropped 2026-09-24). Its marketplace entry runs a command that prints the `share/` directory, and Claude Code links that directory into its cache instead of copying it. The earlier probe showed this works with a stand-in directory. It adds nothing over linked skills: its one advantage, relinking by itself after the install moves, is lost because init must rerun after a move anyway to rewrite the read permission. It also costs a manual approval by each user in their own terminal, prefixed skill names that duplicate the linked skills, and a second route to document and check, and link mode does not work on Windows. Reconsider it only if Commonplace ships something that must be a plugin component.
-- **Full skill copies** in the project. They go stale on every upgrade that changes a skill, and their relative links into the library point nowhere, so each skill would have to look up library files through commands.
-- **Lookup commands as the agent's route to the library** (`commonplace-library`, `commonplace-instruction`). They cost a command call per session, like the generated file, but also need a shell and, in Claude Code, a permission rule per command.
-- **The library path written into `AGENTS.md`.** It saves the one read, but `AGENTS.md` is committed and the path differs per machine, so every teammate's init would rewrite a committed file.
-- **Stubs that find their skill through a lookup command.** They avoid a machine-specific path, but add a command call and a Claude Code permission rule to every skill use, and the stubs are not committed anyway.
-- **Skill paths compiled at install** (init rewrites library references in skills to absolute paths). Stubs give the same result with one absolute path per skill and no rewrite of skill text.
-- **Package data under `site-packages`.** Its path changes with the Python version, which would invalidate Claude Code's read rule on every Python change. It would also move every stub's path.
-- **A per-user setup command** (rejected by the operator, 2026-09-24). It would install skills into user-level skill directories and write user-level Claude Code settings once per machine. It saves one init run per project after an upgrade, but the skills would then load in every project on the machine, including projects that do not use Commonplace, and it adds a second install command with its own scope.
-- **Skill links into the package** (rejected by the operator, 2026-09-24). They avoid the copy and followed upgrades at once in both harnesses. But symlinks are unreliable on Windows, so Windows would need copies, and the operator ruled out platform-specific install paths: if one platform needs copies, every platform copies.
-- **A symlink or junction at `kb/commonplace`.** It keeps the library in the project's view, and symlinks and junctions are unreliable on Windows.
+See [alternatives.md](./alternatives.md).
 
 ## Forces
 
@@ -192,6 +165,7 @@ These are useful in any layout and can ship before, after, or without the rest.
 
 - Whether a stale skill or an uncovered root stops commands or only warns.
 - Where the project keeps its version range. A `[tool.commonplace]` table in `pyproject.toml` suits Python projects, but a non-Python project would need that file for one field.
+
 ## Adoption criteria
 
 Adopt when all of the following hold:

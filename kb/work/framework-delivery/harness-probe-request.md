@@ -50,17 +50,6 @@ Run the shared delivery probe in your harness and record what works, what fails,
 
 ## Context
 
-The details are in [results-claude-code-r4.md](./results-claude-code-r4.md), [results-codex.md](./results-codex.md), and the protocol's "Known results" section. In brief:
-
-- **Claude Code, revision 4:** every case passed. Agents followed the stubs to the real skills in every run, `CLAUDE.md` imported the generated file, and one read rule in `.claude/settings.local.json` was the only setting needed. Before init reran after a switch to an editable install, agents read a stale snapshot without a warning.
-
-Earlier revisions, with commands and symlinked skills:
-
-- **Claude Code** serves the package in place through a link-mode plugin, whose marketplace entry runs a command that prints the plugin directory. The user must accept that command once, in their own terminal. Reading without prompts needs the served directory itself (with revision 3, the tool environment's `share/cp-delivery-probe/`) in the read permissions. Link mode is not supported on Windows.
-- **Codex:**
-  - The base layer and user-level skill symlinks worked, with no read approvals.
-  - Agents misresolved relative links through the symlinks; revision 2 therefore uses the commands first.
-  - A change of the uv tool's Python version moved the install path, and Codex silently dropped the dangling skills. Revision 2's commands warn about that, and `install-skills` repairs it.
-  - Revision 3 therefore installs the tree as shared data under the tool environment's `share/` directory, whose path does not include the Python version. In Codex's revision 3 run, links survived a Python 3.12→3.13 reinstall without repair; switching between editable and normal installs still needed one `install-skills` call, which the commands flagged.
-  - Codex copied local-marketplace plugins into its cache.
+- **Claude Code, revision 4** ([results](./results-claude-code-r4.md)): every case passed. Agents followed the stubs to the real skills in every run, `CLAUDE.md` imported the generated file, and one read rule in `.claude/settings.local.json` was the only setting needed. Before init reran after a switch to an editable install, agents read a stale snapshot without a warning.
+- **Earlier revisions** used lookup commands and symlinked skills. What they showed, and why those options were dropped, is in [alternatives.md](./alternatives.md).
 - **Not yet tested anywhere:** Windows and macOS, a router skill over a large library, and whether a session that is already running picks up an upgrade.
