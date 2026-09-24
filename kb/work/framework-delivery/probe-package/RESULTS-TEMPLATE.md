@@ -5,6 +5,7 @@
 - Operating system:
 - uv and Python versions:
 - Tester (agent or person) and date:
+- Probe package revision (see PROTOCOL.md):
 
 ## Harness facts
 

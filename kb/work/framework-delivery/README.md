@@ -52,8 +52,7 @@ Rejected so far, with reasons:
 
 ## Next steps
 
-1. Update the probe package to the revised design: skills and router use the commands first, and `cp-delivery-probe-install-skills` becomes idempotent (it currently refuses existing links, so repairing after a Python change needs `--remove` first).
-2. Write a request for agents in other harnesses (operator direction, 2026-09-24) to run the same [probe protocol](./probe-package/PROTOCOL.md) from the same package, modifying their copies where their harness needs it and recording the modifications.
+1. Write a request for agents in other harnesses (operator direction, 2026-09-24) to run the same [probe protocol](./probe-package/PROTOCOL.md) from the same package, modifying their copies where their harness needs it and recording the modifications.
 
 ## Evaluation boundary
 
