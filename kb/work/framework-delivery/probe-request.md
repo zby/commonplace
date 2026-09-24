@@ -23,7 +23,7 @@ Reach these outcomes. Check each in a **new session that did not do the adaptati
 4. **An upgrade:** after `python3 tools/bump.py 2` and a reinstall, outcomes 2 and 3 report `-V2` tokens, with at most a rerun of init.
 5. **A second project:** outcomes 2 and 3 again, in a new project.
 6. **The skill index alone:** outcome 3 with the skill stubs removed, so only the index in the generated `library.md` can lead to the skill. Skip this if your harness has no native skills; outcome 3 has already tested it.
-7. **A sub-agent:** asked "Run the delivery-probe-delegate check," a session hands one read to a sub-agent and reports `DELEGATED-STEP-V1`. Several Commonplace skills need sub-agents. If your harness cannot start one, the right result is a clean stop that says so.
+7. **A sub-agent:** asked "Run the delivery-probe-delegate check," a session hands one read to a sub-agent and reports `DELEGATED-STEP-V1`. Several Commonplace skills need sub-agents. If your harness cannot start one, let the agent design an emulation that keeps the read out of its own context, and report how it works and what it costs per use.
 
 If your harness loads neither `AGENTS.md` nor `CLAUDE.md`, find what does load standing instructions and put this line there:
 

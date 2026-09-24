@@ -34,8 +34,6 @@ The options considered for delivering the library and skills, and why each was r
 - **Hooks,** including a session-start hook that prints the library root. Ruled out until hooks are standardised; at least one enterprise user runs their own harness.
 - **Instructions served over MCP,** including GBrain's `get_skill`. It needs an MCP server, clients handle MCP instructions unreliably, and tool schemas cost context ([comparable-systems-survey.md](./comparable-systems-survey.md)).
 
-- **Emulating sub-agents** in harnesses without them, for example by writing a worker packet for the user to run in a new session. Sub-agents are essential to the skills that use them, so the operator chose to wait until harnesses provide them (2026-09-24). Reconsider if a required harness still lacks them when those skills are needed there.
-
 ## Smaller choices
 
 - **`permissions.additionalDirectories` instead of a `Read` rule** for Claude Code. Both removed the read denials ([results-claude-code.md](./results-claude-code.md), case 2). The `Read` rule is read-only; `additionalDirectories` adds the directory to the workspace. A `Read` rule also covers Grep and Glob per Claude Code's documentation; that was not probed.
