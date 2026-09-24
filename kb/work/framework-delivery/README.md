@@ -2,7 +2,7 @@
 
 ## Commission
 
-Posed by the operator on 2026-09-23. Decide how Commonplace delivers what agents read — the framework library, global types, review gates, and skills — to installed projects. The selected design is written back into the [library-served-from-the-installed-package proposal](./design.md), which it will largely replace.
+Posed by the operator on 2026-09-23. Decide how Commonplace delivers what agents read — the framework library, global types, review gates, and skills — to installed projects. On 2026-09-24, at the operator's direction, the proposal `library-served-from-the-installed-package` was moved into this workshop as [design.md](./design.md) and removed from `kb/reference/proposals/`, so the design is kept in one place while it changes.
 
 ## Problem
 
@@ -18,27 +18,9 @@ Today `commonplace-init` copies the library and the skills into every project. T
 - **No hooks** (2026-09-24). No harness hooks until hooks are standardised. At least one enterprise user runs their own harness.
 - **Harness-neutral base** (2026-09-24). The design rests on files, a shell, the `commonplace-*` commands, and a project `AGENTS.md`. Agent Skills and harness plugins are optional layers above that base. The base must still let an agent find a library instruction that the user names in conversation, outside any skill.
 
-## Working design
+## Design
 
-Three layers. Each works without the ones above it. Updated 2026-09-24 with the [Codex results](./results-codex.md).
-
-1. **Base, for every harness.** The library, laid out as a plugin (skills, instructions, notes, reference, types, and gates), installs as wheel shared data under `<uv tool environment>/share/commonplace/`. That is the conventional place for a program's read-only data, and its path does not change with the tool's Python version. The `commonplace-*` commands read it there, or from the source tree in an editable install, where shared data would be an install-time snapshot. `commonplace-init` writes a project `AGENTS.md` naming two commands: `commonplace-library` prints the library root, and `commonplace-instruction <name>` prints the path of one instruction (or lists them). An agent asked for a named instruction runs the command and reads the file it prints. Setup grants the harness read access to the root where the harness needs it; Codex needed none. Project files never contain the library path, because it differs per machine and per uv tool directory.
-2. **Skills, where the harness supports Agent Skills.** Setup links each `cp-skill-*` directory from the harness's user-level skill directory into the package. Skills find library files through the same commands as the base layer, by name. Relative links stay in the text as a convenience, not as the route a skill depends on: agents in Codex misresolved them against the symlink path before recovering. A router skill (`commonplace-library`) indexes the library by instruction name, so an agent asked for an instruction in conversation finds it through the skill's description.
-3. **Harness-specific extras.** In Claude Code, a link-mode plugin serves the `share/commonplace/` tree in place: its path command prints that directory, Claude Code links its top-level entries, and nothing is copied. A moved tree is picked up after one session. The user must accept the path command once, in their own terminal, and Claude Code's read permissions must include the `share/commonplace/` directory itself. Link mode was probed with a stand-in directory, not yet with a real `share/` install. Codex has no equivalent that serves in place: its local-marketplace plugins are copied into its cache and go stale on a uv upgrade, so Codex uses layer 2 only.
-
-**Keeping skill links valid.** With the tree under `share/`, upgrades and Python changes keep the path, so linked skills see new content at once. Codex confirmed this with revision 3: links made under Python 3.12 survived a reinstall on 3.13 without repair. (With package data, a Python change moved the path, and Codex silently dropped the dangling skills.) Links can still go wrong: after a switch between editable and normal installs, a changed uv tool directory, or an uninstall. Without hooks nothing can repair links when that happens, so the design detects and repairs them:
-
-- Skill setup is idempotent. It replaces links that point into any Commonplace install location, and it leaves unrelated entries alone.
-- The health check, and every `commonplace-*` command where the check is cheap, reports dangling or misdirected skill links and names the setup command that repairs them. In Codex's revision 3 run, both directions of the editable/normal switch were detected and repaired by one setup call.
-
-Rejected so far, with reasons:
-
-- A hidden, gitignored copy in the project: it keeps the divergence.
-- A plugin tree published separately from the package (GBrain's route): the one-tree constraint.
-- Hooks, including a session-start hook that prints the library root: the no-hooks constraint.
-- Instructions served over MCP, including GBrain's `get_skill`: it needs an MCP server, clients handle MCP instructions unreliably, and tool schemas cost context (see the survey).
-- Codex plugins from a local marketplace: Codex copies them into its cache, which breaks the one-tree constraint.
-- Relative links as the route skills depend on: agents misresolve them through symlinks. A `readlink -f` instruction fixed that in Codex on Linux, but it is not portable, and the command route already works everywhere.
+The design, and the alternatives rejected so far, are in [design.md](./design.md). Its core is a proposed change to the install procedure: `commonplace-init` stops copying the library, and a per-user setup command links the skills and writes the harness permissions. Keep the design only there; this README holds the commission, constraints, and open questions.
 
 ## Open questions
 
@@ -47,13 +29,15 @@ Rejected so far, with reasons:
 - **The source checkout.** In the source repo the library is `kb/` itself and `.claude/skills/` holds symlinks into `kb/instructions/`. Do the commands and skills behave the same there? The editable install resolved the library into the source tree in both dry runs.
 - **Skill names.** A `.claude-plugin/plugin.json` in the tree makes Codex prefix skill names (`cp-delivery-probe:delivery-probe-read`), even for plain symlinks. Documentation and invocation guidance must not assume the bare name.
 - **Windows and macOS.** Not tested. On Windows, link mode is unsupported and symlinks are unreliable. Are directory junctions usable, or is the version-stamped copy needed?
-- **Plugin approval.** In the operator's terminal the interactive prompt offered only "abort"; `--accept-command <sha256>` worked. The cause is unknown, and setup documentation depends on it.
-- **Running sessions.** Neither harness was tested for picking up an upgrade inside a session that was already running.
+- **Plugin approval.** In the operator's terminal the interactive prompt offered only "abort"; `--accept-command <sha256>` worked. The cause is unknown, and setup documentation depends on it. The Claude Code rerun's case 6 is pending on this.
+- **Running sessions.** A running Claude Code session listed skills linked after it started. An upgrade inside a running session was not tested in either harness.
+- **Centrally managed settings.** Claude Code needs user-level permission entries. Can setup write them where settings are managed centrally, or must it print them?
 
 ## Next steps
 
-1. Agents in other harnesses run the shared probe, as requested in [harness-probe-request.md](./harness-probe-request.md): Gemini CLI, OpenCode, Cursor, Goose, GitHub Copilot, a full Claude Code rerun, and enterprise harnesses. Enterprise results may come back through the operator, anonymised.
-2. Update the working design from their results, then write the selected design back into the proposal.
+1. Finish the Claude Code rerun's case 6 (the link-mode plugin served from a real `share/` install) and its cleanup.
+2. Agents in other harnesses run the shared probe, as requested in [harness-probe-request.md](./harness-probe-request.md): Gemini CLI, OpenCode, Cursor, Goose, GitHub Copilot, and enterprise harnesses. Enterprise results may come back through the operator, anonymised.
+3. Update [design.md](./design.md) from their results.
 
 ## Evaluation boundary
 
@@ -69,10 +53,11 @@ Rejected so far, with reasons:
 
 ## Closure
 
-Close when the working design, or its replacement, is written back into the proposal, each open question is answered or deferred with a trigger, and each departure from GBrain has a recorded reason. Then delete this directory and its entry in `kb/work/README.md`.
+Close when the operator decides the design: an adopted design becomes an ADR and an `INSTALL.md` change; a design left undecided goes back to `kb/reference/proposals/` as a proposal. Before closing, each open question is answered or deferred with a trigger, and each departure from GBrain has a recorded reason. Then delete this directory and its entry in `kb/work/README.md`.
 
 ## Working files
 
+- [design.md](./design.md) — the design, including the proposed install procedure; the only place it is kept
 - [comparable-systems-survey.md](./comparable-systems-survey.md) — how harnesses and 14 comparable systems deliver skills and libraries, from web research and the local clones
 - [gbrain-delivery-methods.md](./gbrain-delivery-methods.md) — code-grounded study of GBrain v0.54.1.0's delivery methods and what carries over to a Python/uv package
 - [probe-results.md](./probe-results.md) — 2026-09-24 probes: a Claude Code link-mode plugin served in place from a package directory, and a Codex skill symlinked into it
@@ -80,4 +65,5 @@ Close when the working design, or its replacement, is written back into the prop
 - [codex-probe-request.md](./codex-probe-request.md) — request to a Codex agent to run the shared probe; Codex appends its reply here
 - [harness-probe-request.md](./harness-probe-request.md) — request to agents in other harnesses, including enterprise ones, to run the shared probe (revision 3)
 - [results-codex.md](./results-codex.md) — Codex's run of the shared probe (2026-09-24), with supplemental findings from its first fixture
+- [results-claude-code.md](./results-claude-code.md) — Claude Code's run of the shared probe (2026-09-24); case 6 pending
 - `results-<harness>.md` — one results file per further harness, from the template
