@@ -1,5 +1,0 @@
-{
-  "name": "cp-delivery-probe",
-  "version": "1.0.0",
-  "description": "Throwaway probe: skills and library served in place from a uv-installed package"
-}

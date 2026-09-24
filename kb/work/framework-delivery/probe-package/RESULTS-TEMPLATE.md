@@ -13,8 +13,8 @@
 - Can the agent run shell commands?
 - Can the agent read files outside the project, and under what setting?
 - Agent Skills support and skill directories (project, user):
-- Does it follow symlinked skill directories?
-- Plugin or extension mechanism, and does it copy or serve in place?
+- Does it read project-level skill directories, and which?
+- Can permission settings live in the project, and can a machine-specific part stay uncommitted?
 
 ## Cases
 
@@ -23,13 +23,15 @@
 | 0 Install | | | |
 | 1 Base layer | | | |
 | 2 Read permission | | | |
-| 3 Skills (link) | | | |
-| 3 Skills (copy) | | | |
-| 4 Router skill | | | |
-| 5 Upgrade, same Python | | | |
-| 5 Upgrade, Python change | | | |
-| 6 Harness plugin | | | |
-| 7 Editable install | | | |
+| 3 Stub skill, run 1 | | | |
+| 3 Stub skill, run 2 | | | |
+| 3 Stub skill, run 3 | | | |
+| 4 Router through a stub | | | |
+| 5a Upgrade, same Python | | | |
+| 5b Description change | | | |
+| 5c Python change | | | |
+| 6 Editable install | | | |
+| 7 Skill names | | | |
 
 ## Modifications to the package
 
