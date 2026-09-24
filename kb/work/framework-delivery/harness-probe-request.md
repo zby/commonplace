@@ -52,11 +52,11 @@ Run the shared delivery probe in your harness and record what works, what fails,
 
 The details are in [results-codex.md](./results-codex.md), [probe-results.md](./probe-results.md), and the protocol's "Known results" section. In brief:
 
-- **Claude Code** serves the package in place through a link-mode plugin, whose marketplace entry runs a command that prints the plugin directory. The user must accept that command once, in their own terminal. Reading without prompts needs the package directory itself in the read permissions. Link mode is not supported on Windows.
+- **Claude Code** serves the package in place through a link-mode plugin, whose marketplace entry runs a command that prints the plugin directory. The user must accept that command once, in their own terminal. Reading without prompts needs the served directory itself (with revision 3, the tool environment's `share/cp-delivery-probe/`) in the read permissions. Link mode is not supported on Windows.
 - **Codex:**
   - The base layer and user-level skill symlinks worked, with no read approvals.
   - Agents misresolved relative links through the symlinks; revision 2 therefore uses the commands first.
   - A change of the uv tool's Python version moved the install path, and Codex silently dropped the dangling skills. Revision 2's commands warn about that, and `install-skills` repairs it.
-  - Revision 3 therefore installs the tree as shared data under the tool environment's `share/` directory, whose path does not include the Python version. Codex has not yet run revision 3.
+  - Revision 3 therefore installs the tree as shared data under the tool environment's `share/` directory, whose path does not include the Python version. In Codex's revision 3 run, links survived a Python 3.12→3.13 reinstall without repair; switching between editable and normal installs still needed one `install-skills` call, which the commands flagged.
   - Codex copied local-marketplace plugins into its cache.
 - **Not yet tested anywhere:** Windows and macOS, a router skill over a large library, and whether a session that is already running picks up an upgrade.

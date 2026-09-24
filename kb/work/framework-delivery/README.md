@@ -24,12 +24,12 @@ Three layers. Each works without the ones above it. Updated 2026-09-24 with the 
 
 1. **Base, for every harness.** The library, laid out as a plugin (skills, instructions, notes, reference, types, and gates), installs as wheel shared data under `<uv tool environment>/share/commonplace/`. That is the conventional place for a program's read-only data, and its path does not change with the tool's Python version. The `commonplace-*` commands read it there, or from the source tree in an editable install, where shared data would be an install-time snapshot. `commonplace-init` writes a project `AGENTS.md` naming two commands: `commonplace-library` prints the library root, and `commonplace-instruction <name>` prints the path of one instruction (or lists them). An agent asked for a named instruction runs the command and reads the file it prints. Setup grants the harness read access to the root where the harness needs it; Codex needed none. Project files never contain the library path, because it differs per machine and per uv tool directory.
 2. **Skills, where the harness supports Agent Skills.** Setup links each `cp-skill-*` directory from the harness's user-level skill directory into the package. Skills find library files through the same commands as the base layer, by name. Relative links stay in the text as a convenience, not as the route a skill depends on: agents in Codex misresolved them against the symlink path before recovering. A router skill (`commonplace-library`) indexes the library by instruction name, so an agent asked for an instruction in conversation finds it through the skill's description.
-3. **Harness-specific extras.** In Claude Code, a link-mode plugin serves the package in place. Nothing is copied, and a moved package is picked up after one session. The user must accept the plugin's path command once, in their own terminal. Codex has no equivalent that serves in place: its local-marketplace plugins are copied into its cache and go stale on a uv upgrade, so Codex uses layer 2 only.
+3. **Harness-specific extras.** In Claude Code, a link-mode plugin serves the `share/commonplace/` tree in place: its path command prints that directory, Claude Code links its top-level entries, and nothing is copied. A moved tree is picked up after one session. The user must accept the path command once, in their own terminal, and Claude Code's read permissions must include the `share/commonplace/` directory itself. Link mode was probed with a stand-in directory, not yet with a real `share/` install. Codex has no equivalent that serves in place: its local-marketplace plugins are copied into its cache and go stale on a uv upgrade, so Codex uses layer 2 only.
 
-**Keeping skill links valid.** With the tree under `share/`, upgrades and Python changes keep the path, so linked skills see new content at once. (With package data, a Python change moved the path, and Codex silently dropped the dangling skills.) Links can still go wrong: after a switch between editable and normal installs, a changed uv tool directory, or an uninstall. Without hooks nothing can repair links when that happens, so the design detects and repairs them:
+**Keeping skill links valid.** With the tree under `share/`, upgrades and Python changes keep the path, so linked skills see new content at once. Codex confirmed this with revision 3: links made under Python 3.12 survived a reinstall on 3.13 without repair. (With package data, a Python change moved the path, and Codex silently dropped the dangling skills.) Links can still go wrong: after a switch between editable and normal installs, a changed uv tool directory, or an uninstall. Without hooks nothing can repair links when that happens, so the design detects and repairs them:
 
 - Skill setup is idempotent. It replaces links that point into any Commonplace install location, and it leaves unrelated entries alone.
-- The health check, and every `commonplace-*` command where the check is cheap, reports dangling or misdirected skill links and names the setup command that repairs them.
+- The health check, and every `commonplace-*` command where the check is cheap, reports dangling or misdirected skill links and names the setup command that repairs them. In Codex's revision 3 run, both directions of the editable/normal switch were detected and repaired by one setup call.
 
 Rejected so far, with reasons:
 
@@ -52,9 +52,8 @@ Rejected so far, with reasons:
 
 ## Next steps
 
-1. Codex reruns cases 3, 5, and 7 on revision 3 (shared-data location), appending to [results-codex.md](./results-codex.md).
-2. Agents in other harnesses run the shared probe, as requested in [harness-probe-request.md](./harness-probe-request.md): Gemini CLI, OpenCode, Cursor, Goose, GitHub Copilot, a full Claude Code rerun, and enterprise harnesses. Enterprise results may come back through the operator, anonymised.
-3. Update the working design from their results, then write the selected design back into the proposal.
+1. Agents in other harnesses run the shared probe, as requested in [harness-probe-request.md](./harness-probe-request.md): Gemini CLI, OpenCode, Cursor, Goose, GitHub Copilot, a full Claude Code rerun, and enterprise harnesses. Enterprise results may come back through the operator, anonymised.
+2. Update the working design from their results, then write the selected design back into the proposal.
 
 ## Evaluation boundary
 

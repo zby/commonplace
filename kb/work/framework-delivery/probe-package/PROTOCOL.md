@@ -57,10 +57,10 @@ Record the revision you started from in your results file.
 
 ## Known results (2026-09-24, Linux, uv)
 
-- Revision 3 installs the tree under `<uv tool dir>/cp-delivery-probe/share/cp-delivery-probe/`. In a dry run, links made under Python 3.12 still passed `--check` after a reinstall on Python 3.13 and read the new version's content.
+- Revision 3 installs the tree under `<uv tool dir>/cp-delivery-probe/share/cp-delivery-probe/`. In Codex's run ([results](../results-codex.md)), links made under Python 3.12 survived a reinstall on Python 3.13 with no warning and no repair, and a fresh session read the new version. Switching between editable and normal installs was flagged by the commands and repaired by one `install-skills` call in each direction.
 - Revisions 1 and 2 used package data under `lib/python3.X/site-packages/`. A same-Python reinstall or `uv tool upgrade` kept that path; a Python change moved it, and Codex silently dropped the dangling skills until `install-skills` ran again.
 - An editable install reads the source tree. Shared data in an editable install is an install-time snapshot, so it is not used there.
-- Claude Code (see `../probe-results.md`) serves the plugin in place through link mode. Codex copies local-marketplace plugins into its cache.
+- Claude Code (see `../probe-results.md`) serves a plugin directory in place through link mode; that probe used a stand-in directory, not a `share/` install. Codex copies local-marketplace plugins into its cache, in every revision tested.
 - A copied skill's relative links point outside the package, so copies depend on the command route.
 
 ## Recording results
