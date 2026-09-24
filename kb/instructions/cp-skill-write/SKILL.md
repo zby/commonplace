@@ -1,12 +1,12 @@
 ---
 name: cp-skill-write
-description: Write one KB note whose intended contribution is already determined, under its collection and type contracts; validate it and hand broader graph discovery to cp-skill-connect.
+description: Write one KB artifact whose intended contribution is already determined, under its collection and type contracts; validate it and hand broader graph discovery to cp-skill-connect.
 type: kb/types/instruction.md
 user-invocable: true
 allowed-tools: Read, Write, Grep, Glob, Bash, Skill
 context: fork
 model: opus
-argument-hint: "[path | collection | type] [topic or claim/purpose] — a note path for editing, or a collection/type/subject for new notes"
+argument-hint: "[path | collection | type] [topic or claim/purpose] — an artifact path for editing, or a collection/type/subject for new artifacts"
 ---
 
 ## EXECUTE NOW
@@ -64,13 +64,13 @@ When those inputs already determine the choices, proceed without a formal brief.
 
 ### Step 5 - Search Before Writing
 
-Write does not run active discovery — that is `cp-skill-connect`'s job. Write authors one note and adds only links supplied by the user or already loaded for this write, plus a cheap duplicate guard:
+Write does not run active discovery — that is `cp-skill-connect`'s job. Write authors one artifact and adds only links supplied by the user or already loaded for this write, plus a cheap duplicate guard:
 
-1. **Near-duplicate check.** Search the target collection for the new note's distinctive title terms with `rg` (e.g. `rg -i "key term" kb/notes/ --glob "*.md"`). This is a targeted term search — do **not** enumerate the whole collection; a complete listing costs linear context and is the wrong tool for a single note's duplicate check. If a near-duplicate already exists, prefer editing it to creating a second note.
-2. **Context already loaded.** Consider relevant notes, sources, and ingests loaded for this write as link candidates.
+1. **Near-duplicate check.** Search the target collection for the new artifact's distinctive title terms with `rg` (e.g. `rg -i "key term" kb/notes/ --glob "*.md"`). This is a targeted term search — do **not** enumerate the whole collection; a complete listing costs linear context and is the wrong tool for a single artifact's duplicate check. If a near-duplicate already exists, prefer editing it to creating a second note.
+2. **Context already loaded.** Consider relevant artifacts loaded for this write, including sources and ingests, as link candidates.
 3. **User-named targets.** Link targets the user mentions in the prompt.
 
-In edit mode, also run a backlinks lookup on the target note — one query, no body search — so edits don't orphan dependents.
+In edit mode, also run a backlinks lookup on the target artifact — one query, no body search — so edits don't orphan dependents.
 
 This guard is intra-KB only. Do not search the external literature for missing
 prior art and do not infer novelty from the absence of a named source. If the
@@ -156,7 +156,7 @@ path. This is the first durable target write.
 
 ### Step 9 - Validate
 
-Validate the note you wrote or edited:
+Validate the artifact you wrote or edited:
 
 ```bash
 commonplace-validate path/to/file.md
@@ -170,9 +170,9 @@ Then suggest `cp-skill-connect` as the next step, for the graph discovery that S
 
 These apply to all typed artifacts regardless of collection.
 
-**Frontmatter** makes notes queryable. No frontmatter means implicit `text`; any file with frontmatter must include a path-valued `type:`. Most library notes also need `description` (double-quoted, 50-250 chars), plus optional `traits`, `tags`, and `user-verified`. Never grant user verification implicitly.
+**Frontmatter** makes artifacts queryable. No frontmatter means implicit `text`; any file with frontmatter must include a path-valued `type:`. Most library artifacts also need `description` (double-quoted, 50-250 chars), plus optional `traits`, `tags`, and `user-verified`. Never grant user verification implicitly.
 
-**Descriptions** are retrieval filters, not summaries. The test: if an agent searched for this note's concept and got 5 results, would this description help pick this one? Paraphrasing the title adds zero retrieval value.
+**Descriptions** are retrieval filters, not summaries. The test: if an agent searched for this artifact's concept and got 5 results, would this description help pick this one? Paraphrasing the title adds zero retrieval value.
 
 **Directive text.** Apply this whenever an artifact, or a section of one, directs someone else to act: a procedure, skill, plan, request, test protocol, handoff, or message.
 

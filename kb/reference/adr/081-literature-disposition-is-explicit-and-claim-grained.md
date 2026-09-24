@@ -187,7 +187,7 @@ Relevant Notes:
 
 - [Assess a claim-bearing artifact against external literature](../../instructions/assess-a-claim-bearing-artifact-against-external-literature.md) — procedure: the claim-grained assessment adopted here
 - [Write a KB artifact through multiple stages](../../instructions/cp-skill-write-multistage/SKILL.md) — procedure: the conditional loader and execution workflow
-- [Write one KB note](../../instructions/cp-skill-write/SKILL.md) — procedure: the ordinary writer's explicit no-search boundary and handoff
+- [Write one KB artifact](../../instructions/cp-skill-write/SKILL.md) — procedure: the ordinary writer's explicit no-search boundary and handoff
 - [Ground a source-dependent claim](../../instructions/cp-skill-ground/SKILL.md) — procedure: the source-resolution and retained-evidence subroutine
 - [ADR 076 — Source-claim grounding is a promoted skill](./076-source-claim-grounding-is-a-promoted-skill.md) — see-also: the grounding entry point and inherited-context caveat used by the bilateral-isolation branch
 - [ADR 078 — Writers invoke grounding and evidence stays in the ingest](./078-writers-invoke-grounding-and-evidence-stays-in-the-ingest.md) — see-also: the ordinary-writer grounding boundary preserved outside this decision's explicit literature-assessment exception
