@@ -14,8 +14,8 @@ structure that connects them; Apodex 1.1 retains weights revised offline.
 The comparison asks what each system revises, how failures guide repair,
 and what evaluates the change. These observations do not alone classify
 [conjectural learning](../definitions/conjectural-learning.md): that requires
-improved capacity attributable to criticism of an operative formulated
-theory. Missing historical rationale does not establish absence of
+an operative formulated theory open to criticism of what it says, and
+improved capacity attributable to the process of conjecture and criticism. Missing historical rationale does not establish absence of
 formulated criticism during an operation. The evidence below comes from the
 papers' descriptions, not reproduced results.
 
@@ -37,7 +37,7 @@ The working-memory and trigger components describe and control the harness's own
 
 ## What the comparison establishes, and its limit
 
-Read together, the reports distinguish persistence, diagnostic operations, and evaluation. Prime Agent exposes versioned edits without an admission gate. Recuris exposes localized component repair checked against the source failure and previously solved tasks. Apodex reports offline weight training rather than a deployment-time artifact-revision loop. Classifying conjectural learning requires evidence that formulated theories guide decisions through their content, that criticism bears on that content, and that the result improves capacity for future action. Missing rationale, editable rules, package growth, and opaque weights alone do not settle those claims. Reported gains establish only what their comparisons support; they do not isolate criticism's contribution.
+Read together, the reports distinguish persistence, diagnostic operations, and evaluation. Prime Agent exposes versioned edits without an admission gate. Recuris exposes localized component repair checked against the source failure and previously solved tasks. Apodex reports offline weight training rather than a deployment-time artifact-revision loop. Classifying conjectural learning requires evidence that formulated theories guide decisions through their content, that the system is open to criticism of that content, and that the process of conjecture and criticism improves capacity for future action. Missing rationale, editable rules, package growth, and opaque weights alone do not settle those claims. Reported gains establish only what their comparisons support; they do not isolate criticism's contribution.
 
 ## Scope
 

@@ -20,8 +20,9 @@ individually. Theories may be expressed in natural language, causal models,
 or programs. Retention and addressability are chosen treatments whose benefits
 are conjectured. [Conjectural learning](./definitions/conjectural-learning.md)
 also admits whole replacement and reconstruction from retained criticism.
-It requires criticism of an operative formulated theory to improve capacity
-for future action; operating the proposed process does not guarantee learning.
+It requires an operative formulated theory open to criticism of what it says,
+and improved capacity for future action from the process of conjecture and
+criticism; operating the proposed process does not guarantee learning.
 
 The conjectured pathway is:
 

@@ -69,7 +69,8 @@ performance are separate claims.
   self-theory and machinery without improving its capacity for future
   action. Reflection names the causally connected self-representation and
   revision; [conjectural learning](./conjectural-learning.md) additionally
-  requires improved capacity attributable to criticism. A failed reflective
+  requires openness to criticism and improved capacity attributable to the
+  process of conjecture and criticism. A failed reflective
   revision does not remove the builder's reflective character.
 - **Independent of autonomy.** A reflective builder may depend on a person
   for diagnosis or machinery changes; see
@@ -125,7 +126,7 @@ performance are separate claims.
   its own software and its rewrites are causally connected to them. Its
   classification as a reflective theory builder stays open with the
   [builder boundary case](./theory-builder.md#boundary-cases). Proof-governed
-  switching alone does not show whether its self-theory is criticized, and
+  switching alone does not show whether its self-theory is open to criticism, and
   deductive criticism is not excluded from conjectural learning. A sharper
   classification needs an account of the theory and its revision in the
   assessed system.

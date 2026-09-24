@@ -40,7 +40,7 @@ work. The lead article gives the causal structure:
 
 where K is the retained tentative knowledge. The middle step is what makes
 this conjectural learning rather than caching: the new retained state is a
-theory that was proposed and criticized, not a stored answer.
+theory that was proposed and is held open to criticism, not a stored answer.
 
 Model weights are held fixed, ruling out weight updates as the source of
 improvement. To identify the contribution of a retained revision, we must

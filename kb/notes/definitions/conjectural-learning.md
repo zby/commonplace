@@ -117,7 +117,7 @@ Whether this approach outperforms alternatives is conjectured there and in
 
 - **Persistence follows the claim.** A claim identifies the action the
   improved capacity is for and the evidence of improvement. If it claims that
-  the capacity remains available at a later time, the effect of criticism must
+  the capacity remains available at a later time, the improvement must
   persist to that time. Conjectural learning adds no minimum duration.
 - **Observer access is an evidence question.** A model may formulate and
   criticize conjectures in language that no observer sees. Where evidence does

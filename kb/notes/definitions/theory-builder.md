@@ -26,8 +26,9 @@ The definition leaves open how a builder revises its theories. It may revise
 an existing theory in response to criticism or reconstruct one from retained
 records. A comparison of retained forms can vary this choice. Constructing a
 first theory is also in scope. Responsibility for this work does not establish [conjectural learning](./conjectural-learning.md),
-which requires an improvement in the system's capacity for future action
-attributable to criticism of an operative formulated theory. A builder can
+which requires an operative formulated theory open to criticism of what it
+says, and an improvement in the system's capacity for future action
+attributable to the process of conjecture and criticism. A builder can
 attempt that process without succeeding. Conversely, conjectural learning
 does not require separately editable theory parts or continuing
 responsibility across demands, so it does not by itself establish builder

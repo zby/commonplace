@@ -13,7 +13,8 @@ that a theory existed, a decision occurred, an outcome followed, a theory
 changed, and later work used retained state does not by itself connect those
 events. The witnesses must identify the joins. Even a connected path establishes
 [conjectural learning](./definitions/conjectural-learning.md) only
-when criticism improves the system's capacity for future action.
+when the process of conjecture and criticism improves the system's capacity
+for future action.
 
 For an empirical recurrent claim, the path has this shape:
 
@@ -101,7 +102,8 @@ repair an experiment that never ran the contrast its causal claim requires.
   of the effect to that time, not an arbitrary minimum duration.
 - Connecting the mechanism's steps does not establish improved capacity.
   A learning claim must identify what capacity improved, by what criterion,
-  and why the improvement is attributable to criticism. A fully connected
+  and why the improvement is attributable to the process of conjecture and
+  criticism. A fully connected
   path can still worsen decisions.
 - The diagram covers an empirical path. Formulated criticism by argument can
   also support learning without an intervention-outcome sequence.

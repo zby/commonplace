@@ -71,9 +71,10 @@ call for narrower comparisons within the successful pipelines.
 [Conjectural learning](../notes/definitions/conjectural-learning.md) requires
 a formulated theory to be
 [operative](../notes/definitions/operative-change.md): a difference in what it
-says changes a decision. Criticism of what the theory says must improve the
-system's capacity for future action. The effect can persist in a retained
-theory or in criticisms from which the theory is reconstructed.
+says changes a decision. The theory must be open to criticism of what it
+says, and holding and criticizing it must improve the system's capacity for
+future action. The effect can persist in a retained theory or in criticisms
+from which the theory is reconstructed.
 
 We therefore distinguish how a revision is produced from how it is accepted.
 A system may diagnose a mistaken assumption, revise the theory, and use an

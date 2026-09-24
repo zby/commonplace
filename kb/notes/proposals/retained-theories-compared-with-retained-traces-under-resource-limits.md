@@ -127,8 +127,8 @@ The storage container does not decide whether a system performs
 [conjectural learning](../definitions/conjectural-learning.md).
 Indexed traces can expose theories and their criticisms as retained,
 addressable knowledge. A theory can also be reconstructed from criticism
-without retaining the assembled theory. Either can qualify when criticism
-improves capacity for future action.
+without retaining the assembled theory. Either can qualify when the process
+of conjecture and criticism improves capacity for future action.
 
 Two retention comparisons therefore ask different questions:
 

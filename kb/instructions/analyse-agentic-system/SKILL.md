@@ -189,9 +189,12 @@ Keep these distinctions:
   variants does not alone establish this. Record the claim challenged and
   the result. A theory can survive criticism: the result may change later
   reliance or test selection without changing its content.
-- **Conjectural learning** requires improved capacity for future action
-  attributable to criticism of an operative formulated theory. Record the
-  capacity, assessment boundary, evidence of improvement, and causal limits.
+- **Conjectural learning** requires an operative formulated theory open to
+  criticism of what it says, and improved capacity for future action
+  attributable to the process of holding and criticizing it; criticism need
+  not yet have occurred, but criticism that occurs must change that
+  capacity. Record the capacity, assessment boundary, evidence of
+  improvement, and causal limits.
   The capacity need not already have been exercised; a claim that it remains
   available later requires the effect to persist to that time. Revision,
   retention, or a connected route alone does not establish learning.
@@ -225,7 +228,7 @@ Keep these distinctions:
 
 On a theory route, give each claim its own conclusion status: formulation,
 operative use, content-directed criticism, the resulting revision or changed
-reliance, and any improved capacity attributable to criticism. For a claim
+reliance, and any improved capacity attributable to that process. For a claim
 about later or recurrent use, also trace what persisted and the later consumer.
 Never infer a missing link from its neighbours or upgrade a citation to use,
 an edit following an outcome to criticism, or later use to improvement.

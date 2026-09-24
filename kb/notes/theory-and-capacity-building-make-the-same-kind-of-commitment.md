@@ -33,7 +33,7 @@ Refactoring is the disciplined case on the constructive side: backtracking over 
 
 ## Conjectural learning is one causal path between the two forms
 
-Capacity does not have to be built through theory: search, optimization, and trajectory reuse can turn experience into constructive commitments directly. [Conjectural learning](./definitions/conjectural-learning.md) singles out one path when formulating and criticizing theory causes improved capacity:
+Capacity does not have to be built through theory: search, optimization, and trajectory reuse can turn experience into constructive commitments directly. [Conjectural learning](./definitions/conjectural-learning.md) singles out one path, in which formulated theory that stays open to criticism, together with the criticism that occurs, causes improved capacity:
 
 ```text
 experience

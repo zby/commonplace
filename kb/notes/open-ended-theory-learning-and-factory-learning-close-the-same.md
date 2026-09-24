@@ -145,10 +145,10 @@ The Gödel machine therefore enters as a contrast case, not a maturity endpoint.
 It closes the [proposal-selection improvement
 loop](./a-proposal-selection-loop-requires-search-evaluation-and-retention.md)
 completely — search, reject-capable evaluation, and operative retention are all
-present in the construction. If its premises are never criticized, as
+present in the construction. If its premises are closed to criticism, as
 stipulated in the proof-only comparison case, that process does not establish
-conjectural learning. The switching rule alone does not establish the absence
-of criticism elsewhere in a complete system. Its guarantee remains conditional
+conjectural learning. The switching rule alone does not establish that a
+complete system is closed to criticism elsewhere. Its guarantee remains conditional
 on the formalization and the availability of the required proof.
 
 That separability makes the convergence claim contentful rather than

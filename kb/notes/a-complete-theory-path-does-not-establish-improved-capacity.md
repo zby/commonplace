@@ -11,8 +11,9 @@ A theory can guide a useful change without the system learning from criticism
 of that theory. Evidence of theory use, a relevant outcome, a response to
 criticism, and later use support successively more complete accounts of the
 process. [Conjectural learning](./definitions/conjectural-learning.md)
-requires a further result: criticism of a formulated operative theory improves
-the system's capacity for future action. A complete observed sequence can
+requires a further result: a formulated operative theory, open to criticism of
+what it says, and the process of conjecture and criticism improve the system's
+capacity for future action. A complete observed sequence can
 still fail to improve that capacity.
 
 The reflective case adds a separate condition. The theory represents selected
@@ -54,12 +55,12 @@ that every instance of learning must traverse: criticism can proceed by
 argument without an empirical intervention. Nor does the fourth level certify
 learning. Changed decisions can be worse. The improvement claim needs evidence
 about the capacity at issue, the criterion of improvement, and why the effect
-is attributable to criticism.
+is attributable to the process of conjecture and criticism.
 
 Capacity can improve before an occasion for exercising it arises. Observed
 later action can establish recurrence and provide evidence of capacity, but
 actual exercise is not a condition of learning. A claim of capacity at a later
-time does require the effect of criticism to persist to that time. Later loss
+time does require the improvement to persist to that time. Later loss
 does not cancel an earlier improvement. Where improvement is unestablished,
 report the observed process at its supported strength.
 
@@ -118,7 +119,8 @@ consistency costs. [A hand-crafted bootstrap fits the Bitter Lesson only when
 learning can outgrow it](./a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md).
 A future model or learned module may supply functions now divided between
 model and artifact. That possibility challenges the chosen realization's
-value, not the need to establish causal use, criticism, and improved capacity.
+value, not the need to establish causal use, openness to criticism, and
+improved capacity.
 
 ## What the retained examples establish
 

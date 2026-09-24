@@ -33,8 +33,9 @@ arguments before symbolic formalization
 ([Epistemology Without a Knowing Subject](../sources/popper-epistemology-without-a-knowing-subject-1968.ingest.md#quotes)).
 
 Commonplace adds the conditions for attributing this learning to a particular
-system: a formulated theory must guide decisions through its content, and
-criticism must improve the system's capacity for future action. Artifact
+system: a formulated theory must guide decisions through its content and be
+open to criticism of what it says, and the process of conjecture and criticism
+must improve the system's capacity for future action. Artifact
 availability alone does not establish those conditions. Neither does a changed
 decision establish improvement. The epistemic basis therefore leaves work
 for a concrete account of consumption, consequences, and persistence.
@@ -68,7 +69,7 @@ challenges 1–2).
 
 These comparisons matter when the theory concerns the modifying system's
 organization. A runtime self-model can be causally operative while its
-assumptions are never criticized. Conversely, conjectural learning about an
+assumptions are closed to criticism. Conversely, conjectural learning about an
 external subject need not be reflective. Improving an adaptation outcome
 does not by itself establish learning of the model or its revision machinery.
 
