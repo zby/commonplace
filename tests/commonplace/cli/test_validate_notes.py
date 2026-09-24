@@ -2001,36 +2001,6 @@ def test_source_snapshot_cache_reports_same_url_as_related_observation(
     ]
 
 
-def test_source_snapshot_cache_recognizes_checksumless_legacy_ingest_by_url(
-    tmp_path: Path,
-) -> None:
-    sources = tmp_path / "kb" / "sources"
-    write(sources / "COLLECTION.md", "# Sources\n")
-    related = write(
-        sources / ".snapshots" / "capture-name.md",
-        "---\nsource: https://example.com/legacy\n---\n\nLegacy bytes.\n",
-    )
-    write(
-        sources / "legacy.ingest.md",
-        "---\nsource: https://example.com/legacy\n---\n",
-    )
-
-    warnings = validation.validate_source_snapshot_cache(
-        sources, repo_root=tmp_path
-    )
-
-    assert warnings == [
-        (
-            related,
-            (
-                "unpaired local snapshot: no same-stem ingest; its source URL "
-                "matches legacy ingest kb/sources/legacy.ingest.md, which records "
-                "no snapshot_sha256"
-            ),
-        )
-    ]
-
-
 def test_source_snapshot_cache_recognizes_derived_original_by_checksum(
     tmp_path: Path,
 ) -> None:

@@ -269,10 +269,7 @@ def build_validation_report(
                 reason=reason,
                 repo_root=repo_root,
             )
-            for reason in [
-                *results.infos,
-                *(item for item in results.passes if "skipped" in item.lower()),
-            ]
+            for reason in results.infos
         )
 
     for path, reason in outcome.collection_warnings:
@@ -359,10 +356,7 @@ def build_single_validation_report(
                 reason=reason,
                 repo_root=repo_root,
             )
-            for reason in [
-                *results.infos,
-                *(item for item in results.passes if "skipped" in item.lower()),
-            ]
+            for reason in results.infos
         ),
     )
     return ValidationReport(

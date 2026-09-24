@@ -8,11 +8,13 @@ from functools import cache
 from pathlib import Path
 from typing import Any
 from urllib.parse import urlparse
+from urllib.request import url2pathname
 
 import yaml
 from jsonschema import Draft202012Validator, FormatChecker
 from jsonschema.exceptions import ValidationError
 from referencing import Registry, Resource
+from referencing.exceptions import NoSuchResource
 
 from commonplace.lib import frontmatter
 from commonplace.lib.project_paths import collection_for_path, kb_root
@@ -172,20 +174,29 @@ def validate_type_eligibility(
     )
 
 
-def _load_type_frontmatter(type_doc_path: Path, workspace_root: Path) -> dict[str, Any]:
+# Reads a type spec's frontmatter. Validation runs pass a loader backed by their
+# parse cache so each type document is read once per run, not once per artifact.
+FrontmatterLoader = Callable[[Path], frontmatter.FrontmatterResult]
+
+
+def read_frontmatter(path: Path) -> frontmatter.FrontmatterResult:
+    return frontmatter.parse(path.read_text(encoding="utf-8"))
+
+
+def _load_type_frontmatter(
+    type_doc_path: Path, type_doc_rel: str, load: FrontmatterLoader
+) -> dict[str, Any]:
     if not type_doc_path.is_file():
         raise FileNotFoundError(
-            f"frontmatter.type points to a missing type spec: {_display_path(type_doc_path, workspace_root)}"
+            f"frontmatter.type points to a missing type spec: {type_doc_rel}"
         )
-    parsed = frontmatter.parse(type_doc_path.read_text(encoding="utf-8"))
+    parsed = load(type_doc_path)
     if not parsed.ok:
         raise ValueError(
-            f"{_display_path(type_doc_path, workspace_root)}: invalid type-spec frontmatter: {'; '.join(parsed.errors)}"
+            f"{type_doc_rel}: invalid type-spec frontmatter: {'; '.join(parsed.errors)}"
         )
     if not parsed.data:
-        raise ValueError(
-            f"{_display_path(type_doc_path, workspace_root)}: type spec must have frontmatter"
-        )
+        raise ValueError(f"{type_doc_rel}: type spec must have frontmatter")
     return parsed.data
 
 
@@ -225,102 +236,40 @@ def _load_schema(path_str: str) -> dict[str, Any]:
     return raw
 
 
-def _iter_local_refs(node: Any) -> tuple[str, ...]:
-    refs: list[str] = []
-    if isinstance(node, dict):
-        ref = node.get("$ref")
-        if isinstance(ref, str):
-            parsed = urlparse(ref)
-            if not parsed.scheme and not ref.startswith("#"):
-                refs.append(ref)
-        for value in node.values():
-            refs.extend(_iter_local_refs(value))
-    elif isinstance(node, list):
-        for item in node:
-            refs.extend(_iter_local_refs(item))
-    return tuple(refs)
+def _installed_schema_path(path: Path) -> Path:
+    """Map a missing ``kb/commonplace/types/`` ref onto the shared ``kb/types/``.
 
-
-def _resolve_local_schema_ref(base_path: Path, ref: str) -> Path:
-    resolved = (base_path.parent / ref).resolve()
-    if resolved.exists():
-        return resolved
-
-    parts = resolved.parts
+    Installed framework collections live below ``kb/commonplace/`` while the
+    global types they reference stay at ``kb/types/``, so their relative
+    ``../../types/`` refs point one level too deep.
+    """
+    if path.exists():
+        return path
+    parts = path.parts
     for idx in range(len(parts) - 2):
         if parts[idx : idx + 3] == ("kb", "commonplace", "types"):
             fallback = Path(*parts[: idx + 1], "types", *parts[idx + 3 :])
             if fallback.exists():
                 return fallback
-    return resolved
+    return path
 
 
-def _register_schema_alias_tree(
-    registry: Registry,
-    *,
-    actual_path: Path,
-    alias_path: Path,
-    seen: set[Path] | None = None,
-) -> Registry:
-    if seen is None:
-        seen = set()
-
-    actual = actual_path.resolve()
-    alias = alias_path.resolve()
-    if alias in seen:
-        return registry
-    seen.add(alias)
-
-    schema = {**_load_schema(str(actual)), "$id": alias.as_uri()}
-    registry = registry.with_resource(alias.as_uri(), Resource.from_contents(schema))
-    for ref in _iter_local_refs(schema):
-        unresolved_child = (alias.parent / ref).resolve()
-        actual_child = _resolve_local_schema_ref(actual, ref)
-        registry = _register_schema_alias_tree(
-            registry,
-            actual_path=actual_child,
-            alias_path=unresolved_child,
-            seen=seen,
-        )
-    return registry
-
-
-def _build_registry_for_path(
-    path: Path, registry: Registry | None = None, seen: set[Path] | None = None
-) -> Registry:
-    if registry is None:
-        registry = Registry()
-    if seen is None:
-        seen = set()
-
-    resolved = path.resolve()
-    if resolved in seen:
-        return registry
-    seen.add(resolved)
-
-    schema = _load_schema(str(resolved))
-    registry = registry.with_resource(schema["$id"], Resource.from_contents(schema))
-
-    for ref in _iter_local_refs(schema):
-        unresolved = (resolved.parent / ref).resolve()
-        ref_path = _resolve_local_schema_ref(resolved, ref)
-        registry = _build_registry_for_path(ref_path, registry, seen)
-        if ref_path != unresolved:
-            registry = _register_schema_alias_tree(
-                registry,
-                actual_path=ref_path,
-                alias_path=unresolved,
-            )
-    return registry
+def _retrieve_schema(uri: str) -> Resource:
+    parsed = urlparse(uri)
+    if parsed.scheme != "file":
+        raise NoSuchResource(ref=uri)
+    path = _installed_schema_path(Path(url2pathname(parsed.path)))
+    # Keep the requested URI as the base so nested relative refs resolve from
+    # where the referencing schema expected this one to live.
+    return Resource.from_contents({**_load_schema(str(path)), "$id": uri})
 
 
 @cache
 def _validator_for_path(path_str: str) -> Draft202012Validator:
-    path = Path(path_str).resolve()
-    schema = _load_schema(str(path))
-    registry = _build_registry_for_path(path)
     return Draft202012Validator(
-        schema, registry=registry, format_checker=FormatChecker()
+        _load_schema(path_str),
+        registry=Registry(retrieve=_retrieve_schema),
+        format_checker=FormatChecker(),
     )
 
 
@@ -341,7 +290,7 @@ def resolve_type_definition(
     type_doc_path: Path,
     *,
     repo_root: Path,
-    type_frontmatter: dict[str, Any] | None = None,
+    load_frontmatter: FrontmatterLoader = read_frontmatter,
 ) -> TypeProfile:
     """Load one identified type-spec document and its declared schema."""
     workspace_root = repo_root.resolve()
@@ -355,14 +304,9 @@ def resolve_type_definition(
         ) from exc
 
     type_doc_rel = resolved_type_doc.relative_to(workspace_root).as_posix()
-    if type_frontmatter is None:
-        type_frontmatter = _load_type_frontmatter(
-            resolved_type_doc, workspace_root
-        )
-    elif not resolved_type_doc.is_file():
-        raise FileNotFoundError(
-            f"frontmatter.type points to a missing type spec: {type_doc_rel}"
-        )
+    type_frontmatter = _load_type_frontmatter(
+        resolved_type_doc, type_doc_rel, load_frontmatter
+    )
 
     if type_frontmatter.get("type") != TYPE_SPEC_PATH:
         raise ValueError(
@@ -403,15 +347,9 @@ def resolve_type(
     frontmatter: dict[str, Any] | None,
     *,
     repo_root: Path,
-    load_type_frontmatter: Callable[[Path], dict[str, Any]] | None = None,
+    load_frontmatter: FrontmatterLoader = read_frontmatter,
 ) -> TypeProfile:
-    """Resolve a note's type profile from its frontmatter.
-
-    load_type_frontmatter exists for validation runs, which already hold a
-    parsed-frontmatter cache and pass its lookup in to avoid reopening each
-    type document once per artifact. Standalone callers omit it and the
-    resolver reads the type document itself.
-    """
+    """Resolve a note's type profile from its frontmatter."""
     workspace_root = repo_root.resolve()
     if frontmatter is None:
         return TypeProfile(
@@ -430,15 +368,10 @@ def resolve_type(
         repo_root=workspace_root,
         source_file=file_path,
     )
-    type_frontmatter = (
-        load_type_frontmatter(type_doc_path)
-        if load_type_frontmatter is not None and type_doc_path.is_file()
-        else None
-    )
     profile = resolve_type_definition(
         type_doc_path,
         repo_root=workspace_root,
-        type_frontmatter=type_frontmatter,
+        load_frontmatter=load_frontmatter,
     )
     assert profile.type_doc_path is not None
     validate_type_eligibility(

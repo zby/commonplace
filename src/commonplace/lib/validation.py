@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import hashlib
 import re
 import subprocess
 from collections.abc import Callable, Collection
@@ -12,6 +13,7 @@ from urllib.parse import unquote, urlsplit
 import yaml
 from jsonschema.exceptions import ValidationError
 
+from commonplace.lib import frontmatter
 from commonplace.lib.agentic_analysis import (
     AGENTIC_ANALYSIS_RUN_TYPE,
     parse_agentic_analysis_run_state,
@@ -44,13 +46,9 @@ from commonplace.lib.project_paths import (
 from commonplace.lib.quote_verification import (
     INGEST_QUOTES_HEADING_RE,
     NEXT_H2_RE,
+    QuoteResult,
     normalize_text,
     verify_content,
-)
-from commonplace.lib.snapshot import (
-    DuplicateSnapshotError,
-    find_snapshot_by_sha256,
-    snapshot_sha256,
 )
 from commonplace.lib.type_resolver import (
     TypeProfile,
@@ -60,6 +58,7 @@ from commonplace.lib.type_resolver import (
     validate_instance,
 )
 
+TAG_README_TYPE = "kb/types/tag-readme.md"
 # Weight gates for tag-readme artifacts: the type contract is that a tag's
 # curated head stays a cheap whole-read surface (ADR 026). Bytes gate; entry
 # count is reported as diagnosis only.
@@ -155,6 +154,12 @@ class ValidationRun:
         default_factory=dict, init=False
     )
     _git_ignored: dict[Path, bool] = field(default_factory=dict, init=False)
+    _verbatim_quotes: dict[Path, list[QuoteResult]] = field(
+        default_factory=dict, init=False
+    )
+    _snapshot_dirs: dict[Path, SnapshotDirectory] = field(
+        default_factory=dict, init=False
+    )
 
     def __post_init__(self) -> None:
         self.repo_root = self.repo_root.resolve()
@@ -178,18 +183,13 @@ class ValidationRun:
         self._documents[key] = loaded
         return loaded
 
-    def load_type_frontmatter(self, path: Path) -> dict[str, object]:
-        """Return cached type-spec frontmatter with resolver-compatible errors."""
+    def load_frontmatter(self, path: Path) -> frontmatter.FrontmatterResult:
+        """Serve type-spec frontmatter from this run's parse cache."""
         loaded = self.load_document(path)
-        display_path = path.resolve().relative_to(self.repo_root).as_posix()
         if loaded.error:
-            raise ValueError(
-                f"{display_path}: invalid type-spec frontmatter: {loaded.error}"
-            )
+            return frontmatter.FrontmatterResult(errors=[loaded.error])
         assert loaded.document is not None
-        if not loaded.document.frontmatter:
-            raise ValueError(f"{display_path}: type spec must have frontmatter")
-        return loaded.document.frontmatter
+        return frontmatter.FrontmatterResult(data=loaded.document.frontmatter or {})
 
     def parse_note(self, path: Path) -> tuple[ParsedNote | None, str | None]:
         """Resolve a cached parsed document's type for deterministic validation."""
@@ -208,7 +208,7 @@ class ValidationRun:
                 key,
                 loaded.document.frontmatter,
                 repo_root=self.repo_root,
-                load_type_frontmatter=self.load_type_frontmatter,
+                load_frontmatter=self.load_frontmatter,
             )
         except (FileNotFoundError, TypeError, ValueError) as exc:
             result = (None, str(exc))
@@ -239,6 +239,23 @@ class ValidationRun:
         )
         self._collection_indexes[key] = index
         return index
+
+    def verbatim_quotes(self, parsed: ParsedNote) -> list[QuoteResult]:
+        """Resolve a note's verbatim quotes once for every check that reads them."""
+        if parsed.path not in self._verbatim_quotes:
+            self._verbatim_quotes[parsed.path] = verify_content(
+                parsed.content,
+                parsed.path,
+                load_source=lambda path: self.load_document(path).content,
+            )
+        return self._verbatim_quotes[parsed.path]
+
+    def snapshots(self, directory: Path) -> SnapshotDirectory:
+        """Share one snapshot-cache scan across every check in this run."""
+        key = directory.resolve()
+        if key not in self._snapshot_dirs:
+            self._snapshot_dirs[key] = SnapshotDirectory(key)
+        return self._snapshot_dirs[key]
 
     def prime_git_ignored(self, paths: tuple[Path, ...]) -> None:
         """Cache which paths Git actually excludes from version control.
@@ -319,7 +336,8 @@ class ValidationRun:
                 if (
                     readme_error
                     or readme_parsed is None
-                    or readme_parsed.note_type != "tag-readme"
+                    or canonical_type_identity(readme_parsed.profile)
+                    != TAG_README_TYPE
                 ):
                     continue
                 frontmatter = readme_parsed.document.frontmatter or {}
@@ -391,7 +409,9 @@ class ValidationRun:
         )
         collection_warnings = (
             validate_source_snapshot_cache(
-                self.collection, repo_root=self.repo_root
+                self.collection,
+                repo_root=self.repo_root,
+                snapshots=self.snapshots(self.collection / ".snapshots"),
             )
             if self.collection is not None
             else []
@@ -422,11 +442,6 @@ def type_rule(*type_paths: str) -> Callable[[TypeRule], TypeRule]:
         return rule
 
     return register
-
-
-def parse_note(path: Path, *, repo_root: Path) -> tuple[ParsedNote | None, str | None]:
-    """Parse one note outside a wider run."""
-    return ValidationRun(repo_root=repo_root, paths=(path,)).parse_note(path)
 
 
 def validate_title_and_slug(
@@ -593,11 +608,7 @@ def validate_quote_citations(results: CheckResults, content: str) -> None:
 
 
 def validate_verbatim_quotes(
-    results: CheckResults,
-    content: str,
-    path: Path,
-    *,
-    load_source: Callable[[Path], str] | None = None,
+    results: CheckResults, quote_results: list[QuoteResult]
 ) -> None:
     """Resolve `verbatim`-marked quotations against the sources they cite.
 
@@ -612,7 +623,6 @@ def validate_verbatim_quotes(
     KB that never adopted the convention, and a check that cries wolf teaches
     authors to ignore it — which is the failure this check exists to prevent.
     """
-    quote_results = verify_content(content, path, load_source=load_source)
     if not quote_results:
         return
 
@@ -675,42 +685,69 @@ def _display_snapshot_path(path: Path, sources_dir: Path) -> str:
         return str(path)
 
 
-def _exact_snapshot_matches(snapshot_dir: Path, checksum: str) -> tuple[Path, ...]:
-    try:
-        match = find_snapshot_by_sha256(snapshot_dir, checksum)
-    except DuplicateSnapshotError as error:
-        return error.paths
-    return (match,) if match is not None else ()
-
-
 def _http_source_from_content(content: str) -> str | None:
-    document, error = parse_document(content)
-    if error is not None or document is None or document.frontmatter is None:
-        return None
-    source = document.frontmatter.get("source")
+    source = frontmatter.parse(content).data.get("source")
     if not isinstance(source, str) or not source.startswith(("http://", "https://")):
         return None
     return source
 
 
-def _snapshot_source_matches(snapshot_dir: Path, source: str) -> tuple[Path, ...]:
-    matches: list[Path] = []
-    for snapshot in sorted(snapshot_dir.glob("*.md")):
-        if not snapshot.is_file():
-            continue
-        try:
-            content = snapshot.read_text(encoding="utf-8")
-        except OSError:
-            continue
-        if _http_source_from_content(content) == source:
-            matches.append(snapshot.resolve())
-    return tuple(matches)
+@dataclass(frozen=True)
+class SnapshotFacts:
+    """Identity facts of one local snapshot file: exact bytes and source URL."""
+
+    sha256: str | None = None
+    source: str | None = None
+    error: str | None = None
+
+
+class SnapshotDirectory:
+    """Read each snapshot in one flat cache directory at most once."""
+
+    def __init__(self, directory: Path) -> None:
+        self.directory = directory
+        self._facts: dict[Path, SnapshotFacts] = {}
+        self._scanned = False
+
+    def read(self, path: Path) -> SnapshotFacts:
+        key = path.resolve()
+        if key not in self._facts:
+            try:
+                data = key.read_bytes()
+            except OSError as error:
+                self._facts[key] = SnapshotFacts(error=str(error))
+            else:
+                self._facts[key] = SnapshotFacts(
+                    sha256=hashlib.sha256(data).hexdigest(),
+                    source=_http_source_from_content(
+                        data.decode("utf-8", errors="replace")
+                    ),
+                )
+        return self._facts[key]
+
+    def all(self) -> dict[Path, SnapshotFacts]:
+        if not self._scanned:
+            for path in sorted(self.directory.glob("*.md")):
+                if path.is_file():
+                    self.read(path)
+            self._scanned = True
+        return self._facts
+
+    def with_sha256(self, checksum: str) -> tuple[Path, ...]:
+        return tuple(p for p, f in self.all().items() if f.sha256 == checksum)
+
+    def with_source(self, source: str | None) -> tuple[Path, ...]:
+        if source is None:
+            return ()
+        return tuple(p for p, f in self.all().items() if f.source == source)
 
 
 def validate_ingest_snapshot_pairing(
     results: CheckResults,
     content: str,
     path: Path,
+    *,
+    snapshots: SnapshotDirectory | None = None,
 ) -> None:
     """Diagnose retained snapshot bytes that are not name-paired to an ingest.
 
@@ -719,137 +756,66 @@ def validate_ingest_snapshot_pairing(
     missing cache entry from filename drift without authorizing the alternate
     path for grounding or mutation.
     """
-    if not path.name.endswith(".ingest.md"):
-        return
-
-    ingest_source = _http_source_from_content(content)
     recorded = SNAPSHOT_SHA256_RE.search(content)
-    expected = _name_paired_snapshot(path)
-    expected_display = _display_snapshot_path(expected, path.parent)
-
-    if recorded is None:
-        if expected.is_file():
-            try:
-                snapshot_content = expected.read_text(encoding="utf-8")
-            except OSError as error:
-                results.warns.append(
-                    f"snapshot pairing: {expected_display} is unreadable ({error})"
-                )
-                return
-            snapshot_source = _http_source_from_content(snapshot_content)
-            source_detail = ""
-            if ingest_source is not None and snapshot_source == ingest_source:
-                source_detail = "; the source URLs match"
-            elif ingest_source is not None and snapshot_source is not None:
-                source_detail = "; the source URLs differ"
-            results.warns.append(
-                "snapshot pairing: ingest records no snapshot_sha256; "
-                f"{expected_display} is present{source_detail}, but exact-byte "
-                "identity is unrecorded"
-            )
-            return
-
-        if ingest_source is None:
-            return
-        url_matches = _snapshot_source_matches(expected.parent, ingest_source)
-        if not url_matches:
-            return
-        located = ", ".join(
-            _display_snapshot_path(match, path.parent) for match in url_matches
-        )
-        results.warns.append(
-            "snapshot pairing: ingest records no snapshot_sha256 and expected "
-            f"{expected_display} is absent; its source URL matches {located}, "
-            "but exact-byte identity is unrecorded"
-        )
+    # A missing checksum is the ingest schema's required-field failure.
+    if not path.name.endswith(".ingest.md") or recorded is None:
         return
 
+    expected = _name_paired_snapshot(path)
+    if snapshots is None:
+        snapshots = SnapshotDirectory(expected.parent)
+    source = _http_source_from_content(content)
     checksum = recorded.group("checksum")
-    if expected.is_file():
-        try:
-            actual = snapshot_sha256(expected)
-        except OSError as error:
-            results.warns.append(
-                f"snapshot pairing: {expected_display} is unreadable ({error})"
-            )
-            return
-        if actual == checksum:
-            if ingest_source is not None:
-                try:
-                    snapshot_content = expected.read_text(encoding="utf-8")
-                except OSError:
-                    return
-                snapshot_source = _http_source_from_content(snapshot_content)
-                if snapshot_source is not None and snapshot_source != ingest_source:
-                    results.warns.append(
-                        f"snapshot pairing: {expected_display} matches "
-                        "snapshot_sha256 but its source URL differs from the ingest"
-                    )
-            return
+    shown = _display_snapshot_path(expected, path.parent)
 
-        matches = tuple(
-            match
-            for match in _exact_snapshot_matches(expected.parent, checksum)
+    def located(paths: tuple[Path, ...]) -> str:
+        return ", ".join(_display_snapshot_path(match, path.parent) for match in paths)
+
+    def warn(message: str) -> None:
+        results.warns.append(f"snapshot pairing: {message}")
+
+    if expected.is_file():
+        facts = snapshots.read(expected)
+        if facts.error is not None:
+            warn(f"{shown} is unreadable ({facts.error})")
+        elif facts.sha256 == checksum:
+            if source is not None and facts.source not in (None, source):
+                warn(
+                    f"{shown} matches snapshot_sha256 but its source URL "
+                    "differs from the ingest"
+                )
+        elif exact := tuple(
+            match for match in snapshots.with_sha256(checksum)
             if match != expected.resolve()
-        )
-        if matches:
-            located = ", ".join(
-                _display_snapshot_path(match, path.parent) for match in matches
-            )
-            results.warns.append(
-                f"snapshot pairing: {expected_display} does not match "
-                f"snapshot_sha256; the exact recorded bytes are at {located}"
+        ):
+            warn(
+                f"{shown} does not match snapshot_sha256; the exact recorded "
+                f"bytes are at {located(exact)}"
             )
         else:
-            url_matches = (
-                _snapshot_source_matches(expected.parent, ingest_source)
-                if ingest_source is not None
-                else ()
-            )
-            source_detail = ""
-            if url_matches:
-                located = ", ".join(
-                    _display_snapshot_path(match, path.parent)
-                    for match in url_matches
-                )
-                source_detail = f"; the source URL matches {located}"
-            results.warns.append(
-                f"snapshot pairing: {expected_display} does not match "
-                "snapshot_sha256 and no exact local match was found"
-                f"{source_detail}"
+            by_url = snapshots.with_source(source)
+            detail = f"; the source URL matches {located(by_url)}" if by_url else ""
+            warn(
+                f"{shown} does not match snapshot_sha256 and no exact local "
+                f"match was found{detail}"
             )
         return
 
-    matches = _exact_snapshot_matches(expected.parent, checksum)
-    if not matches:
-        url_matches = (
-            _snapshot_source_matches(expected.parent, ingest_source)
-            if ingest_source is not None
-            else ()
+    exact = snapshots.with_sha256(checksum)
+    if len(exact) == 1:
+        warn(
+            f"expected {shown} is absent; snapshot_sha256 locates the exact "
+            f"recorded bytes at {located(exact)}"
         )
-        if url_matches:
-            located = ", ".join(
-                _display_snapshot_path(match, path.parent) for match in url_matches
-            )
-            results.warns.append(
-                f"snapshot pairing: expected {expected_display} is absent; its "
-                f"source URL matches {located}, but snapshot_sha256 identifies "
-                "different bytes"
-            )
-        return
-
-    located = ", ".join(
-        _display_snapshot_path(match, path.parent) for match in matches
-    )
-    if len(matches) == 1:
-        results.warns.append(
-            f"snapshot pairing: expected {expected_display} is absent; "
-            f"snapshot_sha256 locates the exact recorded bytes at {located}"
+    elif exact:
+        warn(
+            f"expected {shown} is absent; snapshot_sha256 matches multiple "
+            f"local files ({located(exact)})"
         )
-    else:
-        results.warns.append(
-            f"snapshot pairing: expected {expected_display} is absent; "
-            f"snapshot_sha256 matches multiple local files ({located})"
+    elif by_url := snapshots.with_source(source):
+        warn(
+            f"expected {shown} is absent; its source URL matches "
+            f"{located(by_url)}, but snapshot_sha256 identifies different bytes"
         )
 
 
@@ -857,6 +823,8 @@ def validate_ingest_quotes(
     results: CheckResults,
     content: str,
     path: Path,
+    *,
+    snapshots: SnapshotDirectory | None = None,
 ) -> None:
     """Resolve an ingest's retained quotes against its name-paired snapshot.
 
@@ -900,24 +868,20 @@ def validate_ingest_quotes(
 
     recorded = SNAPSHOT_SHA256_RE.search(content)
     if recorded is None:
-        results.warns.append(
-            f"source quotes: {len(extracts)} present but the ingest records no snapshot_sha256"
-        )
         return
 
+    # The pairing check owns missing, unreadable, and mismatched snapshot
+    # diagnostics independently of whether Quotes happens to be populated.
     snapshot = _name_paired_snapshot(path)
     if not snapshot.is_file():
         return
-
+    if snapshots is None:
+        snapshots = SnapshotDirectory(snapshot.parent)
+    if snapshots.read(snapshot).sha256 != recorded.group("checksum"):
+        return
     try:
         snapshot_text = snapshot.read_text(encoding="utf-8")
-        actual_checksum = snapshot_sha256(snapshot)
     except OSError:
-        # The pairing check owns cache diagnostics independently of whether
-        # Quotes happens to be populated.
-        return
-
-    if actual_checksum != recorded.group("checksum"):
         return
 
     haystack = normalize_text(snapshot_text)
@@ -1044,7 +1008,7 @@ def validate_type_spec_definition(
         profile = resolve_type_definition(
             parsed.path,
             repo_root=run.repo_root,
-            type_frontmatter=parsed.document.frontmatter,
+            load_frontmatter=run.load_frontmatter,
         )
     except (FileNotFoundError, TypeError, ValueError) as exc:
         results.fails.append(f"type definition: {exc}")
@@ -1059,7 +1023,7 @@ def validate_type_spec_definition(
         )
 
 
-@type_rule("kb/types/tag-readme.md")
+@type_rule(TAG_README_TYPE)
 def validate_tag_readme(
     results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
 ) -> None:
@@ -1211,11 +1175,7 @@ def validate_unquoted_sources(
 
     quoted = {
         result.source
-        for result in verify_content(
-            parsed.content,
-            parsed.path,
-            load_source=lambda path: run.load_document(path).content,
-        )
+        for result in run.verbatim_quotes(parsed)
         if result.status == "match"
     }
     unquoted = sorted(
@@ -1418,14 +1378,12 @@ def _validate_parsed_note(parsed: ParsedNote, *, run: ValidationRun) -> CheckRes
         parsed.document.links,
         repo_root=run.repo_root,
     )
-    validate_verbatim_quotes(
-        base,
-        parsed.content,
-        parsed.path,
-        load_source=lambda path: run.load_document(path).content,
+    validate_verbatim_quotes(base, run.verbatim_quotes(parsed))
+    snapshots = run.snapshots(parsed.path.parent / ".snapshots")
+    validate_ingest_snapshot_pairing(
+        base, parsed.content, parsed.path, snapshots=snapshots
     )
-    validate_ingest_snapshot_pairing(base, parsed.content, parsed.path)
-    validate_ingest_quotes(base, parsed.content, parsed.path)
+    validate_ingest_quotes(base, parsed.content, parsed.path, snapshots=snapshots)
     _merge_labelled(results, base, "base")
 
     type_identity = canonical_type_identity(parsed.profile)
@@ -1492,14 +1450,17 @@ def validate_collection_structure(
 
 
 def validate_source_snapshot_cache(
-    collection: Path, *, repo_root: Path
+    collection: Path,
+    *,
+    repo_root: Path,
+    snapshots: SnapshotDirectory | None = None,
 ) -> list[tuple[Path, str]]:
     """Warn about retained cache files that no ingest-pair check can own.
 
     A checksum-matching snapshot at the wrong path is reported on the ingest by
     ``validate_ingest_snapshot_pairing``. This collection check uses source URL
-    independently of checksum so a legacy ingest or changed observation is not
-    mislabeled as unrelated. It also reports redundant alternate copies whose
+    independently of checksum so a changed observation is not mislabeled as
+    unrelated. It also reports redundant alternate copies whose
     checksum owner already has a valid name-paired snapshot.
     """
     collection = collection.resolve()
@@ -1510,11 +1471,12 @@ def validate_source_snapshot_cache(
     snapshot_dir = collection / ".snapshots"
     if not snapshot_dir.is_dir():
         return []
+    if snapshots is None:
+        snapshots = SnapshotDirectory(snapshot_dir)
 
     checksum_owners: dict[str, list[Path]] = {}
     original_checksums: set[str] = set()
     source_owners: dict[str, list[Path]] = {}
-    ingest_checksums: dict[Path, str | None] = {}
     valid_pairs: set[Path] = set()
     for ingest in sorted(collection.glob("*.ingest.md")):
         try:
@@ -1524,93 +1486,62 @@ def validate_source_snapshot_cache(
         source = _http_source_from_content(content)
         if source is not None:
             source_owners.setdefault(source, []).append(ingest)
+        original = ORIGINAL_SNAPSHOT_SHA256_RE.search(content)
+        if original is not None:
+            original_checksums.add(original.group("checksum"))
         recorded = SNAPSHOT_SHA256_RE.search(content)
-        ingest_checksums[ingest] = (
-            recorded.group("checksum") if recorded is not None else None
-        )
-        original_recorded = ORIGINAL_SNAPSHOT_SHA256_RE.search(content)
-        if original_recorded is not None:
-            original_checksums.add(original_recorded.group("checksum"))
         if recorded is None:
             continue
         checksum = recorded.group("checksum")
         checksum_owners.setdefault(checksum, []).append(ingest)
-
         expected = _name_paired_snapshot(ingest)
-        if not expected.is_file():
-            continue
-        try:
-            if snapshot_sha256(expected) == checksum:
-                valid_pairs.add(ingest.resolve())
-        except OSError:
-            continue
+        if expected.is_file() and snapshots.read(expected).sha256 == checksum:
+            valid_pairs.add(ingest)
+
+    def names(owners: list[Path]) -> str:
+        return ", ".join(str(owner.relative_to(repo_root)) for owner in owners)
 
     warnings: list[tuple[Path, str]] = []
-    for snapshot in sorted(snapshot_dir.glob("*.md")):
-        if not snapshot.is_file():
+    for snapshot, facts in sorted(snapshots.all().items()):
+        # Its ingest-level pairing check owns missing, unreadable, and
+        # checksum-mismatch diagnostics at the expected path.
+        if (collection / f"{snapshot.stem}.ingest.md").is_file():
             continue
-        same_stem_ingest = collection / f"{snapshot.stem}.ingest.md"
-        if same_stem_ingest.is_file():
-            # Its ingest-level pairing check owns missing, unreadable, and
-            # checksum-mismatch diagnostics at the expected path.
-            continue
-        try:
-            checksum = snapshot_sha256(snapshot)
-            snapshot_content = snapshot.read_text(encoding="utf-8")
-        except OSError as error:
+        if facts.error is not None:
             warnings.append(
-                (snapshot, f"unpaired local snapshot: unreadable ({error})")
+                (snapshot, f"unpaired local snapshot: unreadable ({facts.error})")
             )
             continue
-        snapshot_source = _http_source_from_content(snapshot_content)
 
         # A derived observation such as a translation can own both its primary
         # snapshot and the exact precursor bytes from which it was produced.
         # The precursor has no name-paired ingest of its own, but it is not an
         # unaccounted cache file once the derivation records its checksum.
-        if checksum in original_checksums:
+        if facts.sha256 in original_checksums:
             continue
 
-        owners = checksum_owners.get(checksum, [])
-        unresolved_owners = [
-            owner for owner in owners if owner.resolve() not in valid_pairs
-        ]
-        if unresolved_owners:
+        owners = checksum_owners.get(facts.sha256 or "", [])
+        if any(owner not in valid_pairs for owner in owners):
             # Each owner locates this exact file in its artifact-level warning;
             # do not report the same path drift twice in a collection sweep.
             continue
 
+        url_owners = source_owners.get(facts.source or "", [])
         if owners:
-            owner_names = ", ".join(
-                str(owner.relative_to(repo_root)) for owner in owners
-            )
             warning = (
-                "unpaired local snapshot: no same-stem ingest; its checksum "
-                f"duplicates the valid name-paired snapshot for {owner_names}"
+                "no same-stem ingest; its checksum duplicates the valid "
+                f"name-paired snapshot for {names(owners)}"
             )
-        elif snapshot_source is not None and source_owners.get(snapshot_source):
-            url_owners = source_owners[snapshot_source]
-            owner_names = ", ".join(
-                str(owner.relative_to(repo_root)) for owner in url_owners
+        elif url_owners:
+            warning = (
+                f"no same-stem ingest; its source URL matches {names(url_owners)}, "
+                "but no matching ingest records these exact bytes"
             )
-            if all(ingest_checksums[owner] is None for owner in url_owners):
-                warning = (
-                    "unpaired local snapshot: no same-stem ingest; its source URL "
-                    f"matches legacy ingest {owner_names}, which records no "
-                    "snapshot_sha256"
-                )
-            else:
-                warning = (
-                    "unpaired local snapshot: no same-stem ingest; its source URL "
-                    f"matches {owner_names}, but no matching ingest records these "
-                    "exact bytes"
-                )
         else:
             warning = (
-                "unpaired local snapshot: no same-stem ingest and no ingest "
-                "matches its source URL or checksum"
+                "no same-stem ingest and no ingest matches its source URL or checksum"
             )
-        warnings.append((snapshot, warning))
+        warnings.append((snapshot, f"unpaired local snapshot: {warning}"))
 
     return warnings
 

@@ -7,6 +7,7 @@ import pytest
 from commonplace.lib.quote_verification import (
     ingest_quotes_section,
     normalize_text,
+    verify_content,
     verify_note,
 )
 from commonplace.lib.validation import CheckResults, validate_verbatim_quotes
@@ -14,7 +15,9 @@ from commonplace.lib.validation import CheckResults, validate_verbatim_quotes
 
 def _check(note: Path) -> CheckResults:
     results = CheckResults(note_type="note")
-    validate_verbatim_quotes(results, note.read_text(encoding="utf-8"), note)
+    validate_verbatim_quotes(
+        results, verify_content(note.read_text(encoding="utf-8"), note)
+    )
     return results
 
 
@@ -656,53 +659,6 @@ class TestIngestQuoteValidation:
                 "snapshot pairing: expected .snapshots/src.md is absent; its "
                 "source URL matches .snapshots/capture-name.md, but "
                 "snapshot_sha256 identifies different bytes"
-            )
-        ]
-
-    def test_checksumless_ingest_warns_for_name_paired_snapshot(self, tmp_path):
-        sources = tmp_path / "kb" / "sources"
-        (sources / ".snapshots").mkdir(parents=True)
-        (sources / ".snapshots" / "src.md").write_text(
-            "---\nsource: https://example.com/legacy\n---\n\nLegacy bytes.\n",
-            encoding="utf-8",
-        )
-        ingest = sources / "src.ingest.md"
-        ingest.write_text(
-            "---\nsource: https://example.com/legacy\n---\n",
-            encoding="utf-8",
-        )
-
-        results = self._run_pairing(ingest)
-
-        assert results.warns == [
-            (
-                "snapshot pairing: ingest records no snapshot_sha256; "
-                ".snapshots/src.md is present; the source URLs match, but "
-                "exact-byte identity is unrecorded"
-            )
-        ]
-
-    def test_checksumless_ingest_locates_snapshot_by_source_url(self, tmp_path):
-        sources = tmp_path / "kb" / "sources"
-        (sources / ".snapshots").mkdir(parents=True)
-        (sources / ".snapshots" / "capture-name.md").write_text(
-            "---\nsource: https://example.com/legacy\n---\n\nLegacy bytes.\n",
-            encoding="utf-8",
-        )
-        ingest = sources / "src.ingest.md"
-        ingest.write_text(
-            "---\nsource: https://example.com/legacy\n---\n\n"
-            "## Quotes\n\nNo source quotes have been retained yet.\n",
-            encoding="utf-8",
-        )
-
-        results = self._run_pairing(ingest)
-
-        assert results.warns == [
-            (
-                "snapshot pairing: ingest records no snapshot_sha256 and expected "
-                ".snapshots/src.md is absent; its source URL matches "
-                ".snapshots/capture-name.md, but exact-byte identity is unrecorded"
             )
         ]
 
