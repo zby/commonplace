@@ -29,6 +29,12 @@ In a scratch project, with the permission settings your users normally have (not
 5. **A new project.** Outcomes 2 and 3 in a second scratch project, reached the same way. This shows the adaptation can be repeated, not just done once.
 6. **A skill through the index alone.** In a harness with native skills, repeat outcome 3 with the stub directories removed, so only the `library.md` index can lead the agent to the skill. This tells us whether the index is enough on its own. A harness without native skills has already covered this in outcome 3.
 
+**If your harness does not load `AGENTS.md` or `CLAUDE.md`.** The design needs only one line of standing instruction, loaded at the start of every session:
+
+> "For the delivery-probe library, read `.cp-delivery-probe/library.md` in the current project and follow it. If that file is missing, stop and ask the user to run `cp-delivery-probe-init`."
+
+The line names no machine path and no particular project, so it can be set once, at whatever level your harness loads standing instructions. Have the agent find that mechanism, such as a rules file under another name, a user-level configuration, or a system prompt that an administrator sets, and propose how the line gets there. Then reach the outcomes with the line in place.
+
 ## Boundaries
 
 These bind any workaround, because the design depends on them:
@@ -44,12 +50,13 @@ These bind any workaround, because the design depends on them:
 
 Give the harness name and version, the OS, and the date. Then, for each outcome 1–6:
 
-- **Status:** reached as supplied (the package and init unchanged, no extra step), reached with a workaround, not reached, blocked by policy, or not applicable (for example, outcome 3 in a harness without skills).
+- **Status:** reached as supplied (the package and init unchanged, no extra step), reached with a workaround, not reached, blocked by policy, or not applicable (for example, outcome 6 in a harness without native skills).
 - **For a workaround, its size:**
   - *Part of the design it changed:* install, the project instruction file or pointer file, permission to read outside the project, skills or stubs, upgrade handling, or other.
   - *Effort:* one small change (a setting or a line), several changes, or new code or tooling.
   - *Repeated:* once per machine, once per project, every session, or after every upgrade.
   - *Who can do it:* the user, or only an administrator or policy owner.
+- **Instruction loading**, once for the harness: what loads standing instructions at session start — the repository's `AGENTS.md` or `CLAUDE.md`, another file in the repository, a user-level file or setting, a system prompt only an administrator can set, or nothing — and where the agent proposes to put the pointer line. Name the kind of mechanism; its internal details are optional.
 - **For an outcome not reached or blocked:** the part of the design where it stopped, from the same list. If it could have been reached only by crossing a boundary (for example, with a hook), say which boundary.
 
 Anything beyond these categories is welcome but optional. A short table is enough.
