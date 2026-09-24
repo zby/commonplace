@@ -36,7 +36,7 @@ Rejected so far, with reasons:
 ## Open questions
 
 - **The enterprise harness.** Does it read `AGENTS.md` or another instruction file? Can the agent run shell commands? Can it read files outside the project? Does it support Agent Skills, and from which directories? The operator is asked; the base layer assumes the first three.
-- **Codex with a real uv installation.** Where package data lives and whether the path survives upgrades and Python changes; user-level skill symlinks; broken links after a move; whether Codex plugins can be served in place. Requested from Codex in [codex-probe-request.md](./codex-probe-request.md).
+- **Codex with a real uv installation.** Where package data lives and whether the path survives upgrades and Python changes; user-level skill symlinks; broken links after a move; whether Codex plugins can be served in place. Requested from Codex in [codex-probe-request.md](./codex-probe-request.md). A 2026-09-24 dry run of the probe package found that changing the uv tool's Python version moves the install path (`lib/python3.12/` → `lib/python3.13/`), leaving symlinked skills dangling until setup relinks them.
 - **The router skill.** Does its description make an agent load it when the user names an instruction in conversation, in Claude Code and in Codex?
 - **The source checkout.** Do the same relative links work where `kb/` itself is the tree and `.claude/skills/` holds symlinks into `kb/instructions/`?
 - **Windows.** Link mode is unsupported, and symlinks are unreliable. Are directory junctions usable, or is the version-stamped copy needed?
@@ -44,8 +44,9 @@ Rejected so far, with reasons:
 
 ## Next steps
 
-1. Codex runs the probes in [codex-probe-request.md](./codex-probe-request.md).
-2. After that, write a request for agents in other harnesses (operator direction, 2026-09-24) to evaluate the working design from their side, especially the harness-neutral base layer. Update the design with the Codex results first, so that the request tests the current version.
+1. Codex runs the shared probe, as requested in [codex-probe-request.md](./codex-probe-request.md).
+2. Update the working design, and the probe package if needed, with the Codex results.
+3. Write a request for agents in other harnesses (operator direction, 2026-09-24) to run the same [probe protocol](./probe-package/PROTOCOL.md) from the same package, modifying their copies where their harness needs it and recording the modifications.
 
 ## Evaluation boundary
 
@@ -68,5 +69,6 @@ Close when the working design, or its replacement, is written back into the prop
 - [comparable-systems-survey.md](./comparable-systems-survey.md) — how harnesses and 14 comparable systems deliver skills and libraries, from web research and the local clones
 - [gbrain-delivery-methods.md](./gbrain-delivery-methods.md) — code-grounded study of GBrain v0.54.1.0's delivery methods and what carries over to a Python/uv package
 - [probe-results.md](./probe-results.md) — 2026-09-24 probes: a Claude Code link-mode plugin served in place from a package directory, and a Codex skill symlinked into it
-- [codex-probe-request.md](./codex-probe-request.md) — request to a Codex agent to repeat the probes with a real uv installation, including the router skill and the `AGENTS.md` fallback; Codex appends its reply here
-- `codex-probe-results.md` — Codex's results (pending)
+- [probe-package/](./probe-package/PROTOCOL.md) — the shared probe: a throwaway uv package whose data is the plugin-shaped tree, commands for the base layer, a test project, the protocol every harness runs, and a results template. Testers modify a copy and record the modifications
+- [codex-probe-request.md](./codex-probe-request.md) — request to a Codex agent to run the shared probe; Codex appends its reply here
+- `results-<harness>.md` — one results file per harness, from the template (pending; Codex first)

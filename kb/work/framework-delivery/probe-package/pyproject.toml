@@ -1,0 +1,19 @@
+[project]
+name = "cp-delivery-probe"
+version = "1.0.0"
+description = "Throwaway probe: can a uv-installed package serve skills and a Markdown library to agent harnesses in place?"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.scripts]
+cp-delivery-probe-library = "cp_delivery_probe.cli:library_root"
+cp-delivery-probe-plugin-path = "cp_delivery_probe.cli:plugin_path"
+cp-delivery-probe-instruction = "cp_delivery_probe.cli:instruction"
+cp-delivery-probe-install-skills = "cp_delivery_probe.cli:install_skills"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/cp_delivery_probe"]
