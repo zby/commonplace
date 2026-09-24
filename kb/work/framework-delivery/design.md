@@ -190,12 +190,11 @@ Adopt when all of the following hold:
 - After `commonplace-init`, agents read the library without permission prompts in Claude Code and Codex, on Linux, macOS, and Windows. A root that the permission rules do not cover, and a stub that no longer matches the installed package, are detected.
 - Every promoted skill, reached through its stub, finds the library files it links to, in the source repo and in installed projects, with no text that branches between them. Agents follow the stubs reliably in the required harnesses.
 - Review checks show stable package identities across installation moves, unchanged freshness for identical criterion text, `criterion-changed` for edited text, and a clear failure for an unavailable criterion. Package and project criteria cannot shadow each other.
-- A transition rehearsal keeps review history, retires only the affected baselines, and builds new ones through completed reviews.
+- The review transition keeps review history, retires only the affected baselines, and builds new ones through completed reviews.
 - Every global `type:` pointer uses its bare name, and the validator rejects path-form pointers to global types.
 - Operators who distribute projects by copying have been told what a copy carries.
 - The built package has no unresolved local links: the prepared reader copy (see "Separable changes") is in place. Mirroring the `kb/` layout fixes links among shipped files, but not links into collections the package omits.
-- A migration rehearsal on a project with a locally edited framework file keeps that file and lists it.
-- At least one real promoted workflow runs end to end in an installed project against the built package, from writing through validation.
+- Migration keeps and lists a framework file that differs from the installed package.
 
 Revisit the stubs when the required harnesses can discover skills from a configurable location on every platform. At that point the harnesses can read skills in place like the rest of the library, and the stubs and their checks can be deleted.
 
