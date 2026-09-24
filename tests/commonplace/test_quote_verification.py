@@ -4,13 +4,19 @@ from pathlib import Path
 
 import pytest
 
+from commonplace.lib.hashing import content_sha256_for_text
 from commonplace.lib.quote_verification import (
     ingest_quotes_section,
     normalize_text,
     verify_content,
     verify_note,
 )
-from commonplace.lib.validation import CheckResults, validate_verbatim_quotes
+from commonplace.lib.validation import (
+    CheckResults,
+    validate_ingest_quotes,
+    validate_ingest_snapshot_pairing,
+    validate_verbatim_quotes,
+)
 
 
 def _check(note: Path) -> CheckResults:
@@ -21,74 +27,149 @@ def _check(note: Path) -> CheckResults:
     return results
 
 
-def _write_pair(tmp_path: Path, note_body: str, source_body: str) -> Path:
+def _write_pair(
+    tmp_path: Path, note_body: str, source_body: str, source_name: str = "source.md"
+) -> Path:
     notes = tmp_path / "notes"
     sources = tmp_path / "sources"
     notes.mkdir()
     sources.mkdir()
-    (sources / "source.md").write_text(source_body, encoding="utf-8")
+    (sources / source_name).write_text(source_body, encoding="utf-8")
     note = notes / "note.md"
     note.write_text(note_body, encoding="utf-8")
     return note
+
+
+_INGEST_WITH_SUMMARY_PHRASE = (
+    "## Summary\n\n"
+    "The paper argues that shorter contexts help.\n\n"
+    "## Quotes\n\n"
+    "- **Source extract (verbatim):** an unrelated retained passage\n"
+    "  - **Source location:** Section 1.\n"
+)
+
+_INGEST_WITH_QUOTED_PHRASE = (
+    "## Summary\n\n"
+    "Analysis prose that does not repeat the passage.\n\n"
+    "## Quotes\n\n"
+    "- **Source extract (verbatim):** shorter contexts help\n"
+    "  - **Source location:** Section 1.\n"
+)
 
 
 def test_normalize_text_folds_capture_typography_and_whitespace():
     assert normalize_text("  “one\n two” … it’s  ") == '"one two" ... it\'s'
 
 
-def test_verifies_marker_before_quote(tmp_path: Path):
-    note = _write_pair(
-        tmp_path,
-        'The conclusion, verbatim: “quoted words here” '
-        '([Source](../sources/source.md), Abstract).',
-        "The source has quoted words here in its abstract.",
-    )
+@pytest.mark.parametrize(
+    "body, source_body, source_name",
+    [
+        pytest.param(
+            'The conclusion, verbatim: “quoted words here” '
+            '([Source](../sources/source.md), Abstract).',
+            "The source has quoted words here in its abstract.",
+            "source.md",
+            id="marker-before-quote",
+        ),
+        pytest.param(
+            '> "A complete quoted sentence."\n'
+            '> ([Source](../sources/source.md), verbatim)',
+            "A complete quoted sentence.",
+            "source.md",
+            id="terminal-punctuation-in-blockquote-attribution",
+        ),
+        pytest.param(
+            '> "A complete quoted sentence."\n\n'
+            '([Source](../sources/source.md), Abstract, verbatim).',
+            "A complete quoted sentence.",
+            "source.md",
+            id="blockquote-then-citation-paragraph",
+        ),
+        pytest.param(
+            'The paper says "shorter contexts help" '
+            "([Ingest](../sources/src.ingest.md), Section 1, verbatim).",
+            _INGEST_WITH_QUOTED_PHRASE,
+            "src.ingest.md",
+            id="ingest-quotes-section",
+        ),
+        pytest.param(
+            'The paper says "shorter contexts help" '
+            "([Source](../sources/source.md), Summary, verbatim).",
+            "## Summary\n\nThe paper argues that shorter contexts help.\n",
+            "source.md",
+            id="non-ingest-source-anywhere-in-file",
+        ),
+    ],
+)
+def test_single_verbatim_quote_matches(
+    tmp_path: Path, body: str, source_body: str, source_name: str
+):
+    note = _write_pair(tmp_path, body, source_body, source_name)
 
     assert [result.status for result in verify_note(note)] == ["match"]
 
 
-def test_explicitly_non_verbatim_prose_is_not_a_candidate(tmp_path: Path):
-    note = _write_pair(
-        tmp_path,
-        'The snapshot does not carry this passage verbatim, but summarizes it as '
-        '"an own-words rendering" ([Source](../sources/source.md), paraphrase layer).',
-        "Different text.",
-    )
+@pytest.mark.parametrize(
+    "body",
+    [
+        pytest.param(
+            'The snapshot does not carry this passage verbatim, but summarizes it as '
+            '"an own-words rendering" ([Source](../sources/source.md), paraphrase layer).',
+            id="explicitly-non-verbatim-prose",
+        ),
+        pytest.param(
+            'The source says "quoted words" (Abstract, verbatim).',
+            id="unlinked-mention",
+        ),
+        pytest.param(
+            'The paper calls this "a paraphrase" '
+            '([Source](../sources/source.md), summary). '
+            "A direct verbatim statement follows later.",
+            id="distant-verbatim-discussion",
+        ),
+    ],
+)
+def test_no_verbatim_candidate(tmp_path: Path, body: str):
+    note = _write_pair(tmp_path, body, "Different text.")
 
     assert verify_note(note) == []
 
 
-def test_unlinked_mentions_are_out_of_scope(tmp_path: Path):
-    note = tmp_path / "note.md"
-    note.write_text('The source says "quoted words" (Abstract, verbatim).', encoding="utf-8")
+@pytest.mark.parametrize(
+    "body, source_body",
+    [
+        pytest.param(
+            'The conclusion is "quoted words" '
+            '([Source, "A title"](../sources/source.md), verbatim).',
+            "quoted words",
+            id="quote-in-link-label",
+        ),
+        pytest.param(
+            'The conclusion is "quoted words" '
+            '([Source](../sources/source.md), "Notable claims", verbatim).',
+            "# Notable claims\n\nquoted words",
+            id="quote-in-citation-locator",
+        ),
+        pytest.param(
+            'The paraphrase calls this "own words." The conclusion is "quoted words" '
+            '([Source](../sources/source.md), verbatim).',
+            "quoted words",
+            id="marker-does-not-cross-sentence-boundary",
+        ),
+        pytest.param(
+            '**Paper (2020, "A title"):** "quoted words" '
+            '([Source](../sources/source.md), verbatim).',
+            "quoted words",
+            id="quoted-title-in-bold-lead-in",
+        ),
+    ],
+)
+def test_distractor_quotes_are_not_candidates(
+    tmp_path: Path, body: str, source_body: str
+):
+    note = _write_pair(tmp_path, body, source_body)
 
-    assert verify_note(note) == []
-
-
-def test_quotes_in_markdown_link_labels_are_ignored(tmp_path: Path):
-    note = _write_pair(
-        tmp_path,
-        'The conclusion is "quoted words" '
-        '([Source, "A title"](../sources/source.md), verbatim).',
-        "quoted words",
-    )
-
-    results = verify_note(note)
-
-    assert [result.quote for result in results] == ["quoted words"]
-
-
-def test_quotes_in_citation_locators_are_ignored(tmp_path: Path):
-    note = _write_pair(
-        tmp_path,
-        'The conclusion is "quoted words" '
-        '([Source](../sources/source.md), "Notable claims", verbatim).',
-        "# Notable claims\n\nquoted words",
-    )
-
-    results = verify_note(note)
-
-    assert [result.quote for result in results] == ["quoted words"]
+    assert [result.quote for result in verify_note(note)] == ["quoted words"]
 
 
 @pytest.mark.parametrize(
@@ -168,54 +249,6 @@ def test_parenthesis_in_quote_does_not_hide_the_next_quote(tmp_path: Path, quote
     ]
 
 
-def test_marker_does_not_cross_a_sentence_boundary(tmp_path: Path):
-    note = _write_pair(
-        tmp_path,
-        'The paraphrase calls this "own words." The conclusion is "quoted words" '
-        '([Source](../sources/source.md), verbatim).',
-        "quoted words",
-    )
-
-    results = verify_note(note)
-
-    assert [result.quote for result in results] == ["quoted words"]
-
-
-def test_quoted_title_in_bold_lead_in_is_not_a_candidate(tmp_path: Path):
-    note = _write_pair(
-        tmp_path,
-        '**Paper (2020, "A title"):** "quoted words" '
-        '([Source](../sources/source.md), verbatim).',
-        "quoted words",
-    )
-
-    results = verify_note(note)
-
-    assert [result.quote for result in results] == ["quoted words"]
-
-
-def test_terminal_punctuation_does_not_separate_blockquote_attribution(tmp_path: Path):
-    note = _write_pair(
-        tmp_path,
-        '> "A complete quoted sentence."\n'
-        '> ([Source](../sources/source.md), verbatim)',
-        "A complete quoted sentence.",
-    )
-
-    assert [result.status for result in verify_note(note)] == ["match"]
-
-
-def test_distant_verbatim_discussion_does_not_create_unresolved_candidate(tmp_path: Path):
-    note = _write_pair(
-        tmp_path,
-        'The paper calls this "a paraphrase" '
-        '([Source](../sources/source.md), summary). A direct verbatim statement follows later.',
-        "Different text.",
-    )
-
-    assert verify_note(note) == []
-
-
 def test_verbatim_citation_without_quotation_is_unresolved(tmp_path: Path):
     note = _write_pair(
         tmp_path,
@@ -229,25 +262,12 @@ def test_verbatim_citation_without_quotation_is_unresolved(tmp_path: Path):
     assert [result.status for result in results] == ["unresolved"]
 
 
-def test_blockquote_and_following_citation_paragraph_are_paired(tmp_path: Path):
+def test_missing_linked_source_is_unresolved(tmp_path: Path):
     note = _write_pair(
         tmp_path,
-        '> "A complete quoted sentence."\n\n'
-        '([Source](../sources/source.md), Abstract, verbatim).',
-        "A complete quoted sentence.",
-    )
-
-    assert [result.status for result in verify_note(note)] == ["match"]
-
-
-def test_missing_linked_source_is_unresolved(tmp_path: Path):
-    notes = tmp_path / "notes"
-    notes.mkdir()
-    note = notes / "note.md"
-    note.write_text(
         'The source says "quoted words" '
         '([Missing](../sources/missing.md), verbatim).',
-        encoding="utf-8",
+        "",
     )
 
     results = verify_note(note)
@@ -255,41 +275,26 @@ def test_missing_linked_source_is_unresolved(tmp_path: Path):
     assert [result.status for result in results] == ["unresolved"]
 
 
-def _write_ingest_pair(tmp_path: Path, note_body: str, ingest_body: str) -> Path:
-    notes = tmp_path / "notes"
-    sources = tmp_path / "sources"
-    notes.mkdir()
-    sources.mkdir()
-    (sources / "src.ingest.md").write_text(ingest_body, encoding="utf-8")
-    note = notes / "note.md"
-    note.write_text(note_body, encoding="utf-8")
-    return note
-
-
-_INGEST_WITH_SUMMARY_PHRASE = (
-    "## Summary\n\n"
-    "The paper argues that shorter contexts help.\n\n"
-    "## Quotes\n\n"
-    "- **Source extract (verbatim):** an unrelated retained passage\n"
-    "  - **Source location:** Section 1.\n"
+@pytest.mark.parametrize(
+    "ingest_body",
+    [
+        pytest.param(_INGEST_WITH_SUMMARY_PHRASE, id="phrase-only-in-analysis"),
+        pytest.param(
+            "## Summary\n\nThe paper argues that shorter contexts help.\n",
+            id="no-quotes-section",
+        ),
+    ],
 )
-
-_INGEST_WITH_QUOTED_PHRASE = (
-    "## Summary\n\n"
-    "Analysis prose that does not repeat the passage.\n\n"
-    "## Quotes\n\n"
-    "- **Source extract (verbatim):** shorter contexts help\n"
-    "  - **Source location:** Section 1.\n"
-)
-
-
-def test_ingest_analysis_prose_does_not_satisfy_a_verbatim_quote(tmp_path: Path):
+def test_ingest_analysis_prose_does_not_satisfy_a_verbatim_quote(
+    tmp_path: Path, ingest_body: str
+):
     """An ingest's own analysis is not source support (ADR 073)."""
-    note = _write_ingest_pair(
+    note = _write_pair(
         tmp_path,
         'The paper says "shorter contexts help" '
         "([Ingest](../sources/src.ingest.md), Summary, verbatim).",
-        _INGEST_WITH_SUMMARY_PHRASE,
+        ingest_body,
+        "src.ingest.md",
     )
 
     results = verify_note(note)
@@ -298,39 +303,6 @@ def test_ingest_analysis_prose_does_not_satisfy_a_verbatim_quote(tmp_path: Path)
     assert results[0].detail == (
         "normalized quotation does not occur in the linked ingest's Quotes section"
     )
-
-
-def test_quote_retained_in_the_ingest_quotes_section_matches(tmp_path: Path):
-    note = _write_ingest_pair(
-        tmp_path,
-        'The paper says "shorter contexts help" '
-        "([Ingest](../sources/src.ingest.md), Section 1, verbatim).",
-        _INGEST_WITH_QUOTED_PHRASE,
-    )
-
-    assert [result.status for result in verify_note(note)] == ["match"]
-
-
-def test_non_ingest_source_still_matches_anywhere_in_the_file(tmp_path: Path):
-    note = _write_pair(
-        tmp_path,
-        'The paper says "shorter contexts help" '
-        "([Source](../sources/source.md), Summary, verbatim).",
-        "## Summary\n\nThe paper argues that shorter contexts help.\n",
-    )
-
-    assert [result.status for result in verify_note(note)] == ["match"]
-
-
-def test_ingest_without_a_quotes_section_supports_nothing(tmp_path: Path):
-    note = _write_ingest_pair(
-        tmp_path,
-        'The paper says "shorter contexts help" '
-        "([Ingest](../sources/src.ingest.md), Summary, verbatim).",
-        "## Summary\n\nThe paper argues that shorter contexts help.\n",
-    )
-
-    assert [result.status for result in verify_note(note)] == ["mismatch"]
 
 
 # --- validator integration ---------------------------------------------------
@@ -474,9 +446,8 @@ class TestIngestQuoteValidation:
         snapshot: str | None,
         sha: str | None = None,
         snapshot_name: str = "src.md",
+        source: str | None = None,
     ):
-        from commonplace.lib.hashing import content_sha256_for_text
-
         sources = tmp_path / "kb" / "sources"
         (sources / ".snapshots").mkdir(parents=True)
         body = snapshot if snapshot is not None else ""
@@ -490,27 +461,21 @@ class TestIngestQuoteValidation:
             if extract is None
             else f"- **Source extract (verbatim):** {extract}\n"
         )
+        source_line = f"source: {source}\n" if source is not None else ""
         ingest = sources / "src.ingest.md"
         ingest.write_text(
-            f"---\nsnapshot_sha256: {digest}\n---\n\n"
+            f"---\n{source_line}snapshot_sha256: {digest}\n---\n\n"
             f"## Quotes\n\n{quotes}",
             encoding="utf-8",
         )
         return ingest
 
     def _run(self, ingest):
-        from commonplace.lib.validation import CheckResults, validate_ingest_quotes
-
         results = CheckResults(note_type="ingest-report")
         validate_ingest_quotes(results, ingest.read_text(encoding="utf-8"), ingest)
         return results
 
     def _run_pairing(self, ingest):
-        from commonplace.lib.validation import (
-            CheckResults,
-            validate_ingest_snapshot_pairing,
-        )
-
         results = CheckResults(note_type="ingest-report")
         validate_ingest_snapshot_pairing(
             results, ingest.read_text(encoding="utf-8"), ingest
@@ -614,17 +579,11 @@ class TestIngestQuoteValidation:
         assert not results.warns
 
     def test_matching_checksum_with_different_source_url_warns(self, tmp_path):
-        from commonplace.lib.hashing import content_sha256_for_text
-
-        sources = tmp_path / "kb" / "sources"
-        (sources / ".snapshots").mkdir(parents=True)
-        snapshot = "---\nsource: https://example.com/capture\n---\n\nBytes.\n"
-        (sources / ".snapshots" / "src.md").write_text(snapshot, encoding="utf-8")
-        ingest = sources / "src.ingest.md"
-        ingest.write_text(
-            "---\nsource: https://example.com/other\n"
-            f"snapshot_sha256: {content_sha256_for_text(snapshot)}\n---\n",
-            encoding="utf-8",
+        ingest = self._ingest(
+            tmp_path,
+            None,
+            snapshot="---\nsource: https://example.com/capture\n---\n\nBytes.\n",
+            source="https://example.com/other",
         )
 
         results = self._run_pairing(ingest)
@@ -639,17 +598,13 @@ class TestIngestQuoteValidation:
     def test_missing_expected_snapshot_reports_same_url_as_different_bytes(
         self, tmp_path
     ):
-        sources = tmp_path / "kb" / "sources"
-        (sources / ".snapshots").mkdir(parents=True)
-        (sources / ".snapshots" / "capture-name.md").write_text(
-            "---\nsource: https://example.com/article\n---\n\nNew bytes.\n",
-            encoding="utf-8",
-        )
-        ingest = sources / "src.ingest.md"
-        ingest.write_text(
-            "---\nsource: https://example.com/article\n"
-            f"snapshot_sha256: {'1' * 64}\n---\n",
-            encoding="utf-8",
+        ingest = self._ingest(
+            tmp_path,
+            None,
+            snapshot="---\nsource: https://example.com/article\n---\n\nNew bytes.\n",
+            snapshot_name="capture-name.md",
+            sha="1" * 64,
+            source="https://example.com/article",
         )
 
         results = self._run_pairing(ingest)
@@ -664,8 +619,6 @@ class TestIngestQuoteValidation:
 
     def test_instruction_showing_the_template_is_not_checked(self, tmp_path):
         """Only a tracked ingest asserts an extract; docs merely display one."""
-        from commonplace.lib.validation import CheckResults, validate_ingest_quotes
-
         doc = tmp_path / "ground-source-dependent-claims.md"
         doc.write_text(
             "## Quotes\n\n- **Source extract (verbatim):** <exact supporting content>\n",
@@ -677,14 +630,14 @@ class TestIngestQuoteValidation:
 
 
 def test_marker_word_inside_a_link_target_is_not_a_citation(tmp_path: Path):
-    notes = tmp_path / "notes"
-    notes.mkdir()
-    (notes / "046-verbatim-quotes-are-validated.md").write_text("An ADR.", encoding="utf-8")
-    note = notes / "note.md"
-    note.write_text(
+    note = _write_pair(
+        tmp_path,
         "The validator fails a note on a mismatch "
         "([ADR 046](./046-verbatim-quotes-are-validated.md)), so the marker is load-bearing.",
-        encoding="utf-8",
+        "",
+    )
+    (note.parent / "046-verbatim-quotes-are-validated.md").write_text(
+        "An ADR.", encoding="utf-8"
     )
 
     assert verify_note(note) == []

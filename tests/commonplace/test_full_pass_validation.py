@@ -1,19 +1,34 @@
 from __future__ import annotations
 
-import shutil
 from pathlib import Path
 
+import pytest
+
 from commonplace.lib.validation import validate_note
-from tests.commonplace.lib.test_full_pass import write_packet
+from tests.commonplace.validation_helpers import (
+    NOTE_TYPE_SPECS,
+    copy_repo_files,
+    write_packet,
+)
 
 
 def install_types(repo: Path) -> None:
-    project_root = Path(__file__).resolve().parents[2]
-    shutil.copytree(project_root / "kb/types", repo / "kb/types")
-    report_types = repo / "kb/reports/types"
-    report_types.mkdir(parents=True)
-    for name in ("full-pass-report.md", "full-pass-report.schema.yaml"):
-        shutil.copy2(project_root / "kb/reports/types" / name, report_types / name)
+    copy_repo_files(
+        repo,
+        *NOTE_TYPE_SPECS,
+        "kb/reports/types/full-pass-report.md",
+        "kb/reports/types/full-pass-report.schema.yaml",
+    )
+
+
+def edit(report: Path, old: str, new: str) -> None:
+    text = report.read_text(encoding="utf-8")
+    assert old in text, f"fixture text not found: {old!r}"
+    report.write_text(text.replace(old, new, 1), encoding="utf-8")
+
+
+def has_fail(result, *fragments: str) -> bool:
+    return any(all(f in item for f in fragments) for item in result.fails)
 
 
 def test_full_pass_type_rule_verifies_capture_and_resolution(tmp_path: Path) -> None:
@@ -34,7 +49,7 @@ def test_full_pass_type_rule_rejects_corrupt_capture(tmp_path: Path) -> None:
 
     result = validate_note(report, repo_root=tmp_path)
 
-    assert any("does not match its recorded hash" in item for item in result.fails)
+    assert has_fail(result, "does not match its recorded hash")
 
 
 def test_full_pass_type_rule_rejects_resolution_projection_drift(
@@ -42,14 +57,11 @@ def test_full_pass_type_rule_rejects_resolution_projection_drift(
 ) -> None:
     install_types(tmp_path)
     report = write_packet(tmp_path)
-    text = report.read_text(encoding="utf-8").replace(
-        "**Status:** not-required", "**Status:** pending"
-    )
-    report.write_text(text, encoding="utf-8")
+    edit(report, "**Status:** not-required", "**Status:** pending")
 
     result = validate_note(report, repo_root=tmp_path)
 
-    assert any("resolution projection" in item for item in result.fails)
+    assert has_fail(result, "resolution projection")
 
 
 def test_full_pass_type_rule_rejects_duplicate_resolution_sections(
@@ -65,48 +77,45 @@ def test_full_pass_type_rule_rejects_duplicate_resolution_sections(
 
     result = validate_note(report, repo_root=tmp_path)
 
-    assert any("headings" in item for item in result.fails)
+    assert has_fail(result, "headings")
 
 
-def test_pending_merge_validates_both_packet_captures(tmp_path: Path) -> None:
+@pytest.mark.parametrize(
+    ("disposition", "capture_count"),
+    [
+        ("merge", 2),  # the merge target is captured alongside the source
+        ("rehome", 1),
+        ("revise", 1),  # revise hands back from the packet phase
+    ],
+)
+def test_pending_disposition_validates_its_packet_captures(
+    tmp_path: Path, disposition: str, capture_count: int
+) -> None:
     install_types(tmp_path)
-    report = write_packet(tmp_path, disposition="merge")
+    report = write_packet(tmp_path, disposition=disposition)
 
     result = validate_note(report, repo_root=tmp_path)
 
     assert not result.fails
-    assert any("packet captures: all 2" in item for item in result.passes)
-
-
-def test_pending_rehome_validates_with_only_the_source_capture(tmp_path: Path) -> None:
-    install_types(tmp_path)
-    report = write_packet(tmp_path, disposition="rehome")
-
-    result = validate_note(report, repo_root=tmp_path)
-
-    assert not result.fails
-    assert any("packet captures: all 1" in item for item in result.passes)
+    assert any(f"packet captures: all {capture_count}" in item for item in result.passes)
 
 
 def test_terminal_resolution_requires_complete_metadata(tmp_path: Path) -> None:
     install_types(tmp_path)
     report = write_packet(tmp_path, disposition="delete")
-    text = report.read_text(encoding="utf-8").replace(
-        "resolution: pending", "resolution: accepted", 1
-    )
-    report.write_text(text, encoding="utf-8")
+    edit(report, "resolution: pending", "resolution: accepted")
 
     result = validate_note(report, repo_root=tmp_path)
 
-    assert any("resolved_at" in item for item in result.fails)
-    assert any("resolution_authority" in item for item in result.fails)
+    assert has_fail(result, "resolved_at")
+    assert has_fail(result, "resolution_authority")
 
 
 def test_keep_report_may_be_superseded_by_version_guard(tmp_path: Path) -> None:
     install_types(tmp_path)
     report = write_packet(tmp_path)
-    text = report.read_text(encoding="utf-8")
-    text = text.replace(
+    edit(
+        report,
         """resolution: not-required
 resolved_at: null
 resolution_authority: null
@@ -120,7 +129,8 @@ resolution_summary: Source changed before packet application
 resolution_rationale: The packet no longer describes the live source
 resulting_paths: [kb/notes/source.md]""",
     )
-    text = text.replace(
+    edit(
+        report,
         """**Status:** not-required
 **Resolved at:** —
 **Authority:** —
@@ -134,16 +144,6 @@ resulting_paths: [kb/notes/source.md]""",
 **Rationale:** The packet no longer describes the live source
 **Resulting paths:** `kb/notes/source.md`""",
     )
-    report.write_text(text, encoding="utf-8")
-
-    result = validate_note(report, repo_root=tmp_path)
-
-    assert not result.fails
-
-
-def test_pending_revise_validates_as_a_packet_phase_hand_back(tmp_path: Path) -> None:
-    install_types(tmp_path)
-    report = write_packet(tmp_path, disposition="revise")
 
     result = validate_note(report, repo_root=tmp_path)
 
@@ -162,16 +162,11 @@ def test_completed_recovery_requires_ready_closing_status(tmp_path: Path) -> Non
 
     assert not validate_note(report, repo_root=tmp_path).fails
 
-    report.write_text(
-        report.read_text(encoding="utf-8").replace(
-            "closing_status: ready", "closing_status: null"
-        ),
-        encoding="utf-8",
-    )
+    edit(report, "closing_status: ready", "closing_status: null")
 
     result = validate_note(report, repo_root=tmp_path)
 
-    assert result.fails
+    assert has_fail(result, "complete phase requires ready status")
 
 
 def test_closing_phase_allows_only_one_pending_bounded_repair(tmp_path: Path) -> None:
@@ -184,21 +179,13 @@ def test_closing_phase_allows_only_one_pending_bounded_repair(tmp_path: Path) ->
         closing_status="repair-needed",
     )
 
-    result = validate_note(report, repo_root=tmp_path)
+    assert not validate_note(report, repo_root=tmp_path).fails
 
-    assert not result.fails
-
-    report.write_text(
-        report.read_text(encoding="utf-8").replace(
-            "closing_repair_attempted: false",
-            "closing_repair_attempted: true",
-        ),
-        encoding="utf-8",
-    )
+    edit(report, "closing_repair_attempted: false", "closing_repair_attempted: true")
 
     result = validate_note(report, repo_root=tmp_path)
 
-    assert result.fails
+    assert has_fail(result, "repair-needed is unavailable after the bounded repair")
 
 
 def test_closing_hand_back_is_valid_but_cannot_be_complete(tmp_path: Path) -> None:
@@ -210,18 +197,13 @@ def test_closing_hand_back_is_valid_but_cannot_be_complete(tmp_path: Path) -> No
         closing_status="hand-back",
     )
 
-    result = validate_note(report, repo_root=tmp_path)
-    assert not result.fails
+    assert not validate_note(report, repo_root=tmp_path).fails
 
-    report.write_text(
-        report.read_text(encoding="utf-8").replace(
-            "phase: closing", "phase: complete"
-        ),
-        encoding="utf-8",
-    )
+    edit(report, "phase: closing", "phase: complete")
+
     result = validate_note(report, repo_root=tmp_path)
 
-    assert result.fails
+    assert has_fail(result, "complete phase requires ready status")
 
 
 def test_completed_keep_pass_rejects_a_corrupt_final_capture(tmp_path: Path) -> None:
@@ -236,7 +218,7 @@ def test_completed_keep_pass_rejects_a_corrupt_final_capture(tmp_path: Path) -> 
 
     result = validate_note(report, repo_root=tmp_path)
 
-    assert any("final capture" in item for item in result.fails)
+    assert has_fail(result, "final capture")
 
 
 def test_closing_phase_requires_a_final_capture(tmp_path: Path) -> None:
@@ -245,15 +227,14 @@ def test_closing_phase_requires_a_final_capture(tmp_path: Path) -> None:
 
     result = validate_note(report, repo_root=tmp_path)
 
-    assert result.fails
+    assert has_fail(result, "frontmatter.final_capture")
 
 
 def test_pending_disposition_must_stay_in_packet_phase(tmp_path: Path) -> None:
     install_types(tmp_path)
     report = write_packet(tmp_path, disposition="delete")
-    text = report.read_text(encoding="utf-8").replace("phase: packet", "phase: editing")
-    report.write_text(text, encoding="utf-8")
+    edit(report, "phase: packet", "phase: editing")
 
     result = validate_note(report, repo_root=tmp_path)
 
-    assert result.fails
+    assert has_fail(result, "frontmatter.phase", "'packet' was expected")

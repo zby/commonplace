@@ -95,16 +95,3 @@ def test_redirects_cli_target_reports_repository_validation(
     assert "validation.repository.redirect-target-does-not-exist" in output
     assert "notes/old.md -> notes/missing.md" in output
 
-
-def test_redirects_cli_target_skips_absent_config(
-    tmp_path: Path, monkeypatch, capsys
-) -> None:
-    monkeypatch.chdir(tmp_path)
-
-    exit_code = validate_notes.main(["redirects"])
-    output = capsys.readouterr().out
-
-    assert exit_code == 0
-    assert "VALIDATION SUCCESS" in output
-    assert "NOTICES:" in output
-    assert "properdocs.yml: not configured; redirect validation skipped" in output

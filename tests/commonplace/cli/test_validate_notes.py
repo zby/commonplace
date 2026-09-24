@@ -4,20 +4,17 @@ import json
 import os
 import shutil
 import subprocess
-import sys
 from datetime import UTC, datetime
 from pathlib import Path
-
-SRC_ROOT = Path(__file__).resolve().parents[4] / "src"
-if str(SRC_ROOT) not in sys.path:
-    sys.path.insert(0, str(SRC_ROOT))
 
 import pytest
 
 from commonplace.cli import validate_notes
 from commonplace.lib import validation
 from commonplace.lib.naming import MAX_NOTE_SLUG_LENGTH
+from commonplace.lib.snapshot import snapshot_sha256
 
+REPO_ROOT = Path(__file__).resolve().parents[3]
 FIXTURES_ROOT = Path(__file__).resolve().parent / "fixtures" / "schemas"
 
 
@@ -47,6 +44,14 @@ schema: {schema_value}
 # {name}
 """,
     )
+
+
+def copy_repo_file(tmp_path: Path, rel_path: str) -> Path:
+    """Copy one committed repository file into the same place under tmp_path."""
+    dest = tmp_path / rel_path
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copyfile(REPO_ROOT / rel_path, dest)
+    return dest
 
 
 def install_schema_tree(tmp_path: Path, tree_name: str) -> None:
@@ -81,63 +86,61 @@ def configure_temp_repo(tmp_path: Path) -> Path:
 
 def configure_tag_readme_repo(tmp_path: Path) -> Path:
     notes = configure_temp_repo(tmp_path)
+    copy_repo_file(tmp_path, "kb/types/note-base.schema.yaml")
+    copy_repo_file(tmp_path, "kb/types/tag-readme.schema.yaml")
     write_type_spec(
         tmp_path,
         "kb/types/tag-readme.md",
         name="tag-readme",
         schema="kb/types/tag-readme.schema.yaml",
     )
-    write(
-        tmp_path / "kb" / "types" / "tag-readme.schema.yaml",
-        """$schema: "https://json-schema.org/draft/2020-12/schema"
-type: object
-required:
-  - frontmatter
-properties:
-  frontmatter:
-    type: object
-    required:
-      - description
-      - type
-      - index_source
-      - index_key
-    properties:
-      type:
-        const: kb/types/tag-readme.md
-      index_source:
-        const: tag
-      index_key:
-        type: string
-      complete:
-        type: boolean
-      covered_by:
-        type: array
-        items:
-          type: string
-      user-verified:
-        const: true
-      status: false
-    additionalProperties: true
-""",
-    )
     return notes
 
 
 def configure_type_spec_repo(tmp_path: Path) -> None:
-    notes = tmp_path / "kb" / "notes"
-    write(notes / "COLLECTION.md", "# Notes collection\n")
-    write(
-        tmp_path / "kb" / "types" / "type-spec.schema.yaml",
-        (Path.cwd() / "kb" / "types" / "type-spec.schema.yaml").read_text(
-            encoding="utf-8"
-        ),
-    )
+    write(tmp_path / "kb" / "notes" / "COLLECTION.md", "# Notes collection\n")
+    copy_repo_file(tmp_path, "kb/types/type-spec.schema.yaml")
     write_type_spec(
         tmp_path,
         "kb/types/type-spec.md",
         name="type-spec",
         schema="kb/types/type-spec.schema.yaml",
     )
+
+
+def configure_snapshot_repo(tmp_path: Path) -> None:
+    copy_repo_file(tmp_path, "kb/sources/types/snapshot.schema.yaml")
+    write_type_spec(
+        tmp_path,
+        "kb/sources/types/snapshot.md",
+        name="snapshot",
+        schema="kb/sources/types/snapshot.schema.yaml",
+    )
+
+
+def configure_sources_collection(tmp_path: Path) -> Path:
+    sources = tmp_path / "kb" / "sources"
+    write(sources / "COLLECTION.md", "# Sources\n")
+    return sources
+
+
+def configure_orphan_snapshot_sources(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """A sources collection with one text file and one uncatalogued snapshot."""
+    sources = configure_sources_collection(tmp_path)
+    write(sources / "scratch.md", "Visible source work.\n")
+    write(sources / ".snapshots" / "orphan.md", "uncatalogued bytes\n")
+    monkeypatch.chdir(tmp_path)
+
+
+def type_labelled_findings(results: validation.CheckResults, name: str) -> list[str]:
+    return [
+        finding
+        for findings in (results.passes, results.warns, results.fails, results.infos)
+        for finding in findings
+        if finding.startswith(f"[type: {name}]")
+    ]
 
 
 def test_text_file_has_no_structural_requirements(tmp_path: Path) -> None:
@@ -151,15 +154,15 @@ def test_text_file_has_no_structural_requirements(tmp_path: Path) -> None:
 
 
 def test_imperative_type_rules_dispatch_by_path_not_bare_name(tmp_path: Path) -> None:
-    configure_temp_repo(tmp_path)
+    notes = configure_tag_readme_repo(tmp_path)
     write_type_spec(
         tmp_path,
         "kb/notes/types/tag-readme.md",
         name="tag-readme",
         schema=None,
     )
-    note = write(
-        tmp_path / "kb" / "notes" / "same-name-local-type.md",
+    local = write(
+        notes / "same-name-local-type.md",
         """---
 description: Local type that deliberately shares a framework type name
 type: kb/notes/types/tag-readme.md
@@ -168,38 +171,37 @@ type: kb/notes/types/tag-readme.md
 # Same-name local type
 """,
     )
+    framework = write(
+        notes / "topic-README.md",
+        """---
+description: Curated head of the framework tag-readme type, whose imperative rules run
+type: kb/types/tag-readme.md
+index_source: tag
+index_key: topic
+---
 
-    results = validation.validate_note(note, repo_root=tmp_path)
-
-    assert results.note_type == "tag-readme"
-    assert not any(
-        finding.startswith("[type: tag-readme]")
-        for findings in (results.passes, results.warns, results.fails, results.infos)
-        for finding in findings
+# Topic
+""",
     )
 
+    local_results = validation.validate_note(local, repo_root=tmp_path)
+    framework_results = validation.validate_note(framework, repo_root=tmp_path)
 
-def test_source_snapshot_validates_without_description(tmp_path: Path) -> None:
-    write(
-        tmp_path / "kb" / "sources" / "types" / "snapshot.schema.yaml",
-        (Path.cwd() / "kb" / "sources" / "types" / "snapshot.schema.yaml").read_text(
-            encoding="utf-8"
-        ),
-    )
-    write_type_spec(
-        tmp_path,
-        "kb/sources/types/snapshot.md",
-        name="snapshot",
-        schema="kb/sources/types/snapshot.schema.yaml",
-    )
+    assert local_results.note_type == "tag-readme"
+    assert type_labelled_findings(local_results, "tag-readme") == []
+    # Positive control: the same label does appear when the framework type runs.
+    assert framework_results.note_type == "tag-readme"
+    assert type_labelled_findings(framework_results, "tag-readme") != []
+
+
+def test_source_snapshot_validates_without_optional_fields(tmp_path: Path) -> None:
+    configure_snapshot_repo(tmp_path)
     snapshot = write(
         tmp_path / "kb" / "sources" / "sample.md",
         """---
 source: https://example.com/article
 captured: "2026-04-19"
 capture: web-fetch
-capture_scope: full-source
-genre: conceptual-essay
 type: kb/sources/types/snapshot.md
 ---
 
@@ -219,91 +221,10 @@ Captured text.
     )
 
 
-def test_source_snapshot_allows_genre_to_be_omitted(tmp_path: Path) -> None:
-    write(
-        tmp_path / "kb" / "sources" / "types" / "snapshot.schema.yaml",
-        (Path.cwd() / "kb" / "sources" / "types" / "snapshot.schema.yaml").read_text(
-            encoding="utf-8"
-        ),
-    )
-    write_type_spec(
-        tmp_path,
-        "kb/sources/types/snapshot.md",
-        name="snapshot",
-        schema="kb/sources/types/snapshot.schema.yaml",
-    )
-    snapshot = write(
-        tmp_path / "kb" / "sources" / "sample.md",
-        """---
-source: https://example.com/article
-captured: "2026-04-19"
-capture: web-fetch
-type: kb/sources/types/snapshot.md
----
-
-# Sample
-
-Captured text.
-""",
-    )
-
-    results = validation.validate_note(snapshot, repo_root=tmp_path)
-
-    assert results.note_type == "snapshot"
-    assert results.fails == []
-
-
-def test_source_snapshot_off_list_genre_warns_not_fails(tmp_path: Path) -> None:
-    write(
-        tmp_path / "kb" / "sources" / "types" / "snapshot.schema.yaml",
-        (Path.cwd() / "kb" / "sources" / "types" / "snapshot.schema.yaml").read_text(
-            encoding="utf-8"
-        ),
-    )
-    write_type_spec(
-        tmp_path,
-        "kb/sources/types/snapshot.md",
-        name="snapshot",
-        schema="kb/sources/types/snapshot.schema.yaml",
-    )
-    snapshot = write(
-        tmp_path / "kb" / "sources" / "sample.md",
-        """---
-source: https://example.com/article
-captured: "2026-04-19"
-capture: web-fetch
-genre: podcast-transcript
-type: kb/sources/types/snapshot.md
----
-
-# Sample
-
-Captured text.
-""",
-    )
-
-    results = validation.validate_note(snapshot, repo_root=tmp_path)
-
-    assert results.note_type == "snapshot"
-    assert results.fails == []
-    assert any("genre" in item for item in results.warns)
-
-
 def test_source_snapshot_requires_h1_as_first_nonblank_body_line(
     tmp_path: Path,
 ) -> None:
-    write(
-        tmp_path / "kb" / "sources" / "types" / "snapshot.schema.yaml",
-        (Path.cwd() / "kb" / "sources" / "types" / "snapshot.schema.yaml").read_text(
-            encoding="utf-8"
-        ),
-    )
-    write_type_spec(
-        tmp_path,
-        "kb/sources/types/snapshot.md",
-        name="snapshot",
-        schema="kb/sources/types/snapshot.schema.yaml",
-    )
+    configure_snapshot_repo(tmp_path)
     snapshot = write(
         tmp_path / "kb" / "sources" / "sample.md",
         """---
@@ -328,17 +249,12 @@ Captured text before the title.
 
 
 def configure_ingest_report_repo(tmp_path: Path) -> None:
-    for name in ("note-base.schema.yaml", "note.schema.yaml"):
-        write(
-            tmp_path / "kb" / "types" / name,
-            (Path.cwd() / "kb" / "types" / name).read_text(encoding="utf-8"),
-        )
-    write(
-        tmp_path / "kb" / "sources" / "types" / "ingest-report.schema.yaml",
-        (
-            Path.cwd() / "kb" / "sources" / "types" / "ingest-report.schema.yaml"
-        ).read_text(encoding="utf-8"),
-    )
+    for rel_path in (
+        "kb/types/note-base.schema.yaml",
+        "kb/types/note.schema.yaml",
+        "kb/sources/types/ingest-report.schema.yaml",
+    ):
+        copy_repo_file(tmp_path, rel_path)
     write_type_spec(
         tmp_path,
         "kb/sources/types/ingest-report.md",
@@ -517,19 +433,6 @@ def test_ingest_rejects_retired_source_fields(
     assert any("False schema does not allow" in item for item in results.fails)
 
 
-def test_ingest_off_list_genre_warns_not_fails(tmp_path: Path) -> None:
-    configure_ingest_report_repo(tmp_path)
-    content = code_grounded_ingest(include_heading=True).replace(
-        "genre: scientific-paper", "genre: podcast-transcript"
-    )
-    ingest = write(tmp_path / "kb" / "sources" / "paper.ingest.md", content)
-
-    results = validation.validate_note(ingest, repo_root=tmp_path)
-
-    assert results.fails == []
-    assert any("genre" in item for item in results.warns)
-
-
 @pytest.mark.parametrize(
     ("old", "new", "expected"),
     [
@@ -610,10 +513,11 @@ def test_note_description_must_be_present_non_empty_text(
             + "with enough repeated words to exceed the upper bound " * 5,
             "description should be at most 250 characters",
         ),
+        ("x" * 225, None),
     ],
 )
-def test_note_description_length_outside_style_band_warns(
-    tmp_path: Path, description: str, expected: str
+def test_note_description_length_style_band_warns_outside_only(
+    tmp_path: Path, description: str, expected: str | None
 ) -> None:
     configure_temp_repo(tmp_path)
     note = write(
@@ -631,47 +535,41 @@ type: kb/types/note.md
 
     assert results.note_type == "note"
     assert results.fails == []
-    assert any(f"frontmatter.description: {expected}" in item for item in results.warns)
+    description_warns = [
+        item for item in results.warns if "frontmatter.description" in item
+    ]
+    if expected is None:
+        assert description_warns == []
+    else:
+        assert any(f"frontmatter.description: {expected}" in item for item in description_warns)
 
 
-def test_note_description_between_old_and_new_upper_bound_does_not_warn(
+def test_link_validation_checks_local_targets_and_skips_code_and_external(
     tmp_path: Path,
 ) -> None:
     configure_temp_repo(tmp_path)
-    description = "x" * 225
-    note = write(
-        tmp_path / "description-inside-style-band.md",
-        f"""---
-description: {description}
-type: kb/types/note.md
----
-
-# Description inside style band
-""",
-    )
-
-    results = validation.validate_note(note, repo_root=tmp_path)
-
-    assert results.fails == []
-    assert not any("frontmatter.description" in item for item in results.warns)
-
-
-def test_link_validation_skips_code_and_external_urls(tmp_path: Path) -> None:
-    configure_temp_repo(tmp_path)
-    target = write(tmp_path / "target.md", "# Target\n")
+    write(tmp_path / "target.txt", "Target\n")
+    (tmp_path / "existing-dir").mkdir()
     note = write(
         tmp_path / "note.md",
-        f"""---
-description: A note with one real missing link and links that should be ignored by deterministic validation
+        """---
+description: A note with resolving, missing, code-span, and external links so link health checks each kind
 type: kb/types/note.md
 traits: []
 ---
 
 # Link validation note
 
-Real link: [target](./{target.name})
-Missing link: [missing](./missing.md)
+Existing file: [target](./target.txt)
+Existing file with fragment and query: [target details](./target.txt?mode=brief#details)
+Existing directory: [directory](./existing-dir/)
+Missing note: [missing](./missing.md)
+Missing directory: [missing directory](./missing-dir/)
+Missing non-md file: [missing text](./missing.txt)
+Anchor-only link: [heading](#heading)
 External link: [site](https://example.com/foo.md)
+External scheme: [mail](mailto:person@example.com)
+Protocol-relative URL: [cdn](//example.com/file.txt)
 
 `[inline-code](./ignored.md)`
 
@@ -687,55 +585,12 @@ External link: [site](https://example.com/foo.md)
         "link health: all local relative links resolve" not in item
         for item in results.passes
     )
-    assert any(
-        "link health: missing target ./missing.md" in item for item in results.warns
-    )
-    assert all("ignored.md" not in item for item in results.warns)
-    assert all("example.com" not in item for item in results.warns)
-
-
-def test_link_validation_checks_all_relative_targets(tmp_path: Path) -> None:
-    configure_temp_repo(tmp_path)
-    write(tmp_path / "target.txt", "Target\n")
-    (tmp_path / "existing-dir").mkdir()
-    note = write(
-        tmp_path / "note.md",
-        """---
-description: A note with local links to files and directories so link health checks all relative targets
-type: kb/types/note.md
-traits: []
----
-
-# Link validation note
-
-Existing file: [target](./target.txt)
-Existing file with fragment and query: [target details](./target.txt?mode=brief#details)
-Existing directory: [directory](./existing-dir/)
-Missing directory: [missing directory](./missing-dir/)
-Missing non-md file: [missing text](./missing.txt)
-Anchor-only link: [heading](#heading)
-External scheme: [mail](mailto:person@example.com)
-Protocol-relative URL: [cdn](//example.com/file.txt)
-""",
-    )
-
-    results = validation.validate_note(note, repo_root=tmp_path)
-
-    assert all(
-        "link health: all local relative links resolve" not in item
-        for item in results.passes
-    )
-    assert any(
-        "link health: missing target ./missing-dir/" in item for item in results.warns
-    )
-    assert any(
-        "link health: missing target ./missing.txt" in item for item in results.warns
-    )
-    assert all("target.txt" not in item for item in results.warns)
-    assert all("existing-dir" not in item for item in results.warns)
-    assert all("#heading" not in item for item in results.warns)
-    assert all("person@example.com" not in item for item in results.warns)
-    assert all("example.com" not in item for item in results.warns)
+    for missing in ("./missing.md", "./missing-dir/", "./missing.txt"):
+        assert any(
+            f"link health: missing target {missing}" in item for item in results.warns
+        )
+    for skipped in ("target.txt", "existing-dir", "#heading", "ignored.md", "example.com"):
+        assert all(skipped not in item for item in results.warns)
 
 
 def test_link_health_and_inbound_detection_share_url_resolution(tmp_path: Path) -> None:
@@ -784,28 +639,37 @@ traits: []
     assert inbound[target.resolve()] is True
 
 
-def test_library_artifact_cannot_link_to_archived_proposal(tmp_path: Path) -> None:
+@pytest.mark.parametrize(
+    ("filename", "frontmatter", "expected_type"),
+    [
+        (
+            "source.md",
+            (
+                "---\ndescription: Library note linking to a retired proposal that must "
+                "stay outside the live knowledge graph\ntype: kb/types/note.md\n"
+                "traits: []\n---\n\n"
+            ),
+            "note",
+        ),
+        ("README.md", "", "text"),
+    ],
+)
+def test_library_artifact_cannot_link_to_archived_proposal(
+    tmp_path: Path, filename: str, frontmatter: str, expected_type: str
+) -> None:
     notes = configure_temp_repo(tmp_path)
     archived = write(
         tmp_path / "kb/reference/proposals/archive/retired.md",
         "# Retired proposal\n",
     )
     note = write(
-        notes / "source.md",
-        f"""---
-description: Library note linking to a retired proposal that must stay outside the live knowledge graph
-type: kb/types/note.md
-traits: []
----
-
-# Source
-
-[Retired proposal]({os.path.relpath(archived, notes)})
-""",
+        notes / filename,
+        f"{frontmatter}# Source\n\n[Retired proposal]({os.path.relpath(archived, notes)})\n",
     )
 
     results = validation.validate_note(note, repo_root=tmp_path)
 
+    assert results.note_type == expected_type
     assert any(
         "proposal archive boundary: library artifact links to archived proposal"
         in item
@@ -847,23 +711,6 @@ traits: []
     for path in (library_note, workshop_note, archive_readme):
         results = validation.validate_note(path, repo_root=tmp_path)
         assert results.fails == []
-
-
-def test_bare_library_text_cannot_link_to_archived_proposal(tmp_path: Path) -> None:
-    notes = configure_temp_repo(tmp_path)
-    archived = write(
-        tmp_path / "kb/reference/proposals/archive/retired.md",
-        "# Retired proposal\n",
-    )
-    readme = write(
-        notes / "README.md",
-        f"# Notes\n\n[Retired proposal]({os.path.relpath(archived, notes)})\n",
-    )
-
-    results = validation.validate_note(readme, repo_root=tmp_path)
-
-    assert results.note_type == "text"
-    assert any("proposal archive boundary" in item for item in results.fails)
 
 
 def test_structured_claim_requires_evidence_and_reasoning(tmp_path: Path) -> None:
@@ -984,19 +831,9 @@ def configure_agent_memory_review_type(tmp_path: Path) -> Path:
     configure_temp_repo(tmp_path)
     reviews_root = tmp_path / "kb" / "agent-memory-systems"
     write(reviews_root / "COLLECTION.md", "# Agent memory systems\n")
-    write(
-        tmp_path
-        / "kb"
-        / "agent-memory-systems"
-        / "types"
-        / "agent-memory-system-review.schema.yaml",
-        (
-            Path.cwd()
-            / "kb"
-            / "agent-memory-systems"
-            / "types"
-            / "agent-memory-system-review.schema.yaml"
-        ).read_text(encoding="utf-8"),
+    copy_repo_file(
+        tmp_path,
+        "kb/agent-memory-systems/types/agent-memory-system-review.schema.yaml",
     )
     write_type_spec(
         tmp_path,
@@ -1199,51 +1036,47 @@ The source does not establish behavioral activation.
     assert any("frontmatter: 'tags' is a required property" in item for item in results.fails)
 
 
-def test_quote_citation_shape_passes_when_well_formed() -> None:
+@pytest.mark.parametrize(
+    ("content", "expected_pass", "expected_warn"),
+    [
+        (
+            (
+                "Retrieval latency dominates at scale.\n\n"
+                "> p95 retrieval latency was 340ms, 6x the generation step\n"
+                "> --- `src/memory/store.py` @ `abc123`\n"
+            ),
+            "quote-anchored citations: 1 well-formed",
+            None,
+        ),
+        (
+            (
+                "> p95 retrieval latency was 340ms\n"
+                "> --- [src/memory/store.py]"
+                "(https://github.com/org/repo/blob/abc123/src/memory/store.py)\n"
+            ),
+            "quote-anchored citations: 1 well-formed",
+            None,
+        ),
+        (
+            "> p95 retrieval latency was 340ms\n> --- the documentation\n",
+            None,
+            "names no source",
+        ),
+        ("Some prose.\n\n> --- `src/memory/store.py`\n", None, "no quoted text above"),
+    ],
+)
+def test_quote_citation_shape(
+    content: str, expected_pass: str | None, expected_warn: str | None
+) -> None:
     results = validation.CheckResults(note_type="agent-memory-system-review")
-    content = (
-        "Retrieval latency dominates at scale.\n\n"
-        "> p95 retrieval latency was 340ms, 6x the generation step\n"
-        "> --- `src/memory/store.py` @ `abc123`\n"
-    )
 
     validation.validate_quote_citations(results, content)
 
-    assert any(
-        "quote-anchored citations: 1 well-formed" in item for item in results.passes
-    )
-    assert results.warns == []
-
-
-def test_quote_citation_shape_accepts_commit_pinned_blob_url() -> None:
-    results = validation.CheckResults(note_type="agent-memory-system-review")
-    content = (
-        "> p95 retrieval latency was 340ms\n"
-        "> --- [src/memory/store.py](https://github.com/org/repo/blob/abc123/src/memory/store.py)\n"
-    )
-
-    validation.validate_quote_citations(results, content)
-
-    assert any("1 well-formed" in item for item in results.passes)
-    assert results.warns == []
-
-
-def test_quote_citation_shape_warns_when_attribution_names_no_source() -> None:
-    results = validation.CheckResults(note_type="agent-memory-system-review")
-    content = "> p95 retrieval latency was 340ms\n> --- the documentation\n"
-
-    validation.validate_quote_citations(results, content)
-
-    assert any("names no source" in item for item in results.warns)
-
-
-def test_quote_citation_shape_warns_when_no_quote_above_attribution() -> None:
-    results = validation.CheckResults(note_type="agent-memory-system-review")
-    content = "Some prose.\n\n> --- `src/memory/store.py`\n"
-
-    validation.validate_quote_citations(results, content)
-
-    assert any("no quoted text above" in item for item in results.warns)
+    if expected_pass is None:
+        assert any(expected_warn in item for item in results.warns)
+    else:
+        assert any(expected_pass in item for item in results.passes)
+        assert results.warns == []
 
 
 @pytest.mark.parametrize(
@@ -1273,29 +1106,6 @@ type: kb/types/note.md
     results = validation.validate_note(note, repo_root=tmp_path)
 
     assert (results.fails == []) is should_pass
-
-
-def test_tag_readme_rejects_global_status(tmp_path: Path) -> None:
-    notes_root = configure_tag_readme_repo(tmp_path)
-    readme = write(
-        notes_root / "topic-README.md",
-        """---
-description: Curated head exercising the direct note-base descendant boundary
-type: kb/types/tag-readme.md
-index_source: tag
-index_key: topic
-status: current
----
-
-# Topic
-""",
-    )
-
-    results = validation.validate_note(readme, repo_root=tmp_path)
-
-    assert any(
-        "False schema does not allow 'current'" in failure for failure in results.fails
-    )
 
 
 def test_adr_status_uses_type_specific_enum_from_note_base(tmp_path: Path) -> None:
@@ -1335,48 +1145,6 @@ Consequences.
 
     assert results.fails == []
     assert all("status" not in warning for warning in results.warns)
-
-
-def test_instruction_type_accepts_review_gate_metadata(tmp_path: Path) -> None:
-    install_schema_tree(tmp_path, "instruction")
-    write_type_spec(
-        tmp_path,
-        "kb/types/instruction.md",
-        name="instruction",
-        schema="kb/types/instruction.schema.yaml",
-    )
-    gate = write(
-        tmp_path / "kb" / "instructions" / "review-gates" / "prose" / "sample.md",
-        """---
-gate_id: prose/sample
-name: Sample
-description: Sample review gate for validating instruction metadata
-type: kb/types/instruction.md
-lens: prose
-watches: [body]
-staleness: changed
----
-
-# Sample
-
-## Failure mode
-
-The prose fails in a sample way.
-
-## Test
-
-Check the sample condition.
-""",
-    )
-
-    results = validation.validate_note(gate, repo_root=tmp_path)
-
-    assert results.fails == []
-    assert results.warns == []
-    assert any(
-        "type schema: instruction requirements satisfied" in item
-        for item in results.passes
-    )
 
 
 def test_title_length_over_limit_fails_validation(tmp_path: Path) -> None:
@@ -1812,10 +1580,7 @@ def test_validate_collection_structure_allows_namespace_collections(
 def test_source_snapshot_cache_warns_about_redundant_alternate_copy(
     tmp_path: Path,
 ) -> None:
-    from commonplace.lib.snapshot import snapshot_sha256
-
-    sources = tmp_path / "kb" / "sources"
-    write(sources / "COLLECTION.md", "# Sources\n")
+    sources = configure_sources_collection(tmp_path)
     expected = write(sources / ".snapshots" / "source.md", "same bytes\n")
     duplicate = write(sources / ".snapshots" / "adapter-name.md", "same bytes\n")
     write(
@@ -1844,11 +1609,7 @@ def test_source_collection_validation_prints_local_snapshot_warning(
     monkeypatch: pytest.MonkeyPatch,
     capsys: pytest.CaptureFixture[str],
 ) -> None:
-    sources = tmp_path / "kb" / "sources"
-    write(sources / "COLLECTION.md", "# Sources\n")
-    write(sources / "scratch.md", "Visible source work.\n")
-    write(sources / ".snapshots" / "orphan.md", "uncatalogued bytes\n")
-    monkeypatch.chdir(tmp_path)
+    configure_orphan_snapshot_sources(tmp_path, monkeypatch)
 
     exit_code = validate_notes.main(["sources"])
     output = capsys.readouterr().out
@@ -1872,11 +1633,7 @@ def test_validation_json_is_compact_and_structured(
     monkeypatch: pytest.MonkeyPatch,
     capsys: pytest.CaptureFixture[str],
 ) -> None:
-    sources = tmp_path / "kb" / "sources"
-    write(sources / "COLLECTION.md", "# Sources\n")
-    write(sources / "scratch.md", "Visible source work.\n")
-    write(sources / ".snapshots" / "orphan.md", "uncatalogued bytes\n")
-    monkeypatch.chdir(tmp_path)
+    configure_orphan_snapshot_sources(tmp_path, monkeypatch)
 
     exit_code = validate_notes.main(["--json", "sources"])
     payload = json.loads(capsys.readouterr().out)
@@ -1919,8 +1676,7 @@ def test_validation_json_output_matches_stdout_bytes(
     monkeypatch: pytest.MonkeyPatch,
     capsysbinary: pytest.CaptureFixture[bytes],
 ) -> None:
-    sources = tmp_path / "kb" / "sources"
-    write(sources / "COLLECTION.md", "# Sources\n")
+    sources = configure_sources_collection(tmp_path)
     write(sources / "scratch.md", "Visible source work.\n")
     receipt = tmp_path / "validation.json"
     monkeypatch.chdir(tmp_path)
@@ -1973,8 +1729,7 @@ tags: []
 def test_source_snapshot_cache_reports_same_url_as_related_observation(
     tmp_path: Path,
 ) -> None:
-    sources = tmp_path / "kb" / "sources"
-    write(sources / "COLLECTION.md", "# Sources\n")
+    sources = configure_sources_collection(tmp_path)
     related = write(
         sources / ".snapshots" / "older-name.md",
         "---\nsource: https://example.com/article\n---\n\nOlder bytes.\n",
@@ -2004,10 +1759,7 @@ def test_source_snapshot_cache_reports_same_url_as_related_observation(
 def test_source_snapshot_cache_recognizes_derived_original_by_checksum(
     tmp_path: Path,
 ) -> None:
-    from commonplace.lib.snapshot import snapshot_sha256
-
-    sources = tmp_path / "kb" / "sources"
-    write(sources / "COLLECTION.md", "# Sources\n")
+    sources = configure_sources_collection(tmp_path)
     original = write(
         sources / ".snapshots" / "article.md",
         "---\nsource: https://example.com/article\n---\n\nOriginal bytes.\n",

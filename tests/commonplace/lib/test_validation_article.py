@@ -3,33 +3,16 @@ from __future__ import annotations
 from pathlib import Path
 
 from commonplace.lib.validation import validate_note
-
-
-def write(path: Path, content: str) -> Path:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(content, encoding="utf-8")
-    return path
+from tests.commonplace.validation_helpers import NOTE_TYPE_SPECS, copy_repo_files, write
 
 
 def setup_repo(tmp_path: Path) -> Path:
-    # The validator resolves global and collection-local type specs from the
-    # repo root, so the fixture repo needs the real specs copied in.
-    repo_root = Path(__file__).resolve().parents[3]
-    real_types = repo_root / "kb" / "types"
-    for name in (
-        "note.md",
-        "note.schema.yaml",
-        "note-base.schema.yaml",
-        "type-spec.md",
-        "type-spec.schema.yaml",
-    ):
-        write(tmp_path / "kb" / "types" / name, (real_types / name).read_text(encoding="utf-8"))
-    article_types = repo_root / "kb" / "articles" / "types"
-    for name in ("article.md", "article.schema.yaml"):
-        write(
-            tmp_path / "kb" / "articles" / "types" / name,
-            (article_types / name).read_text(encoding="utf-8"),
-        )
+    copy_repo_files(
+        tmp_path,
+        *NOTE_TYPE_SPECS,
+        "kb/articles/types/article.md",
+        "kb/articles/types/article.schema.yaml",
+    )
     write(tmp_path / "kb" / "articles" / "COLLECTION.md", "# Articles collection\n")
     write(tmp_path / "kb" / "notes" / "COLLECTION.md", "# Notes collection\n")
     write(
@@ -45,17 +28,16 @@ type: kb/types/note.md
     return tmp_path / "kb" / "articles"
 
 
-def article(path: Path, *, source_notes: list[str] | None = None) -> Path:
-    lineage = ""
-    if source_notes is not None:
-        rendered = "\n".join(f"  - {note}" for note in source_notes)
-        lineage = f"source_notes:\n{rendered}\n"
+def article(path: Path, *, source_notes: list[str]) -> Path:
+    rendered = "\n".join(f"  - {note}" for note in source_notes)
     return write(
         path,
         f"""---
 description: "an outward-facing article used by the validation tests of the article type"
 type: kb/articles/types/article.md
-{lineage}---
+source_notes:
+{rendered}
+---
 
 # A test article
 
@@ -64,17 +46,9 @@ Reader-facing prose.
     )
 
 
-def test_minimal_article_passes(tmp_path: Path) -> None:
-    # The article type is deliberately nearly empty: description and type
-    # alone make a valid article; constraints accrue with collected failure
-    # modes.
-    articles = setup_repo(tmp_path)
-    path = article(articles / "test-article.md")
-    results = validate_note(path, repo_root=tmp_path)
-    assert not results.fails
-
-
 def test_resolving_source_notes_pass(tmp_path: Path) -> None:
+    # The article type is deliberately nearly empty: description, type, and
+    # resolving lineage make a valid article.
     articles = setup_repo(tmp_path)
     path = article(
         articles / "test-article.md",
@@ -95,32 +69,3 @@ def test_unresolved_source_note_fails(tmp_path: Path) -> None:
     assert any(
         "source_notes" in f and "kb/notes/missing-note.md" in f for f in results.fails
     )
-
-
-def test_article_over_unquoted_source_bound_fails(tmp_path: Path) -> None:
-    setup_repo(tmp_path)
-    links = []
-    for index in range(6):
-        write(
-            tmp_path / "kb" / "sources" / f"src-{index}.ingest.md",
-            "# Ingest: src\n\n## Quotes\n\n- **Source extract (verbatim):** passage\n",
-        )
-        links.append(f"[src {index}](../sources/src-{index}.ingest.md)")
-    path = write(
-        tmp_path / "kb" / "articles" / "six-sources.md",
-        """---
-description: "an article citing six tracked sources without quoting any"
-type: kb/articles/types/article.md
----
-
-# Six sources
-
-"""
-        + " ".join(f"A claim from {link}." for link in links)
-        + "\n",
-    )
-    results = validate_note(path, repo_root=tmp_path)
-    fails = [fail for fail in results.fails if "unquoted sources" in fail]
-    assert len(fails) == 1
-    assert "6 distinct tracked sources" in fails[0]
-

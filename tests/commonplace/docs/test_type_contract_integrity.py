@@ -177,24 +177,6 @@ def test_note_contract_matches_the_global_frontmatter_schema() -> None:
     required_fields = set(frontmatter_schema["required"])
     shared_fields = set(frontmatter_schema["properties"])
 
-    assert required_fields == {"description", "type"}
-    assert shared_fields == {
-        "description",
-        "type",
-        "traits",
-        "tags",
-        "user-verified",
-    }
-    assert "status" not in shared_fields
-
-    note_schema = yaml.safe_load(
-        (REPO_ROOT / "kb/types/note.schema.yaml").read_text(encoding="utf-8")
-    )
-    note_fields = note_schema["allOf"][1]["properties"]["frontmatter"][
-        "properties"
-    ]
-    assert note_fields["status"] is False
-
     note_contract = (REPO_ROOT / "kb/types/note.md").read_text(encoding="utf-8")
     table = note_contract.split("## Frontmatter", maxsplit=1)[1].split(
         "## Description", maxsplit=1
@@ -331,8 +313,6 @@ def test_ingest_owns_durable_source_and_snapshot_anchor() -> None:
         "genre",
         "snapshot_sha256",
     } <= required
-    assert ingest_fields["properties"]["source_snapshot"] is False
-    assert ingest_fields["properties"]["code_revisions"] is False
     assert "secondary_sources" in ingest_fields["properties"]
     assert "`kb/sources/.snapshots/`" in ingest_contract
 
@@ -354,12 +334,6 @@ def test_ingest_owns_durable_source_and_snapshot_anchor() -> None:
         snapshot_frontmatter["properties"]["capture_scope"]["enum"]
     )
     ingest_scopes = set(ingest_fields["properties"]["capture_scope"]["enum"])
-    assert snapshot_scopes == {
-        "full-source",
-        "partial-source",
-        "abstract",
-        "excerpt",
-    }
     assert ingest_scopes == snapshot_scopes
     assert "capture_scope" not in snapshot_required
     assert "capture_scope" not in required

@@ -2,33 +2,27 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import pytest
+
 from commonplace.lib.validation import validate_note
+from tests.commonplace.validation_helpers import NOTE_TYPE_SPECS, copy_repo_files, write
+
+SLUGS = [f"src-{index}" for index in range(1, 7)]
+QUOTED_PASSAGE = "the passage text here"
 
 
-def write(path: Path, content: str) -> Path:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(content, encoding="utf-8")
-    return path
-
-
-def setup_repo(tmp_path: Path) -> Path:
-    # The validator resolves global and collection-local type specs from the
-    # repo root, so the fixture repo needs the real specs copied in.
-    repo_root = Path(__file__).resolve().parents[3]
-    real_types = repo_root / "kb" / "types"
-    for name in (
-        "note.md",
-        "note.schema.yaml",
-        "note-base.schema.yaml",
-        "type-spec.md",
-        "type-spec.schema.yaml",
-    ):
-        write(
-            tmp_path / "kb" / "types" / name,
-            (real_types / name).read_text(encoding="utf-8"),
-        )
+def setup_repo(tmp_path: Path, *, passage: str = QUOTED_PASSAGE) -> None:
+    """Build a repo whose six tracked ingests each retain `passage`."""
+    copy_repo_files(
+        tmp_path,
+        *NOTE_TYPE_SPECS,
+        "kb/articles/types/article.md",
+        "kb/articles/types/article.schema.yaml",
+    )
     write(tmp_path / "kb" / "notes" / "COLLECTION.md", "# Notes collection\n")
-    return tmp_path / "kb" / "notes"
+    write(tmp_path / "kb" / "articles" / "COLLECTION.md", "# Articles collection\n")
+    for slug in SLUGS:
+        ingest(tmp_path, slug, passage=passage)
 
 
 def ingest(tmp_path: Path, slug: str, *, passage: str, summary: str = "Analysis.") -> Path:
@@ -53,12 +47,18 @@ source: https://example.com/{slug}
     )
 
 
-def note(path: Path, body: str) -> Path:
+def note(
+    tmp_path: Path,
+    body: str,
+    *,
+    collection: str = "notes",
+    type_path: str = "kb/types/note.md",
+) -> Path:
     return write(
-        path,
+        tmp_path / "kb" / collection / "test-note.md",
         f"""---
 description: "a note used by the unquoted-sources validation tests"
-type: kb/types/note.md
+type: {type_path}
 ---
 
 # A test note
@@ -73,39 +73,52 @@ def _cite(slug: str, *, snapshot_required: bool = False) -> str:
     return f"[{slug}{marker}](../sources/{slug}.ingest.md)"
 
 
-def test_six_unquoted_tracked_sources_warn(tmp_path: Path) -> None:
-    notes = setup_repo(tmp_path)
-    slugs = [f"src-{index}" for index in range(1, 7)]
-    for slug in slugs:
-        ingest(tmp_path, slug, passage="the passage text here")
-    path = note(
-        notes / "test-note.md",
-        "The claim rests on several tracked sources "
-        + ", ".join(_cite(slug) for slug in slugs)
-        + ".",
+def first_quoted_body(*, snapshot_required: bool = False) -> str:
+    """Quote src-1 verbatim and cite the other five without a quotation."""
+    return (
+        "The first source states, verbatim, "
+        f'"{QUOTED_PASSAGE}" ({_cite("src-1", snapshot_required=snapshot_required)}).\n\n'
+        "The rest are cited without a retained quotation: "
+        + ", ".join(_cite(slug) for slug in SLUGS[1:])
+        + "."
     )
 
-    results = validate_note(path, repo_root=tmp_path)
 
-    fails = [fail for fail in results.fails if "unquoted sources" in fail]
+def unquoted_fails(path: Path, repo_root: Path) -> list[str]:
+    results = validate_note(path, repo_root=repo_root)
+    return [fail for fail in results.fails if "unquoted sources" in fail]
+
+
+@pytest.mark.parametrize(
+    ("collection", "type_path"),
+    [
+        ("notes", "kb/types/note.md"),
+        ("articles", "kb/articles/types/article.md"),
+    ],
+)
+def test_six_unquoted_tracked_sources_fail(
+    tmp_path: Path, collection: str, type_path: str
+) -> None:
+    setup_repo(tmp_path)
+    path = note(
+        tmp_path,
+        "The claim rests on several tracked sources "
+        + ", ".join(_cite(slug) for slug in SLUGS)
+        + ".",
+        collection=collection,
+        type_path=type_path,
+    )
+
+    fails = unquoted_fails(path, tmp_path)
+
     assert len(fails) == 1
     assert "6 distinct tracked sources" in fails[0]
-    assert all(f"{slug}.ingest.md" in fails[0] for slug in slugs)
+    assert all(f"{slug}.ingest.md" in fails[0] for slug in SLUGS)
 
 
 def test_one_verified_quote_brings_the_note_under_the_bound(tmp_path: Path) -> None:
-    notes = setup_repo(tmp_path)
-    slugs = [f"src-{index}" for index in range(1, 7)]
-    for slug in slugs:
-        ingest(tmp_path, slug, passage="the passage text here")
-    path = note(
-        notes / "test-note.md",
-        "The first source states, verbatim, "
-        f'"the passage text here" ({_cite("src-1")}).\n\n'
-        "The rest are cited without a retained quotation: "
-        + ", ".join(_cite(slug) for slug in slugs[1:])
-        + ".",
-    )
+    setup_repo(tmp_path)
+    path = note(tmp_path, first_quoted_body())
 
     results = validate_note(path, repo_root=tmp_path)
 
@@ -117,32 +130,21 @@ def test_one_verified_quote_brings_the_note_under_the_bound(tmp_path: Path) -> N
 
 
 def test_snapshot_required_source_counts_even_when_quoted(tmp_path: Path) -> None:
-    notes = setup_repo(tmp_path)
-    slugs = [f"src-{index}" for index in range(1, 7)]
-    for slug in slugs:
-        ingest(tmp_path, slug, passage="the passage text here")
-    path = note(
-        notes / "test-note.md",
-        "The first source states, verbatim, "
-        f'"the passage text here" ({_cite("src-1", snapshot_required=True)}).\n\n'
-        "The rest are cited without a retained quotation: "
-        + ", ".join(_cite(slug) for slug in slugs[1:])
-        + ".",
-    )
+    setup_repo(tmp_path)
+    path = note(tmp_path, first_quoted_body(snapshot_required=True))
 
-    results = validate_note(path, repo_root=tmp_path)
+    fails = unquoted_fails(path, tmp_path)
 
-    fails = [fail for fail in results.fails if "unquoted sources" in fail]
     assert len(fails) == 1
     assert "6 distinct tracked sources" in fails[0]
     assert "src-1.ingest.md" in fails[0]
 
 
 def test_note_citing_no_tracked_source_says_nothing(tmp_path: Path) -> None:
-    notes = setup_repo(tmp_path)
-    note(notes / "other-note.md", "A sibling note.")
+    setup_repo(tmp_path)
+    write(tmp_path / "kb" / "notes" / "other-note.md", "A sibling note.\n")
     path = note(
-        notes / "test-note.md",
+        tmp_path,
         "This note only links a sibling [other note](./other-note.md).",
     )
 
@@ -156,27 +158,16 @@ def test_note_citing_no_tracked_source_says_nothing(tmp_path: Path) -> None:
 
 def test_quote_matching_only_ingest_analysis_does_not_discharge(tmp_path: Path) -> None:
     """Ties to the Quotes-section confinement: analysis prose is not support."""
-    notes = setup_repo(tmp_path)
-    slugs = [f"src-{index}" for index in range(1, 7)]
-    for slug in slugs:
-        ingest(tmp_path, slug, passage="an unrelated retained passage")
+    setup_repo(tmp_path, passage="an unrelated retained passage")
     ingest(
         tmp_path,
         "src-1",
         passage="an unrelated retained passage",
-        summary="The author writes that the passage text here is central.",
+        summary=f"The author writes that {QUOTED_PASSAGE} is central.",
     )
-    path = note(
-        notes / "test-note.md",
-        "The first source states, verbatim, "
-        f'"the passage text here" ({_cite("src-1")}).\n\n'
-        "The rest are cited without a retained quotation: "
-        + ", ".join(_cite(slug) for slug in slugs[1:])
-        + ".",
-    )
+    path = note(tmp_path, first_quoted_body())
 
-    results = validate_note(path, repo_root=tmp_path)
+    fails = unquoted_fails(path, tmp_path)
 
-    fails = [fail for fail in results.fails if "unquoted sources" in fail]
     assert len(fails) == 1
     assert "6 distinct tracked sources" in fails[0]

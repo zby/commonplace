@@ -2,17 +2,14 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import pytest
+
 from commonplace.lib.validation import (
     TAG_README_HARD_BYTES,
     TAG_README_SOFT_BYTES,
     validate_note,
 )
-
-
-def write(path: Path, content: str) -> Path:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(content, encoding="utf-8")
-    return path
+from tests.commonplace.validation_helpers import NOTE_TYPE_SPECS, copy_repo_files, write
 
 
 def note(path: Path, tags: list[str]) -> Path:
@@ -54,19 +51,12 @@ Orientation paragraph.
 
 
 def setup_repo(tmp_path: Path) -> Path:
-    # The validator resolves the global type from kb/types/ in the repo root,
-    # so the fixture repo needs the real specs copied in.
-    real_types = Path(__file__).resolve().parents[3] / "kb" / "types"
-    for name in (
-        "tag-readme.md",
-        "tag-readme.schema.yaml",
-        "note.md",
-        "note.schema.yaml",
-        "note-base.schema.yaml",
-        "type-spec.md",
-        "type-spec.schema.yaml",
-    ):
-        write(tmp_path / "kb" / "types" / name, (real_types / name).read_text(encoding="utf-8"))
+    copy_repo_files(
+        tmp_path,
+        "kb/types/tag-readme.md",
+        "kb/types/tag-readme.schema.yaml",
+        *NOTE_TYPE_SPECS,
+    )
     write(tmp_path / "kb" / "notes" / "COLLECTION.md", "# Notes collection\n")
     return tmp_path / "kb" / "notes"
 
@@ -88,33 +78,24 @@ def test_complete_mark_fails_on_missing_member(tmp_path: Path) -> None:
     assert any("maintain-curated-indexes" in f for f in results.fails)
 
 
-def test_complete_mark_passes_when_all_members_linked(tmp_path: Path) -> None:
+@pytest.mark.parametrize(
+    ("filename", "link"),
+    [
+        ("linked-note.md", "./linked-note.md"),
+        # Percent-encoding, query, and fragment are normalized away.
+        ("linked note.md", "./linked%20note.md?view=brief#details"),
+    ],
+)
+def test_complete_mark_passes_when_all_members_linked(
+    tmp_path: Path, filename: str, link: str
+) -> None:
     notes = setup_repo(tmp_path)
-    note(notes / "linked-note.md", ["kb-design"])
+    note(notes / filename, ["kb-design"])
     readme = tag_readme(
         notes / "kb-design-README.md",
         "kb-design",
         marks="complete: true\n",
-        body="\n## Picks\n\n- [linked note](./linked-note.md) — placed\n",
-    )
-
-    results = validate_note(readme, repo_root=tmp_path)
-
-    assert not results.fails
-    assert any("complete mark: all 1 members linked" in p for p in results.passes)
-
-
-def test_complete_mark_normalizes_edge_case_local_urls(tmp_path: Path) -> None:
-    notes = setup_repo(tmp_path)
-    note(notes / "linked note.md", ["kb-design"])
-    readme = tag_readme(
-        notes / "kb-design-README.md",
-        "kb-design",
-        marks="complete: true\n",
-        body=(
-            "\n## Picks\n\n"
-            "- [linked note](./linked%20note.md?view=brief#details) — placed\n"
-        ),
+        body=f"\n## Picks\n\n- [linked note]({link}) — placed\n",
     )
 
     results = validate_note(readme, repo_root=tmp_path)
