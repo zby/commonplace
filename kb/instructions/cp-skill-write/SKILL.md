@@ -181,6 +181,8 @@ These apply to all typed artifacts regardless of collection.
 - Expect partial execution. Say which parts matter most, accept a partial or coarse answer, and state what a missing or negative answer changes.
 - When the answer comes from someone outside your control, ask for the detail the decision needs and no more. Let them withhold the rest, and ask for cost as well as outcome when a costly success would change the decision.
 
+This borrows one idea from *Auftragstaktik* (mission command): when execution will meet conditions the author cannot foresee, give the executor the intent and the boundaries, and leave the means to them. Only that idea applies here. Command hierarchy, obedience, and the adversarial setting of the military doctrine do not.
+
 (rationale: [intent-framed delegation](../../notes/intent-framed-delegation-is-a-control-regime-not-a-short-prompt.md))
 
 **Literal language.** Prefer literal wording when a metaphor or idiom would mainly add flourish, interpretation work, or unintended connotations. Keep figurative wording when it is conventional and precise or clarifies the explanation; an available literal alternative alone does not make a metaphor a problem.
