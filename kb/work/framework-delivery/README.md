@@ -31,8 +31,8 @@ Posed by the operator on 2026-09-23. Decide how Commonplace delivers what agents
 
 ## Next steps
 
-1. A Codex agent runs probe revision 4.
-2. Agents in other harnesses run the shared probe, as requested in [harness-probe-request.md](./probe-request.md): Gemini CLI, OpenCode, Cursor, Goose, GitHub Copilot, and enterprise harnesses. Enterprise results may come back through the operator, anonymised.
+1. A Codex agent runs probe revision 4, from the [probe request](./probe-request.md).
+2. Agents in other harnesses run the probe, from the same [probe request](./probe-request.md): Gemini CLI, OpenCode, Cursor, Goose, GitHub Copilot, and enterprise harnesses. Enterprise results may come back through the operator, anonymised.
 3. Rehearse end to end in an installed project against a built package: migrate a project that has a locally edited framework file, then run one real promoted workflow through writing and validation.
 4. Update [design.md](./design.md) from the results.
 
@@ -59,7 +59,7 @@ Current:
 - [design.md](./design.md) — the chosen design, including the proposed install procedure
 - [alternatives.md](./alternatives.md) — rejected options, why, and the evidence by probe revision
 - [probe-package/](./probe-package/PROTOCOL.md) — the shared probe (revision 4): a throwaway uv package, a test project, the protocol every harness runs, and a results template
-- [harness-probe-request.md](./probe-request.md) — open request to agents in other harnesses to run the probe
+- [probe-request.md](./probe-request.md) — the open request to agents in any harness to run the probe, with a log of replies
 - [results-claude-code-r4.md](./results-claude-code-r4.md) — Claude Code's run of revision 4
 
 Background research:
@@ -72,4 +72,3 @@ Evidence from earlier revisions, cited by `alternatives.md`:
 - [probe-results.md](./probe-results.md) — early probes: a Claude Code link-mode plugin, a Codex skill symlink, uv shared data
 - [results-codex.md](./results-codex.md) — Codex's runs of revisions 1–3
 - [results-claude-code.md](./results-claude-code.md) — Claude Code's run of revision 3
-- [codex-probe-request.md](./codex-probe-request.md) — the answered request to Codex for revisions 1–3

@@ -1,6 +1,6 @@
-# Probe request: does the uv-only delivery design work in your harness?
+# Probe request: does the delivery design work in your harness?
 
-- To: agents in harnesses other than Codex, including Gemini CLI, OpenCode, Cursor, Goose, GitHub Copilot, Claude Code (a full rerun of the shared protocol), and enterprise or in-house harnesses
+- To: an agent in any harness: Codex, Claude Code, Gemini CLI, OpenCode, Cursor, Goose, GitHub Copilot, and enterprise or in-house harnesses. A harness that ran an earlier revision runs this one again.
 - From: Claude session on the framework-delivery workshop, at the operator's direction
 - Posted: 2026-09-24
 - Status: open
@@ -9,7 +9,7 @@
 
 Run the shared delivery probe in your harness and record what works, what fails, and what you had to change.
 
-**What the result is for.** Commonplace is a framework for agent-operated knowledge bases. It is moving to a single distribution channel: a Python package installed with `uv tool install`. The installed package is meant to be the only copy of everything agents read — skills, instructions, type specs — with no per-project copies and no separately published plugin. Codex has already run this probe. Your run tells the operator whether the design works in your harness, and what it would need there. The findings decide the design; they are not a ranking of harnesses.
+**What the result is for.** Commonplace is a framework for agent-operated knowledge bases. It is moving to a single distribution channel: a Python package installed with `uv tool install`. The installed package is meant to be the only copy of everything agents read — skills, instructions, type specs — with no per-project copies and no separately published plugin. Your run tells the operator whether the design works in your harness, and what it would need there. The findings decide the design; they are not a ranking of harnesses.
 
 **The design under test** ([design.md](./design.md)). The library stays in the installed package. A per-project `init` command writes three uncommitted files into the project, and agents reach the library only by reading files:
 
@@ -43,7 +43,8 @@ Run the shared delivery probe in your harness and record what works, what fails,
 
 **Owned outputs.**
 
-- `results-<harness>.md` in this workshop, from [probe-package/RESULTS-TEMPLATE.md](./probe-package/RESULTS-TEMPLATE.md). If a file for your harness already exists, add a suffix.
+- `results-<harness>-r4.md` in this workshop, from [probe-package/RESULTS-TEMPLATE.md](./probe-package/RESULTS-TEMPLATE.md). If that file exists, add a further suffix.
+- One line under "Replies" below: the date, harness and version, OS, and a link to your results file. The request stays open for further harnesses.
 - **If you cannot write to this repository** (for example, an agent inside an enterprise environment), return the filled-in template to the operator instead. Replace internal names, hosts, paths, and anything confidential with neutral labels such as `enterprise-A`. The design needs the behaviour, not the identity.
 
 **Stop and report instead of proceeding** if a case would need a change you cannot undo, a permission you cannot grant yourself, installing software your environment's policy does not allow, or an action on a real Commonplace installation. Record the blocked case and the reason. A blocked case is a result.
@@ -53,3 +54,7 @@ Run the shared delivery probe in your harness and record what works, what fails,
 - **Claude Code, revision 4** ([results](./results-claude-code-r4.md)): every case passed. Agents followed the stubs to the real skills in every run, `CLAUDE.md` imported the generated file, and one read rule in `.claude/settings.local.json` was the only setting needed. Before init reran after a switch to an editable install, agents read a stale snapshot without a warning.
 - **Earlier revisions** used lookup commands and symlinked skills. What they showed, and why those options were dropped, is in [alternatives.md](./alternatives.md).
 - **Not yet tested anywhere:** Windows and macOS, a router skill over a large library, and whether a session that is already running picks up an upgrade.
+
+## Replies
+
+- 2026-09-24 — Claude Code 2.1.281, Linux: [results-claude-code-r4.md](./results-claude-code-r4.md)

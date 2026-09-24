@@ -155,7 +155,7 @@ No hooks were used. Credentials were not copied or moved. The real `llm-commonpl
 
 **Result:** User-level skill symlinks and the command-and-`AGENTS.md` base can read the uv-installed package in place. Ordinary local-marketplace plugin installation copies it. Python-version changes silently break skill discovery until the links are replaced. Relative links work at the filesystem level, but agents repeatedly simplified them incorrectly before recovering.
 
-The [request](./codex-probe-request.md) changed during execution: its original version commissioned a tester-chosen fixture and `codex-probe-results.md`; the revision required the shared package and this filename. The cases below use a copy of the shared package introduced in commit `90e0ef8a`. Earlier tests with a separate fixture are identified as supplemental evidence, not shared-protocol results.
+The request (`codex-probe-request.md`, since replaced by the single [probe request](./probe-request.md); see git history) changed during execution: its original version commissioned a tester-chosen fixture and `codex-probe-results.md`; the revision required the shared package and this filename. The cases below use a copy of the shared package introduced in commit `90e0ef8a`. Earlier tests with a separate fixture are identified as supplemental evidence, not shared-protocol results.
 
 ### Harness facts
 
