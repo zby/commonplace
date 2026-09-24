@@ -1,8 +1,8 @@
 # Checks for the conjectural-learning definition
 
 Maintenance material for [conjectural learning](./conjectural-learning.md).
-The six checks and fourteen cases preserve the criteria adopted on
-2026-09-19 and the case assumptions settled through 2026-09-21.
+The six checks and sixteen cases preserve the criteria adopted on
+2026-09-19 and the case assumptions settled through 2026-09-24.
 Apply them when changing that definition, including cross-references that
 change its meaning. Report affected cases before revising their expected
 classifications; keep case numbers stable and make changes to assumptions
@@ -26,11 +26,11 @@ on how it is written. They do not decide its scope.
    errors, what they are eliminated from, or what persists. A condition whose
    removal leaves the mechanism and changes how well it works is a conjecture
    with a baseline. By this test formulation in language, operative use,
-   criticism of content, and an effect on the capacity for future action are
-   definitional.
+   openness to criticism of content, and the effect of criticism that occurs
+   on the capacity for future action are definitional.
    The definition's two numbered conditions bundle these four: the first
-   holds formulation and operative use, the second criticism of content and
-   its effect on the capacity for future action.
+   holds formulation and operative use, the second openness to criticism of
+   content and the effect of criticism on the capacity for future action.
    Addressability of parts, and retaining the theory against rebuilding it
    from retained criticisms, are conjectures. Fixed weights are a study
    condition. These distinctions identify the mechanism; learning also
@@ -54,8 +54,8 @@ on how it is written. They do not decide its scope.
 4. **Each condition is attributed.** Popper's, ours, or an empirical
    question. Stating the schema's starting problem as a problem about the
    system's capacity for future action is ours. It sets what criticism
-   measures against and is not a further condition; a theory's origin does
-   not decide membership.
+   measures against and is not a further condition, so it is stated outside
+   the definiens; a theory's origin does not decide membership.
 5. **No term without a claim.** A new term enters only when a claim cannot be
    stated without it.
 6. **A change reports the cases it flips.** Run the proposed wording against
@@ -77,13 +77,15 @@ unestablished, learning remains unestablished.
 | 3 | Formulated criticisms are retained and a theory is rebuilt from them when needed | Inside | Persistence of the effect of criticism |
 | 4 | Records containing only inputs and outcomes are retained for reconstruction | Comparison of retained content | The records do not retain formulated conjectures or criticism; this does not classify what the reconstructor does |
 | 5 | Prompts or programs are varied and selected by score, with no formulated reason for failure bearing on their content | Comparison | Criticism of content, absent by stipulation; this does not classify unknown processing in a model proposer |
-| 6 | A theory is built while reasoning and then discarded | Inside if formulated criticism changes the system's capacity for future action, before disposal or through a retained result afterward; outside if nothing learned from criticism changes that capacity | A claim of later capacity requires persistence to that time; disposal alone does not settle whether capacity improved earlier |
+| 6 | A theory is built while reasoning and then discarded | Inside if the system is open to criticizing it and the process improves the system's capacity for future action, before disposal or through a retained result afterward; outside if the theory is merely applied and closed to criticism | Openness to criticism (condition 2). A claim of later capacity requires persistence to that time; disposal alone does not settle whether capacity improved earlier |
 | 7 | Weights are adapted and no formulated theory guides decisions | Comparison | Formulation, absent by stipulation. An opaque model with no visible theory is a different case; insufficient evidence leaves it unclassified |
 | 8 | Weights, prompts, and code evolve together around a formulated operative theory | Inside. The research program treats it as an extension it does not pursue, since its experiments hold the weights fixed | Both conditions still hold; fixed weights are a study condition under test 1 |
-| 9 | A formulated theory guides decisions and is never criticized | Comparison: the frozen-seed baseline | No criticism; test 2 |
+| 9 | A formulated theory guides decisions and is closed to criticism: the system would never criticize it | Comparison: the frozen-seed baseline | Closed to criticism; test 2 |
 | 10 | A theory is stored and no process in the system would consume it | Excluded; as a baseline it is the system run without the theory | Not operative, so it adds no capacity. A theory that a process would consume when an occasion arises is not this case |
 | 11 | A theory survives an attempted refutation, and the recorded result guides later reliance on it or the choice of further tests | Inside | Criticism is attempted elimination; its result can change assessed support and subsequent use without changing the theory's content |
 | 12 | One model proposes and criticizes its own theories | Inside | Test 1: decorrelating the critic from the proposer changes how well criticism works, not which mechanism does the learning |
 | 13 | Criticisms are written down, but a test detects no difference from placebo text of the same form | Not shown to be inside by that test | The test has not established a content effect; non-detection alone does not establish absence |
-| 14 | A formulated operative theory licenses revisions only by proof from premises that are never criticized | Comparison: proof-only revision under an uncriticized theory | Criticism of content, absent by stipulation. Proof-governed switching alone does not establish this absence in a complete system. Test 1: what eliminates differs in kind |
+| 14 | A formulated operative theory licenses revisions only by proof from premises closed to criticism | Comparison: proof-only revision under an uncriticized theory | Criticism of content, excluded by stipulation. Proof-governed switching alone does not establish this closure in a complete system. Test 1: what eliminates differs in kind |
+| 15 | A new conjecture improves capacity; the system would criticize it when an occasion arises, and none has arisen yet | Inside | Openness to criticism is a capacity whose occasion need not have arisen (condition 2); evidence of openness is required (test 3) |
+| 16 | A conjecture produces most of the improvement; criticism follows and changes only reliance on it | Inside | The improvement is attributed to the whole process of conjecture and criticism |
 
