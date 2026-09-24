@@ -61,10 +61,23 @@ Open questions: automatic link repair without hooks, enterprise-client use of ex
 
 ## Revision 2 reply
 
-Repeated on 2026-09-24 at the operator's request, using an unmodified copy of probe-package revision 2 (`2c9c67a3`) except for the prescribed version bump. See the [current results](./results-codex.md#current-run-revision-2); revision 1 remains in that file for comparison.
+Repeated on 2026-09-24 at the operator's request, using an unmodified copy of probe-package revision 2 (`2c9c67a3`) except for the prescribed version bump. See the [revision 2 results](./results-codex.md#earlier-run-revision-2-retained); revision 1 remains in that file for comparison.
 
 The base, linked-skill, router, same-Python upgrade, Python-change warning and repair, and editable-install cases passed. Command-first skills made no failed path reads. After the Python 3.13 move, Codex still silently dropped dangling skills, but both lookup commands warned and one installer call repaired the links without `--remove`. A fresh skill session then read the V2 files from Python 3.13.
 
 Package reads required no approval in the tested default CLI, explicit read-only, or verified workspace-write/on-request sessions. Local-marketplace plugin installation still copied the package and retained V1 until an explicit plugin reinstall.
 
 The new code resolves the earlier installer and path-resolution findings in these runs. Automatic repair during upgrades remains untested; the successful route requires a lookup command to expose the warning and setup to repair the links. Platform portability, router behavior at library scale, and existing-session refresh remain open. All temporary installations and configuration changes were removed, and configuration restoration was hash-checked. No commit was made.
+
+
+## Revision 3 reply
+
+Repeated on 2026-09-24 using revision 3 (`acfaf5a6`), which installs the plugin tree as wheel shared data. See the [current results](./results-codex.md#current-run-revision-3). The earlier runs remain in that report.
+
+The key change passed: the original user-level skill links survived the normal-install Python 3.12→3.13 change without repair. Both links still passed `--check`, the lookup command emitted no warning, and a fresh Codex session read V2. Base, linked-skill, router, same-Python upgrade, and read-permission cases also passed.
+
+Editable installation switched commands to the source tree and warned that the existing links pointed elsewhere. One installer call repointed them. A supplemental source-only bump to V3, without reinstalling, was read by fresh base and skill sessions while shared data retained V2. Returning to a normal V3 install warned again; one installer call restored shared-data links, and a fresh skill session read V3 there.
+
+The local-marketplace plugin still copied seven files and remained at V1 after the uv upgrade until an explicit plugin reinstall. The remaining location-change repair requirement concerns transitions such as editable/normal installs; this run required no repair for a Python-version change. Windows/macOS, changed uv tool directories, running-session refresh, and router behavior at library scale remain untested.
+
+Temporary installations and configuration changes were removed; configuration restoration was hash-checked. Both edited files passed validation. No commit was made for this rerun.
