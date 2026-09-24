@@ -7,25 +7,25 @@
 
 ## Intent
 
-Commonplace is a framework for agent-operated knowledge bases. We are changing how it reaches the projects that use it. One installed Python package will hold everything agents read (skills, instructions, type specs), and each project gets only a few small, uncommitted files that point into that package ([design.md](./design.md)).
+Commonplace is a framework for agent-operated knowledge bases. We are changing how it reaches the projects that use it. One installed Python package will hold everything agents read (skills, instructions, type specs), and each project gets only a few small, uncommitted pointer files into that package, plus a line in its instruction file ([design.md](./design.md)).
 
-We cannot test every harness ourselves, and we cannot write a separate install route for each. So the question is not whether our exact files work unchanged in your harness. It is whether **an agent working in your harness, told what the design is for, can make it work there**, adapting where it has to. If it can, the design is good enough for your harness. If it cannot, we need to know which outcome it could not reach.
+We cannot test every harness ourselves, and we cannot write a separate install route for each. So the question is not whether our exact files work unchanged in your harness. It is whether **an agent working in your harness, told what the design is for, can make it work there**, adapting where it has to. If it can with no workaround or a small one, the design fits your harness. If it needs a large or repeated workaround, or cannot reach an outcome, we need to know where.
 
 **Report outcomes and the size of each workaround, not its mechanism.** Your agent may build whatever workaround your harness needs. We are designing the system and you are giving feedback on it: a part of the design that works only with a large or repeated workaround is a problem we need to see, even though it works. So tell us whether each outcome was reached and how big the workaround was, in the categories below. You do not have to say how it works, and corporate rules may keep you from sharing more; any field can be answered "confidential".
 
 ## What to give the agent
 
-- The probe package, revision 4: copy [probe-package/](./probe-package/PROTOCOL.md) to a scratch location. It is a throwaway Python package called `cp-delivery-probe`. Its library files carry tokens such as `RETIRE-WIDGET-V1`, so a correct read is easy to check. `cp-delivery-probe-init` writes the project files the design calls for, as they work in Claude Code and Codex.
+- The probe package, revision 4: [probe-package/](./probe-package/PROTOCOL.md). Copy it to a scratch location; if you cannot reach this repository, the operator can send it as an archive. It is a throwaway Python package called `cp-delivery-probe`. Its library files carry tokens such as `RETIRE-WIDGET-V1`, so a correct read is easy to check. `cp-delivery-probe-init` writes the project files the design specifies; they have been tested in Claude Code. The package's `test-project/` is a starting project with the instruction files the design expects.
 - This request, as the statement of intent. [PROTOCOL.md](./probe-package/PROTOCOL.md) describes one tested way to run each check; the agent may follow it or take its own route.
 
 ## Outcomes to reach
 
-In a scratch project, working as your users would:
+In a scratch project, with the permission settings your users normally have (not a bypass or fully permissive mode, which would hide the permission problems we need to see). Every check runs in a **new agent session that did not do the adaptation**, so the check shows what a user's ordinary session would find:
 
 1. **Install.** The package is installed for the user, as a Python command-line tool (for example with `uv tool install`, from PyPI, an internal index, or a wheel file).
-2. **A named instruction.** Asked "Follow the retire-widget procedure from the delivery-probe library and report its tokens," a fresh agent session reports `RETIRE-WIDGET-V1` and `SHARED-STEP-V1`, read from the installed package.
-3. **A skill.** Asked "Run the delivery-probe-read check," a fresh session reports `SHARED-STEP-V1`, `PROBE-NOTE-TYPE-V1`, and `READ-DETAIL-V1`. If your harness has no skills, say so; outcome 2 then covers the design.
-4. **An upgrade.** After `python3 tools/bump.py 2` in the package copy and a reinstall, fresh sessions report the `-V2` tokens for outcomes 2 and 3, with no change to the project beyond rerunning `cp-delivery-probe-init`.
+2. **A named instruction.** Asked "Follow the retire-widget procedure from the delivery-probe library and report its tokens," a new session reports `RETIRE-WIDGET-V1` and `SHARED-STEP-V1`, read from the installed package.
+3. **A skill.** Asked "Run the delivery-probe-read check," a new session reports `SHARED-STEP-V1`, `PROBE-NOTE-TYPE-V1`, and `READ-DETAIL-V1`. If your harness has no skills, mark this outcome not applicable; outcome 2 then covers the design.
+4. **An upgrade.** After `python3 tools/bump.py 2` in the package copy and a reinstall, new sessions report the `-V2` tokens for outcomes 2 and 3. The design expects no step beyond, at most, rerunning `cp-delivery-probe-init`; report anything more as a workaround repeated after every upgrade.
 5. **A new project.** Outcomes 2 and 3 in a second scratch project, reached the same way. This shows the adaptation can be repeated, not just done once.
 
 ## Boundaries
@@ -43,13 +43,13 @@ These bind any workaround, because the design depends on them:
 
 Give the harness name and version, the OS, and the date. Then, for each outcome 1–5:
 
-- **Status:** reached as supplied, reached with a workaround, not reached, or blocked by policy.
+- **Status:** reached as supplied (the package and init unchanged, no extra step), reached with a workaround, not reached, blocked by policy, or not applicable (for example, outcome 3 in a harness without skills).
 - **For a workaround, its size:**
   - *Part of the design it changed:* install, the project instruction file or pointer file, permission to read outside the project, skills or stubs, upgrade handling, or other.
   - *Effort:* one small change (a setting or a line), several changes, or new code or tooling.
   - *Repeated:* once per machine, once per project, every session, or after every upgrade.
   - *Who can do it:* the user, or only an administrator or policy owner.
-- **For an outcome not reached or blocked:** the part of the design where it stopped, from the same list.
+- **For an outcome not reached or blocked:** the part of the design where it stopped, from the same list. If it could have been reached only by crossing a boundary (for example, with a hook), say which boundary.
 
 Anything beyond these categories is welcome but optional. A short table is enough.
 
