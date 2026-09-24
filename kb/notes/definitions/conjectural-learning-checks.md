@@ -52,7 +52,10 @@ on how it is written. They do not decide its scope.
    unclassified. Observer inaccessibility alone establishes neither presence
    nor absence.
 4. **Each condition is attributed.** Popper's, ours, or an empirical
-   question.
+   question. Stating the schema's starting problem as a problem about the
+   system's capacity for future action is ours. It sets what criticism
+   measures against and is not a further condition; a theory's origin does
+   not decide membership.
 5. **No term without a claim.** A new term enters only when a claim cannot be
    stated without it.
 6. **A change reports the cases it flips.** Run the proposed wording against

@@ -1,5 +1,5 @@
 ---
-description: "Definition — conjectural learning is learning in which formulated tentative theories are operative in the learning system: used, criticized for what they say, with the result changing the system's capacity for future action"
+description: "Definition — conjectural learning is learning in which formulated tentative theories, held as proposed solutions to problems about the system's capacity for future action, are used and criticized for what they say, and the result changes it"
 type: kb/types/definition.md
 tags: [foundations, self-improving-systems, learning-theory]
 ---
@@ -10,10 +10,11 @@ tags: [foundations, self-improving-systems, learning-theory]
 [conjectural-learning-checks.md](./conjectural-learning-checks.md). -->
 
 **Conjectural learning** is learning in which tentative theories are
-formulated, operative objects within the learning system: the system uses
-them, criticizes what they say, and carries the result of that criticism
-into its capacity for future action. It is Popper's process of conjecture and
-criticism under two conditions:
+formulated, operative objects within the learning system: the system holds
+them as proposed solutions to problems about its capacity for future action,
+uses them, criticizes what they say, and carries the result of that criticism
+into that capacity. It is Popper's process of conjecture and criticism under
+two conditions:
 
 1. **A formulated theory is operative.** A
    [tentative theory](./tentative-theory.md) is formulated in language,
@@ -55,6 +56,13 @@ The process is Popper's schema for the growth of knowledge,
 `P1 → TT → EE → P2`: a problem, a tentative theory, attempted error
 elimination, and a new problem
 ([Popper 1966](../../sources/popper-a-realist-view-of-logic-physics-and-history-1966.ingest.md#quotes)).
+The schema starts from a problem. Popper states problems in terms of
+knowledge; to attribute learning to a system, the definition states the
+problem in terms of that system's capacity for future action, whatever the
+theory's origin. This does not exclude pure science: since action includes
+developing and testing further theories, a theory pursued for understanding
+alone is a solution to a problem about the capacity to explain, predict, and
+choose tests. Stating the problem this way is the KB's reading, not Popper's.
 *Conjectural* is Popper's own word for the status of theories, which "remain
 essentially tentative, or conjectural, or hypothetical"
 ([Conjectures and Refutations, Chapter 1](../../sources/popper-conjectures-and-refutations.ingest.md#quotes)).
