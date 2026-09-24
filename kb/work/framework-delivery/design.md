@@ -21,7 +21,7 @@ The operator's constraints are recorded in the [workshop README](./README.md#ope
 ## What the fix must provide
 
 1. Library files are not in the user's collections, searches, or `git status`.
-2. The installed package holds the only copy of the library on a machine. The one exception is skills, which harnesses discover only in their own skill directories: skills are copied, the same way on every platform, and each copy carries a version stamp and a hash check.
+2. The installed package holds the only copy of the library on a machine. The one exception is skills, which harnesses discover only in their own skill directories: `commonplace-init` copies them into each project, the same way on every platform, and each copy carries a version stamp and a hash check.
 3. Commands and agents read the library from the package.
 4. Skills find the library files they name, and a skill copy that no longer matches the installed package is detected.
 5. When the library is unavailable or unreadable, commands and skills say so plainly.
@@ -43,31 +43,31 @@ The operator's constraints are recorded in the [workshop README](./README.md#ope
 Two layers. The base works without the skills layer.
 
 1. **Base layer, for every harness.** The library installs as wheel shared data under `<uv tool environment>/share/commonplace/`. That path does not change with the tool's Python version or on upgrade. The tree holds the skills, instructions, notes, reference, types, and gates. It needs no plugin manifest, because no harness plugin serves it. Commands read it there. In an editable install, commands read the source tree instead, because shared data is an install-time snapshot. The project's `AGENTS.md` names two commands: `commonplace-library` prints the library root, and `commonplace-instruction <name>` prints the path of one instruction, or lists them. An agent asked for a named instruction runs the command and reads the file it prints. Project files never contain the library path, because it differs per machine.
-2. **Skills layer, where the harness supports Agent Skills.** Setup copies each `cp-skill-*` skill into the harness's user-level skill directory, with a version stamp and a hash check. It copies on every platform. Links would avoid the copy, but they are unreliable on Windows, and the operator ruled out platform-specific install paths (2026-09-24). What is copied is open: the full skill, or a stub that carries the skill's name and description and tells the agent to fetch the real `SKILL.md` through `commonplace-instruction` (see "Open choices"). Skills find library files through the same commands, by name. A router skill (`commonplace-library`) indexes the library by instruction name, so an agent asked for an instruction in conversation finds it through the skill's description.
+2. **Skills layer, where the harness supports Agent Skills.** `commonplace-init` copies each `cp-skill-*` skill into the project's skill directories (`.claude/skills/`, `.agents/skills/`), with a version stamp and a hash check. It copies on every platform. Links would avoid the copy, but they are unreliable on Windows, and the operator ruled out platform-specific install paths (2026-09-24). What is copied is open: the full skill, or a stub that carries the skill's name and description and tells the agent to fetch the real `SKILL.md` through `commonplace-instruction` (see "Open choices"). Skills find library files through the same commands, by name. A router skill (`commonplace-library`) indexes the library by instruction name, so an agent asked for an instruction in conversation finds it through the skill's description.
 
-### Harness permissions are part of setup
+### Harness permissions are part of init
 
 The base layer does not work in Claude Code without permission rules. In `default` permission mode, a fresh session was denied every call to the lookup commands. With the commands allowed, reading the printed file was denied, because it lies outside the project. Two rules together removed every denial:
 
 - a Bash allow rule for each lookup command (`Bash(commonplace-library:*)`, `Bash(commonplace-instruction:*)`);
 - read access to the library root, either as a `Read(//<root>/**)` allow rule or as an entry in `permissions.additionalDirectories`.
 
-Both worked from user-level settings (`~/.claude/settings.json`), so one write covers every project. Codex needed no rules: its default sandbox allows the commands and the reads.
+Both worked from user-level settings and from a settings file passed with `--settings`. Project settings were not tested, but Claude Code merges them the same way (inferred). Init therefore writes them per project: the command rules name no path, so they can go in the committed `.claude/settings.json`; the read rule names this machine's library root, so it goes in the uncommitted `.claude/settings.local.json`. Codex needed no rules: its default sandbox allows the commands and the reads.
 
-The read rule names a concrete path, so it covers only one library root. The root is stable across upgrades and Python changes. It changes on a switch between an editable and a normal install, and when the uv tool directory changes. Setup rewrites the rule when it refreshes the skill copies, so one repair handles both.
+The read rule names a concrete path, so it covers only one library root. The root is stable across upgrades and Python changes. It changes on a switch between an editable and a normal install, and when the uv tool directory changes. Init rewrites the rule when it refreshes the skill copies, so one rerun handles both.
 
 A root that the rule does not cover is worse than a denial. In one Claude Code run after a switch to an editable install, the agent was denied the source-tree file. It then followed the skill's relative link, which still pointed into `share/` through a symlinked skill, and read the stale shared-data snapshot. The tokens matched only because the source and the snapshot were at the same version. A second run under the same conditions stopped without an answer. Two changes follow:
 
-- Setup writes the rule for the current root and refreshes the skill copies in the same call. The checks below report a root the rule does not cover.
+- Init writes the rule for the current root and refreshes the skill copies in the same run. The checks below report a root the rule does not cover.
 - Skills drop the relative-link fallback. The base layer already assumes a shell, and the fallback is the route by which a denied agent reached a stale copy. (Inferred from one run; the stale read has not been reproduced deliberately.) In a copied skill, relative links into the library point nowhere anyway.
 
 ### Keeping copies and rules current
 
-Without hooks, nothing refreshes skill copies or rules when the install changes, so the design detects problems and gives the one command that repairs them.
+Without hooks, nothing refreshes skill copies or rules when the install changes, so the design detects problems and gives the one command that repairs them: rerun `commonplace-init` in the project.
 
-- Setup is idempotent. It replaces skill copies that carry its marker, leaves unrelated entries alone, and rewrites the Commonplace permission entries for the current root.
-- The health check, and the lookup commands where the check is cheap, report a skill copy whose stamp or hash does not match the installed package, a missing copy, and an uncovered library root, and they name the setup command.
-- A full copy goes stale on every upgrade that changes a skill, until setup reruns. Links did not have this cost: in both harnesses they showed new content at once after an upgrade. A stub goes stale only when a skill is added, removed, or renamed, or its description changes.
+- Init is idempotent. On a rerun it overwrites skill copies and permission entries that carry its marker, and it leaves the project's own files, skills, and settings alone. This changes today's rule that init never overwrites an existing file; that rule stays for the project's own KB files.
+- The health check, and the lookup commands where the check is cheap, report a skill copy in the current project whose stamp or hash does not match the installed package, a missing copy, and an uncovered library root, and they name the init command.
+- A full copy goes stale on every upgrade that changes a skill, until init reruns in that project. Links did not have this cost: in both harnesses they showed new content at once after an upgrade. A stub goes stale only when a skill is added, removed, or renamed, or its description changes.
 - The probe tested copies only as a fallback that was never needed, so a copied skill's discovery and staleness warnings are untested in both harnesses.
 
 ### Skill names
@@ -76,27 +76,27 @@ Codex listed the probe's symlinked skills with a prefix (`cp-delivery-probe:deli
 
 ## Proposed change to the install procedure
 
-This is the user-visible form of the design. It changes `INSTALL.md` steps 3–6, "Pre-approve Commonplace commands", "Resulting layout", and "Updating". The reader install and steps 1–2 are unchanged.
+This is the user-visible form of the design. There is no per-machine setup step: after installing the tool, everything happens in `commonplace-init`, per project. It changes `INSTALL.md` steps 3–6, "Pre-approve Commonplace commands", "Resulting layout", and "Updating". The reader install and steps 1–2 are unchanged.
 
-**Step 3, `commonplace-init`, stops copying the library.** It creates the project's own KB directories and collection heads, and an `AGENTS.md.template` that names `commonplace-library` and `commonplace-instruction`. It no longer creates `kb/commonplace/`, the global types under `kb/types/`, or skill copies under `.agents/skills/` and `.claude/skills/`. If it finds a `kb/commonplace/` copy from an earlier release, it tells the operator to delete it.
+**Step 3, `commonplace-init`.** On a new project it creates the project's own KB directories and collection heads, and an `AGENTS.md.template` that names `commonplace-library` and `commonplace-instruction`. It no longer creates `kb/commonplace/` or the global types under `kb/types/`. On every run, new or not, it:
 
-**New step, per user and per machine: `commonplace-setup`** (name not settled). Run it once after installing the tool, and again after every upgrade or reinstall of the tool. It:
+- copies each `cp-skill-*` skill and the router skill into `.claude/skills/` and `.agents/skills/`, with a version stamp and a hash check, the same way on every platform, overwriting only its own earlier copies;
+- writes Claude Code's permission entries: Bash allow rules for the lookup commands in `.claude/settings.json`, and read access to this machine's library root in `.claude/settings.local.json`;
+- with `--check`, reports each skill copy and entry as `ok`, `missing`, or `stale` without writing anything, and exits non-zero on any problem.
 
-- copies each `cp-skill-*` skill and the router skill into the user-level skill directory of each harness it finds (`~/.claude/skills`, `~/.agents/skills`, and directories the operator names), with a version stamp and a hash check, the same way on every platform;
-- writes Claude Code's user-level permission entries: Bash allow rules for the lookup commands, and read access to the current library root;
-- with `--check`, reports each skill copy and rule as `ok`, `missing`, or `stale`, and exits non-zero on any problem.
+If init finds a `kb/commonplace/` copy from an earlier release, it tells the operator to delete it.
 
-Setup is a separate command from `commonplace-init` because the two have different scopes: init runs once per project, setup once per user and machine, and setup must rerun when the install changes while init does not.
+**Step 5 shrinks to a check.** Run `commonplace-init --check`. For a harness whose skill directory init does not know, pass that directory to init.
 
-**Step 5 shrinks to a check.** Skills are no longer projected per project. The step becomes: run `commonplace-setup --check`. For a harness whose skill directory setup does not know, pass that directory to setup.
+**"Pre-approve Commonplace commands" becomes part of init** for the two lookup commands and the library read. Pre-approving the other `commonplace-*` commands stays optional.
 
-**"Pre-approve Commonplace commands" becomes part of setup** for the two lookup commands and the library read. Pre-approving the other `commonplace-*` commands stays optional. It moves from `.claude/settings.local.json` to user-level settings, because the tool is installed per user.
+**A new clone or a new machine.** Each person who clones the project runs `commonplace-init` once in their clone, because the read rule is local to the machine. What else the clone already carries depends on what is committed (see "Open choices").
 
-**Resulting layout.** The project contains `kb/` with its own collections and collection-local types, and `AGENTS.md` or `CLAUDE.md`. It contains no `kb/commonplace/`, no global types, and no skills.
+**Resulting layout.** The project contains `kb/` with its own collections and collection-local types, `AGENTS.md` or `CLAUDE.md`, the skill copies, and the two Claude Code settings files. It contains no `kb/commonplace/` and no global types.
 
-**Updating.** After `uv tool upgrade llm-commonplace`, rerun `commonplace-setup` to refresh the skill copies; the lookup commands warn until you do. The library itself and the read rule need nothing, because the library path is unchanged. After switching between an editable and a normal install, setup also rewrites the read rule. Rerunning `commonplace-init` is no longer the way to pick up library changes.
+**Updating.** After `uv tool upgrade llm-commonplace`, rerun `commonplace-init` in each project to refresh its skill copies; the lookup commands warn in a project until you do. The library itself and the read rule need nothing, because the library path is unchanged. After switching between an editable and a normal install, the rerun also rewrites the read rule.
 
-**Migrating an existing project.** Install the new tool, run `commonplace-setup`, then delete `kb/commonplace/`, the global type files under `kb/types/`, and the `cp-skill-*` copies under `.agents/skills/` and `.claude/skills/`. Review baselines whose criteria move to package identities are retired once and rebuilt (see "Review identity").
+**Migrating an existing project.** Install the new tool, delete `kb/commonplace/` and the global type files under `kb/types/`, and rerun `commonplace-init`, which replaces the old `cp-skill-*` copies. Old copies carry no marker, so init has to recognise them by name the first time. Review baselines whose criteria move to package identities are retired once and rebuilt (see "Review identity").
 
 ## Parts the install change depends on
 
@@ -142,22 +142,23 @@ These are useful in any layout and can ship before, after, or without the rest.
 - **Hooks,** including a session-start hook that prints the library root. They break the no-hooks constraint.
 - **Instructions served over MCP,** including GBrain's `get_skill`. It needs an MCP server, clients handle MCP instructions unreliably, and tool schemas cost context (see [the survey](./comparable-systems-survey.md)).
 - **Codex plugins from a local marketplace.** Codex copies them into its cache, which breaks the one-tree constraint.
-- **A Claude Code link-mode plugin** (dropped 2026-09-24). Its marketplace entry runs a command that prints the `share/` directory, and Claude Code links that directory into its cache instead of copying it. The earlier probe showed this works with a stand-in directory. It adds nothing over linked skills: its one advantage, relinking by itself after the install moves, is lost because setup must rerun after a move anyway to rewrite the read permission. It also costs a manual approval by each user in their own terminal, prefixed skill names that duplicate the linked skills, and a second route to document and check, and link mode does not work on Windows. Reconsider it only if Commonplace ships something that must be a plugin component.
+- **A Claude Code link-mode plugin** (dropped 2026-09-24). Its marketplace entry runs a command that prints the `share/` directory, and Claude Code links that directory into its cache instead of copying it. The earlier probe showed this works with a stand-in directory. It adds nothing over linked skills: its one advantage, relinking by itself after the install moves, is lost because init must rerun after a move anyway to rewrite the read permission. It also costs a manual approval by each user in their own terminal, prefixed skill names that duplicate the linked skills, and a second route to document and check, and link mode does not work on Windows. Reconsider it only if Commonplace ships something that must be a plugin component.
 - **Relative links as a route skills depend on.** Agents in Codex misresolved them through symlinks, and in Claude Code a denied agent reached a stale snapshot through them.
-- **Skill paths compiled at setup** (setup rewrites library references in skills to absolute paths). The command route gives the same result without machine-specific skill text or a rewrite step.
+- **Skill paths compiled at install** (init rewrites library references in skills to absolute paths). The command route gives the same result without machine-specific skill text or a rewrite step.
 - **Package data under `site-packages`.** Its path changes with the Python version, which would invalidate Claude Code's read rule on every Python change. (It also left linked skills dangling, and Codex dropped them silently.)
+- **A per-user setup command** (rejected by the operator, 2026-09-24). It would copy skills into user-level skill directories and write user-level Claude Code settings once per machine. It saves one init run per project after an upgrade, but the skills would then load in every project on the machine, including projects that do not use Commonplace, and it adds a second install command with its own scope.
 - **Skill links into the package** (rejected by the operator, 2026-09-24). They avoid the copy and followed upgrades at once in both harnesses. But symlinks are unreliable on Windows, so Windows would need copies, and the operator ruled out platform-specific install paths: if one platform needs copies, every platform copies.
 - **A symlink or junction at `kb/commonplace`.** It keeps the library in the project's view, and symlinks and junctions are unreliable on Windows.
 
 ## Forces
 
 - **One copy against local control.** Reading the package in place removes divergence between the library and the code. The price is that the library changes on `uv tool upgrade`, with no diff for the user to review. The recorded version range makes an unwanted upgrade detectable.
-- **Setup writes user-level harness settings.** Claude Code needs permission entries that setup must write into the user's own settings file. That is a larger footprint than copying files into the project, and an operator who manages settings centrally must apply the entries themselves.
-- **Harness coupling.** The base layer depends on each harness allowing the lookup commands and reads outside the project, by default or through a user-level setting. Claude Code and Codex allow it; other harnesses are being checked through the shared probe.
+- **Init writes harness settings into the project.** Claude Code needs permission entries, which init writes into the project's `.claude/` settings files. Where settings are managed centrally, a managed policy may override them.
+- **Harness coupling.** The base layer depends on each harness allowing the lookup commands and reads outside the project, by default or through a setting. Claude Code and Codex allow it; other harnesses are being checked through the shared probe.
 - **Visibility against discoverability.** The library no longer appears in searches of the project. Agents search the library root explicitly.
-- **Portability.** A copied or cloned project carries no library. It still works as a plain-Markdown KB, but framework work needs the tool installed and set up on each machine.
-- **Stale skills between an upgrade and setup.** Copying everywhere means an upgrade that changes a skill leaves the copies stale until setup reruns. The check makes this visible but does not prevent it. Stubs narrow it.
-- **Migration cost.** Existing projects rerun setup and delete their copies. Review baselines for moved criteria are retired and rebuilt once. Bare type names add a mechanical rewrite of about 800 lines in the source repo.
+- **Portability.** A copied or cloned project carries no library. It still works as a plain-Markdown KB, but framework work needs the tool installed and `commonplace-init` run in each clone.
+- **Stale skills between an upgrade and init.** An upgrade that changes a skill leaves every project's copies stale until init reruns there. The check makes this visible but does not prevent it. Stubs narrow it.
+- **Migration cost.** Existing projects delete their library copy and rerun init. Review baselines for moved criteria are retired and rebuilt once. Bare type names add a mechanical rewrite of about 800 lines in the source repo.
 
 ## Non-goals
 
@@ -168,19 +169,19 @@ These are useful in any layout and can ship before, after, or without the rest.
 
 ## Open choices
 
-- The setup command's name, and whether a stale skill or an uncovered root stops commands or only warns.
-- Whether setup edits the user's Claude Code settings file directly or prints the entries for the operator to apply. Direct edits suit most users; enterprise users may manage settings centrally.
+- Whether a stale skill or an uncovered root stops commands or only warns.
 - Where the project keeps its version range. A `[tool.commonplace]` table in `pyproject.toml` suits Python projects, but a non-Python project would need that file for one field.
 - **What a skill copy contains:** the full skill, or a stub (name, description, and an instruction to fetch the real `SKILL.md` through `commonplace-instruction`). Stubs go stale far less often. Untested: whether agents reliably follow a stub, and how a stub-loaded skill finds its own `references/` files.
-- **Where skill copies go:** user-level (one setup per machine, but the skills load in every project on the machine, including projects that do not use Commonplace) or per project (only in projects that use Commonplace, and committable if they are stubs, but the one-tree constraint currently rules out per-project copies).
-- How the source checkout avoids listing each skill twice: once from its project-level `.claude/skills/` entries and once from the user-level copies that setup writes.
+- **Whether skill copies are committed.** Committed full copies change on every upgrade that changes a skill, and teammates on different tool versions would overwrite each other's copies. Committed stubs change only when a skill is added, removed, or renamed, or its description changes. Uncommitted copies avoid both but leave a fresh clone without skills until init runs, which it must anyway for the read rule. The Claude Code command rules in `.claude/settings.json` name no path and no version, so they can be committed either way.
+
+## Adoption criteria
 
 ## Adoption criteria
 
 Adopt when all of the following hold:
 
-- A set-up project contains no library files, no global types, and no skills, and commands read the library, gates, and global types only from the package.
-- After setup, agents read the library without permission prompts in Claude Code and Codex, on Linux, macOS, and Windows. A root that the permission rules do not cover, and a skill copy that no longer matches the installed package, are detected.
+- An initialised project contains no library files and no global types, and its only framework files are marked skill copies and settings entries, and commands read the library, gates, and global types only from the package.
+- After `commonplace-init`, agents read the library without permission prompts in Claude Code and Codex, on Linux, macOS, and Windows. A root that the permission rules do not cover, and a skill copy that no longer matches the installed package, are detected.
 - Every promoted skill finds the library files it names, in the source repo and in installed projects, with no text that branches between them.
 - Review checks show stable package identities across installation moves, unchanged freshness for identical criterion text, `criterion-changed` for edited text, and a clear failure for an unavailable criterion. Package and project criteria cannot shadow each other.
 - A transition rehearsal keeps review history, retires only the affected baselines, and builds new ones through completed reviews.
