@@ -57,3 +57,14 @@ The unmodified shared package passed the base, symlinked-skill, router, same-Pyt
 The local-marketplace plugin copied files into Codex's cache and needed an explicit plugin reinstall to pick up V2. Supplemental tests found that `skills/extraRoots/set` can discover package skills in place, and that an enclosing plugin manifest explains the `plugin:skill` name prefix. Explicit symlink canonicalization guidance prevented the earlier path error in the supplemental fixture.
 
 Open questions: automatic link repair without hooks, enterprise-client use of extra skill roots, portability beyond Linux, router reliability at library scale, and same-version plugin refresh. Temporary installations, links, marketplace, plugin, and configuration changes were removed; configuration restoration was hash-checked. The real Commonplace installation was not changed, and no commit was made.
+
+
+## Revision 2 reply
+
+Repeated on 2026-09-24 at the operator's request, using an unmodified copy of probe-package revision 2 (`2c9c67a3`) except for the prescribed version bump. See the [current results](./results-codex.md#current-run-revision-2); revision 1 remains in that file for comparison.
+
+The base, linked-skill, router, same-Python upgrade, Python-change warning and repair, and editable-install cases passed. Command-first skills made no failed path reads. After the Python 3.13 move, Codex still silently dropped dangling skills, but both lookup commands warned and one installer call repaired the links without `--remove`. A fresh skill session then read the V2 files from Python 3.13.
+
+Package reads required no approval in the tested default CLI, explicit read-only, or verified workspace-write/on-request sessions. Local-marketplace plugin installation still copied the package and retained V1 until an explicit plugin reinstall.
+
+The new code resolves the earlier installer and path-resolution findings in these runs. Automatic repair during upgrades remains untested; the successful route requires a lookup command to expose the warning and setup to repair the links. Platform portability, router behavior at library scale, and existing-session refresh remain open. All temporary installations and configuration changes were removed, and configuration restoration was hash-checked. No commit was made.
