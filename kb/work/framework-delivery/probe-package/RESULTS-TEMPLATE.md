@@ -34,6 +34,9 @@
 | 6 Editable install | | | |
 | 7 Skill names | | | |
 | 8 Fresh clone before init | | | |
+| 9 Emulated skill, run 1 | | | |
+| 9 Emulated skill, run 2 | | | |
+| 9 Emulated skill, run 3 | | | |
 
 ## Modifications to the package
 

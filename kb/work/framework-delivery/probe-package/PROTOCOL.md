@@ -4,7 +4,7 @@ One tested way to reach the outcomes in the [probe request](../probe-request.md)
 
 ## Intent
 
-Learn whether the framework-delivery design (`../design.md`) works in your harness, and what it would take to make it work. The cases test the design's assumptions about a harness (`../design.md`, "What the design assumes about a harness") and then its upgrade behaviour. Run as far as your harness and environment allow: cases 0–4 decide whether the design works at all; cases 5–6 test upgrades and install-mode switches; cases 7–8 fill in details. A case you cannot run is a result; record why. The method below is a common baseline so results compare across harnesses. Where your harness needs a different route to the same test, take it. If you can share details, record the change; if not, report only the outcomes the probe request asks for.
+Learn whether the framework-delivery design (`../design.md`) works in your harness, and what it would take to make it work. The cases test the design's assumptions about a harness (`../design.md`, "What the design assumes about a harness") and then its upgrade behaviour. Run as far as your harness and environment allow: cases 0–4 and 9 decide whether the design works at all (case 9 for harnesses without native skills); cases 5–6 test upgrades and install-mode switches; cases 7–8 fill in details. A case you cannot run is a result; record why. The method below is a common baseline so results compare across harnesses. Where your harness needs a different route to the same test, take it. If you can share details, record the change; if not, report only the outcomes the probe request asks for.
 
 ## Rules
 
@@ -26,7 +26,7 @@ Learn whether the framework-delivery design (`../design.md`) works in your harne
 Agents reach the library by reading files; no agent route runs a command. `cp-delivery-probe-init [project] [--check | --remove]` stands in for `commonplace-init` and writes three uncommitted, machine-specific outputs into a project:
 
 - a **stub** per skill in `.claude/skills/` and `.agents/skills/`: a `SKILL.md` with the real skill's frontmatter and one instruction, to read the real `SKILL.md` at its absolute path and follow it;
-- **`.cp-delivery-probe/library.md`**: the library root and entry points as full paths. The test project's `AGENTS.md` points to it, and its `CLAUDE.md` imports it with `@.cp-delivery-probe/library.md`;
+- **`.cp-delivery-probe/library.md`**: the library root and entry points as full paths, and a skill index giving each skill's name, description, and full `SKILL.md` path. The index emulates the skills mechanism for harnesses without one. The test project's `AGENTS.md` points to the file, and its `CLAUDE.md` imports it with `@.cp-delivery-probe/library.md`;
 - a Claude Code **read rule** for the library root in `.claude/settings.local.json`, merged with any existing settings.
 
 It also adds its outputs to `.gitignore`. Init is idempotent: it replaces its own outputs, removes stubs for skills the package no longer has, and leaves anything else alone. `--check` reports each output as `ok`, `stale`, `missing`, `foreign`, or `extra` and exits non-zero on any problem. An output is stale when it differs from what init would write now: the library moved, or a skill's frontmatter changed.
@@ -52,13 +52,15 @@ Use a fresh agent session for each case. Copy `test-project/` to a scratch direc
    - c. Reinstall with `--python 3.13`. `--check` should still report all `ok`, and a fresh case 3 session should still pass.
 6. **Editable install.** `uv tool install --reinstall --editable <copy>`. The outputs still point into `share/`, so `--check` should report stubs, `library.md`, and the rule `stale`. Record what a fresh case 3 session does before the repair. Then rerun init, run `python3 tools/bump.py 3` without reinstalling, and repeat cases 1a and 3. Pass: `-V3` tokens read from the source tree. Finish with a normal reinstall and one more init.
 7. **Skill names.** Record the names under which the harness lists the stubs.
-8. **Fresh clone before init.** In a copy of the test project with no init outputs, start a session and ask case 1's question. Record whether the missing `library.md` (and, in Claude Code, the failing import) causes an error, and what the agent does.
+8. **Fresh clone before init.** In a copy of the test project with no init outputs, start a session and ask case 1's question. Record whether the missing `library.md` (and, in Claude Code, the failing import) causes an error, and what the agent does. Revision 5's `AGENTS.md` tells the agent to stop and ask for init in this case; record whether it does.
+9. **Emulated skill.** Delete the stub directories (`.claude/skills/`, `.agents/skills/`) for this case only, so the harness has no native skill to find, and keep `library.md`. Ask: "Run the delivery-probe-read check." Pass: `SHARED-STEP-V1`, `PROBE-NOTE-TYPE-V1`, and `READ-DETAIL-V1`; the last one shows the agent ran the real skill, not only the library. Record how the agent found the skill (the imported index, reading `library.md`, or another route) and any failed read. **Run it three times**, each in a fresh session: this tests whether the index triggers a skill reliably enough to stand in for native skills. Rerun init afterwards.
 
 ## Package revisions
 
 - **Revision 1** (commit `90e0ef8a`): skills relied on relative links; `install-skills` refused existing entries. Codex ran this revision.
 - **Revision 2**: skills and router used the commands first, because agents in Codex misresolved relative links through the skill symlinks. `install-skills` became idempotent and gained `--check`.
 - **Revision 3**: the plugin tree moved from package data to wheel shared data, whose path does not change with the Python version. Codex and Claude Code ran this revision ([Codex](../results-codex.md), [Claude Code](../results-claude-code.md)).
+- **Revision 5** (2026-09-24): `library.md` adds a skill index (name, description, full `SKILL.md` path) that emulates skills for harnesses without them; stubs are still written for harnesses with native skills. The test project's `AGENTS.md` points agents to the index and tells them to stop and ask for init when `library.md` is missing. Adds case 9. Cases 0–8 are unchanged, so a harness that ran revision 4 needs only cases 8 and 9.
 - **Revision 4** (2026-09-24): follows the design's decisions. `cp-delivery-probe-init` writes per-project stubs that redirect to the real skill in the installed library, a generated `library.md` with the library's full paths, and one Claude Code read rule, on every platform, with no symlinks. The tree mirrors a KB layout, so skills use ordinary relative links. No agent route runs a command: the lookup commands and `install-skills` are gone. The Claude Code plugin manifest, the marketplace, and the plugin-path command are gone, because the plugin layer was dropped.
 
 Record the revision you started from in your results file.

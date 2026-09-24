@@ -12,6 +12,7 @@ Posed by the operator on 2026-09-23. Decide how Commonplace delivers what agents
 - **Init only, per project** (2026-09-24). No per-machine setup command. `commonplace-init` writes everything a project needs.
 - **Skill stubs** (2026-09-24). Each project gets a stub per skill that redirects to the real skill in the installed package. It costs one extra read per skill use; every alternative was worse.
 - **Generated routing file** (2026-09-24). Agents find the library through a gitignored file that init writes with full paths, not through commands.
+- **Plan for harnesses without skills** (2026-09-24). The routing file carries a skill index that emulates the skills mechanism; stubs stay for harnesses with native skills.
 - **No hooks** (2026-09-24). No harness hooks until hooks are standardised. At least one enterprise user runs their own harness.
 - **Harness-neutral base** (2026-09-24). The design rests on files and a project `AGENTS.md`, with Agent Skills as an optional layer above that base. The base must still let an agent find a library instruction that the user names in conversation, outside any skill.
 
@@ -22,6 +23,7 @@ Posed by the operator on 2026-09-23. Decide how Commonplace delivers what agents
 ## Open questions
 
 - **Missing initialization.** In Codex's revision 4 run, an agent in a clone without init found a nearby source checkout and answered from it instead of reporting the missing `library.md`. The design now has the `AGENTS.md` template say to stop and ask for init; does that work in both harnesses?
+- **Emulated skills.** Does the skill index in `library.md` trigger the right skill reliably when no native skill exists (probe case 9)? In Codex, the agent sees the index only after reading `library.md`.
 - **Skill metadata.** Does any harness need skill metadata beyond name and description copied into the stub? The probe's skills had none.
 - **The enterprise harness.** Which of the design's harness assumptions (H1–H6 in [design.md](./design.md#what-the-design-assumes-about-a-harness)) hold there? The enterprise colleague cannot give detailed answers, so the probe request asks whether an agent in the harness can adapt the design to reach five outcomes, and reports whether each was reached and how large any workaround was, without its mechanism; the table maps an outcome not reached to the assumption that failed. If the harness is built on Codex's app-server, `skills/extraRoots/set` may let it discover the package's skills in place.
 - **The router skill at scale.** It worked with a small index. Does it still select the right instruction with an index the size of the real library?
@@ -32,8 +34,9 @@ Posed by the operator on 2026-09-23. Decide how Commonplace delivers what agents
 
 ## Next steps
 
-1. Agents in other harnesses answer the same [probe request](./probe-request.md), reporting which outcomes they reached and the size of any workaround: Gemini CLI, OpenCode, Cursor, Goose, GitHub Copilot, and enterprise harnesses. Enterprise results may come back through the operator, anonymised.
-2. Update [design.md](./design.md) from the results, then decide it: an ADR and the `INSTALL.md` change, followed by implementation. No end-to-end rehearsal before the decision (operator, 2026-09-24): Commonplace is in alpha, so problems found in use are fixed in use.
+1. Claude Code and Codex run revision 5's new cases: 8 (the stop-on-missing-init rule) and 9 (a skill reached through the index alone).
+2. Agents in other harnesses answer the same [probe request](./probe-request.md), reporting which outcomes they reached and the size of any workaround: Gemini CLI, OpenCode, Cursor, Goose, GitHub Copilot, and enterprise harnesses. Enterprise results may come back through the operator, anonymised.
+3. Update [design.md](./design.md) from the results, then decide it: an ADR and the `INSTALL.md` change, followed by implementation. No end-to-end rehearsal before the decision (operator, 2026-09-24): Commonplace is in alpha, so problems found in use are fixed in use.
 
 ## Evaluation boundary
 

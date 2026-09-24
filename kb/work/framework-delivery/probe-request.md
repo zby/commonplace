@@ -15,7 +15,7 @@ We cannot test every harness ourselves, and we cannot write a separate install r
 
 ## What to give the agent
 
-- The probe package, revision 4: [probe-package/](./probe-package/PROTOCOL.md). Copy it to a scratch location; if you cannot reach this repository, the operator can send it as an archive. It is a throwaway Python package called `cp-delivery-probe`. Its library files carry tokens such as `RETIRE-WIDGET-V1`, so a correct read is easy to check. `cp-delivery-probe-init` writes the project files the design specifies; they have been tested in Claude Code. The package's `test-project/` is a starting project with the instruction files the design expects.
+- The probe package, revision 5: [probe-package/](./probe-package/PROTOCOL.md). Copy it to a scratch location; if you cannot reach this repository, the operator can send it as an archive. It is a throwaway Python package called `cp-delivery-probe`. Its library files carry tokens such as `RETIRE-WIDGET-V1`, so a correct read is easy to check. `cp-delivery-probe-init` writes the project files the design specifies; they have been tested in Claude Code. The package's `test-project/` is a starting project with the instruction files the design expects.
 - This request, as the statement of intent. [PROTOCOL.md](./probe-package/PROTOCOL.md) describes one tested way to run each check; the agent may follow it or take its own route.
 
 ## Outcomes to reach
@@ -24,9 +24,10 @@ In a scratch project, with the permission settings your users normally have (not
 
 1. **Install.** The package is installed for the user, as a Python command-line tool (for example with `uv tool install`, from PyPI, an internal index, or a wheel file).
 2. **A named instruction.** Asked "Follow the retire-widget procedure from the delivery-probe library and report its tokens," a new session reports `RETIRE-WIDGET-V1` and `SHARED-STEP-V1`, read from the installed package.
-3. **A skill.** Asked "Run the delivery-probe-read check," a new session reports `SHARED-STEP-V1`, `PROBE-NOTE-TYPE-V1`, and `READ-DETAIL-V1`. If your harness has no skills, mark this outcome not applicable; outcome 2 then covers the design.
+3. **A skill.** Asked "Run the delivery-probe-read check," a new session reports `SHARED-STEP-V1`, `PROBE-NOTE-TYPE-V1`, and `READ-DETAIL-V1`. In a harness with native skills, this goes through the skill stubs. In a harness without them, it goes through the skill index in the generated `library.md`, which stands in for the skills mechanism.
 4. **An upgrade.** After `python3 tools/bump.py 2` in the package copy and a reinstall, new sessions report the `-V2` tokens for outcomes 2 and 3. The design expects no step beyond, at most, rerunning `cp-delivery-probe-init`; report anything more as a workaround repeated after every upgrade.
 5. **A new project.** Outcomes 2 and 3 in a second scratch project, reached the same way. This shows the adaptation can be repeated, not just done once.
+6. **A skill through the index alone.** In a harness with native skills, repeat outcome 3 with the stub directories removed, so only the `library.md` index can lead the agent to the skill. This tells us whether the index is enough on its own. A harness without native skills has already covered this in outcome 3.
 
 ## Boundaries
 
@@ -41,7 +42,7 @@ These bind any workaround, because the design depends on them:
 
 ## How to reply
 
-Give the harness name and version, the OS, and the date. Then, for each outcome 1–5:
+Give the harness name and version, the OS, and the date. Then, for each outcome 1–6:
 
 - **Status:** reached as supplied (the package and init unchanged, no extra step), reached with a workaround, not reached, blocked by policy, or not applicable (for example, outcome 3 in a harness without skills).
 - **For a workaround, its size:**
@@ -53,12 +54,12 @@ Give the harness name and version, the OS, and the date. Then, for each outcome 
 
 Anything beyond these categories is welcome but optional. A short table is enough.
 
-- **If you can write to this repository:** put the reply in `results-<harness>-r4.md` in this workshop and add a line under "Replies" below. If you ran the full protocol and can share details, use [probe-package/RESULTS-TEMPLATE.md](./probe-package/RESULTS-TEMPLATE.md).
+- **If you can write to this repository:** put the reply in `results-<harness>-r5.md` in this workshop and add a line under "Replies" below. If you ran the full protocol and can share details, use [probe-package/RESULTS-TEMPLATE.md](./probe-package/RESULTS-TEMPLATE.md).
 - **If you cannot:** send the reply to the operator. Use neutral labels such as `enterprise-A` for anything internal.
 
 ## Context
 
-- **Claude Code and Codex, revision 4** ([Claude Code](./results-claude-code-r4.md), [Codex](./results-codex-r4.md)): all five outcomes reached as supplied, on Linux.
+- **Claude Code and Codex, revision 4** ([Claude Code](./results-claude-code-r4.md), [Codex](./results-codex-r4.md)): outcomes 1–5 reached as supplied, on Linux. Outcome 6 and the missing-init rule are new in revision 5 and untested.
 - **Earlier revisions** used lookup commands and symlinked skills. What they showed, and why those options were dropped, is in [alternatives.md](./alternatives.md).
 - **Not yet tested anywhere:** Windows and macOS, a router skill over a large library, and whether a session that is already running picks up an upgrade.
 
