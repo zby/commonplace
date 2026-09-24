@@ -58,10 +58,11 @@ Anything beyond these categories is welcome but optional. A short table is enoug
 
 ## Context
 
-- **Claude Code, revision 4** ([results](./results-claude-code-r4.md)): all five outcomes reached as supplied, on Linux.
+- **Claude Code and Codex, revision 4** ([Claude Code](./results-claude-code-r4.md), [Codex](./results-codex-r4.md)): all five outcomes reached as supplied, on Linux.
 - **Earlier revisions** used lookup commands and symlinked skills. What they showed, and why those options were dropped, is in [alternatives.md](./alternatives.md).
 - **Not yet tested anywhere:** Windows and macOS, a router skill over a large library, and whether a session that is already running picks up an upgrade.
 
 ## Replies
 
+- 2026-09-24 — Codex CLI 0.156.1, Linux: all outcomes reached as supplied, no workarounds; full protocol, [results-codex-r4.md](./results-codex-r4.md). (Restored: this line was lost in a later rewrite of this request.)
 - 2026-09-24 — Claude Code 2.1.281, Linux: all outcomes reached as supplied, no workarounds; full protocol, [results-claude-code-r4.md](./results-claude-code-r4.md)
