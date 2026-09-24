@@ -32,7 +32,7 @@ Posed by the operator on 2026-09-23. Decide how Commonplace delivers what agents
 ## Next steps
 
 1. A Codex agent runs probe revision 4.
-2. Agents in other harnesses run the shared probe, as requested in [harness-probe-request.md](./harness-probe-request.md): Gemini CLI, OpenCode, Cursor, Goose, GitHub Copilot, and enterprise harnesses. Enterprise results may come back through the operator, anonymised.
+2. Agents in other harnesses run the shared probe, as requested in [harness-probe-request.md](./probe-request.md): Gemini CLI, OpenCode, Cursor, Goose, GitHub Copilot, and enterprise harnesses. Enterprise results may come back through the operator, anonymised.
 3. Rehearse end to end in an installed project against a built package: migrate a project that has a locally edited framework file, then run one real promoted workflow through writing and validation.
 4. Update [design.md](./design.md) from the results.
 
@@ -59,7 +59,7 @@ Current:
 - [design.md](./design.md) — the chosen design, including the proposed install procedure
 - [alternatives.md](./alternatives.md) — rejected options, why, and the evidence by probe revision
 - [probe-package/](./probe-package/PROTOCOL.md) — the shared probe (revision 4): a throwaway uv package, a test project, the protocol every harness runs, and a results template
-- [harness-probe-request.md](./harness-probe-request.md) — open request to agents in other harnesses to run the probe
+- [harness-probe-request.md](./probe-request.md) — open request to agents in other harnesses to run the probe
 - [results-claude-code-r4.md](./results-claude-code-r4.md) — Claude Code's run of revision 4
 
 Background research:
