@@ -20,11 +20,16 @@ Today `commonplace-init` copies the library and the skills into every project. T
 
 ## Working design
 
-Three layers. Each works without the ones above it.
+Three layers. Each works without the ones above it. Updated 2026-09-24 with the [Codex results](./results-codex.md).
 
-1. **Base, for every harness.** The package's data is the library, laid out as a plugin: skills, instructions, notes, reference, types, and gates, linked by relative paths. The `commonplace-*` commands read it as package data. `commonplace-init` writes a project `AGENTS.md` stating that `commonplace-library` prints the library root. An agent asked for a named instruction runs the command and reads under that root. Setup grants the harness read access to the root where the harness needs it.
-2. **Skills, where the harness supports Agent Skills.** Setup links each `cp-skill-*` directory from the harness's skill directory into the package. A router skill (`commonplace-library`) carries a generated index of the library with relative links, so an agent that is asked for an instruction can find it through the skill's description.
-3. **Harness-specific extras.** In Claude Code, a link-mode plugin serves the package in place. Nothing is copied, and a moved package is picked up after one session. The user must accept the plugin's path command once, in their own terminal.
+1. **Base, for every harness.** The package's data is the library, laid out as a plugin: skills, instructions, notes, reference, types, and gates. The `commonplace-*` commands read it as package data. `commonplace-init` writes a project `AGENTS.md` naming two commands: `commonplace-library` prints the library root, and `commonplace-instruction <name>` prints the path of one instruction (or lists them). An agent asked for a named instruction runs the command and reads the file it prints. Setup grants the harness read access to the root where the harness needs it; Codex needed none. Project files never contain the library path, because it includes the Python version and changes when the tool's Python changes.
+2. **Skills, where the harness supports Agent Skills.** Setup links each `cp-skill-*` directory from the harness's user-level skill directory into the package. Skills find library files through the same commands as the base layer, by name. Relative links stay in the text as a convenience, not as the route a skill depends on: agents in Codex misresolved them against the symlink path before recovering. A router skill (`commonplace-library`) indexes the library by instruction name, so an agent asked for an instruction in conversation finds it through the skill's description.
+3. **Harness-specific extras.** In Claude Code, a link-mode plugin serves the package in place. Nothing is copied, and a moved package is picked up after one session. The user must accept the plugin's path command once, in their own terminal. Codex has no equivalent that serves in place: its local-marketplace plugins are copied into its cache and go stale on a uv upgrade, so Codex uses layer 2 only.
+
+**Keeping skill links valid.** A uv upgrade on the same Python version keeps the install path, so linked skills see new content at once. A change of the tool's Python version moves the path, and Codex then drops the dangling skills without any error. Without hooks nothing can repair links at upgrade time, so the design detects and repairs them instead:
+
+- Skill setup is idempotent. It replaces links that point into any Commonplace install location, and it leaves unrelated entries alone.
+- The health check, and every `commonplace-*` command where the check is cheap, reports dangling or misdirected skill links and names the setup command that repairs them.
 
 Rejected so far, with reasons:
 
@@ -32,21 +37,23 @@ Rejected so far, with reasons:
 - A plugin tree published separately from the package (GBrain's route): the one-tree constraint.
 - Hooks, including a session-start hook that prints the library root: the no-hooks constraint.
 - Instructions served over MCP, including GBrain's `get_skill`: it needs an MCP server, clients handle MCP instructions unreliably, and tool schemas cost context (see the survey).
+- Codex plugins from a local marketplace: Codex copies them into its cache, which breaks the one-tree constraint.
+- Relative links as the route skills depend on: agents misresolve them through symlinks. A `readlink -f` instruction fixed that in Codex on Linux, but it is not portable, and the command route already works everywhere.
 
 ## Open questions
 
-- **The enterprise harness.** Does it read `AGENTS.md` or another instruction file? Can the agent run shell commands? Can it read files outside the project? Does it support Agent Skills, and from which directories? The operator is asked; the base layer assumes the first three.
-- **Codex with a real uv installation.** Where package data lives and whether the path survives upgrades and Python changes; user-level skill symlinks; broken links after a move; whether Codex plugins can be served in place. Requested from Codex in [codex-probe-request.md](./codex-probe-request.md). A 2026-09-24 dry run of the probe package found that changing the uv tool's Python version moves the install path (`lib/python3.12/` → `lib/python3.13/`), leaving symlinked skills dangling until setup relinks them.
-- **The router skill.** Does its description make an agent load it when the user names an instruction in conversation, in Claude Code and in Codex?
-- **The source checkout.** Do the same relative links work where `kb/` itself is the tree and `.claude/skills/` holds symlinks into `kb/instructions/`?
-- **Windows.** Link mode is unsupported, and symlinks are unreliable. Are directory junctions usable, or is the version-stamped copy needed?
+- **The enterprise harness.** Does it read `AGENTS.md` or another instruction file? Can the agent run shell commands? Can it read files outside the project? Does it support Agent Skills, and from which directories? The operator is asked; the base layer assumes the first three. If it is built on Codex's app-server, `skills/extraRoots/set` may let it discover the package's skills in place with no links; Codex observed discovery only.
+- **The router skill at scale.** It worked with a three-entry index in Codex. Does it still select the right instruction with an index the size of the real library?
+- **The source checkout.** In the source repo the library is `kb/` itself and `.claude/skills/` holds symlinks into `kb/instructions/`. Do the commands and skills behave the same there? The editable install resolved the library into the source tree in both dry runs.
+- **Skill names.** A `.claude-plugin/plugin.json` in the tree makes Codex prefix skill names (`cp-delivery-probe:delivery-probe-read`), even for plain symlinks. Documentation and invocation guidance must not assume the bare name.
+- **Windows and macOS.** Not tested. On Windows, link mode is unsupported and symlinks are unreliable. Are directory junctions usable, or is the version-stamped copy needed?
 - **Plugin approval.** In the operator's terminal the interactive prompt offered only "abort"; `--accept-command <sha256>` worked. The cause is unknown, and setup documentation depends on it.
+- **Running sessions.** Neither harness was tested for picking up an upgrade inside a session that was already running.
 
 ## Next steps
 
-1. Codex runs the shared probe, as requested in [codex-probe-request.md](./codex-probe-request.md).
-2. Update the working design, and the probe package if needed, with the Codex results.
-3. Write a request for agents in other harnesses (operator direction, 2026-09-24) to run the same [probe protocol](./probe-package/PROTOCOL.md) from the same package, modifying their copies where their harness needs it and recording the modifications.
+1. Update the probe package to the revised design: skills and router use the commands first, and `cp-delivery-probe-install-skills` becomes idempotent (it currently refuses existing links, so repairing after a Python change needs `--remove` first).
+2. Write a request for agents in other harnesses (operator direction, 2026-09-24) to run the same [probe protocol](./probe-package/PROTOCOL.md) from the same package, modifying their copies where their harness needs it and recording the modifications.
 
 ## Evaluation boundary
 
@@ -71,4 +78,5 @@ Close when the working design, or its replacement, is written back into the prop
 - [probe-results.md](./probe-results.md) — 2026-09-24 probes: a Claude Code link-mode plugin served in place from a package directory, and a Codex skill symlinked into it
 - [probe-package/](./probe-package/PROTOCOL.md) — the shared probe: a throwaway uv package whose data is the plugin-shaped tree, commands for the base layer, a test project, the protocol every harness runs, and a results template. Testers modify a copy and record the modifications
 - [codex-probe-request.md](./codex-probe-request.md) — request to a Codex agent to run the shared probe; Codex appends its reply here
-- `results-<harness>.md` — one results file per harness, from the template (pending; Codex first)
+- [results-codex.md](./results-codex.md) — Codex's run of the shared probe (2026-09-24), with supplemental findings from its first fixture
+- `results-<harness>.md` — one results file per further harness, from the template
