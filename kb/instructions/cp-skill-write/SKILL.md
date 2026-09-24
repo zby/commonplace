@@ -13,7 +13,7 @@ argument-hint: "[path | collection | type] [topic or claim/purpose] — a docume
 
 **Target: $ARGUMENTS**
 
-**Intent.** Produce a document that is aligned with this KB's doctrine: the standing rules in the root `AGENTS.md`, the target collection's `COLLECTION.md`, and the document's type spec. Together they fix what the document may contribute, its quality bar, structure, vocabulary, and links. When done, the document is saved at its resolved path, meets those rules, has its source-dependent claims grounded, and passes `commonplace-validate`. This skill authors only: link discovery beyond a duplicate guard belongs to `cp-skill-connect`, source records to `cp-skill-ingest`, and verification to a human. The step order binds where it protects the target: the source guard (Step 7) finishes before the first write (Step 8). Wording, and structure within the type contract, are the writer's choice.
+**Intent.** Produce a document that is aligned with this KB's doctrine: the standing rules in the root `AGENTS.md`, the target collection's `COLLECTION.md`, the document's type spec, and the Universal Mechanics below. Together they fix what the document may contribute, its quality bar, structure, vocabulary, and links. When done, the document is saved at its resolved path, meets those rules, has its source-dependent claims grounded, and passes `commonplace-validate`. This skill authors only: link discovery beyond a duplicate guard belongs to `cp-skill-connect`, source records to `cp-skill-ingest`, and verification to a human. The step order binds where it protects the target: the source guard (Step 7) finishes before the first write (Step 8). Wording, and structure within the type contract, are the writer's choice.
 
 All documents in the KB live in a **collection**: a directory under `kb/` with a local `COLLECTION.md`, such as `kb/notes/`, `kb/reference/`, `kb/instructions/`, or an installed library collection like `kb/commonplace/notes/`. Each collection that accepts writes has a `COLLECTION.md` with its purpose, intended contribution, quality goal, and linking conventions.
 
@@ -66,7 +66,7 @@ When those inputs already determine the choices, proceed without a formal brief.
 
 Write does not run active discovery — that is `cp-skill-connect`'s job. Write authors one document and adds only links supplied by the user or already loaded for this write, plus a cheap duplicate guard:
 
-1. **Near-duplicate check.** Search the target collection for the new document's distinctive title terms with `rg` (e.g. `rg -i "key term" kb/notes/ --glob "*.md"`). This is a targeted term search — do **not** enumerate the whole collection; a complete listing costs linear context and is the wrong tool for a single document's duplicate check. If a near-duplicate already exists, prefer editing it to creating a second note.
+1. **Near-duplicate check.** Search the target collection for the new document's distinctive title terms with `rg` (e.g. `rg -i "key term" kb/notes/ --glob "*.md"`). This is a targeted term search — do **not** enumerate the whole collection; a complete listing costs linear context and is the wrong tool for a single document's duplicate check. If a near-duplicate already exists, prefer editing it to creating a second document.
 2. **Context already loaded.** Consider relevant documents loaded for this write, including sources and ingests, as link candidates.
 3. **User-named targets.** Link targets the user mentions in the prompt.
 
@@ -168,7 +168,7 @@ Then suggest `cp-skill-connect` as the next step, for the graph discovery that S
 
 ## Universal Mechanics
 
-These apply to all typed documents regardless of collection.
+These apply to every document regardless of collection; the frontmatter rules apply to typed documents.
 
 **Frontmatter** makes documents queryable. No frontmatter means implicit `text`; any file with frontmatter must include a path-valued `type:`. Most library documents also need `description` (double-quoted, 50-250 chars), plus optional `traits`, `tags`, and `user-verified`. Never grant user verification implicitly.
 
