@@ -35,9 +35,10 @@ Posed by the operator on 2026-09-23. Decide how Commonplace delivers what agents
 
 ## Next steps
 
-1. Claude Code and Codex run revision 5's new cases: 8 (the stop-on-missing-init rule) and 9 (a skill reached through the index alone).
+1. Claude Code and Codex run the cases added since revision 4: 8 (the stop-on-missing-init rule), 9 (a skill reached through the index alone), and 10 (a sub-agent).
 2. Agents in other harnesses answer the same [probe request](./probe-request.md), reporting which outcomes they reached and the size of any workaround: Gemini CLI, OpenCode, Cursor, Goose, GitHub Copilot, and enterprise harnesses. Enterprise results may come back through the operator, anonymised.
 3. Update [design.md](./design.md) from the results, then decide it: an ADR and the `INSTALL.md` change, followed by implementation. No end-to-end rehearsal before the decision (operator, 2026-09-24): Commonplace is in alpha, so problems found in use are fixed in use.
+4. When a sub-agent emulation is chosen from the probe results, update `cp-skill-ingest` to accept it. Its rule allows only a harness-provided sub-agent and forbids launching the harness CLI as a worker. It is the only skill with such a ban today; the other skills that need workers (`cp-skill-write-multistage`, `cp-skill-revise-autoreason`, `analyse-agentic-system`) should be checked for the same assumption in the same change.
 
 ## Evaluation boundary
 
