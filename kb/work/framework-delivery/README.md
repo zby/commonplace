@@ -21,7 +21,8 @@ Posed by the operator on 2026-09-23. Decide how Commonplace delivers what agents
 
 ## Open questions
 
-- **Codex.** Revision 4 passed every case in Claude Code. Does Codex follow the stubs, and read `library.md` from `AGENTS.md`, equally well? Does it list the stubs under bare names? Does any harness need skill metadata copied into the stub?
+- **Missing initialization.** In Codex's revision 4 run, an agent in a clone without init found a nearby source checkout and answered from it instead of reporting the missing `library.md`. The design now has the `AGENTS.md` template say to stop and ask for init; does that work in both harnesses?
+- **Skill metadata.** Does any harness need skill metadata beyond name and description copied into the stub? The probe's skills had none.
 - **The enterprise harness.** Which of the design's harness assumptions (H1–H6 in [design.md](./design.md#what-the-design-assumes-about-a-harness)) hold there? The enterprise colleague cannot give detailed answers, so the probe request asks whether an agent in the harness can adapt the design to reach five outcomes, and reports whether each was reached and how large any workaround was, without its mechanism; the table maps an outcome not reached to the assumption that failed. If the harness is built on Codex's app-server, `skills/extraRoots/set` may let it discover the package's skills in place.
 - **The router skill at scale.** It worked with a small index. Does it still select the right instruction with an index the size of the real library?
 - **The source checkout.** The design has the source repo run init like any project, so its stubs replace the committed symlinks in `.claude/skills/`. Not yet tried on the real repository.
@@ -31,9 +32,8 @@ Posed by the operator on 2026-09-23. Decide how Commonplace delivers what agents
 
 ## Next steps
 
-1. A Codex agent runs probe revision 4, from the [probe request](./probe-request.md).
-2. Agents in other harnesses answer the same [probe request](./probe-request.md), reporting which outcomes they reached and the size of any workaround: Gemini CLI, OpenCode, Cursor, Goose, GitHub Copilot, and enterprise harnesses. Enterprise results may come back through the operator, anonymised.
-3. Update [design.md](./design.md) from the results, then decide it: an ADR and the `INSTALL.md` change, followed by implementation. No end-to-end rehearsal before the decision (operator, 2026-09-24): Commonplace is in alpha, so problems found in use are fixed in use.
+1. Agents in other harnesses answer the same [probe request](./probe-request.md), reporting which outcomes they reached and the size of any workaround: Gemini CLI, OpenCode, Cursor, Goose, GitHub Copilot, and enterprise harnesses. Enterprise results may come back through the operator, anonymised.
+2. Update [design.md](./design.md) from the results, then decide it: an ADR and the `INSTALL.md` change, followed by implementation. No end-to-end rehearsal before the decision (operator, 2026-09-24): Commonplace is in alpha, so problems found in use are fixed in use.
 
 ## Evaluation boundary
 
@@ -60,6 +60,8 @@ Current:
 - [probe-package/](./probe-package/PROTOCOL.md) — the shared probe (revision 4): a throwaway uv package, a test project, the protocol every harness runs, and a results template
 - [probe-request.md](./probe-request.md) — the open request to agents in any harness to run the probe, with a log of replies
 - [results-claude-code-r4.md](./results-claude-code-r4.md) — Claude Code's run of revision 4
+- [results-codex-r4.md](./results-codex-r4.md) — Codex's run of revision 4
+- [adr-draft.md](./adr-draft.md) — draft ADR 086 recording the decision, for the operator to adopt
 
 Background research:
 

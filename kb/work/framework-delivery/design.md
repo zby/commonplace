@@ -51,7 +51,7 @@ Harnesses discover skills only in their own skill directories, so something has 
 
 Because the installed tree mirrors `kb/`, a skill's relative link such as `../re-ingest.md` or `../../types/note.md` is correct both in the source checkout and in the installed library. That removes the two-branch wording ("in an installed project use X; in the source checkout use Y"), which exists today only because the two layouts differ.
 
-In Claude Code, probe revision 4 confirmed the route: in five skill sessions and a router session, the agent followed the stub to the real skill and resolved every relative link from the real location, with no failed read ([results](./results-claude-code-r4.md)). Not yet tested: stubs in Codex, and whether a harness reads skill metadata from the skill directory itself (frontmatter fields beyond name and description, or files such as Codex's `agents/`) that init must copy into the stub.
+In Claude Code and Codex, probe revision 4 confirmed the route ([Claude Code](./results-claude-code-r4.md), [Codex](./results-codex-r4.md)). In Claude Code's five skill sessions and router session, the agent followed the stub to the real skill and resolved every relative link from the real location, with no failed read ([results](./results-claude-code-r4.md)). Not yet tested: stubs in Codex, and whether a harness reads skill metadata from the skill directory itself (frontmatter fields beyond name and description, or files such as Codex's `agents/`) that init must copy into the stub.
 
 ### Why a generated routing file
 
@@ -86,7 +86,7 @@ Replies to the [probe request](./probe-request.md) report outcomes and the size 
 | H5. The harness discovers Agent Skills from a project directory. | The skills layer only | The base layer still works: the router's index and every skill's `SKILL.md` are ordinary files reachable from `library.md`. Skills lose automatic triggering by description. |
 | H6. The agent can run shell commands. | The `commonplace-*` commands, not delivery | Delivery works; command-time checks and KB maintenance commands do not. |
 
-Claude Code and Codex satisfy H1–H6 on Linux (revision 4 for Claude Code; revisions 1–3 for Codex, with H4 and H5 through symlinks rather than stubs).
+Claude Code and Codex satisfy H1–H6 on Linux (probe revision 4). Codex has no import in its instruction file, so it reads `library.md` itself, at the cost of one read per session.
 
 ### Skill names
 
@@ -140,7 +140,7 @@ Skills link to library files by ordinary relative links, which resolve because t
 
 ### Making an unavailable library visible
 
-- The control-plane template states that the project needs the tool and names the accepted versions.
+- The control-plane template states that the project needs the tool and names the accepted versions. It also says that if `.commonplace/library.md` is missing, the agent stops and tells the user to run `commonplace-init`, instead of looking for the library elsewhere. In Codex's revision 4 run, an agent in a clone without init searched nearby directories, found a source checkout, and answered from it without reporting the missing file; Claude Code stopped on its own. The template rule is untested.
 - The health check and every `commonplace-*` command report a missing or stale stub, a stale generated file, or an uncovered library root, with the exact command that fixes it. A missing tool shows up as a missing command, and `AGENTS.md` says the project needs the tool.
 - Validation reports a bare type name that it cannot resolve because the library is missing as "Commonplace library not available", not as a broken type.
 
