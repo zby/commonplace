@@ -1,75 +1,54 @@
 # Probe request: can an agent in your harness adapt to the delivery design?
 
-- To: an agent, or a person with an agent, working in any harness: Codex, Claude Code, Gemini CLI, OpenCode, Cursor, Goose, GitHub Copilot, and enterprise or in-house harnesses. A harness that ran an earlier revision runs this one again.
+- To: an agent, or a person with an agent, in any harness, including enterprise and in-house ones. A harness that ran an earlier revision runs this one again.
 - From: Claude session on the framework-delivery workshop, at the operator's direction
 - Posted: 2026-09-24
 - Status: open
 
 ## Intent
 
-Commonplace is a framework for agent-operated knowledge bases. We are changing how it reaches the projects that use it. One installed Python package will hold everything agents read (skills, instructions, type specs), and each project gets only a few small, uncommitted pointer files into that package, plus a line in its instruction file ([design.md](./design.md)).
+Commonplace is a framework for agent-operated knowledge bases. We are changing how it reaches the projects that use it. One installed Python package will hold everything agents read (skills, instructions, type specs). Each project gets only a few small, uncommitted pointer files and one line of standing instruction ([design.md](./design.md)).
 
-We cannot test every harness ourselves, and we cannot write a separate install route for each. So the question is not whether our exact files work unchanged in your harness. It is whether **an agent working in your harness, told what the design is for, can make it work there**, adapting where it has to. If it can with no workaround or a small one, the design fits your harness. If it needs a large or repeated workaround, or cannot reach an outcome, we need to know where.
+We cannot test every harness or write an install route for each. So we want to know whether **an agent in your harness, told what the design is for, can make it work there**, adapting where it has to, and what that adaptation costs. A part of the design that works only with a large or repeated workaround is a problem we need to see, even though it works. We are designing the system; you are giving feedback on it. Share as much as your company's policy allows, and no more.
 
-**Report outcomes, the size of each workaround, and, where your company's policy allows, how the workaround works.** Your agent may build whatever workaround your harness needs. We are designing the system and you are giving feedback on it: a part of the design that works only with a large or repeated workaround is a problem we need to see, even though it works. So tell us whether each outcome was reached and how big the workaround was, in the categories below. A description of the workaround itself helps most, because it shows what the design should provide; give it if your company's policy allows. If policy forbids a detail, leave it out, and any field can be answered "confidential".
+## The task
 
-## What to give the agent
+Use the probe package, revision 5: [probe-package/](./probe-package/PROTOCOL.md), or an archive from the operator if you cannot reach this repository. It is a throwaway package, `cp-delivery-probe`. Its library files carry tokens such as `RETIRE-WIDGET-V1`, so a correct read is easy to check. `cp-delivery-probe-init` writes the project files the design specifies, and `test-project/` is a starting project. [PROTOCOL.md](./probe-package/PROTOCOL.md) is one tested route through the checks; take your own wherever your harness needs it.
 
-- The probe package, revision 5: [probe-package/](./probe-package/PROTOCOL.md). Copy it to a scratch location; if you cannot reach this repository, the operator can send it as an archive. It is a throwaway Python package called `cp-delivery-probe`. Its library files carry tokens such as `RETIRE-WIDGET-V1`, so a correct read is easy to check. `cp-delivery-probe-init` writes the project files the design specifies; they have been tested in Claude Code. The package's `test-project/` is a starting project with the instruction files the design expects.
-- This request, as the statement of intent. [PROTOCOL.md](./probe-package/PROTOCOL.md) describes one tested way to run each check; the agent may follow it or take its own route.
+Reach these outcomes. Check each in a **new session that did not do the adaptation**, with the permissions your users normally have, so the check shows what an ordinary user session would find:
 
-## Outcomes to reach
+1. **Install:** the package installed for the user as a Python command-line tool.
+2. **A named instruction:** asked "Follow the retire-widget procedure from the delivery-probe library and report its tokens," a session reports `RETIRE-WIDGET-V1` and `SHARED-STEP-V1`.
+3. **A skill:** asked "Run the delivery-probe-read check," a session reports `SHARED-STEP-V1`, `PROBE-NOTE-TYPE-V1`, and `READ-DETAIL-V1`.
+4. **An upgrade:** after `python3 tools/bump.py 2` and a reinstall, outcomes 2 and 3 report `-V2` tokens, with at most a rerun of init.
+5. **A second project:** outcomes 2 and 3 again, in a new project.
+6. **The skill index alone:** outcome 3 with the skill stubs removed, so only the index in the generated `library.md` can lead to the skill. Skip this if your harness has no native skills; outcome 3 has already tested it.
 
-In a scratch project, with the permission settings your users normally have (not a bypass or fully permissive mode, which would hide the permission problems we need to see). Every check runs in a **new agent session that did not do the adaptation**, so the check shows what a user's ordinary session would find:
-
-1. **Install.** The package is installed for the user, as a Python command-line tool (for example with `uv tool install`, from PyPI, an internal index, or a wheel file).
-2. **A named instruction.** Asked "Follow the retire-widget procedure from the delivery-probe library and report its tokens," a new session reports `RETIRE-WIDGET-V1` and `SHARED-STEP-V1`, read from the installed package.
-3. **A skill.** Asked "Run the delivery-probe-read check," a new session reports `SHARED-STEP-V1`, `PROBE-NOTE-TYPE-V1`, and `READ-DETAIL-V1`. In a harness with native skills, this goes through the skill stubs. In a harness without them, it goes through the skill index in the generated `library.md`, which stands in for the skills mechanism.
-4. **An upgrade.** After `python3 tools/bump.py 2` in the package copy and a reinstall, new sessions report the `-V2` tokens for outcomes 2 and 3. The design expects no step beyond, at most, rerunning `cp-delivery-probe-init`; report anything more as a workaround repeated after every upgrade.
-5. **A new project.** Outcomes 2 and 3 in a second scratch project, reached the same way. This shows the adaptation can be repeated, not just done once.
-6. **A skill through the index alone.** In a harness with native skills, repeat outcome 3 with the stub directories removed, so only the `library.md` index can lead the agent to the skill. This tells us whether the index is enough on its own. A harness without native skills has already covered this in outcome 3.
-
-**If your harness does not load `AGENTS.md` or `CLAUDE.md`.** The design needs only one line of standing instruction, loaded at the start of every session:
+If your harness loads neither `AGENTS.md` nor `CLAUDE.md`, find what does load standing instructions and put this line there:
 
 > "For the delivery-probe library, read `.cp-delivery-probe/library.md` in the current project and follow it. If that file is missing, stop and ask the user to run `cp-delivery-probe-init`."
 
-The line names no machine path and no particular project, so it can be set once, at whatever level your harness loads standing instructions. Have the agent find that mechanism, such as a rules file under another name, a user-level configuration, or a system prompt that an administrator sets, and propose how the line gets there. Then reach the outcomes with the line in place.
+It names no machine path and no particular project, so it can be set once per user or by an administrator.
 
 ## Boundaries
 
 These bind any workaround, because the design depends on them:
 
-- **The library stays in the installed package.** Do not copy library files or skill bodies into the project. Small pointer files, like the ones init writes, are fine.
-- **No harness hooks** and **no MCP servers.**
-- **Do not touch a real Commonplace installation** (the `llm-commonplace` uv tool or `commonplace-*` commands), and do not copy or move credentials.
-- **Undo every change when you finish:** files created, settings, and the `cp-delivery-probe` tool.
-- **Stop instead of proceeding** if an outcome would need a change you cannot undo, a permission you cannot grant yourself, or software your environment's policy does not allow. A blocked outcome is a result.
-- **Do not commit** to this repository. Write only your reply.
+- The library stays in the installed package: no copies of library files or skill bodies in the project.
+- No harness hooks and no MCP servers.
+- Do not touch a real Commonplace installation (the `llm-commonplace` tool or `commonplace-*` commands), and do not copy or move credentials.
+- Undo every change when you finish. Stop and report instead of proceeding when a step needs a change you cannot undo, a permission you cannot grant yourself, or software your policy does not allow; a blocked outcome is a result.
+- Do not commit to this repository; write only your reply.
 
-## How to reply
+## Reply
 
-Give the harness name and version, the OS, and the date. Then, for each outcome 1–6:
+Give the harness and version, the OS, and the date. For each outcome, say whether it was reached as supplied, reached with a workaround, not reached, or blocked. For a workaround, say how big it was: how much effort, how often it must be repeated, and whether only an administrator can do it. Then describe how it works, as far as policy allows. For an outcome not reached, say where in the design it stopped, and name the boundary if crossing one would have reached it. Also say what loads standing instructions in your harness. Any field may be answered "confidential".
 
-- **Status:** reached as supplied (the package and init unchanged, no extra step), reached with a workaround, not reached, blocked by policy, or not applicable (for example, outcome 6 in a harness without native skills).
-- **For a workaround, its size:**
-  - *Part of the design it changed:* install, the project instruction file or pointer file, permission to read outside the project, skills or stubs, upgrade handling, or other.
-  - *Effort:* one small change (a setting or a line), several changes, or new code or tooling.
-  - *Repeated:* once per machine, once per project, every session, or after every upgrade.
-  - *Who can do it:* the user, or only an administrator or policy owner.
-- **Instruction loading**, once for the harness: what loads standing instructions at session start — the repository's `AGENTS.md` or `CLAUDE.md`, another file in the repository, a user-level file or setting, a system prompt only an administrator can set, or nothing — and where the agent proposes to put the pointer line. Name the kind of mechanism, and describe it as far as policy allows.
-- **For an outcome not reached or blocked:** the part of the design where it stopped, from the same list. If it could have been reached only by crossing a boundary (for example, with a hook), say which boundary.
-- **For a workaround, how it works**, as far as your company's policy allows: what the agent changed or built, and where. Omit what policy forbids.
-
-A short table is enough for the categories; the workaround descriptions can follow it.
-
-- **If you can write to this repository:** put the reply in `results-<harness>-r5.md` in this workshop and add a line under "Replies" below. If you ran the full protocol and can share details, use [probe-package/RESULTS-TEMPLATE.md](./probe-package/RESULTS-TEMPLATE.md).
-- **If you cannot:** send the reply to the operator. Use neutral labels such as `enterprise-A` for anything internal.
+Put the reply in `results-<harness>-r5.md` in this workshop and add a line under "Replies", or send it to the operator with internal names replaced by neutral labels such as `enterprise-A`.
 
 ## Context
 
-- **Claude Code and Codex, revision 4** ([Claude Code](./results-claude-code-r4.md), [Codex](./results-codex-r4.md)): outcomes 1–5 reached as supplied, on Linux. Outcome 6 and the missing-init rule are new in revision 5 and untested.
-- **Earlier revisions** used lookup commands and symlinked skills. What they showed, and why those options were dropped, is in [alternatives.md](./alternatives.md).
-- **Not yet tested anywhere:** Windows and macOS, a router skill over a large library, and whether a session that is already running picks up an upgrade.
+Claude Code and Codex reached outcomes 1–5 with revision 4 on Linux ([Claude Code](./results-claude-code-r4.md), [Codex](./results-codex-r4.md)). Outcome 6 and the stop-on-missing-init rule are new in revision 5. Earlier routes and why they were dropped are in [alternatives.md](./alternatives.md).
 
 ## Replies
 
