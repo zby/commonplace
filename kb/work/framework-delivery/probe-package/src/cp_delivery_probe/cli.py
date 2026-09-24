@@ -59,7 +59,7 @@ def _skills() -> dict[str, Path]:
 
 
 def _frontmatter(skill_md: Path) -> str:
-    lines = skill_md.read_text().splitlines()
+    lines = skill_md.read_text(encoding="utf-8-sig").splitlines()
     if not lines or lines[0].strip() != "---":
         sys.exit(f"{skill_md}: no frontmatter")
     return "\n".join(lines[1 : lines.index("---", 1)])
@@ -116,7 +116,7 @@ def _read_rule() -> str:
 
 def _load_settings(project: Path) -> dict:
     path = project / SETTINGS
-    return json.loads(path.read_text()) if path.is_file() else {}
+    return json.loads(path.read_text(encoding="utf-8-sig")) if path.is_file() else {}
 
 
 def _statuses(project: Path) -> list[tuple[str, Path]]:
@@ -132,7 +132,7 @@ def _statuses(project: Path) -> list[tuple[str, Path]]:
             elif not (dest / STUB_MARKER).is_file():
                 found.append(("foreign", dest))
             else:
-                current = (dest / "SKILL.md").is_file() and (dest / "SKILL.md").read_text() == _render_stub(skill)
+                current = (dest / "SKILL.md").is_file() and (dest / "SKILL.md").read_text(encoding="utf-8-sig") == _render_stub(skill)
                 found.append(("ok" if current else "stale", dest))
         if directory.is_dir():
             for dest in sorted(directory.iterdir()):
@@ -142,14 +142,14 @@ def _statuses(project: Path) -> list[tuple[str, Path]]:
     if not routing.is_file():
         found.append(("missing", routing))
     else:
-        found.append(("ok" if routing.read_text() == _render_routing() else "stale", routing))
+        found.append(("ok" if routing.read_text(encoding="utf-8-sig") == _render_routing() else "stale", routing))
     allowed = _load_settings(project).get("permissions", {}).get("allow", [])
     settings = project / SETTINGS
     if _read_rule() in allowed:
         found.append(("ok", settings))
     else:
         record = project / RULE_RECORD
-        found.append(("stale" if record.is_file() and record.read_text().strip() in allowed else "missing", settings))
+        found.append(("stale" if record.is_file() and record.read_text(encoding="utf-8-sig").strip() in allowed else "missing", settings))
     return found
 
 
@@ -177,14 +177,14 @@ def _write_rule(project: Path, remove_only: bool) -> None:
     settings = _load_settings(project)
     allow = settings.setdefault("permissions", {}).setdefault("allow", [])
     record = project / RULE_RECORD
-    if record.is_file() and record.read_text().strip() in allow:
-        allow.remove(record.read_text().strip())
+    if record.is_file() and record.read_text(encoding="utf-8-sig").strip() in allow:
+        allow.remove(record.read_text(encoding="utf-8-sig").strip())
     if remove_only:
         record.unlink(missing_ok=True)
     else:
         allow.append(_read_rule())
         record.parent.mkdir(exist_ok=True)
-        record.write_text(_read_rule() + "\n")
+        record.write_text(_read_rule() + "\n", encoding="utf-8")
     if not allow:
         del settings["permissions"]["allow"]
     if not settings["permissions"]:
@@ -192,14 +192,14 @@ def _write_rule(project: Path, remove_only: bool) -> None:
     path = project / SETTINGS
     if settings:
         path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(json.dumps(settings, indent=2) + "\n")
+        path.write_text(json.dumps(settings, indent=2) + "\n", encoding="utf-8")
     else:
         path.unlink(missing_ok=True)
 
 
 def _write_gitignore(project: Path, remove_only: bool) -> None:
     path = project / ".gitignore"
-    lines = path.read_text().splitlines() if path.is_file() else []
+    lines = path.read_text(encoding="utf-8-sig").splitlines() if path.is_file() else []
     if GITIGNORE_BEGIN in lines:
         start = lines.index(GITIGNORE_BEGIN)
         del lines[start : lines.index(GITIGNORE_END, start) + 1]
@@ -207,7 +207,7 @@ def _write_gitignore(project: Path, remove_only: bool) -> None:
         entries = [f"/{d}/{name}/" for d in SKILL_DIRS for name in _skills()]
         lines += [GITIGNORE_BEGIN, "/.cp-delivery-probe/", f"/{SETTINGS}", *entries, GITIGNORE_END]
     if lines:
-        path.write_text("\n".join(lines) + "\n")
+        path.write_text("\n".join(lines) + "\n", encoding="utf-8")
     else:
         path.unlink(missing_ok=True)
 
@@ -242,8 +242,8 @@ def init() -> None:
                 print(f"removed {dest}")
             continue
         dest.mkdir(parents=True)
-        (dest / "SKILL.md").write_text(_render_stub(skills[dest.name]))
-        (dest / STUB_MARKER).write_text(__version__ + "\n")
+        (dest / "SKILL.md").write_text(_render_stub(skills[dest.name]), encoding="utf-8")
+        (dest / STUB_MARKER).write_text(__version__ + "\n", encoding="utf-8")
         print(f"wrote stub {dest} -> {skills[dest.name] / 'SKILL.md'}")
     _write_rule(project, args.remove)
     _write_gitignore(project, args.remove)
@@ -253,7 +253,7 @@ def init() -> None:
         print(f"removed {routing.parent}, the read rule, and the .gitignore block")
     else:
         routing.parent.mkdir(exist_ok=True)
-        routing.write_text(_render_routing())
+        routing.write_text(_render_routing(), encoding="utf-8")
         print(f"wrote {routing}, the read rule {_read_rule()}, and the .gitignore block")
     if failed:
         sys.exit(1)

@@ -14,8 +14,8 @@ new = int(sys.argv[1])
 root = Path(__file__).resolve().parent.parent
 pkg = root / "src" / "cp_delivery_probe"
 for path in [root / "pyproject.toml", pkg / "__init__.py"]:
-    text = re.sub(r'"\d+\.0\.0"', f'"{new}.0.0"', path.read_text(), count=1)
-    path.write_text(text)
+    text = re.sub(r'"\d+\.0\.0"', f'"{new}.0.0"', path.read_text(encoding="utf-8-sig"), count=1)
+    path.write_text(text, encoding="utf-8")
 for path in (root / "library").rglob("*.md"):
-    path.write_text(re.sub(r"-V\d+`", f"-V{new}`", path.read_text()))
+    path.write_text(re.sub(r"-V\d+`", f"-V{new}`", path.read_text(encoding="utf-8-sig")), encoding="utf-8")
 print(f"bumped to {new}.0.0")
