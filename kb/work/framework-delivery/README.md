@@ -42,6 +42,11 @@ Rejected so far, with reasons:
 - **Windows.** Link mode is unsupported, and symlinks are unreliable. Are directory junctions usable, or is the version-stamped copy needed?
 - **Plugin approval.** In the operator's terminal the interactive prompt offered only "abort"; `--accept-command <sha256>` worked. The cause is unknown, and setup documentation depends on it.
 
+## Next steps
+
+1. Codex runs the probes in [codex-probe-request.md](./codex-probe-request.md).
+2. After that, write a request for agents in other harnesses (operator direction, 2026-09-24) to evaluate the working design from their side, especially the harness-neutral base layer. Update the design with the Codex results first, so that the request tests the current version.
+
 ## Evaluation boundary
 
 - Harnesses: Claude Code and Codex, plus the base layer in any harness that meets its stated assumptions.
