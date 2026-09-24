@@ -13,6 +13,8 @@ argument-hint: "[path | collection | type] [topic or claim/purpose] — a note p
 
 **Target: $ARGUMENTS**
 
+**Intent.** Produce one KB artifact whose contribution is already determined. When done, it is saved at its resolved path, conforms to its collection and type contracts, has its source-dependent claims grounded, and passes `commonplace-validate`. This skill authors only: link discovery beyond a duplicate guard belongs to `cp-skill-connect`, source records to `cp-skill-ingest`, and verification to a human. The step order binds where it protects the target: the source guard (Step 7) finishes before the first write (Step 8). Wording, and structure within the type contract, are the writer's choice.
+
 All documents in the KB live in a **collection**: a directory under `kb/` with a local `COLLECTION.md`, such as `kb/notes/`, `kb/reference/`, `kb/instructions/`, or an installed library collection like `kb/commonplace/notes/`. Each collection that accepts writes has a `COLLECTION.md` with its purpose, intended contribution, quality goal, and linking conventions.
 
 Documents with frontmatter carry a path-valued `type:` that points to a type-spec doc, for example `type: kb/types/note.md` or `type: kb/reference/types/adr.md`. Files with no frontmatter are implicit `text`.
@@ -50,7 +52,7 @@ For `text`, write raw markdown with no frontmatter only when the user explicitly
 Before drafting, identify from the user's request and the target artifact in edit mode:
 
 - the intended audience, using the collection default when the task does not narrow it;
-- the governing question, target claim, or practical purpose;
+- the governing question, target claim, or practical purpose (for an artifact that directs someone to act, this becomes the intent that opens it; see "Directive text" under Universal Mechanics);
 - what the reader should understand, infer, or do because this artifact exists; and
 - any scope or angle needed to distinguish it from materially different artifacts on the same topic.
 
@@ -58,13 +60,17 @@ The repository and collection contracts constrain the acceptable contribution cl
 
 Remembered intent may complete a bare request, but it is not meaning contained in that request, a choice licensed by model priors, or evidence that warrants factual claims. Do not add an ad hoc history search to this skill; older interaction history counts only when a memory mechanism supplies it through the retained-intent input.
 
-If the artifact directs someone to act, its practical purpose becomes the stated intent that opens it (see "Directive text" under Universal Mechanics).
-
 When those inputs already determine the choices, proceed without a formal brief. If several materially different contributions still fit, treat that as a specification gap rather than something a stronger model should guess: ask one focused question, or use an exploratory workshop when determining the contribution is itself the work. When the contribution is determined but its claims still need substantial grounding or synthesis, stop and explain why the ordinary path is insufficient. Ask whether the user wants to continue with `cp-skill-write-multistage`, and invoke it only after explicit confirmation.
 
 ### Step 5 - Search Before Writing
 
 Write does not run active discovery — that is `cp-skill-connect`'s job. Write authors one note and adds only links supplied by the user or already loaded for this write, plus a cheap duplicate guard:
+
+1. **Near-duplicate check.** Search the target collection for the new note's distinctive title terms with `rg` (e.g. `rg -i "key term" kb/notes/ --glob "*.md"`). This is a targeted term search — do **not** enumerate the whole collection; a complete listing costs linear context and is the wrong tool for a single note's duplicate check. If a near-duplicate already exists, prefer editing it to creating a second note.
+2. **Context already loaded.** Consider relevant notes, sources, and ingests loaded for this write as link candidates.
+3. **User-named targets.** Link targets the user mentions in the prompt.
+
+In edit mode, also run a backlinks lookup on the target note — one query, no body search — so edits don't orphan dependents.
 
 This guard is intra-KB only. Do not search the external literature for missing
 prior art and do not infer novelty from the absence of a named source. If the
@@ -75,13 +81,7 @@ explicit request supplies the confirmation required by Step 4; do not ask the
 user to authorize the handoff again. The multistage skill loads the specialised
 literature-disposition procedure.
 
-1. **Near-duplicate check.** Search the target collection for the new note's distinctive title terms with `rg` (e.g. `rg -i "key term" kb/notes/ --glob "*.md"`). This is a targeted term search — do **not** enumerate the whole collection; a complete listing costs linear context and is the wrong tool for a single note's duplicate check. If a near-duplicate already exists, prefer editing it to creating a second note.
-2. **Context already loaded.** Consider relevant notes, sources, and ingests loaded for this write as link candidates.
-3. **User-named targets.** Link targets the user mentions in the prompt.
-
-In edit mode, also run a backlinks lookup on the target note — one query, no body search — so edits don't orphan dependents.
-
-All discovery beyond this — collection-wide description scans, cross-destination prospecting, body search, tag traversal, link-following, reverse-edge reasoning — belongs to `cp-skill-connect`, not here. Write stays focused on authoring one note.
+All other discovery — collection-wide description scans, cross-destination prospecting, body search, tag traversal, link-following, reverse-edge reasoning — belongs to `cp-skill-connect`.
 
 ### Step 6 - Draft The Candidate
 
@@ -164,7 +164,7 @@ commonplace-validate path/to/file.md
 
 Fix structural failures before stopping.
 
-Then suggest `cp-skill-connect` as the next step. Step 5 adds only links from loaded context or the user's request, plus a duplicate guard. The connect skill performs the remaining graph discovery: collection-wide description scans, cross-destination candidate search, body search, tag traversal, link following, and reverse-edge search. The suggestion is required.
+Then suggest `cp-skill-connect` as the next step, for the graph discovery that Step 5 leaves to it. The suggestion is required.
 
 ## Universal Mechanics
 
@@ -174,16 +174,14 @@ These apply to all typed artifacts regardless of collection.
 
 **Descriptions** are retrieval filters, not summaries. The test: if an agent searched for this note's concept and got 5 results, would this description help pick this one? Paraphrasing the title adds zero retrieval value.
 
-**Directive text.** Apply this whenever an artifact, or a section of one, directs someone else to act: a procedure, skill, plan, request, test protocol, handoff, or message, in any collection.
+**Directive text.** Apply this whenever an artifact, or a section of one, directs someone else to act: a procedure, skill, plan, request, test protocol, handoff, or message.
 
 - State the intent before any particular instruction. Say what the result is for or what decision it feeds, what end state counts as done, and which boundaries bind every route.
 - Then give the particular instructions as a supported route. Fix a step, its order, or its method only when a binding reason requires it, such as a dependency, an external commitment, a coordination need, or results that must compare across executors. Otherwise, say that the executor may take another route to the same end state.
 - Expect partial execution. Say which parts matter most, accept a partial or coarse answer, and state what a missing or negative answer changes.
 - When the answer comes from someone outside your control, ask for the detail the decision needs and no more. Let them withhold the rest, and ask for cost as well as outcome when a costly success would change the decision.
 
-This borrows one idea from *Auftragstaktik* (mission command): when execution will meet conditions the author cannot foresee, give the executor the intent and the boundaries, and leave the means to them. Only that idea applies here. Command hierarchy, obedience, and the adversarial setting of the military doctrine do not.
-
-(rationale: [intent-framed delegation](../../notes/intent-framed-delegation-is-a-control-regime-not-a-short-prompt.md))
+This borrows one idea from *Auftragstaktik* (mission command): when execution will meet conditions the author cannot foresee, give the executor the intent and the boundaries, and leave the means to them. Only that idea applies here. Command hierarchy, obedience, and the adversarial setting of the military doctrine do not (rationale: [intent-framed delegation](../../notes/intent-framed-delegation-is-a-control-regime-not-a-short-prompt.md)).
 
 **Literal language.** Prefer literal wording when a metaphor or idiom would mainly add flourish, interpretation work, or unintended connotations. Keep figurative wording when it is conventional and precise or clarifies the explanation; an available literal alternative alone does not make a metaphor a problem.
 
