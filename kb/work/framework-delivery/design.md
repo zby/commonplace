@@ -40,11 +40,10 @@ The operator's constraints are recorded in the [workshop README](./README.md#ope
 
 ## The design
 
-Three layers. Each works without the ones above it.
+Two layers. The base works without the skills layer.
 
-1. **Base layer, for every harness.** The library installs as wheel shared data under `<uv tool environment>/share/commonplace/`. That path does not change with the tool's Python version or on upgrade. The tree is laid out as a plugin: skills, instructions, notes, reference, types, and gates. Commands read it there. In an editable install, commands read the source tree instead, because shared data is an install-time snapshot. The project's `AGENTS.md` names two commands: `commonplace-library` prints the library root, and `commonplace-instruction <name>` prints the path of one instruction, or lists them. An agent asked for a named instruction runs the command and reads the file it prints. Project files never contain the library path, because it differs per machine.
+1. **Base layer, for every harness.** The library installs as wheel shared data under `<uv tool environment>/share/commonplace/`. That path does not change with the tool's Python version or on upgrade. The tree holds the skills, instructions, notes, reference, types, and gates. It needs no plugin manifest, because no harness plugin serves it. Commands read it there. In an editable install, commands read the source tree instead, because shared data is an install-time snapshot. The project's `AGENTS.md` names two commands: `commonplace-library` prints the library root, and `commonplace-instruction <name>` prints the path of one instruction, or lists them. An agent asked for a named instruction runs the command and reads the file it prints. Project files never contain the library path, because it differs per machine.
 2. **Skills layer, where the harness supports Agent Skills.** Setup links each `cp-skill-*` directory from the harness's user-level skill directory into the package. Skills find library files through the same commands, by name. A router skill (`commonplace-library`) indexes the library by instruction name, so an agent asked for an instruction in conversation finds it through the skill's description.
-3. **Harness-specific extras, optional.** In Claude Code, a link-mode plugin can serve the `share/commonplace/` tree in place: its marketplace entry runs a command that prints the directory, and Claude Code links the directory's top-level entries without copying them. Each user must accept that command once, in their own terminal. Codex copies local-marketplace plugins into its cache, so Codex uses layer 2 only.
 
 ### Harness permissions are part of setup
 
@@ -72,7 +71,7 @@ Without hooks, nothing repairs links or rules when an install changes, so the de
 
 ### Skill names
 
-Codex prefixes a skill with the plugin name when the tree contains `.claude-plugin/plugin.json` (`cp-delivery-probe:delivery-probe-read`), even when the skill is a plain symlink. Claude Code listed the same links under their bare names. Documentation and invocation guidance must not assume either form.
+Codex listed the probe's linked skills with a prefix (`cp-delivery-probe:delivery-probe-read`), and Claude Code listed them under their bare names. Codex's first run tied the prefix to the tree's `.claude-plugin/plugin.json`; a later run did not repeat that test. Without the plugin layer the tree needs no manifest, so the bare names should hold in both harnesses. That is inferred, not tested. Until a probe without the manifest confirms it, documentation and invocation guidance must not assume either form.
 
 ## Proposed change to the install procedure
 
@@ -84,7 +83,6 @@ This is the user-visible form of the design. It changes `INSTALL.md` steps 3–6
 
 - links each `cp-skill-*` skill and the router skill into the user-level skill directory of each harness it finds (`~/.claude/skills`, `~/.agents/skills`, and directories the operator names). On Windows it copies them instead, with a version stamp and a hash check;
 - writes Claude Code's user-level permission entries: Bash allow rules for the lookup commands, and read access to the current library root;
-- prints, but cannot perform, the optional Claude Code plugin install, which the user must accept in their own terminal;
 - with `--check`, reports each link and rule as `ok`, `missing`, `dangling`, `elsewhere`, or `stale-copy`, and exits non-zero on any problem.
 
 Setup is a separate command from `commonplace-init` because the two have different scopes: init runs once per project, setup once per user and machine, and setup must rerun when the install changes while init does not.
@@ -143,6 +141,7 @@ These are useful in any layout and can ship before, after, or without the rest.
 - **Hooks,** including a session-start hook that prints the library root. They break the no-hooks constraint.
 - **Instructions served over MCP,** including GBrain's `get_skill`. It needs an MCP server, clients handle MCP instructions unreliably, and tool schemas cost context (see [the survey](./comparable-systems-survey.md)).
 - **Codex plugins from a local marketplace.** Codex copies them into its cache, which breaks the one-tree constraint.
+- **A Claude Code link-mode plugin** (dropped 2026-09-24). Its marketplace entry runs a command that prints the `share/` directory, and Claude Code links that directory into its cache instead of copying it. The earlier probe showed this works with a stand-in directory. It adds nothing over linked skills: its one advantage, relinking by itself after the install moves, is lost because setup must rerun after a move anyway to rewrite the read permission. It also costs a manual approval by each user in their own terminal, prefixed skill names that duplicate the linked skills, and a second route to document and check, and link mode does not work on Windows. Reconsider it only if Commonplace ships something that must be a plugin component.
 - **Relative links as a route skills depend on.** Agents in Codex misresolved them through symlinks, and in Claude Code a denied agent reached a stale snapshot through them.
 - **Skill paths compiled at setup** (setup rewrites library references in skills to absolute paths). The command route gives the same result without machine-specific skill text or a rewrite step.
 - **Package data under `site-packages`.** Its path changes with the Python version, which left linked skills dangling; Codex then dropped them silently.

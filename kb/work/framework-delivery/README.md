@@ -27,17 +27,15 @@ The design, and the alternatives rejected so far, are in [design.md](./design.md
 - **The enterprise harness.** Does it read `AGENTS.md` or another instruction file? Can the agent run shell commands? Can it read files outside the project? Does it support Agent Skills, and from which directories? The operator is asked; the base layer assumes the first three. If it is built on Codex's app-server, `skills/extraRoots/set` may let it discover the package's skills in place with no links; Codex observed discovery only.
 - **The router skill at scale.** It worked with a three-entry index in Codex. Does it still select the right instruction with an index the size of the real library?
 - **The source checkout.** In the source repo the library is `kb/` itself and `.claude/skills/` holds symlinks into `kb/instructions/`. Do the commands and skills behave the same there? The editable install resolved the library into the source tree in both dry runs.
-- **Skill names.** A `.claude-plugin/plugin.json` in the tree makes Codex prefix skill names (`cp-delivery-probe:delivery-probe-read`), even for plain symlinks. Documentation and invocation guidance must not assume the bare name.
+- **Skill names.** Codex prefixed the linked skills (`cp-delivery-probe:delivery-probe-read`); Claude Code did not. Codex's first run tied the prefix to the tree's `.claude-plugin/plugin.json`. With the plugin layer dropped, the manifest can go. Does Codex then list the bare names?
 - **Windows and macOS.** Not tested. On Windows, link mode is unsupported and symlinks are unreliable. Are directory junctions usable, or is the version-stamped copy needed?
-- **Plugin approval.** In the operator's terminal the interactive prompt offered only "abort"; `--accept-command <sha256>` worked. The cause is unknown, and setup documentation depends on it. The Claude Code rerun's case 6 is pending on this.
 - **Running sessions.** A running Claude Code session listed skills linked after it started. An upgrade inside a running session was not tested in either harness.
 - **Centrally managed settings.** Claude Code needs user-level permission entries. Can setup write them where settings are managed centrally, or must it print them?
 
 ## Next steps
 
-1. Finish the Claude Code rerun's case 6 (the link-mode plugin served from a real `share/` install) and its cleanup.
-2. Agents in other harnesses run the shared probe, as requested in [harness-probe-request.md](./harness-probe-request.md): Gemini CLI, OpenCode, Cursor, Goose, GitHub Copilot, and enterprise harnesses. Enterprise results may come back through the operator, anonymised.
-3. Update [design.md](./design.md) from their results.
+1. Agents in other harnesses run the shared probe, as requested in [harness-probe-request.md](./harness-probe-request.md): Gemini CLI, OpenCode, Cursor, Goose, GitHub Copilot, and enterprise harnesses. Enterprise results may come back through the operator, anonymised.
+2. Update [design.md](./design.md) from their results.
 
 ## Evaluation boundary
 
@@ -65,5 +63,5 @@ Close when the operator decides the design: an adopted design becomes an ADR and
 - [codex-probe-request.md](./codex-probe-request.md) — request to a Codex agent to run the shared probe; Codex appends its reply here
 - [harness-probe-request.md](./harness-probe-request.md) — request to agents in other harnesses, including enterprise ones, to run the shared probe (revision 3)
 - [results-codex.md](./results-codex.md) — Codex's run of the shared probe (2026-09-24), with supplemental findings from its first fixture
-- [results-claude-code.md](./results-claude-code.md) — Claude Code's run of the shared probe (2026-09-24); case 6 pending
+- [results-claude-code.md](./results-claude-code.md) — Claude Code's run of the shared probe (2026-09-24)
 - `results-<harness>.md` — one results file per further harness, from the template
