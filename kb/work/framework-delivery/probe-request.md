@@ -11,7 +11,7 @@ Commonplace is a framework for agent-operated knowledge bases. We are changing h
 
 We cannot test every harness ourselves, and we cannot write a separate install route for each. So the question is not whether our exact files work unchanged in your harness. It is whether **an agent working in your harness, told what the design is for, can make it work there**, adapting where it has to. If it can, the design is good enough for your harness. If it cannot, we need to know which outcome it could not reach.
 
-**Report outcomes, not mechanisms.** Your agent may build whatever workaround your harness needs. Tell us whether each outcome below was reached. You do not have to say how, and you should not include anything confidential.
+**Report outcomes and the size of each workaround, not its mechanism.** Your agent may build whatever workaround your harness needs. We are designing the system and you are giving feedback on it: a part of the design that works only with a large or repeated workaround is a problem we need to see, even though it works. So tell us whether each outcome was reached and how big the workaround was, in the categories below. You do not have to say how it works, and corporate rules may keep you from sharing more; any field can be answered "confidential".
 
 ## What to give the agent
 
@@ -41,9 +41,17 @@ These bind any workaround, because the design depends on them:
 
 ## How to reply
 
-For each outcome 1–5, one of: **reached as supplied**, **reached with a workaround**, **not reached**, or **blocked by policy**. Add the harness name and version, the OS, and the date.
+Give the harness name and version, the OS, and the date. Then, for each outcome 1–5:
 
-Optional, only if you can share it: for a workaround, who has to repeat it (once per machine, once per project, every session), and for an outcome not reached, which step failed. The design weighs a workaround by that cost.
+- **Status:** reached as supplied, reached with a workaround, not reached, or blocked by policy.
+- **For a workaround, its size:**
+  - *Part of the design it changed:* install, the project instruction file or pointer file, permission to read outside the project, skills or stubs, upgrade handling, or other.
+  - *Effort:* one small change (a setting or a line), several changes, or new code or tooling.
+  - *Repeated:* once per machine, once per project, every session, or after every upgrade.
+  - *Who can do it:* the user, or only an administrator or policy owner.
+- **For an outcome not reached or blocked:** the part of the design where it stopped, from the same list.
+
+Anything beyond these categories is welcome but optional. A short table is enough.
 
 - **If you can write to this repository:** put the reply in `results-<harness>-r4.md` in this workshop and add a line under "Replies" below. If you ran the full protocol and can share details, use [probe-package/RESULTS-TEMPLATE.md](./probe-package/RESULTS-TEMPLATE.md).
 - **If you cannot:** send the reply to the operator. Use neutral labels such as `enterprise-A` for anything internal.
@@ -56,4 +64,4 @@ Optional, only if you can share it: for a workaround, who has to repeat it (once
 
 ## Replies
 
-- 2026-09-24 — Claude Code 2.1.281, Linux: all outcomes reached as supplied; full protocol, [results-claude-code-r4.md](./results-claude-code-r4.md)
+- 2026-09-24 — Claude Code 2.1.281, Linux: all outcomes reached as supplied, no workarounds; full protocol, [results-claude-code-r4.md](./results-claude-code-r4.md)

@@ -75,7 +75,7 @@ Without hooks, nothing refreshes the stubs, the generated file, or the read rule
 
 ### What the design assumes about a harness
 
-Replies to the [probe request](./probe-request.md) report outcomes, not mechanisms: an agent in the harness may adapt the design and say only whether each outcome was reached. An outcome that was not reached points to the assumption that failed: outcome 1 (install) to H1, outcome 2 (a named instruction) to H2–H4, outcome 3 (a skill) to H4–H5. Each assumption is listed with what a "no" would change.
+Replies to the [probe request](./probe-request.md) report outcomes and the size of any workaround, not its mechanism: an agent in the harness may adapt the design and say whether each outcome was reached, which part of the design the workaround changed, how much effort it took, how often it repeats, and whether an administrator was needed. A part of the design that needs a large or repeated workaround is a design problem even where it works. An outcome that was not reached points to the assumption that failed: outcome 1 (install) to H1, outcome 2 (a named instruction) to H2–H4, outcome 3 (a skill) to H4–H5. Each assumption is listed with what a "no" would change.
 
 | Assumption | Needed for | If the answer is no |
 |---|---|---|
