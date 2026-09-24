@@ -1,0 +1,32 @@
+---
+description: "Generated memory comparisons from retained main-review evidence"
+type: kb/types/note.md
+traits: [has-comparison]
+---
+
+# Memory mechanisms in agentic systems
+
+Each row uses one main-review result and its stated memory boundary. Values
+carry their evidence basis. Absence, inapplicability, uninspected mechanisms,
+and indeterminate classifications remain distinct. This is the selected
+population, not the historical memory-review corpus.
+
+## code-grounded (4)
+
+| System | Compared boundary | Storage | Read-back | Push selection | Trace learning | Authority | Evidence |
+|---|---|---|---|---|---|---|---|
+| [Apache Maka](../reviews/apache-maka.md) | Retained runtime traces and their model projections; text and provider-native continuation checkpoints; manual MEMORY.md/PENDING.md entries; automatically extracted SQLite memory items and their access metadata; acquired or edited local skills, preferences and turn inventories; archived tool results and delegated-session reads. Static shipped prompt text and uninstalled bundled skills are contextual evidence only. Operator-only recap output is a checked boundary exclusion. External provider internals and deployment outcomes are unavailable. | files, in-memory, sqlite [wired] | pull, push [wired] | coarse, identifier [wired] | yes [wired] | instruction, knowledge, ranking, routing, validation [wired] | [AAS-2026-09-05-apache-maka-06](../../reports/retained/agentic-system-analysis/AAS-2026-09-05-apache-maka-06/result.md) |
+| [GBrain](../reviews/gbrain-garrytan.md) | Retained objects GBrain accumulates or changes through use: brain pages (Markdown files plus DB rows, chunks, embeddings), facts rows and `## Facts` fences, fact withdrawals, takes/take proposals/grade cache/calibration profiles, link and timeline edges, session_context_state, the raw transcript corpus (session-end, compaction-segment and writeback-turn files) and Stop live buffer, dream/think-generated pages, the bootstrap agent-workspace memory files (MEMORY.md, memory/ daily logs, USER.md, SOUL.md) as edited by the agent, brain-resident shared skill revisions, SkillOpt versions/best/proposed/history/rejected buffers and the SKILL.md files SkillOpt commits; plus access metadata (last_retrieved_at, context_volunteer_events). Routes: explicit remember/put_page/Markdown sync/workspace file edits, ambient Stop-hook writeback, compaction checkpoint harvest, session-end corpus plus serve sweep extraction, page-write facts backstop, dream-cycle phases, SkillOpt, shared-skill publish; maintenance by dedup, supersession, TTL, forget/withdrawal, decay-ranking, consolidation, purge; read-back through requested recall/search/query/entity/context_pack/delta/think/synthesize/get_skill and automatic hook push, MCP _meta hot memory, harness file imports and compile-context files. Statically shipped bundled skills, plugin trees and bootstrap templates are delivery artifacts and excluded; the Memorable procedure-extraction implementation is excluded. | files, graph, rdbms, repo, vector [wired] | pull, push [wired] | coarse, identifier, inferred-lexical [wired] | yes [wired] | enforcement, instruction, knowledge, ranking, validation [wired] | [AAS-2026-09-23-gbrain-01](../../reports/retained/agentic-system-analysis/AAS-2026-09-23-gbrain-01/result.md) |
+| [Supermemory](../reviews/supermemory.md) | Publicly represented documents, conversation traces, extracted graph facts, profiles/buckets, virtual memory files and their access metadata/caches; MCP and SDK write/read routes plus committed remote-engine doctrine. Excludes proprietary implementation, model-provider internals, externally linked plugins and hosted-console implementation. | not-determinable | pull, push [wired] | not-determinable | yes [claimed] | knowledge, ranking, routing [claimed] | [AAS-2026-09-21-supermemory-01](../../reports/retained/agentic-system-analysis/AAS-2026-09-21-supermemory-01/result.md) |
+| [WikiSkill (Stahl-G)](../reviews/wikiskill-stahl-g.md) | Product Wiki patterns, human feedback, carried/candidate skills, training outcome/trace artifacts and gate history; research Wiki/index/logs, impacts, skills, raw and compacted trajectories; retained installation backups and their withdrawal route. Static prompts are mechanism evidence, not accumulated memory. Host runtime internals and external datasets/services are excluded. Includes isolated Spreadsheet study Wiki snapshots, candidate/final skill and purpose mappings, compacted traces and TRAIN reference feedback; its single round has no deployed next-round consumer. | files [wired] | pull, push [afforded] | coarse, identifier [wired] | yes [wired] | enforcement, instruction, knowledge, routing, validation [wired] | [AAS-2026-09-17-wikiskill-stahl-g-01](../../reports/retained/agentic-system-analysis/AAS-2026-09-17-wikiskill-stahl-g-01/result.md) |
+
+## doc-grounded (0)
+
+No selected results in this tier.
+
+## Input identities
+
+- `kb/agentic-systems/reviews/apache-maka.md`: `99c3b85eedd1c8ad5b7490148a27b01533759b09a4a53cbb8e724cb98601b5c5`; exact result `kb/reports/retained/agentic-system-analysis/AAS-2026-09-05-apache-maka-06/result.md`: `9752e8525ec9e76d03dbac0934726cecf97263b2a6f092ea5ae413c769db42b4`; source `https://github.com/apache/maka` at `02f97c16d76e644d5b565889701958293ff7b5fb`.
+- `kb/agentic-systems/reviews/gbrain-garrytan.md`: `66a823075bb9726011ab9bfa328eb7a0115251a845ed9b02abb31391d9e9ca34`; exact result `kb/reports/retained/agentic-system-analysis/AAS-2026-09-23-gbrain-01/result.md`: `2e35b7143dc3b883e6a92e7db54035669cfedcf5ec2945693a24542cc5e86dbb`; source `https://github.com/garrytan/gbrain` at `6040075c6cb95be5881cc2e1b76ef7d71f4e5d29`.
+- `kb/agentic-systems/reviews/supermemory.md`: `a850de2528a0c5d2531f7017fefee5958743eee4ac6c50a060e55e007315f528`; exact result `kb/reports/retained/agentic-system-analysis/AAS-2026-09-21-supermemory-01/result.md`: `aa8a44ae7f070b0e9303af00d8dfcdc4d4944e1f259ce2816770722bafffc0aa`; source `https://github.com/supermemoryai/supermemory` at `57b430b5b6a19106a989651f4cde853c05147682`.
+- `kb/agentic-systems/reviews/wikiskill-stahl-g.md`: `1b21fb4b10e27e97b0dca15f18a5794b82408d7ee422654cf555d369bc3eaf64`; exact result `kb/reports/retained/agentic-system-analysis/AAS-2026-09-17-wikiskill-stahl-g-01/result.md`: `d6a4b32fa658039947b437460c8e9e70207ab3e867012f0e0da195f456544c8a`; source `https://github.com/Stahl-G/wikiskill` at `9df975b2145a0e924f344f2a3d116e11d3f025ac`.
