@@ -13,7 +13,7 @@ We cannot test every harness or write an install route for each. So we want to k
 
 ## The task
 
-Use the probe package, revision 5: [probe-package/](./probe-package/PROTOCOL.md), or an archive from the operator if you cannot reach this repository. It is a throwaway package, `cp-delivery-probe`. Its library files carry tokens such as `RETIRE-WIDGET-V1`, so a correct read is easy to check. `cp-delivery-probe-init` writes the project files the design specifies, and `test-project/` is a starting project. [PROTOCOL.md](./probe-package/PROTOCOL.md) is one tested route through the checks; take your own wherever your harness needs it.
+Use the probe package, revision 6: [probe-package/](./probe-package/PROTOCOL.md), or an archive from the operator if you cannot reach this repository. It is a throwaway package, `cp-delivery-probe`. Its library files carry tokens such as `RETIRE-WIDGET-V1`, so a correct read is easy to check. `cp-delivery-probe-init` writes the project files the design specifies, and `test-project/` is a starting project. [PROTOCOL.md](./probe-package/PROTOCOL.md) is one tested route through the checks; take your own wherever your harness needs it.
 
 Reach these outcomes. Check each in a **new session that did not do the adaptation**, with the permissions your users normally have, so the check shows what an ordinary user session would find:
 
@@ -23,6 +23,7 @@ Reach these outcomes. Check each in a **new session that did not do the adaptati
 4. **An upgrade:** after `python3 tools/bump.py 2` and a reinstall, outcomes 2 and 3 report `-V2` tokens, with at most a rerun of init.
 5. **A second project:** outcomes 2 and 3 again, in a new project.
 6. **The skill index alone:** outcome 3 with the skill stubs removed, so only the index in the generated `library.md` can lead to the skill. Skip this if your harness has no native skills; outcome 3 has already tested it.
+7. **A sub-agent:** asked "Run the delivery-probe-delegate check," a session hands one read to a sub-agent and reports `DELEGATED-STEP-V1`. Several Commonplace skills need sub-agents. If your harness cannot start one, the right result is a clean stop that says so.
 
 If your harness loads neither `AGENTS.md` nor `CLAUDE.md`, find what does load standing instructions and put this line there:
 
@@ -42,13 +43,13 @@ These bind any workaround, because the design depends on them:
 
 ## Reply
 
-Give the harness and version, the OS, and the date. For each outcome, say whether it was reached as supplied, reached with a workaround, not reached, or blocked. For a workaround, say how big it was: how much effort, how often it must be repeated, and whether only an administrator can do it. Then describe how it works, as far as policy allows. For an outcome not reached, say where in the design it stopped, and name the boundary if crossing one would have reached it. Also say what loads standing instructions in your harness. Any field may be answered "confidential".
+Give the harness and version, the OS, and the date. For each outcome, say whether it was reached as supplied, reached with a workaround, not reached, or blocked. For a workaround, say how big it was: how much effort, how often it must be repeated, and whether only an administrator can do it. Then describe how it works, as far as policy allows. For an outcome not reached, say where in the design it stopped, and name the boundary if crossing one would have reached it. Also say what loads standing instructions in your harness, and whether an agent can start sub-agents with a fresh context. Any field may be answered "confidential".
 
-Put the reply in `results-<harness>-r5.md` in this workshop and add a line under "Replies", or send it to the operator with internal names replaced by neutral labels such as `enterprise-A`.
+Put the reply in `results-<harness>-r6.md` in this workshop and add a line under "Replies", or send it to the operator with internal names replaced by neutral labels such as `enterprise-A`.
 
 ## Context
 
-Claude Code and Codex reached outcomes 1–5 with revision 4 on Linux ([Claude Code](./results-claude-code-r4.md), [Codex](./results-codex-r4.md)). Outcome 6 and the stop-on-missing-init rule are new in revision 5. Earlier routes and why they were dropped are in [alternatives.md](./alternatives.md).
+Claude Code and Codex reached outcomes 1–5 with revision 4 on Linux ([Claude Code](./results-claude-code-r4.md), [Codex](./results-codex-r4.md)). Outcome 6 and the stop-on-missing-init rule are new in revision 5, and outcome 7 in revision 6. Earlier routes and why they were dropped are in [alternatives.md](./alternatives.md).
 
 ## Replies
 

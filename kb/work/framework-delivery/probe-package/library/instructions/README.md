@@ -5,3 +5,4 @@
 - [shared-step](./shared-step.md) — a step other procedures include
 - [delivery-probe-read](./delivery-probe-read/SKILL.md) — the probe's read-check skill
 - [delivery-probe-library](./delivery-probe-library/SKILL.md) — the probe's router skill
+- [delivery-probe-delegate](./delivery-probe-delegate/SKILL.md) — the probe's sub-agent check skill

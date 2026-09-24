@@ -37,6 +37,7 @@
 | 9 Emulated skill, run 1 | | | |
 | 9 Emulated skill, run 2 | | | |
 | 9 Emulated skill, run 3 | | | |
+| 10 Sub-agent | | | |
 
 ## Modifications to the package
 

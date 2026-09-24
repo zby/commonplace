@@ -12,6 +12,7 @@ Posed by the operator on 2026-09-23. Decide how Commonplace delivers what agents
 - **Init only, per project** (2026-09-24). No per-machine setup command. `commonplace-init` writes everything a project needs.
 - **Skill stubs** (2026-09-24). Each project gets a stub per skill that redirects to the real skill in the installed package. It costs one extra read per skill use; every alternative was worse.
 - **Generated routing file** (2026-09-24). Agents find the library through a gitignored file that init writes with full paths, not through commands.
+- **Sub-agents are required, not emulated** (2026-09-24). Skills that need workers stay unavailable in a harness without sub-agents until the harness provides them.
 - **Plan for harnesses without skills** (2026-09-24). The routing file carries a skill index that emulates the skills mechanism; stubs stay for harnesses with native skills.
 - **No hooks** (2026-09-24). No harness hooks until hooks are standardised. At least one enterprise user runs their own harness.
 - **Harness-neutral base** (2026-09-24). The design rests on files and a project `AGENTS.md`, with Agent Skills as an optional layer above that base. The base must still let an agent find a library instruction that the user names in conversation, outside any skill.
