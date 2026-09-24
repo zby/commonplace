@@ -1,19 +1,19 @@
 ---
 name: cp-skill-write
-description: Write one KB artifact whose intended contribution is already determined, under its collection and type contracts; validate it and hand broader graph discovery to cp-skill-connect.
+description: Write one KB document whose intended contribution is already determined, under its collection and type contracts; validate it and hand broader graph discovery to cp-skill-connect.
 type: kb/types/instruction.md
 user-invocable: true
 allowed-tools: Read, Write, Grep, Glob, Bash, Skill
 context: fork
 model: opus
-argument-hint: "[path | collection | type] [topic or claim/purpose] — an artifact path for editing, or a collection/type/subject for new artifacts"
+argument-hint: "[path | collection | type] [topic or claim/purpose] — a document path for editing, or a collection/type/subject for new documents"
 ---
 
 ## EXECUTE NOW
 
 **Target: $ARGUMENTS**
 
-**Intent.** Produce one KB artifact whose contribution is already determined. When done, it is saved at its resolved path, conforms to its collection and type contracts, has its source-dependent claims grounded, and passes `commonplace-validate`. This skill authors only: link discovery beyond a duplicate guard belongs to `cp-skill-connect`, source records to `cp-skill-ingest`, and verification to a human. The step order binds where it protects the target: the source guard (Step 7) finishes before the first write (Step 8). Wording, and structure within the type contract, are the writer's choice.
+**Intent.** Produce one KB document whose contribution is already determined. When done, it is saved at its resolved path, conforms to its collection and type contracts, has its source-dependent claims grounded, and passes `commonplace-validate`. This skill authors only: link discovery beyond a duplicate guard belongs to `cp-skill-connect`, source records to `cp-skill-ingest`, and verification to a human. The step order binds where it protects the target: the source guard (Step 7) finishes before the first write (Step 8). Wording, and structure within the type contract, are the writer's choice.
 
 All documents in the KB live in a **collection**: a directory under `kb/` with a local `COLLECTION.md`, such as `kb/notes/`, `kb/reference/`, `kb/instructions/`, or an installed library collection like `kb/commonplace/notes/`. Each collection that accepts writes has a `COLLECTION.md` with its purpose, intended contribution, quality goal, and linking conventions.
 
@@ -41,7 +41,7 @@ Read the target collection's `COLLECTION.md` for the collection's writing conven
 
 ### Step 3 - Load The Type Spec
 
-Read the selected type-spec doc. Its frontmatter must include `type: kb/types/type-spec.md`, `name`, `description`, and `schema`. Its body supplies the artifact shape and may include a template block. Follow that body as the structural authoring contract.
+Read the selected type-spec doc. Its frontmatter must include `type: kb/types/type-spec.md`, `name`, `description`, and `schema`. Its body supplies the document shape and may include a template block. Follow that body as the structural authoring contract.
 
 Do not fall back from a missing type path to `note`.
 
@@ -49,14 +49,14 @@ For `text`, write raw markdown with no frontmatter only when the user explicitly
 
 ### Step 4 - Resolve The Intended Contribution
 
-Before drafting, identify from the user's request and the target artifact in edit mode:
+Before drafting, identify from the user's request and the target document in edit mode:
 
 - the intended audience, using the collection default when the task does not narrow it;
-- the governing question, target claim, or practical purpose (for an artifact that directs someone to act, this becomes the intent that opens it; see "Directive text" under Universal Mechanics);
-- what the reader should understand, infer, or do because this artifact exists; and
-- any scope or angle needed to distinguish it from materially different artifacts on the same topic.
+- the governing question, target claim, or practical purpose (for a document that directs someone to act, this becomes the intent that opens it; see "Directive text" under Universal Mechanics);
+- what the reader should understand, infer, or do because this document exists; and
+- any scope or angle needed to distinguish it from materially different documents on the same topic.
 
-The repository and collection contracts constrain the acceptable contribution class, quality bar, and often the default audience. They do not by themselves select an artifact-specific claim or purpose. Resolve that choice from the task, the incumbent artifact, and any retained intent supplied for this write. Treat a context block as retained intent only when it identifies its source, subject, scope, and whether its role is authoritative or advisory. Current user direction prevails. If retained intent conflicts with the incumbent or another applicable input and no explicit precedence resolves the conflict, ask the user rather than silently amending the commission.
+The repository and collection contracts constrain the acceptable contribution class, quality bar, and often the default audience. They do not by themselves select a document-specific claim or purpose. Resolve that choice from the task, the incumbent document, and any retained intent supplied for this write. Treat a context block as retained intent only when it identifies its source, subject, scope, and whether its role is authoritative or advisory. Current user direction prevails. If retained intent conflicts with the incumbent or another applicable input and no explicit precedence resolves the conflict, ask the user rather than silently amending the commission.
 
 Remembered intent may complete a bare request, but it is not meaning contained in that request, a choice licensed by model priors, or evidence that warrants factual claims. Do not add an ad hoc history search to this skill; older interaction history counts only when a memory mechanism supplies it through the retained-intent input.
 
@@ -64,18 +64,18 @@ When those inputs already determine the choices, proceed without a formal brief.
 
 ### Step 5 - Search Before Writing
 
-Write does not run active discovery — that is `cp-skill-connect`'s job. Write authors one artifact and adds only links supplied by the user or already loaded for this write, plus a cheap duplicate guard:
+Write does not run active discovery — that is `cp-skill-connect`'s job. Write authors one document and adds only links supplied by the user or already loaded for this write, plus a cheap duplicate guard:
 
-1. **Near-duplicate check.** Search the target collection for the new artifact's distinctive title terms with `rg` (e.g. `rg -i "key term" kb/notes/ --glob "*.md"`). This is a targeted term search — do **not** enumerate the whole collection; a complete listing costs linear context and is the wrong tool for a single artifact's duplicate check. If a near-duplicate already exists, prefer editing it to creating a second note.
-2. **Context already loaded.** Consider relevant artifacts loaded for this write, including sources and ingests, as link candidates.
+1. **Near-duplicate check.** Search the target collection for the new document's distinctive title terms with `rg` (e.g. `rg -i "key term" kb/notes/ --glob "*.md"`). This is a targeted term search — do **not** enumerate the whole collection; a complete listing costs linear context and is the wrong tool for a single document's duplicate check. If a near-duplicate already exists, prefer editing it to creating a second note.
+2. **Context already loaded.** Consider relevant documents loaded for this write, including sources and ingests, as link candidates.
 3. **User-named targets.** Link targets the user mentions in the prompt.
 
-In edit mode, also run a backlinks lookup on the target artifact — one query, no body search — so edits don't orphan dependents.
+In edit mode, also run a backlinks lookup on the target document — one query, no body search — so edits don't orphan dependents.
 
 This guard is intra-KB only. Do not search the external literature for missing
 prior art and do not infer novelty from the absence of a named source. If the
-user explicitly asks whether an artifact duplicates, restates, or is subsumed
-by external literature, or asks for an artifact disposition on that basis,
+user explicitly asks whether a document duplicates, restates, or is subsumed
+by external literature, or asks for a literature disposition of the document on that basis,
 invoke `cp-skill-write-multistage` with the same target and request. That
 explicit request supplies the confirmation required by Step 4; do not ask the
 user to authorize the handoff again. The multistage skill loads the specialised
@@ -85,7 +85,7 @@ All other discovery — collection-wide description scans, cross-destination pro
 
 ### Step 6 - Draft The Candidate
 
-Follow the type-spec doc and collection conventions. Derive a lowercase-hyphenated filename from `# Title` unless editing an existing file. For typed artifacts, set `type:` to the exact repo-relative type-spec path, not the type name.
+Follow the type-spec doc and collection conventions. Derive a lowercase-hyphenated filename from `# Title` unless editing an existing file. For typed documents, set `type:` to the exact repo-relative type-spec path, not the type name.
 
 Set traits only when clearly warranted. The available traits and their meanings are defined in the target type's spec (e.g. the traits table in `kb/types/note.md`) — take the vocabulary from there, not from a remembered list.
 
@@ -156,7 +156,7 @@ path. This is the first durable target write.
 
 ### Step 9 - Validate
 
-Validate the artifact you wrote or edited:
+Validate the document you wrote or edited:
 
 ```bash
 commonplace-validate path/to/file.md
@@ -168,13 +168,13 @@ Then suggest `cp-skill-connect` as the next step, for the graph discovery that S
 
 ## Universal Mechanics
 
-These apply to all typed artifacts regardless of collection.
+These apply to all typed documents regardless of collection.
 
-**Frontmatter** makes artifacts queryable. No frontmatter means implicit `text`; any file with frontmatter must include a path-valued `type:`. Most library artifacts also need `description` (double-quoted, 50-250 chars), plus optional `traits`, `tags`, and `user-verified`. Never grant user verification implicitly.
+**Frontmatter** makes documents queryable. No frontmatter means implicit `text`; any file with frontmatter must include a path-valued `type:`. Most library documents also need `description` (double-quoted, 50-250 chars), plus optional `traits`, `tags`, and `user-verified`. Never grant user verification implicitly.
 
-**Descriptions** are retrieval filters, not summaries. The test: if an agent searched for this artifact's concept and got 5 results, would this description help pick this one? Paraphrasing the title adds zero retrieval value.
+**Descriptions** are retrieval filters, not summaries. The test: if an agent searched for this document's concept and got 5 results, would this description help pick this one? Paraphrasing the title adds zero retrieval value.
 
-**Directive text.** Apply this whenever an artifact, or a section of one, directs someone else to act: a procedure, skill, plan, request, test protocol, handoff, or message.
+**Directive text.** Apply this whenever a document, or a section of one, directs someone else to act: a procedure, skill, plan, request, test protocol, handoff, or message.
 
 - State the intent before any particular instruction. Say what the result is for or what decision it feeds, what end state counts as done, and which boundaries bind every route.
 - Then give the particular instructions as a supported route. Fix a step, its order, or its method only when a binding reason requires it, such as a dependency, an external commitment, a coordination need, or results that must compare across executors. Otherwise, say that the executor may take another route to the same end state.
@@ -185,7 +185,7 @@ This borrows one idea from *Auftragstaktik* (mission command): when execution wi
 
 **Literal language.** Prefer literal wording when a metaphor or idiom would mainly add flourish, interpretation work, or unintended connotations. Keep figurative wording when it is conventional and precise or clarifies the explanation; an available literal alternative alone does not make a metaphor a problem.
 
-**Vocabulary.** Use the active vocabulary declared in root `AGENTS.md`. When writing or materially editing prose, gloss and link active vocabulary on first meaningful mention when the reader may not know the term. Do not edit otherwise untouched passages only to add vocabulary links. Keep one term for one concept through the artifact: do not vary a word for variety, because in technical prose a changed word reads as a changed referent.
+**Vocabulary.** Use the active vocabulary declared in root `AGENTS.md`. When writing or materially editing prose, gloss and link active vocabulary on first meaningful mention when the reader may not know the term. Do not edit otherwise untouched passages only to add vocabulary links. Keep one term for one concept through the document: do not vary a word for variety, because in technical prose a changed word reads as a changed referent.
 
 **Links.** Use relative markdown paths from the source file. Every link must point to a real file.
 
@@ -195,6 +195,6 @@ The collection's `COLLECTION.md` authorises labels per destination and names the
 
 **Filenames** are lowercase, hyphenated, `.md`, derived from `# Title`, max 70 chars.
 
-**Lineage tracking**: when a focused artifact is worked up from a source, record the dependency in the source's footer — `Derived into:`, `Abstracted into:`, `Operationalized into:`, or `Adapted into:`, whichever the source collection authorizes and [link-vocabulary.md](../../reference/link-vocabulary.md)'s test fits; never stack more than one for the same edge. The produced artifact does not link back.
+**Lineage tracking**: when a focused document is worked up from a source, record the dependency in the source's footer — `Derived into:`, `Abstracted into:`, `Operationalized into:`, or `Adapted into:`, whichever the source collection authorizes and [link-vocabulary.md](../../reference/link-vocabulary.md)'s test fits; never stack more than one for the same edge. The produced document does not link back.
 
 **Renames**: never rename manually. Use `commonplace-relocate-note` to update backlinks.
