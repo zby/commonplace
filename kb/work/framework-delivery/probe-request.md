@@ -58,3 +58,4 @@ Run the shared delivery probe in your harness and record what works, what fails,
 ## Replies
 
 - 2026-09-24 — Claude Code 2.1.281, Linux: [results-claude-code-r4.md](./results-claude-code-r4.md)
+- 2026-09-24 — Codex CLI 0.156.1, Linux: [results-codex-r4.md](./results-codex-r4.md)
