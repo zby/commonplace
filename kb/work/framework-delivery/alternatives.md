@@ -38,6 +38,8 @@ The options considered for delivering the library and skills, and why each was r
 - **`permissions.additionalDirectories` instead of a `Read` rule** for Claude Code. Both removed the read denials ([results-claude-code.md](./results-claude-code.md), case 2). The `Read` rule is read-only; `additionalDirectories` adds the directory to the workspace. A `Read` rule also covers Grep and Glob per Claude Code's documentation; that was not probed.
 - **A reserved `kb/types/` prefix for global types.** It would look like a path but name no file in a project, so an agent that opened it would find nothing. Bare names were chosen instead.
 - **One stub for the whole library instead of one per skill.** Skills would no longer trigger on their own descriptions, and invocation by skill name would be lost.
+- **Making commands fail instead of warn on stale init outputs.** A stale read can happen before any command runs, so failing would not close the gap; detection stays at command time, with the developer procedure to rerun init after a switch (review by a Codex agent, 2026-09-24).
+- **Banning project-owned shared types.** The earlier proposal required a project to copy such a type into each collection. That is a product restriction, not a consequence of package delivery, and the [types note](../../notes/directory-scoped-types-are-cheaper-than-global-types.md) allows global types whose structure is reusable across collections. Projects keep path-form pointers such as `kb/types/my-type.md` (same review).
 - **Committable stubs with a `~/…` path.** The uv tool directory differs on Windows and with a custom `UV_TOOL_DIR`, so this would bring back platform differences.
 
 ## Evidence by probe revision

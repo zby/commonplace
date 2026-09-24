@@ -63,7 +63,7 @@ In Claude Code, reading outside the project needs a permission rule. Init writes
 
 The read rule, the stubs, and the generated file name the same concrete root. The root is stable across upgrades and Python changes. It changes on a switch between an editable and a normal install, and when the uv tool directory changes. Init rewrites all three in the same run.
 
-**Risk after an install-mode switch.** After a switch to an editable install and before init reruns, the stubs and `library.md` still point into `share/`, which uv leaves as a stale snapshot. Revision 4 observed this in Claude Code: a fresh session read the old version with no warning, because no agent route runs a command that could warn. The risk is limited to install-mode switches and uv tool directory changes, which developers make, not to ordinary upgrades, where the path does not move. The developer procedure is therefore: rerun `commonplace-init` immediately after any switch. `commonplace-*` commands and `init --check` report the stale outputs until then.
+**Risk after an install-mode switch.** After a switch to an editable install and before init reruns, the stubs and `library.md` still point into `share/`, which uv leaves as a stale snapshot. Revision 4 observed this in Claude Code: a fresh session read the old version with no warning, because no agent route runs a command that could warn. The risk is limited to install-mode switches and uv tool directory changes, which developers make, not to ordinary upgrades, where the path does not move. The guarantee is therefore narrow: stale outputs are detected when a `commonplace-*` command or `init --check` runs, not when an agent reads files. Making commands fail instead of warn would not change this, because the stale read can happen before any command runs. The developer procedure is: rerun `commonplace-init` immediately after any switch.
 
 ### Keeping init's outputs current
 
@@ -71,7 +71,7 @@ Without hooks, nothing refreshes the stubs, the generated file, or the read rule
 
 - Init is idempotent. On a rerun it overwrites its own stubs, generated file, and read rule, and it leaves the project's own files, skills, and settings alone. This changes today's rule that init never overwrites an existing file; that rule stays for the project's own KB files.
 - A stub is current when its path points at the current library root and its name and description match the real skill. An upgrade leaves stubs current unless a skill was added, removed, or renamed, or its description changed.
-- Every `commonplace-*` command runs one cheap check: it recomputes init's outputs for the current project and compares them with the files. A missing, extra, or stale stub, a stale generated file, or a read rule for another root produces a warning that names the init command. Agents run `commonplace-validate` often, so a stale output surfaces quickly. Both harnesses tested drop a broken skill without an error, so these checks are the only signal.
+- Every `commonplace-*` command runs one cheap check: it recomputes init's outputs for the current project and compares them with the files. A missing, extra, or stale stub, a stale generated file, or a read rule for another root produces a warning that names the init command. This is command-time detection: agents run `commonplace-validate` often, so a stale output surfaces at the next command, but a read before that is not caught. Both harnesses tested drop a broken skill without an error, so these checks are the only signal.
 
 ### Skill names
 
@@ -101,7 +101,7 @@ If init finds a `kb/commonplace/` copy from an earlier release, it tells the ope
 
 **Updating.** After `uv tool upgrade llm-commonplace`, skills, instructions, and types change in place; nothing else is needed. If the upgrade added, removed, or renamed a skill or changed a description, `commonplace-*` commands warn in each project until `commonplace-init` reruns there. After switching between an editable and a normal install, rerun init: it rewrites its outputs for the new root.
 
-**Migrating an existing project.** Install the new tool, delete `kb/commonplace/` and the global type files under `kb/types/`, and rerun `commonplace-init`, which replaces the old `cp-skill-*` copies with stubs. Old copies carry no marker, so init has to recognise them by name the first time. Review baselines whose criteria move to package identities are retired once and rebuilt (see "Review identity").
+**Migrating an existing project.** Install the new tool and rerun `commonplace-init`. Init inventories the old framework copies: `kb/commonplace/`, the global type files under `kb/types/`, and the `cp-skill-*` directories under `.claude/skills/` and `.agents/skills/`. It compares each file with the installed package's version. A file that matches is removed, and a skill copy that matches is replaced by a stub. A file that differs is left in place and listed, because it may carry a local change; a matching name does not show that a file is disposable. The old copies carry no version marker, so a differing file may also be an unmodified file from an older release; the operator decides which. This follows the agent-operability workshop's constraint that no upgrade operation silently overwrites a differing file. Review baselines whose criteria move to package identities are retired once and rebuilt (see "Review identity").
 
 ## Parts the install change depends on
 
@@ -115,7 +115,9 @@ Global types leave `kb/types/`, so their pointers change, and a local schema's `
 
 A global type is named by its bare name, such as `type: note`. A collection-local type keeps its path form (`./`, `../`, or `kb/…`, ending in `.md`). The form alone tells the resolver which kind it has, with no fallback between them. A bare name `X` resolves to `types/X.md` under the library root, which is `kb/types/X.md` in the source repo, so both places write the same pointer. This partly reverses [ADR 018](../../reference/adr/018-types-are-path-references-to-instruction-docs.md). ADR 018 objected to names because a name was looked up first in the collection's `types/` and then in `kb/types/`, so one name could mean different files. That lookup does not return: a bare name only ever means a global type. Global types are a small, closed set that the package owns (9 today). Framework validation rules would be keyed by bare name instead of canonical path ([ADR 048](../../reference/adr/048-imperative-type-rules-dispatch-by-canonical-path.md)). The migration rewrites about 800 `type:` lines mechanically.
 
-**Schema references.** The validator applies the `note-base` rule to every typed artifact, and a local schema never uses `$ref` outside its own `types/` directory. This drops `note.schema.yaml`'s `status:` ban from local types that do not restate it.
+A project that wants its own type shared across collections keeps the path form, for example `type: kb/types/my-type.md`. Bare names are reserved for the package's global types, so the two cannot shadow each other.
+
+**Schema references.** The validator applies the `note-base` rule to every typed artifact, and a local schema never uses `$ref` outside its own `types/` directory. The delivery change must not change which artifacts validate. The migration therefore restates, in each local schema that inherited it, the one restriction `note.schema.yaml` adds over `note-base`: its ban on `status:`. Whether to drop that restriction is a separate decision.
 
 ### How skills name library files
 
@@ -158,8 +160,7 @@ See [alternatives.md](./alternatives.md).
 
 - Changing where the source repo authors its library or types.
 - Distributing grounding evidence for the library's claims, or relaxing grounding requirements for source authoring or project-owned content.
-- Supporting project-owned global types. A project that wants one type in two collections keeps a copy in each, which [rests on](../../notes/directory-scoped-types-are-cheaper-than-global-types.md) the claim that directory-scoped types are cheaper than global types.
-- Backwards compatibility for projects with an existing `kb/commonplace/` copy. Init detects it and tells the operator to delete it.
+- Backwards compatibility for projects with an existing `kb/commonplace/` copy, beyond the migration's preservation rule.
 
 ## Open choices
 
@@ -177,6 +178,9 @@ Adopt when all of the following hold:
 - A transition rehearsal keeps review history, retires only the affected baselines, and builds new ones through completed reviews.
 - Every global `type:` pointer uses its bare name, and the validator rejects path-form pointers to global types.
 - Operators who distribute projects by copying have been told what a copy carries.
+- The built package has no unresolved local links: the prepared reader copy (see "Separable changes") is in place. Mirroring the `kb/` layout fixes links among shipped files, but not links into collections the package omits.
+- A migration rehearsal on a project with a locally edited framework file keeps that file and lists it.
+- At least one real promoted workflow runs end to end in an installed project against the built package, from writing through validation.
 
 Revisit the stubs when the required harnesses can discover skills from a configurable location on every platform. At that point the harnesses can read skills in place like the rest of the library, and the stubs and their checks can be deleted.
 

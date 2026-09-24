@@ -23,7 +23,6 @@ Posed by the operator on 2026-09-23. Decide how Commonplace delivers what agents
 
 - **Codex.** Revision 4 passed every case in Claude Code. Does Codex follow the stubs, and read `library.md` from `AGENTS.md`, equally well? Does it list the stubs under bare names? Does any harness need skill metadata copied into the stub?
 - **The enterprise harness.** Does it read `AGENTS.md` or another instruction file? Can it read files outside the project, and can that be allowed from an uncommitted project file? Does it support Agent Skills, and from which project directories? The operator is asked. If it is built on Codex's app-server, `skills/extraRoots/set` may let it discover the package's skills in place.
-- **Stale snapshot after an install-mode switch.** Until init reruns, agents read the stale `share/` snapshot without a warning (revision 4, case 6). Is "rerun init right after a switch" enough for developers, or should the commands make the stale snapshot fail loudly?
 - **The router skill at scale.** It worked with a small index. Does it still select the right instruction with an index the size of the real library?
 - **The source checkout.** The design has the source repo run init like any project, so its stubs replace the committed symlinks in `.claude/skills/`. Not yet tried on the real repository.
 - **Windows and macOS.** Not tested. Do the full paths that init writes, and reads of files under `share/`, work on both?
@@ -34,7 +33,8 @@ Posed by the operator on 2026-09-23. Decide how Commonplace delivers what agents
 
 1. A Codex agent runs probe revision 4.
 2. Agents in other harnesses run the shared probe, as requested in [harness-probe-request.md](./harness-probe-request.md): Gemini CLI, OpenCode, Cursor, Goose, GitHub Copilot, and enterprise harnesses. Enterprise results may come back through the operator, anonymised.
-3. Update [design.md](./design.md) from their results.
+3. Rehearse end to end in an installed project against a built package: migrate a project that has a locally edited framework file, then run one real promoted workflow through writing and validation.
+4. Update [design.md](./design.md) from the results.
 
 ## Evaluation boundary
 
