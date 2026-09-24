@@ -29,17 +29,19 @@ The design, and the alternatives rejected so far, are in [design.md](./design.md
 
 - **The enterprise harness.** Does it read `AGENTS.md` or another instruction file? Can the agent run shell commands? Can it read files outside the project? Does it support Agent Skills, and from which directories? The operator is asked; the base layer assumes the first three. If it is built on Codex's app-server, `skills/extraRoots/set` may let it discover the package's skills in place with no links; Codex observed discovery only.
 - **The router skill at scale.** It worked with a three-entry index in Codex. Does it still select the right instruction with an index the size of the real library?
-- **The source checkout.** In the source repo the library is `kb/` itself and `.claude/skills/` holds symlinks into `kb/instructions/`. Do the commands and skills behave the same there? The editable install resolved the library into the source tree in both dry runs.
-- **Skill names.** Codex prefixed the linked skills (`cp-delivery-probe:delivery-probe-read`); Claude Code did not. Codex's first run tied the prefix to the tree's `.claude-plugin/plugin.json`. With the plugin layer dropped, the manifest can go. Does Codex then list the bare names?
-- **Windows and macOS.** Not tested. Copying everywhere removes the question of Windows links. Does the base layer (commands printing paths under `share/`, and reads of those paths) work on both?
-- **Stubs.** Do agents in both harnesses reliably follow a stub to the real skill, and resolve the real skill's relative links from its location? Does any harness need skill metadata copied into the stub? Probe revision 4 tests this.
+- **The source checkout.** The design has the source repo run init like any project, so its stubs replace the committed symlinks in `.claude/skills/`. Not yet tried on the real repository.
+- **Skill names.** Codex prefixed symlinked skills while the tree had a `.claude-plugin/plugin.json`; Claude Code listed revision 4's stubs under bare names. Revision 4 has no manifest. Does Codex list the stubs under bare names?
+- **Windows and macOS.** Not tested. Do the full paths that init writes, and reads of files under `share/`, work on both?
+- **Stubs in Codex.** In Claude Code, revision 4 passed every case: stubs, the generated `library.md` (imported and read), one project-level read rule. Does Codex follow the stubs and read `library.md` from `AGENTS.md` equally well? Does any harness need skill metadata copied into the stub?
+- **Stale snapshot after an install-mode switch.** Until init reruns, agents read the stale `share/` snapshot without a warning (revision 4, case 6). Is "rerun init right after a switch" enough for developers, or should the commands make the stale snapshot fail loudly?
 - **Running sessions.** A running Claude Code session listed skills linked after it started. An upgrade inside a running session was not tested in either harness.
 - **Centrally managed settings.** Init writes Claude Code permission entries into the project's settings files. Does a centrally managed policy override them?
 
 ## Next steps
 
-1. Agents in other harnesses run the shared probe, as requested in [harness-probe-request.md](./harness-probe-request.md): Gemini CLI, OpenCode, Cursor, Goose, GitHub Copilot, and enterprise harnesses. Enterprise results may come back through the operator, anonymised.
-2. Update [design.md](./design.md) from their results.
+1. A Codex agent runs probe revision 4.
+2. Agents in other harnesses run the shared probe, as requested in [harness-probe-request.md](./harness-probe-request.md): Gemini CLI, OpenCode, Cursor, Goose, GitHub Copilot, and enterprise harnesses. Enterprise results may come back through the operator, anonymised.
+3. Update [design.md](./design.md) from their results.
 
 ## Evaluation boundary
 
@@ -65,7 +67,8 @@ Close when the operator decides the design: an adopted design becomes an ADR and
 - [probe-results.md](./probe-results.md) — 2026-09-24 probes: a Claude Code link-mode plugin served in place from a package directory, and a Codex skill symlinked into it
 - [probe-package/](./probe-package/PROTOCOL.md) — the shared probe: a throwaway uv package whose data is the plugin-shaped tree, commands for the base layer, a test project, the protocol every harness runs, and a results template. Testers modify a copy and record the modifications
 - [codex-probe-request.md](./codex-probe-request.md) — request to a Codex agent to run the shared probe; Codex appends its reply here
-- [harness-probe-request.md](./harness-probe-request.md) — request to agents in other harnesses, including enterprise ones, to run the shared probe (revision 3)
+- [harness-probe-request.md](./harness-probe-request.md) — request to agents in other harnesses, including enterprise ones, to run the shared probe (revision 4)
 - [results-codex.md](./results-codex.md) — Codex's run of the shared probe (2026-09-24), with supplemental findings from its first fixture
-- [results-claude-code.md](./results-claude-code.md) — Claude Code's run of the shared probe (2026-09-24)
+- [results-claude-code.md](./results-claude-code.md) — Claude Code's run of probe revision 3 (2026-09-24)
+- [results-claude-code-r4.md](./results-claude-code-r4.md) — Claude Code's run of probe revision 4 (2026-09-24): stubs, generated `library.md`, one project-level read rule
 - `results-<harness>.md` — one results file per further harness, from the template

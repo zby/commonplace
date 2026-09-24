@@ -57,7 +57,7 @@ A stub carries a path specific to one machine. That costs nothing extra: stubs a
 
 The layout condition matters. Because the installed tree mirrors `kb/`, a skill's relative link such as `../re-ingest.md` or `../../types/note.md` is correct both in the source checkout and in the installed library. That removes the two-branch wording ("in an installed project use X; in the source checkout use Y") without adding anything. Today's two layouts, `kb/commonplace/instructions/` and `kb/instructions/`, are the reason the branches exist.
 
-Evidence so far: in both harnesses, an agent that read a library file at its real path followed the file's relative link correctly (`retire-widget` → `shared-step`). The relative-link failures in Codex came from symlinked skills, where the agent resolved `..` against the link's location; a stub has no symlink. Not yet tested: whether agents reliably follow the stub's redirect instead of acting on its description alone, and whether any skill metadata that a harness reads from the skill directory itself (frontmatter fields beyond name and description, or files such as Codex's `agents/`) must be copied into the stub.
+Evidence so far: in both harnesses, an agent that read a library file at its real path followed the file's relative link correctly (`retire-widget` → `shared-step`). The relative-link failures in Codex came from symlinked skills, where the agent resolved `..` against the link's location; a stub has no symlink. In Claude Code, probe revision 4 confirmed the stub route: in five skill sessions and a router session, the agent followed the stub to the real skill and resolved all three kinds of relative link from the real location, with no failed read ([results](./results-claude-code-r4.md)). Not yet tested: stubs in Codex, and whether any skill metadata that a harness reads from the skill directory itself (frontmatter fields beyond name and description, or files such as Codex's `agents/`) must be copied into the stub.
 
 ### Why a generated routing file
 
@@ -65,7 +65,7 @@ An agent outside a skill needs the library root. Earlier revisions got it from a
 
 - It costs at most one read per session, the same as one command call, and in Claude Code nothing, because `CLAUDE.md` imports it. After that the root stays in context.
 - It needs no shell, and in Claude Code no permission to run a command.
-- Every route starts from a path init wrote, and init's check reports a path that no longer matches the current root. That covers the editable-switch failure described below.
+- Every route starts from a path init wrote, and init's check reports a path that no longer matches the current root.
 
 The file lists entry points, not every instruction. The library has its own navigation (READMEs and the router skill), so the file goes stale only when the root moves, the same event that makes the stubs stale. The path is machine-specific, so the file is gitignored and `AGENTS.md` only points to it.
 
@@ -75,7 +75,7 @@ In Claude Code, reading outside the project needs a permission rule. In `default
 
 The read rule, the stubs, and the generated file name the same concrete root. The root is stable across upgrades and Python changes. It changes on a switch between an editable and a normal install, and when the uv tool directory changes. Init rewrites all three in the same run.
 
-A root that the rule does not cover is worse than a denial. In one Claude Code run after a switch to an editable install, the agent was denied the source-tree file. It then followed a symlinked skill's relative link into `share/` and read the stale shared-data snapshot. A second run under the same conditions stopped without an answer. In this design the same failure would need a stub or a generated file that still points into `share/` after the switch. The check below reports that case, and one init rerun fixes it.
+A root that the rule does not cover is worse than a denial. In one Claude Code run after a switch to an editable install, the agent was denied the source-tree file. It then followed a symlinked skill's relative link into `share/` and read the stale shared-data snapshot. A second run under the same conditions stopped without an answer. This design removes the denial but keeps a quieter form of the risk. After a switch to an editable install and before init reruns, the stubs and `library.md` still point into `share/`, which uv leaves as a stale snapshot. Revision 4 observed this in Claude Code: a fresh session read the old version with no warning, because no agent route runs a command that could warn. The risk is limited to install-mode switches and uv tool directory changes, which developers make, not to ordinary upgrades, where the path does not move. The developer procedure is therefore: rerun `commonplace-init` immediately after any switch. `commonplace-*` commands and `init --check` report the stale outputs until then.
 
 ### Keeping init's outputs current
 
