@@ -39,7 +39,7 @@ Decided and adopted on 2026-09-25 as [ADR 086](../../reference/adr/086-projects-
 1. **Release.** Bump the version and publish to PyPI, the only channel; then install from PyPI on a clean machine, including macOS and Windows where possible, and run `commonplace-init` and `commonplace-init --check` in a new project.
 2. **Probe follow-ups.** Claude Code and Codex run the cases added since revision 4: 8 (the stop-on-missing-init rule), 9 (a skill reached through the index alone), and 10 (a sub-agent). Agents in other harnesses answer the same [probe request](./probe-request.md): Gemini CLI, OpenCode, Cursor, Goose, GitHub Copilot, and enterprise harnesses; enterprise results may come back through the operator, anonymised. Findings that change the decision amend ADR 086.
 3. **Sub-agent emulation.** When an emulation is chosen from the probe results, update `cp-skill-ingest` to accept it. Its rule allows only a harness-provided sub-agent and forbids launching the harness CLI as a worker. The other skills that need workers (`cp-skill-write-multistage`, `cp-skill-revise-autoreason`, `analyse-agentic-system`) are checked for the same assumption in the same change.
-4. **Coupled workshops.** Tell the two workshops under Coupling that the library copy is gone, so they can narrow or close their items.
+4. **Coupled workshops.** Done 2026-09-25: mailbox messages in `kb/messages/` ask both workshops under Coupling to reassess the items that assumed a library copy and to reply. Close this item when both replies arrive or their workshops close.
 
 ## Evaluation boundary
 
