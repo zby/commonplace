@@ -8,8 +8,8 @@ tags: []
 
 **Status:** workshop draft; not accepted
 **Date:** 2026-09-25
-**Amends:** [ADR 086](../../reference/adr/086-projects-read-the-library-from-the-installed-package.md) (bare global type names; project-shared types stay allowed), [ADR 087](../../reference/adr/087-source-and-report-types-are-global-library-types.md) (the one permitted snapshot rewrite), and [ADR 068](../../reference/adr/068-collection-contracts-stop-enumerating-available-types.md) (type eligibility)
-**Restores:** the path-valued `type:` of [ADR 018](../../reference/adr/018-types-are-path-references-to-instruction-docs.md), for every type
+**Amends:** [ADR 086](./086-projects-read-the-library-from-the-installed-package.md) (bare global type names; project-shared types stay allowed), [ADR 087](./087-source-and-report-types-are-global-library-types.md) (the one permitted snapshot rewrite), and [ADR 068](./068-collection-contracts-stop-enumerating-available-types.md) (type eligibility)
+**Restores:** the path-valued `type:` of [ADR 018](./018-types-are-path-references-to-instruction-docs.md), for every type
 **Promotion condition:** accept only with the implementation that makes the
 resolver, the collision check, the emitters, init's migration, and the specs,
 contracts, and skills that teach the form operative. Allocate the ADR number
