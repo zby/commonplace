@@ -30,7 +30,7 @@ Two accounts fit week 1 equally well:
 
 Under both accounts the fix passed its accepting metric. So the record of accepted changes looks the same under both, however long it grows. Every entry in it passed its own check under either hypothesis.
 
-The reason is that the accepting metric and the compounding claim test different things. The accepting metric checks whether the change achieved its immediate target. The compounding claim says that the retained benefit helped produce a later improvement by making that work cheaper, broader, more reliable, or less dependent on human judgment. This has the shape of [a proximate target's linking claim](./a-proximate-target-is-checked-for-achievement-not-for-warrant.md). The recipe can be measurably better at finding notes while the next diagnosis costs exactly what the last one did. A benchmark increase is evidence about the accepted change, not yet evidence about the productivity of the improvement pathway.
+The reason is that the accepting metric and the compounding claim test different things. The accepting metric checks whether the change achieved its immediate target. The compounding claim says that the retained benefit helped produce a later improvement by making that work cheaper, broader, more reliable, or less dependent on human judgment. This has the shape of [a proximate target's linking claim](./a-proximate-target-is-checked-for-achievement-not-for-warrant.md). The recipe can be measurably better at finding notes while the next diagnosis costs exactly what the last one did. A benchmark increase is evidence about the accepted change, not yet evidence about the productivity of later improvement work.
 
 ## Requirement 1: look at a later improvement episode
 
@@ -47,11 +47,11 @@ Re-running "does the recipe find the missed note" in week 5 only re-confirms epi
 | More reliable | Share of episodes completing without later retraction or repair of what they accepted |
 | Broader | Classes of artifact an episode can change without bespoke human instruction |
 | Reinvestment | Saved time, compute, or judgment that is subsequently spent on improvement work |
-| Maintenance debit | Work performed only to keep the retained artifact layer current |
+| Maintenance debit | Work performed only to keep the retained artifacts current |
 
 In the example, the natural measures are the turns episode 2 needed and the number of times a human had to point the agent to a note.
 
-Human decisions are the load-bearing denominator in a human-inclusive loop because [automation changes what a fixed amount of judgment buys](./increasing-computational-autonomy-relocates-human-effort.md). Maintenance is easily omitted because it belongs to no single episode. An artifact layer whose upkeep consumes the effort it saves may show a gross gain and no net gain.
+Human decisions are the load-bearing denominator in a human-inclusive loop because [automation changes what a fixed amount of judgment buys](./increasing-computational-autonomy-relocates-human-effort.md). Maintenance is easily omitted because it belongs to no single episode. A set of retained artifacts whose upkeep consumes the effort it saves may show a gross gain and no net gain.
 
 ## Requirement 3: connect the two with a causal trace
 
@@ -71,16 +71,16 @@ The trace is indirect when the earlier change helps by freeing resources that im
 
 This mechanism assumes that such a path exists and that another bottleneck does not fix improvement throughput. A fixed budget or an unspent saving can satisfy the first link while leaving the other two absent. If the hour goes to another project, or if review bandwidth caps how many improvements land regardless, the fix saved time but did not feed later improvement. Indirect reinvestment therefore needs the resource path to be observed rather than assumed.
 
-### What the protocol combines
+### What the test combines
 
-The protocol combines a displaced measure with an uptake or reinvestment trace. A changed artifact that later work never uses contributes nothing through the direct path. A cost curve without either kind of trace supports correlation, not the claimed feedback.
+The test combines a displaced measure with a direct or indirect trace. A changed artifact that later work never uses contributes nothing through the direct path. A cost curve without either kind of trace supports correlation, not the claimed feedback.
 
 ## Three baselines remove different explanations
 
 A trace shows that the later episode used the earlier change. A baseline shows how much that use mattered. Each baseline removes a different alternative explanation for the 12-versus-30 difference.
 
-- **Frozen-artifact variant.** Replay the later episode with the artifact layer pinned at the earlier snapshot. In the example, rerun episode 2 with the old recipe. This tests whether the retained change contributed anything.
-- **Stronger base model with a thin or absent artifact layer.** This tests whether a newer model would have supplied the same capability unprompted, for example by searching list-form tags without being told to. Because public artifacts may enter later training data, the design needs post-cutoff tasks, checks for layer-specific reproduction, or a private-corpus arm.
+- **Frozen-artifact variant.** Replay the later episode with the retained artifacts pinned at the earlier snapshot. In the example, rerun episode 2 with the old recipe. This tests whether the retained change contributed anything.
+- **Stronger base model with few or no retained artifacts.** This tests whether a newer model would have supplied the same capability unprompted, for example by searching list-form tags without being told to. Because public artifacts may enter later training data, the design needs post-cutoff tasks, checks for reproduction specific to the retained artifacts, or a private-corpus arm.
 - **Simpler memory system.** Compare against an append-only log with no types, gates, or review to distinguish structured retention from bare persistence.
 
 The comparisons must include evaluation, maintenance, and human judgment on the cost side. They should also be repeated across corpus sizes and model strengths: an advantage observed at one point may disappear as either grows.
@@ -106,9 +106,9 @@ Uptake, displaced gain, and attribution are joint requirements, not steps taken 
 
 ### HyperAgents shows one bundled cross-domain contribution
 
-The [HyperAgents transfer experiment](https://ar5iv.labs.arxiv.org/html/2603.19461#52-improving-the-ability-to-improve), summarized in the [ingest](../sources/hyperagents.ingest.md), comes close to this protocol. The authors selected one transfer hyperagent from each of five joint paper-review and robotics runs, moved them into unseen math grading, and ran 50 later agent-generation steps with DGM-H without self-improvement. In that baseline the meta agent that modifies hyperagents is fixed for the entire run. Median Improvement@50 reached 0.630 (95% bootstrap CI 0.540–0.630), significantly above the initial hyperagent.
+The [HyperAgents transfer experiment](https://ar5iv.labs.arxiv.org/html/2603.19461#52-improving-the-ability-to-improve), summarized in the [ingest](../sources/hyperagents.ingest.md), comes close to this test. The authors selected one transfer hyperagent from each of five joint paper-review and robotics runs, moved them into unseen math grading, and ran 50 later agent-generation steps with DGM-H without self-improvement. In that baseline the meta agent that modifies hyperagents is fixed for the entire run. Median Improvement@50 reached 0.630 (95% bootstrap CI 0.540–0.630), significantly above the initial hyperagent.
 
-The uptake is direct: the transferred improvement procedure generates the later agents. The measure is displaced to a new domain rather than reusing the source-run score. This establishes one cross-domain link in which an earlier retained improver helps produce later improvements. It does not isolate which bundled task- and meta-agent changes caused the gain. Continued evolution from transferred rather than fresh hyperagents reached 0.640 versus 0.610, but the difference was not statistically significant, so sustained compounding remains unestablished ([HyperAgents experiment (snapshot required)](../sources/hyperagents.ingest.md)).
+The uptake is direct: the transferred improvement procedure generates the later agents. The measure is displaced to a new domain rather than reusing the source-run score. This establishes one cross-domain link in which an earlier retained improvement procedure helps produce later improvements. It does not isolate which bundled task- and meta-agent changes caused the gain. Continued evolution from transferred rather than fresh hyperagents reached 0.640 versus 0.610, but the difference was not statistically significant, so sustained compounding remains unestablished ([HyperAgents experiment (snapshot required)](../sources/hyperagents.ingest.md)).
 
 ### Agent Optimizers stops before attribution
 
@@ -126,14 +126,14 @@ The study supports the outcome comparison through controlled evolver-agent cross
 
 The update and benefit metrics remain relative to the tested pairings, while prompts, editable surfaces, task streams, and anchor sets stay fixed. The measurements localize shortfalls within that decomposition.
 
-Compounding adds a distinct final edge: task benefit → causal contribution to a later improvement episode. Harness benefit is therefore necessary for compounding through a task-side gain, but it is not sufficient. The final edge can close when the later improver directly takes up the benefit, or when an observed allocator makes resources freed or preserved by the benefit available to improvement work and later search consumes them. The study does not observe this final feedback edge.
+Compounding adds a distinct final step: task benefit → causal contribution to a later improvement episode. Harness benefit is therefore necessary for compounding through a task-side gain, but it is not sufficient. The final step can close when the later improvement episode directly takes up the benefit, or when an observed allocator makes resources freed or preserved by the benefit available to improvement work and later search consumes them. The study does not observe this final feedback step.
 
 ## Scope
 
 - One later episode can provide local evidence of compounding; several successive episodes show whether it is sustained over time.
-- A null result still leaves real accumulated improvement. The protocol distinguishes retained gains from gains that help produce further ones.
+- A null result still leaves real accumulated improvement. The test distinguishes retained gains from gains that help produce further ones.
 - Human-inclusive samples are small and heterogeneous, so matched episodes are usually stronger than a fitted aggregate trend.
-- A measured contribution can still be bad policy if pathway investment displaces more valuable task improvement.
+- A measured contribution can still be bad policy if investment in improvement displaces more valuable task improvement.
 - Nothing here decides whether the earlier change should have been accepted. Acceptance remains bounded by its own warrant; this note constrains what the acceptance record can later support.
 
 ## Open Questions
@@ -146,11 +146,11 @@ Compounding adds a distinct final edge: task benefit → causal contribution to 
 
 Relevant Notes:
 
-- [Improvements can accumulate without compounding](./improvements-can-accumulate-without-compounding.md) — grounds: supplies the feedback claim this protocol tests
+- [Improvements can accumulate without compounding](./improvements-can-accumulate-without-compounding.md) — grounds: supplies the feedback claim this test checks
 - [A proximate target is checked for achievement, not for warrant](./a-proximate-target-is-checked-for-achievement-not-for-warrant.md) — grounds: explains why the accepting metric cannot test the later linking claim
 - [Accumulation counts dependence through the retained result, not through the evidence it caused](./accumulation-counts-dependence-through-the-retained-result.md) — grounds: supplies the substitution test for direct uptake
 - [Increasing computational autonomy relocates human effort to the frontier instead of reducing it](./increasing-computational-autonomy-relocates-human-effort.md) — grounds: explains the human-decision denominator
-- [Measuring autonomy well enough to see it improve is an open problem](./measuring-autonomy-well-enough-to-see-it-improve-is-an-open-problem.md) — extends: supplies the commensurability obstacle this protocol works around with matched episodes
+- [Measuring autonomy well enough to see it improve is an open problem](./measuring-autonomy-well-enough-to-see-it-improve-is-an-open-problem.md) — extends: supplies the commensurability obstacle this test works around with matched episodes
 - [Scaling absorbs scaffolding at fixed difficulty, not at the frontier](./scaling-absorbs-scaffolding-at-fixed-difficulty-not-at-the-frontier.md) — grounds: motivates the stronger-model baseline
 - [An experiment identifies only the contrast it actually runs](./an-experiment-identifies-only-the-contrast-it-actually-runs.md) — grounds: explains why an instruction-present adherence judgment is not a causal uptake effect and why bundle comparisons cannot isolate a component
 - [Ingest: HyperAgents](../sources/hyperagents.ingest.md) — evidenced-by: freezes transferred improvement machinery in a new domain and measures its later agent-generation productivity
@@ -160,4 +160,4 @@ Relevant Notes:
 - [Warranted autonomy is bounded by oracle domain](./warranted-autonomy-is-bounded-by-oracle-domain.md) — contrasts: bounds what may run unattended rather than what later evidence establishes
 - [Commonplace as a reflective self-improving system](./evidence/commonplace-as-a-reflective-system.md) — evidenced-by: supplies human-inclusive candidate episodes whose compounding contribution remains unmeasured
 - [Ablation baselines for the declared objective](../reference/proposals/ablation-baselines-for-the-declared-objective.md) — see-also: supplies objective-level ablation designs complementary to these later-episode comparisons
-- [Citing retained theory at the decision point is a mediation trace](./citing-retained-theory-at-the-decision-point-is-a-mediation-trace.md) — extends: the cheap uptake side of the causal trace this protocol requires, and what a citation alone leaves open
+- [Citing retained theory at the decision point is a mediation trace](./citing-retained-theory-at-the-decision-point-is-a-mediation-trace.md) — extends: the cheap uptake side of the causal trace this test requires, and what a citation alone leaves open
