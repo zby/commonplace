@@ -22,39 +22,59 @@ what separates a builder from gradient descent.
 
 ## Decisions so far (operator, 2026-09-25)
 
+Decision numbers D1–D8 refer to the
+[consumer inventory](./consumer-inventory.md).
+
 - Define the term in Popper's vocabulary; list the KB's additions as such.
 - Reflective and autonomous are qualifiers, not conditions.
-- Direction under this workshop, pending the definition's approval:
-  retire `conjectural-learning.md`; fold the reflective and autonomous
-  definitions into the qualifiers; move the externally tested case and the
-  seed, extension, and intervention accounting into the testing article,
-  their main consumer. This reverses the 2026-09-21 workshop decisions that
-  kept learner and builder apart and made criticism optional for a builder.
+- Retire `conjectural-learning.md`, `reflective-theory-builder.md`,
+  `autonomous-theory-builder.md`, and `externally-tested-theory-builder.md`;
+  the qualifiers absorb the reflective and autonomous definitions. This
+  reverses the 2026-09-21 workshop decisions that kept learner and builder
+  apart and made criticism optional for a builder.
 - Whole-theory rejection, and rebuilding from retained criticism (D3), are
   inside. Addressability is graded: localization (some unit carries content)
   is condition 1, finer grades are a design commitment. A model replaced
   whole is an addressable part of the machinery.
-- D4 (inventory): `conjectural-learning-checks.md` is replaced by
-  [theory-builder-checks.md](./theory-builder-checks.md), drafted here and
-  promoted with the definition.
-
-## Open
-
-- Whether the article series keeps "conjectural learning" as informal
-  wording or is retitled.
-- Where the learning-claim checks used by `assess-learning-claims-during-ingest.md`
-  and the analyse-agentic-system skill go once `conjectural-learning.md` is
-  retired (proposed: judge outside systems condition by condition against the
-  new definition).
+- Criticism aimed at what localized units say separates a builder from
+  gradient descent; critique applied through weights is outside.
+- D1: retitle the three notes named for conjectural learning (the research
+  companion, the precedents note, the rules-weights evidence note). New
+  titles come to the operator for approval; the companion's claim reverses.
+- D2: retitle the article series away from "conjectural learning"; redirects
+  keep old links working.
+- D4: `conjectural-learning-checks.md` is replaced by
+  [theory-builder-checks.md](./theory-builder-checks.md), promoted with the
+  definition.
+- D5: split the externally tested case. What a claim must supply for itself
+  goes to `a-claim-without-external-assessment-carries-three-obligations.md`;
+  the evaluation protocol, seed, extension, and intervention accounting go to
+  the testing article.
+- D6: generated reviews and retained results keep their link bytes and rely
+  on redirects. The concurrent analysis batch is not paused; its output is
+  treated as frozen under the old wording.
+- D7: re-judge all source ingests condition by condition against the new
+  definition, in batches delegated to subagents; swapping links alone is not
+  enough.
+- D8: restore "revision need not be small" (done) and "retention is the
+  builder's, not the interpreter's" (done, in Boundary).
+- Outside-system checks: `assess-learning-claims-during-ingest.md` and the
+  analyse-agentic-system skill judge systems condition by condition against
+  the new definition.
 
 ## Steps
 
-1. Draft [theory-builder.md](./theory-builder.md) — done; awaiting operator review.
-2. After approval: consumer inventory and edit plan for the builder family
-   and `conjectural-learning.md` consumers, for operator approval before any
-   batch edit. Frozen records (retained analysis results, the boundary-case
-   report, messages) keep their content; only links change.
-3. Apply, validate, close.
+1. Draft [theory-builder.md](./theory-builder.md) and its
+   [checks](./theory-builder-checks.md) — done.
+2. Refresh the [consumer inventory](./consumer-inventory.md) against the
+   current draft and the decisions above — next. The first version was
+   written against the five-condition draft, so its predicted verdict flips
+   are stale.
+3. Operator approves the refreshed edit plan, including D1 and D2 titles.
+4. Apply in the inventory's order: receiving sections, definitions, skills
+   and types, notes and articles, ingest re-judging, links and redirects,
+   frozen records last. Validate.
+5. Close: delete this directory and its index entry.
 
 ## Closes when
 

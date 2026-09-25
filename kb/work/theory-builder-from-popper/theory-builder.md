@@ -107,6 +107,10 @@ the builder unless they perform one of these operations. The boundary follows
 the operation, not the person, so a claim about a builder declares the
 boundary it assumes.
 
+Retention is the builder's, not the interpreter's: a model may propose and
+evaluators may assess, but what is kept for later work is decided by the
+builder's process.
+
 The builder is identified by its continuing process, not by any component.
 Every theory, procedure, and model in it may be replaced over time through
 its own criticism and revision. A change installed from outside that process
