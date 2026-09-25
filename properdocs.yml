@@ -14,6 +14,7 @@ exclude_docs: |
   work/review-revise-gated/target.md
   work/review-revise-gated/gates/**
   work/review-revise-gated/run-08/**
+  work/framework-delivery/staged/**
 theme:
   name: mkdocs
 extra_css:
