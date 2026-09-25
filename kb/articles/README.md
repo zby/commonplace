@@ -31,7 +31,7 @@ question. The series proposes Commonplace's experiments; it reports no
 completed experimental result from that program. The survey discusses results
 reported by other systems.
 
-- [Building a Theory Builder from Today's LLMs](./conjectural-learning-with-fixed-models.md) — the lead. It states the bet: a fully automated theory builder, a Popperian cycle of problem, tentative solution, error elimination, and revised problem over explicit revisable theories, can be built with today's fixed-weight LLMs. It gives the conjectured payoff of explicit learned state and its costs, argues compatibility with the Bitter Lesson, and states the two-part test that would count as learning. Testing, bootstrapping from Commonplace, and the software-house arrangement each point to a supplement.
+- [Building a Theory Builder from Today's LLMs](./building-a-theory-builder-from-todays-llms.md) — the lead. It states the bet: a fully automated theory builder, a Popperian cycle of problem, tentative solution, error elimination, and revised problem over explicit revisable theories, can be built with today's fixed-weight LLMs. It gives the conjectured payoff of explicit learned state and its costs, argues compatibility with the Bitter Lesson, and states the two-part test that would count as learning. Testing, bootstrapping from Commonplace, and the software-house arrangement each point to a supplement.
 
 The supplements, in the order a reader is likely to want them:
 

@@ -108,7 +108,7 @@ looks at sentences will miss them.
 
 The operator's reading, 2026-09-05: this workshop is exactly the learning
 mechanism the [training
-article](../../articles/conjectural-learning-with-fixed-models.md)
+article](../../articles/building-a-theory-builder-from-todays-llms.md)
 proposes. Fixed model weights cannot supply this kind of fine-tuning of
 texts, because what counts as a good fix is specific to this KB's texts: its
 conventions, its terms, its readers, and one author's judgment of when a

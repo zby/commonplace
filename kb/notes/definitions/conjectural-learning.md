@@ -165,7 +165,7 @@ attempts to learn.
   criticism of them. The instance shows that the unit is the whole system and
   that weight change in a component does not decide classification. It is the
   familiar case the [lead
-  article](../../articles/conjectural-learning-with-fixed-models.md) opens
+  article](../../articles/building-a-theory-builder-from-todays-llms.md) opens
   with.
 - **A theory criticized and replaced whole.** Inside when the criticism bears
   on its content and the replacement would guide later action. Separately

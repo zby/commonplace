@@ -21,7 +21,7 @@ source_notes:
 > **Rewrite plan, not the article.** The previous draft of this supplement is
 > superseded and stays in git history at commit `6d39a12f`. This page holds
 > the plan for its replacement, in the compact form of
-> [Building a Theory Builder from Today's LLMs](./conjectural-learning-with-fixed-models.md).
+> [Building a Theory Builder from Today's LLMs](./building-a-theory-builder-from-todays-llms.md).
 > Comments on the plan are welcome on
 > [the repository's GitHub Discussions page](https://github.com/zby/commonplace/discussions).
 

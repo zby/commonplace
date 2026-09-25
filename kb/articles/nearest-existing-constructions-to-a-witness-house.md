@@ -20,7 +20,7 @@ source_notes:
 
 Existing self-improving systems already report gains from retained knowledge
 and revised skills. They also supply mechanisms for diagnosis, criticism,
-revision, and reuse. [Our program](./conjectural-learning-with-fixed-models.md)
+revision, and reuse. [Our program](./building-a-theory-builder-from-todays-llms.md)
 asks two separate questions of each system. Is it a theory builder, a system
 that states its theories, acts on them, criticizes what they say, and lets
 the result of criticism shape its next conjecture? And does holding and criticizing those

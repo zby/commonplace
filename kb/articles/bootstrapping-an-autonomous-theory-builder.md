@@ -27,7 +27,7 @@ source_notes:
 > and counterexamples are welcome on
 > [the repository's GitHub Discussions page](https://github.com/zby/commonplace/discussions).
 
-A fully automated [theory builder](./conjectural-learning-with-fixed-models.md)
+A fully automated [theory builder](./building-a-theory-builder-from-todays-llms.md)
 is not a builder without people. It is one in which computation performs
 every internal role in building theories: diagnosing failures, producing and
 evaluating revisions, choosing which theory to keep, and repairing the
