@@ -1,11 +1,12 @@
 ---
-description: "Rewrite plan for the software-house supplement: intent, end state, constraints, inputs, and open choices for a compact article on the automated software house as a second, harder test of conjectural learning"
+description: "Rewrite plan for the software-house supplement: intent, end state, constraints, inputs, and open choices for a compact article on the automated software house as a second, harder test of a theory builder"
 type: kb/articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
 source_notes:
   - kb/notes/definitions/software-house.md
-  - kb/notes/definitions/externally-tested-theory-builder.md
+  - kb/notes/definitions/theory-builder.md
+  - kb/notes/a-claim-without-external-assessment-carries-three-obligations.md
   - kb/notes/definitions/representational-form.md
   - kb/notes/naur-equates-machine-execution-with-formulated-criteria.md
   - kb/notes/naurs-compiler-case-tests-one-historically-bounded-documentation-and-consumption-system.md
@@ -15,12 +16,12 @@ source_notes:
   - kb/notes/a-fixed-model-house-must-retain-missing-procedures-for-theory-use.md
 ---
 
-# An Automated Software House as a Second Test of Conjectural Learning
+# An Automated Software House as a Second Test of a Theory Builder
 
 > **Rewrite plan, not the article.** The previous draft of this supplement is
 > superseded and stays in git history at commit `6d39a12f`. This page holds
 > the plan for its replacement, in the compact form of
-> [Conjectural Learning with Today's LLMs](./conjectural-learning-with-fixed-models.md).
+> [Building a Theory Builder from Today's LLMs](./conjectural-learning-with-fixed-models.md).
 > Comments on the plan are welcome on
 > [the repository's GitHub Discussions page](https://github.com/zby/commonplace/discussions).
 
@@ -32,8 +33,8 @@ second arrangement, an automated software house, and to say why it is worth
 keeping beside the first: **software gives the program a stronger falsifier
 than a knowledge base does, at the price of a harder claim.** A researcher
 who has read the lead should finish this article knowing what the
-software-house conjecture asserts, why an automated house is a conjectural
-learner and not just a coding agent, what a witness would have to show, and
+software-house conjecture asserts, why an automated house is a theory
+builder and not just a coding agent, what a witness would have to show, and
 why the arrangement is a companion rather than the main path.
 
 ## End state
@@ -47,7 +48,7 @@ technical reader with no KB context can restate as four claims:
    stated, with its working standard: at least as well as a house with
    people in its internal production roles, on the same requests and
    resources.
-2. **Why it is a test of conjectural learning.** The retained theory is
+2. **Why it is a test of a theory builder.** The retained theory is
    Naur's program theory, the account of what the program is for and how
    it is built, held by whoever maintains it. Naur did not show that only
    people can hold it; he equated machine execution with formulated
@@ -57,9 +58,10 @@ technical reader with no KB context can restate as four claims:
    cycle with software failures as the error-elimination step.
 3. **Why the falsifier is stronger.** Failing tests, broken builds, and
    rejected releases are external, fast, and not judged by the house's own
-   evaluators. This supplies what the externally tested builder definition
-   requires without the consuming-project arrangement the knowledge base
-   needs. The price: open-ended coherent change is a harder claim than
+   evaluators. These are the three items of full external assessment (an
+   external falsifier, an external objective, and an outcome level
+   independent of the builder's evaluators), supplied without the
+   consuming-project arrangement the knowledge base needs. The price: open-ended coherent change is a harder claim than
    knowledge delivery, and no finite run establishes it.
 4. **What a witness must show.** The four conditions, holding and
    application, coherent revision, automated continuation, and practical
@@ -103,10 +105,12 @@ rewritten to match.
   stay at their addresses with their banners and are not touched.
 - The nearest-constructions supplement, for the one-sentence survey
   conclusion.
-- The software-house and externally-tested-builder definitions for claims
-  1 and 3; the two Naur notes and the program-theory note for claim 2; the
-  missing-procedures note for why a fixed-model house must retain
-  procedures outside its weights.
+- The software-house and theory-builder definitions for claims 1 and 2;
+  the note on what a claim without external assessment must supply, and the
+  testing supplement's evidence-interface section, for claim 3; the two
+  Naur notes and the program-theory note for claim 2; the missing-procedures
+  note for why a fixed-model house must retain procedures outside its
+  weights.
 
 ## Choices left to the writer
 

@@ -19,7 +19,7 @@ source_notes:
   - kb/notes/citing-retained-theory-at-the-decision-point-is-a-mediation-trace.md
 ---
 
-# Testing Conjectural Learning
+# Testing Whether a Theory Builder Learns
 
 > **Draft.** The claims and structure of this article may change. Comments
 > and counterexamples are welcome on

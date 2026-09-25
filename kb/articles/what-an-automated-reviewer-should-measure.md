@@ -8,7 +8,7 @@ source_notes:
   - kb/notes/reverse-compression-is-when-llm-output-expands-without-adding.md
   - kb/notes/warranted-reader-update-is-the-objective-of-substantive-writing.md
   - kb/notes/definitions/addressable-theory.md
-  - kb/notes/definitions/conjectural-learning.md
+  - kb/notes/definitions/theory-builder.md
   - kb/notes/definitions/reach-assessment.md
   - kb/notes/first-principles-reasoning-selects-for-explanatory-reach-over.md
   - kb/notes/the-augmentation-automation-boundary-is-discrimination-not-accuracy.md
@@ -241,8 +241,8 @@ structure—the failure called [reverse
 compression](../notes/reverse-compression-is-when-llm-output-expands-without-adding.md).
 Gain per token alone would hide the trade-off between total benefit and cost.
 
-This experiment connects to [conjectural learning with fixed
-models](./conjectural-learning-with-fixed-models.md): the research arrangement
+This experiment connects to [building a theory builder from today's
+LLMs](./conjectural-learning-with-fixed-models.md): the research arrangement
 tests whether retained material changes later behaviour while weights remain
 fixed. This experiment tests one artifact's effect, not whether formulation
 and criticism improve the system's capacity across the whole learning loop.
@@ -276,6 +276,6 @@ develops the reader-relative baseline.
 [Explanatory reach](../notes/first-principles-reasoning-selects-for-explanatory-reach-over.md)
 and [reach-assessment](../notes/definitions/reach-assessment.md) develop the
 property and its assessment.
-[Conjectural Learning with Fixed
-Models](./conjectural-learning-with-fixed-models.md) develops the
+[Building a Theory Builder from Today's
+LLMs](./conjectural-learning-with-fixed-models.md) develops the
 research program behind the retained-artifact comparison.

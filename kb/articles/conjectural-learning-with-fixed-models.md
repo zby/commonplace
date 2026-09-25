@@ -1,14 +1,12 @@
 ---
-description: "Lead article: the bet that a fully automated conjectural learner, a Popperian conjecture-and-criticism cycle over explicit revisable theories, can be built from today's fixed-weight LLMs; three payoffs, three conjectures, Bitter Lesson, learning test"
+description: "Lead article: the bet that an autonomous theory builder, a Popperian conjecture-and-criticism cycle over explicit revisable theories, can be built from today's fixed-weight LLMs; three payoffs, three conjectures, Bitter Lesson, learning test"
 type: kb/articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
 source_notes:
-  - kb/notes/definitions/conjectural-learning.md
+  - kb/notes/definitions/theory-builder.md
   - kb/notes/definitions/tentative-theory.md
   - kb/notes/definitions/addressable-theory.md
-  - kb/notes/definitions/theory-builder.md
-  - kb/notes/definitions/autonomous-theory-builder.md
   - kb/notes/definitions/operative-change.md
   - kb/notes/commonplace-studies-conjectural-learning-through-retained-theories.md
   - kb/notes/a-complete-theory-path-does-not-establish-improved-capacity.md
@@ -27,7 +25,7 @@ source_notes:
   - kb/notes/an-optimal-long-run-learning-strategy-invests-in-its-own-machinery.md
 ---
 
-# Conjectural Learning with Today's LLMs
+# Building a Theory Builder from Today's LLMs
 
 > **Draft.** The claims and structure of this article may change. Comments
 > and counterexamples are welcome on
@@ -43,30 +41,29 @@ We propose a learning paradigm based on
 
 > problem → tentative solution → error elimination → revised problem
 
-We call a system that implements this cycle a **conjectural learner**.
+We call a system that implements this cycle a **theory builder**.
 
 Its learned state is explicit and revisable. The system formulates problems,
 proposes [tentative theories](../notes/definitions/tentative-theory.md) as
 solutions, subjects them to criticism or tests, revises them in response, and
 retains the result so that it changes later behaviour. The knowledge base
-behind this article calls the process
-[conjectural learning](../notes/definitions/conjectural-learning.md) and the
-persistent system that carries it a
-[theory builder](../notes/definitions/theory-builder.md); this article uses
-the plainer name.
+behind this article
+[defines the theory builder](../notes/definitions/theory-builder.md) by four
+conditions. Whether a theory builder learns is not part of the definition; it
+is the question this article's test asks.
 
 ## The bet
 
-Our bet is that **a fully automated conjectural learner can be built with
+Our bet is that **a fully automated theory builder can be built with
 today's fixed-weight LLMs**.
 
 Fully automated means that every internal role in the cycle is performed
 computationally. Users still set the tasks and judge the results; what the
-learner does not need from people is the formulation, criticism, and
-revision of its own theories. That boundary is the definition of an
-[autonomous theory builder](../notes/definitions/autonomous-theory-builder.md).
+builder does not need from people is the formulation, criticism, and
+revision of its own theories. That boundary is what the knowledge base calls
+the [autonomous qualifier](../notes/definitions/theory-builder.md#qualifiers).
 
-The learner is not the LLM alone. It is a system containing an LLM together
+The builder is not the LLM alone. It is a system containing an LLM together
 with persistent state, tools, tests, evaluators, and control machinery.
 [The deployed system, not the model, is the unit that learns](../notes/the-deployed-system-not-the-model-is-the-unit-of-learning.md):
 prompts, retrieval, tools, and runtime policy jointly determine what it does,
@@ -163,14 +160,14 @@ have to be checked by other means.
 
 ## A distinct learning paradigm
 
-If this works autonomously, conjectural learning is a distinct learning
+If this works autonomously, theory building is a distinct learning
 paradigm rather than another agent workflow, because its learning happens
 through explicit, criticizable theories rather than only through changes to
 model weights. Three payoffs follow from that difference.
 
 **Learning without retraining.** New knowledge becomes available
 [without another weight-training cycle](../notes/retained-artifacts-enable-persistent-deployment-time-adaptation.md),
-so the learner adapts at deployment time rather than at the next training
+so the builder adapts at deployment time rather than at the next training
 run.
 
 **Fewer observations after a shift.** A retained theory may
@@ -195,7 +192,7 @@ learns rather than what its form makes possible. The knowledge base develops
 each in its
 [research companion](../notes/commonplace-studies-conjectural-learning-through-retained-theories.md#three-conjectures).
 
-*Criticism carries content.* When a theory fails, the learner formulates
+*Criticism carries content.* When a theory fails, the builder formulates
 why. A stated diagnosis directs the next attempt differently from a bare
 failure signal, and can save search that variant-and-select methods would
 spend. A wrong diagnosis can also waste it; the conjecture is about what a
@@ -209,7 +206,7 @@ investigation and preserve useful knowledge through a revision; it can also
 locate a fault in the wrong part.
 
 *Retention beats reconstruction.* Keeping the assembled theory, and the
-criticism that shaped it, spares the learner from rebuilding both from raw
+criticism that shaped it, spares the builder from rebuilding both from raw
 records every time. Whether that saving holds at comparable decision quality
 is the efficiency question the companion states in two comparisons.
 
@@ -244,7 +241,7 @@ what scale displaced included hand-tuned weights as well as hand-written
 feature extractors, so the losing side spanned both forms and the selection
 ran on how the content was produced.
 
-Conjectural learning sits on the computation side of that axis. Its theories,
+A theory builder sits on the computation side of that axis. Its theories,
 criticism, tests, and revisions are explicit, but they need not be supplied
 by people: a theory proposed, criticized, and revised by the loop is a
 learned result whatever form it is retained in. And if the entire loop is
@@ -256,14 +253,14 @@ The relevant distinction is therefore not between explicit knowledge and
 scalable learning. It is between **human-supplied knowledge** and
 **automatically generated, tested, and revised knowledge**.
 
-Two conditions attach. A learner that starts from hand-written theories and
+Two conditions attach. A builder that starts from hand-written theories and
 machinery, as ours does, fits the lesson
 [only if its learning outgrows that starting state](../notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md):
 computation, not people, must come to supply the task-specific knowledge
 each new demand needs. And because an improvement to the learning machinery
 is paid for once and then reused by every later episode,
 [a long-run strategy should spend part of its effort on that machinery](../notes/an-optimal-long-run-learning-strategy-invests-in-its-own-machinery.md).
-That spending is **reflection**: the learner turns its own methods into
+That spending is **reflection**: the builder turns its own methods into
 theories it can criticize and revise, and the lesson says which revisions to
 look for — those that convert additional computation into capability.
 
@@ -286,7 +283,7 @@ knowledge base calls a change that passes this test
 behaviour should be better. Showing that a theory was formulated, criticized,
 and revised, and that the revision was used,
 [does not by itself establish improved capacity](../notes/a-complete-theory-path-does-not-establish-improved-capacity.md);
-a learner can retain and faithfully apply a bad rule. The
+a builder can retain and faithfully apply a bad rule. The
 [testing supplement](./testing-the-conjectural-learning-program.md) states
 the hypotheses that separate these outcomes and what would refute each.
 
@@ -305,8 +302,8 @@ defines the system under test, the three hypotheses, and the first protocol.
 The [bootstrap supplement](./bootstrapping-an-autonomous-theory-builder.md)
 starts from Commonplace, a knowledge base currently maintained by people and
 agents together, and transfers its internal roles to computation one class at
-a time; it also covers the learner's reflection on its own machinery. The
+a time; it also covers the builder's reflection on its own machinery. The
 [software-house supplement](./an-automated-software-house-as-a-second-test-of-conjectural-learning.md)
 proposes a second arrangement whose failures are more visible. The
-[definition](../notes/definitions/conjectural-learning.md) states exactly
-what the paradigm requires and what it leaves open.
+[definition](../notes/definitions/theory-builder.md) states exactly
+what a theory builder requires and what it leaves open.

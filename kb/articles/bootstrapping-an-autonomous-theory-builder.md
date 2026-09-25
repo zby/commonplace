@@ -1,5 +1,5 @@
 ---
-description: "Bootstrap supplement: build a fully automated conjectural learner from a partially automated system that retains what operator and machinery learn, applies it reflectively to the learning machinery, and builds new software"
+description: "Bootstrap supplement: build an autonomous theory builder from a partially automated system that retains what operator and machinery learn, applies it reflectively to the learning machinery, and builds new software"
 type: kb/articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
@@ -7,14 +7,13 @@ source_notes:
   - kb/notes/an-optimal-long-run-learning-strategy-invests-in-its-own-machinery.md
   - kb/notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md
   - kb/notes/system-use-selects-theory-fit-without-a-fixed-oracle.md
-  - kb/notes/definitions/reflective-theory-builder.md
+  - kb/notes/definitions/theory-builder.md
   - kb/notes/definitions/codification.md
   - kb/notes/scheduler-llm-separation-exploits-an-error-correction-asymmetry.md
   - kb/notes/a-fixed-model-house-must-retain-missing-procedures-for-theory-use.md
   - kb/notes/warranted-transfer-leaves-people-the-hardest-to-warrant-decisions.md
   - kb/notes/commonplace-studies-conjectural-learning-through-retained-theories.md
   - kb/notes/evidence/commonplace-revision-used-theory-guided-computational-search.md
-  - kb/notes/definitions/autonomous-theory-builder.md
   - kb/notes/methodological-and-computational-closure-track-different-changes.md
   - kb/notes/warranted-autonomy-is-bounded-by-oracle-domain.md
   - kb/notes/revising-an-improvement-objective-is-licensed-from-outside-it.md
@@ -22,21 +21,21 @@ source_notes:
   - kb/notes/computationally-directed-self-improvement-is-a-reallocation.md
 ---
 
-# Bootstrapping a Fully Automated Learner with Commonplace
+# Bootstrapping an Autonomous Theory Builder with Commonplace
 
 > **Draft.** The claims and structure of this article may change. Comments
 > and counterexamples are welcome on
 > [the repository's GitHub Discussions page](https://github.com/zby/commonplace/discussions).
 
-A fully automated [conjectural learner](./conjectural-learning-with-fixed-models.md)
-is not a learner without people. It is one in which computation performs
+A fully automated [theory builder](./conjectural-learning-with-fixed-models.md)
+is not a builder without people. It is one in which computation performs
 every internal role in building theories: diagnosing failures, producing and
 evaluating revisions, choosing which theory to keep, and repairing the
 machinery that does this. Users still supply tasks and judge the results
-against what they asked for. The knowledge base calls such a learner an
-[autonomous theory builder](../notes/definitions/autonomous-theory-builder.md).
+against what they asked for. The knowledge base calls such a builder
+[autonomous](../notes/definitions/theory-builder.md#qualifiers).
 
-Such a learner does not have to be built in one step. We start with a
+Such a builder does not have to be built in one step. We start with a
 partially automated system in which a human operator and automated machinery
 learn together. We require only that what is learned is retained in the
 system, changes later behaviour, and changes it for the better; the lead
@@ -68,9 +67,9 @@ where no fixed test of a theory's fit yet exists.
 Some of what the system learns concerns its own operation. A recurring
 failure in review, decomposition, evaluation, or representation can become
 an object of learning, and the resulting knowledge can change the machinery
-used in future learning. A learner that holds such knowledge, connected to
-its machinery in both directions, is what the knowledge base calls a
-[reflective theory builder](../notes/definitions/reflective-theory-builder.md).
+used in future learning. A builder that holds such knowledge, connected to
+its machinery in both directions, is what the knowledge base calls
+[reflective](../notes/definitions/theory-builder.md#qualifiers).
 
 This closes a feedback loop:
 
@@ -89,7 +88,7 @@ revised state rather than reconstructing the old one. That shows retention
 and later use. It does not show a change to the learning machinery, and no
 improvement in later performance was demonstrated.
 
-## Let the learner build its machinery
+## Let the builder build its machinery
 
 Improving the machinery may take more than revising text. A new theory may
 call for new tools, experiments, search procedures, or schedulers, and
@@ -107,7 +106,7 @@ enforceable checks, where it is more reliable, following
 The boundary between them is not fixed: the software is part of the system
 and changes as learning reveals new requirements. With model weights held
 fixed,
-[procedures the learner acquires must persist outside the weights](../notes/a-fixed-model-house-must-retain-missing-procedures-for-theory-use.md),
+[procedures the builder acquires must persist outside the weights](../notes/a-fixed-model-house-must-retain-missing-procedures-for-theory-use.md),
 and code is one place they can live.
 
 A stronger possibility stays open: general learning may not merely benefit
