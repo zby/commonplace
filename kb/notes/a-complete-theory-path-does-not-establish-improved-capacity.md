@@ -12,8 +12,8 @@ of that theory. Evidence of theory use, a relevant outcome, a response to
 criticism, and later use support successively more complete accounts of the
 process. A [theory builder](./definitions/theory-builder.md) states its
 theories, acts on them, criticizes what they say, and lets the result of
-criticism shape the next conjecture. The definition does not require that this improves anything.
-Learning, in the sense of improved capacity for future action from the process
+criticism shape the next conjecture. The definition does not require that
+this improves anything. Learning, in the sense of improved capacity for future action from the process
 of conjecture and criticism, is a further claim. A complete observed sequence
 can still fail to improve that capacity.
 
@@ -114,11 +114,14 @@ criticism and revision target particular assumptions, scope conditions, or
 parts. These are separable functions, and none supplies correction or improved
 capacity by itself.
 
-This arrangement can accumulate targeted changes without rebuilding the theory
-each episode. Its advantage over reconstruction from retained criticisms or
-from inputs and outcomes is conjectured. A theory criticized and replaced
-whole can still support learning; a stored theory that no process would
-consume cannot. Private linguistic formulation and criticism are not
+This arrangement takes the high end of graded
+[persistence](./definitions/theory-builder.md#persistence): it can accumulate
+targeted changes without rebuilding the theory each episode. Its advantage is
+conjectured against lower grades: a builder that reconstructs the theory from
+retained criticisms, and the persistence baseline, which rebuilds from records
+of inputs and outcomes that carry nothing criticism produced. A theory
+criticized and replaced whole can still support learning; a stored theory that
+no process would consume cannot. Private linguistic formulation and criticism are not
 excluded, although opacity may leave their presence or effects unestablished.
 
 Retained addressable theory must earn its retrieval, maintenance, and
@@ -165,11 +168,9 @@ The construction is not an observed recurrent learning result.
   determine the modifying system's own behavior; the two-way causal connection
   must still hold.
 - Iteration is a theory-builder condition, and reconstruction from retained
-  criticism meets it. How far results persist is graded. Retaining the
-  assembled theory across problems with fine-grained addressability is an
-  explicit premise of the chosen arrangement, not a condition of being a
-  theory builder. A claim of recurrent learning across problems still needs
-  the effect to persist to the later use.
+  criticism meets it. Retaining the assembled theory across problems with
+  fine-grained addressability is a design commitment of the chosen
+  arrangement, not a condition of being a theory builder.
 - Criticism can be delayed. A later demand or maintenance failure may provide
   the relevant challenge, and claims must stay within what it tested.
 - Identity across records helps establish a connected path; it does not

@@ -20,18 +20,19 @@ individually. Theories may be expressed in natural language, causal models,
 or programs. The arrangement is a
 [theory builder](./definitions/theory-builder.md): it states its theories,
 acts on them, criticizes what they say, and lets the result of criticism
-shape the next conjecture. Three further choices are treatments whose
-benefits are conjectured: retaining results for later problems, a high grade
-of the graded [persistence](./definitions/theory-builder.md#persistence) the
-definition leaves open; retaining the assembled theory rather than rebuilding
-it from retained criticism; and fine-grained addressability. A builder that
-replaces a criticized theory whole, rebuilds it from retained criticism, or
-keeps nothing beyond one run meets the same conditions. The conjecture is
-that the finer-grained, more persistent arrangement needs fewer target
-observations than such builders and than reconstruction from records of
-inputs and outcomes only, which carry nothing that criticism produced. Operating a theory builder does not
-guarantee learning: whether it improves capacity for future action is a
-separate empirical claim.
+shape the next conjecture. Two design choices above the definition's
+minimums are treatments whose benefits are conjectured: fine-grained
+addressability, and the high grade of
+[persistence](./definitions/theory-builder.md#persistence), where the
+assembled theory and its testing record are kept for later problems. The
+definition also admits builders that replace a criticized theory whole, and
+builders whose results persist less: they rebuild the theory from retained
+criticism, or keep nothing beyond one run. The conjecture is that the
+finer-grained, more persistent arrangement needs fewer target observations
+than these builders. The persistence baseline is reconstruction from records
+of inputs and outcomes only, which carry nothing that criticism produced
+across runs. Operating a theory builder does not guarantee learning: whether
+it improves capacity for future action is a separate empirical claim.
 
 The conjectured pathway is:
 
@@ -164,16 +165,20 @@ contribution is distinguishable from its selector's.
 **Reuse and revision comparison.** Use the same base model, source observations,
 and inference budget. Keep the initial source-derived theory fixed across
 arms that retain it unchanged, allow additions only, or permit revision.
-Compare retention separately with reconstruction from retained formulated
-criticisms and with reconstruction from records containing only inputs and
-outcomes. The first contrast asks what keeping the assembled theory buys;
-the second asks what retaining the work of criticism buys. Indexed traces
-containing the same conjectures and criticism can implement retained theory;
-file format does not distinguish the treatments.
+Compare persistence grades separately. Against reconstruction from retained
+formulated criticisms, another theory builder whose assembled theory does not
+persist, the contrast asks what keeping the assembled theory buys. Against
+reconstruction from records containing only inputs and outcomes, the
+persistence baseline, it asks what keeping the work of criticism buys. A
+reconstructor that states, criticizes, and revises within a run is still a
+builder at that run's grade, so this contrast does not establish that it
+lacks formulated criticism. Indexed traces containing the same conjectures
+and criticism can implement retained theory; file format does not
+distinguish the treatments.
 
 These comparisons estimate differences between the specified arrangements.
-They do not establish that a reconstructor lacks private formulated criticism,
-or isolate criticism's contribution merely by holding model weights fixed.
+Holding model weights fixed does not by itself isolate criticism's
+contribution.
 Reconstruction and use must actually occur for their costs and benefits to
 be compared. A supplied theory using knowledge unavailable in the source
 observations is a capability test, not evidence of an end-to-end learning

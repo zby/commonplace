@@ -28,14 +28,16 @@ a theory about the system's own
 is posited, interpreted into a change, made operative, and exposed to consequences
 its author did not write. Criticism of the theory then affects later use through
 revision, reconstruction, or changed reliance on unchanged content. The
-convergence claim concerns this recurrent empirical arrangement. A connected
-path still needs evidence of improved capacity before it establishes learning.
+convergence claim concerns this recurrent empirical arrangement.
+
 Iteration, where the result of criticism shapes the next conjecture, is a
 condition of being a [theory builder](./definitions/theory-builder.md), and
 reconstruction from retained criticism meets it. How far results persist is
-graded; this convergence needs the high grade, where results reach later
-production work. Recurrence and improvement belong to the separate claim
-that the builder learns.
+[graded](./definitions/theory-builder.md#persistence). This convergence needs
+the high grade, where results reach later production work; that grade is a
+design commitment, not a condition. Improvement is a separate claim: a
+connected path still needs evidence of improved capacity before it
+establishes that the builder learns.
 
 ## From theory learning down to production machinery
 
@@ -50,9 +52,8 @@ touching the observer. For a theory about the system's own organization, the
 consequences that bear on it are largely the consequences of acting on it: what
 a change guided by the theory costs when a later demand arrives. So the theory
 must already have guided an operative change before that later evidence exists.
-The change must persist to the claimed horizon; the assembled theory need not.
-It may be reconstructed from retained criticism. This test phase depends on
-operative effects, without requiring the assembled theory itself to be retained.
+The change must persist to the claimed horizon. The assembled theory need not;
+it may be reconstructed from retained criticism.
 
 **Integration is a machinery change.** The lifecycle's final phase reconnects
 prior evidence under the accepted claim and updates the artifacts that use it.

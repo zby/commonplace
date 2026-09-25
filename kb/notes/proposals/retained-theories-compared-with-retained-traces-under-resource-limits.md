@@ -129,22 +129,24 @@ Indexed traces can expose theories and their criticisms as retained,
 addressable knowledge. A theory can also be reconstructed from retained
 criticism without retaining the assembled theory. Both arrangements meet the
 builder's iteration condition, and both keep criticism's results across
-problems, a high grade of persistence. Whether either learns, in the sense of
-improving capacity for future action, is a separate question.
+problems. They differ in how much of that work persists. Whether either
+learns, in the sense of improving capacity for future action, is a separate
+question.
 
-Two retention comparisons therefore ask different questions:
+The two reconstruction comparisons therefore compare
+[persistence](../definitions/theory-builder.md#persistence) grades and ask
+different questions:
 
 - **Assembled theory and testing record versus retained criticisms.** This
   asks what keeping the assembled theory buys over reconstructing it from
-  work already done. Both arms are theory builders.
+  criticism already done. Both arms are theory builders.
 - **Assembled theory and testing record versus inputs and outcomes only.**
-  This asks what retaining the work of conjecture and criticism buys over
-  doing that work again. The records in the second arrangement do not
-  contain formulated criticisms; its active machinery may still formulate
-  and use them. A storage contrast cannot establish their internal absence.
-  Because what is retained holds no stated theory or criticism, nothing
-  criticism produced persists across runs: this arm is the baseline for the
-  persistence conjecture. A reconstructor that states, criticizes, and
+  This asks what keeping the work of conjecture and criticism buys over
+  doing that work again. What the second arm retains holds no stated theory
+  or criticism, so nothing criticism produced persists across runs: this arm
+  is the baseline for the persistence conjecture. Its active machinery may
+  still formulate and use criticisms, and a storage contrast cannot
+  establish their absence. A reconstructor that states, criticizes, and
   revises within a run is a builder at that run's grade, and it may still
   learn in the ordinary sense.
 
@@ -181,8 +183,8 @@ not a universal boundary between learning and nonlearning arrangements.
 - Can retained criticisms be kept usefully distinct from a compressed or
   partially assembled theory in an actual implementation?
 - Which costs or failures should cause a system to revise, reconstruct, or
-  combine the two? Either strategy meets the builder's iteration condition
-  at a high persistence grade; neither is required.
+  combine the two? Either strategy meets the builder's iteration condition;
+  neither is required.
 - When does a learned index itself expose an addressable theory, rather than
   only route access to records? Retention or editability alone does not decide.
 - How should replay be compared when stochastic choices cannot be reproduced
@@ -197,6 +199,6 @@ not a universal boundary between learning and nonlearning arrangements.
 Relevant Notes:
 
 - [Theory builder](../definitions/theory-builder.md) — defined-in: membership, including reconstruction from retained criticism, is distinct from whether an arrangement learns
-- [Addressable theory](../definitions/addressable-theory.md) — defined-in: the optional structural property supporting targeted criticism
+- [Addressable theory](../definitions/addressable-theory.md) — defined-in: the graded structural property supporting targeted criticism
 - [Commonplace builds a theory builder and tests whether it learns](../commonplace-builds-a-theory-builder-and-tests-whether-it-learns.md) — see-also: the independently stated efficiency conjecture
 - [Retaining episode evidence keeps a distilled rule open to re-examination](../retaining-episode-evidence-keeps-a-distilled-rule-open-to.md) — grounds: records remain evidence behind retained abstractions
