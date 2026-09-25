@@ -8,6 +8,7 @@ status: accepted
 # 076-Source-claim grounding is a promoted skill
 
 **Status:** accepted
+**Amended by:** [ADR 078](./078-writers-invoke-grounding-and-evidence-stays-in-the-ingest.md) — writers no longer stop when Quotes are insufficient; they invoke `cp-skill-ground` automatically.
 **Date:** 2026-08-25
 
 ## Context

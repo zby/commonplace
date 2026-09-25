@@ -282,7 +282,7 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     parser.add_argument("--input", required=True, help="Selector JSON path, or '-' for stdin.")
     parser.add_argument(
         "--model-partition",
-        help="Review model partition (a partition name, not a concrete model). Required for direct input; validation-only for selector input.",
+        help="Review model partition (a partition name, not a concrete model). Used when the selector JSON has no model_partition; otherwise it must match it.",
     )
     parser.add_argument("--grouping", required=True, choices=["note", "criterion"], help="Job grouping axis.")
     parser.add_argument("--batch-size", type=int, help="Note targets per criterion-packed job. Defaults to 5.")

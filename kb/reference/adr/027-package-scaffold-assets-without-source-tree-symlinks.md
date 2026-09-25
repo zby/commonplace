@@ -8,6 +8,7 @@ status: accepted
 # 027-Package scaffold assets without source-tree symlinks
 
 **Status:** accepted
+**Amended by:** [ADR 086](./086-projects-read-the-library-from-the-installed-package.md) — the library no longer ships as scaffold under `commonplace/_data/`; it installs as shared data and is read in place, and ADR 086's layout replaces ADR 021's. The mappings here now cover only the remaining scaffold inputs.
 **Date:** 2026-06-11
 
 ## Context

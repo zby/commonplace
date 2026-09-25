@@ -77,5 +77,4 @@ A typed artifact in this collection may use a global type, named by its path und
 - Shipped-system description → `kb/reference/`
 - Procedures and how-to guidance → `kb/instructions/`
 - In-flight exploration → `kb/work/`
-- Article drafts → `kb/articles/`
 - Captured external material → `kb/sources/`

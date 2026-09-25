@@ -24,7 +24,7 @@ The uv tool executable directory is the command authority. `commonplace-*` comma
 
 Project environments retain project and development dependencies. `pytest`, `ruff`, and documentation builders run through `uv run`; `pytest` is no longer a runtime dependency of `llm-commonplace`. Optional command dependencies remain uv-tool extras selected during installation.
 
-`commonplace-init` creates no Commonplace-specific venv or `.envrc`. Its generated control-plane template gives one unconditional bare-name rule. Init diagnostics warn about missing entry points, commands resolving outside uv's tool directory, and legacy or shadowing `.envrc` residue; they never delete it. The health-check skill distinguishes the resulting failure classes.
+`commonplace-init` creates no Commonplace-specific venv or `.envrc`. Its generated control-plane template gives one unconditional bare-name rule. Init diagnostics warn about missing entry points and commands resolving outside uv's tool directory; the health check, not init, inspects legacy or shadowing `.envrc` residue and never deletes it. The health-check skill distinguishes the resulting failure classes.
 
 CI uses the same primitive: jobs install the editable checkout or built wheel with `uv tool install` and verify bare-name commands on native Windows and POSIX runners.
 

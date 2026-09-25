@@ -14,7 +14,7 @@ A type-spec doc is the authoring and validation contract for one Commonplace art
 - `type`: `types/type-spec.md`. The root type spec is self-referential and uses the same value.
 - `name`: short human-facing type name.
 - `description`: retrieval description for the type contract.
-- `schema`: repo-relative path to the `.schema.yaml` file that validates artifacts of this type, or `null` when the type has no schema.
+- `schema`: file-relative path (`./<name>.schema.yaml`) to the `.schema.yaml` file that validates artifacts of this type, or `null` when the type has no schema. A library type spec may use only the file-relative form.
 
 A type spec carries no `tags`; the schema rejects the field. Type specs are structural contracts, not knowledge, so they never enter tag membership.
 
@@ -42,7 +42,7 @@ Do not restate a schema rule in body text. The validator already enforces it, so
 type: types/type-spec.md
 name: {type-name}
 description: "{Retrieval description for this type contract}"
-schema: {kb/types/{type-name}.schema.yaml or null}
+schema: {./{type-name}.schema.yaml or null}
 ---
 
 # {Type name}

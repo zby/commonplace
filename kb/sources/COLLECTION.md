@@ -99,7 +99,9 @@ present. It never falls back from an unmarked link to ambient snapshot state.
 ## Outbound links
 
 **Snapshots are immutable local inputs.** Don't add, edit, or annotate after
-capture: changing any byte changes the checksum. Never author a durable link to
+capture: changing any byte changes the checksum. The only exceptions are the
+recorded type-line migrations of ADRs 087 and 088, which re-pin the ingest
+checksums. Never author a durable link to
 `.snapshots/`. A citation of what the source says points to the external
 `source` URL; a citation of Commonplace's analysis points to the ingest.
 

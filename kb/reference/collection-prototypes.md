@@ -24,8 +24,9 @@ catalogue.
 
 ## Shipped prototypes
 
-`commonplace-init` uses three prototypes when it creates a project's standard
-collections. Their source files are package data under
+`commonplace-init` uses three prototypes when it creates a project's knowledge
+collections; it also seeds operating contracts for sources, reports, and work,
+which are not prototypes. Their source files are package data under
 `src/commonplace/_data/templates/`:
 
 | Prototype | Source file | Starting purpose |
@@ -34,10 +35,10 @@ collections. Their source files are package data under
 | Reference | `user-reference-COLLECTION.md` | Faithful, economical accounts of the system the project ships |
 | Instructions | `user-instructions-COLLECTION.md` | Executable procedures, skills, and operational rules |
 
-Each installed contract tells the maintainer to replace its placeholders and
-state the collection's own purpose, scope, quality goal, conventions, link
-rules, and type eligibility. Existing destination files are preserved rather
-than refreshed from the prototype.
+Each installed contract is ready to use: it has no placeholders, and the
+maintainer customizes it only when the project needs different conventions.
+Once installed, it belongs to the project. Existing destination files are
+preserved rather than refreshed from the prototype.
 
 ## Experimental prototypes
 

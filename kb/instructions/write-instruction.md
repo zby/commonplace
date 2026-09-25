@@ -122,4 +122,6 @@ If the instruction proves useful enough to warrant automatic routing:
 2. Add the skill frontmatter fields (`name`, `allowed-tools`, `context`, `model`).
 3. Add `<name>` to `MANIFEST.promoted_skills` in `src/commonplace/scaffold_manifest.py`.
 4. Update the control-plane routing table in `CLAUDE.md` or `AGENTS.md`.
- `commonplace-init` will then copy that instruction directory into the runtime skill surfaces (`.claude/skills/` and `.agents/skills/`) with the `commonplace-` prefix.
+5. In this checkout, add relative symlinks `.claude/skills/<name>` and `.agents/skills/<name>` pointing to `../../kb/instructions/<name>`.
+
+Installed projects need no copy: `commonplace-init` writes a stub for the skill into their `.claude/skills/` and `.agents/skills/` that points to the real `SKILL.md` in the installed library, and lists the skill in `.commonplace/library.md`.

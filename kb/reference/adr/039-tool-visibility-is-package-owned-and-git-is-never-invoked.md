@@ -8,6 +8,7 @@ status: accepted
 # 039-Tool visibility is package-owned and git is never invoked
 
 **Status:** accepted
+**Amended by:** [ADR 086](./086-projects-read-the-library-from-the-installed-package.md) — runtime skill directories hold init-written stubs, not copies.
 **Date:** 2026-07-05
 **Amended:** 2026-07-27 — collection-scoped validation exclusion; 2026-07-13 by [ADR 047](./047-type-specifications-use-normal-deterministic-validation.md) (`types/` visibility)
 

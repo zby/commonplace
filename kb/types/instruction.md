@@ -9,7 +9,7 @@ schema: ./instruction.schema.yaml
 
 ## Authoring Instructions
 
-Use `instruction` for prescriptive content: procedures, skill bodies, wrapper prompts, review gates, work packets handed to sub-agents. The shared property is that the content tells an agent or maintainer what to do, not what is true.
+Use `instruction` for prescriptive content: procedures, skill bodies, wrapper prompts, work packets handed to sub-agents. Review gates are prescriptive too, but use the specialized [`review-gate`](./review-gate.md) type. The shared property is that the content tells an agent or maintainer what to do, not what is true.
 
 ## Frontmatter
 

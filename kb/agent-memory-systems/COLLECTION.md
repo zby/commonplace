@@ -48,7 +48,7 @@ Selective Commonplace implications are living transfer scans under `kb/reports/s
 Organised per destination: when to prospect for links, and the authorised labels (semantics in [link-vocabulary.md](../reference/link-vocabulary.md)).
 
 - **→ `kb/agent-memory-systems/`** (within collection) — search when a review touches a component of a larger reviewed system, realizes a contract named in another review, or shares a design axis with another system (the core cross-system work). Labels: `part-of` / `contains`, `implements` / `implemented-by`, `compares-with`, `see-also`.
-- **→ `kb/sources/`** — for lightweight coverage, link back to the snapshot it was abstracted from. Labels: `derived-from`, `evidenced-by`, `see-also`.
+- **→ `kb/sources/`** — for lightweight coverage, link back to the tracked ingest of the source it was abstracted from, never the local snapshot. Labels: `derived-from`, `evidenced-by`, `see-also`.
 - **→ `external`** — cite the reviewed repository, code, documents, or papers already in hand. Code-grounded reviews follow the type's commit-pinning and citation-shape rules; do not prospect the open web. Labels: `evidenced-by`, `see-also`.
 - **→ `kb/notes/`** — search when a system's design depends on a theoretical claim. Use `rests-on` for that design dependency and rare `is-evidence-for` when the reviewed system instead bears on the target claim; promote a novel claim to `kb/notes/` rather than author theory in a review. Labels: `rests-on`, `is-evidence-for` (rare), `defined-in`, `see-also`.
 - **→ `kb/reports/retained/agentic-system-analysis/`** — cite the exact main-analysis result when a current comparison needs its canonical records or full evidence. These results are published and hash-identified. Labels: `see-also`.
@@ -69,5 +69,5 @@ A typed artifact in this collection may use a global type, named by its path und
 - Descriptions of the Commonplace system itself → `kb/reference/`
 - Selective Commonplace differences, borrowable ideas, or current watch items → a transfer scan under `kb/reports/state/agentic-system-transfer/`
 - Whole external agentic-system or harness analyses not centered on memory/knowledge/context engineering → `kb/agentic-systems/reviews/`
-- Raw snapshots of external sources → `kb/sources/`
+- Raw captures of external sources → `kb/sources/.snapshots/`, each analysed by a tracked ingest in `kb/sources/`
 - Work in progress → `kb/work/`

@@ -87,8 +87,8 @@ note*.
    run. Three would put eighteen notes over.
 
 The operativity path has two channels. `commonplace-validate` consumes the
-count deterministically on every validation run, with warn force that does not
-fail the process. The three hashed criteria consume the reading rules as
+count deterministically on every validation run, with the FAIL force stated in
+the decision above. The three hashed criteria consume the reading rules as
 binding judgment instruction inside review prompts; changing them stales their
 populations once through ordinary criterion freshness.
 

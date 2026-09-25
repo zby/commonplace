@@ -8,6 +8,7 @@ status: accepted
 # 022-active-vocabulary-and-write-path-first-mentions
 
 **Status:** accepted
+**Amended by:** [ADR 086](./086-projects-read-the-library-from-the-installed-package.md) — shipped definitions are no longer under a project's `kb/commonplace/`; they live in the installed library, which project files cannot link to by relative path.
 **Date:** 2026-05-17
 **Refines:** [ADR-011](./011-notes-must-be-accessible-to-external-readers.md), [ADR-017](./017-collection-md-is-the-register-convention-boundary.md), [ADR-019](./019-collection-owned-link-vocabulary.md)
 

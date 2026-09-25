@@ -8,6 +8,7 @@ status: accepted
 # 073-Untracked source snapshots require ingest grounding
 
 **Status:** accepted
+**Amended by:** [ADR 076](./076-source-claim-grounding-is-a-promoted-skill.md) — `cp-skill-ingest` has no quote-append path; retaining quotes belongs to grounding, and `commonplace-validate` verifies them.
 **Date:** 2026-08-24
 **Revised:** 2026-08-25
 

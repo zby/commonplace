@@ -8,6 +8,7 @@ status: accepted
 # 038-Type-conformance reviews use the type spec as the gate
 
 **Status:** accepted
+**Amended by:** [ADR 086](./086-projects-read-the-library-from-the-installed-package.md) — in an installed project a library type spec's persisted criterion identity is `commonplace:types/<name>.md`; the repository path stays the identity in the source checkout.
 **Date:** 2026-07-04
 
 ## Context

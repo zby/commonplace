@@ -1,15 +1,15 @@
 ---
 type: types/type-spec.md
-name: index
-description: Build-time generated listing pages (per-directory dir-index virtual files); committed tag landings use kb/types/tag-readme.md instead
+name: generated-index
+description: Build-time generated listing pages (per-directory dir-index virtual files); committed tag landings use types/tag-readme.md instead
 schema: ./generated-index.schema.yaml
 ---
 
-# Index
+# Generated index
 
 ## Authoring Instructions
 
-Since ADR 026 the `index` type covers **build-time generated pages only** — do not author new committed artifacts with this type. A tag's committed curated head is a `<tag>-README.md` of type `types/tag-readme.md` (see that spec); complete listings are never committed (ADR 025).
+Since ADR 026 the `generated-index` type covers **build-time generated pages only** — do not author new committed artifacts with this type. A tag's committed curated head is a `<tag>-README.md` of type `types/tag-readme.md` (see that spec); complete listings are never committed (ADR 025).
 
 The ProperDocs hook materializes index-typed pages at build time:
 

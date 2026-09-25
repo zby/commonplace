@@ -587,7 +587,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument(
         "--output",
         type=Path,
-        help="Atomically save the exact --json stdout bytes to this existing directory.",
+        help="Atomically save the exact --json stdout bytes to this file path; its parent directory must exist.",
     )
     parser.add_argument(
         "target",

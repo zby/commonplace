@@ -59,7 +59,7 @@ These outputs belong to the project. Init creates each one only when it is missi
 - `kb/work/COLLECTION.md` — workshop-layer contract: structure, closing, and loose linking
 - `kb/work/README.md` — active-workshops landing
 
-The notes, reference, and instructions `COLLECTION.md` templates invite the practitioner to state the collection's purpose, intended contribution, quality goal, and outbound link rules; the library's own `COLLECTION.md` files serve as worked examples. The sources contract instead supplies generic rules for tracked source analyses and ignored immutable captures. The reports contract supplies cache, state, retained, and local-type policies. Each `README.md` supplies the collection's stable reader landing, points authors to its local contract, and states the collection's initial contents.
+The notes, reference, and instructions `COLLECTION.md` templates are ready-to-use defaults with no placeholders; a practitioner customizes them only when the project needs different conventions, and the library's own `COLLECTION.md` files serve as worked examples. The sources contract instead supplies generic rules for tracked source analyses and ignored immutable captures. The reports contract supplies cache, state, retained, and local-type policies. Each `README.md` supplies the collection's stable reader landing, points authors to its local contract, and states the collection's initial contents.
 
 **Resolved templates** — read, substituted, written:
 

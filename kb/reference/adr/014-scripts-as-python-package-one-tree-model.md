@@ -8,6 +8,7 @@ status: accepted
 # 014-scripts-as-python-package-one-tree-model
 
 **Status:** accepted
+**Amended by:** [ADR 086](./086-projects-read-the-library-from-the-installed-package.md) — skills are no longer copied at init; init writes stubs that point into the installed library, so a skill change reaches projects on upgrade without rerunning init.
 **Date:** 2026-04-08
 **Supersedes:** [ADR-006 (two-tree installation layout)](./006-two-tree-installation-layout.md) — the `commonplace/` subtree no longer exists in consuming projects.
 **Refines:** [ADR-008 (stdlib-only core scripts)](./008-stdlib-only-core-scripts.md) — scripts are invoked as installed commands rather than by path; "no venv needed" becomes "standard pip install". [ADR-013 (skills-first delivery)](./013-skills-first-delivery-with-core-local-type-split.md) — skills-first remains; only the backend packaging changes.

@@ -68,7 +68,7 @@ For a promoted skill, edit its directory under `kb/instructions/`; installed pro
 
 ## Title and description conventions
 
-**Imperative titles.** Answer "what does this tell me to do?" — "Write an instruction", "Review triage", "Fix warnings". For promoted skills, the skill name is the title (`write/SKILL.md`).
+**Imperative titles.** Answer "what does this tell me to do?" — "Write an instruction", "Review triage", "Fix warnings". For promoted skills, the skill name is the title (`cp-skill-write/SKILL.md`).
 
 **Description** (frontmatter) should name the trigger condition — when to use this procedure.
 
@@ -102,11 +102,11 @@ Minimal. Plain instructions need `description` and `type: types/instruction.md`.
 
 ## Promoted skills
 
-Some subdirectories are promoted into runtime skill surfaces (`.claude/skills/`, `.agents/skills/`) by `commonplace-init`. Promoted skills:
+Some subdirectories are promoted skills, listed in `MANIFEST.promoted_skills`. In this checkout the runtime skill directories (`.claude/skills/`, `.agents/skills/`) hold relative symlinks to them; in an installed project `commonplace-init` writes a stub per skill that points to the real `SKILL.md` in the installed library. Promoted skills:
 
-- Must not rely on on-disk location being `kb/instructions/<name>/`
-- Should use stable workspace-root paths (`kb/notes/`, `kb/instructions/COLLECTION.md`)
-- Treat `kb/instructions/` as the searchable source surface and runtime skill directories as compiled copies
+- Link to other library files by relative paths, which resolve from the skill's own file in the library
+- Name the invoking project's own collections by workspace-root paths (`kb/notes/`, `kb/instructions/COLLECTION.md`)
+- Treat `kb/instructions/` as the only source; runtime skill directories hold stubs or symlinks, never copies
 
 ## Default template
 

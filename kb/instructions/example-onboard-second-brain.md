@@ -25,19 +25,19 @@ Read `CLAUDE.md`, `kb/notes/COLLECTION.md`, and `kb/instructions/COLLECTION.md` 
 
 Interview the operator with 5–7 conversational questions covering: role and day-to-day work, what they're optimising for this year, real working style (tools they actually use, not aspirational), growth edges and recurring feedback, and what they care about outside work.
 
-Write the result to `kb/notes/me.md` as a `structured-claim` or `text` note (whichever fits — `me.md` is descriptive about a person, so a plain note with no claim title is fine; use standard frontmatter and leave `user-verified` absent).
+Write the result to `kb/notes/me.md` as a plain note (`type: types/note.md`) or frontmatter-free `text` — `me.md` is descriptive about a person, so a note with no claim title is fine; leave `user-verified` absent.
 
 Run `/cp-skill-connect kb/notes/me.md` to surface candidate links. Apply the ones that hold.
 
 ### 1b. Design new collections
 
-Commonplace ships three collections with complete local contracts:
+`commonplace-init` seeds three knowledge collections with ready-to-use contracts, plus operating collections for sources, reports, and work:
 
-| Path | Intended contribution | Quality goal |
-|---|---|---|
-| `kb/notes/` | transferable claims about the design space | explanatory-reach |
-| `kb/reference/` | Commonplace selections and resulting state | fidelity + economy |
-| `kb/instructions/` | executable procedures | executability + precision |
+| Path | Starting purpose |
+|---|---|
+| `kb/notes/` | claims, mechanisms, definitions, and synthesis about the project's domain |
+| `kb/reference/` | faithful, economical accounts of the system the project ships |
+| `kb/instructions/` | executable procedures, skills, and operational rules |
 
 A Second Brain usually needs more. Interview the operator about what else they want to capture. Common candidates (ask, don't assume):
 

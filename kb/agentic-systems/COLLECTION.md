@@ -86,7 +86,7 @@ Current differences from Commonplace, borrowable ideas, and watch items are not 
 
 Organised per destination; label semantics in [link-vocabulary.md](../reference/link-vocabulary.md).
 
-- **→ `kb/sources/`** — link the snapshots an analysis is grounded in. Labels: `derived-from`, `evidenced-by`, `see-also`.
+- **→ `kb/sources/`** — link the tracked ingests an analysis is grounded in, never the local snapshots. Labels: `derived-from`, `evidenced-by`, `see-also`.
 - **→ `external`** — cite the source code, documents, papers, or first-hand records already used for the evidence basis; prefer version-pinned targets when available and do not prospect the open web. Labels: `evidenced-by`, `see-also`.
 - **→ `kb/notes/`** — search when an analysis maps a system onto theory. Use `rests-on` when the theory explains the analysed design; use rare `is-evidence-for` when the observed system instead bears on the target claim. Promote a novel transferable claim to `kb/notes/` rather than author theory here. Labels: `rests-on`, `is-evidence-for` (rare), `defined-in`, `see-also`.
 - **→ `kb/agent-memory-systems/`** — when the analysed whole system has a memory, knowledge, or context-engineering subsystem reviewed there. Use `contains` from the whole-system analysis to the subsystem review; use `part-of` only from a subsystem-focused analysis back to the whole system. Labels: `part-of` / `contains`, `compares-with`, `see-also`.
@@ -101,7 +101,7 @@ A typed artifact in this collection may use a global type, named by its path und
 ## What does NOT belong here
 
 - Transferable claims about KB methodology or orchestration theory → `kb/notes/`
-- Raw snapshots of external sources → `kb/sources/`
+- Raw captures of external sources → `kb/sources/.snapshots/`, each analysed by a tracked ingest in `kb/sources/`
 - Descriptions of the Commonplace system itself → `kb/reference/`
 - Current Commonplace differences, borrowable ideas, and watch items → a selective transfer scan under `kb/reports/state/agentic-system-transfer/`
 - Procedures and how-to guidance → `kb/instructions/`

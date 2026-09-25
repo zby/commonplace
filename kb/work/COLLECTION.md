@@ -10,7 +10,7 @@ Plain markdown without frontmatter is fine. Imported, copied, or transitional fi
 
 ## Structure
 
-Substantial work lives in a named subdirectory `kb/work/<workshop-name>/` with a short `README.md` (or `framing.md` / `plan.md`) saying what the work is and what would close it. A workflow that produces many uniform run directories may group them under `kb/work/<workflow-name>/`; multistage writing uses `kb/work/multistage/`. Each nested run remains a workshop with its own framing file and entry in `kb/work/README.md`. Small one-off files can live directly under `kb/work/` until they disappear or grow into a workshop.
+Substantial work lives in a named subdirectory `kb/work/<workshop-name>/` with a short `README.md` (or `framing.md` / `plan.md`) saying what the work is and what would close it. A workflow that produces many uniform run directories may group them under `kb/work/<workflow-name>/`; multistage writing uses `kb/work/multistage/`. Each nested run remains a workshop with its own framing file and entry in `kb/work/README.md`. A skill's scratch run directory that the skill deletes before it finishes, such as `kb/work/revise-autoreason/`, needs neither. Small one-off files can live directly under `kb/work/` until they disappear or grow into a workshop.
 
 The framing file should fix only what a later session cannot safely determine
 from its authorized evidence — the goal, who posed it and in what role (the

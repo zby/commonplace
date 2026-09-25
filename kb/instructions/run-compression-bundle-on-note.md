@@ -12,7 +12,7 @@ This is deliberately separate from the snapshot-anchored assay pipeline in `kb/i
 Inputs:
 
 - first argument: `{note-path}` — repository-relative note path, for example `kb/notes/linking-theory.md`
-- optional second argument: `{output-path}` — repository-relative Markdown path for the sub-agent's report. If omitted, write it next to the target note as `<note-name>-compression-bundle-review.md`.
+- optional second argument: `{output-path}` — repository-relative Markdown path for the sub-agent's report. If omitted, write it to the replaceable report cache as `kb/reports/cache/compression-bundle/<note-name>.md`.
 
 ## Compression criteria
 
