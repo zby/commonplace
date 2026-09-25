@@ -1,5 +1,5 @@
 ---
-description: "Without external assessment a claim needs its own contradiction-and-support rule, comparison level for objective change, and attribution when it asserts a cause or lacks an independent outcome level; investigating a failure crosses no boundary"
+description: "Without external assessment a claim needs its own contradiction-and-support rule, a comparison level for objective change, and a performance measure it does not grade itself, plus attribution when it asserts a cause"
 type: kb/types/note.md
 traits: [title-as-claim]
 tags: [foundations, self-improving-systems, learning-theory]
@@ -113,6 +113,21 @@ preserve the objective either: an outside judge can keep accepting a proxy
 the builder has learned to satisfy without the outcome, and renewing users
 or tasks does not prevent this, since new users can repeat the same
 misleading acceptance proxy.
+
+## A performance measure the builder does not grade itself
+
+When no outside judge supplies the outcome level, a performance claim needs
+a measure that does not rest on the builder's own evaluators. The builder's
+approval of a theory or revision is an internal evaluation, however careful;
+it can support retaining a candidate, not a claim that later work improved.
+Candidate measures fix the answers before the change is made and keep the
+evaluator that judges them apart from the process that proposed the change:
+held-out cases whose outcomes are settled independently, or a comparison
+against the same later work run without the change. Such a measure
+supports only the contrast it runs, since
+[an experiment identifies only the contrast it actually runs](./an-experiment-identifies-only-the-contrast-it-actually-runs.md).
+Where no such measure is available, the claim is reported as internal
+approval and makes no performance claim.
 
 ## Attribution beyond the observed outcome
 
