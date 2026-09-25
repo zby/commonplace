@@ -14,12 +14,7 @@ The site holds the adopted doctrine together with research and evidence that can
 
 ## Start here
 
-[Can a Theory Builder Running on Fixed-Weight LLMs Learn?](./articles/can-a-theory-builder-running-on-fixed-weight-llms-learn.md) is the lead article. It defines a theory builder, states the bet, and says what evidence would show that the builder learns: withholding or altering its retained knowledge should change its later behavior, and the changed behavior should be better. Four supplements each develop one part of it:
-
-- [Testing whether a theory builder learns](./articles/testing-whether-a-theory-builder-learns.md) — controlled tests that separate a retained change that is used from one that improves later work, and the hypotheses with what would refute each.
-- [Bootstrapping an autonomous theory builder with Commonplace](./articles/bootstrapping-an-autonomous-theory-builder.md) — how Commonplace moves operations from people to computation one at a time, measured by the human decisions each verified improvement still needs.
-- [Which existing self-improving systems are theory builders](./articles/which-existing-self-improving-systems-are-theory-builders.md) — eighteen systems placed against the definition, with their reported gains judged separately.
-- [An automated software house as a second test of a theory builder](./articles/an-automated-software-house-as-a-second-test-of-a-theory-builder.md) — a companion arrangement in which the builder maintains software. Failures are easier to see there, and the claim is harder to meet. The [Naur note](./notes/naur-equates-machine-execution-with-formulated-criteria.md) asks who holds a program's theory, and the [coherent-search note](./notes/program-theory-sustains-search-under-delayed-feedback.md) states the long-running test.
+The [theory builder definition](./notes/definitions/theory-builder.md) states the four conditions, the graded design commitments above them, and what the definition leaves open. [Commonplace builds a theory builder and tests whether it learns](./notes/commonplace-builds-a-theory-builder-and-tests-whether-it-learns.md) sets out the research program and its three conjectures. The [learning theory index](./notes/learning-theory-README.md) maps the wider thread.
 
 ## Other threads
 
@@ -33,7 +28,7 @@ The site holds the adopted doctrine together with research and evidence that can
 
 ## Browse
 
-- [Notes](./notes/README.md) and [Articles](./articles/README.md) — research claims and self-standing explanations
+- [Notes](./notes/README.md) — research claims
 - [Reference](./reference/README.md) and [Types](./types/README.md) — the current system, decisions, and artifact contracts
 - [Agent Memory Systems](./agent-memory-systems/README.md) and [Agentic Systems](./agentic-systems/README.md) — external-system reviews
 - [Sources](./sources/README.md), [Instructions](./instructions/README.md), and [Workshops](./work/README.md) — evidence, procedures, and work in flight
