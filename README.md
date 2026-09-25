@@ -2,11 +2,15 @@
 
 **Research on knowledge systems, running as one.**
 
-Commonplace is a **living doctrine for agent-operated knowledge systems, developed and tested by running one**. It selects and coordinates how model-mediated and symbolic operations are used. Explicit artifacts can [activate](./kb/notes/knowledge-storage-does-not-imply-contextual-activation.md) model capabilities and give their use project authority; code and validators can [faithfully execute](./kb/notes/scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) operations that should not be reconstructed on every call. The doctrine, prompts, code, and models can all change. Like the Ship of Theseus, Commonplace remains the same project through a governed sequence of revisions, not because any component is permanent.
+Commonplace is a **living doctrine for agent-operated knowledge systems, developed and tested by running one**.
 
-Its first application is an **LLM wiki**, in the sense [AI researcher Andrej Karpathy sketched](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f): a persistent, linked Markdown layer around a person's or project's work. Human-directed agents turn vague thoughts into retained notes, connect them to evidence and related claims, and revise both the knowledge base and its operating machinery.
+It has two goals. The practical one is an **LLM wiki**, in the sense [Andrej Karpathy sketched](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f): a persistent, linked Markdown layer in which agents, directed by people, turn a person's or project's work into retained, connected notes. The theoretical one is a new learning paradigm, the **theory builder**: a system that states theories, acts on them, criticizes them, and keeps what criticism shows for the next round, following Karl Popper's method of conjecture and criticism. We bet that a fully automated theory builder that learns can be built with today's LLMs, their weights held fixed. No test of the bet has been run yet.
 
-This repository is Commonplace's current reference embodiment. It contains adopted doctrine, research and evidence that can challenge it, and the types, conventions, skills, schemas, validators, tests, and commands that make the current system operative. Research does not become doctrine merely by being stored here. This README covers the tool; the [rendered site](https://zby.github.io/commonplace/) is the main route into the research.
+The goals reinforce each other, because memory is always about learning: a note is worth something when it changes what the system does next. Theories that are acted on, criticized, and revised are what make a wiki learn, and [real use of the wiki supplies the problems and criticism](./kb/notes/system-use-selects-theory-fit-without-a-fixed-oracle.md) a theory builder learns from.
+
+[Reflection](./kb/notes/definitions/theory-builder.md#qualifiers) is the core of the method. Commonplace's doctrine, how it writes, connects, and revises notes, is one of the theories it criticizes and revises, so [an improvement to the method is reused by all later work](./kb/notes/an-optimal-long-run-learning-strategy-invests-in-its-own-machinery.md). People still perform many of its operations; the work is moving them to computation.
+
+This repository holds the adopted doctrine, research and evidence that can challenge it, and the tool: the types, conventions, skills, schemas, validators, tests, and commands that you can install to build a knowledge base of the same kind in your own project. Research does not become doctrine merely by being stored here. This README covers the tool; the research routes below point into the rest.
 
 ## Use it
 
@@ -75,34 +79,18 @@ src/commonplace/          Packaged operational engine
 
 **Authored knowledge remains file-backed.** Markdown and Git provide a universal interface, versioning, diffs, and rollback. Derived indexes handle scale without replacing authored files. Review execution state is the scoped exception and lives in SQLite; see [ADR 010](./kb/reference/adr/010-review-state-should-move-to-sqlite-once-reviews-leave-git-and.md) and [ADR 035](./kb/reference/adr/035-review-jobs-finalize-all-or-nothing-with-derived-artifacts.md).
 
-**Local contracts and revision solve different problems.** Different collections support different kinds of work, so task-specific types and link conventions stay local. Structures can also become obsolete as questions, evidence, or model capabilities change, so those local choices remain revisable. Shared invariants are reserved for constraints that survive both variation across collections and change over time. See why [task-fitted structure costs cross-task reuse](./kb/notes/current-task-fit-alone-does-not-warrant-costly-entrenchment.md).
+**Local contracts stay revisable.** Different parts of the knowledge base support different kinds of work, so task-specific types and link conventions stay local to each part. Structures can also become obsolete as questions, evidence, or model capabilities change, so those local choices remain revisable. Shared rules are kept for constraints that hold across parts and over time. See why [task-fitted structure costs cross-task reuse](./kb/notes/current-task-fit-alone-does-not-warrant-costly-entrenchment.md).
 
-**Doctrine is explicit; exact operations can be symbolic.** Skills and conventions activate and authorize relevant model capabilities. Code, schemas, and validators carry operations whose behavior should not depend on repeated interpretation. Both sides remain revisable as evidence and model capabilities change.
+**Doctrine is explicit; exact operations are code.** Skills and conventions tell the model what to do and which of its capabilities to use. Code, schemas, and validators carry operations whose behavior should not depend on repeated interpretation, because code [executes them the same way every time](./kb/notes/scheduler-llm-separation-exploits-an-error-correction-asymmetry.md). Both sides remain revisable as evidence and model capabilities change.
 
 ## Research routes
 
-**Automated software houses.** Can a complete software house sustain
-open-ended coherent change with no human in an internal production role while
-current learned components remain fixed? The [automated software house
-conjecture](./kb/articles/automated-software-houses-with-fixed-llms.md) allows
-the starting project theory and production machinery to be written by people.
-It tests whether the resulting composite can carry the program-theory function,
-use it across novel demands, revise coherently when later demands expose an
-error, and continue over a declared scope and horizon. How the house acquires
-and improves its own organization is a separate question. The [Naur
-note](./kb/notes/naur-equates-machine-execution-with-formulated-criteria.md)
-reopens the bearer question, while the [coherent-search
-note](./kb/notes/program-theory-sustains-search-under-delayed-feedback.md)
-states the longitudinal test. Two companion articles say [how such a house
-should learn](./kb/articles/the-software-house-as-the-unit-of-training.md)
-and [how the first one would be
-built](./kb/articles/bootstrapping-an-autonomous-theory-builder.md).
+The [rendered site](https://zby.github.io/commonplace/) is the main route into the research. Starting points:
 
-**Deployment-time learning.** Durable changes to prompts, rules, tools, schemas, tests, and code can affect later sessions without updating model weights. Storage is insufficient: later operation must load or enforce the result. Start with [retained system-definition artifacts enable persistent deployment-time adaptation](./kb/notes/retained-artifacts-enable-persistent-deployment-time-adaptation.md) and the [learning theory index](./kb/notes/learning-theory-README.md).
-
-**Self-improving systems.** Improvement requires evidence-responsive change to the system's own behavior-determining organization. [Reflection](./kb/notes/definitions/reflective-system.md) is a separate property that supplies addressability, not improvement by itself. The [self-improving systems index](./kb/notes/self-improving-systems-README.md) maps the distinction, and [Commonplace as a reflective system](./kb/notes/evidence/commonplace-as-a-reflective-system.md) applies it locally.
-
-**Agent-usable memory.** Agents need [discoverable, composable, and trusted knowledge under bounded context](./kb/notes/agent-memory-needs-discoverable-composable-trusted-knowledge-under.md). The repository also contains reviews of [agent memory systems](./kb/agent-memory-systems/README.md) and [agentic systems](./kb/agentic-systems/README.md); the [comparative review](./kb/agent-memory-systems/agentic-memory-systems-comparative-review.md) focuses on activation and verification rather than storage alone.
+- [Can a Theory Builder Running on Fixed-Weight LLMs Learn?](./kb/articles/can-a-theory-builder-running-on-fixed-weight-llms-learn.md) — the lead article, with supplements on [testing](./kb/articles/testing-whether-a-theory-builder-learns.md), [bootstrapping](./kb/articles/bootstrapping-an-autonomous-theory-builder.md), [existing systems](./kb/articles/which-existing-self-improving-systems-are-theory-builders.md), and [the software house](./kb/articles/an-automated-software-house-as-a-second-test-of-a-theory-builder.md).
+- [Deployment-time learning](./kb/notes/retained-artifacts-enable-persistent-deployment-time-adaptation.md) and the [learning theory index](./kb/notes/learning-theory-README.md) — durable changes to prompts, rules, tools, and code that affect later sessions without updating model weights.
+- [Self-improving systems](./kb/notes/self-improving-systems-README.md) and [Commonplace as a reflective system](./kb/notes/evidence/commonplace-as-a-reflective-system.md).
+- Reviews of [agent memory systems](./kb/agent-memory-systems/README.md) and [agentic systems](./kb/agentic-systems/README.md), with a [comparative review](./kb/agent-memory-systems/agentic-memory-systems-comparative-review.md).
 
 ## Commands, skills, and instructions
 
@@ -123,12 +111,12 @@ Skills (`cp-skill-*`) are agent procedures auto-loaded by compatible harnesses w
 | `cp-skill-write` | Write or edit an artifact under its collection and type contracts |
 | `cp-skill-validate` | Validate artifacts, collection landings, and site redirects |
 | `cp-skill-connect` | Discover connections and write a connect report |
-| `cp-skill-convert` | Convert raw text into structured notes |
-| `cp-skill-ingest` | Snapshot, connect, classify, and analyze an external source |
+| `cp-skill-convert` | Convert a plain text file into a structured note |
+| `cp-skill-ingest` | Turn one URL or local snapshot into a tracked source analysis |
 | `cp-skill-snapshot-web` | Capture a URL into ignored local snapshots |
 | `cp-skill-ground` | Retain the minimum quotations needed to ground a source claim |
 | `cp-skill-health-check` | Diagnose a broken Commonplace installation |
-| `cp-skill-revise-autoreason` | Revise a note using incumbent, revision, and synthesis judging |
+| `cp-skill-revise-autoreason` | Experimentally revise a note with critic, author, synthesizer, and blind-judge agents, keeping the original as fallback |
 | `cp-skill-write-multistage` | Write or rebuild an unsettled artifact through staged authorship and independent review |
 | `cp-skill-library` | Find and follow a Commonplace library procedure, instruction, or type by name |
 

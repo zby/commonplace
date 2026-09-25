@@ -2,42 +2,34 @@
 
 **Research on knowledge systems, running as one.**
 
-Commonplace is a **living doctrine for agent-operated knowledge systems, developed and tested by running one**. The doctrine selects and coordinates how model-mediated and symbolic operations are used. Explicit artifacts can [activate](./notes/knowledge-storage-does-not-imply-contextual-activation.md) model capabilities and give their use project authority; code and validators can [faithfully execute](./notes/scheduler-llm-separation-exploits-an-error-correction-asymmetry.md) operations that should not be reconstructed on every call. The doctrine, prompts, code, and models can all change. Like the Ship of Theseus, Commonplace remains the same project through a governed sequence of revisions, not because any component is permanent.
+Commonplace is a **living doctrine for agent-operated knowledge systems, developed and tested by running one**.
 
-Its first application is an **LLM wiki**, in the sense [AI researcher Andrej Karpathy sketched](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f): a persistent, linked Markdown layer around a person's or project's work. Human-directed agents turn vague thoughts into retained notes, connect them to evidence and related claims, and revise both the knowledge base and its operating machinery. Humans direct the inquiry and remain responsible for judgments that current evidence and evaluation cannot settle.
+It has two goals. The practical one is an **LLM wiki**, in the sense [Andrej Karpathy sketched](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f): a persistent, linked Markdown layer in which agents, directed by people, turn a person's or project's work into retained, connected notes. The theoretical one is a new learning paradigm, the **theory builder**: a system that states theories, acts on them, criticizes them, and keeps what criticism shows for the next round, following Karl Popper's method of conjecture and criticism. We bet that a fully automated theory builder that learns can be built with today's LLMs, their weights held fixed. No test of the bet has been run yet.
 
-The repository is Commonplace's current embodiment. It contains adopted doctrine, research and evidence that can challenge it, and the procedures and code that make it operative. Research does not become doctrine merely by being stored here.
+The goals reinforce each other, because memory is always about learning: a note is worth something when it changes what the system does next. Theories that are acted on, criticized, and revised are what make a wiki learn, and [real use of the wiki supplies the problems and criticism](./notes/system-use-selects-theory-fit-without-a-fixed-oracle.md) a theory builder learns from.
 
-Two separate pressures keep the design modular. Different collections support different kinds of work, so task-specific types and link conventions stay local. Structures can also become obsolete as questions, evidence, or model capabilities change, so local choices remain revisable rather than accumulating by default. Commonplace keeps shared invariants small for both reasons. See why [task-fitted structure costs cross-task reuse](./notes/current-task-fit-alone-does-not-warrant-costly-entrenchment.md) and why [a framework rule with a boundary-preserving rival is not an inherited constraint](./notes/a-framework-rule-with-a-boundary-preserving-rival-is-not-inherited.md).
+[Reflection](./notes/definitions/theory-builder.md#qualifiers) is the core of the method. Commonplace's doctrine, how it writes, connects, and revises notes, is one of the theories it criticizes and revises, so [an improvement to the method is reused by all later work](./notes/an-optimal-long-run-learning-strategy-invests-in-its-own-machinery.md). People still perform many of its operations; the work is moving them to computation.
 
-## Threads worth following
+The site holds the adopted doctrine together with research and evidence that can challenge it. Research does not become doctrine merely by being stored here.
 
-**The automated software house conjecture.** The current
-[research program](./articles/an-automated-software-house-as-a-second-test-of-a-theory-builder.md)
-asks whether a complete software house can sustain open-ended coherent change
-with current learned components pinned and no human in an internal production
-role. Its starting project theory and production machinery may be written by
-people. The test is whether the resulting composite can carry the program-theory
-function, use it where the needed implication was not stated verbatim, revise
-when later demands expose an error, and continue across a declared scope and
-horizon. How such a house should acquire and improve its organization is a
-separate question. The [Naur
-note](./notes/naur-equates-machine-execution-with-formulated-criteria.md)
-reopens the bearer question, while the [coherent-search
-note](./notes/program-theory-sustains-search-under-delayed-feedback.md)
-states the longitudinal test. [The software house as the unit of
-training](./articles/can-a-theory-builder-running-on-fixed-weight-llms-learn.md) says how
-such a house should learn, and [bootstrapping the first automated software
-house](./articles/bootstrapping-an-autonomous-theory-builder.md) says
-how it would be built from a house that still has people inside.
+## Start here
 
-**Deployment-time learning.** Durable changes to behavior-shaping prompts, rules, tools, schemas, tests, and code can affect later sessions without updating model weights. Storage is insufficient: later operation must load or enforce the result. [Deploy-time learning](./notes/retained-artifacts-enable-persistent-deployment-time-adaptation.md) develops this path, while [bounded context](./notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) explains why selective routing remains necessary. The [learning theory index](./notes/learning-theory-README.md) maps the wider thread.
+[Can a Theory Builder Running on Fixed-Weight LLMs Learn?](./articles/can-a-theory-builder-running-on-fixed-weight-llms-learn.md) is the lead article. It defines a theory builder, states the bet, and says what evidence would show that the builder learns: withholding or altering its retained knowledge should change its later behavior, and the changed behavior should be better. Four supplements each develop one part of it:
 
-**Self-improving systems.** A system improves itself only when evidence-responsive change reaches its own behavior-determining organization. One architecture directly updates behavior; another searches candidates, evaluates them, and [retains an accepted proposal](./notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md). [Reflection](./notes/definitions/reflective-system.md) is a separate property that provides [addressability](./notes/reflection-buys-addressability.md), not improvement by itself. The [self-improving systems index](./notes/self-improving-systems-README.md) and [Commonplace case](./notes/evidence/commonplace-as-a-reflective-system.md) develop the distinction.
+- [Testing whether a theory builder learns](./articles/testing-whether-a-theory-builder-learns.md) — controlled tests that separate a retained change that is used from one that improves later work, and the hypotheses with what would refute each.
+- [Bootstrapping an autonomous theory builder with Commonplace](./articles/bootstrapping-an-autonomous-theory-builder.md) — how Commonplace moves operations from people to computation one at a time, measured by the human decisions each verified improvement still needs.
+- [Which existing self-improving systems are theory builders](./articles/which-existing-self-improving-systems-are-theory-builders.md) — eighteen systems placed against the definition, with their reported gains judged separately.
+- [An automated software house as a second test of a theory builder](./articles/an-automated-software-house-as-a-second-test-of-a-theory-builder.md) — a companion arrangement in which the builder maintains software. Failures are easier to see there, and the claim is harder to meet. The [Naur note](./notes/naur-equates-machine-execution-with-formulated-criteria.md) asks who holds a program's theory, and the [coherent-search note](./notes/program-theory-sustains-search-under-delayed-feedback.md) states the long-running test.
 
-**Agent-usable memory.** Agents need [discoverable, composable, and trusted knowledge under bounded context](./notes/agent-memory-needs-discoverable-composable-trusted-knowledge-under.md). [Explicit link semantics](./notes/links-README.md) expose support, contrast, and consequence; routing selects what reaches a task; provenance and review indicate how strongly to rely on it. Because [information value is observer-relative](./notes/information-value-is-observer-relative.md), useful condensation depends on the consuming agent and task.
+## Other threads
 
-**Systems compared.** We reviewed [148 agent memory systems](./agent-memory-systems/README.md), including Mem0, Graphiti, Cognee, and Letta. The [comparative analysis](./agent-memory-systems/agentic-memory-systems-comparative-review.md) finds that activation and verification distinguish the reviewed systems more than storage location. The collection over-samples file-based systems, so its counts describe this corpus rather than the field.
+**Deployment-time learning.** Durable changes to prompts, rules, tools, schemas, tests, and code can affect later sessions without updating model weights. Storing a change is not enough: later work must load or enforce it. [Deploy-time learning](./notes/retained-artifacts-enable-persistent-deployment-time-adaptation.md) develops this path, and [bounded context](./notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md) explains why a system must still choose what each task loads. The [learning theory index](./notes/learning-theory-README.md) maps the wider thread.
+
+**Self-improving systems.** A system improves itself when evidence changes the parts that determine its own behavior. One design updates behavior directly; another searches candidates, evaluates them, and [retains an accepted proposal](./notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md). A theory builder is a further kind: its improvement runs through criticism of theories it has stated. The [self-improving systems index](./notes/self-improving-systems-README.md) and the [Commonplace case](./notes/evidence/commonplace-as-a-reflective-system.md) develop the distinction.
+
+**Agent-usable memory.** Agents need [discoverable, composable, and trusted knowledge under bounded context](./notes/agent-memory-needs-discoverable-composable-trusted-knowledge-under.md). [Explicit link semantics](./notes/links-README.md) show support, contrast, and consequence; routing selects what reaches a task; provenance and review indicate how strongly to rely on it. Because [information value is observer-relative](./notes/information-value-is-observer-relative.md), useful condensation depends on the consuming agent and task.
+
+**Systems compared.** We have reviewed [more than 150 agent memory systems](./agent-memory-systems/README.md), including Mem0, Graphiti, Cognee, and Letta. The [comparative analysis](./agent-memory-systems/agentic-memory-systems-comparative-review.md) finds that the reviewed systems differ less in where they store memory than in how memory reaches the agent's next action and whether anyone checks that it changed behavior. The reviews over-sample file-based systems, so their counts describe this set of reviews rather than the field.
 
 ## Browse
 
