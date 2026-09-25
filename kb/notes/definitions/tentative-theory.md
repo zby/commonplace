@@ -67,7 +67,7 @@ stored or edited. Structural properties have their own term,
 
 Relevant Notes:
 
-- [Theory builder](./theory-builder.md) — extends: the system that states, consumes, criticizes, and retains tentative theories
+- [Theory builder](./theory-builder.md) — extends: the system that states, consumes, criticizes, and revises tentative theories
 - [Addressable theory](./addressable-theory.md) — contrasts: the structural property, separate from the epistemic status
 - [Popper, A realist view of logic, physics, and history](../../sources/popper-a-realist-view-of-logic-physics-and-history-1966.ingest.md) — evidenced-by: the schema and the place of `TT` in it
 - [Popper, Conjectures and Refutations](../../sources/popper-conjectures-and-refutations.ingest.md) — evidenced-by: tentativeness as a lasting status

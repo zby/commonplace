@@ -1,5 +1,5 @@
 ---
-description: "Definition — a theory builder grows objective knowledge by conjecture and refutation: it states theories in localized units, acts on them, criticizes what they say, and builds on the result; persistence and addressability are graded"
+description: "Definition — a theory builder applies conjecture and refutation to stated theories: it acts on them, criticizes what they say, and lets the result shape the next conjecture; addressability and persistence are graded"
 type: kb/types/definition.md
 tags: [foundations, self-improving-systems, learning-theory]
 ---
@@ -9,18 +9,17 @@ tags: [foundations, self-improving-systems, learning-theory]
 <!-- Maintenance: when changing this definition, please apply the checks in
 [theory-builder-checks.md](./theory-builder-checks.md). -->
 
-A **theory builder** is a system that grows knowledge by Popper's method of
-conjecture and refutation, applied to theories it keeps as objective
-knowledge. It works through Popper's schema `P1 → TT → EE → P2`: faced with a
-problem, it proposes a [tentative theory](./tentative-theory.md), attempts to
+A **theory builder** is a system that applies Popper's method of conjecture
+and refutation to theories it keeps as objective knowledge. It works
+through Popper's schema `P1 → TT → EE → P2`: faced with a problem, it proposes a [tentative theory](./tentative-theory.md), attempts to
 eliminate its errors, "especially by way of critical discussion", and takes
 up the new problems that result
 ([Popper 1966](../../sources/popper-a-realist-view-of-logic-physics-and-history-1966.ingest.md#quotes)).
 The KB needs the term to name the kind of system Commonplace builds and
 studies.
 
-A system is a theory builder when it meets four conditions, each stated in
-Popper's terms.
+A system is a theory builder when it meets four conditions, each grounded in
+Popper's account.
 
 1. **Localized content.** Its theories are stated in natural or formal
    language, so identifiable units carry their content: each unit says
@@ -31,6 +30,7 @@ Popper's terms.
    and he holds that criticism needs this form: without a descriptive
    language "there can be no object for our critical discussion"
    ([Popper 1968](../../sources/popper-epistemology-without-a-knowing-subject-1968.ingest.md#quotes)).
+   How finely the units divide a theory is graded (see Addressability).
 2. **Consumption.** Its theories guide what it does through what they say.
    In Popper's words, "all our actions in the first world are influenced by
    our second-world grasp of the third world"
@@ -42,21 +42,23 @@ Popper's terms.
    tests of stated consequences. A criticism is itself stated, so it can be
    criticized in turn; in particular, it can blame the test, the data, or an
    auxiliary assumption instead of the theory. Theories that fail are
-   revised, or rejected whole and replaced by a new conjecture. Revision need
-   not be small: it may change a core assumption, the problem, or the
-   machinery.
-4. **Iteration.** The result of criticism is kept and shapes the next
-   conjecture: the new problem `P2` becomes the starting point of the next
-   round. The kept result may be the revised theory, the record of criticism,
-   or both; a theory rebuilt from retained criticism is a new conjecture
-   informed by it. In Popper's sense, consuming a theory includes
-   "criticising them, changing them, and often even demolishing them, in
-   order to replace them by better ones"
+   revised, or rejected whole and replaced by a new conjecture: for Popper,
+   our consumption of theories "also means criticising them, changing them,
+   and often even demolishing them, in order to replace them by better ones"
    ([Popper 1966](../../sources/popper-a-realist-view-of-logic-physics-and-history-1966.ingest.md#quotes)).
+   Revision need not be small: it may change a core assumption, the problem,
+   or the machinery.
+4. **Iteration.** The result of criticism is kept and shapes the next
+   conjecture. In Popper's schema, "the result of criticism, or of
+   error-elimination, applied to a tentative theory, is as a rule the
+   emergence of a new problem"
+   ([Popper 1966](../../sources/popper-a-realist-view-of-logic-physics-and-history-1966.ingest.md#quotes)),
+   and that problem `P2` is the starting point of the next round. The kept
+   result may be the revised theory, the record of criticism, or both; a
+   theory rebuilt from retained criticism is a new conjecture informed by it.
    A revised theory is a new conjecture, so testing it again on cases that
-   refuted its predecessor is a real test. The condition sets no minimum
-   duration; how long and how widely results persist is graded (see
-   Persistence).
+   refuted its predecessor is a real test. How long and how widely results
+   persist is graded (see Persistence).
 
 **Criticism against gradient descent.** Gradient descent also eliminates
 error, and it assigns blame more finely than any text: every parameter gets
@@ -90,7 +92,8 @@ whole system, but replies: "It is possible in quite a few cases to find which
 hypothesis is responsible for the refutation"
 ([Conjectures and Refutations, Chapter 10](../../sources/popper-conjectures-and-refutations.ingest.md#quotes)).
 Commonplace builds for the high end. That this pays is a conjecture, tested
-against builders whose theories are coarser.
+against builders whose theories are coarser; the lowest baseline states each
+theory as one undivided unit.
 
 Addressability is relative to the unit criticism names, and this applies to
 the machinery as well as to the theories. A model is not localized inside,
@@ -107,13 +110,14 @@ round. Above the minimum, persistence comes in grades: within one reasoning
 episode, across the rounds of one run, across runs on the same task, and
 across problems and sessions, where later work on other questions starts from
 retained theories and their testing record. Commonplace builds for the high
-end: a library of retained theories that later work takes up. That this pays,
-compared with rebuilding what criticism produced, is a conjecture, tested
-against builders whose results persist less.
+end: a library of retained theories that later work takes up. That this pays
+is a conjecture, tested against builders whose results persist less; the
+lowest baseline keeps only records of inputs and outcomes, which carry
+nothing criticism produced.
 
-A frozen product handed to someone else does not extend the builder. When a
-run freezes a theory and another system deploys it, the builder that
-produced it stopped at the freeze; what it was while it ran is unchanged.
+When a run freezes a theory and another system deploys it, the deployment
+does not extend the builder. The builder stopped at the freeze; what it was
+while it ran is unchanged.
 
 ## Boundary
 
@@ -124,11 +128,9 @@ revision, selecting the theory to keep, and changing the machinery that does
 these things. Users who supply problems and judge the products are outside
 the builder unless they perform one of these operations. The boundary follows
 the operation, not the person, so a claim about a builder declares the
-boundary it assumes.
-
-Retention is the builder's, not the interpreter's: a model may propose and
-evaluators may assess, but what is kept for later work is decided by the
-builder's process.
+boundary it assumes. Selecting what to keep is one of the operations: a
+model may propose and outside evaluators may assess, but what carries into
+later work is decided by the builder's process.
 
 The builder is identified by its continuing process, not by any component.
 Every theory, procedure, and model in it may be replaced over time through
@@ -156,10 +158,10 @@ is an intervention and is recorded as one.
   Unlike computational reflection, this connection is not kept up
   automatically. When the machinery changes outside the texts, for example
   when a model is replaced, text and operation can diverge until criticism
-  finds the gap. Reflection reaches the models only as addressable parts: the
-  builder can hold theories about a model and criticize the choice of it, but
-  it changes the model only through what it gives the model or by replacing
-  it.
+  finds the gap. Reflection reaches a model only as an addressable part (see
+  Addressability): the builder can hold theories about the model and
+  criticize the choice of it, but it changes the model only through what it
+  gives the model or by replacing it.
 - **Autonomous.** Computation performs every operation inside the boundary.
   Users still supply problems and judge products. Autonomy does not
   establish that the operations are reliable.
@@ -190,8 +192,8 @@ human-staffed theory builder; the research program's bet is an autonomous one.
   can find weights that carry a particular fact. To that extent those parts
   of a model move toward the localized side, and criticism aimed at them can
   meet condition 3. The definition tracks localization, not substrate, so
-  whether weights are excluded is an empirical question about a given model
-  and method.
+  whether a given model's weights meet condition 1 is an empirical question
+  about that model and method.
 - **The Gödel machine** stays open. Its switching is governed by proof from
   premises that the construction does not criticize; whether a deployment
   criticizes them elsewhere is not settled by the construction. See
@@ -201,7 +203,8 @@ human-staffed theory builder; the research program's bet is an autonomous one.
 
 - **Dispositions and weight adaptation.** Popper counts expectations and
   dispositions as tentative theories in a wider sense. Their content is not
-  localized, so they fail condition 1, and adjusting them by gradient fails
+  localized, so they fail condition 1 (for content located in particular
+  weights, see Boundary cases), and adjusting them by gradient fails
   condition 3. A system whose only change is weight adaptation is not a
   theory builder. Its models can still be components of one.
 - **Black-box optimization.** Variants of prompts or programs are generated

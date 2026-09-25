@@ -84,7 +84,7 @@ a preference for minimal revision from them.
 Relevant Notes:
 
 - [Tentative theory](./tentative-theory.md) — contrasts: the epistemic status, which requires no structure
-- [Theory builder](./theory-builder.md) — extends: the system whose condition 1 is addressability's minimum and whose design commits to finer grades
+- [Theory builder](./theory-builder.md) — extends: the system whose condition 1 is addressability's minimum; Commonplace's design commits to finer grades
 - [Representational form](./representational-form.md) — grounds: the localization and assigned-consequences axes
 - [Codification](./codification.md) — grounds: the crossing that gives a part computed consequences
 - [Reflection buys addressability](../reflection-buys-addressability.md) — extends: what addressability changes about an improvement pathway

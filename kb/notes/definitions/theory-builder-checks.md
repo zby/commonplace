@@ -27,16 +27,15 @@ written. They do not decide its scope.
 
 1. **Design, not outcome.** A condition belongs in the definition only if
    Commonplace's arrangement depends on it by design, and removing it gives a
-   named arrangement the program compares against. Localized content, consumption,
-   criticism, and iteration pass this test. Localization is the minimum of
-   addressability, and iteration is the minimum of persistence. Grades above
-   either minimum have no cut-off that names a baseline, so fine-grained
-   addressability and long persistence are design commitments, not
-   conditions (operator, 2026-09-25). Whether any of
-   these pays is a conjecture tested against the arrangement without it. Fixed
-   weights are a study condition. Improvement is never a condition: a
-   definition that required it would settle the program's main question by
-   stipulation.
+   named arrangement the program compares against. Localized content,
+   consumption, criticism, and iteration pass this test. Localization is the
+   minimum of addressability, and iteration is the minimum of persistence.
+   Grades above either minimum have no cut-off that names a baseline, so
+   fine-grained addressability and long persistence are design commitments,
+   not conditions (operator, 2026-09-25). That each commitment pays is a
+   conjecture tested against builders at lower grades. Fixed weights are a
+   study condition. Improvement is never a condition: a definition that
+   required it would settle the program's main question by stipulation.
 2. **Every arrangement left outside is named.** It is specified well enough
    to be run as a baseline. Boundary cases also include arrangements inside
    the term; a case need not fail a condition to clarify the boundary.
@@ -57,8 +56,7 @@ written. They do not decide its scope.
 6. **No term without a claim.** A new term enters only when a claim cannot be
    stated without it.
 7. **A change reports the cases it flips.** Run the proposed wording against
-   the cases below and say which change class. A change that flips none is
-   wording. A change that flips one is a scope decision for the operator and
+   the cases below. A change that flips none is a wording change. A change that flips one is a scope decision for the operator and
    names the test it appeals to.
 
 ## Cases to check a change against
@@ -72,8 +70,8 @@ system improves.
 |---|---|---|---|
 | 1 | A retained theory with separate parts is criticized and revised part by part, whether stored in separate documents or exposed through indexed traces | Inside | All four conditions; storage representation does not distinguish the cases |
 | 2 | A retained prose theory is criticized for what it says and replaced whole | Inside | Condition 3: rejecting a theory whole and proposing a new conjecture is error elimination. Fine-grained addressability is not a condition; the prose is localized (operator, 2026-09-25) |
-| 3 | Formulated criticisms are retained and a theory is rebuilt from them when needed | Inside | Condition 4: the rebuilt theory is a new conjecture informed by retained criticism, as in case 2 (operator, 2026-09-25, D3) |
-| 4 | Records containing only inputs and outcomes are retained for reconstruction | The records carry nothing criticism produced: the baseline for the persistence conjecture | Nothing formulated persists across runs. A reconstructor that states, criticizes, and revises within a run is a builder at that run's grade; this case does not classify it |
+| 3 | Formulated criticisms are retained and a theory is rebuilt from them when needed | Inside | Condition 4: the rebuilt theory is a new conjecture informed by retained criticism, as in case 2 (operator, 2026-09-25) |
+| 4 | Records containing only inputs and outcomes are retained for reconstruction | Not classified by this case; the baseline for the persistence conjecture | The records carry nothing criticism produced, so nothing formulated persists across runs. A reconstructor that states, criticizes, and revises within a run is a builder at that run's grade |
 | 5 | Prompts or programs are varied and selected by score, with no formulated reason for failure bearing on their content | Outside: trial and error | Condition 3; does not classify unknown processing in a model proposer |
 | 6 | A theory is built while reasoning and then discarded | Inside at the lowest persistence grade if the reasoning states, criticizes, and revises it; outside if it is merely applied | Conditions 3 and 4 inside the episode; persistence is graded, not a condition (operator, 2026-09-25) |
 | 7 | Weights are adapted and no formulated theory guides decisions | Outside | Condition 1: no unit carries content; gradient updates also fail condition 3. An opaque model with no visible theory is a different case; insufficient evidence leaves it unclassified |
@@ -88,18 +86,18 @@ system improves.
 | 16 | A conjecture produces most of the improvement; criticism follows and changes only reliance on it | Inside | Membership does not depend on how improvement is attributed |
 | 17 | A system meets all four conditions, and its criticism and revisions never improve later work | Inside; learning is not established | Test 1: improvement is not a condition. This is the case the program's experiments must be able to find |
 | 18 | Commonplace today: operators perform criticism and selection, and method texts guide the work and are revised in response to criticism | Inside; reflective; not autonomous | The boundary follows the operation, so operators performing internal operations are inside |
-| 19 | Users only supply problems and judge products; all internal operations are computational | Inside; autonomous | Users stay outside the boundary; test 5 |
+| 19 | A builder's users only supply problems and judge products; all internal operations are computational | Inside; autonomous | Users stay outside the boundary; test 5 |
 | 20 | A builder's method texts are fixed and never criticized, while its theories about its subject are | Inside; not reflective | Test 5 |
 | 21 | A reflective builder has a procedure with no stated purpose | The builder stays reflective relative to its other method texts; that procedure lies outside reflection | Criticism aims at a procedure's stated conjecture about why it works; without one the procedure can be tried but not criticized |
 | 22 | A reflective builder replaces its model and leaves its method texts unchanged | Still reflective; text and operation may diverge until criticism finds the gap | The connection runs through consumption and criticism, not automatic update |
 | 23 | A research community, declared as the system | Inside | Popper's own case; no member holds the whole theory or supplies all the criticism |
 | 24 | One invocation of a refinement procedure such as FORTE over a supplied theory | Inside at a low persistence grade | Conditions 1–4 hold within the run: a repaired theory is a new conjecture, so re-testing it on the same examples is a real test. Nothing persists beyond the run (operator, 2026-09-25) |
 | 25 | The Gödel machine | Open | Whether a deployment criticizes its proof premises elsewhere is not settled by the construction |
-| 26 | A retained theory has no stated assumptions, scope conditions, or parts that criticism could name; it is criticized and replaced | Inside; minimum addressability | The whole theory is one localized unit, which meets condition 1 (operator, 2026-09-25). The baseline for the addressability conjecture |
+| 26 | A retained theory has no stated assumptions, scope conditions, or parts that criticism could name; it is criticized for what it says and replaced whole | Inside at minimum addressability; the baseline for the addressability conjecture | The whole theory is one localized unit, which meets condition 1 (operator, 2026-09-25) |
 | 27 | A builder revises its model only by replacing it whole | Inside | The model is an addressable part of the machinery: a stated choice names it, criticism can blame the choice, and replacement revises it (operator, 2026-09-25). The weights' content stays out of reach |
 | 28 | A system states a criticism and uses it to update weights (critique-trained RL, textual gradients); no stated theory is retained and consumed | Outside | Conditions 1 and 3: the revised theory is the weights, where no unit says anything. Inside only if the criticism aims at a retained, consumed stated theory |
 | 29 | Model editing locates a fact in particular weights, and the system criticizes and edits that fact | Partly localized; classify on evidence | Condition 1 tracks localization, not substrate (test 4). The located parts can meet conditions 1 and 3; the rest of the model cannot |
-| 30 | Weights are trained by gradient descent against a loss on examples | Outside: the gradient-descent contrast | Blame reaches every parameter, but no parameter says anything, and the report cannot blame the loss or data. Conditions 1 and 3 |
+| 30 | Weights are trained by gradient descent against a loss on examples | Outside: the gradient-descent contrast | Blame reaches every parameter, but no parameter says anything, and the process cannot blame the loss or the data. Conditions 1 and 3 |
 | 31 | One run pursues a sequence of different experiments, and each later experiment consumes the stated findings and criticisms of earlier ones | Inside | Condition 4; persistence within the run |
 | 32 | A bounded optimization run revises one solution for one task over many rounds, keeping a store of variants and critiques | Inside if criticism aims at what the variants say; outside if variants are kept by score alone | Condition 3 decides; condition 4 holds within the run, and freezing the result afterwards ends the builder |
 | 33 | A critic reports errors in stated theories, but no next conjecture takes the report up | Outside | Condition 4: criticism that feeds nothing is not iteration |
