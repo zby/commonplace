@@ -1,5 +1,5 @@
 ---
-description: "Definition — a theory builder grows objective knowledge by conjecture and refutation: it formulates theories, acts on them, criticizes them, and retains the results; learning is tested, not assumed"
+description: "Definition — a theory builder grows objective knowledge by conjecture and refutation: it states theories in localized units, acts on them, criticizes what the units say, and retains the results; learning is tested, not assumed"
 type: kb/types/definition.md
 tags: [foundations, self-improving-systems, learning-theory]
 ---
@@ -22,13 +22,14 @@ studies.
 A system is a theory builder when it meets four conditions, each stated in
 Popper's terms.
 
-1. **Objective knowledge.** Its theories are formulated in language and kept
-   as products outside any single mind or model. Popper's objective knowledge
-   is knowledge "contained in a book; or stored in a library"
-   ([Popper 1966](../../sources/popper-a-realist-view-of-logic-physics-and-history-1966.ingest.md#quotes)).
-   He also holds
-   that criticism needs this form: without a descriptive language "there can
-   be no object for our critical discussion"
+1. **Localized content.** Its theories are stated in natural or formal
+   language, so identifiable units carry their content: each unit says
+   something that can be pointed at. This is the localized side of
+   [representational form](./representational-form.md). Popper's objective
+   knowledge is knowledge "contained in a book; or stored in a library"
+   ([Popper 1966](../../sources/popper-a-realist-view-of-logic-physics-and-history-1966.ingest.md#quotes)),
+   and he holds that criticism needs this form: without a descriptive
+   language "there can be no object for our critical discussion"
    ([Popper 1968](../../sources/popper-epistemology-without-a-knowing-subject-1968.ingest.md#quotes)).
 2. **Consumption.** Its theories guide what it does through what they say.
    In Popper's words, "all our actions in the first world are influenced by
@@ -37,14 +38,13 @@ Popper's terms.
    A difference in a theory's content that matters to a decision changes the
    decision ([operative change](./operative-change.md)).
 3. **Criticism.** It has a working process of attempted refutation aimed at
-   what its theories say: critical argument, comparison with rivals, and
-   tests of stated consequences. Theories that fail are revised, or rejected
-   whole and replaced by a new conjecture. Revision need not be small: it may
-   change a core assumption, the problem, or the machinery. Popper separates this critical method from trial and error, which
-   is applied "in a more dogmatic fashion, by the amoeba also"; the
-   difference "lies not so much in the trials as in a critical and
-   constructive attitude towards errors"
-   ([Conjectures and Refutations, Chapter 1](../../sources/popper-conjectures-and-refutations.ingest.md#quotes)).
+   what identified units say: critical argument, comparison with rivals, and
+   tests of stated consequences. A criticism is itself stated, so it can be
+   criticized in turn; in particular, it can blame the test, the data, or an
+   auxiliary assumption instead of the theory. Theories that fail are
+   revised, or rejected whole and replaced by a new conjecture. Revision need
+   not be small: it may change a core assumption, the problem, or the
+   machinery.
 4. **Growth.** It retains its theories and the record of their criticism, so
    that the new problem `P2` becomes the starting point of later work. A
    builder that keeps only the record of criticism and rebuilds a theory from
@@ -54,18 +54,17 @@ Popper's terms.
    changing them, and often even demolishing them, in order to replace them
    by better ones" ([Popper 1966](../../sources/popper-a-realist-view-of-logic-physics-and-history-1966.ingest.md#quotes)).
 
-**Addressability is a design commitment, not a condition.** How
-[addressable](./addressable-theory.md) a part of the builder is comes in
-grades. At the high end, a theory's assumptions, scope conditions, and parts
-can be inspected and revised individually, so criticism can name the part it
-blames. At the low end, a component can only be replaced whole: a model's
-weights are revised by fine-tuning them without addressing parts, or by
-replacing the model. Popper grants Duhem that a test often bears on a whole
-system, but replies: "It is possible in quite a few cases to find which
-hypothesis is responsible for the refutation"
-([Conjectures and Refutations, Chapter 10](../../sources/popper-conjectures-and-refutations.ingest.md#quotes)).
-Commonplace builds for the high end. That this pays is a conjecture, tested
-against builders whose theories are less addressable.
+**Criticism against gradient descent.** Gradient descent also eliminates
+error, and it assigns blame more finely than any text: every parameter gets
+its share. But no parameter says anything by itself, so the blame cannot be
+stated as an error in what the theory says, and it cannot be argued with; the
+loss and the data are fixed from outside the process. This is Popper's
+distinction between the critical method and trial and error, which is applied
+"in a more dogmatic fashion, by the amoeba also"; the difference "lies not so
+much in the trials as in a critical and constructive attitude towards errors"
+([Conjectures and Refutations, Chapter 1](../../sources/popper-conjectures-and-refutations.ingest.md#quotes)).
+Conditions 1 and 3 together draw this line: localization supplies units that
+say something, and criticism aims at what they say.
 
 **Error elimination is attempted, not guaranteed.** The parentheses in
 Popper's "(attempted) error-elimination" are his. A builder whose criticism
@@ -74,6 +73,28 @@ theory builder. Whether a theory builder learns, in the sense of improving
 its capacity for future action
 ([Simon's criterion](../learning-is-not-only-about-generality.md)), is an
 empirical question about it. The definition does not settle it.
+
+## Addressability
+
+Condition 1 sets the minimum: some unit carries content, even if that unit is
+the whole theory. Above the minimum,
+[addressability](./addressable-theory.md) comes in grades: the finer the
+units, the more precisely criticism can name what it blames. At the high end,
+a theory's assumptions, scope conditions, and parts are stated separately and
+can be revised individually. Popper grants Duhem that a test often bears on a
+whole system, but replies: "It is possible in quite a few cases to find which
+hypothesis is responsible for the refutation"
+([Conjectures and Refutations, Chapter 10](../../sources/popper-conjectures-and-refutations.ingest.md#quotes)).
+Commonplace builds for the high end. That this pays is a conjecture, tested
+against builders whose theories are coarser.
+
+Addressability is relative to the unit criticism names, and this applies to
+the machinery as well as to the theories. A model is not localized inside,
+but as a component of the builder it is an addressable part: a method text or
+configuration states which model does which work, criticism can blame that
+choice, and the builder can replace the model whole. What the builder cannot
+do is criticize what the model's weights say, because no unit in them says
+anything.
 
 ## Boundary
 
@@ -112,10 +133,10 @@ is an intervention and is recorded as one.
   Unlike computational reflection, this connection is not kept up
   automatically. When the machinery changes outside the texts, for example
   when a model is replaced, text and operation can diverge until criticism
-  finds the gap. Reflection covers only the formulated part of the method.
-  The interpreter's weights are not objective knowledge: the builder can hold
-  theories about them, but it changes them only through what it gives them or
-  by replacing them.
+  finds the gap. Reflection reaches the models only as addressable parts: the
+  builder can hold theories about a model and criticize the choice of it, but
+  it changes the model only through what it gives the model or by replacing
+  it.
 - **Autonomous.** Computation performs every operation inside the boundary.
   Users still supply problems and judge products. Autonomy does not
   establish that the operations are reliable.
@@ -130,6 +151,17 @@ human-staffed theory builder; the research program's bet is an autonomous one.
   theory or supplies all the criticism.
 - **Commonplace's note-review loop**, with the operator performing internal
   operations, is a human-staffed theory builder.
+- **Criticism applied through weights.** Critique-trained reinforcement
+  learning and "textual gradient" methods state a criticism, then use it to
+  update weights. The revised theory is the weights, where no unit says
+  anything, so the arrangement is outside. It becomes a builder only when the
+  criticism aims at a stated theory that the system retains and consumes.
+- **Content located in weights.** Model editing and interpretability methods
+  can find weights that carry a particular fact. To that extent those parts
+  of a model move toward the localized side, and criticism aimed at them can
+  meet condition 3. The definition tracks localization, not substrate, so
+  whether weights are excluded is an empirical question about a given model
+  and method.
 - **The Gödel machine** stays open. Its switching is governed by proof from
   premises that the construction does not criticize; whether a deployment
   criticizes them elsewhere is not settled by the construction. See
@@ -137,17 +169,19 @@ human-staffed theory builder; the research program's bet is an autonomous one.
 
 ## Exclusions
 
-- **Dispositions and weights.** Popper counts expectations and dispositions
-  as tentative theories in a wider sense. They are not formulated, so they
-  fail condition 1. A system whose only change is weight adaptation is not a
+- **Dispositions and weight adaptation.** Popper counts expectations and
+  dispositions as tentative theories in a wider sense. Their content is not
+  localized, so they fail condition 1, and adjusting them by gradient fails
+  condition 3. A system whose only change is weight adaptation is not a
   theory builder. Its models can still be components of one.
 - **Black-box optimization.** Variants of prompts or programs are generated
   and kept by outcome score, with no stated reason bearing on what a variant
-  says. This is trial and error, and it fails condition 3. Real systems fall
+  says. The variants are localized, but selection does not aim at what they
+  say, so this is trial and error and fails condition 3. Real systems fall
   between this case and a builder; the test is whether a stated reason bears
-  on what the theory says.
-- **A fixed theory.** A formulated theory guides decisions and the system
-  never criticizes it. It fails condition 3.
+  on what a unit says.
+- **A fixed theory.** A stated theory guides decisions and the system never
+  criticizes it. It fails condition 3.
 - **A single run without retention.** A theory built while reasoning and then
   discarded, or one invocation of a refinement procedure such as FORTE, fails
   condition 4. This does not classify a larger system that uses the
@@ -160,7 +194,7 @@ human-staffed theory builder; the research program's bet is an autonomous one.
 - Calling a model, a prompt, a harness, or a review pipeline a theory builder
   when it is one component of the system that performs the operations.
 - Counting a system as a theory builder because it stores prose about its
-  subject or itself. Storage satisfies none of conditions 2 to 4.
+  subject or itself. Storage satisfies condition 1 at most.
 - Reading membership as evidence of learning. A builder can criticize and
   revise without improving; improvement needs its own comparison.
 - Counting a user inside the builder because their problems or verdicts
@@ -171,7 +205,8 @@ human-staffed theory builder; the research program's bet is an autonomous one.
 Relevant Notes:
 
 - [Tentative theory](./tentative-theory.md) — defined-in: the status of every theory the builder holds
-- [Addressable theory](./addressable-theory.md) — defined-in: the graded structural property the builder is designed for
+- [Representational form](./representational-form.md) — grounds: the localization axis that condition 1 uses
+- [Addressable theory](./addressable-theory.md) — defined-in: the graded property above condition 1's minimum
 - [Reflective system](./reflective-system.md) — defined-in: the causal connection the reflective qualifier requires
 - [Learning is not only about generality](../learning-is-not-only-about-generality.md) — grounds: the sense of learning the definition leaves to test
 - [Commonplace studies conjectural learning through retained theories](../commonplace-studies-conjectural-learning-through-retained-theories.md) — extends: the research program's conjectures about builders

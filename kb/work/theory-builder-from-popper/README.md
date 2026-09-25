@@ -14,10 +14,11 @@ the kind of system Commonplace builds, stated in terms borrowed from Popper.
 - `theory-builder.md` (library version) does not require criticism, so a
   builder that never criticizes anything qualifies.
 
-The new `theory-builder.md` requires formulated, consumed, criticized, and
+The new `theory-builder.md` requires localized, consumed, criticized, and
 retained theories, and has no success condition: whether a builder learns is
-the hypothesis under test. Addressability is a graded design commitment, not
-a condition.
+the hypothesis under test. Localization is addressability's minimum; finer
+grades are a design commitment. Criticism aimed at what localized units say is
+what separates a builder from gradient descent.
 
 ## Decisions so far (operator, 2026-09-25)
 
@@ -30,8 +31,9 @@ a condition.
   their main consumer. This reverses the 2026-09-21 workshop decisions that
   kept learner and builder apart and made criticism optional for a builder.
 - Whole-theory rejection, and rebuilding from retained criticism (D3), are
-  inside. Addressability is demoted from condition to design commitment,
-  because it is graded; a model replaced whole sits at its lowest grade.
+  inside. Addressability is graded: localization (some unit carries content)
+  is condition 1, finer grades are a design commitment. A model replaced
+  whole is an addressable part of the machinery.
 - D4 (inventory): `conjectural-learning-checks.md` is replaced by
   [theory-builder-checks.md](./theory-builder-checks.md), drafted here and
   promoted with the definition.

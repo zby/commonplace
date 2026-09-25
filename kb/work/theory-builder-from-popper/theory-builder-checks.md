@@ -12,7 +12,7 @@ proposed change exposes.
 
 Drafted 2026-09-25 to replace the conjectural-learning checks. Cases 1–16
 carry over that file's cases with the same numbers and assumptions, and are
-reclassified under the new definition. Cases 17–27 are new.
+reclassified under the new definition. Cases 17–30 are new.
 
 ## Purpose
 
@@ -27,10 +27,11 @@ written. They do not decide its scope.
 
 1. **Design, not outcome.** A condition belongs in the definition only if
    Commonplace's arrangement depends on it by design, and removing it gives a
-   named arrangement the program compares against. Formulation, consumption,
-   criticism, and retention pass this test. Addressability does not: it comes
-   in grades, so it has no cut-off that names a baseline, and it is kept as a
-   design commitment. Whether any of
+   named arrangement the program compares against. Localized content, consumption,
+   criticism, and retention pass this test. Localization is the minimum of
+   addressability: some unit carries content. Grades above that minimum have
+   no cut-off that names a baseline, so fine-grained addressability is a
+   design commitment, not a condition. Whether any of
    these pays is a conjecture tested against the arrangement without it. Fixed
    weights are a study condition. Improvement is never a condition: a
    definition that required it would settle the program's main question by
@@ -42,7 +43,7 @@ written. They do not decide its scope.
    terms with a quote from an ingested source, or is marked as the KB's
    addition with the grounds for it. A condition may not be attributed to
    Popper when the quote supports only part of it.
-4. **Classification requires evidence for the conditions.** Formulated
+4. **Classification requires evidence for the conditions.** Stated
    artifacts, consumption traces, and records of criticism can establish the
    conditions without an account of model internals. Where evidence is
    insufficient, the case remains unclassified. Observer inaccessibility alone
@@ -61,7 +62,7 @@ written. They do not decide its scope.
 
 ## Cases to check a change against
 
-Condition numbers refer to the definition: 1 objective knowledge,
+Condition numbers refer to the definition: 1 localized content,
 2 consumption, 3 criticism, 4 retention. Unless a case says
 otherwise, it assumes a continuing system and says nothing about whether the
 system improves.
@@ -69,12 +70,12 @@ system improves.
 | # | Case | Class | Settled by |
 |---|---|---|---|
 | 1 | A retained theory with separate parts is criticized and revised part by part, whether stored in separate documents or exposed through indexed traces | Inside | All four conditions; storage representation does not distinguish the cases |
-| 2 | A retained prose theory is criticized for what it says and replaced whole | Inside | Condition 3: rejecting a theory whole and proposing a new conjecture is error elimination. Addressability is not a condition (operator, 2026-09-25) |
+| 2 | A retained prose theory is criticized for what it says and replaced whole | Inside | Condition 3: rejecting a theory whole and proposing a new conjecture is error elimination. Fine-grained addressability is not a condition; the prose is localized (operator, 2026-09-25) |
 | 3 | Formulated criticisms are retained and a theory is rebuilt from them when needed | Inside | Condition 4: the rebuilt theory is a new conjecture informed by retained criticism, as in case 2 (operator, 2026-09-25, D3) |
 | 4 | Records containing only inputs and outcomes are retained for reconstruction | Outside: the baseline for the retention conjecture | Conditions 1 and 4: no formulated conjectures or criticism are retained. This does not classify what the reconstructor does |
 | 5 | Prompts or programs are varied and selected by score, with no formulated reason for failure bearing on their content | Outside: trial and error | Condition 3; does not classify unknown processing in a model proposer |
 | 6 | A theory is built while reasoning and then discarded | Outside | Condition 4. Criticism of it inside the run may still improve that run |
-| 7 | Weights are adapted and no formulated theory guides decisions | Outside | Condition 1. An opaque model with no visible theory is a different case; insufficient evidence leaves it unclassified |
+| 7 | Weights are adapted and no formulated theory guides decisions | Outside | Condition 1: no unit carries content; gradient updates also fail condition 3. An opaque model with no visible theory is a different case; insufficient evidence leaves it unclassified |
 | 8 | Weights, prompts, and code evolve together around a formulated, consumed, criticized, retained theory | Inside | Weight change is not excluded; fixed weights are a study condition (test 1) |
 | 9 | A formulated theory guides decisions and the system would never criticize it | Outside: the frozen-seed baseline | Condition 3; test 2 |
 | 10 | A theory is stored and no process in the system would consume it | Outside; as a baseline it is the system run without the theory | Condition 2. A theory that a process would consume when an occasion arises is not this case |
@@ -93,5 +94,8 @@ system improves.
 | 23 | A research community, declared as the system | Inside | Popper's own case; no member holds the whole theory or supplies all the criticism |
 | 24 | One invocation of a refinement procedure such as FORTE over a supplied theory | Outside | Condition 4: nothing is retained for later work. This does not classify a larger system that uses the procedure |
 | 25 | The Gödel machine | Open | Whether a deployment criticizes its proof premises elsewhere is not settled by the construction |
-| 26 | A retained theory has no stated assumptions, scope conditions, or parts that criticism could name; it is criticized and replaced | Inside; low addressability | Addressability is a graded design commitment, not a condition (operator, 2026-09-25). The baseline for the addressability conjecture |
-| 27 | A builder revises its model only by replacing it whole | Inside; the model is at the lowest addressability grade | The model's weights are machinery, not objective knowledge (condition 1); replacing them is a change to the machinery |
+| 26 | A retained theory has no stated assumptions, scope conditions, or parts that criticism could name; it is criticized and replaced | Inside; minimum addressability | The whole theory is one localized unit, which meets condition 1 (operator, 2026-09-25). The baseline for the addressability conjecture |
+| 27 | A builder revises its model only by replacing it whole | Inside | The model is an addressable part of the machinery: a stated choice names it, criticism can blame the choice, and replacement revises it (operator, 2026-09-25). The weights' content stays out of reach |
+| 28 | A system states a criticism and uses it to update weights (critique-trained RL, textual gradients); no stated theory is retained and consumed | Outside | Conditions 1 and 3: the revised theory is the weights, where no unit says anything. Inside only if the criticism aims at a retained, consumed stated theory |
+| 29 | Model editing locates a fact in particular weights, and the system criticizes and edits that fact | Partly localized; classify on evidence | Condition 1 tracks localization, not substrate (test 4). The located parts can meet conditions 1 and 3; the rest of the model cannot |
+| 30 | Weights are trained by gradient descent against a loss on examples | Outside: the gradient-descent contrast | Blame reaches every parameter, but no parameter says anything, and the report cannot blame the loss or data. Conditions 1 and 3 |
