@@ -64,7 +64,7 @@ collection, so Phase 3 acceptance uses a synthetic cross-collection witness.
   reached is generated from a narrower membership set.
 
 The full starting audit remains in the [parent handoff
-record](../system-contract-consistency/plans/t1-tag-scope.md).
+record](./plans/t1-tag-scope.md).
 
 ## Design inputs, not authority
 

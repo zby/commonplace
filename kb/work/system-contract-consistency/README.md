@@ -46,8 +46,8 @@ explicitly historical statement, or an unimplemented proposal does not.
 
 | ID | Pri | Contradiction | Consequence |
 |---|---|---|---|
-| T1 | P1 | Tag coverage stated beyond one collection, checked within one | **Transferred** to [tag-contract convergence](../tag-contract-convergence/README.md); [closure tracker](./plans/t1-tag-scope.md) |
-| E1 | P1 | Native Windows supported; promoted skills keep unpaired POSIX commands (health check, connect `xargs -r`, validate's Bash loop) | **Owned** by [execution-channel compatibility](../execution-channel-compatibility/README.md); [plan](./plans/e1-windows-execution.md). E1 now also owns the package-owned `commonplace-validate all` target |
+| T1 | P1 | Tag coverage stated beyond one collection, checked within one | **Transferred** to [tag-contract convergence](../tag-contract-convergence/README.md); [closure tracker](../tag-contract-convergence/plans/t1-tag-scope.md) |
+| E1 | P1 | Native Windows supported; promoted skills keep unpaired POSIX commands (health check, connect `xargs -r`, validate's Bash loop) | **Owned** by [execution-channel compatibility](../execution-channel-compatibility/README.md); [plan](../execution-channel-compatibility/e1-windows-execution.md). E1 now also owns the package-owned `commonplace-validate all` target |
 
 Witness paths and line numbers for each new finding are in the [rescan
 witness file](./rescan-2026-09-25.md). Re-derive them before acting; they go

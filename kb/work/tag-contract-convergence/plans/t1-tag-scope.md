@@ -1,7 +1,7 @@
 # T1 handoff — Track tag-scope contradiction closure
 
 **State:** open finding; design and implementation transferred on 2026-08-27
-to [tag-contract convergence](../../tag-contract-convergence/README.md).
+to [tag-contract convergence](../README.md).
 
 **Audited against:** commit `6660bd2a`; rebaselined 2026-09-25 after
 [ADR 086](../../../reference/adr/086-projects-read-the-library-from-the-installed-package.md)
