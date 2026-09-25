@@ -5,7 +5,7 @@ traits: [title-as-claim, has-comparison, has-external-sources]
 tags: [self-improving-systems]
 ---
 
-# Missing rationale does not exclude a theory builder, but weight-only retention does
+# Missing rationale does not exclude a theory builder; weight-only retention excludes one across runs
 
 Three systems reported in August 2026 retain different objects. Prime Agent
 and Recuris retain editable rules about their own operation, and neither
