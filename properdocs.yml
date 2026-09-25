@@ -323,6 +323,7 @@ plugins:
         'work/framework-delivery/adr-draft.md': 'reference/adr/086-projects-read-the-library-from-the-installed-package.md'
         'work/framework-delivery/harness-probe-request.md': 'work/framework-delivery/probe-request.md'
         'work/information-measures/epiplexity-eli5.md': 'notes/epiplexity-by-example-what-entropy-and-complexity-miss.md'
+        'work/system-contract-consistency/087-sources-and-reports-types-are-global-library-types.md': 'reference/adr/087-source-and-report-types-are-global-library-types.md'
         'work/tag-contract-convergence/plans/02-consumer-convergence.md': 'work/tag-contract-convergence/plans/03-consumer-convergence.md'
         'work/tag-contract-convergence/plans/03-canonical-heads-migration.md': 'work/tag-contract-convergence/plans/04-canonical-heads-migration.md'
         'work/tag-contract-convergence/plans/04-cleanup-and-follow-up.md': 'work/tag-contract-convergence/plans/05-cleanup-and-follow-up.md'

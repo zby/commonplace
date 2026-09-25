@@ -8,7 +8,7 @@ tags: []
 
 **Status:** workshop draft; not accepted
 **Date:** 2026-09-25
-**Amends:** [ADR 086](../../reference/adr/086-projects-read-the-library-from-the-installed-package.md) (projects read the library from the installed package) and [ADR 072](../../reference/adr/072-ingests-own-source-authority-and-snapshots-are-local.md) (ingests own source authority; snapshots are local and immutable)
+**Amends:** [ADR 086](./086-projects-read-the-library-from-the-installed-package.md) (projects read the library from the installed package) and [ADR 072](./072-ingests-own-source-authority-and-snapshots-are-local.md) (ingests own source authority; snapshots are local and immutable)
 **Promotion condition:** accept only with the implementation that makes the
 emitters, the snapshot migration, init's migration, and the collection
 contracts operative. Allocate the ADR number at promotion; 087 is provisional.

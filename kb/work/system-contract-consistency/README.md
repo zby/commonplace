@@ -122,7 +122,7 @@ ledger) were deleted on 2026-09-25; git history keeps them.
 - `kb/sources/types` and `kb/reports/types` are still copied into projects as
   project-owned. The documents describe this consistently, so it is not a
   contradiction, but code depends on the copies' exact paths. The [ADR
-  draft](./087-sources-and-reports-types-are-global-library-types.md) proposes
+  draft](../../reference/adr/087-source-and-report-types-are-global-library-types.md) proposes
   making the seven types global library types, with no scope restriction, and
   rewriting snapshots once with their ingest checksums re-pinned.
 - Proposals that still describe the `kb/commonplace/` layout (for example the
