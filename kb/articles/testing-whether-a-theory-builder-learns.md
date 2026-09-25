@@ -44,7 +44,7 @@ causal structure:
 
 > K(t) → conjecture and criticism → K(t+1) → different later behaviour
 
-where K is the retained tentative knowledge. The middle step is what makes
+where K is the retained state. The middle step is what makes
 this theory building rather than caching: the new retained state is a
 theory that was proposed and is held open to criticism, not a stored answer.
 
@@ -55,7 +55,7 @@ can also retain and faithfully apply a bad rule: showing that a theory was
 formulated, criticized, revised, and used
 [does not by itself establish improved capacity](../notes/a-complete-theory-path-does-not-establish-improved-capacity.md).
 The quantity to measure is the change in future capacity caused by retained
-knowledge.
+state.
 
 A failed outcome also does not say where the fault lies. Deriving
 predictions from a theory, identifying candidate faults, and assessing
@@ -76,7 +76,7 @@ other records, code, or people may still carry the lesson.
 The first experiments should make the causal role of a revision easy to
 observe. Each test answers a separate question. Installing a revision is not
 evidence that later work used it, and use is not evidence that it caused an
-improvement: a retained theory
+improvement: a retained revision
 [matters only through its consumption path](../notes/an-action-model-matters-only-through-its-consumption-path.md).
 
 - **retention** — does the revision survive into later work?
@@ -98,8 +98,8 @@ improvement: a retained theory
   replaying the original one? This is the
   [sample-efficiency conjecture](../notes/retained-theories-may-improve-sample-efficiency.md)
   in testable form.
-- **revision** — can later evidence change retained knowledge when it turns
-  out to be wrong?
+- **revision** — can later evidence change the revision when it turns out
+  to be wrong?
 
 Run the tests on the same revision. Retention shown for one revision and
 transfer shown for another do not show that any revision
@@ -110,14 +110,16 @@ transfer shown for another do not show that any revision
 Early experiments should be small enough that causal attribution is
 possible. A simple pattern is:
 
-1. declare the builder's **seed**: its starting knowledge and machinery;
+1. declare the builder's **seed**: its starting knowledge and machinery,
+   the instructions, tools, and orchestration that do its theory-building
+   work;
 2. give it a family of tasks with some learnable regularity, whose answers
    are fixed outside the builder before the run;
 3. let it meet failures and retain its own revisions;
 4. run the revised builder and the seed on the same fresh instances.
 
-The baseline in step 4 is the same later demand run without the retained
-revisions under matched conditions. It is not the seed's earlier performance
+The baseline in step 4 is the same later demand, meaning the same set of
+tasks, run without the retained revisions under matched conditions. It is not the seed's earlier performance
 on earlier tasks, because a gain between episodes confounds the revision
 with task drift, model variance, and scoring noise. The externally fixed
 answer, not the builder's approval, is the outcome. A claim tested without
@@ -128,7 +130,7 @@ Once the revised builder beats the seed, the first tests isolate a single
 revision's contribution. Reconstruction can match retention at comparable
 total cost; both systems have then learned, but explicit retention offered
 no advantage under those conditions. Count the costs of acquiring,
-maintaining, reconstructing, and using the knowledge. For each comparison,
+maintaining, reconstructing, and using the revision. For each comparison,
 name the state being varied, hold the model, tools, evidence, task
 conditions, and resource limits fixed, and repeat across tasks and runs to
 separate an effect from sampling variation.
@@ -178,10 +180,10 @@ answer. Before the task runs, state which artifact should be written and
 read, and score consumption against that expectation;
 [PAST-Bench](../sources/past-bench-personal-agents-pdf.ingest.md) does both,
 though following an expected pathway is evidence of use, not of causal
-necessity. Removing retained content usually removes information the task
+necessity. Removing retained state usually removes information the task
 needs, so a with-and-without comparison measures benefit, not harm;
 measuring harm needs current authoritative evidence held available while
-the retained content varies, as
+the retained state varies, as
 [The Memory Trust Gap](../sources/the-memory-trust-gap.ingest.md) does in
 separate benefit and safety suites.
 
@@ -215,7 +217,7 @@ falling.
 ## Then test accumulation and compounding
 
 A builder that learns must eventually hold many revisions without becoming
-incoherent, overfitting to recent cases, or retaining obsolete knowledge.
+incoherent, overfitting to recent cases, or keeping obsolete revisions.
 Long-horizon tests will matter, but only after the basic causal mechanism
 is established.
 
@@ -224,16 +226,16 @@ whether a revision changes later task work. The bootstrap supplement's
 loop, from learning to better learning machinery, needs revisions that
 change later improvement work. Improvements
 [accumulate](../notes/improvements-can-accumulate-without-compounding.md)
-when a later improvement builds on an earlier retained result. They
-compound when the earlier result makes the later improvement cheaper, more
+when a later improvement builds on an earlier retained revision. They
+compound when the earlier revision makes the later improvement cheaper, more
 reliable, or dependent on fewer human decisions. The loop requires
 compounding.
 
 [Compounding is measured in the later improvement episode](../notes/compounding-is-tested-in-later-improvement-not-by-the-accepting-metric.md),
-not by the check that accepted the earlier change: a passing validator shows
-that the change met its target, not that the next diagnosis became easier.
-Replay the later episode with the retained knowledge frozen at the earlier
-snapshot, and trace how it used the earlier change. Without that trace, a
+not by the check that accepted the earlier revision: a passing validator
+shows that the revision met its target, not that the next diagnosis became easier.
+Replay the later episode with the retained state frozen at the earlier
+snapshot, and trace how it used the earlier revision. Without that trace, a
 cheaper later episode could come from an easier problem or a more
 experienced operator.
 
@@ -251,12 +253,13 @@ autonomous theory builder. A builder "whose machinery changes pass through a
 causally connected self-theory" is a
 [reflective](../notes/definitions/theory-builder.md#qualifiers) one.
 
-Three further terms need glosses. A frozen seed is the seed retained
+The hypotheses also use terms that need glosses. Their "capability" is
+what this article calls capacity. A frozen seed is the seed retained
 unchanged. An **extension** is a retained machinery change that shows a
-capability gain over the seed on a stated demand under a stated budget,
+capacity gain over the seed on a stated demand under a stated budget,
 through later work that consumes the change and against the matched
 baseline described above. It is a bounded comparative claim, not a proof
-that the seed could never have supplied the capability. "Currently public"
+that the seed could never have supplied that capacity. "Currently public"
 means available as of the adoption date; "training" means retained changes
 to the builder's instructions, knowledge, tools, and orchestration, not
 changes to model weights.
@@ -310,7 +313,7 @@ predicted effects, and outcomes that connect these steps. Matched
 interventions on the revised commitment, or on its consumption path,
 strengthen the attribution; a machinery change followed by better outcomes
 does not establish it alone. Reflection and extension are separate claims:
-a reflective revision can fail to improve capability, and a capability gain
+a reflective revision can fail to improve capacity, and a capacity gain
 can come from a change that no self-theory guided.
 
 > **Reflection hypothesis.** A builder whose machinery changes pass through
