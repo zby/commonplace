@@ -1,5 +1,5 @@
 ---
-description: "Proposal: a second, weaker kind of tag — a keyword with no head, no page, and no marks, for scoped search only — declared per collection; rejected for now by ADR 089 in favour of one mechanism where every tag has a head"
+description: "Proposal: a second, weaker kind of tag — a keyword with no head, no page, and no marks, for scoped search only — declared per collection; set aside by ADR 089 on YAGNI grounds until search-only tagging shows a need"
 type: reference/types/design-proposal.md
 tags: [kb-maintenance]
 ---
@@ -10,7 +10,7 @@ A tag today is a membership claim: the artifact belongs to a topic that has a he
 
 ## Current state (as of 2026-09-25)
 
-[ADR 089](../adr/089-tags-are-one-namespace-per-kb-with-heads-in-kb-tags.md) decides that every tag in use within the KB's tag space has a head, that membership ranges over one fixed set of participating collections, and that no consumer reads tags outside that set. It records this proposal's idea under its considered alternatives and rejects it for now as two mechanisms where one suffices. The headless tags that existed when the ADR was written were given heads or retagged in the same change. `kb/work/` and `kb/sources/` artifacts may carry `tags:` lines; nothing reads them, so they are neither keywords nor memberships but inert text.
+[ADR 089](../adr/089-tags-are-one-namespace-per-kb-with-heads-in-kb-tags.md) decides that every tag in use within the KB's tag space has a head, that membership ranges over one fixed set of participating collections, and that no consumer reads tags outside that set. It records this proposal's idea under its considered alternatives and rejects it for now on YAGNI grounds: the headless tags that prompted it were mistakes under the existing rules, and were given heads or retagged in the same change rather than legalized by a new mechanism. `kb/work/` and `kb/sources/` artifacts may carry `tags:` lines; nothing reads them, so they are neither keywords nor memberships but inert text.
 
 ## Problem
 
