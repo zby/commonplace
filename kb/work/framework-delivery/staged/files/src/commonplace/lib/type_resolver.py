@@ -173,7 +173,8 @@ def validate_type_eligibility(
 ) -> None:
     """Reject collection-local types used outside their owning collection.
 
-    Global types in the library are eligible everywhere. A collection may
+    Global types in the library and project-shared types under the project's
+    ``kb/types/`` are eligible everywhere. A collection may
     also use specs under its own ``types/`` directory. The ``kb/work/``
     lifecycle subtree may use any valid type spec. Files that are not inside a
     declared collection retain the referential-only behavior.
@@ -197,6 +198,12 @@ def validate_type_eligibility(
         return
 
     if _is_global_type_doc(type_doc):
+        return
+
+    # A project's own kb/types/ holds project-shared types, eligible in every
+    # collection. (In the source checkout that directory is the library, whose
+    # types are named by bare name before this point.)
+    if type_doc.is_relative_to(boundary / "types"):
         return
 
     local_types = collection / "types"

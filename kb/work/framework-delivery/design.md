@@ -112,7 +112,7 @@ This is the user-visible form of the design. There is no per-machine setup step:
 
 If init finds a `kb/commonplace/` copy from an earlier release, it tells the operator to delete it.
 
-**Step 5 shrinks to a check.** Run `commonplace-init --check`. The source checkout does not run init (operator decision, 2026-09-25). It is where the library is authored, and its committed `.claude/skills/` and `.agents/skills/` symlinks cover all its skills, including five that are not promoted. For a harness whose skill directory init does not know, pass that directory to init.
+**Step 5 shrinks to a check.** Run `commonplace-init --check`. The source checkout does not run init (operator decision, 2026-09-25). It is where the library is authored, and its committed `.claude/skills/` and `.agents/skills/` symlinks cover all its skills, including five that are not promoted. A harness whose skill directory init does not know uses the skill index in `.commonplace/library.md`.
 
 **"Pre-approve Commonplace commands" stays optional.** Delivery needs only the read rule, which init writes. Agents run `commonplace-*` commands in ordinary work, and pre-approving them is unchanged.
 

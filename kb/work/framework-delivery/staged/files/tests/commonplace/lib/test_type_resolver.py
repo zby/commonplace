@@ -471,3 +471,22 @@ allOf:
 
     assert missing_description
     assert complete == []
+
+
+def test_project_shared_type_is_eligible_in_every_collection(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    project = tmp_path / "project"
+    library_root = tmp_path / "library"
+    monkeypatch.setenv(library.LIBRARY_ENV, str(library_root))
+    (library_root / "types").mkdir(parents=True)
+    notes = write_collection(project, "kb/notes")
+    write_type_spec(project, "kb/types/my-type.md", name="my-type", schema=None)
+
+    profile = type_resolver.resolve_type(
+        notes / "sample.md",
+        {"description": "Sample", "type": "kb/types/my-type.md"},
+        repo_root=project,
+    )
+
+    assert profile.type_path == "kb/types/my-type.md"
