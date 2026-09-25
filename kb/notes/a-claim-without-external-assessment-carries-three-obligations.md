@@ -7,29 +7,56 @@ tags: [foundations, self-improving-systems, learning-theory]
 
 # A claim without external assessment carries three obligations
 
-An [externally tested theory builder](./definitions/externally-tested-theory-builder.md)
-can compare outcomes without first proving every explanation it used to
-produce them. The comparison supports performance on its assessed tasks and
-conditions. It does not establish each internal theory or every broader
-scope the builder proposes. For a claim the declared interface does not
-assess, the builder must supply for itself what the interface would have
-supplied: what counts as contradiction and what support licenses each use,
-in place of the external falsifier; a comparison level when an objective
-changes, in place of the external objective; and a performance measure that
-does not rest on its own evaluators, in place of the independent outcome
-level. The third carries a consequence the interface never supplied,
+A [theory builder](./definitions/theory-builder.md) can have some of its
+claims assessed from outside its boundary. Full external assessment of a
+claim supplies three items:
+
+1. **An external falsifier.** Applying the claim produces consequences
+   judged against an outcome contract supplied from outside: a failing
+   test, an invalid release, a bug report, a user's rejection. The signal
+   reports that an outcome failed; it does not locate the fault among the
+   theory, its consumer, retrieval, the judge, or the task setup.
+2. **An external objective.** Acceptance requirements are supplied and
+   judged outside the builder. They may stay fixed across many requests; a
+   change to them is declared and assessed separately.
+3. **An outcome level independent of the builder's evaluators.** Work is
+   judged without treating the builder's own approval of a theory or
+   revision as the outcome judgment. This is independence of roles, not a
+   guarantee of correct measurement.
+
+With all three, the builder's outcomes can be compared, for example with a
+human-staffed builder's under the same demands, without first proving every
+explanation used to produce them. A [software house](./definitions/software-house.md)
+whose users assess the program's visible behaviour is one arrangement that
+supplies them. The comparison supports performance on the assessed tasks and
+conditions. It does not establish each internal theory or any broader scope
+the builder proposes. For a claim the three items do not cover, the builder
+must supply for itself what they would have supplied:
+
+| Supplied from outside | Obligation without it |
+|---|---|
+| External falsifier | A rule for what counts as contradiction and what support licenses each use |
+| External objective | A comparison level for an objective change |
+| Independent outcome level | A performance measure that does not rest on the builder's own evaluators |
+
+The third carries a consequence that outside assessment never supplied,
 attribution. External assessment does not locate a fault, so attribution is
-required whenever a claim asserts a cause, inside or outside the main path.
-Without an independent outcome level it is required for a performance
-claim too, because no outcome then absorbs an interpretation error and a
-theory error together. These three are the boundary of the main path: a
-claim leaves it when its consequences face no external assessment, not
-when the builder reasons about a failure.
+required whenever a claim asserts a cause, whether or not the claim is
+externally assessed. Without an independent outcome level it is required for
+a performance claim too, because no outcome then absorbs an interpretation
+error and a theory error together. A claim leaves external assessment when
+its consequences face none, not when the builder reasons about a failure.
 
 The boundary applies to a claim and a proposed use, not to the builder as a
 whole. A builder can work on externally assessed tasks while also retaining
 broader inquiry candidates; entertaining an untested idea does not change
-its category.
+its category. The boundary also follows roles, not people. One person can
+judge outputs in one interaction and diagnose or revise in another; the
+acts are recorded separately. Review of the builder's own theories is
+internal even when a person outside the rest of the system performs it,
+because selecting which theory to keep is a builder operation. An operator's
+acceptance of a methodology note is internal evaluation, and Commonplace's
+note-review verdicts assess the note, not its downstream use.
 
 ## Support for the proposed use
 
@@ -61,6 +88,10 @@ Assessment of support can itself be wrong. Distinguish actual support from
 an evaluator's judgment that it is sufficient; the failure of concern is
 [false-positive acceptance becoming operative](./false-positive-generation-is-filtered-before-retention.md).
 
+This obligation also binds inside full external assessment, for the
+internal theories behind an assessed outcome: outcome assessment makes the
+comparison possible without settling their retention thresholds.
+
 ## A comparison level for changing an objective
 
 Identify what makes a claimed improvement better when a revision changes
@@ -77,33 +108,53 @@ reported as such; the Darwin Gödel Machine agent that deleted the marker
 its hallucination detector keyed on is the mechanical instance. This is an
 obligation, not an inference that computation prohibits objective change.
 
+Who may change the objective is a separate question from who performs the
+builder's operations. A builder in which computation performs every
+operation can still take its acceptance judgments from outside, and a
+human-staffed builder can lack them. External assessment does not by itself
+preserve the objective either: an outside judge can keep accepting a proxy
+the builder has learned to satisfy without the outcome, and renewing users
+or tasks does not prevent this, since new users can repeat the same
+misleading acceptance proxy.
+
 ## Attribution beyond the observed outcome
 
-This obligation is conditional. It binds a claim that asserts a cause, in
-either case, and it binds a performance claim only when no independent
-outcome level absorbs interpretation and theory errors together. An
-external judge may establish that a task failed while leaving open
-whether the cause was a theory, its interpretation, retrieval, execution,
-or the environment. To assert a particular cause, specify a discriminating
+This obligation is conditional. It binds a claim that asserts a cause,
+whether or not the claim is externally assessed, and it binds a performance
+claim only when no independent outcome level absorbs interpretation and
+theory errors together. An external judge may establish that a task failed
+while leaving open whether the cause was the product theory, its
+interpretation, the evaluator that admitted a change, retrieval that never
+surfaced the theory, a skipped check, or the environment. A task rejection
+is therefore evidence about the combined task, consumer, and product
+arrangement, not a refutation of a particular theory. To assert a particular cause, specify a discriminating
 trace, intervention, or test that could distinguish the alternatives; a
 plausible explanation is a candidate for that test. No adopted standard
 separates an interpretation error from a theory error; failures are
 localized with ordinary probes. Failed attribution limits the causal claim;
 it does not erase an observed performance difference under a sound
-comparison.
+comparison. Feedback that arrives late, rarely, or at great expense also
+limits what can be externally assessed within a budget.
 
-## What stays inside the main path
+## Investigating a failure stays externally assessed
 
 Diagnosing a failure, choosing what to observe, revising a self-theory, or
-running an active experiment stays inside the main path when the resulting
-performance claim faces the declared external assessment. A diagnosis may
-remain provisional while its proposed repair is tested. Internal proxy
+running an active experiment does not take a claim outside external
+assessment while the resulting performance claim still faces it. A diagnosis
+may remain provisional while its proposed repair is tested. Internal proxy
 tests can guide development; they do not become the external acceptance
 criterion because the builder passed them.
 
 For an unsupported extension of scope, record the unassessed consequence,
 the intended use, the evidence missing for that use, and the next bounded
 test or the reason to defer it.
+
+## Scope
+
+External assessment comes in degrees. An arrangement may supply a falsifier
+for some consequences and not others, or acceptance for outcomes but not for
+the theories behind them. Each missing item leaves its own obligation; the
+case with all three supplied is the limit, not the usual condition.
 
 ## Open Questions
 
@@ -132,8 +183,8 @@ test or the reason to defer it.
 
 Relevant Notes:
 
-- [Externally tested theory builder](./definitions/externally-tested-theory-builder.md) — defined-in: the case whose interface discharges these obligations
-- [Theory builder](./definitions/theory-builder.md) — grounds: the evidence interface as a declared parameter, and the lineage question this note keeps open
+- [Theory builder](./definitions/theory-builder.md) — defined-in: the system whose claims these obligations bind, and the operation-based boundary that separates internal review from outside assessment
+- [Software house](./definitions/software-house.md) — defined-in: one arrangement whose users supply all three items
 - [Theory warrant is tracked at the finest granularity evidence licenses](./theory-warrant-tracked-at-the-finest-granularity-evidence-licenses.md) — grounds: the supported unit may be a claim, conjunction, or model
 - [Derivation and inheritance give starting warrant; evidence earns scope](./derivation-and-inheritance-give-starting-warrant-earns-scope.md) — grounds: candidate retention below a use threshold
 - [Current task fit alone does not warrant costly entrenchment](./current-task-fit-alone-does-not-warrant-costly-entrenchment.md) — grounds: codification needs more than one fit
