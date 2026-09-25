@@ -2,7 +2,7 @@
 description: Bounded context and underspecification don't just permit conjecture-and-refutation — they require it; derives three concrete practices (falsifier blocks, contradiction-first connection, rejected-interpretation capture) from KB mechanics.
 type: types/note.md
 traits: [title-as-claim]
-tags: [foundations]
+tags: [foundations, self-improving-systems]
 ---
 
 # Mechanistic constraints make Popperian KB recommendations actionable

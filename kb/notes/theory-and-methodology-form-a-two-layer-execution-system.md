@@ -2,7 +2,7 @@
 description: "In open or incompletely covered domains, the theory-derived fast path and live theory fallback co-execute while methodology-native content follows a separate maintenance regime"
 type: types/note.md
 traits: [title-as-claim]
-tags: [learning-theory, constraining]
+tags: [learning-theory, constraining, self-improving-systems]
 ---
 
 # Methodology with incomplete coverage and its live theory fallback form a two-layer execution system
