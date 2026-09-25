@@ -164,7 +164,7 @@ Relative links into `kb/commonplace/` stop resolving. ADR 021 found project-to-l
 
 These are useful in any layout and can ship before, after, or without the rest.
 
-- **A prepared reader copy at build time.** The package build stages the library, replaces links to local ingests with their canonical external source URLs, regenerates navigation, and fails on any unresolved local link. Authored source files, with their grounding under [ADR 073](../../reference/adr/073-untracked-source-snapshots-require-ingest-grounding.md), stay unchanged. This fixes today's 132 dangling `../sources/` links.
+- **A prepared reader copy at build time.** The package build stages the library, replaces links to local ingests with their canonical external source URLs and other links leaving the library with their GitHub URLs, and fails on any unresolved local link (implemented as `hatch_build.py`; navigation is not regenerated, because only links leaving the library change). Authored source files, with their grounding under [ADR 073](../../reference/adr/073-untracked-source-snapshots-require-ingest-grounding.md), stay unchanged. This fixes today's 132 dangling `../sources/` links.
 - **A recorded version range.** The project records the Commonplace versions it accepts as a PEP 440 specifier, compared with the installed `llm-commonplace` version. This fills ADR 021's missing marker.
 - **The implicit `note-base` rule.** It is useful in the source repo on its own.
 

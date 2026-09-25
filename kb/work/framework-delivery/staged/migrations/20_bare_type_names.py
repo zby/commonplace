@@ -4,6 +4,8 @@ Rewrites, across the repository:
 - `type:` lines that point at a global type (repo-relative `kb/types/X.md`, or a
   relative path resolving to it) to `type: X`, in Markdown frontmatter and examples,
   and inline code spans `` `type: kb/types/X.md` `` in prose;
+- JSON-style frontmatter values `"type": "kb/types/X.md"` in Markdown;
+- gate `requires_type:` values naming a global type, in scalar or list form;
 - global type specs' `schema: kb/types/X.schema.yaml` to `schema: ./X.schema.yaml`;
 - global schemas' `const: kb/types/X.md` pins to `const: X`;
 - schema `$ref`s to a global schema from outside the library's types directory to
@@ -58,6 +60,20 @@ for path in _files("*.md"):
         return f"{match.group(1)}type: {name}" if name else match.group(0)
 
     new = TYPE_LINE.sub(bare, text)
+    # Gate requirements compare against the note's raw `type:` value, so they
+    # name global types the same way: `requires_type: X` or a list of them.
+    new = re.sub(
+        r"^(\s*(?:requires_type:\s*|-\s+))kb/types/([a-z0-9-]+)\.md\s*$",
+        lambda m: f"{m.group(1)}{m.group(2)}" if m.group(2) in GLOBAL else m.group(0),
+        new,
+        flags=re.M,
+    ) if "requires_type:" in new else new
+    # JSON-style frontmatter, as the agentic-analysis tooling writes it.
+    new = re.sub(
+        r'("type"\s*:\s*)"kb/types/([a-z0-9-]+)\.md"',
+        lambda m: f'{m.group(1)}"{m.group(2)}"' if m.group(2) in GLOBAL else m.group(0),
+        new,
+    )
     # Inline code spans in prose, such as `type: kb/types/note.md`.
     new = re.sub(
         r"`type: kb/types/([a-z0-9-]+)\.md`",

@@ -324,6 +324,8 @@ Init compares every file of those old copies with the installed library's versio
 
 Init also retires, once, the review baselines whose criteria were files in the old copy, because those criteria now have library identities (`commonplace:instructions/review-gates/...`, `commonplace:types/...`). Review history is kept; the affected pairs are reviewed again as missing baselines.
 
+If the project committed its old skill copies, git keeps tracking those directories after init turns them into stubs, and the stubs hold paths specific to one machine. Init lists every such tracked pointer with the command to untrack it (`git rm -r --cached <paths>`); run it and commit. Init does not change the git index itself. A skill directory that is a symlink is never migrated, overwritten, or deleted; init lists it as skipped.
+
 Two changes are not made by init:
 
 - **Type pointers.** Global types are now named by bare name, such as `type: note`, and the validator rejects a path to a global type. Rewrite every `type: kb/types/<name>.md` in the project, including relative paths to the same files, to `type: <name>` for each global type in the library's `types/` directory. `rg -n "^type: .*types/" kb/ --glob "*.md"` lists the candidates; a project's collection-local types keep their path form.

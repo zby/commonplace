@@ -2,6 +2,7 @@
   "AGENTS.md.template": "0f4acaf6a044a7d58d4bc612694659686f62a0c6a2a2777087625db433e70046",
   "INSTALL.md": "50f4d81d48cd2b1c135d3d05315308fec98834b7f31394244ea24a82d24c1a08",
   "README.md": "a8c98634a0e79e1717b983f7eeb93eb62877f0007ed516f9377ae872f0c3e9ce",
+  "hatch_build.py": null,
   "kb/instructions/README.md": "36a409938165ef62a35efc14c75a40954aa6ef9701c42fa50b832e736741a721",
   "kb/instructions/cp-skill-ground/SKILL.md": "975609f292837f890843cbfb010aa9760fc9d8b9e9f379eb09bed3106542a4d7",
   "kb/instructions/cp-skill-health-check/SKILL.md": "8073cd212e333c2fe249396f4bc4aa6ce4a8f780332713b7d0b8db941fcc08c2",
@@ -30,6 +31,8 @@
   "tests/commonplace/docs/test_type_contract_integrity.py": "65feacb0067a10f7052c8d6fdce1b765aee24f120a8f46ae6293979373dcf35f",
   "tests/commonplace/lib/test_type_resolver.py": "cf5a234c5d2ae3abcb8101c03b16d8236035e2781b761cb4d8b8f94c8dd22748",
   "tests/commonplace/review/conftest.py": null,
+  "tests/commonplace/review/test_requires_type_bare_names.py": null,
   "tests/commonplace/review/test_review_jobs_live_and_direct.py": "0b03bae90403353deb660395820a4d953079321366b6712b18e196e4ccfe8b14",
-  "tests/commonplace/review/test_type_conformance.py": "d4b7190e12412fe24d3024a7ac92df114f508dc2e09c2775e4bbfbb722eaa44b"
+  "tests/commonplace/review/test_type_conformance.py": "d4b7190e12412fe24d3024a7ac92df114f508dc2e09c2775e4bbfbb722eaa44b",
+  "tests/commonplace/test_library_build.py": null
 }

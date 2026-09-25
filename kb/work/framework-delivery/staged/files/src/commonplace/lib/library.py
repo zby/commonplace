@@ -237,7 +237,8 @@ def statuses(project: Path, root: Path | None = None) -> list[OutputStatus]:
             dest = directory / name
             if not dest.exists():
                 found.append(OutputStatus("missing", dest))
-            elif not (dest / STUB_MARKER).is_file():
+            elif dest.is_symlink() or not (dest / STUB_MARKER).is_file():
+                # A symlinked skill directory is someone else's; never write through it.
                 found.append(OutputStatus("foreign", dest))
             else:
                 stub = dest / "SKILL.md"
@@ -245,7 +246,7 @@ def statuses(project: Path, root: Path | None = None) -> list[OutputStatus]:
                 found.append(OutputStatus("ok" if current else "stale", dest))
         if directory.is_dir():
             for dest in sorted(directory.iterdir()):
-                if dest.name not in wanted and (dest / STUB_MARKER).is_file():
+                if dest.name not in wanted and not dest.is_symlink() and (dest / STUB_MARKER).is_file():
                     found.append(OutputStatus("extra", dest))
     routing = project / ROUTING
     if not routing.is_file():

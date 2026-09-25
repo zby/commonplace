@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import shutil
+import subprocess
 import sys
 from pathlib import Path
 
@@ -250,6 +251,37 @@ def test_init_project_retires_baselines_recorded_under_the_old_library_copy(tmp_
         remaining = {criterion for _, criterion, _ in review_db.load_current_freshness_baselines(conn)}
     assert remaining == {project_gate}
     assert report.retired_baselines == [f"{note_path} × {legacy_gate} (test-model)"]
+
+
+def test_migration_never_deletes_through_a_symlinked_skill_directory(tmp_path: Path) -> None:
+    root = library.library_root()
+    outside = tmp_path / "outside" / "cp-skill-validate"
+    shutil.copytree(root / "instructions" / "cp-skill-validate", outside)
+    project = tmp_path / "project"
+    (project / ".claude" / "skills").mkdir(parents=True)
+    link = project / ".claude" / "skills" / "cp-skill-validate"
+    link.symlink_to(outside, target_is_directory=True)
+
+    report = init_project(project)
+
+    assert (outside / "SKILL.md").read_bytes() == (root / "instructions" / "cp-skill-validate" / "SKILL.md").read_bytes()
+    assert link.is_symlink()
+    assert Path(".claude/skills/cp-skill-validate") in report.skipped_foreign
+
+
+def test_init_project_reports_outputs_that_git_still_tracks(tmp_path: Path) -> None:
+    if shutil.which("git") is None:
+        pytest.skip("git not available")
+    root = library.library_root()
+    subprocess.run(["git", "init", "-q"], cwd=tmp_path, check=True)
+    old_copy = tmp_path / ".claude" / "skills" / "cp-skill-write"
+    shutil.copytree(root / "instructions" / "cp-skill-write", old_copy)
+    subprocess.run(["git", "add", ".claude"], cwd=tmp_path, check=True)
+
+    report = init_project(tmp_path)
+
+    assert Path(".claude/skills/cp-skill-write") in report.tracked_outputs
+    assert (old_copy / library.STUB_MARKER).is_file()
 
 
 def test_init_project_leaves_foreign_skill_directories_alone(tmp_path: Path) -> None:
