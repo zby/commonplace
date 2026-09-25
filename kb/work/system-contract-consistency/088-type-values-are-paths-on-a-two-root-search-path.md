@@ -174,7 +174,9 @@ the collision check would guard real use rather than migration leftovers.
 Dropped under YAGNI: no project is known to use them.
 
 **Values without `.md`.** Reads like a module path. Lost: the value would no
-longer be the file's path, which is the property being restored.
+longer be the file's path, which is the property being restored, and adding
+the extension back is one more rule every reader and tool must be told
+(operator, 2026-09-25).
 
 Left open: schema references. Local schemas refer to global schemas as
 `commonplace:types/<name>.schema.yaml`. They are JSON Schema `$ref`s, which
