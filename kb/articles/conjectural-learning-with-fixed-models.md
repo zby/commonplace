@@ -46,7 +46,9 @@ We call a system that implements this cycle a **theory builder**.
 Its learned state is explicit and revisable. The system formulates problems,
 proposes [tentative theories](../notes/definitions/tentative-theory.md) as
 solutions, subjects them to criticism or tests, revises them in response, and
-retains the result so that it changes later behaviour. The knowledge base
+keeps the result so that it shapes the next conjecture. How long results
+persist is graded; the arrangement we build retains them so that they change
+later work on other problems. The knowledge base
 behind this article
 [defines the theory builder](../notes/definitions/theory-builder.md) by four
 conditions. Whether a theory builder learns is not part of the definition; it
@@ -205,10 +207,11 @@ revision keep the rest. This property is
 investigation and preserve useful knowledge through a revision; it can also
 locate a fault in the wrong part.
 
-*Retention beats reconstruction.* Keeping the assembled theory, and the
-criticism that shaped it, spares the builder from rebuilding both from raw
-records every time. Whether that saving holds at comparable decision quality
-is the efficiency question the companion states in two comparisons.
+*Persistence beats reconstruction.* Keeping the assembled theory, and the
+criticism that shaped it, across problems spares the builder from rebuilding
+both from raw records every time. Whether that saving holds at comparable
+decision quality is the persistence question the companion states in two
+comparisons.
 
 Explicit state also has costs. A retained theory requires retrieval,
 applicability checks, revision, validation, and maintenance. A false

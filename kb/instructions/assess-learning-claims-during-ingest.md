@@ -47,10 +47,12 @@ Procedure:
    from the source's claims.
 3. Judge the source's system against the theory-builder definition
    condition by condition: localized content, consumption, content-directed
-   criticism, and retention. Give each condition its own evidence strength
-   and do not infer one from another. Retention counts when what is kept is
-   taken up on a new problem; rounds of revision on one problem, however
-   many, are one pass of error elimination. Judge learning, meaning improved
+   criticism, and iteration. Give each condition its own evidence strength
+   and do not infer one from another. Iteration counts when the result of
+   criticism is kept and shapes the next conjecture, including rounds within
+   one run. Record separately how far results persist (within an episode, a
+   run, across runs, or across problems); persistence is graded, not a
+   condition. Judge learning, meaning improved
    capacity for future action, as a separate claim: meeting the conditions
    does not establish it, and failing one does not rule out other
    improvement. Choose the further analytical distinctions that matter for

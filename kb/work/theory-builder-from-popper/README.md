@@ -72,9 +72,6 @@ Decision numbers D1–D8 refer to the
 
 ## Open
 
-- Precedents note, Workspace Optimization: whether DreamTeam's levels within
-  one game run count as new problems for condition 4. The note states it as
-  unsettled by the source.
 - Precedents note, runtime-model comparison: "additional contribution of
   learning through criticism" became "criticism aimed at what a theory says";
   check whether dropping "learning" changed the claim.
@@ -99,8 +96,10 @@ Decision numbers D1–D8 refer to the
    AGENTS.md (38df120c), skills and types (3532f494). Inventory step 4:
    notes (85ef951e, 9e51af45) and articles (20a3928c). Step 5: ingest
    batches B1–B7 committed (467fea89, c666d569, 6ec3c22d, 58b83473,
-   99b103c5, 37a36faa, 37a4d4c1). Next: settle problem granularity, then
-   step 6 (relocations, deletions, redirects).
+   99b103c5, 37a36faa, 37a4d4c1). Persistence made graded (ec14035c);
+   50 ingests re-checked under iteration (f8b89ceb, d5fbf063, 14d33490);
+   skills, notes, and articles updated to match. Next: step 6
+   (relocations, deletions, redirects).
    Apply in the inventory's order: receiving sections, definitions, skills
    and types, notes and articles, ingest re-judging, links and redirects,
    frozen records last. Validate.

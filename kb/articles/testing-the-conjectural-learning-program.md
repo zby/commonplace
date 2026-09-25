@@ -28,8 +28,9 @@ source_notes:
 We are only starting to
 [build theory builders from today's language models](./conjectural-learning-with-fixed-models.md).
 A [theory builder](../notes/definitions/theory-builder.md) states its
-theories in text, acts on them, criticizes what they say, and keeps the
-results for later problems. Meeting that definition does not show that a
+theories in text, acts on them, criticizes what they say, and lets the
+result of criticism shape its next conjecture. How far that result persists,
+within a run or across later problems, is graded. Meeting that definition does not show that a
 system learns, in the sense of improving its capacity for later work; the
 definition leaves that question to testing. The first testing goal should be
 modest. Before asking whether theory builders can learn broadly or
@@ -97,7 +98,7 @@ Useful tests include:
 - **reconstruction** — does retaining the revision reduce total cost at
   comparable decision quality relative to re-deriving it from the episode
   records each time? This is the
-  [efficiency conjecture](../notes/commonplace-studies-conjectural-learning-through-retained-theories.md#three-conjectures)
+  [persistence conjecture](../notes/commonplace-studies-conjectural-learning-through-retained-theories.md#three-conjectures)
   in testable form.
 - **transfer** — does the revision help on new cases rather than only
   replaying the original one? This is the

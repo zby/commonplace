@@ -22,8 +22,8 @@ Existing self-improving systems already report gains from retained knowledge
 and revised skills. They also supply mechanisms for diagnosis, criticism,
 revision, and reuse. [Our program](./conjectural-learning-with-fixed-models.md)
 asks two separate questions of each system. Is it a theory builder, a system
-that states its theories, acts on them, criticizes what they say, and keeps
-the results for later problems? And does holding and criticizing those
+that states its theories, acts on them, criticizes what they say, and lets
+the result of criticism shape its next conjecture? And does holding and criticizing those
 theories improve its later decisions? A third question is whether the whole
 process can run without people performing its internal roles.
 
@@ -88,11 +88,13 @@ it meets four conditions:
    Generating variants and keeping those with the best outcome score, with no
    stated reason bearing on what a variant says, is trial and error and does
    not meet this condition.
-4. **Growth.** The system retains its theories, or the record of their
-   criticism, and takes what it retains up on new problems. Rounds of
-   revision on one problem, however many, count as one pass of error
-   elimination. A run that improves one task set and then freezes its result
-   has not met this condition.
+4. **Iteration.** The result of criticism, a revised theory or the record
+   of criticism, is kept and shapes the next conjecture. Rounds of revision
+   within one run meet this condition. How far results persist, within a
+   run, across runs, or across problems, is graded, like addressability,
+   and is not a condition. A critic whose report no next conjecture takes up
+   does not meet it, and a run that freezes its result for another system to
+   deploy ends the builder at the freeze.
 
 The builder is the whole system that performs these operations, so people
 who propose, criticize, or select theories are inside it. A human-staffed
@@ -136,8 +138,8 @@ than inferred from the neighbouring conditions. On that basis:
   Huxley-Gödel Machine, Recuris, Harness Continual Learning, Dynamic
   Cheatsheet, Voyager, HyperAgents, Autogenesis, Exo, and Prime Agent. Most
   are unsettled on condition 3: the evidence shows an outcome gate or a
-  success report, not criticism aimed at what a retained unit says. The two
-  Gödel machines are also unsettled on condition 4.
+  success report, not criticism aimed at what a retained unit says. No
+  placement turns on persistence.
 
 **Knowledge and skill pipelines with reported gains.** Knowledge-Centric
 Self-Improvement meets the four conditions: its claims are stated,
@@ -201,12 +203,15 @@ the evidence cited here does not complete the trace for any of them.
   ([Darwin Gödel Machine](../sources/darwin-godel-machine-open-ended-evolution-self-improving-agents.ingest.md),
   verbatim). Diagnostic rationale is not shown to persist across
   generations. Unsettled on condition 3, since admission is by viability and
-  score, and on condition 4, since the evidence cited does not show the
-  archive taken up on a problem other than the one it evolved on.
+  score. Later generations build on archived agents, so results persist
+  across the run; the evidence cited does not show the archive taken up on a
+  problem other than the one it evolved on, which bears on its persistence
+  grade, not on membership.
 - The [Huxley-Gödel Machine](../sources/huxley-godel-machine-human-level-coding-agent-development.ingest.md)
   replaces score with descendant productivity for parent selection, and
-  reports that immediate score predicts it poorly. Unsettled on conditions 3
-  and 4 for the same reasons as the Darwin Gödel Machine.
+  reports that immediate score predicts it poorly. Unsettled on condition 3
+  for the same reason as the Darwin Gödel Machine, with the same run-level
+  persistence.
 - Recuris proposes memory patches from traces and decides each through a
   deterministic paired held-out gate, with the memory coordinates supplied
   in advance: "The memory only grows, and it can afford to."
@@ -240,12 +245,12 @@ an improvement.
 
 - [Autogenesis](../agentic-systems/reviews/autogenesis.md) can write to many
   forms, but its selection is weaker than its versioning, and public
-  implementations are incomplete. Unsettled on conditions 3 and 4.
+  implementations are incomplete. Unsettled on condition 3.
 - [Exo](../agentic-systems/reviews/exo.md) supports self-inspection,
   revision, restart, rollback, and preserved failure evidence, with no
   automatic trigger from experience to improvement. Exo is machinery that a
-  builder could use; whether a system built on it criticizes and retains
-  theories is unsettled.
+  builder could use; whether a system built on it criticizes its theories
+  and builds on the result is unsettled.
 - Prime Agent retains versioned prompts, memories, skills, and subagent
   specifications without weight updates; one case found a specification
   exploit and "preserved it as a reusable skill"
@@ -268,7 +273,8 @@ For most unsettled systems, the deciding evidence is whether a stated reason
 bears on what a retained unit says. Recording the proposer's diagnosis next to
 each accepted change, and checking whether it names what the changed unit
 said, would settle condition 3. For the Gödel machines, running a retained
-archive on a problem it did not evolve on would settle condition 4.
+archive on a problem it did not evolve on would measure how far their results
+persist.
 
 For the knowledge and skill pipelines, vary the formulated criticism while
 keeping the underlying observations and evaluation conditions comparable.
@@ -285,6 +291,6 @@ the same program at different stages of automation.
 
 Finally, compare retaining an assembled theory with reconstructing it from
 the same episode evidence, counting both cost and decision quality. This
-tests the program's retention advantage; either arrangement may learn. The
+tests the program's persistence conjecture; either arrangement may learn. The
 [testing supplement](./testing-the-conjectural-learning-program.md) develops
 these comparisons into controlled task-family experiments.

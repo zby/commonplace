@@ -59,11 +59,13 @@ State the external mechanism in its own operational terms before applying a Comm
 
 Describe a theory pathway through the conditions of a
 [theory builder](../notes/definitions/theory-builder.md): localized content,
-consumption, criticism of that content, and retention taken up on a new
-problem. Each condition holds only at the strength supported by its own
-evidence. Improved capacity for future action attributable to that criticism
-is a separate learning claim. Addressability is a separate graded finding
-above condition 1's minimum. Record its degree and boundary; whole
+consumption, criticism of that content, and iteration, where the result of
+criticism shapes the next conjecture. Each condition holds only at the
+strength supported by its own evidence. Improved capacity for future action
+attributable to that criticism is a separate learning claim. Persistence
+(within an episode, a run, across runs, or across problems) is a separate
+graded finding above condition 4's minimum. Addressability is a separate
+graded finding above condition 1's minimum. Record its degree and boundary; whole
 replacement, or reconstruction from retained criticisms, can qualify, while
 stored rules or parameters alone do not classify the process. Missing
 historical rationale does not establish absent criticism; inaccessible model

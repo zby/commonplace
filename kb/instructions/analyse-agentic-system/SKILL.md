@@ -195,14 +195,21 @@ Keep these distinctions:
   survive criticism: the result may change later reliance or test selection
   without changing its content. A theory rejected whole and replaced by a
   new conjecture has been revised.
-- **Retention** (condition 4) counts when what is kept is taken up on a new
-  problem. Record what persists: theories, formulated criticisms,
-  input/outcome records, parameters, or other source-native material, and
-  the later consumer that takes it up. Rounds of revision on one problem,
-  however many, are one pass of error elimination; the unit is the problem,
-  not the process run. Rebuilding a theory from retained criticisms counts;
-  input/outcome records alone do not. Storage form does not decide retained
-  content or the process used to reconstruct it.
+- **Iteration** (condition 4) counts when the result of criticism is kept
+  and shapes the next conjecture. The kept result may be the revised theory,
+  the formulated criticism, or both; rebuilding a theory from retained
+  criticisms counts, input/outcome records alone do not. A critic whose
+  report no next conjecture takes up fails the condition. Rounds of revision
+  within one run meet it; a revised theory re-tested on the cases that
+  refuted its predecessor faces a real test.
+- **Persistence** is a separate graded finding above condition 4's minimum:
+  within one reasoning episode, across the rounds of one run, across runs on
+  the same task, or across problems and sessions. Record what persists
+  (theories, formulated criticisms, input/outcome records, parameters, or
+  other source-native material), the grade it reaches, and the later
+  consumer that takes it up. Storage form does not decide retained content
+  or the process used to reconstruct it. Freezing a product for deployment
+  by another system ends the builder at the freeze.
 - **Theory-builder membership** requires all four conditions of
   [theory builder](../../notes/definitions/theory-builder.md). Give each
   condition its own conclusion status and never infer one from its
@@ -213,7 +220,7 @@ Keep these distinctions:
   Record the capacity, assessment boundary, evidence of improvement,
   attribution, and causal limits. The capacity need not already have been
   exercised; a claim that it remains available later requires the effect to
-  persist to that time. Membership, revision, retention, or a connected
+  persist to that time. Membership, revision, persistence, or a connected
   route alone does not establish learning.
 - **Addressability** is a separate graded finding above condition 1's
   minimum, where the whole theory is the one unit that carries content.
@@ -251,8 +258,8 @@ Keep these distinctions:
 
 On a theory route, give each claim its own conclusion status: localized
 content, consumption, content-directed criticism, the resulting revision or
-changed reliance, retention taken up on a new problem, and any improved
-capacity attributable to that process. Report them under the free-text labels
+changed reliance, iteration into the next conjecture with its persistence
+grade, and any improved capacity attributable to that process. Report them under the free-text labels
 "theory-builder conditions 1–4" and "learning". For a claim about later or
 recurrent use, also trace what persisted and the later consumer.
 Never infer a missing link from its neighbours or upgrade a citation to use,
@@ -348,7 +355,8 @@ that specialist pass in the coordinator's context.
    classify its content, retention, and operation under step 3. For a theory,
    record separately each theory-builder condition (localized content,
    consumption, content-directed criticism with the resulting revision or
-   changed reliance, and retention) and any supported learning. Give each
+   changed reliance, and iteration with its persistence grade) and any
+   supported learning. Give each
    finding its own conclusion status.
    A link without evidence is `uninspected`, not inferred from its neighbours.
    When later or recurrent use is claimed, identify what persisted and its

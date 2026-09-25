@@ -19,15 +19,17 @@ assumptions, scope conditions, and parts that can be inspected and revised
 individually. Theories may be expressed in natural language, causal models,
 or programs. The arrangement is a
 [theory builder](./definitions/theory-builder.md): it states its theories,
-acts on them, criticizes what they say, and retains the results for later
-problems. Retention is therefore a condition of the arrangement. Two further
-choices are treatments whose benefits are conjectured: retaining the assembled
-theory rather than rebuilding it from retained criticism, and fine-grained
-addressability. A builder that replaces a criticized theory whole, or rebuilds
-it from retained criticism, meets the same conditions. The conjecture is that
-the finer-grained arrangement needs fewer target observations than such a
-coarser builder and than reconstruction from records of inputs and outcomes
-only, which is not a theory builder. Operating a theory builder does not
+acts on them, criticizes what they say, and lets the result of criticism
+shape the next conjecture. Three further choices are treatments whose
+benefits are conjectured: retaining results for later problems, a high grade
+of the graded [persistence](./definitions/theory-builder.md#persistence) the
+definition leaves open; retaining the assembled theory rather than rebuilding
+it from retained criticism; and fine-grained addressability. A builder that
+replaces a criticized theory whole, rebuilds it from retained criticism, or
+keeps nothing beyond one run meets the same conditions. The conjecture is
+that the finer-grained, more persistent arrangement needs fewer target
+observations than such builders and than reconstruction from records of
+inputs and outcomes only, which carry nothing that criticism produced. Operating a theory builder does not
 guarantee learning: whether it improves capacity for future action is a
 separate empirical claim.
 
@@ -51,7 +53,7 @@ proposed capability behind the second hypothesis. A useful supplied theory
 can deliver the first benefit without being chosen by that selector. Neither
 retention nor a gain from the complete arrangement establishes the selector's
 contribution. These structured-transfer hypotheses remain distinct from the
-[companion's content, addressability, and efficiency conjectures](./commonplace-studies-conjectural-learning-through-retained-theories.md).
+[companion's criticism, addressability, and persistence conjectures](./commonplace-studies-conjectural-learning-through-retained-theories.md).
 
 ## Explanatory-reach supplies the leverage
 
@@ -219,7 +221,7 @@ retained-theory arrangement.
 
 Relevant Notes:
 
-- [Theory builder](./definitions/theory-builder.md) — defined-in: the arrangement studied; membership requires retention, not fine-grained addressability
+- [Theory builder](./definitions/theory-builder.md) — defined-in: the arrangement studied; membership requires iteration, not high persistence or fine-grained addressability
 - [Addressable theory](./definitions/addressable-theory.md) — defined-in: the chosen structural property whose payoff is conjectured
 - [Reach-assessment](./definitions/reach-assessment.md) — defined-in: the capability that selects the theory whose reach could pay, and which retention does not supply
 - [First-principles reasoning selects for explanatory-reach over adaptive fit](./first-principles-reasoning-selects-for-explanatory-reach-over.md) — grounds: the property that carries the conjectured gain, and the negative test that judges it

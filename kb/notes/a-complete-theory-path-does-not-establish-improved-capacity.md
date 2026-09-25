@@ -11,8 +11,8 @@ A theory can guide a useful change without the system learning from criticism
 of that theory. Evidence of theory use, a relevant outcome, a response to
 criticism, and later use support successively more complete accounts of the
 process. A [theory builder](./definitions/theory-builder.md) states its
-theories, acts on them, criticizes what they say, and retains the results for
-later problems. The definition does not require that this improves anything.
+theories, acts on them, criticizes what they say, and lets the result of
+criticism shape the next conjecture. The definition does not require that this improves anything.
 Learning, in the sense of improved capacity for future action from the process
 of conjecture and criticism, is a further claim. A complete observed sequence
 can still fail to improve that capacity.
@@ -164,10 +164,12 @@ The construction is not an observed recurrent learning result.
   about an external target need not be reflective unless that target helps
   determine the modifying system's own behavior; the two-way causal connection
   must still hold.
-- Retention is a theory-builder condition, and reconstruction from retained
-  criticism meets it. Retaining the assembled theory with fine-grained
-  addressability is an explicit premise of the chosen arrangement, not a
-  condition of being a theory builder.
+- Iteration is a theory-builder condition, and reconstruction from retained
+  criticism meets it. How far results persist is graded. Retaining the
+  assembled theory across problems with fine-grained addressability is an
+  explicit premise of the chosen arrangement, not a condition of being a
+  theory builder. A claim of recurrent learning across problems still needs
+  the effect to persist to the later use.
 - Criticism can be delayed. A later demand or maintenance failure may provide
   the relevant challenge, and claims must stay within what it tested.
 - Identity across records helps establish a connected path; it does not

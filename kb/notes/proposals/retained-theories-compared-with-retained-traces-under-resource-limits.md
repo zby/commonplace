@@ -12,7 +12,7 @@ and *derived state*. It separates conditions that require intermediate or
 reusable state from the conjecture that retaining theories supplies that
 state efficiently. The terms remain unadopted. The
 [research arrangement](../commonplace-studies-conjectural-learning-through-retained-theories.md)
-already states the retention conjecture without depending on them.
+already states the persistence conjecture without depending on them.
 
 Adoption would be justified if a comparison needs to distinguish these
 resource conditions repeatedly and ordinary descriptions no longer suffice.
@@ -128,7 +128,8 @@ The storage container does not decide whether a system is a
 Indexed traces can expose theories and their criticisms as retained,
 addressable knowledge. A theory can also be reconstructed from retained
 criticism without retaining the assembled theory. Both arrangements meet the
-builder's retention condition. Whether either learns, in the sense of
+builder's iteration condition, and both keep criticism's results across
+problems, a high grade of persistence. Whether either learns, in the sense of
 improving capacity for future action, is a separate question.
 
 Two retention comparisons therefore ask different questions:
@@ -141,9 +142,11 @@ Two retention comparisons therefore ask different questions:
   doing that work again. The records in the second arrangement do not
   contain formulated criticisms; its active machinery may still formulate
   and use them. A storage contrast cannot establish their internal absence.
-  Because what is retained holds no stated theory or criticism, this arm is
-  the baseline outside the theory builder; it may still learn in the
-  ordinary sense.
+  Because what is retained holds no stated theory or criticism, nothing
+  criticism produced persists across runs: this arm is the baseline for the
+  persistence conjecture. A reconstructor that states, criticizes, and
+  revises within a run is a builder at that run's grade, and it may still
+  learn in the ordinary sense.
 
 Full reasoning traces may contain theories and criticism. Treating all
 traces as raw observations would change what the comparison varies. Generic
@@ -178,8 +181,8 @@ not a universal boundary between learning and nonlearning arrangements.
 - Can retained criticisms be kept usefully distinct from a compressed or
   partially assembled theory in an actual implementation?
 - Which costs or failures should cause a system to revise, reconstruct, or
-  combine the two? Either strategy meets the builder's retention condition;
-  neither is required.
+  combine the two? Either strategy meets the builder's iteration condition
+  at a high persistence grade; neither is required.
 - When does a learned index itself expose an addressable theory, rather than
   only route access to records? Retention or editability alone does not decide.
 - How should replay be compared when stochastic choices cannot be reproduced

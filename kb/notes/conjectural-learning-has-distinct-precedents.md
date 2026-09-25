@@ -34,9 +34,10 @@ arguments before symbolic formalization
 
 Commonplace adds the conditions for attributing this method to a particular
 system: its theories are stated in localized units, guide its decisions
-through what they say, are criticized for what they say, and are retained with
-the record of their criticism so that later problems take them up. These
-conditions contain no success condition. Whether a builder improves its
+through what they say, are criticized for what they say, and are revised
+through iteration, where the result of criticism shapes the next conjecture.
+How far that result persists is graded. These conditions contain no success
+condition. Whether a builder improves its
 capacity for future action is a separate learning claim, tested rather than
 assumed. Artifact availability alone does not establish the conditions, and a
 changed decision does not establish improvement. The epistemic basis therefore
@@ -48,10 +49,11 @@ consequences to candidate repair locations. Their proof-guided repair shows
 what [addressability](./definitions/addressable-theory.md#precedent)
 can make possible under a supplied representation. It does not define every
 tentative theory, require small revisions, or establish the same capability
-for interpreted prose. They are precedents for one operation, assigning blame,
-not for a theory builder: one invocation over a supplied theory and training
-set is one pass of error elimination on one problem, so it fails the retention
-condition ([theory builder, exclusions](./definitions/theory-builder.md)).
+for interpreted prose. One invocation over a supplied theory and training set
+is a theory builder at a low grade of persistence: the repaired theory is a
+new conjecture, re-tested on the examples, and nothing persists beyond the run
+([theory builder, boundary cases](./definitions/theory-builder.md#boundary-cases)).
+Their precedent value lies in assigning blame, not in persistence.
 
 ## Reflection supplies the structural relation
 
@@ -92,9 +94,9 @@ This is a concrete comparison for keeping learned changes in artifacts that
 later calls consume. It does not establish learning of a continuing system's
 own improvement procedure. The retained source reports adaptation within game
 runs; it does not demonstrate the cross-session recurrent self-theory claim.
-Changes carried across the levels of one game run meet the retention
-condition only if those levels count as new problems rather than as rounds of
-error elimination on one game; the source does not settle which.
+Changes carried across the levels of one game run meet the iteration
+condition when criticism aims at what the revised code and context say; their
+persistence reaches the run, not later sessions.
 The benefit of the complete arrangement also does not isolate the effect of
 criticism, addressability, or retaining an assembled theory.
 
@@ -117,8 +119,8 @@ A comparison should therefore name which question it asks. A runtime-model
 comparison concerns the additional contribution of criticism aimed at what a
 theory says.
 An editable-workspace comparison concerns the supplied theory and its use
-beyond persistence and repair. A retention comparison concerns which work is
-kept rather than reconstructed. None can inherit the conclusion of another
+beyond persistence and repair. A persistence comparison concerns which work
+is kept rather than reconstructed, and for how long. None can inherit the conclusion of another
 merely because the systems share some machinery.
 
 ## Scope

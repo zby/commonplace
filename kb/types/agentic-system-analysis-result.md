@@ -264,19 +264,22 @@ A theory route gives separate conclusion statuses and evidence for each
 [theory-builder](../notes/definitions/theory-builder.md) condition, labelled
 "theory-builder conditions 1–4": localized content, consumption,
 content-directed criticism with its resulting revision or changed reliance,
-and retention. No condition is inferred from its neighbours. Criticism is
+and iteration. No condition is inferred from its neighbours. Criticism is
 itself stated and can blame the test, the data, or an auxiliary assumption; a
 score selecting variants does not count. A theory can survive criticism
-without a text change. Retention counts when what is kept is taken up on a
-new problem; rounds of revision on one problem are one pass of error
-elimination. Rebuilding a theory from retained criticisms counts; retained
-input/outcome records alone do not. Whole replacement of a theory meets
-condition 1 at its minimum.
+without a text change. Iteration counts when the result of criticism is
+kept and shapes the next conjecture, including rounds within one run; a
+critic whose report no next conjecture takes up fails it. Rebuilding a theory
+from retained criticisms counts; retained input/outcome records alone do not.
+Whole replacement of a theory meets condition 1 at its minimum. Persistence
+is a graded finding recorded separately, like addressability: within one
+reasoning episode, across the rounds of one run, across runs on the same
+task, or across problems and sessions.
 
 Membership has no success condition, so learning is a separate claim,
 labelled "learning". It identifies the improved capacity for future action,
 its assessment boundary, the evidence of improvement, and the evidence
-supporting attribution; membership, revision, retention, or connected steps
+supporting attribution; membership, revision, persistence, or connected steps
 alone do not establish it. Capacity need not already have been exercised. A
 claim about later capacity traces persistence to that time; a claim about
 later or recurrent use traces the retained result and its consumer. The
