@@ -130,11 +130,14 @@ while it ran is unchanged.
 ## Boundary
 
 The builder is the whole system that performs the operations above: people,
-models, tools, and retained texts. The operations are proposing a theory,
-deriving what it implies, criticizing it, choosing what to blame, producing a
-revision, selecting the theory to keep, and changing the machinery that does
-these things. Users who supply problems and judge the products are outside
-the builder unless they perform one of these operations. The boundary follows
+models, tools, and retained texts. The operations are noticing a problem in
+its own theories or work, proposing a theory, deriving what it implies,
+criticizing it, choosing what to blame, producing a revision, selecting the
+theory to keep, and changing the machinery that does these things. Noticing
+starts the cycle: a recurring failure, a theory that has gone stale, or a
+connection nobody made becomes a problem the builder takes up. Users who
+supply problems as tasks and judge the products are outside the builder
+unless they perform one of these operations. The boundary follows
 the operation, not the person, so a claim about a builder declares the
 boundary it assumes. Selecting what to keep is one of the operations: a
 model may propose and outside evaluators may assess, but what carries into

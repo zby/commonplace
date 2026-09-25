@@ -194,8 +194,8 @@ and a changing task mix can move a score.
 
 People will be inside the early experiments. The builder's
 [boundary](../notes/definitions/theory-builder.md#boundary) follows the
-operation, not the person. Someone who proposes a theory, criticizes it,
-chooses what to blame, produces a revision, selects what to keep, or changes
+operation, not the person. Someone who notices a problem in the builder's
+theories or work, proposes a theory, criticizes it, chooses what to blame, produces a revision, selects what to keep, or changes
 the machinery is inside the builder for that act. Someone who supplies
 problems or judges products against the task contract is outside. The same
 person can do both, so record the acts separately. An operator-written

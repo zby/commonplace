@@ -12,7 +12,7 @@ proposed change exposes.
 
 Drafted 2026-09-25 to replace the conjectural-learning checks. Cases 1–16
 carry over that file's cases with the same numbers and assumptions, and are
-reclassified under the new definition. Cases 17–33 are new.
+reclassified under the new definition. Cases 17–35 are new.
 
 ## Purpose
 
@@ -101,3 +101,5 @@ system improves.
 | 31 | One run pursues a sequence of different experiments, and each later experiment consumes the stated findings and criticisms of earlier ones | Inside | Condition 4; persistence within the run |
 | 32 | A bounded optimization run revises one solution for one task over many rounds, keeping a store of variants and critiques | Inside if criticism aims at what the variants say; outside if variants are kept by score alone | Condition 3 decides; condition 4 holds within the run, and freezing the result afterwards ends the builder |
 | 33 | A critic reports errors in stated theories, but no next round takes the report up | Outside | Condition 4: criticism that feeds nothing is not iteration |
+| 34 | A person only notices problems in the builder's theories or work, such as a stale theory or a recurring failure, and computation performs every other operation | Inside for that act; the builder is not autonomous | Noticing a problem in its own theories or work is an internal operation (operator, 2026-09-25) |
+| 35 | A user poses a task and judges the product, and notices nothing about the builder's theories | Outside the builder | Supplying problems as tasks is external; noticing concerns the builder's own theories or work |

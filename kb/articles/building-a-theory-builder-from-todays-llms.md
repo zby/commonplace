@@ -67,8 +67,8 @@ conjecture and criticism improve its capacity for later work; the test below
 says how that is shown.
 
 Fully automated means that computation performs the roles the cycle needs:
-formulating, criticizing, revising, and selecting the builder's own
-theories. Users still set the tasks and judge the results. The knowledge
+noticing problems in the builder's own theories and work, and formulating,
+criticizing, revising, and selecting its theories. Users still set the tasks and judge the results. The knowledge
 base's [autonomous qualifier](../notes/definitions/theory-builder.md#qualifiers)
 also covers changing the machinery that does this work; the approach
 described below includes it.

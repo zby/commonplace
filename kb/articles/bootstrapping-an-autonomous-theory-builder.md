@@ -30,7 +30,7 @@ source_notes:
 An [autonomous](../notes/definitions/theory-builder.md#qualifiers)
 [theory builder](./building-a-theory-builder-from-todays-llms.md) is one in
 which computation performs every internal role in building theories:
-diagnosing failures, producing and evaluating revisions, choosing which
+noticing problems, diagnosing failures, producing and evaluating revisions, choosing which
 theory to keep, and repairing the method by which it does this. It still has
 people: users supply tasks and judge the results against what they asked
 for.
