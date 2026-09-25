@@ -35,7 +35,7 @@ theory to keep, and repairing the method by which it does this. It still has
 people: users supply tasks and judge the results against what they asked
 for.
 
-Such a builder does not have to be built in one step. We start with a
+Such a builder can be built in stages. We start with a
 partially automated system in which a human operator and computation learn
 together. Because the builder includes whoever performs its internal
 operations, such a system is already a theory builder, staffed partly by
@@ -47,16 +47,15 @@ that last condition is tested. Commonplace is our implementation of this bootstr
 
 ## Retain learning in the system
 
-Successful learning must leave durable changes in the system rather than
-remain in the operator's head. In Commonplace those changes take the form of
+Successful learning must leave durable changes in the system. In Commonplace
+those changes take the form of
 theories, instructions, schemas, validators, tests, code, and other
 persistent artifacts.
 
 Who contributes the learning matters less at the start. The operator may
 contribute anywhere in the process: choosing problems, criticizing results,
 interpreting evidence, approving changes, or supplying missing capabilities.
-We do not need to decide in advance which functions must already be
-automated.
+Which functions to automate first can be decided as the work proceeds.
 
 This works only while the operator keeps contributing, which requires a
 system people want to use. Then the judgments they supply are part of work
@@ -84,15 +83,14 @@ a long horizon its return can exceed that of immediate learning, and where
 it does,
 [an optimal long-run learning strategy invests in its own machinery](../notes/an-optimal-long-run-learning-strategy-invests-in-its-own-machinery.md).
 
-Reflection makes the method open to criticism, but that alone does not close
-the loop. The loop closes only when method changes also compound, making
-later improvement cheaper, more reliable, or possible where it was not. That
-takes two further things. The builder must be able to change its method
-beyond revising text, which the next section takes up. Its evaluators must be
-able to tell a better method from a worse one, and approval from the
-builder's theory of its own method does not count as that evidence. Showing
-that compounding happened takes a later improvement episode, measured on
-something other than the check that accepted the change, with a trace
+Reflection makes the method open to criticism. To close the loop, method
+changes must also compound, making later improvement cheaper, more reliable,
+or newly possible. That takes two further things. The builder must be able to
+change its method beyond revising text, which the next section takes up. Its
+evaluators must be able to tell a better method from a worse one, and that
+evidence must come from outside the builder's theory of its own method.
+Showing that compounding happened takes a later improvement episode, measured
+independently of the check that accepted the change, with a trace
 connecting the two; the
 [compounding test](../notes/compounding-is-tested-in-later-improvement-not-by-the-accepting-metric.md)
 states what counts.
@@ -104,17 +102,15 @@ later performance.
 the model read the retained project theory, searched over reformulations of
 the research program, and proposed the edits. The operator supplied the
 decisive judgments about which formulation fit. Later commits built on the
-revised state rather than reconstructing the old one.
+revised state.
 
 ## Let the builder build its own software
 
 Improving the method can take more than revising text. A new theory can
 call for new tools, experiments, search procedures, or schedulers. Testing
-hypotheses reliably or at scale can require exact symbolic computation
-instead of repeated LLM interpretation. So Commonplace does not count on
-natural-language changes around fixed software to sustain self-improvement.
-It uses LLMs both to revise retained knowledge and to build and modify the
-software that puts it into operation.
+hypotheses reliably or at scale can require exact symbolic computation. So
+Commonplace uses LLMs both to revise retained knowledge and to build and
+modify the software that puts it into operation.
 
 The LLM handles semantic interpretation. Software handles exact
 bookkeeping, orchestration, and enforceable checks, where it is more
@@ -124,7 +120,7 @@ The boundary between them moves: the software is part of the system and
 changes as learning reveals new requirements. With model weights held
 fixed,
 [procedures the builder acquires must persist outside the weights](../notes/a-fixed-model-house-must-retain-missing-procedures-for-theory-use.md),
-and code is one place they can live.
+and code is one place to keep them.
 
 General learning may even require this ability, if new theories keep
 creating new ways to test, organize, and apply knowledge.
@@ -133,8 +129,7 @@ creating new ways to test, organize, and apply knowledge.
 
 A hand-built start fits Richard Sutton's Bitter Lesson
 [only if learning outgrows it](../notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md):
-computation, not the operator, must come to supply the knowledge each new
-demand needs. Automation therefore grows one function at a time.
+computation must take over supplying the knowledge each new demand needs. Automation therefore grows one function at a time.
 
 A judgment the operator makes repeatedly can move by one of two routes once
 its scope has stabilized. It can be [codified](../notes/definitions/codification.md)
@@ -149,17 +144,17 @@ A function has moved when computation makes the decision and evidence shows
 that it decides adequately within a stated scope. The evidence condition
 matters because handing a decision to an unattended model is easy;
 [a computational decision can be trusted only where its checks are reliable](../notes/warranted-autonomy-is-bounded-by-oracle-domain.md).
-Transfer also runs both ways: a function returns to the operator when its
+A function can also move back: it returns to the operator when its
 check turns out to be a poor stand-in for what it was meant to catch.
 
 Each transfer and each return is recorded, so that a later reader can see
-what moved, by which route, and when. So is what has not moved. A person
-still in the loop is named as such, and their contribution is not credited
-to computation. That record is informative, because
+what moved, by which route, and when. So is what stays with the operator. A
+person still in the loop is named, and their contribution is credited to
+them. That record is informative, because
 [transfer leaves people the decisions hardest to warrant](../notes/warranted-transfer-leaves-people-the-hardest-to-warrant-decisions.md).
 The functions that remain with the operator show where the means to
 automate them are missing, where an objective is unsettled, where authority
-is deliberately kept, or where transfer is not worth its cost.
+is deliberately kept, or where transfer costs more than it returns.
 
 ## The bootstrap
 
@@ -171,18 +166,19 @@ capabilities an autonomous theory builder requires.
 
 The hard part is the work that currently makes improvement possible at all: noticing the next problem, diagnosing it,
 and deciding which change serves the objective better. We conjecture that
-this process can transfer that work too, not only the judgments it has
+this process can transfer that work too, beyond the judgments it has
 already stabilized. The conjecture does not cover choosing the objective
 itself. The objective stays declared, and
 [changing it counts as improvement only against a standard outside it](../notes/revising-an-improvement-objective-is-licensed-from-outside-it.md).
 
-Operator time does not measure progress. In an open-ended system,
+Progress is measured by the number of human decisions each completed,
+verified improvement requires. Operator hours are a poor measure: in an
+open-ended system,
 [attention freed from routine work moves to harder work](../notes/increasing-computational-autonomy-relocates-human-effort.md),
-so the operator's hours can stay flat while the bootstrap succeeds. The
-measure is the number of human decisions each completed, verified
-improvement requires. The conjecture fails, in the terms of
+so they can stay flat while the bootstrap succeeds. The conjecture fails, in
+the terms of
 [the bootstrap condition](../notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md),
-if that number grows with the system instead of falling. The strongest
+if that number grows as the system grows. The strongest
 evidence of success is
 [a removal test](../notes/computationally-directed-self-improvement-is-a-reallocation.md):
 withhold the operator's decisions and check whether an improvement process
