@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import re
 import shutil
 import sys
 from pathlib import Path
@@ -88,6 +89,8 @@ def test_init_project_does_not_copy_the_library(tmp_path: Path) -> None:
         Path("kb/instructions/README.md"),
         Path("kb/sources/COLLECTION.md"),
         Path("kb/sources/README.md"),
+        Path("kb/work/COLLECTION.md"),
+        Path("kb/work/README.md"),
         Path("kb/reports/COLLECTION.md"),
         Path("kb/reports/README.md"),
         Path("kb/reports/.gitignore"),
@@ -363,6 +366,20 @@ def test_init_project_satisfies_collection_landing_invariant(tmp_path: Path) -> 
 
     assert results.fails == []
     assert any("collection landings: all" in line for line in results.passes)
+
+
+def test_every_project_collection_the_template_routes_to_is_scaffolded(
+    tmp_path: Path,
+) -> None:
+    # The template tells agents to read a routed collection's COLLECTION.md
+    # before writing there, so each routed project path must ship one.
+    init_project(tmp_path)
+    template = (tmp_path / "AGENTS.md.template").read_text(encoding="utf-8")
+    routed = re.findall(r"^\| `(kb/[^`]+)/` \|", template, flags=re.MULTILINE)
+
+    assert routed
+    missing = [path for path in routed if not is_collection_dir(tmp_path / path)]
+    assert missing == []
 
 
 def test_init_project_seeds_quote_or_snapshot_source_contract(tmp_path: Path) -> None:

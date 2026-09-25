@@ -71,6 +71,8 @@ MANIFEST = ScaffoldManifest(
         ("templates/user-reference-README.md", "kb/reference/README.md"),
         ("templates/user-instructions-COLLECTION.md", "kb/instructions/COLLECTION.md"),
         ("templates/user-instructions-README.md", "kb/instructions/README.md"),
+        ("templates/user-work-COLLECTION.md", "kb/work/COLLECTION.md"),
+        ("templates/user-work-README.md", "kb/work/README.md"),
         ("templates/user-reports-COLLECTION.md", "kb/reports/COLLECTION.md"),
         ("templates/user-reports-README.md", "kb/reports/README.md"),
         ("templates/user-reports-cache-README.md", "kb/reports/cache/README.md"),
