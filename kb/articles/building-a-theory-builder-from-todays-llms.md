@@ -317,7 +317,7 @@ agents together, and transfers its internal roles to computation one class at
 a time; it also covers the builder's reflection on its own machinery. The
 [software-house supplement](./an-automated-software-house-as-a-second-test-of-a-theory-builder.md)
 proposes a second arrangement whose failures are more visible. The
-[survey](./nearest-existing-constructions-to-a-witness-house.md) places
+[survey](./which-existing-self-improving-systems-are-theory-builders.md) places
 eighteen existing self-improving systems against the four conditions and
 judges their reported gains separately. The
 [definition](../notes/definitions/theory-builder.md) states exactly

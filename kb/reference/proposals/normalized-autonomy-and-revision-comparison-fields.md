@@ -7,7 +7,7 @@ type: ../types/design-proposal.md
 
 ## Problem
 
-The [nearest-constructions supplement](../../articles/nearest-existing-constructions-to-a-witness-house.md)
+The [nearest-constructions supplement](../../articles/which-existing-self-improving-systems-are-theory-builders.md)
 compares systems against the automated software house conjecture's witness
 conditions. Its judgments depend on component fixity, permitted revisions,
 admission mechanisms, decision roles, operating modes and answer-oracle
