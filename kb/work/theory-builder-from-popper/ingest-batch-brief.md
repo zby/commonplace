@@ -22,10 +22,16 @@ what the system does through what they say); 3 criticism (a working process
 of attempted refutation aimed at what identified units say; a criticism is
 itself stated and can blame the test, data, or an auxiliary; score selection
 over variants is trial and error, not criticism; gradient descent fails 1 and
-3); 4 retention (theories or the record of their criticism are kept and taken
-up on a new problem; rounds of revision on one problem, however many, are one
-pass of error elimination; reconstruction from retained criticism counts;
-input/outcome records alone do not). No success condition: learning
+3); 4 iteration (the result of criticism is kept and shapes the next
+conjecture; a revised theory re-tested on the cases that refuted its
+predecessor faces a real test; keeping the record of criticism and rebuilding
+from it counts; a critic whose report feeds no next conjecture fails).
+Persistence is graded, not a condition: record the grade reached (within one
+reasoning episode, across rounds of one run, across runs on one task, across
+problems and sessions). Freezing a product and handing it off ends the
+builder; it was still a builder while it ran. This superseded, on 2026-09-25,
+an earlier reading that required retained results to be taken up on a new
+problem; verdicts decided only by that reading are wrong. No success condition: learning
 (improved capacity for future action) is a separate claim. Fine-grained
 addressability is a graded design commitment, not a condition; a model
 replaced whole is an addressable part of the machinery. Reflective and
