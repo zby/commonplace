@@ -1,8 +1,6 @@
 ---
 description: Index of notes about document types, writing conventions, validation, and structural quality — how notes are classified, structured, and checked
 type: types/tag-readme.md
-index_source: tag
-index_key: document-system
 ---
 
 # Document system

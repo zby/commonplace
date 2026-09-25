@@ -1,8 +1,6 @@
 ---
 description: "Curated head for agent-memory notes — memory as crosscutting architecture, requirements, activation, lifecycle, and evaluation"
 type: types/tag-readme.md
-index_source: tag
-index_key: agent-memory
 ---
 
 # Agent memory

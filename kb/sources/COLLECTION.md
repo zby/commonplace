@@ -107,7 +107,7 @@ checksums. Never author a durable link to
 
 **Ingest reports and source reviews** carry the active outbound surface — the analysis cites where the source lands in the rest of the KB. Inline for strongest commitment, with a connective word that fits (e.g. `as in [title](path)`); footer for labelled — `- [title](path) — label: context phrase`.
 
-Scan `kb/notes/`, `kb/reference/`, `kb/agent-memory-systems/`, `kb/agentic-systems/`, and other sources for link targets. Do not link into `kb/work/` (workshop layer — value is consumed, not imported) or `kb/instructions/` (executing readers don't follow source links).
+Scan `kb/notes/`, `kb/reference/`, `kb/agent-memory-systems/`, `kb/agentic-systems/`, `kb/tags/`, and other sources for link targets. Do not link into `kb/work/` (workshop layer — value is consumed, not imported) or `kb/instructions/` (executing readers don't follow source links).
 
 **Labels (apply to ingest reports and source reviews; the snapshot itself is never the link author):**
 

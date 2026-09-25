@@ -106,6 +106,7 @@ Collections are `kb/` subtrees with a local `COLLECTION.md`. Read the target col
 | `kb/notes/` | Writing transferable claims, mechanisms, definitions, synthesis, and project-specific theory. |
 | `kb/reference/` | Describing the current system, architecture, interfaces, decisions, and operational surface. |
 | `kb/instructions/` | Writing project-specific procedures, skills, operational rules, and how-to guidance. |
+| `kb/tags/` | Writing or maintaining a tag head: what a tag gathers and its selective picks; the participating-collection declaration. |
 | `kb/sources/` | Storing tracked ingests and source reviews; local source snapshots live ignored under `kb/sources/.snapshots/`. |
 | `kb/work/` | Holding in-flight investigations, drafts, migration plans, and temporary work that should eventually close or promote durable artifacts. |
 | `<library>/notes/` | Reading Commonplace theory and examples. |
@@ -120,11 +121,12 @@ For the full model, read `<library>/reference/navigation.md`. In short: use `rg`
 Entry points:
 
 - `<library>/reference/README.md` — Commonplace documentation entry point
+- `<library>/tags/README.md` — Commonplace tag heads: browse the library's notes by topic
 
-<!-- Add curated tag READMEs here as they emerge. When 5+ related notes accumulate under a tag, create `kb/notes/<tag>-README.md` (type `types/tag-readme.md`): an orientation paragraph plus selective picks with context phrases. It may declare validator-enforced marks — `complete: true` (links every tagged note) or `covered_by: [children]` (every tagged note carries a listed child tag); see `<library>/types/tag-readme.md`. -->
+<!-- Add this project's tag heads here as they emerge. Every tag in use needs a head at `kb/tags/<tag>-README.md` (type `types/tag-readme.md`): an orientation paragraph plus selective picks with context phrases; `kb/tags/README.md` is the hub, and `kb/tags/COLLECTION.md` lists the collections whose tags count. A head may declare validator-enforced marks — `complete: true` (links every tagged artifact) or `covered_by: [children]` (every tagged artifact carries a listed child tag); see `<library>/types/tag-readme.md`. -->
 
 <!-- If this project also vendors the full Commonplace research KB as a read-only reference (see Commonplace INSTALL.md, "Reader install"), add its entry point here, e.g.:
-- `commonplace/kb/notes/tags-README.md` — vendored Commonplace research KB (read-only): agent context engineering, memory, deploy-time learning
+- `commonplace/kb/tags/README.md` — vendored Commonplace research KB (read-only): agent context engineering, memory, deploy-time learning
 -->
 
 ```bash

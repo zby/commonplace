@@ -32,7 +32,7 @@ A reader can enter through any of these. They are distinct files with distinct j
 | GitHub repo page | `/README.md` | Tool face: install, commands, layout, license. Outside `docs_dir`, so GitHub-only. | No (GitHub repo view) |
 | Site home | `kb/index.md` | Content face: the rendered site's front door — positioning lede, theory threads, browse. Shadows `kb/README.md`. | Yes (`Home`) |
 | Source routing doc | `kb/README.md` | Filesystem-contract routing for agents reading the source tree. Shadowed by `kb/index.md`. | No (dropped from build) |
-| Collection landings | `kb/<collection>/README.md` (agent-memory-systems, agentic-systems, articles, instructions, notes, reference, sources, types, work) | Each top-level collection's curated head and nav target; renders as the collection's main page. | Yes (one nav entry each) |
+| Collection landings | `kb/<collection>/README.md` (agent-memory-systems, agentic-systems, articles, instructions, notes, reference, sources, tags, types, work) | Each top-level collection's curated head and nav target; renders as the collection's main page. | Yes (one nav entry each) |
 
 The root `README.md` (tool face) and `kb/index.md` (content face) are kept as separate files deliberately: they serve different jobs, and `docs_dir: kb` puts the root README outside the docs tree, so a single shared homepage would require moving `docs_dir` or a symlink. Both should open with the same positioning lede and then diverge by job; the shared lede is short enough to sync by hand.
 

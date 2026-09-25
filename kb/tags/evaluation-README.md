@@ -1,8 +1,6 @@
 ---
 description: What works, what doesn't, what needs testing — empirical observations about KB operations and prompt design
 type: types/tag-readme.md
-index_source: tag
-index_key: evaluation
 ---
 
 # Evaluation

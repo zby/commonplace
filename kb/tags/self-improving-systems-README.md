@@ -1,17 +1,15 @@
 ---
-description: "Curated head for the self-improving-systems tag — membership, update architecture, and the four-part pathway profile; selective picks"
+description: "Curated head for the self-improving-systems tag — membership, update architecture, and the pathway profile; selective picks"
 type: types/tag-readme.md
-index_source: tag
-index_key: self-improving-systems
 ---
 
 # Self-improving systems
 
-Selective head: the membership definition, the update architectures, and the four-part pathway profile, with the load-bearing note per claim. Full tag membership comes from the by-tag sweep (`kb/reference/navigation.md`).
+Selective head: membership, update architectures, and the four-part pathway profile, with one note per claim.
 
 ## Membership
 
-A [self-improving system](../notes/definitions/self-improving-system.md) makes operative, evidence-responsive changes to its own behavior-determining organization. Read every attribution against a declared frame of boundary, horizon, and objective: including maintainers can make a development system a human-inclusive member, and [self-improvement is relative to a declared objective](../notes/self-improvement-is-relative-to-a-declared-objective.md) — indexed in the attribution, antecedent in the pathway. When the objective itself changes, [the change is improvement only against a level outside it](../notes/revising-an-improvement-objective-is-licensed-from-outside-it.md). Below the objective sits the target level, where a structural property is pursued because it is held to serve the objective and [is checked for achievement rather than for warrant](../notes/a-proximate-target-is-checked-for-achievement-not-for-warrant.md) — the profile dimensions below are read that way whenever they are treated as goals. Membership settles only the category; [deploy-time-learning](./deploy-time-learning-README.md) is the demand they most naturally take over from human maintainers, not a definitional part.
+A [self-improving system](../notes/definitions/self-improving-system.md) makes operative, evidence-responsive changes to its own behavior-determining organization. Read every attribution against a declared frame of boundary, horizon, and objective (including maintainers makes a development system a human-inclusive member); [self-improvement is relative to a declared objective](../notes/self-improvement-is-relative-to-a-declared-objective.md) — indexed in the attribution, antecedent in the pathway. When the objective itself changes, [the change is improvement only against a level outside it](../notes/revising-an-improvement-objective-is-licensed-from-outside-it.md). Below it sits the target level: a structural property pursued because it is held to serve the objective, which [is checked for achievement, not warrant](../notes/a-proximate-target-is-checked-for-achievement-not-for-warrant.md); the profile dimensions below are read that way when treated as goals. Membership settles the category; [deploy-time-learning](./deploy-time-learning-README.md) is the demand they most naturally take over from human maintainers; not definitional.
 
 ## Update architecture
 

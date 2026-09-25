@@ -2,7 +2,7 @@
 
 `CLAUDE.md` is a symlink to this file (`AGENTS.md`). Edit `AGENTS.md` directly.
 
-> **Vendored?** If this repository sits inside another project as a read-only knowledge base (a submodule or gitignored clone — see `INSTALL.md`, "Reader install"), you are a reader here, not an operator: navigate from `kb/notes/tags-README.md`, quote and cite freely, and do not create, edit, or commit anything under this directory. Everything below applies only when Commonplace itself is the working project. To contest a claim, open an issue at <https://github.com/zby/commonplace/issues>.
+> **Vendored?** If this repository sits inside another project as a read-only knowledge base (a submodule or gitignored clone — see `INSTALL.md`, "Reader install"), you are a reader here, not an operator: navigate from `kb/tags/README.md`, quote and cite freely, and do not create, edit, or commit anything under this directory. Everything below applies only when Commonplace itself is the working project. To contest a claim, open an issue at <https://github.com/zby/commonplace/issues>.
 
 ## Repository Overview
 
@@ -135,6 +135,7 @@ Read the target collection's `COLLECTION.md` before writing or connecting artifa
 | Path | Use when |
 |---|---|
 | `kb/notes/` | Writing transferable claims, mechanisms, definitions, synthesis, and KB methodology theory. |
+| `kb/tags/` | Writing or maintaining a tag head: what a tag gathers and its selective picks; the participating-collection declaration. |
 | `kb/reference/` | Describing the shipped Commonplace system, architecture, type system, commands, and ADRs. |
 | `kb/instructions/` | Writing procedures, skills, review gates, operational rules, and how-to guidance. |
 | `kb/agent-memory-systems/` | Reviewing and comparing external agent memory, knowledge, and context-engineering systems. |
@@ -185,13 +186,13 @@ For the full model, read `kb/reference/navigation.md`. In short: use `rg` for ch
 
 Entry points:
 
-- `kb/notes/tags-README.md` — top-level navigation hub: tag READMEs (including links), foundations, evaluation, gaps
+- `kb/tags/README.md` — top-level navigation hub: tag heads (foundations, evaluation, links, and the rest), gaps
 - `kb/agent-memory-systems/README.md` — curated index of external agent-memory/knowledge systems
 - `kb/reference/README.md` — shipped-system documentation entry point: architecture, type system, operator guide, and ADR navigation
 - `kb/reports/README.md` — report retention policies and durable report records
 - `kb/reference/adr/` — architecture outcome records for the shipped Commonplace system
 
-Each tag's curated head is its `<tag>-README.md` (type `types/tag-readme.md`), small by type contract. It may declare two validator-enforced frontmatter marks: `complete: true` — the README links every note carrying the tag, so a reader can skip the by-tag `rg` sweep; `covered_by: [children]` — every tagged note also carries a listed child tag, so a reader can trust the typed routing. Maintenance of the marks lives in `kb/types/tag-readme.md` (ADR 026).
+Each tag's curated head is `kb/tags/<tag>-README.md` (type `types/tag-readme.md`), small by type contract; tag membership ranges over the collections listed in `kb/tags/COLLECTION.md`. It may declare two validator-enforced frontmatter marks: `complete: true` — the README links every artifact carrying the tag, so a reader can skip the by-tag `rg` sweep; `covered_by: [children]` — every tagged artifact also carries a listed child tag, so a reader can trust the typed routing. Maintenance of the marks lives in `kb/types/tag-readme.md` (ADR 026, ADR 089).
 
 ```bash
 # Find notes by description
@@ -202,7 +203,7 @@ rg "^type: types/note.md" kb/notes/ kb/reference/ kb/instructions/ --glob "*.md"
 rg "^type: reference/types/adr.md" kb/reference/ --glob "*.md"
 
 # Find notes by tag
-rg "^tags:.*learning-theory" kb/notes/ kb/reference/ kb/instructions/ --glob "*.md"
+rg "^tags:.*learning-theory" kb/notes/ kb/reference/ kb/instructions/ kb/agent-memory-systems/ kb/agentic-systems/ --glob "*.md"
 ```
 
 ### Skills

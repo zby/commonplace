@@ -1,13 +1,6 @@
----
-description: Hub for all tag READMEs — browse the KB by conceptual domain rather than by directory; complete over the tag pages in this collection
-type: types/tag-readme.md
-index_source: tag-indexes
-complete: true
----
-
 # Tags
 
-Browse the KB by tag. Each tag page has a curated editorial section and an auto-generated listing of all notes with that tag.
+Browse the KB by topic. Each tag has one head here, `<tag>-README.md`, that says what the tag gathers and picks its load-bearing entries; the published site appends the full member listing across the participating collections. See [COLLECTION.md](./COLLECTION.md) for which collections' tags count and how to write a head.
 
 For current-state documentation about the live Commonplace system rather than transferable theory, start at [../reference/README.md](../reference/README.md).
 

@@ -1,8 +1,6 @@
 ---
 description: "Curated head for the trace-learning tag — external systems that learn from agent traces: raw traces accumulate, then a distillation step produces rules, memories, prompts, or weights; the tag marks reviews where the code shows that loop"
 type: types/tag-readme.md
-index_source: tag
-index_key: trace-learning
 ---
 
 # Trace-learning

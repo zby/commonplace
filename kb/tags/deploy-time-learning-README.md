@@ -1,8 +1,6 @@
 ---
 description: "Curated head for the deploy-time-learning tag — the phenomenon that deployment meets users, surprises, and forces change after first release; what use reveals that design could not"
 type: types/tag-readme.md
-index_source: tag
-index_key: deploy-time-learning
 complete: true
 ---
 

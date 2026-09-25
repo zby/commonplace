@@ -25,7 +25,7 @@ Usage evidence bounds how much machinery the decision may carry. A survey of abo
 
 1. **One namespace per KB.** A tag string has one sense everywhere within one KB. Commonplace's `kb/` is one KB; each host project's `kb/` is another.
 
-2. **Membership ranges over the KB's participating collections.** Every membership claim, mark check, and generated listing for a tag ranges over one set of collections, the same for every tag: in this checkout `notes`, `reference`, `instructions`, `agent-memory-systems`, and `agentic-systems`. `work`, `sources`, `reports`, and the proposal archive are outside the tag space, and no tag consumer reads them. Tags mean one thing wherever they are read; there is no second, weaker kind of tag (see Considered alternatives).
+2. **Membership ranges over the KB's participating collections.** Every membership claim, mark check, and generated listing for a tag ranges over one set of collections, the same for every tag, declared once as the `participating:` list in the frontmatter of `kb/tags/COLLECTION.md` and never inferred from the directory tree. In this checkout: `notes`, `reference`, `instructions`, `agent-memory-systems`, and `agentic-systems`. `work`, `sources`, `reports`, `types`, and the proposal archive are outside the tag space, and no tag consumer reads them. Tags mean one thing wherever they are read; there is no second, weaker kind of tag (see Considered alternatives).
 
 3. **Heads live in `kb/tags/`.** Every tag head is `kb/tags/<tag>-README.md`, type `tag-readme`, in every KB. The filename is the head's identity; the `index_source` and `index_key` fields are retired from the type. The collection's own `README.md` is the hub, an ordinary collection landing, replacing the special `tags-README.md` and its `tag-indexes` binding. `commonplace-init` scaffolds `kb/tags/` with its contract and landing; it scaffolds no heads.
 
@@ -55,7 +55,9 @@ Usage evidence bounds how much machinery the decision may carry. A survey of abo
 
 **Cross-KB membership by reading the library's heads as the host's.** Rejected: the library is read-only, its marks are validated only in the source checkout, and a host member would make them false there.
 
-**Left open.** Where the participating set is recorded so the collector and a host's scaffold read it: the tag collection's own contract is the candidate, since the set is a property of the tag space rather than of any member collection. Whether a host's site build should offer a union view over library tags.
+**Where the participating set is recorded** was left open in the first draft and resolved at implementation: the tag collection's own contract, since the set is a property of the tag space rather than of any member collection, and a collection contract already carries the collection's other cross-collection rules, its linking grammar. A per-collection field was rejected with the keyword option: it is the same distinction carried by every consumer.
+
+**Left open.** Whether a host's site build should offer a union view over library tags.
 
 ## Consequences
 

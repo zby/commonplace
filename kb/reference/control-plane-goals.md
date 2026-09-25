@@ -59,7 +59,7 @@ to use source-side lineage under the link contract.
 | Commonplace delegation doctrine | Framework | `AGENTS.md` `## Delegation` |
 | Type system | Framework | global types in the installed library's `types/`, plus collection-local `kb/*/types/` directories with schemas and templates |
 | Writing conventions | Framework | `kb/*/COLLECTION.md` (per-collection) |
-| Link semantics | Framework | the library's `notes/links-README.md` and related guidance in its `instructions/` |
+| Link semantics | Framework | the library's `tags/links-README.md` and related guidance in its `instructions/` |
 
 Only the per-installation rows require human input. Framework rows are shipped from Commonplace. The ones that live in the installed library change in place on upgrade; the ones in the committed `AGENTS.md` change only when the practitioner merges a newer template.
 

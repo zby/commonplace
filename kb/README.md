@@ -12,6 +12,7 @@ In this source repository, common collection roots include:
 - `kb/notes/`
 - `kb/reference/`
 - `kb/instructions/`
+- `kb/tags/`
 - `kb/agent-memory-systems/`
 - `kb/agentic-systems/`
 - `kb/sources/`

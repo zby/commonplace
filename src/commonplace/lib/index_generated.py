@@ -74,11 +74,13 @@ class TagSpace:
         return set(self.notes_by_tag)
 
     def is_participating(self, path: Path) -> bool:
+        """Return True when path is a membership candidate: inside a
+        participating collection and not in an excluded subtree."""
         resolved = path.resolve()
-        return any(
-            resolved == collection or collection in resolved.parents
-            for collection in self.participating
-        )
+        for collection in self.participating:
+            if resolved == collection or collection in resolved.parents:
+                return _is_member_candidate(resolved, collection)
+        return False
 
 
 def _default_load_document(path: Path) -> ParsedDocument | None:
@@ -130,16 +132,22 @@ def read_participating(
     return tuple(participating), error
 
 
+def _is_member_candidate(path: Path, collection: Path) -> bool:
+    """Files a participating collection contributes: not frozen archives,
+    type definitions, collection internals, or the contract itself."""
+    if is_replaced_archive(path) or is_proposal_archive(path):
+        return False
+    rel_parts = path.relative_to(collection).parts
+    if "types" in rel_parts or ".collection" in rel_parts:
+        return False
+    return path.name != "COLLECTION.md"
+
+
 def _scan_members(
     collection: Path, load_document: LoadDocument, by_tag: dict[str, list[Entry]]
 ) -> None:
     for path in sorted(iter_visible_markdown_files(collection)):
-        if is_replaced_archive(path) or is_proposal_archive(path):
-            continue
-        rel_parts = path.relative_to(collection).parts
-        if "types" in rel_parts or ".collection" in rel_parts:
-            continue
-        if path.name == "COLLECTION.md":
+        if not _is_member_candidate(path, collection):
             continue
         document = load_document(path)
         if document is None:

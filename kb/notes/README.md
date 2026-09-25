@@ -6,7 +6,7 @@ The central thread is [deploy-time learning](./retained-artifacts-enable-persist
 
 ## Navigation
 
-- [tags index](../tags/README.md) — the top-level hub linking every tag README (foundations, evaluation, learning theory, links, and the rest), plus the workshop layer and open gaps.
+- [tags index](../tags/README.md) — the top-level hub in `kb/tags/` linking every tag head (foundations, evaluation, learning theory, links, and the rest), plus the workshop layer and open gaps.
 - `definitions/` — transferable vocabulary such as constraining, codification, and discovery lifecycle, one term per file. Selected Commonplace vocabulary lives in reference definitions instead.
 
 ## How to read these notes

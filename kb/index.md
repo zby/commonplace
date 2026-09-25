@@ -29,6 +29,7 @@ The [theory builder definition](./notes/definitions/theory-builder.md) states th
 ## Browse
 
 - [Notes](./notes/README.md) — research claims
+- [Tags](./tags/README.md) — browse by topic across notes, reference, instructions, and system reviews
 - [Reference](./reference/README.md) and [Types](./types/README.md) — the current system, decisions, and artifact contracts
 - [Agent Memory Systems](./agent-memory-systems/README.md) and [Agentic Systems](./agentic-systems/README.md) — external-system reviews
 - [Sources](./sources/README.md), [Instructions](./instructions/README.md), and [Workshops](./work/README.md) — evidence, procedures, and work in flight

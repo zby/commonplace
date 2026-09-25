@@ -1,8 +1,6 @@
 ---
 description: "Curated head for the methodology tag — how an agent selects, borrows, and is controlled by a methodology: selection among incompatible approaches, borrowing through artifacts or weights, intent as control, and method transfer"
 type: types/tag-readme.md
-index_source: tag
-index_key: methodology
 complete: true
 ---
 

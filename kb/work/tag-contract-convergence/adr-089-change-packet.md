@@ -17,21 +17,21 @@ Per [change a contract that several consumers read](../../instructions/change-a-
 
 | Class | Search | Members | Status |
 |---|---|---|---|
-| resolvers and validators | `rg -n "index_source|index_key|collection_index|impacted_marked_tag_readmes|TAG_PAGE_TYPES|tag-indexes|-README.md" src/` | `lib/index_generated.py`, `lib/validation.py`, `docs/properdocs_hooks.py` | pending |
-| schemas and derived copies | `rg -n "index_source|index_key|tag-indexes" kb/types/` | `tag-readme.schema.yaml`, `generated-index.md`, `generated-index.schema.yaml` | pending |
+| resolvers and validators | `rg -n "index_source|index_key|collection_index|impacted_marked_tag_readmes|TAG_PAGE_TYPES|tag-indexes|-README.md" src/` | `lib/index_generated.py`, `lib/validation.py`, `docs/properdocs_hooks.py` | done (cb3bb5b7) |
+| schemas and derived copies | `rg -n "index_source|index_key|tag-indexes" kb/types/` | `tag-readme.schema.yaml`, `generated-index.md`, `generated-index.schema.yaml` | done (cb3bb5b7) |
 | emitters | none: no command writes a head | — | n/a |
-| migration in `commonplace-init` | `scaffold_manifest.py`, templates | add `kb/tags/` dir, `user-tags-COLLECTION.md`, `user-tags-README.md` | pending |
+| migration in `commonplace-init` | `scaffold_manifest.py`, templates | add `kb/tags/` dir, `user-tags-COLLECTION.md`, `user-tags-README.md` | done (cb3bb5b7); `hatch_build.SHIPPED` gained `tags` |
 | promoted skills and procedures | `rg -n "README.md|tag" kb/instructions/cp-skill-*/SKILL.md kb/instructions/maintain-curated-indexes.md` | connect, write, maintain-curated-indexes | pending |
 | collection contracts and type specs | `rg -n "tag" kb/*/COLLECTION.md kb/types/tag-readme.md` | notes contract, tag-readme spec, new tags contract | pending |
 | control-plane templates and root AGENTS.md | `rg -n "tags-README|-README.md|kb/notes/ --glob" AGENTS.md src/commonplace/_data/ src/commonplace/lib/library.py` | AGENTS.md (vocabulary, navigation, rg recipes), `AGENTS.md.template`, routing file entry points | pending |
 | reference pages and accepted ADRs in present tense | `rg -n "tags-README|index_source|index_key|<tag>-README" kb/reference/` | navigation.md, commands.md, storage-architecture.md, collections-and-types.md, README-REVIEW-SYSTEM? ADR 025/026 (historical: annotate 026) | pending |
-| tests and fixtures | `rg -l "tag-readme|index_source|tags-README|covered_by" tests/` | test_validation_tag_readme, test_properdocs_hooks, test_validate_notes, test_type_resolver, test_init_project | pending |
-| published views | site hooks, `properdocs.yml` redirects | tag routing, tails, 22 redirects from relocation | pending |
-| the heads themselves | `ls kb/notes/*-README.md` | 21 heads + hub | relocation, pure commit |
+| tests and fixtures | `rg -l "tag-readme|index_source|tags-README|covered_by" tests/` | test_validation_tag_readme, test_properdocs_hooks, test_validate_notes, test_init_project, test_library_build, test_type_contract_integrity; new test_tag_space (drift guard) | done (cb3bb5b7) |
+| published views | site hooks, `properdocs.yml` redirects | tag routing, tails (cb3bb5b7); 23 redirects from relocation (96b9b266); `commonplace-validate redirects` clean | done |
+| the heads themselves | `ls kb/notes/*-README.md` | 22 heads + hub | done (96b9b266); `index_source`/`index_key` stripped and hub made a plain landing in the follow-up content commit |
 
-## 4. Byte-pinned consumers
+## 4. Byte-pinned consumers — done
 
-Freshness baselines key review pairs by note path. `commonplace-freshness-status` lists 31 review pairs on `kb/notes/agent-memory-README.md`, all already stale; no other head carries one. Relocation does not re-key the store. Decision: retire those 31 targets with `commonplace-freshness-retire` in the relocation step and record the count in the commit; a future review re-registers at the new path. Verification: status shows no pair on either path afterwards.
+Freshness baselines key review pairs by note path. `commonplace-freshness-status` lists 31 review pairs on `kb/notes/agent-memory-README.md`, all already stale; no other head carries one. Relocation does not re-key the store. Decision: retire those 31 targets with `commonplace-freshness-retire` in the relocation step and record the count in the commit; a future review re-registers at the new path. Verification: status shows no pair on either path afterwards. Done: 31 of 31 retired; status shows none on the old path.
 
 ## 5. Spellings of the old value
 
@@ -41,9 +41,9 @@ Freshness baselines key review pairs by note path. `commonplace-freshness-status
 
 ## 6. Generated and projected forms
 
-Site build: tag tails and tag links (hooks). Installed library: the package ships `kb/` as data, so `kb/tags/` ships with it; no separate projection. Init-written routing file lists entry points (check `library.py`).
+Site build: tag tails and tag links (hooks). Installed library: the package ships only the trees in `hatch_build.SHIPPED`; the first draft of this packet wrongly assumed all of `kb/`. `tags` was added to that tuple. The init-written routing file names `tags/README.md` as the tag-heads entry point.
 
-## 7. Fresh install
+## 7. Fresh install — probed
 
 `commonplace-init` on an empty directory creates `kb/tags/COLLECTION.md` (with `participating: [notes, reference, instructions]`) and `kb/tags/README.md`; `commonplace-validate landings` passes; validating a note with a tag and no head fails with the head path named.
 
@@ -57,7 +57,7 @@ Init on an existing project adds `kb/tags/` if absent and leaves it alone if pre
 - "Head outside `kb/tags/` fails": type rule; probe: a tag-readme file left in `kb/notes/`.
 - "Undeclared participation means no members": probe: `kb/tags/COLLECTION.md` without the field validates with a warning naming the field.
 
-## 10. Acceptance probe
+## 10. Acceptance probe — passed 2026-09-25
 
 ```
 tmp=$(mktemp -d); commonplace-init --root $tmp
@@ -66,7 +66,7 @@ tmp=$(mktemp -d); commonplace-init --root $tmp
 # write kb/tags/x-README.md; validate -> passes
 ```
 
-## 11. Drift guard
+## 11. Drift guard — `tests/commonplace/lib/test_tag_space.py::test_checkout_declares_every_tagging_collection`
 
 Test: the set of directories `collect_tag_space` scans equals the `participating:` declaration in the fixture's `kb/tags/COLLECTION.md`; and every top-level collection in this checkout is either declared participating or named in the ADR's outside list (test reads the ADR-independent constant `NON_PARTICIPATING_NOTE` in the tags contract?). Keep the second as a repository test that lists undeclared collections rather than counting.
 
@@ -74,6 +74,8 @@ Test: the set of directories `collect_tag_space` scans equals the `participating
 
 ADR 025 and ADR 026 describe `tags-README.md` and `index_source` as current; 026 gets a one-line forward annotation to ADR 089, 025 is left (its decision, build-time-only listings, is unchanged). Archived proposals carrying tags stay untouched and outside the tag space. Ingest reports under `kb/sources/` link to head paths; relocation rewrites those links.
 
-## Rescan (step 6)
+## Rescan (step 6) — 2026-09-25
 
-pending
+Patterns: `index_source: tag`, `index_key:`, `tags-README`, `notes/<tag>-README.md`, `kb/notes/<tag>` over the checkout, excluding site output, reports, work, the proposal archive, ADRs before 089, and snapshots. Hits after the docs sweep: the tag-readme schema's `index_key: false` rejection and the scaffold manifest's `kb/tags/README.md` target, both the new form. Historical statements left in place: ADR 026 body (annotated), ADR 048's example path, the tag-scope proposal's description of the pre-089 state, one proposal's hypothetical `tag-members(index_key)`, and the frozen evidence note about the old hub's mark.
+
+Misses found during implementation, now fields of this packet: (a) the participation test must apply the same exclusions as the membership scan, or a per-artifact check fires on archived proposals inside a participating collection; (b) a hub named by convention (`tags-README.md`) had been serving as the head for a `tags` tag by filename accident, exposed when the head requirement ran; (c) relocation lengthens every link in a moved head, pushing two heads over the soft weight gate.

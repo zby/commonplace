@@ -181,6 +181,20 @@ def test_tagged_note_outside_the_tag_space_is_not_checked(tmp_path: Path) -> Non
     assert not any("no head" in f for f in results.fails)
 
 
+def test_archived_proposal_in_a_participating_collection_is_not_checked(
+    tmp_path: Path,
+) -> None:
+    setup_repo(tmp_path, participating="[notes, reference]")
+    write(tmp_path / "kb" / "reference" / "COLLECTION.md", "# Reference collection\n")
+    archived = note(
+        tmp_path / "kb" / "reference" / "proposals" / "archive" / "old.md", ["orphan"]
+    )
+
+    results = validate_note(archived, repo_root=tmp_path)
+
+    assert not any("no head" in f for f in results.fails)
+
+
 def test_undeclared_tag_space_warns_instead_of_failing(tmp_path: Path) -> None:
     copy_repo_files(tmp_path, *NOTE_TYPE_SPECS)
     write(tmp_path / "kb" / "notes" / "COLLECTION.md", "# Notes collection\n")

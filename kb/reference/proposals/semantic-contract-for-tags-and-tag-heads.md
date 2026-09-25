@@ -1,7 +1,7 @@
 ---
 description: "Proposal: define tags as KB-wide semantic membership predicates and tag heads as canonical definition and bounded-context routing surfaces"
 type: reference/types/design-proposal.md
-tags: [tags]
+tags: []
 traits: [has-external-sources]
 ---
 

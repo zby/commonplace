@@ -1,8 +1,6 @@
 ---
 description: "Curated head for the artifact-analysis tag — the four-field vocabulary (substrate, form, lineage, authority) for classifying retained behavior-shaping artifacts, plus its applications"
 type: types/tag-readme.md
-index_source: tag
-index_key: artifact-analysis
 complete: true
 ---
 

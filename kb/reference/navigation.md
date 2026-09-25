@@ -24,9 +24,9 @@ Commonplace navigation is a progressive disclosure stack. Agents should usually 
 
 Descriptions are the important middle layer. They are not decorative summaries; they are fixed, agent-facing filters between lexical search and full reads. A good description lets an agent scan five plausible hits and decide which one to open. This is why validation requires descriptions and why scoped listings and build-time indexes are built from them.
 
-Curated indexes are the collection-scale version of the same idea: grouping and context phrases where the order and headings carry extra routing signal. A directory's curated head is its `README.md`; every top-level collection must provide one, checked by `commonplace-validate landings`. A tag's curated head is its `<tag>-README.md` (type `tag-readme`), small by type contract.
+Curated indexes are the collection-scale version of the same idea: grouping and context phrases where the order and headings carry extra routing signal. A directory's curated head is its `README.md`; every top-level collection must provide one, checked by `commonplace-validate landings`. A tag's curated head is `kb/tags/<tag>-README.md` (type `tag-readme`), small by type contract; `kb/tags/README.md` is the hub.
 
-A tag-README may declare two validator-enforced frontmatter marks (ADR 026): `complete: true` — the README links every note carrying the tag, so a reader can skip the by-tag `rg` recipe below for that tag; `covered_by: [children]` — every tagged note carries a listed child tag, so a reader can trust the README's typed routing ("which kind of X is this?"). Both are accelerators, never load-bearing: scoped `rg` always recovers membership regardless of any mark — full semantics in the [`tag-readme` type spec](../types/tag-readme.md).
+A tag-README may declare two validator-enforced frontmatter marks (ADR 026): `complete: true` — the README links every artifact carrying the tag, so a reader can skip the by-tag `rg` recipe below for that tag; `covered_by: [children]` — every tagged artifact carries a listed child tag, so a reader can trust the README's typed routing ("which kind of X is this?"). Both range over the participating collections declared in [`kb/tags/COLLECTION.md`](../tags/COLLECTION.md) ([ADR 089](./adr/089-tags-are-one-namespace-per-kb-with-heads-in-kb-tags.md)). Both are accelerators, never load-bearing: scoped `rg` always recovers membership regardless of any mark — full semantics in the [`tag-readme` type spec](../types/tag-readme.md).
 
 ## Complete listings are build-time only
 
@@ -34,10 +34,10 @@ Complete generated listings — per-collection `dir-index.md` pages and per-tag 
 
 ### Scoped listing recipes
 
-By tag — path plus description for every note carrying a tag:
+By tag — path plus description for every artifact carrying a tag, over the participating collections:
 
 ```bash
-rg -l '^tags:.*\bTAG\b' kb/notes/ --glob '*.md' \
+rg -l '^tags:.*\bTAG\b' kb/notes/ kb/reference/ kb/instructions/ kb/agent-memory-systems/ kb/agentic-systems/ --glob '*.md' \
   | xargs -r rg -N --no-heading '^description:\s*' -r ''
 ```
 

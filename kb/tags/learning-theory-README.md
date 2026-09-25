@@ -1,8 +1,6 @@
 ---
 description: "Curated head for the learning-theory tag — how systems learn, verify, and improve, with routes through its major child areas and the fundamentals that sit under no child"
 type: types/tag-readme.md
-index_source: tag
-index_key: learning-theory
 ---
 
 # Learning theory

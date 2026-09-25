@@ -1,8 +1,6 @@
 ---
 description: Index of notes about keeping the KB healthy over time — detection of staleness and quality degradation, maintenance operations, and the dynamics that govern system entropy
 type: types/tag-readme.md
-index_source: tag
-index_key: kb-maintenance
 ---
 
 # KB maintenance

@@ -37,7 +37,7 @@ Or paste it directly:
 
 `commonplace/kb/` is a vendored knowledge base on agent context engineering,
 memory, and deploy-time learning. For design decisions in those areas, consult
-it before deciding: start at `commonplace/kb/notes/tags-README.md`. Paths named
+it before deciding: start at `commonplace/kb/tags/README.md`. Paths named
 inside it are relative to `commonplace/`. It is read-only in this project — to
 contest a claim, open an issue at https://github.com/zby/commonplace/issues.
 ```
@@ -182,7 +182,7 @@ The Commonplace library — framework notes, reference, instructions, review gat
 
 On a new project it creates the project's own files once:
 
-- **User KB directories and collection heads** — `kb/notes/`, `kb/reference/`, `kb/instructions/`, `kb/sources/`, `kb/tasks/`, `kb/work/`, `kb/reports/`, `kb/log.md`; notes, reference, instructions, sources, work, and reports each receive a starter `COLLECTION.md` contract and `README.md` landing. Source snapshots are ignored locally; reports also receive `cache/`, `state/`, and `retained/` policy areas with their own ignore and validation boundaries.
+- **User KB directories and collection heads** — `kb/notes/`, `kb/reference/`, `kb/instructions/`, `kb/tags/`, `kb/sources/`, `kb/tasks/`, `kb/work/`, `kb/reports/`, `kb/log.md`; notes, reference, instructions, tags, sources, work, and reports each receive a starter `COLLECTION.md` contract and `README.md` landing. Source snapshots are ignored locally; reports also receive `cache/`, `state/`, and `retained/` policy areas with their own ignore and validation boundaries.
 - **`AGENTS.md.template` and `CLAUDE.md.template`** — control-plane templates with the project name filled in (step 4).
 
 On every run it also writes its pointers into the library for this machine:
@@ -241,7 +241,7 @@ Then review the merged file and fill in the per-project parts. The template's HT
 - **`KB Goals and Scope`** — Purpose, Scope (the out-of-scope list is what prevents scope creep), and Quality bar. Without these the agent has no basis for inclusion decisions.
 - **`The Commonplace library`** — keep it as shipped. It tells agents to read `.commonplace/library.md`, and to stop and ask for `commonplace-init` when that file is missing instead of looking for the library elsewhere.
 - **Command invocation (in `### Commands`)** — keep the unconditional bare-name rule. Commonplace commands come from the user-level uv tool, not the project's dependency environment.
-- **Navigation entry points** — add curated tag READMEs to the list as they emerge; the template comment explains when to create one.
+- **Navigation entry points** — add tag heads (`kb/tags/<tag>-README.md`) to the list as they emerge; the template comment explains when a tag needs one.
 - **Version-control conventions** — keep the framework expectation that the KB is versioned, and add any project-specific commit, branch, or review rules. The template deliberately assigns no portable Commonplace semantics to those objects.
 
 A runtime that loads neither `AGENTS.md` nor `CLAUDE.md` needs the same pointer in whatever it does load: "read `.commonplace/library.md` in the current project; if it is missing, stop and ask for `commonplace-init`". The pointer names no machine path and no particular project, so it can be set once per user.
