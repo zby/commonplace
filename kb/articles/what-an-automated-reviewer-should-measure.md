@@ -276,6 +276,6 @@ develops the reader-relative baseline.
 [Explanatory reach](../notes/first-principles-reasoning-selects-for-explanatory-reach-over.md)
 and [reach-assessment](../notes/definitions/reach-assessment.md) develop the
 property and its assessment.
-[Building a Theory Builder from Today's
-LLMs](./building-a-theory-builder-from-todays-llms.md) develops the
+[Can a Theory Builder Running on
+Fixed-Weight LLMs Learn?](./building-a-theory-builder-from-todays-llms.md) develops the
 research program behind the retained-artifact comparison.

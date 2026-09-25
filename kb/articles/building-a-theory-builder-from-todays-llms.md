@@ -25,7 +25,7 @@ source_notes:
   - kb/notes/an-optimal-long-run-learning-strategy-invests-in-its-own-machinery.md
 ---
 
-# Building a Theory Builder from Today's LLMs
+# Can a Theory Builder Running on Fixed-Weight LLMs Learn?
 
 > **Draft.** The claims and structure of this article may change. Comments
 > and counterexamples are welcome on
