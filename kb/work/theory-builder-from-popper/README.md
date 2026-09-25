@@ -97,8 +97,11 @@ Decision numbers D1–D8 refer to the
    done (N1–N3).
 4. Progress (2026-09-25): inventory steps 1–3 done — receiving sections
    (obligations note 33f44301, testing article 322953b6), definitions and
-   AGENTS.md (38df120c), skills and types (3532f494). Next: inventory step 4
-   (notes and articles), then ingest batches B1–B7.
+   AGENTS.md (38df120c), skills and types (3532f494). Inventory step 4:
+   notes (85ef951e, 9e51af45) and articles (20a3928c). Step 5: ingest
+   batches B1–B7 committed (467fea89, c666d569, 6ec3c22d, 58b83473,
+   99b103c5, 37a36faa, 37a4d4c1). Next: settle problem granularity, then
+   step 6 (relocations, deletions, redirects).
    Apply in the inventory's order: receiving sections, definitions, skills
    and types, notes and articles, ingest re-judging, links and redirects,
    frozen records last. Validate.
