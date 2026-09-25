@@ -1,5 +1,5 @@
 ---
-description: "Testing supplement: a modest first goal, showing that retained revisions causally improve later capacity and stay revisable; seven controlled tests, a task-family design, and the three adopted whole-program hypotheses"
+description: "Testing supplement: a modest first goal, showing that retained revisions causally improve later capacity and stay revisable; seven controlled tests, a task-family design, a compounding test, and the three adopted whole-program hypotheses"
 type: kb/articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
@@ -15,6 +15,11 @@ source_notes:
   - kb/notes/retained-theories-may-improve-sample-efficiency.md
   - kb/notes/a-claim-without-external-assessment-carries-three-obligations.md
   - kb/notes/commonplace-studies-conjectural-learning-through-retained-theories.md
+  - kb/notes/improvements-can-accumulate-without-compounding.md
+  - kb/notes/compounding-is-tested-in-later-improvement-not-by-the-accepting-metric.md
+  - kb/notes/disconnected-witnesses-do-not-establish-a-causal-path-through-theory.md
+  - kb/notes/citing-retained-theory-at-the-decision-point-is-a-mediation-trace.md
+  - kb/notes/definitions/autonomous-theory-builder.md
 ---
 
 # Testing Conjectural Learning
@@ -42,20 +47,31 @@ where K is the retained tentative knowledge. The middle step is what makes
 this conjectural learning rather than caching: the new retained state is a
 theory that was proposed and is held open to criticism, not a stored answer.
 
+Different later behaviour is not yet better later behaviour, and neither is
+task success. A system can solve a task without learning anything. It can
+also learn something useful while the current task still fails. And it can
+retain and faithfully apply a bad rule: showing that a theory was
+formulated, criticized, revised, and used
+[does not by itself establish improved capacity](../notes/a-complete-theory-path-does-not-establish-improved-capacity.md).
+The quantity to measure is therefore not current task performance but the
+change in future capacity caused by retained knowledge.
+
+Attributing that change to a revision requires fixing everything else.
 Model weights are held fixed, ruling out weight updates as the source of
-improvement. To identify the contribution of a retained revision, we must
-also specify which other state stays fixed.
-[An intervention isolates the contribution of the state it varies](../notes/retained-theory-intervention-isolates-one-explicit-surface.md);
+improvement. The other state that stays fixed must be named too, because
+[an intervention isolates the contribution of the state it varies](../notes/retained-theory-intervention-isolates-one-explicit-surface.md);
 other records, code, or people may still carry the lesson.
 
 ## First tests
 
-The first experiments should make that causal role easy to observe. Useful
-tests include:
+The first experiments should make the causal role of a revision easy to
+observe. Useful tests include:
 
 - **retention** — does the revision survive into later work?
 - **use** — does the record of later work show the revision was read and
-  applied?
+  applied? A decision record that cites the revision is
+  [cheap evidence that it was read](../notes/citing-retained-theory-at-the-decision-point-is-a-mediation-trace.md),
+  but not that it carried the decision.
 - **withholding** — does behaviour change when the retained revision is
   hidden? A change that passes this test is what the knowledge base calls
   [operative](../notes/definitions/operative-change.md).
@@ -73,16 +89,9 @@ tests include:
 - **revision** — can later evidence change retained knowledge when it turns
   out to be wrong?
 
-## Separate task success from learning
-
-A system can solve a task without learning anything. It can also learn
-something useful while the current task still fails. And it can retain and
-faithfully apply a bad rule: showing that a theory was formulated,
-criticized, revised, and used
-[does not by itself establish improved capacity](../notes/a-complete-theory-path-does-not-establish-improved-capacity.md).
-
-The quantity to measure is therefore not current task performance but the
-change in future capacity caused by retained knowledge.
+Run the tests on the same revision. Retention shown for one revision and
+transfer shown for another do not show that any revision
+[changed later work through one causal path](../notes/disconnected-witnesses-do-not-establish-a-causal-path-through-theory.md).
 
 ## Start with controlled task families
 
@@ -95,35 +104,65 @@ possible. A simple pattern is:
 4. compare the revised state with the pre-learning state on matched fresh
    instances to test whether the experience improved later capacity.
 
-Then withhold or perturb a particular retained revision to test its
-contribution. Separately, compare retaining the assembled theory with
-reconstructing it from the same episode records. Equal performance at
-comparable total cost can show that explicit retention offers no advantage
-under those conditions, even though both systems learned. Count the costs
-of acquiring, maintaining, reconstructing, and using the knowledge.
+The answers in the task family are fixed outside the system before the run.
+The system's approval of its own revision is not the outcome; the
+[externally fixed answer](../notes/definitions/externally-tested-theory-builder.md)
+is.
+
+Once the revised state beats the pre-learning state, the tests above
+isolate a single revision's contribution: withhold or perturb it, and
+compare retaining it with reconstructing it from the same episode records.
+Reconstruction can match retention at comparable total cost. Both systems
+have then learned, but explicit retention offered no advantage under those
+conditions. Count the costs of acquiring, maintaining, reconstructing, and
+using the knowledge.
 
 For each comparison, name the state being varied and hold the remaining
 model, tools, evidence, task conditions, and resource limits fixed. Repeat
 the comparison across tasks and runs to distinguish an effect from sampling
 variation.
 
-The answers in the task family are fixed outside the system before the run.
-The system's approval of its own revision is not the outcome; the
-[externally fixed answer](../notes/definitions/externally-tested-theory-builder.md)
-is.
+## Record what people contribute
 
 People will be inside the early experiments. Declare whether the assessed
 learning system includes them, and record their contributions separately
 from computational work. An operator-written revision can contribute to
-learning by the combined human–computational system, but does not establish
-autonomous acquisition by its computational components.
+learning by the combined human–computational system, but it does not
+establish autonomous acquisition by the computational components.
 
-## Then test accumulation
+The record should list, for each completed improvement, the decisions a
+person supplied, classified as noticing, diagnosis, choice, or acceptance.
+Supplying the task family and its fixed answers is an
+[external role](../notes/definitions/autonomous-theory-builder.md) and does
+not count. This count is the measure the
+[bootstrap supplement](./bootstrapping-an-autonomous-theory-builder.md)
+uses: its conjecture fails if the count grows with the system instead of
+falling.
 
-A useful learner must eventually accumulate many revisions without becoming
+## Then test accumulation and compounding
+
+A useful learner must eventually hold many revisions without becoming
 incoherent, overfitting to recent cases, or retaining obsolete knowledge.
 Long-horizon tests will therefore matter, but only after the basic causal
 mechanism is established.
+
+Long-horizon tests also reach a question the first tests cannot. The first
+tests ask whether a revision changes later task work. The bootstrap
+supplement's loop, from learning to better learning machinery, needs
+revisions that change later improvement work. Improvements
+[accumulate](../notes/improvements-can-accumulate-without-compounding.md)
+when a later improvement builds on an earlier retained result. They
+compound when the earlier result makes the later improvement cheaper, more
+reliable, or dependent on fewer human decisions. The loop requires
+compounding.
+
+[Compounding is measured in the later improvement episode](../notes/compounding-is-tested-in-later-improvement-not-by-the-accepting-metric.md),
+with a different quantity from the check that accepted the earlier change.
+A validator that passes shows that the change met its target, not that the
+next diagnosis became easier. Replay the later episode with the retained
+knowledge frozen at the earlier snapshot, and trace how the later episode
+used the earlier change. Without that trace, a cheaper later episode could
+come from an easier problem or a more experienced operator.
 
 ## The hypotheses
 
