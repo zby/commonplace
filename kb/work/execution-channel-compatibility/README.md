@@ -80,6 +80,7 @@ This invariant is provisional only in the sense that the exact probe may change.
 - [inventory.md](./inventory.md) — repeatable inventory method, initial counts, execution surfaces, tool-dependency schema, and known gaps.
 - [solution-catalogue.md](./solution-catalogue.md) — candidate mechanisms and their trade-offs; no preferred architecture until worked cases eliminate options.
 - [probe-procedure.md](./probe-procedure.md) — typed instruction for capability-gated evidence gathering from any current Commonplace environment, with native-Windows Codex as the forcing case rather than the assumed layout.
+- [E1 Windows execution plan](./e1-windows-execution.md) — owned closure plan for native-Windows support and `commonplace-validate all`, moved from the closed system-contract consistency workshop.
 - [E1 promoted-skill rebaseline](./e1-promoted-skill-rebaseline-2026-08-27.md) — manifest-derived static inventory and disposition of every promoted skill selected on 2026-08-27; it records no native-Windows runtime result.
 - [evidence/](./evidence/README.md) — append-only probe reports from different agents, runtimes, operating systems, shells, and launch paths.
 - A dated capability matrix for each observed environment class: install/layout mode, execution interface, command lookup, process persistence, session hooks, environment handoff, worktree behavior, bundled tools, and sandbox constraints.

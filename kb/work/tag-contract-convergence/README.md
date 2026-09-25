@@ -31,10 +31,10 @@ Establish one coherent contract connecting:
 6. how every exact-membership consumer uses the same relation;
 7. how a host project's tag space stays separate from the installed library's.
 
-This workshop owns the tag subsystem redesign extracted from T1. The parent
-[system-contract consistency workshop](../system-contract-consistency/README.md)
-retains the original contradiction, witnesses, dependencies, and final closure
-check.
+This workshop owns the tag subsystem redesign extracted from T1, and, since the
+system-contract consistency workshop closed on 2026-09-25, T1's original
+contradiction, witnesses, and final closure check in the [T1 closure
+tracker](./plans/t1-tag-scope.md).
 
 ## Why this is a separate workshop
 
@@ -63,8 +63,7 @@ collection, so Phase 3 acceptance uses a synthetic cross-collection witness.
 - Published tag footers can route across a collection boundary while the page
   reached is generated from a narrower membership set.
 
-The full starting audit remains in the [parent handoff
-record](./plans/t1-tag-scope.md).
+The full starting audit is in the [T1 closure tracker](./plans/t1-tag-scope.md).
 
 ## Design inputs, not authority
 
@@ -86,8 +85,8 @@ from those inputs motivate a distinction among proximal cues, contextual local
 navigation, and query-conditioned results. They concern humans, practitioner
 method, or historical systems. They do not establish LLM-agent performance.
 
-ADR 086 supersedes the tag proposals' embedded-root pruning and the parent
-workshop's disjoint-root design. The proposals remain unchanged until adoption
+ADR 086 supersedes the tag proposals' embedded-root pruning and the former
+parent workshop's disjoint-root design. The proposals remain unchanged until adoption
 because this workshop does not make them operative authority.
 
 ## Working architecture
@@ -148,8 +147,8 @@ cleanup is independent and must not enlarge the core adoption patch.
 
 ## External dependencies
 
-None since the 2026-09-25 rebaseline. The parent workshop's I1, I2, I3, and V1
-findings no longer gate this program: there is no projected library copy to
+None since the 2026-09-25 rebaseline. The former parent workshop's I1, I2, I3, and V1
+findings (closed) no longer gate this program: there is no projected library copy to
 migrate or validate, and Phase 4 uses `commonplace-init`'s existing migration
 path for host projects.
 
@@ -178,6 +177,6 @@ Close and delete this workshop after:
   their fixtures;
 - the two proposals are retired through the normal proposal lifecycle;
 - independent cleanup is completed or explicitly transferred;
-- the parent workshop rechecks and closes T1;
+- the [T1 closure tracker](./plans/t1-tag-scope.md)'s check passes;
 - durable outcomes are linked from current navigation and this workshop has no
   remaining authority role.

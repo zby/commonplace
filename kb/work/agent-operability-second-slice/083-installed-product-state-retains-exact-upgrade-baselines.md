@@ -33,7 +33,8 @@ local and upstream versions changed the same 7,478-byte file differently, the
 prior file was required to locate the conflict and preserve its unaffected
 content.
 
-The active [installed-product ADR draft](../system-contract-consistency/successor-installation-adr-draft.md)
+The then-active installed-product ADR draft (superseded by
+[ADR 086](../../reference/adr/086-projects-read-the-library-from-the-installed-package.md))
 already owns installed topology, per-file ownership, projection, and the
 installer-state manifest. It selects
 `commonplace-library/.installed-product.json` in its proposed disjoint-root

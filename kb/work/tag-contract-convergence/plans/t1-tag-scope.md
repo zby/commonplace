@@ -1,7 +1,9 @@
-# T1 handoff — Track tag-scope contradiction closure
+# T1 closure tracker — Tag-scope contradiction
 
-**State:** open finding; design and implementation transferred on 2026-08-27
-to [tag-contract convergence](../README.md).
+**State:** open finding. The system-contract consistency workshop found it,
+transferred design and implementation here on 2026-08-27, and moved this
+tracker here when it closed on 2026-09-25. This workshop now owns the closure
+check below.
 
 **Audited against:** commit `6660bd2a`; rebaselined 2026-09-25 after
 [ADR 086](../../../reference/adr/086-projects-read-the-library-from-the-installed-package.md)
@@ -39,7 +41,7 @@ installed-product work.
 
 ## Closure check
 
-T1 remains open in this audit until all of the following hold:
+T1 remains open until all of the following hold:
 
 - the owner workshop has adopted one semantic and scope contract;
 - every exact-membership consumer uses the same resolver set;
@@ -49,8 +51,9 @@ T1 remains open in this audit until all of the following hold:
   change and passes after it;
 - the source checkout and a freshly initialized project pass the owner
   workshop's resolver, mark, route, and link checks;
-- this workshop rechecks the original operative surfaces and records no
-  remaining contradiction.
+- a recheck of the original operative surfaces (the tag-readme type, collection
+  routing, mark validation, and generated listings) records no remaining
+  contradiction.
 
 The bounded agent navigation experiment remains follow-up evidence. It becomes
 a closure gate only if an adopted decision claims a retrieval-performance

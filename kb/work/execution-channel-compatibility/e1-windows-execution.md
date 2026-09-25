@@ -1,6 +1,7 @@
 # E1 plan — Make native Windows support operative
 
-**State:** open; rebaselined at commit `6660bd2a` on 2026-08-27. The
+**State:** open; moved here from the system-contract consistency workshop
+when it closed on 2026-09-25; rebaselined at commit `6660bd2a` on 2026-08-27. The
 [manifest-derived promoted-skill audit](./e1-promoted-skill-rebaseline-2026-08-27.md)
 classifies all ten skills selected in that snapshot without making the count a
 future inventory. The implementation dispositions and native-Windows evidence
