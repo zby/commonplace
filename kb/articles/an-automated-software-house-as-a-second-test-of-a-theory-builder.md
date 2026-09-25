@@ -61,9 +61,10 @@ technical reader with no KB context can restate as four claims:
    evaluators. These are the three items of full external assessment (an
    external falsifier, an external objective, and an outcome level
    independent of the builder's evaluators), supplied without the
-   consuming-project arrangement the knowledge base needs. The price: open-ended coherent change is a harder claim than
-   knowledge delivery, and no finite run establishes it.
-4. **What a witness must show.** The four conditions, holding and
+   consuming-project arrangement the knowledge base needs. The price:
+   open-ended coherent change is a harder claim than knowledge delivery, and
+   no finite run establishes it.
+4. **What a witness must show.** The four witness conditions, holding and
    application, coherent revision, automated continuation, and practical
    reliability, each with what would fail it. A witness run supports a
    version of the conjecture bounded to its workload, horizon, and budget.
@@ -114,7 +115,7 @@ rewritten to match.
 
 ## Choices left to the writer
 
-- Whether the four conditions are a list or four short paragraphs.
+- Whether the four witness conditions are a list or four short paragraphs.
 - Whether one concrete software change is used to show the cycle, or the
   claims stand without an example.
 - Section titles and order after the opening conjecture.
