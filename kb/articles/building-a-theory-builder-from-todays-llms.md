@@ -1,5 +1,5 @@
 ---
-description: "Lead article: the bet that an autonomous theory builder that learns, a system running a Popperian conjecture-and-criticism cycle over explicit revisable theories, can be built from fixed-weight LLMs; payoffs, conjectures, Bitter Lesson, learning test"
+description: "Lead article: the bet that a fully automated theory builder that learns, a Popperian conjecture-and-criticism cycle over explicit theories, can be built from fixed-weight LLMs; payoffs, conjectures, Bitter Lesson, learning test"
 type: kb/articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
@@ -69,12 +69,12 @@ says how that is shown.
 Fully automated means that computation performs the roles the cycle needs:
 noticing problems in the builder's own theories and work, and formulating,
 criticizing, revising, and selecting its theories. Users still set the tasks and judge the results. The knowledge
-base's [autonomous qualifier](../notes/definitions/theory-builder.md#qualifiers)
-also covers changing the machinery that does this work; the approach
-described below includes it.
+base [calls such a builder autonomous](../notes/definitions/theory-builder.md#qualifiers).
+In the approach described below, the roles also include changing the method
+that does this work.
 
 The builder is not the LLM alone. It is a system containing an LLM together
-with persistent state, tools, tests, evaluators, and control machinery.
+with retained knowledge, tools, tests, evaluators, and control code.
 [The deployed system, not the model, is the unit that learns](../notes/the-deployed-system-not-the-model-is-the-unit-of-learning.md):
 prompts, retrieval, tools, and runtime policy jointly determine what it does,
 so the learning claim is made about that whole.
@@ -111,7 +111,8 @@ We read this as
 [a proof-governed case of self-modification](../notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md):
 rigorous relative to its formalization, and silent about whether that
 formalization is adequate, since a valid proof under the wrong premises
-warrants nothing anyone wanted. The seed is costly for the same reason.
+guarantees nothing anyone wanted. The machine's starting program is costly
+for the same reason.
 Everything the first improvement needs has to be there already, in executable
 form.
 
@@ -150,8 +151,9 @@ is not formalization — nothing assigns the definition consequences, and the
 interpreter's judgment fixes what happens wherever the words leave a choice
 open. But it is not leaving the operation to people either. This is why the
 theory builder is stated through definitions and why they are worked as hard
-as they are: what it takes for a retained change to count as operative, what
-makes a theory addressable, what a criticism has to do. Each is constrained
+as they are: what it takes for later behaviour to depend on a retained
+change, what lets criticism name one part of a theory, what a criticism has
+to do. Each is constrained
 as far as it will go and then left to the interpreter. Parts that settle can
 be codified afterwards, one at a time, as our validators and schemas have
 been; the rest stays open to criticism.
@@ -163,13 +165,13 @@ produce plausible work from either, and nothing in the medium announces the
 contradiction, so error correction has to be built rather than inherited.
 Constraining is not free to add either: a definition pinned down harder than
 the thing is understood freezes a wrong reading in place. And against the
-earlier constructions we give up warrant, since a proof certified each
-accepted change there, where here the interpreter's judgments are hidden and
-have to be checked by other means.
+earlier constructions we give up the guarantee a proof provides. There a
+proof certified each accepted change; here the interpreter's judgments are
+hidden and have to be checked by other means.
 
 ## A distinct learning paradigm
 
-If a theory builder learns autonomously, theory building is a distinct
+If a fully automated theory builder learns, theory building is a distinct
 learning paradigm rather than another agent workflow, because its learning happens
 through explicit, criticizable theories rather than only through changes to
 model weights. Three payoffs follow from that difference.
@@ -185,7 +187,7 @@ that preserves the structure it describes, which is the sample-efficiency
 advantage most often claimed for explicit knowledge; the note states the
 conditions under which the claim is plausible.
 
-**A learned state that can be read.** What the system has learned is held as
+**Learned knowledge that can be read.** What the system has learned is held as
 stated text, prose and code where a part has been codified, so it can be
 read, diffed, tested, and reverted the way a weight update cannot be. Nothing about this requires a human reader:
 [inspectability is a property of the artifact's form, not of who inspects it](../notes/inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md),
@@ -193,7 +195,7 @@ so agents can do the reading at a volume people could not, and what the
 system has learned stays available for oversight without waiting on progress
 in weight interpretability. But
 [a legible artifact need not be the one actually driving behaviour](../notes/revision-guided-by-rationale-needs-faithfulness-not-just-legibility.md),
-which is why the learning test below alters the retained knowledge instead of
+which is why the learning test below alters the retained state instead of
 inspecting it: the medium makes the question testable, not settled.
 
 Three further advantages are conjectural, and concern how well the loop
@@ -207,11 +209,11 @@ failure signal, and can save search that variant-and-select methods would
 spend. A wrong diagnosis can also waste it; the conjecture is about what a
 supplied reason buys on balance.
 
-*Theories are addressable.* A theory whose assumptions and parts can be
-inspected and revised individually lets criticism name a part, and lets a
-revision keep the rest. This property is
-[addressability](../notes/definitions/addressable-theory.md), and it comes
-in degrees; the comparison is with a builder that criticizes and replaces
+*Theories can be revised in parts.* A theory whose assumptions and parts
+can be inspected and revised individually lets criticism name a part, and
+lets a revision keep the rest. The knowledge base
+[defines this property](../notes/definitions/addressable-theory.md); it comes
+in degrees, and the comparison is with a builder that criticizes and replaces
 each theory whole. Naming a part can focus investigation and preserve useful
 knowledge through a revision; it can also locate a fault in the wrong part.
 
@@ -221,7 +223,7 @@ than keeping results only within one run, or than rebuilding them each time,
 either from retained criticisms or from records of inputs and outcomes
 alone.
 
-Explicit state also has costs. A retained theory requires retrieval,
+Explicit knowledge also has costs. A retained theory requires retrieval,
 applicability checks, revision, validation, and maintenance. A false
 abstraction can misdirect many decisions, and a correct one that retrieval
 misses helps nobody. Keeping episode records alongside distilled rules
@@ -265,8 +267,8 @@ scalable learning. It is between **human-supplied knowledge** and
 **automatically generated, tested, and revised knowledge**.
 
 One condition attaches. A builder that starts from hand-written theories and
-machinery, as ours does, fits the lesson
-[only if its learning outgrows that starting state](../notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md):
+method, as ours does, fits the lesson
+[only if its learning outgrows that starting point](../notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md):
 computation, not people, must come to supply the task-specific knowledge
 each new demand needs.
 
@@ -283,20 +285,21 @@ knowledge base: files holding theories, the criticism recorded against them,
 and the instructions derived from them, which later runs read before acting.
 
 This gives a direct empirical test in two parts. First, withholding or
-altering the retained knowledge should change subsequent behaviour; the
-knowledge base calls a change that passes this test
-[operative](../notes/definitions/operative-change.md). Second, the changed
+altering the retained state should change subsequent behaviour; a change
+that passes this test is shown to be
+[operative](../notes/definitions/operative-change.md): later behaviour
+depends on it. Second, the changed
 behaviour should be better. Showing that a theory was formulated, criticized,
 and revised, and that the revision was used,
 [does not by itself establish improved capacity](../notes/a-complete-theory-path-does-not-establish-improved-capacity.md);
 a builder can retain and faithfully apply a bad rule. The
 [testing supplement](./testing-whether-a-theory-builder-learns.md) gives
-tests that separate a used change from an improvement, and states the
+tests that separate an operative change from an improvement, and states the
 program's hypotheses and what would refute each.
 
 The research question is therefore:
 
-> **Can a fixed-weight LLM system autonomously maintain tentative theories,
+> **Can a fully automated fixed-weight LLM system maintain tentative theories,
 > expose them to error, revise them, retain the revisions, use them in later
 > work, and do better for it?**
 
@@ -332,7 +335,7 @@ The [testing supplement](./testing-whether-a-theory-builder-learns.md)
 defines the system under test, the three hypotheses, and the first protocol.
 The [bootstrap supplement](./bootstrapping-an-autonomous-theory-builder.md)
 starts from Commonplace and transfers its internal roles to computation one class at
-a time; it also covers the builder's reflection on its own machinery. The
+a time; it also covers the builder's reflection on its own method. The
 [software-house supplement](./an-automated-software-house-as-a-second-test-of-a-theory-builder.md)
 proposes a second arrangement whose failures are more visible. The
 [survey](./which-existing-self-improving-systems-are-theory-builders.md) places
