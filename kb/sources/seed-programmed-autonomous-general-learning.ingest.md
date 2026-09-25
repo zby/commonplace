@@ -5,9 +5,9 @@ captured: "2026-09-17"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: f32840f044d32b20c6aacb0f976de3d20f67eac056f6ac953133ac1c2eefab34
+snapshot_sha256: 1d4fa5725aca0fedc462610358610c3d4052374e338b33c8be602d33553e25de
 ingested: "2026-09-17"
-type: ingest-report
+type: types/ingest-report.md
 domains: [learning-theory, cumulative-learning, cognitive-architecture, autonomous-systems]
 learning_claims: true
 ---

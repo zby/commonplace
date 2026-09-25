@@ -1,13 +1,13 @@
 ---
 description: "Schmidhuber's RSI retrospective distinguishes reward-based retention, proof-authorized rewrites, and learned update rules, without establishing sustained compounding or a preferred KB design."
-type: ingest-report
+type: types/ingest-report.md
 source: https://people.idsia.ch/~juergen/recursive-self-improvement.html
 captured: "2026-09-20"
 ingested: "2026-09-20"
 capture: trafilatura
 capture_scope: full-source
 genre: conceptual-essay
-snapshot_sha256: 76c844c4d886e206c5369b2ef9c957706407955adeb0f719ef85201d7b9c07c1
+snapshot_sha256: c9d7553279358d1b6f3d7c40ea38a9cc730db35384b95ef86f5526c3e756c890
 domains: [recursive-self-improvement, meta-learning, learning-theory]
 learning_claims: true
 ---

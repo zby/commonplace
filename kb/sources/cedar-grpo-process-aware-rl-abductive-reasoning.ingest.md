@@ -4,9 +4,9 @@ source: https://arxiv.org/abs/2608.14791
 captured: "2026-08-20"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: 6f30428a6689e6f56ee3aff79fad4f3d2b4141e4209ffb2a1a79fdd945269e43
+snapshot_sha256: bda3b2fbd652ba45beda9470f58da2e0fe571112c5b6d64ebcddf4298400f409
 ingested: "2026-08-20"
-type: ingest-report
+type: types/ingest-report.md
 domains: [reinforcement-learning, abductive-reasoning, llm-evaluation, learning-theory]
 ---
 

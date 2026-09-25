@@ -4,9 +4,9 @@ source: https://pathway.com/research/beyond-transformers-sudoku-bench
 captured: "2026-03-26"
 capture: web-fetch
 genre: practitioner-report
-snapshot_sha256: 7997fd53825d374a29e602acb7cf3dbd3693662cc9e241584a24012f0fc1c61f
+snapshot_sha256: f8382eddda7d3ca7775cb58c206bbb4ee75d0ad8b6ae42d2f9b8d6c426c51b35
 ingested: "2026-03-26"
-type: ingest-report
+type: types/ingest-report.md
 domains: [ml-architecture, constraint-satisfaction, reasoning-benchmarks]
 ---
 

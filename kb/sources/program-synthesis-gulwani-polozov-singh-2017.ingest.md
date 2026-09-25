@@ -5,10 +5,10 @@ captured: "2026-08-31"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: a88abf37379134cd5a195ae49fb84166710cff8db54e527520fd3316b97bc2ed
+snapshot_sha256: 6606aefe23eace5f97867ed4a7f358e4f4a9d6d6cdcfb9e655250496f94870bc
 ingested: "2026-08-31"
 occasion: "bound the coherent meaning of a universal software factory by showing that synthesis consumes user intent through specifications/examples and may require interaction to disambiguate, without claiming this source proves an impossibility theorem."
-type: ingest-report
+type: types/ingest-report.md
 domains: [program-synthesis, specification, human-computer-interaction]
 ---
 

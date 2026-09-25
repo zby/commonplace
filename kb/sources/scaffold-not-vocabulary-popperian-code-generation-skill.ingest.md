@@ -1,5 +1,5 @@
 ---
-type: ingest-report
+type: types/ingest-report.md
 description: "A controlled coding-skill study finds no separable benefit from added Popperian procedure in two settings; its controls bound prompt claims without testing persistent theory refinement."
 source: https://arxiv.org/abs/2606.06454
 captured: "2026-09-19"
@@ -7,7 +7,7 @@ ingested: "2026-09-19"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: 5d366efae156229720ea079392aedcc9e0598d4462506927b4583e8314cb04c4
+snapshot_sha256: 48cfccf6ecd1f3935caab4fe9bf2cd36aa37a205d9e66e20127e0a9a9e8490b9
 occasion: "Reconsider the learning paradigm from Popperian epistemology: compare the epistemic process, computational realization, changeable representations and tests, fixed-model learning, reflection, and supporting evidence."
 domains: [learning-theory, prompt-evaluation, code-generation, oracle-quality]
 learning_claims: true

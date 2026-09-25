@@ -5,9 +5,9 @@ captured: "2026-09-04"
 capture: trafilatura
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: 2a17e0e48f1de343b84fbd5ae52b57c719c7d039c3a4bbf2a8008b15b5c7f895
+snapshot_sha256: 44e5bd5ae933cd35e777a11e51a4b22a7cad1d0272e5ee2b17d636ebac9f8828
 ingested: "2026-09-04"
-type: ingest-report
+type: types/ingest-report.md
 domains: [agent-orchestration, deploy-time-learning, trace-learning, long-horizon-agents]
 ---
 

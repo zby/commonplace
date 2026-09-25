@@ -4,9 +4,9 @@ source: https://arxiv.org/abs/2608.02645
 captured: "2026-08-22"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: f8b5773d7792fdabceb19c89083d4909fe8b61fa9189a4a5562cf596859b01cb
+snapshot_sha256: bbeeb63bd84ffffecd1d5c6e0032e444f77d1cd42551c407d64b16f3faa1f98c
 ingested: "2026-08-22"
-type: ingest-report
+type: types/ingest-report.md
 domains: [agent-reliability, tool-use, distributed-systems, runtime-verification]
 ---
 

@@ -4,9 +4,9 @@ source: https://arxiv.org/pdf/2602.16666
 captured: "2026-02-25"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: fbe5a679ba6aef918bbbb81f7f3169b836cb4eac95e51b687136daf000e23190
+snapshot_sha256: 00ca9c51286009b1300b2813bfe7095f8663630bfbe92d881ae286629d3aa9f1
 ingested: "2026-03-09"
-type: ingest-report
+type: types/ingest-report.md
 domains: [agent-reliability, evaluation-methodology, safety-engineering, deployment-governance]
 ---
 

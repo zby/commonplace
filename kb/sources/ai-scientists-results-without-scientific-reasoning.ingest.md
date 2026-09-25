@@ -1,5 +1,5 @@
 ---
-type: ingest-report
+type: types/ingest-report.md
 description: "Corral separates scientific task success from visible hypothesis testing and revision, but its minimal scaffolds and graph annotations limit claims about scientific learning."
 source: https://arxiv.org/abs/2604.18805
 captured: "2026-09-19"
@@ -7,7 +7,7 @@ ingested: "2026-09-19"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: 6ffcbbd62da5bacfe17d7de5dd449050d9330297dbcffa6e6b7e4a4ac9daa2d5
+snapshot_sha256: bbda3936457faf1d008d11f74276163370269870ebb7461b9d6fb3ccd4574735
 occasion: "Assess 2026 computational implementations and evaluations of conjecture, criticism, revision, and persistence for a learning paradigm grounded directly in Popper; distinguish epistemic commitments, implementation choices, and demonstrated effects."
 domains: [scientific-agents, evaluation, theory-refinement]
 learning_claims: true

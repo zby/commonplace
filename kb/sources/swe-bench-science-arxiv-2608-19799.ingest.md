@@ -4,9 +4,9 @@ source: https://arxiv.org/pdf/2608.19799
 captured: "2026-08-25"
 capture: pdftotext
 genre: scientific-paper
-snapshot_sha256: cf1e4d378ef7afdd84d5226a5faf2d00cbe4ec8b6b80f32ae708dffd3fcc1f9d
+snapshot_sha256: 444db8357dce9eb23ff93fc8ee62bb99e5946fb0d2989947914a82bc0cb788d9
 ingested: "2026-08-25"
-type: ingest-report
+type: types/ingest-report.md
 domains: [coding-agents, evaluation, scientific-software, context-engineering]
 ---
 

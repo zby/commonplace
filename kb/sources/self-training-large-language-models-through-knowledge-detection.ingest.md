@@ -5,9 +5,9 @@ source: https://aclanthology.org/2024.findings-emnlp.883.pdf
 captured: "2026-04-20"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: 85df9305413ddda669bd2ea2f2b27d58bad3bee8f69ebcec555c6bdbeceb7d3c
+snapshot_sha256: 918e06e7cf9068daa8797a79e9b241deb68c21071f10c536c589f3a5b99d2d65
 ingested: "2026-04-20"
-type: ingest-report
+type: types/ingest-report.md
 domains: [learning-theory, continual-learning, oracle-theory, trace-learning]
 ---
 

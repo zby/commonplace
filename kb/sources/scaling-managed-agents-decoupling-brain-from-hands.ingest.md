@@ -4,9 +4,9 @@ source: https://www.anthropic.com/engineering/managed-agents
 captured: "2026-04-11"
 capture: web-fetch
 genre: practitioner-report
-snapshot_sha256: 268510352819ca5483809df6bd29962a5ca8c6a1cabb48a572a8a7bba6e7340a
+snapshot_sha256: 4d46625f45f799ebbc24a6e759388e2b97679dfa14acf4d8ff4f7a45969d673d
 ingested: "2026-04-11"
-type: ingest-report
+type: types/ingest-report.md
 domains: [agent-runtime, context-engineering, orchestration, isolation]
 ---
 

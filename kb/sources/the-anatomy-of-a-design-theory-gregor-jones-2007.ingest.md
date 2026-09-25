@@ -4,9 +4,9 @@ source: https://openresearch-repository.anu.edu.au/bitstreams/cb19f834-e47c-44dc
 captured: "2026-07-14"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: 17980ab77657fed0555a69bf33ab45c2cf86d3066bf2a4f9a3dfba61ed00a20a
+snapshot_sha256: d66ae45be21aff8cbfa868d3550b9bad0569857304a5c98b2c2f974f3851ea9f
 ingested: "2026-07-14"
-type: ingest-report
+type: types/ingest-report.md
 domains: [design-theory, theory-structure, artifact-design, implementation]
 ---
 

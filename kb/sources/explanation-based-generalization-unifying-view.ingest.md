@@ -6,10 +6,10 @@ capture: pdftotext
 capture_scope: full-source
 capture_url: "https://citeseerx.ist.psu.edu/document?doi=44c47c8c86c70aabe8040dce89b8de042f868f19&repid=rep1&type=pdf"
 genre: scientific-paper
-snapshot_sha256: 052f1934da77de72b044e0e6dc8bc14688c19c9ad8b5aab23af398f3ff7505db
+snapshot_sha256: 3ed140a5aee293774754e1677fe68b356a09685be680c63fa291dfb17e29adc3
 ingested: "2026-08-31"
 occasion: "Determine what this source establishes about learning from an explicit but fallible theory: how theory guides inference, search, or generalization; how empirical success or failure bears on the theory; how defects are localized and repaired; and whether the revised theory changes later learning. Distinguish a theory of an external problem domain from a reflective theory of the learner's own software organization. This is source ingestion, not a request to confirm the proposed synthesis."
-type: ingest-report
+type: types/ingest-report.md
 domains: [learning-theory, explanation-based-learning, concept-generalization]
 ---
 

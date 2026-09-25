@@ -5,10 +5,10 @@ captured: "2026-08-31"
 capture: pdftotext
 capture_scope: full-source
 genre: design-proposal
-snapshot_sha256: bce4f5a0382dea9f7d6bb59cd9c0d2d90816bb71d910e9492cc886f636bfb4ba
+snapshot_sha256: 9c9456c6461a058028741a7353c47d671a5c93809fd4b5c12f70d218159183b7
 ingested: "2026-08-31"
 occasion: "reconstruct Greenfield's mature ontology—schema, viewpoints/views, concerns, work-product types/instances, task/workstream templates and instances, assets, factory developer versus development team, product state and lifecycle—and preserve the boundary that human factory developers supply family-specific knowledge"
-type: ingest-report
+type: types/ingest-report.md
 domains: [software-factories, metamodeling, domain-specific-knowledge, development-process]
 ---
 

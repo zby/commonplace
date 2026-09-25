@@ -1,6 +1,6 @@
 ---
 description: "A world-models editorial separates information, causal prediction and agency, and points to representation revision without establishing a unified architecture."
-type: ingest-report
+type: types/ingest-report.md
 source: https://static1.squarespace.com/static/5f29a430a2b6a34680879cc0/t/6a06392b70af613cf631f5d0/1778792747560/rsta.2024.0533.pdf
 captured: "2026-09-24"
 ingested: "2026-09-25"
@@ -8,7 +8,7 @@ capture: pdftotext
 capture_scope: full-source
 doi: "10.1098/rsta.2024.0533"
 genre: conceptual-essay
-snapshot_sha256: a3a34df6db89d9f8e103b1b7525d37f916280d6cdb1c4f849c54c47c459058ca
+snapshot_sha256: 04e3669b02fda9e6cad6816a53073320551816b71de2efefbb549b3e91caca57
 domains: [world-models, learning-theory, agent-architecture, collective-intelligence]
 learning_claims: true
 ---

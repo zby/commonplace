@@ -4,12 +4,12 @@ source: https://x.com/aaron_defazio/status/2084779496549548323
 captured: "2026-08-18T07:36:59.980126+00:00"
 capture: xdk
 genre: conceptual-essay
-snapshot_sha256: 384e69187625637c4d42c0b92dada6cc0ee65d95a026d2676c9f7424c8747b99
+snapshot_sha256: 5d5fc89cd551026c53c1b13efa69c5b32dfb3f1854b1c2c6a3e60bd86cc6fa7d
 status_id: 2084779496549548323
 conversation_id: 2084779496549548323
 post_count: 1
 ingested: "2026-08-18"
-type: ingest-report
+type: types/ingest-report.md
 domains: [scientific-discovery, auto-research, automation-boundary]
 ---
 

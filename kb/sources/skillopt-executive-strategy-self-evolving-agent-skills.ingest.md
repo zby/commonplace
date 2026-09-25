@@ -4,9 +4,9 @@ source: https://arxiv.org/html/2605.23904v2
 captured: "2026-05-28"
 capture: web-fetch
 genre: scientific-paper
-snapshot_sha256: 7122072f5010e99912124a41a8c8109dd10bf2c69c8ae5602d0b150a36506d69
+snapshot_sha256: 3b94b0ac73b247ddc6bef9c685e9e7da3f204c477f8efb6bd841c1313fe3de35
 ingested: "2026-05-28"
-type: ingest-report
+type: types/ingest-report.md
 domains: [skill-optimization, deploy-time-learning, trace-learning, readable-artifacts]
 ---
 

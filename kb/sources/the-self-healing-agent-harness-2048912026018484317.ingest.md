@@ -4,12 +4,12 @@ source: https://x.com/intuitiveml/status/2048912026018484317
 captured: "2026-04-29T17:21:59.182403+00:00"
 capture: xdk
 genre: practitioner-report
-snapshot_sha256: 5335a437847de3e2c3eef6b16b80794e2064356ff165079e9cfed6ce837ec243
+snapshot_sha256: dffb4c774942dc2a0e6e92efa39e89d21c64c3205144fd0ce48041aaf800d591
 status_id: 2048912026018484317
 conversation_id: 2048912026018484317
 post_count: 7
 ingested: "2026-04-29"
-type: ingest-report
+type: types/ingest-report.md
 domains: [agent-evaluation, harness-engineering, deployment-reliability, oracle-theory]
 ---
 

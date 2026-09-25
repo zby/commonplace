@@ -4,9 +4,9 @@ source: https://www.erlang.org/doc/system/release_handling.html
 captured: "2026-08-19"
 capture: web-fetch
 genre: technical-documentation
-snapshot_sha256: 78a3a7a122dffe5170eaa48b96f9e59f6ae20bcad7f5f9b151ca9e65928d7045
+snapshot_sha256: 3b81192a9e44981d72acc5f570a25dcc3b187caaf1d40b60186f661069756935
 ingested: "2026-08-19"
-type: ingest-report
+type: types/ingest-report.md
 domains: [erlang-otp, release-engineering, deployment-governance]
 ---
 

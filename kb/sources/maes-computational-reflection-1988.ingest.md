@@ -4,9 +4,9 @@ source: https://maxapress.com/data/article/ker/preview/pdf/S0269888900004355.pdf
 captured: "2026-07-14"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: 6f339c15240aa39ec97984d28a65d14f18f45ee5b4704ebf6db2b0dc72bf2c70
+snapshot_sha256: bfe6b75490ed0a1e075b1048a10613750e8a66a2e9b2028c176e0d6a359a3cc0
 ingested: "2026-07-14"
-type: ingest-report
+type: types/ingest-report.md
 domains: [computational-reflection, self-representation, meta-level-architecture]
 ---
 

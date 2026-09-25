@@ -5,11 +5,11 @@ captured: "2026-09-17"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: a8ca4d17ac3c7b72e225d8e5d99fa6a387c3877ad67027f205c7ff7f11bd8f63
+snapshot_sha256: 4e3fa73565c29265b5eb7862b1ca736a0cb09bbb554906e46c9947d5a7d80d12
 ingested: "2026-09-17"
 occasion: "What the natural-language reflection retains and whether it functions as a theory under the workshop's definition; what the comparison with scalar-reward search established."
 learning_claims: true
-type: ingest-report
+type: types/ingest-report.md
 domains: [prompt-optimization, learning-theory, deploy-time-learning]
 ---
 

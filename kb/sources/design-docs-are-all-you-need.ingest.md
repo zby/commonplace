@@ -5,9 +5,9 @@ captured: "2026-09-24"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: fc8b97917ca2506caf61eb7273621ac68ecf42dc3a55f68c4168054955dcc4ef
+snapshot_sha256: f7130abdff8b52a9bb5c8e16955cdb6e74de59a9afd688c4f1ed185f11cce067
 ingested: "2026-09-25"
-type: ingest-report
+type: types/ingest-report.md
 domains: [specification-strategy, code-generation, context-engineering]
 learning_claims: true
 ---

@@ -5,10 +5,10 @@ captured: "2026-08-31"
 capture: browser-save+trafilatura
 capture_scope: full-source
 genre: tool-announcement
-snapshot_sha256: be8e09c4a7d9cbb1158a879a13171105f3eaaf820453d380cca3580816282281
+snapshot_sha256: 5adc8ede5ce421822604c26ba043f4de7fa24ad21f0a2f8ba6dca1023747c968
 ingested: "2026-08-31"
 occasion: "Split a legacy source review that combined source identity and analysis into the required snapshot and ingest roles."
-type: ingest-report
+type: types/ingest-report.md
 domains: [world-models, representation-learning, self-supervised-learning]
 ---
 

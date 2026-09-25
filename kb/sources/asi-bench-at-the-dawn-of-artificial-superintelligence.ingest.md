@@ -5,9 +5,9 @@ captured: "2026-08-31"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: b6e0b9d65c36b5026a5e60cd0a293fe5c114be888ea351679f4d17cff244c1db
+snapshot_sha256: abf998a2c3341e93cd2255e70f957a25ab53be57d555103674647a3286740aa6
 ingested: "2026-08-31"
-type: ingest-report
+type: types/ingest-report.md
 domains: [agent-evaluation, scientific-agents, instruction-design, benchmark-methodology]
 ---
 

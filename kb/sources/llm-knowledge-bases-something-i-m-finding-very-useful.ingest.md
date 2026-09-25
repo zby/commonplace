@@ -4,12 +4,12 @@ source: https://x.com/karpathy/status/2039805659525644595
 captured: "2026-04-03T15:30:57.200477+00:00"
 capture: xdk
 genre: practitioner-report
-snapshot_sha256: f5e4f93d865dc9c0e4567d5e1d3163305b4b4414d3d544936b03959dc44b486e
+snapshot_sha256: 929df4a5d951ab469f5e014e8e9bc8993b05b2179345bdf4b7bc7002a4d3a05d
 status_id: 2039805659525644595
 conversation_id: 2039805659525644595
 post_count: 1
 ingested: "2026-04-03"
-type: ingest-report
+type: types/ingest-report.md
 domains: [knowledge-management, context-engineering, file-based-systems, agentic-workflows]
 ---
 

@@ -4,12 +4,12 @@ source: https://x.com/posthog/status/2090858894419693598
 captured: "2026-08-22T07:54:34.187816+00:00"
 capture: xdk
 genre: practitioner-report
-snapshot_sha256: 49a79ade1d44f07e1e813247459a4acf47f68403edc9d864bf3bdab3c005bbad
+snapshot_sha256: 229a8d157c7b30fe2147f40bc46eed4de7e2932e29effcb55e83a9ea7035a91b
 status_id: 2090858894419693598
 conversation_id: 2090858894419693598
 post_count: 1
 ingested: "2026-08-22"
-type: ingest-report
+type: types/ingest-report.md
 domains: [context-engineering, agent-memory, data-governance, lineage]
 ---
 

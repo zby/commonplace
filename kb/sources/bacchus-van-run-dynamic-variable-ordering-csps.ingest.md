@@ -5,10 +5,10 @@ captured: "2026-09-24"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: 77e5841f53925a004284a7677f9bd9030d065c107da60a067a20103a5eee2554
+snapshot_sha256: 09870949502994c12d5c1d0f4eb6d186075ce2bb623cc52849c10c4ca722266e
 ingested: "2026-09-24"
 occasion: "What does constraint-satisfaction search say about the order in which interdependent decisions should be committed, and when that ordering rule stops helping? (For a KB note on solving low-degree-of-freedom subproblems first.)"
-type: ingest-report
+type: types/ingest-report.md
 domains: [computational-model, search-control, constraint-satisfaction]
 ---
 

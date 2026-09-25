@@ -4,9 +4,9 @@ source: https://arxiv.org/abs/2202.05262
 captured: "2026-07-26"
 capture: web-fetch
 genre: scientific-paper
-snapshot_sha256: aaa38177069ba5e0d44bba46dad5dc0de84bc9fab7f38cf2f2310e4ea6775716
+snapshot_sha256: 1567e3a99679e5cea2679ea920b47d4809bc6ef43d412b7cbf0453073c9b7860
 ingested: "2026-07-26"
-type: ingest-report
+type: types/ingest-report.md
 domains: [learning-theory, artifact-analysis, self-improving-systems, interpretability]
 ---
 

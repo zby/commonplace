@@ -4,9 +4,9 @@ source: https://cse.hkust.edu.hk/~charlesz/comp610/paper/p147-maes.pdf
 captured: "2026-07-14"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: d35f0b433f4f0e3ae88d0f5f5a93180de78a31a3dcf6bc9345a700aa618b3dd7
+snapshot_sha256: ecc3085b24304fddc5ca1f127091f5f6fdacb561da5f6a6793fe72b20e23ed54
 ingested: "2026-07-14"
-type: ingest-report
+type: types/ingest-report.md
 domains: [computational-reflection, object-oriented-reflection, meta-objects]
 ---
 

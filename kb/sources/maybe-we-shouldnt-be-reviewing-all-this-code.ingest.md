@@ -5,9 +5,9 @@ captured: "2026-09-03"
 capture: trafilatura
 capture_scope: full-source
 genre: conceptual-essay
-snapshot_sha256: 8db6286d63f0994a6376918f785745037bbd85e2b9c72b3ee474edae8fc188f6
+snapshot_sha256: d128b71543ab75142b644357a415cd892ae63158b23e1455e589a55c56ea7fec
 ingested: "2026-09-03"
-type: ingest-report
+type: types/ingest-report.md
 domains: [agentic-coding, code-review, human-judgment, software-development]
 ---
 

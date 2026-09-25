@@ -4,12 +4,12 @@ source: https://x.com/Vtrivedy10/status/2031408954517971368
 captured: "2026-03-10T18:10:51.011045+00:00"
 capture: xdk
 genre: conceptual-essay
-snapshot_sha256: de0abb256c0aae5a6d8351dff897d45c3d40d17e63f4a77fbae3063d637e64bc
+snapshot_sha256: 61599ecd5d033992c54666f42323bfdbc277b0e29d0dfccb0da0a90875671edc
 status_id: 2031408954517971368
 conversation_id: 2031408954517971368
 post_count: 2
 ingested: "2026-03-12"
-type: ingest-report
+type: types/ingest-report.md
 domains: [agent-systems, harness-engineering, context-engineering, model-harness-coevolution]
 ---
 

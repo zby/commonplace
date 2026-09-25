@@ -4,9 +4,9 @@ source: https://github.com/RL-MIND/DFA-MoE
 captured: "2026-08-21"
 capture: web-fetch
 genre: code-repository
-snapshot_sha256: e416cf4a1701256f68ec2153f857a56317cdc6afdded2f9f22387d55e357fba4
+snapshot_sha256: cc8d3d9f850fbdcbdfc3ecabcc4af7b8ba036bbcbfa05fa7e87de9038c0fc360
 ingested: "2026-08-21"
-type: ingest-report
+type: types/ingest-report.md
 domains: [continual-learning, vision-language-models, model-editing, evaluation]
 ---
 

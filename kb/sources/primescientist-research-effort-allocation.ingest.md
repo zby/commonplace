@@ -5,9 +5,9 @@ captured: "2026-09-24"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: c37ebc4b0cc82644e80791cd077da69027c10f9ca82c623e7c3d3133d3c62eb7
+snapshot_sha256: 0c775fc7d95f4c2d30fdcc50c760a4440ed1e112983c837f94ca17ac6d699d19
 ingested: "2026-09-25"
-type: ingest-report
+type: types/ingest-report.md
 domains: [autonomous-research, search-control, resource-allocation, learning-theory]
 learning_claims: true
 ---

@@ -4,9 +4,9 @@ source: https://arxiv.org/abs/cs/0309048
 captured: "2026-07-14"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: 4f91af7b7cacefae176b452c54981f8d2a980e6b32d1ecc0db17a2e4df779c88
+snapshot_sha256: df6b68e5da8b6d04404ad8bf5ba694617bb43b22b8fdbf061acc29cedacbc345
 ingested: "2026-07-14"
-type: ingest-report
+type: types/ingest-report.md
 domains: [self-modification, reflection, verification, oracle-strength]
 ---
 

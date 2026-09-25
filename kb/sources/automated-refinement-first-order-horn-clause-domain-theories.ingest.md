@@ -8,7 +8,7 @@ genre: scientific-paper
 snapshot_sha256: 97e363997cf37e7fe662022c038b3236ac5155a5cb7e6fbe9988748015f5603e
 ingested: "2026-09-08"
 occasion: "What objects, operations, evaluation criteria, and representation choices define theory refinement? Which are essential to the concept, which belong to particular algorithms, and how does its application to program debugging compare with refinement of theories used to guide software modification?"
-type: ingest-report
+type: types/ingest-report.md
 domains: [theory-refinement, inductive-logic-programming, program-debugging, knowledge-representation]
 ---
 

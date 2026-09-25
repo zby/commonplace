@@ -5,9 +5,9 @@ captured: "2026-09-24"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: db579f816418437c8f49c4a13258628e5cdb10258be6657e99edf2f7b4c9b1e1
+snapshot_sha256: 8702b77968491be7ed2b3fd01487a4f48eb19c4106ad5a8deb01a38c752ba5a6
 ingested: "2026-09-25"
-type: ingest-report
+type: types/ingest-report.md
 domains: [agent-memory, runtime-portability, checkpointing, agent-identity]
 ---
 

@@ -6,9 +6,9 @@ capture: pdftotext
 capture_scope: full-source
 doi: "10.1038/s42256-026-01217-9"
 genre: scientific-paper
-snapshot_sha256: adb4e713897c0d7a052a1a780d970b2087d21c10fd56864507e649e590b488cf
+snapshot_sha256: 8a64bd13d0353016b2bcbcfe3901328f629132bb87bfe3b39918b72aae95a525
 ingested: "2026-09-25"
-type: ingest-report
+type: types/ingest-report.md
 domains: [llm-reliability, confidence-calibration, context-engineering]
 learning_claims: true
 ---

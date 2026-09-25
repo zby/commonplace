@@ -1,13 +1,13 @@
 ---
 description: "ABA audits benchmark prompts, environments, and graders; sampled confirmation supports defect discovery, while hidden acceptance conditions and score sensitivity inform KB evaluation design."
-type: ingest-report
+type: types/ingest-report.md
 source: https://arxiv.org/abs/2605.26079
 captured: "2026-09-19"
 ingested: "2026-09-19"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: 53e44baf5ce593f41afcc8d93e2bf93632f1f202790025ebb51f941b58817395
+snapshot_sha256: bdfd01c6656429405c9f70c6701be42ea8cc9f557f5c3b9cbafc8653ceea1d08
 domains: [evaluation, benchmark-auditing, agentic-systems]
 ---
 

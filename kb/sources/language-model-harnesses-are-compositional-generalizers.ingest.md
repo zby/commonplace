@@ -4,10 +4,10 @@ source: https://alexzhang13.github.io/blog/2026/harness/
 captured: "2026-07-21"
 capture: web-fetch
 genre: practitioner-report
-snapshot_sha256: 006bbb109eb073bf70f502324202f8997dc391259e8835ea3e2ed3dd59397c31
+snapshot_sha256: 78a80c61767667b202ba35a36445de0ce4b61ee93cebaf273fe557235ec880c5
 capture_note: Main argumentative text captured; interactive plots, image assets, and the appendix's detailed metric table were omitted.
 ingested: "2026-07-21"
-type: ingest-report
+type: types/ingest-report.md
 domains: [harness-design, recursive-language-models, context-engineering, compositional-generalization]
 ---
 

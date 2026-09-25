@@ -4,12 +4,12 @@ source: https://x.com/mrinal/status/2081823472016335059
 captured: "2026-07-28T12:24:20.430766+00:00"
 capture: xdk
 genre: practitioner-report
-snapshot_sha256: 58b36098068c60a58a4055e0ba6ed137a42e470434994576c1b5f56f1b350271
+snapshot_sha256: 2c330a5951c31769b1eef29b1617bb45e60bb4be787d6b5144d6906c6a85afb7
 status_id: 2081823472016335059
 conversation_id: 2081823472016335059
 post_count: 5
 ingested: "2026-07-28"
-type: ingest-report
+type: types/ingest-report.md
 domains: [self-improving-systems, agent-memory, evaluation, software-engineering]
 ---
 

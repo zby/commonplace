@@ -5,9 +5,9 @@ captured: "2026-08-28"
 capture: pdftotext
 capture_scope: full-source
 genre: official-statement
-snapshot_sha256: 6715a1e30bd8a57c780821a6c45cbcc341e447f0c770aeef8e92836849a1f56e
+snapshot_sha256: cd8efdb2a46b50fb92ab618e1ac39544909e1de662adae399a078f4811f670be
 ingested: "2026-08-28"
-type: ingest-report
+type: types/ingest-report.md
 domains: [delegation, decentralized-command, context-engineering]
 ---
 

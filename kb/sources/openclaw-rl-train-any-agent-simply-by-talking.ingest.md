@@ -4,9 +4,9 @@ source: https://arxiv.org/html/2603.10165v1
 captured: "2026-03-14"
 capture: web-fetch
 genre: scientific-paper
-snapshot_sha256: 8ae0d2e3f351f10597aa2640a467bb82d60e3e3521eddc0ea76ff1a2cde6e2a4
+snapshot_sha256: 1a966f721eb4242f034f4faef772abdd0237092457396e4457f8435b7eeb61af
 ingested: "2026-03-14"
-type: ingest-report
+type: types/ingest-report.md
 domains: [reinforcement-learning, continuous-learning, agent-training, personalization]
 ---
 

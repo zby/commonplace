@@ -4,9 +4,9 @@ source: https://arxiv.org/html/2512.04307v1
 captured: "2026-03-26"
 capture: web-fetch
 genre: scientific-paper
-snapshot_sha256: f32b87780705a2fc0b733b14831763e0ac387e1cfd952b3d30587b581b91edfb
+snapshot_sha256: 0eb221540513993cd4d47af8cde126489ade937c025aa328d3d5db2dc29c3522
 ingested: "2026-03-26"
-type: ingest-report
+type: types/ingest-report.md
 domains: [context-degradation, agent-systems, web-agents, long-context-evaluation]
 ---
 

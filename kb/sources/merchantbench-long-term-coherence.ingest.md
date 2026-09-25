@@ -5,9 +5,9 @@ captured: "2026-09-24"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: 30b5114c663c2add4ecddd0f1b993482eadedc0f7c669e07bdd10b4bc878d39f
+snapshot_sha256: 4a89ca5b102f76d5696fb3853a01de53e70ec5232880f891fb3979147184ee7e
 ingested: "2026-09-24"
-type: ingest-report
+type: types/ingest-report.md
 domains: [agent-evaluation, agent-memory, long-horizon-agents, deploy-time-learning]
 learning_claims: true
 ---

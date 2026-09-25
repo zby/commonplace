@@ -4,9 +4,9 @@ source: https://www.lesswrong.com/posts/frizRHnA6AZpJSDqw/lab-leaks-black-holes-
 captured: "2026-07-12"
 capture: web-fetch
 genre: official-statement
-snapshot_sha256: f50b255ff8dc12646ff62cf7074d241463548763f7cfa77537cd989da98c973f
+snapshot_sha256: 970921e9f1c065a204e5832c3f4b0dd5a402cc676dc4759eeb984ee62358bd65
 ingested: "2026-08-24"
-type: ingest-report
+type: types/ingest-report.md
 domains: [epistemic-investigation, knowledge-bases, evaluation, interoperability]
 ---
 

@@ -4,9 +4,9 @@ source: https://static1.squarespace.com/static/644321e78cd2dd37613af33e/t/669487
 captured: "2026-07-22"
 capture: user-supplied-pdf-to-markdown
 genre: scientific-paper
-snapshot_sha256: b8fdfeac0e65d5f02accc3b6619e3cdddcf9b861303d57722e2ee7ad1295ee7a
+snapshot_sha256: 1ea884d6fd3d03cc575005bf6ad6630a0304f655ec1935b4c32f09cdbaa398c3
 ingested: "2026-07-22"
-type: ingest-report
+type: types/ingest-report.md
 domains: [automation, human-oversight, deskilling, verification-boundary]
 ---
 

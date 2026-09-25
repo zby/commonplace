@@ -4,9 +4,9 @@ source: https://github.com/Arrmlet/tracecraft
 captured: "2026-04-04"
 capture: gh-cli
 genre: tool-announcement
-snapshot_sha256: c96157dd40fe70aa148568e4a7bee318bbcd935e91b6b476550fb9cc02abff48
+snapshot_sha256: d63ae8c1e0e03564a964ed93d12aa48d40852dba61d23154ca854dafadd65337
 ingested: "2026-04-04"
-type: ingest-report
+type: types/ingest-report.md
 domains: [multi-agent-coordination, agent-infrastructure, distributed-systems]
 ---
 

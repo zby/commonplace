@@ -4,9 +4,9 @@ source: https://uploads.teachablecdn.com/attachments/aYpoH9SdSDO0k3KYVRRj_NA01Mo
 captured: "2026-07-22"
 capture: user-supplied-pdf-to-markdown
 genre: scientific-paper
-snapshot_sha256: 9307d81a421620ef7fc3c4bdbf1fc06b5c3385775ba4110f837fa5f238d31f21
+snapshot_sha256: 77a551ad8ac15bf2c4a33ef0fd2c57bf226d7e65ad6d0ddce76aba4062c103b4
 ingested: "2026-07-22"
-type: ingest-report
+type: types/ingest-report.md
 domains: [discovery, improvement-cycles, scientific-method]
 ---
 

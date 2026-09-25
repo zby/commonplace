@@ -5,9 +5,9 @@ captured: "2026-09-24"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: 4c9b3a9e98d6309a1ba6e0bd5455d5b281498ffe23567ce17b3cf6abda8daba5
+snapshot_sha256: 9d716c573c4bbe22a21b18604e2e03e23d0b1185e7d7bef977efe75b9a621db9
 ingested: "2026-09-24"
-type: ingest-report
+type: types/ingest-report.md
 domains: [agent-evaluation, scientific-discovery, learning-theory, context-engineering]
 learning_claims: true
 ---

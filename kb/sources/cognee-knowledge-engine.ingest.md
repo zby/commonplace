@@ -4,9 +4,9 @@ source: https://github.com/topoteretes/cognee
 captured: "2026-03-05"
 capture: manual
 genre: tool-announcement
-snapshot_sha256: 66ef83ebf80c821c334097a830e9b17bc633715599ef329e475c85d13f87abef
+snapshot_sha256: 2b0ecfbda0aed76b2b70b0c99d85e56ec7b9e59b524d7139c26e1ece25a3b340
 ingested: "2026-03-09"
-type: ingest-report
+type: types/ingest-report.md
 domains: [agent-memory, knowledge-graphs, pipeline-architecture, LLM-extraction]
 ---
 

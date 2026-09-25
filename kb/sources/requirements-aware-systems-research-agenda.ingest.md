@@ -6,10 +6,10 @@ capture: pdftotext
 capture_scope: full-source
 capture_url: https://publications.aston.ac.uk/id/eprint/19491/1/Requirements_aware_systems.pdf
 genre: scientific-paper
-snapshot_sha256: d4fbd59ac61ac0f32622cdcd3474eda62e9f2f9e527205c6868797db870b1ab4
+snapshot_sha256: 4d1100c02e2b5e0fd50761b4edac63d77c05c8534f7163beef88463b25d0f2a3
 ingested: "2026-08-30"
 occasion: "Determine what this source establishes about runtime representations of a software system's own structure, behavior, requirements, goals, or architecture; how those representations are causally connected to adaptation; what remains designer-supplied or fixed; and what evidence supports the claims. This is source ingestion for positioning theory-mediated system learning, not a request to confirm that the source is its predecessor."
-type: ingest-report
+type: types/ingest-report.md
 domains: [requirements-engineering, self-adaptive-systems, runtime-models, reflection]
 ---
 

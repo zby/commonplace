@@ -6,11 +6,11 @@ capture: pdftotext
 capture_scope: full-source
 doi: "10.21105/joss.06839"
 genre: scientific-paper
-snapshot_sha256: c424cdd79c00bef5add93319ab590a0f27d06e2df7dfff47108cfc5501c42a9a
+snapshot_sha256: 116e98fe0c61d9931fca8d6426d2c187cf7c373bb20efe736d4ca71f03212907
 ingested: "2026-09-17"
 occasion: "The theorist, experimentalist, and runner roles and their shared state; what users supply; what the framework does not invent."
 learning_claims: true
-type: ingest-report
+type: types/ingest-report.md
 domains: [automated-science, closed-loop-research, learning-systems]
 ---
 

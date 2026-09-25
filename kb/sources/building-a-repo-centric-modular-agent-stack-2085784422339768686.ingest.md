@@ -4,12 +4,12 @@ source: https://x.com/yoheinakajima/status/2085784422339768686
 captured: "2026-08-10T10:52:37.315669+00:00"
 capture: xdk
 genre: practitioner-report
-snapshot_sha256: a14b4725d3fb88711b675cad9403d52fa712a69dd62459a165a89cc27833407c
+snapshot_sha256: 15439e423063a0e243eb937ff3cc87b60d0bec376e4d15e6161adcdd9893f34e
 status_id: 2085784422339768686
 conversation_id: 2085784422339768686
 post_count: 6
 ingested: "2026-08-10"
-type: ingest-report
+type: types/ingest-report.md
 domains: [agent-architecture, context-engineering, agent-memory, orchestration]
 ---
 

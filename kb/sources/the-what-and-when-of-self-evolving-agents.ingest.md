@@ -4,9 +4,9 @@ source: https://xinmingtu.cn/blog/2026/self-evolving-agents/
 captured: "2026-07-23"
 capture: web-fetch
 genre: conceptual-essay
-snapshot_sha256: 155765e8b99e346c2b77630c1b4c116a48b8ee679f6370e92046f7fbd5916990
+snapshot_sha256: 3d1f67ff8d98013a9ecb3469b3463630d35751e3213f974ca73c6f0ea30b999b
 ingested: "2026-07-23"
-type: ingest-report
+type: types/ingest-report.md
 domains: [self-evolving-agents, continual-learning, deploy-time-learning, agent-harness]
 ---
 

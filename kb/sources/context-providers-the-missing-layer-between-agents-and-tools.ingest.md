@@ -4,12 +4,12 @@ source: https://x.com/ashpreetbedi/status/2048817143974613089
 captured: "2026-04-27T18:29:20.288781+00:00"
 capture: xdk
 genre: practitioner-report
-snapshot_sha256: d2878adf02c460a7c40e6b128028fd4c34580a30b06d48746e55e99b950e355c
+snapshot_sha256: dd8711d78914d8c36c4cb746bd1906528d5501b4400c4d899922fda3bbf55562
 status_id: 2048817143974613089
 conversation_id: 2048817143974613089
 post_count: 1
 ingested: "2026-04-27"
-type: ingest-report
+type: types/ingest-report.md
 domains: [context-engineering, tool-loop, agent-orchestration]
 ---
 

@@ -5,10 +5,10 @@ captured: "2026-08-31"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: c9abfef09ed264ef1037ea74a214d620ffd12103160a262f8caa1297f7c3e229
+snapshot_sha256: fb274dd864ed734ff4fbcccd8f5a12245277dd7d54f9da04a4e7a0ca6544e6eb
 ingested: "2026-08-31"
 occasion: "Establish the generative-programming lineage needed to distinguish automatic product generation inside a supplied family model from computational construction of family-specific production machinery and retained successor factories."
-type: ingest-report
+type: types/ingest-report.md
 domains: [generative-programming, software-product-lines, system-families, computational-production]
 ---
 

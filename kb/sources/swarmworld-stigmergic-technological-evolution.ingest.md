@@ -5,9 +5,9 @@ captured: "2026-09-24"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: 257b0fe7a53890af314c09e2328c20f3418c380ba52781169d4c1c5951d4d50f
+snapshot_sha256: 8fccaeb521aa5226dd078d9c897fd3111ce2b76166ed49b8b88123b293040071
 ingested: "2026-09-25"
-type: ingest-report
+type: types/ingest-report.md
 domains: [multi-agent-systems, cumulative-learning, evaluation, artifact-provenance]
 learning_claims: true
 ---

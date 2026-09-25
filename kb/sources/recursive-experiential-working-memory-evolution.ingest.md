@@ -5,12 +5,12 @@ captured: "2026-08-26"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: 2119d00efb08101b39c9c82a8f0e1d9d4729ab141e30bd4309102c3c4dd2bca7
+snapshot_sha256: 42d46f99719a253bd249c6ca35b31af190029a8e4511195580deb4f52525ea67
 secondary_sources:
   - role: implementation
     source: https://github.com/Gen-Verse/Recuris/commit/f54c9dabfa370c0da495ddabe8ccbe8702b3eae7
 ingested: "2026-08-26"
-type: ingest-report
+type: types/ingest-report.md
 domains: [agent-memory, context-engineering, long-horizon-agents, self-improving-systems]
 ---
 

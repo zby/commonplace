@@ -1,13 +1,13 @@
 ---
 description: RuleMem uses induced conversational rules for evidence retrieval and answer generation; its ablations support the tested pipeline while exposing limits of likelihood-based rule admission.
-type: ingest-report
+type: types/ingest-report.md
 source: https://arxiv.org/abs/2609.03915
 captured: "2026-09-17"
 ingested: "2026-09-17"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: a0e0c3f63b25957ac684d400c336f1c0212622f1b4fc99afc7ad2d0a7304b06c
+snapshot_sha256: ba084b1306030c51097adfae7ae1ebcf473887d3d3ba01b7587555150da52f1a
 domains: [agent-memory, retrieval, rule-induction, learning-theory]
 learning_claims: true
 ---

@@ -6,8 +6,8 @@ ingested: "2026-09-25"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: 698a7115c2e56636356ccd43daf23cca36feb1715e34d2c2f909ce9003cf570e
-type: ingest-report
+snapshot_sha256: 3290ede5241dcd8d2ae3c1e52c126a5cab202880335cde5703e360661d2b2232
+type: types/ingest-report.md
 domains: [agent-memory, context-engineering, learning-theory, semantic-layers]
 learning_claims: true
 ---

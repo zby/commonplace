@@ -4,12 +4,12 @@ source: https://x.com/neural_avb/status/2035040781074145412
 captured: "2026-03-22T12:45:38.021318+00:00"
 capture: xdk
 genre: practitioner-report
-snapshot_sha256: d30342e524ecb18c74e3b5c2caa477b104fda5b517d1dc69ccebc7222c7f517d
+snapshot_sha256: bcfc99a9d88933d60f603a1419da423fdabd4d665782aa9f6a225d141d609201
 status_id: 2035040781074145412
 conversation_id: 2035040781074145412
 post_count: 7
 ingested: "2026-03-22"
-type: ingest-report
+type: types/ingest-report.md
 domains: [agent-architecture, context-engineering, orchestration]
 ---
 

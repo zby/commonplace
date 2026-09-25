@@ -5,9 +5,9 @@ captured: "2026-09-20"
 capture: trafilatura
 capture_scope: full-source
 genre: news-article
-snapshot_sha256: cce6db0246d36daa6f57ed3216cd13eb7fbca15571043d5132458fe1fc3b92ed
+snapshot_sha256: fd570d979bc7cbe216435cb816ba17369eadf347b517c576cc2c7e92e9b44e8f
 ingested: "2026-09-20"
-type: ingest-report
+type: types/ingest-report.md
 domains: [agent-evaluation, failure-localization, trajectory-selection]
 learning_claims: true
 ---

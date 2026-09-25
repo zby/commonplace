@@ -5,9 +5,9 @@ captured: "2026-08-28"
 capture: trafilatura
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: da3504520ae2997612278839bf9396abebdde40486629e6b37494d26c97a2a5e
+snapshot_sha256: 6726a088e6a9cffab1e60eaf2702d437910963b958ea4efe1dec18e3e85df631
 ingested: "2026-08-28"
-type: ingest-report
+type: types/ingest-report.md
 domains: [methodology-transfer, delegation, organisational-culture]
 ---
 

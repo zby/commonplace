@@ -4,9 +4,9 @@ source: https://arxiv.org/abs/2607.13285
 captured: "2026-07-21"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: fc2d38234124d70005efe42d4a763561d55f72c0103634fe295c7b0e7d4d06ef
+snapshot_sha256: 9ae39f1a134195adff8895dfc7a4f1807fc6e33e8a47f48d0da0eddc8c4d1f90
 ingested: "2026-07-21"
-type: ingest-report
+type: types/ingest-report.md
 domains: [harness-evolution, behavior-localization, progressive-disclosure, reflective-systems]
 ---
 

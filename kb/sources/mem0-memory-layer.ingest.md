@@ -4,9 +4,9 @@ source: https://github.com/mem0ai/mem0
 captured: "2026-03-05"
 capture: manual
 genre: tool-announcement
-snapshot_sha256: c4e2ef0af84ab62b9d00689b5d6ccd6175d8e3d40e90c1e38c8eeb7dcb78095c
+snapshot_sha256: 3b95d39da75f32783e815ca02501afc2dc98b9881d8f4ed6b42dc7c022de0ad9
 ingested: "2026-03-09"
-type: ingest-report
+type: types/ingest-report.md
 domains: [agent-memory, vector-retrieval, LLM-mediated-curation, personalization]
 ---
 

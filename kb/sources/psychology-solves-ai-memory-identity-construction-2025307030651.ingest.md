@@ -4,12 +4,12 @@ source: https://x.com/rryssf_/status/2025307030651871631
 captured: "2026-04-04"
 capture: xdk
 genre: conversation-thread
-snapshot_sha256: 8703432c21f2a9edcb2ec89bb035eb5f77512d40cfd3ed1a0f77ca10554b6e11
+snapshot_sha256: 7c8596bef413cc13d582de9bdad439bd9054369107ab1b1d7aa84ea72e0b67db
 title: Psychology already solved AI memory — identity isn't stored, it's constructed
 author: Robert Youssef (@rryssf_)
 source_url: https://x.com/rryssf_/status/2025307030651871631
 ingested: "2026-04-04"
-type: ingest-report
+type: types/ingest-report.md
 domains: [memory-architecture, learning-theory, context-engineering]
 ---
 

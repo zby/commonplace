@@ -4,9 +4,9 @@ source: https://github.com/getzep/graphiti
 captured: "2026-03-05"
 capture: manual
 genre: design-proposal
-snapshot_sha256: a1e2e06eded965bf5e492573fa79a79a4ababe73639acfd2b6d1694abf5834c8
+snapshot_sha256: 74490b84c5164f1b0e151fd0c57231df3a4f9315107236ded2d6c2f40f4eca65
 ingested: "2026-03-09"
-type: ingest-report
+type: types/ingest-report.md
 domains: [agent-memory, knowledge-graphs, temporal-data, retrieval-systems]
 ---
 

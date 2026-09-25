@@ -4,9 +4,9 @@ source: https://people.csail.mit.edu/teevan/work/publications/papers/chi04.pdf
 captured: "2026-08-26"
 capture: pdftotext
 genre: scientific-paper
-snapshot_sha256: 24936a69187c3244f382df95121915a43940d291e53640995c9fe03c1ee78f00
+snapshot_sha256: f55060fbd9c74257fdceac34ed7d9a26defa5f86b2bbb374b15698cb7f2bbe78
 ingested: "2026-08-26"
-type: ingest-report
+type: types/ingest-report.md
 domains: [information-seeking, navigation, context-engineering]
 ---
 

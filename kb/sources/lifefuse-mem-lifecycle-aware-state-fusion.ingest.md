@@ -1,13 +1,13 @@
 ---
 description: "LifeFuse-Mem tests lifecycle-supervised neural memory against temporary overwrite; its useful evaluation separates initial acquisition from retention under known phase and query boundaries."
-type: ingest-report
+type: types/ingest-report.md
 source: https://arxiv.org/abs/2609.12436
 captured: "2026-09-17"
 ingested: "2026-09-17"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: 6ac737c3a97646871db5ce5e6192acafa2a489fa90076eba5061e7d1e551b844
+snapshot_sha256: 218bd5853bab8bc0df8d975128093ec7c0f0643ed07aa33162557dda17bb1eca
 domains: [agent-memory, memory-evaluation, continual-learning]
 learning_claims: true
 ---

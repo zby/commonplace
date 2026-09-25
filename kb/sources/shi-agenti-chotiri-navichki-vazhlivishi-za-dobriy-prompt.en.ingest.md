@@ -4,14 +4,14 @@ source: https://mezha.ua/articles/shi-agenti-chotiri-navichki-yaki-vazhlivishi-z
 captured: "2026-06-22"
 capture: translation-from-snapshot
 genre: conceptual-essay
-snapshot_sha256: c9faa15c10b37b5e4c14bb0cdd6052d7a16b2294360d174f7208965ad3c17fc1
-original_snapshot_sha256: 104f1e9ebcef71c401ceab67e4ef9ada0240664642584fdb904539b8ef6cd762
+snapshot_sha256: 513cc243e97e2ae5acd8537f6021f6acc9546a8e0b6368a076ae949c72f92a16
+original_snapshot_sha256: 06b9010aebd6b08611ca38c037ce6be57ee9102574aa81e3b1d16341311f3786
 original_language: uk
 language: en
 translator: Codex
 license_note: Source states the article is under Creative Commons BY-NC-SA 4.0.
 ingested: "2026-06-22"
-type: ingest-report
+type: types/ingest-report.md
 domains: [ai-fluency, context-engineering, orchestration, verification]
 ---
 

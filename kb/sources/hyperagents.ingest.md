@@ -4,9 +4,9 @@ source: https://ar5iv.labs.arxiv.org/html/2603.19461
 captured: "2026-08-04"
 capture: web-fetch
 genre: scientific-paper
-snapshot_sha256: 90852849fbdac3d370e3cb78b49c92fb405db029839b631ae37931c2e03582ea
+snapshot_sha256: 711535cbc1fbb83aef299fe544c521498d159a7ee67cc63f9fed51973e039ad2
 ingested: "2026-08-04"
-type: ingest-report
+type: types/ingest-report.md
 domains: [self-improving-systems, reflective-systems, agentic-systems, trace-learning]
 ---
 

@@ -5,10 +5,10 @@ captured: "2026-09-18"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: 6f78be61ad4eb9e4ebce37adc98616805bec21e096c66807948573dee2e85720
+snapshot_sha256: 5207c0abb218e20972dc46c774efde31194ac9a3cc2c55f7d6aca8229c23a141
 ingested: "2026-09-18"
 occasion: "what compression progress contributes to an account of creativity, and how far that account applies to current LLMs."
-type: ingest-report
+type: types/ingest-report.md
 domains: [intrinsic-motivation, creativity, learning-theory]
 learning_claims: true
 ---

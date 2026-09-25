@@ -4,9 +4,9 @@ source: https://ajis.aaisnet.org/index.php/ajis/article/download/439/399/551
 captured: "2026-07-14"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: 3868742579c10e3ef7499f0b41ca5eaa15ec33428d51fd344df4cf8d83963451
+snapshot_sha256: 1b39eebe6c3529caa48b5ffddb163ff1e3b2ac453a43360892594f085ff308b7
 ingested: "2026-07-14"
-type: ingest-report
+type: types/ingest-report.md
 domains: [design-theory, theory-taxonomy, actionable-knowledge, information-systems]
 ---
 

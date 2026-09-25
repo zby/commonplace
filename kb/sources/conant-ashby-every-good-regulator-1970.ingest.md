@@ -4,9 +4,9 @@ source: https://pespmc1.vub.ac.be/books/Conant_Ashby.pdf
 captured: "2026-07-14"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: b78ae2b0f5072b1cdbeaed63d59b7d5e6d2e76e116e8a12077b242cb586ae349
+snapshot_sha256: 8c0639261e4b7598ce0da0ab907e370bb3276cb332a53181adb429ce269bcde5
 ingested: "2026-07-14"
-type: ingest-report
+type: types/ingest-report.md
 domains: [regulation, models, cybernetics]
 ---
 

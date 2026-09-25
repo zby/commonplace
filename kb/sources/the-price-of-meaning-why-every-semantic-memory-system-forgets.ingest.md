@@ -4,9 +4,9 @@ source: https://arxiv.org/html/2603.27116v1
 captured: "2026-04-10"
 capture: html-lynx
 genre: scientific-paper
-snapshot_sha256: d2dc14026a0e1cef9f2d2e41db5318ab99348bd252655b8689c6ea6e0193d3da
+snapshot_sha256: 02a09490d4f9a3c612843d62162f288058b14842092a49d54a59729ea8d0d3ee
 ingested: "2026-04-10"
-type: ingest-report
+type: types/ingest-report.md
 domains: [agent-memory, retrieval-architecture, forgetting, learning-theory]
 ---
 

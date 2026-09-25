@@ -4,9 +4,9 @@ source: https://transformer-circuits.pub/2026/workspace/index.html
 captured: "2026-07-06"
 capture: web-fetch
 genre: scientific-paper
-snapshot_sha256: 8001d3530efbe0102b20afeaafc3cf501cdbf6c05ad0a5ec15f426bf8c42716d
+snapshot_sha256: 915a2fd038a11d369f15f95b61bbe57f6c40f86e582b4025b24aa6cb76299ef6
 ingested: "2026-07-06"
-type: ingest-report
+type: types/ingest-report.md
 domains: [interpretability, activation, learning-theory, observability]
 ---
 

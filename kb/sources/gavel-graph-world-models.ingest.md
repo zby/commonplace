@@ -6,8 +6,8 @@ ingested: "2026-09-25"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: 029f5d08d1ef37f68a65a88c8cb57a7b8143fe03e84cef3b1df873fa0deda9c7
-type: ingest-report
+snapshot_sha256: dfa2916f7043cdc027d93d1a16ab7f227689c29d23c6cceb38b51156f99086ef
+type: types/ingest-report.md
 domains: [llm-reliability, symbolic-planning, adaptive-execution]
 learning_claims: true
 ---

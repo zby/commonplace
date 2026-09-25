@@ -5,9 +5,9 @@ captured: "2026-08-28"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: 8ef3476d97877f00c68c7ff83048f56e48ab6c224c9b7d130c0b7bba6ec9862f
+snapshot_sha256: 8639afd19b29c0d0702d8492df1ee7347229b7ebc5ca3d9cab8a34490d9edac8
 ingested: "2026-08-28"
-type: ingest-report
+type: types/ingest-report.md
 domains: [decision-theory, irreversible-commitment, uncertainty]
 ---
 

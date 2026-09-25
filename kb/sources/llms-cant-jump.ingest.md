@@ -4,9 +4,9 @@ source: https://www.tomzahavy.com/files/llms-cant-jump.pdf
 captured: "2026-08-20"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: 08438491fd4ef2eae1a07ad7a57a62d37dddb3d827be8fbb61dbaa441b78d840
+snapshot_sha256: b89a7ab151faa69dfddae7104972dd1ea28d259bbf3d70f0bc798640549e1996
 ingested: "2026-08-20"
-type: ingest-report
+type: types/ingest-report.md
 domains: [scientific-discovery, learning-theory, world-models, evaluation]
 ---
 

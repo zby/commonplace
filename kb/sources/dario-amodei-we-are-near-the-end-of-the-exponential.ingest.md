@@ -4,9 +4,9 @@ source: https://www.dwarkesh.com/p/dario-amodei-2
 captured: "2026-03-12"
 capture: web-fetch
 genre: conversation-thread
-snapshot_sha256: 9eff85dc0a0439d6cef2d67f56617317ca056643291b783f9af46412081aaf2e
+snapshot_sha256: 518ce74f0f6aba4881fb50b2f8f8160cf130b9ac0909b7744ea5098be00152dd
 ingested: "2026-03-12"
-type: ingest-report
+type: types/ingest-report.md
 domains: [ai-scaling, automation-boundary, oracle-theory, deploy-time-learning]
 ---
 

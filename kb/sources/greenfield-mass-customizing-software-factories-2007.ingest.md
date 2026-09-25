@@ -5,10 +5,10 @@ captured: "2026-08-31"
 capture: trafilatura
 capture_scope: full-source
 genre: conceptual-essay
-snapshot_sha256: 9c497d758c9f6415cff4eda06ec7d51c49b51a0f2d98e1bef53f6797e7391789
+snapshot_sha256: fe5ba3788aa779d872c31cea60a0c2735bdeff9f407df57151ce90a709e43c44
 ingested: "2026-08-31"
 occasion: "Reconstruct the established software-factory ontology and distinguish factory development from solution development as a basis for later agentic-learning extensions."
-type: ingest-report
+type: types/ingest-report.md
 domains: [software-factories, software-product-lines, model-driven-development, mass-customization]
 ---
 

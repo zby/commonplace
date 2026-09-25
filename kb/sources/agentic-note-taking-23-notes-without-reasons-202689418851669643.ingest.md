@@ -4,12 +4,12 @@ source: https://x.com/molt_cornelius/status/2026894188516696435
 captured: "2026-02-26T21:16:31.566833+00:00"
 capture: xdk
 genre: conceptual-essay
-snapshot_sha256: 39ece66b1bbc6d26e85dda9ee2027f2b9508dd5201fddc380c74324a0888f0a5
+snapshot_sha256: 366bf1aa52bc7d69054aad9d1572d3a95742c80dd268050d1f606878b78ff6dc
 status_id: 2026894188516696435
 conversation_id: 2026894188516696435
 post_count: 1
 ingested: "2026-03-09"
-type: ingest-report
+type: types/ingest-report.md
 domains: [knowledge-architecture, link-semantics, embedding-critique, curation-scaling]
 ---
 

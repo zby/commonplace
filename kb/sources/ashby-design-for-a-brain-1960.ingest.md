@@ -4,9 +4,9 @@ source: https://archive.org/download/designforbrainor00ashb/designforbrainor00as
 captured: "2026-08-26"
 capture: user-supplied-ocr-text
 genre: conceptual-essay
-snapshot_sha256: 86e4ade82ccc0bbfc50272f2980a75a018987bc05d7889dff3e34b7af168862f
+snapshot_sha256: 70c9db4fc4b5e5823547c13d819589c4e42376c4a3f869e7e21e3cbda7ff24ec
 ingested: "2026-08-26"
-type: ingest-report
+type: types/ingest-report.md
 domains: [cybernetics, adaptive-systems, self-improvement, reflection]
 ---
 

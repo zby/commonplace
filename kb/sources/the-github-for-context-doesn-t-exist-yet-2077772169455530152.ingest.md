@@ -4,12 +4,12 @@ source: https://x.com/prukalpa/status/2077772169455530152
 captured: "2026-07-17T18:28:59.706584+00:00"
 capture: xdk
 genre: practitioner-report
-snapshot_sha256: 52d8ce40887619ce1a0da232c36d4e7709583d0fce05806af711f39d57021542
+snapshot_sha256: eedf3f964a819dbc20ce41ef4bc29fe5c377ab78884a909baf3b087509d13e9a
 status_id: 2077772169455530152
 conversation_id: 2077772169455530152
 post_count: 3
 ingested: "2026-07-17"
-type: ingest-report
+type: types/ingest-report.md
 domains: [context-engineering, agent-memory, governance, deploy-time-learning]
 ---
 

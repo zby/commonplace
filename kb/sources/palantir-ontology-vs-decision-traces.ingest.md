@@ -4,12 +4,12 @@ source: https://x.com/JayaGup10/status/2006384049485484145
 captured: "2026-07-06T18:28:32.161674+00:00"
 capture: xdk
 genre: conceptual-essay
-snapshot_sha256: 9eda1ab7796ecea3eaee351de11a6a468310c2f72791c9b7979f6dc046a253f4
+snapshot_sha256: aae363b3dd9b5892cc898f1896edd7a6ab2674ee3044658f1f3dcf9f065c4fa2
 status_id: 2006384049485484145
 conversation_id: 2006384049485484145
 post_count: 1
 ingested: "2026-07-06"
-type: ingest-report
+type: types/ingest-report.md
 domains: [agent-memory, trace-learning, ontology, context-engineering]
 ---
 

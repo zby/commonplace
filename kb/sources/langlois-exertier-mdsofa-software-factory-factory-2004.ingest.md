@@ -5,10 +5,10 @@ captured: "2026-08-31"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: 10d79a5bc1c64532e70db14e56cf3f563ccfb5ad5d6ce846d4c46bdba948190d
+snapshot_sha256: 0d577d061beb0289e1cb05d4cfece9286369eb810a657fba8e47e8d323991adc
 ingested: "2026-08-31"
 occasion: "determine whether established universal-factory and factory-generator terminology conflicts with or subsumes a proposed concept about computational acquisition of family-specific production knowledge."
-type: ingest-report
+type: types/ingest-report.md
 domains: [software-factories, model-driven-engineering, metamodeling, generative-programming]
 ---
 

@@ -1,5 +1,5 @@
 ---
-type: ingest-report
+type: types/ingest-report.md
 description: "Self-modifying policies retain changes by lifelong reward rate; their checkpoint guarantee bounds claims about learned learning rules and compounding."
 source: https://nic.schraudolph.org/pubs/SchZhaSch98.pdf
 captured: "2026-09-20"
@@ -7,7 +7,7 @@ ingested: "2026-09-21"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: 34bccd9bf950b20d243d3f14b162a734fb062db290ee3beedefb6ef6ef82cabf
+snapshot_sha256: 9be5208861713369d27872261c4d680dc3e624075b2b0521c561e62f010c5459
 domains: [reinforcement-learning, self-modification, metalearning]
 learning_claims: true
 ---

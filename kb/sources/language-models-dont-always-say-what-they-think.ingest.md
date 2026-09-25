@@ -4,9 +4,9 @@ source: https://proceedings.neurips.cc/paper_files/paper/2023/hash/ed3fea9033a80
 captured: "2026-07-23"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: 23fe7a3eb786f8e9c5dfd589f8232b125c5d8dabdc1d12cb2cced5f5f98fe390
+snapshot_sha256: eb10a3e840560dbdfd64881aee90673295ee8717f6323b2439626455d48a7d4a
 ingested: "2026-07-23"
-type: ingest-report
+type: types/ingest-report.md
 domains: [chain-of-thought, faithfulness, evaluation, content-bias]
 ---
 

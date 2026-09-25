@@ -4,9 +4,9 @@ source: https://poetiq.ai/posts/rsi_perspective/
 captured: "2026-08-07"
 capture: web-fetch
 genre: practitioner-report
-snapshot_sha256: 7369407fe29016e8245c559a1b3cfac68b5f4e17937ce7b153aa6ae0d34cd254
+snapshot_sha256: 1233d0528d3eee497afc0fd3b0a5451c3497b57ba1da5523ab3c9b4eee07303e
 ingested: "2026-08-07"
-type: ingest-report
+type: types/ingest-report.md
 domains: [self-improving-systems, harness-optimization, compounding, evaluation]
 ---
 

@@ -4,9 +4,9 @@ source: https://www.usenix.org/system/files/sec19-torres-arias.pdf
 captured: "2026-07-06"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: 8747274198942b7192e86ee1f8a375c74e7d74cadd6fdf4a12df270362bf2400
+snapshot_sha256: 8e8d6cf8c1445ea068931bbbda34644e6b3d7c0865717d2c9b8cf64b2f8d7ea4
 ingested: "2026-07-06"
-type: ingest-report
+type: types/ingest-report.md
 domains: [supply-chain-security, provenance, verification, lineage]
 ---
 

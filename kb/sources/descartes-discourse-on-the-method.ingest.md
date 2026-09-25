@@ -5,9 +5,9 @@ captured: "2026-08-27"
 capture: trafilatura
 capture_scope: full-source
 genre: conceptual-essay
-snapshot_sha256: d00e9abae4c30bf15c5e0cff4fe22eae608f1be81c5f81f8f62582777cb2c141
+snapshot_sha256: 532a7afab3e36ad64850c74adb8944a24fc4d850d6880f4c7de10c5b95d66fba
 ingested: "2026-08-27"
-type: ingest-report
+type: types/ingest-report.md
 domains: [decomposition, method-of-inquiry, epistemology, first-principles]
 ---
 

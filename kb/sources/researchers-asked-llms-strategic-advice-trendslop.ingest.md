@@ -4,9 +4,9 @@ source: https://hbr.org/2026/03/researchers-asked-llms-for-strategic-advice-they
 captured: "2026-04-21"
 capture: web-fetch
 genre: conceptual-essay
-snapshot_sha256: 13c93fd8968b3d2c089fdbf2464be07239c4801d8f52820a9088ff8b12e706ab
+snapshot_sha256: e3145f72d28db7f3e17f61f6f0c12bd30327fcc4605707db0af4b421358dd51d
 ingested: "2026-04-21"
-type: ingest-report
+type: types/ingest-report.md
 domains: [llm-reasoning, prompt-sensitivity, strategy, evaluation]
 ---
 

@@ -6,8 +6,8 @@ ingested: "2026-09-25"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: e4676895076968cb80c94a64c5849a43ba0f5cf29d5a244a7ab0203473d0e2f9
-type: ingest-report
+snapshot_sha256: 7364590247ccf7146a7355c07f2f07c3da59a38b4e5bf94fdf09b5ddb89879ef
+type: types/ingest-report.md
 domains: [procedural-memory, skill-consolidation, deploy-time-learning, transfer]
 learning_claims: true
 ---

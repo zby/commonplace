@@ -5,10 +5,10 @@ captured: "2026-09-24"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: 910552279f708f794cd5c906ecfbaeab521b69280871dc4457a14a8b231b0e72
+snapshot_sha256: 1e3990da5a22d26f9b5e1b548f037f1a92d453fb01c9db3dd693f51657a7707b
 ingested: "2026-09-24"
 occasion: "How does a propose-and-counterexample synthesis loop keep repairs honest — what stays fixed outside the loop while candidates are revised? (For KB notes on review/revise loops that drift toward empty claims.)"
-type: ingest-report
+type: types/ingest-report.md
 domains: [program-synthesis, counterexample-guided-search, verification, oracle-design]
 learning_claims: true
 ---

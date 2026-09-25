@@ -5,9 +5,9 @@ captured: "2026-09-17"
 capture: pdftotext
 capture_scope: full-source
 genre: conceptual-essay
-snapshot_sha256: b4db1ee194880a6572895e8231f00fbc6d7071a7cac46d33ccdcf8d07d9ab1e9
+snapshot_sha256: cb19d59a36bf26e3b4b5bfcd3759b937e2bab4ef046d87a3d03319981dd4eb41
 ingested: "2026-09-17"
-type: ingest-report
+type: types/ingest-report.md
 domains: [epistemology, learning-theory, scientific-method, knowledge-maintenance]
 learning_claims: true
 ---

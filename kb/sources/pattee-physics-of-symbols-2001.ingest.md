@@ -4,9 +4,9 @@ source: https://casci.binghamton.edu/publications/pattee/pattee.html
 captured: "2026-07-14"
 capture: web-fetch
 genre: scientific-paper
-snapshot_sha256: 2d76874debcd2d93759a749386b33a16a87cfee6cb666b4b44fa28aecf6630bd
+snapshot_sha256: 349cc9a71b02a52577e15f844f77df5a44bfed4eea79cf676e4bdefd8f580a3e
 ingested: "2026-07-14"
-type: ingest-report
+type: types/ingest-report.md
 domains: [epistemic-cut, symbols, material-dynamics]
 ---
 

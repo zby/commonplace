@@ -4,9 +4,9 @@ source: https://github.com/spacedriveapp/spacebot
 captured: "2026-02-23"
 capture: web-fetch
 genre: tool-announcement
-snapshot_sha256: f94e3c7088a6054b98cf0571ce99c2fec3466de265ae7faf97b844d841ee6ebc
+snapshot_sha256: 91176773809b214709abf01c8b8f26955286c608d51731b3f1d9e14bd2f800ef
 ingested: "2026-04-20"
-type: ingest-report
+type: types/ingest-report.md
 domains: [agent-architecture, orchestration, context-engineering, memory-systems]
 ---
 

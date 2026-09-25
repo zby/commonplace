@@ -4,9 +4,9 @@ source: https://arxiv.org/abs/2608.18300
 captured: "2026-08-24"
 capture: pdftotext
 genre: scientific-paper
-snapshot_sha256: 008d1a770c520137d594c02015538404856ec2aea021d98d6f479fa3ba338999
+snapshot_sha256: 44e3d8f1d85db0e1eba8786a1ce84b7f135e75132fb6948ca60a674b0a35a76f
 ingested: "2026-08-24"
-type: ingest-report
+type: types/ingest-report.md
 domains: [llm-evaluation, production-monitoring, recommendation-systems, text-optimization]
 ---
 

@@ -4,9 +4,9 @@ source: https://www.cs.uml.edu/~holly/91.550/papers/sheridan-autonomy.pdf
 captured: "2026-07-21"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: ecdfd929b3ac1144817e5c7adf76fd75320ec5c1eed4b7400349d89d4922f8b6
+snapshot_sha256: 83b19caa1558642ad10c4bbe05c39eb32bc8ab78a35498f0f05523350dd043e5
 ingested: "2026-07-21"
-type: ingest-report
+type: types/ingest-report.md
 domains: [human-automation, autonomy, function-allocation, evaluation]
 ---
 

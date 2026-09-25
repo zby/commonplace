@@ -4,9 +4,9 @@ source: https://arxiv.org/abs/1501.01332
 captured: "2026-07-16"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: 569ef8fda72147f030f0998f2ab774ef7e59861a11cae277abb22a2b335a3a34
+snapshot_sha256: 723cb74abda1a74b863a9dfdfd3a07cb401de9583be33f89b0c7d0e43f1a9b99
 ingested: "2026-07-16"
-type: ingest-report
+type: types/ingest-report.md
 domains: [causal-inference, invariance, reach-assessment]
 ---
 

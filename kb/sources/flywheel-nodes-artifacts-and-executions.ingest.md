@@ -5,9 +5,9 @@ captured: "2026-09-17"
 capture: curl+trafilatura
 capture_scope: partial-source
 genre: practitioner-report
-snapshot_sha256: 3966cd78f83531f31669ea6bb4436ef24a732a3d7a02b95bf4393afd3b1d5fb4
+snapshot_sha256: 35e9fd6fdd81095718165011b44342da11431a1194c3b5734fa7d6017503115f
 ingested: "2026-09-17"
-type: ingest-report
+type: types/ingest-report.md
 domains: [agent-memory, research-workflows, evidence-management]
 ---
 

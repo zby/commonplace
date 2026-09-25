@@ -5,9 +5,9 @@ captured: "2026-08-30"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: d56cf154151af1b78939a41bff9181c8b1584acfede3688c4e483420c210f19d
+snapshot_sha256: 4c7ee4e92b1156828eba82a18be8bf7f2e31a7d6f0cc8140037902f501dbe253
 ingested: "2026-08-30"
-type: ingest-report
+type: types/ingest-report.md
 domains: [deploy-time-learning, agent-memory, world-models, multi-agent-systems]
 ---
 

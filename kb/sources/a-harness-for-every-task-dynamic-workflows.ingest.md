@@ -4,12 +4,12 @@ source: https://x.com/trq212/status/2061907337154367865
 captured: "2026-06-03T06:56:27.332770+00:00"
 capture: xdk
 genre: practitioner-report
-snapshot_sha256: 5b09bd6e72c6917981d04783e3e1fb09b31bde1b38ef6fd2e35d59a083a4e9c2
+snapshot_sha256: 845798b63861847647d15faa5e22cc4b813a59aed325909cba0cd36ab676cbbf
 status_id: 2061907337154367865
 conversation_id: 2061907337154367865
 post_count: 7
 ingested: "2026-06-03"
-type: ingest-report
+type: types/ingest-report.md
 domains: [agent-orchestration, sub-agent-coordination, context-engineering, verification]
 ---
 

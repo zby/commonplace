@@ -4,9 +4,9 @@ source: https://www.alphaxiv.org/abs/2608.19799
 captured: "2026-08-25"
 capture: trafilatura
 genre: scientific-paper
-snapshot_sha256: 80c2d9e28b8e297783ba6d44a3db034c9943e302bef772b7d4ddb1573386a040
+snapshot_sha256: 9c166515e618b0e67666d459cca5a363dd618997744dbb5c44e0f810c29ccdbe
 ingested: "2026-08-25"
-type: ingest-report
+type: types/ingest-report.md
 domains: [coding-agents, evaluation, scientific-software, context-engineering]
 ---
 

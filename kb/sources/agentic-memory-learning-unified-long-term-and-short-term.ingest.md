@@ -4,9 +4,9 @@ source: https://arxiv.org/html/2601.01885v1
 captured: "2026-03-08"
 capture: web-fetch
 genre: scientific-paper
-snapshot_sha256: 4d45b329a8d6818a97892112c7d32edebc8ec5ae5a49a7c7e31a626527cdb9ee
+snapshot_sha256: aeefbe955b8823d85d42dbd7b30935406ef76b811e34a5c8766bf660e3609ccd
 ingested: "2026-03-09"
-type: ingest-report
+type: types/ingest-report.md
 domains: [agent-memory, reinforcement-learning, context-management, llm-agents]
 ---
 

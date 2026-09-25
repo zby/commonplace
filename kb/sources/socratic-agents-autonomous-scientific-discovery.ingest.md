@@ -5,10 +5,10 @@ captured: "2026-09-19"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: 95837e84ceb82e6ba8dda0f6643ff0f9247ad916e26ee9165fea09d9025f24da
+snapshot_sha256: a625d2b8a4548ceeb070f4235e006035ab125afa4d6b29f1b2cafc8f30c9671a
 ingested: "2026-09-19"
 occasion: "Assess 2026 computational implementations and evaluations of conjecture, criticism, revision, and persistence for a learning paradigm grounded directly in Popper; distinguish epistemic commitments, implementation choices, and demonstrated effects."
-type: ingest-report
+type: types/ingest-report.md
 domains: [scientific-discovery, theory-refinement, multi-agent-systems]
 learning_claims: true
 ---

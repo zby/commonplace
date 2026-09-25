@@ -4,9 +4,9 @@ source: https://mechanism.ucsd.edu/bill/teaching/w22/phil147/Varela%20-%201981%2
 captured: "2026-07-14"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: b7bcd9b0c44a347859e37f7b8d30a3e8cc5c81d3711a13a78b84255d5c736aba
+snapshot_sha256: 976844fe4e20555d18387612840244dc0d12a0fca27457b3fdaff66d8f867624
 ingested: "2026-07-14"
-type: ingest-report
+type: types/ingest-report.md
 domains: [autonomy, autopoiesis, organizational-closure]
 ---
 

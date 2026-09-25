@@ -4,9 +4,9 @@ source: https://v8.dev/blog/fast-properties
 captured: "2026-08-19"
 capture: web-fetch
 genre: practitioner-report
-snapshot_sha256: 4ea1d36d04af4eefa5681e94ef9cf9014cfa7f7a82581d7aeee403800f1637e5
+snapshot_sha256: 8a20a63137b184d3c8166260dcce9f7b04ccbebb616093a8a6d5267e79da646e
 ingested: "2026-08-19"
-type: ingest-report
+type: types/ingest-report.md
 domains: [object-shapes, inline-caches, deoptimization, runtime-pricing]
 ---
 

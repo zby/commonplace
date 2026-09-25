@@ -4,9 +4,9 @@ source: https://arxiv.org/abs/2606.10662
 captured: "2026-08-12"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: b5ff9d2f710a350823ec49135b3e21122b74f23b397d635ecd8044ea1d7f5ba5
+snapshot_sha256: de0acaa5ee43bbaad9b12fbcd30da942548dd9d3940bddb8c48032a362a57b68
 ingested: "2026-08-12"
-type: ingest-report
+type: types/ingest-report.md
 domains: [multi-agent-systems, agent-orchestration, context-engineering, test-time-scaling]
 ---
 

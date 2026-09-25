@@ -4,9 +4,9 @@ source: https://arxiv.org/html/2409.07429v1
 captured: "2026-05-08"
 capture: web-fetch
 genre: scientific-paper
-snapshot_sha256: b880804fdadd8391f42a41c1a6bf1bb876f6ca6f78d4cd284ea006af34c13a32
+snapshot_sha256: 60fee6c9992485013c19a88033f60187fddbc0eded68412ebea346b2c5d70a55
 ingested: "2026-05-08"
-type: ingest-report
+type: types/ingest-report.md
 domains: [agent-memory, trace-learning, deploy-time-learning, web-agents]
 ---
 

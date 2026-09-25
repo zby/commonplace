@@ -4,9 +4,9 @@ source: https://www.decodingai.com/p/the-context-layer
 captured: "2026-08-19"
 capture: web-fetch
 genre: practitioner-report
-snapshot_sha256: 8e99ad90d6da85efa3e037009ce1925eedf901b11b4d2d79be0b778a9d236afd
+snapshot_sha256: 6d0301160ced2a74f9c88f44eb3aa19acb5a0d1f19b757a378fceeb63c8abccb
 ingested: "2026-08-19"
-type: ingest-report
+type: types/ingest-report.md
 domains: [agent-memory, context-engineering, harness-portability, storage-architecture]
 ---
 

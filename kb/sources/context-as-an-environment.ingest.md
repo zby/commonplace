@@ -5,9 +5,9 @@ captured: "2026-08-27"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: 5017f49bc05fe3a7564c74cde5dffbc16c8846e9f039e9465e0da8bb000ff0e4
+snapshot_sha256: ba327bbcb9bbce6354fbf9da4f50af7046e9e7de1bd4819d844c9386470fba3f
 ingested: "2026-08-27"
-type: ingest-report
+type: types/ingest-report.md
 domains: [context-engineering, agent-memory, long-horizon-agents, evidence-preservation]
 ---
 

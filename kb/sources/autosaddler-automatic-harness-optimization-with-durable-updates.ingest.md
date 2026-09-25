@@ -4,9 +4,9 @@ source: https://arxiv.org/abs/2608.23041
 captured: "2026-08-25"
 capture: pdftotext
 genre: scientific-paper
-snapshot_sha256: 50e8c8d6f616bfadc668d7c1db9afe9d84bd8742cc3e6d2eef8117cdb23a9d5b
+snapshot_sha256: 766ac2524317884b6a531f6577101a889365e4ecefb9b933b67b8172e0e79dab
 ingested: "2026-08-25"
-type: ingest-report
+type: types/ingest-report.md
 domains: [agent-harnesses, optimization, evaluation]
 ---
 

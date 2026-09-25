@@ -4,12 +4,12 @@ source: https://x.com/koylanai/status/2035982137539559616
 captured: "2026-03-23T08:06:15.726975+00:00"
 capture: xdk
 genre: conceptual-essay
-snapshot_sha256: 40c1ff420cdcb4752e61ec6629ccab76d71f12a97333eabc735d26337ec92383
+snapshot_sha256: bf9072b03a46633e7e86b248d6c0e66aa6d044d870b6f3d0024f6f8ed2ed7265
 status_id: 2035982137539559616
 conversation_id: 2035982137539559616
 post_count: 1
 ingested: "2026-03-23"
-type: ingest-report
+type: types/ingest-report.md
 domains: [evaluation, context-engineering, llm-reliability]
 ---
 

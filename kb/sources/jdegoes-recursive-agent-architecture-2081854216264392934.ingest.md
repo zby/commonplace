@@ -4,12 +4,12 @@ source: https://x.com/jdegoes/status/2081854216264392934
 captured: "2026-07-28T12:29:37.280032+00:00"
 capture: xdk
 genre: conceptual-essay
-snapshot_sha256: 3b5eeb143046c32158620fbf79cf61cc079751a6a9c3ac79d0f2d93d6de6662b
+snapshot_sha256: 01e30c976e634965b1a83cb73627406c2d44d419c0c19a3f12e88b91aadb9b90
 status_id: 2081854216264392934
 conversation_id: 2081854216264392934
 post_count: 1
 ingested: "2026-07-28"
-type: ingest-report
+type: types/ingest-report.md
 domains: [computational-model, self-improving-systems, constraining, agentic-systems]
 ---
 

@@ -5,10 +5,10 @@ captured: "2026-09-19"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: 0da02d96e1fce5c9fb08ac391bd4f09fbf0d41e7e0aa9eccb56a26acdc6c11ed
+snapshot_sha256: 6a64e2cd4cf7b05ad29f9f5ae9f327700ff43243fc8d66160e291c030920bd5a
 ingested: "2026-09-19"
 occasion: "Reconsider the learning paradigm from Popperian epistemology: compare the epistemic process, computational realization, changeable representations and tests, fixed-model learning, reflection, and supporting evidence."
-type: ingest-report
+type: types/ingest-report.md
 domains: [learning-theory, critical-rationalism, causal-reasoning]
 learning_claims: true
 ---

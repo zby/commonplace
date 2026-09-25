@@ -4,9 +4,9 @@ source: https://xinmingtu.cn/blog/2026/hierarchical-mas-theory/
 captured: "2026-03-25"
 capture: web-fetch
 genre: conceptual-essay
-snapshot_sha256: 32f38e42274139f16880127d5cf7c40c26d086bf3712b46314f3303511442146
+snapshot_sha256: 5a8a893a699d50afee19fab88b0c729d35b55e7fe3a80515c2f74719ef4b9c97
 ingested: "2026-03-25"
-type: ingest-report
+type: types/ingest-report.md
 domains: [multi-agent-systems, error-correction, test-time-scaling, agent-orchestration]
 ---
 

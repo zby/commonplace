@@ -5,9 +5,9 @@ captured: "2026-09-17"
 capture: curl+trafilatura
 capture_scope: partial-source
 genre: practitioner-report
-snapshot_sha256: 7efafdb13055c70c751d715e7dcb1fb4b83e2bb71324af69e6d61e2f19ee2ede
+snapshot_sha256: c0f6c08434e21929a993493ddbab4b01a22ecad7ce7a18e42cb444cd7617c7a5
 ingested: "2026-09-17"
-type: ingest-report
+type: types/ingest-report.md
 domains: [workflow-automation, enforcement, observability]
 ---
 

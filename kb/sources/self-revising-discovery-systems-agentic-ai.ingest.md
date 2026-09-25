@@ -4,9 +4,9 @@ source: https://arxiv.org/html/2606.01444v1
 captured: "2026-06-06"
 capture: web-fetch
 genre: scientific-paper
-snapshot_sha256: bc218ec6aa8c97ca5cd1dbf18e24ff3361d0dd91463bbf7d4e5d020b7cf81fc1
+snapshot_sha256: 731d645184bdbee2f192de9148a2c2874e6b99dfa0bfdc77f8b374b8b615bb43
 ingested: "2026-06-06"
-type: ingest-report
+type: types/ingest-report.md
 domains: [learning-theory, discovery, verification, typed-artifacts]
 ---
 

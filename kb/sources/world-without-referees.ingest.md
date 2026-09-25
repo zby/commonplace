@@ -5,9 +5,9 @@ captured: "2026-09-24"
 capture: pdftotext
 capture_scope: full-source
 genre: conceptual-essay
-snapshot_sha256: 778969271b9284552e8724207a8672563e4186b40e133abf426519b02e87584e
+snapshot_sha256: be9c7b7e713b44748971ee4ce11350bb8a8151cc30fd6915f3802aa3fdcc2a49
 ingested: "2026-09-25"
-type: ingest-report
+type: types/ingest-report.md
 domains: [peer-review, knowledge-dissemination, evaluation]
 ---
 

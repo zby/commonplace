@@ -4,9 +4,9 @@ source: https://arxiv.org/html/2604.08224v1
 captured: "2026-04-13"
 capture: arxiv-html-lynx
 genre: scientific-paper
-snapshot_sha256: a6094570680e7445ca61b5a5278984ec474490319c0a5ef060e021c4983e0f48
+snapshot_sha256: 632eb67316f27331f11e7c03cbaec1d6dc1613a902ed949887e84be127188568
 ingested: "2026-04-13"
-type: ingest-report
+type: types/ingest-report.md
 domains: [agent-architecture, context-engineering, agent-memory, harness-engineering]
 ---
 

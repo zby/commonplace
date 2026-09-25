@@ -5,9 +5,9 @@ captured: "2026-09-03"
 capture: trafilatura
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: 215432f54c41fb36744836b0510022d640771fdbb4ffdb024c193684694b8879
+snapshot_sha256: 550b7e13635aae95dede5af87ecb18020a15feb871fda16c0bea6e7d32a5d238
 ingested: "2026-09-03"
-type: ingest-report
+type: types/ingest-report.md
 domains: [agent-evaluation, benchmark-design, agent-reliability, workflow-execution]
 ---
 

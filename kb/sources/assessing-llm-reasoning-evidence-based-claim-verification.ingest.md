@@ -4,9 +4,9 @@ source: https://aclanthology.org/2025.findings-acl.1059.pdf
 captured: "2026-08-20"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: 08128548613a380b8b7819fb262ee5e3d398421de64722a541b5d03fee918966
+snapshot_sha256: 458a1cd18f97066f6a714c49abb43c52538081cd99c118e3ae502e52798b7432
 ingested: "2026-08-20"
-type: ingest-report
+type: types/ingest-report.md
 domains: [llm-evaluation, claim-verification, reasoning, rationale-faithfulness]
 ---
 

@@ -4,9 +4,9 @@ source: https://arxiv.org/abs/2602.23615
 captured: "2026-08-21"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: 8b9389578f2e5f40b12ecde78178cc531f06db25d9dccb5a734f0c41703aa4a0
+snapshot_sha256: 873192a2a3d31b0f8cbeb76fba7f825242ce3eebccbfe9daf79a9844c137126f
 ingested: "2026-08-21"
-type: ingest-report
+type: types/ingest-report.md
 domains: [reinforcement-learning, context-selection, oracle-theory, multimodal-reasoning]
 ---
 

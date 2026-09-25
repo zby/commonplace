@@ -6,8 +6,8 @@ ingested: "2026-09-25"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: 9889856286d41366c99216d4c946d3113e0cf185b624c46ca483f31be326e27b
-type: ingest-report
+snapshot_sha256: 52f3070013bedcf9ec6b2227509b96e141d4a6d35a8c9e29d3c88846ebd1955b
+type: types/ingest-report.md
 domains: [agent-harnesses, context-engineering, automated-research, learning]
 learning_claims: true
 ---

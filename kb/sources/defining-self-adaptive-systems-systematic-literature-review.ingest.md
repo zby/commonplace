@@ -4,9 +4,9 @@ source: https://arxiv.org/pdf/2505.17798
 captured: "2026-07-21"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: 47308f7f29d52531996c77976eb8568182a51d90630cbbe236adf2d6d0838265
+snapshot_sha256: f84ebc1176e9cfeb0f354e1772950965daf1379916c53afd5a5cd2ae3592245a
 ingested: "2026-07-21"
-type: ingest-report
+type: types/ingest-report.md
 domains: [self-adaptation, definitions, systematic-review, uncertainty]
 ---
 

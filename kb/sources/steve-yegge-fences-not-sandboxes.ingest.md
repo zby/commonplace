@@ -5,9 +5,9 @@ captured: "2026-08-31"
 capture: trafilatura
 capture_scope: full-source
 genre: practitioner-report
-snapshot_sha256: 8672f303262396a46fb192f2383877a1bb904a3ed5c4c0dbc2c43e161ef8431d
+snapshot_sha256: 4e2543d98342ee36d8e6953ee02c247b93dc6972ab2a8c283df101fb687d1337
 ingested: "2026-08-31"
-type: ingest-report
+type: types/ingest-report.md
 domains: [agent-governance, context-engineering, deploy-time-learning, kb-maintenance]
 ---
 

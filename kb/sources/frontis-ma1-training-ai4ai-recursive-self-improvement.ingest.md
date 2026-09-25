@@ -4,9 +4,9 @@ source: https://arxiv.org/abs/2607.28568
 captured: "2026-08-02"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: 410c7d9d7498b2c6aa012942d25bd1e3813079d28de6bbc83b3d68c95420b806
+snapshot_sha256: 7c2e6dbdf22702ef4240867594d4c7be00fb030c453be927d038134ffef9fbf9
 ingested: "2026-08-02"
-type: ingest-report
+type: types/ingest-report.md
 domains: [harness-learning, post-training, evolutionary-search, self-improvement]
 ---
 

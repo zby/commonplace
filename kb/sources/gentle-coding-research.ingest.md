@@ -4,9 +4,9 @@ source: https://github.com/OttoRenner/Gentle-Coding/blob/main/RESEARCH.md
 captured: "2026-07-17"
 capture: web-fetch
 genre: code-repository
-snapshot_sha256: 057cd7c04c11e1db4db8b2e7fe6ab5d16684521e8a3910ea6ea36c6a97f1d2da
+snapshot_sha256: cfeda61b435e5be456f6f309a1ac59f349d8c313101a38d61d5df04237ba3a5d
 ingested: "2026-08-24"
-type: ingest-report
+type: types/ingest-report.md
 domains: [prompting, sycophancy, evaluation]
 ---
 

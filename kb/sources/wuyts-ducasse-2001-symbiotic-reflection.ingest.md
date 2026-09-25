@@ -4,9 +4,9 @@ source: https://scg.unibe.ch/archive/papers/Wuyt01a.pdf
 captured: "2026-07-14"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: 979feb036ba5e74becb1a96b1446bf31c7010d2c008e6a4ba8ad324d569501e3
+snapshot_sha256: 1de71eb977c22d898ff2db307c6c8e62814ee57b4d05ddea9b2a3b22a57d9a33
 ingested: "2026-07-14"
-type: ingest-report
+type: types/ingest-report.md
 domains: [reflection, language-symbiosis, representational-forms]
 ---
 

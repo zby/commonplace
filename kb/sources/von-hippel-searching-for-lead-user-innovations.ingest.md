@@ -5,10 +5,10 @@ captured: "2026-08-29"
 capture: pdftotext
 capture_scope: excerpt
 genre: conceptual-essay
-snapshot_sha256: 06378885007c72e6d66faf8b5c944dc2981f95a0ca4931b32b458bc48bcc67b8
+snapshot_sha256: 0b64114283705ab160e92846fc5d792afa40c16e309ae46cfac43e037aa282ab
 ingested: "2026-08-29"
 occasion: "What does von Hippel mean by an ‘advanced analog field,’ and what would authoritative use of the concept require?"
-type: ingest-report
+type: types/ingest-report.md
 domains: [innovation-search, lead-users, analogical-transfer]
 ---
 

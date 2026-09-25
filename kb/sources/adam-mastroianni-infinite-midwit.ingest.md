@@ -4,9 +4,9 @@ source: https://www.experimental-history.com/p/infinite-midwit
 captured: "2026-04-06"
 capture: web-fetch
 genre: conceptual-essay
-snapshot_sha256: 14766abe8ea11ea715dc9f544bb16287b320a0c7b1faa8fd44f7605f584f72e8
+snapshot_sha256: 0198c2f7b84a4505daa29915661580d43ed037d79da79ffdfdba3b9a47d9d8fc
 ingested: "2026-04-06"
-type: ingest-report
+type: types/ingest-report.md
 domains: [automation-boundary, oracle-theory, research-methodology, writing-quality]
 ---
 

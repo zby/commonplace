@@ -6,10 +6,10 @@ capture: pdftotext
 capture_scope: full-source
 capture_url: https://publications.aston.ac.uk/id/eprint/19494/1/Requirements_as_runtime_entities.pdf
 genre: scientific-paper
-snapshot_sha256: 890950c4646fa4c5e6d41fce729ec2285033dab9ab99dec106b9a456adedd694
+snapshot_sha256: 00fe384c0d3aedfcab516ea631c8f4809c75b20c2cd7ccb3c789db585baf16a1
 ingested: "2026-08-30"
 occasion: "Determine what this source establishes about runtime representations of a software system's own structure, behavior, requirements, goals, or architecture; how those representations are causally connected to adaptation; what remains designer-supplied or fixed; and what evidence supports the claims. This is source ingestion for positioning theory-mediated system learning, not a request to confirm that the source is its predecessor."
-type: ingest-report
+type: types/ingest-report.md
 domains: [requirements-engineering, self-adaptive-systems, runtime-models, reflection]
 ---
 

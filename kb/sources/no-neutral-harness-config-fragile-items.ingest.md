@@ -1,13 +1,13 @@
 ---
 description: "A multiple-choice harness grid traces ranking changes to unstable items, supporting diagnostic prompt variation while limiting scoring attribution and robust-only comparisons."
-type: ingest-report
+type: types/ingest-report.md
 source: https://arxiv.org/abs/2608.21382
 captured: "2026-09-24"
 ingested: "2026-09-25"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: 31b925eb2eff6e3e415da2a07cd1175dc6086f84e0fe7d5804ebe3d241f41e04
+snapshot_sha256: ee87a7a5c8d0e09bf4c46eaf16d74ff1501c8c14fb311cc8d2dd7ddd808d13be
 domains: [llm-evaluation, prompt-sensitivity, benchmark-design]
 ---
 

@@ -4,9 +4,9 @@ source: https://arxiv.org/abs/2102.11107
 captured: "2026-07-16"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: 9ab2d09a6c699319f046020c7f82ffc85a2dbb66e9bf69f1f1e44b5a193a98c3
+snapshot_sha256: 287307700657e800d31d902abcacfec18e287c0c4f6dfcf3e386e2efdb991f42
 ingested: "2026-07-16"
-type: ingest-report
+type: types/ingest-report.md
 domains: [causal-inference, representation-learning, reach-assessment]
 ---
 

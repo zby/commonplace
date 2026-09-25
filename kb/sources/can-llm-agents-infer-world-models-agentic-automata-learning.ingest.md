@@ -4,9 +4,9 @@ source: https://arxiv.org/pdf/2606.16576
 captured: "2026-06-22"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: 7ad54061806f04fdd2def78de353ab12823d236cd71cea2732f4aa27e687ab10
+snapshot_sha256: 55d0626b5137120961d2cbfa17a1d15d86a763dcf05ce550939d0e4b4e2695e8
 ingested: "2026-06-22"
-type: ingest-report
+type: types/ingest-report.md
 domains: [agent-evaluation, oracle-theory, contextual-activation, agent-benchmarks]
 ---
 

@@ -5,9 +5,9 @@ captured: "2026-09-17"
 capture: curl+trafilatura
 capture_scope: partial-source
 genre: official-statement
-snapshot_sha256: b23c1ea942f67114c08ea39f7ad527d718010eeb4f83e17acc5e7d88406379e8
+snapshot_sha256: 0cbf939eb38fa046c232098540d9cd24dd8b045ea4fdb5fb66471d80b106cb74
 ingested: "2026-09-17"
-type: ingest-report
+type: types/ingest-report.md
 domains: [knowledge-graphs, state-management, recovery]
 ---
 

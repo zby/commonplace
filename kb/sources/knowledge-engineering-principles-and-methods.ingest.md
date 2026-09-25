@@ -6,10 +6,10 @@ capture: pdftotext
 capture_scope: full-source
 doi: "10.1016/S0169-023X(97)00056-6"
 genre: scientific-paper
-snapshot_sha256: 9772cfeaca7941826f033aee9fe9b29e5bee9657b2843eadc4c9af32a3c89ee2
+snapshot_sha256: ad58874bc604d98909b77f52061a87fea31f6abcd68ae6850b37fe1ab5fa0024
 ingested: "2026-09-17"
 occasion: "The domain, inference, and task knowledge layers; the problem-solving method as a reusable unit and its applicability assumptions; the reuse assumption's dependence on human construction."
-type: ingest-report
+type: types/ingest-report.md
 domains: [knowledge-engineering, problem-solving-methods, knowledge-reuse]
 ---
 

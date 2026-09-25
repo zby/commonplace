@@ -4,9 +4,9 @@ source: http://www.incompleteideas.net/IncIdeas/BitterLesson.html
 captured: "2026-07-29"
 capture: fetch
 genre: conceptual-essay
-snapshot_sha256: 8cf31e0ee9739b2228dfe79fdfb6b9d771be62a28e9df50eebbfb67dc8eca56f
+snapshot_sha256: 9d7a5590d0a9f3061392807fd9591eee4e7489d1abe7fb78d8d7d19d26323e6d
 ingested: "2026-08-24"
-type: ingest-report
+type: types/ingest-report.md
 domains: [artificial-intelligence, scaling, learning-theory]
 ---
 

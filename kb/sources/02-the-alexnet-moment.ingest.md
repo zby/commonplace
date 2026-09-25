@@ -4,9 +4,9 @@ source: https://www.manning.com/preview/sutskevers-list/chapter-2
 captured: "2026-08-02"
 capture: epub-conversion
 genre: conceptual-essay
-snapshot_sha256: 6613d8cc2d00619572a3a3ac1d6cbc89add38655092605c57cdfce2a3619ef84
+snapshot_sha256: 0b625f6c13b852e0104ea134f835b9a39d6d2935e0188beec00f6f51d4f81517
 ingested: "2026-08-02"
-type: ingest-report
+type: types/ingest-report.md
 domains: [learning-theory, constraining, evaluation]
 ---
 

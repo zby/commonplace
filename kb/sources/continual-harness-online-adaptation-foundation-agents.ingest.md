@@ -4,9 +4,9 @@ source: https://arxiv.org/html/2605.09998v1?utm_source=chatgpt.com
 captured: "2026-08-02"
 capture: web-fetch
 genre: scientific-paper
-snapshot_sha256: 3750f809039c878745cc5784aba124c529e800d17823ddb938fbf4f35c1a7c90
+snapshot_sha256: a0097c11f7973836cace664afea6b8808a68a36d932f6f093e938d908cbe9c4d
 ingested: "2026-08-02"
-type: ingest-report
+type: types/ingest-report.md
 domains: [harness-learning, self-improvement, representational-form, embodied-agents]
 ---
 

@@ -1,6 +1,6 @@
 ---
 description: "SSA retains reversible policy changes by lifetime reward-rate comparisons; maze and program-learning cases bound its value as evidence for reject-capable retention."
-type: ingest-report
+type: types/ingest-report.md
 source: https://link.springer.com/content/pdf/10.1023/A:1007383707642.pdf
 captured: "2026-09-20"
 ingested: "2026-09-21"
@@ -8,7 +8,7 @@ capture: pdftotext
 capture_scope: full-source
 doi: "10.1023/A:1007383707642"
 genre: scientific-paper
-snapshot_sha256: 154d4522f9cc2bd90ab77cfd28c75750a82abcb3f851c55886bd0d8384ce24f8
+snapshot_sha256: 717c295fe0daf2da759fc08abefc1be98f41943a5cf6e3d9b5888a0969f7134f
 domains: [metalearning, reinforcement-learning, self-improvement]
 learning_claims: true
 ---

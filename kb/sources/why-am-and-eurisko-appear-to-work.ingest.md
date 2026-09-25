@@ -6,11 +6,11 @@ capture: pdftotext
 capture_scope: full-source
 doi: "10.1016/0004-3702(84)90016-X"
 genre: scientific-paper
-snapshot_sha256: db934ef75a856e1698c79496dfe2c1f29c0c447f5e7871ef842da318590a247d
+snapshot_sha256: 739e4da38125fd168d758a6d0527aa59bb9dcf286e162b4543a3b0dcf4969804
 ingested: "2026-09-17"
 occasion: "The representation-productivity claim in its own terms; why learning new heuristics was harder than adding heuristics as a subject; what people intervened to do."
 learning_claims: true
-type: ingest-report
+type: types/ingest-report.md
 domains: [learning-theory, knowledge-representation, discovery-systems]
 ---
 

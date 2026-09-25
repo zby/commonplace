@@ -5,10 +5,10 @@ captured: "2026-08-31"
 capture: trafilatura
 capture_scope: abstract
 genre: scientific-paper
-snapshot_sha256: b60ed92e3090dba3ec90266ea7649295178b36538393d1959c3c72d3c9267795
+snapshot_sha256: e91e0783af43dffc7f865aa578d8b36349b82aaff1fbe26aa0b9cd015d4a3b24
 ingested: "2026-08-31"
 occasion: "Split a legacy source review that combined two source URLs and analysis into one snapshot and ingest pair per primary source."
-type: ingest-report
+type: types/ingest-report.md
 domains: [world-models, self-supervised-learning, robot-planning]
 ---
 

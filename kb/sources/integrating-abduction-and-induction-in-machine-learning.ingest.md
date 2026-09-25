@@ -8,7 +8,7 @@ genre: scientific-paper
 snapshot_sha256: 72da406900066b513342591b6b6af71fd4c222c40b03b61b3af0651f1f59f5c7
 ingested: "2026-09-08"
 occasion: "What roles do abduction and induction play in theory refinement, how are proposed explanations distinguished from accepted theory revisions, and which evaluation criteria could accommodate assessment of explanatory reach?"
-type: ingest-report
+type: types/ingest-report.md
 domains: [abduction, induction, theory-refinement, evaluation]
 ---
 

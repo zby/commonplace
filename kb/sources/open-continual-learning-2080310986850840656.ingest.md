@@ -4,12 +4,12 @@ source: https://x.com/Vtrivedy10/status/2080310986850840656
 captured: "2026-07-23T16:40:15.915587+00:00"
 capture: xdk
 genre: conceptual-essay
-snapshot_sha256: f8610f9dbe0f876ea1c0d004abca5a1672a7ff181e594a3393b65fcdf185e723
+snapshot_sha256: 7c7f1558c428a350cbef06d2216d86e84974c66c06653857fa9d17593b4bba27
 status_id: 2080310986850840656
 conversation_id: 2080310986850840656
 post_count: 1
 ingested: "2026-07-23"
-type: ingest-report
+type: types/ingest-report.md
 domains: [learning-theory, deploy-time-learning, evaluation, agent-adaptation]
 ---
 

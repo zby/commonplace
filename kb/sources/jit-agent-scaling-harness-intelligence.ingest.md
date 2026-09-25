@@ -5,9 +5,9 @@ captured: "2026-08-31"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: 3db4f6ae08fe32868884c85e1d18556fa58692dac4cf8a5c01db3b7e86d260ef
+snapshot_sha256: d222c67be4421432bbb886205862c02451625cb029fe000fbfad1a6a51803e36
 ingested: "2026-08-31"
-type: ingest-report
+type: types/ingest-report.md
 domains: [harness-engineering, deploy-time-learning, evaluation, agentic-systems]
 ---
 

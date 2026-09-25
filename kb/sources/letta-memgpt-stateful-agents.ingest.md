@@ -6,7 +6,7 @@ capture: manual
 genre: design-proposal
 snapshot_sha256: 665d6fcf68ed9f5789b967b06ef350ff679684a27332ef51d6ff098220756bd9
 ingested: "2026-03-09"
-type: ingest-report
+type: types/ingest-report.md
 domains: [agent-memory, context-engineering, stateful-agents, memory-architecture]
 ---
 

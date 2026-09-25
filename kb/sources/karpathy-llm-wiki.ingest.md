@@ -4,9 +4,9 @@ source: https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f
 captured: "2026-04-04"
 capture: web-fetch
 genre: conceptual-essay
-snapshot_sha256: 079a09086f62005a57d92bc295e6bd01dc252d76b6b9aa5065f0e916aad289fb
+snapshot_sha256: 0ab225113cf3ed5eb66add4b59caebfda1390ce6f478d0eef044023b2b600fa5
 ingested: "2026-04-04"
-type: ingest-report
+type: types/ingest-report.md
 domains: [knowledge-management, context-engineering, file-based-systems, agentic-workflows]
 ---
 

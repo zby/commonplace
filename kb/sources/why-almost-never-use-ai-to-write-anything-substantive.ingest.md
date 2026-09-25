@@ -4,9 +4,9 @@ source: https://www.erichgrunewald.com/posts/why-i-think-you-should-almost-never
 captured: "2026-08-06"
 capture: web-fetch
 genre: conceptual-essay
-snapshot_sha256: f86fc5472c8dc14547e402ff5fe497798901b313f97dcbc1af6ade3031e85fc1
+snapshot_sha256: 822609ae23cd8f770a7d896c33563a8524e073359b4c00fc7b0f9c4767245188
 ingested: "2026-08-06"
-type: ingest-report
+type: types/ingest-report.md
 domains: [writing-as-thinking, llm-reliability, human-ai-collaboration, authorship]
 ---
 

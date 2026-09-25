@@ -4,9 +4,9 @@ source: https://x.com/JoshARosen/status/2094075909242294713
 captured: "2026-08-30T21:26:17.744862+00:00"
 capture: xdk
 genre: conceptual-essay
-snapshot_sha256: bceacd8e2bead6b18fc14bca08ab772aee9b0d4aca09e8e53daf4d8a2cf8260e
+snapshot_sha256: 493255e0852af7d09b307a576e5d76aba3315fa41960b6c91a90937e260727cb
 ingested: "2026-08-30"
-type: ingest-report
+type: types/ingest-report.md
 domains: [agent-orchestration, software-factories, agent-verification, agent-runtime]
 status_id: 2094075909242294713
 conversation_id: 2094075909242294713

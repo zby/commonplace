@@ -4,12 +4,12 @@ source: https://x.com/willccbb/status/2085469602017161229
 captured: "2026-08-07T08:38:03.220556+00:00"
 capture: xdk
 genre: conceptual-essay
-snapshot_sha256: 48ca4f69e107b9de7693dd4e6d03e21401e8b606c6f2813689abdb61cbdab24e
+snapshot_sha256: 8f505211a0cc2fda5fde1ca5a517b5ded1b3b42c42827d54b098a93520b6090c
 status_id: 2085469602017161229
 conversation_id: 2085469602017161229
 post_count: 5
 ingested: "2026-08-07"
-type: ingest-report
+type: types/ingest-report.md
 domains: [computational-model, orchestration, context-engineering, tool-loop]
 ---
 

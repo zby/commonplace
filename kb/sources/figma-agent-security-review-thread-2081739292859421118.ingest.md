@@ -4,12 +4,12 @@ source: https://x.com/frgx/status/2081739292859421118
 captured: "2026-07-28T11:52:12.808321+00:00"
 capture: xdk
 genre: practitioner-report
-snapshot_sha256: 4b509bf8dbf26b47e6064e163d370611faf7c9a1c4afb525c43ce621cc2ece72
+snapshot_sha256: 567162d650ed7a4336ed81838587674ba4fcf69f84cd38fc8daa30c73a0eefc6
 status_id: 2081739292859421118
 conversation_id: 2081739292859421118
 post_count: 9
 ingested: "2026-07-28"
-type: ingest-report
+type: types/ingest-report.md
 domains: [agent-memory, context-engineering, evaluation, security]
 ---
 

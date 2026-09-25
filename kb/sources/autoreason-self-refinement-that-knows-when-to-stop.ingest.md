@@ -4,9 +4,9 @@ source: https://github.com/NousResearch/autoreason/blob/main/paper/autoreason.pd
 captured: "2026-04-13"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: 461d8af9f9b234cd80bebac19c51c7f18044961e4b5175d13ebeb4240e1cb980
+snapshot_sha256: 16bfe6ec268d3d18b9f42da0fe6afbbdac5d4c555e3efaad83cbe9620d33bcf6
 ingested: "2026-04-13"
-type: ingest-report
+type: types/ingest-report.md
 domains: [evaluation, self-refinement, oracle-theory, agent-orchestration]
 ---
 

@@ -5,9 +5,9 @@ captured: "2026-09-24"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: 4325fb2495c9c12e919463d297bcbf8f65bac89ea67b4a7e24524986986410c2
+snapshot_sha256: d6758de5279a6a08bad7b425754f8a6a43436e5384cdac849da028776e98bf1c
 ingested: "2026-09-25"
-type: ingest-report
+type: types/ingest-report.md
 domains: [human-memory, learning-theory, knowledge-access]
 learning_claims: true
 ---

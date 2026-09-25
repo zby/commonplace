@@ -4,9 +4,9 @@ source: https://arxiv.org/html/2512.16301v3
 captured: "2026-04-27"
 capture: web-fetch
 genre: scientific-paper
-snapshot_sha256: 9117c7e5ef79b4aff7a64fc083830e569f7c10001abbb339e27fee8c5a9b72c8
+snapshot_sha256: 93b8554304bd552cff1f26283e987a8be0a0a4017720c3b36af0058389587b85
 ingested: "2026-06-09"
-type: ingest-report
+type: types/ingest-report.md
 domains: [agentic-adaptation, learning-theory, agent-memory, evaluation-methodology]
 ---
 

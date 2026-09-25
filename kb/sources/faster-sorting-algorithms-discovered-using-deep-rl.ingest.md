@@ -6,10 +6,10 @@ capture: pdftotext
 capture_scope: full-source
 capture_origin: user-provided-publisher-pdf
 genre: scientific-paper
-snapshot_sha256: 3c7ecb3333c048b0b3b47365330405c136670ceffbbb88f6d3239b38d7e75a72
+snapshot_sha256: 7ac80b00a60ecbaee53a8082504537220c592655a0469eea90a81bcb610a3b71
 ingested: "2026-08-29"
 occasion: "Assess AlphaDev as evidence for learned-localized program improvement and for the production-method/form distinction."
-type: ingest-report
+type: types/ingest-report.md
 domains: [program-synthesis, reinforcement-learning, self-improving-systems, algorithm-optimization]
 ---
 

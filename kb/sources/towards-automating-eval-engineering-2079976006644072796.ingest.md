@@ -4,12 +4,12 @@ source: https://x.com/Vtrivedy10/status/2079976006644072796
 captured: "2026-07-23T16:45:02.869267+00:00"
 capture: xdk
 genre: tool-announcement
-snapshot_sha256: 7b55cc52d8c0946f89d97318cc95282ac8b8b03118c50a9b1df162021d1392c1
+snapshot_sha256: 416e32e26d76153aa6bf83330b939b414ed88c4e37e7d925925b7cf575e21021
 status_id: 2079976006644072796
 conversation_id: 2079976006644072796
 post_count: 8
 ingested: "2026-07-23"
-type: ingest-report
+type: types/ingest-report.md
 domains: [evaluation, harness-engineering, trace-learning, deploy-time-learning]
 ---
 

@@ -5,10 +5,10 @@ captured: "2026-08-31"
 capture: pdftotext
 capture_scope: full-source
 genre: conceptual-essay
-snapshot_sha256: 5955434ad2b23cb07056a68d05ed3106bf155f3fda780a203a5b34c7df12ecdf
+snapshot_sha256: 9951334fe5fc6deba86648969ad3411d6cf7caf78ab0c45a2fc412b87b507b62
 ingested: "2026-08-31"
 occasion: "Establish the adjacent software-product-line lineage needed to distinguish family-level production machinery from individual product development and to locate which family knowledge conventional engineering supplies."
-type: ingest-report
+type: types/ingest-report.md
 domains: [software-product-lines, software-reuse, variability-management, software-architecture]
 ---
 

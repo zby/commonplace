@@ -6,11 +6,11 @@ capture: pdftotext
 capture_scope: full-source
 doi: "10.1016/S0004-3702(83)80005-8"
 genre: scientific-paper
-snapshot_sha256: a48c0e075972f76b487515d49391aca88da2d5aec751cafa6303eb26341cb1ee
+snapshot_sha256: 4f25f7a6284e629ff5254079674d9278df41be1e4b174f2d51ebadbed2f4e9ee
 ingested: "2026-09-17"
 occasion: "Which areas had an external objective and which did not; the reported self-modification failures and credit-assignment pathologies; the human interventions and their consequences."
 learning_claims: true
-type: ingest-report
+type: types/ingest-report.md
 domains: [self-improving-systems, learning-theory, objective-design, credit-assignment]
 ---
 

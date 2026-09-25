@@ -4,9 +4,9 @@ source: https://sites.evergreen.edu/arunchandra/wp-content/uploads/sites/395/201
 captured: "2026-07-14"
 capture: pdf-read
 genre: conceptual-essay
-snapshot_sha256: bfce35dc108238256916c6bb2ebaedbb715b414855a3755702bf2ec0db8ab2e9
+snapshot_sha256: 650c7705e17da05ab20e0fa2fb7e4f31f1b3d3ec5bf68b7b3b78daa34020088d
 ingested: "2026-07-14"
-type: ingest-report
+type: types/ingest-report.md
 domains: [second-order-cybernetics, system-boundaries, observers]
 ---
 

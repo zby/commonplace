@@ -1,13 +1,13 @@
 ---
 description: "ScientistTwo revises research methods through experiments and criticism; its reported gains and audits distinguish successful revision from validation of an original explanation."
-type: ingest-report
+type: types/ingest-report.md
 source: https://arxiv.org/abs/2609.19644
 captured: "2026-09-25"
 ingested: "2026-09-25"
 capture: pdftotext+tesseract
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: dd6634146716d038919b8a3a047c114a8bb10ae759f82274f4ef3e980c0b2b8b
+snapshot_sha256: 40d0e0aec4ce559576649a7d6957df1cfe86c5c7fb9af9262a6d483de6e728c3
 domains: [autonomous-research, theory-building, evaluation, method-code-alignment]
 learning_claims: true
 ---

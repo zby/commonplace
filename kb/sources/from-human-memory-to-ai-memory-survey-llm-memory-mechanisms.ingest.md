@@ -4,9 +4,9 @@ source: https://arxiv.org/html/2504.15965v2
 captured: "2026-06-09"
 capture: web-fetch
 genre: scientific-paper
-snapshot_sha256: 018cc7508618fdcfcca982b41f150c0a445267596e4157ba05a647bd8a7010bb
+snapshot_sha256: 206586c212d99cd571d3a8cb15da1e471707a6f18adedbb39ae2205d93bdc282
 ingested: "2026-06-09"
-type: ingest-report
+type: types/ingest-report.md
 domains: [agent-memory, learning-theory, memory-taxonomy]
 ---
 

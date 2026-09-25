@@ -4,9 +4,9 @@ source: https://arxiv.org/pdf/2603.18743
 captured: "2026-07-28"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: 56b55c0d26e54e02ce43a5b5db75a0421db8f4a9025361fb0c7993453479b0d0
+snapshot_sha256: a177d423295693c419e29e54d58161782f208aca22ee3f0f96979975a93a7e89
 ingested: "2026-07-28"
-type: ingest-report
+type: types/ingest-report.md
 domains: [deploy-time-learning, agent-memory, skill-routing, self-improving-systems]
 ---
 

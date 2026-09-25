@@ -4,9 +4,9 @@ source: https://v8.dev/docs/hidden-classes
 captured: "2026-08-19"
 capture: web-fetch
 genre: practitioner-report
-snapshot_sha256: 3c08a49d8d7c2918060f82bfb64f966649ca2a4be305844c068a46e22d875c25
+snapshot_sha256: dc7a59cf2b9afe42690be254906a9da590a75576f11511c9fb2ccb98967b1160
 ingested: "2026-08-24"
-type: ingest-report
+type: types/ingest-report.md
 domains: [object-shapes, hidden-classes, deoptimization, runtime-pricing]
 ---
 

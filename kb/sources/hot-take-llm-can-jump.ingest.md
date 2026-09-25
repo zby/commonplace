@@ -4,9 +4,9 @@ source: https://yongzx.github.io/blog/2026/08/08/llm-can-jump
 captured: "2026-08-20"
 capture: web-fetch
 genre: conceptual-essay
-snapshot_sha256: 39693556cd077c88ed7a2239d768aab82cae0bc8dcf108c99368bcc373199c45
+snapshot_sha256: 508b21024d9e7a49af1a1a2f77994e0a177210e96cb7bb27936b801c64cbc941
 ingested: "2026-08-20"
-type: ingest-report
+type: types/ingest-report.md
 domains: [scientific-discovery, knowledge-reconstruction, AI-safety, continual-learning]
 ---
 

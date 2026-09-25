@@ -4,9 +4,9 @@ source: https://arxiv.org/pdf/2510.21413
 captured: "2026-03-02"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: 700bc1d5ea3e456ec0eaa4706b06740029fa7e3734fbb77586828d0727e7f84e
+snapshot_sha256: f50c57423a80a4a0d65137fc9dde8e60719c71f4fd9cf11dfb11a2630260da05
 ingested: "2026-03-09"
-type: ingest-report
+type: types/ingest-report.md
 domains: [context-engineering, agentic-systems, open-source, software-artifacts]
 ---
 

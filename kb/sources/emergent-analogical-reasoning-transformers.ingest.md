@@ -4,9 +4,9 @@ source: https://arxiv.org/html/2602.01992v4
 captured: "2026-05-26"
 capture: web-fetch
 genre: scientific-paper
-snapshot_sha256: 998179e58db76fdcfe536eb1b523331170114f8959c6e6acf33d20edcc6fe2af
+snapshot_sha256: d2887dd07fa062be428d8530104deb56a6804dbec02028d26b45285edab98038
 ingested: "2026-05-26"
-type: ingest-report
+type: types/ingest-report.md
 domains: [learning-theory, analogical-reasoning, transformer-mechanisms, discovery]
 ---
 

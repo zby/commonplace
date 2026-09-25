@@ -4,9 +4,9 @@ source: https://arxiv.org/pdf/2601.04688
 captured: "2026-07-28"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: 3c263ebe8bf58bf9c6e10a0b1ee3fdf268086f9cc0566bc01b0e314380fd5b74
+snapshot_sha256: aa7160481fbe1895d7ec8a87c0a597053a6a6adcdb52b0682d26cf501ee65d9a
 ingested: "2026-07-28"
-type: ingest-report
+type: types/ingest-report.md
 domains: [tool-use, formal-methods, runtime-verification, agent-reliability]
 ---
 

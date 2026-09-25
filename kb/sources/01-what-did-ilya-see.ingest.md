@@ -4,9 +4,9 @@ source: https://www.manning.com/preview/sutskevers-list/chapter-1
 captured: "2026-08-02"
 capture: epub-conversion
 genre: conceptual-essay
-snapshot_sha256: 3f69027ba9d77cc13138755b54d9681e8e6af250885437bcf5d50a11a11079d9
+snapshot_sha256: 59b38ce811ad1a056c6234349174d455bf5d10325e612b21bda9faa9135a40c0
 ingested: "2026-08-02"
-type: ingest-report
+type: types/ingest-report.md
 domains: [foundations, learning-theory, self-improving-systems]
 ---
 

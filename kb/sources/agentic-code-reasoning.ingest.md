@@ -4,9 +4,9 @@ source: https://arxiv.org/html/2603.01896v2
 captured: "2026-03-07"
 capture: web-fetch
 genre: scientific-paper
-snapshot_sha256: e1380c2811970edf2736e650584105ae0c30bba0b7f9a957e5736ed1bb4239d7
+snapshot_sha256: 19f33415923cf24ea366560df5f62c897f6ef94c5cee0891c54abfeae2e37a76
 ingested: "2026-03-09"
-type: ingest-report
+type: types/ingest-report.md
 domains: [execution-free-verification, structured-reasoning, agentic-code-analysis, oracle-approximation]
 ---
 

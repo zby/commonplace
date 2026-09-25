@@ -4,9 +4,9 @@ source: https://arxiv.org/abs/2007.04612
 captured: "2026-07-26"
 capture: web-fetch
 genre: scientific-paper
-snapshot_sha256: 0b5f35fc0827a9354ed002230ce90757d3797c6b512edbe6fe33bc13d0f4464e
+snapshot_sha256: 6f2346692b5a758d18c5021b8952475e9164c668c5fcc2da91980c713e8ea4b1
 ingested: "2026-07-26"
-type: ingest-report
+type: types/ingest-report.md
 domains: [interpretability, addressability, human-oversight]
 ---
 

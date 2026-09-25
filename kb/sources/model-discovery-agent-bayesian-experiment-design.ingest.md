@@ -4,9 +4,9 @@ source: https://arxiv.org/abs/2608.09696v1
 captured: "2026-08-12"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: 07a32ebb6c800613961db6d99adb77f598618d2084376060d1372383a8022314
+snapshot_sha256: bbe89d938f996eed1f9426549985f5968701f41d8ecb7180d6a055e04285456a
 ingested: "2026-08-12"
-type: ingest-report
+type: types/ingest-report.md
 domains: [scientific-discovery, bayesian-experiment-design, mechanistic-world-models, learning-theory]
 ---
 

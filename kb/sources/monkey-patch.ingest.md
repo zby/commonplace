@@ -4,9 +4,9 @@ source: https://en.wikipedia.org/wiki/Monkey_patch
 captured: "2026-08-19"
 capture: web-fetch
 genre: conceptual-essay
-snapshot_sha256: c31dee48a164a47ceccc025da9a3fd025bbccee20c8a01a4106a357daae300d1
+snapshot_sha256: 2369acdaab95957501d5c4528450ea63f159fbfce5e3b6ac7fde32f852c991dd
 ingested: "2026-08-19"
-type: ingest-report
+type: types/ingest-report.md
 domains: [monkey-patching, runtime-modification, domain-pricing]
 ---
 

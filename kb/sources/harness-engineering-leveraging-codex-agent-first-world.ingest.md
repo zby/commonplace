@@ -4,9 +4,9 @@ source: https://openai.com/index/harness-engineering/
 captured: "2026-03-05"
 capture: web-fetch
 genre: practitioner-report
-snapshot_sha256: f2a48e688545d2918784aad5259fc4a9bbe8e48e470b725db84ecfac97da8ad0
+snapshot_sha256: c381abf662a98ecfc76d86ac1cdb39ef2e974552b591546fb5b6eb17e4b167a2
 ingested: "2026-03-09"
-type: ingest-report
+type: types/ingest-report.md
 domains: [agent-systems, context-engineering, constraining, code-generation]
 ---
 

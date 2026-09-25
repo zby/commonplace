@@ -4,9 +4,9 @@ source: https://arxiv.org/html/2608.14905v1
 captured: "2026-08-23"
 capture: web-fetch
 genre: scientific-paper
-snapshot_sha256: 6e9f44bc6aecc2425a36c66f515f53ac17aa0fd6881bdc8913afc5e37f17fcb7
+snapshot_sha256: 9a4c01f7256f504f4d7febc0f14cda2d1a3fd95c3dcc64d3e20a0069a09bec0b
 ingested: "2026-08-23"
-type: ingest-report
+type: types/ingest-report.md
 domains: [agent-evaluation, autonomous-research, llm-reliability, scientific-discovery]
 ---
 

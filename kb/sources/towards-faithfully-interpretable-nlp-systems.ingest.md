@@ -4,9 +4,9 @@ source: https://aclanthology.org/2020.acl-main.386/
 captured: "2026-07-23"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: 97fc378dd5ef983338eb395aea3e688d35360a13522019745b7204900ffa2efa
+snapshot_sha256: 6aa4cd943530f2b94cae51e3aa7e02b42bc30469bf50655a0876b6390ea72cc1
 ingested: "2026-07-23"
-type: ingest-report
+type: types/ingest-report.md
 domains: [interpretability, faithfulness, explanation-evaluation, oversight]
 ---
 

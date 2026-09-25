@@ -9,7 +9,7 @@ genre: scientific-paper
 snapshot_sha256: 8f9e5e4119b6dd58d1213af014e6cd6a5d53b2efb655f73d6b85981b8074951a
 ingested: "2026-09-08"
 occasion: "What does explanation-based generalization change and retain, how does its use of a supplied domain theory differ from empirical theory refinement, and what lineage claims remain justified without the theory-mediated learning category?"
-type: ingest-report
+type: types/ingest-report.md
 domains: [learning-theory, explanation-based-learning, operationalization]
 ---
 

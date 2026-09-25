@@ -5,10 +5,10 @@ captured: "2026-08-31"
 capture: pdftotext
 capture_scope: full-source
 genre: design-proposal
-snapshot_sha256: 9174c2bf1119433742ed1750a2abbfb80f7cf107deb05281a5068eb21ac924db
+snapshot_sha256: e47a0ecba91627f6eea49eef16d8c0f6d5ea873bf72a560ac8f7d26445aa6718
 ingested: "2026-08-31"
 occasion: "Investigate the book-derived Tool Factory as primary evidence on software factories or tools constructing and bootstrapping other production tools, and distinguish generated production tooling from acquisition of family-specific production knowledge."
-type: ingest-report
+type: types/ingest-report.md
 domains: [software-factories, domain-specific-languages, tool-generation, bootstrapping]
 ---
 

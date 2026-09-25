@@ -7,7 +7,7 @@ capture_scope: full-source
 genre: scientific-paper
 snapshot_sha256: a0158b5f9fdc06de1123e9b1204bec27337b0a9a0e7ecc4308c04b7f4e071d69
 ingested: "2026-09-09"
-type: ingest-report
+type: types/ingest-report.md
 domains: [agent-failure-diagnosis, trajectory-evaluation, neuro-symbolic-methods, llm-as-judge]
 ---
 

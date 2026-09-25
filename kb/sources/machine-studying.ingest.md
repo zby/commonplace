@@ -4,9 +4,9 @@ source: https://jacobxli.com/blog/2026/machine-studying/
 captured: "2026-08-18"
 capture: web-fetch
 genre: practitioner-report
-snapshot_sha256: 793d5a7040da293e8dc5e806388c687f7492b646f5e3619b6aa78a6427d69819
+snapshot_sha256: 96fd135e5337c3adad1cc7fc3dede93aae987e852865d71d980eccd41dbb3919
 ingested: "2026-08-18"
-type: ingest-report
+type: types/ingest-report.md
 domains: [machine-studying, deploy-time-learning, agent-memory, evaluation]
 ---
 

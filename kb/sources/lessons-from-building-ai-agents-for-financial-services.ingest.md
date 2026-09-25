@@ -4,12 +4,12 @@ source: https://x.com/nicbstme/status/2015174818497437834
 captured: "2026-03-03T20:27:26.085015+00:00"
 capture: xdk
 genre: practitioner-report
-snapshot_sha256: abc79987fc7951fef1d646b13e8be9015196181aca7c9c798be435bbbfb7ad1e
+snapshot_sha256: ec8622be9dcf6f93c92b85cd0291330621aafa3173537665cc7fe5899133cf01
 status_id: 2015174818497437834
 conversation_id: 2015174818497437834
 post_count: 1
 ingested: "2026-03-09"
-type: ingest-report
+type: types/ingest-report.md
 domains: [agent-architecture, context-engineering, skills-as-product, filesystem-first]
 ---
 

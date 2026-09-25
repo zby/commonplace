@@ -4,12 +4,12 @@ source: https://x.com/deepfates/status/2036857868914483592
 captured: "2026-03-25T18:29:38.213238+00:00"
 capture: xdk
 genre: conversation-thread
-snapshot_sha256: b8c74d95ddf1b5e5a457bdd2958b86baa0c3e82ca32221151758fd95f8933deb
+snapshot_sha256: a6a034c05ff3a5f1805e955f0240195fac25d0e402e2d54c00efe77c6c0ff269
 status_id: 2036857868914483592
 conversation_id: 2036857868914483592
 post_count: 1
 ingested: "2026-03-25"
-type: ingest-report
+type: types/ingest-report.md
 domains: [context-engineering, memory-architecture, learning-theory]
 ---
 

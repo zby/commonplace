@@ -4,9 +4,9 @@ source: https://arxiv.org/abs/2608.14290v1
 captured: "2026-08-18"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: 773b40703c0814723ba28d081483393bd665405f9aad6c2f19c10c73e0246679
+snapshot_sha256: 1f4f72f33705315138ccd78fb5da0751cdd7acd4482703a3e4a58f816c43bc39
 ingested: "2026-08-18"
-type: ingest-report
+type: types/ingest-report.md
 domains: [model-architecture, parametric-memory, reasoning, continual-learning]
 secondary_sources:
   - role: implementation

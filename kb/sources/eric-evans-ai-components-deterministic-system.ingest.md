@@ -4,9 +4,9 @@ source: https://www.domainlanguage.com/articles/ai-components-deterministic-syst
 captured: "2026-03-09"
 capture: web-fetch
 genre: practitioner-report
-snapshot_sha256: 5ce286b6bf74a3fad83e16acea63e63c0377c5bc2e8036071a0a5062c5813835
+snapshot_sha256: 6401ce22ed8cf02b43920a1e5b8fa7bcf4940f14e648621ff5b17271786b2e3e
 ingested: "2026-03-09"
-type: ingest-report
+type: types/ingest-report.md
 domains: [constraining, classification-systems, LLM-integration, domain-driven-design]
 ---
 

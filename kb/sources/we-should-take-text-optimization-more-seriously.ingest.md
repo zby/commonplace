@@ -4,12 +4,12 @@ source: https://x.com/yoonholeee/status/2064027464926716154
 captured: "2026-06-09T15:02:46.024584+00:00"
 capture: xdk
 genre: conceptual-essay
-snapshot_sha256: 0630cd58916a6f2ed1563e3ea6bac52afa9cc62d5173eda8bf83b53d67f333f0
+snapshot_sha256: cbdf0d6ed24b758cbfada14208457f79ecb96245b89fb80a6bd7f660a56b2796
 status_id: 2064027464926716154
 conversation_id: 2064027464926716154
 post_count: 1
 ingested: "2026-06-09"
-type: ingest-report
+type: types/ingest-report.md
 domains: [continual-learning, context-engineering, text-optimization]
 ---
 

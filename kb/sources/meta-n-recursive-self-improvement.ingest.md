@@ -5,9 +5,9 @@ captured: "2026-09-24"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: b3fdf2d2710a11a79a31def3212f0c897b46af2134c80ce3bf70c30a4bc6bd52
+snapshot_sha256: 56bf72b674e873f83a5176cf550ed0ce3bbd55a8a888c364d7359e6d3438b65f
 ingested: "2026-09-25"
-type: ingest-report
+type: types/ingest-report.md
 domains: [self-improving-systems, learning-theory, context-engineering]
 learning_claims: true
 ---

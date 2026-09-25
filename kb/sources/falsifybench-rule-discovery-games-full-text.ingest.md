@@ -1,5 +1,5 @@
 ---
-type: ingest-report
+type: types/ingest-report.md
 description: "FALSIFYBENCH links negative testing to semantic rule recovery under deliberately narrow initial hypotheses; it measures within-game revision, not persistent theory learning."
 source: https://arxiv.org/abs/2606.04751
 captured: "2026-09-19"
@@ -7,7 +7,7 @@ ingested: "2026-09-19"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: f093b6bf982c84cf415ee0619f098e5d7b243e0b6afaa7db26d67cc8098e646f
+snapshot_sha256: ac87797ef2269f2d680f80de6eb941c1e1b445955e7c80e50ef091061b25c090
 occasion: "Assess 2026 computational implementations and evaluations of conjecture, criticism, revision, and persistence for a learning paradigm grounded directly in Popper; distinguish epistemic commitments, implementation choices, and demonstrated effects."
 learning_claims: true
 domains: [learning-theory, hypothesis-testing, evaluation]

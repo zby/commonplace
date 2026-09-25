@@ -4,9 +4,9 @@ source: https://jmvidal.cse.sc.edu/library/kephart03a.pdf
 captured: "2026-07-22"
 capture: user-supplied-pdf-to-markdown
 genre: conceptual-essay
-snapshot_sha256: 0076ec339c3b1a1a1c780522eb5cd917a451b6fc01fe3b6bb2cbb627295c8c74
+snapshot_sha256: da9a118d1a329fbbc8d963824ee1c66b56f52e1ce6a40c4ba537eda4d3173a10
 ingested: "2026-07-22"
-type: ingest-report
+type: types/ingest-report.md
 domains: [self-adaptive-systems, control-loops, self-improving-systems, agent-architecture]
 ---
 

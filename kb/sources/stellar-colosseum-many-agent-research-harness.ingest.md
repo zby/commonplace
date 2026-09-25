@@ -5,9 +5,9 @@ captured: "2026-09-24"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: 196a3fbdc052b1c2210e6fa72eba428a8099e421915f298bbe5a936ad0ed2dcb
+snapshot_sha256: b20c79b955773923a26afe5fb8aab694a9cf560be7941cc92269fb6a392b1d49
 ingested: "2026-09-25"
-type: ingest-report
+type: types/ingest-report.md
 domains: [multi-agent-coordination, mathematical-reasoning, knowledge-reuse, learning]
 learning_claims: true
 ---

@@ -4,9 +4,9 @@ source: https://cymerys.com/w/im-becoming-ai-blind
 captured: "2026-08-22"
 capture: web-fetch
 genre: conceptual-essay
-snapshot_sha256: 3ca8619388667f6cfedde6e9aab00540fc6b368c4268e408e5c5afa5988a97ff
+snapshot_sha256: 54a768aa8d5db43913782c2ec4d0612bd0065bc32624f70497488b43bb3c8b8f
 ingested: "2026-08-22"
-type: ingest-report
+type: types/ingest-report.md
 domains: [llm-writing, human-ai-collaboration, attention, credibility]
 ---
 

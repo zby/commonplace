@@ -4,9 +4,9 @@ source: https://arxiv.org/html/2508.10795v4
 captured: "2026-06-22"
 capture: web-fetch
 genre: scientific-paper
-snapshot_sha256: 6b0b780847df5e1fb00ee5ea0ca08e9eb5c4570d91078dde0ea0a8364d52b849
+snapshot_sha256: bc83d4e5d462cf4d1cd7b51152fde6b13d316c49b70cb0a490e2baeffe3ce082
 ingested: "2026-06-22"
-type: ingest-report
+type: types/ingest-report.md
 domains: [evaluation, oracle-theory, peer-review, scholarly-literature]
 ---
 

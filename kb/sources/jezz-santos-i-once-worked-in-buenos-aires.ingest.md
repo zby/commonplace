@@ -5,10 +5,10 @@ captured: "2026-09-02"
 capture: trafilatura
 capture_scope: full-source
 genre: practitioner-report
-snapshot_sha256: 2dc5c9320be1f05ed71372e3c50fe7039fdd17eebb77ba7153a990adb78a7b73
+snapshot_sha256: 9bda7480ab96e7bfcb7e5a054d374b00ae199926ce760ef1c6ae7ca2cadde040
 ingested: "2026-09-02"
 occasion: "for kb/work/factory-theory-restart we need to ground the failure claim - snapshot and ingest a retrospective"
-type: ingest-report
+type: types/ingest-report.md
 domains: [software-factories, product-strategy, tool-maintenance]
 ---
 

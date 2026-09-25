@@ -4,12 +4,12 @@ source: https://x.com/shivsakhuja/status/2047124337191444844
 captured: "2026-04-23T07:19:24.259560+00:00"
 capture: xdk
 genre: practitioner-report
-snapshot_sha256: edbf6f8a7f86b8b477003c1b37a3ad87f8f9b3bff64279c779ba8cd14245c1af
+snapshot_sha256: 8da34ebe26e6f20971f0e94f4bdf7a0fbc78fa12b5594a5a1983fe148c748a7f
 status_id: 2047124337191444844
 conversation_id: 2047124337191444844
 post_count: 1
 ingested: "2026-04-23"
-type: ingest-report
+type: types/ingest-report.md
 domains: [skill-composition, agent-orchestration, reliability, capability-placement]
 ---
 

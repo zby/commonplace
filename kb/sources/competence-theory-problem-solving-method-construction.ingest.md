@@ -6,10 +6,10 @@ capture: pdftotext
 capture_scope: full-source
 doi: "10.1006/ijhc.1998.0209"
 genre: scientific-paper
-snapshot_sha256: 691f38eab709b5cba616b5595d5e1670cb21f861dcccfb7dc5abc90257d5ef31
+snapshot_sha256: 401426d736a5e6a82bff8cb0294dea93b881ac6f7fefc83729bf92e36bcc351d
 ingested: "2026-09-17"
 occasion: "The three construction stages and the commitments each exposes; which stages the framework leaves to the designer."
-type: ingest-report
+type: types/ingest-report.md
 domains: [knowledge-engineering, methodology, problem-solving-methods]
 ---
 

@@ -4,9 +4,9 @@ source: https://www.microsoft.com/en-us/research/wp-content/uploads/2018/03/buil
 captured: "2026-07-06"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: 260b36145683b588ea9555695e88bc36b8722be63930299434e85dc08e547301
+snapshot_sha256: 909b0b8f5fd6ba38f2c491d92d981870e00ee5c5f21a2b4cd8fcb089e68ab921
 ingested: "2026-07-06"
-type: ingest-report
+type: types/ingest-report.md
 domains: [build-systems, incremental-computation, staleness-detection, caching]
 ---
 

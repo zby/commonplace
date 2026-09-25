@@ -4,9 +4,9 @@ source: https://arxiv.org/abs/2006.08381
 captured: "2026-07-26"
 capture: web-fetch
 genre: scientific-paper
-snapshot_sha256: 08ecb84780a0d121bcf3028d2bb8b04cb899e0ba5be60a3523cb8b2b460a16bd
+snapshot_sha256: 53db65d35f605205e92a8dea7183acab5d1b370ff7e9902800d3d29ea6612e94
 ingested: "2026-07-26"
-type: ingest-report
+type: types/ingest-report.md
 domains: [self-improving-systems, program-synthesis, abstraction, compression]
 ---
 

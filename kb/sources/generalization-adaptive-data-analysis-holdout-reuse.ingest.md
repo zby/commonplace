@@ -5,11 +5,11 @@ captured: "2026-09-17"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: 1fc1aa2348138860bf804a9dba2ce2c7248bbabf34003fe8d3da00f444bd67ac
+snapshot_sha256: 000f09205c42de0e4470dc71254efbd0a63574333511bcd41b21eebcf835dc42
 ingested: "2026-09-17"
 occasion: "Why a sequence of evaluations that each guides the next revision invalidates ordinary generalization arguments; what protocols restore it; what this implies for reusing review criteria across revisions."
 learning_claims: true
-type: ingest-report
+type: types/ingest-report.md
 domains: [adaptive-data-analysis, generalization, evaluation, theory-refinement]
 ---
 

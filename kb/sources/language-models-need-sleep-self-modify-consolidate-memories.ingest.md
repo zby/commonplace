@@ -4,9 +4,9 @@ source: https://arxiv.org/abs/2606.03979
 captured: "2026-07-31"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: c943bd84140fab1ef71278e5777bcc3d68601e2be3aa274279c35f2abf7b1010
+snapshot_sha256: dd35f9d8cb67c65f683986ebb95a6be36134467261a3d540638ce199068f59fe
 ingested: "2026-07-31"
-type: ingest-report
+type: types/ingest-report.md
 domains: [continual-learning, agent-memory, self-improving-systems, representational-form]
 ---
 

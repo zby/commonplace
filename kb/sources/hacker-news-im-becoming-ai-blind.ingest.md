@@ -4,9 +4,9 @@ source: https://news.ycombinator.com/item?id=49386699
 captured: "2026-08-22"
 capture: web-fetch
 genre: conversation-thread
-snapshot_sha256: 79cc94b174456df97066c7ef0b6783f6204b7fe98e958a6ba5440a41dd32ecb0
+snapshot_sha256: ae28b226f0bbd80c882220fa8787ab9a5ce7d33ff232021475339dffa7a4c167
 ingested: "2026-08-22"
-type: ingest-report
+type: types/ingest-report.md
 domains: [ai-writing, substantive-writing, review-burden]
 ---
 

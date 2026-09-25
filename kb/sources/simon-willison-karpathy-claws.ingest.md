@@ -4,9 +4,9 @@ source: https://simonwillison.net/2026/Feb/21/claws/
 captured: "2026-02-22"
 capture: fetch
 genre: conceptual-essay
-snapshot_sha256: b1a97777acb5783a34e6578998667df3b8f43aede549e3fe15a540d8c7e87e96
+snapshot_sha256: 9572ff0f6238b880e7889f69ccef59c70b758eb26d1c4f8e95eeed3aa1db18de
 ingested: "2026-04-20"
-type: ingest-report
+type: types/ingest-report.md
 domains: [ai-agents, terminology, agent-architecture, personal-computing]
 ---
 

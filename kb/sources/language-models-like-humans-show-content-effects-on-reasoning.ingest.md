@@ -4,9 +4,9 @@ source: https://academic.oup.com/pnasnexus/article/3/7/pgae233/7712372
 captured: "2026-03-08"
 capture: web-fetch
 genre: scientific-paper
-snapshot_sha256: 59c30697f9a02b5dff11d95e386579c8927c1a5579c30a8d5686473c96fd9c6a
+snapshot_sha256: 261fcb37bf71ced7f7b6e6f0b7d5c736273a6cd5b1abf67045f95e862aaf253c
 ingested: "2026-03-09"
-type: ingest-report
+type: types/ingest-report.md
 domains: [cognitive-science, llm-reasoning, human-ai-comparison, dual-process-theory]
 ---
 

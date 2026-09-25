@@ -6,8 +6,8 @@ ingested: "2026-09-25"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: 4723890b3433e2236bb2c07bb56e20876e102d922fdef50853e3dac00a61c0b0
-type: ingest-report
+snapshot_sha256: bb5d2bd5c7abf4319985d1a4700924d2b5e8d5351dae1fa60110cf50b59593a4
+type: types/ingest-report.md
 domains: [agent-harnesses, learning-theory, evaluation]
 learning_claims: true
 ---

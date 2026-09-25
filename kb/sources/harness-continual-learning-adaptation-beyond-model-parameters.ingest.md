@@ -4,9 +4,9 @@ source: https://arxiv.org/abs/2608.19013
 captured: "2026-08-21"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: 558627f124d0794b5109aec6b67f76ef80bb63cbdfe8f52a2beee220293035fe
+snapshot_sha256: 624858252526be4bf0e438f4100efed1532c4c1e45c2d25bf4a68befb82708d2
 ingested: "2026-08-21"
-type: ingest-report
+type: types/ingest-report.md
 domains: [harness-learning, continual-learning, self-improvement, evaluation]
 ---
 

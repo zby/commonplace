@@ -4,9 +4,9 @@ source: https://ciir.cs.umass.edu/pubfiles/ir-130.pdf
 captured: "2026-08-26"
 capture: pdftotext
 genre: scientific-paper
-snapshot_sha256: 630320109537c5fd43ffa456bbb335665176ed7b4560ad39ac8e6b534aa920eb
+snapshot_sha256: 145d1e67cfb52ff6684ccd90ec0bdeb45e1258c38c5b2a8d0f2fe3b4e2924720
 ingested: "2026-08-26"
-type: ingest-report
+type: types/ingest-report.md
 domains: [information-retrieval, context-engineering, evaluation]
 ---
 

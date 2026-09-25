@@ -4,9 +4,9 @@ source: https://bibliography.selflanguage.org/_static/self-power.pdf
 captured: "2026-08-19"
 capture: pdf-read
 genre: design-proposal
-snapshot_sha256: 8e13ed54c1c016bbad3fe7a22e20fce55b05a4e3c49fbfb7b9cf7bc22129fa7e
+snapshot_sha256: ad4e5946c60f8824c3ceef919f1c2fe9cc4db6774334139987c2ae202359ba25
 ingested: "2026-08-19"
-type: ingest-report
+type: types/ingest-report.md
 domains: [prototype-based-oo, class-instance-model, domain-pricing]
 ---
 

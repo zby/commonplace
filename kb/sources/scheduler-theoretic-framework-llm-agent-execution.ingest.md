@@ -4,9 +4,9 @@ source: https://arxiv.org/html/2604.11378v1
 captured: "2026-06-28"
 capture: manual-paste
 genre: design-proposal
-snapshot_sha256: 33f1d38d8e0205bed263d11b45355199d3515ad4b0b27a3879b6334a73ed6998
+snapshot_sha256: 7f81bce289ce57ec28337e152d96250e7238013c84654fbf6d4e59ce1b548c6c
 ingested: "2026-06-28"
-type: ingest-report
+type: types/ingest-report.md
 domains: [agent-orchestration, scheduling-theory, failure-recovery]
 ---
 

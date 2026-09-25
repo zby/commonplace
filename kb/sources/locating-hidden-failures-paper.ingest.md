@@ -5,9 +5,9 @@ captured: "2026-09-20"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: a572cb6bb2e5bae3e8c4af21efe9d7e1f6311b28f00b9ae2e20ec026986a9b7c
+snapshot_sha256: 3fda26e49c0da45e65ca0a668b54b2df57ea372ea421ccfe7a2b16e31cc0cd7f
 ingested: "2026-09-20"
-type: ingest-report
+type: types/ingest-report.md
 domains: [agent-evaluation, failure-localization, verifier-training, agent-safety]
 learning_claims: true
 ---

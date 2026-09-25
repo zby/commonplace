@@ -4,9 +4,9 @@ source: https://yoonholee.com/meta-harness/paper.pdf
 captured: "2026-03-31"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: f63d3431b818747e80c624049bd0ab90629e218045117833de4e4044d7f9574e
+snapshot_sha256: a4b0731ef434a7734ac5ce37ce9a88aee5105c9b48f28a2cc683b68ea568bf73
 ingested: "2026-03-30"
-type: ingest-report
+type: types/ingest-report.md
 domains: [learning-theory, context-engineering, evaluation, harness-engineering]
 ---
 

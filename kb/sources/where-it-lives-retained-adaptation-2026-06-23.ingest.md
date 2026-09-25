@@ -5,10 +5,10 @@ captured: "2026-06-23"
 capture: local-file
 doi: 10.1007/978-3-032-39143-8_24
 genre: scientific-paper
-snapshot_sha256: f401b5456658ea28c1ab6405bdbf22f3d287199f859c680e5352d2875bee1797
+snapshot_sha256: 70005a9b761dbf7fb4df70464707fe04bfa5e2a87e30aff4415eb12989005e68
 original_title: 'Where It Lives Is Not What It Is: An Architectural Vocabulary for Retained Adaptation in Agentic Systems'
 ingested: "2026-06-23"
-type: ingest-report
+type: types/ingest-report.md
 domains: [artifact-analysis, agent-memory, software-architecture]
 ---
 

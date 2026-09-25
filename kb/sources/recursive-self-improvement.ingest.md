@@ -5,9 +5,9 @@ captured: "2026-09-17"
 capture: trafilatura
 capture_scope: full-source
 genre: reference-article
-snapshot_sha256: 07e6d37a000e35ffc6b320230368357ce3644209c54aa17555c29f95cbc3710f
+snapshot_sha256: b3f857e37b7492bf8d4a6b66838052a1d6d640d46ce3785a29cd68191034cb02
 ingested: "2026-09-17"
-type: ingest-report
+type: types/ingest-report.md
 domains: [self-improving-systems, artificial-intelligence, learning-theory]
 learning_claims: true
 ---

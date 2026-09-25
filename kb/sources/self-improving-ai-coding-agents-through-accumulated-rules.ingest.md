@@ -4,9 +4,9 @@ source: https://arxiv.org/html/2607.13091v1?utm_source=chatgpt.com
 captured: "2026-08-02"
 capture: web-fetch
 genre: scientific-paper
-snapshot_sha256: b1f4cca42031925198fafe14bd63db9f61b4cd3199b5775e7efac4d378c6ddbd
+snapshot_sha256: b754d93c6daff262c6cbb9364c55ec624299f9b7df3ff427b2c653cb4ce43d5a
 ingested: "2026-08-02"
-type: ingest-report
+type: types/ingest-report.md
 domains: [deploy-time-learning, agent-memory, evaluation, software-engineering]
 ---
 

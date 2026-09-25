@@ -4,9 +4,9 @@ source: https://arxiv.org/abs/2608.02412
 captured: "2026-08-04"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: 9289a6b956aaa352ebb2371cfc43a4c6dee341447ff93322840ed7e35dee108c
+snapshot_sha256: 0ca21a8782c0d0888096e2096456fc60df78806e0e27baa667b79e492a77bb75
 ingested: "2026-08-04"
-type: ingest-report
+type: types/ingest-report.md
 domains: [context-engineering, evaluation, in-context-learning, benchmark-design]
 ---
 

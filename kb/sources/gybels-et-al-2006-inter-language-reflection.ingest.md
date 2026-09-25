@@ -4,9 +4,9 @@ source: https://rmod-files.lille.inria.fr/Team/Texts/Papers/Gybe06aSymbioticRefl
 captured: "2026-07-14"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: 24601cd0b3dd6912959c58acc327d443fa293ada43e7a7061f1c2a42f581fac2
+snapshot_sha256: 6086494ed47bc4a64b56a94e8c85bf3b87c255b3662cf367c5f17d0d5e6a7c78
 ingested: "2026-07-14"
-type: ingest-report
+type: types/ingest-report.md
 domains: [reflection, linguistic-symbiosis, protocol-mapping]
 ---
 

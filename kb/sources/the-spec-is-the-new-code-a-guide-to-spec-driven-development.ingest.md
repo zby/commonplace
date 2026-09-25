@@ -4,12 +4,12 @@ source: https://x.com/juliandeangeIis/status/2033303156340240481
 captured: "2026-03-16T09:36:38.343417+00:00"
 capture: xdk
 genre: practitioner-report
-snapshot_sha256: 7f03d8c46c32f7012de2bf43bf95de9501a812dfeb41c669aae6a9cfcc68e589
+snapshot_sha256: 87f677cdbcdd46ab1df5428b8f9acd7825018cb45bb57aebf952cb81a3d1e57a
 status_id: 2033303156340240481
 conversation_id: 2033303156340240481
 post_count: 8
 ingested: "2026-03-16"
-type: ingest-report
+type: types/ingest-report.md
 domains: [spec-driven-development, agent-architecture, context-engineering, constraining]
 ---
 

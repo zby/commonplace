@@ -4,9 +4,9 @@ source: https://ftp.cs.ucla.edu/pub/stat_ser/r212-reprint.pdf
 captured: "2026-08-26"
 capture: pdftotext
 genre: scientific-paper
-snapshot_sha256: 55321ac063ac656ca06953b0a19b3f7aa12b429c4f4c1ec43a170d475c7e32fe
+snapshot_sha256: b62dfaef8950a8a2fe44be013729a457f2859d018507dc7070d1d9a0aecc048c
 ingested: "2026-08-26"
-type: ingest-report
+type: types/ingest-report.md
 domains: [causal-inference, action-semantics, formal-reasoning]
 ---
 

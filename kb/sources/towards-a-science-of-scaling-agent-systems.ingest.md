@@ -4,9 +4,9 @@ source: https://arxiv.org/pdf/2512.08296
 captured: "2026-03-08"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: 7718a6d9fbfbf122d6e244d28141463fa707411118bd0ab6f2453dfc10d31283
+snapshot_sha256: ca19802560d198f58728dad829035a82ab59df8955d33238d806a493f9167e85
 ingested: "2026-04-20"
-type: ingest-report
+type: types/ingest-report.md
 domains: [multi-agent-systems, agent-architecture, scaling-laws, coordination]
 ---
 

@@ -6,8 +6,8 @@ ingested: "2026-09-25"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: 8b67ce2dbe8e480a79f4e81786e4353e6f1fc123488c6139d9a8ba0d2bb67fd2
-type: ingest-report
+snapshot_sha256: 8ea10c5161292fe87f5de64a45084940bafdbdb561239582e91b3cdb4775b866
+type: types/ingest-report.md
 domains: [agent-skills, context-engineering, deploy-time-learning, evaluation]
 learning_claims: true
 ---

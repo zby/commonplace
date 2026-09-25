@@ -4,9 +4,9 @@ source: https://arxiv.org/pdf/2509.13680
 captured: "2026-03-11"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: c6c2aa6c953c618ca9b5d96b1c67a848b83f1d5a6d769e9ce94653d3f80b6f28
+snapshot_sha256: d29f22a52f74d5469e11d11c2ed3e446b60190ee2f7d4fe94116a03521e016fc
 ingested: "2026-03-12"
-type: ingest-report
+type: types/ingest-report.md
 domains: [prompt-sensitivity, llm-evaluation, code-generation, reliability]
 ---
 
