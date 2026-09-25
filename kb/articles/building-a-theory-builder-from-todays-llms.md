@@ -186,9 +186,9 @@ that preserves the structure it describes, which is the sample-efficiency
 advantage most often claimed for explicit knowledge; the note states the
 conditions under which the claim is plausible.
 
-**A learned state that can be read.** What the system has learned is held in
-natural language, so it can be read, diffed, tested, and reverted the way a
-weight update cannot be. Nothing about this requires a human reader:
+**A learned state that can be read.** What the system has learned is held as
+stated text, prose and code where a part has been codified, so it can be
+read, diffed, tested, and reverted the way a weight update cannot be. Nothing about this requires a human reader:
 [inspectability is a property of the artifact's form, not of who inspects it](../notes/inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md),
 so agents can do the reading at a volume people could not, and what the
 system has learned stays available for oversight without waiting on progress

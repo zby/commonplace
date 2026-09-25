@@ -76,12 +76,6 @@ Raised by the post-migration coherence pass (2026-09-25):
 
 - Three-obligations note: the third obligation (a performance measure not
   resting on the builder's evaluators) has no section of its own.
-- Lead article: learned state "in natural language" versus "stated text"
-  (the definition admits formal language).
-- Precedents note opening: "without learning" versus "without criticizing
-  it".
-- Open-ended note: "the retained self-directed arrangement" could read "a
-  self-directed arrangement whose results persist into later work".
 - Survey article: Recuris and Wheelhouse placements arguable (path renamed
   to match the headline in 7a9a855c).
 - Software-house article (written in the commit after 65405571): the witness

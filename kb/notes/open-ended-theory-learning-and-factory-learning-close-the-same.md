@@ -1,5 +1,5 @@
 ---
-description: "In the retained self-directed arrangement, theory learning and software-factory learning require one connected reflective path; proof-governed switching alone does not settle criticism"
+description: "In Commonplace's arrangement, theory learning and software-factory learning require one connected reflective path; proof-governed switching alone does not settle criticism"
 type: kb/types/note.md
 traits: [title-as-claim, synthesis, has-comparison]
 tags: [foundations, self-improving-systems, learning-theory]
@@ -7,8 +7,10 @@ tags: [foundations, self-improving-systems, learning-theory]
 
 # Open-ended theory learning and factory learning close the same reflective loop
 
-Two research directions in the retained self-directed arrangement studied here
-look like separate programs. One
+Two research directions in
+[Commonplace's arrangement](./commonplace-builds-a-theory-builder-and-tests-whether-it-learns.md),
+in which results persist into later work and the system directs its own
+revisions, look like separate programs. One
 asks how a system acquires, tests, and revises explanatory theories about its
 own organization. The other asks how [a software factory learns from its production experience](./factory-learning-is-experience-responsive-retention-that-improves.md). They are
 the same loop reached from opposite ends: each, pushed to where it stops being

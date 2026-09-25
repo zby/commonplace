@@ -8,7 +8,7 @@ tags: [learning-theory, deploy-time-learning, self-improving-systems, foundation
 # Theory building has distinct epistemic, structural, and implementation precedents
 
 A system can criticize a theory of an external subject without representing
-itself. It can use a causally connected self-representation without learning.
+itself. It can use a causally connected self-representation without criticizing it.
 It can also edit persistent files without formulating criticism of what a
 theory says. These possibilities separate three questions when comparing
 systems: how errors are criticized, what the representation is about, and
