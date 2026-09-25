@@ -1,0 +1,24 @@
+{
+  "frontmatter_fields_preserved": true,
+  "user_verified_absent": true,
+  "link_targets_and_counts_preserved": true,
+  "section_headings_preserved": true,
+  "chars_a": 15688,
+  "chars_ab": 15684,
+  "sha256_ab": "114efebda48038356d11121adfd56e4e5222026cbad487c61d34b2ea2f7025b4",
+  "validation_at_intended_path": {
+    "note_type": "note",
+    "passes": [
+      "[base] frontmatter: valid delimiters, well-formed YAML",
+      "[base] title: 71 chars (within 100-char limit)",
+      "[base] filename slug: 70 chars (within 70-char limit)",
+      "[base] link health: all local relative links resolve",
+      "[base] proposal archive boundary: no links to archived proposal files",
+      "[type: note] unquoted sources: 4 of 4 tracked sources need a full read (limit 5)",
+      "[schema] type schema: note requirements satisfied"
+    ],
+    "warns": [],
+    "fails": [],
+    "infos": []
+  }
+}

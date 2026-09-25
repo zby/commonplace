@@ -7,6 +7,7 @@ a library claim or system definition.
 
 Current retained sets:
 
+- [AutoReason compounding trial](./autoreason-compounding-trial-20260925/README.md) — model-preferred revision remained hard to read; experiment closed without application, with autorevision kept experimental.
 - [Curiosity prompts experiment](./curiosity-prompts-20260310/README.md)
 - [Epistemic-architecture analysis trials](./epistemic-architecture-analysis-trials-20260820/README.md)
 - [Planning and delegation theory](./planning-delegation-theory/README.md)

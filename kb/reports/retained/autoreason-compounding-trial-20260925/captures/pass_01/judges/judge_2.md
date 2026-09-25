@@ -1,0 +1,9 @@
+All three candidates appear semantically safe on the supplied text. Their frontmatter, reported study results, links, and principal qualifications agree. Each distinguishes retained gains from causal contribution to later improvement, preserves the missing-comparison caveats, and limits the claim about sustained compounding. Source accuracy and link destinations cannot be independently verified within this review.
+
+Candidate 1 makes the direct and indirect paths easy to follow. The numbered reinvestment sequence separates the three necessary links, and the Harness section moves from the study’s measurements and limitations to the additional feedback claim. This is the strongest combination of clarity and restraint. Its weaknesses are minor: “outcome comparison” is less precise than “task-benefit comparison,” and the examples repeat much of the already stated reinvestment mechanism.
+
+Candidate 2 preserves the substantive distinctions and expresses the Agent Optimizers resource-saving hypothesis clearly. Its main weakness is density: one long paragraph combines direct uptake, all three indirect links, assumptions, a failure case, and the substitution test. The Harness section also introduces the final feedback edge before returning to the study’s measurement details, making the explanatory progression less direct. These are editorial disadvantages, not apparent losses of evidence or qualification.
+
+Candidate 3 retains the useful numbered sequence and the clearer Harness progression. “Task-benefit comparison” improves precision, and referring back to the previously specified reinvestment path reduces repetition without dropping its requirements. However, the sentence announcing the three studies adds little beyond the headings, and the shorter final-edge explanation requires a backward reference where Candidate 1 remains self-contained. These are small tradeoffs; Candidate 1 wins narrowly for its directness and restraint.
+
+RANKING: 1, 3, 2

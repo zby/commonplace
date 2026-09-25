@@ -1,0 +1,15 @@
+{
+  "note_type": "note",
+  "passes": [
+    "[base] frontmatter: valid delimiters, well-formed YAML",
+    "[base] title: 71 chars (within 100-char limit)",
+    "[base] filename slug: 70 chars (within 70-char limit)",
+    "[base] link health: all local relative links resolve",
+    "[base] proposal archive boundary: no links to archived proposal files",
+    "[type: note] unquoted sources: 4 of 4 tracked sources need a full read (limit 5)",
+    "[schema] type schema: note requirements satisfied"
+  ],
+  "warns": [],
+  "fails": [],
+  "infos": []
+}

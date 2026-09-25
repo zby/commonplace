@@ -1,0 +1,188 @@
+{
+  "captured_at": "2026-09-25T07:25:50.203760+00:00",
+  "original_location": "kb/work/revise-autoreason/compounding-is-tested-in-later-improvement-not-by-the-accepting-metric.md.20260925-064159",
+  "capture_root": "captures",
+  "role": "Exact run files, including separate post-trial gradual proposal. Final disposition is in README.md; pending statuses inside captures are historical.",
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 2423,
+      "sha256": "69a8b9f35639dca6727b47bb7e5f0369eebe6f9bdf8aefdbeb468c71f70c5b05"
+    },
+    {
+      "path": "baseline-validation.json",
+      "bytes": 548,
+      "sha256": "2978a9d9ce923b82c953773218be1bb58bbdb756ef20d6c6e62616d8887d26cb"
+    },
+    {
+      "path": "current_a.md",
+      "bytes": 15730,
+      "sha256": "114efebda48038356d11121adfd56e4e5222026cbad487c61d34b2ea2f7025b4"
+    },
+    {
+      "path": "final-validation.json",
+      "bytes": 548,
+      "sha256": "2978a9d9ce923b82c953773218be1bb58bbdb756ef20d6c6e62616d8887d26cb"
+    },
+    {
+      "path": "original.md",
+      "bytes": 15734,
+      "sha256": "87f830ec33d99003450b8dac030c7c080dad1dde7a31a89679b48c172b5d0b19"
+    },
+    {
+      "path": "pass_01/auditor/output.md",
+      "bytes": 1609,
+      "sha256": "4708cb670440057e0597f6201cd5a895778a8235e8c6e3761cabe70baa881209"
+    },
+    {
+      "path": "pass_01/author_b/checks.json",
+      "bytes": 890,
+      "sha256": "539480194213292f2b9cefca3054bd594b767e58b8b10c650391b62250c699d5"
+    },
+    {
+      "path": "pass_01/author_b/diff.patch",
+      "bytes": 7932,
+      "sha256": "9a818729ee098ea4ddbd759f867747781e900a6da531f95fc79c52cc2f227104"
+    },
+    {
+      "path": "pass_01/author_b/version_b.md",
+      "bytes": 15855,
+      "sha256": "cd431821a4da3b2ae689b08d1159b766ac07e2bc199112dfdd86e7b0a8879164"
+    },
+    {
+      "path": "pass_01/candidate_checks.md",
+      "bytes": 1590,
+      "sha256": "362897570f0908cc9efa9593ec6fc9df7a977cabdd5f9ae92b2967b86d41d30a"
+    },
+    {
+      "path": "pass_01/candidates/version_a.md",
+      "bytes": 15734,
+      "sha256": "87f830ec33d99003450b8dac030c7c080dad1dde7a31a89679b48c172b5d0b19"
+    },
+    {
+      "path": "pass_01/critic/output.md",
+      "bytes": 2837,
+      "sha256": "8d2ef0f8a99fd958205fc87a75bcc4e75a5519df364dea841df6141e333a5a21"
+    },
+    {
+      "path": "pass_01/judges/judge_1.md",
+      "bytes": 1863,
+      "sha256": "24d792f3b843d9a3c2457ebe3022e9d72c39f4b924c6ed93eca04ae5f7b8eaeb"
+    },
+    {
+      "path": "pass_01/judges/judge_1_candidate_1.md",
+      "bytes": 15734,
+      "sha256": "87f830ec33d99003450b8dac030c7c080dad1dde7a31a89679b48c172b5d0b19"
+    },
+    {
+      "path": "pass_01/judges/judge_1_candidate_2.md",
+      "bytes": 15855,
+      "sha256": "cd431821a4da3b2ae689b08d1159b766ac07e2bc199112dfdd86e7b0a8879164"
+    },
+    {
+      "path": "pass_01/judges/judge_1_candidate_3.md",
+      "bytes": 15730,
+      "sha256": "114efebda48038356d11121adfd56e4e5222026cbad487c61d34b2ea2f7025b4"
+    },
+    {
+      "path": "pass_01/judges/judge_2.md",
+      "bytes": 1987,
+      "sha256": "28786056382dcc1c26c87176037d8f1ba2e1cbf884917fd241966c39b8bf2323"
+    },
+    {
+      "path": "pass_01/judges/judge_2_candidate_1.md",
+      "bytes": 15730,
+      "sha256": "114efebda48038356d11121adfd56e4e5222026cbad487c61d34b2ea2f7025b4"
+    },
+    {
+      "path": "pass_01/judges/judge_2_candidate_2.md",
+      "bytes": 15734,
+      "sha256": "87f830ec33d99003450b8dac030c7c080dad1dde7a31a89679b48c172b5d0b19"
+    },
+    {
+      "path": "pass_01/judges/judge_2_candidate_3.md",
+      "bytes": 15855,
+      "sha256": "cd431821a4da3b2ae689b08d1159b766ac07e2bc199112dfdd86e7b0a8879164"
+    },
+    {
+      "path": "pass_01/judges/judge_3.md",
+      "bytes": 2059,
+      "sha256": "61a585713f86d70d4f86dc99e91c84106177a7dff3a20bfdd8a58f9dceeb6aa9"
+    },
+    {
+      "path": "pass_01/judges/judge_3_candidate_1.md",
+      "bytes": 15855,
+      "sha256": "cd431821a4da3b2ae689b08d1159b766ac07e2bc199112dfdd86e7b0a8879164"
+    },
+    {
+      "path": "pass_01/judges/judge_3_candidate_2.md",
+      "bytes": 15730,
+      "sha256": "114efebda48038356d11121adfd56e4e5222026cbad487c61d34b2ea2f7025b4"
+    },
+    {
+      "path": "pass_01/judges/judge_3_candidate_3.md",
+      "bytes": 15734,
+      "sha256": "87f830ec33d99003450b8dac030c7c080dad1dde7a31a89679b48c172b5d0b19"
+    },
+    {
+      "path": "pass_01/judges/judge_mappings.md",
+      "bytes": 72,
+      "sha256": "820c29c6027070355c4585d6e3c142c4deb32e76ea3ae7faacfaac01f4679350"
+    },
+    {
+      "path": "pass_01/judges/packet-hashes.json",
+      "bytes": 1002,
+      "sha256": "df007bdc229f35aaa17a17548dd431314a54ba04a0ae50b92d213a5805d968f1"
+    },
+    {
+      "path": "pass_01/result.md",
+      "bytes": 1805,
+      "sha256": "15154953353ed74f3b394afebb5b2add4c4bd230682980ad37311e0bcfc65a2b"
+    },
+    {
+      "path": "pass_01/synthesizer/checks.json",
+      "bytes": 892,
+      "sha256": "b7db0cb9ca5cc475cc3ffb6ffdbbee0befbecb5b8f09bd7b709bba080ca92a49"
+    },
+    {
+      "path": "pass_01/synthesizer/diff.patch",
+      "bytes": 7789,
+      "sha256": "b4124d64346e71c73fefe47f06481362240b79eb45e3b3505c4ad0e702cf88e5"
+    },
+    {
+      "path": "pass_01/synthesizer/version_ab.md",
+      "bytes": 15730,
+      "sha256": "114efebda48038356d11121adfd56e4e5222026cbad487c61d34b2ea2f7025b4"
+    },
+    {
+      "path": "proposed.diff",
+      "bytes": 7950,
+      "sha256": "4bdff9d411d6b396f3b661f4c29dda44510e1e7d216a78a72b73020903fad1a8"
+    },
+    {
+      "path": "proposed_gradual-rationale.md",
+      "bytes": 3538,
+      "sha256": "a67217c4439387ea7602389cd5627e125780a9d658c9d97c7a0650b06b0546bb"
+    },
+    {
+      "path": "proposed_gradual.md",
+      "bytes": 19766,
+      "sha256": "6e139443f9283e9eaa9c0cd3a9d384fc8c82808986d632166ac5cef50363786a"
+    },
+    {
+      "path": "protocol.md",
+      "bytes": 26747,
+      "sha256": "78ba60c18097643e95919ab6159c081e1b8c0402ba0e2feeacdf5ab73698e5b8"
+    },
+    {
+      "path": "run-state.json",
+      "bytes": 6522,
+      "sha256": "e40d9a603b46fa16a927f178272c129690f8f2575928579246589acb7f54c74d"
+    },
+    {
+      "path": "summary.md",
+      "bytes": 3596,
+      "sha256": "813727c5165e2d3115faff5df87791688ef3c4a13b4ba5f84091a3b7e2854328"
+    }
+  ]
+}

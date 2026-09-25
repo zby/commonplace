@@ -1,0 +1,9 @@
+All three candidates appear comparably safe: their frontmatter, reported results, links, and substantive qualifications agree. Each preserves the distinction between a retained gain and its causal contribution to later improvement, including the limitations of the cited experiments. Link destinations and external evidence cannot be verified from these packets alone.
+
+Candidate 1 preserves the full causal mechanism and keeps the reinvestment conditions explicit. Its main weakness is presentation: one long paragraph combines direct uptake, three indirect links, bottleneck conditions, and the substitution test. The Harness section also moves from study description to the compounding inference and then back to measurement details, making its argument harder to follow.
+
+Candidate 2 makes the three indirect links easy to inspect and gives the Harness section a clearer progression from measurement to limits to compounding. “Task-benefit comparison” is more specific than “outcome comparison.” Its added roadmap sentence contributes little, however, and the final Harness paragraph requires a backward reference to recover the reinvestment conditions. “The allocator” is also less careful than introducing a hypothetical allocator explicitly, although the surrounding conditional wording prevents a material overclaim.
+
+Candidate 3 offers the strongest balance of readability and restraint. It separates the causal links, groups the Harness evidence before its compounding implication, and keeps allocation and subsequent consumption explicit where the examples need them. The qualifications remain intact without extra roadmap prose. Some repetition of the reinvestment mechanism remains, and “outcome comparison” could be more specific, but these are minor costs compared with its clearer, locally complete explanations.
+
+RANKING: 3, 2, 1
