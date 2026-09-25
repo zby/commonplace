@@ -53,7 +53,7 @@ prediction.
 
 ## The Bitter Lesson creates immediate pressure to use computation
 
-If [Commonplace's retained-theory arrangement](./commonplace-studies-conjectural-learning-through-retained-theories.md) proves useful, the lesson still recommends
+If [Commonplace's retained-theory arrangement](./commonplace-builds-a-theory-builder-and-tests-whether-it-learns.md) proves useful, the lesson still recommends
 using computation as early as possible to search over theories, methods,
 programs, and evaluation machinery. It gives no reason to complete a
 hand-designed theory first and automate it afterward.

@@ -106,7 +106,7 @@ and critic concerns how well criticism works.
 ## The current LLM-plus-artifact realization
 
 Commonplace studies [retained theories as a research
-arrangement](./commonplace-studies-conjectural-learning-through-retained-theories.md).
+arrangement](./commonplace-builds-a-theory-builder-and-tests-whether-it-learns.md).
 An LLM can interpret natural-language theories before their relevant concepts
 have been fully formalized. An artifact can preserve the theory across bounded
 calls. [Addressability](./definitions/addressable-theory.md) lets

@@ -8,7 +8,7 @@ source_notes:
   - kb/notes/definitions/tentative-theory.md
   - kb/notes/definitions/addressable-theory.md
   - kb/notes/definitions/operative-change.md
-  - kb/notes/commonplace-studies-conjectural-learning-through-retained-theories.md
+  - kb/notes/commonplace-builds-a-theory-builder-and-tests-whether-it-learns.md
   - kb/notes/a-complete-theory-path-does-not-establish-improved-capacity.md
   - kb/notes/retained-theories-may-improve-sample-efficiency.md
   - kb/notes/the-deployed-system-not-the-model-is-the-unit-of-learning.md
@@ -192,7 +192,7 @@ inspecting it: the medium makes the question testable, not settled.
 Three further advantages are conjectural, and concern how well the loop
 learns rather than what its form makes possible. The knowledge base develops
 each in its
-[research companion](../notes/commonplace-studies-conjectural-learning-through-retained-theories.md#three-conjectures).
+[research companion](../notes/commonplace-builds-a-theory-builder-and-tests-whether-it-learns.md#three-conjectures).
 
 *Criticism carries content.* When a theory fails, the builder formulates
 why. A stated diagnosis directs the next attempt differently from a bare
@@ -224,7 +224,7 @@ weights-only learner.
 
 The advantages and the costs are both empirical questions. The claim that
 matters here is that the paradigm is possible; the companion states
-[what the research program claims and what it does not](../notes/commonplace-studies-conjectural-learning-through-retained-theories.md#research-program-and-development-path).
+[what the research program claims and what it does not](../notes/commonplace-builds-a-theory-builder-and-tests-whether-it-learns.md#research-program-and-development-path).
 
 ## Compatible with the Bitter Lesson
 

@@ -12,7 +12,7 @@ source_notes:
   - kb/notes/retained-theory-intervention-isolates-one-explicit-surface.md
   - kb/notes/retained-theories-may-improve-sample-efficiency.md
   - kb/notes/a-claim-without-external-assessment-carries-three-obligations.md
-  - kb/notes/commonplace-studies-conjectural-learning-through-retained-theories.md
+  - kb/notes/commonplace-builds-a-theory-builder-and-tests-whether-it-learns.md
   - kb/notes/improvements-can-accumulate-without-compounding.md
   - kb/notes/compounding-is-tested-in-later-improvement-not-by-the-accepting-metric.md
   - kb/notes/disconnected-witnesses-do-not-establish-a-causal-path-through-theory.md
@@ -98,7 +98,7 @@ Useful tests include:
 - **reconstruction** — does retaining the revision reduce total cost at
   comparable decision quality relative to re-deriving it from the episode
   records each time? This is the
-  [persistence conjecture](../notes/commonplace-studies-conjectural-learning-through-retained-theories.md#three-conjectures)
+  [persistence conjecture](../notes/commonplace-builds-a-theory-builder-and-tests-whether-it-learns.md#three-conjectures)
   in testable form.
 - **transfer** — does the revision help on new cases rather than only
   replaying the original one? This is the

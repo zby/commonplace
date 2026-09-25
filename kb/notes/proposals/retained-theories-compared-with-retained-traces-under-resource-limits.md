@@ -11,7 +11,7 @@ three terms for resource comparisons: *trace strategy*, *effective context*,
 and *derived state*. It separates conditions that require intermediate or
 reusable state from the conjecture that retaining theories supplies that
 state efficiently. The terms remain unadopted. The
-[research arrangement](../commonplace-studies-conjectural-learning-through-retained-theories.md)
+[research arrangement](../commonplace-builds-a-theory-builder-and-tests-whether-it-learns.md)
 already states the persistence conjecture without depending on them.
 
 Adoption would be justified if a comparison needs to distinguish these
@@ -198,5 +198,5 @@ Relevant Notes:
 
 - [Theory builder](../definitions/theory-builder.md) — defined-in: membership, including reconstruction from retained criticism, is distinct from whether an arrangement learns
 - [Addressable theory](../definitions/addressable-theory.md) — defined-in: the optional structural property supporting targeted criticism
-- [Commonplace studies conjectural learning through retained theories](../commonplace-studies-conjectural-learning-through-retained-theories.md) — see-also: the independently stated efficiency conjecture
+- [Commonplace studies conjectural learning through retained theories](../commonplace-builds-a-theory-builder-and-tests-whether-it-learns.md) — see-also: the independently stated efficiency conjecture
 - [Retaining episode evidence keeps a distilled rule open to re-examination](../retaining-episode-evidence-keeps-a-distilled-rule-open-to.md) — grounds: records remain evidence behind retained abstractions

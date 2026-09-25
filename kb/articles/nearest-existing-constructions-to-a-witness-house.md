@@ -7,7 +7,7 @@ source_notes:
   - kb/notes/definitions/theory-builder.md
   - kb/notes/definitions/operative-change.md
   - kb/notes/a-complete-theory-path-does-not-establish-improved-capacity.md
-  - kb/notes/commonplace-studies-conjectural-learning-through-retained-theories.md
+  - kb/notes/commonplace-builds-a-theory-builder-and-tests-whether-it-learns.md
   - kb/notes/definitions/system-definition-artifact.md
   - kb/notes/evidence/commonplace-revision-used-theory-guided-computational-search.md
 ---

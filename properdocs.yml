@@ -128,6 +128,7 @@ plugins:
         'notes/code-complements-the-weight-prompt-pair-with-independently-executed-symbolic-operations.md': 'notes/code-complements-weight-prompt-with-symbolic-operations.md'
         'notes/codified-scheduling-patterns-can-turn-tools-into-hidden-schedulers.md': 'notes/cross-task-transition-policy-remains-scheduling-behind-tools.md'
         'notes/commonplace-architecture.md': 'reference/architecture.md'
+        'notes/commonplace-studies-conjectural-learning-through-retained-theories.md': 'notes/commonplace-builds-a-theory-builder-and-tests-whether-it-learns.md'
         'notes/composition-friction-is-a-filter-and-a-signal-that-llm-inference-removes.md': 'instructions/composition-friction-gate.md'
         'notes/composition-friction-is-a-filter-and-signal-llm-inference-removes.md': 'instructions/composition-friction-gate.md'
         'notes/compounding-needs-leverage-to-multiply-and-autonomy-to-scale.md': 'notes/improvements-can-accumulate-without-compounding.md'

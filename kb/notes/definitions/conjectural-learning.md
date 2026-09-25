@@ -109,7 +109,7 @@ the distinction concerns what establishes learning by this system.
 
 Commonplace's choice of research arrangement and its three conjectures are
 stated in
-[Commonplace studies conjectural learning through retained theories](../commonplace-studies-conjectural-learning-through-retained-theories.md).
+[Commonplace studies conjectural learning through retained theories](../commonplace-builds-a-theory-builder-and-tests-whether-it-learns.md).
 Whether this approach outperforms alternatives is conjectured there and in
 [retained theories may improve sample efficiency under structured shifts](../retained-theories-may-improve-sample-efficiency.md).
 
@@ -125,7 +125,7 @@ Whether this approach outperforms alternatives is conjectured there and in
   improvement, membership remains unestablished. Opacity alone establishes
   neither presence nor absence. Membership does not require that it has been
   demonstrated. The companion's [evidence
-  discussion](../commonplace-studies-conjectural-learning-through-retained-theories.md#evidence)
+  discussion](../commonplace-builds-a-theory-builder-and-tests-whether-it-learns.md#evidence)
   describes how to investigate it.
 - **Improvement does not require a faultless theory.** A theory can remain
   mistaken in some respects while supporting an improved capacity for future
@@ -234,5 +234,5 @@ Relevant Notes:
 - [Learning is not only about generality](../learning-is-not-only-about-generality.md) — grounds: Simon's criterion, the general sense of learning that conjectural learning narrows
 - [Constraining](./constraining.md) — contrasts: learning that can improve capacity without criticism of a formulated theory
 - [Addressable theory](./addressable-theory.md) — extends: the stronger structural property the KB conjectures pays
-- [Commonplace studies conjectural learning through retained theories](../commonplace-studies-conjectural-learning-through-retained-theories.md) — extends: the chosen research arrangement and its three conjectures
+- [Commonplace studies conjectural learning through retained theories](../commonplace-builds-a-theory-builder-and-tests-whether-it-learns.md) — extends: the chosen research arrangement and its three conjectures
 - [A complete theory path does not establish improved capacity](../a-complete-theory-path-does-not-establish-improved-capacity.md) — extends: the evidence ladder for the parts of the process

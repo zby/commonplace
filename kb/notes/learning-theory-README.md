@@ -24,7 +24,7 @@ These child tags route major parts of the area:
 
 ## Start here
 
-- [Theory builder](./definitions/theory-builder.md) — localized theories that are consumed, criticized for what they say, and retained; whether a builder learns is tested, not assumed. The [research companion](./commonplace-studies-conjectural-learning-through-retained-theories.md) states the program's conjectures about builders
+- [Theory builder](./definitions/theory-builder.md) — localized theories that are consumed, criticized for what they say, and retained; whether a builder learns is tested, not assumed. The [research companion](./commonplace-builds-a-theory-builder-and-tests-whether-it-learns.md) states the program's conjectures about builders
 - [Retained system-definition artifacts enable persistent deployment-time adaptation](./retained-artifacts-enable-persistent-deployment-time-adaptation.md) — the unifying framework: persistent cross-session adaptation through retained behavior-shaping artifacts, without weight updates
 - [learning is not only about generality](./learning-is-not-only-about-generality.md) — accumulation with explanatory-reach as its key property; Simon's definition grounds the decomposition
 - [agentic systems interpret underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — the underspecification foundation: spec-to-program projection and the constrain/relax cycle

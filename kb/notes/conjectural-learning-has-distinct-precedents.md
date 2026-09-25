@@ -107,7 +107,7 @@ of [the arrangements actually run](./an-experiment-identifies-only-the-contrast-
 
 ## Research positioning and comparison
 
-Commonplace's [research arrangement](./commonplace-studies-conjectural-learning-through-retained-theories.md#research-program-and-development-path)
+Commonplace's [research arrangement](./commonplace-builds-a-theory-builder-and-tests-whether-it-learns.md#research-program-and-development-path)
 pursues recursive self-improvement within Schmidhuber's broad program, using
 interpreted methodology and selective codification. This states the research
 objective and chosen realization, a theory builder whose learning is under

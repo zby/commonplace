@@ -12,7 +12,7 @@ source_notes:
   - kb/notes/scheduler-llm-separation-exploits-an-error-correction-asymmetry.md
   - kb/notes/a-fixed-model-house-must-retain-missing-procedures-for-theory-use.md
   - kb/notes/warranted-transfer-leaves-people-the-hardest-to-warrant-decisions.md
-  - kb/notes/commonplace-studies-conjectural-learning-through-retained-theories.md
+  - kb/notes/commonplace-builds-a-theory-builder-and-tests-whether-it-learns.md
   - kb/notes/evidence/commonplace-revision-used-theory-guided-computational-search.md
   - kb/notes/methodological-and-computational-closure-track-different-changes.md
   - kb/notes/warranted-autonomy-is-bounded-by-oracle-domain.md

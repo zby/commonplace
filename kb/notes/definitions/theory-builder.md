@@ -238,7 +238,7 @@ Relevant Notes:
 - [Addressable theory](./addressable-theory.md) — defined-in: the graded property above condition 1's minimum
 - [Reflective system](./reflective-system.md) — defined-in: the causal connection the reflective qualifier requires
 - [Learning is not only about generality](../learning-is-not-only-about-generality.md) — grounds: the sense of learning the definition leaves to test
-- [Commonplace studies conjectural learning through retained theories](../commonplace-studies-conjectural-learning-through-retained-theories.md) — extends: the research program's conjectures about builders
+- [Commonplace studies conjectural learning through retained theories](../commonplace-builds-a-theory-builder-and-tests-whether-it-learns.md) — extends: the research program's conjectures about builders
 - [Popper, A realist view of logic, physics, and history](../../sources/popper-a-realist-view-of-logic-physics-and-history-1966.ingest.md) — evidenced-by: the schema, objective knowledge, and consumption
 - [Popper, Epistemology without a knowing subject](../../sources/popper-epistemology-without-a-knowing-subject-1968.ingest.md) — evidenced-by: formulation as a condition of criticism, action guided by objective knowledge, self-criticism
 - [Popper, Conjectures and Refutations](../../sources/popper-conjectures-and-refutations.ingest.md) — evidenced-by: the critical method against trial and error, and locating the refuted hypothesis

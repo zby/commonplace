@@ -53,7 +53,7 @@ proposed capability behind the second hypothesis. A useful supplied theory
 can deliver the first benefit without being chosen by that selector. Neither
 retention nor a gain from the complete arrangement establishes the selector's
 contribution. These structured-transfer hypotheses remain distinct from the
-[companion's criticism, addressability, and persistence conjectures](./commonplace-studies-conjectural-learning-through-retained-theories.md).
+[companion's criticism, addressability, and persistence conjectures](./commonplace-builds-a-theory-builder-and-tests-whether-it-learns.md).
 
 ## Explanatory-reach supplies the leverage
 

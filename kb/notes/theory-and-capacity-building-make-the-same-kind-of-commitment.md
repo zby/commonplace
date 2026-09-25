@@ -44,7 +44,7 @@ experience
   -> theory revision
 ```
 
-Its value is empirical: if direct use of retained experience produces comparable capacity at comparable cost, the path loses support. The [retained-theory arrangement](./commonplace-studies-conjectural-learning-through-retained-theories.md) studied by Commonplace also asks whether theory use, criticism, and the result of criticism affect later operation on one connected path. The theory can survive criticism without a text revision. Whether this path improves later operation is a claim about learning, not a condition of being a theory builder.
+Its value is empirical: if direct use of retained experience produces comparable capacity at comparable cost, the path loses support. The [retained-theory arrangement](./commonplace-builds-a-theory-builder-and-tests-whether-it-learns.md) studied by Commonplace also asks whether theory use, criticism, and the result of criticism affect later operation on one connected path. The theory can survive criticism without a text revision. Whether this path improves later operation is a claim about learning, not a condition of being a theory builder.
 
 The reverse path runs regardless. A constructive commitment creates machinery, the machinery produces new experience, and that experience can support, narrow, or defeat the theory that guided the construction. The two kinds of commitment can co-evolve without collapsing into one kind of retained state.
 
