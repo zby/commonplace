@@ -29,13 +29,12 @@ a condition.
   seed, extension, and intervention accounting into the testing article,
   their main consumer. This reverses the 2026-09-21 workshop decisions that
   kept learner and builder apart and made criticism optional for a builder.
-
 - Whole-theory rejection, and rebuilding from retained criticism (D3), are
   inside. Addressability is demoted from condition to design commitment,
   because it is graded; a model replaced whole sits at its lowest grade.
 - D4 (inventory): `conjectural-learning-checks.md` is replaced by
   [theory-builder-checks.md](./theory-builder-checks.md), drafted here and
-  promoted with the definition. Case 3 waits on D3.
+  promoted with the definition.
 
 ## Open
 
