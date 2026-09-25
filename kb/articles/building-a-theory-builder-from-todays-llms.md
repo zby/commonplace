@@ -1,5 +1,5 @@
 ---
-description: "Lead article: the bet that a fully automated theory builder that learns, a Popperian conjecture-and-criticism cycle over explicit theories, can be built from fixed-weight LLMs; payoffs, conjectures, Bitter Lesson, learning test"
+description: "Lead article: bets that a fully automated theory builder that learns, a Popperian conjecture-and-criticism cycle over explicit theories, can be built from fixed-weight LLMs applying precise definitions; payoffs, Bitter Lesson, learning test"
 type: kb/articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
@@ -31,10 +31,26 @@ source_notes:
 > and counterexamples are welcome on
 > [the repository's GitHub Discussions page](https://github.com/zby/commonplace/discussions).
 
+A theory builder is a system that works by stating theories, acting on
+them, criticizing them, and keeping what the criticism shows for the next
+round. It applies the method of conjecture and criticism that the
+philosopher Karl Popper described for the growth of knowledge. We bet that a
+theory builder that learns can be built from today's LLMs, with computation
+performing every step of that method and the model's weights held fixed. Its
+learning is then held in text that it retains and revises. If the bet holds,
+such a system learns while it is deployed, with no retraining, and what it
+has learned can be read, tested, and reverted.
+
 Agent systems already keep notes, decide what is worth keeping, and revise
 what they kept. How far they run without a person depends on how precisely
-those operations are defined, because an interpreter fills in whatever a
-definition leaves open.
+those operations are defined, because the LLM performing them fills in
+whatever a definition leaves open. Proof-based self-improving machines, such
+as Jürgen Schmidhuber's Gödel machine, require the work to be formalized so
+that each change can be proved beneficial. Judgments that nobody has
+formalized, such as when a theory's premises should change, have been left
+to people. We argue that an LLM can make such judgments when the definitions
+it applies are precise enough, and we state what evidence would show that
+the resulting system learns.
 
 We propose a learning paradigm based on
 [Popper's cycle for the growth of knowledge](https://doi.org/10.1016/S0049-237X(08)71204-7):
@@ -119,7 +135,7 @@ Proving that a switch is beneficial under the current premises is one thing.
 Revising those premises because cases have gone against them is another, and
 the second is most of what open-ended learning consists of.
 
-We know of no formalization of that operation, and Peter Naur argued that
+We know of no formalization of that operation, and the computer scientist Peter Naur argued that
 there cannot be one: the judgments that relate a program to the world cannot
 be reduced to formulated criteria, so the theory of a program is bound to the
 people who hold it. As the knowledge base
