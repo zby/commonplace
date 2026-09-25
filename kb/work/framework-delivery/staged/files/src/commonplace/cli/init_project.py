@@ -12,6 +12,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 import shutil
 import subprocess
 from dataclasses import dataclass, field
@@ -34,6 +35,7 @@ class InitReport:
     skipped_foreign: list[Path] = field(default_factory=list)
     retired_baselines: list[str] = field(default_factory=list)
     tracked_outputs: list[Path] = field(default_factory=list)
+    rewritten_type_pointers: list[Path] = field(default_factory=list)
 
 
 def _record_existing(
@@ -296,6 +298,83 @@ def _retire_legacy_baselines(project: Path, root: Path, report: InitReport) -> N
         conn.commit()
 
 
+_TYPE_LINE = re.compile(r"^(\s*(?:type|requires_type):\s*|\s*-\s+)(\S+\.md)\s*$", re.MULTILINE)
+_JSON_TYPE = re.compile(r'("(?:type|requires_type)"\s*:\s*)"([^"]+\.md)"')
+_SCHEMA_REF = re.compile(r'(\$ref"?\s*:\s*["\']?)([^"\'\s]+\.schema\.(?:yaml|json))')
+_MIGRATION_SKIP = ("kb/reports/cache/", "kb/reports/state/")
+
+
+def _project_files(project: Path, pattern: str) -> list[Path]:
+    kb = project / "kb"
+    if not kb.is_dir():
+        return []
+    return [
+        path
+        for path in _real_files(kb)
+        if path.match(pattern)
+        and ".snapshots" not in path.parts
+        and not path.relative_to(project).as_posix().startswith(_MIGRATION_SKIP)
+    ]
+
+
+def _migrate_type_pointers(project: Path, root: Path, report: InitReport) -> None:
+    """Rewrite a project's pointers to global types in the forms this release uses.
+
+    A `type:` or `requires_type:` value (YAML or JSON-style) that points at the
+    project's old copy of a global type, `kb/types/X.md` or a relative path to
+    it, becomes the bare name `X`. A schema `$ref` to such a copy's schema
+    becomes `commonplace:types/X.schema.yaml`. A pointer is rewritten only when
+    the project has no file of its own at that path, so project-shared types and
+    kept, differing copies keep their paths. Every rewritten file is reported.
+    """
+    project_types = (project / "kb" / "types").resolve()
+    global_names = {p.stem for p in (root / "types").glob("*.md")}
+
+    def global_name(value: str, source: Path, suffix: str) -> str | None:
+        target = (project / value) if value.startswith("kb/") else (source.parent / value)
+        target = target.resolve()
+        name = target.name.removesuffix(suffix)
+        if target.parent != project_types or not target.name.endswith(suffix) or target.exists():
+            return None
+        return name if name in global_names else None
+
+    for path in _project_files(project, "*.md"):
+        text = library.read_text(path)
+        # Only frontmatter binds a type; the body may quote paths as prose.
+        match = re.match(r"---\r?\n.*?\r?\n---[ \t]*(?:\r?\n|$)", text, re.DOTALL)
+        if match is None:
+            continue
+        head = match.group(0)
+        def bare_line(m: re.Match[str], source: Path = path) -> str:
+            name = global_name(m.group(2), source, ".md")
+            return f"{m.group(1)}{name}" if name else m.group(0)
+
+        def bare_json(m: re.Match[str], source: Path = path) -> str:
+            name = global_name(m.group(2), source, ".md")
+            return f'{m.group(1)}"{name}"' if name else m.group(0)
+
+        new_head = _JSON_TYPE.sub(bare_json, _TYPE_LINE.sub(bare_line, head))
+        new = new_head + text[len(head) :]
+        if new != text:
+            library.write_text(path, new)
+            report.rewritten_type_pointers.append(path.relative_to(project))
+    for pattern in ("*.schema.yaml", "*.schema.json"):
+        for path in _project_files(project, pattern):
+            text = library.read_text(path)
+
+            def schema_ref(match: re.Match[str], source: Path = path) -> str:
+                target = (source.parent / match.group(2)).resolve()
+                name = target.name.split(".schema.")[0]
+                if target.parent != project_types or target.exists() or name not in global_names:
+                    return match.group(0)
+                return f"{match.group(1)}{library.LIBRARY_IDENTITY_PREFIX}types/{target.name}"
+
+            new = _SCHEMA_REF.sub(schema_ref, text)
+            if new != text:
+                library.write_text(path, new)
+                report.rewritten_type_pointers.append(path.relative_to(project))
+
+
 # --- init --------------------------------------------------------------------------
 
 
@@ -310,6 +389,13 @@ def init_project(root: Path, name: str | None = None) -> InitReport:
         "{{project_name}}": name,
         "/PATH/TO/COMMONPLACE/": str(root) + "/",
     }
+
+    # Migrate what earlier releases left before scaffolding, so the refreshed
+    # report and source types compare against the package's current versions.
+    library_root = library.library_root()
+    _migrate_legacy_copies(root, library_root, report)
+    _migrate_type_pointers(root, library_root, report)
+    _retire_legacy_baselines(root, library_root, report)
 
     for rel_path in MANIFEST.directories:
         target = root / rel_path
@@ -338,9 +424,6 @@ def init_project(root: Path, name: str | None = None) -> InitReport:
             target = root / target_rel
             _write_template(src, target, Path(target_rel), replacements, report)
 
-    library_root = library.library_root()
-    _migrate_legacy_copies(root, library_root, report)
-    _retire_legacy_baselines(root, library_root, report)
     _write_stubs(root, library_root, report)
     _write_if_changed(root, library.ROUTING, library.render_routing(library_root), report)
     _write_read_rule(root, library_root, report)
@@ -511,6 +594,11 @@ def main(argv: list[str] | None = None) -> int:
         "(remove them to receive the library's skill):",
         report.skipped_foreign,
     )
+    _print_section(
+        "Rewrote pointers to global types in the forms this release uses (bare type names, "
+        "commonplace: schema refs):",
+        report.rewritten_type_pointers,
+    )
     if report.retired_baselines:
         print("Retired review baselines recorded under the old library copy (history kept):")
         for item in report.retired_baselines:
@@ -534,6 +622,7 @@ def main(argv: list[str] | None = None) -> int:
             report.migration_kept,
             report.skipped_foreign,
             report.retired_baselines,
+            report.rewritten_type_pointers,
             report.preserved_identical,
             report.preserved_different,
         )

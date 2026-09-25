@@ -284,6 +284,51 @@ def test_init_project_reports_outputs_that_git_still_tracks(tmp_path: Path) -> N
     assert (old_copy / library.STUB_MARKER).is_file()
 
 
+def test_init_project_migrates_pointers_to_global_types(tmp_path: Path) -> None:
+    notes = tmp_path / "kb" / "notes"
+    notes.mkdir(parents=True)
+    (notes / "COLLECTION.md").write_text("# Notes\n", encoding="utf-8")
+    (notes / "a.md").write_text(
+        "---\ndescription: Repo-relative pointer to a global type\ntype: kb/types/note.md\n---\n\n"
+        "# A\n\n- kb/types/note.md stays as prose in the body\n",
+        encoding="utf-8",
+    )
+    (notes / "b.md").write_text(
+        "---\ndescription: Relative pointer\ntype: ../types/definition.md\n---\n\n# B\n", encoding="utf-8"
+    )
+    (notes / "c.md").write_text(
+        '---\n{\n  "description": "JSON-style frontmatter",\n  "type": "kb/types/note.md"\n}\n---\n\n# C\n',
+        encoding="utf-8",
+    )
+    shared = tmp_path / "kb" / "types" / "my-type.md"
+    shared.parent.mkdir(parents=True)
+    shared.write_text("---\ntype: kb/types/type-spec.md\nname: my-type\n---\n", encoding="utf-8")
+    (notes / "d.md").write_text(
+        "---\ndescription: Project-shared type keeps its path\ntype: kb/types/my-type.md\n---\n\n# D\n",
+        encoding="utf-8",
+    )
+    schema = tmp_path / "kb" / "reports" / "types" / "old-report.schema.yaml"
+    schema.parent.mkdir(parents=True)
+    schema.write_text('allOf:\n  - $ref: "../../types/note.schema.yaml"\n', encoding="utf-8")
+
+    report = init_project(tmp_path)
+
+    assert "type: note\n" in (notes / "a.md").read_text(encoding="utf-8")
+    assert "- kb/types/note.md stays as prose" in (notes / "a.md").read_text(encoding="utf-8")
+    assert "type: definition\n" in (notes / "b.md").read_text(encoding="utf-8")
+    assert '"type": "note"' in (notes / "c.md").read_text(encoding="utf-8")
+    assert "type: kb/types/my-type.md" in (notes / "d.md").read_text(encoding="utf-8")
+    assert "type: type-spec" in shared.read_text(encoding="utf-8")
+    assert '$ref: "commonplace:types/note.schema.yaml"' in schema.read_text(encoding="utf-8")
+    assert set(report.rewritten_type_pointers) == {
+        Path("kb/notes/a.md"),
+        Path("kb/notes/b.md"),
+        Path("kb/notes/c.md"),
+        Path("kb/types/my-type.md"),
+        Path("kb/reports/types/old-report.schema.yaml"),
+    }
+
+
 def test_init_project_leaves_foreign_skill_directories_alone(tmp_path: Path) -> None:
     dest = tmp_path / ".claude" / "skills" / "cp-skill-write"
     dest.mkdir(parents=True)

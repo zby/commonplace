@@ -326,10 +326,10 @@ Init also retires, once, the review baselines whose criteria were files in the o
 
 If the project committed its old skill copies, git keeps tracking those directories after init turns them into stubs, and the stubs hold paths specific to one machine. Init lists every such tracked pointer with the command to untrack it (`git rm -r --cached <paths>`); run it and commit. Init does not change the git index itself. A skill directory that is a symlink is never migrated, overwritten, or deleted; init lists it as skipped.
 
-Two changes are not made by init:
+Init also rewrites the project's pointers to global types in the forms this release uses, and lists every file it changed:
 
-- **Type pointers.** Global types are now named by bare name, such as `type: note`, and the validator rejects a path to a global type. Rewrite every `type: kb/types/<name>.md` in the project, including relative paths to the same files, to `type: <name>` for each global type in the library's `types/` directory. `rg -n "^type: .*types/" kb/ --glob "*.md"` lists the candidates; a project's collection-local types keep their path form.
-- **The reports and sources types.** Init does not overwrite the project's files, so older copies under `kb/reports/types/` and `kb/sources/types/` stay as they were, and their schemas still refer to the removed global schemas by relative path. Init lists them under "Preserved existing files differing from current scaffold output". Replace each one with the package's version unless you changed it.
+- **Type pointers.** Global types are named by bare name. A frontmatter `type:` or `requires_type:` value that points at a global type, as `kb/types/<name>.md` or a relative path to the same file, becomes `type: <name>`. JSON-style frontmatter is handled the same way. A pointer is left alone when the project has a file of its own at that path: a project-shared type, or a differing copy init kept.
+- **Schema references.** A schema under the project's `kb/` that refers to a global schema by relative path, as the older report and source types do, now refers to it as `commonplace:types/<name>.schema.yaml`, resolved in the installed library.
 
 Relative links from project notes into `kb/commonplace/` stop resolving. Point them at the published Commonplace documentation or remove them. When the migration is done, `commonplace-init --check` reports every entry `ok` and `commonplace-validate` passes on the project's collections.
 

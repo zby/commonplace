@@ -116,6 +116,7 @@ for path in _files("*.py"):
 HAND_STAGED_TESTS = {
     "tests/commonplace/lib/test_frontmatter.py",
     "tests/commonplace/lib/test_type_resolver.py",
+    "tests/commonplace/cli/test_init_project.py",
     "tests/commonplace/docs/test_type_contract_integrity.py",
 }
 for path in _files("*.py"):
