@@ -12,7 +12,7 @@ not migration constants; every execution packet re-derives its inventory.
 The 2026-08-27 pass assumed that an initialized project holds two disjoint
 `kb-root`s: the host `kb/` and a projected library copy under
 `commonplace-library/kb/`. It therefore gated Phase 1 on I3's multi-root model
-and Phase 3 on I1's upgrade and I2's projection machinery. ADR 086 removed the
+and Phase 4 on I1's upgrade and I2's projection machinery. ADR 086 removed the
 library copy. Projects read the library in place from the installed package,
 and the library is validated in the source checkout. This changes the plan:
 
@@ -33,9 +33,9 @@ and the library is validated in the source checkout. This changes the plan:
   collections. `kb/types/` is now a discovered collection, and the `type-spec`
   schema rejects `tags` (commit `fd573556`). The global types collection
   declares `non-participating`.
-- **I1, I2, I3, and V1 are no longer dependencies.** Phase 3's host migration
+- **I1, I2, I3, and V1 are no longer dependencies.** Phase 4's host migration
   uses `commonplace-init`'s existing migration path, which already rewrites
-  type pointers and removes legacy library copies. Phase 2 validates each
+  type pointers and removes legacy library copies. Phase 3 validates each
   declared collection with `commonplace-validate` scopes; a whole-product
   validation command would be convenient but is not required.
 - **Both starting witnesses have been repaired locally.** On 2026-08-31,
@@ -48,11 +48,11 @@ and the library is validated in the source checkout. This changes the plan:
 
 ## Outcome
 
-The four-phase program is coherent if Phase 1 lands only dormant resolution
-machinery, Phase 2 is the single semantic activation boundary, and Phase 3 is a
+The program is coherent if Phase 1 lands only dormant resolution machinery,
+the Phase 2 finding trial decides how much of Phases 3–4 to build, Phase 3 is the single semantic activation boundary, and Phase 4 is a
 later representation migration. An accepted ADR, live participation
 declarations, new mark wording, and any consumer switch must not precede the
-Phase 2 activation packet.
+Phase 3 activation packet.
 
 This pass fixes the participation declaration, resolver surface, transitional
 head identity, participation matrix, consumer ledger, and cross-consumer
@@ -75,9 +75,9 @@ ADR. The decision record remains a workshop draft during this phase.
 Dormant Phase 1 code may land separately because no current behavior or reader
 license depends on it.
 
-### Phase 2 activates the contract once
+### Phase 3 activates the contract once
 
-Phase 2 is one activation packet containing:
+Phase 3 is one activation packet containing:
 
 - the accepted ADR;
 - live collection participation declarations, in source and in the init
@@ -92,10 +92,10 @@ No commit on `main` may expose only part of that list. Code and prose may be
 reviewed as smaller commits on a branch, but the operative state changes
 together. This is the point at which the original T1 contradiction closes.
 
-### Phase 3 changes representation, not meaning
+### Phase 4 changes representation, not meaning
 
-Phase 2 keeps the current head locations and resolves them through one head
-API. Phase 3 changes that API from legacy metadata lookup to direct
+Phase 3 keeps the current head locations and resolves them through one head
+API. Phase 4 changes that API from legacy metadata lookup to direct
 `kb/tags/<tag>-README.md` construction, moves every head, removes the legacy
 identity fields and hub branches, and migrates host projects. It retains no
 legacy fallback. Because membership and all consumers already resolve through
@@ -193,20 +193,20 @@ content. The head defines the tag's canonical sense and supplies its fixed
 meaning, use, boundary, route, and stopping prefix; richer curation remains
 optional.
 
-During Phases 1 and 2, `resolve_tag_head` scans the KB for the existing
+During Phases 1 and 3, `resolve_tag_head` scans the KB for the existing
 `tag-readme` type with `index_source: tag` and uses `index_key` as identity.
-Duplicate identities fail. Phase 2 requires every participating tag to resolve
+Duplicate identities fail. Phase 3 requires every participating tag to resolve
 to one such head but leaves the files in their existing locations. The legacy
 `tag-indexes` hub is not a tag head.
 
-Phase 3 changes the implementation to direct construction of
+Phase 4 changes the implementation to direct construction of
 `kb/tags/<tag>-README.md`, derives identity from the filename, and removes
 `index_source` and `index_key`. Canonical resolution and relocation land
 together; metadata scanning does not survive as compatibility code.
 
 Non-participating artifacts may route a known tag to its head even though they
 are not members. A headless provisional tag renders as plain text. Source
-topic tags may therefore remain search and routing cues; the separate Phase 4
+topic tags may therefore remain search and routing cues; the separate Phase 5
 cleanup removes only redundant source-family values.
 
 A host tag with the same string as a library tag is a separate tag in the
@@ -242,7 +242,7 @@ and 20 per-tag heads on 2026-09-25. Six tags are headless:
 | `planning` | 1 | Confirm the predicate, then create a head or replace/remove the assignment. |
 | `tags` | 1 | Confirm the predicate, then create a head or replace/remove the assignment. |
 
-The activation invariant is not a head count. Phase 2 re-derives every tag in
+The activation invariant is not a head count. Phase 3 re-derives every tag in
 participating content and dispositions every headless value. It may establish a
 minimal head, reuse a better existing tag, or remove a bad assignment; it may
 not activate with a headless participating tag.
@@ -253,20 +253,20 @@ not activate with a headless participating tag.
 |---|---|---|---|
 | Collection discovery | `src/commonplace/lib/project_paths.py` | Already discovers `kb/types/` (commit `fd573556`). Parse participation clauses from discovered collections. | Discovery and declaration tests. |
 | Membership enumeration | `src/commonplace/lib/index_generated.py` | Move eligibility and `by_tag` assembly into the resolver; leave generation as a consumer. | Unit tests compare exact records and ordering. |
-| Operator command | No current exact-membership command | Build and test the renderer in Phase 1; register and document `commonplace-tag-members` in Phase 2 without adding a second resolver. | `pyproject.toml`, `kb/reference/commands.md`, CLI tests. |
+| Operator command | No current exact-membership command | Build and test the renderer in Phase 1; register and document `commonplace-tag-members` in Phase 3 without adding a second resolver. | `pyproject.toml`, `kb/reference/commands.md`, CLI tests. |
 | Mark validation | `src/commonplace/lib/validation.py` | Check `complete` and `covered_by` over resolver membership for the whole KB. | `tests/commonplace/lib/test_validation_tag_readme.py`. |
 | Impact expansion | `ValidationRun.impacted_marked_tag_readmes` in `validation.py` | Eligible tag edits affect their heads anywhere in the KB; declaration edits affect every marked head. | Tests for member, participation, exclusion, creation, deletion, and relocation changes. |
 | Generated tag-page tail | `src/commonplace/docs/properdocs_hooks.py`; `index_generated.py` | Generate uncurated members from the same resolver result. | ProperDocs tests compare the shared fixture's member paths. |
 | Footer routing | `_find_tag_index` in `properdocs_hooks.py` | Use `resolve_tag_head`, including for non-participating artifacts. | Headed and headless build cases. |
 | Connect discovery and skip license | `kb/instructions/cp-skill-connect/SKILL.md` | Read heads; call `commonplace-tag-members` for exact fallback; keep task discovery open after a mark skip. | Skill text review; the installed stub points at the same file. |
 | Agent recipes | `AGENTS.md`, `AGENTS.md.template`, `kb/reference/navigation.md`, the generated `.commonplace/library.md` | Replace path-list `rg` recipes with the command; use `--library` for library tags and label a two-space result as navigation only. | Template/init fixture plus lexical guard against the retired recipes. |
-| Mark and head authoring | `kb/types/tag-readme.md`, its schema, `kb/instructions/maintain-curated-indexes.md` | State KB-wide mark semantics, mandatory stable heads, and transitional identity; keep the old identity fields until Phase 3. | Type/schema tests and maintenance examples. |
+| Mark and head authoring | `kb/types/tag-readme.md`, its schema, `kb/instructions/maintain-curated-indexes.md` | State KB-wide mark semantics, mandatory stable heads, and transitional identity; keep the old identity fields until Phase 4. | Type/schema tests and maintenance examples. |
 | Tag assignment grammar | `kb/types/note-base.schema.yaml`, authoring instructions, collection clauses | Enforce the token grammar structurally and semantic reuse through the write path and review. | Schema fixtures cover `tags` and `covered_by`; semantic review remains non-deterministic. |
-| Legacy hub and generated-index branches | `kb/types/generated-index.*`, tag-readme schema, generation/validation branches | Retain through Phase 2; remove only with the Phase 3 move. | Phase 3 lexical absence checks. |
-| Review population | `src/commonplace/review/review_target_selector.py` and review-sweep procedures | Phase 2 preserves current heads; Phase 3 adds `kb/tags/` to the reviewable set before moving heads. | Selector tests prove heads remain reviewable across the move. |
-| Library build and init | `hatch_build.py` `SHIPPED`, `scaffold_manifest.py`, `commonplace-init` migrations, `library.md` entry points | Phase 2 ships the declarations and scaffolds host declarations. Phase 3 ships `tags/`, scaffolds an empty host `kb/tags/`, moves host heads in an init migration, and repoints the library's navigation entry point. | Build test, init tests on fresh and pre-move host fixtures. |
-| Published paths | `properdocs.yml` redirect map and build configuration | Phase 2 changes semantics at old URLs; Phase 3 records redirects for every moved head and the retired hub. | Site build and redirect validation. |
-| Machine classification using one tag | `src/commonplace/lib/systems_matrix.py` and agent-memory review contracts | Continue reading `trace-learning` directly; this is predicate parity, not general membership recovery. | Independent Phase 4 packet. |
+| Legacy hub and generated-index branches | `kb/types/generated-index.*`, tag-readme schema, generation/validation branches | Retain through Phase 3; remove only with the Phase 4 move. | Phase 4 lexical absence checks. |
+| Review population | `src/commonplace/review/review_target_selector.py` and review-sweep procedures | Phase 3 preserves current heads; Phase 4 adds `kb/tags/` to the reviewable set before moving heads. | Selector tests prove heads remain reviewable across the move. |
+| Library build and init | `hatch_build.py` `SHIPPED`, `scaffold_manifest.py`, `commonplace-init` migrations, `library.md` entry points | Phase 3 ships the declarations and scaffolds host declarations. Phase 4 ships `tags/`, scaffolds an empty host `kb/tags/`, moves host heads in an init migration, and repoints the library's navigation entry point. | Build test, init tests on fresh and pre-move host fixtures. |
+| Published paths | `properdocs.yml` redirect map and build configuration | Phase 3 changes semantics at old URLs; Phase 4 records redirects for every moved head and the retired hub. | Site build and redirect validation. |
+| Machine classification using one tag | `src/commonplace/lib/systems_matrix.py` and agent-memory review contracts | Continue reading `trace-learning` directly; this is predicate parity, not general membership recovery. | Independent Phase 5 packet. |
 
 The implementation packet reruns lexical search over code, instructions,
 templates, package data, and tests before claiming this ledger complete. A new
@@ -302,8 +302,9 @@ is invoked.
 ## Execution gates
 
 - Phase 1 has no external gate.
-- Phase 2 activates only after the resolver contract is stable.
-- Phase 3 starts only after Phase 2 converges consumers.
-- Phase 4 cleanup may run independently now. The navigation and browsing
-  trials wait for exact resolution and canonical heads and remain outside
-  structural closure.
+- Phase 2, the finding trial, runs on Phase 1's resolver. Its decision may
+  rewrite or close Phases 3–4, including parts of this readiness contract.
+- Phase 3 activates only after the resolver contract is stable and Phase 2 has
+  decided.
+- Phase 4 starts only after Phase 3 converges consumers.
+- Phase 5 cleanup may run independently now.

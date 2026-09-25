@@ -1,6 +1,7 @@
-# Phase 3 — Move canonical heads and migrate host projects
+# Phase 4 — Move canonical heads and migrate host projects
 
-**State:** waits for consumer convergence in Phase 2.
+**State:** waits for consumer convergence in Phase 3; scope set by the
+[Phase 2 decision](./02-finding-trial.md#decision-rule).
 
 ## Outcome
 

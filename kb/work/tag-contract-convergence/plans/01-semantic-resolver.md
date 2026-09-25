@@ -8,7 +8,7 @@ Implement and test one candidate tag meaning per KB, declared participation,
 one exact membership resolver, and transitional head lookup. Keep the machinery
 dormant: live collection declarations, binding wording, consumer switches,
 mandatory-head enforcement, and the accepted ADR all activate together in
-Phase 2.
+Phase 3.
 
 ## Decision packet
 
@@ -50,7 +50,7 @@ choices inside implementation; return a conflict to this workshop.
 5. Keep membership independent of presentation. Implement and test the stable
    Python result and the JSON-lines renderer for
    `commonplace-tag-members TAG [--library]`, but do not register or document
-   the command until Phase 2 activation.
+   the command until Phase 3 activation.
 6. Treat membership-affecting collection changes as invalidation inputs for all
    heads in the KB.
 7. Resolve current-location heads through the `tag-readme` type plus

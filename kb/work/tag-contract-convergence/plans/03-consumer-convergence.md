@@ -1,6 +1,8 @@
-# Phase 2 — Activate the contract across every membership consumer
+# Phase 3 — Activate the contract across every membership consumer
 
-**State:** blocked on Phase 1's resolver contract. The readiness consumer
+**State:** blocked on Phase 1's resolver contract and the [Phase 2
+decision](./02-finding-trial.md#decision-rule), which may rewrite or close this
+phase. The readiness consumer
 inventory is a baseline and must be refreshed at execution.
 
 ## Outcome

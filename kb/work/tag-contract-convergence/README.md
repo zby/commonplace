@@ -12,7 +12,9 @@ activation boundary, declaration syntax, resolver surface, transitional head
 model, consumer ledger, and fixture. On 2026-09-25 it was rebaselined for
 [ADR 086](../../reference/adr/086-projects-read-the-library-from-the-installed-package.md),
 which removed the installed library copy and with it the multi-root design.
-Phase 1 is ready. `kb/types/` is now a discovered collection and type specs
+Phase 1 is ready. Later the same day the program was reordered: a finding
+trial (Phase 2) now tests whether any tag page helps before the contract and
+head work. `kb/types/` is now a discovered collection and type specs
 reject tags (commit `fd573556`). No adopting ADR, live participation
 declaration, exact resolver, consumer migration, canonical tag collection, or
 host migration has landed.
@@ -47,7 +49,7 @@ disagree while this workshop asks what coherent architecture replaces them.
 Both corpus witnesses below have since been repaired locally (see the
 [rebaseline](./plans/00-readiness.md#rebaseline-for-adr-086-2026-09-25)). The
 defect they exposed is latent, not gone: validation still checks one
-collection, so Phase 2 acceptance uses a synthetic cross-collection witness.
+collection, so Phase 3 acceptance uses a synthetic cross-collection witness.
 
 - The [tag-readme type](../../types/tag-readme.md) and routing use unqualified
   membership language across collections, while current validation and
@@ -76,8 +78,8 @@ record](../system-contract-consistency/plans/t1-tag-scope.md).
   disclosure](../../notes/pointer-design-tradeoffs-in-progressive-disclosure.md)
 - [Tag maintenance and derived
   browsing](../../reference/proposals/tag-maintenance-and-derived-browsing.md)
-  — the Gwern-derived browsing and maintenance options; an input to the
-  Phase 4 trial only
+  — the Gwern-derived browsing and maintenance options; the source of the
+  Phase 2 finding trial's grouped page
 
 The recent Pirolli, Teevan, Tombros–Sanderson, Milo, and Luhmann ingests linked
 from those inputs motivate a distinction among proximal cues, contextual local
@@ -113,13 +115,16 @@ The adopting decision should begin from these narrow choices:
 - Canonical heads are the vocabulary registry. Do not add a second manually
   maintained known-tags list unless a concrete provisional-tag lifecycle needs
   one.
-- Phase 2 activates these semantics once, with live participation declarations,
+- Phase 3 activates these semantics once, with live participation declarations,
   mandatory transitional heads, every exact-membership consumer, and the
-  accepted ADR. Phase 1 may land dormant resolver machinery; Phase 3 later
+  accepted ADR. Phase 1 may land dormant resolver machinery; Phase 4 later
   changes head representation without changing membership.
-- Gwern-style browsing and maintenance aids are a Phase 4 trial, not part of
-  the contract. Letting heads carry tags as related-topic links would change
-  membership; if wanted, the ADR decides it.
+- Usefulness is tested before correctness is enforced. The operator stopped
+  using tags because tag pages did not help them find things (2026-09-25).
+  The Phase 2 trial compares the current page, an exact listing, a Gwern-style
+  grouped page, and no tag at all; its result decides how much contract and
+  head work follows. Letting heads carry tags as related-topic links would
+  change membership; if wanted, the ADR decides it.
 
 These are workshop selections until an ADR adopts them.
 
@@ -127,14 +132,17 @@ These are workshop selections until an ADR adopts them.
 
 0. [Readiness and execution inventory — complete](./plans/00-readiness.md)
 1. [Semantic foundation and exact resolver](./plans/01-semantic-resolver.md)
-2. [Consumer convergence and contract activation](./plans/03-consumer-convergence.md)
-3. [Canonical heads and host migration](./plans/04-canonical-heads-migration.md)
-4. [Independent metadata cleanup, navigation trial, and Gwern-style browsing trial](./plans/05-cleanup-and-follow-up.md)
+2. [Finding trial: does any tag page help find things?](./plans/02-finding-trial.md)
+3. [Consumer convergence and contract activation](./plans/03-consumer-convergence.md) — scope set by Phase 2
+4. [Canonical heads and host migration](./plans/04-canonical-heads-migration.md) — scope set by Phase 2
+5. [Independent metadata cleanup](./plans/05-cleanup-and-follow-up.md)
 
 Phase 1 is separately landable only while its resolver and head lookup remain
-dormant. Phase 2 is the single activation packet: the accepted ADR, live
+dormant. Phase 2 may rewrite or close Phases 3–4; if nothing beats plain
+description search, tags become search keywords and the head and mark work is
+dropped. Phase 3 is the single activation packet: the accepted ADR, live
 declarations, head requirement, consumer switches, and witness repairs change
-operative behavior together. Phase 3 changes canonical paths only after
+operative behavior together. Phase 4 changes canonical paths only after
 consumers resolve semantics correctly in existing locations. Source-family
 cleanup is independent and must not enlarge the core adoption patch.
 
@@ -142,28 +150,32 @@ cleanup is independent and must not enlarge the core adoption patch.
 
 None since the 2026-09-25 rebaseline. The parent workshop's I1, I2, I3, and V1
 findings no longer gate this program: there is no projected library copy to
-migrate or validate, and Phase 3 uses `commonplace-init`'s existing migration
+migrate or validate, and Phase 4 uses `commonplace-init`'s existing migration
 path for host projects.
 
 ## Evaluation boundary
 
-Structural closure asks whether every exact-membership consumer resolves and
-uses the same eligible set, in the source checkout and in a host project. It does not
-ask whether one navigation presentation improves agent task performance.
+The Phase 2 finding trial is a gate on scope, not on closure. It decides
+whether tags are worth a contract at all and which tag page the contract should
+serve. Its result is judged on the operator's real finding tasks, for the
+operator and for fresh agents, measuring found targets, misses (including
+relevant items outside the tag), items opened, and early stopping.
 
-After the resolver and heads exist, a bounded agent trial may compare exact
-membership records, a curated head, and query-conditioned pointers. Measure
-membership recovery and task-relevant discovery separately, including false
-stopping. That trial is follow-up unless an adopted decision makes a performance
-claim.
+Structural closure then asks whether every exact-membership consumer that
+survives Phase 2 resolves and uses the same eligible set, in the source
+checkout and in a host project.
 
 ## Closure condition
 
 Close and delete this workshop after:
 
-- an ADR adopts one tag semantic, root, participation, mark, and head contract;
-- all exact-membership consumers use the resolver;
-- canonical heads and the source and host migrations pass their fixtures;
+- the Phase 2 finding trial has recorded its result and decision;
+- an ADR adopts the tag contract that decision supports: at minimum one
+  semantic, participation, and membership contract, plus the mark and head
+  contract if tags remain a finding path;
+- all surviving exact-membership consumers use the resolver;
+- if heads survive, canonical heads and the source and host migrations pass
+  their fixtures;
 - the two proposals are retired through the normal proposal lifecycle;
 - independent cleanup is completed or explicitly transferred;
 - the parent workshop rechecks and closes T1;
