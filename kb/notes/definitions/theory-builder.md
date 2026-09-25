@@ -1,5 +1,5 @@
 ---
-description: "Definition — a theory builder grows objective knowledge by conjecture and refutation: it states theories in localized units, acts on them, criticizes what the units say, and retains the results; learning is tested, not assumed"
+description: "Definition — a theory builder grows objective knowledge by conjecture and refutation: it states theories in localized units, acts on them, criticizes what they say, and builds on the result; persistence and addressability are graded"
 type: kb/types/definition.md
 tags: [foundations, self-improving-systems, learning-theory]
 ---
@@ -45,19 +45,18 @@ Popper's terms.
    revised, or rejected whole and replaced by a new conjecture. Revision need
    not be small: it may change a core assumption, the problem, or the
    machinery.
-4. **Growth.** It retains its theories and the record of their criticism, so
-   that the new problem `P2` becomes the starting point of later work. A
-   builder that keeps only the record of criticism and rebuilds a theory from
-   it when needed also meets this condition: the rebuilt theory is a new
-   conjecture informed by the retained criticism. Later work consumes what is
-   retained, and in Popper's sense consumption includes "criticising them,
-   changing them, and often even demolishing them, in order to replace them
-   by better ones" ([Popper 1966](../../sources/popper-a-realist-view-of-logic-physics-and-history-1966.ingest.md#quotes)).
-   Retention counts when what is kept is taken up on a new problem. Rounds
-   of revision on one problem, however many, are one pass of error
-   elimination; the unit is the problem, not the process run, so a single
-   run that carries its results into later, different problems meets the
-   condition.
+4. **Iteration.** The result of criticism is kept and shapes the next
+   conjecture: the new problem `P2` becomes the starting point of the next
+   round. The kept result may be the revised theory, the record of criticism,
+   or both; a theory rebuilt from retained criticism is a new conjecture
+   informed by it. In Popper's sense, consuming a theory includes
+   "criticising them, changing them, and often even demolishing them, in
+   order to replace them by better ones"
+   ([Popper 1966](../../sources/popper-a-realist-view-of-logic-physics-and-history-1966.ingest.md#quotes)).
+   A revised theory is a new conjecture, so testing it again on cases that
+   refuted its predecessor is a real test. The condition sets no minimum
+   duration; how long and how widely results persist is graded (see
+   Persistence).
 
 **Criticism against gradient descent.** Gradient descent also eliminates
 error, and it assigns blame more finely than any text: every parameter gets
@@ -100,6 +99,21 @@ configuration states which model does which work, criticism can blame that
 choice, and the builder can replace the model whole. What the builder cannot
 do is criticize what the model's weights say, because no unit in them says
 anything.
+
+## Persistence
+
+Condition 4 sets the minimum: the result of criticism reaches the next
+round. Above the minimum, persistence comes in grades: within one reasoning
+episode, across the rounds of one run, across runs on the same task, and
+across problems and sessions, where later work on other questions starts from
+retained theories and their testing record. Commonplace builds for the high
+end: a library of retained theories that later work takes up. That this pays,
+compared with rebuilding what criticism produced, is a conjecture, tested
+against builders whose results persist less.
+
+A frozen product handed to someone else does not extend the builder. When a
+run freezes a theory and another system deploys it, the builder that
+produced it stopped at the freeze; what it was while it ran is unchanged.
 
 ## Boundary
 
@@ -160,6 +174,13 @@ human-staffed theory builder; the research program's bet is an autonomous one.
   theory or supplies all the criticism.
 - **Commonplace's note-review loop**, with the operator performing internal
   operations, is a human-staffed theory builder.
+- **A refinement run such as FORTE** is a theory builder at a low grade of
+  persistence. Its Horn-clause theory is stated and highly addressable,
+  misclassified examples refute it, proof traces assign blame to clauses, and
+  each repair is tested again. What it lacks is persistence beyond the run.
+- **A theory built while reasoning and then discarded** is inside at the
+  lowest grade when the reasoning states the theory, criticizes it, and
+  revises it in response. Discarding it afterwards ends that builder.
 - **Criticism applied through weights.** Critique-trained reinforcement
   learning and "textual gradient" methods state a criticism, then use it to
   update weights. The revised theory is the weights, where no unit says
@@ -191,12 +212,9 @@ human-staffed theory builder; the research program's bet is an autonomous one.
   on what a unit says.
 - **A fixed theory.** A stated theory guides decisions and the system never
   criticizes it. It fails condition 3.
-- **Work on one problem only.** A theory built while reasoning and then
-  discarded fails condition 4. So does iterated refinement on a single
-  problem, such as one invocation of FORTE over a supplied theory and
-  training set, or counterexample-guided synthesis of one program: the
-  rounds are one pass of error elimination, and nothing is taken up on a new
-  problem. This does not classify a larger system that uses the procedure.
+- **Criticism that feeds nothing.** A critic reports errors, but no next
+  conjecture takes the report up: the output is ranked, filtered, or
+  returned as it was. It fails condition 4.
 - **A stored theory nothing consumes.** It fails condition 2. See
   [an action model matters only through its consumption path](../an-action-model-matters-only-through-its-consumption-path.md).
 

@@ -58,10 +58,14 @@ Decision numbers D1–D8 refer to the
   enough.
 - D8: restore "revision need not be small" (done) and "retention is the
   builder's, not the interpreter's" (done, in Boundary).
-- N1: retention counts when what is kept is taken up on a new problem; rounds
-  on one problem are one pass of error elimination (reading C). N2 and N3:
-  the inventory's D1 titles and D2 headlines are approved; the lead article
-  moves to `building-a-theory-builder-from-todays-llms.md`.
+- N1 (revised 2026-09-25): condition 4 is iteration — the result of
+  criticism shapes the next conjecture. Persistence (within an episode, a
+  run, across runs, across problems) is a graded design commitment, like
+  addressability, not a condition. This supersedes the earlier "new problem"
+  reading, which drew its line by fiat: Popper's P2 arises within one
+  domain, and a revised theory re-tested on old cases faces a real test.
+  N2 and N3: the inventory's D1 titles and D2 headlines are approved; the
+  lead article moves to `building-a-theory-builder-from-todays-llms.md`.
 - Outside-system checks: `assess-learning-claims-during-ingest.md` and the
   analyse-agentic-system skill judge systems condition by condition against
   the new definition.
@@ -77,11 +81,6 @@ Decision numbers D1–D8 refer to the
 - Testing article grew from about 1,660 to 2,840 words; consider a
   tightening pass after the retitle.
 
-- Problem granularity for condition 4 (raised by B4): workers read many
-  instances of one task, or one benchmark's task family, as one problem, so
-  instances are tests of one theory and only a different task is a new
-  problem. This decided GEPA, procedural graphs, PoPE, and Corral. Confirm,
-  and consider stating it in the definition's condition 4.
 - Cleanup for step 6: unlinked "conjectural learning" outside Learning Claims
   sections (e.g. `automated-hypothesis-validation-sequential-falsifications`
   Extractable Value); its follow-up asks whether POPPER should be named in
