@@ -74,9 +74,6 @@ Decision numbers D1–D8 refer to the
 
 Raised by the post-migration coherence pass (2026-09-25):
 
-- Evidence note title: "…but weight-only retention does" holds for a
-  builder spanning runs; within one run Apodex's task board leaves the case
-  open. Retitle to say "across runs", or accept the scope as the body states.
 - Checks case 11: condition 4 says the result "shapes the next conjecture";
   a result that changes only reliance on a theory is borderline. Decide
   whether choosing the next test counts as the next round, and say so.
