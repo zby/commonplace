@@ -211,4 +211,4 @@ Relevant Notes:
 - [Open-ended improvement must allocate search before decisive evaluation is available](./open-ended-improvement-allocates-search-before-evaluation.md) — grounds: the prior-allocation condition that a held theory is proposed to meet
 - [Learning inside a fixed decomposition inherits its mistakes](./learning-inside-a-fixed-decomposition-inherits-its-mistakes.md) — extends: what the supplied-provenance end of the second axis costs under empirical licensing
 - [Revising an improvement objective is licensed from outside it or is not improvement](./revising-an-improvement-objective-is-licensed-from-outside-it.md) — grounds: why a supplied utility function is unrevisable from inside the construction that serves it
-- [Conjectural learning has distinct precedents](./conjectural-learning-has-distinct-precedents.md) — extends: distinguishes the program's epistemic, structural, and implementation precedents
+- [Conjectural learning has distinct precedents](./theory-building-has-distinct-precedents.md) — extends: distinguishes the program's epistemic, structural, and implementation precedents

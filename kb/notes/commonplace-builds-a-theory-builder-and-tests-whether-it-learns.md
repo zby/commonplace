@@ -21,7 +21,7 @@ Beyond the four conditions, Commonplace makes three further choices:
 fine-grained addressability, high persistence, and fixed model weights.
 Whether the conditions and these choices offer advantages over other
 arrangements is an empirical question. Each conjecture below compares the
-builder with an arrangement that lacks one feature or has less of it. The [precedents note](./conjectural-learning-has-distinct-precedents.md)
+builder with an arrangement that lacks one feature or has less of it. The [precedents note](./theory-building-has-distinct-precedents.md)
 supplies the fuller attribution.
 
 ## Research program and development path

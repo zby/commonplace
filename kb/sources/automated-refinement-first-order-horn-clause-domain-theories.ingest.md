@@ -43,7 +43,7 @@ can be caught in local maxima.
 
 ## Connections Found
 
-FORTE is a technical basis for the classical refinement mechanism in [conjectural learning has distinct precedents](../notes/conjectural-learning-has-distinct-precedents.md): explicit fallible rules shape proof diagnosis and are themselves revised against examples. It also provides a concrete comparison for [our account of theory use](../notes/definitions/theory-builder.md#exclusions). In its debugging application the revised theory is the program; this differs from revising a theory of purposes and organization that guides edits to a distinct program. Program repair therefore broadens the lineage beyond external classification without establishing reflective self-modification. The [fixed-decomposition analysis](../notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md) limits the experimental reading: FORTE varies clauses and, in its path-finding ablation, an operator capability; it does not learn its representation, verifier, or protected background predicates.
+FORTE is a technical basis for the classical refinement mechanism in [conjectural learning has distinct precedents](../notes/theory-building-has-distinct-precedents.md): explicit fallible rules shape proof diagnosis and are themselves revised against examples. It also provides a concrete comparison for [our account of theory use](../notes/definitions/theory-builder.md#exclusions). In its debugging application the revised theory is the program; this differs from revising a theory of purposes and organization that guides edits to a distinct program. Program repair therefore broadens the lineage beyond external classification without establishing reflective self-modification. The [fixed-decomposition analysis](../notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md) limits the experimental reading: FORTE varies clauses and, in its path-finding ablation, an operator capability; it does not learn its representation, verifier, or protected background predicates.
 
 ## Extractable Value
 
@@ -69,4 +69,4 @@ Recursive repair depends on sufficiently complete small examples. Deriving examp
 
 ## Recommended Next Action
 
-Revise [conjectural learning has distinct precedents](../notes/conjectural-learning-has-distinct-precedents.md) to add a bounded comparison of executable-theory repair and refinement of a theory guiding separate software changes, using FORTE's debugging results and component-contract failure to state what transfers and what remains untested.
+Revise [conjectural learning has distinct precedents](../notes/theory-building-has-distinct-precedents.md) to add a bounded comparison of executable-theory repair and refinement of a theory guiding separate software changes, using FORTE's debugging results and component-contract failure to state what transfers and what remains untested.
