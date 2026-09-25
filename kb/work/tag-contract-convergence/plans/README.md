@@ -3,6 +3,11 @@
 These plans stage one invariant as separately reviewable changes. They are
 workshop state, not adopted system authority.
 
+Superseded on 2026-09-25 by the decisions recorded in the workshop README:
+Phase 1 closes unbuilt, Phase 2 is replaced by the committed cleanup, and
+Phases 3–4 shrink to the ADR, the participating-scope consumer change, and the
+`kb/tags/` relocation. The table is kept as the record of the design space.
+
 | Phase | Outcome | Dependency |
 |---|---|---|
 | 0 | **Complete:** [activation boundary, decisions, inventory, and fixture](./00-readiness.md), rebaselined 2026-09-25 for ADR 086 | Current workshop and implementation audit |

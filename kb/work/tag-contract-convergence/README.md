@@ -12,12 +12,12 @@ activation boundary, declaration syntax, resolver surface, transitional head
 model, consumer ledger, and fixture. On 2026-09-25 it was rebaselined for
 [ADR 086](../../reference/adr/086-projects-read-the-library-from-the-installed-package.md),
 which removed the installed library copy and with it the multi-root design.
-Phase 1 is ready. Later the same day the program was reordered: a finding
-trial (Phase 2) now tests whether any tag page helps before the contract and
-head work. `kb/types/` is now a discovered collection and type specs
-reject tags (commit `fd573556`). No adopting ADR, live participation
-declaration, exact resolver, consumer migration, canonical tag collection, or
-host migration has landed.
+`kb/types/` is now a discovered collection and type specs reject tags
+(commit `fd573556`). Later on 2026-09-25 the operator settled the design
+(see [Decisions of 2026-09-25](#decisions-of-2026-09-25)): the finding trial
+is replaced by the cleanup it would have motivated, the exact resolver is not
+built, and heads move to a scaffolded `kb/tags/`. No adopting ADR, live
+participation declaration, consumer change, or relocation has landed.
 
 ## Goal
 
@@ -127,6 +127,59 @@ The adopting decision should begin from these narrow choices:
 
 These are workshop selections until an ADR adopts them.
 
+## Decisions of 2026-09-25
+
+Made by the operator in one working session, after the tag cleanup recorded in
+commits `93dd08fb`, `5202c69d`, and `a92e33e0`. They supersede the bullets
+above where the two differ.
+
+- **Cleanup, not redesign, answers the usefulness question.** The operator's
+  failures to find notes through tags were checked against their own
+  examples. The notes were present and tagged; the miss was vocabulary
+  (title, description, and head phrase did not carry the operator's label)
+  and stale head text that misdescribed what a tag meant. No page shape
+  fixes that, so the Phase 2 four-condition trial is not run. Gwern-style
+  topic groups are redundant with child tags, which Commonplace already has;
+  the grouping proposal stays open only as a split-candidate generator for
+  tags over about 100 members, untriggered.
+- **One namespace per KB; membership over declared participation.** A tag
+  string has one sense within one KB. Every membership claim, mark, and
+  generated listing ranges over the KB's participating library collections:
+  in this checkout `notes`, `reference`, `instructions`,
+  `agent-memory-systems`, `agentic-systems`. `work` and `sources` do not
+  participate. Participation is declared in each collection's contract.
+- **Heads live in `kb/tags/`, in Commonplace and in host projects.** A head is
+  not a note by the notes contract, and members span collections, so the head
+  sits in none of them. The hub becomes `kb/tags/README.md`. `commonplace-init`
+  scaffolds `kb/tags/` with its contract; an empty collection means every tag
+  is a keyword. No heads are scaffolded.
+- **A tag without a head is a keyword.** Searchable, listed, but it carries no
+  marks and makes no completeness claim. This settles the headless tags
+  (`trace-learning`, which marks nearly a whole collection, among them)
+  without forcing heads.
+- **No cross-KB membership.** A host cannot be a member of a library tag; the
+  library is read-only under ADR 086. A host may reuse a library tag string as
+  its own tag. A union of two KBs' sweeps is an explicit query, not a claim.
+- **The exact resolver is not built.** Agents rarely use tags (see the Phase 2
+  plan's survey); the collector, validator, and site tail scanning the
+  participating set is the whole consumer change. Phase 1 closes unbuilt.
+- **Marks stay enforced-or-omitted and are not forced.** `covered_by` on
+  `learning-theory` was restored and dropped again the same day because three
+  fundamentals honestly carry no child; weak child tags and three-note tags
+  are refused, as on 2026-08-31.
+- **Two tag definitions fixed as an example of head cleanup.**
+  `deploy-time-learning` names the phenomenon that deployment surprises and
+  forces post-release change, historically the maintainers' work.
+  `self-improving-systems` names systems that make such changes themselves;
+  taking over that work is the natural pairing, stated in both heads and not
+  part of either definition.
+
+Remaining program: an ADR adopting the above and closing both tag proposals;
+the collector, validator, and site-tail change to participating scope; the
+`kb/tags/` contract, scaffold template, and relocation of the 21 heads and hub
+as a pure relocation commit after the collector change lands; then the
+independent cleanup.
+
 ## Staged program
 
 0. [Readiness and execution inventory — complete](./plans/00-readiness.md)
@@ -136,14 +189,12 @@ These are workshop selections until an ADR adopts them.
 4. [Canonical heads and host migration](./plans/04-canonical-heads-migration.md) — scope set by Phase 2
 5. [Independent metadata cleanup](./plans/05-cleanup-and-follow-up.md)
 
-Phase 1 is separately landable only while its resolver and head lookup remain
-dormant. Phase 2 may rewrite or close Phases 3–4; if nothing beats plain
-description search, tags become search keywords and the head and mark work is
-dropped. Phase 3 is the single activation packet: the accepted ADR, live
-declarations, head requirement, consumer switches, and witness repairs change
-operative behavior together. Phase 4 changes canonical paths only after
-consumers resolve semantics correctly in existing locations. Source-family
-cleanup is independent and must not enlarge the core adoption patch.
+As of 2026-09-25 the plans are superseded by the decisions above: Phase 1
+closes unbuilt, Phase 2 is replaced by the cleanup already committed, Phase 3
+reduces to the ADR plus the participating-scope consumer change, and Phase 4
+to the `kb/tags/` contract, scaffold, and relocation. The plan files are kept
+as the record of the design space until the ADR lands. Source-family cleanup
+is independent and must not enlarge the core adoption patch.
 
 ## External dependencies
 

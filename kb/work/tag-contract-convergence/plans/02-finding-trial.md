@@ -1,7 +1,10 @@
 # Phase 2 — Test whether any tag page helps find things
 
-**State:** waits for Phase 1's resolver. Its outcome decides the scope of
-Phases 3 and 4.
+**State:** superseded on 2026-09-25, not run. The operator's own examples
+showed the misses were vocabulary and stale head text, which no page shape
+addresses; see the workshop README's decisions section. The survey below
+remains the evidence that agents rarely use tags. Kept as the record of the
+design space.
 
 ## Why this runs before the contract work
 
