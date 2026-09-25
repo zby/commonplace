@@ -104,7 +104,7 @@ The requirements give a checklist. A study can satisfy some items and miss other
 
 Uptake, displaced gain, and attribution are joint requirements, not steps taken in order. One later episode that meets all three is local evidence of compounding. Only a sequence of such episodes is evidence that compounding is sustained.
 
-### HyperAgents reaches one attributed cross-domain link
+### HyperAgents shows one bundled cross-domain contribution
 
 The [HyperAgents transfer experiment](https://ar5iv.labs.arxiv.org/html/2603.19461#52-improving-the-ability-to-improve), summarized in the [ingest](../sources/hyperagents.ingest.md), comes close to this protocol. The authors selected one transfer hyperagent from each of five joint paper-review and robotics runs, moved them into unseen math grading, and ran 50 later agent-generation steps with DGM-H without self-improvement. In that baseline the meta agent that modifies hyperagents is fixed for the entire run. Median Improvement@50 reached 0.630 (95% bootstrap CI 0.540–0.630), significantly above the initial hyperagent.
 
