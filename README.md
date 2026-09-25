@@ -87,7 +87,7 @@ src/commonplace/          Packaged operational engine
 
 The [rendered site](https://zby.github.io/commonplace/) is the main route into the research. Starting points:
 
-- [Can a Theory Builder Running on Fixed-Weight LLMs Learn?](./kb/articles/can-a-theory-builder-running-on-fixed-weight-llms-learn.md) — the lead article, with supplements on [testing](./kb/articles/testing-whether-a-theory-builder-learns.md), [bootstrapping](./kb/articles/bootstrapping-an-autonomous-theory-builder.md), [existing systems](./kb/articles/which-existing-self-improving-systems-are-theory-builders.md), and [the software house](./kb/articles/an-automated-software-house-as-a-second-test-of-a-theory-builder.md).
+- The [theory builder definition](./kb/notes/definitions/theory-builder.md) and [Commonplace builds a theory builder and tests whether it learns](./kb/notes/commonplace-builds-a-theory-builder-and-tests-whether-it-learns.md) — what a theory builder is, and the research program that tests whether one learns.
 - [Deployment-time learning](./kb/notes/retained-artifacts-enable-persistent-deployment-time-adaptation.md) and the [learning theory index](./kb/notes/learning-theory-README.md) — durable changes to prompts, rules, tools, and code that affect later sessions without updating model weights.
 - [Self-improving systems](./kb/notes/self-improving-systems-README.md) and [Commonplace as a reflective system](./kb/notes/evidence/commonplace-as-a-reflective-system.md).
 - Reviews of [agent memory systems](./kb/agent-memory-systems/README.md) and [agentic systems](./kb/agentic-systems/README.md), with a [comparative review](./kb/agent-memory-systems/agentic-memory-systems-comparative-review.md).
