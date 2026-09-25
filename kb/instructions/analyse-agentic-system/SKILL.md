@@ -196,10 +196,10 @@ Keep these distinctions:
   without changing its content. A theory rejected whole and replaced by a
   new conjecture has been revised.
 - **Iteration** (condition 4) counts when the result of criticism is kept
-  and shapes the next conjecture. The kept result may be the revised theory,
+  and shapes the next round. The kept result may be the revised theory,
   the formulated criticism, or both; rebuilding a theory from retained
   criticisms counts, input/outcome records alone do not. A critic whose
-  report no next conjecture takes up fails the condition. Rounds of revision
+  report no next round takes up fails the condition. Rounds of revision
   within one run meet it; a revised theory re-tested on the cases that
   refuted its predecessor faces a real test.
 - **Persistence** is a separate graded finding above condition 4's minimum:
@@ -258,7 +258,7 @@ Keep these distinctions:
 
 On a theory route, give each claim its own conclusion status: localized
 content, consumption, content-directed criticism, the resulting revision or
-changed reliance, iteration into the next conjecture with its persistence
+changed reliance, iteration into the next round with its persistence
 grade, and any improved capacity attributable to that process. Report them under the free-text labels
 "theory-builder conditions 1–4" and "learning". For a claim about later or
 recurrent use, also trace what persisted and the later consumer.

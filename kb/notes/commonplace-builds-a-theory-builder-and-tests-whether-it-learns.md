@@ -107,7 +107,7 @@ builder, not what makes a system one.
 
 New work begins with what the system retained from earlier problems.
 Condition 4 of the definition, iteration, requires only that the result of
-criticism shape the next conjecture, which can happen within one run.
+criticism shape the next round, which can happen within one run.
 [Persistence](./definitions/theory-builder.md#persistence) is graded: within
 one reasoning episode, across the rounds of one run, across runs, or across
 problems and sessions. We choose the high end: a library of retained theories

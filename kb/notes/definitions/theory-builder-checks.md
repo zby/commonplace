@@ -78,7 +78,7 @@ system improves.
 | 8 | Weights, prompts, and code evolve together around a formulated, consumed, criticized, retained theory | Inside | Weight change is not excluded; fixed weights are a study condition (test 1) |
 | 9 | A formulated theory guides decisions and the system would never criticize it | Outside: the frozen-seed baseline | Condition 3; test 2 |
 | 10 | A theory is stored and no process in the system would consume it | Outside; as a baseline it is the system run without the theory | Condition 2. A theory that a process would consume when an occasion arises is not this case |
-| 11 | A theory survives an attempted refutation, and the recorded result guides later reliance on it or the choice of further tests | Inside | Condition 3 counts attempted refutation; survival and its record satisfy conditions 3 and 4 |
+| 11 | A theory survives an attempted refutation, and the recorded result guides later reliance on it or the choice of further tests | Inside | Condition 3 counts attempted refutation. Condition 4: the text is unchanged but the testing record changed, and the next round uses it (operator, 2026-09-25) |
 | 12 | One model proposes and criticizes its own theories | Inside | Test 1: decorrelating the critic changes how well criticism works, not the arrangement |
 | 13 | Criticisms are written down, but a test detects no difference from placebo text of the same form | Not shown to be inside by that test | Condition 2 for the criticisms is unestablished; non-detection alone does not establish absence (test 4) |
 | 14 | A formulated theory licenses revisions only by proof from premises closed to criticism | Outside | Condition 3, excluded by stipulation. Proof-governed switching alone does not establish this closure in a complete system |
@@ -100,4 +100,4 @@ system improves.
 | 30 | Weights are trained by gradient descent against a loss on examples | Outside: the gradient-descent contrast | Blame reaches every parameter, but no parameter says anything, and the process cannot blame the loss or the data. Conditions 1 and 3 |
 | 31 | One run pursues a sequence of different experiments, and each later experiment consumes the stated findings and criticisms of earlier ones | Inside | Condition 4; persistence within the run |
 | 32 | A bounded optimization run revises one solution for one task over many rounds, keeping a store of variants and critiques | Inside if criticism aims at what the variants say; outside if variants are kept by score alone | Condition 3 decides; condition 4 holds within the run, and freezing the result afterwards ends the builder |
-| 33 | A critic reports errors in stated theories, but no next conjecture takes the report up | Outside | Condition 4: criticism that feeds nothing is not iteration |
+| 33 | A critic reports errors in stated theories, but no next round takes the report up | Outside | Condition 4: criticism that feeds nothing is not iteration |

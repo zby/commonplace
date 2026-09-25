@@ -53,7 +53,7 @@ conditions on how it treats such theories:
 2. it acts on them, so that what a theory says changes what the system does;
 3. it criticizes what they say, by argument, by comparison with rivals, or
    by testing their consequences, and revises or replaces those that fail;
-4. it keeps the result of criticism, so that it shapes the next conjecture.
+4. it keeps the result of criticism, so that it shapes the next round.
 
 The definition sets no minimum for how long results persist. The arrangement
 we build keeps them across problems, so that they change later work on other

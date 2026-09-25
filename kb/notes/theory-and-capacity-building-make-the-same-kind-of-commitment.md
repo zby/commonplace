@@ -33,7 +33,7 @@ Refactoring is the disciplined case on the constructive side: backtracking over 
 
 ## Theory building is one causal path between the two forms
 
-Capacity does not have to be built through theory: search, optimization, and trajectory reuse can turn experience into constructive commitments directly. A [theory builder](./definitions/theory-builder.md) works one path: it states theories, acts on them, criticizes what they say, and lets the result of criticism shape the next conjecture. The builder learns along this path when that process, including the criticism that occurs, causes improved capacity:
+Capacity does not have to be built through theory: search, optimization, and trajectory reuse can turn experience into constructive commitments directly. A [theory builder](./definitions/theory-builder.md) works one path: it states theories, acts on them, criticizes what they say, and lets the result of criticism shape the next round. The builder learns along this path when that process, including the criticism that occurs, causes improved capacity:
 
 ```text
 experience

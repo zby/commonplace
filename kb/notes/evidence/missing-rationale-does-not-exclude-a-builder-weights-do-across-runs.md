@@ -14,7 +14,7 @@ structure that connects them; Apodex 1.1 retains weights revised offline.
 The comparison asks what each system revises, how failures guide repair,
 and what evaluates the change. A [theory builder](../definitions/theory-builder.md)
 states its theories in localized units, acts on them, criticizes what they
-say, and lets the result of criticism shape the next conjecture.
+say, and lets the result of criticism shape the next round.
 The two retention patterns bear on condition 1, localized content,
 differently. A retained rule is a localized unit, so missing historical
 rationale does not settle membership; it also does not establish that no
@@ -46,7 +46,7 @@ The working-memory and trigger components describe and control the harness's own
 
 ## What the comparison establishes, and its limit
 
-Read together, the reports distinguish persistence, diagnostic operations, and evaluation. Prime Agent exposes versioned edits without an admission gate. Recuris exposes localized component repair checked against the source failure and previously solved tasks. Apodex reports offline weight training rather than a deployment-time artifact-revision loop. Classifying a theory builder requires evidence that stated theories guide decisions through their content, that the system criticizes that content, and that the result of criticism shapes the next conjecture. Missing rationale, editable rules, and package growth alone do not settle those conditions for Prime Agent and Recuris. Weight-only retention settles condition 1 for anything that spans runs: on the paper's account Apodex carries only weights across runs, so no builder spans them. Whether any of the three learns is a separate claim about improved capacity. Reported gains establish only what their comparisons support; they do not isolate criticism's contribution.
+Read together, the reports distinguish persistence, diagnostic operations, and evaluation. Prime Agent exposes versioned edits without an admission gate. Recuris exposes localized component repair checked against the source failure and previously solved tasks. Apodex reports offline weight training rather than a deployment-time artifact-revision loop. Classifying a theory builder requires evidence that stated theories guide decisions through their content, that the system criticizes that content, and that the result of criticism shapes the next round. Missing rationale, editable rules, and package growth alone do not settle those conditions for Prime Agent and Recuris. Weight-only retention settles condition 1 for anything that spans runs: on the paper's account Apodex carries only weights across runs, so no builder spans them. Whether any of the three learns is a separate claim about improved capacity. Reported gains establish only what their comparisons support; they do not isolate criticism's contribution.
 
 ## Scope
 

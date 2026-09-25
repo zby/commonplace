@@ -1,5 +1,5 @@
 ---
-description: "Definition — a theory builder applies conjecture and refutation to stated theories: it acts on them, criticizes what they say, and lets the result shape the next conjecture; addressability and persistence are graded"
+description: "Definition — a theory builder applies conjecture and refutation to stated theories: it acts on them, criticizes what they say, and lets the result shape the next round; addressability and persistence are graded"
 type: kb/types/definition.md
 tags: [foundations, self-improving-systems, learning-theory]
 ---
@@ -49,16 +49,24 @@ Popper's account.
    Revision need not be small: it may change a core assumption, the problem,
    or the machinery.
 4. **Iteration.** The result of criticism is kept and shapes the next
-   conjecture. In Popper's schema, "the result of criticism, or of
+   round. In Popper's schema, "the result of criticism, or of
    error-elimination, applied to a tentative theory, is as a rule the
    emergence of a new problem"
    ([Popper 1966](../../sources/popper-a-realist-view-of-logic-physics-and-history-1966.ingest.md#quotes)),
-   and that problem `P2` is the starting point of the next round. The kept
-   result may be the revised theory, the record of criticism, or both; a
+   and that problem `P2` is the starting point of the next round. After a
+   refutation, the next round works with a revised or replacement theory; a
    theory rebuilt from retained criticism is a new conjecture informed by it.
    A revised theory is a new conjecture, so testing it again on cases that
-   refuted its predecessor is a real test. How long and how widely results
-   persist is graded (see Persistence).
+   refuted its predecessor is a real test. After a survival, the text may
+   stay the same while the theory's testing record changes. The record is
+   part of what the next round works with. Popper notes "something like a
+   law of diminishing returns from repeated tests (as opposed to tests which,
+   in the light of our background knowledge, are of a new kind)"
+   ([Conjectures and Refutations, Chapter 10](../../sources/popper-conjectures-and-refutations.ingest.md#quotes)),
+   so the problem becomes finding a test of a new kind, and the record also
+   changes how far the theory is relied on.
+   A change to the record counts only when later work uses it. How long and
+   how widely results persist is graded (see Persistence).
 
 **Criticism against gradient descent.** Gradient descent also eliminates
 error, and it assigns blame more finely than any text: every parameter gets

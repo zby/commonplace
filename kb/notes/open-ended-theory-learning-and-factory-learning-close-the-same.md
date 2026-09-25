@@ -30,7 +30,7 @@ its author did not write. Criticism of the theory then affects later use through
 revision, reconstruction, or changed reliance on unchanged content. The
 convergence claim concerns this recurrent empirical arrangement.
 
-Iteration, where the result of criticism shapes the next conjecture, is a
+Iteration, where the result of criticism shapes the next round, is a
 condition of being a [theory builder](./definitions/theory-builder.md), and
 reconstruction from retained criticism meets it. How far results persist is
 [graded](./definitions/theory-builder.md#persistence). This convergence needs

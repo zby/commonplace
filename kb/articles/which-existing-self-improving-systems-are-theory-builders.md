@@ -23,7 +23,7 @@ and revised skills. They also supply mechanisms for diagnosis, criticism,
 revision, and reuse. [Our program](./building-a-theory-builder-from-todays-llms.md)
 asks two separate questions of each system. Is it a theory builder, a system
 that states its theories, acts on them, criticizes what they say, and lets
-the result of criticism shape its next conjecture? And does holding and
+the result of criticism shape its next round? And does holding and
 criticizing those theories improve its later decisions? A third question is
 whether the whole process can run without people performing its internal
 roles.
@@ -88,7 +88,7 @@ it meets four conditions:
    stated reason bearing on what a variant says, is trial and error and does
    not meet this condition.
 4. **Iteration.** The result of criticism, a revised theory or the record
-   of criticism, is kept and shapes the next conjecture. Rounds of revision
+   of criticism, is kept and shapes the next round. Rounds of revision
    within one run meet this condition. A critic whose report no next
    conjecture takes up does not meet it.
 

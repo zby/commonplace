@@ -20,7 +20,7 @@ individually. Theories may be expressed in natural language, causal models,
 or programs. The arrangement is a
 [theory builder](./definitions/theory-builder.md): it states its theories,
 acts on them, criticizes what they say, and lets the result of criticism
-shape the next conjecture. Two design choices above the definition's
+shape the next round. Two design choices above the definition's
 minimums are treatments whose benefits are conjectured: fine-grained
 addressability, and the high grade of
 [persistence](./definitions/theory-builder.md#persistence), where the

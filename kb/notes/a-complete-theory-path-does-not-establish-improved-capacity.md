@@ -12,7 +12,7 @@ of that theory. Evidence of theory use, a relevant outcome, a response to
 criticism, and later use support successively more complete accounts of the
 process. A [theory builder](./definitions/theory-builder.md) states its
 theories, acts on them, criticizes what they say, and lets the result of
-criticism shape the next conjecture. The definition does not require that
+criticism shape the next round. The definition does not require that
 this improves anything. Learning, in the sense of improved capacity for future action from the process
 of conjecture and criticism, is a further claim. A complete observed sequence
 can still fail to improve that capacity.

@@ -60,7 +60,7 @@ State the external mechanism in its own operational terms before applying a Comm
 Describe a theory pathway through the conditions of a
 [theory builder](../notes/definitions/theory-builder.md): localized content,
 consumption, criticism of that content, and iteration, where the result of
-criticism shapes the next conjecture. Each condition holds only at the
+criticism shapes the next round. Each condition holds only at the
 strength supported by its own evidence. Improved capacity for future action
 attributable to that criticism is a separate learning claim. Persistence
 (within an episode, a run, across runs, or across problems) is a separate

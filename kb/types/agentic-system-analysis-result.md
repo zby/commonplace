@@ -268,8 +268,8 @@ and iteration. No condition is inferred from its neighbours. Criticism is
 itself stated and can blame the test, the data, or an auxiliary assumption; a
 score selecting variants does not count. A theory can survive criticism
 without a text change. Iteration counts when the result of criticism is
-kept and shapes the next conjecture, including rounds within one run; a
-critic whose report no next conjecture takes up fails it. Rebuilding a theory
+kept and shapes the next round, including rounds within one run; a
+critic whose report no next round takes up fails it. Rebuilding a theory
 from retained criticisms counts; retained input/outcome records alone do not.
 Whole replacement of a theory meets condition 1 at its minimum. Persistence
 is a graded finding recorded separately, like addressability: within one

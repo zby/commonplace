@@ -49,7 +49,7 @@ Procedure:
    condition by condition: localized content, consumption, content-directed
    criticism, and iteration. Give each condition its own evidence strength
    and do not infer one from another. Iteration counts when the result of
-   criticism is kept and shapes the next conjecture, including rounds within
+   criticism is kept and shapes the next round, including rounds within
    one run. Record separately how far results persist (within an episode, a
    run, across runs, or across problems); persistence is graded, not a
    condition. Judge learning, meaning improved

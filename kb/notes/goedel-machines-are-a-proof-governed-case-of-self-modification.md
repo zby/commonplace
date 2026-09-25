@@ -113,7 +113,7 @@ objective. A strong answer on one dimension does not supply the other.
 
 A [theory builder](./definitions/theory-builder.md) states tentative
 theories, acts on them, criticizes what they say, and lets the result of
-criticism shape the next conjecture. A
+criticism shape the next round. A
 [reflective](./definitions/theory-builder.md#qualifiers) builder also holds and
 criticizes theories of its own machinery. In neither case must a machinery
 change first be proved beneficial under the current self-theory. The

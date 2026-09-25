@@ -36,7 +36,7 @@ arguments before symbolic formalization
 Commonplace adds the conditions for attributing this method to a particular
 system: its theories are stated in localized units, guide its decisions
 through what they say, are criticized for what they say, and are revised
-through iteration, where the result of criticism shapes the next conjecture.
+through iteration, where the result of criticism shapes the next round.
 How far that result persists is graded. These conditions contain no success
 condition. Whether a builder improves its
 capacity for future action is a separate learning claim, tested rather than

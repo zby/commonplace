@@ -74,9 +74,6 @@ Decision numbers D1–D8 refer to the
 
 Raised by the post-migration coherence pass (2026-09-25):
 
-- Checks case 11: condition 4 says the result "shapes the next conjecture";
-  a result that changes only reliance on a theory is borderline. Decide
-  whether choosing the next test counts as the next round, and say so.
 - Three-obligations note: the third obligation (a performance measure not
   resting on the builder's evaluators) has no section of its own.
 - Lead article: learned state "in natural language" versus "stated text"
