@@ -1,5 +1,5 @@
 ---
-description: "The August 2026 Prime Agent, Recuris, and Apodex reports: retained rules without a recorded rationale leave theory-builder membership open, while Apodex retains only weights, where no unit says anything that could be criticized"
+description: "The August 2026 Prime Agent, Recuris, and Apodex reports: retained rules without a recorded rationale leave theory-builder membership open, while Apodex carries only weights across runs, where no unit says anything, so no builder spans its runs"
 type: kb/types/note.md
 traits: [title-as-claim, has-comparison, has-external-sources]
 tags: [self-improving-systems]
@@ -15,13 +15,15 @@ The comparison asks what each system revises, how failures guide repair,
 and what evaluates the change. A [theory builder](../definitions/theory-builder.md)
 states its theories in localized units, acts on them, criticizes what they
 say, and lets the result of criticism shape the next conjecture.
-The two retention patterns bear on these conditions differently. Missing
-historical rationale for a retained rule does not settle membership: a
-retained rule is a localized unit, and missing rationale does not establish
-absence of formulated criticism during an operation. Retaining only weights
-does settle it: no retained unit says anything, so the deployed Apodex
-system fails condition 1. How far a system's results persist is graded, not
-a membership condition; it does not decide these cases.
+The two retention patterns bear on condition 1, localized content,
+differently. A retained rule is a localized unit, so missing historical
+rationale does not settle membership; it also does not establish that no
+criticism was formulated during an operation. Weights are not localized: no
+unit in them says anything. When weights are all a system carries from one
+run to the next, no builder spans those runs, because the theories that guide
+later runs fail condition 1. The exclusion rests on condition 1 alone, not on
+how long anything persists, which is graded. It does not reach a builder
+confined to one run, which would need stated content inside the run.
 Membership is also separate from learning: a builder need not improve, and a
 system outside the definition can still learn. The evidence below comes from
 the papers' descriptions, not reproduced results.
@@ -40,11 +42,11 @@ The working-memory and trigger components describe and control the harness's own
 
 ## Apodex 1.1: offline parametric retention
 
-[Apodex 1.1](../../sources/apodex-1-1-scaling-agentic-intelligence-for-complex-work.ingest.md) revises model weights through an offline training program run by the developers between releases: supervised fine-tuning merged into one checkpoint, then a reinforcement method that localizes the consequential decision points in a trajectory and trains a correction there, guided by a hint that "is never a prediction target, and is absent at inference time". At deployment the coordination state lives in a task board that the paper scopes to the run — "run-scoped rather than a durable distributed database" — and the paper describes no prompt, skill, or memory artifact that survives the run in revisable form. Within the deployed harness boundary, this account describes no ongoing weight-update loop and does not present the deployed harness as a self-improving system; the developers' training process lies outside that boundary. The retained weights occupy the parametric end of the representational-form axis, where no unit says anything by itself. On that account the deployed system is outside the definition: what it retains fails condition 1. A within-run theory the model states, criticizes, and revises would be a builder at the lowest persistence grade ([boundary cases](../definitions/theory-builder.md#boundary-cases)); the paper does not show this. The developers' training program is outside the deployed boundary. Taken as its own system, it uses a stated hint to train corrections into weights, which on our reading matches the definition's case of criticism applied through weights, also outside. None of this denies that Apodex learns: weight training can improve capacity for future action. It places that learning outside a theory builder. Richard Sutton and Khurram Javed [argue for that end directly](../../sources/sutton-javed-why-ai-models-stop-learning.ingest.md): "So context can be in the state, too. It could be both, but you still need to be able to update the weights."
+[Apodex 1.1](../../sources/apodex-1-1-scaling-agentic-intelligence-for-complex-work.ingest.md) revises model weights through an offline training program run by the developers between releases: supervised fine-tuning merged into one checkpoint, then a reinforcement method that localizes the consequential decision points in a trajectory and trains a correction there, guided by a hint that "is never a prediction target, and is absent at inference time". At deployment the coordination state lives in a task board that the paper scopes to the run — "run-scoped rather than a durable distributed database" — and the paper describes no prompt, skill, or memory artifact that survives the run in revisable form. Within the deployed harness boundary, this account describes no ongoing weight-update loop and does not present the deployed harness as a self-improving system; the developers' training process lies outside that boundary. The retained weights occupy the parametric end of the representational-form axis, where no unit says anything by itself. On that account no theory builder spans Apodex runs: the theories that guide the next run are carried only by weights, which fails condition 1. Within a run the case is open. The task board is stated content that the run consumes, and "plan revisions are expressed as tool-mediated edits to it". Whether its entries state theories, and whether the run's verification criticizes what they say, the paper does not establish; if both hold, each run is a builder at a low persistence grade that ends with the run ([boundary cases](../definitions/theory-builder.md#boundary-cases)). The developers' training program is outside the deployed boundary. Taken as its own system, it uses a stated hint to train corrections into weights, which on our reading matches the definition's case of criticism applied through weights, also outside. None of this denies that Apodex learns: weight training can improve capacity for future action. It places that learning outside a theory builder. Richard Sutton and Khurram Javed [argue for that end directly](../../sources/sutton-javed-why-ai-models-stop-learning.ingest.md): "So context can be in the state, too. It could be both, but you still need to be able to update the weights."
 
 ## What the comparison establishes, and its limit
 
-Read together, the reports distinguish persistence, diagnostic operations, and evaluation. Prime Agent exposes versioned edits without an admission gate. Recuris exposes localized component repair checked against the source failure and previously solved tasks. Apodex reports offline weight training rather than a deployment-time artifact-revision loop. Classifying a theory builder requires evidence that stated theories guide decisions through their content, that the system criticizes that content, and that the result of criticism shapes the next conjecture. Missing rationale, editable rules, and package growth alone do not settle those conditions for Prime Agent and Recuris. Weight-only retention does settle them: on the paper's account Apodex retains only weights and is outside. Whether any of the three learns is a separate claim about improved capacity. Reported gains establish only what their comparisons support; they do not isolate criticism's contribution.
+Read together, the reports distinguish persistence, diagnostic operations, and evaluation. Prime Agent exposes versioned edits without an admission gate. Recuris exposes localized component repair checked against the source failure and previously solved tasks. Apodex reports offline weight training rather than a deployment-time artifact-revision loop. Classifying a theory builder requires evidence that stated theories guide decisions through their content, that the system criticizes that content, and that the result of criticism shapes the next conjecture. Missing rationale, editable rules, and package growth alone do not settle those conditions for Prime Agent and Recuris. Weight-only retention settles condition 1 for anything that spans runs: on the paper's account Apodex carries only weights across runs, so no builder spans them. Whether any of the three learns is a separate claim about improved capacity. Reported gains establish only what their comparisons support; they do not isolate criticism's contribution.
 
 ## Scope
 
@@ -57,7 +59,7 @@ The limit is symmetrical. Nothing here shows that retaining additional explanato
 
 Relevant Notes:
 
-- [Theory builder](../definitions/theory-builder.md) — defined-in: the four conditions; weight-only retention settles them for Apodex, and rule retention leaves them open
+- [Theory builder](../definitions/theory-builder.md) — defined-in: the four conditions; weight-only retention fails condition 1 across Apodex runs, and rule retention leaves membership open
 - [Addressable theory](../definitions/addressable-theory.md) — defined-in: the separately inspectable and revisable structure, graded above the definition's minimum and independent of membership
 - [Reflective system](../definitions/reflective-system.md) — defined-in: the reflective property
 - [Self-improving system](../definitions/self-improving-system.md) — defined-in: the self-improving property

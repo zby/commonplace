@@ -1,5 +1,5 @@
 ---
-description: "Commonplace builds a system meeting the theory-builder conditions and tests whether it learns; criticism of content, fine-grained addressability, and high persistence are each compared against an arrangement with less of them"
+description: "Commonplace builds a system meeting the theory-builder conditions and tests whether it learns; criticism of content is compared against trial and error, and fine-grained addressability and high persistence against builders with less of each"
 type: kb/types/note.md
 traits: [title-as-claim, has-external-sources]
 tags: [foundations, learning-theory, self-improving-systems]
@@ -17,12 +17,14 @@ capacity for future action
 ([Simon's criterion](./learning-is-not-only-about-generality.md)), is the
 hypothesis under test. Membership does not establish it.
 
-Beyond the four conditions, Commonplace makes three further choices:
-fine-grained addressability, high persistence, and fixed model weights.
-Whether the conditions and these choices offer advantages over other
-arrangements is an empirical question. Each conjecture below compares the
-builder with an arrangement that lacks one feature or has less of it. The [precedents note](./theory-building-has-distinct-precedents.md)
-supplies the fuller attribution.
+Beyond the four conditions, Commonplace builds for the high end of two
+graded properties, addressability and persistence, and holds model weights
+fixed as a study condition. Whether these commitments pay is an empirical
+question, stated as three conjectures below. One asks whether criticism, the
+core of membership, pays against trial and error. The other two ask whether
+each high end pays against a builder with less of it. The
+[precedents note](./theory-building-has-distinct-precedents.md) supplies the
+fuller attribution.
 
 ## Research program and development path
 
@@ -50,7 +52,6 @@ subsequent improvement work more productive.
 We start with an incomplete, criticizable account of how to learn and use it
 through interpretation. The LLM and harness supply executable machinery;
 the methodology need not specify every operation before it can be tried.
-The interpreter supplies judgments where the method leaves choices open.
 This reduces the up-front specification needed to expose a methodological
 conjecture to failure. Whether the resulting judgments support useful
 improvement remains an empirical question.
@@ -134,19 +135,19 @@ and builders whose weights change. Our choice is one arrangement within it.
 
 ## Three conjectures
 
-**Criticism of content.** An arrangement that formulates criticism of what a theory says
-and supplies it to later steps may yield more learning from a failure than an
+**Criticism of content** (membership core). An arrangement that formulates
+criticism of what a theory says and supplies it to later steps may yield more learning from a failure than an
 arrangement that generates variants and selects them by score, with no
 formulated reason for a failure. The second arrangement is trial and error,
 outside the definition (condition 3), so this conjecture asks whether the
-criticism condition, the core of membership, pays. A correct diagnosis can explain why a claim
+criticism condition pays. A correct diagnosis can explain why a claim
 failed and direct subsequent search. The intended contrast is the effect of
 formulating and supplying criticism; a model proposing variants may also
 criticize them unobserved. More elaborate criticism need not supply a better
 diagnosis.
 
-**Addressability** (graded). Criticism that identifies a suspect assumption or part
-may yield more learning from a failure than criticism that leaves the target
+**Addressability** (graded). Criticism that identifies a suspect assumption or
+part may yield more learning from a failure than criticism that leaves the target
 undivided. Identifying a candidate cause can focus investigation and help
 preserve useful knowledge. The comparison is with a builder whose criticism is directed at the
 theory as a whole, which can still constrain its successor. Both arrangements

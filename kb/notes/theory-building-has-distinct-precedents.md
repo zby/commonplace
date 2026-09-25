@@ -16,7 +16,8 @@ how changes persist and affect operation. A precedent for one does not
 establish the others.
 
 A [theory builder](./definitions/theory-builder.md) names the system that
-proposes, criticizes, and retains theories. [Reflection](./definitions/reflective-system.md)
+proposes theories, acts on them, criticizes what they say, and builds on the
+result. [Reflection](./definitions/reflective-system.md)
 adds a relation between a system and a representation of itself. Retained
 text and code around a fixed model supply one implementation. Keeping these
 questions separate makes both attribution and experiment design more precise.
@@ -44,7 +45,7 @@ changed decision does not establish improvement. The epistemic basis therefore
 leaves work for a concrete account of consumption, consequences, and
 persistence.
 
-EITHER and FORTE retain a narrower role as precedents for connecting failed
+EITHER and FORTE serve a narrower role as precedents for connecting failed
 consequences to candidate repair locations. Their proof-guided repair shows
 what [addressability](./definitions/addressable-theory.md#precedent)
 can make possible under a supplied representation. It does not define every
@@ -93,11 +94,9 @@ implementation uses a supplied role decomposition and evaluation machinery
 This is a concrete comparison for keeping learned changes in artifacts that
 later calls consume. It does not establish learning of a continuing system's
 own improvement procedure. The retained source reports adaptation within game
-runs; it does not demonstrate the cross-session recurrent self-theory claim.
-Changes carried across the levels of one game run meet the iteration
+runs. Changes carried across the levels of one run meet the iteration
 condition when criticism aims at what the revised code and context say; their
-persistence reaches the run, not later sessions.
-The benefit of the complete arrangement also does not isolate the effect of
+persistence reaches the run, not later sessions. The benefit of the complete arrangement also does not isolate the effect of
 criticism, addressability, or retaining an assembled theory.
 
 Fixed weights constrain where learned changes persist. They do not hold model
@@ -116,18 +115,18 @@ of criticism or the structural condition for reflection, and it supplies no
 result showing that the combined arrangement works.
 
 A comparison should therefore name which question it asks. A runtime-model
-comparison concerns the additional contribution of criticism aimed at what a
-theory says.
-An editable-workspace comparison concerns the supplied theory and its use
-beyond persistence and repair. A persistence comparison concerns which work
-is kept rather than reconstructed, and for how long. None can inherit the conclusion of another
+comparison concerns what criticism aimed at what a theory says adds to
+learning beyond a causally operative self-model. An editable-workspace
+comparison concerns the supplied theory and its use beyond persistence and
+repair. A persistence comparison concerns which work is kept rather than
+reconstructed, and for how long. None can inherit the conclusion of another
 merely because the systems share some machinery.
 
 ## Scope
 
 These are bounded conceptual and implementation precedents, not a priority
-claim or an exhaustive ranking of earlier systems. A full recurrent reflective
-claim needs connected evidence of theory use, consequences, criticism, and
+claim or an exhaustive ranking of earlier systems. A full claim that a
+reflective theory builder learns needs connected evidence of theory use, consequences, criticism, and
 later influence, plus evidence of improved capacity. Partial findings remain
 reportable at their own strength. Neither their combination nor resemblance
 to a predecessor establishes superiority over simpler arrangements.
