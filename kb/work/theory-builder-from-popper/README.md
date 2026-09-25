@@ -14,9 +14,10 @@ the kind of system Commonplace builds, stated in terms borrowed from Popper.
 - `theory-builder.md` (library version) does not require criticism, so a
   builder that never criticizes anything qualifies.
 
-The new `theory-builder.md` requires formulated, consumed, criticized,
-retained, and addressable theories, and has no success condition: whether a
-builder learns is the hypothesis under test.
+The new `theory-builder.md` requires formulated, consumed, criticized, and
+retained theories, and has no success condition: whether a builder learns is
+the hypothesis under test. Addressability is a graded design commitment, not
+a condition.
 
 ## Decisions so far (operator, 2026-09-25)
 
@@ -29,6 +30,9 @@ builder learns is the hypothesis under test.
   their main consumer. This reverses the 2026-09-21 workshop decisions that
   kept learner and builder apart and made criticism optional for a builder.
 
+- Whole-theory rejection, and rebuilding from retained criticism (D3), are
+  inside. Addressability is demoted from condition to design commitment,
+  because it is graded; a model replaced whole sits at its lowest grade.
 - D4 (inventory): `conjectural-learning-checks.md` is replaced by
   [theory-builder-checks.md](./theory-builder-checks.md), drafted here and
   promoted with the definition. Case 3 waits on D3.

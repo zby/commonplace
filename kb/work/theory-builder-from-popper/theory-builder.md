@@ -1,5 +1,5 @@
 ---
-description: "Definition — a theory builder grows objective knowledge by conjecture and refutation: it formulates addressable theories, acts on them, criticizes them, and retains the results; learning is tested, not assumed"
+description: "Definition — a theory builder grows objective knowledge by conjecture and refutation: it formulates theories, acts on them, criticizes them, and retains the results; learning is tested, not assumed"
 type: kb/types/definition.md
 tags: [foundations, self-improving-systems, learning-theory]
 ---
@@ -19,9 +19,8 @@ up the new problems that result
 The KB needs the term to name the kind of system Commonplace builds and
 studies.
 
-A system is a theory builder when it meets five conditions. The first four
-are Popper's terms. The fifth is the KB's addition, grounded in Popper's
-reply to Duhem.
+A system is a theory builder when it meets four conditions, each stated in
+Popper's terms.
 
 1. **Objective knowledge.** Its theories are formulated in language and kept
    as products outside any single mind or model. Popper's objective knowledge
@@ -54,15 +53,19 @@ reply to Duhem.
    retained, and in Popper's sense consumption includes "criticising them,
    changing them, and often even demolishing them, in order to replace them
    by better ones" ([Popper 1966](../../sources/popper-a-realist-view-of-logic-physics-and-history-1966.ingest.md#quotes)).
-5. **Addressability.** Its theories are [addressable](./addressable-theory.md):
-   assumptions, scope conditions, and parts can be inspected and revised
-   individually. Popper grants Duhem that a test often bears on a whole
-   system, but replies: "It is possible in quite a few cases to find which
-   hypothesis is responsible for the refutation"
-   ([Conjectures and Refutations, Chapter 10](../../sources/popper-conjectures-and-refutations.ingest.md#quotes)).
-   A builder formulates its theories so that such cases can be found.
-   Addressability is about the theory's structure, not the operation
-   criticism performs: an addressable theory may still be rejected whole.
+
+**Addressability is a design commitment, not a condition.** How
+[addressable](./addressable-theory.md) a part of the builder is comes in
+grades. At the high end, a theory's assumptions, scope conditions, and parts
+can be inspected and revised individually, so criticism can name the part it
+blames. At the low end, a component can only be replaced whole: a model's
+weights are revised by fine-tuning them without addressing parts, or by
+replacing the model. Popper grants Duhem that a test often bears on a whole
+system, but replies: "It is possible in quite a few cases to find which
+hypothesis is responsible for the refutation"
+([Conjectures and Refutations, Chapter 10](../../sources/popper-conjectures-and-refutations.ingest.md#quotes)).
+Commonplace builds for the high end. That this pays is a conjecture, tested
+against builders whose theories are less addressable.
 
 **Error elimination is attempted, not guaranteed.** The parentheses in
 Popper's "(attempted) error-elimination" are his. A builder whose criticism
@@ -92,7 +95,7 @@ is an intervention and is recorded as one.
 
 - **Reflective.** The builder's method is part of its objective knowledge.
   The problems it works on, its standards of criticism, and its procedures
-  meet the five conditions, as its other theories do. Popper places these
+  meet the four conditions, as its other theories do. Popper places these
   objects in the third world: only there "the problems and standards of
   rational criticism can develop"
   ([Popper 1968](../../sources/popper-epistemology-without-a-knowing-subject-1968.ingest.md#quotes)).
@@ -151,10 +154,6 @@ human-staffed theory builder; the research program's bet is an autonomous one.
   procedure.
 - **A stored theory nothing consumes.** It fails condition 2. See
   [an action model matters only through its consumption path](../an-action-model-matters-only-through-its-consumption-path.md).
-- **An undivided theory.** A theory with no stated assumptions, scope
-  conditions, or parts that criticism could name fails condition 5, even
-  when the system criticizes it and replaces it. Rejecting a theory whole is
-  not this case.
 
 ## Misuse Cases
 
@@ -172,7 +171,7 @@ human-staffed theory builder; the research program's bet is an autonomous one.
 Relevant Notes:
 
 - [Tentative theory](./tentative-theory.md) — defined-in: the status of every theory the builder holds
-- [Addressable theory](./addressable-theory.md) — defined-in: the structural property condition 5 requires
+- [Addressable theory](./addressable-theory.md) — defined-in: the graded structural property the builder is designed for
 - [Reflective system](./reflective-system.md) — defined-in: the causal connection the reflective qualifier requires
 - [Learning is not only about generality](../learning-is-not-only-about-generality.md) — grounds: the sense of learning the definition leaves to test
 - [Commonplace studies conjectural learning through retained theories](../commonplace-studies-conjectural-learning-through-retained-theories.md) — extends: the research program's conjectures about builders
