@@ -36,7 +36,8 @@ def collection_dirs(root: Path) -> list[Path]:
 
     A collection is identified by a local COLLECTION.md file, so support
     directories such as kb/tasks/ are ignored unless they explicitly opt in as
-    collections.
+    collections. The global kb/types/ is a collection; a types/ directory
+    inside another collection is part of that collection, never its own.
     """
     boundary = kb_root(root).resolve()
     if not boundary.is_dir():
@@ -45,7 +46,7 @@ def collection_dirs(root: Path) -> list[Path]:
         path.parent
         for path in iter_visible_markdown_files(boundary)
         if path.name == "COLLECTION.md"
-        and "types" not in path.relative_to(boundary).parts
+        and "types" not in path.relative_to(boundary).parts[1:-1]
     )
 
 
@@ -67,9 +68,13 @@ def collection_for_path(path: Path, root: Path) -> Path:
 
 
 def is_type_definition_content(path: Path, boundary: Path) -> bool:
-    """Return True when path is under a types/ directory beneath boundary."""
+    """Return True when path is under a types/ directory, boundary included.
+
+    The boundary counts so that the global kb/types/ collection, walked as its
+    own boundary, is recognised as type-definition content.
+    """
     try:
-        rel = path.relative_to(boundary)
+        rel = path.relative_to(boundary.parent)
     except ValueError:
         return False
     return "types" in rel.parent.parts

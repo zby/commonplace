@@ -480,6 +480,27 @@ def test_type_spec_validation_accepts_explicitly_schema_less_type(
     )
 
 
+def test_type_spec_validation_rejects_tags(tmp_path: Path) -> None:
+    configure_type_spec_repo(tmp_path)
+    type_spec = write(
+        tmp_path / "kb" / "notes" / "types" / "local.md",
+        """---
+type: type-spec
+name: local
+description: Type spec for local
+schema: null
+tags: [learning-theory]
+---
+
+# local
+""",
+    )
+
+    results = validation.validate_note(type_spec, repo_root=tmp_path)
+
+    assert any("[schema]" in failure and "tags" in failure for failure in results.fails)
+
+
 @pytest.mark.parametrize(
     ("content", "expected_pass", "expected_warn"),
     [

@@ -6,7 +6,7 @@ This collection is Commonplace's global type surface. Its type specs are system-
 
 Quality goal is **self-contained checkability + economy**. A type spec must tell authors, readers, validators, and type-conformance reviewers what an instance asserts without requiring collection-specific reinterpretation. Keep global contracts small enough to load wherever the type is used; collection-specific structure belongs in a collection-local type instead.
 
-`kb/types/` remains the global type layer. Making it a collection supplies the authoring and outbound-link contract required of artifacts authored here; it does not make type semantics collection-relative.
+`kb/types/` remains the global type layer. Making it a collection supplies the authoring and outbound-link contract required of artifacts authored here; it does not make type semantics collection-relative. Collection discovery includes it like any other collection. A `types/` directory inside another collection belongs to that collection and is not a collection of its own.
 
 ## Title and body conventions
 

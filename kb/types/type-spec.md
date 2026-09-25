@@ -16,6 +16,8 @@ A type-spec doc is the authoring and validation contract for one Commonplace art
 - `description`: retrieval description for the type contract.
 - `schema`: repo-relative path to the `.schema.yaml` file that validates artifacts of this type, or `null` when the type has no schema.
 
+A type spec carries no `tags`; the schema rejects the field. Type specs are structural contracts, not knowledge, so they never enter tag membership.
+
 ## Validation Contract
 
 Two systems check conformance to a type — split by mechanical vs. judgment, not frontmatter vs. body — and a type-spec author writes for both without mixing them:

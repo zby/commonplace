@@ -28,6 +28,10 @@ properties:
           - type: "null"
           - type: string
             pattern: '^(kb/|\.\.?/).+\.schema\.yaml$'
+    # Type specs are structural contracts, not knowledge; they carry no tags.
+    not:
+      required:
+        - tags
     additionalProperties: true
   body:
     type: string

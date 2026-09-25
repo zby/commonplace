@@ -163,6 +163,7 @@ class TestGateIdPlumbing:
         assert not is_collection_md_criterion_path("kb/notes/plain.md")
         assert not is_collection_md_criterion_path("docs/COLLECTION.md")
         assert is_collection_md_criterion_path("kb/notes/COLLECTION.md")
+        assert is_collection_md_criterion_path("kb/types/COLLECTION.md")
         assert is_collection_md_criterion_path("kb/commonplace/notes/COLLECTION.md")
 
 

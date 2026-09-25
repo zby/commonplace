@@ -32,15 +32,16 @@ def is_collection_md_criterion_path(criterion_path: str) -> bool:
     """True when a repo-relative gate path is a kb collection's COLLECTION.md.
 
     `kb/COLLECTION.md` itself is excluded (the kb root is a boundary, not a
-    collection), as is any COLLECTION.md under a `types/` directory, matching
-    `collection_dirs`.
+    collection), as is any COLLECTION.md under a `types/` directory nested
+    below the first level, matching `collection_dirs`; the global
+    `kb/types/COLLECTION.md` is a collection contract.
     """
     path = PurePosixPath(criterion_path)
     if path.name != "COLLECTION.md" or not path.parts or path.parts[0] != "kb":
         return False
     if len(path.parts) < 3:
         return False
-    return "types" not in path.parent.parts
+    return "types" not in path.parent.parts[2:]
 
 
 def collection_criterion_id_for_path(criterion_path: str) -> str:

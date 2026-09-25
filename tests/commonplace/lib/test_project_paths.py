@@ -32,6 +32,30 @@ def test_collection_dirs_returns_content_collections_only(tmp_path: Path) -> Non
     ]
 
 
+def test_collection_dirs_includes_global_types_but_not_local_types(tmp_path: Path) -> None:
+    collection(tmp_path / "kb" / "notes")
+    collection(tmp_path / "kb" / "notes" / "types")
+    collection(tmp_path / "kb" / "types")
+
+    assert project_paths.collection_dirs(tmp_path) == [
+        tmp_path / "kb" / "notes",
+        tmp_path / "kb" / "types",
+    ]
+
+
+def test_type_definition_content_includes_global_types_boundary(tmp_path: Path) -> None:
+    kb = tmp_path / "kb"
+    spec = kb / "types" / "note.md"
+    local_spec = kb / "notes" / "types" / "claim.md"
+    note = kb / "notes" / "claim.md"
+
+    assert project_paths.is_type_definition_content(spec, kb / "types")
+    assert project_paths.is_type_definition_content(spec, kb)
+    assert project_paths.is_type_definition_content(local_spec, kb / "notes")
+    assert not project_paths.is_type_definition_content(note, kb / "notes")
+    assert not project_paths.is_type_definition_content(note, kb)
+
+
 def test_collection_dirs_allows_collections_inside_namespace(tmp_path: Path) -> None:
     collection(tmp_path / "kb" / "commonplace" / "notes")
     collection(tmp_path / "kb" / "commonplace" / "reference")
