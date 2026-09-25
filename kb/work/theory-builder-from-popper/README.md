@@ -88,9 +88,8 @@ Raised by the post-migration coherence pass (2026-09-25):
   it".
 - Open-ended note: "the retained self-directed arrangement" could read "a
   self-directed arrangement whose results persist into later work".
-- Survey article: path `nearest-existing-constructions-to-a-witness-house.md`
-  no longer matches its headline; Recuris and Wheelhouse placements
-  arguable.
+- Survey article: Recuris and Wheelhouse placements arguable (path renamed
+  to match the headline in 7a9a855c).
 - Software-house plan: its four witness conditions are defined nowhere
   current (last in 6d39a12f).
 - Theory-builder definition is about 2,200 words, heavy for the definition
