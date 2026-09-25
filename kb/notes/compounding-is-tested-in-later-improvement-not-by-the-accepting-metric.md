@@ -55,7 +55,7 @@ Human decisions are the load-bearing denominator in a human-inclusive loop becau
 
 ## Requirement 3: connect the two with a causal trace
 
-Suppose episode 2 took 12 turns, while comparable diagnoses used to take 30. That number alone fits several explanations. The model may have been upgraded. The problem may have been easier. The maintainer may simply have gained experience. Attribution requires a trace from the earlier retained change to the later improvement.
+Suppose episode 2 took 12 turns, while comparable diagnoses used to take 30. That number alone fits several explanations. The model may have been upgraded. The problem may have been easier. The maintainer may simply have gained experience. Crediting the gain to the fix needs two kinds of evidence: a trace showing that episode 2 used the fix, and a baseline showing how much the gain depends on it. This section covers the trace; the baselines come next.
 
 ### Direct trace
 
