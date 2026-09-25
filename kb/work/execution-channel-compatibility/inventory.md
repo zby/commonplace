@@ -112,7 +112,7 @@ No instruction tells an agent to run commands through a project venv. What remai
 
 - `AGENTS.md.template:151` and `AGENTS.md:214` prohibit prepending project-venv paths. Operative and correct.
 - `INSTALL.md:302` and `:312` diagnose a venv shadowing the uv tool and describe removing the old two-line `.envrc`. Troubleshooting for migrated projects.
-- `cp-skill-health-check/SKILL.md:168–169` detect residue. Line 168 runs `sed -n '1,80p' .envrc`, which prints up to 80 lines of the file into the agent transcript. An `.envrc` may hold secrets; the probe procedure forbids reading it for that reason. The health check needs only to know whether the file matches the old two-line signature, which can be tested without printing it. Routed to [E1](./e1-windows-execution.md) item 5, which already owns the health-check preflight.
+- `cp-skill-health-check/SKILL.md:168–169` detect residue. Line 168 runs `sed -n '1,80p' .envrc`, which prints up to 80 lines of the file into the agent transcript. An `.envrc` may hold secrets; the probe procedure forbids reading it for that reason. The health check needs only to know whether the file matches the old two-line signature, which can be tested without printing it. Fixed on 2026-09-25: the check now compares the file with the old template and prints only a classification, with a paired PowerShell form (see [E1](./e1-windows-execution.md) item 5).
 
 ## Inventory record
 
