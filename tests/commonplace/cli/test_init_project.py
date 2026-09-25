@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import json
 import shutil
-import subprocess
 import sys
 from pathlib import Path
 
@@ -269,19 +268,18 @@ def test_migration_never_deletes_through_a_symlinked_skill_directory(tmp_path: P
     assert Path(".claude/skills/cp-skill-validate") in report.skipped_foreign
 
 
-def test_init_project_reports_outputs_that_git_still_tracks(tmp_path: Path) -> None:
-    if shutil.which("git") is None:
-        pytest.skip("git not available")
+def test_init_project_reports_skill_copies_it_replaced_with_stubs(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
     root = library.library_root()
-    subprocess.run(["git", "init", "-q"], cwd=tmp_path, check=True)
     old_copy = tmp_path / ".claude" / "skills" / "cp-skill-write"
     shutil.copytree(root / "instructions" / "cp-skill-write", old_copy)
-    subprocess.run(["git", "add", ".claude"], cwd=tmp_path, check=True)
 
-    report = init_project(tmp_path)
+    exit_code = main(["--root", str(tmp_path)])
 
-    assert Path(".claude/skills/cp-skill-write") in report.tracked_outputs
+    assert exit_code == 0
     assert (old_copy / library.STUB_MARKER).is_file()
+    assert "git rm -r --cached .claude/skills/cp-skill-write" in capsys.readouterr().out
 
 
 def test_init_project_migrates_pointers_to_global_types(tmp_path: Path) -> None:

@@ -34,7 +34,7 @@ class InitReport:
     migration_kept: list[Path] = field(default_factory=list)
     skipped_foreign: list[Path] = field(default_factory=list)
     retired_baselines: list[str] = field(default_factory=list)
-    tracked_outputs: list[Path] = field(default_factory=list)
+    replaced_skill_copies: list[Path] = field(default_factory=list)
     rewritten_type_pointers: list[Path] = field(default_factory=list)
 
 
@@ -244,6 +244,8 @@ def _migrate_legacy_copies(project: Path, root: Path, report: InitReport) -> Non
             if counterpart.is_file() and counterpart.read_bytes() == path.read_bytes():
                 path.unlink()
                 report.removed.append(path.relative_to(project))
+                if copy_rel.parent in MANIFEST.skills_dirs and copy_rel not in report.replaced_skill_copies:
+                    report.replaced_skill_copies.append(copy_rel)
             elif copy_rel.as_posix() != "kb/types" or counterpart.exists():
                 report.migration_kept.append(path.relative_to(project))
         for dirpath, _dirnames, _filenames in sorted(os.walk(copy_dir, followlinks=False), reverse=True):
@@ -428,33 +430,7 @@ def init_project(root: Path, name: str | None = None) -> InitReport:
     _write_if_changed(root, library.ROUTING, library.render_routing(library_root), report)
     _write_read_rule(root, library_root, report)
     _write_gitignore(root, library_root, report)
-    _find_tracked_outputs(root, report)
     return report
-
-
-def _find_tracked_outputs(project: Path, report: InitReport) -> None:
-    """List init's outputs that git still tracks: they hold machine-specific paths.
-
-    Earlier releases put skill copies in the project, and some projects committed
-    them. Init reports them with the command to untrack them; it does not change
-    the git index itself.
-    """
-    if shutil.which("git") is None:
-        return
-    outputs = [library.OUTPUT_DIR, library.SETTINGS, *(d / n for d in MANIFEST.skills_dirs for n in library.skills())]
-    result = subprocess.run(
-        ["git", "ls-files", "--", *(p.as_posix() for p in outputs)],
-        cwd=project,
-        capture_output=True,
-        text=True,
-        check=False,
-    )
-    if result.returncode != 0:
-        return
-    tracked = {Path(line) for line in result.stdout.splitlines() if line}
-    report.tracked_outputs = sorted(
-        {p for p in outputs if any(t == p or t.is_relative_to(p) for t in tracked)}
-    )
 
 
 def check_project(root: Path) -> list[library.OutputStatus]:
@@ -603,11 +579,12 @@ def main(argv: list[str] | None = None) -> int:
         print("Retired review baselines recorded under the old library copy (history kept):")
         for item in report.retired_baselines:
             print(f"- {item}")
-    if report.tracked_outputs:
-        paths = " ".join(p.as_posix() for p in report.tracked_outputs)
+    if report.replaced_skill_copies:
+        paths = " ".join(p.as_posix() for p in report.replaced_skill_copies)
         print(
-            "These pointers are tracked by git but hold paths specific to this machine; "
-            f"untrack them and commit: git rm -r --cached {paths}"
+            "These skill directories held copies from an earlier release and now hold stubs "
+            "with paths specific to this machine. If your version control tracks them, untrack "
+            f"them and commit; with git: git rm -r --cached {paths}"
         )
     _print_section("Preserved existing files already matching scaffold:", report.preserved_identical)
     _print_section(
