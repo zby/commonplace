@@ -50,7 +50,7 @@ Decided and adopted on 2026-09-25 as [ADR 086](../../reference/adr/086-projects-
 
 ## Coupling
 
-- [agent-operability-second-slice](../agent-operability-second-slice/README.md) builds install baselines and a three-way upgrade plan for copied framework files. Without the library copy, its subject shrinks to whatever copies remain. Coordinate before either side ships.
+None open.
 
 ## Closure
 
