@@ -72,16 +72,33 @@ Decision numbers D1–D8 refer to the
 
 ## Open
 
-- Precedents note, runtime-model comparison: "additional contribution of
-  learning through criticism" became "criticism aimed at what a theory says";
-  check whether dropping "learning" changed the claim.
-- Testing article grew from about 1,660 to 2,840 words; consider a
-  tightening pass after the retitle.
+Raised by the post-migration coherence pass (2026-09-25):
 
-- Cleanup for step 6: unlinked "conjectural learning" outside Learning Claims
-  sections (e.g. `automated-hypothesis-validation-sequential-falsifications`
-  Extractable Value); its follow-up asks whether POPPER should be named in
-  checks case 24.
+- Evidence note title: "…but weight-only retention does" holds for a
+  builder spanning runs; within one run Apodex's task board leaves the case
+  open. Retitle to say "across runs", or accept the scope as the body states.
+- Checks case 11: condition 4 says the result "shapes the next conjecture";
+  a result that changes only reliance on a theory is borderline. Decide
+  whether choosing the next test counts as the next round, and say so.
+- Three-obligations note: the third obligation (a performance measure not
+  resting on the builder's evaluators) has no section of its own.
+- Lead article: learned state "in natural language" versus "stated text"
+  (the definition admits formal language).
+- Precedents note opening: "without learning" versus "without criticizing
+  it".
+- Open-ended note: "the retained self-directed arrangement" could read "a
+  self-directed arrangement whose results persist into later work".
+- Survey article: path `nearest-existing-constructions-to-a-witness-house.md`
+  no longer matches its headline; Recuris and Wheelhouse placements
+  arguable.
+- Software-house plan: its four witness conditions are defined nowhere
+  current (last in 6d39a12f).
+- Theory-builder definition is about 2,200 words, heavy for the definition
+  type; moving Qualifiers or Boundary cases out would break about 25 anchor
+  links.
+- Cleanup: unlinked "conjectural learning" in the
+  `automated-hypothesis-validation-sequential-falsifications` ingest's
+  Extractable Value section, outside the ingest edit boundary.
 
 ## Steps
 
@@ -98,8 +115,11 @@ Decision numbers D1–D8 refer to the
    batches B1–B7 committed (467fea89, c666d569, 6ec3c22d, 58b83473,
    99b103c5, 37a36faa, 37a4d4c1). Persistence made graded (ec14035c);
    50 ingests re-checked under iteration (f8b89ceb, d5fbf063, 14d33490);
-   skills, notes, and articles updated to match. Next: step 6
-   (relocations, deletions, redirects).
+   skills, notes, and articles updated to match. Step 6: relocations
+   (013bf077 and five more), retirement and redirects (21021fcc), link
+   text (62212d79). Coherence pass over all revised notes and articles
+   (a8d2d180, 226d7dab, 6889b702, abfeb441, 524223ad, b4c23ea8,
+   f42e9db6). Remaining: the Open list above, then close.
    Apply in the inventory's order: receiving sections, definitions, skills
    and types, notes and articles, ingest re-judging, links and redirects,
    frozen records last. Validate.
