@@ -2,7 +2,7 @@
 
 ## Intent
 
-Prepare the whole implementation of [design.md](./design.md) (draft [ADR 086](./adr-draft.md)) without changing the live system, so that adopting the ADR is one apply step followed by the test suite. The operator chose to go ahead without waiting for more probe replies (2026-09-25). The stage is finished when applying it to a clean copy of the repository gives a tree where `uv run pytest` and `uv run ruff check .` pass, `commonplace-validate` passes on the changed documents, and an installed project initialised from the built package works as the design describes.
+Prepare the whole implementation of [design.md](./design.md) (draft [ADR 086](../../reference/adr/086-projects-read-the-library-from-the-installed-package.md)) without changing the live system, so that adopting the ADR is one apply step followed by the test suite. The operator chose to go ahead without waiting for more probe replies (2026-09-25). The stage is finished when applying it to a clean copy of the repository gives a tree where `uv run pytest` and `uv run ruff check .` pass, `commonplace-validate` passes on the changed documents, and an installed project initialised from the built package works as the design describes.
 
 ## How the stage is laid out
 

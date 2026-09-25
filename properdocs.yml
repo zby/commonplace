@@ -314,6 +314,7 @@ plugins:
         'sources/large-language-model-agents-are-not-always-faithful-self-evolvers.ingest.md': 'sources/llm-agents-are-not-always-faithful-self-evolvers.ingest.md'
         'sources/past-bench-recursive-self-improvement-personal-agents.ingest.md': 'sources/past-bench-personal-agents-pdf.ingest.md'
         'sources/the-risks-of-invariant-risk-minimization.ingest.md': 'sources/rosenfeld-risks-of-invariant-risk-minimization.ingest.md'
+        'work/framework-delivery/adr-draft.md': 'reference/adr/086-projects-read-the-library-from-the-installed-package.md'
         'work/framework-delivery/harness-probe-request.md': 'work/framework-delivery/probe-request.md'
         'work/information-measures/epiplexity-eli5.md': 'notes/epiplexity-by-example-what-entropy-and-complexity-miss.md'
         'work/theory-mediated-self-improvement-series/computational-theory-guided-conversation-episode-2026-08-30.md': 'notes/evidence/commonplace-revision-used-theory-guided-computational-search.md'

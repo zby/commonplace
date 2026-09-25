@@ -67,7 +67,7 @@ Current:
 - [probe-request.md](./probe-request.md) — the open request to agents in any harness to run the probe, with a log of replies
 - [results-claude-code-r4.md](./results-claude-code-r4.md) — Claude Code's run of revision 4
 - [results-codex-r4.md](./results-codex-r4.md) — Codex's run of revision 4
-- [adr-draft.md](./adr-draft.md) — draft ADR 086 recording the decision, for the operator to adopt
+- [adr-draft.md](../../reference/adr/086-projects-read-the-library-from-the-installed-package.md) — draft ADR 086 recording the decision, for the operator to adopt
 
 Background research:
 
