@@ -74,7 +74,11 @@ Decision numbers D1–D8 refer to the
    current draft and the decisions above — done.
 3. Operator approves the refreshed edit plan, including D1 and D2 titles —
    done (N1–N3).
-4. Apply in the inventory's order: receiving sections, definitions, skills
+4. Progress (2026-09-25): inventory steps 1–3 done — receiving sections
+   (obligations note 33f44301, testing article 322953b6), definitions and
+   AGENTS.md (38df120c), skills and types (3532f494). Next: inventory step 4
+   (notes and articles), then ingest batches B1–B7.
+   Apply in the inventory's order: receiving sections, definitions, skills
    and types, notes and articles, ingest re-judging, links and redirects,
    frozen records last. Validate.
 5. Close: delete this directory and its index entry.
