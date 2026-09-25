@@ -1,5 +1,5 @@
 ---
-description: "Draft decision that the source and report type specs move from project copies under kb/sources/types and kb/reports/types into the library's global types, named by bare name and usable in any collection; snapshots are rewritten once by a deterministic migration that re-pins their ingest checksums"
+description: "Draft decision that source and report type specs become global library types named by bare name and usable in any collection, with snapshots rewritten once and their ingest checksums re-pinned"
 type: kb/reference/types/adr.md
 tags: []
 ---
