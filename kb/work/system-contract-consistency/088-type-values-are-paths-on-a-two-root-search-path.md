@@ -10,7 +10,6 @@ tags: []
 **Date:** 2026-09-25
 **Amends:** [ADR 086](../../reference/adr/086-projects-read-the-library-from-the-installed-package.md) (bare global type names; project-shared types stay allowed), [ADR 087](../../reference/adr/087-source-and-report-types-are-global-library-types.md) (the one permitted snapshot rewrite), and [ADR 068](../../reference/adr/068-collection-contracts-stop-enumerating-available-types.md) (type eligibility)
 **Restores:** the path-valued `type:` of [ADR 018](../../reference/adr/018-types-are-path-references-to-instruction-docs.md), for every type
-**Replaces:** the library-rooted-path draft of the same number, [088-global-types-are-named-by-library-rooted-paths](./088-global-types-are-named-by-library-rooted-paths.md)
 **Promotion condition:** accept only with the implementation that makes the
 resolver, the collision check, the emitters, init's migration, and the specs,
 contracts, and skills that teach the form operative. Allocate the ADR number
@@ -111,15 +110,36 @@ checkout and its clones rewrite twice.
 
 ## Considered alternatives
 
+The design went through several drafts on 2026-09-25; the rejected ones are
+recorded here.
+
 **Keep bare names (ADR 086 as is).** Shortest, and already implemented. Lost
 on checkability: the value does not name its file. It also leaves local types
 file-relative.
 
+**Keep bare names and add a lookup command** that prints a type's spec path.
+Lost for the reason ADR 086 dropped lookup commands for the library: a command
+call per check, a shell, and a permission rule, where a file path needs none.
+
+**A reserved `kb/types/<name>.md` value for global types.** Rejected in ADR
+086: in an installed project it looks like a project path but names no file
+there.
+
+**A namespaced name without a path** (`commonplace:note`). Short, and the
+prefix keeps no-shadowing by syntax. Lost: it is still not a path, so the
+reader still needs the `types/<name>.md` rule, and it would give `commonplace:`
+two meanings, a path under the library root in schema references and review
+identities, and a name here.
+
 **Library-rooted paths for global types only** (`commonplace:types/note.md`,
-the replaced draft). The prefix states the root, and no-shadowing holds by
-syntax. Lost: the value is still not a path a programmer can open without
-substituting the root, it lengthens every global value, and it leaves local
-types file-relative.
+the first draft of this decision). The prefix states the root, no-shadowing
+holds by syntax, the form matches the `commonplace:` schema references and
+library review identities, and in an installed project a type's identity would
+equal its spec's review identity. Lost: the value is still not a path a
+programmer can open without substituting the root, it lengthens every global
+value, a colon in the value breaks the frontmatter if an author adds a space
+after it, and it leaves local types file-relative. The first draft deferred
+local types to a separate decision; this one takes them in.
 
 **A second prefix for local types** (`collection:types/adr.md`, resolved at the
 artifact's collection root). Gives local types one spelling and makes
@@ -141,6 +161,12 @@ ordinary project type such as its own `reference/types/adr.md` would collide.
 **Precedence instead of a collision error.** The first root that has the file
 wins, as with `PATH`. Lost: a leftover project copy of a library type would
 silently override the library, which is the shadowing ADR 086 ruled out.
+
+**Collision check in the health check only.** Proposed as sufficient, since
+collisions are rare. Lost as the only check: the health check runs when someone
+invokes it, while validation resolves every value anyway, so it can reject a
+collision at no extra cost on every run. The health check keeps a
+project-wide report.
 
 **Keep project-shared types.** Nothing would break, but the library's
 `types/` and a project's `kb/types/` would share one namespace for good, and
