@@ -28,21 +28,22 @@ source_notes:
 > [the repository's GitHub Discussions page](https://github.com/zby/commonplace/discussions).
 
 An [autonomous](../notes/definitions/theory-builder.md#qualifiers)
-[theory builder](./building-a-theory-builder-from-todays-llms.md) is not a
-builder without people. It is one in which computation performs every
-internal role in building theories: diagnosing failures, producing and
-evaluating revisions, choosing which theory to keep, and repairing the
-method by which it does this. Users still supply tasks and judge the results
-against what they asked for.
+[theory builder](./building-a-theory-builder-from-todays-llms.md) is one in
+which computation performs every internal role in building theories:
+diagnosing failures, producing and evaluating revisions, choosing which
+theory to keep, and repairing the method by which it does this. It still has
+people: users supply tasks and judge the results against what they asked
+for.
 
 Such a builder does not have to be built in one step. We start with a
 partially automated system in which a human operator and computation learn
 together. Because the builder includes whoever performs its internal
 operations, such a system is already a theory builder, staffed partly by
-people; what the bootstrap changes is who performs those operations. We
-require only that what is learned is retained in the system, changes later
-behaviour, and changes it for the better; the lead article says how that last
-condition is tested. Commonplace is our implementation of this bootstrap.
+people. The bootstrap changes who performs those operations. We require only
+that what is learned is retained in the system, changes later behaviour, and
+changes it for the better.
+[The lead article](./building-a-theory-builder-from-todays-llms.md) says how
+that last condition is tested. Commonplace is our implementation of this bootstrap.
 
 ## Retain learning in the system
 
@@ -61,8 +62,8 @@ This works only while the operator keeps contributing, which requires a
 system people want to use. Then the judgments they supply are part of work
 they would do anyway. Commonplace is built to be such a system: its operator
 builds and uses the knowledge base for their own work, and
-[that use is the initial selection environment](../notes/system-use-selects-theory-fit-without-a-fixed-oracle.md)
-where no fixed test of a theory's fit yet exists.
+[that use is what first selects theories for fit](../notes/system-use-selects-theory-fit-without-a-fixed-oracle.md),
+before any fixed test of a theory's fit exists.
 
 ## Use reflection to improve the learning method
 
@@ -82,56 +83,53 @@ Every later episode that uses an improved method reuses the
 improvement, so its return grows with reuse. That is why
 [an optimal long-run learning strategy invests in its own machinery](../notes/an-optimal-long-run-learning-strategy-invests-in-its-own-machinery.md).
 
-Reflection alone does not close the loop. Reflection makes the method open to
-criticism; the loop closes only when method changes also compound, making
+Reflection makes the method open to criticism, but that alone does not close
+the loop. The loop closes only when method changes also compound, making
 later improvement cheaper, more reliable, or possible where it was not. That
 takes three further things. The builder must be able to change its method
 beyond revising text, which the next section takes up. Its evaluators must be
-able to tell a better method from a worse one, since
-[warranted autonomy extends only as far as an evaluator can assess](../notes/warranted-autonomy-is-bounded-by-oracle-domain.md)
-and a self-theory's approval of its own change is not that evidence. And
+able to tell a better method from a worse one, and approval from the
+builder's theory of its own method does not count as that evidence. And
 method changes must persist into later improvement work and be shown to help
 there, because
 [compounding is measured in the later improvement episode](../notes/compounding-is-tested-in-later-improvement-not-by-the-accepting-metric.md),
 not by the check that accepted the change.
 
-So far the record shows only what the loop starts from.
+So far the record shows only the loop's starting point: retention and later
+use, with no change to the learning method and no demonstrated improvement in
+later performance.
 [In a 2026-08-30 revision](../notes/evidence/commonplace-revision-used-theory-guided-computational-search.md),
 the model read the retained project theory, searched over reformulations of
-the research program, and proposed the edits; the operator supplied the
-decisive judgments about which formulation fit; later commits built on the
-revised state rather than reconstructing the old one. That shows retention
-and later use. It does not show a change to the learning method, and no
-improvement in later performance was demonstrated.
+the research program, and proposed the edits. The operator supplied the
+decisive judgments about which formulation fit. Later commits built on the
+revised state rather than reconstructing the old one.
 
 ## Let the builder build its own software
 
-Improving the method may take more than revising text. A new theory may
-call for new tools, experiments, search procedures, or schedulers, and
-testing hypotheses reliably or at scale may require exact symbolic
-computation rather than repeated LLM interpretation. We therefore do not
-assume that sustained self-improvement is possible through natural-language
-changes alone while the surrounding software stays fixed. Commonplace uses
-LLMs both to revise retained knowledge and to build and modify the software
-that puts it into operation.
+Improving the method can take more than revising text. A new theory can
+call for new tools, experiments, search procedures, or schedulers. Testing
+hypotheses reliably or at scale can require exact symbolic computation
+instead of repeated LLM interpretation. So Commonplace does not count on
+natural-language changes around fixed software to sustain self-improvement.
+It uses LLMs both to revise retained knowledge and to build and modify the
+software that puts it into operation.
 
-The division of labor is deliberate. The LLM handles semantic
-interpretation. Software handles exact bookkeeping, orchestration, and
-enforceable checks, where it is more reliable, following
+The LLM handles semantic interpretation. Software handles exact
+bookkeeping, orchestration, and enforceable checks, where it is more
+reliable, following
 [the error-correction asymmetry between schedulers and LLMs](../notes/scheduler-llm-separation-exploits-an-error-correction-asymmetry.md).
-The boundary between them is not fixed: the software is part of the system
-and changes as learning reveals new requirements. With model weights held
+The boundary between them moves: the software is part of the system and
+changes as learning reveals new requirements. With model weights held
 fixed,
 [procedures the builder acquires must persist outside the weights](../notes/a-fixed-model-house-must-retain-missing-procedures-for-theory-use.md),
 and code is one place they can live.
 
-A stronger possibility stays open: general learning may not merely benefit
-from this ability but require it, if new theories keep creating new ways of
-testing, organizing, and applying knowledge.
+General learning may even require this ability, if new theories keep
+creating new ways to test, organize, and apply knowledge.
 
 ## Move functions from the operator to computation
 
-A hand-built start fits the Bitter Lesson
+A hand-built start fits Richard Sutton's Bitter Lesson
 [only if learning outgrows it](../notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md):
 computation, not the operator, must come to supply the knowledge each new
 demand needs. Automation therefore grows one function at a time.
@@ -169,8 +167,7 @@ method, turned into new software, and moved function by function from the
 operator to computation. The aim is to use that process to build the
 capabilities an autonomous theory builder requires.
 
-The hard part is not the recurring judgments. It is the work that currently
-makes improvement possible at all: noticing the next problem, diagnosing it,
+The hard part is the work that currently makes improvement possible at all: noticing the next problem, diagnosing it,
 and deciding which change serves the objective better. We conjecture that
 this process can transfer that work too, not only the judgments it has
 already stabilized. The conjecture does not cover choosing the objective
