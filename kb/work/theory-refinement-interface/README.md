@@ -39,8 +39,8 @@ moved here so its promotion and terminology migration can close independently.
 3. The reconciled account is either folded into the
    [addressable-theory definition](../../notes/definitions/addressable-theory.md)
    as a section on the classical repair interface, or promoted as its own note
-   with the definition linking it. It does not define membership in
-   [conjectural learning](../../notes/definitions/conjectural-learning.md).
+   with the definition linking it. It does not define membership in a
+   [theory builder](../../notes/definitions/theory-builder.md).
    The investigation file is then deleted.
 
 ## Evaluation boundary

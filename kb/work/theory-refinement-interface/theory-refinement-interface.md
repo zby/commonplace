@@ -37,8 +37,8 @@ consequences; locate needs addressable parts; revise and evaluate need an
 editable representation and machinery that can test the result. The working
 hypothesis is that these are two views of one classical repair contract. A note
 that eventually leaves this workshop should test and state that relation. These
-properties do not define membership in
-[conjectural learning](../../notes/definitions/conjectural-learning.md).
+properties do not define membership in a
+[theory builder](../../notes/definitions/theory-builder.md).
 
 ## Who implements what
 

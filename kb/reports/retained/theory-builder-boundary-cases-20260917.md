@@ -2,13 +2,12 @@
 
 > **Status:** Retained report, frozen as of 2026-09-17. Produced in the
 > theory-builder workshop as its boundary-case assessment and retained here
-> because the library definitions of
-> [theory builder](../../notes/definitions/theory-builder.md),
-> [externally tested theory builder](../../notes/definitions/externally-tested-theory-builder.md),
-> [reflective theory builder](../../notes/definitions/reflective-theory-builder.md),
-> and [autonomous theory builder](../../notes/definitions/autonomous-theory-builder.md)
-> state their boundary cases in their own words and this is the exact record
-> behind them. These are source-bounded readings, not architecture-wide
+> because the library definitions of theory builder and its externally
+> tested, reflective, and autonomous variants stated their boundary cases in
+> their own words and this is the exact record behind them. On 2026-09-25 the
+> variants were retired and [theory builder](../../notes/definitions/theory-builder.md)
+> was redefined; the record below is unchanged and uses the terms of its
+> date. These are source-bounded readings, not architecture-wide
 > verdicts or independently reproduced experiments. The Commonplace
 > downstream case remains a proposed arrangement; the
 > [first-downstream-run workshop](../../work/first-downstream-run/README.md)

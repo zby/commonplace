@@ -30,8 +30,10 @@ reports lower performance when the solver could read the improvement wiki
 during training, with the authors' hypothesis that direct use made the
 traces less informative for later improvement. Continuing
 responsibility for that release, with the consuming project's judgments
-arriving from outside, is what makes Commonplace an
-[externally tested theory builder](../../notes/definitions/externally-tested-theory-builder.md)
+arriving from outside, is what makes Commonplace a
+[theory builder](../../notes/definitions/theory-builder.md) under external
+assessment, in the sense of the
+[three externally supplied items](../../notes/a-claim-without-external-assessment-carries-three-obligations.md),
 once observed. Whether producing software for others also makes it a
 [software house](../../notes/definitions/software-house.md) is the
 [side conjecture's](../../notes/an-open-domain-theory-builder-becomes-a-software-house-when-new-domains-require-production-machinery-changes.md)
