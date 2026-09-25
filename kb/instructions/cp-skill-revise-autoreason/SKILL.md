@@ -402,7 +402,7 @@ The best version is `last_good`.
 5. Ask the user: "Apply these changes to `${source_file}`? (The AutoReason run bundle will be cleaned up unless you ask to keep it.)"
 6. If the user approves:
    - Copy `last_good` over the original file.
-   - If the title changed and the new title implies a different filename, derive the new filename using the KB convention (lowercase, hyphens, derived from `# Title`), rename with `git mv`, and update markdown links across `kb/`.
+   - If the title changed and the new title implies a different filename, rename with `commonplace-relocate-note <file> "<new title>"`: dry-run first, then `--apply`. It rewrites every backlink and adds the published-site redirect; never rename with `git mv` or hand-edited links. Commit the relocation alone, separate from the content change.
    - Delete the run bundle unless the user asked to keep it.
 7. If the user declines:
    - Leave the original untouched.

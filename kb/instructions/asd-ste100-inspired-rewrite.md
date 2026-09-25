@@ -18,7 +18,7 @@ Experimental. Use this instruction only with an explicit note path. It is inspir
    - Name the actor when the actor matters.
    - Use one term consistently for one concept.
    - Make necessary logical connections explicit.
-3. Preserve the note's claim, reasoning, evidence, scope, frontmatter, title, headings, links, code, quotations, and registered identifiers. If a preference would change the meaning, preserve the original wording.
+3. Preserve the note's claim, reasoning, evidence, scope, frontmatter, title, headings, links, code, quotations, and registered identifiers. If a preference would change the meaning, preserve the original wording. The one frontmatter change: if the note carries `user-verified`, remove it, because a rewrite of the prose is a substantive edit that the human has not reviewed.
 4. Run `commonplace-validate <note-path>`.
 5. Append departures, observed effects, and new ideas to `kb/reports/retained/asd-ste100-inspired-rewrite.md`.
 

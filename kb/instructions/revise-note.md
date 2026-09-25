@@ -37,7 +37,9 @@ A content-level editorial pass on a single note. You may rewrite sentences, reor
    - Add bridging sentences where logical gaps exist.
    - Sharpen vague language into precise claims.
    - Merge or split sections.
-   - Revise frontmatter, title, footer sections, and filename when needed to improve the note as a whole.
+   - Revise frontmatter, title, and footer sections when needed to improve the note as a whole. A filename change is not part of this pass: after it, rename with `commonplace-relocate-note`, which rewrites backlinks in other files and adds the published-site redirect, and commit the relocation alone.
+
+   A revision is a substantive edit: if the note carries `user-verified`, remove that field. Only a human may restore it after review (see the [note type](../types/note.md)).
 
    Do NOT:
    - Change the note into a substantively different note than the one you started with.

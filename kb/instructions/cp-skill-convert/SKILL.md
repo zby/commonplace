@@ -69,16 +69,12 @@ The filename should match the title. Whether the title itself is good is a seman
 - If the filename diverges from the title (e.g. file is `connect-pipeline-features.md` but the title is `# Connect pipeline should detect reciprocal links`) — rename it to match
 
 **To rename:**
-1. Derive the new filename from the `# Title` heading. Slugify: lowercase, hyphens for spaces, strip punctuation, `.md` extension.
-2. Check for backlinks to the old path:
+1. Dry-run the relocation with the `# Title` heading as the new name:
    ```bash
-   rg -l 'old-filename\.md' kb/
+   commonplace-relocate-note old-path/old-filename.md "Title from the heading"
    ```
-3. If backlinks exist, update them all to point to the new filename (preserve the same relative path structure — only the filename changes, not the directory).
-4. Rename the file:
-   ```bash
-   git mv old-path/old-filename.md old-path/new-filename.md
-   ```
+   It derives the filename from the title, lists every backlink it will rewrite, and adds the published-site redirect.
+2. If the dry run is correct, run the same command with `--apply`. Never rename with `git mv` or by editing backlinks by hand: that skips the redirect and the full backlink rewrite.
 
 **Rules:**
 - The file stays in its current directory. Rename only, no move.
@@ -127,6 +123,6 @@ adding it here.
 - Leave `user-verified` absent for text → note conversions
 - Write a description that adds mechanism, scope, or implication
 - Rename the file to match the `# Title` heading (unless it already does)
-- Fix all backlinks when renaming
-- Use `git mv` for renames so git tracks the history
+- Rename with `commonplace-relocate-note`, which rewrites every backlink and adds the redirect
+- Commit a relocation alone, with no content edits, so `git log --follow` survives the rename
 - Report what was done so the user can review

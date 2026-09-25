@@ -45,7 +45,8 @@ For each actionable finding returned in a note entry:
 After all fixes:
 
 5. Re-read edited sections to verify flow and cohesion. Fixes should read as if they were always there.
-6. Produce the fix report (format below).
+6. If any fix was applied and the note carries `user-verified`, remove that field: a fix that changes framing or accuracy is a substantive edit, and only a human may restore verification (see the [note type](../../types/note.md)).
+7. Produce the fix report (format below).
 
 ## Constraints
 
