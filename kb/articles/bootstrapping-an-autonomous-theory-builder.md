@@ -1,5 +1,5 @@
 ---
-description: "Bootstrap supplement: build an autonomous theory builder from a partially automated system that retains what operator and computation learn, applies it reflectively to the learning method, and builds new software"
+description: "Bootstrap supplement: Commonplace starts as a reflective theory builder in which people perform many operations, moves them to computation one at a time, and measures success by human decisions per verified improvement"
 type: kb/articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
@@ -27,23 +27,42 @@ source_notes:
 > and counterexamples are welcome on
 > [the repository's GitHub Discussions page](https://github.com/zby/commonplace/discussions).
 
-An [autonomous](../notes/definitions/theory-builder.md#qualifiers)
-[theory builder](./building-a-theory-builder-from-todays-llms.md) is one in
-which computation performs every internal role in building theories:
-noticing problems, diagnosing failures, producing and evaluating revisions, choosing which
-theory to keep, and repairing the method by which it does this. It still has
-people: users supply tasks and judge the results against what they asked
+[The lead article](./building-a-theory-builder-from-todays-llms.md) bets that
+a fully automated theory builder that learns can be built with today's
+fixed-weight LLMs. A
+[theory builder](../notes/definitions/theory-builder.md) is a system that
+states its theories in natural or formal language, acts on them, criticizes
+and revises them, and keeps the results for its next round of work. This
+article describes how Commonplace, the knowledge base behind these articles,
+builds one that is autonomous.
+
+A theory builder is [autonomous](../notes/definitions/theory-builder.md#qualifiers)
+when computation performs every internal operation: noticing problems,
+diagnosing failures, producing and evaluating revisions, choosing which
+theory to keep, and repairing the method by which it does this. People remain
+as users: they supply tasks and judge the results against what they asked
 for.
 
-Such a builder can be built in stages. We start with a
-partially automated system in which a human operator and computation learn
-together. Because the builder includes whoever performs its internal
-operations, such a system is already a theory builder, staffed partly by
-people. The bootstrap changes who performs those operations. We require only
-that what is learned is retained in the system, changes later behaviour, and
-changes it for the better.
-[The lead article](./building-a-theory-builder-from-todays-llms.md) says how
-that last condition is tested. Commonplace is our implementation of this bootstrap.
+Designing such a builder whole would require knowing in advance how
+computation should perform each of these operations, and we do not know
+that. So Commonplace builds it by bootstrapping. It starts as a system in
+which a human operator performs many of the operations and computation
+performs the rest. Because the builder includes whoever performs its
+operations, this system is already a theory builder, staffed partly by
+people. It is also
+[reflective](../notes/definitions/theory-builder.md#qualifiers) from the
+start: its own method is one of the theories it states, criticizes, and
+revises. The bootstrap moves operations from the operator to computation one
+at a time, each once evidence shows that computation performs it adequately.
+
+Throughout, what is learned must be retained in the system, change later
+behaviour, and change it for the better;
+[the lead article](./building-a-theory-builder-from-todays-llms.md) says how
+that last condition is tested. The bootstrap is working while the number of
+human decisions each completed, verified improvement requires holds steady
+or falls as the system grows. The strongest evidence of success is an
+improvement process that still completes when the operator's decisions are
+withheld. [The last section](#the-bootstrap) states both tests.
 
 ## Retain learning in the system
 
