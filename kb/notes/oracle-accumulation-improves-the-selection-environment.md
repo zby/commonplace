@@ -2,7 +2,7 @@
 description: "A failure retained as a lesson helps tasks that retrieve it; retained as a maintained check it improves selection for later candidates in its domain and amortizes validation"
 type: types/note.md
 traits: [title-as-claim]
-tags: [learning-theory, deploy-time-learning]
+tags: [learning-theory, self-improving-systems]
 ---
 
 # Oracle accumulation improves selection for later candidates in its maintained domain

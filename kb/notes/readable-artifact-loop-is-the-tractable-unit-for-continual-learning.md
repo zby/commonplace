@@ -2,7 +2,7 @@
 description: "Identifies the natural-language-plus-symbolic pair as the tractable first loop for representational-form coevolution because it shares context, operates at current tempos, and already has a codification boundary"
 type: types/note.md
 traits: [title-as-claim]
-tags: [learning-theory, deploy-time-learning]
+tags: [learning-theory, self-improving-systems]
 ---
 
 # The readable-artifact loop is the tractable unit for continual learning

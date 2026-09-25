@@ -2,7 +2,7 @@
 description: Optimization loops need diagnostic error analysis and demonstrated judge discrimination before automation can improve behavior rather than just score
 type: types/note.md
 traits: [has-external-sources, title-as-claim]
-tags: [learning-theory, llm-reliability, evaluation, deploy-time-learning]
+tags: [learning-theory, llm-reliability, evaluation, self-improving-systems]
 ---
 
 # Evaluation automation is phase-gated by comprehension

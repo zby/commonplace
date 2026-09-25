@@ -2,7 +2,7 @@
 description: "Addressable retention localizes a sparse change when units match its decomposition; total adaptation stays local only when the affected units also have a small, explicit impact closure"
 type: types/note.md
 traits: [title-as-claim]
-tags: [learning-theory, deploy-time-learning]
+tags: [learning-theory, self-improving-systems]
 ---
 
 # Localized retention pays when sparse changes have bounded impact in a matching decomposition

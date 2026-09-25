@@ -2,7 +2,7 @@
 description: "An artifact can exactly implement a requirement while the requirement remains a conjectured proxy for a declared objective; assess each named path separately, and attribute failure to the link without erasing local correctness"
 type: types/note.md
 traits: [title-as-claim]
-tags: [learning-theory, constraining]
+tags: [learning-theory, constraining, deploy-time-learning]
 ---
 
 # Exact implementation does not validate a requirement against its objective

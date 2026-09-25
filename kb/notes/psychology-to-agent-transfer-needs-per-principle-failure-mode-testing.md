@@ -2,7 +2,7 @@
 description: Brainstorming a methodology for evaluating cognitive-science-to-agent transfer — assembled from three existing KB notes and tested against Youssef's five psychology principles as worked examples
 type: types/note.md
 traits: [has-external-sources, title-as-claim]
-tags: [learning-theory, deploy-time-learning]
+tags: [evaluation]
 ---
 
 # Psychology-to-agent transfer needs per-principle failure-mode testing

@@ -2,7 +2,7 @@
 description: "Discarding an intermediate artifact loses that artifact's reuse path, not all learning; cross-run accumulation fails only when no experience-dependent state survives to affect later work"
 type: types/note.md
 traits: [title-as-claim]
-tags: [learning-theory, artifact-analysis]
+tags: [learning-theory, artifact-analysis, self-improving-systems]
 ---
 
 # Discarding all experience-dependent state prevents cross-run accumulation

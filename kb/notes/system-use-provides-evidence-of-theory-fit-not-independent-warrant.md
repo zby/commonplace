@@ -2,7 +2,7 @@
 description: "Consequences of using a claim in a live system can test its integration and causal usefulness, but independent factual, formal, source, or scope evidence is still needed for its warrant"
 type: types/note.md
 traits: [title-as-claim]
-tags: [learning-theory, deploy-time-learning, evaluation]
+tags: [learning-theory, deploy-time-learning, evaluation, self-improving-systems]
 ---
 
 # System use provides evidence of theory fit and causal usefulness, not independent warrant

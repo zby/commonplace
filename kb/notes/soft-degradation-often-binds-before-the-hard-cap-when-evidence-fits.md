@@ -2,7 +2,7 @@
 description: For quality-sensitive agent work whose required evidence fits within the provider window, volume, complexity, and interference can silently constrain usable context before the hard cap
 type: types/note.md
 traits: [has-external-sources, title-as-claim]
-tags: [learning-theory, foundations, deploy-time-learning]
+tags: [foundations, context-engineering]
 ---
 
 # Soft degradation can bind before the hard cap even when required evidence fits

@@ -2,7 +2,7 @@
 description: "When no complete fixed oracle decides whether a claim belongs in a working theory, distributed consequences of live system use can provide an initial selection environment"
 type: types/note.md
 traits: [title-as-claim]
-tags: [learning-theory, deploy-time-learning, evaluation]
+tags: [learning-theory, deploy-time-learning, evaluation, self-improving-systems]
 ---
 
 # System use is an initial selection environment when theory fit lacks a fixed oracle
