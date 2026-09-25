@@ -66,6 +66,17 @@ Decision numbers D1–D8 refer to the
   analyse-agentic-system skill judge systems condition by condition against
   the new definition.
 
+## Open
+
+- Precedents note, Workspace Optimization: whether DreamTeam's levels within
+  one game run count as new problems for condition 4. The note states it as
+  unsettled by the source.
+- Precedents note, runtime-model comparison: "additional contribution of
+  learning through criticism" became "criticism aimed at what a theory says";
+  check whether dropping "learning" changed the claim.
+- Testing article grew from about 1,660 to 2,840 words; consider a
+  tightening pass after the retitle.
+
 ## Steps
 
 1. Draft [theory-builder.md](../../notes/definitions/theory-builder.md) and its
