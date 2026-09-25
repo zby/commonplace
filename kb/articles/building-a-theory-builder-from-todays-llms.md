@@ -55,10 +55,8 @@ conditions on how it treats such theories:
    by testing their consequences, and revises or replaces those that fail;
 4. it keeps the result of criticism, so that it shapes the next round.
 
-The definition sets no minimum for how long results persist. The arrangement
-we build keeps them across problems, so that they change later work on other
-questions. The definition also has no success condition: a builder that
-never improves still meets it. That is why the bet below is about learning,
+The definition has no success condition: a builder that never improves
+still meets it. That is why the bet below is about learning,
 not only about building.
 
 ## The bet
@@ -93,22 +91,6 @@ Current LLMs already appear capable of the main functions the loop requires:
 
 None of these capabilities needs to be perfect. The point of the cycle is to
 expose and correct errors.
-
-The bet is about what can be built. Commonplace builds it reflectively from
-the start: the builder's own method is one of the theories it states,
-criticizes, and revises, and people perform many of its operations at
-first. The work is to move those operations to computation,
-and the [bootstrap supplement](./bootstrapping-an-autonomous-theory-builder.md)
-describes that path. A builder that learns could also keep a fixed method.
-Reflection is chosen because an improvement to the method is paid for once
-and reused by every later learning episode, so over a long horizon its return can exceed that of immediate learning, and where it does,
-[an optimal learning strategy invests in its own machinery](../notes/an-optimal-long-run-learning-strategy-invests-in-its-own-machinery.md).
-That return requires method improvements to compound, making later
-improvement cheaper, more reliable, or possible where it was not, which is
-where recursive self-improvement begins. Compounding takes more than
-reflection, and the
-[testing supplement](./testing-whether-a-theory-builder-learns.md) tests
-learning first and compounding after.
 
 ## Formalize it, or leave it to people
 
@@ -168,7 +150,7 @@ applied, by a model, to a case nobody anticipated when it was written. That
 is not formalization — nothing assigns the definition consequences, and the
 interpreter's judgment fixes what happens wherever the words leave a choice
 open. But it is not leaving the operation to people either. This is why the
-paradigm below is stated through definitions and why they are worked as hard
+theory builder is stated through definitions and why they are worked as hard
 as they are: what it takes for a retained change to count as operative, what
 makes a theory addressable, what a criticism has to do. Each is constrained
 as far as it will go and then left to the interpreter. Parts that settle can
@@ -188,8 +170,8 @@ have to be checked by other means.
 
 ## A distinct learning paradigm
 
-If this works autonomously, theory building is a distinct learning
-paradigm rather than another agent workflow, because its learning happens
+If a theory builder learns autonomously, theory building is a distinct
+learning paradigm rather than another agent workflow, because its learning happens
 through explicit, criticizable theories rather than only through changes to
 model weights. Three payoffs follow from that difference.
 
@@ -297,7 +279,7 @@ behaviour:
 
 > K(t) → conjecture and criticism → K(t+1) → different later behaviour
 
-where K is the retained tentative knowledge. In our first arrangement K is a
+where K is the retained state. In the first arrangement K is a
 knowledge base: files holding theories, the criticism recorded against them,
 and the instructions derived from them, which later runs read before acting.
 
@@ -309,10 +291,11 @@ behaviour should be better. Showing that a theory was formulated, criticized,
 and revised, and that the revision was used,
 [does not by itself establish improved capacity](../notes/a-complete-theory-path-does-not-establish-improved-capacity.md);
 a builder can retain and faithfully apply a bad rule. The
-[testing supplement](./testing-whether-a-theory-builder-learns.md) states
-the hypotheses that separate these outcomes and what would refute each.
+[testing supplement](./testing-whether-a-theory-builder-learns.md) gives
+tests that separate a used change from an improvement, and states the
+program's hypotheses and what would refute each.
 
-The research question is therefore simple:
+The research question is therefore:
 
 > **Can a fixed-weight LLM system autonomously maintain tentative theories,
 > expose them to error, revise them, retain the revisions, use them in later
@@ -320,13 +303,36 @@ The research question is therefore simple:
 
 We think the answer is yes.
 
+## How Commonplace builds it
+
+The bet is about what can be built. Commonplace, the knowledge base behind
+this article, maintained by people and agents together, builds it
+reflectively from the start: the builder's own method is one of the theories it states,
+criticizes, and revises, and people perform many of its operations at first.
+The work is to move those operations to computation, and the
+[bootstrap supplement](./bootstrapping-an-autonomous-theory-builder.md)
+describes that path. Results are kept across problems, so they change later
+work on other questions; the definition sets no minimum for how long results
+persist.
+
+A builder that learns could also keep a fixed method. Reflection is chosen
+because an improvement to the method is paid for once and reused by every
+later learning episode, so over a long horizon its return can exceed that of
+immediate learning, and where it does,
+[an optimal learning strategy invests in its own machinery](../notes/an-optimal-long-run-learning-strategy-invests-in-its-own-machinery.md).
+That return requires method improvements to compound, making later
+improvement cheaper, more reliable, or possible where it was not, which is
+where recursive self-improvement begins. Compounding takes more than
+reflection, and the
+[testing supplement](./testing-whether-a-theory-builder-learns.md) tests
+learning first and compounding after.
+
 ## Where to go next
 
 The [testing supplement](./testing-whether-a-theory-builder-learns.md)
 defines the system under test, the three hypotheses, and the first protocol.
 The [bootstrap supplement](./bootstrapping-an-autonomous-theory-builder.md)
-starts from Commonplace, a knowledge base currently maintained by people and
-agents together, and transfers its internal roles to computation one class at
+starts from Commonplace and transfers its internal roles to computation one class at
 a time; it also covers the builder's reflection on its own machinery. The
 [software-house supplement](./an-automated-software-house-as-a-second-test-of-a-theory-builder.md)
 proposes a second arrangement whose failures are more visible. The
