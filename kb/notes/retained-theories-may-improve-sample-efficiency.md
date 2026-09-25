@@ -17,12 +17,19 @@ This note studies an arrangement that retains
 [addressable theories](./definitions/addressable-theory.md): formulated
 assumptions, scope conditions, and parts that can be inspected and revised
 individually. Theories may be expressed in natural language, causal models,
-or programs. Retention and addressability are chosen treatments whose benefits
-are conjectured. [Conjectural learning](./definitions/conjectural-learning.md)
-also admits whole replacement and reconstruction from retained criticism.
-It requires an operative formulated theory open to criticism of what it says,
-and improved capacity for future action from the process of conjecture and
-criticism; operating the proposed process does not guarantee learning.
+or programs. The arrangement is a
+[theory builder](./definitions/theory-builder.md): it states its theories,
+acts on them, criticizes what they say, and retains the results for later
+problems. Retention is therefore a condition of the arrangement. Two further
+choices are treatments whose benefits are conjectured: retaining the assembled
+theory rather than rebuilding it from retained criticism, and fine-grained
+addressability. A builder that replaces a criticized theory whole, or rebuilds
+it from retained criticism, meets the same conditions. The conjecture is that
+the finer-grained arrangement needs fewer target observations than such a
+coarser builder and than reconstruction from records of inputs and outcomes
+only, which is not a theory builder. Operating a theory builder does not
+guarantee learning: whether it improves capacity for future action is a
+separate empirical claim.
 
 The conjectured pathway is:
 
@@ -37,7 +44,7 @@ It contains two separable hypotheses:
 
 The proposed selection rule prefers [explanatory-reach](./first-principles-reasoning-selects-for-explanatory-reach-over.md)
 among revisions that fit the evidence. This is an explicit choice under test,
-not a condition of conjectural learning or evidence that the selector works.
+not a condition of being a theory builder or evidence that the selector works.
 
 [Reach-assessment](./definitions/reach-assessment.md) is the
 proposed capability behind the second hypothesis. A useful supplied theory
@@ -100,8 +107,8 @@ The process cannot use that interface to inspect an assumption or revise a
 scope condition. The extent and collateral effects of updates must be
 assessed behaviorally. This does not classify unknown model-internal
 processing: an opaque model may formulate and criticize theories privately.
-Evidence of weights or missing visible rationale settles neither presence nor
-absence of conjectural learning.
+Evidence of weights or missing visible rationale does not by itself settle
+whether a system meets the theory-builder conditions.
 
 [Addressability](./definitions/addressable-theory.md) makes particular
 assumptions and scope conditions available for revision, and comes in degrees.
@@ -212,7 +219,7 @@ retained-theory arrangement.
 
 Relevant Notes:
 
-- [Conjectural learning](./definitions/conjectural-learning.md) — defined-in: the broader process whose membership does not require retained addressable theories
+- [Theory builder](./definitions/theory-builder.md) — defined-in: the arrangement studied; membership requires retention, not fine-grained addressability
 - [Addressable theory](./definitions/addressable-theory.md) — defined-in: the chosen structural property whose payoff is conjectured
 - [Reach-assessment](./definitions/reach-assessment.md) — defined-in: the capability that selects the theory whose reach could pay, and which retention does not supply
 - [First-principles reasoning selects for explanatory-reach over adaptive fit](./first-principles-reasoning-selects-for-explanatory-reach-over.md) — grounds: the property that carries the conjectured gain, and the negative test that judges it

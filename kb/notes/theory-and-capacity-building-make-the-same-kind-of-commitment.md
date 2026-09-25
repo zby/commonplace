@@ -31,9 +31,9 @@ Neither commitment needs to be correct or permanent; later experience can defeat
 
 Refactoring is the disciplined case on the constructive side: backtracking over a design commitment while preserving the externally observable behavior other commitments depend on. Broader retractions become redesign. At either scale the operation is the same — backtrack over a commitment, propagate the revision through its dependents — and it is part of what [holding a program theory means sustaining coherent search under delayed feedback](./program-theory-sustains-search-under-delayed-feedback.md) demands of a theory-holder. It is also why the current artifact alone can be insufficient for coherent modification: the learner needs enough theory to recognize which visible structures embody commitments and what else depends on them.
 
-## Conjectural learning is one causal path between the two forms
+## Theory building is one causal path between the two forms
 
-Capacity does not have to be built through theory: search, optimization, and trajectory reuse can turn experience into constructive commitments directly. [Conjectural learning](./definitions/conjectural-learning.md) singles out one path, in which formulated theory that stays open to criticism, together with the criticism that occurs, causes improved capacity:
+Capacity does not have to be built through theory: search, optimization, and trajectory reuse can turn experience into constructive commitments directly. A [theory builder](./definitions/theory-builder.md) works one path: it states theories, acts on them, criticizes what they say, and retains the results. The builder learns along this path when that process, including the criticism that occurs, causes improved capacity:
 
 ```text
 experience
@@ -44,7 +44,7 @@ experience
   -> theory revision
 ```
 
-Its value is empirical: if direct use of retained experience produces comparable capacity at comparable cost, the path loses support. The [retained-theory arrangement](./commonplace-studies-conjectural-learning-through-retained-theories.md) studied by Commonplace also asks whether theory use, criticism, and the result of criticism affect later operation on one connected path. The theory can survive criticism without a text revision, and this narrower causal path does not define conjectural learning.
+Its value is empirical: if direct use of retained experience produces comparable capacity at comparable cost, the path loses support. The [retained-theory arrangement](./commonplace-studies-conjectural-learning-through-retained-theories.md) studied by Commonplace also asks whether theory use, criticism, and the result of criticism affect later operation on one connected path. The theory can survive criticism without a text revision. Whether this path improves later operation is a claim about learning, not a condition of being a theory builder.
 
 The reverse path runs regardless. A constructive commitment creates machinery, the machinery produces new experience, and that experience can support, narrow, or defeat the theory that guided the construction. The two kinds of commitment can co-evolve without collapsing into one kind of retained state.
 

@@ -11,8 +11,8 @@ A claim that a theory guided a decision, its consequence informed criticism,
 and the result guided later work concerns a connected causal path. Evidence
 that a theory existed, a decision occurred, an outcome followed, a theory
 changed, and later work used retained state does not by itself connect those
-events. The witnesses must identify the joins. Even a connected path establishes
-[conjectural learning](./definitions/conjectural-learning.md) only
+events. The witnesses must identify the joins. Even a connected path through a
+[theory builder](./definitions/theory-builder.md) establishes learning only
 when the process of conjecture and criticism improves the system's capacity
 for future action.
 
@@ -119,5 +119,5 @@ Relevant Notes:
 - [A complete theory path does not establish improved capacity](./a-complete-theory-path-does-not-establish-improved-capacity.md) — grounds: separates process evidence from improved capacity and the retained realization from the genus
 - [Citing retained theory at the decision point is a mediation trace](./citing-retained-theory-at-the-decision-point-is-a-mediation-trace.md) — grounds: supplies the observable theory-to-decision edge and bounds what citation establishes
 - [History has one chance to become checkable](./history-has-one-chance-to-become-checkable.md) — grounds: explains why non-re-derivable joins need carried evidence
-- [Conjectural learning](./definitions/conjectural-learning.md) — defined-in: the learning claim that also requires improved capacity
+- [Theory builder](./definitions/theory-builder.md) — defined-in: the builder conditions, which leave learning (improved capacity) to separate evidence
 - [Reflective system](./definitions/reflective-system.md) — defined-in: the same-system causal connection needed for a reflective claim

@@ -10,19 +10,26 @@ tags: [foundations, self-improving-systems]
 A theory can guide a useful change without the system learning from criticism
 of that theory. Evidence of theory use, a relevant outcome, a response to
 criticism, and later use support successively more complete accounts of the
-process. [Conjectural learning](./definitions/conjectural-learning.md)
-requires a further result: a formulated operative theory, open to criticism of
-what it says, and the process of conjecture and criticism improve the system's
-capacity for future action. A complete observed sequence can
-still fail to improve that capacity.
+process. A [theory builder](./definitions/theory-builder.md) states its
+theories, acts on them, criticizes what they say, and retains the results for
+later problems. The definition does not require that this improves anything.
+Learning, in the sense of improved capacity for future action from the process
+of conjecture and criticism, is a further claim. A complete observed sequence
+can still fail to improve that capacity.
 
 The reflective case adds a separate condition. The theory represents selected
 aspects of the system itself, and that self-representation has a two-way causal
 connection to those aspects inside the declared boundary. As the
 [reflective-system definition](./definitions/reflective-system.md)
 states, this is an architectural capacity; it need not already have been
-exercised. Evidence for a particular reflective learning episode must connect
-the claimed theory use and criticism to that same system path.
+exercised. For a theory builder, the
+[reflective qualifier](./definitions/theory-builder.md#qualifiers) places this
+connection in consumption and criticism: the builder's operations consume its
+method texts, and criticism tests those texts against records of its own
+operation. The connection is not kept up automatically, so text and operation
+can diverge until criticism finds the gap. Evidence for a particular reflective
+learning episode must connect the claimed theory use and criticism to that
+same system path.
 
 ## Evidence forms a ladder
 
@@ -111,8 +118,8 @@ This arrangement can accumulate targeted changes without rebuilding the theory
 each episode. Its advantage over reconstruction from retained criticisms or
 from inputs and outcomes is conjectured. A theory criticized and replaced
 whole can still support learning; a stored theory that no process would
-consume cannot. Private linguistic formulation and criticism can also qualify,
-although opacity may leave their presence or effects unestablished.
+consume cannot. Private linguistic formulation and criticism are not
+excluded, although opacity may leave their presence or effects unestablished.
 
 Retained addressable theory must earn its retrieval, maintenance, and
 consistency costs. [A hand-crafted bootstrap fits the Bitter Lesson only when
@@ -157,8 +164,10 @@ The construction is not an observed recurrent learning result.
   about an external target need not be reflective unless that target helps
   determine the modifying system's own behavior; the two-way causal connection
   must still hold.
-- Retaining an addressable theory is an explicit premise of the chosen
-  arrangement, not a condition of conjectural learning.
+- Retention is a theory-builder condition, and reconstruction from retained
+  criticism meets it. Retaining the assembled theory with fine-grained
+  addressability is an explicit premise of the chosen arrangement, not a
+  condition of being a theory builder.
 - Criticism can be delayed. A later demand or maintenance failure may provide
   the relevant challenge, and claims must stay within what it tested.
 - Identity across records helps establish a connected path; it does not
@@ -178,7 +187,7 @@ The construction is not an observed recurrent learning result.
 
 Relevant Notes:
 
-- [Conjectural learning](./definitions/conjectural-learning.md) — defined-in: the improvement and criticism conditions kept distinct from process evidence
+- [Theory builder](./definitions/theory-builder.md) — defined-in: the builder conditions and the reflective qualifier, kept distinct from process evidence and from the improvement claim
 - [Reflective system](./definitions/reflective-system.md) — defined-in: the architectural capacity that a reflective learning claim additionally requires
 - [Reflection buys addressability](./reflection-buys-addressability.md) — grounds: explicit retention makes particular claims available for criticism without supplying correctness
 - [Disconnected witnesses do not establish a full causal path through theory](./disconnected-witnesses-do-not-establish-a-causal-path-through-theory.md) — extends: what joins evidence of recurrent use must identify

@@ -111,10 +111,11 @@ objective. A strong answer on one dimension does not supply the other.
 
 ## Grounds for change: comparison with a theory builder
 
-A [theory builder](./definitions/theory-builder.md) develops and revises
-tentative theories of external subjects and of its own machinery, and a
-machinery change need not first be proved beneficial under the current
-self-theory. The distinction from the Gödel machine concerns the grounds
+A [theory builder](./definitions/theory-builder.md) states tentative
+theories, acts on them, criticizes what they say, and retains the results. A
+[reflective](./definitions/theory-builder.md#qualifiers) builder also holds and
+criticizes theories of its own machinery, and a machinery change need not
+first be proved beneficial under the current self-theory. The distinction from the Gödel machine concerns the grounds
 required for a change, not whether the system observes the world or can
 rewrite its evaluators. Natural language, fixed model weights, and the mere
 presence of self-modification do not define the difference.

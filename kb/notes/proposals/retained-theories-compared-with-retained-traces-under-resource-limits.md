@@ -123,23 +123,27 @@ retrieval, interpretation, maintenance, and consistency costs.
 
 ## Separate the two reconstruction comparisons
 
-The storage container does not decide whether a system performs
-[conjectural learning](../definitions/conjectural-learning.md).
+The storage container does not decide whether a system is a
+[theory builder](../definitions/theory-builder.md).
 Indexed traces can expose theories and their criticisms as retained,
-addressable knowledge. A theory can also be reconstructed from criticism
-without retaining the assembled theory. Either can qualify when the process
-of conjecture and criticism improves capacity for future action.
+addressable knowledge. A theory can also be reconstructed from retained
+criticism without retaining the assembled theory. Both arrangements meet the
+builder's retention condition. Whether either learns, in the sense of
+improving capacity for future action, is a separate question.
 
 Two retention comparisons therefore ask different questions:
 
 - **Assembled theory and testing record versus retained criticisms.** This
   asks what keeping the assembled theory buys over reconstructing it from
-  work already done. The reconstruction may itself be conjectural learning.
+  work already done. Both arms are theory builders.
 - **Assembled theory and testing record versus inputs and outcomes only.**
   This asks what retaining the work of conjecture and criticism buys over
   doing that work again. The records in the second arrangement do not
   contain formulated criticisms; its active machinery may still formulate
   and use them. A storage contrast cannot establish their internal absence.
+  Because what is retained holds no stated theory or criticism, this arm is
+  the baseline outside the theory builder; it may still learn in the
+  ordinary sense.
 
 Full reasoning traces may contain theories and criticism. Treating all
 traces as raw observations would change what the comparison varies. Generic
@@ -174,7 +178,8 @@ not a universal boundary between learning and nonlearning arrangements.
 - Can retained criticisms be kept usefully distinct from a compressed or
   partially assembled theory in an actual implementation?
 - Which costs or failures should cause a system to revise, reconstruct, or
-  combine the two? Neither strategy is a membership condition of learning.
+  combine the two? Either strategy meets the builder's retention condition;
+  neither is required.
 - When does a learned index itself expose an addressable theory, rather than
   only route access to records? Retention or editability alone does not decide.
 - How should replay be compared when stochastic choices cannot be reproduced
@@ -188,7 +193,7 @@ not a universal boundary between learning and nonlearning arrangements.
 
 Relevant Notes:
 
-- [Conjectural learning](../definitions/conjectural-learning.md) — defined-in: learning attribution is distinct from the retained-state arrangement
+- [Theory builder](../definitions/theory-builder.md) — defined-in: membership, including reconstruction from retained criticism, is distinct from whether an arrangement learns
 - [Addressable theory](../definitions/addressable-theory.md) — defined-in: the optional structural property supporting targeted criticism
 - [Commonplace studies conjectural learning through retained theories](../commonplace-studies-conjectural-learning-through-retained-theories.md) — see-also: the independently stated efficiency conjecture
 - [Retaining episode evidence keeps a distilled rule open to re-examination](../retaining-episode-evidence-keeps-a-distilled-rule-open-to.md) — grounds: records remain evidence behind retained abstractions

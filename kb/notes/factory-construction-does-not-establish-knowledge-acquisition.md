@@ -67,7 +67,7 @@ production under current family machinery
   -> retention and later use of that change
 ```
 
-That path concerns [factory development](./definitions/factory-development.md), not merely product repair. It can be driven by [conjectural learning](./definitions/conjectural-learning.md), program search, trajectory reuse, learned policies, direct optimization, trial and error, or mixtures. Recursive factory output does not select among those mechanisms and does not establish improved capacity by itself.
+That path concerns [factory development](./definitions/factory-development.md), not merely product repair. It can be driven by a [theory builder's](./definitions/theory-builder.md) conjecture and criticism, program search, trajectory reuse, learned policies, direct optimization, trial and error, or mixtures. Recursive factory output does not select among those mechanisms and does not establish improved capacity by itself.
 
 ## Consequences for the research program
 

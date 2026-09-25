@@ -75,12 +75,12 @@ a particular learner is an empirical question.
 Harder problems, resource limits, and maintenance costs can erode the return.
 When they do, the optimal allocation shifts back toward immediate learning.
 
-For a [reflective theory builder](./definitions/reflective-theory-builder.md),
+For a [reflective theory builder](./definitions/theory-builder.md#qualifiers),
 the machinery is its theory-building machinery. Full automation of that
 machinery is a further conjecture: some internal functions may keep requiring
 an operator, and expanding the system's responsibilities can create new
 operator work. Even [full internal
-automation](./definitions/autonomous-theory-builder.md) leaves users supplying
+automation](./definitions/theory-builder.md#qualifiers) leaves users supplying
 tasks and external acceptance judgments.
 
 ---
@@ -89,4 +89,4 @@ Relevant Notes:
 
 - [A hand-crafted bootstrap fits the Bitter Lesson only if learning can outgrow it](./a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md) — grounds: supplies the compatibility condition on how operator-supplied functions are displaced, which this note's investment argument assumes rather than argues
 - [The bitter lesson selects production methods, not representational forms](./the-bitter-lesson-selects-production-methods-not-representational.md) — grounds: locates the scaling advantage in how capability is produced rather than in automation or the form of retained knowledge
-- [Reflective theory builder](./definitions/reflective-theory-builder.md) — defined-in: the builder whose machinery the argument applies to, with reflection separated from successful learning
+- [Theory builder](./definitions/theory-builder.md#qualifiers) — defined-in: the reflective builder whose machinery the argument applies to, with membership separated from successful learning
