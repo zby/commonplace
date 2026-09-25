@@ -27,7 +27,7 @@ source_notes:
 > and counterexamples are welcome on
 > [the repository's GitHub Discussions page](https://github.com/zby/commonplace/discussions).
 
-[The lead article](./building-a-theory-builder-from-todays-llms.md) bets that
+[The lead article](./can-a-theory-builder-running-on-fixed-weight-llms-learn.md) bets that
 a fully automated theory builder that learns can be built with today's
 fixed-weight LLMs. A
 [theory builder](../notes/definitions/theory-builder.md) is a system that
@@ -57,7 +57,7 @@ at a time, each once evidence shows that computation performs it adequately.
 
 Throughout, what is learned must be retained in the system, change later
 behaviour, and change it for the better;
-[the lead article](./building-a-theory-builder-from-todays-llms.md) says how
+[the lead article](./can-a-theory-builder-running-on-fixed-weight-llms-learn.md) says how
 that last condition is tested. The bootstrap is working while the number of
 human decisions each completed, verified improvement requires holds steady
 or falls as the system grows. The strongest evidence of success is an

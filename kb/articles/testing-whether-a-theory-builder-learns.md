@@ -26,7 +26,7 @@ source_notes:
 > [the repository's GitHub Discussions page](https://github.com/zby/commonplace/discussions).
 
 We are only starting to
-[build theory builders from today's language models](./building-a-theory-builder-from-todays-llms.md).
+[build theory builders from today's language models](./can-a-theory-builder-running-on-fixed-weight-llms-learn.md).
 A [theory builder](../notes/definitions/theory-builder.md) states its
 theories in text, acts on them, criticizes what they say, and lets the
 result of criticism shape its next conjecture. Whether a system that meets
@@ -39,7 +39,7 @@ show that retained revisions cause later improvement at all.
 
 A system has learned only if experience produces a durable change in
 retained state that affects later capacity. The
-[lead article](./building-a-theory-builder-from-todays-llms.md) gives the
+[lead article](./can-a-theory-builder-running-on-fixed-weight-llms-learn.md) gives the
 causal structure:
 
 > K(t) → conjecture and criticism → K(t+1) → different later behaviour

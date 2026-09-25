@@ -20,7 +20,7 @@ source_notes:
 
 Existing self-improving systems already report gains from retained knowledge
 and revised skills. They also supply mechanisms for diagnosis, criticism,
-revision, and reuse. [Our program](./building-a-theory-builder-from-todays-llms.md)
+revision, and reuse. [Our program](./can-a-theory-builder-running-on-fixed-weight-llms-learn.md)
 asks two separate questions of each system. Is it a theory builder, a system
 that states its theories, acts on them, criticizes what they say, and lets
 the result of criticism shape its next round? And does holding and

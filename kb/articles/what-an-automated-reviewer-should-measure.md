@@ -241,7 +241,7 @@ compression](../notes/reverse-compression-is-when-llm-output-expands-without-add
 Gain per token alone would hide the trade-off between total benefit and cost.
 
 This experiment connects to [building a theory builder from today's
-LLMs](./building-a-theory-builder-from-todays-llms.md): that research program
+LLMs](./can-a-theory-builder-running-on-fixed-weight-llms-learn.md): that research program
 tests whether retained theories change later behaviour while model weights
 remain fixed. This experiment tests one article's effect, not whether
 criticizing and revising retained theories improves a whole system's
@@ -277,5 +277,5 @@ develops the reader-relative baseline.
 and [reach-assessment](../notes/definitions/reach-assessment.md) develop the
 property and its assessment.
 [Can a Theory Builder Running on
-Fixed-Weight LLMs Learn?](./building-a-theory-builder-from-todays-llms.md) develops the
+Fixed-Weight LLMs Learn?](./can-a-theory-builder-running-on-fixed-weight-llms-learn.md) develops the
 research program behind the retained-artifact comparison.

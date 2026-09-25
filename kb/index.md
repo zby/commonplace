@@ -26,7 +26,7 @@ note](./notes/naur-equates-machine-execution-with-formulated-criteria.md)
 reopens the bearer question, while the [coherent-search
 note](./notes/program-theory-sustains-search-under-delayed-feedback.md)
 states the longitudinal test. [The software house as the unit of
-training](./articles/building-a-theory-builder-from-todays-llms.md) says how
+training](./articles/can-a-theory-builder-running-on-fixed-weight-llms-learn.md) says how
 such a house should learn, and [bootstrapping the first automated software
 house](./articles/bootstrapping-an-autonomous-theory-builder.md) says
 how it would be built from a house that still has people inside.
