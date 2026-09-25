@@ -16,8 +16,9 @@ which removed the installed library copy and with it the multi-root design.
 (commit `fd573556`). Later on 2026-09-25 the operator settled the design
 (see [Decisions of 2026-09-25](#decisions-of-2026-09-25)): the finding trial
 is replaced by the cleanup it would have motivated, the exact resolver is not
-built, and heads move to a scaffolded `kb/tags/`. No adopting ADR, live
-participation declaration, consumer change, or relocation has landed.
+built, and heads move to a scaffolded `kb/tags/`. [ADR 089](../../reference/adr/089-tags-are-one-namespace-per-kb-with-heads-in-kb-tags.md)
+adopts them. No live participation declaration, consumer change, or
+relocation has landed.
 
 ## Goal
 
