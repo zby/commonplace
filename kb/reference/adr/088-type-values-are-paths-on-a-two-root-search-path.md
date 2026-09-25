@@ -1,19 +1,16 @@
 ---
-description: "Draft decision that every type value is a KB-relative path to its spec file, found on a search path of the library root and the artifact's KB root; restores path-valued types without relative paths and drops project-shared types"
+description: "Every type value is a KB-relative path to its spec file, found on a search path of the library root and the artifact's KB root; restores path-valued types without relative paths and drops project-shared types"
 type: reference/types/adr.md
 tags: []
+status: accepted
 ---
 
 # 088-Type values are paths on a two-root search path
 
-**Status:** workshop draft; not accepted
+**Status:** accepted
 **Date:** 2026-09-25
 **Amends:** [ADR 086](./086-projects-read-the-library-from-the-installed-package.md) (bare global type names; project-shared types stay allowed), [ADR 087](./087-source-and-report-types-are-global-library-types.md) (the one permitted snapshot rewrite), and [ADR 068](./068-collection-contracts-stop-enumerating-available-types.md) (type eligibility)
 **Restores:** the path-valued `type:` of [ADR 018](./018-types-are-path-references-to-instruction-docs.md), for every type
-**Promotion condition:** accept only with the implementation that makes the
-resolver, the collision check, the emitters, init's migration, and the specs,
-contracts, and skills that teach the form operative. Allocate the ADR number
-at promotion; 088 is provisional.
 
 ## Context
 
@@ -107,6 +104,20 @@ byte-deterministic, idempotent migration, re-pinning the same two checksums
 release, so init goes straight from the retired snapshot path to the new
 value, and an installed project rewrites each capture once. Only the source
 checkout and its clones rewrite twice.
+
+**Pinned analysis results are re-pinned.** A retained agentic-system analysis
+result is pinned by `analysis-result-sha256` in the review generated from it,
+and the systems matrix and publication check that pin. Rewriting the result's
+type line changes its bytes, so the migration re-pins every such pin whose
+result changed only in type lines. Init does this for the results it rewrites.
+ADR 086's rewrite had already broken these pins in the source checkout; they
+were repaired once, after checking that each result differed from its pinned
+bytes only in type lines.
+
+**A self-contained bundle is its own library.** A repository that carries its
+own copies of global types, such as a frozen landscape bundle, is validated
+with its own `kb/` as the library root, so its copies do not collide with the
+installed library.
 
 ## Considered alternatives
 

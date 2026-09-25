@@ -8,6 +8,7 @@ status: accepted
 # 068-Collection contracts stop enumerating available types
 
 **Status:** accepted
+**Amended by:** [ADR 088](./088-type-values-are-paths-on-a-two-root-search-path.md) — project-shared types under `kb/types/` are dropped, and type values are paths under a KB root rather than path-valued pointers
 **Date:** 2026-08-22
 
 ## Context

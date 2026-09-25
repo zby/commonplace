@@ -10,7 +10,7 @@ status: accepted
 **Status:** accepted
 **Date:** 2026-09-25
 **Supersedes:** [ADR 021](./021-ship-library-content-under-kb-commonplace.md) (library shipped as a copy under `kb/commonplace/`) and [ADR 037](./037-promote-skills-into-runtime-surfaces-by-copying.md) (skills promoted by copying)
-**Amended by:** [ADR 087](./087-source-and-report-types-are-global-library-types.md) — the source and report types also become global library types instead of project copies
+**Amended by:** [ADR 087](./087-source-and-report-types-are-global-library-types.md) — the source and report types also become global library types instead of project copies; [ADR 088](./088-type-values-are-paths-on-a-two-root-search-path.md) — type values are paths on a two-root search path, bare names are retired, and project-shared types are dropped
 **Partly reverses:** [ADR 018](./018-types-are-path-references-to-instruction-docs.md) (path-valued `type:` for global types) and [ADR 048](./048-imperative-type-rules-dispatch-by-canonical-path.md) (type rules keyed by canonical path)
 
 ## Context

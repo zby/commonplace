@@ -228,8 +228,9 @@ Commonplace runs on its own methodology, so this collection also documents *this
 
 [adr/](./adr/) contains the architecture decision records for major shipped-system choices. Notable entries:
 
-- [ADR-086: projects read the library from the installed package](./adr/086-projects-read-the-library-from-the-installed-package.md) — the current delivery: the library ships as package data, `commonplace-init` writes stubs and pointers, global types are named by bare name
+- [ADR-086: projects read the library from the installed package](./adr/086-projects-read-the-library-from-the-installed-package.md) — the current delivery: the library ships as package data, `commonplace-init` writes stubs and pointers, global types were named by bare name until ADR 088
 - [ADR-087: source and report types are global library types](./adr/087-source-and-report-types-are-global-library-types.md) — the source, snapshot, and report types that commands and procedures produce are read from the library, not copied into projects; local snapshots were retyped once with their checksums re-pinned
+- [ADR-088: type values are paths on a two-root search path](./adr/088-type-values-are-paths-on-a-two-root-search-path.md) — every `type:` value is the spec's path under a KB root (`types/note.md`, `reference/types/adr.md`), looked up in the library root and the artifact's KB root; a value that finds two different files fails
 - [ADR-021: ship library content under kb/commonplace](./adr/021-ship-library-content-under-kb-commonplace.md) — the earlier layout that copied the library into each project; projects now read it from the installed package
 - [ADR-027: package scaffold assets without source-tree symlinks](./adr/027-package-scaffold-assets-without-source-tree-symlinks.md) — the current packaging mechanism for scaffold assets in source checkouts, sdists, and wheels
 - [ADR-037: promote skills into runtime surfaces by copying](./adr/037-promote-skills-into-runtime-surfaces-by-copying.md) — the earlier skill delivery by copying; `commonplace-init` now writes stubs that point into the installed library

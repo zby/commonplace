@@ -8,6 +8,7 @@ status: accepted
 # 087-Source and report types are global library types
 
 **Status:** accepted
+**Amended by:** [ADR 088](./088-type-values-are-paths-on-a-two-root-search-path.md) — type values become paths such as `types/snapshot.md`, and captures get one more recorded type-line rewrite
 **Date:** 2026-09-25
 **Amends:** [ADR 086](./086-projects-read-the-library-from-the-installed-package.md) (projects read the library from the installed package) and [ADR 072](./072-ingests-own-source-authority-and-snapshots-are-local.md) (ingests own source authority; snapshots are local and immutable)
 

@@ -19,7 +19,7 @@ and migrates an old `kb/commonplace/` copy as INSTALL.md describes.
 The 2026-09-25 rescan used three read-only scouts over three surfaces: install
 and delivery, reference and ADRs against code, and the skills, collection
 contracts and type specs that direct agents. It found no P0. It found eight P1
-contradictions and a longer P2 tail. The largest cluster is ADR 086 residue:
+contradictions and a longer P2 tail; G1 has since closed with ADR 088. The largest cluster is ADR 086 residue:
 the migration rewrote 847 frontmatter `type:` values to bare names but left the
 prose rules that teach the path form, and left older accepted ADRs making
 present-tense guarantees about the copy. That is the "decision reached its
@@ -44,7 +44,6 @@ explicitly historical statement, or an unimplemented proposal does not.
 
 | ID | Pri | Contradiction | Consequence |
 |---|---|---|---|
-| G1 | P1 | Global type specs, a promoted skill, and a collection contract teach path-valued `type:` for global types; the resolver and schemas require bare names | Authors following the root type contract or `cp-skill-write` produce frontmatter that fails validation; the type-conformance reviewer reads the stale rule as its criterion |
 | R1 | P1 | Rename steps in convert, autoreason and revise-note use `git mv` plus hand-fixed links; write and retire-artifact say never rename manually | Manual renames skip the ProperDocs redirect and the pure relocation commit |
 | U1 | P1 | `note.md` says a substantive edit must remove `user-verified`; the full pass, revise-note and fix-review-warnings edit bodies and keep it | A trusted human-verification mark survives agent rewrites |
 | V2 | P1 | `cp-skill-validate all` turns `kb/types/` into the reserved `types` target, which sweeps every `kb/**/types/*.md` and ignores validation-ignore markers; `\|\| exit` then aborts | The full-validation procedure fails falsely on report cache and never runs later collections, landings, or redirects (source checkout) |
@@ -69,6 +68,7 @@ stale quickly.
 
 | ID | Closed | How |
 |---|---|---|
+| G1 | 2026-09-25 | [ADR 088](../../reference/adr/088-type-values-are-paths-on-a-two-root-search-path.md) made every type value a path under a KB root; the type specs, `cp-skill-write`, the reports contract, and reference pages now teach that form, and validation rejects bare names with the path to use |
 | I1 | 2026-09-25 | Superseded: ADR 086 replaced ADR 021's marker-backed copy with reading the library in place |
 | I2 | 2026-09-25 | Superseded: no install projection remains; `hatch_build.py` rewrites links leaving the library and fails the build on unresolved ones |
 | V1 | 2026-09-25 | Superseded: a fresh install has no nested collections; the residual package-owned `all` target moved to E1 |
