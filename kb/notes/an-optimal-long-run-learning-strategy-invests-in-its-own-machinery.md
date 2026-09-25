@@ -75,13 +75,13 @@ a particular learner is an empirical question.
 Harder problems, resource limits, and maintenance costs can erode the return.
 When they do, the optimal allocation shifts back toward immediate learning.
 
-For a [reflective theory builder](./definitions/theory-builder.md#qualifiers),
-the machinery is its theory-building machinery. Full automation of that
-machinery is a further conjecture: some internal functions may keep requiring
-an operator, and expanding the system's responsibilities can create new
-operator work. Even [full internal
-automation](./definitions/theory-builder.md#qualifiers) leaves users supplying
-tasks and external acceptance judgments.
+For a [reflective](./definitions/theory-builder.md#qualifiers) theory
+builder, the machinery is its theory-building machinery. That the builder
+can become autonomous, with computation performing every internal operation,
+is a further conjecture: some internal functions may keep requiring an
+operator, and expanding the system's responsibilities can create new
+operator work. Even an autonomous builder leaves users supplying problems and
+judging products.
 
 ---
 

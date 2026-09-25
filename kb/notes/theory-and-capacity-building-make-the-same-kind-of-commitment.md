@@ -33,7 +33,7 @@ Refactoring is the disciplined case on the constructive side: backtracking over 
 
 ## Theory building is one causal path between the two forms
 
-Capacity does not have to be built through theory: search, optimization, and trajectory reuse can turn experience into constructive commitments directly. A [theory builder](./definitions/theory-builder.md) works one path: it states theories, acts on them, criticizes what they say, and retains the results. The builder learns along this path when that process, including the criticism that occurs, causes improved capacity:
+Capacity does not have to be built through theory: search, optimization, and trajectory reuse can turn experience into constructive commitments directly. A [theory builder](./definitions/theory-builder.md) works one path: it states theories, acts on them, criticizes what they say, and lets the result of criticism shape the next conjecture. The builder learns along this path when that process, including the criticism that occurs, causes improved capacity:
 
 ```text
 experience
@@ -44,7 +44,7 @@ experience
   -> theory revision
 ```
 
-Its value is empirical: if direct use of retained experience produces comparable capacity at comparable cost, the path loses support. The [retained-theory arrangement](./commonplace-builds-a-theory-builder-and-tests-whether-it-learns.md) studied by Commonplace also asks whether theory use, criticism, and the result of criticism affect later operation on one connected path. The theory can survive criticism without a text revision. Whether this path improves later operation is a claim about learning, not a condition of being a theory builder.
+Its value is empirical: if direct use of retained experience produces comparable capacity at comparable cost, the path loses support. [Commonplace builds a theory builder and tests whether it learns](./commonplace-builds-a-theory-builder-and-tests-whether-it-learns.md) along this path; being a theory builder does not settle that question. A theory that survives criticism stays on the path without a text revision, because the recorded result still shapes later reliance on it.
 
 The reverse path runs regardless. A constructive commitment creates machinery, the machinery produces new experience, and that experience can support, narrow, or defeat the theory that guided the construction. The two kinds of commitment can co-evolve without collapsing into one kind of retained state.
 

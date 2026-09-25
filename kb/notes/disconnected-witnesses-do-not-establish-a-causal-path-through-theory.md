@@ -57,7 +57,8 @@ which change produced the consequence, how that consequence challenged what
 the theory said, and what the criticism changed. A failure followed by an
 unrelated edit does not show that the failure revised the theory. Acceptance
 of a change does not verify the theory that motivated it. A recorded pass
-without any effect on future reliance or testing does not establish learning.
+that affects neither later reliance nor later testing does not complete the
+path.
 
 The final join identifies **recurrence**: whether the result of criticism
 affected later operation. Git ancestry can establish that work descends from
@@ -100,11 +101,9 @@ repair an experiment that never ran the contrast its causal claim requires.
   not for every claim of learning. Capacity can improve before an occasion
   for exercising it arises; a claim about later capacity requires persistence
   of the effect to that time, not an arbitrary minimum duration.
-- Connecting the mechanism's steps does not establish improved capacity.
-  A learning claim must identify what capacity improved, by what criterion,
+- A learning claim must identify what capacity improved, by what criterion,
   and why the improvement is attributable to the process of conjecture and
-  criticism. A fully connected
-  path can still worsen decisions.
+  criticism. A fully connected path can still worsen decisions.
 - The diagram covers an empirical path. Formulated criticism by argument can
   also support learning without an intervention-outcome sequence.
 - Identity across witnesses does not establish that each link is causal.

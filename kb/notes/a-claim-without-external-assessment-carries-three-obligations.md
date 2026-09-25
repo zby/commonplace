@@ -14,8 +14,7 @@ claim supplies three items:
 1. **An external falsifier.** Applying the claim produces consequences
    judged against an outcome contract supplied from outside: a failing
    test, an invalid release, a bug report, a user's rejection. The signal
-   reports that an outcome failed; it does not locate the fault among the
-   theory, its consumer, retrieval, the judge, or the task setup.
+   reports that an outcome failed, not where the fault lies.
 2. **An external objective.** Acceptance requirements are supplied and
    judged outside the builder. They may stay fixed across many requests; a
    change to them is declared and assessed separately.
@@ -39,18 +38,16 @@ must supply for itself what they would have supplied:
 | External objective | A comparison level for an objective change |
 | Independent outcome level | A performance measure that does not rest on the builder's own evaluators |
 
-The third carries a consequence that outside assessment never supplied,
-attribution. External assessment does not locate a fault, so attribution is
-required whenever a claim asserts a cause, whether or not the claim is
-externally assessed. Without an independent outcome level it is required for
-a performance claim too, because no outcome then absorbs an interpretation
-error and a theory error together. A claim leaves external assessment when
-its consequences face none, not when the builder reasons about a failure.
+The third obligation carries a consequence: attribution. Outside
+assessment never supplied it, because an outside signal does not locate a
+fault. The section on attribution below states when it binds.
 
-The boundary applies to a claim and a proposed use, not to the builder as a
-whole. A builder can work on externally assessed tasks while also retaining
-broader inquiry candidates; entertaining an untested idea does not change
-its category. The boundary also follows roles, not people. One person can
+A claim leaves external assessment when its consequences face none, not when
+the builder reasons about a failure. This boundary applies to a claim and a
+proposed use, not to the builder as a whole. A builder can work on
+externally assessed tasks while also retaining broader inquiry candidates;
+entertaining an untested idea does not change its category. Which side of
+the boundary an act falls on follows roles, not people. One person can
 judge outputs in one interaction and diagnose or revise in another; the
 acts are recorded separately. Review of the builder's own theories is
 internal even when a person outside the rest of the system performs it,
@@ -90,7 +87,7 @@ an evaluator's judgment that it is sufficient; the failure of concern is
 
 This obligation also binds inside full external assessment, for the
 internal theories behind an assessed outcome: outcome assessment makes the
-comparison possible without settling their retention thresholds.
+comparison possible without settling their use thresholds.
 
 ## A comparison level for changing an objective
 
@@ -109,8 +106,8 @@ its hallucination detector keyed on is the mechanical instance. This is an
 obligation, not an inference that computation prohibits objective change.
 
 Who may change the objective is a separate question from who performs the
-builder's operations. A builder in which computation performs every
-operation can still take its acceptance judgments from outside, and a
+builder's operations. An [autonomous](./definitions/theory-builder.md#qualifiers)
+builder can still take its acceptance judgments from outside, and a
 human-staffed builder can lack them. External assessment does not by itself
 preserve the objective either: an outside judge can keep accepting a proxy
 the builder has learned to satisfy without the outcome, and renewing users
@@ -127,14 +124,13 @@ while leaving open whether the cause was the product theory, its
 interpretation, the evaluator that admitted a change, retrieval that never
 surfaced the theory, a skipped check, or the environment. A task rejection
 is therefore evidence about the combined task, consumer, and product
-arrangement, not a refutation of a particular theory. To assert a particular cause, specify a discriminating
-trace, intervention, or test that could distinguish the alternatives; a
-plausible explanation is a candidate for that test. No adopted standard
-separates an interpretation error from a theory error; failures are
-localized with ordinary probes. Failed attribution limits the causal claim;
-it does not erase an observed performance difference under a sound
-comparison. Feedback that arrives late, rarely, or at great expense also
-limits what can be externally assessed within a budget.
+arrangement, not a refutation of a particular theory. To assert a
+particular cause, specify a discriminating trace, intervention, or test that
+could distinguish the alternatives; a plausible explanation is a candidate
+for that test. No adopted standard separates an interpretation error from a
+theory error; failures are localized with ordinary probes. Failed
+attribution limits the causal claim; it does not erase an observed
+performance difference under a sound comparison.
 
 ## Investigating a failure stays externally assessed
 
@@ -153,8 +149,10 @@ test or the reason to defer it.
 
 External assessment comes in degrees. An arrangement may supply a falsifier
 for some consequences and not others, or acceptance for outcomes but not for
-the theories behind them. Each missing item leaves its own obligation; the
-case with all three supplied is the limit, not the usual condition.
+the theories behind them. Feedback that arrives late, rarely, or at great
+expense also limits what can be externally assessed within a budget. Each
+missing item leaves its own obligation; the case with all three supplied is
+the limit, not the usual condition.
 
 ## Open Questions
 
@@ -168,8 +166,7 @@ case with all three supplied is the limit, not the usual condition.
   closed under the seed objective and the evidence it admits is argued in
   both directions and unsettled.
 - **Which consumption paths need different thresholds**, and what evidence
-  licenses each. An external falsifier provides an outcome signal, not a
-  complete retention policy for the internal theories behind it.
+  licenses each.
 - **Which dependencies must survive revision.** Dependency maintenance,
   evidential warrant, and selection policy are separate, as the
   [assumption-based TMS](../sources/an-assumption-based-tms.ingest.md) and

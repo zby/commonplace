@@ -112,12 +112,14 @@ objective. A strong answer on one dimension does not supply the other.
 ## Grounds for change: comparison with a theory builder
 
 A [theory builder](./definitions/theory-builder.md) states tentative
-theories, acts on them, criticizes what they say, and retains the results. A
+theories, acts on them, criticizes what they say, and lets the result of
+criticism shape the next conjecture. A
 [reflective](./definitions/theory-builder.md#qualifiers) builder also holds and
-criticizes theories of its own machinery, and a machinery change need not
-first be proved beneficial under the current self-theory. The distinction from the Gödel machine concerns the grounds
-required for a change, not whether the system observes the world or can
-rewrite its evaluators. Natural language, fixed model weights, and the mere
+criticizes theories of its own machinery. In neither case must a machinery
+change first be proved beneficial under the current self-theory. The
+distinction from the Gödel machine concerns the grounds required for a
+change, not whether the system observes the world or can rewrite its
+evaluators. Natural language, fixed model weights, and the mere
 presence of self-modification do not define the difference.
 
 | Question | Gödel machine's proof-governed route | Theory builder |
@@ -129,16 +131,16 @@ presence of self-modification do not define the difference.
 
 Empirical acceptance permits acting where the required proof has not been
 obtained, and it permits accepting harmful changes. A theory builder is
-therefore not simply a more permissive admission route; its research
-question is whether explicit theories, including a self-theory that the
-return from external work revises, make its machinery acquisition and
+therefore not simply a more permissive admission route. The open question
+about it is whether stated theories, including a self-theory that criticism
+of the builder's own operation revises, make its machinery acquisition and
 evaluation reliable enough for its work. Keep acquisition capability
 separate from the warrant for using an extension: evaluator replacement
 needs evidence of adequacy, not permission from the incumbent. Whether the
-Gödel machine itself is a theory builder is assessed per deployment and
-stays open; an internally represented utility does not by itself decide
-where outcome assessment occurs, and this comparison establishes no
-categorical exclusion.
+Gödel machine itself is a theory builder stays open. The construction does
+not criticize the premises its proofs start from, but whether a deployment
+criticizes them elsewhere is a question about that deployment, so this
+comparison establishes no categorical exclusion.
 
 ## Scope
 
