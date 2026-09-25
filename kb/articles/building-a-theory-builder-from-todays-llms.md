@@ -1,5 +1,5 @@
 ---
-description: "Lead article: the bet that an autonomous theory builder, a system running a Popperian conjecture-and-criticism cycle over explicit revisable theories, can be built from fixed-weight LLMs; payoffs, conjectures, Bitter Lesson, learning test"
+description: "Lead article: the bet that an autonomous theory builder that learns, a system running a Popperian conjecture-and-criticism cycle over explicit revisable theories, can be built from fixed-weight LLMs; payoffs, conjectures, Bitter Lesson, learning test"
 type: kb/articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
@@ -57,14 +57,16 @@ conditions on how it treats such theories:
 
 The definition sets no minimum for how long results persist. The arrangement
 we build keeps them across problems, so that they change later work on other
-questions. The definition also has no success condition. Whether a theory
-builder learns, in the sense of improving its capacity for later work, is
-the question this article's test asks.
+questions. The definition also has no success condition: a builder that
+never improves still meets it. That is why the bet below is about learning,
+not only about building.
 
 ## The bet
 
-Our bet is that **a fully automated theory builder can be built with
-today's fixed-weight LLMs**.
+Our bet is that **a fully automated theory builder that learns can be built
+with today's fixed-weight LLMs**. Learning here means that the builder's own
+conjecture and criticism improve its capacity for later work; the test below
+says how that is shown.
 
 Fully automated means that every internal role in the cycle is performed
 computationally. Users still set the tasks and judge the results; what the

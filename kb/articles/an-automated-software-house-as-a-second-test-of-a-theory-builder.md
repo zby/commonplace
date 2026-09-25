@@ -23,8 +23,8 @@ source_notes:
 > [the repository's GitHub Discussions page](https://github.com/zby/commonplace/discussions).
 
 [The lead article](./building-a-theory-builder-from-todays-llms.md) bets
-that a fully automated theory builder can be made from today's fixed-weight
-LLMs, and tests the bet first with a knowledge base, whose failures are slow
+that a fully automated theory builder that learns can be made from today's
+fixed-weight LLMs, and tests the bet first with a knowledge base, whose failures are slow
 and partly judged by people. This supplement states a second arrangement: an
 automated software house. Software gives the program a stronger falsifier
 than a knowledge base does, at the price of a harder claim. The arrangement

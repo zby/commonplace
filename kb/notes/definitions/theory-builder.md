@@ -175,7 +175,7 @@ is an intervention and is recorded as one.
   establish that the operations are reliable.
 
 The qualifiers are independent. Commonplace today is a reflective,
-human-staffed theory builder; the research program's bet is an autonomous one.
+human-staffed theory builder; the research program's bet is an autonomous one that learns.
 
 ## Boundary cases
 
