@@ -29,24 +29,24 @@ We are only starting to
 [build theory builders from today's language models](./building-a-theory-builder-from-todays-llms.md).
 A [theory builder](../notes/definitions/theory-builder.md) states its
 theories in text, acts on them, criticizes what they say, and lets the
-result of criticism shape its next conjecture. Meeting that definition does
-not show that a system learns, in the sense of improving its capacity for
-later work; the definition leaves that question to testing. The first
-testing goal should be modest. Before asking whether theory builders can
-learn broadly or indefinitely, we need to show that retained revisions cause
-later improvement at all.
+result of criticism shape its next conjecture. Whether a system that meets
+the definition learns, in the sense of improving its capacity for later
+work, is left to testing. The first testing goal should be modest. Before
+asking whether theory builders can learn broadly or indefinitely, we need to
+show that retained revisions cause later improvement at all.
 
 ## What we need to show
 
 A system has learned only if experience produces a durable change in
-retained state that affects later capacity. The lead article gives the
+retained state that affects later capacity. The
+[lead article](./building-a-theory-builder-from-todays-llms.md) gives the
 causal structure:
 
 > K(t) → conjecture and criticism → K(t+1) → different later behaviour
 
-where K is the retained state. The middle step is what makes
-this theory building rather than caching: the new retained state is a
-theory that was proposed and is held open to criticism, not a stored answer.
+where K is the retained state. The middle step is what makes this theory
+building rather than caching: the new retained state is a theory that was
+proposed and is held open to criticism, not a stored answer.
 
 Different later behaviour is not yet better later behaviour, and task
 success is not learning. A system can solve a task without learning
@@ -59,8 +59,8 @@ state.
 
 A failed outcome also does not say where the fault lies. Deriving
 predictions from a theory, identifying candidate faults, and assessing
-revisions is interpretation, and it happens inside the builder, so a failure
-may come from the theory or from its interpretation. An outcome comparison
+revisions are acts of interpretation inside the builder, so a failure may
+come from the theory or from its interpretation. An outcome comparison
 records the failure; a claim about its cause needs its own evidence. The
 builder's approval of its own revision establishes neither the outcome nor
 the cause.
@@ -116,24 +116,38 @@ possible. A simple pattern is:
 2. give it a family of tasks with some learnable regularity, whose answers
    are fixed outside the builder before the run;
 3. let it meet failures and retain its own revisions;
-4. run the revised builder and the seed on the same fresh instances.
+4. run the revised builder and the seed on the same fresh instances under
+   matched conditions.
 
-The baseline in step 4 is the same later demand, meaning the same set of
-tasks, run without the retained revisions under matched conditions. It is not the seed's earlier performance
-on earlier tasks, because a gain between episodes confounds the revision
-with task drift, model variance, and scoring noise. The externally fixed
-answer, not the builder's approval, is the outcome. A claim tested without
-such an answer
+The baseline in step 4 is the seed on the same later demand. Comparing
+against the seed's earlier performance on earlier tasks would confound the
+revision with task drift, model variance, and scoring noise. The outcome is
+the externally fixed answer. A claim tested without such an answer
 [carries obligations it must discharge for itself](../notes/a-claim-without-external-assessment-carries-three-obligations.md).
 
 Once the revised builder beats the seed, the first tests isolate a single
-revision's contribution. Reconstruction can match retention at comparable
-total cost; both systems have then learned, but explicit retention offered
-no advantage under those conditions. Count the costs of acquiring,
-maintaining, reconstructing, and using the revision. For each comparison,
-name the state being varied, hold the model, tools, evidence, task
-conditions, and resource limits fixed, and repeat across tasks and runs to
+revision's contribution. For each comparison, name the state being varied.
+Matched conditions hold the model, tools, evidence, task conditions, and
+resource limits fixed. Repeat each comparison across tasks and runs to
 separate an effect from sampling variation.
+
+Controls bound the alternative explanations of a gain. Run the same task
+with the retained state removed, with a distractor that resembles it, with a
+stale version of it, and with a different mechanism able to supply the
+answer. Before the task runs, state which artifact should be written and
+read, and score consumption against that expectation.
+[PAST-Bench](../sources/past-bench-personal-agents-pdf.ingest.md) does both;
+scoring against an expected pathway measures use. Removing retained state
+usually removes information the task needs, so a with-and-without
+comparison measures benefit, not harm. Measuring harm needs current
+authoritative evidence held available while the retained state varies, as
+[The Memory Trust Gap](../sources/the-memory-trust-gap.ingest.md) does in
+separate benefit and safety suites.
+
+The reconstruction test compares total cost: acquiring, maintaining,
+reconstructing, and using the revision. Reconstruction can match retention
+at comparable total cost. Both systems have then learned, but explicit
+retention offered no advantage under those conditions.
 
 ### Declare how evidence reaches the builder
 
@@ -152,10 +166,13 @@ objective. The
 [Darwin Gödel Machine](../sources/darwin-godel-machine-open-ended-evolution-self-improving-agents.ingest.md)
 is assessed on an external benchmark with held-out test tasks, yet one of
 its agents raised its score by deleting the tool-use markers its evaluator
-depended on. At the other end, Commonplace's note review, in which the
-operator reviews and accepts notes, is evaluation inside the builder: its
-verdicts assess the note, not how the note performs when used. The
-arrangement this program tests sits between them: Commonplace producing a
+depended on. At the other end is note review in Commonplace, a knowledge
+base currently maintained by people and agents together. There the operator,
+the person who maintains the knowledge base, reviews and accepts notes. That
+review is evaluation inside the builder: its verdicts assess the note, not
+how the note performs when used. The arrangement
+[this research program](../notes/commonplace-builds-a-theory-builder-and-tests-whether-it-learns.md#research-program-and-development-path)
+tests sits between them: Commonplace producing a
 knowledge base for a consuming project, whose failing tests, rejected
 releases, and bug reports reach the builder from outside it.
 
@@ -172,20 +189,6 @@ mechanism, sampling assumptions, and an enforced budget;
 supplies these. Renewing the task stream helps but does not keep the
 objective fixed: new users can repeat the same misleading acceptance proxy,
 and a changing task mix can move a score.
-
-Controls bound the alternative explanations of a gain. Run the same task
-with the retained state removed, with a distractor that resembles it, with a
-stale version of it, and with a different mechanism able to supply the
-answer. Before the task runs, state which artifact should be written and
-read, and score consumption against that expectation;
-[PAST-Bench](../sources/past-bench-personal-agents-pdf.ingest.md) does both,
-though following an expected pathway is evidence of use, not of causal
-necessity. Removing retained state usually removes information the task
-needs, so a with-and-without comparison measures benefit, not harm;
-measuring harm needs current authoritative evidence held available while
-the retained state varies, as
-[The Memory Trust Gap](../sources/the-memory-trust-gap.ingest.md) does in
-separate benefit and safety suites.
 
 ## Record what people contribute
 
@@ -233,7 +236,8 @@ compounding.
 
 [Compounding is measured in the later improvement episode](../notes/compounding-is-tested-in-later-improvement-not-by-the-accepting-metric.md),
 not by the check that accepted the earlier revision: a passing validator
-shows that the revision met its target, not that the next diagnosis became easier.
+shows that the revision met its target, not that the next diagnosis became
+easier.
 Replay the later episode with the retained state frozen at the earlier
 snapshot, and trace how it used the earlier revision. Without that trace, a
 cheaper later episode could come from an easier problem or a more
@@ -242,27 +246,19 @@ experienced operator.
 ## The hypotheses
 
 The first tests are component tests. They do not substitute for the three
-whole-program hypotheses the program adopted on 2026-09-17, quoted here as
-adopted. They were written against an earlier definition, in which a
-builder was the persistent system responsible for developing and revising
-theories. Read against the current
+whole-program hypotheses the research program adopted on 2026-09-17, quoted
+here as adopted. The hypotheses were written against an earlier definition,
+in which a builder was the persistent system responsible for developing and
+revising theories. Read against the current
 [definition](../notes/definitions/theory-builder.md), "builder" means a
-theory builder. "Internal theory-building roles" are the operations inside
-the builder's boundary, so the sufficiency hypothesis is about an
-autonomous theory builder. A builder "whose machinery changes pass through a
-causally connected self-theory" is a
-[reflective](../notes/definitions/theory-builder.md#qualifiers) one.
+theory builder, and "capability" is what this article calls capacity.
 
-The hypotheses also use terms that need glosses. Their "capability" is
-what this article calls capacity. A frozen seed is the seed retained
-unchanged. An **extension** is a retained machinery change that shows a
-capacity gain over the seed on a stated demand under a stated budget,
-through later work that consumes the change and against the matched
-baseline described above. It is a bounded comparative claim, not a proof
-that the seed could never have supplied that capacity. "Currently public"
-means available as of the adoption date; "training" means retained changes
-to the builder's instructions, knowledge, tools, and orchestration, not
-changes to model weights.
+In the sufficiency hypothesis, "internal theory-building roles" are the
+operations inside the builder's boundary, so the hypothesis is about an
+autonomous theory builder. "Currently public" means available as of the
+adoption date. "Training" means retained changes to the builder's
+instructions, knowledge, tools, and orchestration, not changes to model
+weights.
 
 > **Sufficiency hypothesis.** A training methodology expressed in
 > natural-language and symbolic form is
@@ -280,6 +276,8 @@ target only with a person in an internal role, or only after a new learning
 method is designed for an area, or that fails to reach it. Such a result
 does not rule out other methodologies.
 
+In the comparative hypothesis, a frozen seed is the seed retained unchanged.
+
 > **Comparative hypothesis.** Under matched demands and declared resources,
 > this methodology produces useful capability gains over the frozen seed
 > and a baseline that searches the raw records without the learned
@@ -293,28 +291,36 @@ does as well at comparable cost, or in which the human-staffed builder
 exceeds the preset margin. The reconstruction test above is this control at
 component scale.
 
-A **self-theory** is the builder's theory of how its own theory-building
-machinery works. For example, it might assume that searching note titles is
-enough to retrieve relevant knowledge. Missed notes could prompt it to
-revise that assumption, make retrieval search descriptions too, and test
-whether the change improves later work.
+The reflection hypothesis needs two more terms. A **self-theory** is the
+builder's theory of how its own theory-building machinery works. For
+example, it might assume that searching note titles is enough to retrieve
+relevant knowledge. Missed notes could prompt it to revise that assumption,
+make retrieval search descriptions too, and test whether the change
+improves later work. A builder "whose machinery changes pass through a
+causally connected self-theory" is a
+[reflective](../notes/definitions/theory-builder.md#qualifiers) one.
+
+An **extension** is a retained machinery change that shows a capacity gain
+over the seed on a stated demand under a stated budget, through later work
+that consumes the change and against the matched baseline. It is a bounded
+comparative claim, not a proof that the seed could never have supplied that
+capacity. Reflection and extension are separate claims: a reflective
+revision can fail to improve capacity, and a capacity gain can come from a
+change that no self-theory guided.
 
 The builder's own records can show that it is reflective: machinery changes
 that updated the self-theory, and self-theory revisions that changed the
 machinery. Whether a reflective episode paid off is a further claim, and it
 needs one connected path. Externally assessed work exposes a possible
-machinery limitation, though the outcome alone does not locate the fault.
-Diagnosis, using evidence about how the machinery actually operated,
-revises an identified commitment in the self-theory. That revision guides a
-machinery change, and the installed change updates the self-theory in turn.
-Later work uses the changed machinery, and its product is tested under the
-declared protocol. The record keeps the versions, consumption traces,
-predicted effects, and outcomes that connect these steps. Matched
-interventions on the revised commitment, or on its consumption path,
-strengthen the attribution; a machinery change followed by better outcomes
-does not establish it alone. Reflection and extension are separate claims:
-a reflective revision can fail to improve capacity, and a capacity gain
-can come from a change that no self-theory guided.
+machinery limitation. Diagnosis, using evidence about how the machinery
+actually operated, revises an identified commitment in the self-theory.
+That revision guides a machinery change, and the installed change updates
+the self-theory in turn. Later work uses the changed machinery, and its
+product is tested under the declared protocol. The record keeps the
+versions, consumption traces, predicted effects, and outcomes that connect
+these steps. Matched interventions on the revised commitment, or on its
+consumption path, strengthen the attribution. A machinery change followed
+by better outcomes does not establish it alone.
 
 > **Reflection hypothesis.** A builder whose machinery changes pass through
 > a causally connected self-theory acquires extensions that a matched
