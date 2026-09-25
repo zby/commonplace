@@ -102,6 +102,30 @@ EDITS: list[tuple[str, str, str, str]] = [
         "- `type: note` — the bare name that selects the base note contract.",
         "global types are named by bare name",
     ),
+    (
+        "kb/instructions/cp-skill-write-multistage/SKILL.md",
+        "  and `kb/types/note.md`; an instruction goes to `kb/instructions/`. Reject",
+        "  and `note`; an instruction goes to `kb/instructions/`. Reject",
+        "global types are named by bare name",
+    ),
+    (
+        "kb/instructions/cp-skill-write-multistage/SKILL.md",
+        "`kb/instructions/assess-a-claim-bearing-artifact-against-external-literature.md`\n(or its installed Commonplace path).",
+        "[assess-a-claim-bearing-artifact-against-external-literature](../assess-a-claim-bearing-artifact-against-external-literature.md),\nresolved from this skill's real location.",
+        "skills run in place in the library and use relative links",
+    ),
+    (
+        "kb/instructions/cp-skill-validate/SKILL.md",
+        "run `kb/instructions/run-review-batches.md` with the `frontmatter` bundle.",
+        "run [run-review-batches](../run-review-batches.md), resolved from this skill's real location, with the `frontmatter` bundle.",
+        "skills run in place in the library and use relative links",
+    ),
+    (
+        "kb/instructions/cp-skill-connect/SKILL.md",
+        "`kb/reference/control-plane-goals.md` documents this always-loaded goal-frame invariant",
+        "[Control-plane goals](../../reference/control-plane-goals.md) documents this always-loaded goal-frame invariant",
+        "skills run in place in the library and use relative links",
+    ),
 ]
 
 for rel, old, new, why in EDITS:

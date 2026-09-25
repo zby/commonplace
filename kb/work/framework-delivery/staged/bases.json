@@ -1,6 +1,10 @@
 {
   "AGENTS.md.template": "0f4acaf6a044a7d58d4bc612694659686f62a0c6a2a2777087625db433e70046",
+  "kb/instructions/cp-skill-ground/SKILL.md": "975609f292837f890843cbfb010aa9760fc9d8b9e9f379eb09bed3106542a4d7",
+  "kb/instructions/cp-skill-health-check/SKILL.md": "8073cd212e333c2fe249396f4bc4aa6ce4a8f780332713b7d0b8db941fcc08c2",
+  "kb/instructions/cp-skill-ingest/SKILL.md": "227b8170801968156ba0f0e9314f3cbaeff8dcef287924b552dbb3df17e3048e",
   "kb/instructions/cp-skill-library/SKILL.md": null,
+  "kb/instructions/cp-skill-write/SKILL.md": "58ac5ae4afdeeb53a314d910cc7b03e0bfb699459e170198fa2a37c4c4b54819",
   "pyproject.toml": "a53806cffc038e2881d6414229f4389f9b198bdff6ad7fd7a322e3f8ad6872b4",
   "src/commonplace/_data/templates/CLAUDE.md.template": null,
   "src/commonplace/cli/init_project.py": "ad48d37ca0925a219ba289cb3ca9cf36c079e4dc77c8ef6414d92523e72b36df",
