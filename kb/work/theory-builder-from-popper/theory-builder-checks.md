@@ -12,7 +12,7 @@ proposed change exposes.
 
 Drafted 2026-09-25 to replace the conjectural-learning checks. Cases 1–16
 carry over that file's cases with the same numbers and assumptions, and are
-reclassified under the new definition. Cases 17–25 are new.
+reclassified under the new definition. Cases 17–26 are new.
 
 ## Purpose
 
@@ -28,7 +28,8 @@ written. They do not decide its scope.
 1. **Design, not outcome.** A condition belongs in the definition only if
    Commonplace's arrangement depends on it by design, and removing it gives a
    named arrangement the program compares against. Formulation, consumption,
-   criticism, retention, and addressability pass this test. Whether any of
+   criticism, and retention pass this test; whether addressability does is
+   open (case 26). Whether any of
    them pays is a conjecture tested against the arrangement without it. Fixed
    weights are a study condition. Improvement is never a condition: a
    definition that required it would settle the program's main question by
@@ -67,8 +68,8 @@ system improves.
 | # | Case | Class | Settled by |
 |---|---|---|---|
 | 1 | A retained theory with separate parts is criticized and revised part by part, whether stored in separate documents or exposed through indexed traces | Inside | All five conditions; storage representation does not distinguish the cases |
-| 2 | A retained prose theory is criticized for what it says and replaced whole | Outside: the baseline for the addressability conjecture | Condition 5; test 2 |
-| 3 | Formulated criticisms are retained and a theory is rebuilt from them when needed | **Pending D3.** Proposed: inside, if the rebuilt theory is addressable | Condition 4 as amended to cover the record of criticism the theories are rebuilt from |
+| 2 | A retained prose theory is criticized for what it says and replaced whole | Inside | Condition 3: rejecting a theory whole and proposing a new conjecture is error elimination. Condition 5 concerns structure, not the operation (operator, 2026-09-25) |
+| 3 | Formulated criticisms are retained and a theory is rebuilt from them when needed | Inside | Condition 4: the rebuilt theory is a new conjecture informed by retained criticism, as in case 2 (operator, 2026-09-25, D3) |
 | 4 | Records containing only inputs and outcomes are retained for reconstruction | Outside: the baseline for the retention conjecture | Conditions 1 and 4: no formulated conjectures or criticism are retained. This does not classify what the reconstructor does |
 | 5 | Prompts or programs are varied and selected by score, with no formulated reason for failure bearing on their content | Outside: trial and error | Condition 3; does not classify unknown processing in a model proposer |
 | 6 | A theory is built while reasoning and then discarded | Outside | Condition 4. Criticism of it inside the run may still improve that run |
@@ -91,3 +92,4 @@ system improves.
 | 23 | A research community, declared as the system | Inside | Popper's own case; no member holds the whole theory or supplies all the criticism |
 | 24 | One invocation of a refinement procedure such as FORTE over a supplied theory | Outside | Condition 4: nothing is retained for later work. This does not classify a larger system that uses the procedure |
 | 25 | The Gödel machine | Open | Whether a deployment criticizes its proof premises elsewhere is not settled by the construction |
+| 26 | A retained theory has no stated assumptions, scope conditions, or parts that criticism could name; it is criticized and replaced | **Open.** Outside under condition 5 as drafted | Whether addressability stays a membership condition or becomes a design commitment tested as a conjecture |

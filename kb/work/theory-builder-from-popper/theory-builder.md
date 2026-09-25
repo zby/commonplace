@@ -39,17 +39,21 @@ reply to Duhem.
    decision ([operative change](./operative-change.md)).
 3. **Criticism.** It has a working process of attempted refutation aimed at
    what its theories say: critical argument, comparison with rivals, and
-   tests of stated consequences. Theories that fail are revised, replaced, or
-   dropped. Popper separates this critical method from trial and error, which
+   tests of stated consequences. Theories that fail are revised, or rejected
+   whole and replaced by a new conjecture. Revision need not be small: it may
+   change a core assumption, the problem, or the machinery. Popper separates this critical method from trial and error, which
    is applied "in a more dogmatic fashion, by the amoeba also"; the
    difference "lies not so much in the trials as in a critical and
    constructive attitude towards errors"
    ([Conjectures and Refutations, Chapter 1](../../sources/popper-conjectures-and-refutations.ingest.md#quotes)).
 4. **Growth.** It retains its theories and the record of their criticism, so
-   that the new problem `P2` becomes the starting point of later work. Later
-   work consumes the retained theories, and in Popper's sense consumption
-   includes "criticising them, changing them, and often even demolishing
-   them" ([Popper 1966](../../sources/popper-a-realist-view-of-logic-physics-and-history-1966.ingest.md#quotes)).
+   that the new problem `P2` becomes the starting point of later work. A
+   builder that keeps only the record of criticism and rebuilds a theory from
+   it when needed also meets this condition: the rebuilt theory is a new
+   conjecture informed by the retained criticism. Later work consumes what is
+   retained, and in Popper's sense consumption includes "criticising them,
+   changing them, and often even demolishing them, in order to replace them
+   by better ones" ([Popper 1966](../../sources/popper-a-realist-view-of-logic-physics-and-history-1966.ingest.md#quotes)).
 5. **Addressability.** Its theories are [addressable](./addressable-theory.md):
    assumptions, scope conditions, and parts can be inspected and revised
    individually. Popper grants Duhem that a test often bears on a whole
@@ -57,6 +61,8 @@ reply to Duhem.
    hypothesis is responsible for the refutation"
    ([Conjectures and Refutations, Chapter 10](../../sources/popper-conjectures-and-refutations.ingest.md#quotes)).
    A builder formulates its theories so that such cases can be found.
+   Addressability is about the theory's structure, not the operation
+   criticism performs: an addressable theory may still be rejected whole.
 
 **Error elimination is attempted, not guaranteed.** The parentheses in
 Popper's "(attempted) error-elimination" are his. A builder whose criticism
@@ -145,9 +151,10 @@ human-staffed theory builder; the research program's bet is an autonomous one.
   procedure.
 - **A stored theory nothing consumes.** It fails condition 2. See
   [an action model matters only through its consumption path](../an-action-model-matters-only-through-its-consumption-path.md).
-- **A theory that can only be replaced whole.** It fails condition 5. The
-  system may still criticize and learn; it is not the arrangement this term
-  names.
+- **An undivided theory.** A theory with no stated assumptions, scope
+  conditions, or parts that criticism could name fails condition 5, even
+  when the system criticizes it and replaces it. Rejecting a theory whole is
+  not this case.
 
 ## Misuse Cases
 
