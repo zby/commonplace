@@ -68,12 +68,12 @@ with today's fixed-weight LLMs**. Learning here means that the builder's own
 conjecture and criticism improve its capacity for later work; the test below
 says how that is shown.
 
-Fully automated means that every internal role in the cycle is performed
-computationally. Users still set the tasks and judge the results; what the
-builder does not need from people is the formulation, criticism, revision,
-and selection of its own theories, or changes to the machinery that does this
-work. That boundary is what the knowledge base calls
-the [autonomous qualifier](../notes/definitions/theory-builder.md#qualifiers).
+Fully automated means that computation performs the roles the cycle needs:
+formulating, criticizing, revising, and selecting the builder's own
+theories. Users still set the tasks and judge the results. The knowledge
+base's [autonomous qualifier](../notes/definitions/theory-builder.md#qualifiers)
+also covers changing the machinery that does this work; that belongs to the
+reflective claim below.
 
 The builder is not the LLM alone. It is a system containing an LLM together
 with persistent state, tools, tests, evaluators, and control machinery.
@@ -94,16 +94,20 @@ Current LLMs already appear capable of the main functions the loop requires:
 None of these capabilities needs to be perfect. The point of the cycle is to
 expose and correct errors.
 
-The bet is the first stage of the program, not all of it. A builder that
-learns can do so with a fixed method. Given such a builder, the next stage
-makes it reflective: its own method becomes one of the theories it states,
-criticizes, and revises. The stage after that is compounding, where
-improvements to the method make later improvement cheaper, more reliable, or
-possible where it was not. Reflection opens that path but does not complete
-it; the [bootstrap supplement](./bootstrapping-an-autonomous-theory-builder.md)
-says what else it takes, and the
+The bet is the base claim, and two stronger claims build on it. A builder
+that learns can do so with a fixed method. A reflective builder also treats
+its own method as one of the theories it states, criticizes, and revises.
+When improvements to the method make later improvement cheaper, more
+reliable, or possible where it was not, the builder's improvement compounds,
+which is where recursive self-improvement begins; reflection makes
+compounding possible, and it takes more than reflection to get there. The
+claims are ordered by strength. Construction runs the other way: Commonplace
+has been reflective from the start, with people performing many of its
+operations, and the work is to move those operations to computation. The
+[bootstrap supplement](./bootstrapping-an-autonomous-theory-builder.md)
+describes that path, and the
 [testing supplement](./testing-whether-a-theory-builder-learns.md) tests
-compounding only after learning is shown.
+learning first and compounding after.
 
 ## Formalize it, or leave it to people
 
