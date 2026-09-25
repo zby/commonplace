@@ -79,21 +79,23 @@ This opens a feedback loop:
 
 > learning → improved learning method → greater future learning capacity → further learning
 
-Every later episode that uses an improved method reuses the
-improvement, so its return grows with reuse. That is why
+An improvement to the method would be reused by every later episode, so over
+a long horizon its return can exceed that of immediate learning, and where
+it does,
 [an optimal long-run learning strategy invests in its own machinery](../notes/an-optimal-long-run-learning-strategy-invests-in-its-own-machinery.md).
 
 Reflection makes the method open to criticism, but that alone does not close
 the loop. The loop closes only when method changes also compound, making
 later improvement cheaper, more reliable, or possible where it was not. That
-takes three further things. The builder must be able to change its method
+takes two further things. The builder must be able to change its method
 beyond revising text, which the next section takes up. Its evaluators must be
 able to tell a better method from a worse one, and approval from the
-builder's theory of its own method does not count as that evidence. And
-method changes must persist into later improvement work and be shown to help
-there, because
-[compounding is measured in the later improvement episode](../notes/compounding-is-tested-in-later-improvement-not-by-the-accepting-metric.md),
-not by the check that accepted the change.
+builder's theory of its own method does not count as that evidence. Showing
+that compounding happened takes a later improvement episode, measured on
+something other than the check that accepted the change, with a trace
+connecting the two; the
+[compounding test](../notes/compounding-is-tested-in-later-improvement-not-by-the-accepting-metric.md)
+states what counts.
 
 So far the record shows only the loop's starting point: retention and later
 use, with no change to the learning method and no demonstrated improvement in

@@ -85,7 +85,7 @@ improvement: a retained revision
   [cheap evidence that it was read](../notes/citing-retained-theory-at-the-decision-point-is-a-mediation-trace.md),
   but not that it carried the decision.
 - **withholding** — does behaviour change when the retained revision is
-  hidden? A change that passes this test is what the knowledge base calls
+  hidden? A change that passes this test is shown to be
   [operative](../notes/definitions/operative-change.md).
 - **perturbation** — does replacing it with a wrong alternative change
   behaviour in the predicted direction?
@@ -205,9 +205,13 @@ would take an
 [autonomous](../notes/definitions/theory-builder.md#qualifiers) builder, in
 which computation performs every operation inside the boundary.
 
-For each completed improvement, record the decisions a person supplied,
-classified as noticing, diagnosis, choice, or acceptance. Supplying the task
-family and its fixed answers is outside the builder and does not count.
+The operations above decide who is inside the builder. A second
+classification measures how much human judgment each improvement still
+needs: for each completed improvement, record the decisions a person
+supplied as noticing, diagnosis, choice, or acceptance, the classes the
+[compounding test](../notes/compounding-is-tested-in-later-improvement-not-by-the-accepting-metric.md)
+counts per episode. Supplying the task family and its fixed answers is
+outside the builder and does not count.
 Record the seed, including how it was constructed, separately from
 interventions during the run. An intervention is a change installed from
 outside the builder's own criticism and revision; the builder gets no credit
