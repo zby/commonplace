@@ -13,8 +13,8 @@ domains
 ## Current verdict
 
 All findings from the 2026-09-25 rescan and its follow-up are closed except
-X3 (small ADR residue), T1 and E1 (held by owner workshops), and the
-contract-change gate. The closed tables below record how each was resolved.
+X3 (small ADR residue) and T1 and E1 (held by owner workshops). The
+contract-change gate is promoted. The closed tables below record how each was resolved.
 
 ADR 086 (projects read the library from the installed package) removed the
 project-local library copy, which dissolved the previous cycle's
@@ -112,10 +112,10 @@ ledger) were deleted on 2026-09-25; git history keeps them.
 2. **Owners:** E1 continues in execution-channel compatibility, including a
    package-owned `commonplace-validate all`; T1 closes here after the tag
    workshop's adoption tests.
-3. **Promote the contract-change gate**, using ADRs 086–088 as its worked
-   applications: the byte pins ADR 086 broke, and the schema constants,
-   quoted values, and collision diagnosis ADR 088's migration first missed.
-   Then delete this workshop.
+3. **Contract-change gate — promoted 2026-09-25** as
+   [change a contract that several consumers read](../../instructions/change-a-contract-that-several-consumers-read.md),
+   loaded from the ADR type's operativity-path rule; worked applications are
+   in the [gate plan](./plans/contract-change-gate.md).
 
 ## Exclusions and non-findings
 

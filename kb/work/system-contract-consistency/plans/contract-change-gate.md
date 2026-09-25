@@ -1,12 +1,10 @@
 # Workshop-wide outcome — Promote a contract-change implementation gate
 
-**State:** open; required before workshop closure. The disjoint-root
-application was abandoned when ADR 086 replaced that design. The ADR 086
-change itself is the first candidate application; a second independent
-application and durable promotion remain pending.
-
-**Audited against:** commit `6660bd2a`; motivated by the workshop's repeated consumer-drift
-mechanism.
+**State:** promoted 2026-09-25 as
+[change a contract that several consumers read](../../../instructions/change-a-contract-that-several-consumers-read.md),
+loaded from the [ADR type](../../../reference/types/adr.md)'s operativity-path
+rule. The two worked applications below added three fields to the original
+nine.
 
 ## Outcome selected
 
@@ -52,3 +50,23 @@ The gate is operative when a current change workflow loads it, both worked
 applications identify their independent consumers and migration boundary, and
 the instruction has a concrete maintenance path. Workshop prose alone does not
 complete this outcome.
+
+## Worked applications (2026-09-25)
+
+Both applications are retrospective: the checklist was run against changes
+already made, and the misses were found by the workshop's rescans.
+
+| Field | ADR 086 (library delivery) | ADR 088 (type values as paths) |
+|---|---|---|
+| Consumer classes | Commit inventoried code, tests, frontmatter values, INSTALL, templates. Missed: prose rules in type specs, `cp-skill-write`, the reports contract; accepted ADRs 014, 022, 027, 038, 039 describing the copy as current | Code, schemas, init, docs sweep, tests covered. Missed at first: theory notes and collection-local specs teaching old values (found by its own contract tests) |
+| Byte-pinned consumers | **Missed.** The rewrite broke 33 `analysis-result-sha256` pins; the matrix and publication checks would have failed | Covered: snapshot checksums re-pinned by a deterministic migration; result pins re-pinned by init |
+| Spellings of the old value | Covered path and bare forms | **Missed** single-quoted YAML values (follow-up I4) |
+| Derived copies | Schema `const` values rewritten in the repository | **Missed** in init's migration: a project's local schema `const` kept the old identity (I4) |
+| Diagnostic promises | None | **Missed:** the ADR promised the health check reports collisions, and type review swallowed the collision error (H1, H2) |
+| Existing installs and clones | Init migration of copies; checkout clones unaffected | Init migration plus `scripts/migrate-snapshot-types.py` for clones |
+| Historical witnesses | ADR 021 and 037 marked superseded; later amended-by markers on five ADRs | Amended-by markers on ADRs 068, 086, 087 |
+
+The misses in the byte-pin, spelling, derived-copy, and diagnostic rows are
+why the instruction has fields 4, 5, and 9 and names schema constants in
+field 3. Its maintenance rule adds a field whenever a later scan finds a
+missed class.
