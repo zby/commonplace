@@ -104,6 +104,12 @@ rule and is not part of any condition.
   resolver.
 - **Mixed result:** the operator decides, with the recorded tasks.
 
+`cp-skill-connect` does not weigh in this decision. Its tag use may still be
+useful, but it needs little: the list of a tag's members, and at most a signal
+that lets it skip that search. It adapts to whichever tag system survives, so
+its current reliance on heads and the `complete` mark is no reason to keep
+them. Phase 3 updates connect to match.
+
 ## Acceptance
 
 - Every condition covered the same member set, and each grouped page was
