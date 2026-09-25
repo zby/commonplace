@@ -287,7 +287,7 @@ behaviour should be better. Showing that a theory was formulated, criticized,
 and revised, and that the revision was used,
 [does not by itself establish improved capacity](../notes/a-complete-theory-path-does-not-establish-improved-capacity.md);
 a builder can retain and faithfully apply a bad rule. The
-[testing supplement](./testing-the-conjectural-learning-program.md) states
+[testing supplement](./testing-whether-a-theory-builder-learns.md) states
 the hypotheses that separate these outcomes and what would refute each.
 
 The research question is therefore simple:
@@ -300,7 +300,7 @@ We think the answer is yes.
 
 ## Where to go next
 
-The [testing supplement](./testing-the-conjectural-learning-program.md)
+The [testing supplement](./testing-whether-a-theory-builder-learns.md)
 defines the system under test, the three hypotheses, and the first protocol.
 The [bootstrap supplement](./bootstrapping-an-autonomous-theory-builder.md)
 starts from Commonplace, a knowledge base currently maintained by people and

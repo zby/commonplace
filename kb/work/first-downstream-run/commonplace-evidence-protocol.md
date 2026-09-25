@@ -176,7 +176,7 @@ available through other records. To attribute a gain to a particular note or
 theory, vary that commitment or its consumption path and state the predicted
 effect in advance. To attribute it to the methodology that built the note,
 compare the production process as well as the resulting artifact. The
-[training article](../../articles/testing-the-conjectural-learning-program.md)
+[training article](../../articles/testing-whether-a-theory-builder-learns.md)
 owns the existing component-comparison design.
 
 ## Outcomes and limits

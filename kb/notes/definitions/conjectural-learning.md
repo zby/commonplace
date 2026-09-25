@@ -179,7 +179,7 @@ attempts to learn.
   one example; a configuration frozen as a proposed solution and closed to
   criticism is another. No effect of criticism can arise to persist. This is
   the frozen-seed baseline of the [testing
-  supplement](../../articles/testing-the-conjectural-learning-program.md#the-hypotheses).
+  supplement](../../articles/testing-whether-a-theory-builder-learns.md#the-hypotheses).
 
 - **A theory built while reasoning and then discarded.** Inside if the system
   is open to criticizing it and the process improves the system's capacity for

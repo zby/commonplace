@@ -292,5 +292,5 @@ the same program at different stages of automation.
 Finally, compare retaining an assembled theory with reconstructing it from
 the same episode evidence, counting both cost and decision quality. This
 tests the program's persistence conjecture; either arrangement may learn. The
-[testing supplement](./testing-the-conjectural-learning-program.md) develops
+[testing supplement](./testing-whether-a-theory-builder-learns.md) develops
 these comparisons into controlled task-family experiments.

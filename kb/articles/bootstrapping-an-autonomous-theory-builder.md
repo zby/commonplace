@@ -172,5 +172,5 @@ evidence of success is
 [a removal test](../notes/computationally-directed-self-improvement-is-a-reallocation.md):
 withhold the operator's decisions and check whether an improvement process
 still completes, over a stated scope and time horizon. The
-[testing supplement](./testing-the-conjectural-learning-program.md) says how
+[testing supplement](./testing-whether-a-theory-builder-learns.md) says how
 these decisions are recorded.
