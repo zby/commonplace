@@ -23,6 +23,7 @@ from __future__ import annotations
 
 import functools
 import json
+import os
 import sys
 from collections.abc import Callable
 from dataclasses import dataclass
@@ -31,6 +32,7 @@ from pathlib import Path
 from commonplace.scaffold_manifest import MANIFEST
 
 SHARE_NAME = "commonplace"
+LIBRARY_ENV = "COMMONPLACE_LIBRARY_ROOT"  # override, for tests and custom layouts
 OUTPUT_DIR = Path(".commonplace")
 ROUTING = OUTPUT_DIR / "library.md"
 RULE_RECORD = OUTPUT_DIR / "read-rule"
@@ -55,7 +57,18 @@ def _source_checkout_kb() -> Path | None:
 
 
 def library_root() -> Path:
-    """The library root: the source tree's kb/ for an editable install, else shared data."""
+    """The library root: the source tree's kb/ for an editable install, else shared data.
+
+    ``COMMONPLACE_LIBRARY_ROOT`` overrides both.
+    """
+    return _library_root(os.environ.get(LIBRARY_ENV))
+
+
+@functools.cache
+def _library_root(override: str | None) -> Path:
+    if override:
+        # An explicit root may hold only part of a library, as test repositories do.
+        return Path(override).resolve()
     root = _source_checkout_kb() or Path(sys.prefix) / "share" / SHARE_NAME
     if not (root / "instructions").is_dir():
         raise LibraryMissingError(
@@ -72,6 +85,46 @@ def read_text(path: Path) -> str:
 def write_text(path: Path, text: str) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(text, encoding="utf-8")
+
+
+# --- artifact identity -----------------------------------------------------------
+
+LIBRARY_IDENTITY_PREFIX = "commonplace:"
+
+
+def is_library_identity(identity: str) -> bool:
+    return identity.startswith(LIBRARY_IDENTITY_PREFIX)
+
+
+def artifact_identity(repo_root: Path, path: Path) -> str:
+    """Stable identity of a file used as review input.
+
+    A file inside the repository is named by its repo-relative path. A library
+    file outside the repository is named `commonplace:<path under the library
+    root>`, which stays the same when the installation moves.
+    """
+    resolved = path.resolve()
+    try:
+        return resolved.relative_to(repo_root.resolve()).as_posix()
+    except ValueError:
+        pass
+    try:
+        rel = resolved.relative_to(library_root())
+    except ValueError as exc:
+        raise ValueError(f"path is neither in the repository nor in the library: {path}") from exc
+    return LIBRARY_IDENTITY_PREFIX + rel.as_posix()
+
+
+def artifact_file(repo_root: Path, identity: str) -> Path:
+    """The file an identity names. The identity's form decides; there is no fallback."""
+    if is_library_identity(identity):
+        rel = identity[len(LIBRARY_IDENTITY_PREFIX) :]
+        root = library_root()
+        path = (root / rel).resolve()
+        if not path.is_relative_to(root) or not rel:
+            raise ValueError(f"library identity escapes the library: {identity}")
+        return path
+    return repo_root / identity
 
 
 # --- skills ------------------------------------------------------------------

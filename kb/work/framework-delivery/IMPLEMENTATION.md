@@ -29,7 +29,7 @@ The pieces depend on each other (removing the copy needs the library reads, whic
 | Step | State |
 |---|---|
 | 1 Delivery core | staged 2026-09-25. Applied to a clean worktree: pytest (774) and ruff pass. A wheel built from it, installed in an isolated uv tool directory, put the library under `share/commonplace/`; init in a new project wrote 24 outputs, all `ok`, and a command run from a project subdirectory warned after `library.md` was altered. The command check is a decorator on each command's `main`, added by `migrations/10_decorate_command_mains.py`, which keeps the `module:main` convention the command catalogue test enforces. |
-| 2 Types | not started |
-| 3 Review | not started |
+| 2 Types | staged 2026-09-25, together with most of step 3, because type-conformance review uses global type specs as criteria. `lib/type_resolver.py` resolves bare global names in the library and rejects path forms to them; `migrations/20_bare_type_names.py` rewrites `type:` lines and inline spans, global `schema:` pointers and `const:` pins, local schema refs to `commonplace:types/...`, identity literals in `src/`, and test fixtures. Applied to a clean worktree: pytest (774) and ruff pass; `commonplace-validate` on notes, reference, instructions, types, sources, and agent-memory-systems reports the same failures as before the stage. |
+| 3 Review | mostly staged with step 2: `artifact_identity`/`artifact_file` in `lib/library.py`; the gate catalog and critique instruction read from the library; `commonplace:` identities for criteria outside the repository; freshness reads them. Remaining: retire, once per installed project, baselines recorded under `kb/commonplace/...` criteria. |
 | 4 Skills and health check | not started |
 | 5 Documentation | not started |

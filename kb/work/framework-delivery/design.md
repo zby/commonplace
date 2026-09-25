@@ -128,7 +128,7 @@ If init finds a `kb/commonplace/` copy from an earlier release, it tells the ope
 
 ### Review identity
 
-A package criterion gets a logical identifier relative to the library root, such as `commonplace:instructions/review-gates/prose/source-residue.md`. It contains neither a version nor an absolute path. Project criteria keep repository-relative paths. One resolver picks the root from the identifier and never falls back between package and project. Freshness still compares criterion text: an upgrade with identical text stays fresh, and edited text yields `criterion-changed`. The switch-over retires the baselines whose criteria gain package identities, once. Historical results stay under their original identities.
+A criterion file outside the repository, in the installed library, is identified relative to the library root, such as `commonplace:instructions/review-gates/prose/source-residue.md`. The identity contains neither a version nor an absolute path. A criterion file inside the repository keeps its repository-relative path; in the source checkout, where the library is the repository's own `kb/`, that covers the library too, so the checkout's existing review baselines keep their identities (implementation decision, 2026-09-25). The identity's form decides where it resolves; there is no fallback between library and project. Freshness still compares criterion text: an upgrade with identical text stays fresh, and edited text yields `criterion-changed`. The switch-over retires the baselines whose criteria gain package identities, once. Historical results stay under their original identities.
 
 ### Global type pointers
 
@@ -142,7 +142,9 @@ Bare names reach beyond `type:` lines. Each global type spec names its schema as
 
 **The project's report and source types.** `kb/reports/types/` and `kb/sources/types/` are the contracts of the project's own reports and sources collections. Init keeps writing them into the project, as it does today (operator decision, 2026-09-25). Their schemas `$ref` the global `note.schema.yaml`; like other local schemas, they restate what they need instead.
 
-**Schema references.** The validator applies the `note-base` rule to every typed artifact, and a local schema never uses `$ref` outside its own `types/` directory. The delivery change must not change which artifacts validate. The migration therefore restates, in each local schema that inherited it, the one restriction `note.schema.yaml` adds over `note-base`: its ban on `status:`. Whether to drop that restriction is a separate decision.
+**Schema references.** A local schema that builds on a global schema refers to it as `commonplace:types/<name>.schema.yaml`, which the validator resolves in the installed library. This keeps validation exactly as it is: each local schema still inherits what it inherited before, including `note.schema.yaml`'s ban on `status:`. It replaces an earlier plan to apply `note-base` implicitly to every typed artifact, which would have started validating local types that inherit nothing today (implementation decision, 2026-09-25).
+
+**Where the library is.** `library_root()` finds the library: the source tree's `kb/` in an editable install, otherwise the tool's shared data. The environment variable `COMMONPLACE_LIBRARY_ROOT` overrides both; tests use it to make a temporary repository its own library, as the source checkout is.
 
 ### How skills name library files
 
