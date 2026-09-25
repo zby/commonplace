@@ -16,8 +16,8 @@ Workshops may mix theoretical drafts, descriptive sketches, and procedures.
 ## Quality goal
 
 Move the work forward, and extract durable conclusions when it closes. A
-finished workshop produces library artifacts (notes, reference, instructions)
-and is then deleted.
+finished workshop produces durable artifacts in the project's own collections
+(notes, reference, instructions) and is then deleted.
 
 Plain Markdown without frontmatter is fine. So are imported or transitional
 files with incomplete frontmatter. Do not add structure to workshop files
