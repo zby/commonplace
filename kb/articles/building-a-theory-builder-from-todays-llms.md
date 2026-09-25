@@ -287,9 +287,7 @@ One condition attaches. A builder that starts from hand-written theories and
 machinery, as ours does, fits the lesson
 [only if its learning outgrows that starting state](../notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md):
 computation, not people, must come to supply the task-specific knowledge
-each new demand needs. The lesson also guides the reflective approach: among
-revisions to the builder's own method, it says to look for those that
-convert additional computation into capacity.
+each new demand needs.
 
 ## What would count as learning?
 
