@@ -15,7 +15,7 @@ def test_analysis_failure_is_rerun_instead_of_recovered() -> None:
     orchestrator = instruction("analyse-agentic-system")
     run_state = (
         REPO_ROOT
-        / "kb/reports/types/agentic-system-analysis-run-state.md"
+        / "kb/types/agentic-system-analysis-run-state.md"
     ).read_text(encoding="utf-8")
 
     assert "correctable pre-publication failure" in orchestrator

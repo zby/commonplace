@@ -15,8 +15,8 @@ from commonplace.lib.validation import CheckResults, ParsedNote, apply_schema_va
 from tests.commonplace.validation_helpers import REPO_ROOT
 
 NOTE = "kb/types/note.md"
-SNAPSHOT = "kb/sources/types/snapshot.md"
-INGEST = "kb/sources/types/ingest-report.md"
+SNAPSHOT = "kb/types/snapshot.md"
+INGEST = "kb/types/ingest-report.md"
 STRUCTURED_CLAIM = "kb/notes/types/structured-claim.md"
 ADR = "kb/reference/types/adr.md"
 AGENT_MEMORY_REVIEW = "kb/agent-memory-systems/types/agent-memory-system-review.md"

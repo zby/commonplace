@@ -42,15 +42,6 @@ def configure_types(tmp_path: Path) -> None:
         REPO_ROOT / "kb/agent-memory-systems/types",
         tmp_path / "kb/agent-memory-systems/types",
     )
-    report_types = tmp_path / "kb/reports/types"
-    report_types.mkdir(parents=True)
-    for name in (
-        "agentic-system-analysis-run-state.md",
-        "agentic-system-analysis-run-state.schema.yaml",
-        "agent-memory-analysis-report.md",
-        "agent-memory-analysis-report.schema.yaml",
-    ):
-        shutil.copyfile(REPO_ROOT / "kb/reports/types" / name, report_types / name)
     write(tmp_path / "kb/reports/COLLECTION.md", "# Reports\n")
     shutil.copytree(
         REPO_ROOT / "kb/instructions/review-gates",
@@ -108,7 +99,7 @@ def memory_report_fixture(run_dir: Path, revision: str) -> Path:
                  for axis in systems_matrix.AXES},
     }
     values = {
-        "type": "kb/reports/types/agent-memory-analysis-report.md",
+        "type": "agent-memory-analysis-report",
         "description": "Fixture specialist report bound to the frozen source and shared input",
         "analysis-run": RUN_ID,
         "source-identity": "https://example.invalid/example-system",
@@ -289,7 +280,7 @@ analysis-result-sha256: {digest(result)}
 ''',
     )
     run_frontmatter: dict[str, object] = {
-        "type": "kb/reports/types/agentic-system-analysis-run-state.md",
+        "type": "agentic-system-analysis-run-state",
         "description": f"Minimal completion state for {RUN_ID}",
         "run-id": RUN_ID,
         "system": "Example System",
@@ -398,7 +389,7 @@ def test_running_state_needs_no_recovery_records(tmp_path: Path) -> None:
     configure_types(tmp_path)
     state = tmp_path / f"kb/reports/state/agentic-system-analysis/{RUN_ID}/run-state.md"
     values: dict[str, object] = {
-        "type": "kb/reports/types/agentic-system-analysis-run-state.md",
+        "type": "agentic-system-analysis-run-state",
         "description": f"Minimal completion state for {RUN_ID}",
         "run-id": RUN_ID,
         "system": "Example System",
@@ -423,7 +414,7 @@ def test_failed_state_requires_only_a_reason(tmp_path: Path) -> None:
     configure_types(tmp_path)
     state = tmp_path / f"kb/reports/state/agentic-system-analysis/{RUN_ID}/run-state.md"
     values: dict[str, object] = {
-        "type": "kb/reports/types/agentic-system-analysis-run-state.md",
+        "type": "agentic-system-analysis-run-state",
         "description": f"Failed run {RUN_ID}",
         "run-id": RUN_ID,
         "system": "Example System",
@@ -1379,7 +1370,7 @@ def test_git_source_example_can_initialize_running_state(tmp_path: Path) -> None
     state, _, _ = publication_fixture(tmp_path)
     values = frontmatter(state)
     actual = values["source"]
-    contract = (REPO_ROOT / "kb/reports/types/agentic-system-analysis-run-state.md").read_text()
+    contract = (REPO_ROOT / "kb/types/agentic-system-analysis-run-state.md").read_text()
     example = yaml.safe_load(re.search(r"```yaml\n(source:.*?)```", contract, re.DOTALL)[1])["source"]
     example.update({key: actual[key] for key in ("identity", "revision", "path")})
     replace_frontmatter(state, {**values, "source": example})

@@ -21,6 +21,7 @@ from importlib.resources import as_file, files
 from pathlib import Path
 
 from commonplace.lib import library
+from commonplace.lib.snapshot import migrate_snapshot_types
 from commonplace.scaffold_manifest import MANIFEST
 
 
@@ -36,6 +37,8 @@ class InitReport:
     retired_baselines: list[str] = field(default_factory=list)
     replaced_skill_copies: list[Path] = field(default_factory=list)
     rewritten_type_pointers: list[Path] = field(default_factory=list)
+    rewritten_snapshots: list[Path] = field(default_factory=list)
+    repinned_ingests: list[Path] = field(default_factory=list)
 
 
 def _record_existing(
@@ -246,13 +249,15 @@ def _migrate_legacy_copies(project: Path, root: Path, report: InitReport) -> Non
                 report.removed.append(path.relative_to(project))
                 if copy_rel.parent in MANIFEST.skills_dirs and copy_rel not in report.replaced_skill_copies:
                     report.replaced_skill_copies.append(copy_rel)
-            elif copy_rel.as_posix() != "kb/types" or counterpart.exists():
+            # A type directory may also hold the project's own types, which are not copies.
+            elif copy_rel.name != "types" or counterpart.exists():
                 report.migration_kept.append(path.relative_to(project))
         for dirpath, _dirnames, _filenames in sorted(os.walk(copy_dir, followlinks=False), reverse=True):
             directory = Path(dirpath)
             if directory != copy_dir and not directory.is_symlink() and not any(directory.iterdir()):
                 directory.rmdir()
-        if not any(copy_dir.iterdir()):
+        # A type directory the scaffold also creates stays, for the project's own types.
+        if not any(copy_dir.iterdir()) and copy_rel not in MANIFEST.directories:
             copy_dir.rmdir()
     legacy_parent = project / "kb" / "commonplace"
     if legacy_parent.is_dir() and not any(legacy_parent.iterdir()):
@@ -303,7 +308,11 @@ def _retire_legacy_baselines(project: Path, root: Path, report: InitReport) -> N
 _TYPE_LINE = re.compile(r"^(\s*(?:type|requires_type):\s*|\s*-\s+)(\S+\.md)\s*$", re.MULTILINE)
 _JSON_TYPE = re.compile(r'("(?:type|requires_type)"\s*:\s*)"([^"]+\.md)"')
 _SCHEMA_REF = re.compile(r'(\$ref"?\s*:\s*["\']?)([^"\'\s]+\.schema\.(?:yaml|json))')
-_MIGRATION_SKIP = ("kb/reports/cache/", "kb/reports/state/")
+# Replaceable outputs are never rewritten. Report state holds live reports, whose
+# pointers are migrated, and frozen evidence copies, whose global-type pointers are
+# left as recorded; captures under .snapshots/ belong to migrate_snapshot_types.
+_MIGRATION_SKIP = "kb/reports/cache/"
+_FROZEN_POINTER_AREA = "kb/reports/state/"
 
 
 def _project_files(project: Path, pattern: str) -> list[Path]:
@@ -323,12 +332,18 @@ def _migrate_type_pointers(project: Path, root: Path, report: InitReport) -> Non
     """Rewrite a project's pointers to global types in the forms this release uses.
 
     A `type:` or `requires_type:` value (YAML or JSON-style) that points at the
-    project's old copy of a global type, `kb/types/X.md` or a relative path to
-    it, becomes the bare name `X`. A schema `$ref` to such a copy's schema
-    becomes `commonplace:types/X.schema.yaml`. A pointer is rewritten only when
-    the project has no file of its own at that path, so project-shared types and
-    kept, differing copies keep their paths. Every rewritten file is reported.
+    project's old copy of a global type — under `kb/types/`, `kb/sources/types/`,
+    or `kb/reports/types/`, by repo-relative or relative path — becomes the bare
+    name `X`. A schema `$ref` to such a copy's schema becomes
+    `commonplace:types/X.schema.yaml`. A pointer is rewritten only when the
+    project has no file of its own at that path, so project-owned types and kept,
+    differing copies keep their paths. Every rewritten file is reported.
     """
+    copy_dirs = {
+        (project / copy).resolve()
+        for copy, origin in MANIFEST.legacy_copies
+        if origin == "types"
+    }
     project_types = (project / "kb" / "types").resolve()
     global_names = {p.stem for p in (root / "types").glob("*.md")}
 
@@ -336,7 +351,10 @@ def _migrate_type_pointers(project: Path, root: Path, report: InitReport) -> Non
         target = (project / value) if value.startswith("kb/") else (source.parent / value)
         target = target.resolve()
         name = target.name.removesuffix(suffix)
-        if target.parent != project_types or not target.name.endswith(suffix) or target.exists():
+        if target.parent not in copy_dirs or not target.name.endswith(suffix) or target.exists():
+            return None
+        frozen = source.relative_to(project).as_posix().startswith(_FROZEN_POINTER_AREA)
+        if frozen and target.parent == project_types:
             return None
         return name if name in global_names else None
 
@@ -367,7 +385,7 @@ def _migrate_type_pointers(project: Path, root: Path, report: InitReport) -> Non
             def schema_ref(match: re.Match[str], source: Path = path) -> str:
                 target = (source.parent / match.group(2)).resolve()
                 name = target.name.split(".schema.")[0]
-                if target.parent != project_types or target.exists() or name not in global_names:
+                if target.parent not in copy_dirs or target.exists() or name not in global_names:
                     return match.group(0)
                 return f"{match.group(1)}{library.LIBRARY_IDENTITY_PREFIX}types/{target.name}"
 
@@ -392,12 +410,14 @@ def init_project(root: Path, name: str | None = None) -> InitReport:
         "/PATH/TO/COMMONPLACE/": str(root) + "/",
     }
 
-    # Migrate what earlier releases left before scaffolding, so the refreshed
-    # report and source types compare against the package's current versions.
+    # Migrate what earlier releases left before scaffolding.
     library_root = library.library_root()
     _migrate_legacy_copies(root, library_root, report)
     _migrate_type_pointers(root, library_root, report)
     _retire_legacy_baselines(root, library_root, report)
+    snapshots = migrate_snapshot_types(root / "kb")
+    report.rewritten_snapshots += [p.relative_to(root) for p in snapshots.rewritten_snapshots]
+    report.repinned_ingests += [p.relative_to(root) for p in snapshots.repinned_ingests]
 
     for rel_path in MANIFEST.directories:
         target = root / rel_path
@@ -575,6 +595,14 @@ def main(argv: list[str] | None = None) -> int:
         "commonplace: schema refs):",
         report.rewritten_type_pointers,
     )
+    _print_section(
+        "Retyped local snapshots to `type: snapshot` (a one-time migration):",
+        report.rewritten_snapshots,
+    )
+    _print_section(
+        "Re-pinned ingest checksums to the retyped snapshots (commit these):",
+        report.repinned_ingests,
+    )
     if report.retired_baselines:
         print("Retired review baselines recorded under the old library copy (history kept):")
         for item in report.retired_baselines:
@@ -600,6 +628,7 @@ def main(argv: list[str] | None = None) -> int:
             report.skipped_foreign,
             report.retired_baselines,
             report.rewritten_type_pointers,
+            report.rewritten_snapshots,
             report.preserved_identical,
             report.preserved_different,
         )

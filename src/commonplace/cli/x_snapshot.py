@@ -258,7 +258,7 @@ def _render_markdown(
         f"source: {source_url}",
         f'captured: "{timestamp}"',
         "capture: xdk",
-        "type: kb/sources/types/snapshot.md",
+        "type: snapshot",
         f"tags: [{kind}]",
         f"status_id: {status_id}",
         f"conversation_id: {conversation_id}",

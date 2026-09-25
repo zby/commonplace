@@ -38,7 +38,7 @@ def _repo(tmp_path: Path, note_body: str) -> Path:
     _write(repo / "kb" / "notes" / "note.md", note_body)
     _write(
         repo / "kb" / "sources" / "paper.ingest.md",
-        "---\nsource: https://example.org/paper.pdf\ntype: kb/sources/types/ingest-report.md\n---\n\n# Paper\n",
+        "---\nsource: https://example.org/paper.pdf\ntype: ingest-report\n---\n\n# Paper\n",
     )
     _write(repo / "kb" / "agentic-systems" / "tool.md", "# Tool\n")
     return repo

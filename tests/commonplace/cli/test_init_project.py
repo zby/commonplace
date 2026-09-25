@@ -94,10 +94,6 @@ def test_init_project_does_not_copy_the_library(tmp_path: Path) -> None:
         Path("kb/reports/COLLECTION.md"),
         Path("kb/reports/README.md"),
         Path("kb/reports/.gitignore"),
-        Path("kb/reports/types/connect-report.md"),
-        Path("kb/reports/types/connect-report.schema.yaml"),
-        Path("kb/sources/types/ingest-report.md"),
-        Path("kb/sources/types/snapshot.md"),
         Path("kb/sources/.gitignore"),
         Path("AGENTS.md.template"),
         Path("CLAUDE.md.template"),
@@ -328,6 +324,42 @@ def test_init_project_migrates_pointers_to_global_types(tmp_path: Path) -> None:
         Path("kb/types/my-type.md"),
         Path("kb/reports/types/old-report.schema.yaml"),
     }
+
+
+def test_init_project_migrates_copied_source_and_report_types(tmp_path: Path) -> None:
+    root = library.library_root()
+    source_types = tmp_path / "kb" / "sources" / "types"
+    source_types.mkdir(parents=True)
+    shutil.copy2(root / "types" / "ingest-report.md", source_types / "ingest-report.md")
+    (source_types / "snapshot.md").write_text("locally edited\n", encoding="utf-8")
+    (source_types / "paper-note.md").write_text("project-owned\n", encoding="utf-8")
+    report_types = tmp_path / "kb" / "reports" / "types"
+    report_types.mkdir(parents=True)
+    shutil.copy2(root / "types" / "connect-report.md", report_types / "connect-report.md")
+    ingest = tmp_path / "kb" / "sources" / "a.ingest.md"
+    ingest.write_text(
+        "---\ndescription: Ingest typed by the old copy\ntype: ./types/ingest-report.md\n---\n\n# A\n",
+        encoding="utf-8",
+    )
+    live = tmp_path / "kb" / "reports" / "state" / "full-pass" / "n" / "p" / "full-pass-report.md"
+    live.parent.mkdir(parents=True)
+    live.write_text("---\ntype: kb/reports/types/full-pass-report.md\n---\n# P\n", encoding="utf-8")
+    frozen = tmp_path / "kb" / "reports" / "state" / "review-jobs" / "j" / "input.md"
+    frozen.parent.mkdir(parents=True)
+    frozen.write_text("---\ntype: kb/types/note.md\n---\n# J\n", encoding="utf-8")
+
+    report = init_project(tmp_path)
+
+    assert Path("kb/sources/types/ingest-report.md") in report.removed
+    assert Path("kb/reports/types/connect-report.md") in report.removed
+    assert Path("kb/sources/types/snapshot.md") in report.migration_kept
+    assert (source_types / "paper-note.md").exists()
+    assert Path("kb/sources/types/paper-note.md") not in report.migration_kept
+    assert report_types.is_dir()
+    assert "type: ingest-report\n" in ingest.read_text(encoding="utf-8")
+    assert "type: full-pass-report\n" in live.read_text(encoding="utf-8")
+    assert "type: kb/types/note.md\n" in frozen.read_text(encoding="utf-8")
+    assert init_project(tmp_path).created == []
 
 
 def test_init_project_leaves_foreign_skill_directories_alone(tmp_path: Path) -> None:

@@ -206,7 +206,7 @@ empty Trafilatura result, or PDF with no embedded text):
 
 **(Only for PDF and web page paths — GitHub and X scripts handle their own metadata.)**
 
-This workflow supplies `kb/sources/types/snapshot.md` as the type. Open that path and verify from its own frontmatter that it is a type spec before determining metadata. Stop if it is missing or invalid.
+This workflow supplies `snapshot` as the type, a global type specified in [snapshot.md](../../types/snapshot.md). Open that spec and verify from its own frontmatter that it is a type spec before determining metadata. Stop if it is missing or invalid.
 
 From the bounded excerpts, extractor metadata, and `source_url`, determine:
 
@@ -254,7 +254,7 @@ capture: {capture_method}
 capture_scope: {capture_scope}
 genre: {genre}
 doi: "{bare DOI; omit this line when no DOI was verified}"
-type: kb/sources/types/snapshot.md
+type: snapshot
 ---
 
 # {title}

@@ -16,8 +16,8 @@ def install_types(repo: Path) -> None:
     copy_repo_files(
         repo,
         *NOTE_TYPE_SPECS,
-        "kb/reports/types/full-pass-report.md",
-        "kb/reports/types/full-pass-report.schema.yaml",
+        "kb/types/full-pass-report.md",
+        "kb/types/full-pass-report.schema.yaml",
     )
 
 

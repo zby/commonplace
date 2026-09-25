@@ -91,8 +91,6 @@ packages = ["src/commonplace"]
 include = [
     "/AGENTS.md.template",
     "/hatch_build.py",
-    "/kb/reports/types",
-    "/kb/sources/types",
     "/kb/sources/.gitignore",
     "/src",
     "/tests",
@@ -102,11 +100,9 @@ include = [
 
 [tool.hatch.build.targets.wheel.hooks.custom]
 
-# The project scaffold: templates and the project's own report and source types.
+# The project scaffold: control-plane template and the sources ignore file.
 [tool.hatch.build.targets.wheel.force-include]
 "AGENTS.md.template" = "commonplace/_data/AGENTS.md.template"
-"kb/reports/types" = "commonplace/_data/kb/reports/types"
-"kb/sources/types" = "commonplace/_data/kb/sources/types"
 "kb/sources/.gitignore" = "commonplace/_data/kb/sources/.gitignore"
 
 [tool.pytest.ini_options]

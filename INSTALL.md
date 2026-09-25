@@ -183,7 +183,6 @@ The Commonplace library — framework notes, reference, instructions, review gat
 On a new project it creates the project's own files once:
 
 - **User KB directories and collection heads** — `kb/notes/`, `kb/reference/`, `kb/instructions/`, `kb/sources/`, `kb/tasks/`, `kb/work/`, `kb/reports/`, `kb/log.md`; notes, reference, instructions, sources, work, and reports each receive a starter `COLLECTION.md` contract and `README.md` landing. Source snapshots are ignored locally; reports also receive `cache/`, `state/`, and `retained/` policy areas with their own ignore and validation boundaries.
-- **The reports and sources collections' local types** — under `kb/reports/types/` and `kb/sources/types/`. These belong to the project's own collections.
 - **`AGENTS.md.template` and `CLAUDE.md.template`** — control-plane templates with the project name filled in (step 4).
 
 On every run it also writes its pointers into the library for this machine:
@@ -314,13 +313,13 @@ Install and verify the user-level tool first. Then inspect any project `.envrc` 
 
 ### Migrating from a copied library
 
-Earlier Commonplace releases copied the library into the project: the collections under `kb/commonplace/`, the global types under `kb/types/`, and the skills as full directories under `.claude/skills/` and `.agents/skills/`. To migrate, install the new tool and rerun `commonplace-init` in the project.
+Earlier Commonplace releases copied the library into the project: the collections under `kb/commonplace/`, the global types under `kb/types/`, the source and report types under `kb/sources/types/` and `kb/reports/types/`, and the skills as full directories under `.claude/skills/` and `.agents/skills/`. To migrate, install the new tool and rerun `commonplace-init` in the project.
 
 Init compares every file of those old copies with the installed library's version:
 
 - A file that matches is removed. A skill directory emptied this way receives a stub.
 - A file that differs is left in place and listed under "Kept library copies that differ from the installed library". It may carry a local change. The old copies record no version, so it may also be an unmodified file from an older release. Decide which, then delete it or move the change into the project's own collections. A skill directory that still holds such a file is not replaced by a stub until you remove it; init lists it as skipped.
-- A file under `kb/types/` that has no counterpart in the library is treated as the project's own and left alone.
+- A file under `kb/types/`, `kb/sources/types/`, or `kb/reports/types/` that has no counterpart in the library is treated as the project's own and left alone.
 
 Init also retires, once, the review baselines whose criteria were files in the old copy, because those criteria now have library identities (`commonplace:instructions/review-gates/...`, `commonplace:types/...`). Review history is kept; the affected pairs are reviewed again as missing baselines.
 
@@ -328,8 +327,10 @@ If the project committed its old skill copies, version control keeps tracking th
 
 Init also rewrites the project's pointers to global types in the forms this release uses, and lists every file it changed:
 
-- **Type pointers.** Global types are named by bare name. A frontmatter `type:` or `requires_type:` value that points at a global type, as `kb/types/<name>.md` or a relative path to the same file, becomes `type: <name>`. JSON-style frontmatter is handled the same way. A pointer is left alone when the project has a file of its own at that path: a project-shared type, or a differing copy init kept.
+- **Type pointers.** Global types are named by bare name. A frontmatter `type:` or `requires_type:` value that points at an old copy of a global type, as `kb/types/<name>.md`, `kb/sources/types/<name>.md`, `kb/reports/types/<name>.md`, or a relative path to the same file, becomes `type: <name>`. Frozen evidence copies under `kb/reports/state/` keep their recorded pointers to `kb/types/`; live reports there are rewritten. Replaceable output under `kb/reports/cache/` is not rewritten. JSON-style frontmatter is handled the same way. A pointer is left alone when the project has a file of its own at that path: a project-shared type, or a differing copy init kept.
 - **Schema references.** A schema under the project's `kb/` that refers to a global schema by relative path, as the older report and source types do, now refers to it as `commonplace:types/<name>.schema.yaml`, resolved in the installed library.
+
+- **Snapshots.** A local capture under `.snapshots/` whose frontmatter still names the old snapshot type path is rewritten to `type: snapshot`; nothing else in it changes. An ingest that pinned the capture's old bytes in `snapshot_sha256` or `original_snapshot_sha256` gets the new checksum; commit those ingests. The rewrite is the same on every machine, so another clone reaches the same bytes when it reruns init after pulling the re-pinned ingests.
 
 Relative links from project notes into `kb/commonplace/` stop resolving. Point them at the published Commonplace documentation or remove them. When the migration is done, `commonplace-init --check` reports every entry `ok` and `commonplace-validate` passes on the project's collections.
 

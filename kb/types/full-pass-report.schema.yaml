@@ -1,6 +1,6 @@
 $schema: "https://json-schema.org/draft/2020-12/schema"
 allOf:
-  - $ref: "commonplace:types/note.schema.yaml"
+  - $ref: "./note.schema.yaml"
   - type: object
     properties:
       frontmatter:
@@ -30,7 +30,7 @@ allOf:
           - resulting_paths
         properties:
           type:
-            const: kb/reports/types/full-pass-report.md
+            const: full-pass-report
           source:
             type: string
             pattern: '^kb/.+\.md$'

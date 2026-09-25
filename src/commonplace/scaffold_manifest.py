@@ -53,12 +53,9 @@ MANIFEST = ScaffoldManifest(
         Path("kb/reports/retained"),
         Path("kb/reports/types"),
     ),
-    # The project's own report and source collections receive their type
-    # contracts. The library stays in the installed package.
-    trees=(
-        ("kb/reports/types", "kb/reports/types"),
-        ("kb/sources/types", "kb/sources/types"),
-    ),
+    # No scaffold trees: every type Commonplace code or procedures produce is a
+    # global type read from the installed library.
+    trees=(),
     # Single files copied without a tree walk. User-collection contract,
     # landing, and local-policy templates seed empty collections.
     files=(
@@ -120,5 +117,7 @@ MANIFEST = ScaffoldManifest(
         ("kb/commonplace/notes", "notes"),
         ("kb/commonplace/reference", "reference"),
         ("kb/types", "types"),
+        ("kb/sources/types", "types"),
+        ("kb/reports/types", "types"),
     ),
 )

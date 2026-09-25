@@ -2,7 +2,7 @@
 type: type-spec
 name: connect-report
 description: Discovery report for possible KB connections from one source artifact
-schema: kb/reports/types/connect-report.schema.yaml
+schema: ./connect-report.schema.yaml
 ---
 
 # Connect report
@@ -86,7 +86,7 @@ Downstream connection consumers may ignore this section. A later explicit mainte
 ```markdown
 ---
 description: "Discovery report for possible KB connections from one source artifact"
-type: kb/reports/types/connect-report.md
+type: connect-report
 source: "{repo-root source path}"
 source_has_frontmatter: {true|false}
 date: "{YYYY-MM-DD}"

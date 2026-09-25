@@ -42,7 +42,7 @@ properties:
           - abstract
           - excerpt
       type:
-        const: kb/sources/types/snapshot.md
+        const: snapshot
       genre:
         severity: warn
         enum:

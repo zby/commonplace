@@ -2,7 +2,7 @@
 type: type-spec
 name: source-review
 description: Structured extraction and relevance review for an external source
-schema: kb/sources/types/source-review.schema.yaml
+schema: ./source-review.schema.yaml
 ---
 
 # Source review
@@ -21,7 +21,7 @@ Use `source-review` when you want a structured extraction from an external sourc
 | Field | Required | Use |
 |---|---:|---|
 | `description` | Yes | Retrieval description for what the source review extracts and why it matters. |
-| `type` | Yes | `kb/sources/types/source-review.md`. |
+| `type` | Yes | `source-review`. |
 | `tags` | No | Navigation tags for the reviewed source or the claims it supports. |
 | `user-verified` | No | Optional explicit human attestation; creation and source review do not add it automatically. |
 
@@ -30,7 +30,7 @@ Use `source-review` when you want a structured extraction from an external sourc
 ```markdown
 ---
 description: ""
-type: kb/sources/types/source-review.md
+type: source-review
 tags: []
 ---
 

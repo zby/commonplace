@@ -26,7 +26,7 @@ Required frontmatter:
 
 | Field | Meaning |
 |---|---|
-| `type` | `kb/reports/types/agent-memory-analysis-report.md` |
+| `type` | `agent-memory-analysis-report` |
 | `description` | Subject and discriminating memory boundary |
 | `analysis-run` | Parent `AAS-*` run ID |
 | `source-identity` | Exact parent repository or capture identity |

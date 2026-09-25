@@ -63,7 +63,7 @@ durable report.
 
 1. Read these authoritative files in order:
    1. `kb/sources/COLLECTION.md`
-   2. `kb/sources/types/ingest-report.md`
+   2. the global [`ingest-report`](../types/ingest-report.md) type spec
    3. `snapshot_path`
    4. `connect_report_path`
 

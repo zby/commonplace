@@ -907,7 +907,7 @@ def _linked_md_targets(parsed: ParsedNote) -> set[Path]:
     return targets
 
 
-@type_rule("kb/sources/types/snapshot.md")
+@type_rule("snapshot")
 def _snapshot_body_rule(
     results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
 ) -> None:
@@ -935,7 +935,7 @@ def _quote_citation_rule(
 
 
 @type_rule("agentic-system-analysis-result")
-@type_rule("kb/reports/types/agent-memory-analysis-report.md")
+@type_rule("agent-memory-analysis-report")
 def _agentic_evidence_and_references_rule(
     results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
 ) -> None:
@@ -943,7 +943,7 @@ def _agentic_evidence_and_references_rule(
     from commonplace.lib.agentic_records import record_reference_errors
 
     metadata = parsed.document.frontmatter or {}
-    is_report = metadata.get("type") == "kb/reports/types/agent-memory-analysis-report.md"
+    is_report = metadata.get("type") == "agent-memory-analysis-report"
     errors = record_reference_errors(parsed.document.body, memory_report=is_report)
     results.fails.extend(errors)
     if not errors:
@@ -976,7 +976,7 @@ def _agentic_comparison_rule(
         results.passes.append("memory comparison: assessments and canonical references resolve")
 
 
-@type_rule("kb/reports/types/agent-memory-analysis-report.md")
+@type_rule("agent-memory-analysis-report")
 def _memory_report_comparison_rule(
     results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
 ) -> None:

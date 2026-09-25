@@ -1,6 +1,6 @@
 $schema: "https://json-schema.org/draft/2020-12/schema"
 allOf:
-  - $ref: "commonplace:types/note.schema.yaml"
+  - $ref: "./note.schema.yaml"
   - type: object
     properties:
       frontmatter:
@@ -10,5 +10,5 @@ allOf:
           - type
         properties:
           type:
-            const: kb/sources/types/source-review.md
+            const: source-review
         additionalProperties: true

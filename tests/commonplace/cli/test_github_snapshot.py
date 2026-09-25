@@ -66,7 +66,7 @@ def test_github_snapshot_captures_issue_and_pull_request_families(
     md_path = next(tmp_path.glob("*.md"))
     fm = frontmatter(md_path)
 
-    assert fm["type"] == "kb/sources/types/snapshot.md"
+    assert fm["type"] == "snapshot"
     assert fm["tags"] == [expected_family]
     assert fm["api_url"] == expected_api_url
     assert len(md_path.stem) <= MAX_INGEST_SNAPSHOT_SLUG_LENGTH

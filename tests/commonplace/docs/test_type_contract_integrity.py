@@ -256,14 +256,14 @@ def test_current_type_examples_use_path_values() -> None:
 
 def test_snapshot_type_pointer_matches_schema() -> None:
     schema = yaml.safe_load(
-        (REPO_ROOT / "kb/sources/types/snapshot.schema.yaml").read_text(
+        (REPO_ROOT / "kb/types/snapshot.schema.yaml").read_text(
             encoding="utf-8"
         )
     )
     expected_pointer = schema["properties"]["frontmatter"]["properties"]["type"][
         "const"
     ]
-    contract = (REPO_ROOT / "kb/sources/types/snapshot.md").read_text(
+    contract = (REPO_ROOT / "kb/types/snapshot.md").read_text(
         encoding="utf-8"
     )
     metadata = contract.split("## Metadata", maxsplit=1)[1].split(
@@ -271,7 +271,7 @@ def test_snapshot_type_pointer_matches_schema() -> None:
     )[0]
 
     assert f"`type: {expected_pointer}`" in metadata
-    assert "`type: snapshot`" not in metadata
+    assert "kb/sources/types/snapshot.md" not in metadata
 
     collection_contract = (REPO_ROOT / "kb/sources/COLLECTION.md").read_text(
         encoding="utf-8"
@@ -289,20 +289,20 @@ def test_snapshot_type_pointer_matches_schema() -> None:
 
 def test_ingest_owns_durable_source_and_snapshot_anchor() -> None:
     ingest_schema = yaml.safe_load(
-        (REPO_ROOT / "kb/sources/types/ingest-report.schema.yaml").read_text(
+        (REPO_ROOT / "kb/types/ingest-report.schema.yaml").read_text(
             encoding="utf-8"
         )
     )
-    ingest_contract = (REPO_ROOT / "kb/sources/types/ingest-report.md").read_text(
+    ingest_contract = (REPO_ROOT / "kb/types/ingest-report.md").read_text(
         encoding="utf-8"
     )
     snapshot_schema = yaml.safe_load(
-        (REPO_ROOT / "kb/sources/types/snapshot.schema.yaml").read_text(
+        (REPO_ROOT / "kb/types/snapshot.schema.yaml").read_text(
             encoding="utf-8"
         )
     )
     snapshot_contract = (
-        REPO_ROOT / "kb/sources/types/snapshot.md"
+        REPO_ROOT / "kb/types/snapshot.md"
     ).read_text(encoding="utf-8")
 
     ingest_fields = ingest_schema["allOf"][1]["properties"]["frontmatter"]

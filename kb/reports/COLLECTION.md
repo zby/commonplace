@@ -96,10 +96,12 @@ promote the exact report to `retained/` first. Tracked artifacts may cite a
 
 ## Type eligibility and validation
 
-A typed report may use a shared type under `kb/types/` or a collection-local
-type under `kb/reports/types/`. Its `type:` value is the path to that contract.
-Local type ownership is why `kb/reports/` is a collection rather than an
-uncontracted support directory.
+A typed report may use a global type, named by its bare name (the report types
+Commonplace procedures produce, such as `connect-report` and
+`full-pass-report`, are global), or a collection-local type under
+`kb/reports/types/`, named by its path. The retention policy and output
+boundaries are why `kb/reports/` is a collection rather than an uncontracted
+support directory.
 
 The tracked `.commonplace-validation-ignore` markers at `cache/` and `state/`
 exclude their data-bearing subtrees from collection-scoped validation. The

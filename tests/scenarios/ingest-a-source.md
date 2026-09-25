@@ -56,7 +56,7 @@ Notes: connect runs the full prospecting procedure on every destination `kb/sour
 | load | kind | source | hops |
 |---|---|---|---|
 | drafting procedure | overhead | `kb/instructions/draft-ingest-report.md` | 1 |
-| ingest-report type-spec | overhead | `kb/sources/types/ingest-report.md` | 2 |
+| ingest-report type-spec | overhead | `kb/types/ingest-report.md` | 2 |
 | sources collection conventions | overhead | `kb/sources/COLLECTION.md` | 2 |
 | the captured snapshot | content | variable | 1 |
 | generated connection findings | content | variable | 1 |

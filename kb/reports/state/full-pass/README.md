@@ -11,6 +11,6 @@ Output of `kb/instructions/run-full-improvement-pass-on-note.md`. Each invocatio
   full-pass-report.md
 ```
 
-Reports here are **gitignored** local state. `full-pass-report.md` is typed by `kb/reports/types/full-pass-report.md` and is authoritative for a pass disposition and its later resolution. The `.txt` captures are immutable guard/diff inputs; the report and captures are one retention unit.
+Reports here are **gitignored** local state. `full-pass-report.md` is typed by the global `full-pass-report` type and is authoritative for a pass disposition and its later resolution. The `.txt` captures are immutable guard/diff inputs; the report and captures are one retention unit.
 
 Retain every pending packet. Retain rejected or alternative resolutions while they constrain later work. An accepted packet may be deleted after Git history durably records the operation; captures and report are removed together. Review evidence and freshness remain in the Commonplace store, not in these directories. The collection policy, this README, and the report type contract are tracked; pass packets are not.

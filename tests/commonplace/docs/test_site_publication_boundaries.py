@@ -17,7 +17,6 @@ def test_raw_sources_stay_out_while_ingests_are_published() -> None:
     assert not excluded.match_file("sources/example.ingest.md")
     assert not excluded.match_file("sources/nested/example.ingest.md")
     assert not excluded.match_file("sources/README.md")
-    assert not excluded.match_file("sources/types/ingest-report.md")
 
 
 def test_only_retained_main_analysis_results_are_published() -> None:
@@ -49,7 +48,9 @@ def test_source_redirects_only_cover_published_ingests() -> None:
         if old.startswith("sources/") or new.startswith("sources/")
     }
     assert source_redirects
+    # Besides ingests, only the type specs that moved to the global types keep redirects.
     assert all(
-        old.endswith(".ingest.md") and new.endswith(".ingest.md")
+        (old.endswith(".ingest.md") and new.endswith(".ingest.md"))
+        or (old.startswith("sources/types/") and new.startswith("types/"))
         for old, new in source_redirects.items()
     )

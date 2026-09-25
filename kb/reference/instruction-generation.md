@@ -35,14 +35,12 @@ These outputs belong to the project. Init creates each one only when it is missi
 - `kb/notes/`, `kb/notes/types/` — user's notes collection
 - `kb/reference/`, `kb/reference/types/` — user's reference collection
 - `kb/instructions/` — user's instructions collection
-- `kb/sources/`, `kb/sources/types/` — user's tracked source records and local-capture type contracts
+- `kb/sources/`, `kb/sources/types/` — user's tracked source records, and a place for project-authored source types
 - `kb/tasks/backlog/`, `kb/tasks/active/`, `kb/tasks/completed/` — user's task lifecycle
 - `kb/work/` — user's workshop surface
-- `kb/reports/`, its `cache/`, `state/`, and `retained/` policy areas, and `kb/reports/types/` — user's reports collection
+- `kb/reports/`, its `cache/`, `state/`, and `retained/` policy areas, and `kb/reports/types/` for project-authored report types — user's reports collection
 
-**Scaffold trees** — copied from scaffold sources. In a built wheel these sources live under packaged `commonplace/_data/`; in an editable source checkout `commonplace-init` falls back to the canonical repo paths:
-
-- `kb/reports/types/`, `kb/sources/types/` — collection-local type definitions for user-space collections. Their schemas build on global schemas through `commonplace:types/...` references, which resolve in the installed library.
+**Scaffold trees** — none. The source, snapshot, and report types that Commonplace commands and procedures produce are global library types, read in place like the rest of the library.
 
 **Scaffold files** — individual files copied into the user's collections:
 
@@ -85,7 +83,7 @@ The canonical skill is the directory under the library's `instructions/`, not th
 The source tree does not keep symlinked copies of the project scaffold under `src/commonplace/_data/`. Instead, `init_project` resolves each scaffold input by checking two locations:
 
 1. `commonplace/_data/<path>` — packaged wheel data, populated by Hatch `force-include` entries from canonical repo paths. The sdist also explicitly includes those canonical inputs so wheels built from sdists have the same scaffold source.
-2. The canonical repo path — used in editable source checkouts, so edits to `kb/reports/types/`, `kb/sources/types/`, and the root templates are picked up without duplicating files.
+2. The canonical repo path — used in editable source checkouts, so edits to the root templates and the sources ignore file are picked up without duplicating files.
 
 The exception is `src/commonplace/_data/templates/`, which contains real scaffold-only files for the user collections' starter `COLLECTION.md` contracts and `README.md` landings and for the `CLAUDE.md` template. Those files have no canonical counterpart elsewhere in the KB.
 

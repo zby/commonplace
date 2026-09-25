@@ -194,7 +194,7 @@ These rules govern body edits inside a `keep`; the decision table governs the no
 ```markdown
 ---
 description: "Full improvement pass over <pass-start note title>"
-type: kb/reports/types/full-pass-report.md
+type: full-pass-report
 source: <pass-start note path>
 source_capture: source.txt
 source_sha256: <SHA-256 of source.txt as UTF-8 text>

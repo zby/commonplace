@@ -2,7 +2,7 @@
 type: type-spec
 name: full-pass-report
 description: Stateful report for one full-improvement pass and any asynchronous disposition resolution
-schema: kb/reports/types/full-pass-report.schema.yaml
+schema: ./full-pass-report.schema.yaml
 ---
 
 # Full-pass report
@@ -28,7 +28,7 @@ Render the `Resolution` section exactly from the structured fields. Quote a term
 ```markdown
 ---
 description: "Full improvement pass over <pass-start source title>"
-type: kb/reports/types/full-pass-report.md
+type: full-pass-report
 source: kb/notes/example.md
 source_capture: source.txt
 source_sha256: <lowercase SHA-256>

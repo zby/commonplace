@@ -2,7 +2,7 @@
 type: type-spec
 name: ingest-report
 description: Durable source record and analysis of how one external source fits the KB
-schema: kb/sources/types/ingest-report.schema.yaml
+schema: ./ingest-report.schema.yaml
 ---
 
 # Ingest report
@@ -41,7 +41,7 @@ Assess fit relative to the installed KB's goals, local collection contracts, and
   snapshot, set `original_snapshot_sha256` to the lowercase SHA-256 of those
   exact precursor bytes. This gives the derivation input durable identity
   without treating a cache path as provenance or as a second primary source.
-- Use `type: kb/sources/types/ingest-report.md` for the artifact type.
+- Use `type: ingest-report` for the artifact type.
 - When the caller supplied an occasion — the question or job that brought the
   source in, stated before it was read — record it verbatim in `occasion`.
   Omit the field otherwise. The occasion governs only the selection sections
@@ -187,7 +187,7 @@ genre: {source genre}
 snapshot_sha256: {lowercase SHA-256 of the exact snapshot file bytes}
 ingested: "{YYYY-MM-DD}"
 occasion: "{caller's pre-reading question or job, verbatim; omit when none}"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [{tag1}, {tag2}, {tag3}]
 ---
 

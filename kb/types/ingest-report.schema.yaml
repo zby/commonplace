@@ -1,6 +1,6 @@
 $schema: "https://json-schema.org/draft/2020-12/schema"
 allOf:
-  - $ref: "commonplace:types/note.schema.yaml"
+  - $ref: "./note.schema.yaml"
   - type: object
     properties:
       frontmatter:
@@ -17,7 +17,7 @@ allOf:
           - domains
         properties:
           type:
-            const: kb/sources/types/ingest-report.md
+            const: ingest-report
           source:
             type: string
             pattern: "^https?://"

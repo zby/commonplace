@@ -175,7 +175,7 @@ def test_x_snapshot_captures_each_content_family(
     fm = frontmatter(md_path)
     sidecar = json.loads(json_path.read_text(encoding="utf-8"))
 
-    assert fm["type"] == "kb/sources/types/snapshot.md"
+    assert fm["type"] == "snapshot"
     assert fm["tags"] == [expected_family]
     assert len(md_path.stem) <= MAX_INGEST_SNAPSHOT_SLUG_LENGTH
     assert len(f"{md_path.stem}.ingest") <= 70

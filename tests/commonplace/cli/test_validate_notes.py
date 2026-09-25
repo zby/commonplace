@@ -109,12 +109,12 @@ def configure_type_spec_repo(tmp_path: Path) -> None:
 
 
 def configure_snapshot_repo(tmp_path: Path) -> None:
-    copy_repo_file(tmp_path, "kb/sources/types/snapshot.schema.yaml")
+    copy_repo_file(tmp_path, "kb/types/snapshot.schema.yaml")
     write_type_spec(
         tmp_path,
-        "kb/sources/types/snapshot.md",
+        "kb/types/snapshot.md",
         name="snapshot",
-        schema="kb/sources/types/snapshot.schema.yaml",
+        schema="kb/types/snapshot.schema.yaml",
     )
 
 
@@ -204,7 +204,7 @@ def test_source_snapshot_requires_h1_as_first_nonblank_body_line(
 source: https://example.com/article
 captured: "2026-04-19"
 capture: web-fetch
-type: kb/sources/types/snapshot.md
+type: snapshot
 ---
 
 Captured text before the title.
@@ -629,12 +629,6 @@ traits: []
 def test_connect_report_derived_slug_is_exempt_from_note_limit(tmp_path: Path) -> None:
     configure_temp_repo(tmp_path)
     write(tmp_path / "kb" / "reports" / "COLLECTION.md", "# Reports collection\n")
-    write_type_spec(
-        tmp_path,
-        "kb/reports/types/connect-report.md",
-        name="connect-report",
-        schema="kb/types/note.schema.yaml",
-    )
     source_slug = "a" * MAX_NOTE_SLUG_LENGTH
     report = write(
         tmp_path
@@ -646,7 +640,7 @@ def test_connect_report_derived_slug_is_exempt_from_note_limit(tmp_path: Path) -
         / f"{source_slug}.connect.md",
         """---
 description: Derived connection report whose filename preserves a valid source artifact slug
-type: kb/reports/types/connect-report.md
+type: connect-report
 ---
 
 # Connection report
@@ -656,7 +650,8 @@ type: kb/reports/types/connect-report.md
     results = validation.validate_note(report, repo_root=tmp_path)
 
     derived_slug_length = MAX_NOTE_SLUG_LENGTH + len(".connect")
-    assert results.fails == []
+    # The global connect-report schema also applies; only the slug rule is under test.
+    assert not any("filename slug" in item for item in results.fails)
     expected = (
         f"filename slug: {derived_slug_length} chars "
         "(derived connect-report name; authored-artifact limit not applied)"

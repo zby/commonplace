@@ -26,7 +26,7 @@ Target: `$ARGUMENTS` — one artifact path or artifact name. If none provided, a
 ## Setup
 
 1. Determine the source collection from the target artifact's path (`kb/notes/...` -> `notes`, `kb/reports/retained/foo.md` -> `reports`, etc.). **Hard fail immediately if `kb/<source-collection>/COLLECTION.md` does not exist** — do not attempt discovery, do not fall back to defaults, do not soldier on. Report the missing file path to the user and stop. The COLLECTION.md is the only linking-rules surface; without it the skill has no authorised destinations or labels and any output would be invented.
-2. Read `kb/reports/types/connect-report.md` before candidate discovery. It defines the report sections, quality standards, and template you will use while judging candidates.
+2. Read the global [`connect-report`](../../types/connect-report.md) type spec before candidate discovery. It defines the report sections, quality standards, and template you will use while judging candidates.
 3. Read the target artifact fully. Identify its claim, mechanism, implications, scope, and tensions. If the target has no frontmatter (`text` file), continue discovery from its title/body and mark the report as provisional.
 4. Read `kb/<source-collection>/COLLECTION.md` and find its **outbound-linking section** (heading varies — look for the one that names destinations and labels). Read it as authoritative guidance — extract three things, regardless of whether the section is structured as per-destination blocks, a single labels table with a destinations column, prose, or any mix:
    - **Which local destination collections to prospect from this source** (and which are excluded), and whether the reserved `external` destination is authorized. The destination wildcard `any` includes `external`.
@@ -118,7 +118,7 @@ Snapshots in `kb/sources/` are immutable; their authored connection surface is n
 
 ## Output
 
-Save the report to `kb/reports/cache/connect/<source-collection>/<artifact-name>.connect.md`. Use the loaded `kb/reports/types/connect-report.md` template and file-relative markdown links in the body. Tell the user: `Report saved: <full path>`.
+Save the report to `kb/reports/cache/connect/<source-collection>/<artifact-name>.connect.md`. Use the loaded `connect-report` template (`type: connect-report`) and file-relative markdown links in the body. Tell the user: `Report saved: <full path>`.
 
 Every section describes **candidate** signal for a future writer to act on. The connect skill does not author any of these edges into any artifact — the report is the entire connection deliverable.
 
