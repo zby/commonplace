@@ -482,7 +482,7 @@ Renamed paths get redirects through `commonplace-relocate-note`.
 
 | Path | Current headline | Proposed headline | Proposed path |
 |---|---|---|---|
-| `conjectural-learning-with-fixed-models.md` | Conjectural Learning with Today's LLMs | Building a Theory Builder from Today's LLMs | `theory-builders-with-fixed-models.md` |
+| `conjectural-learning-with-fixed-models.md` | Conjectural Learning with Today's LLMs | Building a Theory Builder from Today's LLMs | `building-a-theory-builder-from-todays-llms.md` |
 | `testing-the-conjectural-learning-program.md` | Testing Conjectural Learning | Testing Whether a Theory Builder Learns | `testing-whether-a-theory-builder-learns.md` |
 | `an-automated-software-house-as-a-second-test-of-conjectural-learning.md` | An Automated Software House as a Second Test of Conjectural Learning | An Automated Software House as a Second Test of a Theory Builder | `an-automated-software-house-as-a-second-test-of-a-theory-builder.md` |
 | `nearest-existing-constructions-to-a-witness-house.md` | How existing self-improving systems relate to conjectural learning | Which Existing Self-Improving Systems Are Theory Builders | unchanged |
@@ -527,7 +527,7 @@ disjoint files. Each gets: the draft definition and checks, this section's
 rewrite rule, the f4dc912d edit boundary, the N1 reading chosen, and its
 predicted verdicts to confirm or correct. Each returns a per-file line:
 conditions met, deciding condition, learning claim, flip or not. B1 runs
-first; B2–B7 can run in parallel. B5–B7 wait for N1.
+first; B2–B7 can run in parallel. B5–B7 apply the N1 reading C test.
 
 | Batch | Focus | Files |
 |---|---|---|
@@ -543,29 +543,19 @@ The 6 V7 ingests go with the link pass in step 6.
 
 ## Decisions for the operator
 
-D1–D8 are settled and appear above as plan steps. New:
+D1–D8 are settled and appear above as plan steps. N1–N3 were settled by the
+operator on 2026-09-25:
 
-- **N1. Where does a run end for condition 4?** The draft excludes "one
-  invocation of a refinement procedure such as FORTE" and a theory discarded
-  after reasoning. It does not say whether rounds inside one bounded run
-  count as later work. FORTE also iterates over a retained theory, so the
-  exclusion cannot rest on iteration alone. 26 ingests (V3, V4), several
-  survey systems, and the skill's guidance depend on the answer.
-  - *Reading A (literal):* retention must outlast the run that produced it
-    and be consumed by the system's later criticism. Bounded optimizers and
-    single research runs are "a builder-shaped procedure run once"; a system
-    that carries their archive into later runs would be inside. V3 flips
-    out (20). Consistent with case 6 and FORTE as written.
-  - *Reading B (record-based):* a run meets condition 4 when later rounds
-    consume a retained store of theories and criticisms (an archive,
-    library, or files), not merely a reasoning context or conversation
-    history. FORTE stays outside because it keeps only its current theory,
-    no record of criticism. V4 flips in (6). The draft's FORTE sentence
-    and case 24 would state that ground. Counterexample-guided synthesis
-    (`combinatorial-sketching`) then counts as a builder within its run.
-  - Either way the draft's Exclusions and checks case 24 should state the
-    chosen reading.
-- **N2. Approve the D1 titles** (table above), including the evidence note's
-  Apodex flip, which follows from the draft's weight-only exclusion.
-- **N3. Approve the D2 headlines and paths** (table above), including
-  whether the bootstrapping headline changes.
+- **N1 → reading C (problem-based).** Retention counts when what is kept is
+  taken up on a new problem. Rounds of revision on one problem, however many,
+  are one pass of error elimination; the unit is the problem, not the run.
+  The draft's condition 4, its Exclusions ("Work on one problem only"), and
+  checks cases 24, 31, and 32 state this. Consequences for the ingests:
+  V3 (20) and V4 (6) are re-judged on one question: does the system take its
+  stated results up on a later, different problem? Bounded optimizers and
+  counterexample-guided synthesis of one program are outside; a research run
+  whose later experiments consume earlier findings is inside. Batches B5–B7
+  apply this test and no longer wait.
+- **N2 → approved** as proposed, including the Apodex flip.
+- **N3 → approved** as proposed, except the lead article's path:
+  `building-a-theory-builder-from-todays-llms.md`, matching its headline.

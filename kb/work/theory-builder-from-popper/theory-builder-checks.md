@@ -12,7 +12,7 @@ proposed change exposes.
 
 Drafted 2026-09-25 to replace the conjectural-learning checks. Cases 1–16
 carry over that file's cases with the same numbers and assumptions, and are
-reclassified under the new definition. Cases 17–30 are new.
+reclassified under the new definition. Cases 17–32 are new.
 
 ## Purpose
 
@@ -92,10 +92,12 @@ system improves.
 | 21 | A reflective builder has a procedure with no stated purpose | The builder stays reflective relative to its other method texts; that procedure lies outside reflection | Criticism aims at a procedure's stated conjecture about why it works; without one the procedure can be tried but not criticized |
 | 22 | A reflective builder replaces its model and leaves its method texts unchanged | Still reflective; text and operation may diverge until criticism finds the gap | The connection runs through consumption and criticism, not automatic update |
 | 23 | A research community, declared as the system | Inside | Popper's own case; no member holds the whole theory or supplies all the criticism |
-| 24 | One invocation of a refinement procedure such as FORTE over a supplied theory | Outside | Condition 4: nothing is retained for later work. This does not classify a larger system that uses the procedure |
+| 24 | One invocation of a refinement procedure such as FORTE over a supplied theory | Outside | Condition 4: many rounds on one problem are one pass of error elimination; nothing is taken up on a new problem. This does not classify a larger system that uses the procedure (operator, 2026-09-25, N1) |
 | 25 | The Gödel machine | Open | Whether a deployment criticizes its proof premises elsewhere is not settled by the construction |
 | 26 | A retained theory has no stated assumptions, scope conditions, or parts that criticism could name; it is criticized and replaced | Inside; minimum addressability | The whole theory is one localized unit, which meets condition 1 (operator, 2026-09-25). The baseline for the addressability conjecture |
 | 27 | A builder revises its model only by replacing it whole | Inside | The model is an addressable part of the machinery: a stated choice names it, criticism can blame the choice, and replacement revises it (operator, 2026-09-25). The weights' content stays out of reach |
 | 28 | A system states a criticism and uses it to update weights (critique-trained RL, textual gradients); no stated theory is retained and consumed | Outside | Conditions 1 and 3: the revised theory is the weights, where no unit says anything. Inside only if the criticism aims at a retained, consumed stated theory |
 | 29 | Model editing locates a fact in particular weights, and the system criticizes and edits that fact | Partly localized; classify on evidence | Condition 1 tracks localization, not substrate (test 4). The located parts can meet conditions 1 and 3; the rest of the model cannot |
 | 30 | Weights are trained by gradient descent against a loss on examples | Outside: the gradient-descent contrast | Blame reaches every parameter, but no parameter says anything, and the report cannot blame the loss or data. Conditions 1 and 3 |
+| 31 | One run pursues a sequence of different experiments, and each later experiment consumes the stated findings and criticisms of earlier ones | Inside | Condition 4: the unit is the problem, not the run (operator, 2026-09-25, N1) |
+| 32 | A bounded optimization run revises one solution for one task over many rounds, keeping a store of variants and critiques | Outside | Condition 4: one problem, so the rounds are one pass of error elimination, whatever the store holds |

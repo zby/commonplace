@@ -58,6 +58,10 @@ Decision numbers D1–D8 refer to the
   enough.
 - D8: restore "revision need not be small" (done) and "retention is the
   builder's, not the interpreter's" (done, in Boundary).
+- N1: retention counts when what is kept is taken up on a new problem; rounds
+  on one problem are one pass of error elimination (reading C). N2 and N3:
+  the inventory's D1 titles and D2 headlines are approved; the lead article
+  moves to `building-a-theory-builder-from-todays-llms.md`.
 - Outside-system checks: `assess-learning-claims-during-ingest.md` and the
   analyse-agentic-system skill judge systems condition by condition against
   the new definition.
@@ -67,10 +71,9 @@ Decision numbers D1–D8 refer to the
 1. Draft [theory-builder.md](./theory-builder.md) and its
    [checks](./theory-builder-checks.md) — done.
 2. Refresh the [consumer inventory](./consumer-inventory.md) against the
-   current draft and the decisions above — next. The first version was
-   written against the five-condition draft, so its predicted verdict flips
-   are stale.
-3. Operator approves the refreshed edit plan, including D1 and D2 titles.
+   current draft and the decisions above — done.
+3. Operator approves the refreshed edit plan, including D1 and D2 titles —
+   done (N1–N3).
 4. Apply in the inventory's order: receiving sections, definitions, skills
    and types, notes and articles, ingest re-judging, links and redirects,
    frozen records last. Validate.

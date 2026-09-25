@@ -53,6 +53,11 @@ Popper's terms.
    retained, and in Popper's sense consumption includes "criticising them,
    changing them, and often even demolishing them, in order to replace them
    by better ones" ([Popper 1966](../../sources/popper-a-realist-view-of-logic-physics-and-history-1966.ingest.md#quotes)).
+   Retention counts when what is kept is taken up on a new problem. Rounds
+   of revision on one problem, however many, are one pass of error
+   elimination; the unit is the problem, not the process run, so a single
+   run that carries its results into later, different problems meets the
+   condition.
 
 **Criticism against gradient descent.** Gradient descent also eliminates
 error, and it assigns blame more finely than any text: every parameter gets
@@ -186,10 +191,12 @@ human-staffed theory builder; the research program's bet is an autonomous one.
   on what a unit says.
 - **A fixed theory.** A stated theory guides decisions and the system never
   criticizes it. It fails condition 3.
-- **A single run without retention.** A theory built while reasoning and then
-  discarded, or one invocation of a refinement procedure such as FORTE, fails
-  condition 4. This does not classify a larger system that uses the
-  procedure.
+- **Work on one problem only.** A theory built while reasoning and then
+  discarded fails condition 4. So does iterated refinement on a single
+  problem, such as one invocation of FORTE over a supplied theory and
+  training set, or counterexample-guided synthesis of one program: the
+  rounds are one pass of error elimination, and nothing is taken up on a new
+  problem. This does not classify a larger system that uses the procedure.
 - **A stored theory nothing consumes.** It fails condition 2. See
   [an action model matters only through its consumption path](../an-action-model-matters-only-through-its-consumption-path.md).
 
