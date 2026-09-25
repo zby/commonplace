@@ -72,8 +72,8 @@ Fully automated means that computation performs the roles the cycle needs:
 formulating, criticizing, revising, and selecting the builder's own
 theories. Users still set the tasks and judge the results. The knowledge
 base's [autonomous qualifier](../notes/definitions/theory-builder.md#qualifiers)
-also covers changing the machinery that does this work; our approach below
-includes it.
+also covers changing the machinery that does this work; the approach
+described below includes it.
 
 The builder is not the LLM alone. It is a system containing an LLM together
 with persistent state, tools, tests, evaluators, and control machinery.
@@ -94,15 +94,14 @@ Current LLMs already appear capable of the main functions the loop requires:
 None of these capabilities needs to be perfect. The point of the cycle is to
 expose and correct errors.
 
-The bet is about what can be built. Our approach to building it is
-reflective from the start: the builder's own method is one of the theories
-it states, criticizes, and revises, and people perform many of its
-operations at first. The work is to move those operations to computation,
+The bet is about what can be built. Commonplace builds it reflectively from
+the start: the builder's own method is one of the theories it states,
+criticizes, and revises, and people perform many of its operations at
+first. The work is to move those operations to computation,
 and the [bootstrap supplement](./bootstrapping-an-autonomous-theory-builder.md)
-describes that path. Reflection is our route; a builder that learns could
-also keep a fixed method. We choose it because an improvement to the method
-is paid for once and reused by every later learning episode, so over a long
-horizon its return can exceed that of immediate learning, and where it does,
+describes that path. A builder that learns could also keep a fixed method.
+Reflection is chosen because an improvement to the method is paid for once
+and reused by every later learning episode, so over a long horizon its return can exceed that of immediate learning, and where it does,
 [an optimal learning strategy invests in its own machinery](../notes/an-optimal-long-run-learning-strategy-invests-in-its-own-machinery.md).
 That return requires method improvements to compound, making later
 improvement cheaper, more reliable, or possible where it was not, which is
@@ -288,7 +287,7 @@ One condition attaches. A builder that starts from hand-written theories and
 machinery, as ours does, fits the lesson
 [only if its learning outgrows that starting state](../notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md):
 computation, not people, must come to supply the task-specific knowledge
-each new demand needs. The lesson also guides our reflective approach: among
+each new demand needs. The lesson also guides the reflective approach: among
 revisions to the builder's own method, it says to look for those that
 convert additional computation into capacity.
 
