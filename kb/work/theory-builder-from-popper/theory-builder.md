@@ -6,6 +6,9 @@ tags: [foundations, self-improving-systems, learning-theory]
 
 # Theory builder
 
+<!-- Maintenance: when changing this definition, please apply the checks in
+[theory-builder-checks.md](./theory-builder-checks.md). -->
+
 A **theory builder** is a system that grows knowledge by Popper's method of
 conjecture and refutation, applied to theories it keeps as objective
 knowledge. It works through Popper's schema `P1 → TT → EE → P2`: faced with a

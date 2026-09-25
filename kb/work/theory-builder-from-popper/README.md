@@ -29,6 +29,10 @@ builder learns is the hypothesis under test.
   their main consumer. This reverses the 2026-09-21 workshop decisions that
   kept learner and builder apart and made criticism optional for a builder.
 
+- D4 (inventory): `conjectural-learning-checks.md` is replaced by
+  [theory-builder-checks.md](./theory-builder-checks.md), drafted here and
+  promoted with the definition. Case 3 waits on D3.
+
 ## Open
 
 - Whether the article series keeps "conjectural learning" as informal
