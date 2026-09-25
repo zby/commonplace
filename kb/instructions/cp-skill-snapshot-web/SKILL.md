@@ -6,7 +6,7 @@ user-invocable: true
 allowed-tools: Read, Write, Grep, Glob, Bash
 context: fork
 model: sonnet
-argument-hint: "[url] — URL to snapshot (web page, PDF, GitHub issue/PR, or X/Twitter post)"
+argument-hint: "[url] [reobserve] — URL to snapshot (web page, PDF, GitHub issue/PR, or X/Twitter post); add reobserve to capture a changed source again"
 ---
 
 ## EXECUTE NOW
@@ -23,7 +23,9 @@ If URL provided, start Step 1 immediately.
 
 ## Step 1: Verify Local Storage and Check for Duplicates
 
-Keep the provided URL as `source_url`. Verify that
+Keep the provided URL as `source_url`. The request is a **re-observation** when
+it says `reobserve` or asks to capture a source again because it changed since
+its existing capture. Verify that
 `kb/sources/.snapshots/` is ignored by the project. The shipped scaffold does
 this through `kb/sources/.gitignore`. If the directory is not ignored, stop
 before writing and report the missing rule.
@@ -34,8 +36,11 @@ that payloads there are ignored before writing; stop and report a missing
 ignore rule. The final snapshot still belongs in `kb/sources/.snapshots/`.
 
 Use Grep to search for an exact frontmatter `source: {source_url}` in existing
-Markdown files in `kb/sources/.snapshots/`. If found, compute the SHA-256 of
-the exact file bytes, tell the user, and stop:
+Markdown files in `kb/sources/.snapshots/`. For a re-observation, an existing
+capture is expected: continue, and write the new capture under a distinct
+basename as described under Step 2 and **slug** below. Never overwrite or edit
+the existing capture; its ingest pins its bytes. Otherwise, if found, compute
+the SHA-256 of the exact file bytes, tell the user, and stop:
 
 > Already snapshotted: kb/sources/.snapshots/{filename}
 > SHA-256: {64-character lowercase checksum}
@@ -58,6 +63,9 @@ Run:
 commonplace-github-snapshot "{source_url}"
 ```
 
+For a re-observation, add `--reobserve`: the command skips the duplicate check
+and names the new capture with the capture date.
+
 Parse either the `Snapshot saved:` or `Already snapshotted:` line from the
 output to get the file path. Tell the user and stop — the script handles
 metadata, formatting, and saving.
@@ -69,6 +77,9 @@ Run:
 ```bash
 commonplace-x-snapshot "{source_url}"
 ```
+
+For a re-observation, add `--reobserve`: the command skips the duplicate check
+and names the new capture with the capture date.
 
 Parse either the `Snapshot saved:` or `Already snapshotted:` line from the
 output to get the file path. Tell the user and stop — the script handles
@@ -232,7 +243,9 @@ From the bounded excerpts, extractor metadata, and `source_url`, determine:
   from the title; shorten it to identifying words rather than copying the full
   title. Check the length before writing. An overlong proposed slug is a
   naming choice to fix automatically, not a reason to stop or ask the user.
-  Example: `simon-willison-karpathy-claws`.
+  Example: `simon-willison-karpathy-claws`. For a re-observation, append the
+  capture date as `-YYYYMMDD` within the same 63-character limit, and stop if a
+  file with that name already exists.
 
 For academic papers: prefer the title and complete author list printed in the
 paper over `pdfinfo` or Trafilatura metadata.

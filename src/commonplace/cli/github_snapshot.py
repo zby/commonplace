@@ -25,6 +25,7 @@ from commonplace.lib.naming import (
 from commonplace.lib.snapshot import (
     SNAPSHOT_DIR,
     dedup_existing_snapshot,
+    reobservation_slug,
     snapshot_sha256,
 )
 
@@ -117,7 +118,7 @@ def _render_markdown(data: dict) -> str:
     return "\n".join(lines)
 
 
-def snapshot_github_url(url: str, out_dir: str) -> str:
+def snapshot_github_url(url: str, out_dir: str, *, reobserve: bool = False) -> str:
     api_url, source_url = _to_api_url(url)
     family = _github_family(api_url, source_url)
 
@@ -126,7 +127,7 @@ def snapshot_github_url(url: str, out_dir: str) -> str:
     dest = Path(out_dir)
     dest.mkdir(parents=True, exist_ok=True)
 
-    existing = dedup_existing_snapshot(dest, source_url)
+    existing = None if reobserve else dedup_existing_snapshot(dest, source_url)
     if existing:
         return (
             f"Already snapshotted: {existing}\n"
@@ -162,8 +163,12 @@ def snapshot_github_url(url: str, out_dir: str) -> str:
             default="github-snapshot",
         )
 
+    if reobserve:
+        slug = reobservation_slug(slug, now.date(), MAX_INGEST_SNAPSHOT_SLUG_LENGTH)
     source_path = dest / f"{slug}.json"
     md_path = dest / f"{slug}.md"
+    if md_path.exists():
+        raise FileExistsError(f"capture already exists: {md_path}")
 
     source_path.write_text(json.dumps(data, ensure_ascii=True, indent=2), encoding="utf-8")
 
@@ -201,6 +206,11 @@ def parse_args() -> argparse.Namespace:
             "Example: https://github.com/owner/repo/issues/123"
         ),
     )
+    parser.add_argument(
+        "--reobserve",
+        action="store_true",
+        help="Capture a source that already has a snapshot as a new, date-named observation.",
+    )
     return parser.parse_args()
 
 
@@ -208,7 +218,7 @@ def parse_args() -> argparse.Namespace:
 def main() -> int:
     args = parse_args()
     try:
-        result = snapshot_github_url(args.url, out_dir=DEFAULT_SNAPSHOT_DIR)
+        result = snapshot_github_url(args.url, out_dir=DEFAULT_SNAPSHOT_DIR, reobserve=args.reobserve)
     except Exception as exc:  # noqa: BLE001 - report all CLI boundary failures
         print(f"Error: {exc}", file=sys.stderr)
         return 1

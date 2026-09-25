@@ -24,8 +24,11 @@ If target is empty, list `.ingest.md` files and ask which to re-ingest.
 4. Derive the only eligible snapshot by name: an ingest at
    `kb/sources/<slug>.ingest.md` pairs with
    `kb/sources/.snapshots/<slug>.md`. Do not search for another snapshot by
-   checksum. If the named file is missing, invoke `cp-skill-snapshot-web` on
-   `source` and continue only if it returns that exact path.
+   checksum. If the named file is missing, stop: the capture is local to the
+   machine that took it (ADR 072), and a new capture cannot reproduce its
+   pinned bytes. Report `snapshot not available on this machine`; the operator
+   can copy the capture from the machine that holds it. To analyse the source
+   as it is now instead, follow **New observation** below.
 5. Require the snapshot frontmatter `source` to equal the ingest's canonical
    `source`. Hash the exact named snapshot bytes and retain the incumbent and
    observed lowercase SHA-256 values for reporting.
@@ -45,10 +48,24 @@ purpose; otherwise the incumbent's `occasion` field carries through unchanged.
 
 If the named snapshot checksum differs, this call stops without changing the
 ingest. Disclose the canonical source, both paired paths, and both checksums.
-The recorded observation is immutable: capture changed bytes under a distinct
-snapshot basename and ingest them to a distinct report instead of changing the
-incumbent `snapshot_sha256`. This applies even when Quotes is empty because an
-inbound link marked `(snapshot required)` may depend on those exact bytes.
+The recorded observation is immutable, so the incumbent `snapshot_sha256` never
+changes. This applies even when Quotes is empty because an inbound link marked
+`(snapshot required)` may depend on those exact bytes. To analyse the changed
+source, follow **New observation**.
+
+## New observation
+
+When the source changed, or its old capture is unavailable and the operator
+wants the source analysed as it is now:
+
+1. Invoke `cp-skill-snapshot-web` on the canonical `source` with `reobserve`.
+   It writes a new capture under a date-named basename and leaves the old one
+   untouched.
+2. Invoke `cp-skill-ingest` with the new capture's path as its target. It
+   creates a new ingest report paired with the new capture.
+3. Leave the incumbent ingest in place. Notes that cite it keep citing the
+   observation they were checked against; repoint a note to the new ingest only
+   when you revise its claim against the new observation.
 
 If the incumbent has no Quotes section during the corpus migration, treat it as
 the canonical empty section; do not infer quotes from its other sections. A

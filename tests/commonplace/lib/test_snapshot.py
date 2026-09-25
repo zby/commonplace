@@ -218,3 +218,13 @@ def test_migrate_snapshot_types_retypes_unpinned_captures_and_closing_type_lines
     )
     assert current.read_bytes() == b"---\ntype: types/snapshot.md\n---\n# D\n"
     assert set(result.rewritten_snapshots) == {closing, current}
+
+
+def test_reobservation_slug_appends_the_capture_date_within_the_limit() -> None:
+    from datetime import date
+
+    from commonplace.lib.snapshot import reobservation_slug
+
+    assert reobservation_slug("paper-x", date(2026, 9, 25), 40) == "paper-x-20260925"
+    long = reobservation_slug("a" * 50, date(2026, 9, 25), 40)
+    assert len(long) == 40 and long.endswith("-20260925")

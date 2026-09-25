@@ -122,3 +122,30 @@ def test_github_snapshot_preserves_number_when_title_needs_truncation(
     md_path = next(tmp_path.glob("*.md"))
     assert len(md_path.stem) == MAX_INGEST_SNAPSHOT_SLUG_LENGTH
     assert md_path.stem.endswith("-123")
+
+
+def test_github_snapshot_reobserve_writes_a_second_date_named_capture(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    payload = {
+        "title": "Capture title",
+        "number": 123,
+        "state": "open",
+        "repository_url": "https://api.github.com/repos/example/project",
+        "user": {"login": "alice"},
+        "labels": [],
+        "body": "Capture body",
+    }
+    monkeypatch.setattr(github_snapshot, "_gh_api", lambda _url: json.dumps(payload))
+    url = "https://github.com/example/project/issues/123"
+    github_snapshot.snapshot_github_url(url, out_dir=str(tmp_path))
+    first = set(tmp_path.glob("*.md"))
+
+    github_snapshot.snapshot_github_url(url, out_dir=str(tmp_path), reobserve=True)
+
+    second = set(tmp_path.glob("*.md")) - first
+    assert len(second) == 1
+    (new,) = second
+    assert new.stem[-9:-8] == "-" and new.stem[-8:].isdigit()
+    assert len(new.stem) <= MAX_INGEST_SNAPSHOT_SLUG_LENGTH
+    assert frontmatter(new)["source"] == url

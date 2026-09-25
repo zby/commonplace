@@ -49,12 +49,22 @@ collection's edit-time rule.
    - If they are insufficient, continue. Do not infer the answer from an ingest
      paraphrase or analysis.
 4. Derive `kb/sources/.snapshots/<slug>.md` from
-   `kb/sources/<slug>.ingest.md`. Require that exact file to exist, require its
-   exact-byte SHA-256 to equal the ingest's `snapshot_sha256`, and require its
-   frontmatter `source` to equal the ingest's canonical `source`. Do not search
-   for a differently named checksum match. If any check fails, stop with the
-   literal re-ingest route: `Read and execute the Commonplace library
-   instruction re-ingest with Target: <ingest-path>.`
+   `kb/sources/<slug>.ingest.md`. Do not search for a differently named
+   checksum match.
+   - If that file does not exist, stop and report `snapshot not available on
+     this machine: <snapshot-path>`. The capture is local to the machine that
+     took it (ADR 072), so a missing file is not a stale ingest: do not
+     re-ingest or recapture. The operator can copy the capture from the machine
+     that holds it and rerun.
+   - If it exists but its exact-byte SHA-256 differs from the ingest's
+     `snapshot_sha256`, or its frontmatter `source` differs from the ingest's
+     canonical `source`, stop and report both checksums. If the difference is
+     only a retired `type:` line, the local type migration has not run: in an
+     installed project run `commonplace-init`, in the source checkout run
+     `uv run python scripts/migrate-snapshot-types.py`, then rerun. Otherwise
+     the source was observed again or the capture drifted; route the source to
+     re-ingest: `Read and execute the Commonplace library instruction re-ingest
+     with Target: <ingest-path>.`
 5. Read enough of the primary snapshot to determine the source-side
    proposition and its bounds. Stop if the source does not establish it or the
    request depends on a secondary resource.

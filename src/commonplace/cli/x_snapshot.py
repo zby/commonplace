@@ -25,6 +25,7 @@ from commonplace.lib.naming import (
 from commonplace.lib.snapshot import (
     SNAPSHOT_DIR,
     dedup_existing_snapshot,
+    reobservation_slug,
     snapshot_sha256,
 )
 
@@ -330,7 +331,7 @@ def _classify_family(target_post: dict, posts_sorted: list[dict]) -> str:
     return "x-post"
 
 
-def snapshot_x_url(url: str, out_dir: str, max_posts: int) -> str:
+def snapshot_x_url(url: str, out_dir: str, max_posts: int, *, reobserve: bool = False) -> str:
     source_url = _canonical_source_url(url.strip())
     status_id = _extract_status_id(source_url)
 
@@ -351,7 +352,7 @@ def snapshot_x_url(url: str, out_dir: str, max_posts: int) -> str:
     dest = Path(out_dir)
     dest.mkdir(parents=True, exist_ok=True)
 
-    existing = dedup_existing_snapshot(dest, source_url)
+    existing = None if reobserve else dedup_existing_snapshot(dest, source_url)
     if existing:
         return (
             f"Already snapshotted: {existing}\n"
@@ -401,8 +402,12 @@ def snapshot_x_url(url: str, out_dir: str, max_posts: int) -> str:
         default="x-snapshot",
     )
 
+    if reobserve:
+        slug = reobservation_slug(slug, now.date(), MAX_INGEST_SNAPSHOT_SLUG_LENGTH)
     json_path = dest / f"{slug}.json"
     md_path = dest / f"{slug}.md"
+    if md_path.exists():
+        raise FileExistsError(f"capture already exists: {md_path}")
 
     payload = {
         "source": source_url,
@@ -456,6 +461,11 @@ def parse_args() -> argparse.Namespace:
         default=DEFAULT_MAX_POSTS,
         help=f"Max posts to keep when fetching a thread (default: {DEFAULT_MAX_POSTS})",
     )
+    parser.add_argument(
+        "--reobserve",
+        action="store_true",
+        help="Capture a source that already has a snapshot as a new, date-named observation.",
+    )
     return parser.parse_args()
 
 
@@ -467,7 +477,10 @@ def main() -> int:
     args = parse_args()
     try:
         result = snapshot_x_url(
-            args.url, out_dir=DEFAULT_SNAPSHOT_DIR, max_posts=args.max_posts
+            args.url,
+            out_dir=DEFAULT_SNAPSHOT_DIR,
+            max_posts=args.max_posts,
+            reobserve=args.reobserve,
         )
     except Exception as exc:  # noqa: BLE001 - report all CLI boundary failures
         print(f"Error: {exc}", file=sys.stderr)

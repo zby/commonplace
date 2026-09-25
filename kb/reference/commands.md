@@ -144,12 +144,16 @@ candidates.
 ### commonplace-github-snapshot
 
 Capture a GitHub issue or pull request under the ignored
-`kb/sources/.snapshots/` reading cache.
+`kb/sources/.snapshots/` reading cache. An existing capture of the same source
+is reported rather than replaced; `--reobserve` captures it again as a new
+observation under a basename ending in the capture date.
 
 ### commonplace-x-snapshot
 
 Capture an X/Twitter post, thread, or article under the ignored
-`kb/sources/.snapshots/` reading cache.
+`kb/sources/.snapshots/` reading cache. An existing capture of the same source
+is reported rather than replaced; `--reobserve` captures it again as a new
+observation under a basename ending in the capture date.
 
 ## Review system
 

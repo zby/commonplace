@@ -100,8 +100,9 @@ re_ingest_request:
        both paired paths, and the canonical source. An ingest's
        `snapshot_sha256` is immutable because a note marked `(snapshot
        required)` may depend on those exact bytes even when Quotes is empty. A
-       changed observation requires a distinct snapshot basename and ingest;
-       re-ingest never changes the incumbent observation.
+       changed observation gets a new date-named capture and a new ingest
+       (re-ingest's **New observation**); re-ingest never changes the
+       incumbent observation.
      - Set `occasion` to the request's value when supplied, else to the
        incumbent's frontmatter `occasion` verbatim, else `none`.
      - Set `output_path` to the supplied `ingest_path`, retain whether it existed
@@ -122,11 +123,14 @@ re_ingest_request:
      existing source identity. Never repurpose an existing arXivBangers ingest
      or change its checksum to represent the full paper.
    - For a URL target, first search tracked `kb/sources/*.ingest.md` files for
-     an exact frontmatter `source` match. If several match, stop and report the
-     duplicate ingests. If one matches, resolve only its name-paired snapshot.
-     If that file is missing, capture the ingest's canonical `source` and
-     continue only if the adapter returns that exact name-paired path. Do not
-     search other snapshots for the incumbent checksum.
+     an exact frontmatter `source` match. Several matches are separate
+     observations of one source: list them with their `captured` dates and
+     stop for the user to name one ingest path, or to request a new
+     observation through re-ingest. If one matches, resolve only its
+     name-paired snapshot. If that file is missing, stop and report `snapshot
+     not available on this machine`; do not recapture, because a new capture
+     cannot reproduce the pinned bytes. Do not search other snapshots for the
+     incumbent checksum.
    - If the target is a `paperswithcode.co/paper/` URL, or it is an arXiv paper
      and the user explicitly requested code grounding, read and follow the
      conditional procedure [ingest-paper-with-code](../ingest-paper-with-code.md),

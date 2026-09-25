@@ -6,6 +6,7 @@ import hashlib
 import os
 import re
 from dataclasses import dataclass, field
+from datetime import date
 from pathlib import Path
 
 from commonplace.lib import frontmatter
@@ -181,6 +182,16 @@ def _migrate_snapshot_dir(snapshot_dir: Path, result: SnapshotTypeMigration) -> 
     for path, new_data, _ in sorted(by_old.values()):
         path.write_bytes(new_data)
         result.rewritten_snapshots.append(path)
+
+
+def reobservation_slug(slug: str, captured: date, max_len: int) -> str:
+    """A distinct basename for a new capture of an already captured source.
+
+    The earlier capture stays pinned by its ingest; the new observation gets its
+    own file, named by the capture date, and its own ingest.
+    """
+    suffix = f"-{captured:%Y%m%d}"
+    return slug[: max_len - len(suffix)].rstrip("-") + suffix
 
 
 def dedup_existing_snapshot(out_dir: Path, source_url: str) -> Path | None:
