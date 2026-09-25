@@ -6,7 +6,7 @@ Prepare the whole implementation of [design.md](./design.md) (draft [ADR 086](./
 
 ## How the stage is laid out
 
-- `staged/files/` holds every large change as the complete new file, at the path it will have in the repository.
+- `staged/files/` holds every large change as the complete new file, at the path it will have in the repository. A file that tools would read as live configuration, such as `pyproject.toml`, is stored with a `.staged` suffix so the live ruff and uv do not pick it up.
 - `staged/delete.txt` lists repository paths the change removes, one per line.
 - `staged/migrations/` holds scripts for mechanical rewrites across many files, such as the `type:` pointer rewrite. They run in name order after the files are copied.
 - [CHANGES.md](./staged/CHANGES.md) lists the changes of one or two lines, which are made directly at apply time instead of being staged (operator direction, 2026-09-25).
@@ -28,7 +28,7 @@ The pieces depend on each other (removing the copy needs the library reads, whic
 
 | Step | State |
 |---|---|
-| 1 Delivery core | not started |
+| 1 Delivery core | staged 2026-09-25. Applied to a clean worktree: pytest (774) and ruff pass. A wheel built from it, installed in an isolated uv tool directory, put the library under `share/commonplace/`; init in a new project wrote 24 outputs, all `ok`, and a command run from a project subdirectory warned after `library.md` was altered. The command check is a decorator on each command's `main`, added by `migrations/10_decorate_command_mains.py`, which keeps the `module:main` convention the command catalogue test enforces. |
 | 2 Types | not started |
 | 3 Review | not started |
 | 4 Skills and health check | not started |

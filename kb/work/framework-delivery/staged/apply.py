@@ -8,6 +8,8 @@ Usage:
 A staged file replaces its live counterpart completely, so apply refuses to
 overwrite a file whose live content differs from the base recorded when it was
 staged: that live file changed after staging and the staged copy must be rebased.
+A file that tools would read as live configuration (pyproject.toml) is stored
+with a `.staged` suffix, which apply strips.
 """
 
 from __future__ import annotations
@@ -35,8 +37,26 @@ def _bases() -> dict[str, str | None]:
     return json.loads(BASES.read_text(encoding="utf-8")) if BASES.is_file() else {}
 
 
+SUFFIX = ".staged"  # stored name suffix for files that tools would treat as live config (pyproject.toml)
+IGNORED_PARTS = {".ruff_cache", "__pycache__", ".pytest_cache"}
+
+
+def _target(stored: Path) -> str:
+    """Repository path for a stored staged file: its path under files/, minus the .staged suffix."""
+    rel = stored.relative_to(FILES).as_posix()
+    return rel[: -len(SUFFIX)] if rel.endswith(SUFFIX) else rel
+
+
+def _stored() -> dict[str, Path]:
+    return {
+        _target(p): p
+        for p in sorted(FILES.rglob("*"))
+        if p.is_file() and not IGNORED_PARTS & set(p.relative_to(FILES).parts)
+    }
+
+
 def _staged() -> list[str]:
-    return sorted(p.relative_to(FILES).as_posix() for p in FILES.rglob("*") if p.is_file())
+    return sorted(_stored())
 
 
 def _deletions() -> list[str]:
@@ -74,10 +94,10 @@ def apply(root: Path, check: bool) -> None:
         sys.exit(1)
     if check:
         return
-    for rel in _staged():
+    for rel, stored in _stored().items():
         target = root / rel
         target.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copy2(FILES / rel, target)
+        shutil.copy2(stored, target)
     for rel in _deletions():
         target = root / rel
         if target.is_dir():

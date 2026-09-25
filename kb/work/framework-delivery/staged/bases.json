@@ -1,0 +1,10 @@
+{
+  "AGENTS.md.template": "0f4acaf6a044a7d58d4bc612694659686f62a0c6a2a2777087625db433e70046",
+  "kb/instructions/cp-skill-library/SKILL.md": null,
+  "pyproject.toml": "a53806cffc038e2881d6414229f4389f9b198bdff6ad7fd7a322e3f8ad6872b4",
+  "src/commonplace/_data/templates/CLAUDE.md.template": null,
+  "src/commonplace/cli/init_project.py": "ad48d37ca0925a219ba289cb3ca9cf36c079e4dc77c8ef6414d92523e72b36df",
+  "src/commonplace/lib/library.py": null,
+  "src/commonplace/scaffold_manifest.py": "9fc396f85200de925d07823b4ec9b3a08399bed429fffe6a0d2c7f0b42874011",
+  "tests/commonplace/cli/test_init_project.py": "3de6e560ac8b75f0e677dd08c50d7afbc0fd0ca1383d38c4c9084b49d418365e"
+}
