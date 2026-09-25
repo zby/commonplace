@@ -3,6 +3,7 @@ description: "Updated self-authored ASISAS position paper adding 141-system corp
 source: https://conf.researchr.org/track/ecsa-2026/asisas-2026
 captured: "2026-06-23"
 capture: local-file
+doi: 10.1007/978-3-032-39143-8_24
 genre: scientific-paper
 snapshot_sha256: 1175359b299b670f255ba6f5f9df3fa15e4c71dd782e121090b56240fccc3508
 original_title: 'Where It Lives Is Not What It Is: An Architectural Vocabulary for Retained Adaptation in Agentic Systems'
@@ -16,6 +17,7 @@ domains: [artifact-analysis, agent-memory, software-architecture]
 ## Classification
 
 An ASISAS 2026 position paper with citations, a worked architectural record, and a new corpus-analysis section. It is still mostly a conceptual architecture argument, but the June 23 version adds descriptive evidence from 141 code-grounded agent-memory reviews.
+Published version: Zbigniew Łukasiak, ["Where It Lives Is Not What It Is: An Architectural Vocabulary for Retained Adaptation in Agentic Systems"](https://doi.org/10.1007/978-3-032-39143-8_24), in *Software Architecture. ECSA 2026 Tracks and Workshops*, Lecture Notes in Computer Science, Springer, 2026, pp. 286–295. This ingest analyses the June 23 manuscript, not the published text; differences between the two are unchecked.
 Author: This is the KB owner's own paper. For Commonplace, its authority is lineage and external framing, not independent corroboration. The corpus section is grounded in this KB's review matrix and therefore inherits the matrix's strengths and biases.
 
 ## Summary
