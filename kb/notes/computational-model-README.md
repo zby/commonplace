@@ -9,6 +9,8 @@ index_key: computational-model
 
 What kind of "programs" LLM instructions are, and what programming-language concepts — scoping, homoiconicity, partial evaluation, typing — illuminate their behavior. Where [learning-theory](./learning-theory-README.md) covers how systems learn and [tags](./tags-README.md) covers how knowledge bases are operated, this area covers the computational properties of the medium itself and the scheduling architecture that follows from context scarcity. This is a selective head; the published site appends the complete listing, and the scoped `rg` recipes recover full membership.
 
+**The formal computational model, with the LLM inside, is defined in [Bounded-context orchestration model](./bounded-context-orchestration-model.md):** closed-world orchestration with explicit state and barriered batches of independent LLM calls, in a conditional select/call normal form. Its generality lemma is [any barrier-delimited symbolic program with LLM calls is a batched select/call program](./any-symbolic-program-with-llm-calls-is-a-select-call-program.md).
+
 ## Foundations
 
 - [agentic-systems-interpret-underspecified-instructions](./agentic-systems-interpret-underspecified-instructions.md) — core framing: LLM instructions are distinguished by underspecified semantics and execution indeterminism
