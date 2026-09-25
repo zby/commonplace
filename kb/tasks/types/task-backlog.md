@@ -1,5 +1,5 @@
 ---
-type: kb/types/type-spec.md
+type: type-spec
 name: task-backlog
 description: Deferred task idea document with activation trigger and rough scope
 schema: null

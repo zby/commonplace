@@ -1,6 +1,6 @@
 ---
 description: "Memory should be evaluated by downstream effects on tasks, artifacts, answers, behavior, context efficiency, and lineage alignment"
-type: kb/types/note.md
+type: note
 traits: [has-external-sources]
 tags: [agent-memory, context-engineering, learning-theory]
 ---

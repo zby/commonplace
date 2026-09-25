@@ -2,7 +2,7 @@
 gate_id: compression/branch-bloat
 name: Branch bloat
 description: 'A note carries side claims that may be interesting, but they compete with or weaken the main claim instead of supporting it.'
-type: kb/types/review-gate.md
+type: review-gate
 lens: compression
 watches: [body]
 staleness: changed

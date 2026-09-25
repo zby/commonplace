@@ -1,6 +1,6 @@
 ---
 description: "In Commonplace's arrangement, theory learning and software-factory learning require one connected reflective path; proof-governed switching alone does not settle criticism"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim, synthesis, has-comparison]
 tags: [foundations, self-improving-systems, learning-theory]
 ---

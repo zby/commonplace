@@ -1,6 +1,6 @@
 ---
 {
-  "type": "kb/types/agentic-system-analysis-result.md",
+  "type": "agentic-system-analysis-result",
   "description": "Supermemory's public memory clients and documented external engine: context delivery is inspectable, inference quality and backend curation are not.",
   "run-id": "AAS-2026-09-21-supermemory-01",
   "system": "Supermemory",

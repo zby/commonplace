@@ -16,7 +16,7 @@ from commonplace.lib.note_parser import ParsedDocument, parse_document
 AGENTIC_ANALYSIS_RUN_TYPE = (
     "kb/reports/types/agentic-system-analysis-run-state.md"
 )
-AGENTIC_ANALYSIS_RESULT_TYPE = "kb/types/agentic-system-analysis-result.md"
+AGENTIC_ANALYSIS_RESULT_TYPE = "agentic-system-analysis-result"
 
 _SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
 _LOCAL_SOURCE_ANCHOR_RE = re.compile(
@@ -892,7 +892,7 @@ def verify_agentic_analysis_run_state(
             failures.append(f"generated review: {error}")
         else:
             expected = {
-                "type": "kb/types/note.md",
+                "type": "note",
                 "generated-by": "analyse-agentic-system",
                 "analysis-run": state.run_id,
                 "source-identity": None if state.source is None else state.source.identity,

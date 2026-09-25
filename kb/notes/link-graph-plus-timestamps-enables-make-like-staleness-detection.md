@@ -1,6 +1,6 @@
 ---
 description: Existing links already encode dependency information; comparing note and target timestamps flags notes that may be stale without any new annotation, analogous to make's file-based rebuild logic.
-type: kb/types/note.md
+type: note
 traits: [title-as-claim]
 tags: [kb-maintenance, observability]
 ---

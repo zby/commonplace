@@ -34,7 +34,7 @@ Do not add rationale, history, case studies, related work, or a summary.
 
 - Only `description` and `type`.
 - Description intent: trigger on a request to determine whether/how an external memory subsystem or agentic system produces knowledge, or to trace its epistemic architecture; do not advertise general product review.
-- `type: kb/types/instruction.md`.
+- `type: instruction`.
 - H1: `Analyse an External System's Epistemic Architecture`.
 - Opening job: state the trigger, both system scopes, route-level output, and that the analysis informs a review but does not accept external claims.
 - Define here:

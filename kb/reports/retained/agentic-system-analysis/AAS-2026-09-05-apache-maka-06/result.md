@@ -1,5 +1,5 @@
 ---
-type: kb/types/agentic-system-analysis-result.md
+type: agentic-system-analysis-result
 description: "Complete source analysis of Apache Maka's hosted execution, memory and evaluation boundaries"
 run-id: AAS-2026-09-05-apache-maka-06
 system: "Apache Maka"

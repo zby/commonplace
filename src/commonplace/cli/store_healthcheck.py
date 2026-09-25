@@ -5,9 +5,11 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
+from commonplace.lib.library import checks_library
 from commonplace.store import check_store_health, resolve_db_path
 
 
+@checks_library
 def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     parser = argparse.ArgumentParser(
         description="Verify snapshot hashes and freshness baseline invariants in the operational store.",

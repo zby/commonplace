@@ -1,5 +1,5 @@
 ---
-type: kb/types/agentic-system-analysis-result.md
+type: agentic-system-analysis-result
 description: "PrimeScientist plan-tree search, score/prior selection, reflector rationale and execution inheritance with bounded evaluator and budget authority"
 run-id: AAS-2026-09-25-primescientist-01
 system: PrimeScientist

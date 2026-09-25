@@ -1,5 +1,5 @@
 ---
-type: kb/types/type-spec.md
+type: type-spec
 name: source-review
 description: Structured extraction and relevance review for an external source
 schema: kb/sources/types/source-review.schema.yaml

@@ -14,6 +14,7 @@ from commonplace.lib.agentic_publication import (
     prepare_publication,
     publish_publication,
 )
+from commonplace.lib.library import checks_library
 
 
 def _parser() -> argparse.ArgumentParser:
@@ -41,6 +42,7 @@ def _spec(args: argparse.Namespace, *, repo_root: Path) -> PublicationSpec:
     )
 
 
+@checks_library
 def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     parser = _parser()
     args = parser.parse_args(argv)

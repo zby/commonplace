@@ -1,6 +1,6 @@
 ---
 description: Knowledge systems both inherit human-oriented materials and produce dual-audience documents (human + LLM), making human-LLM cognitive differences a first-class design concern rather than a generic disclaimer
-type: kb/types/note.md
+type: note
 traits: [title-as-claim]
 tags: [document-system]
 ---

@@ -1,6 +1,6 @@
 ---
 description: "Architecture boundaries of the Commonplace review subsystem: parent-owned dispatch, canonical state, derived artifacts, atomic finalization, and freshness hashing"
-type: kb/types/note.md
+type: note
 tags: []
 ---
 

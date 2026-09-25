@@ -1,5 +1,5 @@
 ---
-type: kb/types/note.md
+type: note
 description: "oh-my-pi's coding loop, effect controls, four memory backends and experiment admission at a pinned implementation boundary"
 traits: [has-external-sources]
 generated-by: analyse-agentic-system

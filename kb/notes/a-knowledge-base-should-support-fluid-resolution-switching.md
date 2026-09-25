@@ -1,6 +1,6 @@
 ---
 description: "Defines resolution-switching as movement among KB views with different scope and detail, then inventories the mechanisms and limits of that qualitative criterion"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim]
 tags: [foundations]
 ---

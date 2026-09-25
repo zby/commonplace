@@ -1,6 +1,6 @@
 ---
 description: "Capture is layered (verbatim / paraphrase / second-hand) by forced constraints; a citation's fidelity is bounded by which layer holds the passage, and no notation can raise it — only re-capture"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim, has-external-sources]
 tags: [document-system, context-engineering]
 ---

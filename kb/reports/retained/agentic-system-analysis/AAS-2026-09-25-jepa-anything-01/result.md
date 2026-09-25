@@ -1,5 +1,5 @@
 ---
-type: kb/types/agentic-system-analysis-result.md
+type: agentic-system-analysis-result
 description: 'JEPA-Anything compiler host integration: checked design/scaffold generation
   with scientific evaluation and host memory outside the boundary'
 run-id: AAS-2026-09-25-jepa-anything-01

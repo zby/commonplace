@@ -1,6 +1,6 @@
 ---
 description: "The production-method versus representational-form distinction answers only a narrow weights-only inference; theory-guided bootstrapping is a provisional first strategy under incomplete global evaluation, not a defense of continuing hand production"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim, synthesis]
 tags: [learning-theory, deploy-time-learning]
 ---

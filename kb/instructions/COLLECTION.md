@@ -64,7 +64,7 @@ baseline; review that cohort through repository search when the rule changes.
 Commonplace accepts this broad cohort instead of adding per-packet dependency
 fields or consumer-visible maintenance links.
 
-For a promoted skill, edit the canonical source under `kb/instructions/`, not its runtime projections. Inspect the promotion manifest and runtime projections only when the skill name, directory, promotion status, or packaged resources change.
+For a promoted skill, edit its directory under `kb/instructions/`; installed projects run it in place through the stubs `commonplace-init` writes, and this checkout through symlinks. Inspect the promotion manifest and the stub rendering only when the skill name, directory, promotion status, or frontmatter change.
 
 ## Title and description conventions
 
@@ -98,7 +98,7 @@ Scan `kb/instructions/`, `kb/notes/`, and `kb/reference/` for link targets. Do n
 
 ## Frontmatter
 
-Minimal. Plain instructions need `description` and `type: kb/types/instruction.md`. Promoted skills add skill-specific fields (`name`, `allowed-tools`, `context`, `model`) in their `SKILL.md`. Review gates use `type: kb/types/review-gate.md` and the gate-specific fields documented in that type spec; see `../reference/README-REVIEW-SYSTEM.md` for runtime concepts.
+Minimal. Plain instructions need `description` and `type: instruction`. Promoted skills add skill-specific fields (`name`, `allowed-tools`, `context`, `model`) in their `SKILL.md`. Review gates use `type: review-gate` and the gate-specific fields documented in that type spec; see `../reference/README-REVIEW-SYSTEM.md` for runtime concepts.
 
 ## Promoted skills
 
@@ -113,7 +113,7 @@ Some subdirectories are promoted into runtime skill surfaces (`.claude/skills/`,
 ```markdown
 ---
 description: ""
-type: kb/types/instruction.md
+type: instruction
 ---
 
 # {Imperative title}
@@ -136,7 +136,7 @@ type: kb/types/instruction.md
 
 ## Type eligibility
 
-A typed artifact in this collection may use a global type spec under `kb/types/` or a local type spec under this collection's `types/` directory. Its `type:` value is the path to that contract. Frontmatter-free Markdown is implicit `text`.
+A typed artifact in this collection may use a global type spec under `kb/types/`, named by its bare name such as `type: note`, or a local type spec under this collection's `types/` directory, named by its path. Frontmatter-free Markdown is implicit `text`.
 
 ## What does NOT belong here
 

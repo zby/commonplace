@@ -1,6 +1,6 @@
 ---
 description: "A failure retained as a lesson helps tasks that retrieve it; retained as a maintained check it improves selection for later candidates in its domain and amortizes validation"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim]
 tags: [learning-theory, deploy-time-learning]
 ---

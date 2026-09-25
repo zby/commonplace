@@ -1,6 +1,6 @@
 ---
 description: "Explains why an instruction generated from model weights can still add KB value: testing selects a procedure under a criterion and retention makes that choice reusable."
-type: kb/types/note.md
+type: note
 traits: [title-as-claim]
 tags: [context-engineering]
 ---

@@ -1,6 +1,6 @@
 ---
 description: "A rival design that preserves a framework's boundary invariants while dropping a rule demotes the rule to a design choice; finding no rival certifies nothing — the test cuts one way only"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim]
 tags: [document-system, foundations]
 ---

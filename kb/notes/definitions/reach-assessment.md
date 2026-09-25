@@ -1,6 +1,6 @@
 ---
 description: "Definition — judging whether a commitment's claimed explanatory-reach is genuine across natural-language, symbolic, and distributed-parametric forms"
-type: kb/types/definition.md
+type: definition
 tags: [foundations, computational-model, self-improving-systems]
 ---
 

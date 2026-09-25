@@ -1,6 +1,6 @@
 ---
 description: "Maps descriptive, prescriptive, prohibitive, explanatory, and conditional context-file styles to distinct ways of narrowing agent interpretation, each trading constraint against generality"
-type: kb/types/note.md
+type: note
 traits: [has-external-sources, title-as-claim]
 tags: [computational-model]
 ---

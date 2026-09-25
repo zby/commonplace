@@ -1,5 +1,5 @@
 ---
-type: kb/types/type-spec.md
+type: type-spec
 name: structured-claim
 description: Developed argument note with explicit Evidence and Reasoning sections
 schema: ./structured-claim.schema.yaml

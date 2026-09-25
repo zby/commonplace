@@ -1,6 +1,6 @@
 ---
 description: "Stronger models shrink the scaffolding a fixed task needs; durable deployment-specific structure recurs at the frontier only while assigned difficulty keeps pace with capability and some reliability function stays advantageous to externalize"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim, has-external-sources]
 tags: [learning-theory, deploy-time-learning]
 ---

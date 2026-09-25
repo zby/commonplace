@@ -1,6 +1,6 @@
 ---
 description: "Use when running the blind EX/OP reclassification test that the mechanism direction review named as its reversal evidence, before maintainer adjudication of the explained-by/operates-through split"
-type: kb/types/instruction.md
+type: instruction
 ---
 
 # Blind mechanism reclassification test

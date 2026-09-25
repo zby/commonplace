@@ -1,6 +1,6 @@
 ---
 description: "Distinguishes four use-time requirements for remembered knowledge—discoverability, loadability, composability, and calibrated trust—from system-level activation."
-type: kb/types/note.md
+type: note
 traits: [title-as-claim]
 tags: [agent-memory, context-engineering, learning-theory]
 ---

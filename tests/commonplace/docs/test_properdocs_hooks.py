@@ -19,7 +19,7 @@ def tag_index(collection: Path, tag: str) -> Path:
         collection / f"{tag}-index.md",
         f"""---
 description: Index for {tag}
-type: kb/types/generated-index.md
+type: generated-index
 index_source: tag
 index_key: {tag}
 ---
@@ -64,7 +64,7 @@ def test_on_page_markdown_links_every_tag_with_declared_index(tmp_path: Path) ->
     note = write(notes / "example.md", "# Example\n")
     page = SimpleNamespace(
         meta={
-            "type": "kb/types/note.md",
+            "type": "note",
             "tags": ["agent-memory", "context-engineering", "learning-theory"],
         },
         file=SimpleNamespace(abs_src_path=str(note)),
@@ -87,7 +87,7 @@ def test_on_page_markdown_appends_generated_tail_to_tag_index(tmp_path: Path) ->
         notes / "tagged.md",
         """---
 description: Tagged note
-type: kb/types/note.md
+type: note
 tags: [kb-design]
 ---
 
@@ -98,7 +98,7 @@ tags: [kb-design]
         notes / "curated.md",
         """---
 description: Already curated note
-type: kb/types/note.md
+type: note
 tags: [kb-design]
 ---
 
@@ -107,7 +107,7 @@ tags: [kb-design]
     )
     page = SimpleNamespace(
         meta={
-            "type": "kb/types/generated-index.md",
+            "type": "generated-index",
             "index_source": "tag",
             "index_key": "kb-design",
         },
@@ -136,7 +136,7 @@ def test_on_page_markdown_appends_tail_to_tag_readme_type(tmp_path: Path) -> Non
         notes / "kb-design-README.md",
         """---
 description: "Curated head for kb-design"
-type: kb/types/tag-readme.md
+type: tag-readme
 index_source: tag
 index_key: kb-design
 ---
@@ -148,7 +148,7 @@ index_key: kb-design
         notes / "tagged.md",
         """---
 description: Tagged note
-type: kb/types/note.md
+type: note
 tags: [kb-design]
 ---
 
@@ -157,7 +157,7 @@ tags: [kb-design]
     )
     page = SimpleNamespace(
         meta={
-            "type": "kb/types/tag-readme.md",
+            "type": "tag-readme",
             "index_source": "tag",
             "index_key": "kb-design",
         },
@@ -182,7 +182,7 @@ def test_on_page_markdown_skips_empty_tail_for_complete_readme(tmp_path: Path) -
         notes / "kb-design-README.md",
         """---
 description: "Curated head for kb-design"
-type: kb/types/tag-readme.md
+type: tag-readme
 index_source: tag
 index_key: kb-design
 complete: true
@@ -195,7 +195,7 @@ complete: true
         notes / "curated.md",
         """---
 description: Curated note
-type: kb/types/note.md
+type: note
 tags: [kb-design]
 ---
 
@@ -204,7 +204,7 @@ tags: [kb-design]
     )
     page = SimpleNamespace(
         meta={
-            "type": "kb/types/tag-readme.md",
+            "type": "tag-readme",
             "index_source": "tag",
             "index_key": "kb-design",
             "complete": True,
@@ -282,7 +282,7 @@ def test_on_page_markdown_keeps_unindexed_tags_as_text(tmp_path: Path) -> None:
     note = write(notes / "example.md", "# Example\n")
     page = SimpleNamespace(
         meta={
-            "type": "kb/types/note.md",
+            "type": "note",
             "tags": ["context-engineering", "learning-theory"],
         },
         file=SimpleNamespace(abs_src_path=str(note)),

@@ -1,6 +1,6 @@
 ---
 description: "Navigation hub for concrete agent-memory requirements extracted from the memory-system design synthesis"
-type: kb/types/note.md
+type: note
 traits: [synthesis]
 tags: [agent-memory, context-engineering]
 ---

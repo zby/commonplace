@@ -1,9 +1,18 @@
-"""Initialize a local Commonplace project tree."""
+"""Initialize a Commonplace project, or refresh its pointers into the installed library.
+
+The project receives its own collections and their contracts once. On every run
+init also writes the machine-specific pointers into the installed library (skill
+stubs, `.commonplace/library.md`, a Claude Code read rule) and migrates copies of
+the library left by earlier releases. Run it again after an upgrade that changes
+the skill set, or after switching between editable and normal installs.
+"""
 
 from __future__ import annotations
 
 import argparse
+import json
 import os
+import re
 import shutil
 import subprocess
 from dataclasses import dataclass, field
@@ -11,6 +20,7 @@ from importlib.metadata import PackageNotFoundError, distribution
 from importlib.resources import as_file, files
 from pathlib import Path
 
+from commonplace.lib import library
 from commonplace.scaffold_manifest import MANIFEST
 
 
@@ -19,6 +29,13 @@ class InitReport:
     created: list[Path] = field(default_factory=list)
     preserved_identical: list[Path] = field(default_factory=list)
     preserved_different: list[Path] = field(default_factory=list)
+    refreshed: list[Path] = field(default_factory=list)
+    removed: list[Path] = field(default_factory=list)
+    migration_kept: list[Path] = field(default_factory=list)
+    skipped_foreign: list[Path] = field(default_factory=list)
+    retired_baselines: list[str] = field(default_factory=list)
+    tracked_outputs: list[Path] = field(default_factory=list)
+    rewritten_type_pointers: list[Path] = field(default_factory=list)
 
 
 def _record_existing(
@@ -56,18 +73,6 @@ def _copy_tree_files(
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(src_file, target)
         report.created.append(rel_path)
-
-
-def _copy_scaffold_tree(
-    scaffold_root: Path,
-    src_rel: str,
-    dest_root: Path,
-    target_rel: str,
-    report: InitReport,
-) -> None:
-    """Recursively copy a scaffold subtree, classifying existing files."""
-    src_dir = _resolve_scaffold_source(scaffold_root, src_rel)
-    _copy_tree_files(src_dir, dest_root, target_rel, report)
 
 
 def _copy_scaffold_file(
@@ -119,20 +124,258 @@ def _write_template(
 def _resolve_scaffold_source(scaffold_root: Path, src_rel: str) -> Path:
     """Resolve scaffold input from packaged data or a source checkout.
 
-    Wheels include canonical repo files under `commonplace/_data/` through
-    Hatch force-includes. Editable source checkouts do not duplicate those
-    files under `_data`; they read the canonical repo paths directly.
+    Wheels include the scaffold under `commonplace/_data/`. Editable source
+    checkouts read the canonical repo paths directly.
     """
     packaged = scaffold_root / src_rel
     if packaged.exists():
         return packaged
 
     source_root = Path(__file__).resolve().parents[3]
-    source = source_root / src_rel
-    if source.exists():
-        return source
+    for source in (source_root / src_rel, source_root / "src" / "commonplace" / "_data" / src_rel):
+        if source.exists():
+            return source
 
     raise FileNotFoundError(f"Scaffold source is missing: {src_rel}")
+
+
+# --- pointers into the installed library ----------------------------------------
+
+
+def _write_if_changed(project: Path, rel_path: Path, text: str, report: InitReport) -> None:
+    target = project / rel_path
+    if target.is_file():
+        if library.read_text(target) == text:
+            return
+        library.write_text(target, text)
+        report.refreshed.append(rel_path)
+        return
+    library.write_text(target, text)
+    report.created.append(rel_path)
+
+
+def _write_stubs(project: Path, root: Path, report: InitReport) -> None:
+    for status in library.statuses(project, root):
+        path = status.path
+        if path.parent.name != "skills" or path.parent.parent.name not in (".claude", ".agents"):
+            continue
+        rel = path.relative_to(project)
+        if status.status == "foreign":
+            report.skipped_foreign.append(rel)
+            continue
+        if status.status == "extra":
+            shutil.rmtree(path)
+            report.removed.append(rel)
+            continue
+        skill = library.skills(root)[path.name]
+        _write_if_changed(project, rel / "SKILL.md", library.render_stub(skill), report)
+        marker = path / library.STUB_MARKER
+        if not marker.is_file():
+            library.write_text(marker, "Written by commonplace-init; rerun it to refresh.\n")
+
+
+def _write_read_rule(project: Path, root: Path, report: InitReport) -> None:
+    settings = library.load_settings(project)
+    allow = settings.setdefault("permissions", {}).setdefault("allow", [])
+    record = project / library.RULE_RECORD
+    rule = library.read_rule(root)
+    previous = library.read_text(record).strip() if record.is_file() else None
+    if previous == rule and rule in allow:
+        return
+    if previous and previous in allow:
+        allow.remove(previous)
+    if rule not in allow:
+        allow.append(rule)
+    library.write_text(project / library.SETTINGS, json.dumps(settings, indent=2) + "\n")
+    library.write_text(record, rule + "\n")
+    report.refreshed.append(library.SETTINGS)
+
+
+def _write_gitignore(project: Path, root: Path, report: InitReport) -> None:
+    path = project / ".gitignore"
+    lines = library.read_text(path).splitlines() if path.is_file() else []
+    if library.GITIGNORE_BEGIN in lines:
+        start = lines.index(library.GITIGNORE_BEGIN)
+        del lines[start : lines.index(library.GITIGNORE_END, start) + 1]
+    stubs = [f"/{d.as_posix()}/{name}/" for d in MANIFEST.skills_dirs for name in library.skills(root)]
+    lines += [
+        library.GITIGNORE_BEGIN,
+        f"/{library.OUTPUT_DIR.as_posix()}/",
+        f"/{library.SETTINGS.as_posix()}",
+        *stubs,
+        library.GITIGNORE_END,
+    ]
+    _write_if_changed(project, Path(".gitignore"), "\n".join(lines) + "\n", report)
+
+
+# --- migration of copies left by earlier releases ---------------------------------
+
+
+def _real_files(directory: Path) -> list[Path]:
+    """Regular files under directory, not following or including symlinks."""
+    found = []
+    for dirpath, dirnames, filenames in os.walk(directory, followlinks=False):
+        here = Path(dirpath)
+        dirnames[:] = [d for d in dirnames if not (here / d).is_symlink()]
+        found += [here / f for f in filenames if not (here / f).is_symlink()]
+    return found
+
+
+def _migrate_legacy_copies(project: Path, root: Path, report: InitReport) -> None:
+    """Remove library copies that match the installed library; keep and list the rest.
+
+    A differing file may carry a local change, and the old copies record no
+    version, so only exact matches are removed.
+    """
+    copies = [(Path(copy), root / origin) for copy, origin in MANIFEST.legacy_copies]
+    copies += [
+        (skills_dir / name, skill)
+        for skills_dir in MANIFEST.skills_dirs
+        for name, skill in library.skills(root).items()
+        if not (project / skills_dir / name / library.STUB_MARKER).exists()
+    ]
+    for copy_rel, origin in copies:
+        copy_dir = project / copy_rel
+        # Never traverse or delete through a symlink: its target is not the project's copy.
+        if copy_dir.is_symlink() or not copy_dir.is_dir():
+            continue
+        for path in sorted(_real_files(copy_dir)):
+            counterpart = origin / path.relative_to(copy_dir)
+            if counterpart.is_file() and counterpart.read_bytes() == path.read_bytes():
+                path.unlink()
+                report.removed.append(path.relative_to(project))
+            elif copy_rel.as_posix() != "kb/types" or counterpart.exists():
+                report.migration_kept.append(path.relative_to(project))
+        for dirpath, _dirnames, _filenames in sorted(os.walk(copy_dir, followlinks=False), reverse=True):
+            directory = Path(dirpath)
+            if directory != copy_dir and not directory.is_symlink() and not any(directory.iterdir()):
+                directory.rmdir()
+        if not any(copy_dir.iterdir()):
+            copy_dir.rmdir()
+    legacy_parent = project / "kb" / "commonplace"
+    if legacy_parent.is_dir() and not any(legacy_parent.iterdir()):
+        legacy_parent.rmdir()
+
+
+def _is_legacy_criterion(identity: str, root: Path) -> bool:
+    """A criterion recorded under a copy of the library that projects no longer hold."""
+    if identity.startswith("kb/commonplace/"):
+        return True
+    path = Path(identity)
+    return (
+        path.parent.as_posix() == "kb/types"
+        and (root / "types" / path.name).is_file()
+    )
+
+
+def _retire_legacy_baselines(project: Path, root: Path, report: InitReport) -> None:
+    """Retire, once, review baselines whose criteria lived in the old library copy.
+
+    Their criteria now have library identities, so those pairs start again as
+    missing baselines; review history is kept.
+    """
+    from commonplace.freshness.transitions import REVIEW_PAIR_KIND, retire_target
+    from commonplace.review import review_db
+
+    db_path = review_db.resolve_db_path(project)
+    if not db_path.is_file():
+        return
+    with review_db.connect(db_path) as conn:
+        baselines = review_db.load_current_freshness_baselines(conn)
+        for note_path, criterion_path, model_partition in sorted(baselines):
+            if not _is_legacy_criterion(criterion_path, root):
+                continue
+            retire_target(
+                conn,
+                target_kind=REVIEW_PAIR_KIND,
+                target_key={
+                    "note_path": note_path,
+                    "criterion_path": criterion_path,
+                    "model_partition": model_partition,
+                },
+            )
+            report.retired_baselines.append(f"{note_path} × {criterion_path} ({model_partition})")
+        conn.commit()
+
+
+_TYPE_LINE = re.compile(r"^(\s*(?:type|requires_type):\s*|\s*-\s+)(\S+\.md)\s*$", re.MULTILINE)
+_JSON_TYPE = re.compile(r'("(?:type|requires_type)"\s*:\s*)"([^"]+\.md)"')
+_SCHEMA_REF = re.compile(r'(\$ref"?\s*:\s*["\']?)([^"\'\s]+\.schema\.(?:yaml|json))')
+_MIGRATION_SKIP = ("kb/reports/cache/", "kb/reports/state/")
+
+
+def _project_files(project: Path, pattern: str) -> list[Path]:
+    kb = project / "kb"
+    if not kb.is_dir():
+        return []
+    return [
+        path
+        for path in _real_files(kb)
+        if path.match(pattern)
+        and ".snapshots" not in path.parts
+        and not path.relative_to(project).as_posix().startswith(_MIGRATION_SKIP)
+    ]
+
+
+def _migrate_type_pointers(project: Path, root: Path, report: InitReport) -> None:
+    """Rewrite a project's pointers to global types in the forms this release uses.
+
+    A `type:` or `requires_type:` value (YAML or JSON-style) that points at the
+    project's old copy of a global type, `kb/types/X.md` or a relative path to
+    it, becomes the bare name `X`. A schema `$ref` to such a copy's schema
+    becomes `commonplace:types/X.schema.yaml`. A pointer is rewritten only when
+    the project has no file of its own at that path, so project-shared types and
+    kept, differing copies keep their paths. Every rewritten file is reported.
+    """
+    project_types = (project / "kb" / "types").resolve()
+    global_names = {p.stem for p in (root / "types").glob("*.md")}
+
+    def global_name(value: str, source: Path, suffix: str) -> str | None:
+        target = (project / value) if value.startswith("kb/") else (source.parent / value)
+        target = target.resolve()
+        name = target.name.removesuffix(suffix)
+        if target.parent != project_types or not target.name.endswith(suffix) or target.exists():
+            return None
+        return name if name in global_names else None
+
+    for path in _project_files(project, "*.md"):
+        text = library.read_text(path)
+        # Only frontmatter binds a type; the body may quote paths as prose.
+        match = re.match(r"---\r?\n.*?\r?\n---[ \t]*(?:\r?\n|$)", text, re.DOTALL)
+        if match is None:
+            continue
+        head = match.group(0)
+        def bare_line(m: re.Match[str], source: Path = path) -> str:
+            name = global_name(m.group(2), source, ".md")
+            return f"{m.group(1)}{name}" if name else m.group(0)
+
+        def bare_json(m: re.Match[str], source: Path = path) -> str:
+            name = global_name(m.group(2), source, ".md")
+            return f'{m.group(1)}"{name}"' if name else m.group(0)
+
+        new_head = _JSON_TYPE.sub(bare_json, _TYPE_LINE.sub(bare_line, head))
+        new = new_head + text[len(head) :]
+        if new != text:
+            library.write_text(path, new)
+            report.rewritten_type_pointers.append(path.relative_to(project))
+    for pattern in ("*.schema.yaml", "*.schema.json"):
+        for path in _project_files(project, pattern):
+            text = library.read_text(path)
+
+            def schema_ref(match: re.Match[str], source: Path = path) -> str:
+                target = (source.parent / match.group(2)).resolve()
+                name = target.name.split(".schema.")[0]
+                if target.parent != project_types or target.exists() or name not in global_names:
+                    return match.group(0)
+                return f"{match.group(1)}{library.LIBRARY_IDENTITY_PREFIX}types/{target.name}"
+
+            new = _SCHEMA_REF.sub(schema_ref, text)
+            if new != text:
+                library.write_text(path, new)
+                report.rewritten_type_pointers.append(path.relative_to(project))
+
+
+# --- init --------------------------------------------------------------------------
 
 
 def init_project(root: Path, name: str | None = None) -> InitReport:
@@ -147,14 +390,19 @@ def init_project(root: Path, name: str | None = None) -> InitReport:
         "/PATH/TO/COMMONPLACE/": str(root) + "/",
     }
 
-    # Create directory structure.
+    # Migrate what earlier releases left before scaffolding, so the refreshed
+    # report and source types compare against the package's current versions.
+    library_root = library.library_root()
+    _migrate_legacy_copies(root, library_root, report)
+    _migrate_type_pointers(root, library_root, report)
+    _retire_legacy_baselines(root, library_root, report)
+
     for rel_path in MANIFEST.directories:
         target = root / rel_path
         if not target.exists():
             target.mkdir(parents=True, exist_ok=True)
             report.created.append(rel_path)
 
-    # Create starter log file.
     log_path = root / "kb" / "log.md"
     if not log_path.exists():
         log_path.write_text("", encoding="utf-8")
@@ -162,35 +410,59 @@ def init_project(root: Path, name: str | None = None) -> InitReport:
     else:
         _record_existing(report, Path("kb/log.md"), log_path, b"")
 
-    # Copy scaffold files from the installed package data.
     data_pkg = files("commonplace") / "_data"
     with as_file(data_pkg) as scaffold_root:
         for src_rel, target_rel in MANIFEST.trees:
-            _copy_scaffold_tree(scaffold_root, src_rel, root, target_rel, report)
+            src_dir = _resolve_scaffold_source(scaffold_root, src_rel)
+            _copy_tree_files(src_dir, root, target_rel, report)
 
         for src_rel, target_rel in MANIFEST.files:
             _copy_scaffold_file(scaffold_root, src_rel, root, target_rel, report)
 
-        # Resolve templates with project-specific values.
         for src_rel, target_rel in MANIFEST.templates:
             src = _resolve_scaffold_source(scaffold_root, src_rel)
             target = root / target_rel
             _write_template(src, target, Path(target_rel), replacements, report)
 
-    # Promote selected instruction directories into runtime skills directories
-    # by copying. The source is the local kb/commonplace/instructions/<name>
-    # directory (scaffolded above from the shipped library), not the scaffold
-    # package itself. Copies work on every platform.
-    for skill_name in MANIFEST.promoted_skills:
-        skill_src = root / "kb" / "commonplace" / "instructions" / skill_name
-        if not skill_src.is_dir():
-            raise FileNotFoundError(
-                f"Promoted skill source is missing: kb/commonplace/instructions/{skill_name}"
-            )
-        for skills_dest in MANIFEST.skills_dirs:
-            _copy_tree_files(skill_src, root, skills_dest / skill_name, report)
-
+    _write_stubs(root, library_root, report)
+    _write_if_changed(root, library.ROUTING, library.render_routing(library_root), report)
+    _write_read_rule(root, library_root, report)
+    _write_gitignore(root, library_root, report)
+    _find_tracked_outputs(root, report)
     return report
+
+
+def _find_tracked_outputs(project: Path, report: InitReport) -> None:
+    """List init's outputs that git still tracks: they hold machine-specific paths.
+
+    Earlier releases put skill copies in the project, and some projects committed
+    them. Init reports them with the command to untrack them; it does not change
+    the git index itself.
+    """
+    if shutil.which("git") is None:
+        return
+    outputs = [library.OUTPUT_DIR, library.SETTINGS, *(d / n for d in MANIFEST.skills_dirs for n in library.skills())]
+    result = subprocess.run(
+        ["git", "ls-files", "--", *(p.as_posix() for p in outputs)],
+        cwd=project,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    if result.returncode != 0:
+        return
+    tracked = {Path(line) for line in result.stdout.splitlines() if line}
+    report.tracked_outputs = sorted(
+        {p for p in outputs if any(t == p or t.is_relative_to(p) for t in tracked)}
+    )
+
+
+def check_project(root: Path) -> list[library.OutputStatus]:
+    """Init's outputs in a project and their state, without writing anything."""
+    return library.statuses(root)
+
+
+# --- installation diagnostics ---------------------------------------------------------
 
 
 def _installed_command_names() -> tuple[str, ...]:
@@ -252,7 +524,7 @@ def installation_warnings() -> list[str]:
             f"on PATH: {', '.join(missing)}."
         )
         lines.append(
-            "Run 'uv tool install --python \"\u003e=3.11\" llm-commonplace', then "
+            "Run 'uv tool install --python \">=3.11\" llm-commonplace', then "
             "'uv tool update-shell', and fully restart the shell, IDE, or agent "
             "runtime that must use the commands."
         )
@@ -274,6 +546,13 @@ def installation_warnings() -> list[str]:
     return lines
 
 
+def _print_section(title: str, paths: list[Path]) -> None:
+    if paths:
+        print(title)
+        for path in paths:
+            print(f"- {path.as_posix()}")
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", default=".", help="project root to initialize")
@@ -282,30 +561,71 @@ def main(argv: list[str] | None = None) -> int:
         default=None,
         help="project name (default: directory name)",
     )
+    parser.add_argument(
+        "--check",
+        action="store_true",
+        help="report whether the project's pointers into the library are current; write nothing",
+    )
     args = parser.parse_args(argv)
 
     root = Path(args.root).resolve()
-    warnings = installation_warnings()
 
+    if args.check:
+        problems = 0
+        for item in check_project(root):
+            print(f"{item.status}: {item.path.relative_to(root).as_posix()}")
+            problems += item.status != "ok"
+        return 1 if problems else 0
+
+    warnings = installation_warnings()
     report = init_project(root, name=args.name)
 
     print(f"Initialized Commonplace project at {root}")
-    if report.created:
-        print("Created:")
-        for path in report.created:
-            print(f"- {path.as_posix()}")
-    if report.preserved_identical:
-        print("Preserved existing files already matching scaffold:")
-        for path in report.preserved_identical:
-            print(f"- {path.as_posix()}")
-    if report.preserved_different:
-        print("Preserved existing files differing from current scaffold output:")
-        for path in report.preserved_different:
-            print(f"- {path.as_posix()}")
-    if (
-        not report.created
-        and not report.preserved_identical
-        and not report.preserved_different
+    _print_section("Created:", report.created)
+    _print_section("Refreshed pointers into the installed library:", report.refreshed)
+    _print_section("Removed library copies matching the installed library:", report.removed)
+    _print_section(
+        "Kept library copies that differ from the installed library "
+        "(they may carry local changes; review and delete them):",
+        report.migration_kept,
+    )
+    _print_section(
+        "Skipped skill directories not written by commonplace-init "
+        "(remove them to receive the library's skill):",
+        report.skipped_foreign,
+    )
+    _print_section(
+        "Rewrote pointers to global types in the forms this release uses (bare type names, "
+        "commonplace: schema refs):",
+        report.rewritten_type_pointers,
+    )
+    if report.retired_baselines:
+        print("Retired review baselines recorded under the old library copy (history kept):")
+        for item in report.retired_baselines:
+            print(f"- {item}")
+    if report.tracked_outputs:
+        paths = " ".join(p.as_posix() for p in report.tracked_outputs)
+        print(
+            "These pointers are tracked by git but hold paths specific to this machine; "
+            f"untrack them and commit: git rm -r --cached {paths}"
+        )
+    _print_section("Preserved existing files already matching scaffold:", report.preserved_identical)
+    _print_section(
+        "Preserved existing files differing from current scaffold output:",
+        report.preserved_different,
+    )
+    if not any(
+        (
+            report.created,
+            report.refreshed,
+            report.removed,
+            report.migration_kept,
+            report.skipped_foreign,
+            report.retired_baselines,
+            report.rewritten_type_pointers,
+            report.preserved_identical,
+            report.preserved_different,
+        )
     ):
         print("No changes needed.")
 

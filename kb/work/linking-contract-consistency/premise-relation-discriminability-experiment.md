@@ -1,6 +1,6 @@
 ---
 description: "Use to determine whether premise is an operationally distinguishable relation before reassessing historical grounds rows"
-type: kb/types/instruction.md
+type: instruction
 ---
 
 # Calibrate the premise relation before reclassification

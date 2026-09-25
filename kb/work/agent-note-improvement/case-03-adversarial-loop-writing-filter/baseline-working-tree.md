@@ -1,6 +1,6 @@
 ---
 description: "The writing-is-thinking filter is the loop's, not the pen's — an adversarial human-agent loop can reconstruct what naive delegation loses; the disciplined form of what Borretti condemns"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim]
 tags: [foundations]
 ---

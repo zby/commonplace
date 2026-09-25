@@ -1,6 +1,6 @@
 ---
 description: Holistic rewrite shifts reconciliation from each consumer to the author, but only when the whole-picture narrative can fit within effective context and be refreshed before the narrative goes stale
-type: kb/types/note.md
+type: note
 traits: [has-external-sources, title-as-claim]
 tags: [learning-theory, context-engineering, deploy-time-learning]
 ---

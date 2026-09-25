@@ -1,6 +1,6 @@
 ---
 description: "Why deriving independent choice dimensions from boundary constraints exposes rival designs that inherited solution categories hide"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim]
 tags: [foundations, artifact-analysis]
 ---

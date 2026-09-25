@@ -1,6 +1,6 @@
 ---
 description: Separates knowledge that exists, knowledge loaded into context (read-back), and knowledge that actually changes behavior (activation); explains why retrieval and long context do not guarantee activation
-type: kb/types/note.md
+type: note
 traits: [has-external-sources]
 tags: [llm-reliability, failure-modes, evaluation]
 ---

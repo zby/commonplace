@@ -1,5 +1,5 @@
 ---
-type: kb/types/note.md
+type: note
 description: "AIDE2's nested harness-rewrite search, private grading and evolved context mechanisms, with documentary limits."
 generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-25-aide2-01

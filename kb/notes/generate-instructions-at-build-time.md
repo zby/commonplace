@@ -1,6 +1,6 @@
 ---
 description: Template generation resolves installation-known values before model execution, trading model-side binding work for setup, regeneration, and derived-copy maintenance
-type: kb/types/note.md
+type: note
 traits: []
 tags: [architecture]
 ---

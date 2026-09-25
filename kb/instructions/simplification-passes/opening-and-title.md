@@ -1,6 +1,6 @@
 ---
 description: "Use when an artifact's TL;DR uses terms it never defines, ends on jargon, or its title carries a metaphor or bare term that reads wrongly before the body explains it"
-type: kb/types/instruction.md
+type: instruction
 effort: judgment
 ---
 

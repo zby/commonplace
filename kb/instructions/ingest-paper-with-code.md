@@ -1,6 +1,6 @@
 ---
 description: Use when source ingest receives a Papers with Code URL or the user requests an arXiv paper analysis grounded in its released implementation.
-type: kb/types/instruction.md
+type: instruction
 ---
 
 # Ingest a paper with code

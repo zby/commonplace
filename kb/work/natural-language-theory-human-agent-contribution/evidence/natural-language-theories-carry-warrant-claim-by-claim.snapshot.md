@@ -2,7 +2,7 @@
 
 ---
 description: "Why natural-language theories can carry explanatory-reach while warrant remains limited to interpreted claims and supported scopes, and what formalization adds"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim, synthesis]
 tags: [foundations, learning-theory, discovery]
 ---

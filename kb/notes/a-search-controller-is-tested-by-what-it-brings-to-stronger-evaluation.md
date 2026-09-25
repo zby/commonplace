@@ -1,6 +1,6 @@
 ---
 description: "A search controller should be evaluated by the branches and probes it routes into stronger evaluation, not by treating every provisional judgment as an acceptance claim"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim]
 tags: [foundations, evaluation, self-improving-systems]
 ---

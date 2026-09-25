@@ -1,6 +1,6 @@
 ---
 description: Reference for the commonplace-* CLI commands shipped by llm-commonplace - project setup, validation, indexing, snapshots, note operations, and the review system
-type: kb/types/note.md
+type: note
 tags: []
 ---
 
@@ -23,7 +23,10 @@ and operational distinctions that help a reader choose the right command.
 
 ### commonplace-init
 
-Create or extend a Commonplace project without overwriting existing files. See
+Create or extend a Commonplace project without overwriting its own files, and
+rewrite its machine-specific pointers into the installed library: skill stubs,
+`.commonplace/library.md`, and the Claude Code read rule. `--check` reports
+whether those pointers are current without writing anything. See
 [architecture](./architecture.md) for the installed topology and package/user
 boundary.
 

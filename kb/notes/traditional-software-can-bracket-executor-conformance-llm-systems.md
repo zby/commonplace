@@ -1,6 +1,6 @@
 ---
 description: "Wrongness is a relation to a norm, never intrinsic to a computation; classical stacks bracket the executor-conformance norm so every failure resolves to the spec, and LLM systems cannot, which is what generates the three-source deviation taxonomy"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim, has-comparison]
 tags: [llm-reliability, computational-model]
 ---

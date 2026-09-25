@@ -7,9 +7,11 @@ from pathlib import Path
 
 from commonplace.cli.freshness_io import read_input_payload
 from commonplace.freshness.transitions import parse_target_key, retire_target
+from commonplace.lib.library import checks_library
 from commonplace.review.review_db import connect, ensure_db, resolve_db_path
 
 
+@checks_library
 def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     parser = argparse.ArgumentParser(
         description="Retire a registered freshness target.",

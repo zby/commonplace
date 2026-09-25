@@ -1,8 +1,8 @@
 ---
-type: kb/types/type-spec.md
+type: type-spec
 name: note
 description: Base structured document type for transferable KB notes with optional committed human verification
-schema: kb/types/note.schema.yaml
+schema: ./note.schema.yaml
 ---
 
 # Note
@@ -13,7 +13,7 @@ Use `note` for transferable KB claims, observations, and theory that are worth p
 
 | Field | Required | Use |
 |---|---:|---|
-| `type` | Yes | `kb/types/note.md` |
+| `type` | Yes | `note` |
 | `description` | Yes | Discriminating retrieval filter, not a summary. |
 | `traits` | No | Independently checkable review expectations. |
 | `tags` | No | Navigation tags used by indexes. |
@@ -55,7 +55,7 @@ Traits route semantic review. They do not change structural validation.
 ```markdown
 ---
 description: ""
-type: kb/types/note.md
+type: note
 traits: []
 tags: []
 ---

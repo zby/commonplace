@@ -1,6 +1,6 @@
 ---
 description: "Semantic Engine as code-grounded ingest infrastructure: local SQLite datasets, source chunking, embeddings, query, and visualization surfaces useful before KB promotion."
-type: kb/types/note.md
+type: note
 traits: [has-external-sources]
 tags: []
 ---

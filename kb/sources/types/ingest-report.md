@@ -1,5 +1,5 @@
 ---
-type: kb/types/type-spec.md
+type: type-spec
 name: ingest-report
 description: Durable source record and analysis of how one external source fits the KB
 schema: kb/sources/types/ingest-report.schema.yaml

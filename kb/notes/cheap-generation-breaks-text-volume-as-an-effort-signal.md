@@ -1,6 +1,6 @@
 ---
 description: "When text is cheap to expand but costly to verify, length stops evidencing author effort and can instead warn that the reviewer inherits unperformed checking"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim, has-external-sources]
 tags: [context-engineering, llm-reliability]
 ---

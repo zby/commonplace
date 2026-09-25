@@ -1,6 +1,6 @@
 ---
 description: "Open-ended improvement must choose which questions, candidates, experiments, or proof paths to develop before decisive evidence about them is available; even a Gödel machine's proof gate retains this prior search problem"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim]
 tags: [foundations, computational-model, self-improving-systems]
 ---

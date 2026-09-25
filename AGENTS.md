@@ -56,7 +56,7 @@ Terms needed to understand the project's structure and everyday operations, alph
 - **Assay** — any snapshot-anchored LLM evaluation executed through the review job pipeline. Closed-ended assays ask a fixed question; open-ended assays sample a space of possible findings. This question shape is distinct from the persisted `verdict`/`report` result kind. See `kb/reference/README-REVIEW-SYSTEM.md#concepts`.
 - **Codification** — the symbolic region of constraining, where natural language crosses into a symbolic artifact (code, schema, grammar) with formal semantics or, more generally, a unique operational semantics. See `kb/notes/definitions/codification.md`.
 - **Collection** — a `kb/` subtree whose root contains `COLLECTION.md`; that file is the local authoring and routing contract for artifacts in the subtree. See `kb/reference/definitions/collection.md`.
-- **Commonplace** — the name of this KB and framework. Capitalize it in prose; lowercase only in literal identifiers (`commonplace-*`, `llm-commonplace`, `src/commonplace/`, `kb/commonplace/`).
+- **Commonplace** — the name of this KB and framework. Capitalize it in prose; lowercase only in literal identifiers (`commonplace-*`, `llm-commonplace`, `src/commonplace/`, `commonplace:` library identities).
 - **Commonplace doctrine** — the standing instruction a worker inherits with binding force when its runtime loads it: this file, plus the collection contracts, type specs, and skill its runtime supplies. A handoff is a delta from it. The compound is the technical term; bare *doctrine* stays ordinary English and may abbreviate it where nothing else (such as the source-side military doctrine in the planning reports) could be meant. See `kb/reference/definitions/commonplace-doctrine.md`.
 - **Criterion** — the instruction text applied to a note in an assay. It occupies the persisted `criterion_path` side of a review pair; a gate is a closed-ended, verdict-kind criterion, while critique is an open-ended, report-kind criterion. See `kb/reference/README-REVIEW-SYSTEM.md#concepts`.
 - **Constraining** — narrowing the space of valid interpretations an artifact admits — from writing a convention up to committing to code. See `kb/notes/definitions/constraining.md`.
@@ -207,7 +207,7 @@ rg "^tags:.*learning-theory" kb/notes/ kb/reference/ kb/instructions/ --glob "*.
 
 ### Skills
 
-The `cp-skill-*` family (`cp-skill-write`, `cp-skill-validate`, `cp-skill-connect`, etc.) is installed into `.claude/skills/` and `.agents/skills/` by `commonplace-init`; the harness loads them automatically. Repo-local skills (`operator-brief`, `roughdraft-review`) are symlinked the same way but are not promoted framework skills.
+The `cp-skill-*` family (`cp-skill-write`, `cp-skill-validate`, `cp-skill-connect`, etc.) lives in `kb/instructions/`. In this checkout `.claude/skills/` and `.agents/skills/` hold committed relative symlinks to it, and the harness loads them automatically; installed projects instead receive stubs from `commonplace-init` that point to the same skills in the installed package. Repo-local skills (`operator-brief`, `roughdraft-review`) are symlinked the same way but are not promoted framework skills.
 
 ### Commands
 

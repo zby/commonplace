@@ -8,6 +8,7 @@ import sys
 from pathlib import Path
 
 from commonplace.lib.full_pass import guard_full_pass_report, load_full_pass_report
+from commonplace.lib.library import checks_library
 
 
 class _InvocationError(ValueError):
@@ -19,6 +20,7 @@ class _ArgumentParser(argparse.ArgumentParser):
         raise _InvocationError(message)
 
 
+@checks_library
 def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     parser = _ArgumentParser(
         description="Compare every packet capture in one full-pass report with its live artifact.",

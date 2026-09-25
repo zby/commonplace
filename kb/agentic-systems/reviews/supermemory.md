@@ -1,5 +1,5 @@
 ---
-type: kb/types/note.md
+type: note
 description: Supermemory Vercel wrapper injects retrieved context and uploads conversations,
   with best-effort saving and an uninspected remote learning bridge
 generated-by: analyse-agentic-system

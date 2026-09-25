@@ -1,6 +1,6 @@
 ---
 description: Optimization loops need diagnostic error analysis and demonstrated judge discrimination before automation can improve behavior rather than just score
-type: kb/types/note.md
+type: note
 traits: [has-external-sources, title-as-claim]
 tags: [learning-theory, llm-reliability, evaluation, deploy-time-learning]
 ---

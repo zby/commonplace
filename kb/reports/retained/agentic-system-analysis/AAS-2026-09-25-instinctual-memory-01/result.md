@@ -1,5 +1,5 @@
 ---
-type: kb/types/agentic-system-analysis-result.md
+type: agentic-system-analysis-result
 description: 'mem whole artifact with partial host loop: sourced fact extraction,
   Git publication and automatic context delivery with route-specific withdrawal and
   fidelity limits'

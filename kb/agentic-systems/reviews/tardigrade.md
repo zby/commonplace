@@ -1,5 +1,5 @@
 ---
-type: kb/types/note.md
+type: note
 description: Tardigrade derives model progression from event history and separates
   compaction and schema repair from host durability
 generated-by: analyse-agentic-system

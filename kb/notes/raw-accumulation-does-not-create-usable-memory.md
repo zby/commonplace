@@ -1,6 +1,6 @@
 ---
 description: "Accumulation preserves material, but usable agent memory requires ingress work that adds handles, scope, relationships, provenance, trust signals, and lifecycle pressure."
-type: kb/types/note.md
+type: note
 traits: [title-as-claim]
 tags: [agent-memory, context-engineering, learning-theory]
 ---

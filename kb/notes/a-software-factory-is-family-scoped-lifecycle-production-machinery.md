@@ -1,6 +1,6 @@
 ---
 description: "Reconstructs Greenfield's versioned software-factory ontology: declared product family, schema, packaged assets, configured environment, two development processes, and lifecycle work products"
-type: kb/types/note.md
+type: note
 traits:
   - title-as-claim
   - has-comparison

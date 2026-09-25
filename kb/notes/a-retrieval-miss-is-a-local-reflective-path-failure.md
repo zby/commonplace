@@ -1,6 +1,6 @@
 ---
 description: "A missed relevant artifact leaves its represented aspect inert for the affected task and discovery route, while other loading paths and reflective aspects can remain causally connected"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim]
 tags: [foundations, computational-model, self-improving-systems]
 ---

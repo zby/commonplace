@@ -1,6 +1,6 @@
 ---
 description: "Design exploration for enriching web search by reusing /connect's dual discovery and articulation testing on results, building a temporary research graph before bridging to KB"
-type: kb/types/note.md
+type: note
 traits: [has-comparison]
 tags: []
 ---

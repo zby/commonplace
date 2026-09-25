@@ -1,6 +1,6 @@
 ---
 description: "A retained methodology governs the consequential extension decisions it supplies or imports; actor competence can carry the process further without making those choices settled by the method"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim]
 tags: [foundations, constraining, self-improving-systems]
 ---

@@ -1,6 +1,6 @@
 ---
 description: Continuous learning can happen outside of weights; constraining is one symbolic-artifact form where prompts, schemas, tools, and tests accumulate durable adaptive capacity during deployment
-type: kb/types/note.md
+type: note
 traits: [title-as-claim]
 tags: [learning-theory, constraining]
 ---

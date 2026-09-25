@@ -1,6 +1,6 @@
 ---
 description: "Distinguishes the body-loading boundary from the later title-and-description index boundary, yielding three collection-size regimes with different consequences for areas, connect, and whole-KB work"
-type: kb/types/note.md
+type: note
 tags: []
 ---
 

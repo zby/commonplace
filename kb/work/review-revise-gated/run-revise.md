@@ -1,5 +1,5 @@
 ---
-type: kb/types/instruction.md
+type: instruction
 description: Revise baseline.md based on review findings — address WARNs, optionally address INFOs, write revised note to run directory
 ---
 

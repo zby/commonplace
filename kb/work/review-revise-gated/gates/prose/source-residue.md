@@ -1,5 +1,5 @@
 ---
-type: kb/types/instruction.md
+type: instruction
 description: Workshop review gate for checking source residue during review-revise experiments
 gate_id: prose/source-residue
 name: Source residue

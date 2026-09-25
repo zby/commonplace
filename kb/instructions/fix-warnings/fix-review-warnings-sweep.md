@@ -1,6 +1,6 @@
 ---
 description: Batch fix actionable findings from warn review pairs across notes using warn_selector, sub-agent delegation, and strategy reporting
-type: kb/types/instruction.md
+type: instruction
 ---
 
 # Fix Review Warnings Sweep

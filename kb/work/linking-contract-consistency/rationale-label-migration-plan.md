@@ -1,6 +1,6 @@
 ---
 description: "Use when reviewing and migrating the target-role rationale link identifier under the source-as-subject rule"
-type: kb/types/instruction.md
+type: instruction
 ---
 
 # Migrate the rationale link label

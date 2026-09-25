@@ -1,5 +1,5 @@
 ---
-type: kb/types/instruction.md
+type: instruction
 description: Workshop review gate for checking title body alignment during review-revise experiments
 gate_id: frontmatter/title-body-alignment
 name: Title-body alignment

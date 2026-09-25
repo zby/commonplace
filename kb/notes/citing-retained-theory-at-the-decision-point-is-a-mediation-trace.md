@@ -1,6 +1,6 @@
 ---
 description: "A decision record that cites the theory it followed supplies cheap, checkable evidence that the theory was consumed — necessary for a record-based mediation claim, but short of showing correct or load-bearing use"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim]
 tags: [foundations, self-improving-systems]
 ---

@@ -1,6 +1,6 @@
 ---
 description: "Proposes that construction which must discover and revise an object's organization produces project-specific understanding beyond the object, using programs and theories as its two main cases"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim, has-external-sources]
 tags: [foundations, learning-theory]
 ---

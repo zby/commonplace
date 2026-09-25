@@ -1,6 +1,6 @@
 ---
 description: How the ProperDocs site renders kb/ — the README-vs-index rule, the nav-generation hook, and the full inventory of reader landing pages (GitHub repo page, site home, per-collection landings) that positioning copy must keep consistent
-type: kb/types/note.md
+type: note
 tags: []
 ---
 

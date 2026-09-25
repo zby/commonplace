@@ -17,7 +17,7 @@ def test_generate_directory_index_skips_readme_index_and_types(tmp_path: Path) -
         collection / "real.md",
         """---
 description: Real note
-type: kb/types/note.md
+type: note
 ---
 
 # Real
@@ -79,7 +79,7 @@ def test_collect_index_pages_recurses_and_lists_subdirs(tmp_path: Path) -> None:
         collection / "top.md",
         """---
 description: Top-level note
-type: kb/types/note.md
+type: note
 ---
 
 # Top
@@ -146,7 +146,7 @@ def test_collect_index_pages_prunes_hidden_dirs_and_nested_repos(tmp_path: Path)
         collection / "kept.md",
         """---
 description: Kept note
-type: kb/types/note.md
+type: note
 ---
 
 # Kept
@@ -156,7 +156,7 @@ type: kb/types/note.md
         collection / ".hidden" / "invisible.md",
         """---
 description: Hidden note
-type: kb/types/note.md
+type: note
 ---
 
 # Hidden

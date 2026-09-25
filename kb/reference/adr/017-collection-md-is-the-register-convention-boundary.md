@@ -47,7 +47,7 @@ The write workflow reads the target collection's `COLLECTION.md` first, then res
 ## Consequences
 
 **Easier:**
-- The same structural type can be reused across registers. `type: kb/types/note.md` means "uses the note contract," not "is theoretical."
+- The same structural type can be reused across registers. `type: note` means "uses the note contract," not "is theoretical."
 - New collections can add their own writing convention surface without editing a central writing guide or changing the type system.
 - Mixed-register collections have a place to document their local exceptions instead of forcing a premature split or a new type.
 - Agents get a stable loading path: collection conventions first, then type structure.

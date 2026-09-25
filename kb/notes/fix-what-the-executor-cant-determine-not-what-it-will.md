@@ -1,6 +1,6 @@
 ---
 description: "A decision-specific rule for fixing what verified doctrine, task intent, and authorized evidence cannot safely determine while leaving bounded choices to execution"
-type: kb/types/note.md
+type: note
 traits:
   - title-as-claim
 tags: []

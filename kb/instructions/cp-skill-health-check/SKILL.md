@@ -1,7 +1,7 @@
 ---
 name: cp-skill-health-check
 description: Diagnose Commonplace installation, skill discovery, command PATH, and workflows blocked by unavailable sub-agents, nesting depth, or context isolation.
-type: kb/types/instruction.md
+type: instruction
 user-invocable: true
 allowed-tools: Read, Grep, Glob, Bash, Task
 argument-hint: "[symptom] — optional description of what is broken"
@@ -13,7 +13,7 @@ argument-hint: "[symptom] — optional description of what is broken"
 
 Identify the installation or runtime constraint blocking a Commonplace operation and report the smallest repair supported by evidence.
 
-Use this skill when a Commonplace KB has missing skills, missing or failing `commonplace-*` commands, commands that work in one shell but not in an IDE or agent runtime, or a workflow blocked on sub-agent creation or isolation. It applies both to installed KBs, where shipped content lives under `kb/commonplace/`, and to the Commonplace source repository, where shipped content lives directly under `kb/`.
+Use this skill when a Commonplace KB has missing skills, missing or failing `commonplace-*` commands, commands that work in one shell but not in an IDE or agent runtime, or a workflow blocked on sub-agent creation or isolation. It applies both to installed projects, which read the Commonplace library from the installed package through pointers `commonplace-init` writes, and to the Commonplace source repository, whose own `kb/` is the library.
 
 Target symptom: `$ARGUMENTS`
 
@@ -34,31 +34,39 @@ From the workspace root, inspect:
 pwd
 test -f AGENTS.md && echo "AGENTS.md: present" || echo "AGENTS.md: missing"
 test -f CLAUDE.md && echo "CLAUDE.md: present" || echo "CLAUDE.md: missing"
-test -d kb/commonplace && echo "layout: installed KB" || true
+test -d .commonplace && echo "layout: installed project" || true
 test -f pyproject.toml && test -d src/commonplace && echo "layout: source repo" || true
+test -d kb/commonplace && echo "old library copy: kb/commonplace/ present" || true
 test -d .agents/skills && echo ".agents/skills: present" || true
 test -d .claude/skills && echo ".claude/skills: present" || true
 ```
 
 Interpretation:
 
-- Installed KB: `kb/commonplace/{notes,reference,instructions}/` exists.
-- Source repository: `pyproject.toml`, `src/commonplace/`, and top-level `kb/{notes,reference,instructions}/` exist.
+- Installed project: `.commonplace/library.md` exists and names the library root in the installed package. The project holds no library files.
+- Source repository: `pyproject.toml`, `src/commonplace/`, and top-level `kb/{notes,reference,instructions}/` exist. Its `kb/` is the library.
+- Old library copy: `kb/commonplace/` comes from a release that copied the library into projects. Rerunning `commonplace-init` migrates it: it removes files that match the installed library and lists the ones that differ, which may carry local changes.
 - Neither: the wrong directory is open or `commonplace-init` has not run.
 - `.venv` is not a Commonplace layout requirement. A project may still own one for unrelated dependencies.
 
-## Step 2 — Check the control plane and skill projections
+## Step 2 — Check the control plane, library pointers, and skills
 
-Read the active root control-plane file and confirm it routes Commonplace commands by bare name. Then inspect the canonical health skill and the runtime projections:
+Read the active root control-plane file and confirm it routes Commonplace commands by bare name and, in an installed project, points agents to `.commonplace/library.md`. Then check init's pointers into the library and the runtime skills:
 
 ```bash
-test -f kb/commonplace/instructions/cp-skill-health-check/SKILL.md && echo "installed canonical skill: OK" || true
-test -f kb/instructions/cp-skill-health-check/SKILL.md && echo "source canonical skill: OK" || true
-test -f .agents/skills/cp-skill-health-check/SKILL.md && echo ".agents projection: OK" || true
-test -f .claude/skills/cp-skill-health-check/SKILL.md && echo ".claude projection: OK" || true
+commonplace-init --check
+test -f .agents/skills/cp-skill-health-check/SKILL.md && echo ".agents skill: OK" || true
+test -f .claude/skills/cp-skill-health-check/SKILL.md && echo ".claude skill: OK" || true
 ```
 
-If the canonical skill exists but the current runtime cannot discover its projection, `commonplace-init` may need to be rerun or the runtime may use another skill-discovery surface. Do not repair a Commonplace source checkout with `commonplace-init`; follow the source repository's `AGENTS.md` instead.
+Interpretation, for an installed project:
+
+- Every line `ok`: the skill stubs, `.commonplace/library.md`, and the Claude Code read rule match the installed library.
+- `stale` or `missing`: the library changed or moved since init last ran, for example after an upgrade that changed the skill set or a switch between editable and normal installs. Rerun `commonplace-init`. Until then, agents may read an outdated copy of the library without any warning.
+- `foreign`: a skill directory that `commonplace-init` did not write shadows the library's skill. Remove it after checking it holds nothing the user needs, then rerun `commonplace-init`.
+- Reads of library files denied in Claude Code: the read rule in `.claude/settings.local.json` is missing or names another library root; `commonplace-init --check` reports it.
+
+In the source repository, `.claude/skills/` and `.agents/skills/` hold committed symlinks into `kb/instructions/`; `commonplace-init --check` does not apply. Do not run `commonplace-init` there; follow the source repository's `AGENTS.md` instead.
 
 ## Step 3 — Check delegation, agent depth, and isolation
 
@@ -171,10 +179,10 @@ That exact file is obsolete after the user-level tool works in fresh processes. 
 
 ## Step 6 — Check package and validator health
 
-If this is an installed KB:
+If this is an installed project:
 
 ```bash
-commonplace-validate kb/commonplace/reference/commands.md
+commonplace-validate landings
 ```
 
 If this is the Commonplace source repository:
@@ -218,7 +226,8 @@ Use this format:
 ```text
 Commonplace health check:
 - Project root: OK / problem
-- Layout: installed KB / source repo / problem
+- Layout: installed project / source repo / problem
+- Library pointers: OK / stale / missing / not applicable
 - Control-plane file: OK / problem
 - Runtime skills: OK / problem
 - Diagnostic context: failing caller / other context / unknown
@@ -245,13 +254,13 @@ Evidence:
 - <short command result>
 
 Maintenance observations:
-- <legacy .envrc, unrelated .venv requiring owner review, stale skill copies, or "None">
+- <legacy .envrc, unrelated .venv requiring owner review, an old library copy under kb/commonplace/, or "None">
 ```
 
 List independent problems in this blocking order:
 
 1. Wrong directory or missing initialized layout.
-2. Missing canonical skill or runtime projection.
+2. Stale or missing library pointers, or a missing runtime skill.
 3. Required worker launch, nesting depth, capacity, or isolation is unavailable.
 4. uv or the `llm-commonplace` tool is missing.
 5. uv's tool executable directory is absent from the consuming process's `PATH`.

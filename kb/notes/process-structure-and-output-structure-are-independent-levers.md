@@ -1,6 +1,6 @@
 ---
 description: "Distinguishes constraints on reasoning steps from constraints on result shape and identifies the evidence needed to separate their effects"
-type: kb/types/note.md
+type: note
 traits: [has-external-sources, title-as-claim]
 tags: [type-system]
 ---

@@ -2,7 +2,7 @@
 gate_id: semantic/unearned-generality
 name: Unearned generality
 description: 'A claim is stated in vocabulary more abstract than its argument uses — the wording widens what the claim covers without changing what it forbids.'
-type: kb/types/review-gate.md
+type: review-gate
 lens: semantic
 watches: [title, description, body]
 staleness: changed

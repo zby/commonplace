@@ -1,6 +1,6 @@
 ---
 description: "Bare autonomy is free, but warranted evaluation autonomy extends only to the candidates an oracle can assess with the required confidence"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim]
 tags: [foundations, self-improving-systems, evaluation]
 ---

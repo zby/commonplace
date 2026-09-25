@@ -1,6 +1,6 @@
 ---
 description: Distinguishes reversible adoption from costly structural entrenchment and confines option reasoning to the timing of a commitment supported by an enduring constraint, scoped transfer warrant, or actual coordination value.
-type: kb/types/note.md
+type: note
 traits:
   - title-as-claim
   - has-comparison

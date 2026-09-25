@@ -1,6 +1,6 @@
 ---
 description: Index for context-engineering notes about selecting, scoping, and maintaining task-relevant knowledge under bounded context
-type: kb/types/tag-readme.md
+type: tag-readme
 index_source: tag
 index_key: context-engineering
 ---

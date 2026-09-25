@@ -1,6 +1,6 @@
 ---
 description: "Because each session starts without learned navigation intuition, skills, type templates, routing tables, names, and activation triggers remain permanent architecture rather than temporary scaffolding"
-type: kb/types/note.md
+type: note
 traits: [has-comparison, title-as-claim]
 tags: []
 ---

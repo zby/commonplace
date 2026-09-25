@@ -1,6 +1,6 @@
 ---
 {
-  "type": "kb/types/agentic-system-analysis-result.md",
+  "type": "agentic-system-analysis-result",
   "description": "Complete code-grounded DualGraph workflow analysis: within-report graph/outline reuse, warrant limits and static default-path defects.",
   "run-id": "AAS-2026-09-25-dualgraph-01",
   "system": "DualGraph",

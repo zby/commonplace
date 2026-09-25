@@ -1,5 +1,5 @@
 ---
-type: kb/types/note.md
+type: note
 description: "ContextPilot combines task-local memory and context editing with outcome-trained parameters; its control paths and recovery choices bound claims about autonomous context management."
 generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-25-contextpilot-01

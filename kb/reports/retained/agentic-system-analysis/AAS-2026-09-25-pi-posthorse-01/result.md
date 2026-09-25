@@ -1,5 +1,5 @@
 ---
-type: kb/types/agentic-system-analysis-result.md
+type: agentic-system-analysis-result
 description: 'Pi Posthorse context continuity extension: budgeted recovery, editable
   notes and raw history retrieval with externally owned persistent window commits'
 run-id: AAS-2026-09-25-pi-posthorse-01

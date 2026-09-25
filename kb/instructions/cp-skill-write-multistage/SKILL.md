@@ -1,7 +1,7 @@
 ---
 name: cp-skill-write-multistage
 description: Write or rebuild one unsettled KB artifact through source-first reconstruction, consolidated authorship, independent review, and guarded promotion. Use when claims need grounding or synthesis; avoid it for settled local edits.
-type: kb/types/instruction.md
+type: instruction
 user-invocable: true
 allowed-tools: Read, Edit, Write, Grep, Glob, Bash, Skill, Task
 argument-hint: "[target path | collection/type/topic] [source paths or brief]"
@@ -45,7 +45,7 @@ ambiguous.
   its lowercase SHA-256, and one backlinks query before any worker runs. The
   incumbent is a reconciliation and rollback input, never evidence for itself.
 - **New:** resolve the requested collection and type. Default to `kb/notes/`
-  and `kb/types/note.md`; an instruction goes to `kb/instructions/`. Reject
+  and `note`; an instruction goes to `kb/instructions/`. Reject
   `kb/work/` as a library target. Verify an explicit type path or resolve type
   shorthand to exactly one type spec. Run a targeted near-duplicate search.
   Preserve a valid user-supplied path; otherwise use a provisional filename.
@@ -95,8 +95,8 @@ needs ingestion or retained quotations, use the grounding interface in section
 
 For an explicit external duplication, subsumption, keep/rewrite/thin,
 merge/retire, or cohort question, run
-`kb/instructions/assess-a-claim-bearing-artifact-against-external-literature.md`
-(or its installed Commonplace path). That procedure owns source candidacy and
+[assess-a-claim-bearing-artifact-against-external-literature](../assess-a-claim-bearing-artifact-against-external-literature.md),
+resolved from this skill's real location. That procedure owns source candidacy and
 comparison. Its explicitly authorized bilateral-isolation workers are the only
 exception to this workflow's three-role topology.
 

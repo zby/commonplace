@@ -1,6 +1,6 @@
 ---
 description: "Separates heuristic rules that substitute for unavailable read-time reasoning from authority-bearing constraints and symbolic codification, which remain useful even with abundant context"
-type: kb/types/note.md
+type: note
 traits: [has-comparison, title-as-claim]
 tags: [learning-theory, artifact-analysis]
 ---

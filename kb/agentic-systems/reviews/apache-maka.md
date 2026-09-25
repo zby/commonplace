@@ -1,5 +1,5 @@
 ---
-type: kb/types/note.md
+type: note
 description: "Apache Maka's hosted execution, durable continuation, separate memory acquisition and evaluation authority at a pinned source boundary"
 generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-05-apache-maka-06

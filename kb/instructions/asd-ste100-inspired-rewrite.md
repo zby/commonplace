@@ -1,6 +1,6 @@
 ---
 description: "Use when explicitly asked to experiment with rewriting one KB note in language inspired by ASD-STE100 while preserving its knowledge content"
-type: kb/types/instruction.md
+type: instruction
 ---
 
 # Rewrite a note with ASD-STE100-inspired language

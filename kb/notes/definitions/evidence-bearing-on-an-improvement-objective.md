@@ -1,6 +1,6 @@
 ---
 description: "Definition — evidence bears on an improvement objective when it carries information about the criterion: gradients, rewards, errors, viability signals, tests, judgments; no evaluator required"
-type: kb/types/definition.md
+type: definition
 tags: [foundations, self-improving-systems]
 ---
 

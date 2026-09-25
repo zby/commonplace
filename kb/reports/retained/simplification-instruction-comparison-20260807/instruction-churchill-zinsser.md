@@ -1,6 +1,6 @@
 ---
 description: "Use when testing a compact Churchill-and-Zinsser cue for making complete prose shorter, more direct, and easier to follow without weakening it"
-type: kb/types/instruction.md
+type: instruction
 ---
 
 # Edit with Churchill and Zinsser

@@ -1,6 +1,6 @@
 ---
 description: "Explains why enforcement strength is a partial order over activation and response semantics, rather than a fixed instruction-to-skill-to-hook-to-script ladder"
-type: kb/types/note.md
+type: note
 traits: [has-comparison, title-as-claim]
 tags: [learning-theory, constraining]
 ---

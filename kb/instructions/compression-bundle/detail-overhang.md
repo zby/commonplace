@@ -2,7 +2,7 @@
 gate_id: compression/detail-overhang
 name: Detail overhang
 description: 'Examples, caveats, mechanisms, or background details outgrow their argumentative role.'
-type: kb/types/review-gate.md
+type: review-gate
 lens: compression
 watches: [body]
 staleness: changed

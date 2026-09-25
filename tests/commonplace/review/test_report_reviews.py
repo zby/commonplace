@@ -26,7 +26,7 @@ def make_repo(root: Path) -> Path:
         root / NOTE_PATH,
         """---
 description: Test note
-type: kb/types/note.md
+type: note
 ---
 
 # Sample
@@ -38,7 +38,7 @@ Initial body.
         root / CRITIQUE_PATH,
         """---
 description: Critique a note
-type: kb/types/instruction.md
+type: instruction
 ---
 
 # Critique a note

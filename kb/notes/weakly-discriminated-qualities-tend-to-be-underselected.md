@@ -1,6 +1,6 @@
 ---
 description: "Statistical conjecture: under named proposal-selection conditions, unequal oracle discrimination yields unequal enrichment; absolute degradation needs an additional directional mechanism"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim, has-external-sources]
 tags: [learning-theory, llm-reliability, evaluation, self-improving-systems]
 ---

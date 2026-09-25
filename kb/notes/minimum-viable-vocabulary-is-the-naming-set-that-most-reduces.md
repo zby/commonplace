@@ -1,6 +1,6 @@
 ---
 description: "Defines minimum viable vocabulary as the names that most reduce a bounded observer's extraction cost, connecting conceptual thresholds to an information-theoretic optimization"
-type: kb/types/note.md
+type: note
 traits: [has-external-sources, title-as-claim]
 tags: [learning-theory, discovery]
 ---

@@ -1,6 +1,6 @@
 ---
 description: "Source-dependent artifacts need lineage signals when an upstream change may render those artifacts stale, regardless of where the lineage record is stored"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim]
 tags: [links]
 ---

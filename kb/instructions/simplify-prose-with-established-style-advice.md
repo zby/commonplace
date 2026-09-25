@@ -1,6 +1,6 @@
 ---
 description: "Use when simplifying reader-facing prose through broad established style guidance while preserving its substantive claims and technical precision"
-type: kb/types/instruction.md
+type: instruction
 ---
 
 # Simplify prose using established style advice

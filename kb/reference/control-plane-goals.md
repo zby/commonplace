@@ -1,6 +1,6 @@
 ---
-description: How Commonplace ships KB goals in always-loaded context — the AGENTS.md layout, the scaffolded AGENTS.md.template, and the install-time fill-in contract
-type: kb/types/note.md
+description: How Commonplace ships KB goals in always-loaded context — the AGENTS.md layout, the scaffolded AGENTS.md and CLAUDE.md templates, and the install-time fill-in contract
+type: note
 tags: []
 ---
 
@@ -57,21 +57,23 @@ to use source-side lineage under the link contract.
 | Routing table | Framework | `AGENTS.md` `## Using the KB`, generated/templated |
 | Version-control expectation | Framework default; project workflow | `AGENTS.md` `## Version control` |
 | Commonplace delegation doctrine | Framework | `AGENTS.md` `## Delegation` |
-| Type system | Framework | `kb/types/` plus collection-local `kb/*/types/` directories with schemas and templates |
+| Type system | Framework | global types in the installed library's `types/`, plus collection-local `kb/*/types/` directories with schemas and templates |
 | Writing conventions | Framework | `kb/*/COLLECTION.md` (per-collection) |
-| Link semantics | Framework | `kb/notes/links-README.md` and related guidance in `kb/instructions/` |
+| Link semantics | Framework | the library's `notes/links-README.md` and related guidance in its `instructions/` |
 
-Only the per-installation rows require human input. Framework rows are shipped from Commonplace and can be updated mechanically on upgrade.
+Only the per-installation rows require human input. Framework rows are shipped from Commonplace. The ones that live in the installed library change in place on upgrade; the ones in the committed `AGENTS.md` change only when the practitioner merges a newer template.
 
 ## The scaffold contract
 
-`commonplace-init` copies `AGENTS.md.template` into the practitioner project as `AGENTS.md.template`, which the practitioner fills in and renames (or copies into) `AGENTS.md`. The template carries:
+`commonplace-init` writes `AGENTS.md.template` into the practitioner project as `AGENTS.md.template`, which the practitioner fills in and renames (or copies into) `AGENTS.md`. It also writes `CLAUDE.md.template`, which imports `AGENTS.md` and `.commonplace/library.md` so Claude Code loads both; the practitioner renames it to `CLAUDE.md`. `AGENTS.md.template` carries:
 
 - A placeholder `## KB Goals and Scope` section with HTML comment guidance for each subsection, as concrete prose examples the practitioner replaces with their own answers
 - A stock `## Version control` section that makes versioned maintenance the default while leaving commit, branch, and review semantics to the project
 - A stock `## Delegation` section that makes task packets deltas from a verified Commonplace doctrine, preserves task authority and parent integration, and classifies unstated choices
-- A stock `## Using the KB` routing section pointing at `kb/notes/`, `kb/reference/`, and `kb/instructions/`
+- A stock `## Using the KB` routing section pointing at `kb/notes/`, `kb/reference/`, and `kb/instructions/`, with a `### The Commonplace library` subsection that sends the agent to `.commonplace/library.md` for the library's location and tells it to stop and ask for `commonplace-init` when that file is missing
 - A stock Skills and Commands section listing the Commonplace-provided skills
+
+Neither template names a path on the practitioner's machine. The library's location is machine-specific, so it lives only in the gitignored `.commonplace/library.md`, which init rewrites on every run.
 - `{{project_name}}` placeholders that `init_project` substitutes with the directory name
 
 The three-subsection layout in the template matches the structure the generated file expects, so the scaffold is self-demonstrating: the placeholder text shows the exact shape the practitioner is editing toward.
@@ -82,8 +84,8 @@ The installation guidance distils the "fill in the KB Goals section" step for pr
 
 Concretely, the install sequence is:
 
-1. `commonplace-init --root .` creates the directory structure and scaffolds `AGENTS.md.template` with placeholder goals
-2. The practitioner renames or copies the template to `AGENTS.md` and fills in the five subsections
+1. `commonplace-init --root .` creates the directory structure, scaffolds `AGENTS.md.template` with placeholder goals and `CLAUDE.md.template`, and writes `.commonplace/library.md`
+2. The practitioner renames or copies the templates to `AGENTS.md` and `CLAUDE.md` and fills in the five subsections
 3. Agents in a runtime configured to load root repository instructions receive `AGENTS.md` and see the populated goals on every invocation
 
 The agent has no fallback if goals are left unfilled — an empty `## KB Goals` section is a silent failure mode, which is why the installation guidance treats the fill-in step as a first-run requirement rather than optional polish.

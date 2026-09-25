@@ -1,5 +1,5 @@
 ---
-type: kb/types/note.md
+type: note
 description: "Prime Agent's persistent Python runtime, recursive child sessions, and supplemental-harness refinement, with separate admission and improvement limits"
 generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-05-prime-agent-01

@@ -1,6 +1,6 @@
 ---
 description: "Frozen protocol and provenance for the premise-cohort Luna replication"
-type: kb/types/instruction.md
+type: instruction
 ---
 
 # Premise-cohort replication protocol

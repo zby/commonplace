@@ -1,6 +1,6 @@
 ---
 description: "A meaning-dependent judgment is never removed, only placed — moved upstream where its inputs exist (amortized) or off a bottlenecked context (offloaded); 'free at use-time' always means paid earlier"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim]
 tags: [computational-model, context-engineering]
 ---

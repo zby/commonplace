@@ -1,7 +1,7 @@
 ---
 name: operator-brief
 description: Explain an existing complex technical finding to an operator when its practical meaning is obscured by implementation detail, task-local terminology, or a long causal chain. Do not use for routine updates or simple answers.
-type: kb/types/instruction.md
+type: instruction
 user-invocable: true
 argument-hint: "[technical finding path, finding id, or pasted finding]"
 ---

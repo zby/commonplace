@@ -4,6 +4,13 @@ from __future__ import annotations
 
 from pathlib import Path
 
+from commonplace.lib.library import (
+    LIBRARY_IDENTITY_PREFIX,
+    artifact_file,
+    artifact_identity,
+    is_library_identity,
+    library_root,
+)
 from commonplace.review.collection_conformance import (
     collection_criterion_id_for_path,
     is_collection_conformance_request,
@@ -23,8 +30,14 @@ from commonplace.review.type_conformance import (
     type_criterion_id_for_path,
 )
 
-CHECKOUT_GATES_ROOT = Path("kb/instructions/review-gates")
-INSTALLED_GATES_ROOT = Path("kb/commonplace/instructions/review-gates")
+GATES_REL = "instructions/review-gates"
+# Prefixes a stored gate identity may carry: the source checkout's repo path,
+# the library identity, and the kb/commonplace/ copy of releases before ADR 086.
+STORED_GATE_PREFIXES = (
+    f"kb/{GATES_REL}/",
+    f"{LIBRARY_IDENTITY_PREFIX}{GATES_REL}/",
+    f"kb/commonplace/{GATES_REL}/",
+)
 
 
 def reject_unsafe_relative(raw: str, *, kind: str) -> None:
@@ -43,17 +56,12 @@ def normalize_repo_relative_path(raw: str, *, label: str) -> str:
 
 
 def review_gates_dir(repo_root: Path) -> Path:
-    """Return the gate catalog directory for this project layout.
+    """Return the gate catalog directory: the installed library's review gates.
 
-    Source checkouts author gates at kb/instructions/review-gates. Installed
-    projects receive the shipped gate catalog under kb/commonplace/instructions.
-    Prefer the installed location when present so user-owned instructions do not
-    shadow the framework gate catalog by accident.
+    In the source checkout the library is the repository's own kb/, so this is
+    kb/instructions/review-gates. `repo_root` is kept for call-site symmetry.
     """
-    installed = repo_root / INSTALLED_GATES_ROOT
-    if installed.is_dir():
-        return installed
-    return repo_root / CHECKOUT_GATES_ROOT
+    return library_root() / GATES_REL
 
 
 def criterion_path_for_id(repo_root: Path, criterion_id: str) -> str:
@@ -73,14 +81,14 @@ def criterion_path_for_id(repo_root: Path, criterion_id: str) -> str:
         raise ValueError(f"criterion id is outside the review gate catalog: {criterion_id}")
     if not criterion_abs.is_file():
         raise FileNotFoundError(f"criterion not found: {criterion_id}")
-    return criterion_abs.relative_to(repo_root.resolve()).as_posix()
+    return artifact_identity(repo_root, criterion_abs)
 
 
 def criterion_id_for_path(repo_root: Path, criterion_path: str) -> str:
-    """Derive the human-facing criterion shorthand from a repo-relative criterion path."""
+    """Derive the human-facing criterion shorthand from a criterion identity."""
     reject_unsafe_relative(criterion_path, kind="criterion path")
-    if is_type_spec_criterion_path(Path(criterion_path).as_posix()):
-        if not (repo_root / criterion_path).is_file():
+    if is_type_spec_criterion_path(criterion_path):
+        if not artifact_file(repo_root, criterion_path).is_file():
             raise FileNotFoundError(f"criterion not found: {criterion_path}")
         return type_criterion_id_for_path(criterion_path)
     if is_collection_md_criterion_path(Path(criterion_path).as_posix()):
@@ -88,10 +96,10 @@ def criterion_id_for_path(repo_root: Path, criterion_path: str) -> str:
             raise FileNotFoundError(f"criterion not found: {criterion_path}")
         return collection_criterion_id_for_path(criterion_path)
     if is_critique_criterion_path(criterion_path):
-        if not (repo_root / criterion_path).is_file():
+        if not artifact_file(repo_root, criterion_path).is_file():
             raise FileNotFoundError(f"criterion not found: {criterion_path}")
         return CRITIQUE_LENS
-    criterion_abs = (repo_root / criterion_path).resolve()
+    criterion_abs = artifact_file(repo_root, criterion_path).resolve()
     gates_dir = review_gates_dir(repo_root).resolve()
     try:
         rel = criterion_abs.relative_to(gates_dir)
@@ -101,30 +109,31 @@ def criterion_id_for_path(repo_root: Path, criterion_path: str) -> str:
 
 
 def criterion_id_from_stored_path(criterion_path: str) -> str:
-    """Best-effort shorthand for a stored repo-relative criterion path."""
-    if is_type_spec_criterion_path(Path(criterion_path).as_posix()):
+    """Best-effort shorthand for a stored criterion identity."""
+    if is_type_spec_criterion_path(criterion_path):
         return type_criterion_id_for_path(criterion_path)
     if is_collection_md_criterion_path(Path(criterion_path).as_posix()):
         return collection_criterion_id_for_path(criterion_path)
     if is_critique_criterion_path(criterion_path):
         return CRITIQUE_LENS
-    normalized = Path(criterion_path).with_suffix("").as_posix()
-    prefixes = (
-        CHECKOUT_GATES_ROOT.as_posix() + "/",
-        INSTALLED_GATES_ROOT.as_posix() + "/",
-    )
-    for prefix in prefixes:
+    normalized = criterion_path.removesuffix(".md")
+    for prefix in STORED_GATE_PREFIXES:
         if normalized.startswith(prefix):
             return normalized[len(prefix) :]
     return normalized
 
 
 def normalize_criterion_path(repo_root: Path, criterion: str) -> str:
-    """Accept a criterion path or shorthand and return the repo-relative path."""
+    """Accept a criterion identity, path, or shorthand and return the identity."""
     raw = criterion.strip()
     if not raw:
         raise ValueError("criterion must not be empty")
     reject_unsafe_relative(raw, kind="criterion path")
+    if is_library_identity(raw):
+        path = artifact_file(repo_root, raw)
+        if not path.is_file():
+            raise FileNotFoundError(f"criterion not found: {criterion}")
+        return raw
     candidate = Path(raw)
     if not raw.endswith(".md") and not raw.startswith("kb/"):
         return criterion_path_for_id(repo_root, raw)
@@ -137,7 +146,7 @@ def normalize_criterion_path(repo_root: Path, criterion: str) -> str:
     ):
         if not criterion_abs.is_file():
             raise FileNotFoundError(f"criterion not found: {criterion}")
-        return criterion_abs.relative_to(repo_root.resolve()).as_posix()
+        return artifact_identity(repo_root, criterion_abs)
 
     if criterion_abs.is_file() or raw.startswith("kb/"):
         gates_dir = review_gates_dir(repo_root).resolve()
@@ -145,7 +154,7 @@ def normalize_criterion_path(repo_root: Path, criterion: str) -> str:
             raise ValueError(f"criterion path is outside the review gate catalog: {criterion}")
         if not criterion_abs.is_file():
             raise FileNotFoundError(f"criterion not found: {criterion}")
-        return criterion_abs.relative_to(repo_root.resolve()).as_posix()
+        return artifact_identity(repo_root, criterion_abs)
     # A `.md` name outside kb/ that resolves to no file is a shorthand with an
     # extension; criterion_path_for_id strips it and searches the catalog.
     return criterion_path_for_id(repo_root, raw)

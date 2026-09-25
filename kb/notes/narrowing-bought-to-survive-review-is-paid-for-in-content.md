@@ -1,6 +1,6 @@
 ---
 description: "Repairing a defeated claim by shrinking its subject is justified at every step, but shrinking the subject into the predicate's own extension yields an analytic title that passes every gate and says nothing."
-type: kb/types/note.md
+type: note
 traits: [title-as-claim]
 tags: [document-system, failure-modes]
 ---

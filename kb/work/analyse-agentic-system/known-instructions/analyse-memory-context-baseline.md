@@ -1,6 +1,6 @@
 ---
 description: Workshop baseline for analysing persistent material, memory writes and maintenance, later consumption and read-back, context efficiency, activation evidence, and lifecycle controls in an agentic system.
-type: kb/types/instruction.md
+type: instruction
 ---
 
 # Analyse Memory and Context Persistence

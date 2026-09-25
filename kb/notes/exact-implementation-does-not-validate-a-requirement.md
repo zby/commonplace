@@ -1,6 +1,6 @@
 ---
 description: "An artifact can exactly implement a requirement while the requirement remains a conjectured proxy for a declared objective; assess each named path separately, and attribute failure to the link without erasing local correctness"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim]
 tags: [learning-theory, constraining]
 ---

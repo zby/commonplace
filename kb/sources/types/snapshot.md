@@ -1,5 +1,5 @@
 ---
-type: kb/types/type-spec.md
+type: type-spec
 name: snapshot
 description: Local external source copy with capture metadata and no analysis
 schema: kb/sources/types/snapshot.schema.yaml

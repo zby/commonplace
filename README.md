@@ -25,7 +25,7 @@ Restart the shell or agent runtime, then scaffold the current project:
 commonplace-init --root .
 ```
 
-Fill in the generated `AGENTS.md.template` and use it as the project's `AGENTS.md`. The installation supplies the Commonplace types, conventions, skills, and commands; the new knowledge base accumulates knowledge about its own project. The package does not include this repository's external-system reviews or source corpus. See [INSTALL.md](./INSTALL.md).
+Fill in the generated `AGENTS.md.template` and use it as the project's `AGENTS.md`, and rename `CLAUDE.md.template` to `CLAUDE.md`. The installation supplies the Commonplace types, conventions, skills, and commands, which the project reads in place from the installed package rather than copying; the new knowledge base accumulates knowledge about its own project. The package does not include this repository's external-system reviews or source corpus. See [INSTALL.md](./INSTALL.md).
 
 ### Vendor the research read-only
 
@@ -116,7 +116,7 @@ commonplace-github-snapshot https://github.com/owner/repo/issues/123
 
 The review system adds commands for selecting targets, queuing jobs, and finalizing outputs. `commonplace-x-snapshot` requires the `snapshot` package extra. See the [review system overview](./kb/reference/README-REVIEW-SYSTEM.md).
 
-Skills (`cp-skill-*`) are agent procedures auto-loaded by compatible harnesses when a task matches their description. `commonplace-init` installs them into consuming projects.
+Skills (`cp-skill-*`) are agent procedures auto-loaded by compatible harnesses when a task matches their description. They stay in the installed package; `commonplace-init` writes a small stub for each into a consuming project's skill directories that points the agent to the real skill.
 
 | Skill | Purpose |
 |---|---|
@@ -129,6 +129,8 @@ Skills (`cp-skill-*`) are agent procedures auto-loaded by compatible harnesses w
 | `cp-skill-ground` | Retain the minimum quotations needed to ground a source claim |
 | `cp-skill-health-check` | Diagnose a broken Commonplace installation |
 | `cp-skill-revise-autoreason` | Revise a note using incumbent, revision, and synthesis judging |
+| `cp-skill-write-multistage` | Write or rebuild an unsettled artifact through staged authorship and independent review |
+| `cp-skill-library` | Find and follow a Commonplace library procedure, instruction, or type by name |
 
 Instructions are Markdown procedures invoked explicitly rather than auto-loaded. They live under [`kb/instructions/`](./kb/instructions/README.md).
 

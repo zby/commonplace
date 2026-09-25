@@ -140,7 +140,7 @@ def valid_run_state(tmp_path: Path) -> Path:
     result = write(
         tmp_path / result_path,
         f'''---
-type: kb/types/agentic-system-analysis-result.md
+type: agentic-system-analysis-result
 description: "Complete fixture analysis at one frozen source boundary"
 run-id: {RUN_ID}
 system: "Example System"
@@ -274,7 +274,7 @@ None.
         tmp_path / generated_path,
         f'''---
 description: "Generated fixture review of one external agentic system"
-type: kb/types/note.md
+type: note
 generated-by: analyse-agentic-system
 analysis-run: {RUN_ID}
 source-identity: https://example.invalid/example-system

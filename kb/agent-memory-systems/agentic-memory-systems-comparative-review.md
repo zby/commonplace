@@ -1,6 +1,6 @@
 ---
 description: "148 code-grounded reviews: files/repo storage leads; trace-learning and push read-back travel together; push is rarely behavior-tested; full lifecycle curation is rare."
-type: kb/types/note.md
+type: note
 traits: [has-comparison]
 tags: [agent-memory]
 ---

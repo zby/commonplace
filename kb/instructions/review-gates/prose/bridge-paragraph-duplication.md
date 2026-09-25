@@ -2,7 +2,7 @@
 gate_id: prose/bridge-paragraph-duplication
 name: Bridge paragraph duplication
 description: 'A transition paragraph previews the same material that the next section immediately develops, making the reader process it twice.'
-type: kb/types/review-gate.md
+type: review-gate
 lens: prose
 watches: [body]
 staleness: changed

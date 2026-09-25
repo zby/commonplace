@@ -1,5 +1,5 @@
 ---
-type: kb/types/agentic-system-analysis-result.md
+type: agentic-system-analysis-result
 description: "Ecdysis method-level failure aggregation, collaborative diagnosis, strict score admission and frozen-inference adapter boundaries"
 run-id: AAS-2026-09-25-ecdysis-01
 system: "Ecdysis"

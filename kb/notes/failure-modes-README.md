@@ -1,6 +1,6 @@
 ---
 description: Index for failure-modes notes about characteristic ways knowledge can exist without changing agent behavior
-type: kb/types/tag-readme.md
+type: tag-readme
 index_source: tag
 index_key: failure-modes
 ---

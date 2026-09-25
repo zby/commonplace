@@ -1,6 +1,6 @@
 ---
 description: "Fractal as a code-grounded RLM harness: PredictRLM workspace turns, SBX sandbox mounts, headless delegation, and session continuity outside the repo."
-type: kb/types/note.md
+type: note
 traits: [has-external-sources]
 tags: [computational-model, tool-loop]
 ---

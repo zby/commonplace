@@ -1,5 +1,5 @@
 ---
-type: kb/types/note.md
+type: note
 description: "PrimeScientist's research-plan tree, retained rationale and diagnostics, with score-dependent inheritance and bounded budget/evaluator guarantees"
 generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-25-primescientist-01

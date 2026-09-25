@@ -1,6 +1,6 @@
 ---
 {
-  "type": "kb/types/note.md",
+  "type": "note",
   "description": "Prove2Me host integration: formal proof and translation review contracts, retained feedback, and shipped Lean extraction helpers.",
   "generated-by": "analyse-agentic-system",
   "analysis-run": "AAS-2026-09-25-prove2me-01",

@@ -1,6 +1,6 @@
 ---
 description: "In an open-ended system, increasing computational autonomy need not cut total human hours — attention moves to the frontier — so measure improvements per human judgment, not human time"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim, has-external-sources]
 tags: [foundations, self-improving-systems]
 ---

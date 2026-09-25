@@ -1,7 +1,7 @@
 ---
 name: cp-skill-snapshot-web
 description: Snapshot a URL into the local kb/sources/.snapshots/ cache, routing GitHub, X/Twitter, PDF, and ordinary web sources to the appropriate capture path.
-type: kb/types/instruction.md
+type: instruction
 user-invocable: true
 allowed-tools: Read, Write, Grep, Glob, Bash
 context: fork

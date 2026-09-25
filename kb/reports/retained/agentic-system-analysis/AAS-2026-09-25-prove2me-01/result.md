@@ -1,6 +1,6 @@
 ---
 {
-  "type": "kb/types/agentic-system-analysis-result.md",
+  "type": "agentic-system-analysis-result",
   "description": "Complete Prove2Me host-integration analysis distinguishing documented proof, translation and reuse contracts from shipped Lean extraction helpers.",
   "run-id": "AAS-2026-09-25-prove2me-01",
   "system": "Prove2Me",

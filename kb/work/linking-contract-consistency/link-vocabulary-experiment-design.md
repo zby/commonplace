@@ -1,6 +1,6 @@
 ---
 description: "Use before running an exploratory or comparative experiment in Commonplace when repository instructions, collections, prompts, or prior work may influence the result"
-type: kb/types/instruction.md
+type: instruction
 ---
 
 # Design experiments in Commonplace

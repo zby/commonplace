@@ -1,6 +1,6 @@
 ---
 description: Memory decomposes into storage (solved), retrieval/activation (context engineering), and learning (learning theory) — treating it as a standalone category hides that the hard problems are at the intersections
-type: kb/types/note.md
+type: note
 traits: [title-as-claim]
 tags: [learning-theory, computational-model, agent-memory]
 ---

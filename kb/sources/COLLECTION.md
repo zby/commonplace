@@ -121,7 +121,7 @@ Scan `kb/notes/`, `kb/reference/`, `kb/agent-memory-systems/`, `kb/agentic-syste
 
 ## Type eligibility
 
-A typed artifact in this collection may use a global type spec under `kb/types/` or a local type spec under this collection's `types/` directory. Its `type:` value is the path to that contract. A raw capture awaiting classification may remain frontmatter-free as implicit `text`; once classified, it follows the selected type contract.
+A typed artifact in this collection may use a global type spec under `kb/types/`, named by its bare name such as `type: note`, or a local type spec under this collection's `types/` directory, named by its path. A raw capture awaiting classification may remain frontmatter-free as implicit `text`; once classified, it follows the selected type contract.
 
 ## What does NOT belong here
 

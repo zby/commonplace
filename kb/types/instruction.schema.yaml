@@ -10,7 +10,7 @@ allOf:
           - type
         properties:
           type:
-            const: kb/types/instruction.md
+            const: instruction
           name:
             type: string
             minLength: 1

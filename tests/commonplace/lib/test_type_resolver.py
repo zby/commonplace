@@ -6,7 +6,13 @@ from typing import Any
 import pytest
 import yaml
 
-from commonplace.lib import type_resolver
+from commonplace.lib import library, type_resolver
+
+
+@pytest.fixture(autouse=True)
+def _test_repository_is_the_library(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    """Each test builds its own global types under tmp_path/kb, the library for the test."""
+    monkeypatch.setenv(library.LIBRARY_ENV, str(tmp_path / "kb"))
 
 
 def write(path: Path, content: str) -> Path:
@@ -32,7 +38,7 @@ def write_type_spec(
     return write(
         root / rel_path,
         f"""---
-type: kb/types/type-spec.md
+type: type-spec
 name: {name}
 description: Type spec for {name}
 schema: {schema_value}
@@ -77,16 +83,15 @@ def write_schema(
     return write(root / rel_path, yaml.safe_dump(schema, sort_keys=False))
 
 
-def test_canonical_type_identity_unwraps_installed_framework_namespace() -> None:
+def test_canonical_type_identity_of_a_global_type_is_its_bare_name() -> None:
     profile = type_resolver.TypeProfile(
-        type_path="kb/commonplace/types/tag-readme.md",
-        type_doc_path=Path("/repo/kb/commonplace/types/tag-readme.md"),
+        type_path="tag-readme",
+        type_doc_path=Path("/library/types/tag-readme.md"),
         type_name="tag-readme",
         schema_path=None,
     )
 
-    assert type_resolver.canonical_type_identity(profile) == "kb/types/tag-readme.md"
-
+    assert type_resolver.canonical_type_identity(profile) == "tag-readme"
 
 def test_global_type_in_declared_collection_loads_declared_schema(
     tmp_path: Path,
@@ -95,23 +100,23 @@ def test_global_type_in_declared_collection_loads_declared_schema(
     write_schema(
         tmp_path,
         "kb/types/note.schema.yaml",
-        type_const="kb/types/note.md",
+        type_const="note",
         require_description=True,
     )
     write_type_spec(
         tmp_path,
         "kb/types/note.md",
         name="note",
-        schema="kb/types/note.schema.yaml",
+        schema="./note.schema.yaml",
     )
 
     profile = type_resolver.resolve_type(
         notes / "sample.md",
-        {"description": "Sample", "type": "kb/types/note.md"},
+        {"description": "Sample", "type": "note"},
         repo_root=tmp_path,
     )
 
-    assert profile.type_path == "kb/types/note.md"
+    assert profile.type_path == "note"
     assert profile.type_doc_path == tmp_path / "kb" / "types" / "note.md"
     assert profile.type_name == "note"
     assert profile.schema_path == tmp_path / "kb" / "types" / "note.schema.yaml"
@@ -303,14 +308,15 @@ def test_text_without_frontmatter_resolves_to_implicit_text_profile(tmp_path: Pa
     assert profile.schema_path is None
 
 
-def test_bare_enum_type_is_invalid(tmp_path: Path) -> None:
-    with pytest.raises(ValueError, match="must start with kb/"):
+def test_path_to_a_global_type_is_invalid(tmp_path: Path) -> None:
+    write_type_spec(tmp_path, "kb/types/note.md", name="note", schema=None)
+
+    with pytest.raises(ValueError, match="global types are named by bare name"):
         type_resolver.resolve_type(
             tmp_path / "kb" / "notes" / "sample.md",
-            {"description": "Sample", "type": "note"},
+            {"description": "Sample", "type": "kb/types/note.md"},
             repo_root=tmp_path,
         )
-
 
 def test_frontmatter_without_type_is_invalid(tmp_path: Path) -> None:
     with pytest.raises(ValueError, match="frontmatter.type is required"):
@@ -325,7 +331,7 @@ def test_missing_type_file_is_invalid(tmp_path: Path) -> None:
     with pytest.raises(FileNotFoundError, match="missing type spec"):
         type_resolver.resolve_type(
             tmp_path / "kb" / "notes" / "sample.md",
-            {"description": "Sample", "type": "kb/types/missing.md"},
+            {"description": "Sample", "type": "missing"},
             repo_root=tmp_path,
         )
 
@@ -353,7 +359,7 @@ def test_type_spec_missing_schema_is_invalid(tmp_path: Path) -> None:
     write(
         tmp_path / "kb" / "types" / "note.md",
         """---
-type: kb/types/type-spec.md
+type: type-spec
 name: note
 description: Missing schema field
 ---
@@ -365,7 +371,7 @@ description: Missing schema field
     with pytest.raises(ValueError, match="must include schema"):
         type_resolver.resolve_type(
             tmp_path / "kb" / "notes" / "sample.md",
-            {"description": "Sample", "type": "kb/types/note.md"},
+            {"description": "Sample", "type": "note"},
             repo_root=tmp_path,
         )
 
@@ -414,9 +420,9 @@ def test_file_relative_type_from_subdirectory_matches_schema_const(
     assert errors == []
 
 
-def test_wrapped_library_schema_refs_fall_back_to_shared_global_types(tmp_path: Path) -> None:
+def test_local_schema_builds_on_a_global_schema_through_a_library_ref(tmp_path: Path) -> None:
     write(
-        tmp_path / "kb" / "types" / "note.schema.yaml",
+        tmp_path / "kb" / "types" / "note-base.schema.yaml",
         """$schema: "https://json-schema.org/draft/2020-12/schema"
 type: object
 required:
@@ -426,52 +432,61 @@ properties:
     type: object
     required:
       - description
-      - type
-    properties:
-      description:
-        type: string
-        minLength: 1
-      type:
-        type: string
     additionalProperties: true
 """,
     )
+    write(
+        tmp_path / "kb" / "types" / "note.schema.yaml",
+        """$schema: "https://json-schema.org/draft/2020-12/schema"
+allOf:
+  - $ref: "./note-base.schema.yaml"
+""",
+    )
+    notes = write_collection(tmp_path, "kb/notes")
     write_type_spec(
         tmp_path,
-        "kb/commonplace/notes/types/structured-claim.md",
+        "kb/notes/types/structured-claim.md",
         name="structured-claim",
         schema="./structured-claim.schema.yaml",
     )
     write(
-        tmp_path / "kb" / "commonplace" / "notes" / "types" / "structured-claim.schema.yaml",
+        notes / "types" / "structured-claim.schema.yaml",
         """$schema: "https://json-schema.org/draft/2020-12/schema"
 allOf:
-  - $ref: "../../types/note.schema.yaml"
-  - type: object
-    properties:
-      frontmatter:
-        type: object
-        properties:
-          type:
-            const: kb/notes/types/structured-claim.md
-        additionalProperties: true
+  - $ref: "commonplace:types/note.schema.yaml"
 """,
     )
 
     profile = type_resolver.resolve_type(
-        tmp_path / "kb" / "commonplace" / "notes" / "claim.md",
+        notes / "claim.md",
         {"description": "Sample", "type": "./types/structured-claim.md"},
         repo_root=tmp_path,
     )
-    errors = type_resolver.validate_instance(
-        profile,
-        {
-            "frontmatter": {
-                "description": "Sample",
-                "type": "./types/structured-claim.md",
-            },
-            "headings": ["# Claim"],
-        },
+    missing_description = type_resolver.validate_instance(
+        profile, {"frontmatter": {"type": "./types/structured-claim.md"}}
+    )
+    complete = type_resolver.validate_instance(
+        profile, {"frontmatter": {"description": "Sample", "type": "./types/structured-claim.md"}}
     )
 
-    assert errors == []
+    assert missing_description
+    assert complete == []
+
+
+def test_project_shared_type_is_eligible_in_every_collection(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    project = tmp_path / "project"
+    library_root = tmp_path / "library"
+    monkeypatch.setenv(library.LIBRARY_ENV, str(library_root))
+    (library_root / "types").mkdir(parents=True)
+    notes = write_collection(project, "kb/notes")
+    write_type_spec(project, "kb/types/my-type.md", name="my-type", schema=None)
+
+    profile = type_resolver.resolve_type(
+        notes / "sample.md",
+        {"description": "Sample", "type": "kb/types/my-type.md"},
+        repo_root=project,
+    )
+
+    assert profile.type_path == "kb/types/my-type.md"

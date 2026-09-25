@@ -12,9 +12,9 @@ synchronize it with later template changes.
 
 This collection contains project-specific procedures, operational rules, and
 how-to guidance for people and agents. Skills may live here as directories
-containing `SKILL.md`. The shipped Commonplace procedures live separately in
-`kb/commonplace/instructions/`; do not copy them here merely to populate this
-collection. It may remain empty until the project needs its own instructions.
+containing `SKILL.md`. The shipped Commonplace procedures live in the installed
+Commonplace library, whose location `.commonplace/library.md` gives; do not
+copy them here merely to populate this collection. It may remain empty until the project needs its own instructions.
 
 Put explanations and general claims in `kb/notes/`, descriptions of project
 state and decisions in `kb/reference/`, and unfinished plans in `kb/work/`.
@@ -55,9 +55,9 @@ Use these destinations and labels for connection discovery and authored links:
 
 | Destination | When to search or link | Authorized labels and meanings |
 |---|---|---|
-| `kb/instructions/`, `kb/commonplace/instructions/` | Find an existing prerequisite or procedure needed by a step. | `precondition`: identifies work that must already be done; `invokes`: identifies a procedure to execute; `see-also`: offers optional related guidance. |
-| `kb/reference/`, `kb/commonplace/reference/` | Find the subject's contract, interface, or definition needed for execution. | `operates-on`: describes what the procedure acts on; `defined-in`: explains a term; `see-also`: gives relevant reference detail. |
-| `kb/notes/`, `kb/commonplace/notes/` | Find rationale needed to understand or maintain the procedure. | `rests-on`: identifies a claim the procedure depends on; `see-also`: offers optional explanation. |
+| `kb/instructions/` | Find an existing prerequisite or procedure needed by a step. | `precondition`: identifies work that must already be done; `invokes`: identifies a procedure to execute; `see-also`: offers optional related guidance. |
+| `kb/reference/` | Find the subject's contract, interface, or definition needed for execution. | `operates-on`: describes what the procedure acts on; `defined-in`: explains a term; `see-also`: gives relevant reference detail. |
+| `kb/notes/` | Find rationale needed to understand or maintain the procedure. | `rests-on`: identifies a claim the procedure depends on; `see-also`: offers optional explanation. |
 | `kb/sources/`, `kb/reports/retained/` | Find evidence for a procedural requirement. | `evidenced-by`: supports or qualifies the requirement; `see-also`: gives relevant context. |
 | `external` | Cite identified official guidance or evidence. | `invokes`: identifies a procedure to execute; `evidenced-by`: supports a requirement; `see-also`: offers related guidance. |
 
@@ -68,4 +68,4 @@ authorizes links to already identified targets.
 
 ## Type eligibility
 
-A typed artifact in this collection may use a global type spec under `kb/types/` or a local type spec under this collection's `types/` directory. Its `type:` value is the path to that contract. Frontmatter-free Markdown is implicit `text`.
+A typed artifact in this collection may use a global Commonplace type, named by its bare name such as `type: note`, or a local type spec under this collection's `types/` directory, named by its path. Frontmatter-free Markdown is implicit `text`.

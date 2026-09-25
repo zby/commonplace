@@ -1,6 +1,6 @@
 ---
 description: Authority and lifecycle boundaries among Commonplace's authored files, local source copies, derived artifacts, and operational state
-type: kb/types/note.md
+type: note
 tags: []
 ---
 

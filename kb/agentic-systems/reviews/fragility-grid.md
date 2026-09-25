@@ -1,5 +1,5 @@
 ---
-type: kb/types/note.md
+type: note
 description: fragility-grid evaluates fixed items across prompt and scoring configurations;
   retained files support analysis and resume, with provenance and completion limits
 generated-by: analyse-agentic-system

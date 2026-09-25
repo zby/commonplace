@@ -1,5 +1,5 @@
 ---
-type: kb/types/type-spec.md
+type: type-spec
 name: article
 description: Outward-facing article distilled from KB notes for external technical readers; deliberately minimal spec that gains constraints only as failure modes are collected
 schema: kb/articles/types/article.schema.yaml

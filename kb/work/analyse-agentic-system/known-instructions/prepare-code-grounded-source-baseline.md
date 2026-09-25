@@ -1,6 +1,6 @@
 ---
 description: Workshop baseline for safely preparing and pinning a local GitHub source checkout once for all lenses in an external agentic-system analysis.
-type: kb/types/instruction.md
+type: instruction
 ---
 
 # Prepare a Code-Grounded System Source

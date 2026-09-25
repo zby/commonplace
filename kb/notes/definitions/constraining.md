@@ -1,6 +1,6 @@
 ---
 description: Definition — constraining commits choices in a retained artifact that narrow which readings or behaviors its consumer should treat as valid, or rank the valid ones; codification settles by fixed rules what natural language leaves open
-type: kb/types/definition.md
+type: definition
 tags: [learning-theory, constraining]
 ---
 

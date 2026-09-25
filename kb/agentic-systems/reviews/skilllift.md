@@ -1,5 +1,5 @@
 ---
-type: kb/types/note.md
+type: note
 description: "SkillLift's flagship portfolio search: rubric-guided edits, benchmark promotion, retained task memory and a refined-winner recovery limitation"
 generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-25-skilllift-01

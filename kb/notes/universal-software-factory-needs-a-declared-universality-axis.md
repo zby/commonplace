@@ -1,6 +1,6 @@
 ---
 description: "Universal software factory is ambiguous unless the universality axis, covered class, supplied inputs, adequacy relation, and resource bounds are declared"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim, has-comparison, has-external-sources]
 tags: [foundations, computational-model, self-improving-systems]
 ---

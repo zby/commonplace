@@ -1,7 +1,7 @@
 ---
 name: cp-skill-validate
 description: Run deterministic validation on KB artifacts, collections, collection landings, and the published redirect map, including schemas, links, required sections, and batch signals.
-type: kb/types/instruction.md
+type: instruction
 user-invocable: true
 allowed-tools: Bash
 context: fork
@@ -41,4 +41,4 @@ Prefer the narrowest target that covers the user's request. For write/edit workf
 
 Report the script output directly. Do not interpret, supplement, or override its findings.
 
-For judgment-based frontmatter checks, run `kb/instructions/run-review-batches.md` with the `frontmatter` bundle.
+For judgment-based frontmatter checks, run [run-review-batches](../run-review-batches.md), resolved from this skill's real location, with the `frontmatter` bundle.

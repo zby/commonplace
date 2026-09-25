@@ -1,6 +1,6 @@
 ---
 description: Definition of a COLLECTION.md-bearing subtree whose complete local text contract governs its artifacts; top-level collections also provide a README landing
-type: kb/types/definition.md
+type: definition
 tags: []
 ---
 
@@ -36,19 +36,18 @@ within one artifact or across its consumption paths.
 
 A collection directly under `kb/` also has a `README.md` as its curated reader landing. The README routes readers but does not replace the binding `COLLECTION.md` contract. It must not coexist with a sibling `index.md`, because both render to the same directory URL and `index.md` shadows the README. `commonplace-validate landings` enforces this invariant for collection roots that are direct children of `kb/`; ordinary area directories still inherit their enclosing collection's contract and need no landing of their own.
 
-Collections can also have local type specs. When present, they live in a `types/` subdirectory at the collection root. Type specs are structural authoring contracts: they define artifact shape through schema, frontmatter requirements, required sections, and written guidance for filling that shape. `COLLECTION.md` can guide authors to both global type specs in `kb/types/` and local type specs in the collection's own `types/` directory; see [collections and types](../collections-and-types.md) for their use and resolution.
+Collections can also have local type specs. When present, they live in a `types/` subdirectory at the collection root. Type specs are structural authoring contracts: they define artifact shape through schema, frontmatter requirements, required sections, and written guidance for filling that shape. `COLLECTION.md` can guide authors to both global type specs, named by bare name and defined in the Commonplace library's `types/` directory, and local type specs in the collection's own `types/` directory; see [collections and types](../collections-and-types.md) for their use and resolution.
 
-A descendant directory with no `COLLECTION.md` of its own is an area of the enclosing collection and inherits its contract, such as `kb/notes/definitions/`. An area carries no binding rules of its own: a rule about a kind of artifact lives in that kind's type spec, and a rule about what may live in the area lives in the collection's `COLLECTION.md` ([ADR 084](../adr/084-kind-rules-live-in-type-specs-and-operations-in-instructions.md)). A `COLLECTION.md` inside a non-collection namespace, such as `kb/commonplace/notes/` under `kb/commonplace/`, is an ordinary collection rather than a nested collection; a `COLLECTION.md` inside another collection is invalid.
+A descendant directory with no `COLLECTION.md` of its own is an area of the enclosing collection and inherits its contract, such as `kb/notes/definitions/`. An area carries no binding rules of its own: a rule about a kind of artifact lives in that kind's type spec, and a rule about what may live in the area lives in the collection's `COLLECTION.md` ([ADR 084](../adr/084-kind-rules-live-in-type-specs-and-operations-in-instructions.md)). A `COLLECTION.md` below a directory that is not itself a collection is an ordinary collection rather than a nested collection; a `COLLECTION.md` inside another collection is invalid.
 
 Tools may also treat collections as operational units, but those roles vary by tool and remain secondary to the local authoring contract.
 
-The current top-level source-repo collections are `kb/agent-memory-systems/`, `kb/agentic-systems/`, `kb/articles/`, `kb/instructions/`, `kb/notes/`, `kb/reference/`, `kb/reports/`, `kb/sources/`, `kb/types/`, and `kb/work/`. `kb/types/` is both the global type layer and a collection: its `COLLECTION.md` governs authoring and outbound links, while its type specs and schemas govern artifact structure and semantics. Installed projects expose selected shipped source collections under the `kb/commonplace/` namespace, such as `kb/commonplace/notes/`; their project-owned reports collection stays at `kb/reports/` beside its local types.
+The current top-level source-repo collections are `kb/agent-memory-systems/`, `kb/agentic-systems/`, `kb/articles/`, `kb/instructions/`, `kb/notes/`, `kb/reference/`, `kb/reports/`, `kb/sources/`, `kb/types/`, and `kb/work/`. `kb/types/` is both the global type layer and a collection: its `COLLECTION.md` governs authoring and outbound links, while its type specs and schemas govern artifact structure and semantics. The installed package ships `kb/types/`, together with the notes, reference, and instructions collections, as the library that installed projects read in place. An installed project holds only its own collections, such as `kb/notes/` and its reports collection at `kb/reports/` beside its local types.
 
 ## Exclusions
 
 These are not exceptions to the definition; they are common near-misses that do not have their own `COLLECTION.md`.
 
-- `kb/commonplace/` is a namespace for shipped collections, not a collection.
 - `kb/work/<workshop>/` directories are areas inside the `kb/work/` collection, governed by `kb/work/COLLECTION.md`.
 
 ## Misuse Cases

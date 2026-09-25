@@ -1,6 +1,6 @@
 ---
 description: "Use when an artifact should position named external systems against its own criteria or obligations, so readers can locate their systems on it, and the placements must survive the systems' authors reading them"
-type: kb/types/instruction.md
+type: instruction
 effort: simple
 ---
 

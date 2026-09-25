@@ -1,6 +1,6 @@
 ---
 description: "An explanation of a failed branch becomes operative search control only when its retention changes a later choice about scope, priority, probing, continuation, or abandonment"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim]
 tags: [foundations, learning-theory, deploy-time-learning, self-improving-systems]
 ---

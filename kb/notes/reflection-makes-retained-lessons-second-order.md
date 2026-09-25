@@ -1,6 +1,6 @@
 ---
 description: "Reflection lets a retained lesson target a prior commitment explicitly — rejecting, revising, or rescoping it — while non-reflective correction acts indirectly through the substrate"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim]
 tags: [foundations, self-improving-systems]
 ---

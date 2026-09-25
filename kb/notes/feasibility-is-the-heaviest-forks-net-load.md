@@ -1,6 +1,6 @@
 ---
 description: "Shows why decomposition changes feasibility from total operation cost to the largest residual load left on any fork after work is shifted to siblings or the parent"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim]
 tags: [computational-model, foundations]
 ---

@@ -1,6 +1,6 @@
 ---
 description: "A theory's prototype standing is its expected revision cost — external binding plus the investment a revision discards — so natural-language versus symbolic form determines neither component and acceptance status is a separate axis"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim]
 tags: [learning-theory, constraining, self-improving-systems]
 ---

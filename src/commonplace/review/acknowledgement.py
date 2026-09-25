@@ -8,6 +8,7 @@ from pathlib import Path
 from commonplace.freshness.baselines import REVIEW_PAIR_KIND
 from commonplace.freshness.selector import ChangedInput
 from commonplace.freshness.transitions import InputObservation, ack_target_inputs
+from commonplace.lib.library import artifact_file
 from commonplace.review.paths import (
     criterion_id_from_stored_path,
     normalize_criterion_path,
@@ -121,7 +122,7 @@ def records_from_selector_payload(
             repo_root,
             _required_string(raw_target.get("criterion_path"), label="criterion_path"),
         )
-        if not (repo_root / criterion_path).is_file():
+        if not artifact_file(repo_root, criterion_path).is_file():
             raise FileNotFoundError(f"criterion not found: {criterion_path}")
         criterion_id = _required_string(raw_target.get("criterion_id"), label="criterion_id")
         expected_criterion_id = criterion_id_from_stored_path(criterion_path)

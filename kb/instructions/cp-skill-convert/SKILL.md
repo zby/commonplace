@@ -1,7 +1,7 @@
 ---
 name: cp-skill-convert
 description: Convert notes between types. Currently supports text to note by adding unverified structured frontmatter, renaming the file to match the title, and fixing backlinks. Use with a note path or note name.
-type: kb/types/instruction.md
+type: instruction
 user-invocable: true
 allowed-tools: Read, Edit, Grep, Glob, Bash
 context: fork
@@ -43,7 +43,7 @@ Add YAML frontmatter at the top of the file:
 ```yaml
 ---
 description: [50-250 chars, adds mechanism/scope/implication beyond the title]
-type: kb/types/note.md
+type: note
 traits: []
 tags: []
 ---

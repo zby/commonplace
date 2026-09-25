@@ -16,6 +16,7 @@ from datetime import UTC, datetime
 from pathlib import Path
 from urllib.parse import urlparse
 
+from commonplace.lib.library import checks_library
 from commonplace.lib.naming import (
     MAX_INGEST_SNAPSHOT_SLUG_LENGTH,
     slugify_text,
@@ -203,6 +204,7 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
+@checks_library
 def main() -> int:
     args = parse_args()
     try:

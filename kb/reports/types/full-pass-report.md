@@ -1,5 +1,5 @@
 ---
-type: kb/types/type-spec.md
+type: type-spec
 name: full-pass-report
 description: Stateful report for one full-improvement pass and any asynchronous disposition resolution
 schema: kb/reports/types/full-pass-report.schema.yaml

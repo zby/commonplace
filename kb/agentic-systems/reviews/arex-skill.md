@@ -1,5 +1,5 @@
 ---
-type: kb/types/note.md
+type: note
 description: "AREX-Skill's repository-skill construction and deployment subsystem: model-directed verification, transactional admission, selective reads and evidence limits"
 generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-25-arex-skill-01

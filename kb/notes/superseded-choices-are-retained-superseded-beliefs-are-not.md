@@ -1,6 +1,6 @@
 ---
 description: "Retention after supersession follows remaining truth role rather than maintenance operation: preserve a witness to the choice event, while a refuted belief loses subject-matter standing"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim]
 tags: [kb-maintenance, artifact-analysis, foundations]
 ---

@@ -1,6 +1,6 @@
 ---
 description: "Explains the negative-selection mechanism by which preferential codification changes the composition of work retained at an agent boundary"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim]
 tags: [foundations, computational-model, self-improving-systems]
 ---

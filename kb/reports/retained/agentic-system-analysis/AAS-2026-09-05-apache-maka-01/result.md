@@ -1,5 +1,5 @@
 ---
-type: kb/types/agentic-system-analysis-result.md
+type: agentic-system-analysis-result
 description: "Apache Maka runtime and built-in memory routes at one frozen commit, distinguishing durable extraction from agent read-back"
 run-id: AAS-2026-09-05-apache-maka-01
 system: "Apache Maka (Incubating)"

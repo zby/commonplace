@@ -1,5 +1,5 @@
 ---
-type: kb/types/instruction.md
+type: instruction
 description: Workshop review gate for checking clause packing during review-revise experiments
 gate_id: sentence/clause-packing
 name: Clause packing

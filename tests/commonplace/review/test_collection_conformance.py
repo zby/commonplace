@@ -41,7 +41,7 @@ def make_note(
     title: str,
     body: str,
     *,
-    note_type: str = "kb/types/note.md",
+    note_type: str = "note",
 ) -> Path:
     return write(
         path,
@@ -277,7 +277,7 @@ class TestSelectorCollectionPairs:
         write(
             tmp_path / "kb" / "types" / "note.md",
             """---
-type: kb/types/type-spec.md
+type: type-spec
 name: note
 description: Test type spec for note
 schema: null
@@ -337,7 +337,7 @@ Fixture test.
         write(
             tmp_path / "kb" / "types" / "note.md",
             """---
-type: kb/types/type-spec.md
+type: type-spec
 name: note
 description: Test type spec for note
 schema: null

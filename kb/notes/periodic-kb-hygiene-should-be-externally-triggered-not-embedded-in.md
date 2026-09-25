@@ -1,6 +1,6 @@
 ---
 description: Routing instructions serve the current task; periodic hygiene is triggered externally (user, heartbeat, CI), so embedding it in always-loaded routing blurs two responsibilities and adds session noise
-type: kb/types/note.md
+type: note
 traits: [title-as-claim]
 tags: [kb-maintenance]
 ---

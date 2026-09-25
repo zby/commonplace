@@ -1,6 +1,6 @@
 ---
 description: Resolve, reject, supersede, or reconcile a retained full-pass revise, delete, merge, or rehome disposition
-type: kb/types/instruction.md
+type: instruction
 ---
 
 # Resolve a full-pass disposition

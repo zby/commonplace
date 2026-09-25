@@ -1,6 +1,6 @@
 ---
 description: "Separates world change from late discovery that downstream work chose the wrong interpretation of an underspecified requirement; short iterations mainly limit propagation of the latter"
-type: kb/types/note.md
+type: note
 traits: []
 tags: [learning-theory, deploy-time-learning]
 ---

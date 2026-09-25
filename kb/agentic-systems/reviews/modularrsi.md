@@ -1,5 +1,5 @@
 ---
-type: kb/types/note.md
+type: note
 description: "ModularRSI's proposal backlog, gated module evolution, dynamic composition, and the limits of its runtime and learning guarantees."
 generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-25-modularrsi-01

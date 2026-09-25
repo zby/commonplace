@@ -1,6 +1,6 @@
 ---
 description: "Because prompts, retrieval, tools, and runtime policy jointly determine deployed behavior, model-only learning leaves consequential system choices fixed"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim, synthesis]
 tags: [learning-theory, deploy-time-learning, computational-model]
 ---

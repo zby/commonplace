@@ -1,5 +1,5 @@
 ---
-type: kb/types/note.md
+type: note
 description: 'Reflexion HotPotQA reasoning agents: automatic failure-derived prompt
   memory, exact-match retry control and limits of retained outcome evidence'
 generated-by: analyse-agentic-system

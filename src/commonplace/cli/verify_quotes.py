@@ -14,6 +14,7 @@ import sys
 from collections.abc import Sequence
 from pathlib import Path
 
+from commonplace.lib.library import checks_library
 from commonplace.lib.quote_verification import (
     display_path,
     markdown_files,
@@ -21,6 +22,7 @@ from commonplace.lib.quote_verification import (
 )
 
 
+@checks_library
 def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(

@@ -1,6 +1,6 @@
 ---
 description: Reifies a human goal-revising turn as an explicit LLM update of K.goal, preserving symbolic select/call scheduling while avoiding raw-history re-derivation and ordinary-tool-output treatment
-type: kb/types/note.md
+type: note
 traits: [title-as-claim, has-external-sources]
 tags: [computational-model]
 ---

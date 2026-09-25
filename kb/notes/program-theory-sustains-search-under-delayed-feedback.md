@@ -1,6 +1,6 @@
 ---
 description: "Holding a program's theory is tested by whether a partial, tentative account of what the program is for keeps modification search, backtracking, and recovery coherent until delayed evidence arrives, not by whether the first change is right"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim]
 tags: [foundations, self-improving-systems]
 ---

@@ -1,6 +1,6 @@
 ---
 description: Linked, maintained knowledge artifacts let LLM agents recover reasoning across sessions, improving augmentation even when weak verification still blocks automation
-type: kb/types/note.md
+type: note
 traits: []
 tags: []
 ---

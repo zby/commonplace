@@ -1,6 +1,6 @@
 ---
 description: "Universal frameworks should replace closed content taxonomies with complete local contracts and guarded creation-time defaults; what stays fixed is stipulated or enforced, not certified universal"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim]
 tags: [document-system, foundations]
 ---

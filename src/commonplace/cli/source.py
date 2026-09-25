@@ -7,6 +7,7 @@ from collections.abc import Sequence
 from pathlib import Path
 
 import commonplace
+from commonplace.lib.library import checks_library
 
 
 def source_path() -> Path:
@@ -17,6 +18,7 @@ def source_path() -> Path:
     return Path(package_file).resolve().parent
 
 
+@checks_library
 def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.parse_args(argv)

@@ -1,6 +1,6 @@
 ---
 description: "Uses competent-newcomer ergonomics as a property-by-property default, then isolates access paths that charge a consumer for a selected slice or a whole artifact"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim, has-comparison]
 tags: [document-system, context-engineering]
 ---

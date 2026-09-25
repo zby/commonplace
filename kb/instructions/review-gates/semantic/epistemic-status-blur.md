@@ -2,7 +2,7 @@
 gate_id: semantic/epistemic-status-blur
 name: Epistemic status blur
 description: 'Claims of different epistemic status — observation, derivation, proposed mechanism, conjecture — read with uniform confidence, or support for one claim is presented as covering another.'
-type: kb/types/review-gate.md
+type: review-gate
 lens: semantic
 watches: [title, description, body]
 staleness: changed

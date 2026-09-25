@@ -2,7 +2,7 @@
 gate_id: sentence/clause-packing
 name: Clause packing
 description: 'A sentence chains enough subordinate clauses, qualifiers, or contrasts that its overall relation becomes hard to retain.'
-type: kb/types/review-gate.md
+type: review-gate
 lens: sentence
 watches: [body]
 staleness: changed

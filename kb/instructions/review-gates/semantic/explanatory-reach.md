@@ -2,7 +2,7 @@
 gate_id: semantic/explanatory-reach
 name: Explanatory-reach
 description: 'The note records a pattern or outcome without a mechanism that constrains why it holds or what would make it fail.'
-type: kb/types/review-gate.md
+type: review-gate
 lens: semantic
 watches: [body]
 staleness: changed

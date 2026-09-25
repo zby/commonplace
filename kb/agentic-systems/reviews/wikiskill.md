@@ -1,5 +1,5 @@
 ---
-type: kb/types/note.md
+type: note
 description: "WikiSkill's persistent wiki and reversible skill updates, with paper-only evidence and performance-gate limits."
 generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-25-wikiskill-01

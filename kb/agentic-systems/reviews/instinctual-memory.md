@@ -1,5 +1,5 @@
 ---
-type: kb/types/note.md
+type: note
 description: mem extracts sourced facts into Git and supplies host context, with separate
   publication, recall and withdrawal guarantees
 generated-by: analyse-agentic-system

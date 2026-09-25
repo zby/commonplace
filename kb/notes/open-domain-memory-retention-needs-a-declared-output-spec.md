@@ -1,6 +1,6 @@
 ---
 description: "Explains why an input stream alone can't answer 'what to store' in open-domain memory design; a declared output spec supplies the missing inclusion criterion."
-type: kb/types/note.md
+type: note
 traits: [title-as-claim, has-comparison]
 tags: [agent-memory, context-engineering]
 ---

@@ -2,11 +2,11 @@
 gate_id: semantic/explication-quality
 name: Explication quality
 description: 'A definition names a term without sharpening its ordinary meaning, boundary, contrasts, or operational use for the KB.'
-type: kb/types/review-gate.md
+type: review-gate
 lens: semantic
 watches: [body]
 staleness: changed
-requires_type: kb/types/definition.md
+requires_type: definition
 ---
 
 ## Failure mode

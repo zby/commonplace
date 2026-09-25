@@ -1,6 +1,6 @@
 ---
 description: "Use when an automated improvement pass has weakened or cut a passage and the operator wants to know whether the review finding justified it before restoring anything"
-type: kb/types/instruction.md
+type: instruction
 effort: simple
 ---
 

@@ -1,6 +1,6 @@
 ---
 description: "Autonomy is reported per function rather than scored as a percentage, but that profile does not yet support comparison across systems or time"
-type: kb/types/note.md
+type: note
 tags: [foundations, self-improving-systems]
 ---
 

@@ -1,6 +1,6 @@
 ---
 description: "Five proposal-selection systems expose frozen functions, while a direct-update contrast shows why absence of a gate is not omission; HyperAgents supplies a preliminary partial unfreezing"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim, has-comparison, has-external-sources]
 tags: [foundations, self-improving-systems, deploy-time-learning]
 ---

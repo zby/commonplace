@@ -1,6 +1,6 @@
 ---
 description: Code-grounded review of Eigenius's typed execution substrate and manually loaded host-agent reasoning protocol, with their distinct control and verification limits.
-type: kb/types/note.md
+type: note
 traits:
   - has-external-sources
   - has-implementation

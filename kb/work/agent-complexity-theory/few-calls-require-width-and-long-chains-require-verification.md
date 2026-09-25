@@ -1,6 +1,6 @@
 ---
 description: "Working frontier note whose interface bound remains useful but whose reliability caveat needs a correlation correction and verifier-spacing replacement"
-type: kb/types/note.md
+type: note
 traits: []
 tags: [computational-model, context-engineering, llm-reliability]
 ---

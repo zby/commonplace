@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
+from commonplace.lib.library import checks_library
 from commonplace.review.paths import review_gates_dir
 from commonplace.review.resolve_criteria import criterion_ids_for_cli
 from commonplace.review.review_model import normalize_model_partition
@@ -16,6 +17,7 @@ from commonplace.review.review_target_selector import (
 )
 
 
+@checks_library
 def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     parser = argparse.ArgumentParser(
         description="List assay target (note, criterion) pairs (schema fields use criterion names).",

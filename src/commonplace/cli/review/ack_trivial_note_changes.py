@@ -10,6 +10,7 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
+from commonplace.lib.library import checks_library
 from commonplace.review.ack_trivial_note_changes import qualifying_records
 from commonplace.review.acknowledgement import ack_pairs
 from commonplace.review.paths import review_gates_dir
@@ -55,6 +56,7 @@ def build_parser() -> argparse.ArgumentParser:
     return parser
 
 
+@checks_library
 def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     parser = build_parser()
     args = parser.parse_args(argv)

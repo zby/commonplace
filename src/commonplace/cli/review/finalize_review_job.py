@@ -6,6 +6,7 @@ import argparse
 import json
 from pathlib import Path
 
+from commonplace.lib.library import checks_library
 from commonplace.review.finalization import (
     ExecutionMetadata,
     finalize_review_job_from_owned_output,
@@ -21,6 +22,7 @@ def _print_json(payload: dict[str, object]) -> None:
     print(json.dumps(payload, ensure_ascii=True, sort_keys=True))
 
 
+@checks_library
 def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     parser = argparse.ArgumentParser(description="Finalize a review job from its job-owned output.")
     parser.add_argument("--review-job-id", type=int, required=True, help="Review job id to finalize.")

@@ -1,6 +1,6 @@
 ---
 description: "Evidence from two ASD-STE100-inspired passes over one note: unguarded sentence splitting lost semantic relations, while guarded splitting preserved them by adding 4.9% more words"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim]
 tags: [document-system, evaluation]
 ---

@@ -1,6 +1,6 @@
 ---
 description: "A persistent automated theory builder for external users becomes a software house when genuinely new domains require it to revise the software that performs theory production rather than only the theories produced"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim]
 tags: [foundations, self-improving-systems, learning-theory]
 ---

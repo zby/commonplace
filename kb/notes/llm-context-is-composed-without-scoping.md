@@ -1,6 +1,6 @@
 ---
 description: "Flat context concatenation lacks local scope and produces name collision, contamination, and spooky action at a distance; code-built sub-agent contexts must impose boundaries"
-type: kb/types/note.md
+type: note
 traits: [has-external-sources, title-as-claim]
 tags: [computational-model]
 ---

@@ -1,6 +1,6 @@
 ---
 description: "Use when a kb/articles draft is to be prepared for publication as a paper package whose every dependency is bound inside the package; runs without operator input and reports the free variables it could not bind"
-type: kb/types/instruction.md
+type: instruction
 ---
 
 # Stage an article package

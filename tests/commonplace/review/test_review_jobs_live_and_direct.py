@@ -1,10 +1,13 @@
 from __future__ import annotations
 
 import json
+import shutil
 import subprocess
 from pathlib import Path
 
-from commonplace.lib import frontmatter
+import pytest
+
+from commonplace.lib import frontmatter, library
 from commonplace.review import review_target_selector
 
 from ._run_cli import run_cli
@@ -13,7 +16,7 @@ GATE_ONE = "accessibility/undefined-terms"
 GATE_TWO = "prose/source-residue"
 GATE_ONE_PATH = "kb/instructions/review-gates/accessibility/undefined-terms.md"
 GATE_TWO_PATH = "kb/instructions/review-gates/prose/source-residue.md"
-INSTALLED_GATE_ONE_PATH = "kb/commonplace/instructions/review-gates/accessibility/undefined-terms.md"
+LIBRARY_GATE_ONE_IDENTITY = "commonplace:instructions/review-gates/accessibility/undefined-terms.md"
 
 
 def write(path: Path, content: str) -> Path:
@@ -27,7 +30,7 @@ def make_note(path: Path) -> Path:
         path,
         """---
 description: Test note
-type: kb/types/note.md
+type: note
 traits: []
 ---
 
@@ -238,20 +241,26 @@ Dirty gate marker.
     assert "Dirty gate marker." in prompt
 
 
-def test_create_review_jobs_resolves_installed_commonplace_gates(tmp_path: Path) -> None:
-    repo, db_path = build_repo_fixture(
-        tmp_path,
-        gates_root=Path("kb/commonplace/instructions/review-gates"),
+def test_create_review_jobs_resolves_gates_from_a_library_outside_the_repo(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    repo, db_path = build_repo_fixture(tmp_path)
+    library_dir = tmp_path / "installed-library"
+    shutil.copytree(
+        repo / "kb" / "instructions" / "review-gates",
+        library_dir / "instructions" / "review-gates",
     )
+    shutil.rmtree(repo / "kb" / "instructions" / "review-gates")
+    monkeypatch.setattr(library, "_library_root", lambda _override: library_dir.resolve())
 
     result = create_jobs_from_targets(
         repo,
         db_path,
-        [target("kb/notes/sample.md", INSTALLED_GATE_ONE_PATH, GATE_ONE)],
+        [target("kb/notes/sample.md", LIBRARY_GATE_ONE_IDENTITY, GATE_ONE)],
     )
 
     payload = json.loads(result.stdout)
-    assert [pair["criterion_path"] for pair in payload["jobs"][0]["pairs"]] == [INSTALLED_GATE_ONE_PATH]
+    assert [pair["criterion_path"] for pair in payload["jobs"][0]["pairs"]] == [LIBRARY_GATE_ONE_IDENTITY]
 
 
 def test_create_review_jobs_accepts_selector_json_file_and_validates_model(tmp_path: Path) -> None:

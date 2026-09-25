@@ -1,6 +1,6 @@
 ---
 description: "Generated comparison table for code-reviewed agent memory systems: one-line summaries plus storage, read-back, targeting, trace-learning, and enforcement."
-type: kb/types/note.md
+type: note
 traits: [has-comparison]
 tags: [agent-memory]
 ---

@@ -1,6 +1,6 @@
 ---
 description: "Agentic action can be direct or model-mediated; a retained action model matters only when its consumption path affects intervention selection"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim]
 tags: [computational-model, artifact-analysis]
 ---

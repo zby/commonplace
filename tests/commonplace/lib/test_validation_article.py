@@ -19,7 +19,7 @@ def setup_repo(tmp_path: Path) -> Path:
         tmp_path / "kb" / "notes" / "existing-note.md",
         """---
 description: an existing source note for article lineage tests
-type: kb/types/note.md
+type: note
 ---
 
 # Existing note

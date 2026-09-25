@@ -1,6 +1,6 @@
 ---
 description: "Between an improvement objective and its oracles sits a target level — a property pursued because it is held to serve the objective — whose linking claim no check in the loop evaluates"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim]
 tags: [foundations, self-improving-systems]
 ---

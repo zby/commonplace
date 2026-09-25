@@ -1,6 +1,6 @@
 ---
 description: "For recoverable content and a known one-unit question, a summary lowers the matched raw read-volume floor only when its path loads less answer-bearing material than the source path; whole-artifact compression alone does not decide that relation"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim, has-comparison]
 tags: [document-system, context-engineering]
 ---

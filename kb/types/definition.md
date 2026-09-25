@@ -1,8 +1,8 @@
 ---
-type: kb/types/type-spec.md
+type: type-spec
 name: definition
 description: Operational vocabulary note that sharpens a term for KB use
-schema: kb/types/definition.schema.yaml
+schema: ./definition.schema.yaml
 ---
 
 # Definition
@@ -72,7 +72,7 @@ A good definition note should answer:
 ```markdown
 ---
 description: Definition -- {term} means {operational meaning and why it matters}
-type: kb/types/definition.md
+type: definition
 tags: []
 ---
 

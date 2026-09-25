@@ -1,6 +1,6 @@
 ---
 description: Workshop baseline for analysing how an external agent runtime schedules work, assembles bounded calls, acts on external state, coordinates agents, and exposes control surfaces.
-type: kb/types/instruction.md
+type: instruction
 ---
 
 # Analyse an Agent Runtime

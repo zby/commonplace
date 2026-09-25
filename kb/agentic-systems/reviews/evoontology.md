@@ -1,5 +1,5 @@
 ---
-type: kb/types/note.md
+type: note
 description: "EvoOntology's semantic memory and host-led evolution, with supplied-score admission, direct mutation alternatives and content-only version recovery"
 generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-25-evoontology-01

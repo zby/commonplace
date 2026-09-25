@@ -1,6 +1,6 @@
 ---
 description: "A document can combine observations, deductions, and plausible explanations; KB writing and review must retain which claims and transitions have which warrant."
-type: kb/types/note.md
+type: note
 traits: [title-as-claim]
 tags: [evaluation, context-engineering]
 ---

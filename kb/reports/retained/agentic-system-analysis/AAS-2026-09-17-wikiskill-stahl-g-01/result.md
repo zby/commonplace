@@ -1,5 +1,5 @@
 ---
-type: kb/types/agentic-system-analysis-result.md
+type: agentic-system-analysis-result
 description: "Complete code-grounded analysis of WikiSkill (Stahl-G), separating host-driven skill evolution, research execution, and bounded score admission."
 run-id: AAS-2026-09-17-wikiskill-stahl-g-01
 system: "WikiSkill (Stahl-G)"

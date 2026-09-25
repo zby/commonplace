@@ -1,5 +1,5 @@
 ---
-type: kb/types/type-spec.md
+type: type-spec
 name: theory-proposal
 description: Finished theory the KB has not decided to import into its vocabulary — the terms and distinctions adoption would add, the definitions it would change, its trigger, and its cost
 schema: ./theory-proposal.schema.yaml

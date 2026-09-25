@@ -1,6 +1,6 @@
 ---
 description: "Comparative evidence separates operative redesign, revision of governing machinery, and contributions to later improvement from declared editability across six reported self-improvement paths including HyperAgents"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim, synthesis, has-comparison, has-external-sources]
 tags: [foundations, self-improving-systems]
 ---

@@ -1,6 +1,6 @@
 ---
 {
-  "type": "kb/types/note.md",
+  "type": "note",
   "description": "DualGraph research workflow: graph-guided search and per-report context reuse, with default-path defects and bounded factual warrant.",
   "generated-by": "analyse-agentic-system",
   "analysis-run": "AAS-2026-09-25-dualgraph-01",

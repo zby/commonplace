@@ -1,6 +1,6 @@
 ---
 description: Run snapshot-anchored verdict or report assays by selecting pairs, creating homogeneous jobs, delegating each job, and finalizing results
-type: kb/types/instruction.md
+type: instruction
 ---
 
 # Run review batches

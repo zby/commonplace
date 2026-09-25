@@ -1,7 +1,7 @@
 ---
 name: cp-skill-connect
 description: Discover connections for a single artifact. Writes a connect-report under kb/reports/cache/connect/<collection>/ without mutating library artifacts or indexes. Use with an artifact path or artifact name.
-type: kb/types/instruction.md
+type: instruction
 user-invocable: true
 allowed-tools: Read, Write, Grep, Glob, Bash, Skill
 context: fork
@@ -34,7 +34,7 @@ Target: `$ARGUMENTS` — one artifact path or artifact name. If none provided, a
    - **Any direction or composition hints** — inverse-edge expectations, rare/common edges, frontloading posture, sub-agent invocation preferences. The skill below leans on these for reverse-edge candidates and for tightening prospecting on rare edges.
 
    This is the only linking-rules surface. There is no compiled topology and no separate vocabulary doc to consult.
-5. Treat the installed KB goals from always-loaded `AGENTS.md` as an outer scope check, not as a replacement for collection label authorisation. `kb/reference/control-plane-goals.md` documents this always-loaded goal-frame invariant, including forked skill contexts, so connect does not add a separate goal-loading step.
+5. Treat the installed KB goals from always-loaded `AGENTS.md` as an outer scope check, not as a replacement for collection label authorisation. [Control-plane goals](../../reference/control-plane-goals.md) documents this always-loaded goal-frame invariant, including forked skill contexts, so connect does not add a separate goal-loading step.
 6. Use repo-local discovery only: curated indexes, scoped `rg`, and link following. Do not call external semantic-search tools or MCP search services; connect must work in Codex without external search state. Complete generated listings (`dir-index.md`, tag tails) are build-time site artifacts and do not exist in the repo (ADR 025).
 
 ## Discovery — per destination

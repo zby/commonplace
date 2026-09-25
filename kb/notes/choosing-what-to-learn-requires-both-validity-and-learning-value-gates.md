@@ -1,6 +1,6 @@
 ---
 description: "Separates two promotion checks for learning loops: whether a candidate is trustworthy enough to learn from, and whether learning it would improve the current system."
-type: kb/types/note.md
+type: note
 traits: [title-as-claim, has-external-sources]
 tags: [learning-theory, deploy-time-learning]
 ---

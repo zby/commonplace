@@ -1,6 +1,6 @@
 ---
 description: "RLM variants, Tendril, and llm-do show that control-language restriction and artifact persistence are separate questions, including where cited RLM sources leave post-return lifecycle unspecified"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim, has-comparison, has-external-sources]
 tags: [computational-model, learning-theory, artifact-analysis]
 ---

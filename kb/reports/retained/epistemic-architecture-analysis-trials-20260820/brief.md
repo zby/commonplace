@@ -81,7 +81,7 @@ Exclude:
 
 - Follow `kb/instructions/COLLECTION.md`: executable and precise, frontloaded, explicit decisions and scope, minimal rationale.
 - Follow `kb/types/instruction.md`: imperative title, trigger-focused description, prerequisites, steps, and verification where needed.
-- Frontmatter must contain `description` and `type: kb/types/instruction.md` only unless a concrete runtime consumer requires more.
+- Frontmatter must contain `description` and `type: instruction` only unless a concrete runtime consumer requires more.
 - The instruction must not depend on links into `kb/work/` during execution.
 
 ## Authoring evidence paths

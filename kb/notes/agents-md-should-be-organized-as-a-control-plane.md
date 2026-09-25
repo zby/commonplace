@@ -1,6 +1,6 @@
 ---
 description: Theory for deciding what belongs in AGENTS.md using loading frequency and failure cost, with layers, exclusion rules, and migration paths
-type: kb/types/note.md
+type: note
 traits: [title-as-claim]
 tags: [architecture]
 ---

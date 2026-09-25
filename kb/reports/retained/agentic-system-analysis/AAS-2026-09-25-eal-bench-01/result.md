@@ -1,5 +1,5 @@
 ---
-type: kb/types/agentic-system-analysis-result.md
+type: agentic-system-analysis-result
 description: "Complete analysis of EAL-bench's core authorization-memory writer/executor and reusable evaluation workflow at 51648690"
 run-id: AAS-2026-09-25-eal-bench-01
 system: "EAL-bench"

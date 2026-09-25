@@ -1,5 +1,5 @@
 ---
-type: kb/types/type-spec.md
+type: type-spec
 name: agentic-system-analysis-run-state
 description: Minimal completion state for one rerunnable agentic-system analysis
 schema: kb/reports/types/agentic-system-analysis-run-state.schema.yaml

@@ -1,6 +1,6 @@
 ---
 description: "A Commonplace grounding case changed three of four support verdicts after separating source reconstruction from target-claim judgment, making bilateral isolation a candidate control rather than a proven cause."
-type: kb/types/note.md
+type: note
 traits: [title-as-claim, has-comparison, has-external-sources]
 tags: [evaluation, kb-maintenance]
 ---

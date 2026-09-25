@@ -1,6 +1,6 @@
 ---
 description: "Compares factory-learning mechanisms on their shared causal job — experience-responsive retention — while separating update mechanisms from the project-theory function needed for open-ended coherent modification"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim, has-comparison]
 tags: [foundations, learning-theory, self-improving-systems]
 ---

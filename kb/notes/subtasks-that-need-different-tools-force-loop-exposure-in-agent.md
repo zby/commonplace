@@ -1,6 +1,6 @@
 ---
 description: When decomposition creates child tasks with different tool surfaces, the parent must construct fresh calls for each child, so a framework-owned loop is no longer the right control surface
-type: kb/types/note.md
+type: note
 traits: []
 tags: [computational-model, context-engineering, tool-loop]
 ---

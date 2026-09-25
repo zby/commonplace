@@ -1,6 +1,6 @@
 ---
 description: Create or revise a reusable instruction by codifying stable decisions while preserving execution-dependent judgment.
-type: kb/types/instruction.md
+type: instruction
 ---
 
 # Write an instruction
@@ -72,7 +72,7 @@ Otherwise keep the work in a workshop or log until its boundary is understood.
    ```yaml
    ---
    description: One line — what this instruction does, when to use it.
-   type: kb/types/instruction.md
+   type: instruction
    ---
    ```
    Write the description for the situation in which the instruction should be

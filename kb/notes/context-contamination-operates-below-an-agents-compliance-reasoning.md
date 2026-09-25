@@ -1,6 +1,6 @@
 ---
 description: "A controlled test found fine-grained stance drift despite explicit detection and refusal; exclusion guarantees non-exposure, while instruction-level mitigation remains an empirical question"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim, has-external-sources]
 tags: [llm-reliability, context-engineering]
 ---

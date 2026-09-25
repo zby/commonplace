@@ -1,5 +1,5 @@
 ---
-type: kb/types/agentic-system-analysis-result.md
+type: agentic-system-analysis-result
 description: 'MerchantBench ReAct subsystem: action-feedback loop, optional trace-derived
   scratchpad and guarded protocol with source/default and context-maintenance limits'
 run-id: AAS-2026-09-25-merchantbench-01

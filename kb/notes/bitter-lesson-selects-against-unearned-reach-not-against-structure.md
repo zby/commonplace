@@ -1,6 +1,6 @@
 ---
 description: "The lesson selects against claims whose reach was asserted rather than earned by a refuting test, not against structure or origin — theory search in readable forms is its own method; earned reach protects the claim, not its carrier"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim, has-external-sources]
 tags: [learning-theory, constraining, deploy-time-learning]
 ---

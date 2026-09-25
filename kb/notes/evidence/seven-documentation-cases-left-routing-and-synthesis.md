@@ -1,6 +1,6 @@
 ---
 description: "A seven-artifact Commonplace sweep found that direct source access removed exact-fact prose while discovery maps and cross-component boundaries survived; it does not establish a universal documentation ratio"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim]
 tags: [artifact-analysis, kb-maintenance]
 ---

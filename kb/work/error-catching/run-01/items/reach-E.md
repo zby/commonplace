@@ -1,6 +1,6 @@
 ---
 description: The loading hierarchy (CLAUDE.md → skill descriptions → skill bodies → task docs) should match instruction specificity to loading frequency
-type: kb/types/note.md
+type: note
 traits: [has-external-sources, title-as-claim]
 tags: [architecture]
 ---

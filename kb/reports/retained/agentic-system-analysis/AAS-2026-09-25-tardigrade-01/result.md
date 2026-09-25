@@ -1,5 +1,5 @@
 ---
-type: kb/types/agentic-system-analysis-result.md
+type: agentic-system-analysis-result
 description: 'Tardigrade inference and compaction subsystem: event-derived model progression,
   summary checkpoints and schema correction with bounded host and provider guarantees'
 run-id: AAS-2026-09-25-tardigrade-01

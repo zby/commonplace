@@ -1,6 +1,6 @@
 ---
 description: "Compounding evidence must come from later improvement episodes through displaced productivity measures and causal traces, not from the metric that accepted the earlier change"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim, has-external-sources]
 tags: [foundations, self-improving-systems]
 ---

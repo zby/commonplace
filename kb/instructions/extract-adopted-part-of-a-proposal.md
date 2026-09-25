@@ -1,6 +1,6 @@
 ---
 description: Use when part of a live design proposal has shipped while the rest is still undecided — moves the shipped part out and narrows the proposal to its open remainder
-type: kb/types/instruction.md
+type: instruction
 ---
 
 # Extract the adopted part of a proposal

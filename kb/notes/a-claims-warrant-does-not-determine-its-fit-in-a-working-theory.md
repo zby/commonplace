@@ -1,6 +1,6 @@
 ---
 description: "Independent warrant and fit in a working theory answer different questions: a warranted claim may fit poorly, while apparent fit may be produced by an unwarranted or already-assumed claim"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim]
 tags: [learning-theory, evaluation]
 ---

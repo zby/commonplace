@@ -1,6 +1,6 @@
 ---
 {
-  "type": "kb/types/note.md",
+  "type": "note",
   "description": "RSIAgent separates task verification, Actor-owned memory reconciliation and curriculum selection; source wiring supports reusable experience but reported gains do not isolate criticism-driven improvement.",
   "generated-by": "analyse-agentic-system",
   "analysis-run": "AAS-2026-09-24-rsiagent-01",

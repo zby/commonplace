@@ -1,8 +1,8 @@
 ---
-type: kb/types/type-spec.md
+type: type-spec
 name: index
 description: Build-time generated listing pages (per-directory dir-index virtual files); committed tag landings use kb/types/tag-readme.md instead
-schema: kb/types/generated-index.schema.yaml
+schema: ./generated-index.schema.yaml
 ---
 
 # Index

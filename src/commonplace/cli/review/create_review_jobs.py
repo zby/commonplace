@@ -8,6 +8,7 @@ import sys
 from dataclasses import dataclass
 from pathlib import Path
 
+from commonplace.lib.library import checks_library
 from commonplace.review.batch import prepare_grouped_review_job
 from commonplace.review.collection_conformance import (
     is_collection_md_criterion_path,
@@ -272,6 +273,7 @@ def _read_input(repo_root: Path, path: str | None) -> str:
     return input_path.read_text(encoding="utf-8")
 
 
+@checks_library
 def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     parser = argparse.ArgumentParser(
         description="Create queued review jobs from selector JSON.",

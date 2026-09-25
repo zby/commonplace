@@ -1,6 +1,6 @@
 ---
 description: "Separates semantic underspecification from execution indeterminism: natural-language specs admit multiple valid projections, while constraining commits one projection to precise code."
-type: kb/types/note.md
+type: note
 traits: [has-external-sources]
 tags: [learning-theory, computational-model, constraining]
 ---

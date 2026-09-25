@@ -1,7 +1,7 @@
 ---
 name: synthesize-agent-memory-landscape
 description: Use when asked to write or refresh a public cross-system synthesis from retained analyse-agentic-system results and their memory-comparison fields. Produces one snapshot-bound analysis; excludes legacy reviews and Commonplace transfer scans.
-type: kb/types/instruction.md
+type: instruction
 user-invocable: true
 argument-hint: "[public analysis path or response] [selected main reviews] [current or historical]"
 context: fork

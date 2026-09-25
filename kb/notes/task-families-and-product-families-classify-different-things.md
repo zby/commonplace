@@ -1,6 +1,6 @@
 ---
 description: "Task families group obligations or evaluations; software product families group products through declared commonality, variability, and reusable production scope"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim, has-comparison]
 tags: [foundations, computational-model, self-improving-systems]
 ---

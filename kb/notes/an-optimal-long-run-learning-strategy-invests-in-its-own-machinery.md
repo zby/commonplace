@@ -1,6 +1,6 @@
 ---
 description: "A machinery improvement is paid for once and reused by every later learning episode, so over a long horizon its return can exceed immediate learning; where it does, an optimal strategy diverts effort to the machinery."
-type: kb/types/note.md
+type: note
 traits: [title-as-claim]
 tags: [learning-theory, self-improving-systems]
 ---

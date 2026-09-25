@@ -1,5 +1,5 @@
 ---
-type: kb/types/agentic-system-analysis-result.md
+type: agentic-system-analysis-result
 description: "Complete analysis of Enoch's persistent agent core at 81000d50, including task admission, memory and code evolution"
 run-id: AAS-2026-09-25-enoch-01
 system: "Enoch"

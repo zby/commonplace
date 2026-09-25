@@ -1,5 +1,5 @@
 ---
-type: kb/types/note.md
+type: note
 description: Bounded integration trial of the Maka memory specialist handoff
 memory-comparison:
   scope: Built-in conversation-event retention and history read-back; history compaction

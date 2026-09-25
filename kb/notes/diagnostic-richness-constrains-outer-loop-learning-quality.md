@@ -1,6 +1,6 @@
 ---
 description: "Outer-loop learning depends on inspectable failure evidence, not only on the oracle used to select winning candidates"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim, has-external-sources]
 tags: [learning-theory, deploy-time-learning]
 ---

@@ -1,5 +1,5 @@
 ---
-type: kb/types/instruction.md
+type: instruction
 description: Named system, tool, or organization introduced without enough context for the reader to know what it is.
 ---
 

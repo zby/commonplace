@@ -1,6 +1,6 @@
 ---
 description: Stable quality depends on capacity to prevent, contain, detect, and repair harmful retained artifacts keeping pace with their risk-weighted inflow, for which gross generation volume is only a proxy
-type: kb/types/note.md
+type: note
 traits: [title-as-claim, has-external-sources]
 tags: [kb-maintenance]
 ---

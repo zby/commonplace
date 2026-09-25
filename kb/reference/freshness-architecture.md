@@ -1,6 +1,6 @@
 ---
 description: "Architecture boundaries of Commonplace freshness: target identity, accepted-input applicability, review adaptation, transitions, and concurrency guards"
-type: kb/types/note.md
+type: note
 tags: []
 ---
 

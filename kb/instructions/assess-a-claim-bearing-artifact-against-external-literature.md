@@ -1,6 +1,6 @@
 ---
 description: "Use when explicitly asked whether external literature duplicates or subsumes a claim-bearing KB artifact, or should change its keep, rewrite, thin, merge, retire, or cohort status"
-type: kb/types/instruction.md
+type: instruction
 ---
 
 # Assess a claim-bearing artifact against external literature

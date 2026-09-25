@@ -1,5 +1,5 @@
 ---
-type: kb/types/note.md
+type: note
 description: MerchantBench ReAct baseline combines action feedback and optional persistent
   notes, with context trimming and source/default limits
 generated-by: analyse-agentic-system

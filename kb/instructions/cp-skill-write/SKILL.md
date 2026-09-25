@@ -1,7 +1,7 @@
 ---
 name: cp-skill-write
 description: Write one KB document whose intended contribution is already determined, under its collection and type contracts; validate it and hand broader graph discovery to cp-skill-connect.
-type: kb/types/instruction.md
+type: instruction
 user-invocable: true
 allowed-tools: Read, Write, Grep, Glob, Bash, Skill
 context: fork
@@ -15,21 +15,21 @@ argument-hint: "[path | collection | type] [topic or claim/purpose] — a docume
 
 **Intent.** Produce a document that is aligned with this KB's doctrine: the standing rules in the root `AGENTS.md`, the target collection's `COLLECTION.md`, the document's type spec, and the Universal Mechanics below. Together they fix what the document may contribute, its quality bar, structure, vocabulary, and links. When done, the document is saved at its resolved path, meets those rules, has its source-dependent claims grounded, and passes `commonplace-validate`. This skill authors only: link discovery beyond a duplicate guard belongs to `cp-skill-connect`, source records to `cp-skill-ingest`, and verification to a human. The step order binds where it protects the target: the source guard (Step 7) finishes before the first write (Step 8). Wording, and structure within the type contract, are the writer's choice.
 
-All documents in the KB live in a **collection**: a directory under `kb/` with a local `COLLECTION.md`, such as `kb/notes/`, `kb/reference/`, `kb/instructions/`, or an installed library collection like `kb/commonplace/notes/`. Each collection that accepts writes has a `COLLECTION.md` with its purpose, intended contribution, quality goal, and linking conventions.
+All documents in the KB live in a **collection**: a directory under `kb/` with a local `COLLECTION.md`, such as `kb/notes/`, `kb/reference/`, or `kb/instructions/`. Each collection that accepts writes has a `COLLECTION.md` with its purpose, intended contribution, quality goal, and linking conventions.
 
-Documents with frontmatter carry a path-valued `type:` that points to a type-spec doc, for example `type: kb/types/note.md` or `type: kb/reference/types/adr.md`. Files with no frontmatter are implicit `text`.
+Documents with frontmatter carry a `type:` that names a type-spec doc. A global type, defined in the Commonplace library's `types/` directory, is named by bare name, for example `type: note`. A collection-local type is named by path, for example `type: ./types/adr.md` or `type: kb/reference/types/adr.md`. Files with no frontmatter are implicit `text`. The library's global types are at `../../types/`, resolved from this skill's real location.
 
 ### Step 1 - Parse Arguments
 
 **Edit mode**: first argument is a path to an existing `.md` file. Read it, infer collection from the path, and read its `type:` path from frontmatter. If it has frontmatter but no `type:`, stop and fix that structural problem before editing. If it has no frontmatter, treat it as implicit `text`. Open the type-spec doc named by `type:` before making structural edits.
 
-**New-write mode**: everything else. Extract collection, type, and topic from the arguments. Default an unspecified collection to `notes` and an unspecified type to `kb/types/note.md`. If the requested type is an instruction and no collection is explicit, use collection `instructions`.
+**New-write mode**: everything else. Extract collection, type, and topic from the arguments. Default an unspecified collection to `notes` and an unspecified type to `note`. If the requested type is an instruction and no collection is explicit, use collection `instructions`.
 
 For new writes, resolve the target collection to a directory under `kb/` with a local `COLLECTION.md`; shorthand names such as `notes` mean `kb/notes/`. Resolve the type independently of the collection contract:
 
-- If the user or calling workflow supplied a type path, open it and verify that its own frontmatter identifies it as a type-spec doc.
-- If the user supplied a shorthand type name, search Markdown files under `kb/types/` and every collection `types/` directory below `kb/`. Inspect each candidate's own opening frontmatter and require exactly one type-spec doc whose `name:` equals the shorthand. If none or several match, stop and report the matching paths; do not guess or apply collection-specific precedence.
-- If no type was supplied, use `kb/types/note.md`.
+- If the user or calling workflow supplied a type path, open it and verify that its own frontmatter identifies it as a type-spec doc. A path to one of the library's global types is not valid; use its bare name.
+- If the user supplied a shorthand type name, look for it among the library's global types (`../../types/<name>.md`) and in every collection `types/` directory below `kb/`. Inspect each candidate's own opening frontmatter and require exactly one type-spec doc whose `name:` equals the shorthand. A global match is written as the bare name; a local match as its path. If none or several match, stop and report the matches; do not guess or apply collection-specific precedence.
+- If no type was supplied, use `note`.
 
 This lookup identifies the contract; it does not authorize the type for the target collection. Do not add collection-specific eligibility logic or a `kb/work/` branch. `commonplace-validate` owns that decision. An explicit request for `text` means frontmatter-free Markdown, not a `type:` pointer.
 
@@ -41,11 +41,11 @@ Read the target collection's `COLLECTION.md` for the collection's writing conven
 
 ### Step 3 - Load The Type Spec
 
-Read the selected type-spec doc. Its frontmatter must include `type: kb/types/type-spec.md`, `name`, `description`, and `schema`. Its body supplies the document shape and may include a template block. Follow that body as the structural authoring contract.
+Read the selected type-spec doc. Its frontmatter must include `type: type-spec`, `name`, `description`, and `schema`. Its body supplies the document shape and may include a template block. Follow that body as the structural authoring contract.
 
 Do not fall back from a missing type path to `note`.
 
-For `text`, write raw markdown with no frontmatter only when the user explicitly wants unstructured capture. Otherwise use `kb/types/note.md`.
+For `text`, write raw markdown with no frontmatter only when the user explicitly wants unstructured capture. Otherwise use `note`.
 
 ### Step 4 - Resolve The Intended Contribution
 
@@ -85,9 +85,9 @@ All other discovery — collection-wide description scans, cross-destination pro
 
 ### Step 6 - Draft The Candidate
 
-Follow the type-spec doc and collection conventions. Derive a lowercase-hyphenated filename from `# Title` unless editing an existing file. For typed documents, set `type:` to the exact repo-relative type-spec path, not the type name.
+Follow the type-spec doc and collection conventions. Derive a lowercase-hyphenated filename from `# Title` unless editing an existing file. For typed documents, name a global type by its bare name and a collection-local type by its exact path.
 
-Set traits only when clearly warranted. The available traits and their meanings are defined in the target type's spec (e.g. the traits table in `kb/types/note.md`) — take the vocabulary from there, not from a remembered list.
+Set traits only when clearly warranted. The available traits and their meanings are defined in the target type's spec (e.g. the traits table in [the note type](../../types/note.md)) — take the vocabulary from there, not from a remembered list.
 
 Preserve existing frontmatter and links during edits unless the requested change requires changing them.
 
@@ -118,7 +118,7 @@ and do not retrigger the guard for unchanged source-dependent wording.
 For each guarded dependency, resolve exactly one direct tracked
 `kb/sources/<slug>.ingest.md` from the supplied ingest, canonical source URL, or
 unambiguous source identity. Read its complete Quotes section and the
-`semantic/grounding-alignment` gate from the installed framework gate catalog.
+`semantic/grounding-alignment` gate from the library's review-gate catalog (`../review-gates/`, resolved from this skill's real location).
 
 - When the retained verbatim quotes contain enough source material for the
   gate to judge the candidate's use, apply the gate directly to that use. Link

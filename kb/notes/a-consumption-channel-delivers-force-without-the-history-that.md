@@ -1,6 +1,6 @@
 ---
 description: "A consumption path can promote content into a higher-force role without checking whether an authorization covers that content, version, and use"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim, has-external-sources]
 tags: [failure-modes, artifact-analysis, self-improving-systems]
 ---

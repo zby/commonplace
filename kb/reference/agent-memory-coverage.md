@@ -1,6 +1,6 @@
 ---
 description: "How Commonplace's shipped surfaces realize agent-memory requirements: control plane, contracts, storage roles, validation, review, activation, promotion, lifecycle, and current gaps"
-type: kb/types/note.md
+type: note
 tags: []
 ---
 
@@ -31,7 +31,7 @@ The requirements come from [Designing a Memory System for LLM-Based Agents](../n
 | Authority | Explicit files, version-control review, deterministic validation, and semantic review gates provide the current authority model for durable memory changes. | Authority for automatic extraction, promotion, activation, and retirement is not fully specified. |
 | Evaluation | Structural validation and semantic review evaluate artifact quality. | Activation, behavioral uptake, context efficiency, source-alignment health, and promotion economics are not first-class metrics. |
 | Native work environment | Markdown, version control, shell commands, `.claude/skills/`, `.agents/skills/`, and package commands let Claude Code, Codex, and similar agents inspect and edit memory where they already work. The shipped workflows use Git. See [architecture](./architecture.md) and [instruction generation](./instruction-generation.md). | Harness-specific execution policy differs across tools. |
-| Reusable memory distribution | `commonplace-init` installs reusable methodology under `kb/commonplace/` while leaving user collections project-owned. Shared types stay in `kb/types/`; promoted skills are linked into harness skill directories. | Local project authority and shipped-library upgrades still require operator judgment. |
+| Reusable memory distribution | The installed package carries reusable methodology, global types, review gates, and promoted skills as one library that every project reads in place; user collections stay project-owned. `commonplace-init` writes skill stubs and a routing file that point into the library. | A library upgrade applies in place with no project-level diff to review; local project authority still requires operator judgment. |
 
 ## Boundary
 

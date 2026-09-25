@@ -1,6 +1,6 @@
 ---
 description: "Generated memory comparisons from retained main-review evidence"
-type: kb/types/note.md
+type: note
 traits: [has-comparison]
 ---
 

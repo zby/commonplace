@@ -1,7 +1,7 @@
 ---
 name: write-agent-memory-system-review
 description: Write or update a local code-grounded agent memory system review from a GitHub repository reference, including checkout refresh, optional sub-agent drafting, semantic QA, and validation.
-type: kb/types/instruction.md
+type: instruction
 user-invocable: true
 allowed-tools: Read, Write, Grep, Glob, Bash, Task
 context: fork

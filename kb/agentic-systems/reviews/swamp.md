@@ -1,6 +1,6 @@
 ---
 description: "Swamp as an agent-facing automation control plane: typed resource models, declarative DAGs, remote workers, policy gates, and extension distribution."
-type: kb/types/note.md
+type: note
 traits: [has-external-sources]
 tags: [tool-loop]
 ---

@@ -1,5 +1,5 @@
 ---
-type: kb/types/note.md
+type: note
 description: "Stahl-G's independent WikiSkill implementation: host-agent learning requests, persistent Wiki updates, and score-gated skill adoption."
 generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-17-wikiskill-stahl-g-01

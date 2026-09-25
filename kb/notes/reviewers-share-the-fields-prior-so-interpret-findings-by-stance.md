@@ -1,6 +1,6 @@
 ---
 description: "Decorrelating reviewers removes the author's errors, not the field's; judges converge on consensus where a claim is original, so findings are read by stance and as reconnaissance: engage where load-bearing, deflect where not"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim]
 tags: [foundations, methodology]
 ---

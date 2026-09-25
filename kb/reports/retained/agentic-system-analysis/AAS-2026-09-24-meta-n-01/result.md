@@ -1,5 +1,5 @@
 ---
-type: kb/types/agentic-system-analysis-result.md
+type: agentic-system-analysis-result
 description: Complete code-grounded analysis of Meta^n as an evolutionary code-injection improvement plane, with
   bounded memory and epistemic findings
 run-id: AAS-2026-09-24-meta-n-01

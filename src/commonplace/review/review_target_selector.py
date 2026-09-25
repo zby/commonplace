@@ -10,6 +10,7 @@ from pathlib import Path
 from commonplace.freshness.selector import ChangedInput
 from commonplace.lib import frontmatter
 from commonplace.lib.hashing import content_sha256_for_text
+from commonplace.lib.library import artifact_file
 from commonplace.review.collection_conformance import (
     COLLECTION_CONFORMANCE_LENS,
     is_collection_conformance_request,
@@ -289,7 +290,7 @@ def _criterion_paths_for_notes(
         if critique_requested:
             paths.append(critique_criterion_path(repo_root))
         for criterion_path in paths:
-            if not (repo_root / criterion_path).is_file():
+            if not artifact_file(repo_root, criterion_path).is_file():
                 raise FileNotFoundError(f"Gate not found: {criterion_path}")
         selected.append((note_abs, note_path, paths))
     return selected
@@ -339,7 +340,7 @@ def select_stale_criteria(
         current_note_text: str | None = None
         current_note_hash: str | None = None
         for criterion_path in criterion_paths_for_note:
-            criterion_abs = repo_root / criterion_path
+            criterion_abs = artifact_file(repo_root, criterion_path)
             if model is None:
                 if (note_path, criterion_path) not in baseline_pairs:
                     stale.append(

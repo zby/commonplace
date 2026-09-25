@@ -1,6 +1,6 @@
 ---
 description: Agent orchestration is not ordered along a single ladder — scheduler placement, persistence, coordination form, coordination guarantees, and return artifacts vary independently across architectures
-type: kb/types/note.md
+type: note
 traits: [has-external-sources, title-as-claim]
 tags: [computational-model]
 ---

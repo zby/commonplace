@@ -1,6 +1,6 @@
 ---
 description: "Choose a debugging move by checking intent against the specification, output against the specification, and variation across repeated runs; failure frequency alone cannot identify the defect"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim]
 tags: [learning-theory, computational-model, llm-reliability]
 ---

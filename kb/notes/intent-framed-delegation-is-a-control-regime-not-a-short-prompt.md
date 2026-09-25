@@ -1,6 +1,6 @@
 ---
 description: For consequential agent handoffs, explains how Commonplace doctrine, task intent, binding bounds, and local evidence govern adaptive choice while prompt length does not.
-type: kb/types/note.md
+type: note
 traits:
   - title-as-claim
   - has-comparison

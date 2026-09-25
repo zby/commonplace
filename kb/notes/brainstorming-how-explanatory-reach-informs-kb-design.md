@@ -1,6 +1,6 @@
 ---
 description: Deutsch's reach, registered here as explanatory-reach, applied to KB notes — a maintenance risk signal, not a retrieval signal, because high-explanatory-reach revisions break downstream reasoning silently
-type: kb/types/note.md
+type: note
 traits: []
 tags: [learning-theory, kb-maintenance, discovery]
 ---

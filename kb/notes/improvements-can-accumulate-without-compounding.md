@@ -1,6 +1,6 @@
 ---
 description: "Improvements accumulate when later improvement consumes or preserves retained results; compounding requires an earlier benefit to counterfactually improve a later episode, directly or through reinvested savings"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim]
 tags: [foundations, self-improving-systems]
 ---

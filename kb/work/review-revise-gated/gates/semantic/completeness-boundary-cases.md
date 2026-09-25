@@ -1,5 +1,5 @@
 ---
-type: kb/types/instruction.md
+type: instruction
 description: Workshop review gate for checking completeness boundary cases during review-revise experiments
 gate_id: semantic/completeness-boundary-cases
 name: Completeness and boundary cases

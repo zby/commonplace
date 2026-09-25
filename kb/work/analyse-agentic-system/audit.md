@@ -163,7 +163,7 @@ Resolution: kept; the candidate retains workspace-root paths throughout, includi
 ### 6.3 Frontmatter, title, description, and sections conform
 Status: resolved
 Anchor: frontmatter lines 1–5; H1 "Analyse an Agentic System"; Prerequisites/Steps/Verify sections.
-`description` names the trigger condition as both contracts require; `type: kb/types/instruction.md` matches the template; the title is imperative and is the brief's fixed provisional title, corresponding to the skill name `analyse-agentic-system`; the default template's required sections are all present. (Field completeness for a promoted skill is WF-d.)
+`description` names the trigger condition as both contracts require; `type: instruction` matches the template; the title is imperative and is the brief's fixed provisional title, corresponding to the skill name `analyse-agentic-system`; the default template's required sections are all present. (Field completeness for a promoted skill is WF-d.)
 Recommendation: keep — basis: brief target section; COLLECTION.md title/description and template; kb/types/instruction.md frontmatter rules.
 Resolution: kept; candidate adds only the WF-d fields (`user-invocable`, `argument-hint`) on top of the conforming set.
 

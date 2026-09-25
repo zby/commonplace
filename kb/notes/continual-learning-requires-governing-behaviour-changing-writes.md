@@ -1,6 +1,6 @@
 ---
 description: For deployed systems, persistence is insufficient; continual learning must select, validate, authorize, and coordinate behaviour-changing updates across the representational forms a system can change
-type: kb/types/note.md
+type: note
 traits: [title-as-claim]
 tags: [learning-theory, deploy-time-learning]
 ---

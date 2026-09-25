@@ -1,5 +1,5 @@
 ---
-type: kb/types/note.md
+type: note
 description: "SwarmWorld's simulator-bound agent society: explicit episode memory, executable artifact inheritance, measurement-based skill status and limits on replay and scientific warrant."
 traits: [has-external-sources]
 generated-by: analyse-agentic-system

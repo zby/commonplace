@@ -1,6 +1,6 @@
 ---
 description: Seven roles of the type system — navigation hints, metadata enforcement, verifiable structure, local extensibility, content-layer identification, output quality through structured writing discipline, and maturation through constraining
-type: kb/types/note.md
+type: note
 tags: [type-system]
 ---
 
@@ -45,7 +45,7 @@ The two positive arguments are independent, while the causal limit keeps their b
 Content starts as [text](../types/text.md) (no frontmatter, no structure) and
 gains type information as it develops — gradual typing applied to documents.
 The maturation path is: raw capture → add valid note frontmatter
-(`description` plus `type: kb/types/note.md`) → accumulate traits → promote to
+(`description` plus `type: note`) → accumulate traits → promote to
 a specific type when structural criteria are met. A bare note that persists
 without promotion is a signal. This mirrors the broader [constraining
 pattern](./methodology-enforcement-is-constraining.md): practices start

@@ -1,6 +1,6 @@
 ---
 description: "When a summary cannot license a reliability-compliant stop, the authoritative fallback remains in the path; only fallback work the summary removes can offset its own cost"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim]
 tags: [context-engineering, document-system]
 ---

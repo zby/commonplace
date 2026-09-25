@@ -1,6 +1,6 @@
 ---
 description: Defines staged comparisons that isolate theory-mediated search, candidate choice, evidence acquisition, and cross-episode retention before combining them.
-type: kb/types/note.md
+type: note
 ---
 
 # How to test theory-mediated learning

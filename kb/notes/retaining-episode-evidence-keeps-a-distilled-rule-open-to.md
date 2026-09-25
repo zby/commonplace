@@ -1,6 +1,6 @@
 ---
 description: "Keeping relevant episode evidence and its relation to a distilled rule preserves a route for re-examining that rule; reconstruction, comparative value, and correct generalization still require testing"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim, has-comparison, synthesis]
 tags: [agent-memory, learning-theory, context-engineering]
 ---

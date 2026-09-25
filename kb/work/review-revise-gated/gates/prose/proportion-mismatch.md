@@ -1,5 +1,5 @@
 ---
-type: kb/types/instruction.md
+type: instruction
 description: Workshop review gate for checking proportion mismatch during review-revise experiments
 gate_id: prose/proportion-mismatch
 name: Proportion mismatch

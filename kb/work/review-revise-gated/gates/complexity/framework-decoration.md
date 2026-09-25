@@ -1,5 +1,5 @@
 ---
-type: kb/types/instruction.md
+type: instruction
 description: Workshop review gate for checking framework decoration during review-revise experiments
 gate_id: complexity/framework-decoration
 name: Framework decoration

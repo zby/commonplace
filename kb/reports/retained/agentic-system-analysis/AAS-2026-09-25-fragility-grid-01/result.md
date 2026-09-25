@@ -1,5 +1,5 @@
 ---
-type: kb/types/agentic-system-analysis-result.md
+type: agentic-system-analysis-result
 description: 'fragility-grid collection subsystem: fixed model-evaluation grid, file-backed
   analytical reuse and existence-only resumption without learned guidance'
 run-id: AAS-2026-09-25-fragility-grid-01

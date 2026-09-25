@@ -1,6 +1,6 @@
 ---
 description: "Explains why conceptual distinctions built to support a paper's stated result can become its most valuable reusable output in a different research context"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim]
 tags: [foundations]
 ---

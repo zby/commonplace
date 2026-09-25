@@ -52,7 +52,7 @@ def note(
     body: str,
     *,
     collection: str = "notes",
-    type_path: str = "kb/types/note.md",
+    type_path: str = "note",
 ) -> Path:
     return write(
         tmp_path / "kb" / collection / "test-note.md",
@@ -92,7 +92,7 @@ def unquoted_fails(path: Path, repo_root: Path) -> list[str]:
 @pytest.mark.parametrize(
     ("collection", "type_path"),
     [
-        ("notes", "kb/types/note.md"),
+        ("notes", "note"),
         ("articles", "kb/articles/types/article.md"),
     ],
 )

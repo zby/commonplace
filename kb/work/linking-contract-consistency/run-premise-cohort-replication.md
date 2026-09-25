@@ -1,6 +1,6 @@
 ---
 description: "Use when independently replicating the legacy grounds premise classifications before approving the deferred grounds migration"
-type: kb/types/instruction.md
+type: instruction
 ---
 
 # Replicate the premise-cohort classification

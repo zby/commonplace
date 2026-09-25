@@ -1,6 +1,6 @@
 ---
 description: Running a decomposition confirms only that it sufficed here; because many force-sets fit the same split, rationale retained at design time is what gives a transfer claim an antecedent to test
-type: kb/types/note.md
+type: note
 traits: [title-as-claim, has-external-sources]
 tags: [learning-theory, deploy-time-learning]
 ---

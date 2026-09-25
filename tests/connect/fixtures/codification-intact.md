@@ -1,6 +1,6 @@
 ---
 description: Definition — codification is constraining that crosses a medium boundary, the phase transition from natural language to executable code where medium, consumer, and verification regime all change — the far end of the constraining spectrum
-type: kb/types/note.md
+type: note
 traits: []
 tags: [learning-theory]
 ---

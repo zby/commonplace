@@ -58,7 +58,7 @@ from commonplace.lib.type_resolver import (
     validate_instance,
 )
 
-TAG_README_TYPE = "kb/types/tag-readme.md"
+TAG_README_TYPE = "tag-readme"
 # Weight gates for tag-readme artifacts: the type contract is that a tag's
 # curated head stays a cheap whole-read surface (ADR 026). Bytes gate; entry
 # count is reported as diagnosis only.
@@ -934,7 +934,7 @@ def _quote_citation_rule(
     validate_quote_citations(results, parsed.content)
 
 
-@type_rule("kb/types/agentic-system-analysis-result.md")
+@type_rule("agentic-system-analysis-result")
 @type_rule("kb/reports/types/agent-memory-analysis-report.md")
 def _agentic_evidence_and_references_rule(
     results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
@@ -959,7 +959,7 @@ def _agentic_evidence_and_references_rule(
         )
 
 
-@type_rule("kb/types/agentic-system-analysis-result.md")
+@type_rule("agentic-system-analysis-result")
 def _agentic_comparison_rule(
     results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
 ) -> None:
@@ -996,7 +996,7 @@ def _memory_report_comparison_rule(
         )
 
 
-@type_rule("kb/types/type-spec.md")
+@type_rule("type-spec")
 def validate_type_spec_definition(
     results: CheckResults,
     parsed: ParsedNote,
@@ -1139,7 +1139,7 @@ def validate_article(
 
 
 @type_rule(
-    "kb/types/note.md",
+    "note",
     "kb/notes/types/structured-claim.md",
     "kb/articles/types/article.md",
 )

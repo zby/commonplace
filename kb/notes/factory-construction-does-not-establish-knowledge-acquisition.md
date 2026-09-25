@@ -1,6 +1,6 @@
 ---
 description: "Recursive software-factory construction is prior art, but the demonstrated constructors receive the family definitions, metamodels, mappings, and expertise that determine the produced factory"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim, has-comparison, has-external-sources]
 tags: [foundations, self-improving-systems]
 ---

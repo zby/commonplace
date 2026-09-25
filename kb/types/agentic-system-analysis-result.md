@@ -1,8 +1,8 @@
 ---
-type: kb/types/type-spec.md
+type: type-spec
 name: agentic-system-analysis-result
 description: "Exact state result of one evidence-bounded external agentic-system analysis run"
-schema: kb/types/agentic-system-analysis-result.schema.yaml
+schema: ./agentic-system-analysis-result.schema.yaml
 ---
 
 # Agentic system analysis result
@@ -351,7 +351,7 @@ A transfer-scan disposition belongs in the operator report unless an owning work
 
 ```markdown
 ---
-type: kb/types/agentic-system-analysis-result.md
+type: agentic-system-analysis-result
 description: "Complete analysis of {system} at {boundary}, with {disposition} disposition"
 run-id: AAS-YYYY-MM-DD-system-slug-nn
 system: "{source-native system name}"

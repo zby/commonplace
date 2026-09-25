@@ -1,5 +1,5 @@
 ---
-type: kb/types/instruction.md
+type: instruction
 description: Workshop review gate for checking connection inflation during review-revise experiments
 gate_id: complexity/connection-inflation
 name: Connection inflation

@@ -2,7 +2,7 @@
 gate_id: accessibility/unidentified-references
 name: Unidentified References
 description: Named system, tool, or organization introduced without enough context for the reader to know what it is.
-type: kb/types/review-gate.md
+type: review-gate
 lens: accessibility
 watches: [body]
 staleness: changed

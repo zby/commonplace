@@ -34,7 +34,7 @@ def make_note(
         path,
         f"""---
 description: {description}
-type: kb/types/note.md
+type: note
 traits: {traits}
 tags: {tags}
 ---
@@ -188,7 +188,7 @@ def _note(
 ) -> str:
     return f"""---
 description: {description}
-type: kb/types/note.md
+type: note
 traits: {traits}
 tags: {tags}
 ---
@@ -307,7 +307,7 @@ def test_all_gates_cli_selects_type_pairs_but_never_acks_them(tmp_path: Path) ->
     write(
         repo / "kb" / "types" / "note.md",
         """---
-type: kb/types/type-spec.md
+type: type-spec
 name: note
 description: Test type spec for note
 schema: null

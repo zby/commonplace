@@ -1,6 +1,6 @@
 ---
 description: "A hand-crafted starting state fits the Bitter Lesson only if scalable learning displaces the task- and family-specific production knowledge it supplies as claimed reach widens"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim]
 tags: [learning-theory, deploy-time-learning, foundations]
 ---

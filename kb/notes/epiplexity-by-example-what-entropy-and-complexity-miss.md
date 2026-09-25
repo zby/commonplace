@@ -1,6 +1,6 @@
 ---
 description: ELI5 explanation of epiplexity through encrypted messages, shuffled textbooks, CSPRNGs, and chess notation — contrasting surprise, shortest description, and observer-relative usable structure
-type: kb/types/note.md
+type: note
 traits: [has-external-sources]
 tags: [learning-theory, discovery]
 ---

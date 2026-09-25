@@ -1,6 +1,6 @@
 ---
 description: "Derives agent-memory design pressures and links to a requirements inventory for agents designing or evaluating memory systems"
-type: kb/types/note.md
+type: note
 traits: [synthesis, has-external-sources]
 tags: [agent-memory, context-engineering, learning-theory]
 ---

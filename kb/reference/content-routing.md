@@ -1,6 +1,6 @@
 ---
 description: "Routing table from content kind to destination — instructions and contracts, reference, ADRs, notes, commit messages, log, workshop — with the regeneration source and consuming operation that justify each row"
-type: kb/types/note.md
+type: note
 ---
 
 # Content routing

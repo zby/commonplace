@@ -1,6 +1,6 @@
 ---
 description: Adapts Deutsch's adaptive-vs-explanatory distinction to KB design — first-principles reasoning selects explanations with reach, accountable to observed fit and rival-practice tests
-type: kb/types/note.md
+type: note
 traits: [has-external-sources]
 tags: [learning-theory, discovery]
 ---

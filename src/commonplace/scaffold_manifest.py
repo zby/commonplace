@@ -17,7 +17,8 @@ class ScaffoldManifest:
 
     Tree/file/template entries are (scaffold_relative_path, target_relative_path)
     pairs; sources resolve from packaged `commonplace/_data/` or a source
-    checkout.
+    checkout. The library itself is not scaffolded: projects read it from the
+    installed package (see `commonplace.lib.library`).
     """
 
     directories: tuple[Path, ...]
@@ -26,12 +27,12 @@ class ScaffoldManifest:
     templates: tuple[tuple[str, str], ...]
     skills_dirs: tuple[Path, ...]
     promoted_skills: tuple[str, ...]
+    router_skill: str
+    legacy_copies: tuple[tuple[str, str], ...]
 
 
 MANIFEST = ScaffoldManifest(
     directories=(
-        # Shared top-level (types are shared between library and user).
-        Path("kb/types"),
         # User collections — start empty; user adds their own content.
         Path("kb/notes"),
         Path("kb/notes/types"),
@@ -52,16 +53,11 @@ MANIFEST = ScaffoldManifest(
         Path("kb/reports/retained"),
         Path("kb/reports/types"),
     ),
-    # Shipped library content lands under kb/commonplace/ (ADR-021). Shared
-    # types stay at top-level kb/types/. User-space type scaffolds (sources,
-    # reports) land in their conventional locations under the user's tree.
+    # The project's own report and source collections receive their type
+    # contracts. The library stays in the installed package.
     trees=(
-        ("kb/instructions", "kb/commonplace/instructions"),
-        ("kb/notes", "kb/commonplace/notes"),
-        ("kb/reference", "kb/commonplace/reference"),
         ("kb/reports/types", "kb/reports/types"),
         ("kb/sources/types", "kb/sources/types"),
-        ("kb/types", "kb/types"),
     ),
     # Single files copied without a tree walk. User-collection contract,
     # landing, and local-policy templates seed empty collections.
@@ -93,9 +89,10 @@ MANIFEST = ScaffoldManifest(
     # Resolved with project-specific replacements at install time.
     templates=(
         ("AGENTS.md.template", "AGENTS.md.template"),
+        ("templates/CLAUDE.md.template", "CLAUDE.md.template"),
     ),
-    # Skill directories for supported runtimes; promoted skills are copied
-    # into each from kb/commonplace/instructions/<name>.
+    # Skill directories for supported runtimes; init writes a stub per skill
+    # into each, redirecting to the real skill in the installed library.
     skills_dirs=(
         Path(".claude/skills"),
         Path(".agents/skills"),
@@ -111,5 +108,15 @@ MANIFEST = ScaffoldManifest(
         "cp-skill-revise-autoreason",
         "cp-skill-write-multistage",
         "cp-skill-ground",
+    ),
+    # Indexes the library's instructions by name; receives a stub like the others.
+    router_skill="cp-skill-library",
+    # Where earlier releases copied the library into a project, and the library
+    # path each copy came from. Migration removes copies that match the library.
+    legacy_copies=(
+        ("kb/commonplace/instructions", "instructions"),
+        ("kb/commonplace/notes", "notes"),
+        ("kb/commonplace/reference", "reference"),
+        ("kb/types", "types"),
     ),
 )

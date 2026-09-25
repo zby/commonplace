@@ -1,30 +1,30 @@
 ---
-description: Scenario-derived shipped architecture — single KB root with a library/user split under kb/commonplace/, package-provided commands, promoted skills, and a measurable scenario decomposition
-type: kb/types/note.md
+description: Scenario-derived shipped architecture — the user's KB in the project, the library read in place from the installed package, package-provided commands, promoted skills, and a measurable scenario decomposition
+type: note
 tags: []
 ---
 
 # Scenario architecture
 
-How Commonplace instantiates scenario-derived architecture in the shipped system. This note describes the installed KB surface (library and user collections under one `kb/` root), the command-and-skill split that supports it, and the measurable scenario decomposition that explains those choices.
+How Commonplace instantiates scenario-derived architecture in the shipped system. This note describes the installed KB surface (the user's collections in the project and the library in the installed package), the command-and-skill split that supports it, and the measurable scenario decomposition that explains those choices.
 
 ## The shipped operating context
 
-An installed project has one `kb/` root containing two coexisting surfaces:
+An installed project works with two surfaces:
 
-- `kb/commonplace/` — the shipped library (read-only by convention): methodology notes, reference, and instructions.
-- `kb/notes/`, `kb/reference/`, `kb/instructions/` — the user's own collections, scaffolded without user-authored artifacts but with starter `COLLECTION.md` contracts and `README.md` landings.
+- the project's `kb/` — the user's own collections (`kb/notes/`, `kb/reference/`, `kb/instructions/`, and the rest), scaffolded without user-authored artifacts but with starter `COLLECTION.md` contracts and `README.md` landings;
+- the Commonplace library — methodology notes, reference, instructions, and the global types — read in place from the installed package. `.commonplace/library.md` gives its location on the machine.
 
 Plus two supporting runtime surfaces:
 
 - `commonplace-*` commands provided by the installed Python package
-- promoted framework skills under `.claude/skills/` and `.agents/skills/` (copies of the `kb/commonplace/instructions/` skill directories)
+- promoted framework skills, reached through stubs under `.claude/skills/` and `.agents/skills/` that point to the real skill directories in the library
 
-There is no separate vendored `commonplace/` framework tree. The agent's normal path stays inside the project:
+The project holds no copy of the library. The agent's normal path:
 
-- route from `AGENTS.md`
+- route from `AGENTS.md`, and read `.commonplace/library.md` for the library's location (Claude Code has it in context through `CLAUDE.md`)
 - read the target collection's `COLLECTION.md` (the user's own when writing, or the library's for established conventions)
-- load the relevant type definition from `kb/types/` (shared global) or `kb/<collection>/types/` (collection-local)
+- load the relevant type definition: a global type from the library's `types/`, or a collection-local type from `kb/<collection>/types/`
 - write into the user's `kb/`
 - invoke a promoted skill or CLI command when the workflow needs one
 
@@ -32,25 +32,25 @@ There is no separate vendored `commonplace/` framework tree. The agent's normal 
 
 | Step | Context needed | Where it lives |
 |------|---------------|----------------|
-| Route to the correct location | Routing table | `AGENTS.md` |
+| Route to the correct location | Routing table, library location | `AGENTS.md`, `.commonplace/library.md` |
 | Decide whether it belongs | KB goals and scope boundary | `AGENTS.md` `## KB Goals and Scope` |
-| Find related notes | Searchable library and user notes | `kb/notes/`, `kb/commonplace/notes/` |
+| Find related notes | Searchable user and library notes | `kb/notes/`, the library's `notes/` |
 | Know how to write well | Writing conventions | target collection's `COLLECTION.md` (e.g. `kb/notes/COLLECTION.md`) |
-| Know the structure | Global or collection-local type definitions | `kb/types/`, `kb/<collection>/types/` |
+| Know the structure | Global or collection-local type definitions | the library's `types/`, `kb/<collection>/types/` |
 | Write the file | All of the above | `kb/notes/` or another user collection |
 | Connect it to existing knowledge | Skill or manual linking workflow | promoted `cp-skill-connect` skill plus indexes |
 
-The key architectural property is locality: the common write path does not require the agent to leave the installed tree. Writes always target the user's collections; the library is consulted read-only.
+The key architectural property is a fixed read/write split: writes always target the user's collections inside the project, and the library is consulted read-only at the location `.commonplace/library.md` names. Reading the library costs the agent one read of that file per session at most, and nothing in Claude Code, which imports it.
 
 ## When the common path is not enough
 
-The shipped system still needs a place for deeper explanation, and that explanation lives inside the library under `kb/commonplace/`:
+The shipped system still needs a place for deeper explanation, and that explanation lives in the library:
 
-- `kb/commonplace/reference/` explains how the shipped system works
-- `kb/commonplace/reference/adr/` records why major architectural choices were made
+- the library's `reference/` explains how the shipped system works
+- the library's `reference/adr/` records why major architectural choices were made
 - project-local notes in `kb/notes/` can extend that explanation when the shipped docs are not enough
 
-Explanatory material is part of the installed surface under `kb/commonplace/`, not an external escalation target. The split from the earlier model is that it now lives in its own namespace rather than sharing the user's collection paths.
+Explanatory material is part of the installed library, not an external escalation target. It stays outside the project's collection paths, so project searches and version history show only the project's own files.
 
 ## The control-plane contract
 

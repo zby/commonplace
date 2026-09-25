@@ -1,12 +1,18 @@
-"""Virtual critique assay identity and installed/source path resolution."""
+"""Virtual critique assay identity; the critique instruction lives in the library."""
 
 from __future__ import annotations
 
 from pathlib import Path
 
+from commonplace.lib.library import (
+    LIBRARY_IDENTITY_PREFIX,
+    artifact_identity,
+    is_library_identity,
+    library_root,
+)
+
 CRITIQUE_LENS = "critique"
-SOURCE_CRITIQUE_PATH = Path("kb/instructions/critique-note.md")
-INSTALLED_CRITIQUE_PATH = Path("kb/commonplace/instructions/critique-note.md")
+CRITIQUE_REL = "instructions/critique-note.md"
 
 
 def is_critique_request(value: str) -> bool:
@@ -14,20 +20,16 @@ def is_critique_request(value: str) -> bool:
 
 
 def critique_criterion_path(repo_root: Path) -> str:
-    installed = repo_root / INSTALLED_CRITIQUE_PATH
-    source = repo_root / SOURCE_CRITIQUE_PATH
-    path = installed if installed.is_file() else source
+    """Identity of the critique instruction, read from the installed library."""
+    path = library_root() / CRITIQUE_REL
     if not path.is_file():
-        raise FileNotFoundError(f"critique instruction not found: {path.relative_to(repo_root)}")
-    return path.relative_to(repo_root).as_posix()
+        raise FileNotFoundError(f"critique instruction not found: {path}")
+    return artifact_identity(repo_root, path)
 
 
 def is_critique_criterion_path(path: str) -> bool:
-    normalized = Path(path).as_posix()
-    return normalized in {
-        SOURCE_CRITIQUE_PATH.as_posix(),
-        INSTALLED_CRITIQUE_PATH.as_posix(),
-    }
+    normalized = Path(path).as_posix() if not is_library_identity(path) else path
+    return normalized in {f"kb/{CRITIQUE_REL}", LIBRARY_IDENTITY_PREFIX + CRITIQUE_REL}
 
 
 def result_kind_for_criterion_path(path: str) -> str:

@@ -13,9 +13,11 @@ import argparse
 import sys
 from pathlib import Path
 
+from commonplace.lib.library import checks_library
 from commonplace.lib.relocation import relocate_note
 
 
+@checks_library
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("note", help="Note path or unique note name under kb/")

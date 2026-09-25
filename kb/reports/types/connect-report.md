@@ -1,5 +1,5 @@
 ---
-type: kb/types/type-spec.md
+type: type-spec
 name: connect-report
 description: Discovery report for possible KB connections from one source artifact
 schema: kb/reports/types/connect-report.schema.yaml

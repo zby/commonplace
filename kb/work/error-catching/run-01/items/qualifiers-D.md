@@ -1,6 +1,6 @@
 ---
 description: Synthesis — oracle theory, labor economics, frontier-lab capability predictions, and supply-chain integrity evidence converge on verification cost as the primary structural determinant of automation
-type: kb/types/note.md
+type: note
 traits: [has-external-sources, title-as-claim]
 tags: [llm-interpretation-errors]
 ---

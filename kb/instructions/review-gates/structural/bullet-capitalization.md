@@ -2,7 +2,7 @@
 gate_id: structural/bullet-capitalization
 name: Bullet capitalization
 description: 'Bullet items begin with lowercase prose where a normal sentence fragment should start with a capital letter.'
-type: kb/types/review-gate.md
+type: review-gate
 lens: structural
 watches: [body]
 staleness: changed

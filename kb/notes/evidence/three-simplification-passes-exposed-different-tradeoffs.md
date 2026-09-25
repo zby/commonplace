@@ -1,6 +1,6 @@
 ---
 description: "Evidence from three independent rewrites of one mature article: broad style guidance ranked best overall, a compact style cue improved rhythm but drifted, and exhaustive local review barely changed the text"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim, has-comparison]
 tags: [document-system, evaluation]
 ---

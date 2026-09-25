@@ -1,5 +1,5 @@
 ---
-type: kb/types/note.md
+type: note
 description: SoL-Pi wraps Pi with optional fused actions, recoverable observations, checked diagnostic excerpts
   and plan-driven native compaction
 generated-by: analyse-agentic-system

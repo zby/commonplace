@@ -1,6 +1,6 @@
 ---
 description: "How Commonplace distributes design-rationale records across proposals, ADRs, contracts, and enforcement, without enforcing end-to-end continuity"
-type: kb/types/note.md
+type: note
 traits: [has-external-sources, has-comparison]
 ---
 

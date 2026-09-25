@@ -2,7 +2,7 @@
 gate_id: prose/proportion-mismatch
 name: Proportion mismatch
 description: 'The load-bearing idea gets less development than a secondary section because the easier or earlier-written material expanded first.'
-type: kb/types/review-gate.md
+type: review-gate
 lens: prose
 watches: [body]
 staleness: changed

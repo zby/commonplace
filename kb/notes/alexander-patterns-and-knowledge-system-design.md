@@ -1,6 +1,6 @@
 ---
 description: "Maps Alexander's Context/Problem/Forces/Solution pattern to typed document contracts and his generative process to incremental codification, while marking the looser 'centers' analogy"
-type: kb/types/note.md
+type: note
 traits: []
 tags: [foundations]
 ---

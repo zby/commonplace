@@ -1,5 +1,5 @@
 ---
-type: kb/types/instruction.md
+type: instruction
 description: Workshop review gate for checking unbridged cross domain during review-revise experiments
 gate_id: prose/unbridged-cross-domain
 name: Unbridged cross-domain evidence

@@ -1,6 +1,6 @@
 ---
 description: Use before accepting a solution-shaped request as the task; recover the underlying problem, evidence status, alternative framings, and the smallest sufficient next move.
-type: kb/types/instruction.md
+type: instruction
 ---
 
 # Invert solution-shaped requests

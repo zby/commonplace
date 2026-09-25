@@ -1,7 +1,7 @@
 ---
 name: cp-skill-ingest
 description: Use when asked to ingest one URL or local snapshot into a tracked .ingest.md source analysis, or to execute a bounded re-ingest request. Retaining quotes in an existing ingest is cp-skill-ground's job, not this skill's.
-type: kb/types/instruction.md
+type: instruction
 user-invocable: true
 allowed-tools: Read, Write, Grep, Glob, Bash, Skill, Task
 context: fork
@@ -129,9 +129,8 @@ re_ingest_request:
      search other snapshots for the incumbent checksum.
    - If the target is a `paperswithcode.co/paper/` URL, or it is an arXiv paper
      and the user explicitly requested code grounding, read and follow the
-     conditional procedure `ingest-paper-with-code.md`. In an installed project
-     use `kb/commonplace/instructions/ingest-paper-with-code.md`; in the
-     Commonplace source checkout use `kb/instructions/ingest-paper-with-code.md`.
+     conditional procedure [ingest-paper-with-code](../ingest-paper-with-code.md),
+     resolved from this skill's real location.
      Use the paper snapshot and code-grounding context it returns. Skip the next
      two target-input bullets, then resume with the snapshot-frontmatter bullet
      so the common output, Quotes, and checksum guards still run.
@@ -170,9 +169,8 @@ re_ingest_request:
      block.
 
      On an ordinary-target checksum mismatch, report one permanent route with
-     the exact ingest path filled in: in the source checkout, `Read and execute
-     kb/instructions/re-ingest.md with Target: <path>.`; in an installed
-     project, use `kb/commonplace/instructions/re-ingest.md`.
+     the exact ingest path filled in: `Read and execute the Commonplace library
+     instruction re-ingest with Target: <path>.`
 
 2. **Run connection discovery.**
    Invoke `cp-skill-connect` on the source snapshot path. Wait for it to finish.
@@ -184,10 +182,9 @@ re_ingest_request:
 
 3. **Prepare the drafting handoff.**
    Resolve these exact inputs without writing a brief file:
-   - `draft_instruction_path`: use
-     `kb/commonplace/instructions/draft-ingest-report.md` in an installed
-     project or `kb/instructions/draft-ingest-report.md` in the Commonplace
-     source checkout
+   - `draft_instruction_path`: the absolute path of
+     [draft-ingest-report](../draft-ingest-report.md), resolved from this
+     skill's real location, so the worker can open it
    - `snapshot_path`: the Markdown snapshot from Step 1
    - `connect_report_path`: the generated report from Step 2
    - `output_path`: `kb/sources/<snapshot-slug>.ingest.md`

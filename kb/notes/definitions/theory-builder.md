@@ -1,6 +1,6 @@
 ---
 description: "Definition — a theory builder applies conjecture and refutation to stated theories: it acts on them, criticizes what they say, and lets the result shape the next round; addressability and persistence are graded"
-type: kb/types/definition.md
+type: definition
 tags: [foundations, self-improving-systems, learning-theory]
 ---
 

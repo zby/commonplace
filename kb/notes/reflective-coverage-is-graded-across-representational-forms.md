@@ -1,6 +1,6 @@
 ---
 description: "Reflective coverage is stated per represented form and operation profile; control of an external dependency does not make that dependency part of the system's reflective coverage"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim, has-comparison, has-external-sources, synthesis]
 tags: [foundations, computational-model, constraining, self-improving-systems]
 ---

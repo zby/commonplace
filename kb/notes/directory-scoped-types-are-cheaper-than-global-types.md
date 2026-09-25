@@ -1,6 +1,6 @@
 ---
 description: Globally eligible types widen every collection's authoring choices; collection-local types keep specialized contracts scoped while path pointers load either kind on demand
-type: kb/types/note.md
+type: note
 traits: [title-as-claim]
 tags: [type-system]
 ---
@@ -61,7 +61,7 @@ The base note contract supplies the shared structured-note surface:
 - **Optional shared fields** — `traits`, `tags`, and `user-verified`. Absence of
   `user-verified` says nothing about maturity, truth, currency, or review state.
 - **Text → note promotion** — adding complete note frontmatter with
-  `description` and `type: kb/types/note.md` to a raw capture. This is a
+  `description` and `type: note` to a raw capture. This is a
   structural change, not a global lifecycle transition.
 
 Collections own their text and outbound-link conventions. Specialized types may own coherent local lifecycle fields, but ordinary notes have no global `status`.

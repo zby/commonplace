@@ -1,6 +1,6 @@
 ---
 description: "Mediation, empirical contact, response to criticism, and recurrent mediation support different claims; none alone establishes improved capacity, and retained addressable theory is one realization"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim]
 tags: [foundations, self-improving-systems]
 ---

@@ -41,7 +41,7 @@ def make_note(
     title: str,
     body: str,
     *,
-    note_type: str = "kb/types/note.md",
+    note_type: str = "note",
 ) -> Path:
     return write(
         path,
@@ -62,7 +62,7 @@ def make_type_spec(path: Path, name: str, *, instructions: str = "State one clai
     return write(
         path,
         f"""---
-type: kb/types/type-spec.md
+type: type-spec
 name: {name}
 description: Test type spec for {name}
 schema: null
@@ -145,7 +145,7 @@ def build_fixture(tmp_path: Path) -> dict[str, Path]:
         notes_dir / "definition.md",
         "Definition note",
         "\nBody.\n",
-        note_type="kb/types/definition.md",
+        note_type="definition",
     )
     return {
         "note_spec": note_spec,
@@ -221,7 +221,7 @@ class TestNoteTypeSpecPath:
         assert note_type_spec_path(tmp_path, note) == "kb/notes/types/structured-claim.md"
 
     def test_malformed_type_value_yields_none(self, tmp_path: Path) -> None:
-        note = make_note(tmp_path / "kb" / "notes" / "broken.md", "Broken", "\nBody.\n", note_type="not-a-path")
+        note = make_note(tmp_path / "kb" / "notes" / "broken.md", "Broken", "\nBody.\n", note_type="Not A Type!")
         assert note_type_spec_path(tmp_path, note) is None
 
     def test_declared_but_missing_type_spec_raises(self, tmp_path: Path) -> None:
@@ -229,9 +229,9 @@ class TestNoteTypeSpecPath:
             tmp_path / "kb" / "notes" / "orphan.md",
             "Orphan",
             "\nBody.\n",
-            note_type="kb/types/ghost.md",
+            note_type="ghost",
         )
-        with pytest.raises(FileNotFoundError, match="kb/types/ghost.md"):
+        with pytest.raises(FileNotFoundError, match="ghost"):
             note_type_spec_path(tmp_path, note)
 
 
@@ -306,7 +306,7 @@ class TestSelectorTypePairs:
     def test_note_edit_marks_type_pair_note_changed_with_diff(self, tmp_path: Path) -> None:
         fixture = build_fixture(tmp_path)
         seed_freshness_baseline(tmp_path, note_path="kb/notes/definition.md", criterion_path="kb/types/definition.md")
-        make_note(fixture["definition"], "Definition note", "\nUpdated body.\n", note_type="kb/types/definition.md")
+        make_note(fixture["definition"], "Definition note", "\nUpdated body.\n", note_type="definition")
 
         stale = review_target_selector.select_stale_criteria(
             tmp_path,
@@ -323,7 +323,7 @@ class TestSelectorTypePairs:
 
     def test_note_without_valid_type_binding_gets_no_type_pair(self, tmp_path: Path) -> None:
         build_fixture(tmp_path)
-        make_note(tmp_path / "kb" / "notes" / "broken.md", "Broken", "\nBody.\n", note_type="not-a-path")
+        make_note(tmp_path / "kb" / "notes" / "broken.md", "Broken", "\nBody.\n", note_type="Not A Type!")
         stale = review_target_selector.select_stale_criteria(
             tmp_path,
             model=TEST_MODEL,

@@ -1,6 +1,6 @@
 ---
 description: When intended-path success and fallback success produce the same final task outcome, the outcome cannot establish whether the intended path and its supporting infrastructure were healthy
-type: kb/types/note.md
+type: note
 traits: [title-as-claim]
 tags: [computational-model, kb-maintenance, learning-theory, observability, tool-loop, deploy-time-learning]
 ---

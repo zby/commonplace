@@ -1,5 +1,5 @@
 ---
-type: kb/types/type-spec.md
+type: type-spec
 name: task-active
 description: Work-in-progress task state document for resumable active work
 schema: null

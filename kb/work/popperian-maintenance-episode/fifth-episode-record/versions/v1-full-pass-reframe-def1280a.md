@@ -1,6 +1,6 @@
 ---
 description: "Separates what retained passages from Naur establish—the need for world-sensitive application judgment beyond enumerated criteria—from what they do not establish: that only humans can bear that capacity"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim, has-external-sources]
 tags: [foundations, context-engineering]
 ---

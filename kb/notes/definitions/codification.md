@@ -1,6 +1,6 @@
 ---
 description: "Definition — codification is the symbolic region of constraining: a rule or operation is committed to an artifact with formal semantics or, more generally, fixed rules that determine what behavior is permitted"
-type: kb/types/definition.md
+type: definition
 tags: [learning-theory, constraining]
 ---
 

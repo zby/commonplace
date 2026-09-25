@@ -1,6 +1,6 @@
 ---
 description: Handle a request to ingest a directory without admitting a directory as a v1 primary source.
-type: kb/types/instruction.md
+type: instruction
 ---
 
 # Do not ingest a directory as a primary source

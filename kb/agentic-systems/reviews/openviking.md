@@ -1,5 +1,5 @@
 ---
-type: kb/types/note.md
+type: note
 description: 'OpenViking session and user-memory subsystem: queued extraction, cumulative
   continuation and bounded recall with explicit host/training exclusions'
 generated-by: analyse-agentic-system

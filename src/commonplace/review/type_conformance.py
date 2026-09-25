@@ -16,6 +16,7 @@ from __future__ import annotations
 from pathlib import Path, PurePosixPath
 
 from commonplace.lib import frontmatter
+from commonplace.lib.library import artifact_identity, is_library_identity, library_root
 from commonplace.lib.project_paths import kb_root
 from commonplace.lib.type_resolver import validate_type_path
 
@@ -29,7 +30,10 @@ def is_type_conformance_request(arg: str) -> bool:
 
 
 def is_type_spec_criterion_path(criterion_path: str) -> bool:
-    """True when a repo-relative gate path points into a kb `types/` directory."""
+    """True when a gate identity names a type spec: a global type in the library, or a kb `types/` file."""
+    if is_library_identity(criterion_path):
+        path = PurePosixPath(criterion_path.split(":", 1)[1])
+        return path.suffix == ".md" and path.parent.as_posix() == "types"
     path = PurePosixPath(criterion_path)
     if path.suffix != ".md" or not path.parts or path.parts[0] != "kb":
         return False
@@ -44,19 +48,19 @@ def type_criterion_id_for_path(criterion_path: str) -> str:
 
 
 def resolve_type_criterion_id(repo_root: Path, criterion_id: str) -> str:
-    """Resolve a `type/{name}` gate id to the repo-relative type-spec path.
+    """Resolve a `type/{name}` gate id to the type spec's identity.
 
-    Prefers the global `kb/types/{name}.md`; otherwise the name must match
-    exactly one collection-local `kb/**/types/{name}.md`.
+    Prefers the global type `{name}` in the library; otherwise the name must
+    match exactly one collection-local `kb/**/types/{name}.md`.
     """
     name = criterion_id.strip().removeprefix(f"{TYPE_CONFORMANCE_LENS}/")
     name = name.removesuffix(".md")
     if not name or name == TYPE_CONFORMANCE_LENS or "/" in name or name in {".", ".."}:
         raise ValueError(f"invalid type gate id: {criterion_id}")
     boundary = kb_root(repo_root)
-    global_spec = boundary / "types" / f"{name}.md"
+    global_spec = library_root() / "types" / f"{name}.md"
     if global_spec.is_file():
-        return global_spec.relative_to(repo_root).as_posix()
+        return artifact_identity(repo_root, global_spec)
     candidates = sorted(
         path
         for path in boundary.glob(f"**/types/{name}.md")
@@ -71,7 +75,7 @@ def resolve_type_criterion_id(repo_root: Path, criterion_id: str) -> str:
 
 
 def note_type_spec_path(repo_root: Path, note_abs: Path) -> str | None:
-    """Canonical repo-relative type-spec path for a note, or None without a valid binding.
+    """Identity of the note's type spec, or None without a valid binding.
 
     Malformed frontmatter or a malformed `type:` value yields None — rejecting
     those is the deterministic validator's job, and a note without a valid
@@ -94,4 +98,4 @@ def note_type_spec_path(repo_root: Path, note_abs: Path) -> str | None:
         return None
     if not resolved.is_file():
         raise FileNotFoundError(f"type spec not found: {canonical} (declared by {note_abs.name})")
-    return canonical
+    return artifact_identity(repo_root, resolved)

@@ -15,7 +15,7 @@ allOf:
           - staleness
         properties:
           type:
-            const: kb/types/review-gate.md
+            const: review-gate
           gate_id:
             type: string
             minLength: 1

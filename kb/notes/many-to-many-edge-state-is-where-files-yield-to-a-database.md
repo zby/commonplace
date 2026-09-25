@@ -1,6 +1,6 @@
 ---
 description: Distinguishes the complete edge key required by relation-owned mutable state from the workload-specific choice between edge files and a database.
-type: kb/types/note.md
+type: note
 traits: [title-as-claim]
 tags: [architecture]
 ---

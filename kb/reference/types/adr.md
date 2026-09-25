@@ -1,5 +1,5 @@
 ---
-type: kb/types/type-spec.md
+type: type-spec
 name: adr
 description: Architecture decision record for implemented system decisions
 schema: ./adr.schema.yaml

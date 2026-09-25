@@ -34,10 +34,9 @@ def kb_root(root: Path) -> Path:
 def collection_dirs(root: Path) -> list[Path]:
     """Return content collection directories under kb/.
 
-    A collection is identified by a local COLLECTION.md file. This lets
-    installed library collections live under kb/commonplace/<collection>/ while
-    support directories such as kb/tasks/ are ignored unless they explicitly
-    opt in as collections.
+    A collection is identified by a local COLLECTION.md file, so support
+    directories such as kb/tasks/ are ignored unless they explicitly opt in as
+    collections.
     """
     boundary = kb_root(root).resolve()
     if not boundary.is_dir():

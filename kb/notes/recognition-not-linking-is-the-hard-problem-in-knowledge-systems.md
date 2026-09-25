@@ -1,6 +1,6 @@
 ---
 description: "Seeing that two items share a structure is the expensive step in connecting knowledge; articulating a seen connection is cheap, and naming a recognized structure amortizes later recognition."
-type: kb/types/note.md
+type: note
 traits: [title-as-claim]
 tags: [learning-theory, discovery]
 ---

@@ -1,6 +1,6 @@
 ---
 description: "Explains workshop as the temporal counterpart to a permanent knowledge library: in-flight state, dependencies, expiry, and promotion bridges, with tasks as an early prototype"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim]
 tags: []
 ---

@@ -1,6 +1,6 @@
 ---
 description: "For model-facing derived values, costly model-side recomputation shifts cache economics toward checked materialization, but persistence pays only when its total expected cost beats the alternatives and the copy substitutes for work"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim]
 tags: [computational-model, context-engineering]
 ---

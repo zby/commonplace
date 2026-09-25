@@ -1,6 +1,6 @@
 ---
 description: Editorial revision of a single KB note — rewrites for logic, flow, and cohesion. Reads linked notes for context. Edits the file in place and reports changes.
-type: kb/types/instruction.md
+type: instruction
 ---
 
 # Revise Note

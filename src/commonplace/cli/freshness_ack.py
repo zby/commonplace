@@ -11,6 +11,7 @@ from commonplace.freshness.transitions import (
     parse_input_observation,
     parse_target_key,
 )
+from commonplace.lib.library import checks_library
 from commonplace.review.review_db import (
     connect,
     ensure_db,
@@ -19,6 +20,7 @@ from commonplace.review.review_db import (
 )
 
 
+@checks_library
 def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     parser = argparse.ArgumentParser(
         description="Acknowledge changed inputs for a registered freshness target.",

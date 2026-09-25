@@ -1,5 +1,5 @@
 ---
-type: kb/types/agentic-system-analysis-result.md
+type: agentic-system-analysis-result
 description: 'OpenViking session and user-memory subsystem: queued commit, cumulative
   continuation, extracted memory and scoped later-consumer routes'
 run-id: AAS-2026-09-25-openviking-01

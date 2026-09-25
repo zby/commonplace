@@ -1,6 +1,6 @@
 ---
 description: "Retention test for source-checkout design rationale: keep current decision premises not faithfully recoverable from implementation, git, and general knowledge; treat recoverable, role-free explanation as a cache"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim, has-external-sources]
 tags: [document-system, context-engineering]
 ---

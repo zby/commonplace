@@ -1,6 +1,6 @@
 ---
 description: Fix description warnings from validate output or review gates — too short, too long, multi-sentence, terminal-punctuated, or title-restating
-type: kb/types/instruction.md
+type: instruction
 ---
 
 # Fix Description Warnings

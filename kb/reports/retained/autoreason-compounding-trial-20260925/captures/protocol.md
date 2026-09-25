@@ -1,7 +1,7 @@
 ---
 name: cp-skill-revise-autoreason
 description: "Experimentally revise a note with fresh critic, author, synthesizer, and blind-judge agents while retaining the incumbent as fallback."
-type: kb/types/instruction.md
+type: instruction
 user-invocable: true
 allowed-tools: Read, Edit, Write, Bash, Glob, Grep, Task
 argument-hint: <note-filename>

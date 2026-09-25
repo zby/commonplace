@@ -1,6 +1,6 @@
 ---
 description: Index of notes about the document type system — why types exist, what roles they serve, how they improve output quality, and how they're structured
-type: kb/types/tag-readme.md
+type: tag-readme
 index_source: tag
 index_key: type-system
 tags: [document-system]

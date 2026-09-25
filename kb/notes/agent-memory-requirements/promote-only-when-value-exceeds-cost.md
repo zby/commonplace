@@ -1,6 +1,6 @@
 ---
 description: "Candidate memory should become durable only when future retrieval or activation value exceeds review and maintenance cost"
-type: kb/types/note.md
+type: note
 tags: [agent-memory, context-engineering]
 ---
 

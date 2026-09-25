@@ -1,6 +1,6 @@
 ---
 description: Formatting compliance, extra computation, and task decomposition can mimic distribution-selection gains, so prompt performance alone cannot identify the mechanism
-type: kb/types/note.md
+type: note
 traits: [has-external-sources, title-as-claim]
 tags: [type-system]
 ---

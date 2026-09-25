@@ -1,5 +1,5 @@
 ---
-type: kb/types/type-spec.md
+type: type-spec
 name: design-proposal
 description: Finished but unadopted design for the Commonplace system — problem, option space, forces, free choices, no decision
 schema: ./design-proposal.schema.yaml

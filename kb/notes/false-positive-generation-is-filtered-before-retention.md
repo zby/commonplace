@@ -1,6 +1,6 @@
 ---
 description: "False-positive generation faces evaluation before retention, while false-positive acceptance becomes operative and can compound"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim]
 tags: [foundations, self-improving-systems]
 ---

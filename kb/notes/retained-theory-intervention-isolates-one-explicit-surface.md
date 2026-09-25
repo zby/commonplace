@@ -1,6 +1,6 @@
 ---
 description: "An intervention on retained theory estimates that surface's causal contribution under matched conditions; influence, explanatory guidance, acquisition, and whole-system theory possession remain different claims"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim]
 tags: [foundations, self-improving-systems, evaluation]
 ---

@@ -2,7 +2,7 @@
 gate_id: sentence/stock-phrases
 name: Stock Phrases
 description: Sentence uses a stock LLM pattern that adds no content — deletion test shows paragraph reads equally well without it.
-type: kb/types/review-gate.md
+type: review-gate
 lens: sentence
 watches: [body]
 staleness: changed

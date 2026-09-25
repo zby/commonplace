@@ -5,10 +5,12 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
+from commonplace.lib.library import checks_library
 from commonplace.review.review_db import prepare_review_db
 from commonplace.review.warn_selector import render_grouped, render_json, scan_reviews
 
 
+@checks_library
 def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     parser = argparse.ArgumentParser(
         description=(

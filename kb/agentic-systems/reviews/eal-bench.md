@@ -1,5 +1,5 @@
 ---
-type: kb/types/note.md
+type: note
 description: "EAL-bench's frozen authorization-memory writer/executor workflow, checkpoint controls and limits of its causal-attribution protocol"
 generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-25-eal-bench-01

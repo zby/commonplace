@@ -1,6 +1,6 @@
 ---
 description: "Compares fixed, query-time, and crafted retrieval pointers across specificity, cost, availability, accuracy, and authoring dependence"
-type: kb/types/note.md
+type: note
 traits: [has-external-sources]
 tags: [links, computational-model]
 ---

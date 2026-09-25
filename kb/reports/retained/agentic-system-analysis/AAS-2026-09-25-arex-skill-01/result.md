@@ -1,5 +1,5 @@
 ---
-type: kb/types/agentic-system-analysis-result.md
+type: agentic-system-analysis-result
 description: "AREX-Skill repository-skill construction, verification, deployment and consumption subsystem at ac3fe1af"
 run-id: AAS-2026-09-25-arex-skill-01
 system: "AREX-Skill"

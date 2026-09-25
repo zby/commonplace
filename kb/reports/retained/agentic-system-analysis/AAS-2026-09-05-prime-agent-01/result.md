@@ -1,5 +1,5 @@
 ---
-type: kb/types/agentic-system-analysis-result.md
+type: agentic-system-analysis-result
 description: "Prime Agent runtime, retained-context and refinement analysis at commit 5146337; complete code-grounded disposition"
 run-id: AAS-2026-09-05-prime-agent-01
 system: "Prime Agent"

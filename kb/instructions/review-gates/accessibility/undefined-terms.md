@@ -2,7 +2,7 @@
 gate_id: accessibility/undefined-terms
 name: Undefined Terms
 description: Technical term used without inline definition — reader must follow a link or know KB context to understand the sentence.
-type: kb/types/review-gate.md
+type: review-gate
 lens: accessibility
 watches: [body]
 staleness: changed

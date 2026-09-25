@@ -34,9 +34,10 @@ RETIRED_TEXT_PROMOTION_WORDING = (
     "has frontmatter with description",
     "raw capture → add frontmatter (`note`)",
     "the file never moves or gets copied",
-    "`type: note`",
+    "`type: kb/types/note.md`",
 )
-RETIRED_BARE_NOTE_YAML = re.compile(r"(?m)^\s*type:\s*note\s*(?:#.*)?$")
+# Global types are named by bare name (ADR 086); the path form is retired.
+RETIRED_PATH_NOTE_YAML = re.compile(r"(?m)^\s*type:\s*kb/types/note\.md\s*(?:#.*)?$")
 
 TYPE_EXAMPLE_GUIDANCE = (
     Path("kb/notes/agent-statelessness-means-the-context-engine-should-inject-context.md"),
@@ -118,7 +119,7 @@ def test_text_promotion_requires_complete_note_frontmatter() -> None:
     required_fields = set(schema["properties"]["frontmatter"]["required"])
     expected_markers = {
         "description": "`description`",
-        "type": "`type: kb/types/note.md`",
+        "type": "`type: note`",
     }
 
     assert required_fields == set(expected_markers), (
@@ -146,7 +147,7 @@ def test_text_promotion_requires_complete_note_frontmatter() -> None:
     assert required_fields <= set(template), (
         "convert template omits schema-required note frontmatter"
     )
-    assert template["type"] == "kb/types/note.md"
+    assert template["type"] == "note"
     assert template["traits"] == []
     assert template["tags"] == []
     assert "user-verified" not in template
@@ -161,8 +162,8 @@ def test_current_text_promotion_guidance_avoids_retired_shortcuts() -> None:
             for wording in RETIRED_TEXT_PROMOTION_WORDING
             if wording.casefold() in content
         )
-        if RETIRED_BARE_NOTE_YAML.search(content):
-            occurrences.append(f"{relative_path}: bare YAML type: note")
+        if RETIRED_PATH_NOTE_YAML.search(content):
+            occurrences.append(f"{relative_path}: path-form YAML type: kb/types/note.md")
 
     assert occurrences == [], "retired text-promotion guidance remains:\n" + "\n".join(
         occurrences
@@ -192,7 +193,7 @@ def test_note_contract_matches_the_global_frontmatter_schema() -> None:
     assert {field for field, (required, _) in rows.items() if required == "Yes"} == (
         required_fields
     )
-    assert rows["type"][1] == "`kb/types/note.md`"
+    assert rows["type"][1] == "`note`"
 
 
 def test_status_frontmatter_is_confined_to_specialized_type_contracts() -> None:

@@ -1,6 +1,6 @@
 ---
 description: "Separates the contribution a bare writing prompt leaves underdetermined from empirical claims about how experts and LLMs supply the missing purpose."
-type: kb/types/note.md
+type: note
 traits: [title-as-claim]
 tags: [llm-reliability, computational-model]
 ---

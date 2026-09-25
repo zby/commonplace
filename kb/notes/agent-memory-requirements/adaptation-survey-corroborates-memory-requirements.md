@@ -1,6 +1,6 @@
 ---
 description: "The agentic-adaptation survey supports the memory requirements map by treating memory and skills as adaptive tools, but it needs substrate, form, lineage, and authority governance to become design guidance"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim, has-external-sources]
 tags: [agent-memory, learning-theory, context-engineering]
 ---

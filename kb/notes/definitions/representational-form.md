@@ -1,6 +1,6 @@
 ---
 description: "Definition - representational form classifies how content is encoded and consumed: natural-language, symbolic, distributed-parametric, or mixed"
-type: kb/types/definition.md
+type: definition
 tags: [learning-theory, artifact-analysis]
 ---
 

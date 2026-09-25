@@ -101,7 +101,7 @@ reciprocal link.
 ## Type eligibility
 
 A typed artifact in this collection may use a local type spec under
-`kb/sources/types/` or a shared type spec under `kb/types/`. Its `type:` value
-is the path to that contract. Frontmatter-free Markdown is implicit `text` only
+`kb/sources/types/`, named by its path, or a global Commonplace type, named by
+its bare name. Frontmatter-free Markdown is implicit `text` only
 for deliberate unstructured source work. Captures under `.snapshots/` may use
 the local snapshot contract even though they are not collection content.

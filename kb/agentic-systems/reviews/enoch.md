@@ -1,5 +1,5 @@
 ---
-type: kb/types/note.md
+type: note
 description: "Enoch's persistent personal-agent core: task recovery, conditional memory read-back, rationale-bearing evolution, and bounded code-adoption gates"
 generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-25-enoch-01

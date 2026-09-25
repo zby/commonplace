@@ -42,7 +42,7 @@ Most claims don't need the structure — only the ones worth structuring do.
 
 ### The promotion path
 
-A note with a claim title can start as `type: kb/types/note.md`. When its evidence and reasoning become explicit and fit the Toulmin scaffold, its pointer can change to `type: kb/notes/types/structured-claim.md`. Other claim-titled notes keep `type: kb/types/note.md`. This is structural refinement, not a global maturity or verification verdict.
+A note with a claim title can start as `type: note`. When its evidence and reasoning become explicit and fit the Toulmin scaffold, its pointer can change to `type: kb/notes/types/structured-claim.md`. Other claim-titled notes keep `type: note`. This is structural refinement, not a global maturity or verification verdict.
 
 ### Evidence vs Reasoning (from Toulmin)
 
@@ -111,7 +111,7 @@ Each of these is a bounded judgment within a known section, not an open-ended do
 The adoption retired the `has-claim` trait. Artifacts split into:
 
 - **`type: kb/notes/types/structured-claim.md`** — notes with developed arguments that can fill Evidence/Reasoning/Caveats sections
-- **`type: kb/types/note.md`** — notes with claim-like titles but free-form bodies. The title-as-claim convention still applies; they just don't commit to the Toulmin scaffold.
+- **`type: note`** — notes with claim-like titles but free-form bodies. The title-as-claim convention still applies; they just don't commit to the Toulmin scaffold.
 
 The other traits (`has-comparison`, `has-implementation`, `has-external-sources`) remain as traits — they describe properties within a document, not its overall shape. A `structured-claim` can still carry `traits: [has-comparison]` if it uses a comparison table as evidence.
 

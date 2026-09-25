@@ -11,9 +11,11 @@ from commonplace.lib.agentic_analysis import (
     parse_agentic_analysis_run_state,
     render_agentic_analysis_handoff,
 )
+from commonplace.lib.library import checks_library
 from commonplace.lib.note_parser import parse_document
 
 
+@checks_library
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("run_state", help="Path to a complete run-state.md")

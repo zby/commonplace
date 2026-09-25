@@ -18,7 +18,7 @@ def note(path: Path, tags: list[str]) -> Path:
         path,
         f"""---
 description: {name}
-type: kb/types/note.md
+type: note
 tags: [{", ".join(tags)}]
 ---
 
@@ -38,7 +38,7 @@ def tag_readme(
         path,
         f"""---
 description: "Curated head for {tag}"
-type: kb/types/tag-readme.md
+type: tag-readme
 index_source: tag
 index_key: {tag}
 {marks}---

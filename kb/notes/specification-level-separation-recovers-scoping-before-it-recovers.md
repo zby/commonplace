@@ -1,6 +1,6 @@
 ---
 description: OpenProse-like DSLs expose control flow and discretion boundaries while leaving scheduling and validation on the LLM substrate, creating an intermediate regime between flat prompting and symbolic scheduling
-type: kb/types/note.md
+type: note
 tags: [computational-model, llm-reliability]
 ---
 

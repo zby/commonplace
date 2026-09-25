@@ -1,6 +1,6 @@
 ---
 description: Framework-owned tool loops package the common model/tool/retry pattern well, but strong frameworks keep the loop optional so applications can control state projection, branching, and re-entry
-type: kb/types/note.md
+type: note
 traits: []
 tags: [computational-model, tool-loop]
 ---

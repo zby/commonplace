@@ -13,11 +13,11 @@ Use this collection when the question is specifically about the shipped Commonpl
 
 You do not operate the KB directly. You instruct an agent, and the agent operates the KB for you.
 
-The agent reads the shipped skills (`.claude/skills/cp-skill-*/SKILL.md` or `.agents/skills/cp-skill-*/SKILL.md`), reads the target collection's `COLLECTION.md`, and writes output under `kb/`.
+The agent reads the shipped skills, which live in the installed Commonplace library and are reached through the stubs in `.claude/skills/` or `.agents/skills/`, reads the target collection's `COLLECTION.md`, and writes output under `kb/`.
 
 The practical consequence: ask for outcomes, not internal procedures. "Write a note about X" is better than "read the write skill and then ...". The skill is the agent's concern; the outcome is yours.
 
-This guide assumes you have a running agent session (Claude Code, Codex, etc.) with Commonplace's skills in its discovery path. If `commonplace-init` has run and `.claude/skills/` or `.agents/skills/` exists, you're ready.
+This guide assumes you have a running agent session (Claude Code, Codex, etc.) with Commonplace's skills in its discovery path. If `commonplace-init` has run and `commonplace-init --check` reports every entry `ok`, you're ready.
 
 ## How to
 
@@ -96,7 +96,7 @@ For the full read path and scaling direction, see [navigation.md](./navigation.m
 
 - "Convert `kb/notes/scratch.md` from text to a note."
 
-*What happens.* The agent adds valid note frontmatter: a semantic `description`, `type: kb/types/note.md`, and empty `traits` and `tags`, while leaving `user-verified` absent. It does not edit the body. When the filename does not match the title, it renames the file within its collection and repairs backlinks.
+*What happens.* The agent adds valid note frontmatter: a semantic `description`, `type: note`, and empty `traits` and `tags`, while leaving `user-verified` absent. It does not edit the body. When the filename does not match the title, it renames the file within its collection and repairs backlinks.
 
 *What you get.* The same captured content as a structurally valid, unverified note, possibly under a title-aligned filename with its inbound links updated.
 
@@ -179,8 +179,8 @@ From an installed project, `commonplace-source` locates the package that
 supplies the running commands. The documents below retain architecture,
 invariants, and orientation that the implementation does not cheaply recover.
 
-- [architecture.md](./architecture.md) — installed topology and the library/user, command-runtime, skill-projection, and path-invariance boundaries
-- [scenario-architecture.md](./scenario-architecture.md) — scenario-derived architecture: the library/user split under `kb/commonplace/`, package-provided commands, and measurable scenario decomposition
+- [architecture.md](./architecture.md) — installed topology and the library/user, command-runtime, library-location, skill-stub, and path-invariance boundaries
+- [scenario-architecture.md](./scenario-architecture.md) — scenario-derived architecture: the user's KB in the project, the library read in place from the package, package-provided commands, and measurable scenario decomposition
 - [storage-architecture.md](./storage-architecture.md) — authority and lifecycle boundaries among authored files, local copies, derived artifacts, and operational state
 - [documentation-site.md](./documentation-site.md) — how the ProperDocs site renders `kb/`: the README-vs-index rule, the nav-generation hook, and the full inventory of reader landing pages
 - [navigation.md](./navigation.md) — how agents move through the KB using control-plane pointers, `rg`, titles/descriptions, indexes, links, connect reports, and future search layers
@@ -191,7 +191,7 @@ invariants, and orientation that the implementation does not cheaply recover.
 
 ### Type system and collection model
 
-- [collections-and-types.md](./collections-and-types.md) — how collection and type contracts compose, how path-valued type pointers resolve, common examples, and where global and collection-local type specs live
+- [collections-and-types.md](./collections-and-types.md) — how collection and type contracts compose, how bare global names and collection-local type paths resolve, common examples, and where both kinds of type spec live
 - [link-vocabulary.md](./link-vocabulary.md) — linking approach and label catalogue: collection-owned outbound rules, reader-need labels, articulation tests, connect reports, and guidance for `COLLECTION.md` authors
 - [collection-prototypes.md](./collection-prototypes.md) — optional creation-time contracts that may be copied into a new collection; the resulting `COLLECTION.md` is independently owned and receives no prototype updates
 - [collections-never-own-frontmatter-semantics.md](./collections-never-own-frontmatter-semantics.md) — why the collection/type split is asymmetric: a type spec owns frontmatter semantics, `COLLECTION.md` owns only text-level features
@@ -228,9 +228,9 @@ Commonplace runs on its own methodology, so this collection also documents *this
 
 [adr/](./adr/) contains the architecture decision records for major shipped-system choices. Notable entries:
 
-- [ADR-021: ship library content under kb/commonplace](./adr/021-ship-library-content-under-kb-commonplace.md) — the library/user boundary, path invariance rules, and scaffold layout behind the current installed surface
+- [ADR-021: ship library content under kb/commonplace](./adr/021-ship-library-content-under-kb-commonplace.md) — the earlier layout that copied the library into each project; projects now read it from the installed package
 - [ADR-027: package scaffold assets without source-tree symlinks](./adr/027-package-scaffold-assets-without-source-tree-symlinks.md) — the current packaging mechanism for scaffold assets in source checkouts, sdists, and wheels
-- [ADR-037: promote skills into runtime surfaces by copying](./adr/037-promote-skills-into-runtime-surfaces-by-copying.md) — why `commonplace-init` copies skill directories instead of symlinking or junctioning them
+- [ADR-037: promote skills into runtime surfaces by copying](./adr/037-promote-skills-into-runtime-surfaces-by-copying.md) — the earlier skill delivery by copying; `commonplace-init` now writes stubs that point into the installed library
 - [ADR-075: commit messages carry read-path trailers](./adr/075-commit-messages-carry-read-path-trailers.md) — subject, migration-narrative body, and conditional `Decision:`/`Workshop:`/`Model:` trailers, each justified by a named git read path
 - [ADR-074: git is the change-history layer](./adr/074-git-is-the-change-history-layer.md) — change narrative lives in commits; reference and ADRs retain only premises a named change operation must read; instructions declare the git read paths
 - [ADR-039: tool visibility is package-owned and git is never invoked](./adr/039-tool-visibility-is-package-owned-and-git-is-never-invoked.md) — the name-based visibility contract that replaced gitignore filtering and `git mv`

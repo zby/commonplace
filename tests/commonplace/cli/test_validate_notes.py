@@ -35,7 +35,7 @@ def write_type_spec(
     return write(
         root / rel_path,
         f"""---
-type: kb/types/type-spec.md
+type: type-spec
 name: {name}
 description: Type spec for {name}
 schema: {schema_value}
@@ -175,7 +175,7 @@ type: kb/notes/types/tag-readme.md
         notes / "topic-README.md",
         """---
 description: Curated head of the framework tag-readme type, whose imperative rules run
-type: kb/types/tag-readme.md
+type: tag-readme
 index_source: tag
 index_key: topic
 ---
@@ -231,7 +231,7 @@ def test_link_validation_checks_local_targets_and_skips_code_and_external(
         tmp_path / "note.md",
         """---
 description: A note with resolving, missing, code-span, and external links so link health checks each kind
-type: kb/types/note.md
+type: note
 traits: []
 ---
 
@@ -276,7 +276,7 @@ def test_link_health_and_inbound_detection_share_url_resolution(tmp_path: Path) 
         notes / "source.md",
         """---
 description: Source note exercising normalized local and external Markdown link targets
-type: kb/types/note.md
+type: note
 traits: []
 ---
 
@@ -291,7 +291,7 @@ traits: []
         notes / "target name.md",
         """---
 description: Target note whose filename requires percent decoding during link resolution
-type: kb/types/note.md
+type: note
 traits: []
 ---
 
@@ -323,7 +323,7 @@ traits: []
             "source.md",
             (
                 "---\ndescription: Library note linking to a retired proposal that must "
-                "stay outside the live knowledge graph\ntype: kb/types/note.md\n"
+                "stay outside the live knowledge graph\ntype: note\n"
                 "traits: []\n---\n\n"
             ),
             "note",
@@ -365,7 +365,7 @@ def test_proposal_archive_boundary_allows_readme_and_workshop_links(
         notes / "source.md",
         f"""---
 description: Library note entering the proposal archive through its permitted reader-facing README
-type: kb/types/note.md
+type: note
 traits: []
 ---
 
@@ -395,7 +395,7 @@ def test_non_path_frontmatter_type_fails_validation(tmp_path: Path) -> None:
     note = write(
         notes_root / "invalid-type.md",
         """---
-description: Non-path frontmatter type should be rejected by the current path-valued contract
+description: A bare frontmatter type names a global type, so an unknown name must be rejected
 type: spec
 ---
 
@@ -407,7 +407,7 @@ type: spec
 
     assert results.note_type == "unknown"
     assert any(
-        "frontmatter.type: must start with kb/ or be file-relative (./ or ../): spec"
+        "frontmatter.type points to a missing type spec: spec"
         in item
         for item in results.fails
     )
@@ -530,7 +530,7 @@ def test_title_length_over_limit_fails_validation(tmp_path: Path) -> None:
         notes_root / "short-slug.md",
         f"""---
 description: Note with an overly long title so the validator should fail deterministically on title length
-type: kb/types/note.md
+type: note
 traits: []
 ---
 
@@ -552,7 +552,7 @@ def test_filename_slug_length_over_limit_fails_validation(tmp_path: Path) -> Non
         notes_root / f"{overlong_slug}.md",
         """---
 description: Note with an overly long slug so the validator should fail deterministically on filename length
-type: kb/types/note.md
+type: note
 traits: []
 ---
 
@@ -582,7 +582,7 @@ def test_git_ignored_artifact_is_exempt_from_authored_length_limits(
         ignored_dir / f"{overlong_slug}.md",
         f"""---
 description: Ignored local artifact whose source-derived title and filename may exceed authored library limits
-type: kb/types/note.md
+type: note
 traits: []
 ---
 
@@ -650,7 +650,7 @@ def test_recent_target_uses_mtime_and_target_lookup(tmp_path: Path) -> None:
         notes_root / "today.md",
         """---
 description: Note modified today so recent target resolution should find it deterministically
-type: kb/types/note.md
+type: note
 traits: []
 ---
 
@@ -661,7 +661,7 @@ traits: []
         notes_root / "old.md",
         """---
 description: Older note that should not be picked up by recent target resolution in deterministic validation
-type: kb/types/note.md
+type: note
 traits: []
 ---
 
@@ -687,7 +687,7 @@ def test_notes_target_scans_only_notes_collection(tmp_path: Path) -> None:
         tmp_path / "kb" / "notes" / "note.md",
         """---
 description: Note in the notes collection
-type: kb/types/note.md
+type: note
 traits: []
 ---
 
@@ -698,7 +698,7 @@ traits: []
         tmp_path / "kb" / "reports" / "retained" / "report.md",
         """---
 description: Report outside the notes collection
-type: kb/types/note.md
+type: note
 traits: []
 ---
 
@@ -750,7 +750,7 @@ def test_note_target_also_validates_marked_tag_readmes(
         notes / "tagged-note.md",
         """---
 description: "Tagged note with enough metadata to validate cleanly by itself"
-type: kb/types/note.md
+type: note
 tags: [kb-design, unmarked]
 ---
 
@@ -761,7 +761,7 @@ tags: [kb-design, unmarked]
         notes / "kb-design-README.md",
         """---
 description: "Complete curated head for the kb-design tag"
-type: kb/types/tag-readme.md
+type: tag-readme
 index_source: tag
 index_key: kb-design
 complete: true
@@ -776,7 +776,7 @@ Orientation paragraph.
         notes / "unmarked-README.md",
         """---
 description: "Selective curated head for the unmarked tag"
-type: kb/types/tag-readme.md
+type: tag-readme
 index_source: tag
 index_key: unmarked
 ---
@@ -839,7 +839,7 @@ def test_collection_directory_targets_scan_that_collection(tmp_path: Path) -> No
         tmp_path / "kb" / "agent-memory-systems" / "index.md",
         """---
 description: Agent memory systems index note
-type: kb/types/note.md
+type: note
 traits: []
 ---
 
@@ -850,7 +850,7 @@ traits: []
         tmp_path / "kb" / "agent-memory-systems" / "reviews" / "agent-r.md",
         """---
 description: Agent R review note
-type: kb/types/note.md
+type: note
 traits: []
 ---
 
@@ -861,7 +861,7 @@ traits: []
         tmp_path / "kb" / "agent-memory-systems" / "types" / "review.template.md",
         """---
 description: Template that should not be validated as collection content
-type: kb/types/note.md
+type: note
 ---
 
 # Template
@@ -875,7 +875,7 @@ type: kb/types/note.md
         tmp_path / "kb" / "reports" / "retained" / "report.md",
         """---
 description: Report outside the target collection
-type: kb/types/note.md
+type: note
 traits: []
 ---
 
@@ -909,7 +909,7 @@ def test_directory_without_collection_file_is_not_a_validation_scope(
         tmp_path / "kb" / "tasks" / "report.md",
         """---
 description: Report in a support directory without collection conventions
-type: kb/types/note.md
+type: note
 traits: []
 ---
 
@@ -1077,7 +1077,7 @@ def test_validation_json_identifies_one_typed_external_artifact(
     result.write_text(
         """---
 description: "A typed note outside a collection"
-type: kb/types/note.md
+type: note
 tags: []
 ---
 

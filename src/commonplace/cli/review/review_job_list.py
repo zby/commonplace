@@ -6,6 +6,7 @@ import argparse
 import json
 from pathlib import Path
 
+from commonplace.lib.library import checks_library
 from commonplace.review.review_db import (
     JOB_STATUS_VALUES,
     connect,
@@ -35,6 +36,7 @@ def _print_table(jobs: list[dict[str, object]]) -> None:
         )
 
 
+@checks_library
 def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     parser = argparse.ArgumentParser(description="List queued, completed, or failed review jobs.", allow_abbrev=False)
     parser.add_argument("--status", choices=sorted(JOB_STATUS_VALUES), help="Filter by job status.")

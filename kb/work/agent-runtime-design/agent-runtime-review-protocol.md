@@ -219,7 +219,7 @@ A provisional template is:
 ```markdown
 ---
 description: "{Discriminating retrieval description}"
-type: kb/types/note.md
+type: note
 traits: [has-external-sources]
 tags: [{only useful theory-routing tags}]
 ---

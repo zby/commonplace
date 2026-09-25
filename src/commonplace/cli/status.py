@@ -7,6 +7,7 @@ import json
 from dataclasses import asdict
 from pathlib import Path
 
+from commonplace.lib.library import checks_library
 from commonplace.lib.project_status import ProjectStatus, load_project_status
 
 
@@ -71,6 +72,7 @@ def format_status_json(status: ProjectStatus) -> str:
     return json.dumps(payload, indent=2, sort_keys=True)
 
 
+@checks_library
 def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__, allow_abbrev=False)
     parser.add_argument("--json", action="store_true", help="Print structured status.")

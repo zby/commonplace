@@ -1,5 +1,5 @@
 ---
-type: kb/types/note.md
+type: note
 description: LHTB bundled continuation preserves work and feeds verifier outcomes
   into later attempts, with narrower feedback and isolation guarantees than its documentation
 generated-by: analyse-agentic-system

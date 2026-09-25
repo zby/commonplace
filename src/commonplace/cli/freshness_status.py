@@ -12,10 +12,12 @@ from commonplace.freshness.status import (
     render_status_json,
     status_exit_code,
 )
+from commonplace.lib.library import checks_library
 from commonplace.review.review_db import connect, ensure_db, resolve_db_path
 from commonplace.review.review_model import normalize_model_partition
 
 
+@checks_library
 def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     parser = argparse.ArgumentParser(
         description="Report freshness status for registered targets.",

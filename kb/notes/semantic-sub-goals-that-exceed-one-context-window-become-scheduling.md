@@ -1,6 +1,6 @@
 ---
 description: Some semantic subgoals exceed one context window, so they must be partitioned into smaller semantic judgments with symbolic collection, filtering, and staged summarization between them
-type: kb/types/note.md
+type: note
 traits: []
 tags: [computational-model, context-engineering, tool-loop]
 ---

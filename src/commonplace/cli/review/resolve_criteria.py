@@ -19,10 +19,12 @@ import sys
 from pathlib import Path
 
 from commonplace.lib import frontmatter
+from commonplace.lib.library import artifact_file, checks_library
 from commonplace.review.paths import criterion_path_for_id, review_gates_dir
 from commonplace.review.resolve_criteria import resolve_criterion_requests
 
 
+@checks_library
 def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
     parser = argparse.ArgumentParser(
         description="Resolve gate, bundle, concrete conformance, or critique criterion requests.",
@@ -41,7 +43,7 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
         resolved: list[tuple[str, str]] = []
         for criterion_id in criterion_ids:
             criterion_path = criterion_path_for_id(repo_root, criterion_id)
-            criterion_file = repo_root / criterion_path
+            criterion_file = artifact_file(repo_root, criterion_path)
             criterion_text = criterion_file.read_text(encoding="utf-8")
             criterion_text = frontmatter.strip(criterion_text).lstrip("\n")
             resolved.append((criterion_id, criterion_text))

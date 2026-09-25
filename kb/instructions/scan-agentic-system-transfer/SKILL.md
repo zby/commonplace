@@ -1,7 +1,7 @@
 ---
 name: scan-agentic-system-transfer
 description: Use when asked what a completed analyse-agentic-system result currently suggests for Commonplace under a named design question or priority. Produces selective living state, never system characterization or matrix data.
-type: kb/types/instruction.md
+type: instruction
 user-invocable: true
 argument-hint: "<main-review result.md path> plus <current Commonplace question or priority> and optional state output path"
 context: fork

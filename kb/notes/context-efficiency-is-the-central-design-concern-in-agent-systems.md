@@ -1,6 +1,6 @@
 ---
 description: Context is the single scarce resource in agent systems, and it is scarce for two distinct reasons — per-window degradation (feasibility) and aggregate token economics (cost) — of which feasibility is the binding one
-type: kb/types/note.md
+type: note
 traits: [has-external-sources, title-as-claim]
 tags: [computational-model, foundations]
 ---

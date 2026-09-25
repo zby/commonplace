@@ -1,6 +1,6 @@
 ---
 description: "The class/instance analogy captures session startup but omits the retained update relation that can revise later agent definitions and reusable-content placement"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim, has-comparison]
 tags: [computational-model, deploy-time-learning, learning-theory]
 ---

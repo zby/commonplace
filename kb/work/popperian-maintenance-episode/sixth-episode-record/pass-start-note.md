@@ -2,7 +2,7 @@
 
 ```yaml
 description: "A proof gate cannot admit unformalized candidates; upstream translation relocates the criticism needed to settle their concepts, while cheaper formalization shortens that stage only after those concepts stabilize"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim, has-comparison, has-external-sources]
 tags: [foundations, self-improving-systems, constraining]
 ```

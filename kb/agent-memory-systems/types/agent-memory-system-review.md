@@ -1,5 +1,5 @@
 ---
-type: kb/types/type-spec.md
+type: type-spec
 name: agent-memory-system-review
 description: Review of an external agent memory or context-engineering system; source-tier marks code-grounded vs doc-grounded evidence
 schema: ./agent-memory-system-review.schema.yaml

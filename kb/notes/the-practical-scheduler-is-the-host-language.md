@@ -1,6 +1,6 @@
 ---
 description: The simplest practical orchestration library demotes the tool loop to a returning, per-call-parameterized function and lets ordinary host-language code play select and K — reifying K only when the run must outlive its process or outgrow its memory
-type: kb/types/note.md
+type: note
 traits: [title-as-claim]
 tags: [computational-model, context-engineering, tool-loop]
 ---

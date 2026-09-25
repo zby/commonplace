@@ -10,7 +10,7 @@ def test_parse_document_extracts_headings_and_excludes_fenced_code() -> None:
     document, error = parse_document(
         """---
 description: Example
-type: kb/types/note.md
+type: note
 ---
 
 # Title
@@ -32,7 +32,7 @@ def test_parse_document_extracts_links_and_body_dates() -> None:
     document, error = parse_document(
         """---
 description: Example
-type: kb/types/note.md
+type: note
 ---
 
 # Title

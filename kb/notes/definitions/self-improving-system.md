@@ -1,6 +1,6 @@
 ---
 description: "Definition — operative, evidence-responsive change to a system's own behavior-determining organization, read against a declared boundary, horizon, and improvement objective"
-type: kb/types/definition.md
+type: definition
 tags: [foundations, computational-model, self-improving-systems]
 ---
 

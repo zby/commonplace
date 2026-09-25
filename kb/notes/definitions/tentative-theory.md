@@ -1,6 +1,6 @@
 ---
 description: "Definition — a tentative theory is a theory proposed as a solution to a problem, which stays open to criticism and revision however well it has survived; Popper's term with nothing added, a status of every theory"
-type: kb/types/definition.md
+type: definition
 tags: [foundations, self-improving-systems, learning-theory]
 ---
 

@@ -1,6 +1,6 @@
 ---
 description: The partial-evaluation framing for LLM frontloading is structurally precise, not metaphorical, because instructions and data share one token medium; without that shared medium, it would just be divide-and-conquer
-type: kb/types/note.md
+type: note
 traits: []
 tags: []
 ---

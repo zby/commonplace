@@ -1,6 +1,6 @@
 ---
 description: "Keeping a specific LLM output resolves semantic underspecification and freezes one run against execution indeterminism - a constraining move applied to artifacts"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim]
 tags: [learning-theory, constraining]
 ---

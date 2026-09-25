@@ -1,6 +1,6 @@
 ---
 description: "Without external assessment a claim needs its own contradiction-and-support rule, a comparison level for objective change, and a performance measure it does not grade itself, plus attribution when it asserts a cause"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim]
 tags: [foundations, self-improving-systems, learning-theory]
 ---

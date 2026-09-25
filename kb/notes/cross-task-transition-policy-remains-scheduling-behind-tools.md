@@ -1,6 +1,6 @@
 ---
 description: "Classifies code by authority over interceptable transitions among independently steerable goals, separating scheduler role from its tool-shaped interface and audience-relative concealment"
-type: kb/types/note.md
+type: note
 traits: []
 tags: [computational-model, context-engineering, tool-loop]
 ---

@@ -2,7 +2,7 @@
 gate_id: complexity/connection-inflation
 name: Connection inflation
 description: 'Relevant Notes entries add no navigational value beyond what the body already provides.'
-type: kb/types/review-gate.md
+type: review-gate
 lens: complexity
 watches: [body]
 staleness: changed

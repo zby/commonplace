@@ -1,6 +1,6 @@
 ---
 description: "Definition — the discovery lifecycle is an ideal-type six-phase evaluation of an ampliative conjecture; the compound is technical, bare 'discovery' stays ordinary English"
-type: kb/types/definition.md
+type: definition
 tags: [learning-theory, discovery]
 ---
 

@@ -1,6 +1,6 @@
 ---
 description: "Naur argues program theory cannot be expressed as criteria, then concludes it is human-only; the bridge is that machine execution meant formulated criteria — true of the programs of his day, and separated since by trained recognizers"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim, has-external-sources]
 tags: [foundations, context-engineering]
 ---

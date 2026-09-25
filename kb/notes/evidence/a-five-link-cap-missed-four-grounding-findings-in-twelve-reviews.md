@@ -1,6 +1,6 @@
 ---
 description: "A paired Commonplace assay found five capped-versus-uncapped grounding outcome divergences; one reproduced as reviewer noise, while four appeared only after fuller reading reached 6–16 linked artifacts"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim, has-comparison]
 tags: [evaluation, kb-maintenance]
 ---

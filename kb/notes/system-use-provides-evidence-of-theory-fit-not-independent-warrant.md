@@ -1,6 +1,6 @@
 ---
 description: "Consequences of using a claim in a live system can test its integration and causal usefulness, but independent factual, formal, source, or scope evidence is still needed for its warrant"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim]
 tags: [learning-theory, deploy-time-learning, evaluation]
 ---

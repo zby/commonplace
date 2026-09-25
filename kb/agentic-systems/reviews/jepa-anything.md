@@ -1,5 +1,5 @@
 ---
-type: kb/types/note.md
+type: note
 description: LLM-hosted world-model design compilation with deterministic consistency
   checks and generated evidence contracts, distinct from empirical model validation
 generated-by: analyse-agentic-system

@@ -13,6 +13,7 @@ from dataclasses import dataclass
 from datetime import UTC, datetime
 from pathlib import Path
 
+from commonplace.lib.library import checks_library
 from commonplace.lib.lifecycle_validation import validate_lifecycle
 from commonplace.lib.project_paths import (
     kb_root,
@@ -569,6 +570,7 @@ def _print_full_collection_report(
     print("\n===")
 
 
+@checks_library
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     output = parser.add_mutually_exclusive_group()

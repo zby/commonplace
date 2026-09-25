@@ -1,6 +1,6 @@
 ---
 description: "A search judgment is lightweight when its authority stops at allocating further investigation, probing, continuation, suspension, or abandonment rather than licensing an operative change"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim]
 tags: [foundations, computational-model, self-improving-systems]
 ---

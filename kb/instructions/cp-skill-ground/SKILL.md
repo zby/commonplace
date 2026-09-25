@@ -1,7 +1,7 @@
 ---
 name: cp-skill-ground
 description: Ground one source-side claim by retaining minimum verbatim quotes or requiring the pinned snapshot. Use when a note needs source support or retained quotes; choose this skill, not cp-skill-ingest, for quote retention.
-type: kb/types/instruction.md
+type: instruction
 user-invocable: true
 allowed-tools: Read, Edit, Write, Grep, Glob, Bash, Skill
 context: fork
@@ -53,9 +53,8 @@ collection's edit-time rule.
    exact-byte SHA-256 to equal the ingest's `snapshot_sha256`, and require its
    frontmatter `source` to equal the ingest's canonical `source`. Do not search
    for a differently named checksum match. If any check fails, stop with the
-   literal re-ingest route:
-   - source checkout: `Read and execute kb/instructions/re-ingest.md with Target: <ingest-path>.`
-   - installed project: `Read and execute kb/commonplace/instructions/re-ingest.md with Target: <ingest-path>.`
+   literal re-ingest route: `Read and execute the Commonplace library
+   instruction re-ingest with Target: <ingest-path>.`
 5. Read enough of the primary snapshot to determine the source-side
    proposition and its bounds. Stop if the source does not establish it or the
    request depends on a secondary resource.

@@ -1,5 +1,5 @@
 ---
-type: kb/types/instruction.md
+type: instruction
 description: Workshop review gate for checking claim to section ratio during review-revise experiments
 gate_id: complexity/claim-to-section-ratio
 name: Claim-to-section ratio

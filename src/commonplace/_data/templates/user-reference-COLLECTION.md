@@ -63,4 +63,4 @@ authorizes links to already identified targets.
 
 ## Type eligibility
 
-A typed artifact in this collection may use a global type spec under `kb/types/` or a local type spec under this collection's `types/` directory. Its `type:` value is the path to that contract. Frontmatter-free Markdown is implicit `text`.
+A typed artifact in this collection may use a global Commonplace type, named by its bare name such as `type: note`, or a local type spec under this collection's `types/` directory, named by its path. Frontmatter-free Markdown is implicit `text`.

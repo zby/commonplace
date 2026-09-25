@@ -13,9 +13,11 @@ import argparse
 import sys
 from pathlib import Path
 
+from commonplace.lib.library import checks_library
 from commonplace.lib.relocation import relocate_directory
 
 
+@checks_library
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("source", help="Source directory under kb/")

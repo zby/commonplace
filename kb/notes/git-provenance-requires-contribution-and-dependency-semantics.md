@@ -1,5 +1,5 @@
 ---
-type: kb/types/note.md
+type: note
 description: "Choose among Git parents, provenance records within commits, and external records by the dependency semantics and historical access the work requires."
 traits: [title-as-claim, has-comparison, has-external-sources]
 ---

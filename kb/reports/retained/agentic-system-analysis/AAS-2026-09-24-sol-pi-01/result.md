@@ -1,5 +1,5 @@
 ---
-type: kb/types/agentic-system-analysis-result.md
+type: agentic-system-analysis-result
 description: Complete code-grounded analysis of SoL-Pi as an optional Pi extension, with bounded archive, reducer
   and native compaction contracts
 run-id: AAS-2026-09-24-sol-pi-01

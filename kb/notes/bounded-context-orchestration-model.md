@@ -1,6 +1,6 @@
 ---
 description: Defines a conditional batched select/call form for closed-world LLM orchestration, including its state, barrier, feasibility, and comparison boundaries
-type: kb/types/note.md
+type: note
 traits: [has-external-sources]
 tags: [computational-model]
 ---

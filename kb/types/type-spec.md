@@ -1,8 +1,8 @@
 ---
-type: kb/types/type-spec.md
+type: type-spec
 name: type-spec
 description: Authoring and validation contract for path-valued Commonplace type specifications
-schema: kb/types/type-spec.schema.yaml
+schema: ./type-spec.schema.yaml
 ---
 
 # Type spec
@@ -37,7 +37,7 @@ Do not restate a schema rule in body text. The validator already enforces it, so
 
 ````markdown
 ---
-type: kb/types/type-spec.md
+type: type-spec
 name: {type-name}
 description: "{Retrieval description for this type contract}"
 schema: {kb/types/{type-name}.schema.yaml or null}

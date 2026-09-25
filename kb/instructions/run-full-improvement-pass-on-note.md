@@ -1,6 +1,6 @@
 ---
 description: Run the full improvement pipeline over one note, apply bounded edits that keep its claim, and require closing review to accept, repair once, or hand back the result.
-type: kb/types/instruction.md
+type: instruction
 ---
 
 # Run a full improvement pass on one note

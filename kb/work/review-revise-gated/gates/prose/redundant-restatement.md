@@ -1,5 +1,5 @@
 ---
-type: kb/types/instruction.md
+type: instruction
 description: Workshop review gate for checking redundant restatement during review-revise experiments
 gate_id: prose/redundant-restatement
 name: Redundant restatement

@@ -1,6 +1,6 @@
 ---
 description: "Different reasons for an untransferred decision identify different missing functions; a single process can supply several, and the current carrier split is not a permanent requirement"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim]
 tags: [foundations, self-improving-systems]
 ---

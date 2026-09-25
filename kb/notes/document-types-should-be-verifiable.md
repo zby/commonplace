@@ -1,6 +1,6 @@
 ---
 description: Document types should assert verifiable structural properties, not subject matter — with a base type + traits model inspired by gradual and structural typing
-type: kb/types/note.md
+type: note
 traits: [title-as-claim]
 tags: [type-system]
 ---
@@ -42,7 +42,7 @@ The original type system used a flat enum: `design`, `analysis`, `insight`, `res
 The solution borrows from subtyping and structural typing. Instead of a flat enum, use a **base type** (hard structural category) plus **traits** (independently checkable properties):
 
 ```yaml
-type: kb/types/note.md
+type: note
 traits: [has-comparison, has-external-sources]
 ```
 
@@ -69,7 +69,7 @@ A note can satisfy multiple traits without conflict. What the old system called 
 
 [`kb/types/note.md`](../types/note.md) is the base structured type that makes few body-shape claims — like `Any` in a gradually typed language. This connects to the [verifiability gradient](./verifiability-gradient.md): just as logic starts underspecified and constrains toward precision, documents can start as frontmatter-free text and gain checkable structure.
 
-1. New content enters as implicit `text` or as `type: kb/types/note.md` — soft, with no required body sections
+1. New content enters as implicit `text` or as `type: note` — soft, with no required body sections
 2. Traits accumulate as the document develops — `has-implementation` when code sketches appear, `has-external-sources` when citing external material
 3. The type pointer changes to a narrower contract such as `type: kb/notes/types/structured-claim.md` when its structural criteria are met
 4. A base note with no traits may still be the right final shape; when its body makes stronger promises, a narrower type or trait makes those promises checkable

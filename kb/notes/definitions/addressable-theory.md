@@ -1,6 +1,6 @@
 ---
 description: "Definition — an addressable theory is a theory formulated in language whose assumptions, scope, and parts can be inspected and revised individually; a graded structural property, separate from tentative status"
-type: kb/types/definition.md
+type: definition
 tags: [foundations, self-improving-systems, learning-theory]
 ---
 

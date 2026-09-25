@@ -1,5 +1,5 @@
 ---
-type: kb/types/note.md
+type: note
 description: "Ecdysis failure diagnosis, strict-score harness selection, checkpoint reuse, and the external adapter contracts that bound them."
 generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-25-ecdysis-01

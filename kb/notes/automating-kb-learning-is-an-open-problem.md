@@ -1,6 +1,6 @@
 ---
 description: "The KB already learns through manual improvement; automating judgment-heavy mutations needs oracles for connections, groupings, and synthesis we cannot yet manufacture"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim]
 tags: []
 ---

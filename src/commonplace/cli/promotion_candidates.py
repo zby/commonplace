@@ -7,9 +7,11 @@ import sys
 from collections.abc import Sequence
 from pathlib import Path
 
+from commonplace.lib.library import checks_library
 from commonplace.lib.promotion import write_promotion_candidates_report
 
 
+@checks_library
 def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.parse_args(argv)

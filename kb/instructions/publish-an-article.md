@@ -1,6 +1,6 @@
 ---
 description: "Use when a circulating kb/articles draft has explicit approval to become a working paper or frozen dated article on the ProperDocs site"
-type: kb/types/instruction.md
+type: instruction
 ---
 
 # Publish an article

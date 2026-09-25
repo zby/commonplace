@@ -1,5 +1,5 @@
 ---
-type: kb/types/note.md
+type: note
 description: Pi Posthorse keeps recoverable notes and history while its external Pi
   host commits fresh context windows
 generated-by: analyse-agentic-system

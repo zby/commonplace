@@ -1,5 +1,5 @@
 ---
-type: kb/types/note.md
+type: note
 description: 'arsumbris release-wide review: typed-file memory, adapter-specific governance and instructed
   knowledge/improvement workflows'
 generated-by: analyse-agentic-system

@@ -1,5 +1,5 @@
 ---
-type: kb/types/type-spec.md
+type: type-spec
 name: task-recurring
 description: Stable recurring maintenance or review runbook
 schema: null

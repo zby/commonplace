@@ -1,5 +1,5 @@
 ---
-type: kb/types/note.md
+type: note
 description: "GBrain adds provenance-carrying memory, deterministic context push, nightly maintenance and hash-guarded skill delivery to existing agent harnesses; its fact curation catches near duplicates, not contradictions."
 generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-23-gbrain-01

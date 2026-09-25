@@ -1,6 +1,6 @@
 ---
 description: "Recovery failure shows content is missing from the tested source; causal provenance and live authority require independent evidence, and only pairs with unique content on both sides are bidirectionally irrecoverable"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim]
 tags: [artifact-analysis, kb-maintenance]
 ---

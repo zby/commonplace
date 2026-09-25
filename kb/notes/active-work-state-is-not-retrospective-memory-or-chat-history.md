@@ -1,6 +1,6 @@
 ---
 description: "Active work state needs current pointers, evidence gates, and closure; treating it as retrospective memory or chat history preserves the wrong state"
-type: kb/types/note.md
+type: note
 traits: [title-as-claim, synthesis, has-external-sources]
 tags: [agent-memory, context-engineering]
 ---
