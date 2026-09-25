@@ -127,9 +127,9 @@ These are workshop selections until an ADR adopts them.
 
 0. [Readiness and execution inventory — complete](./plans/00-readiness.md)
 1. [Semantic foundation and exact resolver](./plans/01-semantic-resolver.md)
-2. [Consumer convergence and contract activation](./plans/02-consumer-convergence.md)
-3. [Canonical heads and host migration](./plans/03-canonical-heads-migration.md)
-4. [Independent metadata cleanup, navigation trial, and Gwern-style browsing trial](./plans/04-cleanup-and-follow-up.md)
+2. [Consumer convergence and contract activation](./plans/03-consumer-convergence.md)
+3. [Canonical heads and host migration](./plans/04-canonical-heads-migration.md)
+4. [Independent metadata cleanup, navigation trial, and Gwern-style browsing trial](./plans/05-cleanup-and-follow-up.md)
 
 Phase 1 is separately landable only while its resolver and head lookup remain
 dormant. Phase 2 is the single activation packet: the accepted ADR, live

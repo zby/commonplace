@@ -317,6 +317,9 @@ plugins:
         'work/framework-delivery/adr-draft.md': 'reference/adr/086-projects-read-the-library-from-the-installed-package.md'
         'work/framework-delivery/harness-probe-request.md': 'work/framework-delivery/probe-request.md'
         'work/information-measures/epiplexity-eli5.md': 'notes/epiplexity-by-example-what-entropy-and-complexity-miss.md'
+        'work/tag-contract-convergence/plans/02-consumer-convergence.md': 'work/tag-contract-convergence/plans/03-consumer-convergence.md'
+        'work/tag-contract-convergence/plans/03-canonical-heads-migration.md': 'work/tag-contract-convergence/plans/04-canonical-heads-migration.md'
+        'work/tag-contract-convergence/plans/04-cleanup-and-follow-up.md': 'work/tag-contract-convergence/plans/05-cleanup-and-follow-up.md'
         'work/theory-mediated-self-improvement-series/computational-theory-guided-conversation-episode-2026-08-30.md': 'notes/evidence/commonplace-revision-used-theory-guided-computational-search.md'
 # nav is generated dynamically by src/commonplace/docs/properdocs_hooks.py:on_config
 # from kb/<collection>/README.md files. To add a collection to the nav, create
