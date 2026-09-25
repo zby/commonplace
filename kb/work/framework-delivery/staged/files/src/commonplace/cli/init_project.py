@@ -32,6 +32,7 @@ class InitReport:
     removed: list[Path] = field(default_factory=list)
     migration_kept: list[Path] = field(default_factory=list)
     skipped_foreign: list[Path] = field(default_factory=list)
+    retired_baselines: list[str] = field(default_factory=list)
 
 
 def _record_existing(
@@ -241,6 +242,47 @@ def _migrate_legacy_copies(project: Path, root: Path, report: InitReport) -> Non
         legacy_parent.rmdir()
 
 
+def _is_legacy_criterion(identity: str, root: Path) -> bool:
+    """A criterion recorded under a copy of the library that projects no longer hold."""
+    if identity.startswith("kb/commonplace/"):
+        return True
+    path = Path(identity)
+    return (
+        path.parent.as_posix() == "kb/types"
+        and (root / "types" / path.name).is_file()
+    )
+
+
+def _retire_legacy_baselines(project: Path, root: Path, report: InitReport) -> None:
+    """Retire, once, review baselines whose criteria lived in the old library copy.
+
+    Their criteria now have library identities, so those pairs start again as
+    missing baselines; review history is kept.
+    """
+    from commonplace.freshness.transitions import REVIEW_PAIR_KIND, retire_target
+    from commonplace.review import review_db
+
+    db_path = review_db.resolve_db_path(project)
+    if not db_path.is_file():
+        return
+    with review_db.connect(db_path) as conn:
+        baselines = review_db.load_current_freshness_baselines(conn)
+        for note_path, criterion_path, model_partition in sorted(baselines):
+            if not _is_legacy_criterion(criterion_path, root):
+                continue
+            retire_target(
+                conn,
+                target_kind=REVIEW_PAIR_KIND,
+                target_key={
+                    "note_path": note_path,
+                    "criterion_path": criterion_path,
+                    "model_partition": model_partition,
+                },
+            )
+            report.retired_baselines.append(f"{note_path} × {criterion_path} ({model_partition})")
+        conn.commit()
+
+
 # --- init --------------------------------------------------------------------------
 
 
@@ -285,6 +327,7 @@ def init_project(root: Path, name: str | None = None) -> InitReport:
 
     library_root = library.library_root()
     _migrate_legacy_copies(root, library_root, report)
+    _retire_legacy_baselines(root, library_root, report)
     _write_stubs(root, library_root, report)
     _write_if_changed(root, library.ROUTING, library.render_routing(library_root), report)
     _write_read_rule(root, library_root, report)
@@ -429,6 +472,10 @@ def main(argv: list[str] | None = None) -> int:
         "(remove them to receive the library's skill):",
         report.skipped_foreign,
     )
+    if report.retired_baselines:
+        print("Retired review baselines recorded under the old library copy (history kept):")
+        for item in report.retired_baselines:
+            print(f"- {item}")
     _print_section("Preserved existing files already matching scaffold:", report.preserved_identical)
     _print_section(
         "Preserved existing files differing from current scaffold output:",
@@ -441,6 +488,7 @@ def main(argv: list[str] | None = None) -> int:
             report.removed,
             report.migration_kept,
             report.skipped_foreign,
+            report.retired_baselines,
             report.preserved_identical,
             report.preserved_different,
         )

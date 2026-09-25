@@ -206,6 +206,52 @@ def test_migration_removes_matching_copies_and_keeps_differing_ones(tmp_path: Pa
     assert (old_skill / library.STUB_MARKER).is_file()
 
 
+def test_init_project_retires_baselines_recorded_under_the_old_library_copy(tmp_path: Path) -> None:
+    from commonplace.review import review_db
+    from tests.commonplace.review.pair_helpers import accept_pair, insert_completed_pair
+
+    note_path = "kb/notes/sample.md"
+    legacy_gate = "kb/commonplace/instructions/review-gates/prose/sample-gate.md"
+    project_gate = "kb/instructions/project-gate.md"
+    for rel in (note_path, legacy_gate, project_gate):
+        (tmp_path / rel).parent.mkdir(parents=True, exist_ok=True)
+        (tmp_path / rel).write_text(f"# {rel}\n", encoding="utf-8")
+    db_path = review_db.resolve_db_path(tmp_path)
+    review_db.ensure_db(db_path)
+    with review_db.connect(db_path) as conn:
+        note_snapshot = review_db.snapshot_file(conn, repo_root=tmp_path, path=note_path)
+        for criterion in (legacy_gate, project_gate):
+            criterion_snapshot = review_db.snapshot_file(conn, repo_root=tmp_path, path=criterion)
+            pair = insert_completed_pair(
+                conn,
+                note_path=note_path,
+                criterion_id=criterion,
+                model_partition="test-model",
+                outcome="pass",
+                reviewed_note_snapshot_id=note_snapshot.snapshot_id,
+                reviewed_criterion_snapshot_id=criterion_snapshot.snapshot_id,
+                completed_at="2026-07-01T00:00:00+00:00",
+            )
+            accept_pair(
+                conn,
+                review_pair_id=pair,
+                note_path=note_path,
+                criterion_id=criterion,
+                model_partition="test-model",
+                baseline_note_snapshot_id=note_snapshot.snapshot_id,
+                baseline_criterion_snapshot_id=criterion_snapshot.snapshot_id,
+                baseline_updated_at="2026-07-01T00:00:00+00:00",
+            )
+        conn.commit()
+
+    report = init_project(tmp_path)
+
+    with review_db.connect(db_path) as conn:
+        remaining = {criterion for _, criterion, _ in review_db.load_current_freshness_baselines(conn)}
+    assert remaining == {project_gate}
+    assert report.retired_baselines == [f"{note_path} × {legacy_gate} (test-model)"]
+
+
 def test_init_project_leaves_foreign_skill_directories_alone(tmp_path: Path) -> None:
     dest = tmp_path / ".claude" / "skills" / "cp-skill-write"
     dest.mkdir(parents=True)
