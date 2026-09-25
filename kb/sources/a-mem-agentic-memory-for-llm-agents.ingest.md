@@ -31,9 +31,9 @@ No source quotes have been retained yet.
 /connect identified 6 new note connections and 3 source connections, in addition to 4 existing connections from KB notes.
 
 **Already connected (4 notes reference this source):**
-- [learning-theory](../notes/learning-theory-README.md) — reference material in Memory & Architecture section: flat single-space design as test case for three-space separation
-- [tags](../notes/tags-README.md) — reference material: empirical evidence for boiling cauldron mutations and scaling data for embedding-based linking
-- [links](../notes/links-README.md) — reference material: empirical counterpoint on embedding-based link generation succeeding on QA benchmarks
+- [learning-theory](../tags/learning-theory-README.md) — reference material in Memory & Architecture section: flat single-space design as test case for three-space separation
+- [tags](../tags/README.md) — reference material: empirical evidence for boiling cauldron mutations and scaling data for embedding-based linking
+- [links](../tags/links-README.md) — reference material: empirical counterpoint on embedding-based link generation succeeding on QA benchmarks
 - [memory-management-policy-is-learnable-but-oracle-dependent](../notes/memory-management-policy-is-learnable-but-oracle-dependent.md) — contrasts: A-MEM's hand-crafted heuristics as "plausible theories about memory management, not definitions of it"
 
 **New connections found (6 notes):**
@@ -79,7 +79,7 @@ No source quotes have been retained yet.
 
 - **No curation operations tested.** The paper's contribution is memory evolution (updating context and tags of existing memories), but the evolution vocabulary is limited to "strengthen" and "update_neighbor." There is no split, merge, retire, or restructure. The prompt schema mentions "merge" and "prune" but the methodology section does not describe them. The system accumulates forever. Whether this matters depends on scale and use case, but it was not tested.
 
-- **Naive linking baselines only.** A-MEM compares against systems that do not link at all (MemoryBank, ReadAgent) or use fixed linking strategies (MemGPT). No comparison against systems with typed, propositional links — the kind of linking that [links.md](../notes/links-README.md) argues is necessary for navigability. A-MEM's improvement may reflect the value of any linking over no linking, not the specific value of its linking approach.
+- **Naive linking baselines only.** A-MEM compares against systems that do not link at all (MemoryBank, ReadAgent) or use fixed linking strategies (MemGPT). No comparison against systems with typed, propositional links — the kind of linking that [links.md](../tags/links-README.md) argues is necessary for navigability. A-MEM's improvement may reflect the value of any linking over no linking, not the specific value of its linking approach.
 
 - **Small model sizes dominate.** Results with Qwen-1.5B/3B and Llama 3.2 1B/3B may not generalize to larger models where the baselines' full-context approach becomes more viable. The token efficiency advantage (85-93% reduction) matters less when the model can handle 16K+ token contexts natively.
 

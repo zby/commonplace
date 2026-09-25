@@ -75,7 +75,7 @@ Links:
 
 - [Workshop README](./README.md) — depends-on: the goal and sequencing this assessment proposes to revise
 - [External-theory evaluation](./external-theory-evaluation.md) — extends: the conservative-extension stance and findings this assessment carries to the methodology layer
-- [Self-improving systems tag README](../../notes/self-improving-systems-README.md) — tests: the cluster whose delegation surface is assessed
+- [Self-improving systems tag README](../../tags/self-improving-systems-README.md) — tests: the cluster whose delegation surface is assessed
 - [Methodological and computational closure track different changes](../../notes/methodological-and-computational-closure-track-different-changes.md) — evidenced-by: the executed Parasuraman form-inheritance the proposal treats as pending
 - [A proposal-selection improvement loop requires search, evaluation, and operative retention](../../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — tests: the note cleanup item 3 targets; already delegates loop-model status via Weyns
 - [Reflection makes retained lessons second-order](../../notes/reflection-makes-retained-lessons-second-order.md) — tests: the note cleanup item 1 targets; carries no Argyris content to delegate

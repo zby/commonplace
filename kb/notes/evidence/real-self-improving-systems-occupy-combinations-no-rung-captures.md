@@ -67,7 +67,7 @@ Accumulated Behavioral Rules turns on one person at capture time: "The engineer 
 
 Relevant Notes:
 
-- [Self-improving systems](../self-improving-systems-README.md) — see-also: the curated head listing the four dimensions these placements are read against
+- [Self-improving systems](../../tags/self-improving-systems-README.md) — see-also: the curated head listing the four dimensions these placements are read against
 - [Self-improvement is relative to a declared objective](../self-improvement-is-relative-to-a-declared-objective.md) — grounds: why each row names its frame, and why no ordering follows from the profile alone
 - [Accumulation counts dependence through the retained result, not through the evidence it caused](../accumulation-counts-dependence-through-the-retained-result.md) — grounds: the cumulativity column's criterion
 - [Reflection buys addressability](../reflection-buys-addressability.md) — grounds: what the reflective column is worth, and what parametric accumulation does without it

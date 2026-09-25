@@ -30,7 +30,7 @@ The review searches 1,493 papers, selects 314 relevant papers, and finds only ni
 
 ## Connections Found
 
-This source is direct evidence for [a proposal-selection loop requires search, evaluation, and retention](../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md), which already uses this review to caution that loop architecture does not settle category membership. It also reinforces [the curated self-improving-systems head](../notes/self-improving-systems-README.md): the review's missing dimensions (uncertainty, domain versus adaptation goals, context, system state) are precisely reasons to report a multidimensional pathway profile. The review is a limitation/negative-result anchor rather than a replacement definition.
+This source is direct evidence for [a proposal-selection loop requires search, evaluation, and retention](../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md), which already uses this review to caution that loop architecture does not settle category membership. It also reinforces [the curated self-improving-systems head](../tags/self-improving-systems-README.md): the review's missing dimensions (uncertainty, domain versus adaptation goals, context, system state) are precisely reasons to report a multidimensional pathway profile. The review is a limitation/negative-result anchor rather than a replacement definition.
 
 ## Extractable Value
 
@@ -49,6 +49,6 @@ The source snapshot was refreshed from the user's full converted Markdown captur
 
 ## Recommended Next Action
 
-Update [the curated self-improving-systems head](../notes/self-improving-systems-README.md) with the review's explicit **uncertainty** dimension, keeping it as a profile field and not as a new single membership criterion. Still open.
+Update [the curated self-improving-systems head](../tags/self-improving-systems-README.md) with the review's explicit **uncertainty** dimension, keeping it as a profile field and not as a new single membership criterion. Still open.
 
 **The domain-goal half was taken up and declined.** Adopting domain goals versus adaptation goals as a second objective level was considered while drafting the cluster's objective vocabulary and rejected: adaptation goals are instrumental to the improvement objective rather than a second objective alongside it, so a parallel level would misdescribe the relation. The distinction the split was reaching for is kept in a different shape — a property pursued because it is held to serve the objective is a proximate target, and [what makes it a target rather than a goal is that it is checked for achievement and not for warrant](../notes/a-proximate-target-is-checked-for-achievement-not-for-warrant.md). Read Petrovska's adaptation goals as that level, one rung below the declared objective rather than beside it.

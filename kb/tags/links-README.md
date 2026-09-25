@@ -24,19 +24,19 @@ Our link semantics (extends, grounds, contradicts, exemplifies) are lighter than
 
 ## Foundations
 
-- [title-as-claim-enables-traversal-as-reasoning](./title-as-claim-enables-traversal-as-reasoning.md) — claim titles make link traversal read as reasoning; explains why "since [X]" works but "see [X]" is a different link intent, and where the pattern breaks for multi-claim documents
+- [title-as-claim-enables-traversal-as-reasoning](../notes/title-as-claim-enables-traversal-as-reasoning.md) — claim titles make link traversal read as reasoning; explains why "since [X]" works but "see [X]" is a different link intent, and where the pattern breaks for multi-claim documents
 
 ## Observations
 
-- [agents-navigate-by-deciding-what-to-read-next](./agents-navigate-by-deciding-what-to-read-next.md) — links, skills, and index entries are all contextual hints for read/skip decisions
-- [two-kinds-of-navigation](./link-following-and-search-impose-different-metadata-requirements.md) — link-following is local with context; search is long-range with titles/descriptions; indexes bridge both
-- [indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more](./indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more.md) — apparent completeness lowers route recall when it suppresses retrieval that would find more (now in [maintenance](./kb-maintenance-README.md))
+- [agents-navigate-by-deciding-what-to-read-next](../notes/agents-navigate-by-deciding-what-to-read-next.md) — links, skills, and index entries are all contextual hints for read/skip decisions
+- [two-kinds-of-navigation](../notes/link-following-and-search-impose-different-metadata-requirements.md) — link-following is local with context; search is long-range with titles/descriptions; indexes bridge both
+- [indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more](../notes/indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more.md) — apparent completeness lowers route recall when it suppresses retrieval that would find more (now in [maintenance](./kb-maintenance-README.md))
 
 ## Analysis
 
-- [inbound-and-outbound-links-serve-asymmetric-reader-needs](./inbound-and-outbound-links-serve-asymmetric-reader-needs.md) — outbound links are authored reader aids and their on-demand inverse serves four distinct orientation needs; independently useful reciprocal links remain allowed, while the surfacing design space is [backlink-surfacing](../reference/proposals/backlink-surfacing.md)
-- [link-strength-is-encoded-in-position-and-prose](./link-strength-is-encoded-in-position-and-prose.md) — inline premise links carry more weight than footer links; position and prose encode commitment level, creating a weighted graph
-- [source changes should surface downstream review targets, while reverse lineage can remain searchable](./artifacts-produced-from-sources-need-lineage-recorded-at-the-source.md) — when an upstream change is recognized, a forward lineage view should surface dependent artifacts for review; the record itself need not live at the source
+- [inbound-and-outbound-links-serve-asymmetric-reader-needs](../notes/inbound-and-outbound-links-serve-asymmetric-reader-needs.md) — outbound links are authored reader aids and their on-demand inverse serves four distinct orientation needs; independently useful reciprocal links remain allowed, while the surfacing design space is [backlink-surfacing](../reference/proposals/backlink-surfacing.md)
+- [link-strength-is-encoded-in-position-and-prose](../notes/link-strength-is-encoded-in-position-and-prose.md) — inline premise links carry more weight than footer links; position and prose encode commitment level, creating a weighted graph
+- [source changes should surface downstream review targets, while reverse lineage can remain searchable](../notes/artifacts-produced-from-sources-need-lineage-recorded-at-the-source.md) — when an upstream change is recognized, a forward lineage view should surface dependent artifacts for review; the record itself need not live at the source
 
 ## Decisions
 
@@ -44,7 +44,7 @@ Our link semantics (extends, grounds, contradicts, exemplifies) are lighter than
 
 ## Theory
 
-- [linking-theory](./linking-theory.md) — open questions about what makes links load-bearing, how relationship types interact with position, and what a principled linking theory would predict
+- [linking-theory](../notes/linking-theory.md) — open questions about what makes links load-bearing, how relationship types interact with position, and what a principled linking theory would predict
 
 ## Reference material
 

@@ -129,7 +129,7 @@ Treating agentic systems as interpreters of underspecified instructions suggests
 
 Relevant Notes:
 
-- [learning-theory](./learning-theory-README.md) — parent index: learning mechanisms, oracle theory, memory architecture
+- [learning-theory](../tags/learning-theory-README.md) — parent index: learning mechanisms, oracle theory, memory architecture
 - [llm-code-boundaries-are-natural-checkpoints](./llm-code-boundaries-are-natural-checkpoints.md) — splits from this note: the boundary-as-checkpoint argument expanded with debugging, testing, and refactoring applications
 - [progressive-constraining-commits-only-after-patterns-stabilize](./progressive-constraining-commits-only-after-patterns-stabilize.md) — splits from this note: the one-shot vs progressive distinction for LLM code generation as a constraining mode
 - [LLM debugging separates specification gaps, instruction violations, and run-to-run variation](./llm-debugging-starts-with-retry-versus-rewrite-triage.md) — extends: checks specification adequacy and model conformance separately from failure frequency

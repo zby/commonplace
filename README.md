@@ -73,7 +73,7 @@ src/commonplace/          Packaged operational engine
 
 ## Core design choices
 
-**Claims form a network.** Note titles are assertions, not topics, and links state how claims relate—such as `grounds`, `extends`, `contradicts`, or `exemplifies`. This makes traversal a form of reasoning rather than generic browsing. See [title as claim](./kb/notes/title-as-claim-enables-traversal-as-reasoning.md) and the [linking methodology](./kb/notes/links-README.md).
+**Claims form a network.** Note titles are assertions, not topics, and links state how claims relate—such as `grounds`, `extends`, `contradicts`, or `exemplifies`. This makes traversal a form of reasoning rather than generic browsing. See [title as claim](./kb/notes/title-as-claim-enables-traversal-as-reasoning.md) and the [linking methodology](./kb/tags/links-README.md).
 
 **Structure is earned progressively.** A frontmatter-free file is valid `text`. Add a description and note type when the material deserves a durable claim; specialize it further only when the extra contract enables useful operations. See the [wikiwiki principle](./kb/notes/wikiwiki-principle-lowest-friction-capture-then-progressive-refinement.md).
 
@@ -88,8 +88,8 @@ src/commonplace/          Packaged operational engine
 The [rendered site](https://zby.github.io/commonplace/) is the main route into the research. Starting points:
 
 - The [theory builder definition](./kb/notes/definitions/theory-builder.md) and [Commonplace builds a theory builder and tests whether it learns](./kb/notes/commonplace-builds-a-theory-builder-and-tests-whether-it-learns.md) — what a theory builder is, and the research program that tests whether one learns.
-- [Deployment-time learning](./kb/notes/retained-artifacts-enable-persistent-deployment-time-adaptation.md) and the [learning theory index](./kb/notes/learning-theory-README.md) — durable changes to prompts, rules, tools, and code that affect later sessions without updating model weights.
-- [Self-improving systems](./kb/notes/self-improving-systems-README.md) and [Commonplace as a reflective system](./kb/notes/evidence/commonplace-as-a-reflective-system.md).
+- [Deployment-time learning](./kb/notes/retained-artifacts-enable-persistent-deployment-time-adaptation.md) and the [learning theory index](./kb/tags/learning-theory-README.md) — durable changes to prompts, rules, tools, and code that affect later sessions without updating model weights.
+- [Self-improving systems](./kb/tags/self-improving-systems-README.md) and [Commonplace as a reflective system](./kb/notes/evidence/commonplace-as-a-reflective-system.md).
 - Reviews of [agent memory systems](./kb/agent-memory-systems/README.md) and [agentic systems](./kb/agentic-systems/README.md), with a [comparative review](./kb/agent-memory-systems/agentic-memory-systems-comparative-review.md).
 
 ## Commands, skills, and instructions

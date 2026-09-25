@@ -59,5 +59,5 @@ This checkout has no `kb/reports/state/commonplace-store.sqlite` and no `kb/repo
 Links:
 
 - [Workshop framing](../README.md) — owns: phase sequencing and closure criteria
-- [Self-improving systems cluster](../../../notes/self-improving-systems-README.md) — supplies: audit vocabulary
+- [Self-improving systems cluster](../../../tags/self-improving-systems-README.md) — supplies: audit vocabulary
 - [Commonplace declared frame](../../../reference/commonplace-declared-frame.md) — bounds: the system under assessment

@@ -57,7 +57,7 @@ Giving the unresolved design judgment to an unconstrained model would change all
 
 ## What the classification does not claim
 
-The trace establishes neither whole-pathway computational closure nor improvement beyond the adopted criterion. Human inclusion makes membership cheap; comparison must use [the four-part pathway profile](../self-improving-systems-README.md), whose comparison across time or differently decomposed systems remains [an open measurement problem](../measuring-autonomy-well-enough-to-see-it-improve-is-an-open-problem.md). A broader [six-path Commonplace audit](./six-commonplace-paths-establish-broad-addressability-not-completeness.md) establishes wide addressability without establishing complete coverage; separately, generic maintainer admission is its strongest gap in the broader revision affordance.
+The trace establishes neither whole-pathway computational closure nor improvement beyond the adopted criterion. Human inclusion makes membership cheap; comparison must use [the four-part pathway profile](../../tags/self-improving-systems-README.md), whose comparison across time or differently decomposed systems remains [an open measurement problem](../measuring-autonomy-well-enough-to-see-it-improve-is-an-open-problem.md). A broader [six-path Commonplace audit](./six-commonplace-paths-establish-broad-addressability-not-completeness.md) establishes wide addressability without establishing complete coverage; separately, generic maintainer admission is its strongest gap in the broader revision affordance.
 
 ---
 

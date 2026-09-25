@@ -1,6 +1,6 @@
 # Evaluating the cluster against established theory
 
-Evaluation of the [self-improving-systems cluster](../../notes/self-improving-systems-README.md) against external established frameworks: mainstream formal ontology (BFO, DOLCE, OntoClean), the systems theories the cluster borrows from (computational reflection, cybernetics, self-adaptive systems), the neighboring mainstream frameworks it does not yet engage, and the Carnapian explication standard the definition claims for itself. Method: reconstruct the cluster's ontological commitments from the definition notes, then test each commitment against what the external framework would demand, marking each finding as a confirmed strength, a gap with a suggested disposition, or a non-goal.
+Evaluation of the [self-improving-systems cluster](../../tags/self-improving-systems-README.md) against external established frameworks: mainstream formal ontology (BFO, DOLCE, OntoClean), the systems theories the cluster borrows from (computational reflection, cybernetics, self-adaptive systems), the neighboring mainstream frameworks it does not yet engage, and the Carnapian explication standard the definition claims for itself. Method: reconstruct the cluster's ontological commitments from the definition notes, then test each commitment against what the external framework would demand, marking each finding as a confirmed strength, a gap with a suggested disposition, or a non-goal.
 
 ## 0. Design stance: coverage extension, not a competing theory
 
@@ -95,7 +95,7 @@ The definition calls itself an explication, so Carnap's four criteria apply on t
 
 Links:
 
-- [Self-improving systems tag README](../../notes/self-improving-systems-README.md) — tests: the cluster under evaluation
+- [Self-improving systems tag README](../../tags/self-improving-systems-README.md) — tests: the cluster under evaluation
 - [Reach-assessment](../../notes/definitions/reach-assessment.md) — draws-on: the note carrying the LLM-shaped delta (semantic judgment of prose commitments) and the anti-exclusivity discipline finding 9 confirms
 - [Reflection buys addressability](../../notes/reflection-buys-addressability.md) — draws-on: the commitment-operation extension that, with retrieval-as-wire, covers semantic self-interpretation
 - [Self-improving system](../../notes/definitions/self-improving-system.md) — tests: the definition whose tense and frame-relativity findings 2–3 concern

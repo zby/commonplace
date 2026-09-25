@@ -58,8 +58,8 @@ collection, so Phase 3 acceptance uses a synthetic cross-collection witness.
 - [Trace-learning techniques in related
   systems](../../agent-memory-systems/trace-learning-techniques-in-related-systems.md)
   carries `learning-theory` without any child declared by the notes collection's
-  [covered head](../../notes/learning-theory-README.md), yet that head validates.
-- The complete [artifact-analysis head](../../notes/artifact-analysis-README.md)
+  [covered head](../../tags/learning-theory-README.md), yet that head validates.
+- The complete [artifact-analysis head](../../tags/artifact-analysis-README.md)
   omits a live reference proposal under the proposed participating scope.
 - Published tag footers can route across a collection boundary while the page
   reached is generated from a narrower membership set.

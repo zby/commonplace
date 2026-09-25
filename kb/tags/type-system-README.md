@@ -1,0 +1,45 @@
+---
+description: Index of notes about the document type system — why types exist, what roles they serve, how they improve output quality, and how they're structured
+type: types/tag-readme.md
+index_source: tag
+index_key: type-system
+tags: [document-system]
+---
+
+# Type system
+
+Why documents have types, what the type system does, and how structured writing improves quality. Sub-area of [document-system](./document-system-README.md).
+
+## Overview
+
+- [why-notes-have-types](../notes/why-notes-have-types.md) — seven roles of the type system: navigation hints, metadata enforcement, verifiable structure, local extensibility, content-layer identification, output quality, and maturation through constraining
+- [collections and types](../reference/collections-and-types.md) — current-state: how artifacts use path-valued contracts, with common global and collection-local examples
+
+## Type Roles
+
+- [types-give-agents-structural-hints-before-opening-documents](../notes/types-give-agents-structural-hints-before-opening-documents.md) — navigation: type + description let agents route without loading full documents
+- [type-system-enforces-metadata-that-navigation-depends-on](../notes/type-system-enforces-metadata-that-navigation-depends-on.md) — enforcement: descriptions exist because the note base type requires them; without enforcement, navigation degrades
+- [document-types-should-be-verifiable](../notes/document-types-should-be-verifiable.md) — verification: types assert structural properties, not subject matter; verification gradient from deterministic to corpus-level
+- [directory-scoped-types-are-cheaper-than-global-types](../notes/directory-scoped-types-are-cheaper-than-global-types.md) — extensibility: global types tax every session; local types load only when working in that directory
+
+## Output Quality
+
+Two arguments for why structured document types improve what gets written, plus one causal-identification limit:
+
+- [human-writing-structures-transfer-to-llms-because-failure-modes-overlap](../notes/human-writing-structures-transfer-to-llms-because-failure-modes.md) — failure-mode transfer: LLMs exhibit human-like failures, so structures that prevent those failures in humans prevent them in LLMs too
+- [Structured-prompt gains do not establish training-distribution selection](../notes/structured-prompt-gains-do-not-establish-distribution-selection.md) — causal limit: prompt-performance gains do not isolate a higher-quality training distribution from rival mechanisms
+- [structured-output-is-easier-for-humans-to-review](../notes/structured-output-is-easier-for-humans-to-review.md) — reviewability: separated sections let readers check facts and logic independently
+
+## Structure Dimensions
+
+- [process-structure-and-output-structure-are-independent-levers](../notes/process-structure-and-output-structure-are-independent-levers.md) — constraining what reasoning steps must occur (process structure) is independent from constraining result format (output structure); the KB's output quality arguments apply differently to each
+
+## Type Definitions
+
+- [claim-notes-should-use-toulmin-derived-sections-for-structured-argument](../notes/claim-notes-should-use-toulmin-derived-sections-for-structured.md) — the `structured-claim` type: Toulmin-derived Evidence/Reasoning/Caveats sections
+- [wikiwiki-principle-lowest-friction-capture-then-progressive-refinement](../notes/wikiwiki-principle-lowest-friction-capture-then-progressive-refinement.md) — the type ladder: zero-friction capture, then progressive refinement as thoughts earn structure
+
+## Related Tags
+
+- [document-system](./document-system-README.md) — parent area; type system is one component of the document infrastructure
+- [learning-theory](./learning-theory-README.md) — the type ladder instantiates the constraining gradient for documents

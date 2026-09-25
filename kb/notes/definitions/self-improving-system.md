@@ -44,7 +44,7 @@ Membership establishes improvement-directed self-change, not a complete architec
 Classify the remaining questions elsewhere:
 
 - [Reflective system](./reflective-system.md) owns whether the pathway changes itself through a causally connected self-representation; reflection is not required for membership.
-- [The pathway profile](../self-improving-systems-README.md) owns reflective structure, improvement dynamics, governance, and actor allocation; [the cumulativity criterion itself](../accumulation-counts-dependence-through-the-retained-result.md) is held separately.
+- [The pathway profile](../../tags/self-improving-systems-README.md) owns reflective structure, improvement dynamics, governance, and actor allocation; [the cumulativity criterion itself](../accumulation-counts-dependence-through-the-retained-result.md) is held separately.
 - [Methodological and computational closure](../methodological-and-computational-closure-track-different-changes.md) owns the two closure readings, and [warranted autonomy](../warranted-autonomy-is-bounded-by-oracle-domain.md) owns when unattended evaluation is trustworthy.
 
 ## Exclusions

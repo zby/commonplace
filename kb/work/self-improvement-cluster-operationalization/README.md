@@ -2,7 +2,7 @@
 
 ## Goal
 
-Operationalize the [self-improving-systems cluster](../../notes/self-improving-systems-README.md) as an ontology and a Commonplace-specific overlay on established improvement methods: wire it into the decisions that change Commonplace's behavior-determining organization, and distill only what the host methods cannot supply — the operativity test, the reflective/addressability profile, and the warrant boundary. Do not construct a standalone improvement methodology (delegation stance adopted 2026-07-22; [external-delegation-assessment](./external-delegation-assessment.md) §3a). Keeping the cluster good research and applying it are the same program — every ambiguity or contradiction left in the theory surfaces as a failure at application time.
+Operationalize the [self-improving-systems cluster](../../tags/self-improving-systems-README.md) as an ontology and a Commonplace-specific overlay on established improvement methods: wire it into the decisions that change Commonplace's behavior-determining organization, and distill only what the host methods cannot supply — the operativity test, the reflective/addressability profile, and the warrant boundary. Do not construct a standalone improvement methodology (delegation stance adopted 2026-07-22; [external-delegation-assessment](./external-delegation-assessment.md) §3a). Keeping the cluster good research and applying it are the same program — every ambiguity or contradiction left in the theory surfaces as a failure at application time.
 
 The trigger finding (full-cluster review, 2026-07-21): the cluster currently fails its own operativity test. In its own vocabulary, it has no reliable consumer, channel, or force into actual change decisions — nothing loads it when someone modifies a skill, validator, type spec, or collection contract, and the shipped review system (the repo's most developed evaluation machinery) is never read through the cluster's loop vocabulary. Hygiene defects found in the same review were fixed directly (world-models tagging gap, misattributed profile citation, explanatory-reach link, cumulativity-test exclusion left implicit, slug-length failure).
 
@@ -106,7 +106,7 @@ Findings and drafts live as files in this directory; phase 1 per-artifact audit 
 
 Links:
 
-- [Self-improving systems tag README](../../notes/self-improving-systems-README.md) — tests: the cluster whose operational fitness this workshop exercises
+- [Self-improving systems tag README](../../tags/self-improving-systems-README.md) — tests: the cluster whose operational fitness this workshop exercises
 - [A methodology governs its own extension only as far as it settles the meta-decisions it raises](../../notes/a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md) — grounds: the form/verification/authority axes the operationalization must settle for the cluster's own content
 - [Retrieval failure is reflection failure](../../notes/a-retrieval-miss-is-a-local-reflective-path-failure.md) — grounds: why authority paths 2 and 3 are best-effort and what strengthening the wire means
 - [False-positive generation is filtered; false-positive acceptance becomes operative](../../notes/false-positive-generation-is-filtered-before-retention.md) — draws-on: the automate-search-first rule the audit applies to existing automation

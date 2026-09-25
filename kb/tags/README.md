@@ -39,11 +39,11 @@ For current-state documentation about the live Commonplace system rather than tr
 
 ## Workshop Layer
 
-- [a-functioning-kb-needs-a-workshop-layer-not-just-a-library](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — the library type system models durable knowledge but not work-in-motion
-- [evolving-understanding-needs-holistic-rewrite-not-composition](./evolving-understanding-needs-holistic-rewrite-not-composition.md) — when a consumer needs the whole evolving picture, rewrite it as a single narrative rather than composing notes
+- [a-functioning-kb-needs-a-workshop-layer-not-just-a-library](../notes/a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — the library type system models durable knowledge but not work-in-motion
+- [evolving-understanding-needs-holistic-rewrite-not-composition](../notes/evolving-understanding-needs-holistic-rewrite-not-composition.md) — when a consumer needs the whole evolving picture, rewrite it as a single narrative rather than composing notes
 
 ## Gaps
 
-- [automating-kb-learning-is-an-open-problem](./automating-kb-learning-is-an-open-problem.md) — the open problem is automating judgment-heavy mutations (connections, groupings, synthesis)
-- [claw-learning-loops-must-improve-action-capacity-not-just-retrieval](./claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md) — learning must improve action capacity, not just retrieval
-- [brainstorming-how-to-enrich-web-search](./brainstorming-how-to-enrich-web-search.md) — enriching web search by temporarily expanding the corpus and applying connection methodology
+- [automating-kb-learning-is-an-open-problem](../notes/automating-kb-learning-is-an-open-problem.md) — the open problem is automating judgment-heavy mutations (connections, groupings, synthesis)
+- [claw-learning-loops-must-improve-action-capacity-not-just-retrieval](../notes/claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md) — learning must improve action capacity, not just retrieval
+- [brainstorming-how-to-enrich-web-search](../notes/brainstorming-how-to-enrich-web-search.md) — enriching web search by temporarily expanding the corpus and applying connection methodology

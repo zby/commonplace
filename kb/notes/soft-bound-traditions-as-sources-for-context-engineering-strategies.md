@@ -78,7 +78,7 @@ Three structural differences between agents and prior traditions limit what tran
 
 ## What this means for the KB
 
-The KB's framework draws directly on several of these traditions — [constraining](./definitions/constraining.md), [context efficiency](./context-efficiency-is-the-central-design-concern-in-agent-systems.md), [composable notes](./short-composable-notes-maximize-combinatorial-discovery.md), and [typed links](./links-README.md) among them. The transfer assessment indicates where that grounding is solid and where it's aspirational:
+The KB's framework draws directly on several of these traditions — [constraining](./definitions/constraining.md), [context efficiency](./context-efficiency-is-the-central-design-concern-in-agent-systems.md), [composable notes](./short-composable-notes-maximize-combinatorial-discovery.md), and [typed links](../tags/links-README.md) among them. The transfer assessment indicates where that grounding is solid and where it's aspirational:
 
 - **Literature search becomes targeted.** Search for the bounded-processor pattern in each tradition — but focus on the "already transferred" and "plausible" tiers first.
 - **Design decisions can be grounded in prior results** — but verify the transfer conditions hold (same optimization target, feedback not required, matching failure mode).
@@ -100,7 +100,7 @@ Relevant Notes:
 - [theory and methodology form a two-layer execution system](./theory-and-methodology-form-a-two-layer-execution-system.md) — instance: compression for a specific observer; roots in pedagogy, technical writing, knowledge management
 - [context efficiency is the central design concern](./context-efficiency-is-the-central-design-concern-in-agent-systems.md) — instance: attention scarcity made architectural; roots in Simon, working memory
 - [short composable notes maximize combinatorial discovery](./short-composable-notes-maximize-combinatorial-discovery.md) — instance: modularity under bounds; roots in Parnas, Ranganathan, Zettelkasten
-- [links index](./links-README.md) — instance: typed relationships for bounded navigation; roots in hypertext theory, semantic web, library science
+- [links index](../tags/links-README.md) — instance: typed relationships for bounded navigation; roots in hypertext theory, semantic web, library science
 - [deploy-time learning](./retained-artifacts-enable-persistent-deployment-time-adaptation.md) — instance: system-level adaptation through artifacts; roots in organizational learning, knowledge creation
 - [title as claim enables traversal as reasoning](./title-as-claim-enables-traversal-as-reasoning.md) — instance: propositional titles for bounded scanners
 - [information value is observer-relative](./information-value-is-observer-relative.md) — grounds: observer-relativity that makes adaptation necessary

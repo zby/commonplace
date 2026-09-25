@@ -20,5 +20,5 @@ Relevant Notes:
 - [changing requirements conflate genuine change with disambiguation failure](./changing-requirements-conflate-genuine-change-with-disambiguation.md) — sharpens: the first silent choice is already a degraded run state, not only a future maintenance problem
 - [out-of-spec output is a failure of the interpreter, not the spec](./out-of-spec-output-is-a-failure-of-the-interpreter-not-the-spec.md) — distinguishes: this note is about insufficient specification, not violating a sufficient one
 - [enforcement without structured recovery is incomplete](./enforcement-without-structured-recovery-is-incomplete.md) — applies: ambiguity handling also needs typed recovery and escalation
-- [observability](./observability-README.md) — belongs to: semantic recovery must be visible to learn whether contracts are sufficient
+- [observability](../tags/observability-README.md) — belongs to: semantic recovery must be visible to learn whether contracts are sufficient
 - [What Spec-Driven Development Gets Wrong](https://x.com/augmentcode/status/2025993446633492725) — exemplifies: bidirectional spec updates make semantic recovery visible

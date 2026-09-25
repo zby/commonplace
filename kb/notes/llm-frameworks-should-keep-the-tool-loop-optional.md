@@ -69,7 +69,7 @@ Shaped this way, the framework still serves the common case well: most users can
 Relevant Notes:
 
 - [bounded-context orchestration model](./bounded-context-orchestration-model.md) — foundation: a conditional representation in which symbolic inter-call execution selects bounded calls; the framework-owned loop freezes that selection to one policy
-- [tool loop](./tool-loop-README.md) — prior framing: argues from expressivity loss; this draft restarts from why tool loops are a useful convenience layer in the first place
+- [tool loop](../tags/tool-loop-README.md) — prior framing: argues from expressivity loss; this draft restarts from why tool loops are a useful convenience layer in the first place
 - [LLM-mediated schedulers are a degraded variant of the clean model](./llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md) — consequence: hidden tool loops push bookkeeping and progression back into the bounded conversational medium
 - [session history should not be the default next context](./session-history-should-not-be-the-default-next-context.md) — extends: once the framework owns progression it also tends to decide what later calls inherit
 - [final task success does not establish intended-path health](./final-task-success-does-not-establish-intended-path-health.md) — consequence: a framework-owned loop needs an independent path signal when its application-facing interface collapses primary and fallback success

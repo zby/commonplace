@@ -89,7 +89,7 @@ Relevant Notes:
 - [Frontloading spares execution context](./frontloading-spares-execution-context.md) — mechanism: the single-step mechanism this note extends to an iterative loop
 - [LLM context is composed without scoping](./llm-context-is-composed-without-scoping.md) — mechanism: sub-agent isolation provides the clean frames that make loop iterations independent
 - [LLM-mediated schedulers are a degraded variant of the clean model](./llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md) — extends: conversation-held scheduling spends bounded context on state progression
-- [Tool loop](./tool-loop-README.md) — extends: develops the model's main architectural implication for implementations
+- [Tool loop](../tags/tool-loop-README.md) — extends: develops the model's main architectural implication for implementations
 - [Theory and methodology form a two-layer execution system](./theory-and-methodology-form-a-two-layer-execution-system.md) — mechanism: the orchestrator receives a compact task-facing view while fuller state remains available
 - [A functioning KB needs a workshop layer](./a-functioning-kb-needs-a-workshop-layer-not-just-a-library.md) — exemplifies: the workshop is a KB-specific instance of keeping retained state outside bounded calls
 - [Agent-runtime analysis should separate scheduling, context assembly, and external state](./agent-runtime-analysis-should-separate-scheduling-context-state.md) — extends: separates scheduling from context assembly and external state inside the broader form
