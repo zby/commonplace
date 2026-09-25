@@ -76,8 +76,8 @@ still meets it. That is why the bet below is about a builder that learns.
 
 ## The bet
 
-Our bet is that **a fully automated theory builder that learns can be built
-with today's fixed-weight LLMs**. Learning here means that the builder's own
+Stated precisely, our bet is that **a fully automated theory builder that
+learns can be built with today's fixed-weight LLMs**. Learning here means that the builder's own
 conjecture and criticism improve its capacity for later work. The test below
 says how that is shown.
 
@@ -119,9 +119,8 @@ of its own software — the proof searcher included — once it has proved that
 the rewrite beats carrying on unchanged. These are real learning machines,
 and the Gödel machine's optimality result is a formal theorem.
 
-They require the work to be formalized first. The environment, the machine,
-and the utility function enter as axioms, and a change is admitted by a proof
-under them. The paper states the consequence: the machine "must ignore those
+In these machines the environment, the machine, and the utility function
+enter as axioms, and a change is admitted by a proof under them. The paper states the consequence: the machine "must ignore those
 self-improvements whose effectiveness it cannot prove." This makes it
 [a proof-governed case of self-modification](../notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md).
 It is rigorous relative to its formalization and silent about whether that
