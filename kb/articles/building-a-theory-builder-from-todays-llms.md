@@ -1,5 +1,5 @@
 ---
-description: "Lead article: the bet that an autonomous theory builder, a Popperian conjecture-and-criticism cycle over explicit revisable theories, can be built from today's fixed-weight LLMs; three payoffs, three conjectures, Bitter Lesson, learning test"
+description: "Lead article: the bet that an autonomous theory builder, a system running a Popperian conjecture-and-criticism cycle over explicit revisable theories, can be built from fixed-weight LLMs; payoffs, conjectures, Bitter Lesson, learning test"
 type: kb/articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
@@ -41,18 +41,25 @@ We propose a learning paradigm based on
 
 > problem → tentative solution → error elimination → revised problem
 
-We call a system that implements this cycle a **theory builder**.
-
-Its learned state is explicit and revisable. The system formulates problems,
-proposes [tentative theories](../notes/definitions/tentative-theory.md) as
-solutions, subjects them to criticism or tests, revises them in response, and
-keeps the result so that it shapes the next conjecture. How long results
-persist is graded; the arrangement we build retains them so that they change
-later work on other problems. The knowledge base
-behind this article
+We call a system that runs this cycle over explicit theories a **theory
+builder**. Faced with a problem, it proposes a
+[tentative theory](../notes/definitions/tentative-theory.md) as a solution.
+The knowledge base behind this article
 [defines the theory builder](../notes/definitions/theory-builder.md) by four
-conditions. Whether a theory builder learns is not part of the definition; it
-is the question this article's test asks.
+conditions on how it treats such theories:
+
+1. it states them in natural or formal language, so that identifiable units
+   say something;
+2. it acts on them, so that what a theory says changes what the system does;
+3. it criticizes what they say, by argument, by comparison with rivals, or
+   by testing their consequences, and revises or replaces those that fail;
+4. it keeps the result of criticism, so that it shapes the next conjecture.
+
+The definition sets no minimum for how long results persist. The arrangement
+we build keeps them across problems, so that they change later work on other
+questions. The definition also has no success condition. Whether a theory
+builder learns, in the sense of improving its capacity for later work, is
+the question this article's test asks.
 
 ## The bet
 
@@ -61,8 +68,9 @@ today's fixed-weight LLMs**.
 
 Fully automated means that every internal role in the cycle is performed
 computationally. Users still set the tasks and judge the results; what the
-builder does not need from people is the formulation, criticism, and
-revision of its own theories. That boundary is what the knowledge base calls
+builder does not need from people is the formulation, criticism, revision,
+and selection of its own theories, or changes to the machinery that does this
+work. That boundary is what the knowledge base calls
 the [autonomous qualifier](../notes/definitions/theory-builder.md#qualifiers).
 
 The builder is not the LLM alone. It is a system containing an LLM together
@@ -203,15 +211,16 @@ supplied reason buys on balance.
 *Theories are addressable.* A theory whose assumptions and parts can be
 inspected and revised individually lets criticism name a part, and lets a
 revision keep the rest. This property is
-[addressability](../notes/definitions/addressable-theory.md). It can focus
-investigation and preserve useful knowledge through a revision; it can also
-locate a fault in the wrong part.
+[addressability](../notes/definitions/addressable-theory.md), and it comes
+in degrees; the comparison is with a builder that criticizes and replaces
+each theory whole. Naming a part can focus investigation and preserve useful
+knowledge through a revision; it can also locate a fault in the wrong part.
 
-*Persistence beats reconstruction.* Keeping the assembled theory, and the
-criticism that shaped it, across problems spares the builder from rebuilding
-both from raw records every time. Whether that saving holds at comparable
-decision quality is the persistence question the companion states in two
-comparisons.
+*Persistence saves work.* Keeping the assembled theory, and the criticism
+that shaped it, across problems may cost less at comparable decision quality
+than keeping results only within one run, or than rebuilding them each time,
+either from retained criticisms or from records of inputs and outcomes
+alone.
 
 Explicit state also has costs. A retained theory requires retrieval,
 applicability checks, revision, validation, and maintenance. A false
@@ -308,5 +317,8 @@ agents together, and transfers its internal roles to computation one class at
 a time; it also covers the builder's reflection on its own machinery. The
 [software-house supplement](./an-automated-software-house-as-a-second-test-of-a-theory-builder.md)
 proposes a second arrangement whose failures are more visible. The
+[survey](./nearest-existing-constructions-to-a-witness-house.md) places
+eighteen existing self-improving systems against the four conditions and
+judges their reported gains separately. The
 [definition](../notes/definitions/theory-builder.md) states exactly
 what a theory builder requires and what it leaves open.

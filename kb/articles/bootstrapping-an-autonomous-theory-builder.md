@@ -37,10 +37,12 @@ against what they asked for. The knowledge base calls such a builder
 
 Such a builder does not have to be built in one step. We start with a
 partially automated system in which a human operator and automated machinery
-learn together. We require only that what is learned is retained in the
-system, changes later behaviour, and changes it for the better; the lead
-article says how that last condition is tested. Commonplace is our
-implementation of this bootstrap.
+learn together. Because the builder includes whoever performs its internal
+operations, such a system is already a theory builder, staffed partly by
+people; what the bootstrap changes is who performs those operations. We
+require only that what is learned is retained in the system, changes later
+behaviour, and changes it for the better; the lead article says how that last
+condition is tested. Commonplace is our implementation of this bootstrap.
 
 ## Retain learning in the system
 
@@ -67,8 +69,9 @@ where no fixed test of a theory's fit yet exists.
 Some of what the system learns concerns its own operation. A recurring
 failure in review, decomposition, evaluation, or representation can become
 an object of learning, and the resulting knowledge can change the machinery
-used in future learning. A builder that holds such knowledge, connected to
-its machinery in both directions, is what the knowledge base calls
+used in future learning. A builder whose methods are stated as theories,
+consumed by its operations and criticized against records of its own
+operation, is what the knowledge base calls
 [reflective](../notes/definitions/theory-builder.md#qualifiers).
 
 This closes a feedback loop:
