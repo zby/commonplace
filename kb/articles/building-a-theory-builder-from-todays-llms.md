@@ -41,7 +41,7 @@ We propose a learning paradigm based on
 
 > problem → tentative solution → error elimination → revised problem
 
-We call a system that runs this cycle over explicit theories a **theory
+A system that runs this cycle over explicit theories is a **theory
 builder**. Faced with a problem, it proposes a
 [tentative theory](../notes/definitions/tentative-theory.md) as a solution.
 The knowledge base behind this article
@@ -89,12 +89,12 @@ Current LLMs appear capable of the main functions the loop requires:
 - revising explicit knowledge,
 - using retained knowledge in later work.
 
-None of these capabilities needs to be perfect. The point of the cycle is to
-expose and correct errors.
+The capabilities can be imperfect: the cycle exists to expose and correct
+errors.
 
 ## Formalize it, or leave it to people
 
-Self-improving machines are not new. Schmidhuber's
+Self-improving machines have a long history. Schmidhuber's
 [program](https://people.idsia.ch/~juergen/recursive-self-improvement.html)
 has pursued them since 1987: policies that modify their own update rules,
 program search that reuses its earlier solutions, and the
@@ -105,21 +105,19 @@ and the Gödel machine's optimality result is a formal theorem.
 
 They require the work to be formalized first. The environment, the machine,
 and the utility function enter as axioms, and a change is admitted by a proof
-under them. The paper is blunt about the consequence: the machine "must
-ignore those self-improvements whose effectiveness it cannot prove." We read
-this as
+under them. The paper states the consequence: the machine "must ignore those
+self-improvements whose effectiveness it cannot prove." This makes it
 [a proof-governed case of self-modification](../notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md).
 It is rigorous relative to its formalization and silent about whether that
-formalization is adequate, since a valid proof under the wrong premises
-guarantees nothing anyone wanted. The machine's starting program is costly
+formalization is adequate, since a valid proof under the wrong premises can
+certify a change nobody wanted. The machine's starting program is costly
 for the same reason: everything the first improvement needs has to be there
 already, in executable form.
 
-Beyond this restriction, one operation is missing altogether. Proving that a
-switch is beneficial under the current premises is one thing. Revising those
-premises because cases have gone against them is another, and the second is
-most of what open-ended learning consists of. Schmidhuber's retrospective
-leaves that operation unspecified.
+Beyond this restriction, the program leaves one operation unspecified.
+Proving that a switch is beneficial under the current premises is one thing.
+Revising those premises because cases have gone against them is another, and
+the second is most of what open-ended learning consists of.
 
 We know of no formalization of that operation, and Peter Naur argued that
 there cannot be one: the judgments that relate a program to the world cannot
@@ -129,8 +127,8 @@ people who hold it. As the knowledge base
 it needs one further premise: that a computer can make a judgment only by
 executing criteria formulated in advance. Grant the premise and the work
 divides in two. What can be formalized goes to machines, and what cannot
-stays with people. Schmidhuber's constructions push the first half as far as
-it goes, and Naur's conclusion is what the second half implies.
+stays with people. Schmidhuber's constructions develop the first half as far
+as it goes, and Naur's conclusion is what the second half implies.
 
 This division leaves out a middle, because narrowing what an artifact can be
 taken to mean is a [gradient](../notes/definitions/constraining.md). Defining
@@ -138,8 +136,7 @@ a term rules out some readings. A convention rules out more. A structured
 document assigns meaning to positions in it. A schema or a validator rejects
 the readings it does not admit. Only the last steps cross into a symbolic
 medium, where a formal consumer assigns the consequences. That crossing is
-what we mean by [codification](../notes/definitions/codification.md). Every
-earlier step leaves natural language that an interpreter still has to read.
+[codification](../notes/definitions/codification.md). Every earlier step leaves natural language that an interpreter still has to read.
 The choice between formalizing and leaving it to people treats the far end
 of that gradient as the whole of it.
 
@@ -151,22 +148,22 @@ formalization: wherever the words leave a choice open, the interpreter's
 judgment decides. But the judgment is the model's, so the operation is not
 left to people either.
 
-This is why the theory builder is stated through definitions, and why those
-definitions are worked so hard. They say what it takes for later behaviour
+This is why the theory builder is stated through definitions, and why so
+much effort goes into those definitions. They say what it takes for later behaviour
 to depend on a retained change, what lets criticism name one part of a
 theory, and what a criticism has to do. Each is constrained as far as it will
-go, and the interpreter handles the rest. Parts that settle can be codified
-afterwards, one at a time, as our validators and schemas have been. The rest
-stays open to criticism.
+go, and the interpreter handles the rest. Parts that stop changing can be
+codified afterwards, one at a time, as the knowledge base's validators and
+schemas have been. The rest stays open to criticism.
 
 This position has costs. The first is how it fails. A proof gate fails
 closed: it refuses every change it cannot certify, including the good ones.
 An interpreter fails open. Given a definition that contradicts another, it
-will apply either one and produce plausible work, and nothing in the medium
-announces the contradiction. Error correction therefore has to be built; the
-medium does not supply it. The second cost is that constraining can go too
-far: a definition pinned down harder than the thing is understood freezes a
-wrong reading in place. The third is the guarantee we give up. In the
+will apply either one and produce plausible work, and the medium gives no
+sign of the contradiction. Error correction therefore has to be built into
+the system. The second cost is that constraining can go too far: a
+definition made more precise than the understanding behind it fixes a wrong
+reading in place. The third is a lost guarantee. In the
 earlier constructions a proof certified each accepted change. Here the
 interpreter's judgments are hidden and have to be checked by other means.
 
@@ -177,8 +174,8 @@ learning paradigm and not just another agent workflow. The difference is
 where its learning happens: in explicit, criticizable theories, and not only
 in changes to model weights. Three payoffs follow from that difference.
 
-**Learning without retraining.** New knowledge becomes available
-[without another weight-training cycle](../notes/retained-artifacts-enable-persistent-deployment-time-adaptation.md),
+**Learning without retraining.** New knowledge
+[becomes usable as soon as it is retained](../notes/retained-artifacts-enable-persistent-deployment-time-adaptation.md),
 so the builder adapts at deployment time instead of waiting for the next
 training run.
 
@@ -190,18 +187,18 @@ states the conditions it depends on.
 
 **Learned knowledge that can be read.** What the system has learned is held
 as stated text: prose, and code where a part has been codified. It
-can be read, diffed, tested, and reverted the way a weight update cannot be.
+can be read, diffed, tested, and reverted.
 
-This does not require a human reader.
-[Inspectability is a property of the artifact's form, not of who inspects it](../notes/inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md),
+The reader can be an agent:
+[inspectability is a property of the artifact's form](../notes/inspectable-artifact-not-supervision-defeats-the-blackbox-problem.md),
 so agents can do the reading at a volume people could not. What the system
-has learned stays available for oversight without waiting on progress in
-weight interpretability.
+has learned is available for oversight now, whatever the pace of weight
+interpretability research.
 
 Readability has a limit.
 [A legible artifact need not be the one actually driving behaviour](../notes/revision-guided-by-rationale-needs-faithfulness-not-just-legibility.md).
 That is why the learning test below alters the retained state instead of
-inspecting it: the medium makes the question testable, not settled.
+inspecting it: the medium makes the question testable, and the test settles it.
 
 Three further advantages are conjectural. The payoffs above follow from the
 form of the knowledge; these concern how well the loop learns. The knowledge
@@ -231,7 +228,7 @@ or from records of inputs and outcomes alone.
 Explicit knowledge also has costs. A retained theory requires retrieval,
 applicability checks, revision, validation, and maintenance. A false
 abstraction can misdirect many decisions, and a correct one that retrieval
-misses helps nobody. Keeping episode records alongside distilled rules
+misses is never used. Keeping episode records alongside distilled rules
 [preserves a route for re-examining a rule](../notes/retaining-episode-evidence-keeps-a-distilled-rule-open-to.md)
 that turns out to be wrong. Construction, retrieval, maintenance, and
 mistakes have to be counted on both sides of any comparison with a
@@ -247,18 +244,18 @@ matters here is that the paradigm is possible. The companion states
 contrasts leveraging human knowledge with leveraging computation through
 search and learning. That is a claim about how the content that determines a
 system's behaviour gets made. It says nothing about the form the content is
-kept in. Its folk version, *structure loses to weights*, quietly turns it
-into a claim about form. The lesson
+kept in. Its folk version, *structure loses to weights*, turns it into a
+claim about form. The lesson
 [selects production methods, not representational forms](../notes/the-bitter-lesson-selects-production-methods-not-representational.md).
 
 Sutton himself leans toward the folk version. In a 2026
 [interview](https://sequoiacap.com/podcast/rich-sutton-and-khurram-javed-why-ai-models-stop-learning-and-how-to-start-it-again),
 he and Khurram Javed argue that forming new concepts needs continued weight
-updating. That is a separate hypothesis: our bet runs against it, and the
+updating. That is a separate hypothesis: the bet runs against it, and the
 essay does not establish it. The essay's own cases separate production from
 form. Scale displaced hand-tuned weights as well as hand-written feature
-extractors. The losing side spanned both forms, so the selection ran on how
-the content was produced.
+extractors. The displaced methods spanned both forms, so what decided the
+outcome was how the content was produced.
 
 A theory builder sits on the computation side.
 Its theories, criticism, tests, and revisions are explicit, but they need not
@@ -273,16 +270,15 @@ scalable learning. It is between **human-supplied knowledge** and
 **automatically generated, tested, and revised knowledge**.
 
 One condition attaches. A builder that starts from hand-written theories and
-method, as ours does, fits the lesson
+method, as the one described here does, fits the lesson
 [only if its learning outgrows that starting point](../notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md):
-computation, not people, must come to supply the task-specific knowledge
-each new demand needs.
+computation must come to supply the task-specific knowledge each new demand
+needs.
 
 ## What would count as learning?
 
-Repeated problem solving is not enough. For learning to occur, the result of
-one episode must durably change the system in a way that affects later
-behaviour:
+For learning to occur, the result of one episode must durably change the
+system in a way that affects later behaviour:
 
 > K(t) → conjecture and criticism → K(t+1) → different later behaviour
 
