@@ -11,7 +11,7 @@ Commonplace builds a [theory builder](./definitions/theory-builder.md): a
 continuing system whose theories are stated in localized units, guide what it
 does through what they say, are criticized for what they say, and are
 revised through iteration, where the result of criticism shapes the next
-conjecture. The definition has no
+round. The definition has no
 success condition. Whether the system learns, in the sense of improving its
 capacity for future action
 ([Simon's criterion](./learning-is-not-only-about-generality.md)), is the
@@ -28,9 +28,29 @@ fuller attribution.
 
 ## Research program and development path
 
-Commonplace pursues recursive self-improvement within the broad research
-program developed by Schmidhuber. His account starts from programs: "True
-RSI is about encoding the initial learning algorithm in a universal
+The first research claim is that an autonomous theory builder learns, which
+it could do with a fixed method. Commonplace pursues it alongside a practical
+goal, an LLM wiki that people use for their own work, and the two reinforce
+each other: learning is what makes the wiki's memory worth keeping, and real
+use supplies the problems and criticism the builder learns from, as the
+second difference below explains.
+
+Commonplace's approach to building a theory builder is
+reflective from the start: the builder criticizes and revises its own stated
+method, and people perform many of its operations until they move to
+computation. The approach rests on the return to investing in the method:
+[an improvement to the learning machinery is reused by every later episode](./an-optimal-long-run-learning-strategy-invests-in-its-own-machinery.md),
+so over a long horizon it can pay more than immediate learning. That return
+requires method changes to compound, making later improvement better, which
+is the claim of recursive self-improvement. Reflection is not sufficient for
+it, and it is not necessary for recursive self-improvement in general:
+Schmidhuber's realizations select self-modifications by reward rather than
+by criticizing a stated method. Commonplace takes the reflective route, where
+compounding comes through criticism of the stated method.
+
+The program sits within the broad research program on recursive
+self-improvement developed by Schmidhuber. His account starts from programs:
+"True RSI is about encoding the initial learning algorithm in a universal
 programming language", whose instructions can modify that code itself
 ([RSI retrospective](../sources/recursive-self-improvement-since-1987.ingest.md#quotes)).
 His example of such a language is a "recurrent neural network or RNN". On
@@ -49,20 +69,6 @@ criticism. Retained theories can guide diagnosis, test
 selection, and procedure revision; the research objective includes making
 subsequent improvement work more productive.
 
-The first research claim is that an autonomous theory builder learns, which
-it could do with a fixed method. Commonplace's approach to building one is
-reflective from the start: the builder criticizes and revises its own stated
-method, and people perform many of its operations until they move to
-computation. The approach rests on the return to investing in the method:
-[an improvement to the learning machinery is reused by every later episode](./an-optimal-long-run-learning-strategy-invests-in-its-own-machinery.md),
-so over a long horizon it can pay more than immediate learning. That return
-requires method changes to compound, making later improvement better, which
-is the claim of recursive self-improvement. Reflection is not sufficient for
-it, and it is not necessary for recursive self-improvement in general:
-Schmidhuber's realizations select self-modifications by reward rather than
-by criticizing a stated method. Commonplace takes the reflective route, where
-compounding comes through criticism of the stated method.
-
 We start with an incomplete, criticizable account of how to learn and use it
 through interpretation. The LLM and harness supply executable machinery;
 the methodology need not specify every operation before it can be tried.
@@ -77,10 +83,9 @@ improvement needs, and the general routes to that competence, program
 enumeration and proof search, are expensive; the realizations that ran stayed
 within bounded domains. With an LLM the seed is a delta over pretrained
 competence: it directs what it need not encode. This difference is shared
-with every LLM-era attempt. Second, the start. An improvement to learning
-machinery
-[pays through the later episodes that reuse it](./an-optimal-long-run-learning-strategy-invests-in-its-own-machinery.md),
-and [a bootstrap is the running system itself](./a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md),
+with every LLM-era attempt. Second, the start. An improvement to the method pays
+through the later episodes that reuse it, and
+[a bootstrap is the running system itself](./a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md),
 so starting from a working system supplies that stream from the first day,
 with people supplying the functions not yet automated. Any program could in
 principle close its loop with human judgment. Sustaining that requires a
