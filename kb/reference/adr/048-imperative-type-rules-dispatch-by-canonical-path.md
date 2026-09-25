@@ -9,6 +9,7 @@ status: accepted
 
 **Status:** accepted
 **Date:** 2026-07-13
+**Partly reversed by:** [086-projects-read-the-library-from-the-installed-package](./086-projects-read-the-library-from-the-installed-package.md) — global types are named by bare name
 
 ## Context
 

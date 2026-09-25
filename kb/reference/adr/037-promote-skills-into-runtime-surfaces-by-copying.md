@@ -2,12 +2,12 @@
 description: Replaces symlink and Windows-junction skill projections with real copied directories in commonplace-init
 type: ../types/adr.md
 tags: []
-status: accepted
+status: superseded
 ---
 
 # 037-Promote skills into runtime surfaces by copying
 
-**Status:** accepted
+**Status:** superseded by [086-projects-read-the-library-from-the-installed-package](./086-projects-read-the-library-from-the-installed-package.md)
 **Date:** 2026-07-03
 
 ## Context

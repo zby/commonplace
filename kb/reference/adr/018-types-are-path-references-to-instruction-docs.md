@@ -9,6 +9,7 @@ status: accepted
 
 **Status:** accepted
 **Date:** 2026-04-19
+**Partly reversed by:** [086-projects-read-the-library-from-the-installed-package](./086-projects-read-the-library-from-the-installed-package.md) — global types are named by bare name
 **Supersedes (in part):** [ADR 016 — custom types use template/instruction pairs](./016-custom-types-use-template-instruction-pairs.md); retires the `note` inlining from [ADR 002](./002-inline-global-types-in-writing-guide.md).
 **Superseded (in part) by:** [ADR 068](./068-collection-contracts-stop-enumerating-available-types.md) (removes per-collection type listings; collection eligibility becomes a validator rule).
 **Related:** [ADR 009](./009-link-relationship-semantics.md).

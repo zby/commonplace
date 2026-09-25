@@ -2,12 +2,12 @@
 description: "Ship Commonplace library content under kb/commonplace/ so user collections at kb/notes/, kb/reference/, kb/instructions/ stay user-owned while the shipped library sits alongside as a read-only dependency."
 type: ../types/adr.md
 tags: []
-status: accepted
+status: superseded
 ---
 
 # 021-Ship library content under kb/commonplace
 
-**Status:** accepted
+**Status:** superseded by [086-projects-read-the-library-from-the-installed-package](./086-projects-read-the-library-from-the-installed-package.md)
 **Date:** 2026-04-23
 **Relates to:** [ADR-014](./014-scripts-as-python-package-one-tree-model.md) (refines its one-tree model with a namespace within `kb/`)
 **Superseded (in part) by:** [ADR 068](./068-collection-contracts-stop-enumerating-available-types.md) (type-offerings placeholders)
