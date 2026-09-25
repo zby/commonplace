@@ -13,8 +13,8 @@ domains
 ## Current verdict
 
 All findings from the 2026-09-25 rescan and its follow-up are closed except
-X3 (small ADR residue) and T1 and E1 (held by owner workshops). The
-contract-change gate is promoted. The closed tables below record how each was resolved.
+T1 and E1, which are held by owner workshops. The contract-change gate is
+promoted. The closed tables below record how each was resolved.
 
 ADR 086 (projects read the library from the installed package) removed the
 project-local library copy, which dissolved the previous cycle's
@@ -46,7 +46,6 @@ explicitly historical statement, or an unimplemented proposal does not.
 
 | ID | Pri | Contradiction | Consequence |
 |---|---|---|---|
-| X3 | P2 | Residue left from the 2026-09-25 cleanup: ADRs 059 and 066 lack the required `## Considered alternatives` section; ADR 073 says the snapshot marker lives in the gate while `job_prompt.py` hardcodes it (uncertain) | A retrofit needs the deciding reasoning, which may only be in git history |
 | T1 | P1 | Tag coverage stated beyond one collection, checked within one | **Transferred** to [tag-contract convergence](../tag-contract-convergence/README.md); [closure tracker](./plans/t1-tag-scope.md) |
 | E1 | P1 | Native Windows supported; promoted skills keep unpaired POSIX commands (health check, connect `xargs -r`, validate's Bash loop) | **Owned** by [execution-channel compatibility](../execution-channel-compatibility/README.md); [plan](./plans/e1-windows-execution.md). E1 now also owns the package-owned `commonplace-validate all` target |
 
@@ -61,6 +60,7 @@ superseded by ADR 088, which deliberately dropped that eligibility.
 
 | ID | Closed | How |
 |---|---|---|
+| X3 | 2026-09-25 | ADR 073 records that prompt scaffolding also recognizes the snapshot marker; ADRs 059 and 066 carry Considered alternatives reconstructed from their commits and proposal, with inferred points marked |
 | I4 | 2026-09-25 | Init's migration also rewrites a local schema's `kb/...` type constant to the ADR 088 form and handles single-quoted type values; a second run changes nothing |
 | H1 | 2026-09-25 | `commonplace-init --check`, which the health check runs, reports a project `kb/types/<name>.md` that collides with a library global type as `collision` |
 | H2 | 2026-09-25 | Type collisions raise a distinct `TypeCollisionError` that type-review selection lets through, so the selector fails with the collision instead of returning no targets |
@@ -107,12 +107,10 @@ ledger) were deleted on 2026-09-25; git history keeps them.
 
 ## Implementation order
 
-1. **X3.** Retrofit Considered alternatives into ADRs 059 and 066 from their
-   implementing commits, and settle whether ADR 073's marker claim holds.
-2. **Owners:** E1 continues in execution-channel compatibility, including a
+1. **Owners:** E1 continues in execution-channel compatibility, including a
    package-owned `commonplace-validate all`; T1 closes here after the tag
    workshop's adoption tests.
-3. **Contract-change gate — promoted 2026-09-25** as
+2. **Contract-change gate — promoted 2026-09-25** as
    [change a contract that several consumers read](../../instructions/change-a-contract-that-several-consumers-read.md),
    loaded from the ADR type's operativity-path rule; worked applications are
    in the [gate plan](./plans/contract-change-gate.md).

@@ -24,6 +24,22 @@ The counter-machinery was tested before adoption. The two-stage idealization cri
 4. **The full pass repairs mode mismatch through the existing keep-reframe, mode-guarded and bidirectional.** Counterexample shapes route the target mode. Guards: a statistical retitle must state its refuter or the reframe fails as vacuous; an ideal-type conversion must write the adequacy record into the body, where the closing cycle's premise rerun attacks it — that closing attack is the conversion's required resistance. A claim hedged below its warrant is the same finding in reverse, reframed up.
 5. **Conversions outside a pass remain permitted**; the mode guards bind whoever converts, and the next full pass supplies the deferred attack, since the record is content the premise gate tests by default.
 
+## Considered alternatives
+
+The option space was developed in the design proposal "Repair dispositions for defeated claims are an epistemic policy with an option space", in its version before this ADR trimmed it. The proposal framed repair of defeated claims as an epistemic policy and offered three options.
+
+**Option 1: document reframe-to-warranted as the universal policy.** Name the existing weaken-only repair set as this installation's policy in `kb/notes/COLLECTION.md` or the pass instruction, with no new mechanism. It lost as a complete answer because the idealization question stays unposable: a claim whose crisp form is refuted in detail but whose unification is worth keeping has no survivable declared form. Its core point, that the repair policy must be stated where it binds, survives in the "Claim modality" contract.
+
+**Option 2 as proposed: a modality trait or frontmatter field, plus a new keep-as-idealization disposition.** The adopted decision takes this option's modes, reading rule (undeclared reads as universal), and two-stage adequacy assessment, but changes two parts. Modality moved into the claim text, because the premise-decomposition gate quotes premises verbatim, so in-text modality is attacked without extra machinery, while a field would be a second copy of claim semantics that can drift. The new disposition variant became a mode-guarded use of the existing keep-reframe, because the in-pass assessment ran with no new verdict, trait, or gate.
+
+**Option 3: profile-level repair policy.** Each text-contract profile would declare which repair dispositions review may take. Deferred, not rejected: no second installation or episode demands it, and building profile machinery ahead of that need is the plan-first risk the proposal itself named. It stays in the proposal as undecided remainder.
+
+**A dedicated pricing gate beside the premise gate.** The proposal left open whether the premise gate learns modality-conditional reading or a separate gate runs the honesty test. Resolved for the premise gate: it reads premises at stated modality and annotates counterexample shape as routing information. Drift tracking for pricing attestations needs factored `(note, attestation)` review pairs, which are themselves an open proposal, so it stays deferred.
+
+**Deciding forces.** Every repair the pipeline offered weakened the claim; three worked episodes and the 22-note survey showed the cost; the first in-pass adequacy assessment showed that declared commitments can be attacked as ordinary content; and an idealization form must not become an immunizing stratagem, hence the adequacy record and the stated-refuter guard.
+
+**Free choices.** Resolved: all three conversion paths the proposal named (write-time declaration, in-pass reframe, direct revision outside a pass) remain permitted under the same guards (decision 5). The proposal flagged "idealization" as a naming risk (praise-adjacent readings) and listed "first-order model" and "declared-ideal" as alternatives; the decision names the mode "ideal-type", the term the proposal's option 2 already used, and the record gives no further reason for that choice. Left open: profile-level policy declaration and attestation drift tracking. ADR 080 later removed in-pass mode conversion from the full pass (see Status).
+
 ## Consequences
 
 - The 22 surveyed candidates are repairable by ordinary full passes; no migration or batch operation is needed.

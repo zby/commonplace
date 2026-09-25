@@ -31,6 +31,22 @@ The source collection remains the sole authorization boundary:
 
 This decision adds an authorization class, not a general external-link policy. Retention, snapshot preference, source quality, and link-rot policy remain collection-local or future work.
 
+## Considered alternatives
+
+No workshop or proposal developed an option space for this decision. The record is the implementing commit, one discarded draft, and the evidence-label migration that exposed the gap. That migration's baseline counted 23 notes→external `evidence` edges that no collection authorized; it classed them as authorization gaps, not as reasons to change the relation. The options below come from that record.
+
+**Keep external citation a type-level concern (the prior position).** ADR 023 placed quote-anchored citations in the review type spec because an external target "has no destination collection and no catalogue label, so it is not an outbound-linking rule." It lost because the rule generalizes badly: any type or local convention could then open an external link surface that the source collection never authorized, which breaks ADR 019's single authorization boundary. The type keeps citation shape, pinning, and validation; only the permission moved.
+
+**`external` opt-in by name only, excluded from `any`.** A draft of the link-vocabulary wording, removed from the worktree before this ADR's commit, said "`external` is opt-in and is never included by `any`." The adopted rule includes `external` in `any` and treats choosing the wildcard as an explicit collection-level authorization. The record does not state why the draft lost. A plausible reason (inferred): a wildcard with an unstated exception would make `any` mean something other than every destination.
+
+**Model the open web as a collection.** The ADR does not describe this as a weighed option; it rules it out in passing ("is not itself a collection") and lists what the reserved token avoids: fake collection identities, local indexes, backlinks, and connect prospecting. Treat this as a boundary the decision states, not as a developed alternative.
+
+**Let authorization license open-web prospecting by `cp-skill-connect`.** Rejected in the decision text: connect's discovery surface stays the local repository, and it evaluates only external targets already in hand. The articles collection is the one recorded exception route: it assigns external prospecting to article research, not to connect.
+
+**Deciding forces.** One authorization boundary at the source collection (ADR 019); an existing corpus of intentional external links that needed a sanctioned home; and keeping connect's search surface inside the local repository.
+
+**Free choices.** Resolved: `any` includes `external`; a collection may authorize formal labelled edges or an inline citation surface with no rendered identifier. Left open: retention, snapshot preference, source quality, and link-rot policy, which stay collection-local or future work.
+
 ## Consequences
 
 - Existing collection ownership now covers external links instead of treating them as a type-level exception.
