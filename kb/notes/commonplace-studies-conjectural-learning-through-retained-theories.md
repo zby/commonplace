@@ -1,21 +1,27 @@
 ---
-description: "Commonplace's RSI research uses interpreted methodology, selective codification, and retained theories; content, addressability, and efficiency remain conjectured benefits"
+description: "Commonplace builds a system meeting the theory-builder conditions and tests whether it learns; criticism of content, fine-grained addressability, and retention are each compared against the arrangement without them"
 type: kb/types/note.md
 traits: [title-as-claim, has-external-sources]
 tags: [foundations, learning-theory, self-improving-systems]
 ---
 
-# Commonplace studies conjectural learning through retained theories
+# Commonplace builds a theory builder and tests whether it learns
 
-Commonplace chooses to study a continuing system that develops, uses, and
-criticizes formulated theories. It retains the theories and their testing
-record so that what it learns shapes future work. This is our research
-choice. Whether it offers advantages over other approaches is an empirical
-question.
+Commonplace builds a [theory builder](./definitions/theory-builder.md): a
+continuing system whose theories are stated in localized units, guide what it
+does through what they say, are criticized for what they say, and are retained
+with the record of their criticism for later problems. The definition has no
+success condition. Whether the system learns, in the sense of improving its
+capacity for future action
+([Simon's criterion](./learning-is-not-only-about-generality.md)), is the
+hypothesis under test. Membership does not establish it.
 
-The [definition](./definitions/conjectural-learning.md) states when the term
-applies; the [precedents note](./conjectural-learning-has-distinct-precedents.md) supplies the fuller
-attribution.
+Beyond the four conditions, Commonplace makes two further choices:
+fine-grained addressability and fixed model weights. Whether the conditions
+and these choices offer advantages over other arrangements is an empirical
+question. Each conjecture below compares the builder with an arrangement that
+lacks one feature. The [precedents note](./conjectural-learning-has-distinct-precedents.md)
+supplies the fuller attribution.
 
 ## Research program and development path
 
@@ -76,7 +82,9 @@ methodology's claims as tentative theories, criticize their content, test
 their consequences, and let the resulting problems guide further work
 ([formulation and criticism](../sources/popper-epistemology-without-a-knowing-subject-1968.ingest.md#quotes)).
 This follows from our choice to develop the methodology through conjecture
-and criticism. Natural language alone does not make a procedure Popperian;
+and criticism, which makes the method part of what the builder criticizes
+(the [reflective qualifier](./definitions/theory-builder.md#qualifiers)).
+Natural language alone does not make a procedure Popperian;
 an instruction, a theory about its effects, and a criticism have different
 roles even when they share one artifact.
 
@@ -89,35 +97,44 @@ underlying theory true or exempt from criticism. Whether it preserves useful
 behavior while reducing cost or error is a separate question from whether
 the interpreted methodology improves learning.
 
-The direction does not add a membership condition to conjectural learning.
+This direction does not add a condition to the definition. Interpreted
+methodology and selective codification are how Commonplace realizes a theory
+builder, not what makes a system one.
 
 ## The continuing system
 
-New work begins with what the system has already learned. A failed test may
+New work begins with what the system retained from earlier problems.
+Retention is condition 4 of the definition: it counts when what is kept is
+taken up on a new problem. A failed test may
 prompt revision or replacement. Surviving a serious test adds to the grounds
 for relying on a theory as background for further theories, or for spending
 less effort repeating tests of the same vulnerability. The theory remains
 tentative; its content can stay unchanged while its assessed support and
 future use change.
 
-We choose to retain addressable theories: assumptions, scope, and parts can
-be inspected and revised individually. Indexed traces that expose conjectures,
-criticism, and testing results are an implementation of this retained knowledge,
-not a separate comparison. We also hold model weights fixed in
-the research program. The theories, testing record, and other retained state
-remain parts of the learning system and continue to develop. Fixed weights
-rule out parameter updates as the source of improvement; they do not establish
-that a particular retained change caused it.
+The definition requires only that some unit carry content, even if that unit
+is the whole theory. We choose the high end of
+[addressability](./definitions/theory-builder.md#addressability): assumptions,
+scope, and parts can be inspected and revised individually. Indexed traces
+that expose conjectures, criticism, and testing results are an implementation
+of this retained knowledge, not a separate comparison. We also hold model
+weights fixed in the research program. The theories, testing record, and other
+retained state remain parts of the builder and continue to develop. Fixed
+weights rule out parameter updates as the source of improvement; they do not
+establish that a particular retained change caused it.
 
-The broader definition also admits reconstruction from retained criticisms
-and systems whose weights change. Our choice is one arrangement within it.
+The definition also admits theories criticized and replaced whole, theories
+rebuilt from retained criticism, and builders whose weights change. Our choice
+is one arrangement within it.
 
 ## Three conjectures
 
 **Content.** An arrangement that formulates criticism of what a theory says
 and supplies it to later steps may yield more learning from a failure than an
 arrangement that generates variants and selects them by score, with no
-formulated reason for a failure. A correct diagnosis can explain why a claim
+formulated reason for a failure. The second arrangement is trial and error,
+outside the definition (condition 3), so this conjecture asks whether the
+criticism condition pays. A correct diagnosis can explain why a claim
 failed and direct subsequent search. The intended contrast is the effect of
 formulating and supplying criticism; a model proposing variants may also
 criticize them unobserved. More elaborate criticism need not supply a better
@@ -126,9 +143,12 @@ diagnosis.
 **Addressability.** Criticism that identifies a suspect assumption or part
 may yield more learning from a failure than criticism that leaves the target
 undivided. Identifying a candidate cause can focus investigation and help
-preserve useful knowledge. The comparison is with criticism directed at the
+preserve useful knowledge. The comparison is with a builder whose criticism is directed at the
 theory as a whole, which can still constrain its successor. Both arrangements
-can be conjectural learning. The target of criticism is distinct from edit
+are theory builders: a theory with no stated parts that is criticized and
+replaced whole meets the definition at its minimum, and it is the baseline for
+this conjecture
+([checks, case 26](./definitions/theory-builder-checks.md)). The target of criticism is distinct from edit
 size: a diagnosis of one part can lead to rewriting the whole theory.
 Localization can be mistaken, and a revision may overturn a core assumption.
 
@@ -138,8 +158,13 @@ the contribution of formulated criticism; the efficiency conjecture concerns
 the cost of retaining versus reconstructing that work. We compare retaining the theory
 and its testing record with two alternatives: rebuilding a theory from
 retained criticisms, and rebuilding from records containing only inputs and
-outcomes. The first asks what keeping the assembled theory buys;
-the second asks what keeping the work of criticism buys. Retention may save
+outcomes. The first alternative is still a theory builder, so it asks what
+keeping the assembled theory buys. The second retains no stated conjectures or
+criticism and is outside the definition (conditions 1 and 4); it is the
+baseline for the retention conjecture
+([checks, case 4](./definitions/theory-builder-checks.md)) and asks what
+keeping the work of criticism buys. The system reconstructing from those
+records may still learn in the ordinary sense. Retention may save
 reconstruction, but still requires retrieval, interpretation, and maintenance.
 Compare total cost at comparable quality and quality under matched budgets.
 Vary record volume or context capacity to test whether bounded context
@@ -162,13 +187,13 @@ that its content affected later action requires causal evidence. Compare
 relevant content with altered or mismatched content while controlling its
 form. Removing the artifact alone cannot distinguish a content effect from
 the effect of supplying text at all. These are ways to investigate membership,
-not additional conditions for belonging to the class; see the
+not additional conditions of the definition; see the
 [evidence ladder](./a-complete-theory-path-does-not-establish-improved-capacity.md#evidence-forms-a-ladder)
 and [experimental contrasts](./an-experiment-identifies-only-the-contrast-it-actually-runs.md).
 Failure to detect an effect leaves membership unestablished by that test;
-it does not by itself establish absence. Demonstrating the mechanism also
-requires a separate assessment of whether the system's capacity for future
-action improved before it establishes learning. Observed action provides
+it does not by itself establish absence. Demonstrating the mechanism establishes
+membership at most. Learning needs a separate assessment of whether the
+system's capacity for future action improved. Observed action provides
 evidence of that capacity; lack of exercise alone establishes neither its
 presence nor its absence. Failed attempts can occur within a process that
 learns; an advantage over alternative approaches is a further claim.
@@ -193,8 +218,10 @@ from a reconstructed theory in practice, remain open questions.
 
 Relevant Notes:
 
-- [Conjectural learning](./definitions/conjectural-learning.md) — defined-in: the process studied
-- [Addressable theory](./definitions/addressable-theory.md) — defined-in: the structural property chosen for this research
+- [Theory builder](./definitions/theory-builder.md) — defined-in: the kind of system built and studied, and its four conditions
+- [Theory-builder checks](./definitions/theory-builder-checks.md) — grounds: the baseline cases the addressability and retention conjectures compare against
+- [Addressable theory](./definitions/addressable-theory.md) — defined-in: the graded property whose high end is chosen for this research
+- [Learning is not only about generality](./learning-is-not-only-about-generality.md) — grounds: the sense of learning the program tests
 - [Retained theories may improve sample efficiency under structured shifts](./retained-theories-may-improve-sample-efficiency.md) — see-also: the separate conjecture about structured shifts
 - [An optimal long-run learning strategy invests in its own machinery](./an-optimal-long-run-learning-strategy-invests-in-its-own-machinery.md) — grounds: why a working system's stream of episodes makes machinery improvements pay from the first day
 - [A hand-crafted bootstrap fits the Bitter Lesson only if learning can outgrow it](./a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md) — grounds: the bootstrap is the running system, with people supplying functions not yet automated

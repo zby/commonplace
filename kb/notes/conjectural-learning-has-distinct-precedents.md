@@ -1,11 +1,11 @@
 ---
-description: "Conjecture and criticism, causal self-representation, and persistent artifact editing supply different precedents; similarity on one does not establish the others"
+description: "Conjecture and criticism, causal self-representation, and persistent artifact editing supply different precedents for a theory builder's operations; similarity on one does not establish the others"
 type: kb/types/note.md
 traits: [title-as-claim, synthesis, has-external-sources]
 tags: [learning-theory, deploy-time-learning, self-improving-systems, foundations]
 ---
 
-# Conjectural learning has distinct epistemic, structural, and implementation precedents
+# Theory building has distinct epistemic, structural, and implementation precedents
 
 A system can criticize a theory of an external subject without representing
 itself. It can use a causally connected self-representation without learning.
@@ -15,8 +15,8 @@ systems: how errors are criticized, what the representation is about, and
 how changes persist and affect operation. A precedent for one does not
 establish the others.
 
-[Conjectural learning](./definitions/conjectural-learning.md) names
-the learning process. [Reflection](./definitions/reflective-system.md)
+A [theory builder](./definitions/theory-builder.md) names the system that
+proposes, criticizes, and retains theories. [Reflection](./definitions/reflective-system.md)
 adds a relation between a system and a representation of itself. Retained
 text and code around a fixed model supply one implementation. Keeping these
 questions separate makes both attribution and experiment design more precise.
@@ -32,20 +32,26 @@ His treatment of linguistic formulation and criticism includes informal
 arguments before symbolic formalization
 ([Epistemology Without a Knowing Subject](../sources/popper-epistemology-without-a-knowing-subject-1968.ingest.md#quotes)).
 
-Commonplace adds the conditions for attributing this learning to a particular
-system: a formulated theory must guide decisions through its content and be
-open to criticism of what it says, and the process of conjecture and criticism
-must improve the system's capacity for future action. Artifact
-availability alone does not establish those conditions. Neither does a changed
-decision establish improvement. The epistemic basis therefore leaves work
-for a concrete account of consumption, consequences, and persistence.
+Commonplace adds the conditions for attributing this method to a particular
+system: its theories are stated in localized units, guide its decisions
+through what they say, are criticized for what they say, and are retained with
+the record of their criticism so that later problems take them up. These
+conditions contain no success condition. Whether a builder improves its
+capacity for future action is a separate learning claim, tested rather than
+assumed. Artifact availability alone does not establish the conditions, and a
+changed decision does not establish improvement. The epistemic basis therefore
+leaves work for a concrete account of consumption, consequences, and
+persistence.
 
 EITHER and FORTE retain a narrower role as precedents for connecting failed
 consequences to candidate repair locations. Their proof-guided repair shows
 what [addressability](./definitions/addressable-theory.md#precedent)
 can make possible under a supplied representation. It does not define every
 tentative theory, require small revisions, or establish the same capability
-for interpreted prose.
+for interpreted prose. They are precedents for one operation, assigning blame,
+not for a theory builder: one invocation over a supplied theory and training
+set is one pass of error elimination on one problem, so it fails the retention
+condition ([theory builder, exclusions](./definitions/theory-builder.md)).
 
 ## Reflection supplies the structural relation
 
@@ -69,8 +75,8 @@ challenges 1–2).
 
 These comparisons matter when the theory concerns the modifying system's
 organization. A runtime self-model can be causally operative while its
-assumptions are closed to criticism. Conversely, conjectural learning about an
-external subject need not be reflective. Improving an adaptation outcome
+assumptions are closed to criticism. Conversely, a theory builder whose theories
+concern an external subject need not be reflective. Improving an adaptation outcome
 does not by itself establish learning of the model or its revision machinery.
 
 ## Persistent workspaces supply an implementation comparison
@@ -86,6 +92,9 @@ This is a concrete comparison for keeping learned changes in artifacts that
 later calls consume. It does not establish learning of a continuing system's
 own improvement procedure. The retained source reports adaptation within game
 runs; it does not demonstrate the cross-session recurrent self-theory claim.
+Changes carried across the levels of one game run meet the retention
+condition only if those levels count as new problems rather than as rounds of
+error elimination on one game; the source does not settle which.
 The benefit of the complete arrangement also does not isolate the effect of
 criticism, addressability, or retaining an assembled theory.
 
@@ -99,12 +108,14 @@ of [the arrangements actually run](./an-experiment-identifies-only-the-contrast-
 Commonplace's [research arrangement](./commonplace-studies-conjectural-learning-through-retained-theories.md#research-program-and-development-path)
 pursues recursive self-improvement within Schmidhuber's broad program, using
 interpreted methodology and selective codification. This states the research
-objective and chosen realization. It does not replace the Popperian account
+objective and chosen realization, a theory builder whose learning is under
+test. It does not replace the Popperian account
 of criticism or the structural condition for reflection, and it supplies no
 result showing that the combined arrangement works.
 
 A comparison should therefore name which question it asks. A runtime-model
-comparison concerns the additional contribution of learning through criticism.
+comparison concerns the additional contribution of criticism aimed at what a
+theory says.
 An editable-workspace comparison concerns the supplied theory and its use
 beyond persistence and repair. A retention comparison concerns which work is
 kept rather than reconstructed. None can inherit the conclusion of another
@@ -129,7 +140,7 @@ general machinery over the declared reach.
 
 Relevant Notes:
 
-- [Conjectural learning](./definitions/conjectural-learning.md) — defined-in: the epistemic process and system-attribution conditions
+- [Theory builder](./definitions/theory-builder.md) — defined-in: the four conditions for attributing conjecture and criticism to a system, with learning left to test
 - [Reflective system](./definitions/reflective-system.md) — grounds: causal self-representation is separate from learning
 - [Addressable theory](./definitions/addressable-theory.md) — contrasts: a structural property whose expected benefit is empirical
 - [Machinery persists by warrant, not position in a reflective loop](./machinery-persists-by-warrant-not-position-in-a-reflective-loop.md) — grounds: supplied machinery is assessed by its warrant over the declared reach

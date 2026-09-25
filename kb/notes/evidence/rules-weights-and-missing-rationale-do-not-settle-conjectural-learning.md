@@ -1,23 +1,30 @@
 ---
-description: "The August 2026 Prime Agent, Recuris, and Apodex reports distinguish repair and retention mechanisms; missing rationale or parametric storage alone does not classify conjectural learning"
+description: "The August 2026 Prime Agent, Recuris, and Apodex reports: retained rules without a recorded rationale leave theory-builder membership open, while Apodex retains only weights, so nothing stated survives to be criticized or taken up later"
 type: kb/types/note.md
 traits: [title-as-claim, has-comparison, has-external-sources]
 tags: [self-improving-systems]
 ---
 
-# Rules, weights, and missing rationale do not settle conjectural learning
+# Missing rationale does not exclude a theory builder, but weight-only retention does
 
 Three systems reported in August 2026 retain different objects. Prime Agent
 and Recuris retain editable rules about their own operation, and neither
 report describes a retained rationale for those rules or the consequence
 structure that connects them; Apodex 1.1 retains weights revised offline.
 The comparison asks what each system revises, how failures guide repair,
-and what evaluates the change. These observations do not alone classify
-[conjectural learning](../definitions/conjectural-learning.md): that requires
-an operative formulated theory open to criticism of what it says, and
-improved capacity attributable to the process of conjecture and criticism. Missing historical rationale does not establish absence of
-formulated criticism during an operation. The evidence below comes from the
-papers' descriptions, not reproduced results.
+and what evaluates the change. A [theory builder](../definitions/theory-builder.md)
+states its theories in localized units, acts on them, criticizes what they
+say, and retains them with the record of their criticism for later problems.
+The two retention patterns bear on these conditions differently. Missing
+historical rationale for a retained rule does not settle membership: a
+retained rule is a localized unit, and missing rationale does not establish
+absence of formulated criticism during an operation. Retaining only weights
+does settle it: no retained unit says anything. On the paper's account,
+nothing stated survives the run, so the deployed Apodex system fails
+conditions 1 and 4.
+Membership is also separate from learning: a builder need not improve, and a
+system outside the definition can still learn. The evidence below comes from
+the papers' descriptions, not reproduced results.
 
 ## Prime Agent: persistent artifact edits without an admission gate
 
@@ -29,15 +36,15 @@ The retained artifacts concern the agent's own behavior and division of labor. T
 
 [Recuris](../../sources/recursive-experiential-working-memory-evolution.ingest.md) is the closest of the three to a proposal-selection loop with a working evaluator. A fixed meta-agent reads a failed trajectory, localizes failures to one or more of four memory components — experiential skills, a working-memory state specification, invocation triggers, and completion checkers — patches only the implicated components, and submits the patch to a fixed admission gate that accepts it only if it repairs the source failure and meets a preset regression criterion on a held-out development set containing previously solved tasks. Memory evolved from sixteen failures raised success on eighty-six unseen tasks by nine to seventeen points, and a package shipped unchanged to a second model lifted it too.
 
-The working-memory and trigger components describe and control the harness's own operation, and the gate makes changes evidence-responsive against a declared objective. Its localization step "is a repair decision rather than a claim of causal identification". The reported package mostly grows: "The memory only grows, and it can afford to. Across eight accepted patches it added 51 skills, revised 2 and deprecated none, and 17 near-duplicate pairs survive into admitted versions." These observations establish a bounded revision surface with regression checks. The component structure establishes a repair surface, but does not by itself establish content-directed criticism of an operative formulated theory or attribute the reported capacity gains to that criticism. Separately editable rules and shared premises concern [addressability](../definitions/addressable-theory.md), not whether learning qualifies. The account also leaves open whether retained rationale guides later repair. That gap does not establish absence of newly formulated criticism. On the tests in [compounding is tested in later improvement](../compounding-is-tested-in-later-improvement-not-by-the-accepting-metric.md), its claim that a second round adds to the first sits within the paper's own noise estimate from rerunning unchanged memory, and one lineage gives most of the second-round gain back later. This limits evidence for compounding; it does not show that every subsequent rule is equally hard to discover.
+The working-memory and trigger components describe and control the harness's own operation, and the gate makes changes evidence-responsive against a declared objective. Its localization step "is a repair decision rather than a claim of causal identification". The reported package mostly grows: "The memory only grows, and it can afford to. Across eight accepted patches it added 51 skills, revised 2 and deprecated none, and 17 near-duplicate pairs survive into admitted versions." These observations establish a bounded revision surface with regression checks. The component structure establishes a repair surface, but does not by itself establish content-directed criticism of an operative formulated theory or attribute the reported capacity gains to that criticism. Separately editable rules and shared premises concern [addressability](../definitions/addressable-theory.md) above the definition's minimum, not membership. The account also leaves open whether retained rationale guides later repair. That gap does not establish absence of newly formulated criticism. On the tests in [compounding is tested in later improvement](../compounding-is-tested-in-later-improvement-not-by-the-accepting-metric.md), its claim that a second round adds to the first sits within the paper's own noise estimate from rerunning unchanged memory, and one lineage gives most of the second-round gain back later. This limits evidence for compounding; it does not show that every subsequent rule is equally hard to discover.
 
 ## Apodex 1.1: offline parametric retention
 
-[Apodex 1.1](../../sources/apodex-1-1-scaling-agentic-intelligence-for-complex-work.ingest.md) revises model weights through an offline training program run by the developers between releases: supervised fine-tuning merged into one checkpoint, then a reinforcement method that localizes the consequential decision points in a trajectory and trains a correction there, guided by a hint that "is never a prediction target, and is absent at inference time". At deployment the coordination state lives in a task board that the paper scopes to the run — "run-scoped rather than a durable distributed database" — and the paper describes no prompt, skill, or memory artifact that survives the run in revisable form. Within the deployed harness boundary, this account describes no ongoing weight-update loop and does not present the deployed harness as a self-improving system; the developers' training process lies outside that boundary. The retained weights occupy the parametric end of the representational-form axis and do not themselves expose separately editable theory claims. This does not establish that the model never formulates or criticizes a theory during use. Nor does a lack of durable theory files rule out learning whose effect persists in another form or improves capacity before a temporary theory is discarded. Those process and capacity claims remain unestablished by the retention description. Richard Sutton and Khurram Javed [argue for that end directly](../../sources/sutton-javed-why-ai-models-stop-learning.ingest.md): "So context can be in the state, too. It could be both, but you still need to be able to update the weights."
+[Apodex 1.1](../../sources/apodex-1-1-scaling-agentic-intelligence-for-complex-work.ingest.md) revises model weights through an offline training program run by the developers between releases: supervised fine-tuning merged into one checkpoint, then a reinforcement method that localizes the consequential decision points in a trajectory and trains a correction there, guided by a hint that "is never a prediction target, and is absent at inference time". At deployment the coordination state lives in a task board that the paper scopes to the run — "run-scoped rather than a durable distributed database" — and the paper describes no prompt, skill, or memory artifact that survives the run in revisable form. Within the deployed harness boundary, this account describes no ongoing weight-update loop and does not present the deployed harness as a self-improving system; the developers' training process lies outside that boundary. The retained weights occupy the parametric end of the representational-form axis, where no unit says anything by itself. On that account the deployed system is outside the definition: what it retains fails condition 1, and nothing stated is kept for a later problem, which fails condition 4. A theory the model formulates and criticizes during a run and then discards is one pass of error elimination on that run's problem ([exclusions](../definitions/theory-builder.md)). The developers' training program is outside the deployed boundary. Taken as its own system, it uses a stated hint to train corrections into weights, which on our reading matches the definition's case of criticism applied through weights, also outside. None of this denies that Apodex learns: weight training can improve capacity for future action. It places that learning outside a theory builder. Richard Sutton and Khurram Javed [argue for that end directly](../../sources/sutton-javed-why-ai-models-stop-learning.ingest.md): "So context can be in the state, too. It could be both, but you still need to be able to update the weights."
 
 ## What the comparison establishes, and its limit
 
-Read together, the reports distinguish persistence, diagnostic operations, and evaluation. Prime Agent exposes versioned edits without an admission gate. Recuris exposes localized component repair checked against the source failure and previously solved tasks. Apodex reports offline weight training rather than a deployment-time artifact-revision loop. Classifying conjectural learning requires evidence that formulated theories guide decisions through their content, that the system is open to criticism of that content, and that the process of conjecture and criticism improves capacity for future action. Missing rationale, editable rules, package growth, and opaque weights alone do not settle those claims. Reported gains establish only what their comparisons support; they do not isolate criticism's contribution.
+Read together, the reports distinguish persistence, diagnostic operations, and evaluation. Prime Agent exposes versioned edits without an admission gate. Recuris exposes localized component repair checked against the source failure and previously solved tasks. Apodex reports offline weight training rather than a deployment-time artifact-revision loop. Classifying a theory builder requires evidence that stated theories guide decisions through their content, that the system criticizes that content, and that the theories and criticism are retained for later problems. Missing rationale, editable rules, and package growth alone do not settle those conditions for Prime Agent and Recuris. Weight-only retention does settle them: on the paper's account Apodex retains only weights and is outside. Whether any of the three learns is a separate claim about improved capacity. Reported gains establish only what their comparisons support; they do not isolate criticism's contribution.
 
 ## Scope
 
@@ -50,8 +57,8 @@ The limit is symmetrical. Nothing here shows that retaining additional explanato
 
 Relevant Notes:
 
-- [Conjectural learning](../definitions/conjectural-learning.md) — defined-in: the learning claim that retention and repair observations alone do not establish
-- [Addressable theory](../definitions/addressable-theory.md) — defined-in: the separately inspectable and revisable structure, independent of learning membership
+- [Theory builder](../definitions/theory-builder.md) — defined-in: the four conditions; weight-only retention settles them for Apodex, and rule retention leaves them open
+- [Addressable theory](../definitions/addressable-theory.md) — defined-in: the separately inspectable and revisable structure, graded above the definition's minimum and independent of membership
 - [Reflective system](../definitions/reflective-system.md) — defined-in: the reflective property
 - [Self-improving system](../definitions/self-improving-system.md) — defined-in: the self-improving property
 - [Representational form](../definitions/representational-form.md) — defined-in: the axis on which Apodex sits at the parametric end
