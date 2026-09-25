@@ -11,6 +11,8 @@ status: accepted
 
 **Date:** 2026-08-23
 
+**Amended by** [ADR 087](./087-source-and-report-types-are-global-library-types.md) — one recorded migration retypes captures to `type: snapshot` and re-pins the ingest checksums; no other change to capture bytes or pinned checksums is permitted.
+
 **Superseded in part by** [ADR 073](./073-untracked-source-snapshots-require-ingest-grounding.md) — grounding and mutation-bearing ingest paths require the exact name-paired snapshot; generic cache recovery remains checksum-first.
 
 ## Context

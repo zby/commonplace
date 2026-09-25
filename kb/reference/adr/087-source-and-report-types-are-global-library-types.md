@@ -1,17 +1,15 @@
 ---
-description: "Draft decision that source and report type specs become global library types named by bare name and usable in any collection, with snapshots rewritten once and their ingest checksums re-pinned"
-type: kb/reference/types/adr.md
+description: "Source and report type specs are global library types named by bare name and usable in any collection; local snapshots are retyped once and their ingest checksums re-pinned"
+type: ../types/adr.md
 tags: []
+status: accepted
 ---
 
 # 087-Source and report types are global library types
 
-**Status:** workshop draft; not accepted
+**Status:** accepted
 **Date:** 2026-09-25
 **Amends:** [ADR 086](./086-projects-read-the-library-from-the-installed-package.md) (projects read the library from the installed package) and [ADR 072](./072-ingests-own-source-authority-and-snapshots-are-local.md) (ingests own source authority; snapshots are local and immutable)
-**Promotion condition:** accept only with the implementation that makes the
-emitters, the snapshot migration, init's migration, and the collection
-contracts operative. Allocate the ADR number at promotion; 087 is provisional.
 
 ## Context
 
@@ -73,23 +71,23 @@ procedures that write there, keep describing their default contents; they do
 not restrict them.
 
 **Snapshots are rewritten once, and their checksums re-pinned.** A single
-migration replaces a capture's frontmatter line
-`type: kb/sources/types/snapshot.md` with `type: snapshot` and changes nothing
-else. The transformation is byte-deterministic, so identical old bytes on any
-machine become identical new bytes. For each snapshot that an ingest pins,
-through `snapshot_sha256` or `original_snapshot_sha256`, the migration:
+migration replaces a capture's frontmatter line naming a retired snapshot type
+path (`kb/sources/types/snapshot.md` or `./types/snapshot.md`) with
+`type: snapshot` and changes nothing else. The transformation is
+byte-deterministic, so identical old bytes on any machine become identical new
+bytes. The migration retypes every such capture. An ingest beside it that pins
+the capture's old bytes, through `snapshot_sha256` or
+`original_snapshot_sha256`, gets the new checksum. An ingest that already pins
+the new bytes, because another clone migrated it, needs nothing more. A capture
+that no ingest pins is retyped too: no checksum names its bytes, so nothing can
+break. An ingest that pins neither form stays mismatched, as validation already
+reports.
 
-- rewrites the snapshot and replaces the ingest's checksum with the new hash
-  when the snapshot's current bytes match the ingest's checksum;
-- rewrites the snapshot and leaves the ingest alone when the rewritten bytes
-  already match it, because another clone has migrated the tracked ingest;
-- otherwise changes nothing and reports the pair, as validation already does
-  for any mismatch.
-
-The migration is idempotent and never touches a snapshot that no ingest pins
-to either its old or its new bytes. It amends ADR 072 in exactly one place:
-this recorded migration is the only permitted change to a capture's bytes and
-to an existing ingest's checksum. New captures write `type: snapshot`.
+The migration is idempotent. It amends ADR 072 in exactly one place: this
+recorded migration is the only permitted change to a capture's bytes and to an
+existing ingest's checksum. New captures write `type: snapshot`. Installed
+projects run it through init; clones of the source checkout, which never run
+init, run it through a one-off script.
 
 **Init stops copying and migrates.** Init no longer installs
 `kb/sources/types/` or `kb/reports/types/`. On a rerun it treats an old copy of
@@ -131,20 +129,23 @@ resolver. Lost to the operator's choice (2026-09-25) to rewrite: the checksum
 guards against unrecorded change, and a deterministic, recorded rewrite that
 re-pins the checksum preserves that guarantee without a lasting exception.
 
+**Retype only pinned captures.** The draft of this decision left unpinned
+captures alone and reported them. Lost in implementation: an unpinned capture's
+bytes are named by no checksum, so retyping it cannot break a pairing, and
+leaving it would keep the retired path alive in captures awaiting ingest.
+
 **A general fallback from old paths to global names.** Would make every
 retired `kb/.../types/X.md` path resolve. Lost to ADR 086's no-fallback rule;
 every other pointer can be rewritten directly.
 
-Left open:
+Resolved in implementation: clones of the source checkout run the migration
+through a one-off script rather than a package command, because the source
+checkout is the only consumer that never runs init.
 
-- How a clone of the source checkout, which does not run init, invokes the
-  snapshot migration: a package command, a flag on an existing command, or a
-  one-off script. Validation's mismatch warning names the migration either
-  way.
-- Whether the Commonplace-internal report types (full-pass, agentic-analysis
-  run state, agent-memory analysis report) should later move out of the
-  shipped library if their procedures stop being promoted. Today their
-  procedures ship, so their types ship with them.
+Left open: whether the Commonplace-internal report types (full-pass, agentic-analysis
+run state, agent-memory analysis report) should later move out of the shipped
+library if their procedures stop being promoted. Today their procedures ship,
+so their types ship with them.
 
 ## Consequences
 
@@ -164,7 +165,7 @@ retired type path survives in any resolver.
 - Until a clone runs the migration, its snapshots mismatch the pulled ingests.
   Validation warns, and grounding, ingest, and re-ingest stop on those pairs,
   until the migration rewrites them. A clone whose capture had already drifted
-  keeps its mismatch; the migration reports it and does not guess.
+  keeps its mismatch, which validation reports.
 - An ingest whose snapshot is absent on the machine that runs the migration
   keeps its old checksum. It is re-pinned only by a later run on a machine
   that holds the capture, which then commits the new checksum.

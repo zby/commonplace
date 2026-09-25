@@ -119,12 +119,10 @@ ledger) were deleted on 2026-09-25; git history keeps them.
 - Linking vocabulary, direction, and grammar remain in the [linking
   workshop](../linking-contract-consistency/README.md); lineage conflicts in
   the [lineage ledger](../lineage-mechanisms/current-contradictions.md).
-- `kb/sources/types` and `kb/reports/types` are still copied into projects as
-  project-owned. The documents describe this consistently, so it is not a
-  contradiction, but code depends on the copies' exact paths. The [ADR
-  draft](../../reference/adr/087-source-and-report-types-are-global-library-types.md) proposes
-  making the seven types global library types, with no scope restriction, and
-  rewriting snapshots once with their ingest checksums re-pinned.
+- Init no longer copies `kb/sources/types` or `kb/reports/types`: [ADR
+  087](../../reference/adr/087-source-and-report-types-are-global-library-types.md)
+  (accepted 2026-09-25) made the seven source and report types global library
+  types and retyped local snapshots with their ingest checksums re-pinned.
 - Proposals that still describe the `kb/commonplace/` layout (for example the
   tag-scope proposal) are unadopted and outside the standard.
 - `kb/work/dialectical-sample/COLLECTION.md` and report-cache contracts sit
