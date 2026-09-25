@@ -9,9 +9,13 @@ workshop
 
 **State:** active. The [readiness pass](./plans/00-readiness.md) fixed the
 activation boundary, declaration syntax, resolver surface, transitional head
-model, consumer ledger, and fixture. Core implementation waits for minimal I3;
-no adopting ADR, live participation declaration, exact resolver, consumer
-migration, canonical tag collection, or upgrade migration has landed.
+model, consumer ledger, and fixture. On 2026-09-25 it was rebaselined for
+[ADR 086](../../reference/adr/086-projects-read-the-library-from-the-installed-package.md),
+which removed the installed library copy and with it the multi-root design.
+Phase 1 is ready. `kb/types/` is now a discovered collection and type specs
+reject tags (commit `fd573556`). No adopting ADR, live participation
+declaration, exact resolver, consumer migration, canonical tag collection, or
+host migration has landed.
 
 ## Goal
 
@@ -23,7 +27,7 @@ Establish one coherent contract connecting:
 4. what a tag head provides;
 5. what `complete` and `covered_by` authorize consumers to skip;
 6. how every exact-membership consumer uses the same relation;
-7. how source and installed KBs keep separate but coherent tag spaces.
+7. how a host project's tag space stays separate from the installed library's.
 
 This workshop owns the tag subsystem redesign extracted from T1. The parent
 [system-contract consistency workshop](../system-contract-consistency/README.md)
@@ -39,6 +43,11 @@ design here lets the consistency workshop ask where operative contracts
 disagree while this workshop asks what coherent architecture replaces them.
 
 ## Starting witnesses
+
+Both corpus witnesses below have since been repaired locally (see the
+[rebaseline](./plans/00-readiness.md#rebaseline-for-adr-086-2026-09-25)). The
+defect they exposed is latent, not gone: validation still checks one
+collection, so Phase 2 acceptance uses a synthetic cross-collection witness.
 
 - The [tag-readme type](../../types/tag-readme.md) and routing use unqualified
   membership language across collections, while current validation and
@@ -65,24 +74,29 @@ record](../system-contract-consistency/plans/t1-tag-scope.md).
   requirements](../../notes/link-following-and-search-impose-different-metadata-requirements.md)
 - [Pointer design tradeoffs in progressive
   disclosure](../../notes/pointer-design-tradeoffs-in-progressive-disclosure.md)
+- [Tag maintenance and derived
+  browsing](../../reference/proposals/tag-maintenance-and-derived-browsing.md)
+  — the Gwern-derived browsing and maintenance options; an input to the
+  Phase 4 trial only
 
 The recent Pirolli, Teevan, Tombros–Sanderson, Milo, and Luhmann ingests linked
 from those inputs motivate a distinction among proximal cues, contextual local
 navigation, and query-conditioned results. They concern humans, practitioner
 method, or historical systems. They do not establish LLM-agent performance.
 
-The parent workshop's disjoint-root decision supersedes the tag proposals'
-embedded-root pruning and physically shared `kb/types/` assumptions as design
-inputs. The proposals remain unchanged until adoption because this workshop
-does not make them operative authority.
+ADR 086 supersedes the tag proposals' embedded-root pruning and the parent
+workshop's disjoint-root design. The proposals remain unchanged until adoption
+because this workshop does not make them operative authority.
 
 ## Working architecture
 
 The adopting decision should begin from these narrow choices:
 
-- One tag string has one canonical declared sense within one `kb-root`.
-- Membership is projection-relative and ranges over explicitly participating
-  collections in that root.
+- One tag string has one canonical declared sense within one KB. A host
+  project's `kb/` and the installed library are separate KBs; the library is
+  read-only and validated in the source checkout.
+- Membership ranges over the explicitly participating collections of one KB.
+  Type specs never carry tags.
 - A minimal canonical head is required from the first stable use in a
   participating collection. It may be small before it earns richer routing.
 - Provisional vocabulary may exist only outside the participating library.
@@ -103,6 +117,9 @@ The adopting decision should begin from these narrow choices:
   mandatory transitional heads, every exact-membership consumer, and the
   accepted ADR. Phase 1 may land dormant resolver machinery; Phase 3 later
   changes head representation without changing membership.
+- Gwern-style browsing and maintenance aids are a Phase 4 trial, not part of
+  the contract. Letting heads carry tags as related-topic links would change
+  membership; if wanted, the ADR decides it.
 
 These are workshop selections until an ADR adopts them.
 
@@ -111,8 +128,8 @@ These are workshop selections until an ADR adopts them.
 0. [Readiness and execution inventory — complete](./plans/00-readiness.md)
 1. [Semantic foundation and exact resolver](./plans/01-semantic-resolver.md)
 2. [Consumer convergence and contract activation](./plans/02-consumer-convergence.md)
-3. [Canonical heads and migration](./plans/03-canonical-heads-migration.md)
-4. [Independent metadata cleanup and empirical follow-up](./plans/04-cleanup-and-follow-up.md)
+3. [Canonical heads and host migration](./plans/03-canonical-heads-migration.md)
+4. [Independent metadata cleanup, navigation trial, and Gwern-style browsing trial](./plans/04-cleanup-and-follow-up.md)
 
 Phase 1 is separately landable only while its resolver and head lookup remain
 dormant. Phase 2 is the single activation packet: the accepted ADR, live
@@ -123,22 +140,15 @@ cleanup is independent and must not enlarge the core adoption patch.
 
 ## External dependencies
 
-- I3 supplies explicit, pairwise-disjoint `kb-root` boundaries and root-local
-  collection/type discovery. The selected installation shape is recorded in
-  the parent workshop's [impact
-  ledger](../system-contract-consistency/disjoint-root-impact-ledger.md).
-- V1 supplies structured whole-product validation.
-- I2 supplies the installed edition and compiler-like projection.
-- I1 supplies the generic ownership-aware upgrade mechanism.
-
-This workshop supplies migration inputs and acceptance criteria to those
-programs. It does not implement parallel topology, projection, validation, or
-upgrade machinery.
+None since the 2026-09-25 rebaseline. The parent workshop's I1, I2, I3, and V1
+findings no longer gate this program: there is no projected library copy to
+migrate or validate, and Phase 3 uses `commonplace-init`'s existing migration
+path for host projects.
 
 ## Evaluation boundary
 
 Structural closure asks whether every exact-membership consumer resolves and
-uses the same eligible set, in source and installed projections. It does not
+uses the same eligible set, in the source checkout and in a host project. It does not
 ask whether one navigation presentation improves agent task performance.
 
 After the resolver and heads exist, a bounded agent trial may compare exact
@@ -153,9 +163,9 @@ Close and delete this workshop after:
 
 - an ADR adopts one tag semantic, root, participation, mark, and head contract;
 - all exact-membership consumers use the resolver;
-- canonical heads and source/installed migrations pass their fixtures;
+- canonical heads and the source and host migrations pass their fixtures;
 - the two proposals are retired through the normal proposal lifecycle;
 - independent cleanup is completed or explicitly transferred;
-- the parent workshop rechecks and closes its original T1 witnesses;
+- the parent workshop rechecks and closes T1;
 - durable outcomes are linked from current navigation and this workshop has no
   remaining authority role.

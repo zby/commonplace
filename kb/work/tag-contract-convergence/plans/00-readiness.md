@@ -1,12 +1,50 @@
 # Readiness pass — Fix the activation boundary and execution inventory
 
-**State:** complete on 2026-08-27 and revised for the disjoint-root decision.
-Core implementation remains gated by minimal I3 `kb-root` semantics.
+**State:** complete on 2026-08-27; rebaselined on 2026-09-25 for [ADR
+086](../../../reference/adr/086-projects-read-the-library-from-the-installed-package.md).
+Nothing gates Phase 1.
 
-**Audited starting commit:** `6660bd2ad0d53938551ac283f60463f3c3d91b8e`
-
-**Inventory basis:** the live 2026-08-27 worktree. Counts below are diagnostics,
+**Inventory basis:** the live 2026-09-25 worktree. Counts below are diagnostics,
 not migration constants; every execution packet re-derives its inventory.
+
+## Rebaseline for ADR 086 (2026-09-25)
+
+The 2026-08-27 pass assumed that an initialized project holds two disjoint
+`kb-root`s: the host `kb/` and a projected library copy under
+`commonplace-library/kb/`. It therefore gated Phase 1 on I3's multi-root model
+and Phase 3 on I1's upgrade and I2's projection machinery. ADR 086 removed the
+library copy. Projects read the library in place from the installed package,
+and the library is validated in the source checkout. This changes the plan:
+
+- **One writable tag space per checkout.** The source checkout and each host
+  project each have one `kb/`. The existing `project_paths.kb_root` is
+  sufficient; the resolver needs no root-identity model.
+- **The installed library is a read-only second target.** An agent in a host
+  project can still read the library's tags and heads. The resolver can run
+  over the installed library, but nothing validates or migrates there.
+- **Marks stay true in the shipped subset.** The package ships `notes`,
+  `reference`, `instructions`, and `types`, a subset of the source's
+  participating collections. `complete` (the head links every member) and
+  `covered_by` (every member carries a listed child tag) both stay true when
+  members are removed. A mark validated in source therefore holds over the
+  shipped library without install-side revalidation. A shipped head may link
+  a source-only member; the build rewrites that link to a GitHub URL.
+- **No `prohibited` participation state.** It existed only for type
+  collections. `kb/types/` is now a discovered collection, and the `type-spec`
+  schema rejects `tags` (commit `fd573556`). The global types collection
+  declares `non-participating`.
+- **I1, I2, I3, and V1 are no longer dependencies.** Phase 3's host migration
+  uses `commonplace-init`'s existing migration path, which already rewrites
+  type pointers and removes legacy library copies. Phase 2 validates each
+  declared collection with `commonplace-validate` scopes; a whole-product
+  validation command would be convenient but is not required.
+- **Both starting witnesses have been repaired locally.** On 2026-08-31,
+  `learning-theory-README.md` dropped its stale `covered_by` mark (commit
+  `a21eac03`). The `artifact-analysis` head now links its one reference member.
+  A 2026-09-25 recheck found no marked head that omits a member in another
+  collection. The defect is latent: validation still checks one collection, so
+  a new cross-collection omission would pass. Acceptance therefore needs a
+  synthetic cross-collection witness rather than the live ones.
 
 ## Outcome
 
@@ -16,55 +54,52 @@ later representation migration. An accepted ADR, live participation
 declarations, new mark wording, and any consumer switch must not precede the
 Phase 2 activation packet.
 
-This pass also fixes the participation declaration, resolver surface,
-transitional head identity, initial projection states, consumer ledger, and
-cross-consumer fixture. The two older proposals remain design inputs. Their
-optional-head and single-atomic-migration clauses are superseded by the choices
-recorded here. The parent installation decision also supersedes their
-embedded-root and shared-type topology. The adopting ADR must disposition
-those clauses when it retires the proposals.
+This pass fixes the participation declaration, resolver surface, transitional
+head identity, participation matrix, consumer ledger, and cross-consumer
+fixture. The two older proposals remain design inputs. Their optional-head,
+single-atomic-migration, embedded-root, and shared-type clauses are superseded
+by the choices recorded here. The adopting ADR must disposition those clauses
+when it retires the proposals.
 
 ## Activation boundary
 
 ### Phase 1 is dormant infrastructure
 
-After minimal I3 lands, Phase 1 may add the pure Python resolver, transitional
-head lookup, an unregistered command renderer, and fixture-only participation
-declarations. It does not register or document the command, add participation
-clauses to live collection contracts, change any binding tag or mark wording,
-switch a consumer, enforce mandatory heads on the live corpus, or promote an
-accepted ADR. The decision record remains a workshop draft during this phase.
+Phase 1 may add the pure Python resolver, transitional head lookup, an
+unregistered command renderer, and fixture-only participation declarations. It
+does not register or document the command, add participation clauses to live
+collection contracts, change any binding tag or mark wording, switch a
+consumer, enforce mandatory heads on the live corpus, or promote an accepted
+ADR. The decision record remains a workshop draft during this phase.
 
 Dormant Phase 1 code may land separately because no current behavior or reader
-license depends on it. Its tests prove the candidate relation without claiming
-that the source or installed product has adopted that relation.
+license depends on it.
 
 ### Phase 2 activates the contract once
 
 Phase 2 is one activation packet containing:
 
 - the accepted ADR;
-- live collection participation declarations and their validation;
-- root and schema authoring guidance;
+- live collection participation declarations, in source and in the init
+  templates, and their validation;
+- authoring guidance for tags and marks;
 - mandatory-head enforcement in the transitional representation;
 - every exact-membership consumer switch;
-- the two starting-witness dispositions; and
-- source, installed, and multi-root acceptance through V1.
+- the synthetic cross-collection witness; and
+- source and fresh-install acceptance.
 
-No merge or release boundary may expose only part of that list. Code and prose
-may be reviewed as smaller commits before activation, but the operative state
-changes together. This is the point at which the original T1 behavioral
-contradiction closes.
+No commit on `main` may expose only part of that list. Code and prose may be
+reviewed as smaller commits on a branch, but the operative state changes
+together. This is the point at which the original T1 contradiction closes.
 
 ### Phase 3 changes representation, not meaning
 
-Phase 2 keeps the current head locations and resolves them through one
-root-aware head API. Phase 3 atomically changes that API from legacy metadata
-lookup to direct `kb/tags/<tag>-README.md` construction, moves every head,
-removes the legacy identity fields and hub branches, and migrates source and
-installed projections. It retains no legacy fallback. Because membership and
-all consumers already resolve through package APIs, this later move does not
-reopen tag semantics.
+Phase 2 keeps the current head locations and resolves them through one head
+API. Phase 3 changes that API from legacy metadata lookup to direct
+`kb/tags/<tag>-README.md` construction, moves every head, removes the legacy
+identity fields and hub branches, and migrates host projects. It retains no
+legacy fallback. Because membership and all consumers already resolve through
+package APIs, this later move does not reopen tag semantics.
 
 ## Participation declaration
 
@@ -79,17 +114,14 @@ exactly one machine-read body section of this form:
 
 The allowed states are:
 
-- `participating` — eligible ordinary artifacts enter this `kb-root`'s tag
-  membership relation;
+- `participating` — eligible ordinary artifacts enter the KB's tag membership
+  relation;
 - `non-participating` — tags may exist for search or provisional work, but no
-  artifact in the collection enters an exact membership claim; and
-- `prohibited` — artifacts in the collection may not declare `tags` at all.
+  artifact in the collection enters an exact membership claim.
 
-`prohibited` is initially reserved for each root's type collection. Type
-artifacts are structural support and do not enter tag vocabulary, even though
-the collection has an unambiguous root owner. Other collections use one of the
-other two states. Missing, duplicated, unknown, or malformed state clauses
-fail validation.
+Missing, duplicated, unknown, or malformed state clauses fail validation. Type
+specs cannot carry tags in any collection; the `type-spec` schema enforces
+that, so no collection state is needed for it.
 
 A participating collection may repeat an exact collection-relative exclusion
 line after the state:
@@ -101,32 +133,30 @@ line after the state:
 An excluded subtree is a literal directory prefix, not a glob. It uses POSIX
 separators, ends in `/`, remains inside its collection, and contains no `.` or
 `..` segment. A missing or non-directory target fails validation so a typo or
-stale projection clause cannot silently widen membership. The initial source
-use is `kb/reference/proposals/archive/`. I2 must omit or rewrite that line in a
-projection where the directory is absent.
+stale clause cannot silently widen membership. The initial source use is
+`kb/reference/proposals/archive/`. The shipped library keeps the line only
+while the directory ships; the build must drop it otherwise.
 
-Package-wide artifact eligibility remains code-owned. The resolver stays
-inside its selected disjoint root, prunes validation-ignored subtrees, and
-excludes `COLLECTION.md`, type specifications, tag heads, generated or
-infrastructure artifacts, and replaced archives. Collection clauses select
-participation and deliberate local subtrees; they do not restate those package
-rules.
+Package-wide artifact eligibility remains code-owned. The resolver prunes
+validation-ignored subtrees and excludes `COLLECTION.md`, type-definition
+content, tag heads, generated or infrastructure artifacts, and replaced
+archives. Collection clauses select participation and deliberate local
+subtrees; they do not restate those package rules.
 
-Every participation or exclusion edit invalidates all marked heads in the
-`kb-root`. Creation, deletion, or relocation of a collection requires an
-explicit whole-head validation because the old declaration may no longer exist
-to supply an impact edge.
+Every participation or exclusion edit invalidates all marked heads in the KB.
+Creation, deletion, or relocation of a collection requires an explicit
+whole-head validation because the old declaration may no longer exist to supply
+an impact edge.
 
 ## Resolver and command contract
 
 Phase 1 adds `commonplace.lib.tag_membership`, with one immutable result for a
-declared `kb-root`:
+KB directory:
 
-- `kb-root` identity and physical boundary;
+- the KB directory resolved;
 - deterministic participating-collection paths;
 - deterministic `by_tag` membership; and
-- member records containing `kb-root`-relative POSIX path, title, and
-  description.
+- member records containing KB-relative POSIX path, title, and description.
 
 Tag keys and member records are ordered lexically; a member appears once per
 tag. Frontmatter parse failures in an otherwise eligible artifact are resolver
@@ -134,22 +164,23 @@ errors, not silent omissions. Head existence and presentation do not affect the
 membership set.
 
 All Python consumers import this result. They do not execute a command or
-reconstruct participating paths. A separate root-aware `resolve_tag_head`
-operation supplies zero or one head for routing consumers.
+reconstruct participating paths. A separate `resolve_tag_head` operation
+supplies zero or one head for routing consumers.
 
 The thin operator surface is:
 
 ```text
-commonplace-tag-members TAG --root KB_ROOT_PATH
+commonplace-tag-members TAG [--library]
 ```
 
-`--root` is required and must select one I3-declared `kb-root`. The command
-has no repository-wide fallback and no cross-root union mode. It emits one JSON
-object per line with exactly `path`, `title`, and `description`, in resolver
-order. A zero-member query emits no records and exits successfully. Resolution
-or declaration errors exit nonzero with the bounded root named. Cross-root
-navigation invokes the command once per root and labels the union; neither
-root's marks transfer to that union.
+Without a flag it resolves the project's `kb/`. `--library` resolves the
+installed library instead; in the source checkout the two are the same
+directory. There is no union mode. The command emits one JSON object per line
+with exactly `path`, `title`, and `description`, in resolver order. A
+zero-member query emits no records and exits successfully. Resolution or
+declaration errors exit nonzero with the KB named. An agent that wants both
+spaces calls the command twice and labels the result; neither KB's marks
+transfer to the other.
 
 No ranking, query-conditioned summary, synonym expansion, or relevance claim
 belongs in this surface.
@@ -162,76 +193,80 @@ content. The head defines the tag's canonical sense and supplies its fixed
 meaning, use, boundary, route, and stopping prefix; richer curation remains
 optional.
 
-During Phases 1 and 2, `resolve_tag_head` scans artifacts inside the selected
-root for the existing `tag-readme` type with `index_source: tag` and uses
-`index_key` as identity. Duplicate identities fail. Phase 2 requires every participating tag
-to resolve to one such head but leaves the files in their existing locations.
-The legacy `tag-indexes` hub is not a tag head.
+During Phases 1 and 2, `resolve_tag_head` scans the KB for the existing
+`tag-readme` type with `index_source: tag` and uses `index_key` as identity.
+Duplicate identities fail. Phase 2 requires every participating tag to resolve
+to one such head but leaves the files in their existing locations. The legacy
+`tag-indexes` hub is not a tag head.
 
 Phase 3 changes the implementation to direct construction of
-`<root>/tags/<tag>-README.md`, derives identity from the filename, and removes
+`kb/tags/<tag>-README.md`, derives identity from the filename, and removes
 `index_source` and `index_key`. Canonical resolution and relocation land
 together; metadata scanning does not survive as compatibility code.
 
-Root-owned non-participating artifacts may route a known tag to that root's
-head even though they are not members. A headless provisional tag renders as
-plain text. Source topic tags may therefore remain search and routing cues;
-the separate Phase 4 cleanup removes only redundant source-family values.
+Non-participating artifacts may route a known tag to its head even though they
+are not members. A headless provisional tag renders as plain text. Source
+topic tags may therefore remain search and routing cues; the separate Phase 4
+cleanup removes only redundant source-family values.
 
-## Initial participation matrix
+A host tag with the same string as a library tag is a separate tag in the
+host's own space. Whether a headless host tag may route to the library's head
+is open for the ADR; the default is plain text, because the host has not
+adopted the library's sense.
+
+## Participation matrix
 
 This table supplies migration inputs. Runtime discovery consumes declarations,
 not this list or a fixed collection count.
 
-| Projection/root | Participating | Non-participating | Prohibited |
-|---|---|---|---|
-| Source Commonplace root at `kb/` | `notes`, `reference` except `proposals/archive/`, `instructions`, `agent-memory-systems`, `agentic-systems`, `articles` | `sources`, `work`, later `tags` | `types` |
-| Fresh host root at `kb/` | `notes`, `reference`, `instructions`; every user-created collection must choose explicitly | `sources`, `work`, `tags` | `types` |
-| Installed Commonplace root at `commonplace-library/kb/` | projected `notes`, `reference`, `instructions`; any later projected participating collection carries its declaration | projected `sources`, `tags` | `types` |
+| KB | Participating | Non-participating |
+|---|---|---|
+| Source checkout `kb/` | `notes`, `reference` except `proposals/archive/`, `instructions`, `agent-memory-systems`, `agentic-systems`, `articles` | `sources`, `work`, `reports`, `types`, later `tags` |
+| Fresh host `kb/` | `notes`, `reference`, `instructions`; every user-created collection must choose explicitly | `sources`, `work`, `reports`, later `tags` |
+| Installed library (read-only) | shipped `notes`, `reference`, `instructions`, carrying their source declarations | shipped `types`, later `tags` |
 
-An omitted source collection has no declaration in that projection and is not
-an error. A concrete collection discovered inside a selected root with no
-declaration is an error.
+A concrete collection discovered inside a KB with no declaration is an error.
 
 ## Live head audit
 
-Applying the existing collection tag parser to the six proposed participating
-collections, then removing `kb/reference/proposals/archive/`, found 24
-member-bearing tags and 20 per-tag heads in the live worktree. Four tags are
-headless:
+Applying the existing tag parser to the six participating source collections,
+then removing `kb/reference/proposals/archive/`, found 26 member-bearing tags
+and 20 per-tag heads on 2026-09-25. Six tags are headless:
 
-| Tag | Current participating members | Activation disposition |
+| Tag | Participating members | Activation disposition |
 |---|---:|---|
-| `trace-learning` | 104 | Retain and create a minimal head; this choice is already fixed. |
+| `trace-learning` | 105 | Retain and create a minimal head; this choice is already fixed. |
+| `methodology` | 6 | Confirm the predicate, then create a head or replace/remove the assignments. |
 | `review-system` | 2 | Confirm the predicate, then create a head or replace/remove both assignments. |
 | `agent-runtime` | 1 | Confirm the predicate, then create a head or replace/remove the assignment. |
+| `planning` | 1 | Confirm the predicate, then create a head or replace/remove the assignment. |
 | `tags` | 1 | Confirm the predicate, then create a head or replace/remove the assignment. |
 
-The activation invariant is not "24 heads." Phase 2 re-derives every tag in
+The activation invariant is not a head count. Phase 2 re-derives every tag in
 participating content and dispositions every headless value. It may establish a
 minimal head, reuse a better existing tag, or remove a bad assignment; it may
 not activate with a headless participating tag.
 
 ## Consumer ledger
 
-| Consumer class | Current operative surface | Required disposition | Projection or guard |
+| Consumer class | Current operative surface | Required disposition | Guard |
 |---|---|---|---|
-| Root and collection discovery | `src/commonplace/lib/project_paths.py`; `src/commonplace/scaffold_manifest.py` | Consume I3 `kb-root` and collection objects; reject overlap and do not infer roots from depth. | I3 manifest/discovery parity and source/install root fixtures. |
+| Collection discovery | `src/commonplace/lib/project_paths.py` | Already discovers `kb/types/` (commit `fd573556`). Parse participation clauses from discovered collections. | Discovery and declaration tests. |
 | Membership enumeration | `src/commonplace/lib/index_generated.py` | Move eligibility and `by_tag` assembly into the resolver; leave generation as a consumer. | Unit tests compare exact records and ordering. |
-| Operator command | No current exact-membership command | Build and test the renderer in Phase 1; register and document `commonplace-tag-members` in the Phase 2 activation without adding a second resolver. | `pyproject.toml`, `kb/reference/commands.md`, CLI tests, and command-catalogue parity. |
-| Mark validation | `src/commonplace/lib/validation.py` | Check `complete` and `covered_by` over resolver membership for the head's root. | `tests/commonplace/lib/test_validation_tag_readme.py`. |
-| Impact expansion | `ValidationRun.impacted_marked_tag_readmes` in `validation.py` | Resolve heads root-wide; eligible tag edits affect their heads, while declaration edits affect every marked head. | Tests for member, participation, exclusion, creation, deletion, and relocation changes. |
+| Operator command | No current exact-membership command | Build and test the renderer in Phase 1; register and document `commonplace-tag-members` in Phase 2 without adding a second resolver. | `pyproject.toml`, `kb/reference/commands.md`, CLI tests. |
+| Mark validation | `src/commonplace/lib/validation.py` | Check `complete` and `covered_by` over resolver membership for the whole KB. | `tests/commonplace/lib/test_validation_tag_readme.py`. |
+| Impact expansion | `ValidationRun.impacted_marked_tag_readmes` in `validation.py` | Eligible tag edits affect their heads anywhere in the KB; declaration edits affect every marked head. | Tests for member, participation, exclusion, creation, deletion, and relocation changes. |
 | Generated tag-page tail | `src/commonplace/docs/properdocs_hooks.py`; `index_generated.py` | Generate uncurated members from the same resolver result. | ProperDocs tests compare the shared fixture's member paths. |
-| Footer routing | `_find_tag_index` in `properdocs_hooks.py` | Use `resolve_tag_head`; route within the artifact's `kb-root`, including declared non-participating artifacts. | Headed, headless, host, projected-library, and explicitly selected reader-root build cases. |
-| Connect discovery and skip license | `kb/instructions/cp-skill-connect/SKILL.md` | Read root-global heads; call `commonplace-tag-members` for exact fallback; scope marks to one root and keep task discovery open. | Source skill and promoted installed copies must match. |
-| Agent recipes | `AGENTS.md`, `AGENTS.md.template`, `kb/reference/navigation.md` | Replace path-list `rg` recipes with one command call per root; label cross-root unions as navigation only. | Template/init fixture plus lexical guard against the retired recipes. |
-| Mark and head authoring | `kb/types/tag-readme.md`, its schema, `kb/instructions/maintain-curated-indexes.md` | State projection-relative mark semantics, mandatory stable heads, and transitional identity; keep the old identity fields until Phase 3. | Type/schema tests and maintenance examples. |
-| Tag assignment grammar | `kb/types/note-base.schema.yaml`, root authoring instructions, collection clauses | Enforce the token grammar structurally and semantic reuse through the write path/review. | Schema fixtures cover `tags` and `covered_by`; semantic review remains non-deterministic. |
+| Footer routing | `_find_tag_index` in `properdocs_hooks.py` | Use `resolve_tag_head`, including for non-participating artifacts. | Headed and headless build cases. |
+| Connect discovery and skip license | `kb/instructions/cp-skill-connect/SKILL.md` | Read heads; call `commonplace-tag-members` for exact fallback; keep task discovery open after a mark skip. | Skill text review; the installed stub points at the same file. |
+| Agent recipes | `AGENTS.md`, `AGENTS.md.template`, `kb/reference/navigation.md`, the generated `.commonplace/library.md` | Replace path-list `rg` recipes with the command; use `--library` for library tags and label a two-space result as navigation only. | Template/init fixture plus lexical guard against the retired recipes. |
+| Mark and head authoring | `kb/types/tag-readme.md`, its schema, `kb/instructions/maintain-curated-indexes.md` | State KB-wide mark semantics, mandatory stable heads, and transitional identity; keep the old identity fields until Phase 3. | Type/schema tests and maintenance examples. |
+| Tag assignment grammar | `kb/types/note-base.schema.yaml`, authoring instructions, collection clauses | Enforce the token grammar structurally and semantic reuse through the write path and review. | Schema fixtures cover `tags` and `covered_by`; semantic review remains non-deterministic. |
 | Legacy hub and generated-index branches | `kb/types/generated-index.*`, tag-readme schema, generation/validation branches | Retain through Phase 2; remove only with the Phase 3 move. | Phase 3 lexical absence checks. |
-| Review population | `src/commonplace/review/review_target_selector.py` and review-sweep procedures | Phase 2 preserves current heads; Phase 3 adds each root-local `tags/` collection to the reviewable set before moving heads. | Selector tests prove heads remain reviewable across the move. |
-| Distribution and upgrades | `ScaffoldManifest`, package data, init tests, projected instructions and skills | Consume I2's projection and I1's ownership-aware migration; do not add a tag-specific updater. | Fresh and pre-adoption upgraded fixtures converge on `commonplace-managed` paths. |
+| Review population | `src/commonplace/review/review_target_selector.py` and review-sweep procedures | Phase 2 preserves current heads; Phase 3 adds `kb/tags/` to the reviewable set before moving heads. | Selector tests prove heads remain reviewable across the move. |
+| Library build and init | `hatch_build.py` `SHIPPED`, `scaffold_manifest.py`, `commonplace-init` migrations, `library.md` entry points | Phase 2 ships the declarations and scaffolds host declarations. Phase 3 ships `tags/`, scaffolds an empty host `kb/tags/`, moves host heads in an init migration, and repoints the library's navigation entry point. | Build test, init tests on fresh and pre-move host fixtures. |
 | Published paths | `properdocs.yml` redirect map and build configuration | Phase 2 changes semantics at old URLs; Phase 3 records redirects for every moved head and the retired hub. | Site build and redirect validation. |
-| Machine classification using one tag | `src/commonplace/lib/systems_matrix.py` and agent-memory review contracts | Continue reading `trace-learning` directly; this is predicate parity, not general membership recovery. | Independent Phase 4 schema/type/template/skill/tests packet. |
+| Machine classification using one tag | `src/commonplace/lib/systems_matrix.py` and agent-memory review contracts | Continue reading `trace-learning` directly; this is predicate parity, not general membership recovery. | Independent Phase 4 packet. |
 
 The implementation packet reruns lexical search over code, instructions,
 templates, package data, and tests before claiming this ledger complete. A new
@@ -239,46 +274,36 @@ consumer is added by role, not hidden under an existing filename entry.
 
 ## Cross-consumer fixture
 
-Build one reusable multi-root fixture after I3 supplies the root object. It has:
+Build one reusable fixture KB with:
 
-- a host `notes` member and host `reference` member carrying `shared-topic`;
-- a host `reference/proposals/archive/` artifact carrying the same tag;
-- a host `work` artifact carrying the same tag;
+- a `notes` member and a `reference` member carrying `shared-topic`;
+- a `reference/proposals/archive/` artifact carrying the same tag;
+- a `work` artifact carrying the same tag;
 - a validation-ignored participating subtree carrying the same tag;
-- a host head for `shared-topic`, initially incomplete and then repaired;
-- a sibling projected Commonplace root with its own `notes` and `reference` members and
-  its own head for the same string;
-- a tagged type artifact in one root as a prohibited negative case;
+- a head for `shared-topic` in `notes`, marked `complete` while linking only the
+  `notes` member, which must fail, and then repaired — this is the synthetic
+  cross-collection witness;
+- a tagged type spec as a schema-rejected negative case;
 - one participating collection with a missing declaration;
 - one malformed exclusion and one participation change; and
 - a tag with zero members.
 
-Expected host membership contains exactly the two host library members.
-Expected Commonplace membership contains exactly the Commonplace members.
-Neither set contains archive, work, ignored, type, or other-root artifacts. An
-explicit navigation union contains both sets but licenses neither head's marks
-across the root boundary.
+Expected membership contains exactly the two library members. It contains no
+archive, work, ignored, or type artifacts. A second fixture directory stands in
+for the installed library through `COMMONPLACE_LIBRARY_ROOT`; `--library`
+resolves it independently and neither KB's marks apply to the other.
 
 Run the same fixture through the Python resolver, command renderer, mark
 validator, impact expansion, ProperDocs augmentation and footer routing, and
-connect/recipe contract tests. Every consumer uses one shared expected ordered
-record set rather than maintaining an independent fixture inventory. The
-zero-member command returns an empty bounded result; no shell fallback is
-invoked.
-
-In addition, retain integration assertions for the live `learning-theory` and
-`artifact-analysis` witnesses and for source, fresh-install, and upgraded
-projections. The synthetic fixture proves parity; the retained witnesses prove
-that the original contradiction actually closes.
+recipe contract tests. Every consumer uses one shared expected ordered record
+set. The zero-member command returns an empty bounded result; no shell fallback
+is invoked.
 
 ## Execution gates
 
-- Phase 1 starts only after I3 exposes root identity, boundary, ownership, and
-  recursive collection discovery including each root's type collection.
-- Phase 2 activates only after the resolver contract is stable and V1 can run
-  every declared source and installed scope without fail-fast behavior.
-- Phase 3 starts only after Phase 2 converges consumers and I1/I2 expose the
-  generic upgrade and projection mechanisms.
-- Phase 4 cleanup may run independently now. The agent-navigation experiment
-  waits for exact resolution and canonical heads and remains outside structural
-  closure.
+- Phase 1 has no external gate.
+- Phase 2 activates only after the resolver contract is stable.
+- Phase 3 starts only after Phase 2 converges consumers.
+- Phase 4 cleanup may run independently now. The navigation and browsing
+  trials wait for exact resolution and canonical heads and remain outside
+  structural closure.
