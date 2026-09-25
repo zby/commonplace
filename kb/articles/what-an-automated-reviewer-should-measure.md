@@ -112,10 +112,9 @@ the proposed change inspectable:
 This reading treats the prior account as an [addressable
 theory](../notes/definitions/addressable-theory.md): its commitments can be
 inspected and revised separately against cases while useful prior knowledge
-is preserved. The reviewer should
-cite supporting passages and flag gaps. These are not required headings;
-finding all five parts makes a revision legible but does not establish
-its quality.
+is preserved. The reviewer should cite supporting passages and flag gaps.
+These are not required headings; finding all five parts makes a revision
+legible but does not establish its quality.
 
 Next assess the explanation:
 
@@ -242,10 +241,11 @@ compression](../notes/reverse-compression-is-when-llm-output-expands-without-add
 Gain per token alone would hide the trade-off between total benefit and cost.
 
 This experiment connects to [building a theory builder from today's
-LLMs](./building-a-theory-builder-from-todays-llms.md): the research arrangement
-tests whether retained material changes later behaviour while weights remain
-fixed. This experiment tests one artifact's effect, not whether formulation
-and criticism improve the system's capacity across the whole learning loop.
+LLMs](./building-a-theory-builder-from-todays-llms.md): that research program
+tests whether retained theories change later behaviour while model weights
+remain fixed. This experiment tests one article's effect, not whether
+criticizing and revising retained theories improves a whole system's
+capacity for future action.
 
 A retrospective study could use later experimental results for both coding
 and task tests. It must address model exposure to the article or results

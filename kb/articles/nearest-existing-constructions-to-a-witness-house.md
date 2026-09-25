@@ -23,9 +23,10 @@ and revised skills. They also supply mechanisms for diagnosis, criticism,
 revision, and reuse. [Our program](./building-a-theory-builder-from-todays-llms.md)
 asks two separate questions of each system. Is it a theory builder, a system
 that states its theories, acts on them, criticizes what they say, and lets
-the result of criticism shape its next conjecture? And does holding and criticizing those
-theories improve its later decisions? A third question is whether the whole
-process can run without people performing its internal roles.
+the result of criticism shape its next conjecture? And does holding and
+criticizing those theories improve its later decisions? A third question is
+whether the whole process can run without people performing its internal
+roles.
 
 This survey compares eighteen systems through retained code reviews, papers,
 and practitioner reports. No reported outcome was reproduced here. It places
@@ -67,9 +68,7 @@ so its fixed solver weights do not make every component fixed-weight.
 Both precedents address parts of the program's first testing goal: retained
 changes improving later performance. Their remaining mechanism questions
 call for narrower comparisons within the successful pipelines. Both are also
-theory builders on this evidence, as the next section explains: their
-retained units are stated, consumed on later tasks, and revised after
-criticism aimed at a particular claim or skill.
+theory builders on this evidence, as the placements below explain.
 
 ## What the comparison asks
 
@@ -90,11 +89,14 @@ it meets four conditions:
    not meet this condition.
 4. **Iteration.** The result of criticism, a revised theory or the record
    of criticism, is kept and shapes the next conjecture. Rounds of revision
-   within one run meet this condition. How far results persist, within a
-   run, across runs, or across problems, is graded, like addressability,
-   and is not a condition. A critic whose report no next conjecture takes up
-   does not meet it, and a run that freezes its result for another system to
-   deploy ends the builder at the freeze.
+   within one run meet this condition. A critic whose report no next
+   conjecture takes up does not meet it.
+
+Two properties above these minimums come in grades. Addressability grows as
+the units criticism can name become finer. Persistence grows as results last
+longer: within a run, across runs, or across problems. Neither decides
+membership. A run that freezes its result for another system to deploy ends
+the builder at the freeze; the deployment is not part of it.
 
 The builder is the whole system that performs these operations, so people
 who propose, criticize, or select theories are inside it. A human-staffed
@@ -106,7 +108,6 @@ Membership is not a claim of success. Whether holding and criticizing a
 builder's theories improves its capacity for future action is a separate
 learning claim, and it needs an outcome comparison:
 [observing the whole theory-to-use path does not establish improved capacity](../notes/a-complete-theory-path-does-not-establish-improved-capacity.md).
-A system can be a theory builder without any shown gain.
 
 We distinguish how a revision is produced from how it is accepted. A system
 may diagnose a mistaken assumption, revise the theory, and use an outcome
@@ -143,10 +144,12 @@ than inferred from the neighbouring conditions. On that basis:
 
 **Knowledge and skill pipelines with reported gains.** Knowledge-Centric
 Self-Improvement meets the four conditions: its claims are stated,
-challenged with evidence, distilled, and consumed through a memo on unseen
-tasks. Memento-Skills meets them as well: failure attribution names one
-responsible skill, rewriting changes what that skill says, and the retained
-skills are used on the unseen test set.
+challenged with evidence, and distilled for later agents in the run, which
+act on them. The frozen bundle's transfer to unseen tasks is evidence of
+learning; by the freeze rule above it is not part of the builder.
+Memento-Skills meets the conditions as well: failure attribution names one
+responsible skill, rewriting changes what that skill says, and later tasks
+use the rewritten skill.
 
 **Human-assisted learning and machinery development.** These systems show
 how people and agents retain knowledge and change their working machinery.
@@ -201,17 +204,15 @@ the evidence cited here does not complete the trace for any of them.
   admission is viability: "Only agents that compile successfully and retain
   the ability to edit a given codebase are added to the DGM archive"
   ([Darwin Gödel Machine](../sources/darwin-godel-machine-open-ended-evolution-self-improving-agents.ingest.md),
-  verbatim). Diagnostic rationale is not shown to persist across
-  generations. Unsettled on condition 3, since admission is by viability and
-  score. Later generations build on archived agents, so results persist
-  across the run; the evidence cited does not show the archive taken up on a
-  problem other than the one it evolved on, which bears on its persistence
-  grade, not on membership.
+  verbatim). Unsettled on condition 3: the evidence cited does not show
+  whether a diagnosis names what the parent agent's code or prompt says
+  wrongly, and admission tests viability and score, not content. Later
+  generations build on archived agents, so results persist across the run;
+  persistence beyond it is not shown.
 - The [Huxley-Gödel Machine](../sources/huxley-godel-machine-human-level-coding-agent-development.ingest.md)
   replaces score with descendant productivity for parent selection, and
   reports that immediate score predicts it poorly. Unsettled on condition 3
-  for the same reason as the Darwin Gödel Machine, with the same run-level
-  persistence.
+  for the same reason as the Darwin Gödel Machine.
 - Recuris proposes memory patches from traces and decides each through a
   deterministic paired held-out gate, with the memory coordinates supplied
   in advance: "The memory only grows, and it can afford to."
