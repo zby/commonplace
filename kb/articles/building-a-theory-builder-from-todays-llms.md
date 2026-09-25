@@ -306,7 +306,7 @@ The [bootstrap supplement](./bootstrapping-an-autonomous-theory-builder.md)
 starts from Commonplace, a knowledge base currently maintained by people and
 agents together, and transfers its internal roles to computation one class at
 a time; it also covers the builder's reflection on its own machinery. The
-[software-house supplement](./an-automated-software-house-as-a-second-test-of-conjectural-learning.md)
+[software-house supplement](./an-automated-software-house-as-a-second-test-of-a-theory-builder.md)
 proposes a second arrangement whose failures are more visible. The
 [definition](../notes/definitions/theory-builder.md) states exactly
 what a theory builder requires and what it leaves open.

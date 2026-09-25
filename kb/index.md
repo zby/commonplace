@@ -13,7 +13,7 @@ Two separate pressures keep the design modular. Different collections support di
 ## Threads worth following
 
 **The automated software house conjecture.** The current
-[research program](./articles/an-automated-software-house-as-a-second-test-of-conjectural-learning.md)
+[research program](./articles/an-automated-software-house-as-a-second-test-of-a-theory-builder.md)
 asks whether a complete software house can sustain open-ended coherent change
 with current learned components pinned and no human in an internal production
 role. Its starting project theory and production machinery may be written by
