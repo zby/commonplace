@@ -81,7 +81,7 @@ build-backend = "hatchling.build"
 [tool.hatch.build.targets.wheel]
 packages = ["src/commonplace"]
 
-# The library (kb/instructions, notes, reference, types) is not packaged from the
+# The library (kb/instructions, notes, reference, tags, types) is not packaged from the
 # raw trees: hatch_build.py prepares a copy whose links outside the library point
 # to their sources or to GitHub, fails the build on a link that resolves to
 # nothing, and supplies the copy to both targets. The wheel installs it as shared

@@ -218,6 +218,10 @@ def test_status_frontmatter_is_confined_to_specialized_type_contracts() -> None:
 
 def test_active_frontmatter_types_are_paths() -> None:
     for relative_path in _active_kb_markdown_paths():
+        if Path(relative_path).name == "COLLECTION.md":
+            # A collection contract is metadata, not a typed artifact; its
+            # frontmatter carries collection-level declarations (ADR 089).
+            continue
         content = (REPO_ROOT / relative_path).read_text(encoding="utf-8")
         parsed = frontmatter.parse(content)
         assert parsed.ok, f"{relative_path}: {parsed.errors}"

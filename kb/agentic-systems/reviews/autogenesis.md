@@ -2,7 +2,7 @@
 description: "Autogenesis as a code-grounded self-evolving agent framework: protocol resources, orchestration, versioned mutation, rollback, and the gaps between its paper artifact and current rewrite"
 type: types/note.md
 traits: [has-external-sources]
-tags: [computational-model, deploy-time-learning, self-improving-systems]
+tags: [computational-model, self-improving-systems]
 ---
 
 # Autogenesis

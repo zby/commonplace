@@ -91,6 +91,20 @@ def is_replaced_archive(path: Path) -> bool:
     return ".replaced." in path.name
 
 
+def is_proposal_archive(path: Path) -> bool:
+    """Return True when path lies under a `proposals/archive/` directory.
+
+    The proposal archive is frozen and link-isolated (ADR 056) and outside the
+    tag space (ADR 089): its files keep whatever tags they carried, and no tag
+    consumer reads them.
+    """
+    parts = path.parts
+    return any(
+        parts[i] == "proposals" and parts[i + 1] == "archive"
+        for i in range(len(parts) - 1)
+    )
+
+
 def is_collection_metadata(path: Path) -> bool:
     """Return True for collection control files that are not collection content."""
     return path.name == "COLLECTION.md"

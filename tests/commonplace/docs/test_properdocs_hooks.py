@@ -14,15 +14,19 @@ def write(path: Path, content: str) -> Path:
     return path
 
 
-def tag_index(collection: Path, tag: str) -> Path:
+def tag_space(root: Path, participating: str = "[notes]") -> Path:
+    tags = root / "kb" / "tags"
+    write(tags / "COLLECTION.md", f"---\nparticipating: {participating}\n---\n\n# Tags\n")
+    return tags
+
+
+def head(tags: Path, tag: str, marks: str = "") -> Path:
     return write(
-        collection / f"{tag}-index.md",
+        tags / f"{tag}-README.md",
         f"""---
-description: Index for {tag}
-type: types/generated-index.md
-index_source: tag
-index_key: {tag}
----
+description: "Curated head for {tag}"
+type: types/tag-readme.md
+{marks}---
 
 # {tag}
 """,
@@ -57,10 +61,12 @@ def test_on_page_markdown_renders_user_verification_and_specialized_status(tmp_p
     assert "**User verified:** yes" in result
 
 
-def test_on_page_markdown_links_every_tag_with_declared_index(tmp_path: Path) -> None:
+def test_on_page_markdown_links_every_tag_with_a_head(tmp_path: Path) -> None:
     notes = tmp_path / "kb" / "notes"
+    write(notes / "COLLECTION.md", "# Notes collection\n")
+    tags = tag_space(tmp_path)
     for tag in ("agent-memory", "context-engineering", "learning-theory"):
-        tag_index(notes, tag)
+        head(tags, tag)
     note = write(notes / "example.md", "# Example\n")
     page = SimpleNamespace(
         meta={
@@ -69,20 +75,24 @@ def test_on_page_markdown_links_every_tag_with_declared_index(tmp_path: Path) ->
         },
         file=SimpleNamespace(abs_src_path=str(note)),
     )
+    properdocs_hooks.on_config({"docs_dir": str(tmp_path / "kb")})
 
-    result = properdocs_hooks.on_page_markdown("# Example\n\nBody\n", page)
+    result = properdocs_hooks.on_page_markdown(
+        "# Example\n\nBody\n", page, config={"docs_dir": str(tmp_path / "kb")}
+    )
 
     assert (
-        "**Tags:** [agent-memory](agent-memory-index.md), "
-        "[context-engineering](context-engineering-index.md), "
-        "[learning-theory](learning-theory-index.md)"
+        "**Tags:** [agent-memory](../tags/agent-memory-README.md), "
+        "[context-engineering](../tags/context-engineering-README.md), "
+        "[learning-theory](../tags/learning-theory-README.md)"
     ) in result
-
-
-def test_on_page_markdown_appends_generated_tail_to_tag_index(tmp_path: Path) -> None:
+def test_on_page_markdown_appends_tail_across_participating_collections(tmp_path: Path) -> None:
     notes = tmp_path / "kb" / "notes"
+    reference = tmp_path / "kb" / "reference"
     write(notes / "COLLECTION.md", "# Notes collection\n")
-    index = tag_index(notes, "kb-design")
+    write(reference / "COLLECTION.md", "# Reference collection\n")
+    tags = tag_space(tmp_path, "[notes, reference]")
+    readme = head(tags, "kb-design")
     write(
         notes / "tagged.md",
         """---
@@ -92,6 +102,17 @@ tags: [kb-design]
 ---
 
 # Tagged note
+""",
+    )
+    write(
+        reference / "doc.md",
+        """---
+description: Reference doc
+type: types/note.md
+tags: [kb-design]
+---
+
+# Reference doc
 """,
     )
     write(
@@ -106,14 +127,10 @@ tags: [kb-design]
 """,
     )
     page = SimpleNamespace(
-        meta={
-            "type": "types/generated-index.md",
-            "index_source": "tag",
-            "index_key": "kb-design",
-        },
-        file=SimpleNamespace(abs_src_path=str(index)),
+        meta={"type": "types/tag-readme.md"},
+        file=SimpleNamespace(abs_src_path=str(readme)),
     )
-    curated_body = "# kb-design\n\n## Notes\n\n- [Curated](curated.md) — placed\n"
+    curated_body = "# kb-design\n\n## Notes\n\n- [Curated](../notes/curated.md) — placed\n"
     properdocs_hooks.on_config({"docs_dir": str(tmp_path / "kb")})
 
     result = properdocs_hooks.on_page_markdown(
@@ -123,22 +140,19 @@ tags: [kb-design]
     )
 
     assert "## Other tagged notes <!-- generated -->" in result
-    assert "- [Tagged note](./tagged.md) - Tagged note" in result
+    assert "- [Tagged note](../notes/tagged.md) - Tagged note" in result
+    assert "- [Reference doc](../reference/doc.md) - Reference doc" in result
     # Curated links are excluded from the generated tail
     assert result.count("curated.md") == 1
-    assert "- [Curated note](./curated.md)" not in result
-
-
-def test_on_page_markdown_appends_tail_to_tag_readme_type(tmp_path: Path) -> None:
+def test_on_page_markdown_ignores_a_head_left_outside_the_tag_collection(tmp_path: Path) -> None:
     notes = tmp_path / "kb" / "notes"
     write(notes / "COLLECTION.md", "# Notes collection\n")
-    readme = write(
+    tag_space(tmp_path)
+    stray = write(
         notes / "kb-design-README.md",
         """---
 description: "Curated head for kb-design"
 type: types/tag-readme.md
-index_source: tag
-index_key: kb-design
 ---
 
 # kb-design
@@ -156,12 +170,8 @@ tags: [kb-design]
 """,
     )
     page = SimpleNamespace(
-        meta={
-            "type": "types/tag-readme.md",
-            "index_source": "tag",
-            "index_key": "kb-design",
-        },
-        file=SimpleNamespace(abs_src_path=str(readme)),
+        meta={"type": "types/tag-readme.md"},
+        file=SimpleNamespace(abs_src_path=str(stray)),
     )
     properdocs_hooks.on_config({"docs_dir": str(tmp_path / "kb")})
 
@@ -171,26 +181,12 @@ tags: [kb-design]
         config={"docs_dir": str(tmp_path / "kb")},
     )
 
-    assert "## Other tagged notes <!-- generated -->" in result
-    assert "- [Tagged note](./tagged.md) - Tagged note" in result
-
-
+    assert "Other tagged notes" not in result
 def test_on_page_markdown_skips_empty_tail_for_complete_readme(tmp_path: Path) -> None:
     notes = tmp_path / "kb" / "notes"
     write(notes / "COLLECTION.md", "# Notes collection\n")
-    readme = write(
-        notes / "kb-design-README.md",
-        """---
-description: "Curated head for kb-design"
-type: types/tag-readme.md
-index_source: tag
-index_key: kb-design
-complete: true
----
-
-# kb-design
-""",
-    )
+    tags = tag_space(tmp_path)
+    readme = head(tags, "kb-design", marks="complete: true\n")
     write(
         notes / "curated.md",
         """---
@@ -203,15 +199,10 @@ tags: [kb-design]
 """,
     )
     page = SimpleNamespace(
-        meta={
-            "type": "types/tag-readme.md",
-            "index_source": "tag",
-            "index_key": "kb-design",
-            "complete": True,
-        },
+        meta={"type": "types/tag-readme.md", "complete": True},
         file=SimpleNamespace(abs_src_path=str(readme)),
     )
-    curated_body = "# kb-design\n\n- [Curated](./curated.md) — placed\n"
+    curated_body = "# kb-design\n\n- [Curated](../notes/curated.md) — placed\n"
     properdocs_hooks.on_config({"docs_dir": str(tmp_path / "kb")})
 
     result = properdocs_hooks.on_page_markdown(
@@ -222,8 +213,6 @@ tags: [kb-design]
 
     # Every member is curated, so no generated section is appended at all
     assert "Other tagged notes" not in result
-
-
 def test_on_files_publishes_source_index_with_only_published_pages(tmp_path: Path) -> None:
     class Config(dict):
         def __init__(self, docs_dir: Path, site_dir: Path) -> None:
@@ -276,9 +265,10 @@ def test_on_files_publishes_source_index_with_only_published_pages(tmp_path: Pat
     assert "[Complete file listing](./dir-index.md)" in rendered_readme
 
 
-def test_on_page_markdown_keeps_unindexed_tags_as_text(tmp_path: Path) -> None:
+def test_on_page_markdown_keeps_headless_tags_as_text(tmp_path: Path) -> None:
     notes = tmp_path / "kb" / "notes"
-    tag_index(notes, "learning-theory")
+    write(notes / "COLLECTION.md", "# Notes collection\n")
+    head(tag_space(tmp_path), "learning-theory")
     note = write(notes / "example.md", "# Example\n")
     page = SimpleNamespace(
         meta={
@@ -287,7 +277,10 @@ def test_on_page_markdown_keeps_unindexed_tags_as_text(tmp_path: Path) -> None:
         },
         file=SimpleNamespace(abs_src_path=str(note)),
     )
+    properdocs_hooks.on_config({"docs_dir": str(tmp_path / "kb")})
 
-    result = properdocs_hooks.on_page_markdown("# Example\n\nBody\n", page)
+    result = properdocs_hooks.on_page_markdown(
+        "# Example\n\nBody\n", page, config={"docs_dir": str(tmp_path / "kb")}
+    )
 
-    assert "**Tags:** context-engineering, [learning-theory](learning-theory-index.md)" in result
+    assert "**Tags:** context-engineering, [learning-theory](../tags/learning-theory-README.md)" in result

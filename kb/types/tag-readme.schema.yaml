@@ -8,17 +8,9 @@ allOf:
         required:
           - description
           - type
-          - index_source
         properties:
           type:
             const: types/tag-readme.md
-          index_source:
-            enum:
-              - tag
-              - tag-indexes
-          index_key:
-            type: string
-            minLength: 1
           complete:
             type: boolean
           covered_by:
@@ -28,16 +20,10 @@ allOf:
             items:
               type: string
               minLength: 1
+          # Identity is the filename (kb/tags/<tag>-README.md, ADR 089); the
+          # retired index_source/index_key binding is rejected so a stale copy
+          # cannot claim a second identity.
+          index_source: false
+          index_key: false
           status: false
         additionalProperties: true
-  - if:
-      properties:
-        frontmatter:
-          properties:
-            index_source:
-              const: tag
-    then:
-      properties:
-        frontmatter:
-          required:
-            - index_key

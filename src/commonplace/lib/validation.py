@@ -27,8 +27,11 @@ from commonplace.lib.full_pass import (
     verify_capture,
 )
 from commonplace.lib.index_generated import (
-    CollectionTagIndex,
-    collect_collection_tag_index,
+    TagSpace,
+    collect_tag_space,
+    head_path,
+    tag_for_head,
+    tags_collection,
 )
 from commonplace.lib.naming import MAX_NOTE_SLUG_LENGTH, MAX_NOTE_TITLE_LENGTH
 from commonplace.lib.note_parser import (
@@ -150,9 +153,7 @@ class ValidationRun:
     _notes: dict[Path, tuple[ParsedNote | None, str | None]] = field(
         default_factory=dict, init=False
     )
-    _collection_indexes: dict[Path, CollectionTagIndex] = field(
-        default_factory=dict, init=False
-    )
+    _tag_space: TagSpace | None = field(default=None, init=False)
     _git_ignored: dict[Path, bool] = field(default_factory=dict, init=False)
     _verbatim_quotes: dict[Path, list[QuoteResult]] = field(
         default_factory=dict, init=False
@@ -228,17 +229,14 @@ class ValidationRun:
         self._notes[key] = result
         return result
 
-    def collection_index(self, collection: Path) -> CollectionTagIndex:
-        """Build tag membership and tag-index entries in one cached scan."""
-        key = collection.resolve()
-        if key in self._collection_indexes:
-            return self._collection_indexes[key]
-        index = collect_collection_tag_index(
-            key,
-            load_document=lambda path: self.load_document(path).document,
-        )
-        self._collection_indexes[key] = index
-        return index
+    def tag_space(self) -> TagSpace:
+        """Scan the KB's tag space once per run (ADR 089)."""
+        if self._tag_space is None:
+            self._tag_space = collect_tag_space(
+                self.repo_root,
+                load_document=lambda path: self.load_document(path).document,
+            )
+        return self._tag_space
 
     def verbatim_quotes(self, parsed: ParsedNote) -> list[QuoteResult]:
         """Resolve a note's verbatim quotes once for every check that reads them."""
@@ -321,16 +319,15 @@ class ValidationRun:
             tags = parsed.document.frontmatter.get("tags")
             if not isinstance(tags, list):
                 continue
-            try:
-                collection = collection_for_path(path, self.repo_root)
-            except ValueError:
+            tag_space = self.tag_space()
+            if not tag_space.is_participating(path):
                 continue
 
             for tag in tags:
                 if not isinstance(tag, str):
                     continue
-                readme = (collection / f"{tag}-README.md").resolve()
-                if not readme.is_file() or readme in seen:
+                readme = tag_space.heads.get(tag)
+                if readme is None or readme in seen:
                     continue
                 readme_parsed, readme_error = self.parse_note(readme)
                 if (
@@ -1027,8 +1024,9 @@ def validate_type_spec_definition(
 def validate_tag_readme(
     results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
 ) -> None:
-    """Enforce the tag-readme type contract: weight gates plus the optional
-    `complete` (membership) and `covered_by` (coverage) marks (ADR 026)."""
+    """Enforce the tag-readme type contract: the head's place and identity
+    (ADR 089), weight gates, and the optional `complete` (membership) and
+    `covered_by` (coverage) marks (ADR 026) over the participating scope."""
     fm = parsed.document.frontmatter or {}
 
     size = len(parsed.content.encode("utf-8"))
@@ -1048,28 +1046,29 @@ def validate_tag_readme(
             f"weight gate: {size} B within {TAG_README_SOFT_BYTES} B soft limit ({entry_count} entries)"
         )
 
-    try:
-        collection = collection_for_path(parsed.path, run.repo_root)
-    except ValueError as exc:
-        results.fails.append(f"tag-readme: {exc}")
+    tag = tag_for_head(parsed.path)
+    expected_dir = tags_collection(run.repo_root).resolve()
+    if tag is None or parsed.path.resolve().parent != expected_dir:
+        results.fails.append(
+            "tag head: a head is kb/tags/<tag>-README.md and nothing else — "
+            f"{parsed.path.relative_to(run.repo_root)} is not; move it with "
+            f"commonplace-relocate-note; {_TAG_README_FIX_HINT}"
+        )
         return
+    results.passes.append(f"tag head: names the tag `{tag}` by its filename")
 
-    source = fm.get("index_source")
-    key = str(fm.get("index_key", ""))
-    collection_index = run.collection_index(collection)
-    notes_by_tag = collection_index.notes_by_tag
+    tag_space = run.tag_space()
+    if tag_space.declaration_error:
+        results.warns.append(
+            f"tag space: {tag_space.declaration_error} — marks checked against no members"
+        )
+    members = tag_space.notes_by_tag.get(tag, [])
 
     if fm.get("complete") is True:
-        if source == "tag":
-            members = [(path, title) for path, title, _ in notes_by_tag.get(key, [])]
-        else:
-            members = [
-                (path, title) for path, title, _ in collection_index.tag_index_entries
-            ]
         linked = _linked_md_targets(parsed)
         missing = [
             path
-            for path, _ in members
+            for path, _, _ in members
             if path.resolve() not in linked and path.resolve() != parsed.path.resolve()
         ]
         if missing:
@@ -1088,14 +1087,23 @@ def validate_tag_readme(
                 f"covered_by fan-out: {len(covered_by)} children exceeds ~{TAG_README_MAX_FANOUT} — "
                 f"group children under intermediate tags; {_TAG_README_FIX_HINT}"
             )
+        headless_children = [
+            child for child in covered_by if str(child) not in tag_space.heads
+        ]
+        for child in headless_children:
+            results.fails.append(
+                f"covered_by: child `{child}` has no head at "
+                f"{head_path(run.repo_root, str(child)).relative_to(run.repo_root)}; "
+                f"{_TAG_README_FIX_HINT}"
+            )
         covered_paths = {
             path.resolve()
             for child in covered_by
-            for path, _, _ in notes_by_tag.get(str(child), [])
+            for path, _, _ in tag_space.notes_by_tag.get(str(child), [])
         }
         uncovered = [
             path
-            for path, _, _ in notes_by_tag.get(key, [])
+            for path, _, _ in members
             if path.resolve() not in covered_paths
             and path.resolve() != parsed.path.resolve()
         ]
@@ -1105,7 +1113,7 @@ def validate_tag_readme(
                     f"covered_by: {path.relative_to(run.repo_root)} carries no listed child tag — "
                     f"tag it with one of {covered_by} or revise the list; {_TAG_README_FIX_HINT}"
                 )
-        else:
+        elif not headless_children:
             results.passes.append(
                 f"covered_by: all tagged notes carry one of {len(covered_by)} children"
             )
@@ -1318,6 +1326,39 @@ def _merge_labelled(dest: CheckResults, src: CheckResults, source: str) -> None:
         )
 
 
+def validate_tag_heads(
+    results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
+) -> None:
+    """Every tag in use within the tag space has a head (ADR 089).
+
+    Applies to artifacts in participating collections that carry a `tags:`
+    list. Tags outside the tag space are not read, so nothing is reported for
+    them. A missing or malformed tag-space declaration is a warning, because
+    the artifact cannot fix it.
+    """
+    fm = parsed.document.frontmatter or {}
+    tags = fm.get("tags")
+    if not isinstance(tags, list) or not tags:
+        return
+    tag_space = run.tag_space()
+    if tag_space.declaration_error and not tag_space.participating:
+        results.warns.append(f"tags unchecked: {tag_space.declaration_error}")
+        return
+    if not tag_space.is_participating(parsed.path):
+        return
+    headless = [
+        tag for tag in tags if isinstance(tag, str) and tag not in tag_space.heads
+    ]
+    for tag in headless:
+        results.fails.append(
+            f"tag `{tag}`: no head at "
+            f"{head_path(run.repo_root, tag).relative_to(run.repo_root)} — "
+            "write one or drop the tag (ADR 089)"
+        )
+    if not headless:
+        results.passes.append(f"tags: all {len(tags)} have heads in kb/tags/")
+
+
 def _validate_parsed_note(parsed: ParsedNote, *, run: ValidationRun) -> CheckResults:
     """Validate a parsed note against the base contract, type rules, and schema.
 
@@ -1378,6 +1419,7 @@ def _validate_parsed_note(parsed: ParsedNote, *, run: ValidationRun) -> CheckRes
         parsed.document.links,
         repo_root=run.repo_root,
     )
+    validate_tag_heads(base, parsed, run=run)
     validate_verbatim_quotes(base, run.verbatim_quotes(parsed))
     snapshots = run.snapshots(parsed.path.parent / ".snapshots")
     validate_ingest_snapshot_pairing(

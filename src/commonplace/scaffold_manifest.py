@@ -39,6 +39,7 @@ MANIFEST = ScaffoldManifest(
         Path("kb/reference"),
         Path("kb/reference/types"),
         Path("kb/instructions"),
+        Path("kb/tags"),
         # User-space operating directories; collection files are seeded below.
         Path("kb/sources"),
         Path("kb/sources/types"),
@@ -68,6 +69,8 @@ MANIFEST = ScaffoldManifest(
         ("templates/user-reference-README.md", "kb/reference/README.md"),
         ("templates/user-instructions-COLLECTION.md", "kb/instructions/COLLECTION.md"),
         ("templates/user-instructions-README.md", "kb/instructions/README.md"),
+        ("templates/user-tags-COLLECTION.md", "kb/tags/COLLECTION.md"),
+        ("templates/user-tags-README.md", "kb/tags/README.md"),
         ("templates/user-work-COLLECTION.md", "kb/work/COLLECTION.md"),
         ("templates/user-work-README.md", "kb/work/README.md"),
         ("templates/user-reports-COLLECTION.md", "kb/reports/COLLECTION.md"),

@@ -32,7 +32,7 @@ def _write(path: Path, text: str) -> None:
 
 def _repo(tmp_path: Path, note_body: str) -> Path:
     repo = tmp_path / "repo"
-    for name in ("instructions", "reference", "types"):
+    for name in ("instructions", "reference", "tags", "types"):
         (repo / "kb" / name).mkdir(parents=True)
     _write(repo / "kb" / "notes" / "other.md", "# Other\n")
     _write(repo / "kb" / "notes" / "note.md", note_body)

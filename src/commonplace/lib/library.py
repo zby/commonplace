@@ -1,6 +1,6 @@
 """The installed Commonplace library and the project files that point into it.
 
-The library (instructions with the promoted skills, notes, reference, and the
+The library (instructions with the promoted skills, notes, reference, tags, and the
 global types) ships as wheel shared data under ``<tool environment>/share/commonplace/``,
 laid out like the source repository's ``kb/``. That path does not change with the
 tool's Python version. An editable install reads the source tree's ``kb/`` instead,
@@ -192,7 +192,7 @@ def render_routing(root: Path | None = None) -> str:
         f"Library root: {root.as_posix()}\n\n"
         f"- Instructions and skill bodies: {(root / 'instructions').as_posix()}/ "
         "(find one by searching the `description:` lines)\n"
-        f"- Notes navigation: {(root / 'notes' / 'tags-README.md').as_posix()}\n"
+        f"- Tag heads (browse the notes by topic): {(root / 'tags' / 'README.md').as_posix()}\n"
         f"- Reference: {(root / 'reference' / 'README.md').as_posix()}\n"
         f"- Global types: {(root / 'types').as_posix()}/\n\n"
         "Read library files by full path. Links inside a library file are relative to that file.\n\n"

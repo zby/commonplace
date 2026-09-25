@@ -9,16 +9,16 @@ schema: ./generated-index.schema.yaml
 
 ## Authoring Instructions
 
-Since ADR 026 the `generated-index` type covers **build-time generated pages only** — do not author new committed artifacts with this type. A tag's committed curated head is a `<tag>-README.md` of type `types/tag-readme.md` (see that spec); complete listings are never committed (ADR 025).
+Since ADR 026 the `generated-index` type covers **build-time generated pages only** — do not author new committed artifacts with this type. A tag's committed curated head is `kb/tags/<tag>-README.md` of type `types/tag-readme.md` (see that spec, and ADR 089); complete listings are never committed (ADR 025).
 
 The ProperDocs hook materializes index-typed pages at build time:
 
 - `index_source: directory` — per-collection `dir-index.md` virtual pages, a complete inventory of every file with title, description, and type. These exist only in the published site; `dir-index.md` is gitignored.
-- The hook also appends the generated listing (`tag` / `tag-indexes` sources) to tag-README pages on the site; that machinery accepts both this type and `tag-readme` (the dual-type transition also covers any not-yet-migrated committed tag index).
+- The hook also appends the generated member listing to each tag head on the site; that listing is driven by the head's filename and the tag space's participating collections (ADR 089), not by this type.
 
 Agents enumerate the same information with the scoped `rg` recipes in `kb/reference/navigation.md`.
 
 ## Frontmatter
 
 - `index_source: directory` for generated per-directory listings (the only sanctioned use).
-- `index_source: tag` with `index_key: <tag>` and `index_source: tag-indexes` remain schema-valid for unmigrated committed indexes; migrate these to `types/tag-readme.md` rather than authoring new ones.
+- `index_source: tag` and `index_source: tag-indexes` are retired (ADR 089): a tag head is identified by its filename and carries neither field.

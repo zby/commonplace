@@ -96,6 +96,10 @@ def configure_tag_readme_repo(tmp_path: Path) -> Path:
         name="tag-readme",
         schema="kb/types/tag-readme.schema.yaml",
     )
+    write(
+        tmp_path / "kb" / "tags" / "COLLECTION.md",
+        "---\nparticipating: [notes]\n---\n\n# Tags\n",
+    )
     return notes
 
 
@@ -174,12 +178,10 @@ type: notes/types/tag-readme.md
 """,
     )
     framework = write(
-        notes / "topic-README.md",
+        tmp_path / "kb" / "tags" / "topic-README.md",
         """---
 description: Curated head of the framework tag-readme type, whose imperative rules run
 type: types/tag-readme.md
-index_source: tag
-index_key: topic
 ---
 
 # Topic
@@ -777,12 +779,10 @@ tags: [kb-design, unmarked]
 """,
     )
     write(
-        notes / "kb-design-README.md",
+        tmp_path / "kb" / "tags" / "kb-design-README.md",
         """---
 description: "Complete curated head for the kb-design tag"
 type: types/tag-readme.md
-index_source: tag
-index_key: kb-design
 complete: true
 ---
 
@@ -792,12 +792,10 @@ Orientation paragraph.
 """,
     )
     write(
-        notes / "unmarked-README.md",
+        tmp_path / "kb" / "tags" / "unmarked-README.md",
         """---
 description: "Selective curated head for the unmarked tag"
 type: types/tag-readme.md
-index_source: tag
-index_key: unmarked
 ---
 
 # unmarked

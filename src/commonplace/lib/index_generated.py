@@ -1,4 +1,11 @@
-"""Rebuild generated sections of index pages."""
+"""The tag space: heads, participating collections, membership, generated tails.
+
+One KB has one tag namespace (ADR 089). Every tag head is
+``kb/tags/<tag>-README.md``; the filename is the head's identity. Membership
+ranges over the collections that ``kb/tags/COLLECTION.md`` declares as
+participating, and nothing outside that set is read. Generated tails are
+build-time materializations for the published site, never committed (ADR 025).
+"""
 
 from __future__ import annotations
 
@@ -7,119 +14,171 @@ import re
 from collections.abc import Callable
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any
 
 from commonplace.lib import frontmatter
 from commonplace.lib.note_parser import ParsedDocument, parse_document
 from commonplace.lib.project_paths import (
-    collection_for_path,
+    is_collection_dir,
+    is_proposal_archive,
     is_replaced_archive,
-    is_type_definition_content,
     iter_visible_markdown_files,
+    kb_root,
 )
 
 FIELD_NAME = "tags"
 MARKER = "<!-- generated -->"
-INDEX_TYPE = "types/generated-index.md"
 TAG_README_TYPE = "types/tag-readme.md"
-# Page types that carry index_source/index_key and receive a build-time
-# generated listing. INDEX_TYPE remains for build-time virtual pages and
-# unmigrated indexes; TAG_README_TYPE is the committed curated head (ADR 026).
-TAG_PAGE_TYPES = {INDEX_TYPE, TAG_README_TYPE}
-GENERATED_HEADING_BY_SOURCE = {
-    "tag": "## Other tagged notes",
-    "tag-indexes": "## Other tag indexes",
-}
+TAGS_COLLECTION_NAME = "tags"
+PARTICIPATING_FIELD = "participating"
+HEAD_SUFFIX = "-README.md"
+GENERATED_HEADING = "## Other tagged notes"
 URL_SCHEME_RE = re.compile(r"^[a-z][a-z0-9+.-]*:", re.IGNORECASE)
+
+Entry = tuple[Path, str, str]
+LoadDocument = Callable[[Path], ParsedDocument | None]
+
+
+def tags_collection(root: Path) -> Path:
+    """Return the tag collection directory for a project root."""
+    return kb_root(root) / TAGS_COLLECTION_NAME
+
+
+def head_path(root: Path, tag: str) -> Path:
+    """Return the canonical head path for a tag."""
+    return tags_collection(root) / f"{tag}{HEAD_SUFFIX}"
+
+
+def tag_for_head(path: Path) -> str | None:
+    """Return the tag a head file names, or None for any other file.
+
+    The collection landing ``README.md`` is not a head.
+    """
+    name = path.name
+    if not name.endswith(HEAD_SUFFIX) or name == HEAD_SUFFIX[1:]:
+        return None
+    tag = name[: -len(HEAD_SUFFIX)]
+    return tag or None
 
 
 @dataclass(frozen=True)
-class CollectionTagIndex:
-    notes_by_tag: dict[str, list[tuple[Path, str, str]]]
-    tag_index_entries: list[tuple[Path, str, str]]
+class TagSpace:
+    """One scan of a KB's tag space."""
+
+    participating: tuple[Path, ...]
+    notes_by_tag: dict[str, list[Entry]]
+    heads: dict[str, Path]
+    declaration_error: str | None
+
+    @property
+    def tags_in_use(self) -> set[str]:
+        return set(self.notes_by_tag)
+
+    def is_participating(self, path: Path) -> bool:
+        resolved = path.resolve()
+        return any(
+            resolved == collection or collection in resolved.parents
+            for collection in self.participating
+        )
 
 
-def collect_collection_tag_index(
-    collection_dir: Path,
-    *,
-    load_document: Callable[[Path], ParsedDocument | None] | None = None,
-) -> CollectionTagIndex:
-    """Scan a collection once for tag memberships and tag index artifacts."""
+def _default_load_document(path: Path) -> ParsedDocument | None:
+    document, _error = parse_document(path.read_text(encoding="utf-8"))
+    return document
+
+
+def read_participating(
+    root: Path, *, load_document: LoadDocument | None = None
+) -> tuple[tuple[Path, ...], str | None]:
+    """Read the participating collections declared by ``kb/tags/COLLECTION.md``.
+
+    Returns the resolved collection directories and an error message when the
+    declaration is missing or names something that is not a collection. An
+    undeclared tag space has no members: nothing is inferred from the tree.
+    """
+    collection = tags_collection(root).resolve()
+    contract = collection / "COLLECTION.md"
+    if not contract.is_file():
+        return (), f"tag space undeclared: {contract} does not exist (run commonplace-init)"
+
     if load_document is None:
+        data = frontmatter.parse(contract.read_text(encoding="utf-8")).data
+    else:
+        document = load_document(contract)
+        data = (document.frontmatter if document is not None else None) or {}
 
-        def load_document(path: Path) -> ParsedDocument | None:
-            document, _error = parse_document(path.read_text(encoding="utf-8"))
-            return document
+    declared = data.get(PARTICIPATING_FIELD)
+    if not isinstance(declared, list) or not all(isinstance(item, str) for item in declared):
+        return (), (
+            f"tag space undeclared: {contract} has no `{PARTICIPATING_FIELD}:` list "
+            "of collection names"
+        )
 
-    by_tag: dict[str, list[tuple[Path, str, str]]] = {}
-    tag_indexes: list[tuple[Path, str, str]] = []
-    for path in sorted(iter_visible_markdown_files(collection_dir)):
-        if is_replaced_archive(path):
+    boundary = kb_root(root).resolve()
+    participating: list[Path] = []
+    problems: list[str] = []
+    for name in declared:
+        candidate = (boundary / name).resolve()
+        if name == TAGS_COLLECTION_NAME:
+            problems.append(f"`{name}` holds the heads and cannot participate")
+        elif boundary not in candidate.parents or not is_collection_dir(candidate):
+            problems.append(f"`{name}` is not a collection under {boundary}")
+        else:
+            participating.append(candidate)
+    error = None
+    if problems:
+        error = f"tag space declaration in {contract}: " + "; ".join(problems)
+    return tuple(participating), error
+
+
+def _scan_members(
+    collection: Path, load_document: LoadDocument, by_tag: dict[str, list[Entry]]
+) -> None:
+    for path in sorted(iter_visible_markdown_files(collection)):
+        if is_replaced_archive(path) or is_proposal_archive(path):
             continue
-        rel_parts = path.relative_to(collection_dir).parts
+        rel_parts = path.relative_to(collection).parts
         if "types" in rel_parts or ".collection" in rel_parts:
             continue
-
+        if path.name == "COLLECTION.md":
+            continue
         document = load_document(path)
         if document is None:
             continue
         fm = document.frontmatter or {}
-        if fm.get("type") in TAG_PAGE_TYPES:
-            if fm.get("index_source") == "tag":
-                tag_indexes.append(
-                    (path, document.title, str(fm.get("description", "")))
-                )
-            continue
-
         tags = fm.get(FIELD_NAME)
         if not isinstance(tags, list):
             continue
+        entry = (path, document.title, str(fm.get("description", "")))
         for tag in tags:
             if isinstance(tag, str):
-                by_tag.setdefault(tag, []).append(
-                    (path, document.title, str(fm.get("description", "")))
-                )
-
-    return CollectionTagIndex(by_tag, tag_indexes)
+                by_tag.setdefault(tag, []).append(entry)
 
 
-def collect_notes_by_tag(
-    collection_dir: Path,
-) -> dict[str, list[tuple[Path, str, str]]]:
-    """Scan a collection and group notes by tag."""
-    return collect_collection_tag_index(collection_dir).notes_by_tag
+def collect_heads(root: Path) -> dict[str, Path]:
+    """Return every head in the tag collection, keyed by tag."""
+    collection = tags_collection(root)
+    if not collection.is_dir():
+        return {}
+    heads: dict[str, Path] = {}
+    for path in sorted(collection.glob(f"*{HEAD_SUFFIX}")):
+        tag = tag_for_head(path)
+        if tag is not None:
+            heads[tag] = path.resolve()
+    return heads
 
 
-def index_frontmatter(path: Path, content: str | None = None) -> dict[str, Any]:
-    """Parse frontmatter for an index candidate."""
-    if content is None:
-        content = path.read_text(encoding="utf-8")
-    return frontmatter.parse(content).data
-
-
-def index_source(path: Path, root: Path, content: str | None = None) -> str | None:
-    """Return the declared generated-section source for a managed index."""
-    collection = collection_for_path(path, root)
-    rel_parts = path.relative_to(collection).parts
-
-    if is_replaced_archive(path):
-        return None
-    if is_type_definition_content(path, collection) or ".collection" in rel_parts:
-        return None
-    fm = index_frontmatter(path, content)
-    if fm.get("type") not in TAG_PAGE_TYPES:
-        return None
-    source = fm.get("index_source")
-    if source in GENERATED_HEADING_BY_SOURCE:
-        return str(source)
-    return None
-
-
-def collect_tag_index_entries(
-    collection_dir: Path, _root: Path
-) -> list[tuple[Path, str, str]]:
-    """Return all tag indexes within a collection."""
-    return collect_collection_tag_index(collection_dir).tag_index_entries
+def collect_tag_space(
+    root: Path, *, load_document: LoadDocument | None = None
+) -> TagSpace:
+    """Scan the participating collections once for membership, and the tag
+    collection for heads."""
+    if load_document is None:
+        load_document = _default_load_document
+    participating, error = read_participating(root, load_document=load_document)
+    by_tag: dict[str, list[Entry]] = {}
+    for collection in participating:
+        _scan_members(collection, load_document, by_tag)
+    return TagSpace(participating, by_tag, collect_heads(root), error)
 
 
 def extract_curated_links(curated_section: str) -> set[str]:
@@ -146,7 +205,7 @@ def _normalize_curated_link_target(target: str) -> str:
 
 
 def build_generated_section(
-    entries: list[tuple[Path, str, str]],
+    entries: list[Entry],
     index_dir: Path,
     heading: str,
     curated_links: set[str] | None = None,
@@ -172,37 +231,20 @@ def build_generated_section(
     return "\n".join(lines)
 
 
-def generated_section_for_index(
-    index_path: Path,
-    *,
-    source: str,
-    index_key: str | None,
-    curated_text: str,
-    root: Path,
-    notes_by_tag: dict[str, list[tuple[Path, str, str]]] | None = None,
+def generated_section_for_head(
+    head: Path, *, curated_text: str, tag_space: TagSpace
 ) -> str | None:
-    """Build the generated section for one tag/tag-indexes page, in memory.
+    """Build the generated tail for one head, in memory.
 
-    `curated_text` is the page's committed body; links already curated there
-    are excluded from the generated listing. `notes_by_tag` lets the caller
-    reuse one collection scan across pages. Returns None for unknown sources.
-    Nothing is written — generated tails are build-time materializations for
-    the published site, never committed artifacts (ADR 025).
+    ``curated_text`` is the head's committed body; links already curated there
+    are excluded from the listing. Returns None for a file that is not a head.
     """
-    if source not in GENERATED_HEADING_BY_SOURCE:
+    tag = tag_for_head(head)
+    if tag is None:
         return None
-
-    collection = collection_for_path(index_path, root)
-    if source == "tag":
-        if notes_by_tag is None:
-            notes_by_tag = collect_notes_by_tag(collection)
-        entries = notes_by_tag.get(index_key or "", [])
-    else:
-        entries = collect_tag_index_entries(collection, root)
-
     return build_generated_section(
-        entries,
-        index_path.parent,
-        GENERATED_HEADING_BY_SOURCE[source],
+        tag_space.notes_by_tag.get(tag, []),
+        head.parent,
+        GENERATED_HEADING,
         extract_curated_links(curated_text),
     )

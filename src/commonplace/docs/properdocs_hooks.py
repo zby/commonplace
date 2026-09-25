@@ -3,6 +3,8 @@
 Complete generated listings (per-collection dir-index pages and per-tag
 generated tails) are materialized here at build time for the published site;
 they are never committed (ADR 025). Agents use curated heads plus scoped rg.
+Tag pages are the heads in kb/tags/ (ADR 089); a tail lists every member
+across the participating collections.
 """
 
 import os
@@ -12,13 +14,8 @@ from pathlib import Path
 
 from properdocs.structure.files import File, InclusionLevel
 
-from commonplace.lib import frontmatter, index_directory, index_generated
-from commonplace.lib.project_paths import collection_dirs, collection_for_path
-
-INDEX_TYPE = "types/generated-index.md"
-# Page types that act as a tag's landing: the committed tag-readme (ADR 026)
-# and the index type (build-time virtual pages, unmigrated indexes).
-TAG_PAGE_TYPES = {INDEX_TYPE, "types/tag-readme.md"}
+from commonplace.lib import index_directory, index_generated
+from commonplace.lib.project_paths import collection_dirs
 
 # Recursion caps for per-collection dir-index generation. instructions stops
 # at one level because each cp-skill-* subdir is essentially a single SKILL.md
@@ -41,8 +38,7 @@ def on_config(config):
     top-nav entry pointing at that README. Discovery is alphabetical;
     fixed Home and external entries bracket the auto-discovered list.
     """
-    _index_metadata.cache_clear()
-    _notes_by_tag.cache_clear()
+    _tag_space.cache_clear()
     docs_dir = Path(config["docs_dir"])
     collection_entries = []
     for child in sorted(docs_dir.iterdir()):
@@ -111,81 +107,39 @@ def on_files(files, config):
 
 
 @cache
-def _notes_by_tag(collection: Path) -> dict[str, list[tuple[Path, str, str]]]:
-    """Per-build cache of one tag scan per collection."""
-    return index_generated.collect_notes_by_tag(collection)
+def _tag_space(root: Path) -> index_generated.TagSpace:
+    """Per-build cache of one tag-space scan."""
+    return index_generated.collect_tag_space(root)
 
 
-@cache
-def _index_metadata(candidate: Path) -> tuple[str | None, str | None, str | None]:
-    """Return index-related frontmatter for a markdown page."""
-    if not candidate.is_file() or candidate.suffix != ".md":
-        return (None, None, None)
-    content = candidate.read_text(encoding="utf-8")
-    fm = frontmatter.parse(content).data
-    return (fm.get("type"), fm.get("index_source"), fm.get("index_key"))
+def _root_for(config) -> Path | None:
+    if config is None:
+        return None
+    return Path(config["docs_dir"]).resolve().parent
 
 
-def _matches_tag_index(candidate: Path, tag: str) -> bool:
-    """Return True when a page declares itself as the landing for a tag."""
-    note_type, index_source, index_key = _index_metadata(candidate)
-    return note_type in TAG_PAGE_TYPES and index_source == "tag" and index_key == tag
-
-
-def _find_tag_index(tag: str, note_dir: Path, boundary: Path | None = None) -> str | None:
-    """Find relative path from note_dir to the declared index page for a tag.
-
-    `boundary` (the docs root) caps the upward walk so shallow layouts never
-    scan directories outside the site tree.
-    """
-    search_dir = note_dir.resolve()
-    note_dir_resolved = note_dir.resolve()
-
-    for _ in range(4):
-        if boundary is not None and boundary != search_dir and boundary not in search_dir.parents:
-            break
-        if search_dir.is_dir():
-            for candidate in sorted(search_dir.glob("*.md")):
-                if _matches_tag_index(candidate, tag):
-                    return os.path.relpath(candidate, note_dir_resolved)
-            for subdir in sorted(search_dir.iterdir()):
-                if not subdir.is_dir() or subdir.name.startswith("."):
-                    continue
-                for candidate in sorted(subdir.glob("*.md")):
-                    if _matches_tag_index(candidate, tag):
-                        return os.path.relpath(candidate, note_dir_resolved)
-
-        search_dir = search_dir.parent
-
-    return None
+def _is_head(page_path: Path, meta: dict, root: Path) -> bool:
+    return (
+        meta.get("type") == index_generated.TAG_README_TYPE
+        and page_path.resolve().parent == index_generated.tags_collection(root).resolve()
+        and index_generated.tag_for_head(page_path) is not None
+    )
 
 
 def _append_generated_tail(markdown: str, page, config) -> str:
-    """Append the generated listing to tag / tag-indexes pages at build time."""
+    """Append the generated member listing to a tag head at build time."""
     meta = page.meta or {}
-    source = meta.get("index_source")
-    if (
-        meta.get("type") not in TAG_PAGE_TYPES
-        or source not in index_generated.GENERATED_HEADING_BY_SOURCE
-        or config is None
-        or page.file.abs_src_path is None
-    ):
+    root = _root_for(config)
+    if root is None or page.file.abs_src_path is None:
+        return markdown
+    page_path = Path(page.file.abs_src_path)
+    if not _is_head(page_path, meta, root):
         return markdown
 
-    docs_dir = Path(config["docs_dir"]).resolve()
-    root = docs_dir.parent
-    page_path = Path(page.file.abs_src_path)
-    section = index_generated.generated_section_for_index(
-        page_path,
-        source=source,
-        index_key=meta.get("index_key"),
-        curated_text=markdown,
-        root=root,
-        notes_by_tag=_notes_by_tag(collection_for_path(page_path, root))
-        if source == "tag"
-        else None,
+    section = index_generated.generated_section_for_head(
+        page_path, curated_text=markdown, tag_space=_tag_space(root)
     )
-    # A complete-marked README curates every member, leaving the generated
+    # A complete-marked head curates every member, leaving the generated
     # section as a bare heading — skip it rather than render an empty shell.
     if not section or "\n- " not in section:
         return markdown
@@ -204,6 +158,15 @@ def _append_full_listing_link(markdown: str, page) -> str:
         markdown.rstrip("\n")
         + "\n\n---\n\n[Complete file listing](./dir-index.md) *(generated at build time)*\n"
     )
+
+
+def _tag_link(tag: str, note_dir: Path, root: Path | None) -> str:
+    """Link a tag to its head when the head exists; otherwise plain text."""
+    if root is not None:
+        head = _tag_space(root).heads.get(tag)
+        if head is not None:
+            return f"[{tag}]({os.path.relpath(head, note_dir.resolve())})"
+    return tag
 
 
 def on_page_markdown(markdown: str, page, config=None, **kwargs) -> str:
@@ -230,15 +193,10 @@ def on_page_markdown(markdown: str, page, config=None, **kwargs) -> str:
 
     if tags:
         note_dir = Path(page.file.abs_src_path).parent
-        boundary = Path(config["docs_dir"]).resolve() if config else None
-        tag_links = []
-        for tag in tags:
-            relpath = _find_tag_index(tag, note_dir, boundary)
-            if relpath:
-                tag_links.append(f"[{tag}]({relpath})")
-            else:
-                tag_links.append(tag)
-        parts.append(f"**Tags:** {', '.join(tag_links)}")
+        root = _root_for(config)
+        parts.append(
+            "**Tags:** " + ", ".join(_tag_link(tag, note_dir, root) for tag in tags)
+        )
 
     badge_line = " · ".join(parts)
 

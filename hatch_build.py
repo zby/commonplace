@@ -1,6 +1,6 @@
 """Build hook: prepare the Commonplace library that ships in the package.
 
-The library (kb/instructions, kb/notes, kb/reference, kb/types) is read in place
+The library (kb/instructions, kb/notes, kb/reference, kb/tags, kb/types) is read in place
 from the installed package, where the rest of the repository does not exist. So
 the build stages a copy and rewrites every relative Markdown link that leaves the
 shipped trees:
@@ -27,13 +27,13 @@ from urllib.parse import unquote
 
 from hatchling.builders.hooks.plugin.interface import BuildHookInterface
 
-SHIPPED = ("instructions", "notes", "reference", "types")
+SHIPPED = ("instructions", "notes", "reference", "tags", "types")
 GITHUB_BLOB = "https://github.com/zby/commonplace/blob/main/"
-FENCE = re.compile(r"^[ \t]*(```|~~~)[^\n]*\n.*?^[ \t]*\1[ \t]*$", re.M | re.S)
-INLINE_CODE = re.compile(r"(`+)(?!`).*?(?<!`)\1(?!`)", re.S)
+FENCE = re.compile(r"^[ \t]*(```|~~~)[^\n]*\n.*?^[ \t]*\1[ \t]*$", re.MULTILINE | re.DOTALL)
+INLINE_CODE = re.compile(r"(`+)(?!`).*?(?<!`)\1(?!`)", re.DOTALL)
 LINK = re.compile(r"(\]\()(<[^>]+>|[^)\s]+)((?:\s+\"[^\"]*\")?\))")
 SCHEME = re.compile(r"^[a-zA-Z][a-zA-Z0-9+.-]*:")
-SOURCE_LINE = re.compile(r"^source:\s*(\S+)\s*$", re.M)
+SOURCE_LINE = re.compile(r"^source:\s*(\S+)\s*$", re.MULTILINE)
 IGNORED = shutil.ignore_patterns("__pycache__", "*.pyc", ".DS_Store")
 
 
