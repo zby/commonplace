@@ -20,9 +20,9 @@ placed after `Connections Found` under the ingest-report type contract, with
 its paired `learning_claims: true` frontmatter field, and does not authorize
 further source collection.
 
-Read [Conjectural learning](../notes/definitions/conjectural-learning.md) as
-the current comparison basis for learning membership. When localization or
-selective repair matters, also read
+Read [Theory builder](../notes/definitions/theory-builder.md) as the
+current comparison basis for the source's system. When fine-grained
+localization or selective repair matters, also read
 [Addressable theory](../notes/definitions/addressable-theory.md). Load these
 definitions at execution rather than copying their content into this
 instruction. They govern our use of the terms but remain open to challenge
@@ -45,9 +45,17 @@ Procedure:
    concept fits, explain the difference using the nearest relevant
    distinction without forcing equivalence. Distinguish our interpretation
    from the source's claims.
-3. Choose the analytical distinctions that matter for this source and the
-   KB's goals. Where relevant, the current account distinguishes using a
-   theory from revising it.
+3. Judge the source's system against the theory-builder definition
+   condition by condition: localized content, consumption, content-directed
+   criticism, and retention. Give each condition its own evidence strength
+   and do not infer one from another. Retention counts when what is kept is
+   taken up on a new problem; rounds of revision on one problem, however
+   many, are one pass of error elimination. Judge learning, meaning improved
+   capacity for future action, as a separate claim: meeting the conditions
+   does not establish it, and failing one does not rule out other
+   improvement. Choose the further analytical distinctions that matter for
+   this source and the KB's goals. Where relevant, the current account
+   distinguishes using a theory from revising it.
    When they affect the learning judgment, identify the signals and histories
    available to the learner, the operations it can compose, the mappings its
    hypothesis class can express, and the representations or partitions fixed
@@ -69,4 +77,5 @@ Procedure:
 
 Relevant Notes:
 
+- [Theory builder](../notes/definitions/theory-builder.md) — rests-on: the four conditions judged one by one, with learning as a separate claim
 - [Learning inside a fixed decomposition inherits its mistakes](../notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md) — rests-on: learning assessments distinguish improvements within an effective update space from evidence for choices fixed outside it

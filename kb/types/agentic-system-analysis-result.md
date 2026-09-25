@@ -251,27 +251,37 @@ deriving from, criticizing, revising or replacing, and retaining or
 reconstructing a theory in ordinary terms. Record the degree to which its
 assumptions, scope conditions, and parts are individually inspectable and
 revisable, and the boundary over which that addressability judgment holds.
-Addressability is recorded separately from formulation, operative use, and
-retention. A rule set can express a theory without retaining its historical
+Addressability is a graded finding recorded separately from the
+theory-builder conditions; condition 1 needs only its minimum, where the
+whole theory is one unit that carries content. A rule set can express a theory without retaining its historical
 rationale. Record what it claims and how its structure exposes assumptions,
 scope conditions, and parts; do not classify it from the storage label alone.
 Missing rationale does not establish absent formulated criticism of its
 content. Where rationale is retained, the record states whether a later route
 reads it.
 
-A theory route gives separate conclusion statuses and evidence for
-formulation, operative use, content-directed criticism, its resulting
-revision or changed reliance, and any improved capacity attributable to
-criticism. A theory can survive criticism without a text change. A
-conjectural-learning claim identifies the improved capacity for future
-action, its assessment boundary, and the evidence supporting attribution;
-revision, retention, or connected steps alone do not establish it. Capacity
-need not already have been exercised. A claim about later capacity traces
-persistence to that time; a claim about later or recurrent use traces the
-retained result and its consumer. Whole replacement and reconstruction do
-not by themselves exclude learning. The `trace_learning` comparison axis
-retains its specified memory-write meaning; its value alone does not
-establish conjectural learning.
+A theory route gives separate conclusion statuses and evidence for each
+[theory-builder](../notes/definitions/theory-builder.md) condition, labelled
+"theory-builder conditions 1–4": localized content, consumption,
+content-directed criticism with its resulting revision or changed reliance,
+and retention. No condition is inferred from its neighbours. Criticism is
+itself stated and can blame the test, the data, or an auxiliary assumption; a
+score selecting variants does not count. A theory can survive criticism
+without a text change. Retention counts when what is kept is taken up on a
+new problem; rounds of revision on one problem are one pass of error
+elimination. Rebuilding a theory from retained criticisms counts; retained
+input/outcome records alone do not. Whole replacement of a theory meets
+condition 1 at its minimum.
+
+Membership has no success condition, so learning is a separate claim,
+labelled "learning". It identifies the improved capacity for future action,
+its assessment boundary, the evidence of improvement, and the evidence
+supporting attribution; membership, revision, retention, or connected steps
+alone do not establish it. Capacity need not already have been exercised. A
+claim about later capacity traces persistence to that time; a claim about
+later or recurrent use traces the retained result and its consumer. The
+`trace_learning` comparison axis retains its specified memory-write meaning;
+its value alone does not establish learning.
 
 The record distinguishes absent formulation or criticism from inaccessible
 model processing: opacity alone establishes neither presence nor absence.
@@ -279,9 +289,11 @@ For reflection it identifies selected aspects inside the declared system
 boundary, their self-representation, and the two-way causal path: aspect
 changes can update the representation, and representation-mediated operations
 can affect later behavior. Direct modification of represented machinery is
-not required. Revising a self-theory of theory-building organization is the
-more specific reflective-builder claim. Reflection and improved capacity
-remain separate claims. The producing skill's step 3 supplies the matching
+not required. The reflective theory-builder qualifier is more specific: the
+builder's method texts meet conditions 1–4 and are criticized against records
+of the builder's own operation. The autonomous qualifier is recorded role by
+role: computation performs every operation inside the builder's boundary.
+Reflection, autonomy, and improved capacity remain separate claims. The producing skill's step 3 supplies the matching
 vocabulary.
 
 Claim records preserve claimed operation and source. An evidenced absence carries an `absent` conclusion status, searched boundary, evidence, and the conclusion it supports or prevents. A behavioral-authority path records consumer, channel, force, and horizon.
@@ -314,7 +326,7 @@ The lens sections annotate canonical IDs. They do not reproduce the shared inven
 
 ### Bounded synthesis
 
-`## Bounded synthesis` gives the evidence basis and boundary, architectural characterization and claimed work, runtime map, only the discriminating mechanisms this target needs, scenario-relative assessment, and concrete evidence or system changes that would alter the assessment. Where the runtime account supports it, the synthesis states separately whether criticism of an operative formulated theory improved the system's capacity for future action, whether the system is reflective, and whether it is self-improving at the declared boundary, each at its own evidence status; these are three independent properties, not a grade or a ladder. It is organized around the system's operational progression, not as concatenated lens reports. It gives no product ranking, generic adoption advice, system-wide epistemic grade, Commonplace delta, or transfer recommendation.
+`## Bounded synthesis` gives the evidence basis and boundary, architectural characterization and claimed work, runtime map, only the discriminating mechanisms this target needs, scenario-relative assessment, and concrete evidence or system changes that would alter the assessment. Where the runtime account supports it, the synthesis states separately whether the system meets theory-builder conditions 1–4, whether criticism of a consumed theory improved the system's capacity for future action, whether the system is reflective or autonomous, and whether it is self-improving at the declared boundary, each at its own evidence status; these are independent properties, not a grade or a ladder. It is organized around the system's operational progression, not as concatenated lens reports. It gives no product ranking, generic adoption advice, system-wide epistemic grade, Commonplace delta, or transfer recommendation.
 
 For learning and self-improvement findings, the synthesis leads with the strongest supported contribution, including partial results, then states the unresolved question. Each result stays at the level of the comparison actually performed.
 

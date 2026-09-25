@@ -57,13 +57,15 @@ Open each analysis with a one-line **evidence basis**: what it is grounded in â€
 
 State the external mechanism in its own operational terms before applying a Commonplace concept. Explain why the concept fits and qualify partial or unresolved mappings. Commonplace chooses the analytical distinctions; it is not the comparison target, and a reader must be able to reject a mapping without losing the external-system account.
 
-Describe a learning pathway through formulated theory, operative use,
-criticism of its content, and any improvement in capacity for future
-action attributable to that criticism. These establish conjectural learning
-only at the strength supported by the evidence. Addressability and retention
-are separate properties. Record the degree and boundary of addressability;
-whole replacement or reconstruction can qualify, while stored rules or
-parameters alone do not classify the process. Missing
+Describe a theory pathway through the conditions of a
+[theory builder](../notes/definitions/theory-builder.md): localized content,
+consumption, criticism of that content, and retention taken up on a new
+problem. Each condition holds only at the strength supported by its own
+evidence. Improved capacity for future action attributable to that criticism
+is a separate learning claim. Addressability is a separate graded finding
+above condition 1's minimum. Record its degree and boundary; whole
+replacement, or reconstruction from retained criticisms, can qualify, while
+stored rules or parameters alone do not classify the process. Missing
 historical rationale does not establish absent criticism; inaccessible model
 processing remains unestablished. Reflection additionally requires a
 causally connected self-representation of selected aspects inside the

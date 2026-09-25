@@ -177,34 +177,50 @@ Keep these distinctions:
 - **Guarantee strength** is separate from evidence status: invariant, protocol,
   policy, best effort, deployment guarantee, or no claimed guarantee.
 - **Formulated tentative theories** are proposed solutions stated in natural
-  or formal language. Record what a theory says and which decisions depend
-  on that content; storage, citation, or delivery alone does not establish
-  operative use. Describe applying a theory, deriving a consequence or rule,
-  criticizing it, revising or replacing it, and retaining or reconstructing
-  it in ordinary terms. Derivation under an unchanged theory does not by
-  itself establish criticism or learning. For prose, record a contradiction
-  as an interpretation unless a codified check produced it.
-- **Criticism** is a formulated attempt to find an error in what the theory
-  says, by argument or a test of a stated consequence. A score selecting
-  variants does not alone establish this. Record the claim challenged and
-  the result. A theory can survive criticism: the result may change later
-  reliance or test selection without changing its content.
-- **Conjectural learning** requires an operative formulated theory open to
-  criticism of what it says, and improved capacity for future action
-  attributable to the process of holding and criticizing it; criticism need
-  not yet have occurred, but criticism that occurs must change that
-  capacity. Record the capacity, assessment boundary, evidence of
-  improvement, and causal limits.
-  The capacity need not already have been exercised; a claim that it remains
-  available later requires the effect to persist to that time. Revision,
-  retention, or a connected route alone does not establish learning.
-- **Addressability and retention** are separate findings. Record the degree
-  to which assumptions, scope conditions, and parts can be inspected and
-  revised individually, and the boundary over which that judgment holds.
-  Record separately what persists: theories, formulated criticisms,
-  input/outcome records, parameters, or other source-native material. Whole
-  replacement and reconstruction can support conjectural learning. Storage
-  form does not decide retained content or the process used to reconstruct it.
+  or formal language, so identifiable units carry their content
+  (theory-builder condition 1, localized content). Record what a theory says
+  and which decisions depend on that content (condition 2, consumption);
+  storage, citation, or delivery alone does not establish consumption.
+  Describe applying a theory, deriving a consequence or rule, criticizing it,
+  revising or replacing it, and retaining or reconstructing it in ordinary
+  terms. Derivation under an unchanged theory does not by itself establish
+  criticism or learning. For prose, record a contradiction as an
+  interpretation unless a codified check produced it.
+- **Criticism** (condition 3) is a formulated attempt to find an error in
+  what the theory says, by argument, comparison with a rival, or a test of a
+  stated consequence. A score selecting variants does not alone establish
+  this. Record the claim challenged and the result. A criticism is itself
+  stated, so it can blame the test, the data, or an auxiliary assumption
+  instead of the theory; record where it placed the blame. A theory can
+  survive criticism: the result may change later reliance or test selection
+  without changing its content. A theory rejected whole and replaced by a
+  new conjecture has been revised.
+- **Retention** (condition 4) counts when what is kept is taken up on a new
+  problem. Record what persists: theories, formulated criticisms,
+  input/outcome records, parameters, or other source-native material, and
+  the later consumer that takes it up. Rounds of revision on one problem,
+  however many, are one pass of error elimination; the unit is the problem,
+  not the process run. Rebuilding a theory from retained criticisms counts;
+  input/outcome records alone do not. Storage form does not decide retained
+  content or the process used to reconstruct it.
+- **Theory-builder membership** requires all four conditions of
+  [theory builder](../../notes/definitions/theory-builder.md). Give each
+  condition its own conclusion status and never infer one from its
+  neighbours. Membership has no success condition: a system can meet all
+  four without improving.
+- **Learning** is improved capacity for future action attributable to
+  holding and criticizing theories; it is a separate claim from membership.
+  Record the capacity, assessment boundary, evidence of improvement,
+  attribution, and causal limits. The capacity need not already have been
+  exercised; a claim that it remains available later requires the effect to
+  persist to that time. Membership, revision, retention, or a connected
+  route alone does not establish learning.
+- **Addressability** is a separate graded finding above condition 1's
+  minimum, where the whole theory is the one unit that carries content.
+  Record the degree to which assumptions, scope conditions, and parts can be
+  inspected and revised individually, and the boundary over which that
+  judgment holds. Whole replacement of a theory meets the minimum and can
+  support membership.
 - **Rationale and criticism** are separate findings. Rules can express a
   theory without preserving why they were adopted. Record what a rule set
   claims and how its structure exposes assumptions, scope conditions, and
@@ -218,22 +234,31 @@ Keep these distinctions:
   aspects inside the declared system boundary. Changes in those aspects can
   update the representation, and operations mediated through it can affect
   later system behavior. Subject matter alone does not establish that path;
-  direct modification of the represented machinery is not required. A
-  reflective theory builder additionally revises a self-theory of its
-  theory-building organization. Reflection and improved capacity are separate
-  claims.
+  direct modification of the represented machinery is not required. The
+  reflective theory-builder qualifier is more specific: the builder's method
+  texts (its problems, standards of criticism, and procedures) meet
+  conditions 1–4, and criticism tests them against records of the builder's
+  own operation. Reflection and improved capacity are separate claims.
+- **Autonomy** is a qualifier of a theory builder: computation performs every
+  operation inside its boundary. Record it role by role from the decision
+  roles in step 4: who proposes, derives, criticizes, assigns blame, revises,
+  selects what to keep, and changes the machinery. Users who only supply
+  problems and judge products are outside the boundary. Autonomy does not
+  establish that the operations are reliable.
 - **Revision selection** prefers reach among revisions that fit the evidence;
   do not write "reach rather than fit". This preference applies whether or
   not the route is reflective.
 
-On a theory route, give each claim its own conclusion status: formulation,
-operative use, content-directed criticism, the resulting revision or changed
-reliance, and any improved capacity attributable to that process. For a claim
-about later or recurrent use, also trace what persisted and the later consumer.
+On a theory route, give each claim its own conclusion status: localized
+content, consumption, content-directed criticism, the resulting revision or
+changed reliance, retention taken up on a new problem, and any improved
+capacity attributable to that process. Report them under the free-text labels
+"theory-builder conditions 1–4" and "learning". For a claim about later or
+recurrent use, also trace what persisted and the later consumer.
 Never infer a missing link from its neighbours or upgrade a citation to use,
 an edit following an outcome to criticism, or later use to improvement.
 The existing `trace_learning` comparison axis describes its specified memory
-write route; its value alone does not establish conjectural learning.
+write route; its value alone does not establish learning.
 
 Describe every external mechanism in source-native terms before mapping it to
 Commonplace ontology. Explain the fit and mark partial or unresolved mappings.
@@ -321,9 +346,10 @@ that specialist pass in the coordinator's context.
    inapplicable steps remain explicit, without assigning an autonomy grade.
    On each admitting route, name the guidance that shaped the proposal and
    classify its content, retention, and operation under step 3. For a theory,
-   record separately its formulation, operative use, content-directed
-   criticism, the resulting revision or changed reliance, and any supported
-   improvement in capacity. Give each finding its own conclusion status.
+   record separately each theory-builder condition (localized content,
+   consumption, content-directed criticism with the resulting revision or
+   changed reliance, and retention) and any supported learning. Give each
+   finding its own conclusion status.
    A link without evidence is `uninspected`, not inferred from its neighbours.
    When later or recurrent use is claimed, identify what persisted and its
    later consumer. A retained prediction, rationale, or expected outcome is
@@ -386,10 +412,11 @@ mechanisms, scenario-relative assessment, limitations, and evidence or system
 changes that would alter the assessment. Do not concatenate lens reports or add
 a product ranking, generic adoption advice, system-wide epistemic grade,
 Commonplace delta, transfer recommendation, or universal maturity model.
-Where the runtime account supports them, state separately whether criticism
-of an operative formulated theory improved the system's capacity for future
-action, whether the system is reflective, and whether it is self-improving at
-the declared boundary. Give each property its own evidence status. They are
+Where the runtime account supports them, state separately whether the system
+meets theory-builder conditions 1–4, whether it learns (criticism of a
+consumed theory improved its capacity for future action), whether it is
+reflective or autonomous, and whether it is self-improving at the declared
+boundary. Give each property its own evidence status. They are
 independent properties, not a grade or a ladder.
 
 For learning and self-improvement findings, lead with the strongest supported
@@ -526,8 +553,9 @@ A failed run reports its failure reason and does not use the handoff command.
   triggers, operating modes and answer-oracle access are recorded or carry
   explicit `uninspected` or `inapplicable` reasons.
 - Every admitting route classifies its guidance and retention under step 3;
-  a theory route names the operations and gives each claim its own status,
-  including improved capacity when conjectural learning is claimed.
+  a theory route names the operations and gives each theory-builder
+  condition its own status, and states improved capacity when learning is
+  claimed.
 - Both lenses and both scoping records exist; thin evidence produces a bounded
   brief result, not a skipped lens.
 - Source-native mechanisms remain visible beneath Commonplace mappings, and no
@@ -546,7 +574,7 @@ A failed run reports its failure reason and does not use the handoff command.
 - [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md) — rests-on: the retention, read-back, presence, and activation distinctions
 - [Behavioral authority](../../notes/definitions/behavioral-authority.md) — rests-on: the consumer, channel, force, and horizon record
 - [Tentative theory](../../notes/definitions/tentative-theory.md) — rests-on: the status of the theory, independent of structure or retention
-- [Conjectural learning](../../notes/definitions/conjectural-learning.md) — rests-on: formulated operative theory, content-directed criticism, and improved capacity
+- [Theory builder](../../notes/definitions/theory-builder.md) — rests-on: localized, consumed, criticized, and retained theories, and the reflective and autonomous qualifiers
 - [Addressable theory](../../notes/definitions/addressable-theory.md) — rests-on: separately inspectable and editable parts as an additional property
 - [A complete theory path does not establish improved capacity](../../notes/a-complete-theory-path-does-not-establish-improved-capacity.md) — rests-on: the separate evidence claims and stronger requirements for later or recurrent use
 - [Reflective system](../../notes/definitions/reflective-system.md) — rests-on: the causally connected self-representation required for reflection
