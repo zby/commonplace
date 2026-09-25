@@ -16,6 +16,8 @@ Nothing published yet.
 
 - [Where It Lives Is Not What It Is — ASISAS 2026 slides](./asisas-2026-talk.html) — HTML deck prepared for a 10-minute talk and 2 minutes of questions, based on the [June 23 position paper](../sources/where-it-lives-retained-adaptation-2026-06-23.ingest.md). Use arrow keys, space, or click to navigate.
 
+The paper is published as Zbigniew Łukasiak, ["Where It Lives Is Not What It Is: An Architectural Vocabulary for Retained Adaptation in Agentic Systems"](https://link.springer.com/chapter/10.1007/978-3-032-39143-8_24), in *Software Architecture. ECSA 2026 Tracks and Workshops*, Lecture Notes in Computer Science, Springer, 2026, pp. 286–295, doi:[10.1007/978-3-032-39143-8_24](https://doi.org/10.1007/978-3-032-39143-8_24).
+
 The deck uses *memory* for the audience-facing term and *natural-language*
 in place of the paper's *prose*. It derives the three representational forms
 from assigned consequences and localization; the terminology and derivation
