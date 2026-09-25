@@ -123,8 +123,8 @@ ledger) were deleted on 2026-09-25; git history keeps them.
   project-owned. The documents describe this consistently, so it is not a
   contradiction, but code depends on the copies' exact paths. The [ADR
   draft](./087-sources-and-reports-types-are-global-library-types.md) proposes
-  making the seven types global library types, with no scope restriction and
-  one fixed alias for immutable snapshots.
+  making the seven types global library types, with no scope restriction, and
+  rewriting snapshots once with their ingest checksums re-pinned.
 - Proposals that still describe the `kb/commonplace/` layout (for example the
   tag-scope proposal) are unadopted and outside the standard.
 - `kb/work/dialectical-sample/COLLECTION.md` and report-cache contracts sit
