@@ -21,7 +21,7 @@ Posed by the operator on 2026-09-23. Decide how Commonplace delivers what agents
 
 ## Design
 
-[design.md](./design.md) holds the design; keep it only there. In short: the library stays in the installed package, and `commonplace-init` writes three uncommitted, machine-specific files into each project — a stub per skill that redirects to the real skill, `.commonplace/library.md` with the library's full paths, and one Claude Code read rule. Agents reach the library by reading files. Rejected options and their evidence are in [alternatives.md](./alternatives.md).
+Decided and adopted on 2026-09-25 as [ADR 086](../../reference/adr/086-projects-read-the-library-from-the-installed-package.md) (commit `e6103225`). ADR 086, `INSTALL.md`, and the code are now authoritative. [design.md](./design.md) and [alternatives.md](./alternatives.md) are the pre-adoption records; do not update them. This workshop stays open for the follow-ups below.
 
 ## Open questions
 
@@ -36,10 +36,10 @@ Posed by the operator on 2026-09-23. Decide how Commonplace delivers what agents
 
 ## Next steps
 
-1. Claude Code and Codex run the cases added since revision 4: 8 (the stop-on-missing-init rule), 9 (a skill reached through the index alone), and 10 (a sub-agent).
-2. Agents in other harnesses answer the same [probe request](./probe-request.md), reporting which outcomes they reached and the size of any workaround: Gemini CLI, OpenCode, Cursor, Goose, GitHub Copilot, and enterprise harnesses. Enterprise results may come back through the operator, anonymised.
-3. Update [design.md](./design.md) from the results, then decide it: an ADR and the `INSTALL.md` change, followed by implementation. No end-to-end rehearsal before the decision (operator, 2026-09-24): Commonplace is in alpha, so problems found in use are fixed in use.
-4. When a sub-agent emulation is chosen from the probe results, update `cp-skill-ingest` to accept it. Its rule allows only a harness-provided sub-agent and forbids launching the harness CLI as a worker. It is the only skill with such a ban today; the other skills that need workers (`cp-skill-write-multistage`, `cp-skill-revise-autoreason`, `analyse-agentic-system`) should be checked for the same assumption in the same change.
+1. **Release.** Bump the version and publish to PyPI, the only channel; then install from PyPI on a clean machine, including macOS and Windows where possible, and run `commonplace-init` and `commonplace-init --check` in a new project.
+2. **Probe follow-ups.** Claude Code and Codex run the cases added since revision 4: 8 (the stop-on-missing-init rule), 9 (a skill reached through the index alone), and 10 (a sub-agent). Agents in other harnesses answer the same [probe request](./probe-request.md): Gemini CLI, OpenCode, Cursor, Goose, GitHub Copilot, and enterprise harnesses; enterprise results may come back through the operator, anonymised. Findings that change the decision amend ADR 086.
+3. **Sub-agent emulation.** When an emulation is chosen from the probe results, update `cp-skill-ingest` to accept it. Its rule allows only a harness-provided sub-agent and forbids launching the harness CLI as a worker. The other skills that need workers (`cp-skill-write-multistage`, `cp-skill-revise-autoreason`, `analyse-agentic-system`) are checked for the same assumption in the same change.
+4. **Coupled workshops.** Tell the two workshops under Coupling that the library copy is gone, so they can narrow or close their items.
 
 ## Evaluation boundary
 
@@ -55,19 +55,18 @@ Posed by the operator on 2026-09-23. Decide how Commonplace delivers what agents
 
 ## Closure
 
-Close when the operator decides the design: an adopted design becomes an ADR and an `INSTALL.md` change; a design left undecided goes back to `kb/reference/proposals/` as a proposal. Before closing, each open question is answered or deferred with a trigger, and each departure from GBrain has a recorded reason. The rejected alternatives go into the ADR or proposal as its considered options. Then delete this directory and its entry in `kb/work/README.md`.
+The design is recorded in ADR 086. Close when each follow-up above is done or deferred with a trigger and each open question is answered or deferred with a trigger. Then delete this directory and its entry in `kb/work/README.md`.
 
 ## Files
 
 Current:
 
-- [design.md](./design.md) — the chosen design, including the proposed install procedure
-- [alternatives.md](./alternatives.md) — rejected options, why, and the evidence by probe revision
-- [probe-package/](./probe-package/PROTOCOL.md) — the shared probe (revision 4): a throwaway uv package, a test project, the protocol every harness runs, and a results template
+- [design.md](./design.md) — the design as it stood at adoption (pre-adoption record; ADR 086 is authoritative)
+- [alternatives.md](./alternatives.md) — rejected options, why, and the evidence by probe revision (pre-adoption record)
+- [probe-package/](./probe-package/PROTOCOL.md) — the shared probe (revision 6): a throwaway uv package, a test project, the protocol every harness runs, and a results template
 - [probe-request.md](./probe-request.md) — the open request to agents in any harness to run the probe, with a log of replies
 - [results-claude-code-r4.md](./results-claude-code-r4.md) — Claude Code's run of revision 4
 - [results-codex-r4.md](./results-codex-r4.md) — Codex's run of revision 4
-- [adr-draft.md](../../reference/adr/086-projects-read-the-library-from-the-installed-package.md) — draft ADR 086 recording the decision, for the operator to adopt
 
 Background research:
 

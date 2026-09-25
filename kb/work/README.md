@@ -6,7 +6,7 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
-- [framework-delivery](./framework-delivery/README.md) — choosing how the framework library, types, gates, and skills reach installed projects without confusing copies that drift; GBrain's delivery methods are the default design to copy, with departures justified
+- [framework-delivery](./framework-delivery/README.md) — follow-ups to ADR 086 (library served from the installed package, adopted 2026-09-25): release, probe replies from other harnesses, sub-agent emulation for `cp-skill-ingest`
 - [unattended-processing-failure-modes](./unattended-processing-failure-modes/README.md) — cataloguing observable failure modes of chat-tuned models in unattended Commonplace processing, each admitted by a recorded instance and paired with a system-level countermeasure and a regression check; first entries are premature polishing (repair ordering), format-driven fabrication, and finding deference; the post-training cause stays a tentative frame
 - [institution-theory-import](./institution-theory-import/README.md) — assessing institution theory and adjacent semantic frameworks for natural-language interpretation, conformance, and constraining; separates useful conceptual imports from an unproved institutional formalization
 - [first-downstream-run](./first-downstream-run/README.md) — providing a template for the first experiment on Commonplace in outside use (operator interventions on one KB-building task, an earlier framework release against a revised one) for an outside experimenter to run; the fuller scored-run protocol and constructed episodes stay as background
