@@ -89,7 +89,7 @@ Raised by the post-migration coherence pass (2026-09-25):
   to match the headline in 7a9a855c).
 - Software-house article (written in the commit after 65405571): the witness
   conditions are defined only in the article; no note develops them, and
-  no survey assesses systems against them. The Naur DOI link is unverified.
+  no survey assesses systems against them.
 - Theory-builder definition is about 2,200 words, heavy for the definition
   type; moving Qualifiers or Boundary cases out would break about 25 anchor
   links.
