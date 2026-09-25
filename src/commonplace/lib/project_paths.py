@@ -169,14 +169,18 @@ def list_kb_note_paths(root: Path) -> list[Path]:
 
 
 def list_type_spec_paths(root: Path) -> list[Path]:
-    """Return type-directory Markdown artifacts except the implicit text root."""
+    """Return type-directory Markdown artifacts except the implicit text root.
+
+    Subtrees under a validation-ignore marker, such as report cache and state,
+    are skipped, as collection validation skips them.
+    """
     boundary = kb_root(root)
     if not boundary.is_dir():
         return []
     return sorted(
         path
-        for path in boundary.glob("**/types/*.md")
-        if path.name != "text.md"
+        for path in iter_validation_markdown_files(boundary)
+        if path.parent.name == "types" and path.name != "text.md"
     )
 
 

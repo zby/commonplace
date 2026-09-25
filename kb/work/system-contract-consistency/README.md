@@ -32,7 +32,7 @@ cases that fail.
 The 2026-09-25 rescan used three read-only scouts over three surfaces: install
 and delivery, reference and ADRs against code, and the skills, collection
 contracts and type specs that direct agents. It found no P0. It found eight P1
-contradictions and a longer P2 tail. G1 closed with ADR 088, and D1, A1, A2, L1, K1, O1, R1, U1, X1, and X2 closed the same day. The largest cluster is ADR 086 residue:
+contradictions and a longer P2 tail. G1 closed with ADR 088, and D1, A1, A2, L1, K1, O1, R1, U1, V2, V3, X1, and X2 closed the same day. The largest cluster is ADR 086 residue:
 the migration rewrote 847 frontmatter `type:` values to bare names but left the
 prose rules that teach the path form, and left older accepted ADRs making
 present-tense guarantees about the copy. That is the "decision reached its
@@ -61,9 +61,7 @@ explicitly historical statement, or an unimplemented proposal does not.
 | H1 | P2 | ADR 088 promises project-wide collision diagnosis in the health check; its checks do not inspect type collisions | Init-pointer and landing checks pass with a conflicting global-type copy present |
 | H2 | P1 | ADR 088 makes type collisions errors wherever resolved; type-review selection catches that error and returns no pair | An explicitly requested type review silently loses the affected note |
 | Q1 | P2 | Retirement unconditionally requires pytest; root doctrine forbids it for Markdown-only KB data changes | The same retirement receives incompatible verification instructions |
-| V2 | P1 | `cp-skill-validate all` turns `kb/types/` into the reserved `types` target, which sweeps every `kb/**/types/*.md` and ignores validation-ignore markers; `\|\| exit` then aborts | The full-validation procedure fails falsely on report cache and never runs later collections, landings, or redirects (source checkout) |
 | N1 | P1 | cp-skill-ground routes a missing or mismatched snapshot to re-ingest; re-ingest requires a distinct basename and report, but snapshot-web refuses a second capture of the same `source` and ingest stops on several reports per `source` | Snapshots are gitignored, so on any fresh clone the prescribed remedy is blocked. Moderate confidence; needs a design choice, not a wording fix |
-| V3 | P2 | `validation-contract.md` says `commonplace-validate types` covers "the complete global and local type inventory"; the target globs only the project and includes ignored cache | Same root as V2; in an installed project the library's global types are never checked by this target |
 | X3 | P2 | Residue left from the 2026-09-25 cleanup: ADRs 059 and 066 lack the required `## Considered alternatives` section; ADR 073 says the snapshot marker lives in the gate while `job_prompt.py` hardcodes it (uncertain) | A retrofit needs the deciding reasoning, which may only be in git history |
 | T1 | P1 | Tag coverage stated beyond one collection, checked within one | **Transferred** to [tag-contract convergence](../tag-contract-convergence/README.md); [closure tracker](./plans/t1-tag-scope.md) |
 | E1 | P1 | Native Windows supported; promoted skills keep unpaired POSIX commands (health check, connect `xargs -r`, validate's Bash loop) | **Owned** by [execution-channel compatibility](../execution-channel-compatibility/README.md); [plan](./plans/e1-windows-execution.md). E1 now also owns the package-owned `commonplace-validate all` target |
@@ -79,6 +77,7 @@ superseded by ADR 088, which deliberately dropped that eligibility.
 
 | ID | Closed | How |
 |---|---|---|
+| V2, V3 | 2026-09-25 | The `types` target skips validation-ignored subtrees, so it no longer fails on report cache; `cp-skill-validate all` runs every check and reports failure at the end; the validation contract states the target's real scope. A package-owned `validate all` remains E1's |
 | R1 | 2026-09-25 | Convert, autoreason, and revise-note rename through `commonplace-relocate-note` (dry run, then `--apply`) and commit relocations alone; revise-note leaves renames to a separate step |
 | U1 | 2026-09-25 | Revise-note, the full pass (after applied body edits), fix-review-warnings, and the ASD-STE100 rewrite remove `user-verified`, as the note type requires for substantive edits |
 | D1 | 2026-09-25 | The installed `AGENTS.md.template` now permits nested delegation within existing authority, matching the root `AGENTS.md` and the instruction type |

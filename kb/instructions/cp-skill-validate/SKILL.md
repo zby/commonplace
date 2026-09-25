@@ -9,17 +9,19 @@ context: fork
 
 ## EXECUTE NOW
 
-Run the packaged validation command. For `all`, invoke each top-level collection separately because the CLI deliberately rejects a repository-wide literal scope:
+Run the packaged validation command. For `all`, invoke each top-level collection separately because the CLI deliberately rejects a repository-wide literal scope. Run every check even after a failure, and report failure at the end:
 
 ```bash
 if [ "$ARGUMENTS" = "all" ]; then
+  status=0
   for contract in kb/*/COLLECTION.md; do
-    commonplace-validate "$(basename "$(dirname "$contract")")" || exit $?
+    commonplace-validate "$(basename "$(dirname "$contract")")" || status=1
   done
-  commonplace-validate landings || exit $?
+  commonplace-validate landings || status=1
   if [ -f properdocs.yml ]; then
-    commonplace-validate redirects || exit $?
+    commonplace-validate redirects || status=1
   fi
+  exit $status
 else
   commonplace-validate "$ARGUMENTS"
 fi

@@ -207,3 +207,16 @@ def test_resolve_note_raises_on_ambiguous_match(tmp_path: Path) -> None:
 
     with pytest.raises(FileNotFoundError, match="Multiple matching notes found"):
         project_paths.resolve_note("sample", tmp_path)
+
+
+def test_type_spec_paths_skip_validation_ignored_subtrees(tmp_path: Path) -> None:
+    kb = tmp_path / "kb"
+    for rel in ("types/note.md", "reports/types/local.md", "reports/cache/run/kb/types/copy.md"):
+        path = kb / rel
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text("---\n---\n", encoding="utf-8")
+    (kb / "reports" / "cache" / ".commonplace-validation-ignore").write_text("cache\n", encoding="utf-8")
+
+    found = {p.relative_to(kb).as_posix() for p in project_paths.list_type_spec_paths(tmp_path)}
+
+    assert found == {"types/note.md", "reports/types/local.md"}
