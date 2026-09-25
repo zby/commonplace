@@ -1,5 +1,5 @@
 ---
-description: "Bootstrap supplement: build an autonomous theory builder from a partially automated system that retains what operator and machinery learn, applies it reflectively to the learning machinery, and builds new software"
+description: "Bootstrap supplement: build an autonomous theory builder from a partially automated system that retains what operator and computation learn, applies it reflectively to the learning method, and builds new software"
 type: kb/articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
@@ -27,17 +27,17 @@ source_notes:
 > and counterexamples are welcome on
 > [the repository's GitHub Discussions page](https://github.com/zby/commonplace/discussions).
 
-A fully automated [theory builder](./building-a-theory-builder-from-todays-llms.md)
-is not a builder without people. It is one in which computation performs
-every internal role in building theories: diagnosing failures, producing and
+An [autonomous](../notes/definitions/theory-builder.md#qualifiers)
+[theory builder](./building-a-theory-builder-from-todays-llms.md) is not a
+builder without people. It is one in which computation performs every
+internal role in building theories: diagnosing failures, producing and
 evaluating revisions, choosing which theory to keep, and repairing the
-machinery that does this. Users still supply tasks and judge the results
-against what they asked for. The knowledge base calls such a builder
-[autonomous](../notes/definitions/theory-builder.md#qualifiers).
+method by which it does this. Users still supply tasks and judge the results
+against what they asked for.
 
 Such a builder does not have to be built in one step. We start with a
-partially automated system in which a human operator and automated machinery
-learn together. Because the builder includes whoever performs its internal
+partially automated system in which a human operator and computation learn
+together. Because the builder includes whoever performs its internal
 operations, such a system is already a theory builder, staffed partly by
 people; what the bootstrap changes is who performs those operations. We
 require only that what is learned is retained in the system, changes later
@@ -64,11 +64,11 @@ builds and uses the knowledge base for their own work, and
 [that use is the initial selection environment](../notes/system-use-selects-theory-fit-without-a-fixed-oracle.md)
 where no fixed test of a theory's fit yet exists.
 
-## Use reflection to improve the learning machinery
+## Use reflection to improve the learning method
 
 Some of what the system learns concerns its own operation. A recurring
 failure in review, decomposition, evaluation, or representation can become
-an object of learning, and the resulting knowledge can change the machinery
+an object of learning, and the resulting knowledge can change the method
 used in future learning. A builder whose methods are stated as theories,
 consumed by its operations and criticized against records of its own
 operation, is what the knowledge base calls
@@ -76,16 +76,16 @@ operation, is what the knowledge base calls
 
 This opens a feedback loop:
 
-> learning → improved learning machinery → greater future learning capacity → further learning
+> learning → improved learning method → greater future learning capacity → further learning
 
-Every later episode that runs through improved machinery reuses the
+Every later episode that uses an improved method reuses the
 improvement, so its return grows with reuse. That is why
 [an optimal long-run learning strategy invests in its own machinery](../notes/an-optimal-long-run-learning-strategy-invests-in-its-own-machinery.md).
 
 Reflection alone does not close the loop. Reflection makes the method open to
 criticism; the loop closes only when method changes also compound, making
 later improvement cheaper, more reliable, or possible where it was not. That
-takes three further things. The builder must be able to change its machinery
+takes three further things. The builder must be able to change its method
 beyond revising text, which the next section takes up. Its evaluators must be
 able to tell a better method from a worse one, since
 [warranted autonomy extends only as far as an evaluator can assess](../notes/warranted-autonomy-is-bounded-by-oracle-domain.md)
@@ -101,12 +101,12 @@ the model read the retained project theory, searched over reformulations of
 the research program, and proposed the edits; the operator supplied the
 decisive judgments about which formulation fit; later commits built on the
 revised state rather than reconstructing the old one. That shows retention
-and later use. It does not show a change to the learning machinery, and no
+and later use. It does not show a change to the learning method, and no
 improvement in later performance was demonstrated.
 
-## Let the builder build its machinery
+## Let the builder build its own software
 
-Improving the machinery may take more than revising text. A new theory may
+Improving the method may take more than revising text. A new theory may
 call for new tools, experiments, search procedures, or schedulers, and
 testing hypotheses reliably or at scale may require exact symbolic
 computation rather than repeated LLM interpretation. We therefore do not
@@ -129,7 +129,7 @@ A stronger possibility stays open: general learning may not merely benefit
 from this ability but require it, if new theories keep creating new ways of
 testing, organizing, and applying knowledge.
 
-## Move functions from the operator to the machinery
+## Move functions from the operator to computation
 
 A hand-built start fits the Bitter Lesson
 [only if learning outgrows it](../notes/a-bootstrap-fits-the-bitter-lesson-only-if-learning-outgrows-it.md):
@@ -157,17 +157,17 @@ what moved, by which route, and when. So is what has not moved. A person
 still in the loop is named as such, and their contribution is not credited
 to computation. That record is informative, because
 [transfer leaves people the decisions hardest to warrant](../notes/warranted-transfer-leaves-people-the-hardest-to-warrant-decisions.md).
-The functions that remain with the operator show where machinery is
-missing, where an objective is unsettled, where authority is deliberately
-kept, or where transfer is not worth its cost.
+The functions that remain with the operator show where the means to
+automate them are missing, where an objective is unsettled, where authority
+is deliberately kept, or where transfer is not worth its cost.
 
 ## The bootstrap
 
-Commonplace is therefore an environment in which what operator and
-machinery learn together is retained, applied reflectively to the learning
-process, turned into new executable machinery, and moved function by
-function from the operator to that machinery. The aim is to use that
-process to build the capabilities required for fully automated learning.
+Commonplace is therefore an environment in which what the operator and
+computation learn together is retained, applied reflectively to the learning
+method, turned into new software, and moved function by function from the
+operator to computation. The aim is to use that process to build the
+capabilities an autonomous theory builder requires.
 
 The hard part is not the recurring judgments. It is the work that currently
 makes improvement possible at all: noticing the next problem, diagnosing it,
