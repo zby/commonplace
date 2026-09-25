@@ -1,5 +1,5 @@
 ---
-description: "Tags form one namespace per KB; membership claims range over collections that declare participation; every tag head lives in a scaffolded kb/tags/ collection; a tag without a head is a keyword; no cross-KB membership and no exact resolver"
+description: "Tags form one namespace per KB; membership claims range over the KB's participating collections; every tag has a head, and every head lives in a scaffolded kb/tags/ collection; no cross-KB membership and no exact resolver"
 type: reference/types/adr.md
 tags: []
 status: accepted
@@ -25,11 +25,11 @@ Usage evidence bounds how much machinery the decision may carry. A survey of abo
 
 1. **One namespace per KB.** A tag string has one sense everywhere within one KB. Commonplace's `kb/` is one KB; each host project's `kb/` is another.
 
-2. **Membership ranges over declared participation.** Every membership claim, mark check, and generated listing for a tag ranges over the KB's participating collections. A collection participates by saying so in its `COLLECTION.md`; participation is never inferred from the directory tree. In this checkout `notes`, `reference`, `instructions`, `agent-memory-systems`, and `agentic-systems` participate; `work`, `sources`, `reports`, and the proposal archive do not. A bare tag on a non-participating artifact is a keyword for scoped search and asserts nothing.
+2. **Membership ranges over the KB's participating collections.** Every membership claim, mark check, and generated listing for a tag ranges over one set of collections, the same for every tag: in this checkout `notes`, `reference`, `instructions`, `agent-memory-systems`, and `agentic-systems`. `work`, `sources`, `reports`, and the proposal archive are outside the tag space, and no tag consumer reads them. Tags mean one thing wherever they are read; there is no second, weaker kind of tag (see Considered alternatives).
 
 3. **Heads live in `kb/tags/`.** Every tag head is `kb/tags/<tag>-README.md`, type `tag-readme`, in every KB. The filename is the head's identity; the `index_source` and `index_key` fields are retired from the type. The collection's own `README.md` is the hub, an ordinary collection landing, replacing the special `tags-README.md` and its `tag-indexes` binding. `commonplace-init` scaffolds `kb/tags/` with its contract and landing; it scaffolds no heads.
 
-4. **A tag without a head is a keyword.** It is searchable and appears in generated listings, but it carries no marks and makes no completeness or coverage claim. Nothing requires a head; a head is written when someone has a topic to introduce.
+4. **Every tag has a head.** A tag string in use within the tag space has a head, and the validator reports a tag without one. A head may be minimal: an introduction saying what the tag gathers and a few picks. A tag not worth a head is not worth assigning; the assignment is retagged or dropped.
 
 5. **No cross-KB membership.** A host artifact cannot be a member of a library tag, because the library is read-only. A host may reuse a library tag string; it is then the host's own tag, with the host's own head or none. A query that unions two KBs' sweeps is an explicit query and asserts nothing about either KB's marks.
 
@@ -51,9 +51,11 @@ Usage evidence bounds how much machinery the decision may carry. A survey of abo
 
 **Scaffold heads or a starter vocabulary for hosts.** Rejected: no host uses tags, and a head for a tag nobody uses is the stale-index failure by construction.
 
+**Keywords as a second kind of tag.** A tag without a head, or a tag on an artifact in a non-participating collection, would be a keyword: searchable and listed but making no claim. Each collection would declare whether its tags are memberships or keywords. Rejected by the operator (2026-09-25) as two mechanisms where one suffices: a tag would mean different things depending on where it is read, and every consumer would carry the distinction. The idea is retained as a proposal, [Keyword tags without heads](../proposals/keyword-tags-without-heads.md), for the case where search-only tagging earns a mechanism of its own.
+
 **Cross-KB membership by reading the library's heads as the host's.** Rejected: the library is read-only, its marks are validated only in the source checkout, and a host member would make them false there.
 
-**Left open.** Whether the collector reads participation from each `COLLECTION.md` or from one KB-level declaration; both satisfy point 2. Whether a host's site build should offer a union view over library tags. Whether `trace-learning`, which marks nearly the whole agent-memory-systems collection, stays a keyword or is dropped as redundant with the collection.
+**Left open.** Where the participating set is recorded so the collector and a host's scaffold read it: the tag collection's own contract is the candidate, since the set is a property of the tag space rather than of any member collection. Whether a host's site build should offer a union view over library tags.
 
 ## Consequences
 
@@ -63,6 +65,6 @@ Usage evidence bounds how much machinery the decision may carry. A survey of abo
 
 **Harder or riskier.** Twenty-one heads and every link to them move, covered by redirects. A mark can now be falsified by an artifact in another collection, so a clean single-collection validation no longer clears a head; sweeps must validate `kb/tags/`. Reference and instruction authors who tag an artifact now change a published listing and may falsify a mark, which the validator reports on the head, not on the artifact they wrote.
 
-**No longer possible.** A tag page that silently omits members from other participating collections. A head outside `kb/tags/`. Two heads for one tag. A mark that is true in one collection and false in the KB.
+**No longer possible.** A tag page that silently omits members from other participating collections. A head outside `kb/tags/`. A tag in use with no head. Two heads for one tag. A mark that is true in one collection and false in the KB.
 
 **Limits.** This decision covers topical tags on library artifacts in one KB and the surfaces named above. It has not been tested with a host project that uses tags, with more than one participating collection contributing a large share of a tag's members, or with a site build that serves more than one KB. It does not decide what assigning a tag asserts beyond membership in a named set, which the retired semantic-contract proposal explored; that question returns only if a consumer needs more than membership.

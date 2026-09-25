@@ -33,6 +33,8 @@ For current-state documentation about the live Commonplace system rather than tr
 - [LLM reliability](./llm-reliability-README.md) — why LLM output deviates from intent (underspecification, interpreter failure, indeterminism) and the machinery for catching and correcting it: oracle theory, error correction, architectural separation
 - [Observability](./observability-README.md) — making hidden state, hidden failure, and quality drift visible enough for operators and maintenance loops to act on
 - [KB maintenance](./kb-maintenance-README.md) — operations, audits, and maintenance methodology
+- [Methodology](./methodology-README.md) — how an agent selects, borrows, and is controlled by a methodology
+- [Trace-learning](./trace-learning-README.md) — external systems that learn from their own agent traces through a raw-to-distilled loop
 - [Related systems](../agent-memory-systems/README.md) — external systems tracked for comparison and convergence signals
 
 ## Workshop Layer
