@@ -1,6 +1,6 @@
 ---
 description: Scholarly-review automation should decompose reviewer work into separately verifiable subroles before giving an AI system reviewer-level authority
-type: note
+type: types/note.md
 traits: [title-as-claim, has-external-sources, synthesis]
 tags: [evaluation, llm-reliability]
 ---

@@ -1,12 +1,12 @@
 ---
-type: note
+type: types/note.md
 description: "ModularRSI's proposal backlog, gated module evolution, dynamic composition, and the limits of its runtime and learning guarantees."
 generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-25-modularrsi-01
 source-identity: https://github.com/IQuestLab/ModularRSI
 reviewed-revision: b5c72c36b0d08ff93f00ee202a8fbdebe849dfb9
 analysis-result: kb/reports/retained/agentic-system-analysis/AAS-2026-09-25-modularrsi-01/result.md
-analysis-result-sha256: 4f9d6e231c5a841c4a417cd1cac0dcc06bfc15327ad2fed33e02d9ef708ecdbf
+analysis-result-sha256: 1a1508b4847328bc2746c7f71397814f98386abc1e5da2c69b5367a7865955ac
 ---
 
 # ModularRSI

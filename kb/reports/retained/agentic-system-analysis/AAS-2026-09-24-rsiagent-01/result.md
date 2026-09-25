@@ -1,6 +1,6 @@
 ---
 {
-  "type": "agentic-system-analysis-result",
+  "type": "types/agentic-system-analysis-result.md",
   "description": "RSIAgent source-grounded runtime, memory and epistemic analysis: staged experience learning, role-separated verification and bounded improvement evidence.",
   "run-id": "AAS-2026-09-24-rsiagent-01",
   "system": "RSIAgent",

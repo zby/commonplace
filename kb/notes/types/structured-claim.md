@@ -1,5 +1,5 @@
 ---
-type: type-spec
+type: types/type-spec.md
 name: structured-claim
 description: Developed argument note with explicit Evidence and Reasoning sections
 schema: ./structured-claim.schema.yaml
@@ -27,7 +27,7 @@ Do not force this scaffold onto arguments it does not fit.
 | Field | Required | Use |
 |---|---:|---|
 | `description` | Yes | Retrieval description for the claim, naming what the argument establishes. |
-| `type` | Yes | Path to this type spec, usually `./types/structured-claim.md` for notes at the collection root. |
+| `type` | Yes | `notes/types/structured-claim.md` |
 | `traits` | Yes | Include `title-as-claim`; this is what makes the claim-title promise explicit to review gates. |
 | `tags` | No | Navigation tags that help route the claim through the notes collection. |
 | `user-verified` | No | Optional explicit human attestation; may only be `true` and must be removed after substantive edits. |
@@ -37,7 +37,7 @@ Do not force this scaffold onto arguments it does not fit.
 ```markdown
 ---
 description: Template for developed arguments — claim-titled notes with explicit Evidence, Reasoning, and optional Caveats sections
-type: ./types/structured-claim.md
+type: notes/types/structured-claim.md
 traits: [title-as-claim]
 tags: []
 ---

@@ -1,6 +1,6 @@
 ---
 description: Tag README — PL concepts (scoping, homoiconicity, partial evaluation, typing) applied to LLM instructions, plus the scheduling architecture that follows from context scarcity
-type: tag-readme
+type: types/tag-readme.md
 index_source: tag
 index_key: computational-model
 ---

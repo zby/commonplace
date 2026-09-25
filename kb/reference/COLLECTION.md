@@ -99,7 +99,7 @@ Scan `kb/reference/`, `kb/notes/`, `kb/agent-memory-systems/`, `kb/agentic-syste
 
 ## Type eligibility
 
-A typed artifact in this collection may use a global type spec under `kb/types/`, named by its bare name such as `type: note`, or a local type spec under this collection's `types/` directory, named by its path. Frontmatter-free Markdown is implicit `text`.
+A typed artifact in this collection may use a global type, named by its path under the library root such as `type: types/note.md`, or a local type spec under this collection's `types/` directory, named by its path under the KB root such as `type: reference/types/adr.md`. Frontmatter-free Markdown is implicit `text`.
 
 Definitions constituted by a Commonplace selection, contract, or implemented
 classification belong under `kb/reference/definitions/`. Transferable theory

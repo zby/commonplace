@@ -1,6 +1,6 @@
 ---
 description: "Conjecture: writing a provisional claim first and reading only passages likely to overturn it may build a better-warranted synthesis note at lower context cost than reading everything first — motivated by Karnofsky, untested here."
-type: note
+type: types/note.md
 traits: [title-as-claim, has-external-sources]
 tags: []
 ---

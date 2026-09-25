@@ -22,6 +22,9 @@ from tests.commonplace.review.pair_helpers import accept_pair, insert_completed_
 
 from ._run_cli import run_cli
 
+pytestmark = pytest.mark.usefixtures("tmp_library")
+
+
 TEST_MODEL = "test-model"
 REVIEWED_AT = "2026-07-01T00:00:00+00:00"
 
@@ -41,7 +44,7 @@ def make_note(
     title: str,
     body: str,
     *,
-    note_type: str = "note",
+    note_type: str = "types/note.md",
 ) -> Path:
     return write(
         path,
@@ -278,7 +281,7 @@ class TestSelectorCollectionPairs:
         write(
             tmp_path / "kb" / "types" / "note.md",
             """---
-type: type-spec
+type: types/type-spec.md
 name: note
 description: Test type spec for note
 schema: null
@@ -338,7 +341,7 @@ Fixture test.
         write(
             tmp_path / "kb" / "types" / "note.md",
             """---
-type: type-spec
+type: types/type-spec.md
 name: note
 description: Test type spec for note
 schema: null

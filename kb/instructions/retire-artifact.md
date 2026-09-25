@@ -1,6 +1,6 @@
 ---
 description: Retire a committed KB artifact — destination lookup, extraction gate, inbound handling, published redirect, and freshness-baseline retirement
-type: instruction
+type: types/instruction.md
 ---
 
 # Retire an artifact

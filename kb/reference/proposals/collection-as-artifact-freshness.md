@@ -1,6 +1,6 @@
 ---
 description: "Proposal: register collection-maintenance targets with collection-text inputs for casebook-wide staleness without per-file dependency edges"
-type: ../types/design-proposal.md
+type: reference/types/design-proposal.md
 tags: [kb-maintenance, observability]
 ---
 

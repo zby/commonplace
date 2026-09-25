@@ -19,7 +19,7 @@ def setup_repo(tmp_path: Path) -> Path:
         tmp_path / "kb" / "notes" / "existing-note.md",
         """---
 description: an existing source note for article lineage tests
-type: note
+type: types/note.md
 ---
 
 # Existing note
@@ -34,7 +34,7 @@ def article(path: Path, *, source_notes: list[str]) -> Path:
         path,
         f"""---
 description: "an outward-facing article used by the validation tests of the article type"
-type: kb/articles/types/article.md
+type: articles/types/article.md
 source_notes:
 {rendered}
 ---

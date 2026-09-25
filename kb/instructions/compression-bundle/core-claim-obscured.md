@@ -2,7 +2,7 @@
 gate_id: compression/core-claim-obscured
 name: Core claim obscured
 description: 'The strongest claim is present, but supporting apparatus makes it hard to find or remember.'
-type: review-gate
+type: types/review-gate.md
 lens: compression
 watches: [body]
 staleness: changed

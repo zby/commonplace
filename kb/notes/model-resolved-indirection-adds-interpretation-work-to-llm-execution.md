@@ -1,6 +1,6 @@
 ---
 description: A reference adds model-side interpretation only when the model must resolve it; upstream literalization is worthwhile when binding, token, authority, and regeneration costs favor it
-type: note
+type: types/note.md
 traits: [title-as-claim]
 tags: [computational-model]
 ---

@@ -1,6 +1,6 @@
 ---
 description: "LLM Wiki review: Claude Code command package for a Logseq/Obsidian wiki with L1 auto-loaded memory, L2 pull queries, schema rules, and lint gates"
-type: ../types/agent-memory-system-review.md
+type: agent-memory-systems/types/agent-memory-system-review.md
 source-tier: code-grounded
 last-checked: "2026-06-04"
 ---

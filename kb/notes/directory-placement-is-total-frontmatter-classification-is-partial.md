@@ -1,6 +1,6 @@
 ---
 description: "Canonical paths cover every file before validation and supply locality; opt-in types supply portability. Validation can encode similar policy on either surface, but native guarantees differ."
-type: note
+type: types/note.md
 traits: [title-as-claim]
 tags: [document-system, type-system]
 ---

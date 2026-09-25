@@ -1,6 +1,6 @@
 ---
 description: "LLM Wiki review: local-first Obsidian/wiki compiler with source monitors, LLM extraction and integration, BM25 search, autonomous maintenance loops, and weak trace-learning prompt-optimization scaffolding"
-type: ../types/agent-memory-system-review.md
+type: agent-memory-systems/types/agent-memory-system-review.md
 source-tier: code-grounded
 tags: [trace-learning]
 last-checked: "2026-06-04"

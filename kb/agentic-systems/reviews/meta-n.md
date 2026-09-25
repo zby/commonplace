@@ -1,12 +1,12 @@
 ---
-type: note
+type: types/note.md
 description: "Meta^n evolves executable solver layers from task traces, retaining code, rationale and task winners; source-level feedback wiring does not establish improved generalization."
 generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-24-meta-n-01
 source-identity: https://github.com/minnesotanlp/meta-n
 reviewed-revision: b7081843d3c7b0e0f418ca10aaf2ccbff856e7f8
 analysis-result: kb/reports/retained/agentic-system-analysis/AAS-2026-09-24-meta-n-01/result.md
-analysis-result-sha256: 24ecfb914dc10ae0571f613ffadb28477110a252bb0bcf6f1e35356dd29dca16
+analysis-result-sha256: fb252da4610374093d302a11bb4e7ca6cb9a521dbd9c27ef89822ba58386fefa
 ---
 
 # Meta^n

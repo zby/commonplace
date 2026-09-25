@@ -1,6 +1,6 @@
 ---
 description: "Claude Workstream Kit review: repo-local active-work memory for Claude Code with ACTIVE.md resume, workstream closure, gates, and verifier agents"
-type: ../types/agent-memory-system-review.md
+type: agent-memory-systems/types/agent-memory-system-review.md
 source-tier: code-grounded
 tags: [trace-learning]
 last-checked: "2026-06-12"

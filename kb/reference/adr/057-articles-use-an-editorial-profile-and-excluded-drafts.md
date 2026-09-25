@@ -1,6 +1,6 @@
 ---
 description: "Articles use a promoted editorial profile, keep drafts under a site-excluded collection subtree, and publish immutable dated bodies through ProperDocs"
-type: ../types/adr.md
+type: reference/types/adr.md
 tags: []
 status: accepted
 ---

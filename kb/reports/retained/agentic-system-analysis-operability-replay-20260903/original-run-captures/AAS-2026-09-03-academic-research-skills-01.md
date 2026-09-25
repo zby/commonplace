@@ -1,5 +1,5 @@
 ---
-type: agentic-system-analysis-result
+type: types/agentic-system-analysis-result.md
 description: "Complete code-grounded analysis of Academic Research Skills at commit 94436237913091d4739870159d241660527e8338, bounded as a response-only complete artifact with a partial external loop"
 run-id: AAS-2026-09-03-academic-research-skills-01
 system: "Academic Research Skills"

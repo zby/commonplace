@@ -1,6 +1,6 @@
 ---
-description: "How Commonplace composes collection and type contracts, names global types by bare name and collection-local types by path, and locates both kinds of type spec"
-type: note
+description: "How Commonplace composes collection and type contracts, names every type by its spec's path under a KB root, and finds the spec on the library-and-KB search path"
+type: types/note.md
 tags: []
 ---
 
@@ -15,29 +15,36 @@ The collection answers what role the artifact serves in this part of the KB. The
 
 ## How an artifact uses a type
 
-A typed artifact names its type spec in `type:`. A global type is named by its bare name:
+A typed artifact names its type spec in `type:`. The value is the spec's path under a KB root, with its `.md` extension. A global type is named by its path under the library root:
 
 ```yaml
 ---
 description: Why this artifact is useful to a reader
-type: note
+type: types/note.md
 tags: []
 ---
 ```
 
-A bare name such as `note` resolves to `types/note.md` under the Commonplace library root: in an installed project that is the installed package's library, and in the source repository it is `kb/types/note.md`. The global types are a small set that the package owns, so the same pointer works in every project. If the library is not installed, validation reports that the Commonplace library is not available rather than a broken type.
-
-A collection-local type is named by its path, repository-relative (`kb/...`) or file-relative (`./...` or `../...`). The path must end in `.md`, resolve beneath `kb/`, and identify a type-spec document. For example, an ADR under `kb/reference/adr/` can carry:
+A collection-local type is named by its path under the KB root, starting with its collection. For example, an ADR under `kb/reference/adr/` carries:
 
 ```yaml
-type: ../types/adr.md
+type: reference/types/adr.md
 ```
 
-The form alone tells the resolver which kind of type it has; there is no fallback between them. A path that lands on a global type fails validation with the bare name to use instead, so a global type has exactly one spelling. Absolute paths, URLs, repository-relative paths containing `..`, missing files, and `text` as an explicit type also fail.
+A value resolves on a search path of two roots:
 
-The pointer is the type's identity: a global type's bare name, or a local type's normalized `kb/...` path. Two type specs with the same `name:` at different paths are different contracts, and a local type never shadows a global one.
+1. the Commonplace library root, for global types only: a value resolves there only when it names `types/<name>.md`;
+2. the root of the KB that holds the artifact: the project's `kb/` for a project artifact, and the library root for a library file.
 
-For an existing artifact, an agent follows `type:` and opens that document; no catalogue lookup is needed. For a new artifact, a user or workflow may supply the exact type pointer. A shorthand name is resolved by inspecting type-spec frontmatter among the global types and under the collection `types/` directories and requiring one exact `name:` match; a global match is written as its bare name and a local match as its path. Duplicate names remain ambiguous until a pointer is supplied. A general write with no supplied type defaults to `note`. A workflow that requires another type supplies its exact pointer. Implicit `text` is an explicit choice to write frontmatter-free Markdown, not a fallback from failed type lookup.
+In an installed project, `types/note.md` names a file in the installed package's library, whose path `.commonplace/library.md` gives. In the source repository and for every library file, both roots are the same directory, so the value is the path to open under `kb/`, such as `kb/types/note.md`. The library's collection-local types are not on a project's search path. If the library is not installed, validation reports that the Commonplace library is not available rather than a broken type.
+
+A value that resolves under both roots to two different files is an error: validation fails and names both files. No root takes precedence, so a project file never silently overrides a library type. A leftover copy of a library type in a project's `kb/types/` collides this way; delete it or move its change into the project's own collections. A project's `kb/types/` has no special standing, and types a whole project needs are global library types.
+
+A type has one spelling everywhere, so an artifact can move within its collection without changing its type. Values starting with `./`, `../`, or `kb/`, bare names such as `note`, absolute paths, URLs, missing files, and `text` as an explicit type fail validation. The same form applies wherever a type is named: `type:` in frontmatter, gates' `requires_type:`, and type specs' own `type:`.
+
+The written value is the type's identity, such as `types/note.md` or `reference/types/adr.md`. Two type specs with the same `name:` at different paths are different contracts.
+
+For an existing artifact, an agent follows `type:` and opens that document; no catalogue lookup is needed. For a new artifact, a user or workflow may supply the exact type value. A shorthand name is resolved by inspecting type-spec frontmatter among the global types and under the collection `types/` directories and requiring one exact `name:` match; the match is written as its path under its root. Duplicate names remain ambiguous until a value is supplied. A general write with no supplied type defaults to `types/note.md`. A workflow that requires another type supplies its exact value. Implicit `text` is an explicit choice to write frontmatter-free Markdown, not a fallback from failed type lookup.
 
 Lookup identifies the contract but does not authorize it for a collection. For an artifact inside a declared collection, validation permits global types and local specs under that collection's own `types/` directory. A peer collection's local type fails. The entire `kb/work/` subtree is the lifecycle exception: a workshop may reference any valid type spec so that it can stage work for any target collection or test the real contract. Files outside declared collections retain referential validation only.
 
@@ -47,7 +54,7 @@ A type spec is itself a typed Markdown document. Its frontmatter has this shape:
 
 ```yaml
 ---
-type: type-spec
+type: types/type-spec.md
 name: adr
 description: Architecture decision record for accepted or proposed system decisions
 schema: ./adr.schema.yaml
@@ -72,7 +79,7 @@ The filesystem is the live inventory. There are two normal locations:
 - **Global type specs** live in the library's `types/` directory, authored in this repository as [`kb/types/`](../types/README.md). They are intended for reuse across collections, and a project does not hold copies of them.
 - **Collection-local type specs** live in the owning collection's `types/` directory, such as [`kb/reference/types/`](./types/adr.md) and [`kb/notes/types/`](../notes/types/structured-claim.md).
 
-Open those directories—or follow an artifact's `type:` pointer—to see the current definitions. From an installed project, `.commonplace/library.md` gives the path of the library's `types/` directory. A prose list elsewhere is only a snapshot and is not the authority for what exists.
+Open those directories—or follow an artifact's `type:` value—to see the current definitions. From an installed project, `.commonplace/library.md` gives the path of the library's `types/` directory. A prose list elsewhere is only a snapshot and is not the authority for what exists.
 
 ## Common examples
 
@@ -112,4 +119,4 @@ Relevant documentation:
 - [Collections never own frontmatter semantics](./collections-never-own-frontmatter-semantics.md) — extends: why a type owns its fields while a collection owns text-level conventions
 - [Architecture](./architecture.md) — part-of: where global and installed collection-local types sit in the shipped layout
 - [Type system](../notes/type-system-README.md) — see-also: theory explaining why document types exist and what they enable
-- [ADR 018](./adr/018-types-are-path-references-to-instruction-docs.md) — evidenced-by: the decision establishing path-valued type identity, which bare global names partly reverse
+- [ADR 018](./adr/018-types-are-path-references-to-instruction-docs.md) — evidenced-by: the decision establishing path-valued type identity, restored for every type by the two-root search path

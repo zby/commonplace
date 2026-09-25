@@ -11,6 +11,8 @@ from commonplace.lib.validation import (
 )
 from tests.commonplace.validation_helpers import NOTE_TYPE_SPECS, copy_repo_files, write
 
+pytestmark = pytest.mark.usefixtures("tmp_library")
+
 
 def note(path: Path, tags: list[str]) -> Path:
     name = path.stem.replace("-", " ")
@@ -18,7 +20,7 @@ def note(path: Path, tags: list[str]) -> Path:
         path,
         f"""---
 description: {name}
-type: note
+type: types/note.md
 tags: [{", ".join(tags)}]
 ---
 
@@ -38,7 +40,7 @@ def tag_readme(
         path,
         f"""---
 description: "Curated head for {tag}"
-type: tag-readme
+type: types/tag-readme.md
 index_source: tag
 index_key: {tag}
 {marks}---

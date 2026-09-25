@@ -1,6 +1,6 @@
 ---
 description: "Decision that agentic-system analysis keeps one minimal completion record and reruns failed work from a frozen source"
-type: ../types/adr.md
+type: reference/types/adr.md
 tags: []
 status: accepted
 ---

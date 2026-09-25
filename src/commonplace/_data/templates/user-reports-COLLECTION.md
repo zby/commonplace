@@ -91,8 +91,10 @@ the exact report to `retained/` first.
 
 ## Type eligibility and validation
 
-A typed report may use a global Commonplace type, named by its bare name, or a
-local type under `kb/reports/types/`, named by its path. Frontmatter-free Markdown is implicit `text`.
+A typed report may use a global Commonplace type, named by its path under the
+library root such as `types/connect-report.md`, or a local type under
+`kb/reports/types/`, named by its path under the KB root such as
+`reports/types/<name>.md`. Frontmatter-free Markdown is implicit `text`.
 
 The `.commonplace-validation-ignore` markers under `cache/` and `state/`
 exclude those data-bearing subtrees from collection-scoped validation. They do

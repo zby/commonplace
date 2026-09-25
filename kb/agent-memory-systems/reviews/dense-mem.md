@@ -1,6 +1,6 @@
 ---
 description: "Dense-Mem review: self-hosted MCP memory server with Neo4j evidence, typed claims, verifier gates, fact promotion, and tiered recall"
-type: ../types/agent-memory-system-review.md
+type: agent-memory-systems/types/agent-memory-system-review.md
 source-tier: code-grounded
 tags: [trace-learning]
 last-checked: "2026-06-04"

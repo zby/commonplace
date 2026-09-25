@@ -1,12 +1,12 @@
 ---
-type: note
+type: types/note.md
 description: "WikiSkill's persistent wiki and reversible skill updates, with paper-only evidence and performance-gate limits."
 generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-25-wikiskill-01
 source-identity: https://arxiv.org/abs/2608.27454
 reviewed-revision: "sha256:c093e240375e9780468edca9aa91aefecb8714ebdbef40810316644d9b2822d0"
 analysis-result: kb/reports/retained/agentic-system-analysis/AAS-2026-09-25-wikiskill-01/result.md
-analysis-result-sha256: 55c1109438c86ed4e903ab339d3f128c958b271551edb5e0dc8898390f9f94a4
+analysis-result-sha256: 1b27b3f32961a43c1df6a9bd0fc742d07785d9ab2ba0b1951b4d37195175f82b
 ---
 
 # WikiSkill

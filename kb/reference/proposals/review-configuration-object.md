@@ -1,6 +1,6 @@
 ---
 description: "Proposal: give commonplace.review a ReviewConfig for review scan roots, gate and artifact locations, and database path with project overrides, without introducing a global ProjectConfig"
-type: ../types/design-proposal.md
+type: reference/types/design-proposal.md
 tags: [kb-maintenance]
 ---
 

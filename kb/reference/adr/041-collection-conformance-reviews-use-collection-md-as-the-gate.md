@@ -1,6 +1,6 @@
 ---
 description: "Collection-conformance pairs put the note's COLLECTION.md on the gate side of the existing (note, gate) freshness key, matching the enforcement type contracts got in ADR 038"
-type: ../types/adr.md
+type: reference/types/adr.md
 tags: []
 status: accepted
 ---

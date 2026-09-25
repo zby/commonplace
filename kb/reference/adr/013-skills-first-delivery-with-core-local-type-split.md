@@ -1,6 +1,6 @@
 ---
 description: Historical decision to move skills to top-level sources, keep KB Goals always-loaded, split types into core and local, and use dynamic type discovery for practitioner-defined types
-type: ../types/adr.md
+type: reference/types/adr.md
 tags: []
 status: superseded
 ---

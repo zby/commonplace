@@ -1,6 +1,6 @@
 ---
 description: "Superseded historical decision: queued review jobs stored freshness identity separately from nullable parent-dispatch provenance before finalization-time provenance replaced claim/running"
-type: ../types/adr.md
+type: reference/types/adr.md
 tags: []
 status: superseded
 ---

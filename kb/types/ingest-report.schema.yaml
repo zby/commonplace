@@ -17,7 +17,7 @@ allOf:
           - domains
         properties:
           type:
-            const: ingest-report
+            const: types/ingest-report.md
           source:
             type: string
             pattern: "^https?://"

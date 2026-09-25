@@ -1,5 +1,5 @@
 ---
-type: note
+type: types/note.md
 description: Supermemory Vercel wrapper injects retrieved context and uploads conversations,
   with best-effort saving and an uninspected remote learning bridge
 generated-by: analyse-agentic-system
@@ -7,7 +7,7 @@ analysis-run: AAS-2026-09-25-supermemory-02
 source-identity: https://github.com/supermemoryai/supermemory
 reviewed-revision: 0e12f0b3a65af1cf7b03f48561f20ddf4369bc3f
 analysis-result: kb/reports/retained/agentic-system-analysis/AAS-2026-09-25-supermemory-02/result.md
-analysis-result-sha256: 9caa72390cb63c110e48511b87eb83b612cdca25f07400c7d9ea6742e2bcf0e7
+analysis-result-sha256: e17dce575e775ef57c49b700dcaf640d3f332a19d5096072d1e8c4b28c05c408
 ---
 
 # Supermemory: the Vercel memory wrapper

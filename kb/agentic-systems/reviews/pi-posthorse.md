@@ -1,5 +1,5 @@
 ---
-type: note
+type: types/note.md
 description: Pi Posthorse keeps recoverable notes and history while its external Pi
   host commits fresh context windows
 generated-by: analyse-agentic-system
@@ -7,7 +7,7 @@ analysis-run: AAS-2026-09-25-pi-posthorse-01
 source-identity: https://github.com/fitchmultz/pi-posthorse
 reviewed-revision: 5bdba3536e186a7be845844d0398c3485a7f8e2b
 analysis-result: kb/reports/retained/agentic-system-analysis/AAS-2026-09-25-pi-posthorse-01/result.md
-analysis-result-sha256: f545b322c8ee7ae8b2596ada5bdbfda301e23abbfea4d80468df9ff69006bdb1
+analysis-result-sha256: 19d203c7135f34278b17016d93a90c7637adee2484ca1f2d7810f59a0a2a0782
 ---
 
 # pi-posthorse context-window extension

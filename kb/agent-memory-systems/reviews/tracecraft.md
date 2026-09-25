@@ -1,6 +1,6 @@
 ---
 description: "Tracecraft review: serverless bucket-backed multi-agent coordination with JSON memory, atomic claims, mailboxes, artifacts, and session mirroring"
-type: ../types/agent-memory-system-review.md
+type: agent-memory-systems/types/agent-memory-system-review.md
 source-tier: code-grounded
 last-checked: "2026-06-05"
 ---

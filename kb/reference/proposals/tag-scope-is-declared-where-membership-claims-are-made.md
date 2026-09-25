@@ -1,6 +1,6 @@
 ---
 description: "Proposal: one tag namespace per KB; membership claims range over participating collections; trace-learning stays navigable; canonical filename-derived heads live in kb/tags/"
-type: ../types/design-proposal.md
+type: reference/types/design-proposal.md
 tags: [kb-maintenance, document-system]
 ---
 

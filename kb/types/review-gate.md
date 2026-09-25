@@ -1,5 +1,5 @@
 ---
-type: type-spec
+type: types/type-spec.md
 name: review-gate
 description: A single quality check the Commonplace review system applies to KB artifacts
 schema: ./review-gate.schema.yaml
@@ -22,8 +22,8 @@ A review gate is a closed-ended, verdict-kind quality assay. Each gate is one ma
   or criterion. Gate resolution and schema validation reject missing or other
   values. This field is not a per-gate threshold or tuning surface.
 - `description` — the trigger condition: what kind of authoring problem this gate catches.
-- `type: review-gate`.
-- Optional `requires_trait` or `requires_type` — narrow the gate to a subset of artifacts that carry the given trait or type.
+- `type: types/review-gate.md`.
+- Optional `requires_trait` or `requires_type` — narrow the gate to a subset of artifacts that carry the given trait or type. A `requires_type` value is written like a `type:` value, such as `types/definition.md`.
 
 ## Body
 
@@ -46,7 +46,7 @@ A gate is automated problem-noticing, not reject-capable evaluation. Its verdict
 gate_id: {lens}/{name}
 name: {Human-Readable Name}
 description: '{What kind of authoring problem this gate catches.}'
-type: review-gate
+type: types/review-gate.md
 lens: {lens}
 watches: [body]
 staleness: changed

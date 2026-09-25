@@ -1,6 +1,6 @@
 ---
 description: "sage-wiki review: LLM-compiled wiki memory with SQLite search/vector/ontology state, MCP pull tools, session capture, and trust gates"
-type: ../types/agent-memory-system-review.md
+type: agent-memory-systems/types/agent-memory-system-review.md
 source-tier: code-grounded
 tags: [trace-learning]
 last-checked: "2026-06-04"

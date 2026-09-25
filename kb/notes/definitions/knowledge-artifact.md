@@ -1,6 +1,6 @@
 ---
 description: Definition - a knowledge artifact is a retained artifact consumed as evidence, reference, context, explanation, or advice
-type: definition
+type: types/definition.md
 tags: [learning-theory, artifact-analysis]
 ---
 

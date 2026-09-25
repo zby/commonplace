@@ -1,7 +1,7 @@
 ---
 name: cp-skill-ground
 description: Ground one source-side claim by retaining minimum verbatim quotes or requiring the pinned snapshot. Use when a note needs source support or retained quotes; choose this skill, not cp-skill-ingest, for quote retention.
-type: instruction
+type: types/instruction.md
 user-invocable: true
 allowed-tools: Read, Edit, Write, Grep, Glob, Bash, Skill
 context: fork

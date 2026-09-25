@@ -1,6 +1,6 @@
 ---
 description: "Curated head for the constraining tag — narrowing the interpretation space of artifacts, from conventions to deterministic code; codification, relaxing, and the decision heuristics"
-type: tag-readme
+type: types/tag-readme.md
 index_source: tag
 index_key: constraining
 ---

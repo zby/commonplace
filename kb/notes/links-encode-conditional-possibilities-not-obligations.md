@@ -1,6 +1,6 @@
 ---
 description: Links encode conditional possibilities, not obligations — every label must name a specific reader-need (the condition under which following pays off); content required for all reachable readers should be inlined, not linked
-type: note
+type: types/note.md
 traits: [title-as-claim]
 tags: [learning-theory, links, deploy-time-learning]
 ---

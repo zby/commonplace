@@ -1,6 +1,6 @@
 ---
 description: "Use when a kb/articles draft is to be prepared for publication as a paper package whose every dependency is bound inside the package; runs without operator input and reports the free variables it could not bind"
-type: instruction
+type: types/instruction.md
 ---
 
 # Stage an article package
@@ -22,7 +22,7 @@ is where it is requested.
 ## Prerequisites
 
 - The article is at `kb/articles/{slug}.md`, declares
-  `type: kb/articles/types/article.md`, and `commonplace-validate kb/articles/{slug}.md`
+  `type: articles/types/article.md`, and `commonplace-validate kb/articles/{slug}.md`
   reports no failures.
 - `python3 scripts/article_dependency_inventory.py` exists in the checkout.
 - The working tree is clean for `kb/articles/` and `kb/work/staging/{slug}/`.
@@ -43,7 +43,7 @@ it first: a package is regenerated from the current article, never patched.
 | `link-map.md` | body link → package anchor, applied at publication |
 | `closure-check.md` | result of the closure tests and the list of free variables |
 
-Appendix and reference files carry frontmatter `type: kb/articles/types/article.md`,
+Appendix and reference files carry frontmatter `type: articles/types/article.md`,
 the article's `status` and `byline`, and a `description` naming the paper they
 belong to. File names are final: publication moves them into `kb/articles/`
 unchanged.

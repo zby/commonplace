@@ -1,6 +1,6 @@
 ---
 description: Commonplace's build-time instruction generation — template substitution, the project files `commonplace-init` creates once, and the machine-specific pointers into the installed library it rewrites on every run
-type: note
+type: types/note.md
 tags: []
 ---
 

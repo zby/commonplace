@@ -1,6 +1,6 @@
 ---
 description: "GBrain review: Postgres/PGLite-backed agent brain with markdown write-through, hybrid retrieval, graph links, hot facts, skills, and dream-cycle maintenance"
-type: ../types/agent-memory-system-review.md
+type: agent-memory-systems/types/agent-memory-system-review.md
 source-tier: code-grounded
 tags: [trace-learning]
 last-checked: "2026-06-04"

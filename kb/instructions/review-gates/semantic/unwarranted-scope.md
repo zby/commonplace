@@ -2,7 +2,7 @@
 gate_id: semantic/unwarranted-scope
 name: Unwarranted scope
 description: 'The central claim invites reliance over cases its support does not exercise, with no stated transfer relation and no conjecture marking on the surplus scope.'
-type: review-gate
+type: types/review-gate.md
 lens: semantic
 watches: [title, description, body]
 staleness: changed

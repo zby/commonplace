@@ -1,6 +1,6 @@
 ---
 description: Hub for all tag READMEs — browse the KB by conceptual domain rather than by directory; complete over the tag pages in this collection
-type: tag-readme
+type: types/tag-readme.md
 index_source: tag-indexes
 complete: true
 ---

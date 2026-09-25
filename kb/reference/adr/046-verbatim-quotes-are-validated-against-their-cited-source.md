@@ -1,6 +1,6 @@
 ---
 description: "`commonplace-validate` resolves every `verbatim`-marked quotation against the source it links; a false verbatim claim fails, and `unresolved` warns only where the convention is demonstrably in use"
-type: ../types/adr.md
+type: reference/types/adr.md
 tags: []
 status: accepted
 ---

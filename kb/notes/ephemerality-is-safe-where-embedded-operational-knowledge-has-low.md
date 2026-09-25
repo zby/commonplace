@@ -1,6 +1,6 @@
 ---
 description: "Regeneration must preserve or recover the commitments later operation depends on; reuse, reconstruction cost, and failure consequences matter more than code size or explanatory-reach alone"
-type: note
+type: types/note.md
 traits: [has-external-sources, title-as-claim]
 tags: [learning-theory, artifact-analysis]
 ---

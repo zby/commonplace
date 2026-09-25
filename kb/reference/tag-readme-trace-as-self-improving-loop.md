@@ -1,6 +1,6 @@
 ---
 description: "Maps the ADR-026 tag-readme trace onto the search/evaluation/retention loop, showing which half of each step runs in code and which stays human"
-type: note
+type: types/note.md
 traits: [has-implementation]
 ---
 

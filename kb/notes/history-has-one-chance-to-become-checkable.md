@@ -1,6 +1,6 @@
 ---
 description: "An artifact's production history is convertible to later-checkable form only at production time, via records/attestation or re-derivability; after that a bounded reviewer sees only carried state"
-type: note
+type: types/note.md
 traits: [title-as-claim, has-external-sources]
 tags: [context-engineering]
 ---

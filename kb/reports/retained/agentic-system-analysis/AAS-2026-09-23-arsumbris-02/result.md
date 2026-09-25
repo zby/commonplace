@@ -1,5 +1,5 @@
 ---
-type: agentic-system-analysis-result
+type: types/agentic-system-analysis-result.md
 description: arsumbris release-wide analysis of typed graph memory, adapter-specific controls and instructed
   knowledge/improvement workflows
 run-id: AAS-2026-09-23-arsumbris-02

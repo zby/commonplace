@@ -1,5 +1,5 @@
 ---
-type: instruction
+type: types/instruction.md
 description: Run experiment review gates on baseline.md — load gates from local gates/ directory, apply each gate, write per-bundle review files to the run directory
 ---
 

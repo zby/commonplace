@@ -1,6 +1,6 @@
 ---
 description: "Architecture boundaries of an installed Commonplace project: the user KB, the library read in place from the installed package, init's machine-specific pointers into it, the command runtime, and path invariance"
-type: note
+type: types/note.md
 traits: []
 tags: []
 ---
@@ -113,17 +113,16 @@ procedure says to rerun init immediately after such a switch.
 ## Path invariance across source and install
 
 Commonplace authors its library at top-level collection paths in this source
-repository, and the installed library mirrors that `kb/` layout. Three rules
+repository, and the installed library mirrors that `kb/` layout. Two rules
 let the same artifacts work in both places:
 
 - relative Markdown links resolve the same way in both trees, including links
   from a skill to its own files, to other instructions, and to types, because
   an agent reads a skill at its real location rather than through a copy;
-- a global type is named by its bare name (`type: note`), which resolves to
-  `types/<name>.md` under the library root, `kb/types/<name>.md` in the source
-  repository; and
-- collection-local type pointers remain paths, usually file-relative, so they
-  keep their file-to-contract relationship.
+- a type value is the spec's path under a KB root, such as `type: types/note.md`
+  or `type: reference/types/adr.md`, found on a search path of the library root
+  (global `types/<name>.md` only) and the artifact's KB root; in the source
+  repository both roots are `kb/`.
 
 Review criteria follow the same split. A criterion file inside the repository
 is identified by its repository-relative path; a criterion file in the

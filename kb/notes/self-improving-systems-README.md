@@ -1,6 +1,6 @@
 ---
 description: "Curated head for the self-improving-systems tag — membership, update architecture, and the four-part pathway profile; selective picks"
-type: tag-readme
+type: types/tag-readme.md
 index_source: tag
 index_key: self-improving-systems
 ---

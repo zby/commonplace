@@ -123,7 +123,7 @@ def test_relocate_directory_apply_moves_and_rewrites(tmp_path: Path) -> None:
     article = write(
         tmp_path / "kb" / "articles" / "article.md",
         """---
-type: kb/articles/types/article.md
+type: articles/types/article.md
 description: Article
 source_notes:
   - kb/notes/related-systems/foo.md

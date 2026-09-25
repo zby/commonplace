@@ -1,7 +1,7 @@
 ---
 name: analyse-agentic-system
 description: "Use when asked to analyse, review, or refresh an external agent runtime, orchestration system, agent operating layer, agent memory/knowledge/context-engineering system, or narrower model-dependent operational mechanism from inspectable sources."
-type: instruction
+type: types/instruction.md
 user-invocable: true
 argument-hint: "<system identifier> plus source input (repository, checkout, snapshot/bundle, or documents) and optional public review path"
 allowed-tools: Read, Write, Grep, Glob, Bash, Task

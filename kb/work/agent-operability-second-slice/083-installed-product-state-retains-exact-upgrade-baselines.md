@@ -1,6 +1,6 @@
 ---
 description: "Proposed decision that installed-product state retains portable content-addressed base bytes so project drift and offline three-way upgrades share one authority"
-type: kb/reference/types/adr.md
+type: reference/types/adr.md
 tags: []
 ---
 

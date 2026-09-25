@@ -1,5 +1,5 @@
 ---
-type: note
+type: types/note.md
 description: Tardigrade derives model progression from event history and separates
   compaction and schema repair from host durability
 generated-by: analyse-agentic-system
@@ -7,7 +7,7 @@ analysis-run: AAS-2026-09-25-tardigrade-01
 source-identity: https://github.com/clavia-labs/tardigrade
 reviewed-revision: 1c4f4efaab2aaeec0bc482bc38e8ddf3be6f8267
 analysis-result: kb/reports/retained/agentic-system-analysis/AAS-2026-09-25-tardigrade-01/result.md
-analysis-result-sha256: 4adb6ca61ca273e24354be9c0e2f192ba196f8f11e0bd79f869068c0e128ac2d
+analysis-result-sha256: a47b08d9087eced85e18424df28ae9fdfe363f5482e51e630d3df9803904e802
 ---
 
 # Tardigrade inference and compaction

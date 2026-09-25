@@ -1,6 +1,6 @@
 ---
 description: Produce a disposable edit-strategy report for one note using the unanchored compression criteria and high-impact synthesis
-type: instruction
+type: types/instruction.md
 ---
 
 # Run the compression bundle on one note

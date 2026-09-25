@@ -1,6 +1,6 @@
 ---
 description: "Proposal: introduce a model partition registry for review validation, aliases, and runner defaults without making the registry the review identity"
-type: ../types/design-proposal.md
+type: reference/types/design-proposal.md
 tags: [kb-maintenance]
 ---
 

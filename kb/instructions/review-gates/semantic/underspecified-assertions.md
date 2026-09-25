@@ -2,7 +2,7 @@
 gate_id: semantic/underspecified-assertions
 name: Underspecified assertions
 description: 'A load-bearing assertion leaves an argument-relevant mechanism, comparison, threshold, scope, timeframe, or consequence unresolved, so materially different readings change its truth, support, or implication.'
-type: review-gate
+type: types/review-gate.md
 lens: semantic
 watches: [body]
 staleness: changed

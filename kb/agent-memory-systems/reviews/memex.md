@@ -1,6 +1,6 @@
 ---
 description: "Memex review: isolated Claude Code runtime that maintains a markdown wiki through queued ingest, query, and lint jobs"
-type: ../types/agent-memory-system-review.md
+type: agent-memory-systems/types/agent-memory-system-review.md
 source-tier: code-grounded
 last-checked: "2026-06-04"
 ---

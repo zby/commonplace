@@ -1,6 +1,6 @@
 ---
 description: "Accepted decision that a note may cite at most five distinct tracked sources without a paired verified quotation, enforced as a FAIL validator rule on notes and articles, while the three link-following review criteria drop their reader-side caps"
-type: ../types/adr.md
+type: reference/types/adr.md
 tags: []
 status: accepted
 ---

@@ -1,6 +1,6 @@
 ---
 description: "Accepted decision to define text contract as part of collection, retire the duplicate theory definition, and keep each COLLECTION.md as the only binding local contract"
-type: ../types/adr.md
+type: reference/types/adr.md
 tags: []
 status: accepted
 ---

@@ -1,6 +1,6 @@
 ---
 description: Methodology for testing prompt framings — uses controlled variation against a human-verified finding to identify which cognitive moves agents can reliably execute, then deploys the winning framing as instruction
-type: note
+type: types/note.md
 traits: []
 tags: [evaluation]
 ---

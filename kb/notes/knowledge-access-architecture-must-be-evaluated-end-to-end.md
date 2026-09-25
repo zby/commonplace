@@ -1,6 +1,6 @@
 ---
 description: Explains why retrieval measures and storage-substrate labels cannot proxy for task-relative quality across discovery, loading, transformation, activation, and upkeep
-type: note
+type: types/note.md
 traits: [title-as-claim, synthesis]
 tags: [foundations, context-engineering]
 ---

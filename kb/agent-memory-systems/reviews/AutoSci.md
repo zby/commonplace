@@ -1,6 +1,6 @@
 ---
 description: "AutoSci review scoped to its OmegaWiki/SciMem subsystem: file-backed research wiki, schema/runtime contracts, skills, tools, graph, and bounded context packs"
-type: ../types/agent-memory-system-review.md
+type: agent-memory-systems/types/agent-memory-system-review.md
 source-tier: code-grounded
 last-checked: "2026-06-18"
 ---

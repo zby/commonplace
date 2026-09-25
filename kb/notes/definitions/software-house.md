@@ -1,6 +1,6 @@
 ---
 description: "Definition — a software house is the complete persistent system responsible for developing and evolving software for external users"
-type: definition
+type: types/definition.md
 tags: [foundations, self-improving-systems]
 ---
 

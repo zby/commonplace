@@ -1,6 +1,6 @@
 ---
 description: "Use when a discussion has produced an argument larger than the artifact needs, and the operator wants the artifact kept simple while the full treatment is retained where later editing passes will not load it"
-type: instruction
+type: types/instruction.md
 effort: simple
 ---
 

@@ -1,6 +1,6 @@
 ---
 description: Descriptions don't appear spontaneously — they exist because the note base type requires them; without enforcement, metadata degrades and navigation collapses to opening every document
-type: note
+type: types/note.md
 tags: [type-system]
 ---
 
@@ -11,7 +11,7 @@ The [navigation argument](./types-give-agents-structural-hints-before-opening-do
 The [note base type](../types/note.md) requires both a path-valued `type` and a
 `description`. Every note-family artifact must identify its type contract and
 carry a non-empty description. Promotion from [text](../types/text.md) to the
-base note type uses `type: note`; specialized types use their own
+base note type uses `type: types/note.md`; specialized types use their own
 type-spec paths. Validation checks both structural requirements; whether the
 description is *discriminating* remains a judgment-level check. This is the
 enforcement mechanism: the type creates the obligation, and `/validate` checks

@@ -1,6 +1,6 @@
 ---
 description: "Proposal: move the grounding reading limit from the review to the note — a note may cite at most N sources a reviewer must open and search, with validated inline quotes and note links exempt"
-type: ../../types/design-proposal.md
+type: reference/types/design-proposal.md
 tags: []
 ---
 

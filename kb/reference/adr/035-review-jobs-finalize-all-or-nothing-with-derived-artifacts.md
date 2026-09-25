@@ -1,6 +1,6 @@
 ---
 description: "Review jobs use derived artifact paths, finalization-time provenance, strict per-kind result parsing, and all-or-nothing acceptance"
-type: ../types/adr.md
+type: reference/types/adr.md
 tags: []
 status: accepted
 ---

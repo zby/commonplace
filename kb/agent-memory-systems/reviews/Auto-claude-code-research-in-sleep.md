@@ -1,6 +1,6 @@
 ---
 description: "ARIS review: Markdown skill harness for autonomous research with project research-wiki memory, review traces, and gated trace-learning skill optimization"
-type: ../types/agent-memory-system-review.md
+type: agent-memory-systems/types/agent-memory-system-review.md
 source-tier: code-grounded
 tags: [trace-learning]
 last-checked: "2026-06-04"

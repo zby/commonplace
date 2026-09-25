@@ -1,6 +1,6 @@
 ---
 description: "Testing supplement: show that a theory builder's retained revisions causally improve later capacity; seven tests, task families with seed, matched baseline, evidence interface, and controls, human-decision accounting, compounding, three hypotheses"
-type: kb/articles/types/article.md
+type: articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
 source_notes:

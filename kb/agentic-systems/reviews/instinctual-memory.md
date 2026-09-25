@@ -1,5 +1,5 @@
 ---
-type: note
+type: types/note.md
 description: mem extracts sourced facts into Git and supplies host context, with separate
   publication, recall and withdrawal guarantees
 generated-by: analyse-agentic-system
@@ -7,7 +7,7 @@ analysis-run: AAS-2026-09-25-instinctual-memory-01
 source-identity: https://github.com/jasonkneen/instinctual-memory
 reviewed-revision: 6acb13dc35765bf5ccfc87e445dd09c480f1c28a
 analysis-result: kb/reports/retained/agentic-system-analysis/AAS-2026-09-25-instinctual-memory-01/result.md
-analysis-result-sha256: 44ec3f5e0c84862f61ae28a54d4ca90bc1cb17ab671314da4ca1ddf8898723df
+analysis-result-sha256: e84ebd9e68f376b0f3bb91d87492bc51239b76fe0ee796b2665bf1d77cb9d105
 ---
 
 # mem: sourced facts and host context

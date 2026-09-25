@@ -1,6 +1,6 @@
 ---
 description: "Use when auditing retained main-review memory classifications for ambiguous terminology, inconsistent mappings or missing evidence"
-type: instruction
+type: types/instruction.md
 ---
 
 # Audit main-review memory classifications

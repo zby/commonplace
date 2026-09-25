@@ -1,6 +1,6 @@
 ---
 description: Replaces source-tree scaffold symlinks with explicit Hatch wheel force-includes plus source-checkout fallback resolution for Commonplace packaged scaffold assets
-type: ../types/adr.md
+type: reference/types/adr.md
 tags: []
 status: accepted
 ---

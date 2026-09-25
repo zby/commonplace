@@ -1,6 +1,6 @@
 ---
 description: Fix actionable findings from baseline-backed warn reviews whose live inputs still match, then classify and report the fixes
-type: instruction
+type: types/instruction.md
 ---
 
 # Fix Review Warnings

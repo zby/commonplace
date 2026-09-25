@@ -1,5 +1,5 @@
 ---
-type: agentic-system-analysis-result
+type: types/agentic-system-analysis-result.md
 description: "Code-grounded whole-system analysis of oh-my-pi, distinguishing runtime controls, optional memory, and route-specific warrant."
 run-id: AAS-2026-09-05-oh-my-pi-01
 system: oh-my-pi

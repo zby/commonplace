@@ -1,6 +1,6 @@
 ---
 description: First-principles reasoning selects explanations with explanatory-reach, accountable to observed fit, premise variation, and rival-practice tests
-type: note
+type: types/note.md
 traits: [has-external-sources]
 tags: [learning-theory, discovery]
 ---

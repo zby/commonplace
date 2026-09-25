@@ -1,6 +1,6 @@
 ---
 description: "Automated review with two testable claims: reach and economy indicate reader-relative compression progress, and that progress improves relevant task performance"
-type: kb/articles/types/article.md
+type: articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
 source_notes:

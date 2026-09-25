@@ -1,6 +1,6 @@
 ---
 description: "Lightweight doc-grounded coverage of Fintool — a production finance agent whose founder reports S3-backed files, markdown skills, always-loaded user memories, and eval gates"
-type: ../types/agent-memory-system-review.md
+type: agent-memory-systems/types/agent-memory-system-review.md
 source-tier: doc-grounded
 traits: [has-comparison, has-external-sources]
 last-checked: "2026-06-02"

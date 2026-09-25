@@ -1,6 +1,6 @@
 ---
 description: "LLM Wiki review: portable agent plugin that compiles source files into topic wikis, queryable through index-guided reads, audits, linting, and session lessons"
-type: ../types/agent-memory-system-review.md
+type: agent-memory-systems/types/agent-memory-system-review.md
 source-tier: code-grounded
 tags: [trace-learning]
 last-checked: "2026-06-04"

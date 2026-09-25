@@ -1,6 +1,6 @@
 ---
 description: "Moving responsibility between model-interpreted rules and formal enforcement crosses natural-language and symbolic forms, so governing the transfer requires coverage of both and their mapping"
-type: note
+type: types/note.md
 traits: [title-as-claim]
 tags: [foundations, constraining, self-improving-systems]
 ---

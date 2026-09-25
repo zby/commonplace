@@ -1,6 +1,6 @@
 ---
 description: Type-spec documents run through ordinary note validation, with a type-owned referential rule resolving their declared schemas; the former workspace sweep is removed
-type: ../types/adr.md
+type: reference/types/adr.md
 tags: []
 status: accepted
 ---

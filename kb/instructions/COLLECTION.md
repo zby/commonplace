@@ -98,7 +98,7 @@ Scan `kb/instructions/`, `kb/notes/`, and `kb/reference/` for link targets. Do n
 
 ## Frontmatter
 
-Minimal. Plain instructions need `description` and `type: instruction`. Promoted skills add skill-specific fields (`name`, `allowed-tools`, `context`, `model`) in their `SKILL.md`. Review gates use `type: review-gate` and the gate-specific fields documented in that type spec; see `../reference/README-REVIEW-SYSTEM.md` for runtime concepts.
+Minimal. Plain instructions need `description` and `type: types/instruction.md`. Promoted skills add skill-specific fields (`name`, `allowed-tools`, `context`, `model`) in their `SKILL.md`. Review gates use `type: types/review-gate.md` and the gate-specific fields documented in that type spec; see `../reference/README-REVIEW-SYSTEM.md` for runtime concepts.
 
 ## Promoted skills
 
@@ -113,7 +113,7 @@ Some subdirectories are promoted into runtime skill surfaces (`.claude/skills/`,
 ```markdown
 ---
 description: ""
-type: instruction
+type: types/instruction.md
 ---
 
 # {Imperative title}
@@ -136,7 +136,7 @@ type: instruction
 
 ## Type eligibility
 
-A typed artifact in this collection may use a global type spec under `kb/types/`, named by its bare name such as `type: note`, or a local type spec under this collection's `types/` directory, named by its path. Frontmatter-free Markdown is implicit `text`.
+A typed artifact in this collection may use a global type, named by its path under the library root such as `type: types/note.md`, or a local type spec under this collection's `types/` directory, named by its path under the KB root such as `type: instructions/types/<name>.md`. Frontmatter-free Markdown is implicit `text`.
 
 ## What does NOT belong here
 

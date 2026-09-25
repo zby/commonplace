@@ -1,12 +1,12 @@
 ---
-type: note
+type: types/note.md
 description: "Ecdysis failure diagnosis, strict-score harness selection, checkpoint reuse, and the external adapter contracts that bound them."
 generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-25-ecdysis-01
 source-identity: https://github.com/cuiyu-ai/Ecdysis
 reviewed-revision: cf93866d545b0974dbb0bc83b39c31fbbdeeecb8
 analysis-result: kb/reports/retained/agentic-system-analysis/AAS-2026-09-25-ecdysis-01/result.md
-analysis-result-sha256: 62f01a6a0599c571a90ed41f7410e4b112226cc9f851521eb5e9cdc07a3a8951
+analysis-result-sha256: fc2ef3c6a009d4d93c1da5b9aa61d3bf112f95bf50a9c88736d4e336f8979533
 ---
 
 # Ecdysis

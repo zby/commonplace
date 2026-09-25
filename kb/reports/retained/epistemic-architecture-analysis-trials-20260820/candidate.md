@@ -1,6 +1,6 @@
 ---
 description: Determine whether and how an external memory subsystem or agentic system produces knowledge by tracing its epistemic objects, transformations, warrant, and authority routes.
-type: instruction
+type: types/instruction.md
 ---
 
 # Analyse an External System's Epistemic Architecture

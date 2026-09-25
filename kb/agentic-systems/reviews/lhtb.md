@@ -1,5 +1,5 @@
 ---
-type: note
+type: types/note.md
 description: LHTB bundled continuation preserves work and feeds verifier outcomes
   into later attempts, with narrower feedback and isolation guarantees than its documentation
 generated-by: analyse-agentic-system
@@ -7,7 +7,7 @@ analysis-run: AAS-2026-09-25-lhtb-01
 source-identity: https://github.com/zli12321/LHTB
 reviewed-revision: d78f5eb52ad754c5ee9154741af73130a85a65b8
 analysis-result: kb/reports/retained/agentic-system-analysis/AAS-2026-09-25-lhtb-01/result.md
-analysis-result-sha256: f63209fb543736769ca89768228a4b2beaa60cd24e705f5e51e43b2d61549d07
+analysis-result-sha256: 615b32ab30f9072f535b674f92b9fd95609cb3f0a9d893c6abc3c7ba51a58af9
 ---
 
 # LHTB bundled continuation mechanism

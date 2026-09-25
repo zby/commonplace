@@ -1,6 +1,6 @@
 ---
 description: "claude-obsidian review: Obsidian vault memory with agent skills, hot cache, wiki ingestion, hybrid retrieval, locking, hooks, and methodology modes"
-type: ../types/agent-memory-system-review.md
+type: agent-memory-systems/types/agent-memory-system-review.md
 source-tier: code-grounded
 tags: [trace-learning]
 last-checked: "2026-06-04"

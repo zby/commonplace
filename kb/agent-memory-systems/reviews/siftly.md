@@ -1,6 +1,6 @@
 ---
 description: "Siftly review: local SQLite Twitter/X bookmark knowledge base with AI enrichment, category routing, FTS5 search, LLM reranking, mindmap, exports, and JSON CLI"
-type: ../types/agent-memory-system-review.md
+type: agent-memory-systems/types/agent-memory-system-review.md
 source-tier: code-grounded
 last-checked: "2026-06-05"
 ---

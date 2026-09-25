@@ -1,6 +1,6 @@
 ---
 description: "AgentFly/Memento review: planner-executor agent with JSONL case-bank memory, trace-judged case writes, and parametric or SimCSE case read-back"
-type: ../types/agent-memory-system-review.md
+type: agent-memory-systems/types/agent-memory-system-review.md
 source-tier: code-grounded
 last-checked: "2026-06-04"
 tags: [trace-learning]

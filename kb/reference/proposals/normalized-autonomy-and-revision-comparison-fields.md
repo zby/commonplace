@@ -1,6 +1,6 @@
 ---
 description: "Proposal: normalize autonomy and revision findings for cross-system comparison after source-based reviews establish useful distinctions"
-type: ../types/design-proposal.md
+type: reference/types/design-proposal.md
 ---
 
 # Normalized autonomy and revision comparison fields

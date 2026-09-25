@@ -2,7 +2,7 @@
 gate_id: semantic/conceptual-role-conflation
 name: Conceptual-role conflation
 description: "A load-bearing passage blurs a term, the concept it names, a prior account, the current artifact's explication or application, or the object of application, making its attribution, scope, or contribution unclear."
-type: review-gate
+type: types/review-gate.md
 lens: semantic
 watches: [body]
 staleness: changed

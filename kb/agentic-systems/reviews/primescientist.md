@@ -1,12 +1,12 @@
 ---
-type: note
+type: types/note.md
 description: "PrimeScientist's research-plan tree, retained rationale and diagnostics, with score-dependent inheritance and bounded budget/evaluator guarantees"
 generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-25-primescientist-01
 source-identity: https://github.com/Henri-XYu02/PrimeScientist
 reviewed-revision: 29971beac6f4f4b41309b1326762e1b83ceece98
 analysis-result: kb/reports/retained/agentic-system-analysis/AAS-2026-09-25-primescientist-01/result.md
-analysis-result-sha256: 58b89868169553221ef6677c5b3e89034ae8411c58c244ab51a7966d6539dd66
+analysis-result-sha256: b04d0a39fdf389ca522784541573e85905762029469d2d890ea38cd8ba7ee36b
 ---
 
 # PrimeScientist

@@ -1,6 +1,6 @@
 ---
 description: "Review workers receive only a generated prompt path, write one transport output, and may label an optional self-reported model without conversational bookkeeping"
-type: ../types/adr.md
+type: reference/types/adr.md
 tags: []
 status: accepted
 ---

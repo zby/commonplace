@@ -1,7 +1,7 @@
 ---
 name: evaluate-scenarios
 description: Measure framework overhead by decomposing scenarios into clean-context forks and reporting per-fork load plus aggregate cost.
-type: instruction
+type: types/instruction.md
 user-invocable: true
 allowed-tools: Read, Grep, Glob, Bash
 context: fork

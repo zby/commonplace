@@ -10,7 +10,7 @@ allOf:
           - type
         properties:
           type:
-            const: kb/notes/types/theory-proposal.md
+            const: notes/types/theory-proposal.md
           description:
             pattern: '^Proposal\b'
           tags:

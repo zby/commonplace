@@ -1,6 +1,6 @@
 ---
 description: "Direct memory creation preserves live understanding by writing useful artifacts before later trace extraction loses structure"
-type: note
+type: types/note.md
 tags: [agent-memory, context-engineering]
 ---
 

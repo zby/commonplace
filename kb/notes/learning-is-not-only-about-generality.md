@@ -1,6 +1,6 @@
 ---
 description: Per Simon, any capacity change is learning; accumulation is the basic operation, explanatory-reach its key property (facts low, theories high); capacity splits into generality vs reliability/speed/cost
-type: note
+type: types/note.md
 traits: [has-external-sources, title-as-claim]
 tags: [learning-theory, deploy-time-learning]
 ---

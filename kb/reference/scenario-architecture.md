@@ -1,6 +1,6 @@
 ---
 description: Scenario-derived shipped architecture — the user's KB in the project, the library read in place from the installed package, package-provided commands, promoted skills, and a measurable scenario decomposition
-type: note
+type: types/note.md
 tags: []
 ---
 

@@ -10,5 +10,5 @@ allOf:
           - type
         properties:
           type:
-            const: definition
+            const: types/definition.md
         additionalProperties: true

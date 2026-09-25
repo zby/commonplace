@@ -1,5 +1,5 @@
 ---
-type: note
+type: types/note.md
 description: 'Reflexion HotPotQA reasoning agents: automatic failure-derived prompt
   memory, exact-match retry control and limits of retained outcome evidence'
 generated-by: analyse-agentic-system
@@ -7,7 +7,7 @@ analysis-run: AAS-2026-09-25-reflexion-02
 source-identity: https://github.com/noahshinn/reflexion
 reviewed-revision: 218cf0ef1df84b05ce379dd4a8e47f17766733a0
 analysis-result: kb/reports/retained/agentic-system-analysis/AAS-2026-09-25-reflexion-02/result.md
-analysis-result-sha256: 4173ffeae7cb7e55cb0faa0c71c9bb90a22024c263ca9038cc7439bdb473968d
+analysis-result-sha256: 93285ee41e4ffa28444c2b5b7818fd771c7878cd25fd7923e5f17938c267219e
 ---
 
 # Reflexion HotPotQA reasoning agents

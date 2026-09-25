@@ -1,6 +1,6 @@
 ---
 description: Types define structural requirements checked by validation; traits route semantic review gates; the traits-only semantic boundary is amended by ADR-038/041, which make both contracts conformance gates
-type: ../types/adr.md
+type: reference/types/adr.md
 tags: []
 status: accepted
 ---

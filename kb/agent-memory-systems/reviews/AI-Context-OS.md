@@ -1,6 +1,6 @@
 ---
 description: "AI-Context-OS review: filesystem-first Markdown memory with L0/L1/L2 context loading, generated adapters, MCP/chat read-back, and trace-learning optimization suggestions"
-type: ../types/agent-memory-system-review.md
+type: agent-memory-systems/types/agent-memory-system-review.md
 source-tier: code-grounded
 last-checked: "2026-06-04"
 tags: [trace-learning]

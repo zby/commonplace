@@ -1,6 +1,6 @@
 ---
 description: "Proposal (adopted): dated pre-migration source-unit contracts and corpus observations behind the ingest authority decision"
-type: ../../types/design-proposal.md
+type: reference/types/design-proposal.md
 ---
 
 # Ingest source units and supporting material

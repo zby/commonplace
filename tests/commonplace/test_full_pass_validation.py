@@ -11,6 +11,8 @@ from tests.commonplace.validation_helpers import (
     write_packet,
 )
 
+pytestmark = pytest.mark.usefixtures("tmp_library")
+
 
 def install_types(repo: Path) -> None:
     copy_repo_files(

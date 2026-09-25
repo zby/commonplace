@@ -1,6 +1,6 @@
 ---
 description: "Proposal (adopted): outward-facing kb/articles/ uses an editorial profile, excluded draft subtree, dated publication procedure, and ProperDocs channel"
-type: ../../types/design-proposal.md
+type: reference/types/design-proposal.md
 tags: [document-system, context-engineering]
 ---
 

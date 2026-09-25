@@ -1,5 +1,5 @@
 ---
-type: type-spec
+type: types/type-spec.md
 name: definition
 description: Operational vocabulary note that sharpens a term for KB use
 schema: ./definition.schema.yaml
@@ -63,7 +63,7 @@ A good definition note should answer:
 | Field | Required | Use |
 |---|---:|---|
 | `description` | Yes | Retrieval description naming the term and the operational meaning this KB assigns it. |
-| `type` | Yes | `kb/types/definition.md`. |
+| `type` | Yes | `types/definition.md`. |
 | `tags` | No | Navigation tags for the concept area the term belongs to. |
 | `user-verified` | No | Optional explicit human attestation; may only be `true` and must be removed after substantive edits. |
 
@@ -72,7 +72,7 @@ A good definition note should answer:
 ```markdown
 ---
 description: Definition -- {term} means {operational meaning and why it matters}
-type: definition
+type: types/definition.md
 tags: []
 ---
 

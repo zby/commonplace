@@ -1,6 +1,6 @@
 ---
 description: "Synapptic review: trace-learning user-model builder that mines Claude transcripts into weighted profiles, benchmarked guards, and assistant memory files"
-type: ../types/agent-memory-system-review.md
+type: agent-memory-systems/types/agent-memory-system-review.md
 source-tier: code-grounded
 tags: [trace-learning]
 last-checked: "2026-06-05"

@@ -1,5 +1,5 @@
 ---
-type: type-spec
+type: types/type-spec.md
 name: source-review
 description: Structured extraction and relevance review for an external source
 schema: ./source-review.schema.yaml
@@ -30,7 +30,7 @@ Use `source-review` when you want a structured extraction from an external sourc
 ```markdown
 ---
 description: ""
-type: source-review
+type: types/source-review.md
 tags: []
 ---
 

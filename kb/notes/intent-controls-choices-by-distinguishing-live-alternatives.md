@@ -1,6 +1,6 @@
 ---
 description: "A stated intent controls a local choice only when it changes which live alternatives are admissible, preferred, worth further search, or sufficient to stop"
-type: note
+type: types/note.md
 traits: [title-as-claim]
 tags: [foundations, methodology, planning]
 ---

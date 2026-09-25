@@ -7,6 +7,8 @@ import pytest
 from commonplace.lib.validation import validate_note
 from tests.commonplace.validation_helpers import NOTE_TYPE_SPECS, copy_repo_files, write
 
+pytestmark = pytest.mark.usefixtures("tmp_library")
+
 SLUGS = [f"src-{index}" for index in range(1, 7)]
 QUOTED_PASSAGE = "the passage text here"
 
@@ -52,7 +54,7 @@ def note(
     body: str,
     *,
     collection: str = "notes",
-    type_path: str = "note",
+    type_path: str = "types/note.md",
 ) -> Path:
     return write(
         tmp_path / "kb" / collection / "test-note.md",
@@ -92,8 +94,8 @@ def unquoted_fails(path: Path, repo_root: Path) -> list[str]:
 @pytest.mark.parametrize(
     ("collection", "type_path"),
     [
-        ("notes", "note"),
-        ("articles", "kb/articles/types/article.md"),
+        ("notes", "types/note.md"),
+        ("articles", "articles/types/article.md"),
     ],
 )
 def test_six_unquoted_tracked_sources_fail(

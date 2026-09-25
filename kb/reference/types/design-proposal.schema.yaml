@@ -10,7 +10,7 @@ allOf:
           - type
         properties:
           type:
-            const: kb/reference/types/design-proposal.md
+            const: reference/types/design-proposal.md
           description:
             pattern: '^Proposal\b'
           status: false

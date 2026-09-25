@@ -1,6 +1,6 @@
 ---
 description: "Maps agentic-adaptation signals onto artifact-analysis axes so KB learning records which retained surface changes, what authority it gains, and how to review it"
-type: note
+type: types/note.md
 traits: [title-as-claim, has-comparison, has-external-sources]
 tags: [learning-theory, artifact-analysis, agent-memory, context-engineering]
 ---

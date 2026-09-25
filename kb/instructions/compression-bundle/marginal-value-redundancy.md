@@ -2,7 +2,7 @@
 gate_id: compression/marginal-value-redundancy
 name: Marginal-value redundancy
 description: 'A true, consistent passage consumes space without adding enough marginal value to justify keeping it in its current form.'
-type: review-gate
+type: types/review-gate.md
 lens: compression
 watches: [body]
 staleness: changed

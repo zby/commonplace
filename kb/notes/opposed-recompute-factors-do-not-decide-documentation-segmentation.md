@@ -1,6 +1,6 @@
 ---
 description: "When audiences trade per-reconstruction savings against recurrence, neither factor alone determines cache value; among feasible alternatives, segmentation separately depends on whether specialization repays every cost introduced by the split"
-type: note
+type: types/note.md
 traits: [title-as-claim, has-comparison]
 tags: [document-system, context-engineering]
 ---

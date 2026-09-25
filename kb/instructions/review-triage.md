@@ -1,6 +1,6 @@
 ---
 description: Inspect diffs for note-changed assay pairs and acknowledge changes that do not invalidate their existing evidence
-type: instruction
+type: types/instruction.md
 ---
 
 # Review triage

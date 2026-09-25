@@ -1,6 +1,6 @@
 ---
 description: Carry current gate verdicts across a wording-only criterion edit without treating the edit as a fresh review
-type: instruction
+type: types/instruction.md
 ---
 
 # Migrate semantics-preserving gate changes

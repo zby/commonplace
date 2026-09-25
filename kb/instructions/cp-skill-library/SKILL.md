@@ -1,7 +1,7 @@
 ---
 name: cp-skill-library
 description: Find and follow a Commonplace library procedure, instruction, or type by name. Use when the user names a Commonplace procedure or asks how Commonplace does something, and no more specific cp-skill applies.
-type: instruction
+type: types/instruction.md
 user-invocable: true
 allowed-tools: Read, Grep, Glob, Bash
 argument-hint: "[procedure, instruction, or type name or topic]"

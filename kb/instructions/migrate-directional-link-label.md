@@ -1,6 +1,6 @@
 ---
 description: "Use after a directional link label has an adopted source-as-subject successor and a complete edge-disposition ledger, to migrate contracts, guidance, and active corpus tuples without rewriting history"
-type: instruction
+type: types/instruction.md
 ---
 
 # Migrate a directional link label

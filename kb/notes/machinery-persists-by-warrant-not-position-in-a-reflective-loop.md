@@ -1,6 +1,6 @@
 ---
 description: "Reflection makes selected production machinery challengeable, but placement alone neither warrants nor requires revision; fixed general machinery may persist when its role and scope are earned"
-type: note
+type: types/note.md
 traits: [title-as-claim, has-external-sources]
 tags: [learning-theory, deploy-time-learning, self-improving-systems]
 ---

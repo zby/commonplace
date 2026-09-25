@@ -1,6 +1,6 @@
 ---
 description: "When revision of an addressable theory relies on rationale to locate a failed premise, misleading rationale can direct repair to the wrong part; rationale is one optional repair aid"
-type: note
+type: types/note.md
 traits: [title-as-claim, has-external-sources]
 tags: [learning-theory, discovery, evaluation]
 ---

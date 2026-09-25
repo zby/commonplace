@@ -1,6 +1,6 @@
 ---
 description: "Lightweight doc-grounded coverage of Sig, a release-doc-backed desktop app that reports local markdown work memory, reviewed sharing, git-backed team sync, and AI-tool context reuse"
-type: ../types/agent-memory-system-review.md
+type: agent-memory-systems/types/agent-memory-system-review.md
 source-tier: doc-grounded
 traits: [has-comparison, has-external-sources]
 last-checked: "2026-06-02"

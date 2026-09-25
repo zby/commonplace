@@ -1,6 +1,6 @@
 ---
 description: "Separates ephemeral task-specific run state from reusable selection strategies inside host schedulers; RLM-style execution discards both and therefore loses the valuable reusable half"
-type: note
+type: types/note.md
 traits: [title-as-claim]
 tags: [computational-model, learning-theory, tool-loop, artifact-analysis]
 ---

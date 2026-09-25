@@ -1,6 +1,6 @@
 ---
 description: "Curated head for the discovery tag — positing a general concept and recognizing particulars as its instances; explanatory-reach as the value of what discovery produces"
-type: tag-readme
+type: types/tag-readme.md
 index_source: tag
 index_key: discovery
 complete: true

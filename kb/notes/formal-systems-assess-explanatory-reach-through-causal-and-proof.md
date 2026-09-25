@@ -1,6 +1,6 @@
 ---
 description: "Causal and proof obligations demonstrate two ways formal symbolic systems can assess explanatory-reach inside a warranted model"
-type: note
+type: types/note.md
 traits: [title-as-claim, has-comparison, has-external-sources]
 tags: [foundations, computational-model, self-improving-systems]
 ---

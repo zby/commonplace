@@ -1,6 +1,6 @@
 ---
 description: "Code resolves a name to its value everywhere; LLM-read prose has no such dereference, so a fact stated once may not govern where it applies — restate it at the point of use, kept honest by a check"
-type: note
+type: types/note.md
 traits: [title-as-claim]
 tags: [learning-theory, artifact-analysis, computational-model]
 ---

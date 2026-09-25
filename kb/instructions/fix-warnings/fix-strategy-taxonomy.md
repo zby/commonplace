@@ -1,6 +1,6 @@
 ---
 description: Named strategies for classifying review-warning fixes and promoting recurring new patterns into a shared codebook.
-type: instruction
+type: types/instruction.md
 ---
 
 # Fix Strategy Taxonomy

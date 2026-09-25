@@ -1,6 +1,6 @@
 ---
 description: Definition - behavioral authority records who consumes a retained artifact, through which channel, and with what force
-type: definition
+type: types/definition.md
 tags: [learning-theory, artifact-analysis]
 ---
 

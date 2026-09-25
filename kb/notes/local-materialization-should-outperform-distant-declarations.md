@@ -1,6 +1,6 @@
 ---
 description: "Predicts that, for distant or non-obvious uses of a natural-language declaration, generated local materialization will outperform declaration-only presentation without creating a second maintenance authority"
-type: note
+type: types/note.md
 traits: [title-as-claim]
 tags: [learning-theory, artifact-analysis, computational-model]
 ---

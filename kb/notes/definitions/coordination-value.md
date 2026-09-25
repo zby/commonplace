@@ -1,6 +1,6 @@
 ---
 description: "Definition — coordination value is the worth a shared structure has because adopters commit to the same one; created by the commitment rather than discovered as a property of the choice, so a better-in-principle rival does not increase it"
-type: definition
+type: types/definition.md
 tags: [document-system]
 ---
 

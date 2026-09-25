@@ -1,6 +1,6 @@
 ---
 description: Interpreter failure is output that a spec's public meaning rules out; the fault attaches to the interpreter's role, so repair uses detection and correction rather than narrowing an already sufficient spec
-type: note
+type: types/note.md
 traits: [title-as-claim]
 tags: [llm-reliability]
 ---

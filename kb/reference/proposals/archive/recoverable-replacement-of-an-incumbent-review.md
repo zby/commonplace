@@ -1,6 +1,6 @@
 ---
 description: "Proposal: decide what a failed agent-memory review replacement owes the incumbent it already archived, once the run has passed the point where it can still decline to start"
-type: ../../types/design-proposal.md
+type: reference/types/design-proposal.md
 tags: [architecture, lifecycle-management]
 ---
 

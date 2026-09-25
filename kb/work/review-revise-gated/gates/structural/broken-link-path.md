@@ -1,5 +1,5 @@
 ---
-type: instruction
+type: types/instruction.md
 description: Workshop review gate for checking broken link path during review-revise experiments
 gate_id: structural/broken-link-path
 name: Broken link path

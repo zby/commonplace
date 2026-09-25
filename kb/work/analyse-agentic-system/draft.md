@@ -1,7 +1,7 @@
 ---
 name: analyse-agentic-system
 description: "Use when asked to analyse, review, or refresh an external agentic system — an agent runtime, harness, orchestration framework, agent operating layer, or a narrower system whose deployed behavior depends on model calls plus surrounding machinery."
-type: instruction
+type: types/instruction.md
 ---
 
 # Analyse an Agentic System

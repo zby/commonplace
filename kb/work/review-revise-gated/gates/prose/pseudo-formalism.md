@@ -1,5 +1,5 @@
 ---
-type: instruction
+type: types/instruction.md
 description: Workshop review gate for checking pseudo formalism during review-revise experiments
 gate_id: prose/pseudo-formalism
 name: Pseudo-formalism

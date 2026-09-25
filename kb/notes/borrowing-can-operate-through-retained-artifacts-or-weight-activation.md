@@ -1,6 +1,6 @@
 ---
 description: Established external methodologies can become operative either by being explicitly retained in the system or by activating a model's pretrained representation; the two routes trade context economy against inspectability and revisability
-type: note
+type: types/note.md
 traits: [title-as-claim, has-comparison]
 tags: [foundations, methodology, context-engineering]
 ---

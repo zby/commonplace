@@ -1,6 +1,6 @@
 ---
 description: "MiroShark review: simulation knowledge graph with Neo4j graph memory, trace-learning agent activity edges, report-agent reasoning traces, and many public export surfaces"
-type: ../types/agent-memory-system-review.md
+type: agent-memory-systems/types/agent-memory-system-review.md
 source-tier: code-grounded
 last-checked: "2026-06-04"
 tags: [trace-learning]

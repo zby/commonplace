@@ -1,6 +1,6 @@
 ---
 description: "For a fixed assembled input, whether V exceeds I, whether D escapes V, and how D's spread affects realization are three diagnostic questions with different primary repair surfaces"
-type: note
+type: types/note.md
 traits: [title-as-claim, synthesis, has-external-sources]
 tags: [llm-reliability, computational-model]
 ---

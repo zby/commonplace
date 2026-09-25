@@ -1,5 +1,5 @@
 ---
-type: instruction
+type: types/instruction.md
 description: Workshop review gate for checking title composability during review-revise experiments
 gate_id: frontmatter/title-composability
 name: Title composability

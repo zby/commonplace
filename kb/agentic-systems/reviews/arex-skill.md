@@ -1,12 +1,12 @@
 ---
-type: note
+type: types/note.md
 description: "AREX-Skill's repository-skill construction and deployment subsystem: model-directed verification, transactional admission, selective reads and evidence limits"
 generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-25-arex-skill-01
 source-identity: https://github.com/VectorSpaceLab/AREX-Skill
 reviewed-revision: ac3fe1afa80fb9a09775ecfb2b6cc3ba850a2db6
 analysis-result: kb/reports/retained/agentic-system-analysis/AAS-2026-09-25-arex-skill-01/result.md
-analysis-result-sha256: 977c4e8e1c00a88474e88dc34806baafaa2aab496cc0d4e1907ca90dd7d4afbe
+analysis-result-sha256: 973dc7c3679aaadff574cb9b4cc9d40602a8a9c120190430fa48bf8fdd356d47
 ---
 
 # AREX-Skill

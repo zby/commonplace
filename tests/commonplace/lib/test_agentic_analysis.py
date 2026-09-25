@@ -22,6 +22,8 @@ from commonplace.lib.agentic_publication import (
     publish_publication,
 )
 
+pytestmark = pytest.mark.usefixtures("tmp_library")
+
 REPO_ROOT = Path(__file__).resolve().parents[3]
 RUN_ID = "AAS-2026-09-04-example-system-01"
 
@@ -99,7 +101,7 @@ def memory_report_fixture(run_dir: Path, revision: str) -> Path:
                  for axis in systems_matrix.AXES},
     }
     values = {
-        "type": "agent-memory-analysis-report",
+        "type": "types/agent-memory-analysis-report.md",
         "description": "Fixture specialist report bound to the frozen source and shared input",
         "analysis-run": RUN_ID,
         "source-identity": "https://example.invalid/example-system",
@@ -131,7 +133,7 @@ def valid_run_state(tmp_path: Path) -> Path:
     result = write(
         tmp_path / result_path,
         f'''---
-type: agentic-system-analysis-result
+type: types/agentic-system-analysis-result.md
 description: "Complete fixture analysis at one frozen source boundary"
 run-id: {RUN_ID}
 system: "Example System"
@@ -265,7 +267,7 @@ None.
         tmp_path / generated_path,
         f'''---
 description: "Generated fixture review of one external agentic system"
-type: note
+type: types/note.md
 generated-by: analyse-agentic-system
 analysis-run: {RUN_ID}
 source-identity: https://example.invalid/example-system
@@ -280,7 +282,7 @@ analysis-result-sha256: {digest(result)}
 ''',
     )
     run_frontmatter: dict[str, object] = {
-        "type": "agentic-system-analysis-run-state",
+        "type": "types/agentic-system-analysis-run-state.md",
         "description": f"Minimal completion state for {RUN_ID}",
         "run-id": RUN_ID,
         "system": "Example System",
@@ -389,7 +391,7 @@ def test_running_state_needs_no_recovery_records(tmp_path: Path) -> None:
     configure_types(tmp_path)
     state = tmp_path / f"kb/reports/state/agentic-system-analysis/{RUN_ID}/run-state.md"
     values: dict[str, object] = {
-        "type": "agentic-system-analysis-run-state",
+        "type": "types/agentic-system-analysis-run-state.md",
         "description": f"Minimal completion state for {RUN_ID}",
         "run-id": RUN_ID,
         "system": "Example System",
@@ -414,7 +416,7 @@ def test_failed_state_requires_only_a_reason(tmp_path: Path) -> None:
     configure_types(tmp_path)
     state = tmp_path / f"kb/reports/state/agentic-system-analysis/{RUN_ID}/run-state.md"
     values: dict[str, object] = {
-        "type": "agentic-system-analysis-run-state",
+        "type": "types/agentic-system-analysis-run-state.md",
         "description": f"Failed run {RUN_ID}",
         "run-id": RUN_ID,
         "system": "Example System",

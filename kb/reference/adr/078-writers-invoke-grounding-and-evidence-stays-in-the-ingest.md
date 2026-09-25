@@ -1,6 +1,6 @@
 ---
 description: "Accepted decision that promoted writers invoke cp-skill-ground and report quote appends, ordinary writer grounding leaves missing-ingest creation manual, and bounded evidence stays in the ingest Quotes pool"
-type: ../types/adr.md
+type: reference/types/adr.md
 tags: []
 status: accepted
 ---

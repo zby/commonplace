@@ -1,6 +1,6 @@
 ---
 description: "LLMs interpret instructions and content through one token medium, enabling natural-language artifacts to alter behavior without translation while requiring architecture to enforce role, scope, and authority boundaries"
-type: note
+type: types/note.md
 traits: [title-as-claim]
 tags: [computational-model]
 ---

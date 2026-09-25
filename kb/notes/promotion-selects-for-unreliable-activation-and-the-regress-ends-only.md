@@ -1,6 +1,6 @@
 ---
 description: "Recasts promotion from 'the consumer lacks this' to 'the consumer will not apply this unprompted', and requires delivery to have a root firing event independent of that prior activation"
-type: note
+type: types/note.md
 traits: [title-as-claim, has-comparison]
 tags: [agent-memory, context-engineering, failure-modes]
 ---

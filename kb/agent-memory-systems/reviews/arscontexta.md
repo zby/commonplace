@@ -1,6 +1,6 @@
 ---
 description: "Ars Contexta review: Claude Code plugin deriving file-based agent knowledge systems with generated context, skills, hooks, trace mining, and coarse push read-back"
-type: ../types/agent-memory-system-review.md
+type: agent-memory-systems/types/agent-memory-system-review.md
 source-tier: code-grounded
 last-checked: "2026-06-04"
 tags: [trace-learning]

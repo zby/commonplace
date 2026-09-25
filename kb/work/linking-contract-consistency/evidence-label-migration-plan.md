@@ -1,6 +1,6 @@
 ---
 description: "Use when replacing the ambiguous evidence link label with directional identifiers across contracts, authored edges, and current guidance"
-type: instruction
+type: types/instruction.md
 ---
 
 # Migrate the evidence link label

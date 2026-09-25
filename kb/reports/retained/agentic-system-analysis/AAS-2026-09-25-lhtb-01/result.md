@@ -1,5 +1,5 @@
 ---
-type: agentic-system-analysis-result
+type: types/agentic-system-analysis-result.md
 description: 'LHTB bundled Harbor single-step continuation: outcome-derived instructions,
   external verifier gating and conditional isolation with a documentation mismatch'
 run-id: AAS-2026-09-25-lhtb-01

@@ -1,6 +1,6 @@
 ---
 description: "A fixed-client benchmark measures worker capability; it leaves broader closure untested when the client supplies internal production decisions, while ordinary user requirements and acceptance may remain external"
-type: note
+type: types/note.md
 traits: [title-as-claim]
 tags: [foundations, self-improving-systems, evaluation]
 ---

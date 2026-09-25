@@ -1,6 +1,6 @@
 ---
 description: "An adversarial human-agent loop can reconstruct the writing-is-thinking filter only while human judgment remains active."
-type: note
+type: types/note.md
 traits: [title-as-claim]
 tags: [foundations]
 ---

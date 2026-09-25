@@ -1,6 +1,6 @@
 ---
 description: "Specification, checking, permitted interpretations, and repeated-use cost inform which operations to codify; none alone makes code or model interpretation universally preferable"
-type: note
+type: types/note.md
 traits: [synthesis]
 tags: [learning-theory, constraining]
 ---

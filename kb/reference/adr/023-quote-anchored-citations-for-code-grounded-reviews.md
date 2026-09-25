@@ -1,6 +1,6 @@
 ---
 description: "Requires pinned verbatim evidence for load-bearing main-analysis findings; main-review publication resolves generated quotes against frozen Git blobs while standing validation checks retained shape"
-type: ../types/adr.md
+type: reference/types/adr.md
 tags: []
 status: accepted
 ---

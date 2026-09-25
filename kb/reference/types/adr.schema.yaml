@@ -10,7 +10,7 @@ allOf:
           - type
         properties:
           type:
-            const: kb/reference/types/adr.md
+            const: reference/types/adr.md
           status:
             enum:
               - accepted

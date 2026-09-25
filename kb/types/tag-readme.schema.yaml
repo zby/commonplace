@@ -11,7 +11,7 @@ allOf:
           - index_source
         properties:
           type:
-            const: tag-readme
+            const: types/tag-readme.md
           index_source:
             enum:
               - tag

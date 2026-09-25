@@ -1,6 +1,6 @@
 ---
 description: "Separates envelope expansion, where a responsibility leaves the residual human work, from performance gains inside a fixed envelope, so a bounded method reaching its ceiling does not retract the transfer it already made"
-type: note
+type: types/note.md
 traits: [title-as-claim]
 tags: [foundations, self-improving-systems]
 ---

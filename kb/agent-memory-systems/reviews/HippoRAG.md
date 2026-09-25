@@ -1,6 +1,6 @@
 ---
 description: "HippoRAG review: document-ingest memory framework using OpenIE triples, parquet embedding stores, igraph PageRank retrieval, and RAG QA"
-type: ../types/agent-memory-system-review.md
+type: agent-memory-systems/types/agent-memory-system-review.md
 source-tier: code-grounded
 last-checked: "2026-06-04"
 ---

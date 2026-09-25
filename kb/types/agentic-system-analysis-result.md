@@ -1,5 +1,5 @@
 ---
-type: type-spec
+type: types/type-spec.md
 name: agentic-system-analysis-result
 description: "Exact state result of one evidence-bounded external agentic-system analysis run"
 schema: ./agentic-system-analysis-result.schema.yaml
@@ -24,7 +24,7 @@ a new analysis run, never by editing the retained copy.
 
 | Field | Required | Use |
 |---|---:|---|
-| `type` | Yes | `kb/types/agentic-system-analysis-result.md` |
+| `type` | Yes | `types/agentic-system-analysis-result.md` |
 | `description` | Yes | Retrieval description naming the system, selected boundary, and result disposition |
 | `run-id` | Yes | Canonical `AAS-YYYY-MM-DD-system-slug-nn` identity allocated by the producing skill |
 | `system` | Yes | Source-native system name or the caller's unambiguous identifier |
@@ -351,7 +351,7 @@ A transfer-scan disposition belongs in the operator report unless an owning work
 
 ```markdown
 ---
-type: agentic-system-analysis-result
+type: types/agentic-system-analysis-result.md
 description: "Complete analysis of {system} at {boundary}, with {disposition} disposition"
 run-id: AAS-YYYY-MM-DD-system-slug-nn
 system: "{source-native system name}"

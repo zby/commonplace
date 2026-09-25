@@ -1,5 +1,5 @@
 ---
-type: note
+type: types/note.md
 description: "SwarmWorld's simulator-bound agent society: explicit episode memory, executable artifact inheritance, measurement-based skill status and limits on replay and scientific warrant."
 traits: [has-external-sources]
 generated-by: analyse-agentic-system
@@ -7,7 +7,7 @@ analysis-run: AAS-2026-09-25-swarmworld-01
 source-identity: https://github.com/lamm-mit/SwarmWorld
 reviewed-revision: "6af7ae9fa36d98b07b0492cf139658e8af1f6eab"
 analysis-result: kb/reports/retained/agentic-system-analysis/AAS-2026-09-25-swarmworld-01/result.md
-analysis-result-sha256: "774834cb6233b4c244513567f658de749d6b1f80f0dd2fae5c09d8e78cf6d78a"
+analysis-result-sha256: "4a9d0bc1dbd7479ace7f980b34a827ff0bb5c22c13cd39cc4388999ef546aaaf"
 ---
 
 # SwarmWorld

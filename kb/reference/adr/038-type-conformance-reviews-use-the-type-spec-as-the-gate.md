@@ -1,6 +1,6 @@
 ---
 description: "Type-conformance review pairs put the note's type spec on the gate side of the existing (note, gate) freshness key, so a type edit stales exactly its cohort with no new storage semantics"
-type: ../types/adr.md
+type: reference/types/adr.md
 tags: []
 status: accepted
 ---

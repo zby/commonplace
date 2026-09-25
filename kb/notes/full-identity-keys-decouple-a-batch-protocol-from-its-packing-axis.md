@@ -1,6 +1,6 @@
 ---
 description: "A batched LLM-call protocol keyed by each unit's full composite identity, not position or a single axis, lets grouping strategy vary freely without protocol change"
-type: note
+type: types/note.md
 traits: [title-as-claim]
 tags: [computational-model]
 ---

@@ -1,7 +1,7 @@
 ---
 name: cp-skill-validate
 description: Run deterministic validation on KB artifacts, collections, collection landings, and the published redirect map, including schemas, links, required sections, and batch signals.
-type: instruction
+type: types/instruction.md
 user-invocable: true
 allowed-tools: Bash
 context: fork

@@ -1,6 +1,6 @@
 ---
 description: "Trace memories begin as records; verification, abstraction, and consultation earn authority under progressively harder oracles, while unverified stores accumulate guesses presented as knowledge"
-type: note
+type: types/note.md
 traits: [title-as-claim, has-external-sources]
 tags: [agent-memory, learning-theory, context-engineering]
 ---

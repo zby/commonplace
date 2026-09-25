@@ -1,6 +1,6 @@
 ---
 description: "Accepted decision that content placement is decided first by what an interpreter cannot regenerate from implementation, git, and general knowledge, then by the consuming operation's force; content-routing.md is the table; limits get a named section"
-type: ../types/adr.md
+type: reference/types/adr.md
 tags: []
 status: accepted
 ---

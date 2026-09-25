@@ -1,6 +1,6 @@
 ---
 description: "Ordinary notes drop the fused global lifecycle enum and expose only optional committed human verification, while specialized local statuses remain type-owned"
-type: ../types/adr.md
+type: reference/types/adr.md
 tags: []
 status: accepted
 ---

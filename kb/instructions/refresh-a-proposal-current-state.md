@@ -1,6 +1,6 @@
 ---
 description: Use when a live design proposal's current-state anchor may be stale — re-checks its system facts against later ADRs, code, and reference docs, and routes shipped or foreclosed content to the right procedure
-type: instruction
+type: types/instruction.md
 ---
 
 # Refresh a proposal's current state

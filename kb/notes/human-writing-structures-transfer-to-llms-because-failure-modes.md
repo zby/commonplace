@@ -1,6 +1,6 @@
 ---
 description: Writing genres evolved to prevent reasoning failures; the same structures help LLMs because they share those failure modes (content effects on reasoning) — evaluated per convention, not by analogy
-type: note
+type: types/note.md
 traits: [has-external-sources]
 tags: [type-system]
 ---

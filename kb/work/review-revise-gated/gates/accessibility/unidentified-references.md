@@ -1,5 +1,5 @@
 ---
-type: instruction
+type: types/instruction.md
 description: Named system, tool, or organization introduced without enough context for the reader to know what it is.
 ---
 

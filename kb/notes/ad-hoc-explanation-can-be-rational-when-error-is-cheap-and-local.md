@@ -1,6 +1,6 @@
 ---
 description: "Explains why a disposable local guess can rationally select the next probe when error is cheap and contained, while retained explanations need reach checks"
-type: note
+type: types/note.md
 traits: [title-as-claim, has-comparison, synthesis]
 tags: [learning-theory, discovery, kb-maintenance]
 ---

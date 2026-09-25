@@ -1,6 +1,6 @@
 ---
 description: "Use when an artifact's wording should be simplified: decorative figures made literal, unusual words made common, and redundant exclusions cut, without stripping the metaphors that carry the argument or the terms the KB registers"
-type: instruction
+type: types/instruction.md
 effort: simple
 ---
 

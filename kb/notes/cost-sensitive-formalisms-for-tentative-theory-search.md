@@ -1,6 +1,6 @@
 ---
 description: "Exploratory map of backtracking, learning, and complexity models that expose budgets relevant to search guided by tentative theories"
-type: note
+type: types/note.md
 traits: [has-comparison]
 tags: [learning-theory, computational-model, self-improving-systems]
 ---

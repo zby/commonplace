@@ -1,6 +1,6 @@
 ---
 description: "The progress question for self-improving systems is not category membership but which decision-bearing functions humans still supply; the endpoint test is whether the boundary can be contracted to exclude them"
-type: note
+type: types/note.md
 traits: [title-as-claim]
 tags: [foundations, self-improving-systems]
 ---

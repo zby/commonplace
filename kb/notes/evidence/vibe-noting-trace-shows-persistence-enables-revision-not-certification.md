@@ -1,6 +1,6 @@
 ---
 description: "Evidence from one Commonplace note history: persistence enabled later semantic development while review exposed omitted risks, attribution drift, a link error, and an unresolved authority boundary"
-type: note
+type: types/note.md
 traits: [title-as-claim]
 tags: [evaluation]
 ---

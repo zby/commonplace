@@ -1,7 +1,7 @@
 ---
 name: cp-skill-write-multistage
 description: Write or rebuild one unsettled KB artifact through source-first reconstruction, consolidated authorship, independent review, and guarded promotion. Use when claims need grounding or synthesis; avoid it for settled local edits.
-type: instruction
+type: types/instruction.md
 user-invocable: true
 allowed-tools: Read, Edit, Write, Grep, Glob, Bash, Skill, Task
 argument-hint: "[target path | collection/type/topic] [source paths or brief]"

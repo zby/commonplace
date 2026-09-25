@@ -1,6 +1,6 @@
 ---
 description: Replaces per-path git check-ignore visibility and git-mv relocation with a package-owned name-based visibility contract; commonplace commands never invoke the git binary
-type: ../types/adr.md
+type: reference/types/adr.md
 tags: []
 status: accepted
 ---

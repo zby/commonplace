@@ -1,6 +1,6 @@
 ---
 description: "LLM Wiki review: Python toolkit and agent protocol for file-backed Markdown wikis with BM25/qmd search, MCP tools, linting, and Obsidian-oriented workflow"
-type: ../types/agent-memory-system-review.md
+type: agent-memory-systems/types/agent-memory-system-review.md
 source-tier: code-grounded
 last-checked: "2026-07-06"
 tags: []

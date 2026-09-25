@@ -1,12 +1,12 @@
 ---
-type: note
+type: types/note.md
 description: "AIDE2's nested harness-rewrite search, private grading and evolved context mechanisms, with documentary limits."
 generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-25-aide2-01
 source-identity: https://arxiv.org/abs/2609.26457
 reviewed-revision: "sha256:86d1b094380280450bf2281b1e38945a4f0c2528f2b88aebdf9ea8b9a1e8da8e"
 analysis-result: kb/reports/retained/agentic-system-analysis/AAS-2026-09-25-aide2-01/result.md
-analysis-result-sha256: 79a52919eaf48fccaf3e2445c5c52a628ce1dd4076df6ba3840a10252d5dba15
+analysis-result-sha256: fa6898ba490739f176c00f5f515ce05ac179963ea0049c7b27ef800f0fbf2a8f
 ---
 
 # AIDE2

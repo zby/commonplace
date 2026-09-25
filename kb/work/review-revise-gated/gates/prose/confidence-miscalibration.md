@@ -1,5 +1,5 @@
 ---
-type: instruction
+type: types/instruction.md
 description: Workshop review gate for checking confidence miscalibration during review-revise experiments
 gate_id: prose/confidence-miscalibration
 name: Confidence miscalibration

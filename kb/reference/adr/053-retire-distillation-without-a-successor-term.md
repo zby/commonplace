@@ -1,6 +1,6 @@
 ---
 description: "Distillation is retired with no successor term: theory lives in the two-layer structure note, lineage labels carry the derived/abstracted boundary, the discovery lifecycle owns ampliative traffic"
-type: ../types/adr.md
+type: reference/types/adr.md
 tags: []
 status: accepted
 ---

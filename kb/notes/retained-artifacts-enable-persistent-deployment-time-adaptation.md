@@ -1,6 +1,6 @@
 ---
 description: Retaining evaluated changes to behavior-shaping prompts, rules, tools, and tests gives deployed systems a persistent adaptation path outside model-weight updates
-type: note
+type: types/note.md
 traits: [has-comparison, title-as-claim]
 tags: [learning-theory, deploy-time-learning]
 ---

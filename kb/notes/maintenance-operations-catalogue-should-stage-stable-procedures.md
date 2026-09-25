@@ -1,6 +1,6 @@
 ---
 description: Catalogue of periodic KB maintenance operations and readiness status, used as a staging ground before promotion into kb/instructions procedures
-type: note
+type: types/note.md
 traits: [has-implementation, title-as-claim]
 tags: [kb-maintenance]
 ---

@@ -1,6 +1,6 @@
 ---
 description: Opacity is not a representational form; any representation becomes practically opaque at sufficient scale, though distributed-parametric artifacts cross that threshold earliest.
-type: note
+type: types/note.md
 tags: [learning-theory, constraining]
 ---
 

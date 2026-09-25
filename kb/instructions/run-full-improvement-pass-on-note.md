@@ -1,6 +1,6 @@
 ---
 description: Run the full improvement pipeline over one note, apply bounded edits that keep its claim, and require closing review to accept, repair once, or hand back the result.
-type: instruction
+type: types/instruction.md
 ---
 
 # Run a full improvement pass on one note
@@ -194,7 +194,7 @@ These rules govern body edits inside a `keep`; the decision table governs the no
 ```markdown
 ---
 description: "Full improvement pass over <pass-start note title>"
-type: full-pass-report
+type: types/full-pass-report.md
 source: <pass-start note path>
 source_capture: source.txt
 source_sha256: <SHA-256 of source.txt as UTF-8 text>

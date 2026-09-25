@@ -1,5 +1,5 @@
 ---
-type: note
+type: types/note.md
 description: SoL-Pi wraps Pi with optional fused actions, recoverable observations, checked diagnostic excerpts
   and plan-driven native compaction
 generated-by: analyse-agentic-system
@@ -7,7 +7,7 @@ analysis-run: AAS-2026-09-24-sol-pi-01
 source-identity: https://github.com/NVlabs/SoL-Pi
 reviewed-revision: 1559b5cb12c72da4a485bc50fe326586b216fb19
 analysis-result: kb/reports/retained/agentic-system-analysis/AAS-2026-09-24-sol-pi-01/result.md
-analysis-result-sha256: 328605b07b77b380803f5f23dd26ae7147b0fd9baa44755a1d88aaaa8aa51caa
+analysis-result-sha256: aff4937d35f2287af3204726aef7ea934b134209c987953de3ab8a09ffffaa16
 ---
 
 # SoL-Pi

@@ -1,6 +1,6 @@
 ---
 description: "Unqualified technical senses have no reliable namespace in natural-language content; schema slots, rare compounds, and linked clause frames scope them at write time; audits and remediation recover when prevention fails"
-type: note
+type: types/note.md
 traits: [title-as-claim, has-external-sources]
 tags: [computational-model]
 ---

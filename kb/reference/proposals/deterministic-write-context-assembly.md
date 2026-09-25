@@ -1,6 +1,6 @@
 ---
 description: "Proposal: whether code should assemble a target's fixed authoring context while keeping named input roles closed rather than opening a generic provider mechanism"
-type: ../types/design-proposal.md
+type: reference/types/design-proposal.md
 tags: [context-engineering, kb-maintenance]
 ---
 

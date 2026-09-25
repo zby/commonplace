@@ -35,9 +35,10 @@ RETIRED_TEXT_PROMOTION_WORDING = (
     "raw capture → add frontmatter (`note`)",
     "the file never moves or gets copied",
     "`type: kb/types/note.md`",
+    "`type: note`",
 )
-# Global types are named by bare name (ADR 086); the path form is retired.
-RETIRED_PATH_NOTE_YAML = re.compile(r"(?m)^\s*type:\s*kb/types/note\.md\s*(?:#.*)?$")
+# Type values are paths under a KB root (ADR 088); bare names and kb/ paths are retired.
+RETIRED_PATH_NOTE_YAML = re.compile(r"(?m)^\s*type:\s*(?:kb/types/note\.md|note)\s*(?:#.*)?$")
 
 TYPE_EXAMPLE_GUIDANCE = (
     Path("kb/notes/agent-statelessness-means-the-context-engine-should-inject-context.md"),
@@ -49,24 +50,19 @@ TYPE_EXAMPLE_GUIDANCE = (
     Path("kb/types/note.md"),
 )
 
-# This example is explicitly an ADR under kb/reference/adr/, so its
-# file-relative pointer resolves from that illustrated artifact location.
-TYPE_EXAMPLE_SOURCE_CONTEXTS = {
-    (
-        Path("kb/reference/collections-and-types.md"),
-        "../types/adr.md",
-    ): Path("kb/reference/adr/example.md"),
-}
+# Examples whose type value must be resolved from an illustrated artifact
+# location rather than from the guidance file itself.
+TYPE_EXAMPLE_SOURCE_CONTEXTS: dict[tuple[Path, str], Path] = {}
 
 TYPE_LOCAL_STATUS_VALUES = {
-    "kb/articles/types/article.md": {
+    "articles/types/article.md": {
         "draft",
         "working-paper",
         "published",
         "superseded",
         "withdrawn",
     },
-    "kb/reference/types/adr.md": {"accepted", "superseded", "deprecated"},
+    "reference/types/adr.md": {"accepted", "superseded", "deprecated"},
 }
 
 FENCED_EXAMPLE = re.compile(
@@ -119,7 +115,7 @@ def test_text_promotion_requires_complete_note_frontmatter() -> None:
     required_fields = set(schema["properties"]["frontmatter"]["required"])
     expected_markers = {
         "description": "`description`",
-        "type": "`type: note`",
+        "type": "`type: types/note.md`",
     }
 
     assert required_fields == set(expected_markers), (
@@ -147,7 +143,7 @@ def test_text_promotion_requires_complete_note_frontmatter() -> None:
     assert required_fields <= set(template), (
         "convert template omits schema-required note frontmatter"
     )
-    assert template["type"] == "note"
+    assert template["type"] == "types/note.md"
     assert template["traits"] == []
     assert template["tags"] == []
     assert "user-verified" not in template
@@ -193,7 +189,7 @@ def test_note_contract_matches_the_global_frontmatter_schema() -> None:
     assert {field for field, (required, _) in rows.items() if required == "Yes"} == (
         required_fields
     )
-    assert rows["type"][1] == "`note`"
+    assert rows["type"][1] == "`types/note.md`"
 
 
 def test_status_frontmatter_is_confined_to_specialized_type_contracts() -> None:

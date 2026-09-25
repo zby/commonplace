@@ -1,6 +1,6 @@
 ---
 description: "Why the collection/type split is asymmetric: a type spec fully owns frontmatter semantics, COLLECTION.md owns only text-level features, plus the sanctioned moves when a field would vary by collection"
-type: note
+type: types/note.md
 traits: []
 tags: []
 ---

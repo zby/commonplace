@@ -1,6 +1,6 @@
 ---
 description: "Agent Workflow Memory review: web-agent workflow files induced from successful traces and pushed into WebArena/Mind2Web prompts"
-type: ../types/agent-memory-system-review.md
+type: agent-memory-systems/types/agent-memory-system-review.md
 source-tier: code-grounded
 tags: [trace-learning]
 last-checked: "2026-06-04"

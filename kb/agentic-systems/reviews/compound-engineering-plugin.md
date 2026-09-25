@@ -1,6 +1,6 @@
 ---
 description: "Compound Engineering's compounding claim separated into product change, project-knowledge retention, and the narrower reflective pathway that can revise project operating instructions but not the installed harness itself"
-type: note
+type: types/note.md
 traits: [has-external-sources, has-comparison]
 tags: [self-improving-systems, tool-loop]
 ---

@@ -1,6 +1,6 @@
 ---
 description: "Observed July Codex regression that let 268 Sol review results be persisted as Luna, plus the August partial restoration of per-worker model overrides"
-type: note
+type: types/note.md
 ---
 
 # Harness sub-agent model selection regression

@@ -1,5 +1,5 @@
 ---
-type: note
+type: types/note.md
 description: 'arsumbris release-wide review: typed-file memory, adapter-specific governance and instructed
   knowledge/improvement workflows'
 generated-by: analyse-agentic-system
@@ -7,7 +7,7 @@ analysis-run: AAS-2026-09-23-arsumbris-02
 source-identity: https://github.com/arsumbris/arsumbris
 reviewed-revision: arsumbris-0.0.1-alpha-release-bundle-2026-09-23
 analysis-result: kb/reports/retained/agentic-system-analysis/AAS-2026-09-23-arsumbris-02/result.md
-analysis-result-sha256: 49ac66eed29dc93441c088883dc7589a3520e51e59b8a0fc837bae7ce0c7985d
+analysis-result-sha256: 2745f83c243adeaeb224e17a2b8733be833977274156d8b855acebc8b4aed54a
 ---
 
 # arsumbris

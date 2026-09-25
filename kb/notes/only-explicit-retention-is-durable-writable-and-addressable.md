@@ -1,6 +1,6 @@
 ---
 description: "Explicit artifacts give a learner direct targets for inspecting and revising commitments; durability, writability, and effective addressability still depend on the boundary and available operations"
-type: note
+type: types/note.md
 traits: [title-as-claim, has-comparison, synthesis]
 tags: [learning-theory, self-improving-systems, agent-memory]
 ---

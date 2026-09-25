@@ -1,5 +1,5 @@
 ---
-type: instruction
+type: types/instruction.md
 description: Workshop review gate for checking orphan references during review-revise experiments
 gate_id: prose/orphan-references
 name: Orphan references

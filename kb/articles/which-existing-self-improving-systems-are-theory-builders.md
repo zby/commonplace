@@ -1,6 +1,6 @@
 ---
 description: "Survey of eighteen self-improving systems placed against the four theory-builder conditions, with reported learning gains judged separately: five builders, one outside, twelve unsettled mostly on criticism; next experiments"
-type: kb/articles/types/article.md
+type: articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
 source_notes:

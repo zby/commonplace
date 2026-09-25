@@ -1,6 +1,6 @@
 ---
 description: "Two independent bounds on a note: one claim sized to the reader's bounded context, and one checkable inference sized to the checker's single pass — for the grounding check the unit is the unquoted source"
-type: note
+type: types/note.md
 traits: [title-as-claim, has-comparison, has-external-sources]
 tags: [kb-maintenance, evaluation]
 ---

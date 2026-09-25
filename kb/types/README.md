@@ -1,6 +1,6 @@
 # Types
 
-Global structural contracts used across Commonplace collections. A type-spec document tells authors and readers what an artifact of that type contains; its sibling schema enforces the deterministic part of the contract. Typed artifacts store the path to their contract in the `type:` frontmatter field.
+Global structural contracts used across Commonplace collections. A type-spec document tells authors and readers what an artifact of that type contains; its sibling schema enforces the deterministic part of the contract. Typed artifacts store the path to their contract under a KB root in the `type:` frontmatter field, such as `type: types/note.md`.
 
 ## Authored artifact types
 

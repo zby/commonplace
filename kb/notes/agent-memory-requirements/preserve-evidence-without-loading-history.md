@@ -1,6 +1,6 @@
 ---
 description: "Trace retention should preserve evidence for audit and extraction without making raw history the agent's default context"
-type: note
+type: types/note.md
 traits: [has-external-sources]
 tags: [agent-memory, context-engineering]
 ---

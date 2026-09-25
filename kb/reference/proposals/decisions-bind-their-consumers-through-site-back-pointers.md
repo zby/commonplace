@@ -1,6 +1,6 @@
 ---
 description: "Proposal: make a recorded decision reach the operations it constrains by having each ADR declare the artifacts it binds and each bound artifact carry a checked back-pointer, rather than a hand-maintained decision index"
-type: ../types/design-proposal.md
+type: reference/types/design-proposal.md
 tags: []
 ---
 

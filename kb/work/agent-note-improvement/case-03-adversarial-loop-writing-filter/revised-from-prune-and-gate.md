@@ -1,6 +1,6 @@
 ---
 description: "An adversarial human-agent loop can relocate the writing-is-thinking filter from solo composition into review, but only while the human remains the judge."
-type: note
+type: types/note.md
 traits: [title-as-claim]
 tags: [foundations]
 ---

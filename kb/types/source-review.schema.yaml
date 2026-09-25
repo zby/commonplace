@@ -10,5 +10,5 @@ allOf:
           - type
         properties:
           type:
-            const: source-review
+            const: types/source-review.md
         additionalProperties: true

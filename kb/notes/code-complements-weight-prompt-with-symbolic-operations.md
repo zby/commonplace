@@ -1,6 +1,6 @@
 ---
 description: "A model-mediated operation is instantiated by weights plus prompt; code complements that pair by defining operations whose consequences a symbolic runtime executes without reinterpreting the prompt"
-type: note
+type: types/note.md
 traits: [title-as-claim]
 tags: [computational-model, learning-theory, constraining]
 ---

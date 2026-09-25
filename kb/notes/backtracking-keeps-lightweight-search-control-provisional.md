@@ -1,6 +1,6 @@
 ---
 description: "Backtracking preserves the provisional status of a heuristic branch choice by restoring an earlier usable state and redirecting search after contrary evidence"
-type: note
+type: types/note.md
 traits: [title-as-claim]
 tags: [foundations, computational-model, self-improving-systems]
 ---

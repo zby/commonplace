@@ -1,5 +1,5 @@
 ---
-type: instruction
+type: types/instruction.md
 description: Sentence frames its claim in terms of X but the actual mechanism is Y — narrows or misdirects the reader.
 ---
 

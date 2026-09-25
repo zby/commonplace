@@ -1,6 +1,6 @@
 ---
 description: "The improvement objective is a declared parameter alongside boundary and horizon, carrying two separable conditions — indexed by the analyst, antecedent in the pathway — whose failures differ in kind"
-type: note
+type: types/note.md
 traits: [title-as-claim]
 tags: [foundations, self-improving-systems]
 ---

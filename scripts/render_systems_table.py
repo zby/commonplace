@@ -36,7 +36,7 @@ def render(rows: list[dict[str, str]], output: Path) -> str:
     lines = [
         "---",
         'description: "Generated memory comparisons from retained main-review evidence"',
-        "type: kb/types/note.md",
+        "type: types/note.md",
         "traits: [has-comparison]",
         "---",
         "",

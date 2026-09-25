@@ -1,6 +1,6 @@
 ---
 description: "Moves schema finding severity from instance-path inference to each constraint, failing by default with explicit warn opt-downs and optional stable rule identifiers"
-type: ../types/adr.md
+type: reference/types/adr.md
 tags: []
 status: accepted
 ---

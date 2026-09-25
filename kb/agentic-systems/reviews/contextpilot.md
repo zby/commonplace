@@ -1,12 +1,12 @@
 ---
-type: note
+type: types/note.md
 description: "ContextPilot combines task-local memory and context editing with outcome-trained parameters; its control paths and recovery choices bound claims about autonomous context management."
 generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-25-contextpilot-01
 source-identity: https://github.com/Tencent/ContextPilot
 reviewed-revision: 782cbb6611fb610c4cf6fafda6022b7e89cae191
 analysis-result: kb/reports/retained/agentic-system-analysis/AAS-2026-09-25-contextpilot-01/result.md
-analysis-result-sha256: 90d80a12cfa4d0aaf659617a3585228453563cad2a6f480d8357cfd86a5aaa43
+analysis-result-sha256: 8cc0c60126af6b160e9e9496e5b3de7323e61bd6623f178e40d7a35d480ee2c3
 ---
 
 # ContextPilot

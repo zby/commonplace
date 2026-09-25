@@ -1,6 +1,6 @@
 ---
 description: "SAGE review: consensus-governed local agent memory with MCP turn capture, hooks, hybrid recall, decay, and corroboration"
-type: ../types/agent-memory-system-review.md
+type: agent-memory-systems/types/agent-memory-system-review.md
 source-tier: code-grounded
 tags: [trace-learning]
 last-checked: "2026-06-04"

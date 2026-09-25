@@ -1,6 +1,6 @@
 ---
 description: "Proposal: split status semantics — lifecycle stays a structural enum; what commitment 'current' expresses (endorsed, attributed, captured) becomes contract-defined assertion force"
-type: ../../types/design-proposal.md
+type: reference/types/design-proposal.md
 tags: [document-system]
 ---
 

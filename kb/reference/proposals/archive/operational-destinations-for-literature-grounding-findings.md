@@ -1,6 +1,6 @@
 ---
 description: "Proposal (adopted by ADR 081): dated cohort, propagation, and bilateral-isolation design texture behind claim-grained literature disposition and the ordinary-writer prior-art boundary"
-type: ../../types/design-proposal.md
+type: reference/types/design-proposal.md
 tags: [kb-maintenance, review-system]
 ---
 

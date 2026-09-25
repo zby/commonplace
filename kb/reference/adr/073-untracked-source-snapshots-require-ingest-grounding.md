@@ -1,6 +1,6 @@
 ---
 description: "Retain only verbatim source quotes in ingests, mark source links that require a snapshot, and use the standard grounding gate for both routes"
-type: ../types/adr.md
+type: reference/types/adr.md
 tags: []
 status: accepted
 ---

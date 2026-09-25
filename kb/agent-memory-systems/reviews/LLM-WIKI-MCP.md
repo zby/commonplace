@@ -1,6 +1,6 @@
 ---
 description: "LLM-WIKI-MCP review: local Markdown wiki with SQLite FTS, MCP/CLI retrieval, Ollama ask, provenance ingest, sidecar notes, and ask-history memory"
-type: ../types/agent-memory-system-review.md
+type: agent-memory-systems/types/agent-memory-system-review.md
 source-tier: code-grounded
 tags: [trace-learning]
 last-checked: "2026-06-18"

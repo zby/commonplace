@@ -1,6 +1,6 @@
 ---
 description: Half of /validate's checks are hard-oracle (enums, link resolution, frontmatter structure) and could run as a Python script in milliseconds instead of burning LLM tokens via the skill
-type: note
+type: types/note.md
 traits: [title-as-claim]
 tags: [document-system]
 ---

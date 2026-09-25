@@ -98,7 +98,7 @@ merge_target_sha256: null"""
     report.write_text(
         f"""---
 description: Full improvement pass fixture with packet-owned captures for testing
-type: full-pass-report
+type: types/full-pass-report.md
 source: kb/notes/source.md
 source_capture: source.txt
 source_sha256: {content_sha256_for_text(source_text)}

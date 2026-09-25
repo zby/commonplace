@@ -1,6 +1,6 @@
 ---
 description: "Lightweight doc-grounded coverage of Trajectory-Informed Memory Generation — an IBM trajectory-to-tip pipeline known from its paper, not inspected code"
-type: ../types/agent-memory-system-review.md
+type: agent-memory-systems/types/agent-memory-system-review.md
 source-tier: doc-grounded
 traits: [has-comparison, has-external-sources]
 tags: [trace-learning]

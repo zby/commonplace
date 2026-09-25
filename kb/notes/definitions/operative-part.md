@@ -1,6 +1,6 @@
 ---
 description: Definition - an operative part is the behavior-affecting content, structure, parameterization, or mechanism within a retained artifact or consumption path
-type: definition
+type: types/definition.md
 tags: [learning-theory, artifact-analysis]
 ---
 

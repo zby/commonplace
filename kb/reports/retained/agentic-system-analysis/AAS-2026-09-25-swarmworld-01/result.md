@@ -1,5 +1,5 @@
 ---
-type: agentic-system-analysis-result
+type: types/agentic-system-analysis-result.md
 description: "Complete code-grounded analysis of SwarmWorld's simulator, model-policy, episode memory and experimental authority at a frozen source boundary."
 run-id: AAS-2026-09-25-swarmworld-01
 system: SwarmWorld

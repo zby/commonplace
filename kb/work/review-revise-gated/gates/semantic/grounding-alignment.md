@@ -1,5 +1,5 @@
 ---
-type: instruction
+type: types/instruction.md
 description: Workshop review gate for checking grounding alignment during review-revise experiments
 gate_id: semantic/grounding-alignment
 name: Grounding alignment

@@ -1,6 +1,6 @@
 ---
 description: "llm-wiki-coordination review: Markdown protocol layer for multi-agent wiki dialogue, consensus, RoleSpace review, and structural audit"
-type: ../types/agent-memory-system-review.md
+type: agent-memory-systems/types/agent-memory-system-review.md
 source-tier: code-grounded
 last-checked: "2026-06-04"
 ---

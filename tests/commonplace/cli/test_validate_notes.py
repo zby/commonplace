@@ -14,6 +14,8 @@ from commonplace.lib import validation
 from commonplace.lib.naming import MAX_NOTE_SLUG_LENGTH
 from commonplace.lib.snapshot import snapshot_sha256
 
+pytestmark = pytest.mark.usefixtures("tmp_library")
+
 REPO_ROOT = Path(__file__).resolve().parents[3]
 FIXTURES_ROOT = Path(__file__).resolve().parent / "fixtures" / "schemas"
 
@@ -35,7 +37,7 @@ def write_type_spec(
     return write(
         root / rel_path,
         f"""---
-type: type-spec
+type: types/type-spec.md
 name: {name}
 description: Type spec for {name}
 schema: {schema_value}
@@ -165,7 +167,7 @@ def test_imperative_type_rules_dispatch_by_path_not_bare_name(tmp_path: Path) ->
         notes / "same-name-local-type.md",
         """---
 description: Local type that deliberately shares a framework type name
-type: kb/notes/types/tag-readme.md
+type: notes/types/tag-readme.md
 ---
 
 # Same-name local type
@@ -175,7 +177,7 @@ type: kb/notes/types/tag-readme.md
         notes / "topic-README.md",
         """---
 description: Curated head of the framework tag-readme type, whose imperative rules run
-type: tag-readme
+type: types/tag-readme.md
 index_source: tag
 index_key: topic
 ---
@@ -204,7 +206,7 @@ def test_source_snapshot_requires_h1_as_first_nonblank_body_line(
 source: https://example.com/article
 captured: "2026-04-19"
 capture: web-fetch
-type: snapshot
+type: types/snapshot.md
 ---
 
 Captured text before the title.
@@ -231,7 +233,7 @@ def test_link_validation_checks_local_targets_and_skips_code_and_external(
         tmp_path / "note.md",
         """---
 description: A note with resolving, missing, code-span, and external links so link health checks each kind
-type: note
+type: types/note.md
 traits: []
 ---
 
@@ -276,7 +278,7 @@ def test_link_health_and_inbound_detection_share_url_resolution(tmp_path: Path) 
         notes / "source.md",
         """---
 description: Source note exercising normalized local and external Markdown link targets
-type: note
+type: types/note.md
 traits: []
 ---
 
@@ -291,7 +293,7 @@ traits: []
         notes / "target name.md",
         """---
 description: Target note whose filename requires percent decoding during link resolution
-type: note
+type: types/note.md
 traits: []
 ---
 
@@ -323,7 +325,7 @@ traits: []
             "source.md",
             (
                 "---\ndescription: Library note linking to a retired proposal that must "
-                "stay outside the live knowledge graph\ntype: note\n"
+                "stay outside the live knowledge graph\ntype: types/note.md\n"
                 "traits: []\n---\n\n"
             ),
             "note",
@@ -365,7 +367,7 @@ def test_proposal_archive_boundary_allows_readme_and_workshop_links(
         notes / "source.md",
         f"""---
 description: Library note entering the proposal archive through its permitted reader-facing README
-type: note
+type: types/note.md
 traits: []
 ---
 
@@ -395,7 +397,7 @@ def test_non_path_frontmatter_type_fails_validation(tmp_path: Path) -> None:
     note = write(
         notes_root / "invalid-type.md",
         """---
-description: A bare frontmatter type names a global type, so an unknown name must be rejected
+description: A bare frontmatter type is a retired form, so it must be rejected with the path to use
 type: spec
 ---
 
@@ -407,8 +409,7 @@ type: spec
 
     assert results.note_type == "unknown"
     assert any(
-        "frontmatter.type points to a missing type spec: spec"
-        in item
+        "use `type: types/spec.md`" in item
         for item in results.fails
     )
 
@@ -426,7 +427,7 @@ def test_peer_collection_local_type_fails_validation(tmp_path: Path) -> None:
         notes_root / "wrong-local-type.md",
         """---
 description: Peer collection local types should fail deterministic validation
-type: kb/reference/types/adr.md
+type: reference/types/adr.md
 ---
 
 # Wrong local type
@@ -455,7 +456,7 @@ def test_type_spec_validation_resolves_its_own_declared_schema(tmp_path: Path) -
 
     assert any(
         "[type: type-spec] type definition: "
-        "kb/notes/types/local.md: schema file is missing" in failure
+        "notes/types/local.md: schema file is missing" in failure
         for failure in results.fails
     )
 
@@ -485,7 +486,7 @@ def test_type_spec_validation_rejects_tags(tmp_path: Path) -> None:
     type_spec = write(
         tmp_path / "kb" / "notes" / "types" / "local.md",
         """---
-type: type-spec
+type: types/type-spec.md
 name: local
 description: Type spec for local
 schema: null
@@ -551,7 +552,7 @@ def test_title_length_over_limit_fails_validation(tmp_path: Path) -> None:
         notes_root / "short-slug.md",
         f"""---
 description: Note with an overly long title so the validator should fail deterministically on title length
-type: note
+type: types/note.md
 traits: []
 ---
 
@@ -573,7 +574,7 @@ def test_filename_slug_length_over_limit_fails_validation(tmp_path: Path) -> Non
         notes_root / f"{overlong_slug}.md",
         """---
 description: Note with an overly long slug so the validator should fail deterministically on filename length
-type: note
+type: types/note.md
 traits: []
 ---
 
@@ -603,7 +604,7 @@ def test_git_ignored_artifact_is_exempt_from_authored_length_limits(
         ignored_dir / f"{overlong_slug}.md",
         f"""---
 description: Ignored local artifact whose source-derived title and filename may exceed authored library limits
-type: note
+type: types/note.md
 traits: []
 ---
 
@@ -629,6 +630,8 @@ traits: []
 def test_connect_report_derived_slug_is_exempt_from_note_limit(tmp_path: Path) -> None:
     configure_temp_repo(tmp_path)
     write(tmp_path / "kb" / "reports" / "COLLECTION.md", "# Reports collection\n")
+    copy_repo_file(tmp_path, "kb/types/connect-report.md")
+    copy_repo_file(tmp_path, "kb/types/connect-report.schema.yaml")
     source_slug = "a" * MAX_NOTE_SLUG_LENGTH
     report = write(
         tmp_path
@@ -640,7 +643,7 @@ def test_connect_report_derived_slug_is_exempt_from_note_limit(tmp_path: Path) -
         / f"{source_slug}.connect.md",
         """---
 description: Derived connection report whose filename preserves a valid source artifact slug
-type: connect-report
+type: types/connect-report.md
 ---
 
 # Connection report
@@ -666,7 +669,7 @@ def test_recent_target_uses_mtime_and_target_lookup(tmp_path: Path) -> None:
         notes_root / "today.md",
         """---
 description: Note modified today so recent target resolution should find it deterministically
-type: note
+type: types/note.md
 traits: []
 ---
 
@@ -677,7 +680,7 @@ traits: []
         notes_root / "old.md",
         """---
 description: Older note that should not be picked up by recent target resolution in deterministic validation
-type: note
+type: types/note.md
 traits: []
 ---
 
@@ -703,7 +706,7 @@ def test_notes_target_scans_only_notes_collection(tmp_path: Path) -> None:
         tmp_path / "kb" / "notes" / "note.md",
         """---
 description: Note in the notes collection
-type: note
+type: types/note.md
 traits: []
 ---
 
@@ -714,7 +717,7 @@ traits: []
         tmp_path / "kb" / "reports" / "retained" / "report.md",
         """---
 description: Report outside the notes collection
-type: note
+type: types/note.md
 traits: []
 ---
 
@@ -766,7 +769,7 @@ def test_note_target_also_validates_marked_tag_readmes(
         notes / "tagged-note.md",
         """---
 description: "Tagged note with enough metadata to validate cleanly by itself"
-type: note
+type: types/note.md
 tags: [kb-design, unmarked]
 ---
 
@@ -777,7 +780,7 @@ tags: [kb-design, unmarked]
         notes / "kb-design-README.md",
         """---
 description: "Complete curated head for the kb-design tag"
-type: tag-readme
+type: types/tag-readme.md
 index_source: tag
 index_key: kb-design
 complete: true
@@ -792,7 +795,7 @@ Orientation paragraph.
         notes / "unmarked-README.md",
         """---
 description: "Selective curated head for the unmarked tag"
-type: tag-readme
+type: types/tag-readme.md
 index_source: tag
 index_key: unmarked
 ---
@@ -855,7 +858,7 @@ def test_collection_directory_targets_scan_that_collection(tmp_path: Path) -> No
         tmp_path / "kb" / "agent-memory-systems" / "index.md",
         """---
 description: Agent memory systems index note
-type: note
+type: types/note.md
 traits: []
 ---
 
@@ -866,7 +869,7 @@ traits: []
         tmp_path / "kb" / "agent-memory-systems" / "reviews" / "agent-r.md",
         """---
 description: Agent R review note
-type: note
+type: types/note.md
 traits: []
 ---
 
@@ -877,7 +880,7 @@ traits: []
         tmp_path / "kb" / "agent-memory-systems" / "types" / "review.template.md",
         """---
 description: Template that should not be validated as collection content
-type: note
+type: types/note.md
 ---
 
 # Template
@@ -891,7 +894,7 @@ type: note
         tmp_path / "kb" / "reports" / "retained" / "report.md",
         """---
 description: Report outside the target collection
-type: note
+type: types/note.md
 traits: []
 ---
 
@@ -925,7 +928,7 @@ def test_directory_without_collection_file_is_not_a_validation_scope(
         tmp_path / "kb" / "tasks" / "report.md",
         """---
 description: Report in a support directory without collection conventions
-type: note
+type: types/note.md
 traits: []
 ---
 
@@ -1093,7 +1096,7 @@ def test_validation_json_identifies_one_typed_external_artifact(
     result.write_text(
         """---
 description: "A typed note outside a collection"
-type: note
+type: types/note.md
 tags: []
 ---
 

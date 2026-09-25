@@ -1,6 +1,6 @@
 ---
 description: "Proposal: revise behavioral authority's applicability, path topology, and force taxonomy while keeping authorization, warrant, provenance, realization, and dependency closure in neighboring records"
-type: ../types/theory-proposal.md
+type: notes/types/theory-proposal.md
 ---
 
 # Revise the behavioral-authority decomposition

@@ -1,6 +1,6 @@
 ---
 description: "Behavior-changing memory must activate before relevant actions rather than waiting for explicit retrospective search"
-type: note
+type: types/note.md
 traits: [has-external-sources]
 tags: [agent-memory, context-engineering, learning-theory]
 ---

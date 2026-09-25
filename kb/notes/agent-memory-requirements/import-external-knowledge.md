@@ -1,6 +1,6 @@
 ---
 description: "Agent memory systems need import paths when authoritative project knowledge already exists outside the memory substrate"
-type: note
+type: types/note.md
 traits: [has-external-sources]
 tags: [agent-memory, context-engineering]
 ---

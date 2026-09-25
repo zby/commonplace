@@ -1,5 +1,5 @@
 ---
-type: agentic-system-analysis-result
+type: types/agentic-system-analysis-result.md
 description: "SkillLift flagship portfolio improvement plane: rubric-guided edits, oracle promotion, memory read-back and bounded recovery findings"
 run-id: AAS-2026-09-25-skilllift-01
 system: SkillLift

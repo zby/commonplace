@@ -1,6 +1,6 @@
 ---
 description: Full-pass packets retain guarded start-state captures and authoritative asynchronous disposition resolution
-type: ../types/adr.md
+type: reference/types/adr.md
 tags: []
 status: accepted
 ---

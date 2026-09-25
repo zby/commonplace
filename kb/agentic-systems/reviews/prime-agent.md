@@ -1,12 +1,12 @@
 ---
-type: note
+type: types/note.md
 description: "Prime Agent's persistent Python runtime, recursive child sessions, and supplemental-harness refinement, with separate admission and improvement limits"
 generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-05-prime-agent-01
 source-identity: https://github.com/PrimeIntellect-ai/prime-agent
 reviewed-revision: 514633727bf26d74f39f3119c2b0e31a5ceb2a9d
 analysis-result: kb/reports/retained/agentic-system-analysis/AAS-2026-09-05-prime-agent-01/result.md
-analysis-result-sha256: a74d14523dee1f0588a42252c3a356e1e826c214c42b465b72dc30d1499ac305
+analysis-result-sha256: e3406b304b1862ede18a1813c4ea86b79cc10c95c3e1560497f4e9276719bab2
 ---
 
 # Prime Agent

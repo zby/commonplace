@@ -1,6 +1,6 @@
 ---
 description: "Doc-grounded review of NAMS skill distillation and governance: scoped context-graph memory becomes provenance-linked, review-gated procedure artifacts with drift repair"
-type: ../types/agent-memory-system-review.md
+type: agent-memory-systems/types/agent-memory-system-review.md
 source-tier: doc-grounded
 traits: [has-comparison, has-external-sources]
 tags: [trace-learning]

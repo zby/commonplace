@@ -1,6 +1,6 @@
 ---
 description: "Proposal: price a review gate's link-following by a two-term attention heuristic — per-artifact plus per-byte — computed by a sizing command rather than estimated by the reviewer"
-type: ../../types/design-proposal.md
+type: reference/types/design-proposal.md
 tags: []
 ---
 

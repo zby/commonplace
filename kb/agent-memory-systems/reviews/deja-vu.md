@@ -1,6 +1,6 @@
 ---
 description: "deja-vu review: local lexical memory over the session stores of 22 coding-agent harnesses (JSONL and SQLite) with redacted file index, one MCP tool with modes, hooks at session start, on each prompt and around tool calls, a curated note layer, and sync/share"
-type: ../types/agent-memory-system-review.md
+type: agent-memory-systems/types/agent-memory-system-review.md
 source-tier: code-grounded
 tags: [trace-learning]
 last-checked: "2026-09-03"

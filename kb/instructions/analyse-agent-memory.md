@@ -1,6 +1,6 @@
 ---
 description: "Use in a fresh worker commissioned by analyse-agentic-system to analyse memory and context routes from frozen inputs and return a typed report."
-type: instruction
+type: types/instruction.md
 ---
 
 # Analyse agent memory

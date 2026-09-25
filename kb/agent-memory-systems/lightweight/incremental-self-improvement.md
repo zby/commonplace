@@ -1,6 +1,6 @@
 ---
 description: "Lightweight doc-grounded coverage of Schmidhuber's incremental self-improvement paradigm, a reward-gated policy self-modification system"
-type: ../types/agent-memory-system-review.md
+type: agent-memory-systems/types/agent-memory-system-review.md
 source-tier: doc-grounded
 traits: [has-comparison, has-external-sources]
 tags: [trace-learning]

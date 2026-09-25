@@ -1,6 +1,6 @@
 ---
 description: "hyalo review: Rust CLI for structured Markdown vault search, mutation, linting, snapshot indexes, and Claude skill/rule integration"
-type: ../types/agent-memory-system-review.md
+type: agent-memory-systems/types/agent-memory-system-review.md
 source-tier: code-grounded
 last-checked: "2026-06-04"
 ---

@@ -1,6 +1,6 @@
 ---
 description: "Meta-Harness review: trace-learning harness search that uses logs, evaluations, proposer skills, and generated code to evolve memory and agent scaffolds"
-type: ../types/agent-memory-system-review.md
+type: agent-memory-systems/types/agent-memory-system-review.md
 source-tier: code-grounded
 last-checked: "2026-06-04"
 tags: [trace-learning]

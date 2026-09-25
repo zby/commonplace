@@ -1,6 +1,6 @@
 ---
 description: Validation is evaluated by a library-owned run that parses target artifacts once and shares collection indexes across anchored checks
-type: ../types/adr.md
+type: reference/types/adr.md
 tags: []
 status: accepted
 ---

@@ -12,7 +12,7 @@ from pathlib import Path
 
 from commonplace.lib.note_parser import parse_document
 
-RESULT_TYPE = "agentic-system-analysis-result"
+RESULT_TYPE = "types/agentic-system-analysis-result.md"
 RETAINED_ROOT = Path("kb/reports/retained/agentic-system-analysis")
 REVIEWS_ROOT = Path("kb/agentic-systems/reviews")
 RUN_ID = re.compile(r"AAS-\d{4}-\d{2}-\d{2}-[a-z0-9]+(?:-[a-z0-9]+)*-\d{2}")

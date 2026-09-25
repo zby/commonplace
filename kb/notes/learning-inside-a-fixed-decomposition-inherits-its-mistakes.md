@@ -1,6 +1,6 @@
 ---
 description: "Why optimization cannot repair consequential distinctions, responses, or mappings outside the effective update space of a fixed task decomposition"
-type: note
+type: types/note.md
 traits: [title-as-claim, has-external-sources]
 tags: [learning-theory, deploy-time-learning]
 ---

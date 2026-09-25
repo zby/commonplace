@@ -1,6 +1,6 @@
 ---
 description: "Proposal: surface committed user verification at the point of reading through a standardized Markdown banner without turning absence into a review or truth verdict"
-type: ../types/design-proposal.md
+type: reference/types/design-proposal.md
 tags: [kb-maintenance]
 ---
 

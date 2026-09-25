@@ -1,6 +1,6 @@
 ---
 description: "Installed projects read the Commonplace library, global types, gates, and skills in place from the uv tool's shared data, through init-written skill stubs and a gitignored routing file, instead of a copy under kb/commonplace/"
-type: kb/reference/types/adr.md
+type: reference/types/adr.md
 tags: []
 status: accepted
 ---

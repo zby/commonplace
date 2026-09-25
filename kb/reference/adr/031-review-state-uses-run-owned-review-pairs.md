@@ -1,6 +1,6 @@
 ---
 description: "Superseded historical decision: review state moved to invocation-owned note-gate pairs, later simplified into current all-or-nothing review jobs and review pairs"
-type: ../types/adr.md
+type: reference/types/adr.md
 tags: []
 status: superseded
 ---

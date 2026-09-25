@@ -1,6 +1,6 @@
 ---
 description: Validation target resolution now returns paths with explicit collection scope, while type resolution and type-spec checks share direct definition loading
-type: ../types/adr.md
+type: reference/types/adr.md
 tags: []
 status: accepted
 ---

@@ -1,9 +1,11 @@
 """Resolve structural note types from type-spec documents.
 
-A global type is named by its bare name (`type: note`) and resolves to
-`types/<name>.md` in the installed Commonplace library. A collection-local or
-project-shared type is named by path (`./`, `../`, or `kb/...`, ending in
-`.md`). The form alone selects the resolver; there is no fallback between them.
+A type value is the spec's path under a KB root, with its `.md` extension:
+`types/note.md` for a global type, `reference/types/adr.md` for a
+collection-local one (ADR 088). It is looked up on a two-root search path: the
+library root, for global types (`types/<name>.md`) only, and the root of the KB
+that holds the artifact. A value that finds two different files is an error, so
+no root can shadow the other. The written value is the type's identity.
 """
 
 from __future__ import annotations
@@ -37,13 +39,10 @@ class TypeProfile:
     schema: dict[str, Any] | None = None
 
 
-TYPE_SPEC = "type-spec"
-GLOBAL_TYPE_NAME = re.compile(r"^[a-z0-9][a-z0-9-]*$")
+TYPE_SPEC = "types/type-spec.md"
+GLOBAL_TYPE_VALUE = re.compile(r"^types/[a-z0-9][a-z0-9-]*\.md$")
+_BARE_NAME = re.compile(r"^[a-z0-9][a-z0-9-]*$")
 SCHEMA_URI_SCHEME = "commonplace"
-
-
-def is_global_type_name(value: Any) -> bool:
-    return isinstance(value, str) and bool(GLOBAL_TYPE_NAME.match(value.strip()))
 
 
 def global_types_dir() -> Path:
@@ -133,36 +132,77 @@ def _validate_repo_relative_kb_path(
     return canonical, resolved
 
 
+def kb_root_for(file_path: Path | None, repo_root: Path) -> Path:
+    """The root of the KB that holds file_path: the library root for a library file."""
+    project_kb = kb_root(repo_root).resolve()
+    if file_path is None:
+        return project_kb
+    resolved = file_path.resolve()
+    library = library_root().resolve()
+    if resolved.is_relative_to(library) and not resolved.is_relative_to(project_kb):
+        return library
+    return project_kb
+
+
+def _suggested_type_value(rel: str, repo_root: Path, source_file: Path | None) -> str | None:
+    """The ADR 088 spelling of a retired type value, when it can be derived."""
+    if _BARE_NAME.match(rel):
+        return f"types/{rel}.md"
+    if rel.startswith("kb/"):
+        return rel[len("kb/") :]
+    if rel.startswith(("./", "../")) and source_file is not None:
+        target = (source_file.parent / rel).resolve()
+        for root in (kb_root_for(source_file, repo_root), library_root().resolve()):
+            if target.is_relative_to(root):
+                return target.relative_to(root).as_posix()
+    return None
+
+
 def validate_type_path(
     value: Any,
     *,
     repo_root: Path,
     source_file: Path | None = None,
 ) -> tuple[str, Path]:
-    """Validate and resolve a frontmatter type.
+    """Validate a frontmatter type value and find its spec on the search path.
 
-    A bare name resolves to that global type in the library and is returned as
-    its identity. A path (repo-relative ``kb/...`` or file-relative ``./``/``../``
-    when ``source_file`` is given) is returned normalized to the ``kb/...`` form;
-    a path that lands on a global type is rejected, because global types are
-    named by bare name.
+    Returns the value, which is the type's identity, and the spec path. A value
+    that names no file returns the path it would name, so the caller reports a
+    missing spec. A value found under both roots as two different files is
+    rejected.
     """
-    if is_global_type_name(value):
-        name = value.strip()
-        return name, global_types_dir() / f"{name}.md"
-    identity, resolved = _validate_repo_relative_kb_path(
-        value,
-        workspace_root=repo_root.resolve(),
-        suffix=".md",
-        field_name="frontmatter.type",
-        source_file=source_file,
+    if not isinstance(value, str) or not value.strip():
+        raise ValueError("frontmatter.type: must be a non-empty path")
+    rel = value.strip()
+    path = Path(rel)
+    retired = (
+        _BARE_NAME.match(rel)
+        or rel.startswith(("./", "../", "kb/"))
     )
-    if _is_global_type_doc(resolved):
+    if retired:
+        suggestion = _suggested_type_value(rel, repo_root, source_file)
+        hint = f"; use `type: {suggestion}`" if suggestion else ""
         raise ValueError(
-            f"frontmatter.type: global types are named by bare name; use "
-            f"`type: {resolved.stem}` instead of {value.strip()}"
+            "frontmatter.type: a type value is the spec's path under a KB root, "
+            f"such as types/note.md or reference/types/adr.md, not {rel}{hint}"
         )
-    return identity, resolved
+    if urlparse(rel).scheme or path.is_absolute() or ".." in path.parts:
+        raise ValueError(f"frontmatter.type: not a KB-relative path: {rel}")
+    if not rel.endswith(".md"):
+        raise ValueError(f"frontmatter.type: must end with .md: {rel}")
+
+    candidates = []
+    if GLOBAL_TYPE_VALUE.match(rel):
+        candidates.append((library_root() / path).resolve())
+    candidates.append((kb_root_for(source_file, repo_root) / path).resolve())
+    found = list(dict.fromkeys(c for c in candidates if c.is_file()))
+    if len(found) > 1:
+        shown = " and ".join(_display_path(f, repo_root.resolve()) for f in found)
+        raise ValueError(
+            f"frontmatter.type: {rel} names two different files, {shown}; "
+            "delete or rename the project's copy"
+        )
+    return rel, (found[0] if found else candidates[0])
 
 
 def validate_type_eligibility(
@@ -173,8 +213,7 @@ def validate_type_eligibility(
 ) -> None:
     """Reject collection-local types used outside their owning collection.
 
-    Global types in the library and project-shared types under the project's
-    ``kb/types/`` are eligible everywhere. A collection may
+    Global types in the library are eligible everywhere. A collection may
     also use specs under its own ``types/`` directory. The ``kb/work/``
     lifecycle subtree may use any valid type spec. Files that are not inside a
     declared collection retain the referential-only behavior.
@@ -200,12 +239,6 @@ def validate_type_eligibility(
     if _is_global_type_doc(type_doc):
         return
 
-    # A project's own kb/types/ holds project-shared types, eligible in every
-    # collection. (In the source checkout that directory is the library, whose
-    # types are named by bare name before this point.)
-    if type_doc.is_relative_to(boundary / "types"):
-        return
-
     local_types = collection / "types"
     if type_doc.is_relative_to(local_types):
         return
@@ -215,7 +248,7 @@ def validate_type_eligibility(
     local_display = _display_path(local_types, workspace_root)
     raise ValueError(
         f"frontmatter.type: {type_display} is not eligible in collection "
-        f"{collection_display}; use a global type by bare name or a local "
+        f"{collection_display}; use a global type (types/<name>.md) or a local "
         f"type under {local_display}/"
     )
 
@@ -336,8 +369,7 @@ def _validator_for_path_with_library(path_str: str, library_str: str) -> Draft20
 def canonical_type_identity(profile: TypeProfile) -> str:
     """Return the identity used for type-owned behavior.
 
-    A global type's identity is its bare name; a local type's is its
-    repo-relative ``kb/...`` path.
+    It is the spec's path under its KB root, as written in `type:` values.
     """
     return profile.type_path
 
@@ -351,20 +383,19 @@ def resolve_type_definition(
     """Load one identified type-spec document and its declared schema."""
     workspace_root = repo_root.resolve()
     resolved_type_doc = type_doc_path.resolve()
-    is_global = _is_global_type_doc(resolved_type_doc)
-    boundary = library_root() if is_global else kb_root(workspace_root).resolve()
-    try:
-        resolved_type_doc.relative_to(boundary)
-    except ValueError as exc:
+    project_kb = kb_root(workspace_root).resolve()
+    library = library_root().resolve()
+    if resolved_type_doc.is_relative_to(project_kb):
+        root = project_kb
+    elif resolved_type_doc.is_relative_to(library):
+        root = library
+    else:
         raise ValueError(
-            f"type definition path must stay under kb/: {type_doc_path}"
-        ) from exc
-
-    type_doc_rel = (
-        resolved_type_doc.stem
-        if is_global
-        else resolved_type_doc.relative_to(workspace_root).as_posix()
-    )
+            f"type definition path must stay under a KB root: {type_doc_path}"
+        )
+    # A library file outside the project may only use file-relative schema paths.
+    boundary = library if root == library and root != project_kb else None
+    type_doc_rel = resolved_type_doc.relative_to(root).as_posix()
     type_frontmatter = _load_type_frontmatter(
         resolved_type_doc, type_doc_rel, load_frontmatter
     )
@@ -388,7 +419,7 @@ def resolve_type_definition(
         resolved_type_doc,
         type_frontmatter,
         workspace_root,
-        boundary=boundary if is_global else None,
+        boundary=boundary,
     )
     schema = (
         _load_schema(str(schema_path.resolve())) if schema_path is not None else None
@@ -447,9 +478,8 @@ def validate_instance(
 ) -> list[ValidationError]:
     if profile.schema_path is None or profile.schema is None:
         return []
-    # Normalize frontmatter.type to the canonical identity so schemas with
-    # `const: <name>` (global) or `const: kb/<col>/types/<name>.md` (local) match
-    # regardless of whether the source used repo-relative or file-relative form.
+    # Schemas pin `const: <identity>`; the written value is the identity already,
+    # but a caller may pass an instance built from a differently spelled value.
     fm = instance.get("frontmatter")
     schema_type_path = canonical_type_identity(profile)
     if isinstance(fm, dict) and fm.get("type") != schema_type_path:

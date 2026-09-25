@@ -1,6 +1,6 @@
 ---
 description: "Use when brainstorming what formal links do and how collection-shaped link vocabularies should emerge from observed linking practice"
-type: instruction
+type: types/instruction.md
 ---
 
 # Brainstorm formal-link theory from observed practice

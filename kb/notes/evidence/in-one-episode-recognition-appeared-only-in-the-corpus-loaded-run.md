@@ -1,6 +1,6 @@
 ---
 description: "One 2026-09-01 episode: a repository-free synthesis re-derived retained notes and reproposed rejected framings while the corpus-loaded session recognized them; an uncontrolled bundle, recorded as a starting point for better contrasts"
-type: note
+type: types/note.md
 traits: [title-as-claim, has-comparison]
 tags: [evaluation, context-engineering]
 ---

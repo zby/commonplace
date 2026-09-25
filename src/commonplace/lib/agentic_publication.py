@@ -193,7 +193,7 @@ def _check_incumbent(
         raise ValueError("incumbent retained result hash mismatch")
     result_metadata = _parse(result_text, label="incumbent retained result").frontmatter or {}
     if (result_metadata.get("run-id") != run_id
-            or result_metadata.get("type") != "agentic-system-analysis-result"
+            or result_metadata.get("type") != "types/agentic-system-analysis-result.md"
             or result_metadata.get("reviewed-boundary") != metadata.get("reviewed-revision")
             or result_metadata.get("result-disposition") != "complete"):
         raise ValueError("incumbent retained result identity mismatch")

@@ -1,6 +1,6 @@
 ---
 description: "Creates the committed tag-readme type with byte-weight gates and validator-derived complete/covered_by marks, separating meaning, enforcement, and maintenance across their operative surfaces"
-type: ../types/adr.md
+type: reference/types/adr.md
 tags: []
 status: accepted
 ---

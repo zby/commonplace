@@ -1,5 +1,5 @@
 ---
-type: type-spec
+type: types/type-spec.md
 name: tag-readme
 description: A tag's curated head — small by type contract (weight-gated), with optional validator-enforced completeness (complete) and coverage (covered_by) marks
 schema: ./tag-readme.schema.yaml
@@ -49,7 +49,7 @@ For the audit workflow (groupings, orphans, splits), read `kb/instructions/maint
 ```markdown
 ---
 description: "Curated head for the {tag-name} tag — orientation plus selective picks"
-type: tag-readme
+type: types/tag-readme.md
 index_source: tag
 index_key: "{tag-name}"
 ---

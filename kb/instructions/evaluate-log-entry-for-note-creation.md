@@ -1,6 +1,6 @@
 ---
 description: Evaluate whether a kb/log.md entry should be rejected, retained, folded into an existing artifact, or promoted into a new note
-type: instruction
+type: types/instruction.md
 ---
 
 # Evaluate a log entry for note creation

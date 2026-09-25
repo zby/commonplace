@@ -1,6 +1,6 @@
 ---
 description: "Surveys how problem-noticing and candidate-drafting happen in Commonplace beyond a maintainer's own judgment — skills, ephemeral reports, mechanical checks, freshness tracking, agent initiative"
-type: note
+type: types/note.md
 tags: [foundations, computational-model, self-improving-systems]
 ---
 

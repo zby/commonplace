@@ -1,6 +1,6 @@
 ---
 description: The loading hierarchy (CLAUDE.md → skill descriptions → skill bodies → task docs) should match instruction specificity to loading frequency — the pattern production harnesses converge on
-type: note
+type: types/note.md
 traits: [has-external-sources, title-as-claim]
 tags: [architecture]
 ---

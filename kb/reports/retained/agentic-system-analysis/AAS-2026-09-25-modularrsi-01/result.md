@@ -1,5 +1,5 @@
 ---
-type: agentic-system-analysis-result
+type: types/agentic-system-analysis-result.md
 description: "Complete code-grounded analysis of ModularRSI's evolution and modular solver subsystem at the frozen release."
 run-id: AAS-2026-09-25-modularrsi-01
 system: "ModularRSI"

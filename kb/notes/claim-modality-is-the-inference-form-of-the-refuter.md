@@ -1,6 +1,6 @@
 ---
 description: "The three claim modes are refuter-defined images of deduction, induction, and comparative abduction; grounds the mode list's closure for empirical claims and gives vacuity and genre drift precise readings"
-type: note
+type: types/note.md
 traits: [title-as-claim]
 tags: [foundations, kb-maintenance]
 ---

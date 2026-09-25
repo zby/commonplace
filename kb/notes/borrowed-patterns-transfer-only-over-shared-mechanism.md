@@ -1,6 +1,6 @@
 ---
 description: "A borrowed pattern carries transferred warrant only over the layer where source and target share the mechanism it depends on; where the link is analogy or the sharing doesn't reach, it must earn adoption by target-side evidence"
-type: note
+type: types/note.md
 traits: [title-as-claim]
 tags: [foundations]
 ---

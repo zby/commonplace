@@ -1,6 +1,6 @@
 ---
 description: "Explains why orientation and comparative reading need bounded, sufficiently related note sets, while fixed sizes, membership rules, tags, and index layouts remain implementation choices"
-type: note
+type: types/note.md
 traits: [title-as-claim]
 tags: []
 ---

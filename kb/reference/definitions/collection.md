@@ -1,6 +1,6 @@
 ---
 description: Definition of a COLLECTION.md-bearing subtree whose complete local text contract governs its artifacts; top-level collections also provide a README landing
-type: definition
+type: types/definition.md
 tags: []
 ---
 
@@ -36,7 +36,7 @@ within one artifact or across its consumption paths.
 
 A collection directly under `kb/` also has a `README.md` as its curated reader landing. The README routes readers but does not replace the binding `COLLECTION.md` contract. It must not coexist with a sibling `index.md`, because both render to the same directory URL and `index.md` shadows the README. `commonplace-validate landings` enforces this invariant for collection roots that are direct children of `kb/`; ordinary area directories still inherit their enclosing collection's contract and need no landing of their own.
 
-Collections can also have local type specs. When present, they live in a `types/` subdirectory at the collection root. Type specs are structural authoring contracts: they define artifact shape through schema, frontmatter requirements, required sections, and written guidance for filling that shape. `COLLECTION.md` can guide authors to both global type specs, named by bare name and defined in the Commonplace library's `types/` directory, and local type specs in the collection's own `types/` directory; see [collections and types](../collections-and-types.md) for their use and resolution.
+Collections can also have local type specs. When present, they live in a `types/` subdirectory at the collection root. Type specs are structural authoring contracts: they define artifact shape through schema, frontmatter requirements, required sections, and written guidance for filling that shape. `COLLECTION.md` can guide authors to both global type specs, defined in the Commonplace library's `types/` directory and named by paths such as `types/note.md`, and local type specs in the collection's own `types/` directory, named by paths such as `reference/types/adr.md`; see [collections and types](../collections-and-types.md) for their use and resolution.
 
 A descendant directory with no `COLLECTION.md` of its own is an area of the enclosing collection and inherits its contract, such as `kb/notes/definitions/`. An area carries no binding rules of its own: a rule about a kind of artifact lives in that kind's type spec, and a rule about what may live in the area lives in the collection's `COLLECTION.md` ([ADR 084](../adr/084-kind-rules-live-in-type-specs-and-operations-in-instructions.md)). A `COLLECTION.md` below a directory that is not itself a collection is an ordinary collection rather than a nested collection; a `COLLECTION.md` inside another collection is invalid.
 

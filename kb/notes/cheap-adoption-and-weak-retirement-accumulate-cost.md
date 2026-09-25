@@ -1,6 +1,6 @@
 ---
 description: "Explains why locally cheap structural additions become routing, maintenance, and migration debt when retirement needs distributed evidence and lacks an equally operative path."
-type: note
+type: types/note.md
 traits: [title-as-claim, has-comparison]
 tags: [document-system, kb-maintenance]
 ---

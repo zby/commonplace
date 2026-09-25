@@ -90,11 +90,12 @@ def ingest_metadata_from_snapshot(path: Path) -> dict[str, object]:
     return metadata
 
 
-# The path forms earlier releases wrote; the line may close the frontmatter block.
+# The values earlier releases wrote; the line may close the frontmatter block.
 _RETIRED_SNAPSHOT_TYPE = re.compile(
-    rb"^type: (?:kb/sources/types/|\./types/)snapshot\.md(?=\r?\n|\Z)", re.MULTILINE
+    rb"^type: (?:kb/sources/types/snapshot\.md|\./types/snapshot\.md|snapshot)(?=\r?\n|\Z)",
+    re.MULTILINE,
 )
-_CURRENT_SNAPSHOT_TYPE = b"type: snapshot"
+_CURRENT_SNAPSHOT_TYPE = b"type: types/snapshot.md"
 _PINNED_CHECKSUM = re.compile(
     rb"^((?:original_)?snapshot_sha256:[ \t]*)([0-9a-f]{64})(?=[ \t]*\r?$)", re.MULTILINE
 )
@@ -128,10 +129,10 @@ def _retyped_snapshot_bytes(data: bytes) -> bytes | None:
 
 
 def migrate_snapshot_types(kb_dir: Path) -> SnapshotTypeMigration:
-    """Retype captures that still name a retired snapshot type path (ADR 087 draft).
+    """Retype captures that still carry a retired snapshot type value (ADRs 087, 088).
 
     Every capture under a `.snapshots/` directory whose frontmatter has a retired
-    `type:` line is rewritten to `type: snapshot`; nothing else in it changes.
+    `type:` line is rewritten to `type: types/snapshot.md`; nothing else in it changes.
     An ingest beside that directory that pins the capture's old bytes through
     `snapshot_sha256` or `original_snapshot_sha256` is re-pinned to the new
     bytes. An ingest that already pins the new bytes (another clone migrated

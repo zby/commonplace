@@ -10,6 +10,7 @@ the skill set, or after switching between editable and normal installs.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 import re
@@ -37,6 +38,7 @@ class InitReport:
     retired_baselines: list[str] = field(default_factory=list)
     replaced_skill_copies: list[Path] = field(default_factory=list)
     rewritten_type_pointers: list[Path] = field(default_factory=list)
+    repinned_result_checksums: list[Path] = field(default_factory=list)
     rewritten_snapshots: list[Path] = field(default_factory=list)
     repinned_ingests: list[Path] = field(default_factory=list)
 
@@ -305,14 +307,26 @@ def _retire_legacy_baselines(project: Path, root: Path, report: InitReport) -> N
         conn.commit()
 
 
-_TYPE_LINE = re.compile(r"^(\s*(?:type|requires_type):\s*|\s*-\s+)(\S+\.md)\s*$", re.MULTILINE)
-_JSON_TYPE = re.compile(r'("(?:type|requires_type)"\s*:\s*)"([^"]+\.md)"')
+_TYPE_LINE = re.compile(
+    r"^([ \t]*(?:type|requires_type):[ \t]*)(\"?)([^\s\"]+)\2[ \t]*$", re.MULTILINE
+)
+_JSON_TYPE = re.compile(r'("(?:type|requires_type)"\s*:\s*)"([^"]+)"')
 _SCHEMA_REF = re.compile(r'(\$ref"?\s*:\s*["\']?)([^"\'\s]+\.schema\.(?:yaml|json))')
+_BARE_TYPE_NAME = re.compile(r"^[a-z0-9][a-z0-9-]*$")
+_RESULT_PIN = re.compile(r'("?analysis-result-sha256"?\s*:\s*"?)([0-9a-f]{64})')
 # Replaceable outputs are never rewritten. Report state holds live reports, whose
-# pointers are migrated, and frozen evidence copies, whose global-type pointers are
-# left as recorded; captures under .snapshots/ belong to migrate_snapshot_types.
+# type values are migrated, and frozen evidence copies, which keep their values
+# as recorded; captures under .snapshots/ belong to migrate_snapshot_types.
 _MIGRATION_SKIP = "kb/reports/cache/"
 _FROZEN_POINTER_AREA = "kb/reports/state/"
+_LIVE_STATE_TYPES = frozenset(
+    {
+        "agent-memory-analysis-report",
+        "agentic-system-analysis-run-state",
+        "connect-report",
+        "full-pass-report",
+    }
+)
 
 
 def _project_files(project: Path, pattern: str) -> list[Path]:
@@ -328,35 +342,64 @@ def _project_files(project: Path, pattern: str) -> list[Path]:
     ]
 
 
-def _migrate_type_pointers(project: Path, root: Path, report: InitReport) -> None:
-    """Rewrite a project's pointers to global types in the forms this release uses.
+def _repin_result_checksums(project: Path, rehashed: dict[str, str], report: InitReport) -> None:
+    """Point `analysis-result-sha256` pins at results whose type line init rewrote."""
+    if not rehashed:
+        return
+    for path in _project_files(project, "*.md"):
+        text = library.read_text(path)
+        new = _RESULT_PIN.sub(lambda m: m.group(1) + rehashed.get(m.group(2), m.group(2)), text)
+        if new != text:
+            library.write_text(path, new)
+            report.repinned_result_checksums.append(path.relative_to(project))
 
-    A `type:` or `requires_type:` value (YAML or JSON-style) that points at the
-    project's old copy of a global type — under `kb/types/`, `kb/sources/types/`,
-    or `kb/reports/types/`, by repo-relative or relative path — becomes the bare
-    name `X`. A schema `$ref` to such a copy's schema becomes
-    `commonplace:types/X.schema.yaml`. A pointer is rewritten only when the
-    project has no file of its own at that path, so project-owned types and kept,
-    differing copies keep their paths. Every rewritten file is reported.
+
+def _migrate_type_pointers(project: Path, root: Path, report: InitReport) -> None:
+    """Rewrite a project's type values in the form this release uses (ADR 088).
+
+    A `type:` or `requires_type:` value (YAML or JSON-style) becomes the spec's
+    path under a KB root:
+
+    - a bare global name `X`, or a path to an old project copy of a global type
+      (under `kb/types/`, `kb/sources/types/`, or `kb/reports/types/`) that init
+      removed, becomes `types/X.md`;
+    - a `kb/...`, `./`, or `../` path to a file in the project's `kb/` becomes
+      that file's path under `kb/`.
+
+    A kept, differing copy of a global type is therefore named `types/X.md` and
+    collides with the library's file, which validation reports. A schema `$ref`
+    to a removed copy's schema becomes `commonplace:types/X.schema.yaml`. Every
+    rewritten file is reported.
     """
     copy_dirs = {
         (project / copy).resolve()
         for copy, origin in MANIFEST.legacy_copies
         if origin == "types"
     }
-    project_types = (project / "kb" / "types").resolve()
+    kb = (project / "kb").resolve()
     global_names = {p.stem for p in (root / "types").glob("*.md")}
+    # A retained analysis result is pinned by its checksum; rewriting its type line
+    # re-pins it, so record each rewritten file's checksums.
+    rehashed: dict[str, str] = {}
 
-    def global_name(value: str, source: Path, suffix: str) -> str | None:
-        target = (project / value) if value.startswith("kb/") else (source.parent / value)
-        target = target.resolve()
-        name = target.name.removesuffix(suffix)
-        if target.parent not in copy_dirs or not target.name.endswith(suffix) or target.exists():
+    def new_value(value: str, source: Path) -> str | None:
+        if _BARE_TYPE_NAME.match(value):
+            name, result = value, (f"types/{value}.md" if value in global_names else None)
+        elif value.startswith(("kb/", "./", "../")) and value.endswith(".md"):
+            target = ((project / value) if value.startswith("kb/") else (source.parent / value)).resolve()
+            name = target.stem
+            if target.parent in copy_dirs and not target.exists() and name in global_names:
+                result = f"types/{name}.md"
+            elif target.is_file() and target.is_relative_to(kb):
+                result = target.relative_to(kb).as_posix()
+            else:
+                result = None
+        else:
             return None
         frozen = source.relative_to(project).as_posix().startswith(_FROZEN_POINTER_AREA)
-        if frozen and target.parent == project_types:
+        if frozen and name not in _LIVE_STATE_TYPES:
             return None
-        return name if name in global_names else None
+        return result
 
     for path in _project_files(project, "*.md"):
         text = library.read_text(path)
@@ -365,19 +408,23 @@ def _migrate_type_pointers(project: Path, root: Path, report: InitReport) -> Non
         if match is None:
             continue
         head = match.group(0)
-        def bare_line(m: re.Match[str], source: Path = path) -> str:
-            name = global_name(m.group(2), source, ".md")
-            return f"{m.group(1)}{name}" if name else m.group(0)
 
-        def bare_json(m: re.Match[str], source: Path = path) -> str:
-            name = global_name(m.group(2), source, ".md")
-            return f'{m.group(1)}"{name}"' if name else m.group(0)
+        def yaml_value(m: re.Match[str], source: Path = path) -> str:
+            value = new_value(m.group(3), source)
+            return f"{m.group(1)}{value}" if value else m.group(0)
 
-        new_head = _JSON_TYPE.sub(bare_json, _TYPE_LINE.sub(bare_line, head))
+        def json_value(m: re.Match[str], source: Path = path) -> str:
+            value = new_value(m.group(2), source)
+            return f'{m.group(1)}"{value}"' if value else m.group(0)
+
+        new_head = _JSON_TYPE.sub(json_value, _TYPE_LINE.sub(yaml_value, head))
         new = new_head + text[len(head) :]
         if new != text:
+            old_hash = hashlib.sha256(path.read_bytes()).hexdigest()
             library.write_text(path, new)
+            rehashed[old_hash] = hashlib.sha256(path.read_bytes()).hexdigest()
             report.rewritten_type_pointers.append(path.relative_to(project))
+    _repin_result_checksums(project, rehashed, report)
     for pattern in ("*.schema.yaml", "*.schema.json"):
         for path in _project_files(project, pattern):
             text = library.read_text(path)
@@ -591,13 +638,17 @@ def main(argv: list[str] | None = None) -> int:
         report.skipped_foreign,
     )
     _print_section(
-        "Rewrote pointers to global types in the forms this release uses (bare type names, "
-        "commonplace: schema refs):",
+        "Rewrote type values in the form this release uses (paths under a KB root such as "
+        "types/note.md; commonplace: schema refs):",
         report.rewritten_type_pointers,
     )
     _print_section(
-        "Retyped local snapshots to `type: snapshot` (a one-time migration):",
+        "Retyped local snapshots to `type: types/snapshot.md` (a one-time migration):",
         report.rewritten_snapshots,
+    )
+    _print_section(
+        "Re-pinned analysis-result checksums to results whose type line changed (commit these):",
+        report.repinned_result_checksums,
     )
     _print_section(
         "Re-pinned ingest checksums to the retyped snapshots (commit these):",

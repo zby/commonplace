@@ -1,6 +1,6 @@
 ---
 description: "Whole-system analysis of Pond as a durable cross-client session archive, separating its canonical ingest, retrieval, restore, and host policy boundaries"
-type: note
+type: types/note.md
 generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-04-pond-01
 source-identity: https://github.com/tenequm/pond

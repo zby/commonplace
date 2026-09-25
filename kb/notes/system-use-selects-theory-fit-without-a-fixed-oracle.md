@@ -1,6 +1,6 @@
 ---
 description: "When no complete fixed oracle decides whether a claim belongs in a working theory, distributed consequences of live system use can provide an initial selection environment"
-type: note
+type: types/note.md
 traits: [title-as-claim]
 tags: [learning-theory, deploy-time-learning, evaluation]
 ---

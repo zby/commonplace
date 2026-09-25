@@ -1,6 +1,6 @@
 ---
 description: "The base, type-rule, and schema sources of deterministic findings, their dereferencing limits, and the run-scoped execution model"
-type: note
+type: types/note.md
 tags: [type-system]
 ---
 
@@ -68,7 +68,7 @@ This page documents 1 and 2. The third is not a lesser mechanism: **a type spec'
 
 Type-spec documents are ordinary validation artifacts. Collection validation includes local type specs, and `commonplace-validate types` runs the same base, type-rule, and schema pipeline over the complete global and local type inventory. There is no separate type-system validation pass.
 
-Imperative rules select types by type identity, not by the type spec's `name` field. A global type's identity is its bare name, and a collection-local type's is its normalized `kb/...` path, so a same-named collection-local type remains distinct. [ADR 048](./adr/048-imperative-type-rules-dispatch-by-canonical-path.md) introduced this keying when global types were still named by path. Reports still use the shorter `type: <name>` label because a display label is not an identity key.
+Imperative rules select types by type identity, not by the type spec's `name` field. A type's identity is its `type:` value as written, its spec's path under a KB root such as `types/tag-readme.md` or `articles/types/article.md`, so a same-named collection-local type remains distinct. [ADR 048](./adr/048-imperative-type-rules-dispatch-by-canonical-path.md) introduced this keying. Reports still use the shorter `type: <name>` label because a display label is not an identity key.
 
 ## What the schema can and cannot express
 

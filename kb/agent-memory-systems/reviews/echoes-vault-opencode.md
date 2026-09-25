@@ -1,6 +1,6 @@
 ---
 description: "EchoesVault review: OpenCode plugin that bootstraps a Markdown/Obsidian vault, slash-command read-back, and agent-mediated trace capture"
-type: ../types/agent-memory-system-review.md
+type: agent-memory-systems/types/agent-memory-system-review.md
 source-tier: code-grounded
 last-checked: "2026-06-18"
 tags: [trace-learning]

@@ -1,6 +1,6 @@
 ---
 description: How to use the Commonplace review system — concepts, freshness, the review-batch workflow, and command surface
-type: note
+type: types/note.md
 tags: []
 ---
 

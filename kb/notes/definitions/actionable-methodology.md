@@ -1,6 +1,6 @@
 ---
 description: "Definition — actionable is a relation a methodology stands in, not a property of an artifact: it holds only relative to an operator, available operations, a target system, and a stated setting"
-type: definition
+type: types/definition.md
 tags: [foundations]
 ---
 

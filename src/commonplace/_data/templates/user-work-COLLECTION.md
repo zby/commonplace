@@ -59,6 +59,8 @@ the right collection, delete the workshop directory, and remove its entry from
 ## Type eligibility
 
 An artifact under `kb/work/` may use any valid type spec in the project, named
-by its path, or a global Commonplace type, named by its bare name. This lets a
+by its path under the KB root such as `reference/types/<name>.md`, or a global
+Commonplace type, named by its path under the library root such as
+`types/note.md`. This lets a
 workshop stage an artifact for its target collection and test that
 collection's contract. Frontmatter-free Markdown is implicit `text`.

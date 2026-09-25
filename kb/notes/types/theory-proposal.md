@@ -1,5 +1,5 @@
 ---
-type: type-spec
+type: types/type-spec.md
 name: theory-proposal
 description: Finished theory the KB has not decided to import into its vocabulary — the terms and distinctions adoption would add, the definitions it would change, its trigger, and its cost
 schema: ./theory-proposal.schema.yaml
@@ -25,7 +25,7 @@ Everything else follows the `kb/notes/` collection contract and the base [note](
 | Field | Required | Use |
 |---|---:|---|
 | `description` | Yes | Begins with `Proposal:`. |
-| `type` | Yes | `../types/theory-proposal.md`, file-relative from `kb/notes/proposals/`. |
+| `type` | Yes | `notes/types/theory-proposal.md` |
 | `tags` | No | Must be empty or absent. |
 | `traits` | No | Review-routing traits, as for `note`. |
 

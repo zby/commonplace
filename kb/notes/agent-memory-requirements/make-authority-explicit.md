@@ -1,6 +1,6 @@
 ---
 description: "Memory architecture must state who can read, write, promote, activate, enforce, revise, and retire memory across risk levels"
-type: note
+type: types/note.md
 traits: [has-external-sources]
 tags: [agent-memory, context-engineering]
 ---

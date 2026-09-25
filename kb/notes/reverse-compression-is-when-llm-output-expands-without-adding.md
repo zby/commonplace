@@ -1,6 +1,6 @@
 ---
 description: "LLMs can inflate compact seeds into verbose artifacts without adding extractable structure; a KB resists this only when links make additional structure accessible"
-type: note
+type: types/note.md
 traits: [title-as-claim]
 tags: [learning-theory, discovery]
 ---

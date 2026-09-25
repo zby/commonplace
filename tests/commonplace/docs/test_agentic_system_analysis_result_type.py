@@ -24,7 +24,7 @@ def result_text(*, disposition: str = "complete", complete_boundary: bool = True
         evidence_tier = "null"
 
     return f'''---
-type: agentic-system-analysis-result
+type: types/agentic-system-analysis-result.md
 description: "Complete external agentic-system analysis at one frozen source boundary with an explicit run disposition"
 run-id: AAS-2026-08-30-example-system-01
 system: "Example System"

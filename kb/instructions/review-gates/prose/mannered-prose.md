@@ -2,7 +2,7 @@
 gate_id: prose/mannered-prose
 name: Mannered prose
 description: 'The note uses figurative flourish that adds reading effort or unintended connotations without improving the statement.'
-type: review-gate
+type: types/review-gate.md
 lens: prose
 watches: [body]
 staleness: changed

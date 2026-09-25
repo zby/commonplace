@@ -1,6 +1,6 @@
 ---
 description: "Proposal (adopted): run review sweeps through harness-neutral parent orchestration over deterministic job endpoints and hermetic review workers"
-type: ../../types/design-proposal.md
+type: reference/types/design-proposal.md
 tags: [kb-maintenance]
 ---
 

@@ -1,6 +1,6 @@
 ---
 description: "Spacebot review: Rust team-agent harness with SQLite graph memory, LanceDB hybrid recall, pushed working context, trace-learning persistence, and skill injection"
-type: ../types/agent-memory-system-review.md
+type: agent-memory-systems/types/agent-memory-system-review.md
 source-tier: code-grounded
 tags: [trace-learning]
 last-checked: "2026-06-05"

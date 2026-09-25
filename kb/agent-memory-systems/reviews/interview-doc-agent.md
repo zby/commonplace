@@ -1,6 +1,6 @@
 ---
 description: "interview-doc-agent review: single-file job-document skill using a file-native experience library, templates, and index-guided context"
-type: ../types/agent-memory-system-review.md
+type: agent-memory-systems/types/agent-memory-system-review.md
 source-tier: code-grounded
 last-checked: "2026-06-04"
 ---

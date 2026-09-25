@@ -1,6 +1,6 @@
 ---
 description: Controlled prompt variation either decorrelates checks or measures brittleness under fixed task semantics; Deutsch's variation test instead changes the explanation to test mechanism and explanatory-reach
-type: note
+type: types/note.md
 traits: [has-external-sources]
 tags: [evaluation, llm-reliability, learning-theory]
 ---

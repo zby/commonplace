@@ -1,6 +1,6 @@
 ---
 description: "The Deutsch-derived quality property is carried corpus-wide by the rare compound explanatory-reach; bare reach returns to ordinary English, with two note retitles and one brainstorming rename"
-type: ../types/adr.md
+type: reference/types/adr.md
 tags: []
 status: accepted
 ---

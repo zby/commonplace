@@ -1,6 +1,6 @@
 ---
 description: The methodology→skill relationship is same-medium derivation, with the methodology retained as live fallback — distinct from codification and constraining
-type: ./types/structured-claim.md
+type: notes/types/structured-claim.md
 traits: [has-comparison, title-as-claim]
 tags: []
 ---

@@ -1,6 +1,6 @@
 ---
 description: "Distinguishes next-token probability from factual truth and inferential validity: confidence can support correctness decisions only after task-specific validation, and high-assurance acceptance still needs a separate check"
-type: note
+type: types/note.md
 traits: [title-as-claim]
 tags: [learning-theory, failure-modes, llm-reliability]
 ---

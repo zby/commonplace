@@ -1,13 +1,13 @@
 ---
 {
-  "type": "note",
+  "type": "types/note.md",
   "description": "DualGraph research workflow: graph-guided search and per-report context reuse, with default-path defects and bounded factual warrant.",
   "generated-by": "analyse-agentic-system",
   "analysis-run": "AAS-2026-09-25-dualgraph-01",
   "source-identity": "https://github.com/microsoft/DKI_LLM",
   "reviewed-revision": "c090b7d57e3996c8900e86fecd16085b27e07f29",
   "analysis-result": "kb/reports/retained/agentic-system-analysis/AAS-2026-09-25-dualgraph-01/result.md",
-  "analysis-result-sha256": "8de561b3cafce86fa18e7ca691f1576f56a9f9941fa6154a9bc5a9213417c705"
+  "analysis-result-sha256": "4f399f7c21431928fb2cf79da0fef75339874937f0d82bac219b5eb0f1cdb412"
 }
 ---
 

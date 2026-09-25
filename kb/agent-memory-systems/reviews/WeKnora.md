@@ -1,6 +1,6 @@
 ---
 description: "WeKnora review: enterprise RAG and agent platform with document chunks, wiki pages, graph memory, ReAct tools, and push plus pull read-back"
-type: ../types/agent-memory-system-review.md
+type: agent-memory-systems/types/agent-memory-system-review.md
 source-tier: code-grounded
 tags: [trace-learning]
 last-checked: "2026-06-05"

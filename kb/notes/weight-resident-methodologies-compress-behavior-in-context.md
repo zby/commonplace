@@ -1,6 +1,6 @@
 ---
 description: A compact cue can activate a much larger methodology already represented in model weights, trading very low context cost for model-dependent reconstruction rather than exact retained specification
-type: note
+type: types/note.md
 traits: [title-as-claim]
 tags: [foundations, context-engineering, methodology]
 ---

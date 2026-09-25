@@ -19,7 +19,7 @@ allOf:
           - evidence-tier
         properties:
           type:
-            const: agentic-system-analysis-result
+            const: types/agentic-system-analysis-result.md
           run-id:
             type: string
             pattern: '^AAS-\d{4}-\d{2}-\d{2}-[a-z0-9]+(?:-[a-z0-9]+)*-\d{2}$'

@@ -1,6 +1,6 @@
 ---
 description: "pi-self-learning review: pi extension that reflects completed agent sessions into git-backed daily, core, and long-term memory files"
-type: ../types/agent-memory-system-review.md
+type: agent-memory-systems/types/agent-memory-system-review.md
 source-tier: code-grounded
 tags: [trace-learning]
 last-checked: "2026-06-04"

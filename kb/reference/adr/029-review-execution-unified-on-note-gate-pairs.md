@@ -1,6 +1,6 @@
 ---
 description: "Review execution is unified on note-gate pairs; note and gate packing share one protocol, while partial salvage was later removed"
-type: ../types/adr.md
+type: reference/types/adr.md
 tags: []
 status: accepted
 ---

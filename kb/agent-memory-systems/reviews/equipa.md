@@ -1,6 +1,6 @@
 ---
 description: "EQUIPA review: SQLite-backed agent orchestrator with trace-learning lessons, episodes, prompt variants, and prompt-time read-back"
-type: ../types/agent-memory-system-review.md
+type: agent-memory-systems/types/agent-memory-system-review.md
 source-tier: code-grounded
 tags: [trace-learning]
 last-checked: "2026-06-04"

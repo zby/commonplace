@@ -1,6 +1,6 @@
 ---
 description: "Adds a third public article state: a root-placed draft circulating for comments behind a visible banner, with no version handles and no stability promise"
-type: ../types/adr.md
+type: reference/types/adr.md
 tags: []
 status: superseded
 ---

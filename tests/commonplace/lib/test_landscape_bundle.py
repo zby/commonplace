@@ -8,7 +8,7 @@ from pathlib import Path
 
 import pytest
 
-from commonplace.lib import systems_matrix
+from commonplace.lib import library, systems_matrix
 from scripts import bundle_agentic_landscape as bundle
 from tests.commonplace.lib.test_agentic_analysis import (
     REPO_ROOT,
@@ -19,6 +19,12 @@ from tests.commonplace.lib.test_agentic_analysis import (
     valid_run_state,
     write,
 )
+
+
+@pytest.fixture(autouse=True)
+def _source_repository_is_the_library(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    """The fixture repository under tmp_path/source carries its own global types."""
+    monkeypatch.setenv(library.LIBRARY_ENV, str(tmp_path / "source" / "kb"))
 
 
 def copy_member(root: Path, original: str, name: str) -> Path:

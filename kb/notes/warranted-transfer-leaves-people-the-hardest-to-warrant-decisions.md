@@ -1,6 +1,6 @@
 ---
 description: "When a system preferentially transfers decisions whose premises, criteria, and checks are available, the remaining human decisions become harder to warrant per decision; this predicts a residue composition, not structural computational openness"
-type: note
+type: types/note.md
 traits: [title-as-claim]
 tags: [foundations, self-improving-systems]
 ---

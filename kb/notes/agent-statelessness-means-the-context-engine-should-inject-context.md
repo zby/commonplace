@@ -1,6 +1,6 @@
 ---
 description: Since agents can't carry vocabulary or decisions between reads, the context engine should auto-inject referenced context — definitions once per session, ADRs when relevant. The trigger mechanism is open; the need follows from statelessness
-type: ./types/structured-claim.md
+type: notes/types/structured-claim.md
 traits: [title-as-claim]
 tags: []
 ---
@@ -30,7 +30,7 @@ This would make definitions behave like imported constants in a programming lang
 
 ### The `definition` type
 
-For the context engine to identify definitions, they need a machine-readable type. Definition notes now use `type: definition`, which can:
+For the context engine to identify definitions, they need a machine-readable type. Definition notes now use `type: types/definition.md`, which can:
 
 - Signal the context engine to auto-inject on first reference
 - Assert checkable structural properties, such as scope, exclusions, misuse cases, sibling-definition links, or bounded length

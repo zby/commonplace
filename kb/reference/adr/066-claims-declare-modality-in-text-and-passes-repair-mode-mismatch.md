@@ -1,6 +1,6 @@
 ---
 description: "Claims assert in one of three modes — universal, statistical, ideal-type — declared in the claim text; the full pass detects mode mismatch via counterexample shape and repairs it through mode-guarded reframes in both directions"
-type: ../types/adr.md
+type: reference/types/adr.md
 tags: []
 status: accepted
 ---

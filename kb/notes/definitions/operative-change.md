@@ -1,6 +1,6 @@
 ---
 description: "Definition — a change is operative when it affects the system's subsequent operation over the relevant, declared horizon through a behavioral-authority path; operativity does not require permanence"
-type: definition
+type: types/definition.md
 tags: [foundations, self-improving-systems]
 ---
 

@@ -1,5 +1,5 @@
 ---
-type: type-spec
+type: types/type-spec.md
 name: task-backlog
 description: Deferred task idea document with activation trigger and rough scope
 schema: null
@@ -24,7 +24,7 @@ No frontmatter is currently required for backlog task documents; this type has `
 | Field | Required | Use |
 |---|---:|---|
 | `description` | No | Retrieval description of the deferred work and the condition that would make it relevant. |
-| `type` | No | `kb/tasks/types/task-backlog.md` when the task is made into an explicitly typed artifact. |
+| `type` | No | `tasks/types/task-backlog.md` when the task is made into an explicitly typed artifact. |
 | `tags` | No | Routing tags for the work area. |
 
 The task's path plus `## Why Not Now` and `## Trigger to Activate` carry its backlog state. Do not add a generic frontmatter `status` field.

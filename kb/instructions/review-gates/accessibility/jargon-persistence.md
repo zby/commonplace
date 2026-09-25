@@ -2,7 +2,7 @@
 gate_id: accessibility/jargon-persistence
 name: Jargon Persistence
 description: KB-internal term defined once then reused throughout the body without ongoing context — reader loses the grounding.
-type: review-gate
+type: types/review-gate.md
 lens: accessibility
 watches: [body]
 staleness: changed

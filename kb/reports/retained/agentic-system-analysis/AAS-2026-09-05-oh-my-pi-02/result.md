@@ -1,5 +1,5 @@
 ---
-type: agentic-system-analysis-result
+type: types/agentic-system-analysis-result.md
 description: "oh-my-pi coding runtime: tool admission, optional worker isolation, model-driven revision and retained context at a frozen code boundary"
 run-id: AAS-2026-09-05-oh-my-pi-02
 system: "oh-my-pi"

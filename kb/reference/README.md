@@ -96,7 +96,7 @@ For the full read path and scaling direction, see [navigation.md](./navigation.m
 
 - "Convert `kb/notes/scratch.md` from text to a note."
 
-*What happens.* The agent adds valid note frontmatter: a semantic `description`, `type: note`, and empty `traits` and `tags`, while leaving `user-verified` absent. It does not edit the body. When the filename does not match the title, it renames the file within its collection and repairs backlinks.
+*What happens.* The agent adds valid note frontmatter: a semantic `description`, `type: types/note.md`, and empty `traits` and `tags`, while leaving `user-verified` absent. It does not edit the body. When the filename does not match the title, it renames the file within its collection and repairs backlinks.
 
 *What you get.* The same captured content as a structurally valid, unverified note, possibly under a title-aligned filename with its inbound links updated.
 
@@ -191,7 +191,7 @@ invariants, and orientation that the implementation does not cheaply recover.
 
 ### Type system and collection model
 
-- [collections-and-types.md](./collections-and-types.md) — how collection and type contracts compose, how bare global names and collection-local type paths resolve, common examples, and where both kinds of type spec live
+- [collections-and-types.md](./collections-and-types.md) — how collection and type contracts compose, how type values resolve as spec paths on the library and KB roots, common examples, and where both kinds of type spec live
 - [link-vocabulary.md](./link-vocabulary.md) — linking approach and label catalogue: collection-owned outbound rules, reader-need labels, articulation tests, connect reports, and guidance for `COLLECTION.md` authors
 - [collection-prototypes.md](./collection-prototypes.md) — optional creation-time contracts that may be copied into a new collection; the resulting `COLLECTION.md` is independently owned and receives no prototype updates
 - [collections-never-own-frontmatter-semantics.md](./collections-never-own-frontmatter-semantics.md) — why the collection/type split is asymmetric: a type spec owns frontmatter semantics, `COLLECTION.md` owns only text-level features

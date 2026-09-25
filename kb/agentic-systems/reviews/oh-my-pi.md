@@ -1,5 +1,5 @@
 ---
-type: note
+type: types/note.md
 description: "oh-my-pi's coding loop, effect controls, four memory backends and experiment admission at a pinned implementation boundary"
 traits: [has-external-sources]
 generated-by: analyse-agentic-system
@@ -7,7 +7,7 @@ analysis-run: AAS-2026-09-05-oh-my-pi-02
 source-identity: https://github.com/can1357/oh-my-pi
 reviewed-revision: be6cb8217cd4c1dafcc86793ae5d809ea4d7396a
 analysis-result: kb/reports/retained/agentic-system-analysis/AAS-2026-09-05-oh-my-pi-02/result.md
-analysis-result-sha256: 61d96000656cb63cfdd5e438f7c4273450cfdb0638797fea19f47ef5ce1d67f9
+analysis-result-sha256: 2f01cc27ddbe020b66c41e843fc7887271282f90e95fa446dd02d0f8bcaa2d45
 ---
 
 # oh-my-pi

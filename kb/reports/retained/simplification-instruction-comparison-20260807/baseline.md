@@ -1,6 +1,6 @@
 ---
 description: "Distinguishes accumulation from recurrent compounding, examines reflective control over revision decompositions, and presents Commonplace's natural-language theory layer as an unmeasured testbed"
-type: kb/articles/types/article.md
+type: articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
 source_notes:

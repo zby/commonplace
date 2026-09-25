@@ -1,6 +1,6 @@
 ---
 description: "Explains the LLM-call projection preserved when symbolic programs are converted to batched select/call form, and the additional semantics needed for effects and mutable harness configuration"
-type: note
+type: types/note.md
 traits: [title-as-claim, has-external-sources]
 tags: [computational-model]
 ---

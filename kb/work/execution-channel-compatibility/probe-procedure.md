@@ -1,6 +1,6 @@
 ---
 description: "Use to gather an initial, comparable execution-capability report from any environment in which Commonplace is read or operated"
-type: instruction
+type: types/instruction.md
 ---
 
 # Probe the current Commonplace execution environment

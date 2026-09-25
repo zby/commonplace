@@ -1,6 +1,6 @@
 ---
 description: "Curated head for the deploy-time-learning tag — the framework of system adaptation through durable, inspectable artifacts, plus learning fundamentals and feedback quality"
-type: tag-readme
+type: types/tag-readme.md
 index_source: tag
 index_key: deploy-time-learning
 ---

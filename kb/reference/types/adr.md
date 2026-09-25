@@ -1,5 +1,5 @@
 ---
-type: type-spec
+type: types/type-spec.md
 name: adr
 description: Architecture decision record for implemented system decisions
 schema: ./adr.schema.yaml
@@ -16,7 +16,7 @@ Use an ADR for a concrete architectural decision that has been made and implemen
 | Field | Required | Use |
 |---|---:|---|
 | `description` | Yes | Discriminating retrieval description for the decision record. |
-| `type` | Yes | `../types/adr.md` for ADR files under `kb/reference/adr/`. |
+| `type` | Yes | `reference/types/adr.md`. |
 | `tags` | No | Navigation tags, usually empty for ADRs. |
 | `status` | No | Decision lifecycle: `accepted`, `superseded`, or `deprecated`. |
 
@@ -35,7 +35,7 @@ Use an ADR for a concrete architectural decision that has been made and implemen
 ```markdown
 ---
 description: Template for architecture decision records — implemented decisions with Context, Decision, Considered alternatives, and Consequences sections
-type: ../types/adr.md
+type: reference/types/adr.md
 tags: []
 status: accepted
 ---

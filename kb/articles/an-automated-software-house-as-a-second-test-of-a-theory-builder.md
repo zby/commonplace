@@ -1,6 +1,6 @@
 ---
 description: "Supplement: the automated software house conjecture (2026-09-02 fixed models) as a second test of a theory builder; Naur's program theory against the stated-content condition, software's stronger falsifier and harder claim, four witness conditions"
-type: kb/articles/types/article.md
+type: articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
 source_notes:

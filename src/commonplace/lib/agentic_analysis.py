@@ -13,8 +13,8 @@ from urllib.parse import unquote, urlsplit
 
 from commonplace.lib.note_parser import ParsedDocument, parse_document
 
-AGENTIC_ANALYSIS_RUN_TYPE = "agentic-system-analysis-run-state"
-AGENTIC_ANALYSIS_RESULT_TYPE = "agentic-system-analysis-result"
+AGENTIC_ANALYSIS_RUN_TYPE = "types/agentic-system-analysis-run-state.md"
+AGENTIC_ANALYSIS_RESULT_TYPE = "types/agentic-system-analysis-result.md"
 
 _SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
 _LOCAL_SOURCE_ANCHOR_RE = re.compile(
@@ -750,7 +750,7 @@ def _verify_memory_report(
     if _run_identity_value(result_document.body, "Memory analysis report SHA-256") != sha256(report_bytes).hexdigest():
         failures.append("memory report: result's report SHA-256 does not match exact report bytes")
     expected = {
-        "type": "agent-memory-analysis-report",
+        "type": "types/agent-memory-analysis-report.md",
         "analysis-run": state.run_id,
         "source-identity": None if state.source is None else state.source.identity,
         "reviewed-boundary": None if state.source is None else state.source.revision,
@@ -890,7 +890,7 @@ def verify_agentic_analysis_run_state(
             failures.append(f"generated review: {error}")
         else:
             expected = {
-                "type": "note",
+                "type": "types/note.md",
                 "generated-by": "analyse-agentic-system",
                 "analysis-run": state.run_id,
                 "source-identity": None if state.source is None else state.source.identity,

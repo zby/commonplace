@@ -7,7 +7,7 @@ allOf:
         type: object
         properties:
           type:
-            const: kb/articles/types/article.md
+            const: articles/types/article.md
           source_notes:
             type: array
             items:

@@ -1,6 +1,6 @@
 ---
 description: "A Gödel machine admits self-rewrites through proof under its current formalization; this restricts admission without establishing how many useful changes are reachable or how reliably they are found"
-type: note
+type: types/note.md
 traits: [title-as-claim, has-comparison, has-external-sources]
 tags: [foundations, computational-model, self-improving-systems]
 ---

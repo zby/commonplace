@@ -1,6 +1,6 @@
 ---
 description: "Accepted decision that COLLECTION.md states type eligibility instead of listing types, with kb/work allowed to use any valid type contract"
-type: ../types/adr.md
+type: reference/types/adr.md
 tags: []
 status: accepted
 ---

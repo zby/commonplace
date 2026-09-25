@@ -15,10 +15,10 @@ from properdocs.structure.files import File, InclusionLevel
 from commonplace.lib import frontmatter, index_directory, index_generated
 from commonplace.lib.project_paths import collection_dirs, collection_for_path
 
-INDEX_TYPE = "generated-index"
+INDEX_TYPE = "types/generated-index.md"
 # Page types that act as a tag's landing: the committed tag-readme (ADR 026)
 # and the index type (build-time virtual pages, unmigrated indexes).
-TAG_PAGE_TYPES = {INDEX_TYPE, "tag-readme"}
+TAG_PAGE_TYPES = {INDEX_TYPE, "types/tag-readme.md"}
 
 # Recursion caps for per-collection dir-index generation. instructions stops
 # at one level because each cp-skill-* subdir is essentially a single SKILL.md

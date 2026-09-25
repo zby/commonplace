@@ -1,6 +1,6 @@
 ---
 description: "Lead article: bets that a fully automated theory builder that learns, a Popperian conjecture-and-criticism cycle over explicit theories, can be built from fixed-weight LLMs applying precise definitions; payoffs, Bitter Lesson, learning test"
-type: kb/articles/types/article.md
+type: articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
 source_notes:

@@ -1,13 +1,13 @@
 ---
 {
-  "type": "note",
+  "type": "types/note.md",
   "description": "Prove2Me host integration: formal proof and translation review contracts, retained feedback, and shipped Lean extraction helpers.",
   "generated-by": "analyse-agentic-system",
   "analysis-run": "AAS-2026-09-25-prove2me-01",
   "source-identity": "https://github.com/prove2me/prove2me_workspace",
   "reviewed-revision": "326b972580e0640b1f3739ec7b12d2b34d8d3527",
   "analysis-result": "kb/reports/retained/agentic-system-analysis/AAS-2026-09-25-prove2me-01/result.md",
-  "analysis-result-sha256": "22996d00c94fa5b9977e30725570be0ae2e542c900f9269e0a2056333ddb6b33"
+  "analysis-result-sha256": "20273c57e7ee775353a5afafc1a6e601182f5d84624f97641fe8b7845e54ecd8"
 }
 ---
 

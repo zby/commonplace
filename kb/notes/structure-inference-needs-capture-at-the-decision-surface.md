@@ -1,6 +1,6 @@
 ---
 description: "Bottom-up inference of entities and relations from traces needs decision-shaped capture at the decision surface: the 'why' is cheap to record there and hard-to-impossible to recover from state later"
-type: note
+type: types/note.md
 traits: [title-as-claim, has-external-sources]
 tags: [agent-memory, context-engineering, learning-theory]
 ---

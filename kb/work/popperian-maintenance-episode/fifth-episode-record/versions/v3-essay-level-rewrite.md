@@ -1,6 +1,6 @@
 ---
 description: "Naur argues program theory cannot be expressed in rules, then concludes it is bound to humans; the step needs the unargued premise that every non-human candidate follows formulable rules, which a trained interpreter contests"
-type: note
+type: types/note.md
 traits: [title-as-claim, has-external-sources]
 tags: [foundations, context-engineering]
 ---

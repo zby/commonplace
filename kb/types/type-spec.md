@@ -1,5 +1,5 @@
 ---
-type: type-spec
+type: types/type-spec.md
 name: type-spec
 description: Authoring and validation contract for path-valued Commonplace type specifications
 schema: ./type-spec.schema.yaml
@@ -7,11 +7,11 @@ schema: ./type-spec.schema.yaml
 
 # Type spec
 
-A type-spec doc is the authoring and validation contract for one Commonplace artifact type. Artifact frontmatter stores the repo-relative path to this doc in `type:`, and this file serves several consumers differently: an author writing a new instance reads it for what to write, someone unfamiliar with the type reads it for what to expect from an instance before opening one, and the validator and the type-conformance reviewer — specified below — read it to check conformance.
+A type-spec doc is the authoring and validation contract for one Commonplace artifact type. Artifact frontmatter stores this doc's path under a KB root in `type:`, such as `types/note.md` for a global type or `reference/types/adr.md` for a collection-local one ([collections and types](../reference/collections-and-types.md)), and this file serves several consumers differently: an author writing a new instance reads it for what to write, someone unfamiliar with the type reads it for what to expect from an instance before opening one, and the validator and the type-conformance reviewer — specified below — read it to check conformance.
 
 ## Required Frontmatter
 
-- `type`: `kb/types/type-spec.md`. The root type spec is self-referential and uses the same value.
+- `type`: `types/type-spec.md`. The root type spec is self-referential and uses the same value.
 - `name`: short human-facing type name.
 - `description`: retrieval description for the type contract.
 - `schema`: repo-relative path to the `.schema.yaml` file that validates artifacts of this type, or `null` when the type has no schema.
@@ -39,7 +39,7 @@ Do not restate a schema rule in body text. The validator already enforces it, so
 
 ````markdown
 ---
-type: type-spec
+type: types/type-spec.md
 name: {type-name}
 description: "{Retrieval description for this type contract}"
 schema: {kb/types/{type-name}.schema.yaml or null}

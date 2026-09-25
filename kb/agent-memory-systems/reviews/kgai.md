@@ -1,6 +1,6 @@
 ---
 description: "kgai review: local-first Go CLI storing engineering decisions as an append-only content-addressed event log projected into an embedded Kuzu graph, with Claude Code auto-capture"
-type: ../types/agent-memory-system-review.md
+type: agent-memory-systems/types/agent-memory-system-review.md
 source-tier: code-grounded
 last-checked: "2026-07-18"
 ---

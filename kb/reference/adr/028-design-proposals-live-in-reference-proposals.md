@@ -1,6 +1,6 @@
 ---
 description: "Routes unadopted system designs to kb/reference/proposals, reserves ADRs for implemented decisions, and splits YAGNI gaps from transferable theoretical insights"
-type: ../types/adr.md
+type: reference/types/adr.md
 tags: []
 status: accepted
 ---

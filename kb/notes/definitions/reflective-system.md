@@ -1,6 +1,6 @@
 ---
 description: "Definition — a system is reflective relative to selected aspects when an internal process uses a causally connected self-representation of them in its operation"
-type: definition
+type: types/definition.md
 tags: [foundations, computational-model, self-improving-systems]
 ---
 

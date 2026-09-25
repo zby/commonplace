@@ -1,6 +1,6 @@
 ---
 description: Imperative deterministic type rules dispatch by canonical path-valued type identity, preventing same-named local types from inheriting framework rules
-type: ../types/adr.md
+type: reference/types/adr.md
 tags: []
 status: accepted
 ---

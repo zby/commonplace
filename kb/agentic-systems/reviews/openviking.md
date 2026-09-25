@@ -1,5 +1,5 @@
 ---
-type: note
+type: types/note.md
 description: 'OpenViking session and user-memory subsystem: queued extraction, cumulative
   continuation and bounded recall with explicit host/training exclusions'
 generated-by: analyse-agentic-system
@@ -7,7 +7,7 @@ analysis-run: AAS-2026-09-25-openviking-01
 source-identity: https://github.com/volcengine/OpenViking
 reviewed-revision: 4edc30b068934893bc94a4e1b8e87bab2100bce5
 analysis-result: kb/reports/retained/agentic-system-analysis/AAS-2026-09-25-openviking-01/result.md
-analysis-result-sha256: 78668acb0136168663890975c818ff8bcae5ae4d7548b197f77a5046f0ca9526
+analysis-result-sha256: 1e8ba47630396c1649ccfa715649a31185f4c74fa14446e52226a189993a63af
 ---
 
 # OpenViking session and user memory

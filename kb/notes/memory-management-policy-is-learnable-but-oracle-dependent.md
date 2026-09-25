@@ -1,6 +1,6 @@
 ---
 description: Fixed and merely runtime-responsive memory rules need no training oracle; outcome-driven updates do, while noisy rankings weaken learning and misaligned ones teach the wrong ordering
-type: note
+type: types/note.md
 traits: [has-external-sources, title-as-claim]
 tags: [learning-theory, agent-memory]
 ---

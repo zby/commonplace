@@ -20,8 +20,8 @@ from commonplace.lib.project_paths import (
 
 FIELD_NAME = "tags"
 MARKER = "<!-- generated -->"
-INDEX_TYPE = "generated-index"
-TAG_README_TYPE = "tag-readme"
+INDEX_TYPE = "types/generated-index.md"
+TAG_README_TYPE = "types/tag-readme.md"
 # Page types that carry index_source/index_key and receive a build-time
 # generated listing. INDEX_TYPE remains for build-time virtual pages and
 # unmigrated indexes; TAG_README_TYPE is the committed curated head (ADR 026).

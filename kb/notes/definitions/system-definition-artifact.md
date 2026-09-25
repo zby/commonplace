@@ -1,6 +1,6 @@
 ---
 description: Definition - a system-definition artifact is a retained artifact consumed with instruction, enforcement, routing, validation, configuration, evaluation, or learning force
-type: definition
+type: types/definition.md
 tags: [learning-theory, artifact-analysis]
 ---
 

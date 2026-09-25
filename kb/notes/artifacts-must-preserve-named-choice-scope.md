@@ -1,6 +1,6 @@
 ---
 description: "An artifact may inherit scope from context guaranteed to its consumers; for each named system choice it must preserve a proposition-relative reference rule or range plus the choice's role, not necessarily concrete identity or quantifier syntax"
-type: note
+type: types/note.md
 traits: [title-as-claim]
 tags: [document-system, artifact-analysis, foundations]
 ---

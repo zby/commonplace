@@ -1,6 +1,6 @@
 ---
 description: Ward Cunningham's wiki design principle — minimize capture friction, refine in place — drives the text→note→structured-claim codification ladder
-type: note
+type: types/note.md
 traits: [has-external-sources]
 tags: [type-system]
 ---
@@ -16,7 +16,7 @@ The KB type hierarchy is a codification ladder for thoughts. Its design principl
 2. **Our type ladder mirrors this.** The [type system](../reference/collections-and-types.md) supports the same pattern:
    - **`text`** — no frontmatter, just write. Zero friction, like creating a wiki page.
    - **`note`** — add valid frontmatter with `description` and
-     `type: note`, then develop the title and connections. Now
+     `type: types/note.md`, then develop the title and connections. Now
      findable.
    - **`structured-claim`** — add Evidence/Reasoning/Caveats sections. Now [verifiable](./claim-notes-should-use-toulmin-derived-sections-for-structured.md).
 

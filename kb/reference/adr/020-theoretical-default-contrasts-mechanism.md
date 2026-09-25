@@ -1,6 +1,6 @@
 ---
 description: "Adds `contrasts` and `mechanism` to the theoretical-register default template on corpus evidence, and declares the directional-asymmetry principle that governs how the theoretical vocabulary is authored and read."
-type: ../types/adr.md
+type: reference/types/adr.md
 tags: []
 status: accepted
 ---

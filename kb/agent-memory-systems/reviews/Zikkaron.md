@@ -1,6 +1,6 @@
 ---
 description: "Zikkaron review: Claude Code MCP memory with SQLite/FTS/vector storage, predictive write gating, trace-learning consolidation, hooks, and push/pull recall"
-type: ../types/agent-memory-system-review.md
+type: agent-memory-systems/types/agent-memory-system-review.md
 source-tier: code-grounded
 last-checked: "2026-06-05"
 tags: [trace-learning]

@@ -1,6 +1,6 @@
 ---
 description: "Synto review: local LLM vault compiler that turns raw notes into reviewed Markdown wiki articles, SQLite identity state, agent packs, and MCP read tools"
-type: ../types/agent-memory-system-review.md
+type: agent-memory-systems/types/agent-memory-system-review.md
 source-tier: code-grounded
 tags: [trace-learning]
 last-checked: "2026-06-18"

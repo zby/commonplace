@@ -1,12 +1,12 @@
 ---
-type: note
+type: types/note.md
 description: "EvoOntology's semantic memory and host-led evolution, with supplied-score admission, direct mutation alternatives and content-only version recovery"
 generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-25-evoontology-01
 source-identity: https://github.com/ruc-datalab/EvoOntology
 reviewed-revision: ddbb1c991de5a33e27eb32bc86a4212a7537e01e
 analysis-result: kb/reports/retained/agentic-system-analysis/AAS-2026-09-25-evoontology-01/result.md
-analysis-result-sha256: 4eadb7f0712112c9fddea5db5f0d6bac5b184dd7d9f8349f3935afa128296a1a
+analysis-result-sha256: aa9766294d0d76b819168cc4d430077f219929da7689d5b5effeedb374ce105d
 ---
 
 # EvoOntology

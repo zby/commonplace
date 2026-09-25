@@ -1,7 +1,7 @@
 # Convert still requires semantic description
 
 The `cp-skill-convert` skill is mostly structural — add frontmatter with fixed
-structural values (`type: note`, `traits: []`, `tags: []`), leave
+structural values (`type: types/note.md`, `traits: []`, `tags: []`), leave
 `user-verified` absent, and align the filename to the title while repairing
 backlinks.
 

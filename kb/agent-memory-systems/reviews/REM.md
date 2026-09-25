@@ -1,6 +1,6 @@
 ---
 description: "REM review: episodic memory service with trace-learning episodes, vector/graph retrieval, LangChain injection, and partially wired consolidation"
-type: ../types/agent-memory-system-review.md
+type: agent-memory-systems/types/agent-memory-system-review.md
 source-tier: code-grounded
 tags: [trace-learning]
 last-checked: "2026-06-04"

@@ -1,6 +1,6 @@
 ---
 description: "beads_rust as a local active-work and coordination substrate: transactional CLI claims and workflow gates, explicit external execution and Git boundaries, and weaker parity across MCP, inherited-context, and shipped instruction paths"
-type: note
+type: types/note.md
 traits: [has-external-sources, has-comparison]
 tags: [agent-memory, context-engineering, tool-loop]
 ---

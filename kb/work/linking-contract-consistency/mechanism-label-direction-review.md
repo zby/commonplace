@@ -1,6 +1,6 @@
 ---
 description: "Read-only semantic evaluation of active mechanism edges and grounds rows deferred to mechanism review"
-type: instruction
+type: types/instruction.md
 ---
 
 # Mechanism label direction review

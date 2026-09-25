@@ -1,6 +1,6 @@
 ---
 description: "Accepted decision that source-claim grounding is the promoted skill cp-skill-ground, the single advertised entry for choosing which quotes an ingest retains and the only writer of its Quotes section, with cp-skill-ingest confined to (re-)ingest"
-type: ../types/adr.md
+type: reference/types/adr.md
 tags: []
 status: accepted
 ---

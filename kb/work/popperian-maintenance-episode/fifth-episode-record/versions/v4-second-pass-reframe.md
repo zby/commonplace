@@ -1,6 +1,6 @@
 ---
 description: "Naur's rule-inexpressibility argument does not establish that program theory is human-only; that conclusion needs a separate premise excluding every eligible nonhuman theory-holder"
-type: note
+type: types/note.md
 traits: [title-as-claim, has-external-sources]
 tags: [foundations, context-engineering]
 ---

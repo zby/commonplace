@@ -1,6 +1,6 @@
 ---
 description: "Superseded historical decision: honest queued/running review state and a general migration substrate were reduced to queued/completed/failed jobs; a later release added one narrow v4→v5 migration"
-type: ../types/adr.md
+type: reference/types/adr.md
 tags: []
 status: superseded
 ---

@@ -1,6 +1,6 @@
 ---
 description: "VLM-wiki review: file-backed multimodal personal wiki scaffold with AGENTS instructions, raw media, VLM analysis scripts, and Obsidian Markdown read-back"
-type: ../types/agent-memory-system-review.md
+type: agent-memory-systems/types/agent-memory-system-review.md
 source-tier: code-grounded
 last-checked: "2026-06-05"
 ---

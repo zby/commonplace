@@ -1,6 +1,6 @@
 ---
 description: Use during ingest drafting when a source's subject or mechanism is learning or adaptation, to write the Learning Claims section that judges what the source changes in our understanding.
-type: instruction
+type: types/instruction.md
 ---
 
 # Assess learning claims during ingest

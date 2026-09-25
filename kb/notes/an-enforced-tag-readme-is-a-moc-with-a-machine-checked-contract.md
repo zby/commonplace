@@ -1,6 +1,6 @@
 ---
 description: "A Commonplace tag-README can inherit Milo's contextual mapping pattern while validation checks only its declared membership relations, not editorial quality."
-type: note
+type: types/note.md
 traits: [title-as-claim, has-external-sources]
 tags: [kb-maintenance, document-system]
 ---

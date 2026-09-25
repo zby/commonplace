@@ -1,6 +1,6 @@
 ---
 description: Experimental run-by-hand report method that tests whether a note's central claim survives concretization and locates its least-supported inferential joints
-type: instruction
+type: types/instruction.md
 ---
 
 # Reconstruct a note's composition friction

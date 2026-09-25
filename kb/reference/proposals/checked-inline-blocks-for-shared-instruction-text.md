@@ -1,6 +1,6 @@
 ---
 description: "Proposal: reuse natural-language authoring mechanics in specialized writer prompts through literal inlining backed by deterministic source-to-copy checks"
-type: ../types/design-proposal.md
+type: reference/types/design-proposal.md
 tags: [architecture, context-engineering]
 ---
 

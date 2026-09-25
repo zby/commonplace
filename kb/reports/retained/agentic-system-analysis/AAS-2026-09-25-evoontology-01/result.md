@@ -1,5 +1,5 @@
 ---
-type: agentic-system-analysis-result
+type: types/agentic-system-analysis-result.md
 description: "EvoOntology ontology/evolution layer with host-agent construction, semantic read-back, recorded-score gates and alternate mutation paths"
 run-id: AAS-2026-09-25-evoontology-01
 system: EvoOntology

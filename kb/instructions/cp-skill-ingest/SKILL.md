@@ -1,7 +1,7 @@
 ---
 name: cp-skill-ingest
 description: Use when asked to ingest one URL or local snapshot into a tracked .ingest.md source analysis, or to execute a bounded re-ingest request. Retaining quotes in an existing ingest is cp-skill-ground's job, not this skill's.
-type: instruction
+type: types/instruction.md
 user-invocable: true
 allowed-tools: Read, Write, Grep, Glob, Bash, Skill, Task
 context: fork

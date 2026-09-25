@@ -1,5 +1,5 @@
 ---
-type: type-spec
+type: types/type-spec.md
 name: design-proposal
 description: Finished but unadopted design for the Commonplace system — problem, option space, forces, free choices, no decision
 schema: ./design-proposal.schema.yaml
@@ -24,7 +24,7 @@ Use a design proposal for a finished but unadopted design: the problem, the opti
 | Field | Required | Use |
 |---|---:|---|
 | `description` | Yes | Leads with `Proposal:`; an archived adopted proposal may use `Proposal (adopted):`. |
-| `type` | Yes | `../types/design-proposal.md` for proposals under `kb/reference/proposals/`; `../../types/design-proposal.md` once archived. |
+| `type` | Yes | `reference/types/design-proposal.md`, including once archived. |
 | `tags` | No | Navigation tags. |
 | `traits` | No | Review-routing traits, e.g. `has-external-sources`. |
 

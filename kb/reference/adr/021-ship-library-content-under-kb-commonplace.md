@@ -1,6 +1,6 @@
 ---
 description: "Ship Commonplace library content under kb/commonplace/ so user collections at kb/notes/, kb/reference/, kb/instructions/ stay user-owned while the shipped library sits alongside as a read-only dependency."
-type: ../types/adr.md
+type: reference/types/adr.md
 tags: []
 status: superseded
 ---

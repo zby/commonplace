@@ -1,6 +1,6 @@
 ---
 description: "Academic Research Skills as a prompt-defined Claude Code research pipeline with narrow executable checks, host-dependent orchestration, protocol-only resume, and conflicting terminal gate rules"
-type: note
+type: types/note.md
 traits: [has-external-sources, has-implementation]
 tags: [computational-model, context-engineering, evaluation, tool-loop]
 ---

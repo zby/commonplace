@@ -1,6 +1,6 @@
 ---
 description: "With models pinned, newly acquired theory-use procedures must persist outside their parameters; existing general machinery may already supply them, while code can make specified steps cheaper and more reliable"
-type: note
+type: types/note.md
 traits: [title-as-claim]
 tags: [learning-theory, self-improving-systems]
 ---

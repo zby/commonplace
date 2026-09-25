@@ -1,6 +1,6 @@
 ---
 description: Audit and maintain curated tag-index pages — evaluate editorial groupings, check for orphaned notes, and split or merge indexes where needed.
-type: instruction
+type: types/instruction.md
 ---
 
 # Maintain curated indexes
@@ -57,7 +57,7 @@ For each orphan, consider whether adding tags would help future readers find it.
 When a tag grows large and internal clusters emerge:
 
 1. Look at the curated groupings — these often reveal natural sub-tags.
-2. Create a new `<tag>-README.md` with `type: tag-readme`, `index_source: tag`, and `index_key: <tag>` (template in the type spec).
+2. Create a new `<tag>-README.md` with `type: types/tag-readme.md`, `index_source: tag`, and `index_key: <tag>` (template in the type spec).
 3. Add the new tag to relevant notes' `tags:` field — keeping the parent tag on every note (never a partial migration; see the split discipline in `kb/types/tag-readme.md`).
 4. Write the curated body for the new README; the complete listing appears on the published site automatically.
 

@@ -1,6 +1,6 @@
 ---
 description: "Replaces enum type names and three-file type bundles with path references to one authoring contract plus a sibling schema, removing discovery ambiguity and special-case write routing"
-type: ../types/adr.md
+type: reference/types/adr.md
 tags: []
 status: accepted
 ---

@@ -1,6 +1,6 @@
 ---
 description: "Use when a circulating kb/articles draft has explicit approval to become a working paper or frozen dated article on the ProperDocs site"
-type: instruction
+type: types/instruction.md
 ---
 
 # Publish an article
@@ -9,7 +9,7 @@ Promote an approved circulating draft on the ProperDocs deployment to either a r
 
 ## Prerequisites
 
-- The artifact declares `type: kb/articles/types/article.md` and `status: draft`.
+- The artifact declares `type: articles/types/article.md` and `status: draft`.
 - It lives at `kb/articles/{slug}.md` and opens with the draft banner.
 - It carries a byline and resolving `source_notes`.
 - Its body satisfies `kb/articles/COLLECTION.md`: self-standing technical prose for an external reader, no agent-facing footer grammar, and a worthwhile onward path into the KB.

@@ -1,6 +1,6 @@
 ---
 description: Review acceptance stores only the current accepted baseline per note/gate/model key and prunes superseded review evidence inline
-type: ../types/adr.md
+type: reference/types/adr.md
 tags: []
 status: accepted
 ---

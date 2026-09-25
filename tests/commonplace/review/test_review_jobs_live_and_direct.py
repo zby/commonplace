@@ -30,7 +30,7 @@ def make_note(path: Path) -> Path:
         path,
         """---
 description: Test note
-type: note
+type: types/note.md
 traits: []
 ---
 

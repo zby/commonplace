@@ -1,5 +1,5 @@
 ---
-type: note
+type: types/note.md
 description: Explains why improving context selection within a fixed operation interface cannot establish that the interface admits every useful active-context projection.
 traits: [title-as-claim, has-comparison, has-external-sources]
 tags: [context-engineering, computational-model, agent-memory]

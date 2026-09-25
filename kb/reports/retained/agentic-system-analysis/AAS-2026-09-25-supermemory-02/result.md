@@ -1,5 +1,5 @@
 ---
-type: agentic-system-analysis-result
+type: types/agentic-system-analysis-result.md
 description: 'Supermemory Vercel wrapper subsystem: profile injection and conversation
   upload with local cache semantics and uninspected remote learning bridge'
 run-id: AAS-2026-09-25-supermemory-02

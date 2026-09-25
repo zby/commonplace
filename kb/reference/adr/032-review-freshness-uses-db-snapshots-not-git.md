@@ -1,6 +1,6 @@
 ---
 description: "Review freshness is based on SQLite-owned note and gate snapshots, separated from Git and from review execution; the model-side review key is a frozen model_partition"
-type: ../types/adr.md
+type: reference/types/adr.md
 tags: []
 status: accepted
 ---

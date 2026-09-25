@@ -2,7 +2,7 @@
 gate_id: sentence/concept-attribution
 name: Concept attribution
 description: 'The prose identifies a concept with one from a linked note, but the target defines or uses that concept differently.'
-type: review-gate
+type: types/review-gate.md
 lens: sentence
 watches: [body]
 staleness: changed

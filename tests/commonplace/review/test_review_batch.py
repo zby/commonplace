@@ -29,7 +29,7 @@ def make_note(path: Path, title: str) -> Path:
         path,
         f"""---
 description: Test note
-type: note
+type: types/note.md
 traits: []
 ---
 
@@ -667,7 +667,7 @@ def test_create_review_jobs_selector_marks_queued_job_failed_when_prompt_renderi
     (repo / "kb" / "notes" / "first.md").write_text(
         """---
 description: Test note
-type: note
+type: types/note.md
 traits: []
 ---
 

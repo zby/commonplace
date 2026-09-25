@@ -10,7 +10,7 @@ allOf:
           - type
         properties:
           type:
-            const: instruction
+            const: types/instruction.md
           name:
             type: string
             minLength: 1

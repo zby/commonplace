@@ -1,6 +1,6 @@
 ---
 description: "Code-grounded review of Hermes Agent's bounded prompt memory, progressive skills, session recall, background trace learning, and skill curation"
-type: ../types/agent-memory-system-review.md
+type: agent-memory-systems/types/agent-memory-system-review.md
 source-tier: code-grounded
 tags: [trace-learning]
 last-checked: "2026-07-18"

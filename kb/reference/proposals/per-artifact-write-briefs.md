@@ -1,6 +1,6 @@
 ---
 description: "Proposal: whether to preserve an optional artifact-specific commission stating the intended reader update, conditional on deterministic write-context assembly"
-type: ../types/design-proposal.md
+type: reference/types/design-proposal.md
 tags: [context-engineering, kb-maintenance]
 ---
 

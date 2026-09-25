@@ -1,6 +1,6 @@
 ---
 description: "Outbound links are authored reader aids; their on-demand inverse serves distinct standing, grounding, impact, and tension needs without forbidding independently useful reciprocal links"
-type: note
+type: types/note.md
 traits: [title-as-claim]
 tags: [links]
 ---

@@ -2,7 +2,11 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import pytest
+
 from commonplace.lib.index_directory import collect_index_pages, generate
+
+pytestmark = pytest.mark.usefixtures("tmp_library")
 
 
 def write(path: Path, content: str) -> Path:
@@ -17,7 +21,7 @@ def test_generate_directory_index_skips_readme_index_and_types(tmp_path: Path) -
         collection / "real.md",
         """---
 description: Real note
-type: note
+type: types/note.md
 ---
 
 # Real
@@ -79,7 +83,7 @@ def test_collect_index_pages_recurses_and_lists_subdirs(tmp_path: Path) -> None:
         collection / "top.md",
         """---
 description: Top-level note
-type: note
+type: types/note.md
 ---
 
 # Top
@@ -89,7 +93,7 @@ type: note
         collection / "adr" / "001-some-decision.md",
         """---
 description: First decision
-type: kb/reference/types/adr.md
+type: reference/types/adr.md
 ---
 
 # 001 Some decision
@@ -146,7 +150,7 @@ def test_collect_index_pages_prunes_hidden_dirs_and_nested_repos(tmp_path: Path)
         collection / "kept.md",
         """---
 description: Kept note
-type: note
+type: types/note.md
 ---
 
 # Kept
@@ -156,7 +160,7 @@ type: note
         collection / ".hidden" / "invisible.md",
         """---
 description: Hidden note
-type: note
+type: types/note.md
 ---
 
 # Hidden

@@ -1,5 +1,5 @@
 ---
-type: agentic-system-analysis-result
+type: types/agentic-system-analysis-result.md
 description: "Complete documentary analysis of WikiSkill's described skill-evolution loop and retained knowledge."
 run-id: AAS-2026-09-25-wikiskill-01
 system: WikiSkill

@@ -1,6 +1,6 @@
 ---
 description: "Pratiyush llm-wiki review: local file-based transcript-to-wiki compiler with raw session capture, agent-authored wiki pages, static AI exports, MCP tools, and optional synthesis"
-type: ../types/agent-memory-system-review.md
+type: agent-memory-systems/types/agent-memory-system-review.md
 source-tier: code-grounded
 tags: [trace-learning]
 last-checked: "2026-06-04"

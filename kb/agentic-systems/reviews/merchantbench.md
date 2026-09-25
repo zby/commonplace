@@ -1,5 +1,5 @@
 ---
-type: note
+type: types/note.md
 description: MerchantBench ReAct baseline combines action feedback and optional persistent
   notes, with context trimming and source/default limits
 generated-by: analyse-agentic-system
@@ -7,7 +7,7 @@ analysis-run: AAS-2026-09-25-merchantbench-01
 source-identity: https://github.com/KhanCold/merchantbench
 reviewed-revision: f44ce969aeccfd65d1eef6afe50f69868e510946
 analysis-result: kb/reports/retained/agentic-system-analysis/AAS-2026-09-25-merchantbench-01/result.md
-analysis-result-sha256: 9e4a8474f6cb37a4d04c1ed996c676b197b7430daaacdda2dae985377c0dc848
+analysis-result-sha256: 615a4b3b68f419eb12331d03f36166f166e384ace782fc2743ab7e180b74215b
 ---
 
 # MerchantBench: ReAct and optional persistent notes

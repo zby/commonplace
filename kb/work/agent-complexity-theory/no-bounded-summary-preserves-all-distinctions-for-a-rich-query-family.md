@@ -1,6 +1,6 @@
 ---
 description: "Counting lower bound on bounded summaries: exact answering over a query family requires at least one summary code per query-induced answer profile"
-type: kb/notes/types/structured-claim.md
+type: notes/types/structured-claim.md
 traits: []
 tags: [computational-model, context-engineering, learning-theory]
 ---

@@ -1,6 +1,6 @@
 ---
 description: "Superseded decision that placed the required open-vocabulary source genre on snapshots before tracked ingests became the durable source authority"
-type: ../types/adr.md
+type: reference/types/adr.md
 tags: []
 status: superseded
 ---

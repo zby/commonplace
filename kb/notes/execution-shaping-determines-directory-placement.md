@@ -1,6 +1,6 @@
 ---
 description: Hunch that artifacts shaped as executable procedures belong in kb/instructions/ — the directory boundary is execution form, not compression or loading frequency
-type: note
+type: types/note.md
 traits: []
 tags: []
 ---

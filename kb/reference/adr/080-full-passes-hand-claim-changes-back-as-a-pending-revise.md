@@ -1,6 +1,6 @@
 ---
 description: "The full improvement pass applies only edits that keep a note's claim; a finding that requires changing the claim becomes a pending revise disposition handed to the author, and the packet records its execution phase and final capture"
-type: ../types/adr.md
+type: reference/types/adr.md
 tags: []
 status: accepted
 ---

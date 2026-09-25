@@ -1,6 +1,6 @@
 ---
 description: "Draft decision that every type value is a KB-relative path to its spec file, found on a search path of the library root and the artifact's KB root; restores path-valued types without relative paths and drops project-shared types"
-type: kb/reference/types/adr.md
+type: reference/types/adr.md
 tags: []
 ---
 

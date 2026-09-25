@@ -1,6 +1,6 @@
 ---
 description: "Proposal: promote bidirectional codification from design guidance to a comparative conjecture, tested by evolving the same task stream under natural-language-only, symbolic-only, one-way promotion, and bidirectional codify-and-relax regimes"
-type: ../types/design-proposal.md
+type: reference/types/design-proposal.md
 tags: [constraining]
 ---
 

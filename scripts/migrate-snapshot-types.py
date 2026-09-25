@@ -1,9 +1,8 @@
-"""Retype this checkout's local snapshots to `type: snapshot` (ADR 087 draft).
+"""Retype this checkout's local snapshots to `type: types/snapshot.md` (ADRs 087, 088).
 
 One-off for clones of the Commonplace source checkout, which never run
 `commonplace-init` (installed projects get the same migration from init). Run it
-after pulling the commit that moved the source and report types into the global
-types and re-pinned the ingests:
+after pulling a commit that retyped snapshots and re-pinned the ingests:
 
     uv run python scripts/migrate-snapshot-types.py
 

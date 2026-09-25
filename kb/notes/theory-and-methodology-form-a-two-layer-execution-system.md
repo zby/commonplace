@@ -1,6 +1,6 @@
 ---
 description: "In open or incompletely covered domains, the theory-derived fast path and live theory fallback co-execute while methodology-native content follows a separate maintenance regime"
-type: note
+type: types/note.md
 traits: [title-as-claim]
 tags: [learning-theory, constraining]
 ---

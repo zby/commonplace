@@ -1,6 +1,6 @@
 ---
 description: "MentisDB review: append-only hash-chained agent memory with MCP/REST tools, skill registry, LLM extraction, and LangChain memory"
-type: ../types/agent-memory-system-review.md
+type: agent-memory-systems/types/agent-memory-system-review.md
 source-tier: code-grounded
 tags: [trace-learning]
 last-checked: "2026-06-04"

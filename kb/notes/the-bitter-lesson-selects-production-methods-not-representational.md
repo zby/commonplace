@@ -1,6 +1,6 @@
 ---
 description: "The lesson's axis is production method — hand-crafted versus search-and-learning — not representational form. Learned localized forms are therefore a coherent scaling hypothesis, with cross-artifact credit assignment as the decisive open problem"
-type: note
+type: types/note.md
 traits: [title-as-claim, synthesis, has-external-sources]
 tags: [learning-theory, deploy-time-learning, foundations]
 ---

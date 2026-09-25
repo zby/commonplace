@@ -12,7 +12,7 @@ allOf:
           - source-tier
         properties:
           type:
-            const: kb/agent-memory-systems/types/agent-memory-system-review.md
+            const: agent-memory-systems/types/agent-memory-system-review.md
           last-checked:
             type: string
             format: date

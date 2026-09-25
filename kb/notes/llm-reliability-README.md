@@ -1,6 +1,6 @@
 ---
 description: Why LLM output deviates from intent — underspecification, interpreter failure, indeterminism — and the machinery for detecting and correcting it, from oracle theory and error correction to architectural separation
-type: tag-readme
+type: types/tag-readme.md
 index_source: tag
 index_key: llm-reliability
 ---

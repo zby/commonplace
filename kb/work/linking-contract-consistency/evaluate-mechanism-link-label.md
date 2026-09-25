@@ -1,6 +1,6 @@
 ---
 description: "Use when deciding whether mechanism has one source-as-subject successor or must split, including the mechanism-like grounds rows deferred from the premise migration"
-type: instruction
+type: types/instruction.md
 ---
 
 # Evaluate the mechanism link label

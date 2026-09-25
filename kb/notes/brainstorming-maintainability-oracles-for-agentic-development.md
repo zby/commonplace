@@ -1,6 +1,6 @@
 ---
 description: "Explores candidate signals, calibration experiments, authority levels, and workflow placements for evaluating maintainability in agent-generated code"
-type: note
+type: types/note.md
 traits: [has-external-sources, has-comparison]
 tags: [learning-theory, llm-reliability, evaluation]
 ---

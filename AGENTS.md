@@ -191,15 +191,15 @@ Entry points:
 - `kb/reports/README.md` — report retention policies and durable report records
 - `kb/reference/adr/` — architecture outcome records for the shipped Commonplace system
 
-Each tag's curated head is its `<tag>-README.md` (type `tag-readme`), small by type contract. It may declare two validator-enforced frontmatter marks: `complete: true` — the README links every note carrying the tag, so a reader can skip the by-tag `rg` sweep; `covered_by: [children]` — every tagged note also carries a listed child tag, so a reader can trust the typed routing. Maintenance of the marks lives in `kb/types/tag-readme.md` (ADR 026).
+Each tag's curated head is its `<tag>-README.md` (type `types/tag-readme.md`), small by type contract. It may declare two validator-enforced frontmatter marks: `complete: true` — the README links every note carrying the tag, so a reader can skip the by-tag `rg` sweep; `covered_by: [children]` — every tagged note also carries a listed child tag, so a reader can trust the typed routing. Maintenance of the marks lives in `kb/types/tag-readme.md` (ADR 026).
 
 ```bash
 # Find notes by description
 rg "^description:" kb/notes/ kb/reference/ kb/instructions/ --glob "*.md"
 
-# Find notes by type (collection-local types use file-relative paths)
-rg "^type: \./types/structured-claim.md" kb/notes/ --glob "*.md"
-rg "^type: \.\./types/adr.md" kb/reference/ --glob "*.md"
+# Find notes by type (the value is the type spec's path under a KB root)
+rg "^type: types/note.md" kb/notes/ kb/reference/ kb/instructions/ --glob "*.md"
+rg "^type: reference/types/adr.md" kb/reference/ --glob "*.md"
 
 # Find notes by tag
 rg "^tags:.*learning-theory" kb/notes/ kb/reference/ kb/instructions/ --glob "*.md"

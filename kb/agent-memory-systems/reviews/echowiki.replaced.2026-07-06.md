@@ -1,6 +1,6 @@
 ---
 description: "EchoWiki review: Obsidian plugin and CLI that compile raw notes and voice transcripts into an interlinked local wiki"
-type: ../types/agent-memory-system-review.md
+type: agent-memory-systems/types/agent-memory-system-review.md
 source-tier: code-grounded
 tags: []
 last-checked: "2026-07-06"

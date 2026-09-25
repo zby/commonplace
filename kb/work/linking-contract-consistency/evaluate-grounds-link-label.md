@@ -1,6 +1,6 @@
 ---
 description: "Use when deciding the source-as-subject successor, scope, and neighboring-label boundary for the canonical note-to-note grounds cohort"
-type: instruction
+type: types/instruction.md
 ---
 
 # Evaluate the grounds link label

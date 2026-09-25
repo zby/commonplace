@@ -1,6 +1,6 @@
 ---
 description: "Exo review: file-backed long-running agent with append-only traces, coarse-pushed memory, progressive skills, and reversible self-modification"
-type: ../types/agent-memory-system-review.md
+type: agent-memory-systems/types/agent-memory-system-review.md
 source-tier: code-grounded
 last-checked: "2026-07-26"
 ---

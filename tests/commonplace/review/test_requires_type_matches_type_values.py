@@ -1,4 +1,4 @@
-"""Gate type requirements name global types the way notes do: by bare name."""
+"""Gate type requirements name types the way notes do: by their path under a KB root."""
 
 from __future__ import annotations
 
@@ -13,7 +13,7 @@ GATES = REPO_ROOT / "kb" / "instructions" / "review-gates"
 def test_definition_gate_applies_to_a_definition_note(tmp_path: Path) -> None:
     note = tmp_path / "term.md"
     note.write_text(
-        "---\ndescription: A definition note for the requirement check\ntype: definition\n---\n\n# Term\n",
+        "---\ndescription: A definition note for the requirement check\ntype: types/definition.md\n---\n\n# Term\n",
         encoding="utf-8",
     )
     gate = "semantic/explication-quality"

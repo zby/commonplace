@@ -1,6 +1,6 @@
 ---
 description: Pre-computing known instruction inputs and inserting their results spares execution-context budget inside a later LLM call
-type: note
+type: types/note.md
 traits: [has-external-sources]
 tags: [computational-model]
 ---

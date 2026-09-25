@@ -1,6 +1,6 @@
 ---
 description: "Accepted decision to retire text-contract profiles and keep reusable collection contracts only as clone-once prototypes with no inheritance or synchronization"
-type: ../types/adr.md
+type: reference/types/adr.md
 tags: []
 status: accepted
 ---

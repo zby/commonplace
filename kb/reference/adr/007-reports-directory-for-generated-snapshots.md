@@ -1,6 +1,6 @@
 ---
 description: Decision that kb/reports is a collection whose cache, state, and retained areas make report retention policy explicit without conflating generated output with disposable output
-type: ../types/adr.md
+type: reference/types/adr.md
 tags: []
 status: accepted
 ---

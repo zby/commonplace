@@ -1,6 +1,6 @@
 ---
 description: "Retain the recognition anchor and rationale the intended consumption path cannot reliably supply — an enforced path can carry the anchor itself; reconstructable framework recap factors into the linked artifact, tested by downstream effects"
-type: note
+type: types/note.md
 traits: [title-as-claim]
 tags: [context-engineering]
 ---

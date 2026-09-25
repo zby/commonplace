@@ -1,5 +1,5 @@
 ---
-type: type-spec
+type: types/type-spec.md
 name: agentic-system-analysis-run-state
 description: Minimal completion state for one rerunnable agentic-system analysis
 schema: ./agentic-system-analysis-run-state.schema.yaml
@@ -85,7 +85,7 @@ commit.
 
 ```markdown
 ---
-type: agentic-system-analysis-run-state
+type: types/agentic-system-analysis-run-state.md
 description: "Minimal completion state for AAS-YYYY-MM-DD-system-slug-nn"
 run-id: AAS-YYYY-MM-DD-system-slug-nn
 system: "Source-native system name"

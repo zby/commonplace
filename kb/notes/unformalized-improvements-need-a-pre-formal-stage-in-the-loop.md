@@ -1,6 +1,6 @@
 ---
 description: "An improvement whose concepts have no expression in a loop's admitted formal language is reached only through a pre-formal stage, inside the loop or fixed at design time in the choice of language; translation relocates that stage"
-type: note
+type: types/note.md
 traits: [title-as-claim, has-comparison, has-external-sources]
 tags: [foundations, self-improving-systems, constraining]
 ---

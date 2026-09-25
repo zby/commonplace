@@ -1,6 +1,6 @@
 ---
 description: "Replaces rationale with source-as-subject rests-on, reclassifies every off-pattern grounds edge, and gives the global type surface collection-owned link authorization"
-type: ../types/adr.md
+type: reference/types/adr.md
 tags: []
 status: accepted
 ---

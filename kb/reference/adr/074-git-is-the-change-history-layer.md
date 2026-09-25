@@ -1,6 +1,6 @@
 ---
 description: "Accepted decision that git holds the change narrative of the source checkout, reference and ADRs retain only premises that a named change operation must read, and instructions declare the git read paths"
-type: ../types/adr.md
+type: reference/types/adr.md
 tags: []
 status: accepted
 ---

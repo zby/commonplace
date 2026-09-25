@@ -1,6 +1,6 @@
 ---
 description: "General artifact freshness lives in commonplace-store.sqlite; review is the first target adapter over file-text inputs and review-pair targets"
-type: ../types/adr.md
+type: reference/types/adr.md
 tags: []
 status: accepted
 ---

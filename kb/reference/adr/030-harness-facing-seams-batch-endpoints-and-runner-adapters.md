@@ -1,6 +1,6 @@
 ---
 description: "Superseded historical decision: batch prepare/ingest endpoints and runner adapters were replaced by queued jobs and parent-dispatched workers"
-type: ../types/adr.md
+type: reference/types/adr.md
 tags: []
 status: superseded
 ---

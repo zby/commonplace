@@ -1,6 +1,6 @@
 ---
 description: Document types should assert verifiable structural properties, not subject matter — with a base type + traits model inspired by gradual and structural typing
-type: note
+type: types/note.md
 traits: [title-as-claim]
 tags: [type-system]
 ---
@@ -17,7 +17,7 @@ The test: after reading the type, can you say something concrete about the docum
 
 In programming, types are useful because the compiler enforces them. If nothing checked that a `List` is actually a list, the type annotation would be decoration. The value of a type comes from enforcement — something in the system acts on it.
 
-Here, the "compiler" is a mix of agents and scripts. An agent reading `type: kb/reference/types/adr.md` can expect Context, Decision, and Consequences sections. A script validating `type: kb/notes/types/structured-claim.md` can require Evidence and Reasoning headings. They can only act this way if the resolved type spec asserts something checkable. A subject-matter label such as the retired `design` value gives them nothing to act on — every note in a design KB is "about design." An unverifiable type is like an unenforced type annotation: technically present, practically invisible. The [text testing pyramid](./automated-tests-for-text.md) sketches the enforcement split: deterministic checks for structural contracts, LLM rubrics for judgment-dependent traits.
+Here, the "compiler" is a mix of agents and scripts. An agent reading `type: reference/types/adr.md` can expect Context, Decision, and Consequences sections. A script validating `type: notes/types/structured-claim.md` can require Evidence and Reasoning headings. They can only act this way if the resolved type spec asserts something checkable. A subject-matter label such as the retired `design` value gives them nothing to act on — every note in a design KB is "about design." An unverifiable type is like an unenforced type annotation: technically present, practically invisible. The [text testing pyramid](./automated-tests-for-text.md) sketches the enforcement split: deterministic checks for structural contracts, LLM rubrics for judgment-dependent traits.
 
 Types guide what the processor — an [LLM interpreting underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md) — can do with the document. A `spec` tells an agent it can build against this. A `has-comparison` tells it there are alternatives to choose between. Since [agents navigate by deciding what to read next](./agents-navigate-by-deciding-what-to-read-next.md), types and traits are precisely the hints that make those decisions informed rather than blind — the type tells the agent what it can do with the document *before opening it*. The type is only useful if the processor can trust it, and trust requires the ability to check.
 
@@ -27,7 +27,7 @@ In conventional programming, types are crisp because the processor is determinis
 
 Our processor is an [LLM that interprets underspecified instructions](./agentic-systems-interpret-underspecified-instructions.md). This has a direct consequence: type *assignment* is also underspecified. An agent classifying a document resolves the ambiguity inherent in the type definitions — the same document might be classified differently by different agents, or even the same agent on different runs. The underspecification isn't a bug in the type system. It's a consequence of the specifications (both the document and the type definitions) being in natural language, which doesn't have precise denotations.
 
-This means we need types that are useful despite underspecification — types that assert structural properties you can check, even if the checking requires judgment rather than proof. Type assignment has the same selection boundary as [selecting an LLM output](./selecting-an-llm-output-fixes-a-result-not-its-interpretation.md): choosing `type: kb/notes/types/structured-claim.md` fixes which contract downstream tools consume, but it does not make the natural-language parts of that contract unambiguous.
+This means we need types that are useful despite underspecification — types that assert structural properties you can check, even if the checking requires judgment rather than proof. Type assignment has the same selection boundary as [selecting an LLM output](./selecting-an-llm-output-fixes-a-result-not-its-interpretation.md): choosing `type: notes/types/structured-claim.md` fixes which contract downstream tools consume, but it does not make the natural-language parts of that contract unambiguous.
 
 ## What went wrong with flat types
 
@@ -42,7 +42,7 @@ The original type system used a flat enum: `design`, `analysis`, `insight`, `res
 The solution borrows from subtyping and structural typing. Instead of a flat enum, use a **base type** (hard structural category) plus **traits** (independently checkable properties):
 
 ```yaml
-type: note
+type: types/note.md
 traits: [has-comparison, has-external-sources]
 ```
 
@@ -69,9 +69,9 @@ A note can satisfy multiple traits without conflict. What the old system called 
 
 [`kb/types/note.md`](../types/note.md) is the base structured type that makes few body-shape claims — like `Any` in a gradually typed language. This connects to the [verifiability gradient](./verifiability-gradient.md): just as logic starts underspecified and constrains toward precision, documents can start as frontmatter-free text and gain checkable structure.
 
-1. New content enters as implicit `text` or as `type: note` — soft, with no required body sections
+1. New content enters as implicit `text` or as `type: types/note.md` — soft, with no required body sections
 2. Traits accumulate as the document develops — `has-implementation` when code sketches appear, `has-external-sources` when citing external material
-3. The type pointer changes to a narrower contract such as `type: kb/notes/types/structured-claim.md` when its structural criteria are met
+3. The type pointer changes to a narrower contract such as `type: notes/types/structured-claim.md` when its structural criteria are met
 4. A base note with no traits may still be the right final shape; when its body makes stronger promises, a narrower type or trait makes those promises checkable
 
 This is gradual typing applied to documents. The system works at every point on the spectrum, from fully untyped to fully classified.

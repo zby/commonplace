@@ -1,6 +1,6 @@
 ---
 description: Accepted decision to define active vocabulary in AGENTS.md while making first-mention glossing a cp-skill-write authoring behavior
-type: ../types/adr.md
+type: reference/types/adr.md
 tags: []
 status: accepted
 ---

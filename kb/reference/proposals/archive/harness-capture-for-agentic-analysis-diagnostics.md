@@ -1,6 +1,6 @@
 ---
 description: "Proposal: capture harness-visible failures and truncation for agentic-system analysis without claiming completeness from repository state alone"
-type: ../../types/design-proposal.md
+type: reference/types/design-proposal.md
 tags: [context-engineering, kb-maintenance]
 ---
 

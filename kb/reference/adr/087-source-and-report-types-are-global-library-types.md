@@ -1,6 +1,6 @@
 ---
 description: "Source and report type specs are global library types named by bare name and usable in any collection; local snapshots are retyped once and their ingest checksums re-pinned"
-type: ../types/adr.md
+type: reference/types/adr.md
 tags: []
 status: accepted
 ---

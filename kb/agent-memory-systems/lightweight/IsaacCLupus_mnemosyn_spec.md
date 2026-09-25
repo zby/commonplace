@@ -1,6 +1,6 @@
 ---
 description: "Lightweight doc-grounded coverage of Mnemosyne, a spec-first local semantic memory OS with unified SQLite, vault, MCP, and agent-pack design"
-type: ../types/agent-memory-system-review.md
+type: agent-memory-systems/types/agent-memory-system-review.md
 source-tier: doc-grounded
 traits: [has-comparison, has-external-sources]
 tags: [trace-learning]

@@ -1,6 +1,6 @@
 ---
 description: "Proposal: where a write-time contract binding less than a whole collection lives — COLLECTION.md fold, local type, nested contracts, or a new area surface; the instance's core since typed"
-type: ../../types/design-proposal.md
+type: reference/types/design-proposal.md
 tags: [kb-maintenance, document-system]
 ---
 

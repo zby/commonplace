@@ -1,6 +1,6 @@
 ---
 description: "Pricing signatures are defeasible, author-external evidence that a counterexample deserves idealization assessment; whether it refutes is settled by intended use, the omitted mechanism, consequence bounds, and explanatory dominance"
-type: note
+type: types/note.md
 traits: [title-as-claim, has-comparison, has-external-sources]
 tags: [document-system, failure-modes, kb-maintenance]
 ---

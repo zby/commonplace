@@ -1,6 +1,6 @@
 ---
 description: "Eidetic review: Claude Code Markdown memory with hook-pushed context, FTS/vector recall, trace capture, compounding, drift penalties, and vault export"
-type: ../types/agent-memory-system-review.md
+type: agent-memory-systems/types/agent-memory-system-review.md
 source-tier: code-grounded
 last-checked: "2026-06-18"
 tags: [trace-learning]

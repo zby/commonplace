@@ -1,6 +1,6 @@
 ---
 description: "Self-improvement can compound without reflection — parametric learners do — but non-reflective retention gives only indirect handles; reflective retention makes the changed object addressable"
-type: note
+type: types/note.md
 traits: [title-as-claim]
 tags: [foundations, computational-model, self-improving-systems]
 ---

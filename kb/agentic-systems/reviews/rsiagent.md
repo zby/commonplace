@@ -1,13 +1,13 @@
 ---
 {
-  "type": "note",
+  "type": "types/note.md",
   "description": "RSIAgent separates task verification, Actor-owned memory reconciliation and curriculum selection; source wiring supports reusable experience but reported gains do not isolate criticism-driven improvement.",
   "generated-by": "analyse-agentic-system",
   "analysis-run": "AAS-2026-09-24-rsiagent-01",
   "source-identity": "https://github.com/AetherLabsAI/RSIAgent",
   "reviewed-revision": "a9e56263f6deaa493496ad6b155fe24bf131bc12",
   "analysis-result": "kb/reports/retained/agentic-system-analysis/AAS-2026-09-24-rsiagent-01/result.md",
-  "analysis-result-sha256": "0f1dd28fa8ffe6c2cc18b0b24c542a5c19e5e2934bea0685d0f4c93af8570482"
+  "analysis-result-sha256": "08ec7733d485341e2768725babe475c29aa5f0f33ffa6ac7c41a76532a6cd966"
 }
 ---
 

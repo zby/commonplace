@@ -1,6 +1,6 @@
 ---
 description: "Accepted decision that notes scope named system choices in substantive design-space claims while reference records Commonplace selections and resulting state"
-type: ../types/adr.md
+type: reference/types/adr.md
 tags: []
 status: accepted
 ---

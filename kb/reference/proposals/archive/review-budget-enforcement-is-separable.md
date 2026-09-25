@@ -1,6 +1,6 @@
 ---
 description: "Proposal: decide separately whether exceeding a review link budget fails a pair or only requires disclosure, and whether that behavior should be selectable rather than fixed"
-type: ../../types/design-proposal.md
+type: reference/types/design-proposal.md
 tags: []
 ---
 

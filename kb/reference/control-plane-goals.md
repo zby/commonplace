@@ -1,6 +1,6 @@
 ---
 description: How Commonplace ships KB goals in always-loaded context — the AGENTS.md layout, the scaffolded AGENTS.md and CLAUDE.md templates, and the install-time fill-in contract
-type: note
+type: types/note.md
 tags: []
 ---
 

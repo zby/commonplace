@@ -30,7 +30,7 @@ allOf:
           - resulting_paths
         properties:
           type:
-            const: full-pass-report
+            const: types/full-pass-report.md
           source:
             type: string
             pattern: '^kb/.+\.md$'

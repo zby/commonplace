@@ -1,5 +1,5 @@
 ---
-type: type-spec
+type: types/type-spec.md
 name: instruction
 description: Prescriptive procedure, skill body, wrapper prompt, or review gate used by agents and maintainers
 schema: ./instruction.schema.yaml
@@ -13,7 +13,7 @@ Use `instruction` for prescriptive content: procedures, skill bodies, wrapper pr
 
 ## Frontmatter
 
-- Set `type: instruction`.
+- Set `type: types/instruction.md`.
 - Write `description` as the trigger condition: when an agent should use this instruction.
 - Additional frontmatter is governed by the specific runtime consumer (the harness for skills, the review system for gates, etc.).
 
@@ -81,7 +81,7 @@ dependent packet relies on the changed rule as an omission source.
 ```markdown
 ---
 description: "{When to use this instruction}"
-type: instruction
+type: types/instruction.md
 ---
 
 # {Imperative title}

@@ -1,6 +1,6 @@
 ---
 description: "Whole-system analysis of Agno AgentOS as an open-source execution and control plane, distinguishing its runtime loops from the companion coding-agent and Studio builder loops"
-type: note
+type: types/note.md
 traits: [has-comparison, has-external-sources, has-implementation]
 tags: [computational-model, tool-loop, self-improving-systems]
 ---

@@ -1,6 +1,6 @@
 ---
 description: Symbolic artifacts sit on a gradient from loose natural-language to deterministic code; higher-verifiability artifacts support tighter iteration loops, and learning moves artifacts along it in both directions
-type: note
+type: types/note.md
 traits: [has-comparison]
 tags: [learning-theory, deploy-time-learning]
 ---

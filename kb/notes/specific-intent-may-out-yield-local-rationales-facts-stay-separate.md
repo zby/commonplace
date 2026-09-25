@@ -1,6 +1,6 @@
 ---
 description: "Conjectures that an unrecoverable governing intent yields more local rationale per token than rationale snippets, while contingent design facts need their own record"
-type: note
+type: types/note.md
 traits: [title-as-claim, has-external-sources]
 tags: [document-system, context-engineering]
 ---

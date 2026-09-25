@@ -4,13 +4,17 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import subprocess
 import sys
 from collections import Counter
+from collections.abc import Iterator
+from contextlib import contextmanager
 from hashlib import sha256
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
+from commonplace.lib.library import LIBRARY_ENV
 from commonplace.lib.systems_matrix import csv_text, load_results
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -141,6 +145,23 @@ def prepare(
     return {**snapshot, "manifest_sha256": digest(manifest_bytes)}
 
 
+@contextmanager
+def library_at(kb: Path) -> Iterator[None]:
+    """Validate against kb/ as the library: a bundle carries the global types it needs.
+
+    Otherwise its types/ files would collide with the installed library's (ADR 088).
+    """
+    previous = os.environ.get(LIBRARY_ENV)
+    os.environ[LIBRARY_ENV] = str(kb)
+    try:
+        yield
+    finally:
+        if previous is None:
+            os.environ.pop(LIBRARY_ENV, None)
+        else:
+            os.environ[LIBRARY_ENV] = previous
+
+
 def verify(
     bundle: Path, expected_sha256: str, *, source_root: Path | None = None
 ) -> dict:
@@ -156,7 +177,8 @@ def verify(
         raise ValueError("unsupported landscape bundle format")
     require_runtime(bundle)
     reviews = [Path(p) for p in snapshot["reviews"]]
-    inputs = load_results(bundle, reviews)
+    with library_at(bundle / "kb"):
+        inputs = load_results(bundle, reviews)
     if csv_text(inputs).encode("utf-8") != files[MATRIX]:
         raise ValueError("matrix differs from bundled main results")
     if (

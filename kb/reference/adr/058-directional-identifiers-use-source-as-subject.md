@@ -1,6 +1,6 @@
 ---
 description: "Adopts source-as-subject grammar for directional link identifiers and replaces evidence with evidenced-by and is-evidence-for"
-type: ../types/adr.md
+type: reference/types/adr.md
 tags: []
 status: accepted
 ---

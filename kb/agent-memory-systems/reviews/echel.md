@@ -1,6 +1,6 @@
 ---
 description: "Echel review: project-owned Markdown product memory, deterministic graph/report generation, evidence gates, and task-scoped agent packets"
-type: ../types/agent-memory-system-review.md
+type: agent-memory-systems/types/agent-memory-system-review.md
 source-tier: code-grounded
 last-checked: "2026-06-04"
 ---

@@ -1,6 +1,6 @@
 ---
 description: "How Commonplace decides which borrowed ideas to adopt — a fast pass for programming patterns on the software-mechanism bet, first-principles or target-side warrant for other sources, and direct observation as a separate evidence path"
-type: note
+type: types/note.md
 traits: []
 tags: [foundations]
 ---

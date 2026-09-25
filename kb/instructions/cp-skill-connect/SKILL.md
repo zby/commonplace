@@ -1,7 +1,7 @@
 ---
 name: cp-skill-connect
 description: Discover connections for a single artifact. Writes a connect-report under kb/reports/cache/connect/<collection>/ without mutating library artifacts or indexes. Use with an artifact path or artifact name.
-type: instruction
+type: types/instruction.md
 user-invocable: true
 allowed-tools: Read, Write, Grep, Glob, Bash, Skill
 context: fork
@@ -118,7 +118,7 @@ Snapshots in `kb/sources/` are immutable; their authored connection surface is n
 
 ## Output
 
-Save the report to `kb/reports/cache/connect/<source-collection>/<artifact-name>.connect.md`. Use the loaded `connect-report` template (`type: connect-report`) and file-relative markdown links in the body. Tell the user: `Report saved: <full path>`.
+Save the report to `kb/reports/cache/connect/<source-collection>/<artifact-name>.connect.md`. Use the loaded `connect-report` template (`type: types/connect-report.md`) and file-relative markdown links in the body. Tell the user: `Report saved: <full path>`.
 
 Every section describes **candidate** signal for a future writer to act on. The connect skill does not author any of these edges into any artifact — the report is the entire connection deliverable.
 

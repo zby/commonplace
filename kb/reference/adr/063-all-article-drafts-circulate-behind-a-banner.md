@@ -1,6 +1,6 @@
 ---
 description: "Removes the excluded article-draft subtree so every draft circulates from the collection root with a visible authored banner as its only draft-specific circulation requirement"
-type: ../types/adr.md
+type: reference/types/adr.md
 tags: []
 status: accepted
 ---

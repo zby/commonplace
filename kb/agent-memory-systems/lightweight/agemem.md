@@ -1,6 +1,6 @@
 ---
 description: "Lightweight doc-grounded coverage of AgeMem — an RL-trained LTM/STM memory-management policy known from its paper, not from inspected code"
-type: ../types/agent-memory-system-review.md
+type: agent-memory-systems/types/agent-memory-system-review.md
 source-tier: doc-grounded
 traits: [has-comparison, has-external-sources]
 tags: [trace-learning]

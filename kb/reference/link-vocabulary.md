@@ -1,6 +1,6 @@
 ---
 description: "Commonplace's linking approach: collection-owned outbound rules, reader-need labels, articulation tests, connect reports, and the shared label catalogue for COLLECTION.md authors"
-type: note
+type: types/note.md
 ---
 
 # Link vocabulary and linking approach

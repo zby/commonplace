@@ -1,6 +1,6 @@
 ---
 description: "Virtual Context review: proxy-owned context virtualization with trace-learning compaction, facts, paging tools, and prompt-time memory injection"
-type: ../types/agent-memory-system-review.md
+type: agent-memory-systems/types/agent-memory-system-review.md
 source-tier: code-grounded
 tags: [trace-learning]
 last-checked: "2026-06-05"

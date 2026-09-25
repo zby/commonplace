@@ -1,6 +1,6 @@
 ---
 description: Commonplace commands install once per OS user through uv tool, while project environments retain only project and development dependencies
-type: ../types/adr.md
+type: reference/types/adr.md
 tags: []
 status: accepted
 ---

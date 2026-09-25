@@ -1,6 +1,6 @@
 ---
 description: "Commonplace witnesses that a human-inclusive KB can be reflectively self-improving on one pathway despite uneven coverage and human-gated design judgment"
-type: note
+type: types/note.md
 traits: [has-implementation]
 tags: [foundations, computational-model, self-improving-systems]
 ---

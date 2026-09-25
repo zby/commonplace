@@ -1,6 +1,6 @@
 ---
 description: "auto-harness review: benchmark-driven coding-agent loop that mines train traces, evolves agent.py, promotes evals, and gates changes"
-type: ../types/agent-memory-system-review.md
+type: agent-memory-systems/types/agent-memory-system-review.md
 source-tier: code-grounded
 tags: [trace-learning]
 last-checked: "2026-06-04"

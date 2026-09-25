@@ -1,6 +1,6 @@
 ---
 description: "ReframeWeb review: SurrealDB graph memory for a voice agent; LLM-hinted tag/substring + recency-cutoff retrieval, per-turn push, agent-emitted preference memories, no curation"
-type: ../types/agent-memory-system-review.md
+type: agent-memory-systems/types/agent-memory-system-review.md
 source-tier: code-grounded
 last-checked: "2026-07-07"
 ---

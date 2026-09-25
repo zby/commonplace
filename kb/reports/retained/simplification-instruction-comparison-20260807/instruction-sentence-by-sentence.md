@@ -1,6 +1,6 @@
 ---
 description: "Use when simplifying all reader-facing prose in one Markdown file through a compact sentence-by-sentence pass without changing its meaning or structure"
-type: instruction
+type: types/instruction.md
 ---
 
 # Simplify prose sentence by sentence

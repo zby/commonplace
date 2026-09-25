@@ -1,6 +1,6 @@
 ---
 description: "Proposal: mine connect reports on a recurring cadence as a bulk-operation pipeline, automating the noticing-to-candidate triage step connect and kb/log.md leave unattended"
-type: ../types/design-proposal.md
+type: reference/types/design-proposal.md
 tags: [kb-maintenance]
 ---
 

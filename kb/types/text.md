@@ -27,7 +27,7 @@ fields:
 
 - `description` — a non-empty retrieval description that discriminates the
   artifact from nearby notes; and
-- `type: note` — the bare name that selects the base note contract.
+- `type: types/note.md` — the path that selects the base note contract.
 
 `traits` and `tags` are optional in the note schema; `cp-skill-convert`
 initializes both as empty lists. Conversion must leave `user-verified` absent

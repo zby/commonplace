@@ -1,6 +1,6 @@
 ---
 description: "Accepted decision that commit messages keep the practiced imperative subject, carry migration narrative in the body, and use optional Decision, Workshop, and Model trailers derived from named git read paths"
-type: ../types/adr.md
+type: reference/types/adr.md
 tags: []
 status: accepted
 ---

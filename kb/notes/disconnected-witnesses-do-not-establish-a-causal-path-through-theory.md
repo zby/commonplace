@@ -1,6 +1,6 @@
 ---
 description: "Evidence of recurrent learning through theory must identify the joins of one causal path; connected use and criticism still need separate evidence of improved capacity"
-type: note
+type: types/note.md
 traits: [title-as-claim, synthesis]
 tags: [foundations, self-improving-systems, evaluation]
 ---

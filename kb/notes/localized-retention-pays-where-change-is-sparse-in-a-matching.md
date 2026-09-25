@@ -1,6 +1,6 @@
 ---
 description: "Addressable retention localizes a sparse change when units match its decomposition; total adaptation stays local only when the affected units also have a small, explicit impact closure"
-type: note
+type: types/note.md
 traits: [title-as-claim]
 tags: [learning-theory, deploy-time-learning]
 ---

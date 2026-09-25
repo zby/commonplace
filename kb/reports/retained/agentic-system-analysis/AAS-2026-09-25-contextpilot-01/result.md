@@ -1,5 +1,5 @@
 ---
-type: agentic-system-analysis-result
+type: types/agentic-system-analysis-result.md
 description: "Code-grounded analysis of ContextPilot's inference context control and trace-fed training path, with bounded memory and epistemic findings"
 run-id: AAS-2026-09-25-contextpilot-01
 system: ContextPilot

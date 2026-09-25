@@ -1,6 +1,6 @@
 ---
 description: "Distinguishes user-specific gains supplied by retained intent from gains in the model that interprets the assembled context."
-type: note
+type: types/note.md
 traits: [title-as-claim]
 tags: [agent-memory, computational-model, llm-reliability]
 ---

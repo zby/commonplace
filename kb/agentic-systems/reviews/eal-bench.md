@@ -1,12 +1,12 @@
 ---
-type: note
+type: types/note.md
 description: "EAL-bench's frozen authorization-memory writer/executor workflow, checkpoint controls and limits of its causal-attribution protocol"
 generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-25-eal-bench-01
 source-identity: https://github.com/tommasocerruti/eal-bench
 reviewed-revision: 51648690bc52d7a9c7ac080a2c67a784fe9d56cb
 analysis-result: kb/reports/retained/agentic-system-analysis/AAS-2026-09-25-eal-bench-01/result.md
-analysis-result-sha256: 29384a1855e4f53322b20f00f064691f4a215a050816fe850d4b5bc7e415ad3f
+analysis-result-sha256: 8dc0d5ebb29c47255e7a063dc66397a6baf94128595aed5c08657a5c95f22efe
 ---
 
 # EAL-bench

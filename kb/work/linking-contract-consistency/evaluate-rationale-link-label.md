@@ -1,6 +1,6 @@
 ---
 description: "Use when deciding whether rationale needs a distinct source-as-subject successor, should merge with grounds, or should cease to be a formal link relation"
-type: instruction
+type: types/instruction.md
 ---
 
 # Evaluate the rationale link label

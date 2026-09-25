@@ -16,7 +16,7 @@ properties:
       - schema
     properties:
       type:
-        const: type-spec
+        const: types/type-spec.md
       name:
         type: string
         minLength: 1

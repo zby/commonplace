@@ -1,6 +1,6 @@
 ---
 description: Constraining narrows interpretation and extraction produces focused use-shaped artifacts; both can trade generality for reliability, speed, or cost when task fit is good
-type: note
+type: types/note.md
 traits: [title-as-claim]
 tags: [learning-theory, constraining]
 ---

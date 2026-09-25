@@ -1,6 +1,6 @@
 ---
 description: "Register retires as a closed taxonomy; COLLECTION.md must declare a text contract, and theoretical/descriptive/prescriptive persist as named default profiles in an open, worked-case-gated library"
-type: ../types/adr.md
+type: reference/types/adr.md
 tags: []
 status: accepted
 ---

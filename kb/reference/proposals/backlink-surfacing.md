@@ -1,6 +1,6 @@
 ---
 description: "Proposal: surface inbound links through build-time web rendering for humans and on-demand inversion for agents while allowing useful reciprocal links, not mandatory mirroring"
-type: ../types/design-proposal.md
+type: reference/types/design-proposal.md
 tags: [links]
 ---
 

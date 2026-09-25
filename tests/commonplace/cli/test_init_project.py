@@ -301,26 +301,41 @@ def test_init_project_migrates_pointers_to_global_types(tmp_path: Path) -> None:
     shared.parent.mkdir(parents=True)
     shared.write_text("---\ntype: kb/types/type-spec.md\nname: my-type\n---\n", encoding="utf-8")
     (notes / "d.md").write_text(
-        "---\ndescription: Project-shared type keeps its path\ntype: kb/types/my-type.md\n---\n\n# D\n",
+        "---\ndescription: A project's own kb/types spec keeps its file\ntype: kb/types/my-type.md\n---\n\n# D\n",
         encoding="utf-8",
     )
+    (notes / "e.md").write_text(
+        "---\ndescription: Bare global name from ADR 086\ntype: note\n---\n\n# E\n", encoding="utf-8"
+    )
+    adr = tmp_path / "kb" / "reference" / "adr" / "001-x.md"
+    adr.parent.mkdir(parents=True)
+    (tmp_path / "kb" / "reference" / "types").mkdir(parents=True)
+    (tmp_path / "kb" / "reference" / "types" / "adr.md").write_text("---\n---\n", encoding="utf-8")
+    adr.write_text("---\ndescription: File-relative local type\ntype: ../types/adr.md\n---\n# X\n", encoding="utf-8")
     schema = tmp_path / "kb" / "reports" / "types" / "old-report.schema.yaml"
     schema.parent.mkdir(parents=True)
     schema.write_text('allOf:\n  - $ref: "../../types/note.schema.yaml"\n', encoding="utf-8")
 
     report = init_project(tmp_path)
 
-    assert "type: note\n" in (notes / "a.md").read_text(encoding="utf-8")
+    assert "type: types/note.md\n" in (notes / "a.md").read_text(encoding="utf-8")
     assert "- kb/types/note.md stays as prose" in (notes / "a.md").read_text(encoding="utf-8")
-    assert "type: definition\n" in (notes / "b.md").read_text(encoding="utf-8")
-    assert '"type": "note"' in (notes / "c.md").read_text(encoding="utf-8")
-    assert "type: kb/types/my-type.md" in (notes / "d.md").read_text(encoding="utf-8")
-    assert "type: type-spec" in shared.read_text(encoding="utf-8")
+    assert "type: types/definition.md\n" in (notes / "b.md").read_text(encoding="utf-8")
+    assert '"type": "types/note.md"' in (notes / "c.md").read_text(encoding="utf-8")
+    # The project's own kb/types file keeps its path under kb/; validation then
+    # reports it as ineligible (ADR 088 drops project-shared types).
+    assert "type: types/my-type.md" in (notes / "d.md").read_text(encoding="utf-8")
+    assert "type: types/note.md\n" in (notes / "e.md").read_text(encoding="utf-8")
+    assert "type: reference/types/adr.md\n" in adr.read_text(encoding="utf-8")
+    assert "type: types/type-spec.md" in shared.read_text(encoding="utf-8")
     assert '$ref: "commonplace:types/note.schema.yaml"' in schema.read_text(encoding="utf-8")
     assert set(report.rewritten_type_pointers) == {
         Path("kb/notes/a.md"),
         Path("kb/notes/b.md"),
         Path("kb/notes/c.md"),
+        Path("kb/notes/d.md"),
+        Path("kb/notes/e.md"),
+        Path("kb/reference/adr/001-x.md"),
         Path("kb/types/my-type.md"),
         Path("kb/reports/types/old-report.schema.yaml"),
     }
@@ -356,10 +371,33 @@ def test_init_project_migrates_copied_source_and_report_types(tmp_path: Path) ->
     assert (source_types / "paper-note.md").exists()
     assert Path("kb/sources/types/paper-note.md") not in report.migration_kept
     assert report_types.is_dir()
-    assert "type: ingest-report\n" in ingest.read_text(encoding="utf-8")
-    assert "type: full-pass-report\n" in live.read_text(encoding="utf-8")
+    assert "type: types/ingest-report.md\n" in ingest.read_text(encoding="utf-8")
+    assert "type: types/full-pass-report.md\n" in live.read_text(encoding="utf-8")
     assert "type: kb/types/note.md\n" in frozen.read_text(encoding="utf-8")
     assert init_project(tmp_path).created == []
+
+
+def test_init_project_repins_results_whose_type_line_it_rewrites(tmp_path: Path) -> None:
+    import hashlib
+
+    result = tmp_path / "kb" / "reports" / "retained" / "run" / "result.md"
+    result.parent.mkdir(parents=True)
+    result.write_text("---\ntype: agentic-system-analysis-result\n---\n# R\n", encoding="utf-8")
+    pinned = hashlib.sha256(result.read_bytes()).hexdigest()
+    review = tmp_path / "kb" / "agentic-systems" / "reviews" / "x.md"
+    review.parent.mkdir(parents=True)
+    review.write_text(
+        '---\n{\n  "type": "note",\n  "analysis-result": "../../reports/retained/run/result.md",\n'
+        f'  "analysis-result-sha256": "{pinned}"\n}}\n---\n# X\n',
+        encoding="utf-8",
+    )
+
+    report = init_project(tmp_path)
+
+    new_hash = hashlib.sha256(result.read_bytes()).hexdigest()
+    assert "type: types/agentic-system-analysis-result.md" in result.read_text(encoding="utf-8")
+    assert f'"analysis-result-sha256": "{new_hash}"' in review.read_text(encoding="utf-8")
+    assert Path("kb/agentic-systems/reviews/x.md") in report.repinned_result_checksums
 
 
 def test_init_project_leaves_foreign_skill_directories_alone(tmp_path: Path) -> None:

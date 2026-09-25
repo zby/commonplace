@@ -1,6 +1,6 @@
 ---
 description: "Proposal: whether an artifact_function declaration should expose a document's intended whole-artifact job for writing and review routing without asserting atomicity"
-type: ../types/design-proposal.md
+type: reference/types/design-proposal.md
 tags: [context-engineering, kb-maintenance, type-system]
 ---
 

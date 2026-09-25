@@ -1,6 +1,6 @@
 ---
 description: "Decision that a subdirectory never carries binding rules: rules about a kind of artifact live in its type spec, rules about location in COLLECTION.md, and lifecycle operations in instructions the type spec names"
-type: ../types/adr.md
+type: reference/types/adr.md
 tags: []
 status: accepted
 ---

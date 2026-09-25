@@ -1,6 +1,6 @@
 ---
 description: "scripts/ is named the committed home for reusable ad hoc tooling, distinct from throwaway python3 heredocs and the installed package, with a cleanup norm and a promotion signal"
-type: ../types/adr.md
+type: reference/types/adr.md
 tags: []
 status: accepted
 ---

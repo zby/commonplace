@@ -23,7 +23,7 @@
           ],
           "properties": {
             "type": {
-              "const": "agent-memory-analysis-report"
+              "const": "types/agent-memory-analysis-report.md"
             },
             "description": {
               "type": "string",

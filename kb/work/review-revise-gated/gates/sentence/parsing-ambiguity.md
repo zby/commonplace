@@ -1,5 +1,5 @@
 ---
-type: instruction
+type: types/instruction.md
 description: Sentence can be read two ways due to syntactic structure and the unintended reading is plausible.
 ---
 

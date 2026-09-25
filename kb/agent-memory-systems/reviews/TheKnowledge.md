@@ -1,6 +1,6 @@
 ---
 description: "TheKnowledge review: file-first LLM wiki gateway with citation-grounded Markdown, NotebookLM synthesis, MCP tools, and policy distillation"
-type: ../types/agent-memory-system-review.md
+type: agent-memory-systems/types/agent-memory-system-review.md
 source-tier: code-grounded
 tags: [trace-learning]
 last-checked: "2026-06-05"

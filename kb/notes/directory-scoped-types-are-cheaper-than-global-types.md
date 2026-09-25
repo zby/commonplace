@@ -1,6 +1,6 @@
 ---
 description: Globally eligible types widen every collection's authoring choices; collection-local types keep specialized contracts scoped while path pointers load either kind on demand
-type: note
+type: types/note.md
 traits: [title-as-claim]
 tags: [type-system]
 ---
@@ -39,7 +39,7 @@ Other global contracts remain possible when their structure is reusable. Special
 
 ## What moves between directories?
 
-An argument against local scoping is that it prevents types from being portable. But the relevant boundary is the collection, not every subdirectory. A structured claim can move anywhere inside `kb/notes/` while retaining `type: kb/notes/types/structured-claim.md`. Moving it to another durable collection requires either a globally eligible contract or a deliberate type change.
+An argument against local scoping is that it prevents types from being portable. But the relevant boundary is the collection, not every subdirectory. A structured claim can move anywhere inside `kb/notes/` while retaining `type: notes/types/structured-claim.md`. Moving it to another durable collection requires either a globally eligible contract or a deliberate type change.
 
 Frontmatter-free text and the global note contract are portable because their structure is collection-independent. A local type is intentionally less portable: its narrower eligibility records that the contract is intended only for artifacts in that collection.
 
@@ -61,7 +61,7 @@ The base note contract supplies the shared structured-note surface:
 - **Optional shared fields** — `traits`, `tags`, and `user-verified`. Absence of
   `user-verified` says nothing about maturity, truth, currency, or review state.
 - **Text → note promotion** — adding complete note frontmatter with
-  `description` and `type: note` to a raw capture. This is a
+  `description` and `type: types/note.md` to a raw capture. This is a
   structural change, not a global lifecycle transition.
 
 Collections own their text and outbound-link conventions. Specialized types may own coherent local lifecycle fields, but ordinary notes have no global `status`.

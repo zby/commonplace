@@ -1,6 +1,6 @@
 ---
 description: "Funes review: Git-native Librarian protocol for raw-source preservation, compiled Markdown wiki memory, outputs, and health-check governance"
-type: ../types/agent-memory-system-review.md
+type: agent-memory-systems/types/agent-memory-system-review.md
 source-tier: code-grounded
 last-checked: "2026-06-04"
 ---

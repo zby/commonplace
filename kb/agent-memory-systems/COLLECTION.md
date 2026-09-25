@@ -8,7 +8,7 @@ The quality goal is **fidelity + economy**: faithful to what the code actually d
 
 ## Structure
 
-**`reviews/`** — individual system reviews, one file per system, typed as `../types/agent-memory-system-review.md`. The workflow and section rules live in `types/agent-memory-system-review.md`.
+**`reviews/`** — individual system reviews, one file per system, typed as `agent-memory-systems/types/agent-memory-system-review.md`. The workflow and section rules live in `types/agent-memory-system-review.md`.
 
 **`lightweight/`** — doc-grounded coverage for systems known from papers, READMEs, or articles when no inspectable implementation supports a code-grounded review. These are ordinary `agent-memory-system-review` notes carrying `source-tier: doc-grounded`; they hold the **same ontology-normalized comparison elements** as code-grounded reviews (four-field record, write side, and read-back direction) at a lower evidence tier — claim-level. The tier is about authority, not scope. Flip `source-tier` to `code-grounded` when inspectable implementation source supports the material findings. The review spec's instructions are tier-neutral (evidence-stance, source-metadata, and citation rules cover both); see the `source-tier` field in `types/agent-memory-system-review.md`.
 
@@ -60,7 +60,7 @@ Organised per destination: when to prospect for links, and the authorised labels
 
 ## Type eligibility
 
-A typed artifact in this collection may use a global type spec under `kb/types/`, named by its bare name such as `type: note`, or a local type spec under this collection's `types/` directory, named by its path. Frontmatter-free Markdown is implicit `text`.
+A typed artifact in this collection may use a global type, named by its path under the library root such as `type: types/note.md`, or a local type spec under this collection's `types/` directory, named by its path under the KB root such as `type: agent-memory-systems/types/agent-memory-system-review.md`. Frontmatter-free Markdown is implicit `text`.
 
 ## What does NOT belong here
 

@@ -1,6 +1,6 @@
 ---
 description: "One bounded Commonplace trace establishes that operative self-representation can exert causal force in both directions; it does not establish system-wide reflective coverage"
-type: note
+type: types/note.md
 traits: [has-implementation]
 ---
 

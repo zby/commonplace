@@ -58,7 +58,7 @@ def test_rewrite_source_notes_updates_frontmatter_paths_only(tmp_path: Path) -> 
     old_note = tmp_path / "kb" / "notes" / "old-note.md"
     new_note = tmp_path / "kb" / "notes" / "archive" / "new-note.md"
     content = """---
-type: kb/articles/types/article.md
+type: articles/types/article.md
 source_notes: [kb/notes/old-note.md, 'kb/notes/unchanged.md']
 ---
 
@@ -306,7 +306,7 @@ See [doc](./document-classification.md).
     article = write(
         kb_root / "articles" / "article.md",
         """---
-type: kb/articles/types/article.md
+type: articles/types/article.md
 description: Article
 source_notes:
   - kb/notes/document-classification.md

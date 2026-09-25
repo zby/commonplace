@@ -1,6 +1,6 @@
 ---
 description: External is a reserved outbound destination that a source collection must explicitly authorize, without making the open web a collection or a connect-search surface
-type: ../types/adr.md
+type: reference/types/adr.md
 tags: []
 status: accepted
 ---

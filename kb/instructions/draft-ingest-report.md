@@ -1,6 +1,6 @@
 ---
 description: Use in a fresh worker context after snapshotting and connection discovery to write or repair one ingest report from an explicit snapshot and connect report.
-type: instruction
+type: types/instruction.md
 ---
 
 # Draft an ingest report

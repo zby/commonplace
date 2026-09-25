@@ -1,6 +1,6 @@
 ---
 description: "Proposal: generalize validator invalidation or imperative type extension only after explicit selectors and local mark cases prove reusable machinery"
-type: ../types/design-proposal.md
+type: reference/types/design-proposal.md
 tags: [type-system, kb-maintenance]
 ---
 

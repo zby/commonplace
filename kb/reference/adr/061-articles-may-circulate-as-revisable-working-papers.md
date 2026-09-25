@@ -1,6 +1,6 @@
 ---
 description: "Articles gain a second public lifecycle state — a revisable, versioned working paper that circulates while its claims are open — alongside the frozen published record"
-type: ../types/adr.md
+type: reference/types/adr.md
 tags: []
 status: accepted
 ---

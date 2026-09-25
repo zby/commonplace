@@ -1,6 +1,6 @@
 ---
 description: Topology, isolation, and verification may form a strict dependency chain rather than independent design choices — tested against the simpler account that good decomposition implies the other two
-type: note
+type: types/note.md
 tags: [computational-model, llm-reliability]
 ---
 

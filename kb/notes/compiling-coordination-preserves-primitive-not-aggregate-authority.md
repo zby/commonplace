@@ -1,6 +1,6 @@
 ---
 description: Compiling a coordination strategy preserves the primitive action alphabet but expands aggregate authority — the single-context envelope it escapes bounded both compute and effect volume
-type: note
+type: types/note.md
 traits: [title-as-claim]
 tags: [computational-model, tool-loop]
 ---

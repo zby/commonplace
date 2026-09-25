@@ -1,6 +1,6 @@
 ---
 description: "Proposal (adopted): replace project-activated Commonplace command environments with one user-level uv tool installation"
-type: ../../types/design-proposal.md
+type: reference/types/design-proposal.md
 traits: [has-external-sources]
 tags: [architecture]
 ---

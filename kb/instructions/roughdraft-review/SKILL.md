@@ -1,7 +1,7 @@
 ---
 name: roughdraft-review
 description: Open a Markdown file in Roughdraft, wait for the user's CriticMarkup review, then apply or respond to the feedback.
-type: instruction
+type: types/instruction.md
 user-invocable: true
 ---
 

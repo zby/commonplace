@@ -1,6 +1,6 @@
 ---
 description: Accepted decision to use collection-level COLLECTION.md files as the register convention boundary while keeping types structural and allowing mixed-register collections
-type: ../types/adr.md
+type: reference/types/adr.md
 tags: []
 status: accepted
 ---

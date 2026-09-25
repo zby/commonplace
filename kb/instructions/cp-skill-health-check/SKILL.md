@@ -1,7 +1,7 @@
 ---
 name: cp-skill-health-check
 description: Diagnose Commonplace installation, skill discovery, command PATH, and workflows blocked by unavailable sub-agents, nesting depth, or context isolation.
-type: instruction
+type: types/instruction.md
 user-invocable: true
 allowed-tools: Read, Grep, Glob, Bash, Task
 argument-hint: "[symptom] — optional description of what is broken"

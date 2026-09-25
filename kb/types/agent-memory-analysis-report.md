@@ -1,5 +1,5 @@
 ---
-type: type-spec
+type: types/type-spec.md
 name: agent-memory-analysis-report
 description: "Memory specialist's source-grounded findings, classifications and integration questions for one agentic-system analysis run"
 schema: ./agent-memory-analysis-report.schema.yaml

@@ -1,6 +1,6 @@
 ---
 description: "getsentry/skills review: Sentry's repo-backed skill and subagent marketplace with authored prompts, routed references, scripts, and validation rules"
-type: ../types/agent-memory-system-review.md
+type: agent-memory-systems/types/agent-memory-system-review.md
 source-tier: code-grounded
 last-checked: "2026-06-04"
 ---

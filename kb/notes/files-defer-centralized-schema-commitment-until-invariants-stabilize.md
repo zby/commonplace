@@ -1,6 +1,6 @@
 ---
 description: "Canonical files can defer a centralized schema while meanings remain unsettled; a database becomes canonical only when an explicit authority decision and operative write path commit resolutions the files no longer determine."
-type: note
+type: types/note.md
 traits: [title-as-claim, has-comparison, has-external-sources, synthesis]
 tags: [architecture]
 ---

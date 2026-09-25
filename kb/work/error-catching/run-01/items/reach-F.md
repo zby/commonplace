@@ -1,6 +1,6 @@
 ---
 description: In agent systems the error channel is an instruction channel — making errors teach the fix is nearly free, an orthogonal axis to enforcement strength
-type: note
+type: types/note.md
 traits: [has-external-sources, title-as-claim]
 tags: [learning-theory, constraining]
 ---

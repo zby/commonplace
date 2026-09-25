@@ -1,6 +1,6 @@
 ---
 description: "Continuity review: local-first desktop AI workspace with shared SQLite memory, MCP tools, narrative synthesis, prompt push, and org sync"
-type: ../types/agent-memory-system-review.md
+type: agent-memory-systems/types/agent-memory-system-review.md
 source-tier: code-grounded
 tags: [trace-learning]
 last-checked: "2026-06-04"

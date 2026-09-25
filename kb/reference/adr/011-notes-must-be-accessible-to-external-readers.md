@@ -1,6 +1,6 @@
 ---
 description: GitHub Pages commits the KB to external readers who lack CLAUDE.md context — KB vocabulary needs inline glosses and definition links on first mention
-type: ../types/adr.md
+type: reference/types/adr.md
 tags: []
 status: accepted
 ---

@@ -1,5 +1,5 @@
 ---
-type: agentic-system-analysis-result
+type: types/agentic-system-analysis-result.md
 description: "Complete code-grounded analysis of GBrain v0.54.1.0 (memory, context delivery, skill distribution and self-maintenance layer around host harnesses) at 6040075c, complete-artifact partial-loop boundary"
 run-id: AAS-2026-09-23-gbrain-01
 system: "GBrain"

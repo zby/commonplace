@@ -1,12 +1,12 @@
 ---
-type: note
+type: types/note.md
 description: "Apache Maka's hosted execution, durable continuation, separate memory acquisition and evaluation authority at a pinned source boundary"
 generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-05-apache-maka-06
 source-identity: https://github.com/apache/maka
 reviewed-revision: "02f97c16d76e644d5b565889701958293ff7b5fb"
 analysis-result: kb/reports/retained/agentic-system-analysis/AAS-2026-09-05-apache-maka-06/result.md
-analysis-result-sha256: "9752e8525ec9e76d03dbac0934726cecf97263b2a6f092ea5ae413c769db42b4"
+analysis-result-sha256: "f19ebc73bb527919051b211f43a6ae584d78e2de7aaa1abe195ed9f1ed0ff1a8"
 ---
 
 # Apache Maka

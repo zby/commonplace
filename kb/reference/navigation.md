@@ -1,6 +1,6 @@
 ---
 description: "How agents navigate a Commonplace KB using control-plane pointers, rg, titles/descriptions, indexes, links, connect reports, and possible future search layers"
-type: note
+type: types/note.md
 ---
 
 # Navigation

@@ -1,6 +1,6 @@
 ---
 description: "SkillX review: trajectory-derived planning, functional, and atomic skill libraries with filtering, merging, and prompt-time retrieval"
-type: ../types/agent-memory-system-review.md
+type: agent-memory-systems/types/agent-memory-system-review.md
 source-tier: code-grounded
 last-checked: "2026-06-05"
 tags: [trace-learning]

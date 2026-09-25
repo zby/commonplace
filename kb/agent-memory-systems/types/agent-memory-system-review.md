@@ -1,5 +1,5 @@
 ---
-type: type-spec
+type: types/type-spec.md
 name: agent-memory-system-review
 description: Review of an external agent memory or context-engineering system; source-tier marks code-grounded vs doc-grounded evidence
 schema: ./agent-memory-system-review.schema.yaml
@@ -35,7 +35,7 @@ The section specs below distill [designing-agent-memory-systems](../../notes/des
 ## Frontmatter
 
 - `description` — discriminating retrieval filter (50–250 chars, double-quoted)
-- `type: ../types/agent-memory-system-review.md`
+- `type: agent-memory-systems/types/agent-memory-system-review.md`
 - `source-tier` — `code-grounded` (material findings rest on inspected implementation; abandoned-but-readable code counts) or `doc-grounded` (no inspectable implementation supports those findings; they rest on docs/papers, stay claim-level, are filed under `lightweight/`, and are excluded from the matrix). Required — the **only** authority difference between reviews. Promote a `doc-grounded` review by flipping to `code-grounded` once implementation source is inspected.
 - Do not add `user-verified`; creation and review generation cannot grant human attestation.
 - `last-checked: "{today}"`
@@ -220,7 +220,7 @@ Every review ends with explicit `Relevant Notes:` links into the KB. Link notes 
 ```markdown
 ---
 description: Template for ontology-normalized external memory-system reviews with source evidence, comparison fields, and review freshness metadata
-type: ../types/agent-memory-system-review.md
+type: agent-memory-systems/types/agent-memory-system-review.md
 source-tier: code-grounded
 last-checked: "YYYY-MM-DD"
 ---

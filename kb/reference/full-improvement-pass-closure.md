@@ -1,6 +1,6 @@
 ---
 description: "How the shipped full-improvement workflow reassays final note bytes, routes residual findings, and stops without claiming convergence"
-type: note
+type: types/note.md
 tags: [evaluation, kb-maintenance]
 ---
 

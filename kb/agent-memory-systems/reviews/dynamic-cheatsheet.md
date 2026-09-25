@@ -1,6 +1,6 @@
 ---
 description: "Dynamic Cheatsheet review: trace-learning test-time prompt memory with LLM cheatsheet curation, embedding retrieval, and automatic solver read-back"
-type: ../types/agent-memory-system-review.md
+type: agent-memory-systems/types/agent-memory-system-review.md
 source-tier: code-grounded
 last-checked: "2026-06-04"
 tags: [trace-learning]

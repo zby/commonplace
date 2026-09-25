@@ -1,6 +1,6 @@
 ---
 description: "Proposal: test temporary topic groupings and reviewed tag-maintenance suggestions before changing Commonplace’s canonical tag structure."
-type: ../types/design-proposal.md
+type: reference/types/design-proposal.md
 tags: [kb-maintenance, context-engineering]
 traits: [has-external-sources]
 ---

@@ -1,5 +1,5 @@
 ---
-type: type-spec
+type: types/type-spec.md
 name: snapshot
 description: Local external source copy with capture metadata and no analysis
 schema: ./snapshot.schema.yaml
@@ -20,7 +20,7 @@ provenance, genre, checksum, and analysis belong in the tracked
 
 ## Metadata
 
-- Set `type: snapshot`.
+- Set `type: types/snapshot.md`.
 - Set `source` to the canonical URL of the original source.
 - Set `captured` to the capture date or datetime.
 - Set `capture` to the capture mechanism, such as `trafilatura`, `pdftotext`,

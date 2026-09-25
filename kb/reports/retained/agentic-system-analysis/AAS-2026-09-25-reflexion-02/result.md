@@ -1,5 +1,5 @@
 ---
-type: agentic-system-analysis-result
+type: types/agentic-system-analysis-result.md
 description: 'Reflexion HotPotQA workflow: failed-attempt reflection, question-specific
   memory delivery and answer-key retry control with bounded historical display evidence'
 run-id: AAS-2026-09-25-reflexion-02

@@ -1,6 +1,6 @@
 ---
 description: "Complete generated listings establish membership, but their inputs do not determine topic-specific grouping, role phrases, or reading order without editorial judgment"
-type: ./types/structured-claim.md
+type: notes/types/structured-claim.md
 traits: [title-as-claim]
 tags: [kb-maintenance]
 ---

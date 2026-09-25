@@ -1,6 +1,6 @@
 ---
 description: "Separates candidacy evidence, which routes a hypothesis to costly assessment, from verdict evidence, which decides it; pricing and source-grounding cases provide two worked witnesses"
-type: note
+type: types/note.md
 traits: [title-as-claim]
 tags: [foundations, discovery]
 ---

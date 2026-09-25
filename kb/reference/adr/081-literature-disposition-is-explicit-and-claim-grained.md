@@ -1,6 +1,6 @@
 ---
 description: "Accepted decision that explicit external-literature disposition uses a claim-grained multistage procedure with an optional isolation control, while ordinary writing does not search for missing prior art"
-type: ../types/adr.md
+type: reference/types/adr.md
 tags: []
 status: accepted
 ---

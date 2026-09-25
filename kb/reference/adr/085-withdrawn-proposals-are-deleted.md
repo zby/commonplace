@@ -1,6 +1,6 @@
 ---
 description: "Decision that a design proposal whose problem or adoption trigger has lapsed, with no decision foreclosing it, is withdrawn by deletion rather than archived or kept"
-type: ../types/adr.md
+type: reference/types/adr.md
 tags: []
 status: accepted
 ---

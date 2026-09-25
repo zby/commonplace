@@ -1,6 +1,6 @@
 ---
 description: "Conjecture, partially tested: a claim-reconstruction gate is redundant on Commonplace notes; a label-ablation test attributes the self-sufficiency to the body-premise convention, not link labels. The thin pre-connect-draft case stays untested."
-type: note
+type: types/note.md
 traits: [title-as-claim]
 tags: []
 ---

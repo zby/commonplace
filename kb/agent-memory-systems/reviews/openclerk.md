@@ -1,6 +1,6 @@
 ---
 description: "OpenClerk review: local JSON runner over Markdown vaults with SQLite projections, provenance, synthesis, reports, and optional semantic modules"
-type: ../types/agent-memory-system-review.md
+type: agent-memory-systems/types/agent-memory-system-review.md
 source-tier: code-grounded
 last-checked: "2026-06-04"
 ---

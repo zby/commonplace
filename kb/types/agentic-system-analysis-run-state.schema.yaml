@@ -18,7 +18,7 @@ allOf:
           - failure
         properties:
           type:
-            const: agentic-system-analysis-run-state
+            const: types/agentic-system-analysis-run-state.md
           description:
             type: string
             minLength: 1

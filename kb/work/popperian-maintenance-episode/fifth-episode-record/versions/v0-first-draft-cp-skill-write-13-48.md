@@ -1,6 +1,6 @@
 ---
 description: "Re-reads Naur's program theory as application judgment: the irreducibility argument defeats rule-carrying text, while locating the capacity in human minds alone was a 1985 substrate default rather than a derived step"
-type: note
+type: types/note.md
 traits: [title-as-claim, has-external-sources]
 tags: [foundations, context-engineering]
 ---

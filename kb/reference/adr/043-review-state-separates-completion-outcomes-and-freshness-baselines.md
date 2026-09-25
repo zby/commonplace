@@ -1,6 +1,6 @@
 ---
 description: "Review schema v7 separates job grouping, pair completion, verdict outcomes, execution failure, and snapshot-pinned freshness baselines under one cross-surface vocabulary"
-type: ../types/adr.md
+type: reference/types/adr.md
 tags: []
 status: accepted
 ---

@@ -1,6 +1,6 @@
 ---
 description: "Superseded (ADR 082) decision that grounding reviews budget sixteen distinct linked artifacts globally, count repeated targets once, and disclose sampled coverage without failing on budget alone"
-type: ../types/adr.md
+type: reference/types/adr.md
 tags: []
 status: superseded
 ---

@@ -1,5 +1,5 @@
 ---
-type: type-spec
+type: types/type-spec.md
 name: task-active
 description: Work-in-progress task state document for resumable active work
 schema: null
@@ -26,7 +26,7 @@ No frontmatter is currently required for active task documents; this type has `s
 | Field | Required | Use |
 |---|---:|---|
 | `description` | No | Retrieval description of the active work and current resume point. |
-| `type` | No | `kb/tasks/types/task-active.md` when the task is made into an explicitly typed artifact. |
+| `type` | No | `tasks/types/task-active.md` when the task is made into an explicitly typed artifact. |
 | `tags` | No | Routing tags for the work area. |
 
 The operational `## Status` section is body state owned by this task type. Do not duplicate it in a generic frontmatter `status` field.

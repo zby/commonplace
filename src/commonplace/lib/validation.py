@@ -58,7 +58,7 @@ from commonplace.lib.type_resolver import (
     validate_instance,
 )
 
-TAG_README_TYPE = "tag-readme"
+TAG_README_TYPE = "types/tag-readme.md"
 # Weight gates for tag-readme artifacts: the type contract is that a tag's
 # curated head stays a cheap whole-read surface (ADR 026). Bytes gate; entry
 # count is reported as diagnosis only.
@@ -907,7 +907,7 @@ def _linked_md_targets(parsed: ParsedNote) -> set[Path]:
     return targets
 
 
-@type_rule("snapshot")
+@type_rule("types/snapshot.md")
 def _snapshot_body_rule(
     results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
 ) -> None:
@@ -927,15 +927,15 @@ def _snapshot_body_rule(
     results.passes.append("snapshot structure: body starts with an H1 title")
 
 
-@type_rule("kb/agent-memory-systems/types/agent-memory-system-review.md")
+@type_rule("agent-memory-systems/types/agent-memory-system-review.md")
 def _quote_citation_rule(
     results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
 ) -> None:
     validate_quote_citations(results, parsed.content)
 
 
-@type_rule("agentic-system-analysis-result")
-@type_rule("agent-memory-analysis-report")
+@type_rule("types/agentic-system-analysis-result.md")
+@type_rule("types/agent-memory-analysis-report.md")
 def _agentic_evidence_and_references_rule(
     results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
 ) -> None:
@@ -943,7 +943,7 @@ def _agentic_evidence_and_references_rule(
     from commonplace.lib.agentic_records import record_reference_errors
 
     metadata = parsed.document.frontmatter or {}
-    is_report = metadata.get("type") == "agent-memory-analysis-report"
+    is_report = metadata.get("type") == "types/agent-memory-analysis-report.md"
     errors = record_reference_errors(parsed.document.body, memory_report=is_report)
     results.fails.extend(errors)
     if not errors:
@@ -959,7 +959,7 @@ def _agentic_evidence_and_references_rule(
         )
 
 
-@type_rule("agentic-system-analysis-result")
+@type_rule("types/agentic-system-analysis-result.md")
 def _agentic_comparison_rule(
     results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
 ) -> None:
@@ -976,7 +976,7 @@ def _agentic_comparison_rule(
         results.passes.append("memory comparison: assessments and canonical references resolve")
 
 
-@type_rule("agent-memory-analysis-report")
+@type_rule("types/agent-memory-analysis-report.md")
 def _memory_report_comparison_rule(
     results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
 ) -> None:
@@ -996,7 +996,7 @@ def _memory_report_comparison_rule(
         )
 
 
-@type_rule("type-spec")
+@type_rule("types/type-spec.md")
 def validate_type_spec_definition(
     results: CheckResults,
     parsed: ParsedNote,
@@ -1111,7 +1111,7 @@ def validate_tag_readme(
             )
 
 
-@type_rule("kb/articles/types/article.md")
+@type_rule("articles/types/article.md")
 def validate_article(
     results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
 ) -> None:
@@ -1139,9 +1139,9 @@ def validate_article(
 
 
 @type_rule(
-    "note",
-    "kb/notes/types/structured-claim.md",
-    "kb/articles/types/article.md",
+    "types/note.md",
+    "notes/types/structured-claim.md",
+    "articles/types/article.md",
 )
 def validate_unquoted_sources(
     results: CheckResults, parsed: ParsedNote, *, run: ValidationRun

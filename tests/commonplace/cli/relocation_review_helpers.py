@@ -24,7 +24,7 @@ def make_reviewable_note(path: Path, title: str = "Old note") -> Path:
         path,
         f"""---
 description: Test note
-type: note
+type: types/note.md
 traits: []
 ---
 

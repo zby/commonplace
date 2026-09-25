@@ -1,6 +1,6 @@
 ---
 description: "Bootstrap supplement: Commonplace starts as a reflective theory builder in which people perform many operations, moves them to computation one at a time, and measures success by human decisions per verified improvement"
-type: kb/articles/types/article.md
+type: articles/types/article.md
 status: draft
 byline: Zbigniew Lukasiak
 source_notes:

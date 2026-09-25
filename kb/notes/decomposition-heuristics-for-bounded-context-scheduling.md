@@ -1,6 +1,6 @@
 ---
 description: Working heuristics for symbolic scheduling over bounded LLM calls — separate selection from joint reasoning, choose representations not just subsets, save reusable intermediates in scheduler state
-type: note
+type: types/note.md
 traits: [has-external-sources]
 tags: [computational-model]
 ---

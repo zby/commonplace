@@ -1,6 +1,6 @@
 ---
 description: "DocMason review: repo-native private-document KB with provenance, governed ask, deterministic retrieval, and interaction-memory promotion"
-type: ../types/agent-memory-system-review.md
+type: agent-memory-systems/types/agent-memory-system-review.md
 source-tier: code-grounded
 tags: [trace-learning]
 last-checked: "2026-06-04"

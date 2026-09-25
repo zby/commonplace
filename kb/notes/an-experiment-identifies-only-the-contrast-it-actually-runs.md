@@ -1,6 +1,6 @@
 ---
 description: "Why missing comparisons, bundle-to-component attribution, and adjacent unrun treatments all overstate causal conclusions beyond an experiment's observed contrast"
-type: note
+type: types/note.md
 traits: [title-as-claim, has-external-sources]
 tags: [learning-theory, deploy-time-learning]
 ---

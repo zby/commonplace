@@ -1,6 +1,6 @@
 ---
 description: "OKF Harness review: local file-first OKF wiki harness with source provenance, bounded CLI reads, generated agent guidance, lint, and graph reports"
-type: ../types/agent-memory-system-review.md
+type: agent-memory-systems/types/agent-memory-system-review.md
 source-tier: code-grounded
 last-checked: "2026-06-18"
 ---

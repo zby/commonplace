@@ -1,6 +1,6 @@
 ---
 description: "LLM↔code boundaries expose concrete inputs and outputs for inspection and replay; deterministic execution preserves rather than corrects a wrongly interpreted argument"
-type: note
+type: types/note.md
 traits: [title-as-claim]
 tags: [learning-theory, computational-model, constraining]
 ---

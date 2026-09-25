@@ -1,12 +1,12 @@
 ---
-type: note
+type: types/note.md
 description: "SkillLift's flagship portfolio search: rubric-guided edits, benchmark promotion, retained task memory and a refined-winner recovery limitation"
 generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-25-skilllift-01
 source-identity: https://github.com/WalteR-MittY-pro/SkillLift
 reviewed-revision: "599358b4d4c4a27c0e004df8228ab93026600653"
 analysis-result: kb/reports/retained/agentic-system-analysis/AAS-2026-09-25-skilllift-01/result.md
-analysis-result-sha256: f3e5301b6829550a2e88205ac532d3c2d520b67accd5c4b3a60a7a812af8e22d
+analysis-result-sha256: 5582d6a34c759515681c476a2cef7a5d7592b3fcb39d5c29f8e56f44f31982b4
 ---
 
 # SkillLift

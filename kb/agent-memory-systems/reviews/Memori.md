@@ -1,6 +1,6 @@
 ---
 description: "Memori review: SDK and agent integrations with trace-learning augmentation, SQL/Rust storage, hybrid recall, and pre-call memory injection"
-type: ../types/agent-memory-system-review.md
+type: agent-memory-systems/types/agent-memory-system-review.md
 source-tier: code-grounded
 tags: [trace-learning]
 last-checked: "2026-06-04"

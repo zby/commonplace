@@ -1,6 +1,6 @@
 ---
 description: "How Claude Code's dynamic-workflows API works — a model-authored JS orchestrator over sub-agents — mapped onto the bounded-context orchestration model: what of the tool loop the harness exposes, to whom, and what it withholds"
-type: note
+type: types/note.md
 traits: [has-external-sources]
 tags: [computational-model, tool-loop]
 ---

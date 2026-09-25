@@ -1,6 +1,6 @@
 ---
 description: Behaviour change spans distributed-parametric, natural-language, and symbolic forms, so the question is how their improvement loops relate — not which is the real locus of learning
-type: note
+type: types/note.md
 traits: [title-as-claim]
 tags: [learning-theory, deploy-time-learning]
 ---

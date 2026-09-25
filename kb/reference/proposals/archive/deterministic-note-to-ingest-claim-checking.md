@@ -1,6 +1,6 @@
 ---
 description: "Proposal (retired): dated corpus measurements behind replacing paraphrased ingest claims with direct checks against retained quotes or snapshots"
-type: ../../types/design-proposal.md
+type: reference/types/design-proposal.md
 tags: []
 ---
 

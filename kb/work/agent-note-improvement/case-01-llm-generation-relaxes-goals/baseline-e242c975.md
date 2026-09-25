@@ -1,6 +1,6 @@
 ---
 description: "On a goal it can't satisfy, a human writer stalls at the unmet constraint; LLM generation returns a typicality-biased relaxation that hides the hard constraint, displacing the check onto the reader"
-type: note
+type: types/note.md
 traits: [title-as-claim]
 tags: [learning-theory, llm-interpretation-errors]
 ---

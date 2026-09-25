@@ -1,6 +1,6 @@
 ---
 description: "SkillRL review: trajectory-derived SkillBank JSON, prompt-time skill push, dynamic failed-trajectory updates, and SFT/RL policy learning"
-type: ../types/agent-memory-system-review.md
+type: agent-memory-systems/types/agent-memory-system-review.md
 source-tier: code-grounded
 last-checked: "2026-06-30"
 tags: [trace-learning]

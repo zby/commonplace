@@ -1,6 +1,6 @@
 ---
 description: "Adopted and retired proposals move to a link-sink archive after extraction; provenance becomes a title tag, so ADRs from 2026-07-25 must carry a Considered alternatives section"
-type: ../types/adr.md
+type: reference/types/adr.md
 tags: []
 status: accepted
 ---

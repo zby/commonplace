@@ -1,6 +1,6 @@
 ---
 description: "Proposal: decide whether prospective matched evidence should promote bilateral isolation from a conditional diagnostic to a routine literature-assessment control"
-type: ../types/design-proposal.md
+type: reference/types/design-proposal.md
 tags: [kb-maintenance, review-system]
 ---
 

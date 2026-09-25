@@ -1,6 +1,6 @@
 ---
 description: Replaces symlink and Windows-junction skill projections with real copied directories in commonplace-init
-type: ../types/adr.md
+type: reference/types/adr.md
 tags: []
 status: superseded
 ---

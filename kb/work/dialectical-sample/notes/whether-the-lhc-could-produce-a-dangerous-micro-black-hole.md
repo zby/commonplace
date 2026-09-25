@@ -1,6 +1,6 @@
 ---
 description: Condensed position map for the LHC micro-black-hole safety controversy — illustrative sample, not a maintained casebook note
-type: note
+type: types/note.md
 tags: []
 ---
 

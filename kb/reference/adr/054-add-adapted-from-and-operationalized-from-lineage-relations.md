@@ -1,6 +1,6 @@
 ---
 description: "Adds adapted-from and operationalized-from lineage relations, amending ADR 053's no-successor-term decision with the composite operation it left unnamed"
-type: ../types/adr.md
+type: reference/types/adr.md
 tags: []
 status: accepted
 ---

@@ -1,6 +1,6 @@
 ---
 description: "Ingest reports own durable primary and implementation-source identity, capture provenance, genre, and exact snapshot checksums; ignored snapshots are local reading copies"
-type: ../types/adr.md
+type: reference/types/adr.md
 tags: []
 status: accepted
 ---

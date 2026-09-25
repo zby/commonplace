@@ -111,7 +111,7 @@ Collections are `kb/` subtrees with a local `COLLECTION.md`. Read the target col
 | `<library>/notes/` | Reading Commonplace theory and examples. |
 | `<library>/reference/` | Looking up Commonplace architecture, commands, type system, and ADRs. |
 | `<library>/instructions/` | Reading framework procedures and the bodies of the `cp-skill-*` skills. |
-| `<library>/types/` | Looking up the global type specs, named in frontmatter by bare name (`type: note`). |
+| `<library>/types/` | Looking up the global type specs, named in frontmatter by their path under the library root (`type: types/note.md`). |
 
 ### Navigation
 
@@ -121,7 +121,7 @@ Entry points:
 
 - `<library>/reference/README.md` — Commonplace documentation entry point
 
-<!-- Add curated tag READMEs here as they emerge. When 5+ related notes accumulate under a tag, create `kb/notes/<tag>-README.md` (type `tag-readme`): an orientation paragraph plus selective picks with context phrases. It may declare validator-enforced marks — `complete: true` (links every tagged note) or `covered_by: [children]` (every tagged note carries a listed child tag); see `<library>/types/tag-readme.md`. -->
+<!-- Add curated tag READMEs here as they emerge. When 5+ related notes accumulate under a tag, create `kb/notes/<tag>-README.md` (type `types/tag-readme.md`): an orientation paragraph plus selective picks with context phrases. It may declare validator-enforced marks — `complete: true` (links every tagged note) or `covered_by: [children]` (every tagged note carries a listed child tag); see `<library>/types/tag-readme.md`. -->
 
 <!-- If this project also vendors the full Commonplace research KB as a read-only reference (see Commonplace INSTALL.md, "Reader install"), add its entry point here, e.g.:
 - `commonplace/kb/notes/tags-README.md` — vendored Commonplace research KB (read-only): agent context engineering, memory, deploy-time learning
@@ -131,8 +131,8 @@ Entry points:
 # Find notes by description
 rg "^description:" kb/notes/ kb/reference/ kb/instructions/ --glob "*.md"
 
-# Find notes by type (global types by bare name; collection-local types by path)
-rg "^type: note$" kb/notes/ kb/reference/ kb/instructions/ --glob "*.md"
+# Find notes by type (the value is the type spec's path under a KB root)
+rg "^type: types/note.md" kb/notes/ kb/reference/ kb/instructions/ --glob "*.md"
 
 # Find notes by tag
 rg "^tags:.*my-tag" kb/notes/ kb/reference/ kb/instructions/ --glob "*.md"

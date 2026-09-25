@@ -1,6 +1,6 @@
 ---
 description: Where quality checks belong — WRITING.md, validate, the experimental review system, or recurring tasks — based on cost, false-positive tolerance, and whether the check gates note creation
-type: ../types/adr.md
+type: reference/types/adr.md
 tags: []
 status: accepted
 ---

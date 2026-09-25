@@ -1,6 +1,6 @@
 ---
 description: "Proposal: when a review's evidence exceeds one pass's capacity, decompose the review into covering passes and combine their outcomes, rather than sampling links or failing the artifact"
-type: ../../types/design-proposal.md
+type: reference/types/design-proposal.md
 tags: []
 ---
 

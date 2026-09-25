@@ -1,6 +1,6 @@
 ---
 description: Definition of Commonplace doctrine - the standing instruction a worker inherits with binding force when its runtime loads it, from which a handoff is a delta; bare "doctrine" stays ordinary English and may abbreviate it where unambiguous
-type: definition
+type: types/definition.md
 tags: []
 ---
 

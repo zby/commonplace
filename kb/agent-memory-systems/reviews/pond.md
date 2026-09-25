@@ -1,6 +1,6 @@
 ---
 description: "Pond review: Lance-backed cross-client session archive with canonical codecs, scheduled trace acquisition, pull-only recall, read-only analytics, and restore"
-type: ../types/agent-memory-system-review.md
+type: agent-memory-systems/types/agent-memory-system-review.md
 source-tier: code-grounded
 tags: [trace-learning]
 last-checked: "2026-09-04"

@@ -21,7 +21,7 @@ Because the agent reads the skill at its real location, relative links resolve t
 
 - Link to the skill's own files, to other instructions, and to types with ordinary relative links, such as `../re-ingest.md` or `../../types/note.md`
 - Name the project's own collections by workspace-root paths, such as `kb/notes/` and `kb/notes/COLLECTION.md`; those are paths in the project, not in the library
-- Name a global type by its bare name, such as `type: note`
+- Name a type by its path under a KB root, such as `type: types/note.md`
 - Do not branch the text between a source checkout and an installed project; the two layouts agree
 
 ## Promotion Convention

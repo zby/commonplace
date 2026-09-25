@@ -1,6 +1,6 @@
 ---
 description: Design options and scaling strategy for how the connect skill discovers candidate connections — index-first with semantic search backup, and what changes when the KB grows
-type: ../types/adr.md
+type: reference/types/adr.md
 tags: []
 status: superseded
 ---

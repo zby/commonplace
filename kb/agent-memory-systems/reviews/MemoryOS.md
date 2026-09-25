@@ -1,6 +1,6 @@
 ---
 description: "MemoryOS review: hierarchical conversational memory with trace-learning summaries, profiles, knowledge extraction, vector retrieval, and pre-call prompt assembly"
-type: ../types/agent-memory-system-review.md
+type: agent-memory-systems/types/agent-memory-system-review.md
 source-tier: code-grounded
 last-checked: "2026-06-04"
 tags: [trace-learning]

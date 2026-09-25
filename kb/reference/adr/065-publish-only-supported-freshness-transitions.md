@@ -1,6 +1,6 @@
 ---
 description: "Generic freshness acceptance is withdrawn until a concrete non-review target supplies identity, input semantics, and an end-to-end registration path"
-type: ../types/adr.md
+type: reference/types/adr.md
 tags: []
 status: accepted
 ---

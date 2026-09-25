@@ -1,6 +1,6 @@
 ---
 description: "Superseded sketch: the width-independent adaptive-round claim is false; retain the interaction-cut argument and replace adaptivity with a breadth/lookahead tradeoff"
-type: note
+type: types/note.md
 traits: []
 tags: [computational-model, context-engineering]
 ---

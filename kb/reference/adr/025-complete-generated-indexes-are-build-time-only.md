@@ -1,6 +1,6 @@
 ---
 description: "Complete generated listings move to ProperDocs build time; agents discover through curated heads plus scoped path-and-description searches with a 50–250-character soft description warning"
-type: ../types/adr.md
+type: reference/types/adr.md
 tags: []
 status: accepted
 ---

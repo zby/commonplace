@@ -1,6 +1,6 @@
 ---
 description: Decision to ship operational scripts as an installable Python package (llm-commonplace), replace the two-tree layout with a one-tree init model, and use scaffold symlinks for zero-duplication seeding
-type: ../types/adr.md
+type: reference/types/adr.md
 tags: []
 status: accepted
 ---

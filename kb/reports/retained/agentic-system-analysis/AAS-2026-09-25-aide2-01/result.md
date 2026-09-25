@@ -1,5 +1,5 @@
 ---
-type: agentic-system-analysis-result
+type: types/agentic-system-analysis-result.md
 description: "Complete documentary analysis of AIDE2's two-loop harness improvement and evolved memory mechanisms."
 run-id: AAS-2026-09-25-aide2-01
 system: AIDE2

@@ -22,6 +22,9 @@ from tests.commonplace.review.pair_helpers import accept_pair, insert_completed_
 
 from ._run_cli import run_cli
 
+pytestmark = pytest.mark.usefixtures("tmp_library")
+
+
 TEST_MODEL = "test-model"
 REVIEWED_AT = "2026-07-01T00:00:00+00:00"
 
@@ -41,7 +44,7 @@ def make_note(
     title: str,
     body: str,
     *,
-    note_type: str = "note",
+    note_type: str = "types/note.md",
 ) -> Path:
     return write(
         path,
@@ -62,7 +65,7 @@ def make_type_spec(path: Path, name: str, *, instructions: str = "State one clai
     return write(
         path,
         f"""---
-type: type-spec
+type: types/type-spec.md
 name: {name}
 description: Test type spec for {name}
 schema: null
@@ -145,7 +148,7 @@ def build_fixture(tmp_path: Path) -> dict[str, Path]:
         notes_dir / "definition.md",
         "Definition note",
         "\nBody.\n",
-        note_type="definition",
+        note_type="types/definition.md",
     )
     return {
         "note_spec": note_spec,
@@ -216,7 +219,7 @@ class TestNoteTypeSpecPath:
             tmp_path / "kb" / "notes" / "claim.md",
             "Claim",
             "\nBody.\n",
-            note_type="./types/structured-claim.md",
+            note_type="notes/types/structured-claim.md",
         )
         assert note_type_spec_path(tmp_path, note) == "kb/notes/types/structured-claim.md"
 
@@ -229,7 +232,7 @@ class TestNoteTypeSpecPath:
             tmp_path / "kb" / "notes" / "orphan.md",
             "Orphan",
             "\nBody.\n",
-            note_type="ghost",
+            note_type="types/ghost.md",
         )
         with pytest.raises(FileNotFoundError, match="ghost"):
             note_type_spec_path(tmp_path, note)
@@ -306,7 +309,7 @@ class TestSelectorTypePairs:
     def test_note_edit_marks_type_pair_note_changed_with_diff(self, tmp_path: Path) -> None:
         fixture = build_fixture(tmp_path)
         seed_freshness_baseline(tmp_path, note_path="kb/notes/definition.md", criterion_path="kb/types/definition.md")
-        make_note(fixture["definition"], "Definition note", "\nUpdated body.\n", note_type="definition")
+        make_note(fixture["definition"], "Definition note", "\nUpdated body.\n", note_type="types/definition.md")
 
         stale = review_target_selector.select_stale_criteria(
             tmp_path,
