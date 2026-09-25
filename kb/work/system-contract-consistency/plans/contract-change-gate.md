@@ -1,11 +1,11 @@
 # Workshop-wide outcome — Promote a contract-change implementation gate
 
 **State:** open; required before workshop closure. The disjoint-root
-installation change is the first workshop application; a second independent
+application was abandoned when ADR 086 replaced that design. The ADR 086
+change itself is the first candidate application; a second independent
 application and durable promotion remain pending.
 
-**Audited against:** commit `6660bd2a`; motivated by the [witness
-ledger](../baseline-2026-08-27.md) and the workshop's repeated consumer-drift
+**Audited against:** commit `6660bd2a`; motivated by the workshop's repeated consumer-drift
 mechanism.
 
 ## Outcome selected
@@ -37,10 +37,11 @@ instruction should not freeze today's paths as a universal list.
 1. Read the instructions collection contract and content-routing guidance.
 2. Select the narrowest existing implementation/review instruction that can own
    this gate, or write a short new instruction if none has that purpose.
-3. **First application drafted 2026-08-27:** the [disjoint-root impact
-   ledger](../disjoint-root-impact-ledger.md) applies every field to the joint
-   I1/I2/I3/V1 program. Exercise the checklist against one independent
-   migration packet as well. Revise fields that fail to expose a consumer or
+3. **Applications.** The 2026-08-27 disjoint-root ledger was abandoned with
+   its design (it remains in git history). Apply the checklist
+   retrospectively to the ADR 086 delivery change: its commit (`e6103225`)
+   inventoried consumers, and the 2026-09-25 rescan shows which it missed.
+   Then exercise the checklist against one independent migration packet. Revise fields that fail to expose a consumer or
    produce work the implementer cannot use.
 4. Add a narrow discoverability route from the change workflow that needs it.
 5. Validate the durable artifact and record the worked applications here.

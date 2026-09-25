@@ -4,21 +4,21 @@
 [manifest-derived promoted-skill audit](../../execution-channel-compatibility/e1-promoted-skill-rebaseline-2026-08-27.md)
 classifies all ten skills selected in that snapshot without making the count a
 future inventory. The implementation dispositions and native-Windows evidence
-remain open. See the [witness ledger](../baseline-2026-08-27.md).
+remain open. Rechecked 2026-09-25: health check, connect, and validate still
+carry the unpaired POSIX commands the audit names.
 
 ## Resolution selected
 
-Retain native Windows support. Installation, PATH ownership, and copied skill
-projection already have native-Windows behavior; narrowing support now would
+Retain native Windows support. Installation, PATH ownership, and skill stubs
+already have native-Windows behavior; narrowing support now would
 discard working product surface to avoid fixing three visible procedures.
 
 Prefer shell-neutral package commands or runtime-native tool operations for
 load-bearing behavior. Use paired POSIX/PowerShell snippets only where diagnosis
 must work before a package command can be assumed available.
 
-Path enumeration also consumes I3's explicit `kb-root` model. A skill must not
-recreate root discovery with shell globs, assume one workspace `kb/`, or merge
-host and Commonplace results without naming a navigation union.
+A skill must not recreate collection discovery with shell globs; it calls the
+package's contract-based discovery.
 
 ## Work
 
@@ -29,10 +29,13 @@ host and Commonplace results without naming a navigation union.
 2. Collect at least one native-Windows PowerShell result after the owning
    package operations land. The current audit is source-static and Linux-hosted;
    it makes no native-Windows runtime claim.
-3. Consume V1: make `cp-skill-validate` pass the requested file, collection,
-   `all`, `types`, `landings`, or `redirects` target directly to
-   `commonplace-validate <target>`, with the CLI interpreting `all` and no shell
-   program in the skill.
+3. Add a package-owned `commonplace-validate all` target. V1 closed without
+   it (ADR 086 removed the nested library collections the glob missed), so
+   E1 now owns it: the CLI enumerates collections through the existing
+   contract-based discovery, honours validation-ignore markers, continues
+   after failures, and reports one aggregate result. Then make
+   `cp-skill-validate` pass its requested target straight to
+   `commonplace-validate <target>` with no shell program in the skill.
 4. Do not replace connect's pipeline with permanent runtime-specific Grep/Read
    choreography. Put deterministic tag/path collection behind a package command
    or shared Python helper, preferably T1's exact resolver once available, and
@@ -54,10 +57,9 @@ host and Commonplace results without naming a navigation union.
    health checks. Add a narrow static inventory/check for known incompatible
    idioms so a new unpaired `xargs`, POSIX conditional, or hardcoded `/tmp`
    becomes visible at review time.
-8. Exercise the installed disjoint-root fixture on Windows: host `kb/`,
-   `commonplace-library/kb/`, and an optional explicitly selected reader target.
-   Assert the same declared/discovered root set as Linux without path-separator
-   normalization leaks.
+8. Exercise a freshly initialized project on Windows, including stub and
+   `library.md` paths into the installed library, without path-separator
+   leaks.
 
 ## Completion
 
