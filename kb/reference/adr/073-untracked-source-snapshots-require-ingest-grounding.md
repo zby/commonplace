@@ -82,7 +82,11 @@ Markdown-link table and allow semantic gates to read linked material. Prompt
 scaffolding adds only a generic allowance for an active criterion to derive one
 exact local path from a target link. The judgment-bearing route, failure rules,
 and marker syntax live in the gate file, so changing them stales ordinary gate
-baselines as `criterion-changed`.
+baselines as `criterion-changed`. One exception, added on 2026-08-25
+(`adbc1cc0`): prompt scaffolding also recognizes the literal
+`(snapshot required)` marker so that it can list the derived snapshot in the
+target's pre-resolved link table. Changing the marker therefore requires
+changing the gate and `job_prompt.py` together.
 
 The virtual `source` lens, link-derived `(artifact, ingest)` pairs, raw-ingest
 criterion handling, source-specific prompt wrapper, applicability resolver, and
