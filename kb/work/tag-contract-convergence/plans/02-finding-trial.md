@@ -19,6 +19,34 @@ trial takes only the finding-related options. Suggested assignments, rejected
 suggestions, and aliases address maintenance cost, which the operator did not
 report as the problem.
 
+## Prior evidence: agents rarely use tags to find things
+
+A 2026-09-25 survey of session transcripts checked whether agents already use
+tags to navigate. It covered 6,342 Codex sessions in Commonplace-using
+projects (March–September 2026) and 496 Claude Code sessions
+(August–September 2026). Tool calls were extracted and classified with
+regexes.
+
+- Tag search is about 1% of KB search. Content `rg` is about 45 times as
+  frequent, and description `rg` about 7 times.
+- Most tag-page reads and tag searches come from work on the tag system itself
+  or from `cp-skill-connect`, whose procedure prescribes them. Outside those,
+  tag pages are read in fewer than 2% of Codex sessions and about 4% of Claude
+  sessions, usually alongside content search.
+- In installing projects agents almost never use tags: llm-do has about 23,000
+  tool calls and no tag searches.
+- The `complete` mark changed agent behavior only inside the connect procedure.
+  No use of `covered_by` was found.
+- The operator's own positive remark (2026-08-21) was about human readers of
+  the published site finding all systems under one tag.
+
+Limits: the regex classes are coarse, Claude transcripts start in August, and
+reasoning is invisible, so a tag page that informed a choice without a
+follow-up call would be missed. The evidence is consistent with the
+operator's report. Condition D below is already the agents' main finding path,
+so it is the baseline any tag page has to beat. Human site use and agent use
+must be judged separately.
+
 ## Conditions
 
 Each condition covers the same tag and the same exact member set:
