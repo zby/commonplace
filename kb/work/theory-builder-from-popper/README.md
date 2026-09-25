@@ -77,6 +77,16 @@ Decision numbers D1–D8 refer to the
 - Testing article grew from about 1,660 to 2,840 words; consider a
   tightening pass after the retitle.
 
+- Problem granularity for condition 4 (raised by B4): workers read many
+  instances of one task, or one benchmark's task family, as one problem, so
+  instances are tests of one theory and only a different task is a new
+  problem. This decided GEPA, procedural graphs, PoPE, and Corral. Confirm,
+  and consider stating it in the definition's condition 4.
+- Cleanup for step 6: unlinked "conjectural learning" outside Learning Claims
+  sections (e.g. `automated-hypothesis-validation-sequential-falsifications`
+  Extractable Value); its follow-up asks whether POPPER should be named in
+  checks case 24.
+
 ## Steps
 
 1. Draft [theory-builder.md](../../notes/definitions/theory-builder.md) and its
