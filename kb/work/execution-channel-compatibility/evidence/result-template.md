@@ -1,7 +1,7 @@
 # Execution-environment probe: <runtime / surface / OS / interface>
 
 - Survey round: `1 — landscape breadth`
-- Procedure ID: `execution-channel-round1-v6-2026-07-28`
+- Procedure ID: `execution-channel-round1-v7-2026-09-25`
 - Prior related report: none / path
 
 ## Identity
@@ -16,6 +16,7 @@
 | Workspace/current directory | | observed |
 | Launch path | | observed / unknown |
 | Sandbox/approval/write scope | | observed / unknown |
+| Runtime started after last install / `uv tool update-shell` | yes / no / unknown | stated / unknown |
 
 ## Observable layout
 
@@ -24,26 +25,25 @@
 | Runtime-supplied workspace root | | observed / unknown |
 | `pyproject.toml` | | observed / not run |
 | `kb/instructions/COLLECTION.md` | | observed / not run |
-| `kb/commonplace/instructions/COLLECTION.md` | | observed / not run |
+| `.commonplace/library.md` | | observed / not run |
+| `kb/commonplace/instructions/COLLECTION.md` (legacy copy) | | observed / not run |
+| `.claude/skills/`, `.agents/skills/` | | observed / not run |
 | Known reader/vendor path | | observed / unknown |
-| Project `.venv` at observed root | | observed / not run |
-| Workspace `.envrc` | | observed / not run |
+| Legacy residue: workspace `.venv` / `.envrc` (presence only) | | observed / not run |
 
-Provisional class: source-like / initialized-full-project-like / reader/vendor / package-only / other / unknown
+Provisional class (all that match): source-like / initialized-project-like / legacy-copied-library / reader/vendor / package-only / other / unknown
 
-### Project-venv environment signals
+## Library reachability
 
-Complete only when a project `.venv` was observed.
+Complete only when `.commonplace/library.md` was observed.
 
-| Signal | Result | Basis |
+| Observation | Result | Basis |
 |---|---|---|
-| Expected venv command directory | | observed / not run |
-| Expected venv command directory is on process `PATH` | | observed / not run |
-| `VIRTUAL_ENV` | | observed / not run |
-| `VIRTUAL_ENV` identifies the observed project venv | | observed / not run |
-| direnv marker variables set | | observed / not run |
-
-Marker presence alone does not identify the baseline provider. Do not include marker values or `.envrc` contents.
+| `.commonplace/library.md` readable | | observed |
+| Library root named (normalized) | | observed |
+| Skills listed in the index (count only) | | observed |
+| `<library root>/instructions/COLLECTION.md` readable by file-read tool | yes / denied / not found / prompt declined | observed |
+| Sampled skill stub: name, names an absolute library path, target readable | | observed / not run |
 
 ## Universal bare-name probes
 
@@ -52,7 +52,19 @@ Marker presence alone does not identify the baseline provider. Do not include ma
 | `commonplace-validate --help` | | | | observed / unknown |
 | `rg --version` | | | | observed / unknown |
 
-Expected venv entry point check: observed result / not run because no project venv was observed
+Init-output warning printed by `commonplace-validate --help`: none / <class only>
+
+## Command authority
+
+| Observation | Result | Basis |
+|---|---|---|
+| `uv` resolved | | observed / not run |
+| `uv tool dir --bin` (normalized) | | observed / not run |
+| Resolved `commonplace-validate` is inside `<UV_TOOL_BIN>` | yes / no — shadowed by <normalized path> / not resolved | observed / unknown |
+| `<UV_TOOL_BIN>` is on process `PATH` | | observed / not run |
+| `commonplace-init --check` exit status and finding classes | | observed / not run |
+
+Interpretation (not installed / installed but not visible to this process / shadowed / expected authority / unknown) and basis:
 
 ## Tool-call persistence
 
@@ -78,7 +90,6 @@ Use only the mutated variable and function to determine shell-state persistence.
 | `py` | | | | observed / not run |
 | `pytest` | | | | observed / not run |
 | `uv` | | | | observed / not run |
-| `direnv` | | | | observed / not run |
 | `git` | | | | observed / not run |
 | `find` | | | | observed / not run |
 | `sed` | | | | observed / not run |
@@ -100,21 +111,10 @@ Use only the mutated variable and function to determine shell-state persistence.
 
 ### ripgrep
 
-- Observed instruction root:
+- Observed instruction root (workspace `kb/instructions`, `<library root>/instructions`, or vendor root; normalized):
 - Exact search:
-- Result:
+- Result (record a sandbox denial for an outside-workspace root separately):
 - Or not run because:
-
-### direnv state
-
-- Workspace `.envrc` found by direnv: yes / no / unknown
-- Workspace `.envrc` allowed: yes / no / unknown
-- Loaded RC identity: current workspace / different workspace / none / unknown
-- Expected project-venv command directory on `PATH`: yes / no / not run
-- Baseline-provider interpretation and basis:
-- Or not run because:
-
-Do not include raw status output, watch entries, timestamps, `allowPath`, hashes, marker values, or `.envrc` contents.
 
 ### Python identity
 
@@ -125,7 +125,7 @@ Do not include raw status output, watch entries, timestamps, `allowPath`, hashes
 ### Git
 
 - Repository root:
-- Single-fixture status command and result:
+- Single-fixture status command (`--ignored`) and result:
 - Or not run because:
 
 ## Findings

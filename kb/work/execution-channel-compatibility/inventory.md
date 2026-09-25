@@ -2,68 +2,117 @@
 
 ## Status
 
-Initial lexical baseline, 2026-07-28. These counts establish the search boundary; they are not yet a semantic classification of executable versus illustrative occurrences.
+Rebaselined 2026-09-25 at `5a178374`, after [ADR 064](../../reference/adr/064-install-commonplace-commands-as-a-user-level-uv-tool.md) (commands as a user-level uv tool) and [ADR 086](../../reference/adr/086-projects-read-the-library-from-the-installed-package.md) (library served from the installed package). The first lexical baseline was taken on 2026-07-28; both columns are kept below. This rebaseline adds a first semantic classification of the non-promoted instruction files. The promoted skills are classified in the [E1 rebaseline](./e1-promoted-skill-rebaseline-2026-08-27.md) and are not repeated here.
 
-The scan covers `AGENTS.md`, `AGENTS.md.template`, `INSTALL.md`, and all Markdown under `kb/instructions/`. Canonical instructions are counted; generated `.claude/skills/` and `.agents/skills/` projections are excluded to avoid double counting.
+The scan covers `AGENTS.md`, `AGENTS.md.template`, `AGENTS.md.reader-fragment`, `INSTALL.md`, and all Markdown under `kb/instructions/`. Canonical files are counted. The `.claude/skills/` and `.agents/skills/` symlink projections are excluded to avoid double counting.
 
 ## Baseline
 
-| Signal | Initial result | Meaning and limitation |
-|---|---:|---|
-| Markdown files under `kb/instructions/` | 83 | Full canonical instruction collection, including type/readme/support files |
-| Shell-language fences in the scoped surface | 66 | `bash`, `sh`, PowerShell, batch/cmd, console, or shell fences; a fence may be illustrative |
-| Scoped files mentioning `commonplace-*` | 27 | 24 canonical instruction files plus `AGENTS.md`, its template, and `INSTALL.md` |
-| Scoped files mentioning `rg` | 14 | 11 canonical instruction files plus the three root/control-plane surfaces |
-| Promoted `SKILL.md` files mentioning `commonplace-*` | 6 | Compilation of promoted skills alone cannot cover the other 18 canonical instruction files |
-| Promoted `SKILL.md` files mentioning `rg` | 4 | `rg` also appears outside promoted skills |
+| Signal | 2026-07-28 | 2026-09-25 | Meaning and limitation |
+|---|---:|---:|---|
+| Markdown files under `kb/instructions/` | 83 | 120 | Full canonical instruction collection, including type/readme/support files |
+| Shell-language fences, column 0 | 66 | 69 | The July regex. It misses fences indented under list items. |
+| Shell-language fences, any indentation | — | 89 in 28 files | Use this count from now on. `INSTALL.md` also puts install commands in `text` fences, which neither count catches. |
+| Scoped files mentioning `commonplace-*` | 27 | 42 | 39 instruction files plus the three root files |
+| Scoped files mentioning `rg` | 14 | 14 | 11 instruction files plus the three root files |
+| Promoted and router `SKILL.md` files mentioning `commonplace-*` | 6 | 8 of 11 | Not connect, write-multistage (its `references/promotion.md` does), or the router `cp-skill-library` |
+| Promoted and router `SKILL.md` files mentioning `rg` | 4 | 2 | write, connect |
 
-The first conclusion is structural: promoted skills are not a sufficient compilation or portability boundary. Any solution scoped only to them leaves executable Commonplace commands in non-promoted instructions and leaves part of the `rg` surface unresolved.
+The structural conclusion from July is stronger now: 31 of the 42 files that mention commands are not promoted `SKILL.md` files. A solution scoped to promoted skills leaves most of the command surface untouched.
 
-## Initial tool census
+## Tool census
 
-File counts below are lexical counts over the same broad surface, not yet confirmed command invocations.
+File counts are lexical and case-sensitive unless marked. The "nature" column comes from reading the hits.
 
-| Tool or family | Files | Initial concern |
-|---|---:|---|
-| `commonplace-*` | 27 | Project-local venv, bare-name resolution, `.exe` layout on Windows, package version identity |
-| `rg` | 14 | Availability outside bundled agent runtimes; compatible flags and regex behavior on native Windows |
-| `find` | 13 | POSIX utility absent from stock PowerShell; some mentions may mean search conceptually rather than the executable |
-| Git | 11 | Declared development prerequisite, but command availability, repository discovery, and sandboxed `.git` access differ |
-| uv | 4 | Installation/update owner versus runtime dependency; cache location and sandbox access |
-| pytest | 4 | Project-venv resolution and Windows executable suffix; should not silently fall back to a global pytest |
-| `python3` | 4 | Native Windows normally exposes `py -3` or `python`, not necessarily `python3` |
-| `python` | 1 | May resolve differently from `py -3` or the project venv |
-| direnv | 3 | Shell-hook inheritance; not a native Windows baseline and not inherited by desktop apps automatically |
-| `xargs` | 2 | POSIX-only baseline; `-r` semantics are load-bearing in at least one known instruction |
-| `wc` | 2 | POSIX pipeline dependency with easy but non-literal PowerShell alternatives |
-| `sort` | 2 | Name exists in several systems with different command resolution and behavior |
-| `sed` | 1 | POSIX text-processing dependency; broader substring scans overcount prose such as “used” |
-| curl | 1 | Modern Windows often aliases or ships curl differently; flags and proxy behavior need verification |
-| Roughdraft | 1 | Optional external application/CLI with GUI-launch and platform-support questions |
-| Codex / Claude runner names | 3 / 10 | Mostly runtime discussion today; later semantic classification must separate prose references from nested CLI invocation |
+| Tool or family | 2026-07-28 | 2026-09-25 | Nature now |
+|---|---:|---:|---|
+| `commonplace-*` | 27 | 42 | See the command surface below |
+| `rg` | 14 | 14 | Standalone calls in most files; pipelines in `maintain-curated-indexes`, `retire-artifact`, `cp-skill-connect` |
+| `find` | 13 | 18 | All prose. No instruction runs `find`. |
+| Git | 11 | 12 | Executable in `AGENTS.md` commit rules, `INSTALL.md` reader install, `retire-artifact`, `ingest-paper-with-code`, `analyse-agentic-system`, `stage-an-article-package`, `refresh-a-proposal-current-state`, `analyse-agent-memory` |
+| uv | 4 | 9 | Tool install in `INSTALL.md`, health check, snapshot-web; `uv run pytest` / `uv run python` in repo-internal procedures |
+| pytest | 4 | 3 | All through `uv run` |
+| `python3` | 4 | 3 | Executable in `retire-artifact` (`python3 -c` inside a pipe) and `stage-an-article-package` (`python3 scripts/…`) |
+| `python` | 1 | 3 | All `uv run python …` |
+| direnv | 3 | 0 | Removed with ADR 064. `.envrc` survives only as legacy residue (see below). |
+| `xargs` | 2 | 2 | `xargs -r` in `maintain-curated-indexes` and `cp-skill-connect` |
+| `wc` | 2 | 3 | `fix-review-warnings-sweep`, `cp-skill-snapshot-web`, `evaluate-scenarios` |
+| `sort` | 2 | 1 | `maintain-curated-indexes` |
+| `sed` | 1 | 3 | `maintain-curated-indexes` pipeline; `cp-skill-health-check` prints `.envrc` |
+| curl | 1 | 3 | Executable only in `cp-skill-snapshot-web` |
+| awk | — | 1 | `cp-skill-snapshot-web` |
+| ruff | — | 1 | `AGENTS.md`, through `uv run` |
+| Roughdraft | 1 | 2 | `roughdraft-review` (repo-local skill) |
+| qmd, mkdocs, sqlite3, jq, gh, flock | — | 0 | Absent from the surface |
+| grep, tr, uniq, mktemp, date, printf, basename, dirname | — | — | Present in executable fences: `maintain-curated-indexes`, `fix-descriptions`, `cp-skill-snapshot-web`, `cp-skill-revise-autoreason`, `cp-skill-validate`, `retire-artifact` |
 
-Known workflow-specific tools not surfaced by this first broad lexical count—because they live in narrower references, code, local settings, or adjacent workflows—must still be checked when a live instruction routes to them. Candidates include `qmd`, `ruff`, `mkdocs`, `sqlite3`, `jq`, `gh`, `awk`, and `flock`.
+The July Codex/Claude runner counts (3 / 10) cannot be reproduced because the July method was not recorded.
+
+No executable `/tmp` or `$TMPDIR` path appears on the surface. The only temporary directory is `mktemp -d kb/reports/cache/…` in snapshot-web.
 
 ## Commonplace command surface
 
-The initial scan found these command-like identifiers. Some are placeholders or prose identifiers and must be classified before being treated as real entry points:
+All 17 command names found on the surface are declared in `[project.scripts]`: `validate`, `init`, `relocate-note`, `relocate-directory`, `warn-selector`, `review-target-selector`, `create-review-jobs`, `finalize-review-job`, `ack-review`, `guard-full-pass-report`, `agentic-analysis-handoff`, `agentic-analysis-publication`, `freshness-status`, `freshness-retire`, `github-snapshot`, `x-snapshot`, and `source` (only in `AGENTS.md.template`).
 
-- `commonplace-ack-review`
-- `commonplace-create-review-jobs`
-- `commonplace-finalize-review-job`
-- `commonplace-freshness-retire`
-- `commonplace-freshness-status`
-- `commonplace-github-snapshot`
-- `commonplace-guard-full-pass-report`
-- `commonplace-init`
-- `commonplace-relocate-directory`
-- `commonplace-relocate-note`
-- `commonplace-review-target-selector`
-- `commonplace-validate`
-- `commonplace-warn-selector`
-- `commonplace-x-snapshot`
+Four `commonplace-…` strings are not commands: `commonplace-doctrine` and `commonplace-store` (file names), `commonplace-relocate-*` (the command family), and `commonplace-freshness-retire/1` (a JSON schema id). The July false positives are gone.
 
-False-positive or vocabulary candidates already visible include `commonplace-foo`, `commonplace-repo`, `commonplace-store`, and `commonplace-checkout-refreshed-at`. The semantic pass must reconcile every apparent command against `[project.scripts]` in `pyproject.toml` rather than accepting lexical shape as existence.
+Eight declared entry points are never mentioned on the surface: `ack-trivial-note-changes`, `freshness-ack`, `store-healthcheck`, `promotion-candidates`, `review-job-list`, `resolve-criteria`, `status`, `verify-quotes`. That is a documentation question, not a channel one.
+
+## Non-promoted instruction files
+
+Every non-promoted instruction file that mentions `commonplace-*`, contains a shell fence, or carries inline executable commands. **E** means the agent is told to run commands; **P** means prose or illustration only. **Repo-internal** means the procedure assumes the Commonplace source checkout (`scripts/`, `src/`, `tests/`, `properdocs.yml`, `related-systems/`) and does not run in an initialized project.
+
+### Shell-dependent (load-bearing constructs beyond one argv call)
+
+| File | Kind | Constructs in executable position |
+|---|---|---|
+| `retire-artifact.md` | E | `rg … \| rg -i …`; variable assignment; `python3 -c` program inside a pipe; `while IFS= read -r … ; do printf … ; done` loop feeding `commonplace-freshness-retire --input -`; also edits `properdocs.yml` |
+| `maintain-curated-indexes.md` | E | `rg \| grep -o \| tr \| tr \| sed \| sort \| uniq -c \| sort -rn`; `rg -l \| xargs -r rg`; unquoted glob `kb/notes/*.md`; line continuations |
+| `fix-warnings/fix-descriptions.md` | E | `commonplace-validate notes 2>/dev/null \| grep "description:"` |
+| `fix-warnings/fix-review-warnings-sweep.md` | E | `commonplace-warn-selector --json \| wc -l` |
+| `run-review-batches.md` | E | selector `\| commonplace-create-review-jobs --input -` |
+| `run-full-improvement-pass-on-note.md` | E | selector `\| commonplace-create-review-jobs --input -` |
+| `review-triage.md` | E | selector `… > {ack-manifest}` |
+| `migrate-semantics-preserving-gate-changes.md` | E | selector `… > {ack-manifest}` |
+| `stage-an-article-package.md` | E; repo-internal | `python3 scripts/… > kb/work/staging/{slug}/inventory.md` |
+| `refresh-agent-memory-review-taxonomy.md` | E; repo-internal | `uv run python - <path> <<'PY' … PY` heredoc importing package internals |
+| `synthesize-agent-memory-landscape/SKILL.md` (repo-local) | E; repo-internal | `uv run python scripts/…` |
+| `evaluate-scenarios/SKILL.md` (repo-local) | E; repo-internal | unquoted glob `tests/scenarios/*.md`; `wc -c < {path}` |
+
+Two patterns recur. The selector-to-jobs pipe (`… | commonplace-create-review-jobs --input -`) and the selector-to-file redirect (`… > manifest`) are one command feeding another. PowerShell supports both, but its `>` writes UTF-16 by default in Windows PowerShell 5.1, which a JSON reader may reject. Letting the consuming command read from the producing command, or giving the producer an `--output` path, would remove the shell from both. `retire-artifact` and `maintain-curated-indexes` are the only instructions with real POSIX programs; they are the non-promoted counterparts of E1's validate and connect items.
+
+### Shell-neutral (single argv calls; tool prerequisites only)
+
+`analyse-agent-memory.md` (validate, `git show`), `asd-ste100-inspired-rewrite.md`, `change-a-contract-that-several-consumers-read.md` (repo-internal `commonplace-init --root` probe), `draft-ingest-report.md`, `extract-adopted-part-of-a-proposal.md`, `FIX-SYSTEM.md`, `fix-warnings/fix-review-warnings.md`, `publish-an-article.md` (partly repo-internal), `refresh-a-proposal-current-state.md` (`git log --since`), `resolve-full-pass-disposition.md`, `revise-note.md`, `re-ingest.md` (`rg`), `simplification-passes/place-external-systems.md`, `simplification-passes/revise-an-article-or-note.md`, `ingest-paper-with-code.md` (Git clone/fetch/merge in `related-systems/`), `cp-skill-write-multistage/references/promotion.md`, and the repo-local skills `analyse-agentic-system`, `scan-agentic-system-transfer`, `roughdraft-review` (external GUI/CLI).
+
+### Prose only
+
+`COLLECTION.md`, `README.md`, `write-instruction.md`, `review-gates/semantic/grounding-alignment.md`, `example-onboard-second-brain.md`.
+
+## Library paths that break in an initialized project (ADR 086)
+
+In an initialized project the library is at `<library root>/…`, and the project's own `kb/instructions/`, `kb/notes/` and `kb/reference/` hold only the project's own files. Relative Markdown links inside the library still work, because the installed tree mirrors `kb/`. The files below instead name a library file by a workspace-root path in prose or code spans. In a project that path finds nothing, or finds a project file of the same name.
+
+This is a library-reachability defect rather than a shell one, but it has the same effect: the instruction works in the source checkout and fails silently elsewhere.
+
+| Kind of path | Files (line numbers) |
+|---|---|
+| `kb/instructions/…` | `FIX-SYSTEM.md` (17, 60, 73, 83, 89); `fix-warnings/fix-review-warnings.md` (31, 55); `fix-warnings/fix-review-warnings-sweep.md` (38, 64); `run-compression-bundle-on-note.md` (10, 21–26, 61); `compression-bundle/README.md` (3); `run-full-improvement-pass-on-note.md` (8); `simplification-passes/revise-an-article-or-note.md` (71) |
+| `kb/types/…` | `maintain-curated-indexes.md` (10, 61); `analyse-agent-memory.md` (23) |
+| `kb/reference/…` | `evaluate-log-entry-for-note-creation.md` (32) |
+| Ambiguous (project's collection or the library's) | `review-gates/semantic/grounding-alignment.md` (26–27); `extract-adopted-part-of-a-proposal.md` (22); `refresh-a-proposal-current-state.md` (19) |
+
+Repo-internal and repo-local files with the same pattern are not listed; they only run in the source checkout. `cp-skill-health-check` (192) and `cp-skill-ground` (63–64) use such paths only in branches guarded for the source checkout, which is correct.
+
+Candidate fix: replace each with a relative link from the instruction's own location, as ADR 086 did for promoted skills. That belongs in a production change, not in this workshop.
+
+## Legacy `.venv` / `.envrc` references
+
+No instruction tells an agent to run commands through a project venv. What remains:
+
+- `AGENTS.md.template:151` and `AGENTS.md:214` prohibit prepending project-venv paths. Operative and correct.
+- `INSTALL.md:302` and `:312` diagnose a venv shadowing the uv tool and describe removing the old two-line `.envrc`. Troubleshooting for migrated projects.
+- `cp-skill-health-check/SKILL.md:168–169` detect residue. Line 168 runs `sed -n '1,80p' .envrc`, which prints up to 80 lines of the file into the agent transcript. An `.envrc` may hold secrets; the probe procedure forbids reading it for that reason. The health check needs only to know whether the file matches the old two-line signature, which can be tested without printing it. Route this to E1, which already owns the health-check preflight.
 
 ## Inventory record
 
@@ -77,7 +126,7 @@ Each executable locus should receive one record with these fields:
 | `instruction_excerpt` | Minimal literal command or procedure under analysis |
 | `tool_ids` | Every external executable or runtime facility required |
 | `shell_constructs` | Pipes, redirects, command substitution, environment assignment, globbing, conditionals, quoting |
-| `path_assumptions` | Separator, venv layout, executable suffix, current directory, project-root discovery |
+| `path_assumptions` | Separator, executable suffix, current directory, project-root discovery, library root versus workspace path |
 | `availability_class` | Required prerequisite, package-owned, runtime-bundled, optional accelerator, or replaceable detail |
 | `install_owner` | Commonplace install, project install, runtime, OS, or operator |
 | `verification` | Exact bare-name/session probe and expected result |
@@ -89,7 +138,7 @@ Every proposed probe also needs an implementability record before it enters the 
 
 | Field | Purpose |
 |---|---|
-| `target_environment` | Source checkout, initialized full project, reader/vendor install, package-only, remote/restricted, or other |
+| `target_environment` | Source checkout, initialized project, legacy copied-library project, reader/vendor install, package-only, remote/restricted, or other |
 | `prerequisites` | Required shell facility, resolved executable, local fixture, readable path, write scope, launch action, or second prepared environment |
 | `prerequisite_probe` | Observation that establishes each prerequisite without assuming the conclusion |
 | `safe_when_absent` | Exact `not run` result when a prerequisite is missing or unknown |
@@ -105,17 +154,20 @@ For every execution system, record:
 - operating system and filesystem/path model;
 - shell used for ordinary tool calls and for hooks;
 - whether separate tool calls share a process, current directory, aliases, functions, and exported environment;
-- how a runtime launched from a shell inherits environment;
+- how a runtime launched from a shell inherits environment, and whether a restart picks up a changed user `PATH`;
 - whether desktop/IDE surfaces reuse a long-lived process across projects;
 - session-start, resume, compact, and directory-change hooks;
 - whether hooks can persist environment into later tool calls;
 - project-local environment configuration and whether it can prepend to inherited `PATH`;
+- whether the file-read tool and a shell process can read the library root outside the workspace;
 - worktree creation/setup behavior;
 - executable suffix and command lookup rules;
 - bundled tools, with version and whether bundling is a documented contract;
 - sandbox filesystem, network, process, and home/cache constraints.
 
 ## Round 1 procedure feedback
+
+This section records how the probe evolved from v3 to v6 under the project-venv model. Corrections 1, 7 and 8 and the direnv contrast describe a mechanism ADR 064 retired; the rest still apply to v7.
 
 The retained Round 1 reports—[Codex source checkout](./evidence/2026-07-28-codex-api-posix-linux-a5.md), [Codex initialized project with an unallowed `.envrc`](./evidence/2026-07-28-codex-api-posix-linux-a4.md), and [Claude Code source checkout](./evidence/2026-07-28-claude-code-cli-linux-bash-c4.md)—established ten corrections to the breadth probe:
 
@@ -159,6 +211,10 @@ Procedure v6 removes resolver output from the persistence test entirely. Call A 
 
 The retained [Claude Code](./evidence/2026-07-28-claude-code-cli-linux-bash-c4.md) and [Codex](./evidence/2026-07-28-codex-api-posix-linux-a5.md) v6 reports both execute the published blocks without deviation, retain only the controlled result and presence boolean, and pass the disclosure review. Their option-4 wording about `.envrc` is provisional report interpretation: until a runtime-native project configuration mechanism is observed, directory-aware direnv evidence belongs to option 16.
 
+### V7 rebaseline (2026-09-25)
+
+Procedure v7 follows ADR 064 and ADR 086. It drops the project-venv `PATH` signals and the `direnv status` check, and records `.venv` and `.envrc` as presence-only residue. It adds `.commonplace/library.md` and the legacy `kb/commonplace/` copy to layout classification, a library-reachability step (read the routing file, the library root, and one skill stub), command authority against `uv tool dir --bin`, `commonplace-init --check`, and `<UV_TOOLS>`/`<UV_TOOL_BIN>` normalization. v6 reports stay valid for tool-call persistence, discovery and bare-name results.
+
 ## Repeatable sweeps
 
 The workshop should turn these exploratory searches into a checked script only after the inventory record stabilizes. Until then, retain the commands as investigation aids:
@@ -166,16 +222,16 @@ The workshop should turn these exploratory searches into a checked script only a
 ```bash
 rg -l '\bcommonplace-[a-z0-9-]+' AGENTS.md AGENTS.md.template INSTALL.md kb/instructions --glob '*.md'
 rg -l '(^|[^[:alnum:]_-])rg([^[:alnum:]_-]|$)' AGENTS.md AGENTS.md.template INSTALL.md kb/instructions --glob '*.md'
-rg -n '^```(bash|sh|powershell|batch|cmd|console|shell)' AGENTS.md AGENTS.md.template INSTALL.md kb/instructions --glob '*.md'
+rg -n '^\s*```(bash|sh|powershell|batch|cmd|console|shell)' AGENTS.md AGENTS.md.template INSTALL.md kb/instructions --glob '*.md'
 ```
 
 The eventual sweep must parse fenced blocks and declared command positions rather than relying only on regex. It must also inspect files linked as required execution references and reconcile `commonplace-*` names against the package entry-point registry.
 
 ## Next inventory passes
 
-1. Classify all 27 `commonplace-*` files by executable locus and distinguish real commands from placeholders.
-2. Parse all 66 shell-language fences, recording constructs separately from executable names.
+1. Classify every locus in the 12 shell-dependent non-promoted files with the inventory record above, and decide for each whether a package operation (catalogue option 9) or an `--output`/stdin change on an existing command removes the shell.
+2. Fix or route the ADR 086 path hazards listed above; confirm the three ambiguous cases.
 3. Trace required links from every canonical instruction so command-bearing references enter the graph.
 4. Verify the `rg` contract per runtime: installation source, version, command lookup, regex/flag compatibility, and sandbox behavior.
-5. Repeat for Git and the POSIX utility cluster, then for workflow-specific tools.
-6. Compare source checkout, installed KB, and worktree command environments.
+5. Repeat for Git, then for workflow-specific tools (curl, awk, Roughdraft).
+6. Extend the sweep to `text` fences and inline code spans that carry commands, which the fence count misses.

@@ -24,6 +24,10 @@ Use the same naming scheme for later rounds and record the round inside the repo
 
 The procedure ID distinguishes revisions within a round. Keep reports produced by older procedure IDs unchanged; later synthesis must account for fields that an earlier revision did not request.
 
+## Reports under older models
+
+The three reports dated 2026-07-28 used procedure v4–v6, written for the project-venv and direnv command model that [ADR 064](../../../reference/adr/064-install-commonplace-commands-as-a-user-level-uv-tool.md) replaced, and before [ADR 086](../../../reference/adr/086-projects-read-the-library-from-the-installed-package.md) moved the library into the installed package. Their tool-call persistence, tool discovery and bare-name results remain usable; their venv, direnv and `kb/commonplace/` layout findings describe the old model only. Procedure v7 reports are not directly comparable on those fields.
+
 ## Evidence discipline
 
 - Start from [result-template.md](./result-template.md).

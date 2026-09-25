@@ -2,199 +2,194 @@
 
 ## Purpose
 
-This is an option inventory, not a recommendation. Several mechanisms may compose because they act at different layers: installation can ensure a tool exists, environment propagation can make it discoverable, compilation can make an instruction literal for one shell, and a portable package entry point can remove a shell utility dependency entirely.
+This is an option inventory, not a recommendation. Several mechanisms may compose because they act at different layers: installation can ensure a tool exists, `PATH` propagation can make it discoverable, a portable package entry point can remove a shell utility dependency, and an instruction's wording can be made shell-neutral.
 
-Every option must eventually be tested against the same worked cases: bare `commonplace-validate --help`, bare `rg`, a compound Bash-shaped procedure, native Windows Codex desktop execution, and two simultaneous projects or worktrees.
+Every option must eventually be tested against the same worked cases: bare `commonplace-validate --help` in a freshly started process, bare `rg`, a compound Bash-shaped procedure, native Windows Codex desktop execution, reading a library file from an initialized project, and a second project or worktree.
+
+## Rebaseline, 2026-09-25
+
+The catalogue was first written on 2026-07-28, when `commonplace-*` commands came from each project's `.venv` and direnv put that venv on `PATH` (ADR 014). Two later decisions settled or removed several options:
+
+- [ADR 064](../../reference/adr/064-install-commonplace-commands-as-a-user-level-uv-tool.md) installs the commands once per OS user as a uv tool. `uv tool update-shell` puts the tool executable directory on the user's `PATH`; already-running processes must be restarted to see it. One active Commonplace version per OS user is an accepted invariant. The project-venv discovery problem that options 2, 6, 7 and 16 addressed no longer exists.
+- [ADR 086](../../reference/adr/086-projects-read-the-library-from-the-installed-package.md) keeps the library (instructions, types, skills) in the installed package and gives projects gitignored pointers to it. There are no per-project copies to compile or keep in sync. ADR 086 also rules out session hooks until they are standardised, and it rests on files plus `AGENTS.md` rather than any one harness.
+
+Each option below now carries a **status**: *operative* (adopted by an ADR or shipped code), *active* (owned by an open plan), *open* (still a candidate), *fallback* (kept only for a runtime the adopted mechanism fails in), or *retired* (the problem it solved is gone, or an ADR rejected it). Retired entries stay so the reason is not lost; their July detail is in git history.
+
+What remains open is narrower than in July:
+
+1. **Command visibility per launch class.** Does each runtime surface (CLI, IDE extension, Windows desktop app, cloud) see the user `PATH` after `uv tool update-shell` and a full restart? ADR 064 records a positive Windows experiment for the launch classes it tested; other surfaces need a fresh-process check.
+2. **Library reachability.** Can each runtime and its sandbox read files outside the workspace at the library root, by file-read tool and by shell?
+3. **Shell dependence of instruction text.** Which load-bearing Bash constructs and POSIX utilities remain, promoted skills and the rest of the instruction collection alike.
+4. **Non-Python tools.** Whether `rg`, Git and the other external tools are prerequisites, runtime-bundled, or replaceable, and who verifies them.
 
 ## Evaluation dimensions
 
 - can be investigated and verified from each target environment without assuming a source checkout, fixed content path, writable repository, or unavailable shell/tool;
 - preserves bare command names used by instructions;
-- remains project-scoped across multiple projects and worktrees;
-- works in CLI, IDE, desktop, and cloud surfaces;
+- works with one user-level Commonplace version shared by all of a user's projects (ADR 064);
+- works in CLI, IDE, desktop, and cloud surfaces, including a process started before the latest install;
 - handles fresh subprocesses rather than assuming a persistent shell;
 - covers external tools as well as Commonplace's Python entry points;
-- avoids global version conflicts;
+- lets an agent read library text at the installed root, inside the runtime's sandbox;
 - preserves sandbox and approval behavior;
 - keeps failure loud and remediation actionable;
 - avoids per-use LLM translation and unnecessary context;
-- has a clear canonical source, update path, and review target.
+- keeps one canonical tree for library text (ADR 086), with a clear update path and review target;
+- needs no hooks and no per-machine setup command beyond install and `commonplace-init` (ADR 086).
 
 ## Options
 
-### 1. Declared prerequisites plus bare-command session verification
+### 1. Declared prerequisites plus bare-command session verification — operative
 
-Installation instructions tell the operator how to establish the tool environment. Session start invokes the same bare commands later instructions use and reports failure.
+Installation instructions tell the operator how to establish the tool environment. Verification invokes the same bare commands later instructions use and reports failure.
 
-- Strength: tests the effective channel rather than inferring it from `.venv` existence.
-- Limitation: detects but does not provide missing command discovery.
-- Role: necessary control for every other option, not a complete solution alone.
+- Status: adopted by ADR 064. `cp-skill-health-check` checks bare-name resolution and ownership relative to `uv tool dir --bin`; every `commonplace-*` command also warns when init outputs are stale (ADR 086).
+- Strength: tests the effective channel rather than inferring it from files on disk.
+- Limitation: detects but does not provide command discovery. The health check's own preflight still contains POSIX-only blocks; [E1](../system-contract-consistency/plans/e1-windows-execution.md) owns pairing them.
 
-### 2. Launch the agent runtime with a project-prepared environment
+### 2. Launch the agent runtime with a prepared environment — retired
 
-The operator starts `codex` or `claude` as a child of a process whose environment already prepends the current project's venv command directory. Activation is one implementation, not the mechanism itself. Candidate implementations include:
+Starting `codex` or `claude` from a shell that had activated the project venv, or through `uv run -- codex`, made the venv visible to that runtime. With commands in the user-level tool directory there is no project environment to prepare. The residue of this option is operational: after `uv tool update-shell`, start the runtime from a new process. ADR 064 states that requirement.
 
-- activate `.venv`, then launch the runtime from that shell;
-- use a native wrapper that establishes the project root, verifies `.venv`, temporarily prepends `.venv/bin` or `.venv\Scripts`, optionally sets `VIRTUAL_ENV`, and launches the runtime;
-- for a project actually managed as a uv project, use `uv run -- codex ...` so uv supplies the project environment to the child process.
+`uv run` stays the authority for project development dependencies only; ADR 064 rejects `uv run commonplace-*`.
 
-Python documents activation as prepending the venv's command directory to `PATH` and setting `VIRTUAL_ENV`; running installed scripts does not otherwise require the activation script. A native PowerShell wrapper can therefore provide the relevant child-process environment without executing `Activate.ps1`. Its root-discovery algorithm must not silently make Git a new prerequisite: accept an explicit root or establish another bounded project-root rule when Git is unavailable.
+### 3. Runtime-native session environment handoff — fallback
 
-The uv variant has a different ownership boundary. Ordinary `uv run` locks and synchronizes the project before launching the command. That can create or update project/environment state, so it is not merely a session-start activation substitute and conflicts with this workshop's installation/session separation. `uv run --no-sync -- codex ...` is a candidate for an already installed environment, but whether `--frozen` is also required to preclude lockfile updates needs a worked probe. The Commonplace source checkout retains `uv.lock`, making this candidate concrete there; initialized projects and package-only installs may not expose the same uv project state, so it cannot yet be treated as the cross-layout launcher.
+A session hook writes environment changes into a runtime-owned channel applied to every later tool subprocess (Claude Code's `CLAUDE_ENV_FILE`).
 
-For Codex CLI tests, `-c allow_login_shell=false` is an orthogonal hardening option: current Codex documentation says it rejects login-shell requests and makes omitted requests non-login, reducing the chance that a profile rewrites the inherited baseline. It does not create or hand off the project environment. Codex documents `shell_environment_policy.inherit = "all"` as the default for spawned processes, but the probe must still establish actual inheritance on each surface.
+- Role now: only for a runtime surface that does not see the user `PATH` even after a restart.
+- Limitation: runtime-specific, and ADR 086's no-hooks constraint rules it out as a shipped mechanism until hooks are standardised. It could still be an operator-side workaround documented per runtime.
 
-- Strength: project-scoped, requires no change to the later bare commands, and is directly testable for command-line runtimes.
-- Limitation: `uv` or a profile wrapper must itself be installed and discoverable before launch. These launchers start the CLI; they do not prepare an already-running desktop singleton or prove that an IDE/application launch broker preserves the child environment. One runtime process also cannot represent several project venvs simultaneously.
+### 4. Runtime environment configuration — fallback
 
-### 3. Runtime-native session environment handoff
+The runtime's own configuration sets subprocess environment, such as Codex `shell_environment_policy`.
 
-A session hook writes environment changes into a runtime-owned channel that is applied to every later tool subprocess.
+- Role now: fallback for the same failure as option 3.
+- Limitation: an explicit `PATH` value is machine-specific. ADR 086 already has `commonplace-init` write one machine-specific, uncommitted harness setting (the Claude Code read rule), so an init-written, gitignored runtime setting is a known pattern. It would still need per-runtime support for prepending to the inherited `PATH` rather than replacing it.
 
-- Strength: matches the actual fresh-process execution model and keeps environment project/session scoped.
-- Limitation: runtime-specific. Claude exposes `CLAUDE_ENV_FILE`; current Codex `SessionStart` needs verification for any equivalent before this can be treated as portable.
-- Open design: whether Commonplace should request or depend on a Codex environment-file/output capability.
+### 5. Persistent user `PATH` — operative
 
-### 4. Project-local runtime environment configuration
+Add the command directory to the user environment so every newly started process sees it.
 
-The runtime config declares environment overrides for subprocesses, such as Codex `shell_environment_policy`.
+- Status: this is what `uv tool update-shell` does under ADR 064. The July objection (it selects one project's venv globally) no longer applies: the directory holds one user-level tool, and one version per user is accepted.
+- Limitation: running processes do not see the change. On Windows a desktop application may need a full quit and restart, not a new window. Whether each surface actually rereads the user environment on restart is the open item for native Windows Codex.
 
-- Strength: applies centrally to tool calls without rewriting instructions.
-- Limitation: an explicit `PATH` replacement is machine-specific unless the runtime supports project-relative prepend plus inherited-value composition. Current Codex configuration documents inherited-environment selection and literal overrides, but not project-relative `PATH` prepend/interpolation. Trust, configuration precedence, worktree resolution, and desktop-app behavior also matter.
+### 6. Project-aware dispatcher shims — retired
 
-### 5. Persistent user or machine `PATH`
+Global shims that chose each project's venv from the working directory. ADR 064 rejects per-project launcher wrappers until an incompatible-project case requires simultaneous versions.
 
-Add a venv or command directory to the Windows user/system environment so desktop applications see it.
+### 7. Explicit venv executable paths — retired
 
-- Strength: reaches applications that do not inherit an interactive shell.
-- Limitation: globally selecting one project's `.venv\Scripts` breaks project isolation and version identity; changes may require restarting applications or signing in again. Do not conflate this with venv activation, which changes only one process tree.
+Instructions calling `.venv/bin/commonplace-validate`. There is no Commonplace venv to name, and the option broke the bare-command surface.
 
-### 6. Project-aware global dispatcher shims
+### 8. Per-tool environment prefix or command rewrite — fallback
 
-Install stable bare-name shims in a user-level directory already on `PATH`. Each shim finds the nearest project root and delegates to that project's `.venv/bin` or `.venv\Scripts` executable.
+A `PreToolUse` hook rewrites each shell call to prepend the command directory.
 
-- Strength: preserves bare command names in desktop applications while selecting the venv from each tool call's working directory.
-- Limitation: requires a trustworthy global install/update mechanism, careful root discovery, complete command coverage, and explicit behavior outside a project. `pytest` and non-Commonplace tools complicate the boundary.
+- Role now: last-resort fallback for a surface that ignores user `PATH`.
+- Limitation: hook-based, so excluded by ADR 086's no-hooks constraint as a shipped mechanism; approval preservation, quoting and non-shell tools were never proven.
 
-### 7. Explicit venv executable paths
+### 9. Portable package entry points absorb shell logic — active
 
-Instructions invoke `.venv/bin/commonplace-validate` or `.venv\Scripts\commonplace-validate.exe`.
+Move load-bearing `find`/`xargs`/`sed`/pipeline behavior behind tested `commonplace-*` commands, so instructions call one stable entry point.
 
-- Strength: direct and independent of inherited `PATH`.
-- Limitation: violates the desired identical bare command surface, branches by channel, leaks installation layout into every instruction, and increases context and maintenance cost.
+- Status: selected by [E1](../system-contract-consistency/plans/e1-windows-execution.md) for promoted skills. Planned items: `commonplace-validate all`, a package tag/path resolver replacing `cp-skill-connect`'s `rg -l | xargs -r rg` pipeline, and shared byte operations (checksum, verified copy and restore) for ingest, ground and snapshot-web. The per-skill dispositions are in the [E1 rebaseline](./e1-promoted-skill-rebaseline-2026-08-27.md).
+- Open: the same treatment for non-promoted instructions, which E1 does not cover. [inventory.md](./inventory.md) lists them.
+- Limitation: does not absorb ordinary navigation merely to avoid declaring `rg` as a prerequisite.
 
-### 8. Per-tool environment prefix or command rewrite
+### 10. Paired channel-specific literal procedures — active, limited
 
-Before each shell tool call, prepend the project venv and cache variables using shell-native syntax, potentially through a `PreToolUse` hook.
+Canonical instructions carry separate POSIX and PowerShell commands, clearly labelled and tested.
 
-- Strength: works with fresh subprocesses even when session start cannot persist environment.
-- Limitation: adds per-call overhead and runtime-specific shell rewriting; hook trust, approval preservation, quoting, compound commands, and non-shell tool paths need proof.
+- Status: E1 restricts pairing to checks that must run before a package command can be trusted: the health-check preflight and snapshot-web's discovery of optional capture tools. Workflow semantics go to option 9 instead, so the two implementations of failure handling and byte preservation that full pairing would create never arise.
 
-### 9. Portable package entry points absorb shell logic
+### 11. Channel-compiled instruction artifacts — open, likely narrow or reject
 
-Move load-bearing `find`/`xargs`/`sed`/pipeline behavior behind tested `commonplace-*` Python commands. Instructions call one stable console entry point.
+Resolve canonical instructions into a channel-specific literal form. The existing [proposal](../../reference/proposals/channel-compiled-instruction-artifacts.md) considers promoted skills, the whole instructions tree, and the control plane as boundaries.
 
-- Strength: package-owned semantics can be tested on POSIX and Windows; removes silent shell translation and utility-flag differences.
-- Limitation: does not solve discovery of the `commonplace-*` entry point itself and should not absorb ordinary navigation merely to avoid declaring a common prerequisite such as `rg`.
+ADR 086 changes where compilation could happen:
 
-### 10. Paired channel-specific literal procedures
+- **Build time** already has a hook: `hatch_build.py` prepares the library copy that ships in the wheel and rewrites links leaving it. But the wheel is platform-independent, so the build does not know the consumer's shell.
+- **Install time** has no Commonplace hook; `uv tool install` runs none.
+- **Init time** would mean writing channel-specific copies into each project, which ADR 086 rejected to keep one tree per machine and to stop copies diverging.
+- **A per-channel second tree** inside the installed package (for example a PowerShell rendering beside the canonical one) would keep one install but add a second tree to review and keep in sync.
 
-Canonical instructions carry separate POSIX and PowerShell commands, clearly labelled and behaviorally tested.
+Given options 9 and 10 remove most channel-specific text, compilation now has little left to resolve. Provisional disposition for the proposal: narrow or reject, pending the inventory's count of shell constructs that remain after E1.
 
-- Strength: explicit, reviewable, and does not require a compiler.
-- Limitation: every consumer carries irrelevant branches; parity drifts; the agent still selects the branch; the surface grows across all executable instructions.
+### 12. Standardized execution environment — retired for now
 
-### 11. Channel-compiled instruction artifacts
+Declaring WSL, a dev container, or a POSIX image as the only supported substrate. E1 selected retaining native Windows support, because installation, `PATH` ownership and skill stubs already work there.
 
-At install, session start, or explicit refresh, resolve canonical instructions into a channel-specific literal form.
+### 13. Runtime-bundled tool reliance — open
 
-Possible compilation boundaries:
+Treat a tool bundled by an agent runtime, potentially `rg`, as available without separate installation.
 
-- promoted skills only;
-- all canonical instructions that invoke tools;
-- those instructions plus required linked references;
-- the control plane and install/operator guidance as well.
+- Limitation: bundling may differ by runtime, surface, version, or sandbox and may be undocumented. The July Claude Code report found `find` supplied as a runtime shell function, which shows that a resolved name is not an executable with known behavior.
 
-- Strength: removes runtime branching and can emit shell-native commands and path conventions.
-- Limitation: compilation does not install or expose tools. It creates derived copies, review/freshness obligations, search duplication, update drift, and a source-checkout problem. The initial inventory already shows that promoted skills alone are too narrow.
+### 14. Commonplace-managed tool installation — open
 
-### 12. Standardized execution environment
+Installation ensures third-party tools such as `rg` are present, as uv-tool extras or a managed tool directory.
 
-Declare WSL, a dev container, a managed image, or another POSIX environment as the execution substrate even on Windows.
+- Limitation: uv does not naturally own native utilities such as `rg` and Git. Platform packaging, licences, updates and discovery become Commonplace's responsibility.
 
-- Strength: sharply reduces shell and tool variance and may preserve existing instructions unchanged.
-- Limitation: narrows supported channels, imposes operator/runtime setup, and does not automatically solve environment inheritance inside the chosen substrate.
+### 15. Capability-shaped instructions with deterministic dispatch — open, low priority
 
-### 13. Runtime-bundled tool reliance
+Instructions name required operations; a resolver maps each to a verified implementation. Option 9 covers the repeated operations found so far, so this is justified only if a large set of operations remains that no package command should own.
 
-Treat a tool bundled by an agent runtime—potentially `rg`—as available without separate project installation.
+### 16. Directory-aware shell environment manager (direnv) — retired
 
-- Strength: zero project setup where the bundle is contractual.
-- Limitation: bundling may differ by runtime, surface, version, or sandbox and may be undocumented. A bundled binary is not necessarily exposed under the expected bare name or with the required behavior.
+Direnv put the project venv on `PATH` for tool shells. ADR 064 removed `.envrc` from init; the health check reports a leftover `.envrc` as residue and never deletes it. The July probe reports that exercised direnv remain valid evidence about the old model only.
 
-### 14. Commonplace-managed tool installation
+## Library reachability (new with ADR 086)
 
-Installation ensures required third-party tools are present, either in the project environment or a managed tool directory.
+ADR 086 adds a layer that did not exist in July: an agent must read library files outside the workspace. The ADR's mechanisms are:
 
-- Strength: makes availability explicit and versionable.
-- Limitation: Python venvs do not naturally own native utilities such as `rg` and Git; platform packaging, licenses, updates, caches, and executable discovery become Commonplace responsibilities.
+- `.commonplace/library.md`, referenced from `AGENTS.md` and imported by `CLAUDE.md`, gives absolute paths;
+- skill stubs redirect to the real `SKILL.md` by absolute path;
+- init writes a Claude Code `Read(//<library root>/**)` rule; Codex is reported to need none.
 
-### 15. Capability-shaped instructions with deterministic dispatch
+The channel questions this raises:
 
-Canonical instructions name required operations rather than shell spellings; a deterministic resolver selects a registered implementation based on verified capabilities.
+- whether each runtime's sandbox lets the file-read tool, and separately a shell process such as `rg`, read the library root;
+- whether native Windows paths in `library.md` and stubs (drive letters, backslashes, a custom `UV_TOOL_DIR`) are followed correctly by each harness;
+- whether a stale pointer after switching between editable and normal install is detected before an agent reads from the old root. ADR 086 records this as a known silent failure, mitigated only by rerunning init.
 
-- Strength: separates semantic intent from shell syntax and can combine package commands, native tools, or runtime facilities.
-- Limitation: risks recreating a compiler/runtime abstraction with a large mapping surface; only justified where repeated operations and verified implementations exist.
-
-### 16. Directory-aware shell environment manager
-
-A shell hook such as direnv reads authorized project-local configuration on directory entry and prepares the environment before bare commands run.
-
-- Strength: project-scoped and already proven in the POSIX source-checkout reports. An allowed and loaded `.envrc` placed `.venv/bin` on the baseline `PATH` received by every fresh Claude Code tool shell, without requiring persistent shell state.
-- Limitation: `.envrc` presence is inert until authorized, and marker variables do not prove the current file was applied. Direnv publishes a Windows binary/package path and a PowerShell hook, so native Windows is a real candidate rather than an automatic rejection. However, its own overview still states a Unix-like OS prerequisite, and `.envrc` remains Bash evaluated in a Bash subprocess. Open native-PowerShell/Bash-discovery and Git-Bash path-conversion reports make it unsuitable as a presumed cross-platform contract without a current Windows probe. Desktop application launches also do not automatically receive an interactive-shell hook. Multi-project switching and worktree authorization therefore remain runtime- and launch-path-dependent.
-- Evidence boundary: the allowed Claude Code report and unallowed Codex initialized-project report establish opposite effective environments. They do not isolate whether the agent runtime executes the hook or merely inherits its parent process environment.
+ADR 086's evidence is Linux-only. Windows and macOS are outside it.
 
 ## Native Windows Codex application boundary
 
-The current Codex documentation narrows what the launcher proposals can claim:
+Current Codex documentation says the Windows app runs its agent natively with PowerShell by default, or in WSL after a switch and restart; its integrated terminal is configured separately from the agent environment; and local-environment setup scripts run when a worktree is created. None of that exports an environment into later tool calls.
 
-- the Windows app uses the native Windows agent with PowerShell by default, or can switch the agent to WSL after an application restart;
-- its integrated-terminal selection is independent of the agent execution environment;
-- project local-environment setup scripts run in the agent environment when a worktree is created, while actions run in the integrated terminal;
-- the documentation does not state that either mechanism can export a project environment into all later agent tool calls.
+Under ADR 064 the app does not need a project environment. It needs to see the user `PATH` that `uv tool update-shell` wrote, which requires the app process to be started after that change. The remaining desktop questions are:
 
-Therefore `uv run codex`, venv activation followed by `codex`, and a PowerShell `codexv` function are CLI candidates, not answers to the workshop's native Windows desktop forcing case. A profile-wide venv activation is also rejected because it globally selects one project. The desktop candidates still needing evidence are runtime-native project configuration or handoff, project-aware global dispatch shims, a documented app-local environment mechanism with persistent tool-call effects, or selecting WSL as the standardized substrate.
+- whether quitting and restarting the app (not only opening a new window or thread) picks up the new user `PATH`;
+- whether its sandbox permits reading the library root outside the workspace;
+- whether it treats a skill's `allowed-tools: Bash` as binding when the agent's shell is PowerShell (see the E1 rebaseline).
 
-## Likely compositions to test
+Options 3, 4 and 8 apply only if the restart check fails.
 
-These are hypotheses, not rankings:
+## Current composition and open decisions
 
-1. **Verifier + inherited environment for CLI + runtime handoff for managed surfaces.** Minimal when every runtime supplies environment propagation.
-2. **Verifier + project-aware shims for Windows desktop + inherited environment elsewhere.** Preserves bare commands without global project selection.
-3. **Verifier + portable package commands + declared `rg`/Git prerequisites.** Absorb only shell semantics that are load-bearing and retain established external tools.
-4. **Verifier + full executable-instruction compilation + an availability mechanism.** Compilation resolves wording/syntax; environment or shims resolve command discovery.
-5. **Standardized POSIX substrate + portability checks.** Reject native shell parity and make the support boundary explicit.
-6. **Verifier + directory-aware manager on POSIX + a separate native-Windows mechanism.** Retain the proven current path where it operates, while treating Windows desktop command discovery as an independent problem rather than pretending `.envrc` is cross-platform.
-7. **Verifier + project-prepared launcher for CLIs + a separate desktop mechanism.** Use activation, a native wrapper, or a proven no-sync uv invocation only where the runtime is launched as a child; do not generalize CLI inheritance to the Windows app.
+The adopted composition is: user `PATH` via `uv tool update-shell` with a restart (option 5), bare-command verification in the health check and every command (option 1), library pointers written by init (ADR 086), portable package commands for load-bearing shell logic (option 9), and paired preflight only where diagnosis must precede the package (option 10).
 
-## Evidence needed before selection
+Open decisions before the workshop can close:
 
-- Whether each Codex and Claude surface inherits the launcher environment and whether it reuses one process across projects.
-- Whether a runtime-native environment handoff exists and survives resume/compact/worktree transitions.
-- Whether Codex project configuration can prepend a project-relative directory to inherited `PATH` without copying the machine's full path.
-- Whether `PreToolUse` command rewriting preserves normal approval and sandbox semantics.
-- Whether runtime-bundled `rg` is a documented contract on every supported surface.
-- Whether each agent surface executes a directory-environment hook, inherits an already prepared launcher environment, or ignores project directory changes; repeat for unallowed files, worktrees, and multi-project switching.
-- How many shell constructs remain after package-owned operations are separated from ordinary navigation.
-- How generated instructions are checked, reviewed, updated, and excluded from duplicate search results.
-- Whether `uv run --no-sync` uses the already installed Commonplace venv without creating/updating a lockfile or environment in every supported layout; if not, whether a non-mutating uv invocation exists or uv belongs only to a different install model.
-- Whether `allow_login_shell = false` plus the documented inherited-environment default preserves a launcher-prepared venv across actual Codex CLI tool calls on native Windows.
-- Whether Windows app local-environment setup scripts affect later agent tool calls or only perform worktree setup, and whether the application exposes any supported per-project environment handoff.
+- whether `rg` and Git are declared prerequisites (with verification), runtime-bundled conveniences, or something Commonplace installs (options 13 and 14);
+- whether non-promoted instructions receive the option 9 treatment, and in what order;
+- the disposition of the channel-compilation proposal (option 11);
+- which fallback, if any, is documented for a surface that ignores the user `PATH` after a restart (options 3, 4, 8);
+- how `allowed-tools: Bash` is handled on native Windows.
+
+## Evidence needed before closure
+
+- A native-Windows run of the v7 probe in the Codex desktop app after a full restart, recording command authority and library reachability.
+- The same probe in at least one IDE-extension surface and one cloud surface.
+- A worktree or second-project run showing that init outputs and the shared tool behave as expected there.
+- The inventory's classification of non-promoted instructions, to size options 9 and 11.
+- Documentation or observation of whether runtime-bundled `rg` is a contract on each surface.
 
 ## Documentation grounding for candidate mechanics
 
-- [Codex configuration reference](https://developers.openai.com/codex/config-reference) — `allow_login_shell`, `shell_environment_policy`, and CLI `--cd`/`-C` behavior.
-- [Codex Windows app](https://learn.chatgpt.com/docs/windows/windows-app) and [local environments](https://learn.chatgpt.com/docs/environments/local-environment) — native PowerShell versus WSL agent execution, the independent integrated terminal, worktree setup scripts, and actions.
-- [uv project command execution](https://docs.astral.sh/uv/concepts/projects/run/) and [locking/synchronizing](https://docs.astral.sh/uv/concepts/projects/sync/) — arbitrary child commands, automatic lock/sync, `--no-sync`, and `--frozen`.
-- [Python virtual environments](https://docs.python.org/3/library/venv.html) — platform command directories, activation effects, direct script execution, and non-portability of venv directories.
-- [direnv installation](https://direnv.net/docs/installation.html), [shell hooks](https://direnv.net/docs/hook.html), and [execution model](https://direnv.net/man/direnv.1.html) — Windows packaging, the PowerShell hook, authorization, and Bash-subprocess evaluation of `.envrc`.
+- [Codex configuration reference](https://developers.openai.com/codex/config-reference) — `shell_environment_policy` and related subprocess settings.
+- [Codex Windows app](https://learn.chatgpt.com/docs/windows/windows-app) and [local environments](https://learn.chatgpt.com/docs/environments/local-environment) — native PowerShell versus WSL agent execution, the independent integrated terminal, worktree setup scripts.
+- [uv tools](https://docs.astral.sh/uv/concepts/tools/) — tool environments, the tool executable directory, and `uv tool update-shell`.
