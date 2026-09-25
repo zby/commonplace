@@ -46,7 +46,7 @@ moved here so its promotion and terminology migration can close independently.
 ## Evaluation boundary
 
 Evidence is the investigation file as moved here, the addressable-theory
-definition, the conjectural-learning definition, and the source ingests
+definition, the theory-builder definition, and the source ingests
 named above. The exploratory
 [ideal-interpreter workshop](../ideal-interpreter/README.md) owns the
 question of modelling the LLM as an interpreter of semantics; this workshop

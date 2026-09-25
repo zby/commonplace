@@ -198,5 +198,5 @@ Relevant Notes:
 
 - [Theory builder](../definitions/theory-builder.md) — defined-in: membership, including reconstruction from retained criticism, is distinct from whether an arrangement learns
 - [Addressable theory](../definitions/addressable-theory.md) — defined-in: the optional structural property supporting targeted criticism
-- [Commonplace studies conjectural learning through retained theories](../commonplace-builds-a-theory-builder-and-tests-whether-it-learns.md) — see-also: the independently stated efficiency conjecture
+- [Commonplace builds a theory builder and tests whether it learns](../commonplace-builds-a-theory-builder-and-tests-whether-it-learns.md) — see-also: the independently stated efficiency conjecture
 - [Retaining episode evidence keeps a distilled rule open to re-examination](../retaining-episode-evidence-keeps-a-distilled-rule-open-to.md) — grounds: records remain evidence behind retained abstractions

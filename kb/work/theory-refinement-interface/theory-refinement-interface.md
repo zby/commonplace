@@ -301,7 +301,7 @@ case set, which is some evidence that the placement is right.
 6. **Where the interface is written.** As a section of the addressable-theory
    definition, stating the two views of one classical repair contract, or as
    its own note with the definition linking it. Either placement must keep the
-   interface separate from conjectural-learning membership.
+   interface separate from theory-builder membership.
 7. **Which classical results we actually want.** The list above is what
    transfers. Which of it the program needs, and for which claim, is not yet
    decided. Listing results we will not use is the storage-without-consumption
