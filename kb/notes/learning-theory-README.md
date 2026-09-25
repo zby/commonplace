@@ -1,8 +1,9 @@
 ---
-description: "Curated head for the learning-theory tag — how systems learn, verify, and improve, with routes through its major child areas"
+description: "Curated head for the learning-theory tag — how systems learn, verify, and improve; routes to the covered child tags listed in covered_by"
 type: types/tag-readme.md
 index_source: tag
 index_key: learning-theory
+covered_by: [deploy-time-learning, constraining, discovery, artifact-analysis, agent-memory, llm-reliability, self-improving-systems]
 ---
 
 # Learning theory
@@ -21,6 +22,7 @@ These child tags route major parts of the area:
 - [artifact-analysis](./artifact-analysis-README.md) — the four-field vocabulary (substrate, form, lineage, authority) for retained behavior-shaping artifacts
 - [agent-memory](./agent-memory-README.md) — memory architecture: spaces, contamination, policy learnability, and the crosscutting decomposition
 - [llm-reliability](./llm-reliability-README.md) — oracle theory, error correction, and the deviation taxonomy; the area applies verification concepts to LLM output deviations
+- [self-improving-systems](./self-improving-systems-README.md) — theory builders and their warrant: systems that revise their own theories and machinery, the update architecture, and what licenses autonomy
 
 ## Start here
 
