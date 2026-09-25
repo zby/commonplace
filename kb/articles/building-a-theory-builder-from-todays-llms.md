@@ -121,11 +121,10 @@ those premises because cases have gone against them, and the second is most
 of what open-ended learning consists of. Schmidhuber's retrospective leaves
 that operation unspecified.
 
-No one has formalized that operation, and that has generally been taken to
-settle the matter. Peter Naur argued the point from the other side: the
-judgments that relate a program to the world cannot be reduced to formulated
-criteria, so the theory of a program is bound to the people who hold it. As
-the knowledge base
+We know of no formalization of that operation, and Peter Naur argued that
+there cannot be one: the judgments that relate a program to the world cannot
+be reduced to formulated criteria, so the theory of a program is bound to the
+people who hold it. As the knowledge base
 [reconstructs that inference](../notes/naur-equates-machine-execution-with-formulated-criteria.md),
 it needs one further premise — that a computer can make a judgment only by
 executing criteria formulated in advance. Grant the premise and the work
