@@ -4,9 +4,9 @@ source: https://sites.ufpe.br/ixsimpa/wp-content/uploads/sites/49/2021/10/Ciber-
 captured: "2026-07-14"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: a766a42b5d71443b4d538c27798e294c9edc6ba2c00791d79131a82ccfd39841
+snapshot_sha256: cf4363650305de057d2e5aa37bf033e31d0045ffaaedc9c942ccf47e2606f154
 ingested: "2026-07-14"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [second-order-cybernetics, history, observers]
 ---
 

@@ -10,7 +10,7 @@ genre: scientific-paper
 snapshot_sha256: 411944cbe26e885662278b45ab118c1eede22f65cc33521737d2a961fd805302
 ingested: "2026-09-08"
 occasion: "What does AlphaDev establish about program search, theory use, and theory refinement, and which comparisons remain justified when theory refinement is used broadly without requiring explanatory content or a particular reasoning mechanism?"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [program-synthesis, reinforcement-learning, theory-refinement]
 ---
 

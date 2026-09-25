@@ -4,9 +4,9 @@ source: https://arxiv.org/html/2503.16743v5
 captured: "2026-03-26"
 capture: web-fetch
 genre: scientific-paper
-snapshot_sha256: 8ad7f503f89df5ffa942fa83dda845f3d6d772049043f22619d65e2e512026fe
+snapshot_sha256: 4da2c55f16c744d8d722a2bb3c4a1c83622c6481be2d5d191d464ad5a41de9ee
 ingested: "2026-03-26"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [evaluation-methodology, learning-theory, algorithmic-information-theory, LLM-limitations]
 ---
 

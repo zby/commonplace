@@ -5,9 +5,9 @@ captured: "2026-09-24"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: 24d1572cbb712d8583851d2ee5b94ce56f3f31fd9b0ba8d25bad08714767a763
+snapshot_sha256: 574990429d1d4768f56fe718ded3d253eeb7657befacda6f65d569ab49d3f513
 ingested: "2026-09-25"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [agent-learning, action-chunking, procedural-memory]
 learning_claims: true
 ---

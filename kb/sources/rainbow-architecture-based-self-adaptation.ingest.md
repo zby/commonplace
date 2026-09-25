@@ -6,10 +6,10 @@ capture: pdftotext
 capture_scope: full-source
 capture_url: https://www.cs.cmu.edu/afs/cs/project/able/ftp/computer04/article.pdf
 genre: scientific-paper
-snapshot_sha256: 536a0d36c01cc849beae6a8353cb2082b0cdd6c8d8eadd4ebd663edc224b5841
+snapshot_sha256: d74d463898d95a21577d7bb5e7c7cfe96105d0b8a33413af9b3513c15db1c072
 ingested: "2026-08-30"
 occasion: "Determine what this source establishes about runtime representations of a software system's own structure, behavior, requirements, goals, or architecture; how those representations are causally connected to adaptation; what remains designer-supplied or fixed; and what evidence supports the claims. This is source ingestion for positioning theory-mediated system learning, not a request to confirm that the source is its predecessor."
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [self-adaptive-systems, runtime-models, software-architecture, control-loops]
 ---
 

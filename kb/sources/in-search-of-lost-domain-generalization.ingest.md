@@ -4,9 +4,9 @@ source: https://arxiv.org/abs/2007.01434
 captured: "2026-07-26"
 capture: web-fetch
 genre: scientific-paper
-snapshot_sha256: b1ba7ca7cadf2cb0cf5a3a138f02651b5279c7ddaa552f5b0bba4a02ea2951cc
+snapshot_sha256: 46558d691aa0c6441b013f81cc1aa29ce648b034438f2a5eaebd2b7254b4328d
 ingested: "2026-07-26"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [domain-generalization, evaluation-protocol, reach-assessment]
 ---
 

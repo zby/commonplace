@@ -4,9 +4,9 @@ source: https://www.mindfiretechnology.com/blog/archive/the-no-free-lunch-theore
 captured: "2026-05-19"
 capture: web-fetch
 genre: conceptual-essay
-snapshot_sha256: bc51da32d48dcd816dbcb538eacd1c97c60d998dccd995b3eac203d0a9deacbc
+snapshot_sha256: 706ff66230ad07e9bb46dd56c2bbdcebdcaf62ae0a48bc80833b40abf32719c2
 ingested: "2026-05-19"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [learning-theory, inductive-bias, codification, system-design]
 ---
 

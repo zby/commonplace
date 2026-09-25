@@ -4,9 +4,9 @@ source: https://randomlabs.ai/blog/slate
 captured: "2026-03-12"
 capture: paste
 genre: practitioner-report
-snapshot_sha256: 61d5e484855106209ccb4629bf4f13922793bfa8baa4797bb0067141e3641056
+snapshot_sha256: 4cd22306242ce5b0a8303523a745f35ae7343c74c3d609559e0b761420ac117d
 ingested: "2026-03-12"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [agent-architecture, context-engineering, orchestration, episodic-memory]
 ---
 

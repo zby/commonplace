@@ -4,12 +4,12 @@ source: https://x.com/nurijanian/status/2063186118409929161
 captured: "2026-06-17T09:08:07.099475+00:00"
 capture: xdk
 genre: practitioner-report
-snapshot_sha256: 57e9d6f7e49319abb93da31c728a6842e41a6c524069ad6d2813386dcefc4316
+snapshot_sha256: 7d17d85bc0a4c04cd5a4395e390c8cb22b5f6305b8f0e13cad1a1f2b3cea9908
 status_id: 2063186118409929161
 conversation_id: 2063186118409929161
 post_count: 1
 ingested: "2026-06-17"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [skills, process-structure, product-management]
 ---
 

@@ -4,9 +4,9 @@ source: https://arxiv.org/abs/2603.09678
 captured: "2026-03-19"
 capture: web-fetch
 genre: scientific-paper
-snapshot_sha256: 071ef4b58b32dd3a42334f7cf0ff2fd37574b064314ef8150436c68a5d9179f9
+snapshot_sha256: cd343ec877193fbc943b50322862ee0c767374f17a4251349f8870a68dc8aa53
 ingested: "2026-03-19"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [benchmarking, out-of-distribution-generalization, agentic-scaffolding, code-generation]
 ---
 

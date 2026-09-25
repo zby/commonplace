@@ -4,12 +4,12 @@ source: https://x.com/monokern/status/2087241401649996149
 captured: "2026-08-12T11:04:23.078339+00:00"
 capture: xdk
 genre: practitioner-report
-snapshot_sha256: f18c1bad3d543fd929be683b4f41375e64cbd2966281b1122ec9576e00100e3a
+snapshot_sha256: a0f5e01ed0c45e8e063fb0016e43d74f9d54c8560304a2ded4c8715ea791d0a7
 status_id: 2087241401649996149
 conversation_id: 2087241401649996149
 post_count: 1
 ingested: "2026-08-12"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [agent-orchestration, context-engineering, analytical-systems, knowledge-graphs]
 ---
 

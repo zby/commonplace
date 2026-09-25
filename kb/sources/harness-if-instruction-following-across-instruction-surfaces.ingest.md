@@ -4,9 +4,9 @@ source: https://arxiv.org/abs/2608.11727
 captured: "2026-08-18"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: c491838cb8a3e1204c5d1b13685d7baddaf9c4e8596dd2651de08c24bd31484c
+snapshot_sha256: 8467af285de65db5e7d5f8775b8e8e524415bfcb3534065bbc1f34b20bfad3e0
 ingested: "2026-08-18"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [instruction-following, agent-evaluation, harness-engineering, llm-reliability]
 ---
 

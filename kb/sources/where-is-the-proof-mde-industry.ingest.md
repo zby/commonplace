@@ -5,10 +5,10 @@ captured: "2026-09-02"
 capture: trafilatura
 capture_scope: abstract
 genre: scientific-paper
-snapshot_sha256: 2fcef27bd23af1b9740c0e2e715da83a651180fc41b149ac3a8d81193ba8a87e
+snapshot_sha256: ca8bf271d8adc4cfe82761f4d832c4ec1253bc870a1267e4d7d16d1a3475faac
 ingested: "2026-09-02"
 occasion: "for kb/work/factory-theory-restart we need to ground the failure claim - snapshot and ingest a retrospective"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [model-driven-engineering, software-factories, industrial-adoption]
 ---
 

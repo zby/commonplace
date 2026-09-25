@@ -8,7 +8,7 @@ genre: scientific-paper
 snapshot_sha256: 4f29610c235d1421ecc202f3ac75ca0b43bb688f787abbe5697bc386dcf102fc
 ingested: "2026-09-08"
 occasion: "What objects, operations, evaluation criteria, and representation choices define theory refinement? Which are essential to the concept, which belong to particular algorithms, and where could assessment of explanatory reach enter without changing the meaning of the established term?"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [theory-refinement, knowledge-engineering, machine-learning]
 ---
 

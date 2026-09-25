@@ -4,9 +4,9 @@ source: https://arxiv.org/html/2603.25723
 captured: "2026-03-28"
 capture: web-fetch
 genre: scientific-paper
-snapshot_sha256: d8823b9711edfde9beaeec244f34d9f6af857cbdd83f6b8201344dbc3897336b
+snapshot_sha256: 61ac16cf7c5b57c615cce1438bc80c5ed033eb737b02c46f24ec774596af654c
 ingested: "2026-03-28"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [agent-orchestration, harness-engineering, specification-level-separation, deploy-time-learning]
 ---
 

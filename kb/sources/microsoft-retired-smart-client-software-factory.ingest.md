@@ -5,10 +5,10 @@ captured: "2026-09-02"
 capture: trafilatura
 capture_scope: full-source
 genre: official-statement
-snapshot_sha256: 95061d00b961afe6a73192a431075dc179157e798db294a9410f4bb7828be975
+snapshot_sha256: 4d2f7f05f6d6302dadd0fe84c4dd93599ea0df8d35cabbc62fdf12e785c43ef4
 ingested: "2026-09-02"
 occasion: "for kb/work/factory-theory-restart we need to ground the failure claim - snapshot and ingest a retrospective"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [software-factories, product-retirement, microsoft-tooling]
 ---
 

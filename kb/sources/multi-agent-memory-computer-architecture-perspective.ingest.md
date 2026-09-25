@@ -4,9 +4,9 @@ source: https://arxiv.org/html/2603.10062v1
 captured: "2026-03-13"
 capture: web-fetch
 genre: scientific-paper
-snapshot_sha256: b049592c83b5d5c25a1519beb017f76a93cff4fd23bd8816b516868d98b01c22
+snapshot_sha256: 1d1d3f3555e43016415e77a38cfee33712e835b1ace87d333d3958526eeb2d48
 ingested: "2026-03-13"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [multi-agent-systems, memory-architecture, context-engineering, agent-coordination]
 ---
 

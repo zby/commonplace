@@ -6,10 +6,10 @@ capture: pdftotext
 capture_scope: full-source
 doi: "10.1016/S0049-237X(08)71204-7"
 genre: conceptual-essay
-snapshot_sha256: 9274a4c820f5b7e8c7d4e2ee8dd1a4946e1c17b334b1b8bf31b82cdbfe0bfff0
+snapshot_sha256: 2e54798432a6de45c62292610ae7cf60975d62918aaa82bc7ff92b2ff27fb270
 ingested: "2026-09-19"
 occasion: "Reconsider the learning paradigm from Popperian epistemology: clarify the relations among conjectures, their representations, objective knowledge, criticism, and learning without requiring symbolic formalization or external artifacts."
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 learning_claims: true
 domains: [epistemology, learning-theory, knowledge-representation]
 ---

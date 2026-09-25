@@ -4,9 +4,9 @@ source: https://arxiv.org/abs/2607.19592
 captured: "2026-07-24"
 capture: user-supplied-pdf-to-markdown
 genre: scientific-paper
-snapshot_sha256: 80f403224562fdb55dc00d9425bc0ef9ad2e48c3db857f766e424ffd5cbf0ff0
+snapshot_sha256: fcfdf12ea430089b62daaabc8db848710c3b807050db7f59425b6ab453b19d97
 ingested: "2026-07-24"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [knowledge-centric-learning, deploy-time-learning, agent-memory, self-improvement]
 ---
 

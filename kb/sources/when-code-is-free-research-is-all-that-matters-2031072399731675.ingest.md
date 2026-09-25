@@ -4,12 +4,12 @@ source: https://x.com/amytam01/status/2031072399731675269
 captured: "2026-03-10T13:19:25.932591+00:00"
 capture: xdk
 genre: conceptual-essay
-snapshot_sha256: f3d7319ac4880c039574959dd1845194c7f2c710b6f895ea3161fc499b2a8679
+snapshot_sha256: c47b8a8f941bc28d663789b2843e6366627f6ead307420217621ce00226f1f12
 status_id: 2031072399731675269
 conversation_id: 2031072399731675269
 post_count: 1
 ingested: "2026-03-10"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [automation-boundary, research-methodology, oracle-theory, labor-economics]
 ---
 

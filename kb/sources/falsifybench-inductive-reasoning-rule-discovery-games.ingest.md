@@ -4,9 +4,9 @@ source: https://arxiv.org/abs/2606.04751
 captured: "2026-07-26"
 capture: web-fetch
 genre: scientific-paper
-snapshot_sha256: f82893347f93366a4c1088844fe46df390b875d3b64387fc81230c29be9fb46b
+snapshot_sha256: bb46a423d803ec1a3591e89d254dd58c54f27e3a324273ed60621bd2613c61de
 ingested: "2026-07-26"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [scientific-discovery, evaluation, reasoning, learning-theory]
 ---
 

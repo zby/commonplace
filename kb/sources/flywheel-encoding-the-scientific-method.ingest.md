@@ -5,9 +5,9 @@ captured: "2026-09-17"
 capture: curl+trafilatura
 capture_scope: partial-source
 genre: official-statement
-snapshot_sha256: ce3bfd26ee640bedcb302e003cbfb78b4d0739c4e08fb04d75bdb473b393b4d5
+snapshot_sha256: 05f26bb7eb27d72547885780f20db6b56ecbfa582adfc457e914c560177cd5cf
 ingested: "2026-09-17"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [knowledge-management, research-workflows, theory-refinement]
 learning_claims: true
 ---

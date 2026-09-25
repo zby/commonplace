@@ -4,9 +4,9 @@ source: https://arxiv.org/html/2604.17609v1
 captured: "2026-04-22"
 capture: web-fetch
 genre: scientific-paper
-snapshot_sha256: 796cab7db761f58952fb36001a0309771ab41bd56fa47dc67972fe3753b72a4b
+snapshot_sha256: 4bb7526d6f9fbd5bb3918959811fe895c1e8798cd9b922fd3b1ed51da02628b2
 ingested: "2026-04-22"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [agent-reliability, evaluation, tool-loop, context-engineering]
 ---
 

@@ -4,9 +4,9 @@ source: https://qicentral.rcpch.ac.uk/wp-content/uploads/sites/9/2021/10/Moen-an
 captured: "2026-07-22"
 capture: user-supplied-pdf-to-markdown
 genre: conceptual-essay
-snapshot_sha256: d59b81096e3e048f21ff9fec2d92014d4a82799ab6e798b6aeebbff263a81860
+snapshot_sha256: 11ec42a2441afe6c3b78fe87a54184ce580acf455cc805f5b9899027e8144efd
 ingested: "2026-07-22"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [discovery-lifecycle, improvement-loops, scientific-method]
 ---
 

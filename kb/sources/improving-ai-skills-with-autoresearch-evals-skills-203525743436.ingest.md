@@ -4,12 +4,12 @@ source: https://x.com/nurijanian/status/2035257434365976671
 captured: "2026-03-21T19:45:41.107797+00:00"
 capture: xdk
 genre: practitioner-report
-snapshot_sha256: 1dc1ef267ff8461036b2be14622da1d06ace013cca0ef2db896a9658cb6521aa
+snapshot_sha256: 04b254e7c3056d1c04597abaf5a29783c6797cedd3916ee99fc9f63b2a8a8964
 status_id: 2035257434365976671
 conversation_id: 2035257434365976671
 post_count: 1
 ingested: "2026-03-21"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [evals, verification, skill-optimization]
 ---
 

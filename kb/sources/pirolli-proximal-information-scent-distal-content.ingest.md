@@ -4,9 +4,9 @@ source: http://act-r.psy.cmu.edu/wordpress/wp-content/uploads/2012/12/515uir-200
 captured: "2026-08-24"
 capture: pdftotext
 genre: scientific-paper
-snapshot_sha256: dcbc565308e0a9eab683087f729137d462f8b6f0d5a8808f989b10b3095e1da2
+snapshot_sha256: e3fa4e17dfa18322107af92d7020a3aeb7e9a142114505cdbde518ecc34635f3
 ingested: "2026-08-24"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [information-foraging, navigation, context-engineering, cognitive-modeling]
 ---
 

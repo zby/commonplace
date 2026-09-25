@@ -4,9 +4,9 @@ source: https://www.manning.com/preview/sutskevers-list/chapter-7
 captured: "2026-08-02"
 capture: epub-conversion
 genre: conceptual-essay
-snapshot_sha256: 90d6473acd409245761652c60684af83e1c329ba16b62b3e61b49d8547007b26
+snapshot_sha256: 1067579de791bb608585ed3ddbde2bf957fe9e83d41a3611ef36720aa3ed6bd7
 ingested: "2026-08-02"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [evaluation, learning-theory, self-improving-systems]
 ---
 

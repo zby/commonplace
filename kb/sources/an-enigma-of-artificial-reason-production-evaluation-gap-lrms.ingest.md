@@ -4,9 +4,9 @@ source: https://arxiv.org/abs/2606.01462
 captured: "2026-06-17"
 capture: web-fetch
 genre: scientific-paper
-snapshot_sha256: 82dc985d2a279bf02e0f3e3727eb0001a1c435eee3fb7b2838d1fd216c869b17
+snapshot_sha256: c51c7dd2349683a8f6f3c5e1a200ab14705890ce720354082ce333bd721d1757
 ingested: "2026-06-17"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [evaluation, oracle-theory, reasoning, llm-reliability]
 ---
 

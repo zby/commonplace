@@ -4,9 +4,9 @@ source: https://arxiv.org/pdf/2603.24517
 captured: "2026-08-21"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: 0d14a3e0802270a4e9bd83e2c002da8646732fbbe7b2f7438c1ae8320fb027ca
+snapshot_sha256: d2261789d70f9978264bb910972aadafc013589a569ee74746cc60e0135eceaa
 ingested: "2026-08-21"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [evolutionary-search, artifact-learning, evaluation, agentic-optimization]
 ---
 

@@ -5,9 +5,9 @@ captured: "2026-09-17"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: 9e8d076c5144da04ee4f9f541b511368b00a8e1caa0d8749292e5d256cbd610e
+snapshot_sha256: cf429f30fddd497d71eed71d9f17ff840794fee5d46b73d7da8ccbcf9e4c1fac
 ingested: "2026-09-17"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [agent-memory, context-engineering, evaluation]
 ---
 

@@ -4,9 +4,9 @@ source: https://www.databricks.com/blog/memory-scaling-ai-agents
 captured: "2026-04-11"
 capture: web-fetch-paraphrase
 genre: practitioner-report
-snapshot_sha256: 5010c98efa1a1b687a59c47e0c926f15bce2e881891cb4d6d35cfc1be1a23da9
+snapshot_sha256: 02c93947c1b3bf2f2e6a9516d46eae8d3cba028af9825de73964c45739c06c4f
 ingested: "2026-04-11"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [agent-memory, context-engineering, learning-theory, enterprise-ai]
 ---
 

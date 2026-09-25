@@ -5,9 +5,9 @@ captured: "2026-09-17"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: c093e240375e9780468edca9aa91aefecb8714ebdbef40810316644d9b2822d0
+snapshot_sha256: e7a3be68649b22fa379fe525840a6dc3e9643d9e5c9806647838a092419b59e8
 ingested: "2026-09-17"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [agent-memory, learning-theory, skill-evolution]
 learning_claims: true
 ---

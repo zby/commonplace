@@ -4,9 +4,9 @@ source: https://blog.linkingyourthinking.com/notes/mocs-%28defn%29
 captured: "2026-08-26"
 capture: trafilatura
 genre: conceptual-essay
-snapshot_sha256: 836f40a0a4b455408795524d08fee9fbb2d00eb2c8ef05a5f2c23181733bb6f8
+snapshot_sha256: 2f991f75ff859dca42ac3cffb8be93c8cb404d04ee11ad004bf1641805a90d1e
 ingested: "2026-08-26"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [navigation, indexing, kb-maintenance]
 ---
 

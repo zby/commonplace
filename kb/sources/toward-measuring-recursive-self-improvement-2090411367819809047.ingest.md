@@ -4,12 +4,12 @@ source: https://x.com/anndvision/status/2090411367819809047
 captured: "2026-08-20T16:09:58.726619+00:00"
 capture: xdk
 genre: practitioner-report
-snapshot_sha256: 90013596333748df9e306a88d1e64568af6c226b01f7e904a61157aec19e63aa
+snapshot_sha256: e0907c1cbb2788e4bd993120d060876681a3c555ef5afd0ac38686aac7aeb7e5
 status_id: 2090411367819809047
 conversation_id: 2090411367819809047
 post_count: 2
 ingested: "2026-08-20"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [self-improving-systems, agent-memory, evaluation, harness-engineering]
 ---
 

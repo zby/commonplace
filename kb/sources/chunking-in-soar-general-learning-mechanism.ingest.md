@@ -6,10 +6,10 @@ capture: pdftotext
 capture_scope: full-source
 capture_url: https://files.eric.ed.gov/fulltext/ED275301.pdf
 genre: scientific-paper
-snapshot_sha256: c7b66a8cf47eeaa9627b2455ba5cdaa09714959f9a9707f9d3cc28aa079ca0b1
+snapshot_sha256: 2c421cdf8cfa055796c333ee9970cd1ac5aae2ff0a31a60233be2d946fd1c51b
 ingested: "2026-08-31"
 occasion: "Determine what this source establishes about learning persistent search-control or operator knowledge from goal-directed experience, how that knowledge changes later problem solving, and which parts of the underlying learning architecture remain fixed. Assess the source on its own terms rather than treating every learned rule as a revisable explanatory theory."
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [machine-learning, cognitive-architecture, search-control]
 ---
 

@@ -4,9 +4,9 @@ source: https://borretti.me/article/human-bottlenecks
 captured: "2026-06-15"
 capture: web-fetch
 genre: conceptual-essay
-snapshot_sha256: f401bcc09e56ea69abe1b48fd7ee5e612ad0b2d6114939fe01408f97acfce37f
+snapshot_sha256: 8abe62ae5e8c8c6658fac688d588ddd5fbb7fa08d379f3df55422bd2db567ea0
 ingested: "2026-06-15"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [human-llm-differences, augmentation-automation, context-engineering]
 ---
 

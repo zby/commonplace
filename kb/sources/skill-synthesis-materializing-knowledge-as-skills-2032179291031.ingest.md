@@ -4,11 +4,11 @@ source: https://x.com/zeeg/status/2032179291031806408
 captured: "2026-03-13T00:00:00+00:00"
 capture: webfetch
 genre: practitioner-report
-snapshot_sha256: b9d7263006deec0be4b866e232e0c5cc8ce3c00f59323cd9721cbde3a640c706
+snapshot_sha256: 7a566abb463cf5c61c2bc149b2607f1e9267921bcde241e0efa96c47b33689c5
 status_id: 2032179291031806408
 linked_url: https://cra.mr/skill-synthesis
 ingested: "2026-03-13"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [skill-synthesis, security-automation, deploy-time-learning, context-engineering]
 ---
 

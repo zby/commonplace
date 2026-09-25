@@ -5,9 +5,9 @@ captured: "2026-08-28"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: 569d0167174ed8bac343e18a12387e68a35cade6892033ff03048c86aa7cc6af
+snapshot_sha256: 867bca1b9f56db09cf138b1cc4e09dea6a14f3c268a952123411d5f5f84853ea
 ingested: "2026-08-28"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [systems-engineering, product-development, decision-making, rework]
 ---
 

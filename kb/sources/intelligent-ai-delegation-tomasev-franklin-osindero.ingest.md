@@ -4,9 +4,9 @@ source: https://arxiv.org/pdf/2602.11865
 captured: "2026-03-16"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: a7cb2dff339f1ddabb75f9d29318db0072eeb660431c9fdcd2fb1e0fe9dc00b3
+snapshot_sha256: f97dec1ed59eb8fd5cdb4a3fed36b6a106c9db6661ca63d7696750869fa5f400
 ingested: "2026-03-16"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [agent-orchestration, delegation, verification, multi-agent-coordination]
 ---
 

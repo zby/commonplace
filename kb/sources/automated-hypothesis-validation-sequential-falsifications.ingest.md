@@ -1,5 +1,5 @@
 ---
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 description: "POPPER adapts statistical tests for a supplied hypothesis; its conditional error guarantee exposes the gap between executable checks and warranted consequences."
 source: https://arxiv.org/abs/2502.09858
 captured: "2026-09-19"
@@ -7,7 +7,7 @@ ingested: "2026-09-19"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: 56d1c1b6772fd2a1c305bfb1f55340162df259ba5a02765bf5790ce3960b937f
+snapshot_sha256: 4310e14f9d2c7dd9aeba4ec21cd0dbf08d405be5eab6a32ef59c46e75d223c95
 occasion: "Reconsider the learning paradigm from Popperian epistemology: compare the epistemic process, computational realization, changeable representations and tests, fixed-model learning, reflection, and supporting evidence."
 domains: [scientific-discovery, hypothesis-testing, learning-theory]
 learning_claims: true

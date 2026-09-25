@@ -5,9 +5,9 @@ captured: "2026-09-24"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: b34017b1f5cf28c7bfe53639786c2a5bb0d5ec64e37c6e424a0feb913a47f653
+snapshot_sha256: 6ee3ee68e50baec5ea7991f55e8c05d51e880a4e8256f548377a63cb37b9c38e
 ingested: "2026-09-25"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [scientific-reasoning, evidence, epistemic-status]
 ---
 

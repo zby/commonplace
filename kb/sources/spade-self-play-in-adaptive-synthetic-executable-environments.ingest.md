@@ -4,9 +4,9 @@ source: https://arxiv.org/abs/2608.19197v1
 captured: "2026-08-21"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: fae1b572161af376154ca218604c1e7da6d42f2a70641c035e9a5260ebf01b23
+snapshot_sha256: 97c7e97f6af245e56f7d6505d75fd0a96984ce01eff86ad645dda1ebdd10c0ea
 ingested: "2026-08-21"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [self-improving-systems, learning-theory, evaluation, agent-memory]
 secondary_sources:
   - role: implementation

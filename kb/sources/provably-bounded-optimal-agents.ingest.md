@@ -5,11 +5,11 @@ captured: "2026-09-17"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: a3cbaa3aeb2c226c37c53e10014977684c84af812b28fc0ff8928dc2cb7a70b5
+snapshot_sha256: aa67cc94c396a3c5f090073d9fd0de36336404e9a79f028eb7ccf673eee26da6
 ingested: "2026-09-17"
 occasion: "Evaluating a program relative to architecture and environment rather than an ideal reasoner; which classes the results cover."
 learning_claims: true
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [bounded-optimality, agent-evaluation, real-time-systems, learning-theory]
 ---
 

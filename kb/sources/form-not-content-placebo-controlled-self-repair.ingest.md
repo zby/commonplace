@@ -1,13 +1,13 @@
 ---
 description: "PoPE tests error-conditioned code repair against prompt and adapter placebos; bounded nulls and a withdrawn allocation positive supply controls for Popperian learning claims."
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 source: https://arxiv.org/abs/2607.12962
 captured: "2026-09-19"
 ingested: "2026-09-19"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: b35a5af72f5e968f268b5da7700b18bc4b53b55b084de05ad5624d840d1b29f6
+snapshot_sha256: f5b3674833ab37d3b61206b13149ada117ae81f00035cd44f650c97734d45ca3
 occasion: "Assess 2026 computational implementations and evaluations of conjecture, criticism, revision, and persistence for a learning paradigm grounded directly in Popper; distinguish epistemic commitments, implementation choices, and demonstrated effects."
 domains: [learning-theory, self-repair, experimental-design, falsification]
 learning_claims: true

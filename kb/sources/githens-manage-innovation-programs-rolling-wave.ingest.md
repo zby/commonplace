@@ -5,9 +5,9 @@ captured: "2026-08-28"
 capture: trafilatura
 capture_scope: full-source
 genre: practitioner-report
-snapshot_sha256: e2f75d72e3523e94dfe7159c79fd1e5e583f70880560b4a540d42be7d7f751a8
+snapshot_sha256: 30367e2b6e8adc5cf86b08a2b6fffdf5d60b0072cbdeaf3ae880970ead64c501
 ingested: "2026-08-28"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [adaptive-planning, uncertainty-reduction, project-management]
 ---
 

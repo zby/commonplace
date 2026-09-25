@@ -5,9 +5,9 @@ captured: "2026-08-31"
 capture: pdftotext
 capture_scope: full-source
 genre: conceptual-essay
-snapshot_sha256: 49bab5cb066cc69477c5c30b6c45fd24d0fa5256f267d17b2c9311df1060e31a
+snapshot_sha256: 16f6d151a905fe39d5167feaca124eac49a2ec2bead735935a53ce143a97bb0a
 ingested: "2026-08-31"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [open-ended-ai, representation, verification, agent-memory]
 ---
 

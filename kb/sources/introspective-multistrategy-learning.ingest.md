@@ -6,11 +6,11 @@ capture: pdftotext
 capture_scope: full-source
 doi: "10.1016/S0004-3702(99)00047-8"
 genre: scientific-paper
-snapshot_sha256: 46416e98c244d3bf37bdad1659b341ca72f5d1f872b1e46c8e4ca95c5ddd141f
+snapshot_sha256: 0e00c0814525619dc23399288a05814289a957ad30ca03af0aadba6a52aa5d10
 ingested: "2026-09-17"
 occasion: "What the failure-to-strategy loop requires of the self-representation; what the learning-goal ablation showed and under what conditions; whether the strategy library is fixed or extensible."
 learning_claims: true
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [learning-theory, reflection, multistrategy-learning, failure-diagnosis]
 ---
 

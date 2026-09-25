@@ -4,9 +4,9 @@ source: https://arxiv.org/html/2601.22436v3
 captured: "2026-06-15"
 capture: web-fetch
 genre: scientific-paper
-snapshot_sha256: da3e80a514eba1cde15466360fda76ec201abb3bf4af9a3d7cde00951ed528ac
+snapshot_sha256: b1aafdfd4a61f55ba454eb9dadaccc3bb07320501a2c163de8ce6716dadce56a
 ingested: "2026-06-15"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [agent-memory, distillation, verification, llm-agents]
 ---
 

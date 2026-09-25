@@ -4,9 +4,9 @@ source: https://arxiv.org/html/2602.01075v2
 captured: "2026-03-04"
 capture: web-fetch
 genre: scientific-paper
-snapshot_sha256: da64de7122873a671a6b79a75a54f4b812c09cebd6aec6b7d735e13db2e3ce11
+snapshot_sha256: c97c7b7505065430558cb2b52618e7db4548a344c54edca9a4c0173fb9ccf5db
 ingested: "2026-03-09"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [compositional-reasoning, agentic-scaffolding, context-management, benchmarking]
 ---
 

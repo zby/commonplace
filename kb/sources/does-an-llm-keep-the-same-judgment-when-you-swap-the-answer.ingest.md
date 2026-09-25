@@ -4,12 +4,12 @@ source: https://x.com/LechMazur/status/2046661738339430489
 captured: "2026-04-23T16:14:07.941709+00:00"
 capture: xdk
 genre: tool-announcement
-snapshot_sha256: 3c94142effca7a513279544e767d68b4ac424acd5b21020250f50e03709b92dd
+snapshot_sha256: c98563e7cf5aae9c74b5d6c908e46d94ae980e61befd9d13f79c4157ba29381f
 status_id: 2046661738339430489
 conversation_id: 2046661738339430489
 post_count: 13
 ingested: "2026-04-23"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [evaluation, judge-reliability, position-bias, llm-as-judge]
 ---
 

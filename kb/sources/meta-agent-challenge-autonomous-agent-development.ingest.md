@@ -1,13 +1,13 @@
 ---
 description: "MAC evaluates autonomous agent development on held-out tasks; gains are uncommon, and artifact revision does not establish recursive improvement or a Popperian learning commitment."
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 source: https://arxiv.org/abs/2606.04455
 captured: "2026-09-19"
 ingested: "2026-09-19"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: 34e6241f6ca1d3d374dfced83481f01a61f1f471499b57628c7d2653b1b24264
+snapshot_sha256: 159c403b54c288398478d33b8dc6e6ca4884bc5e3ea1a70071ca26a9cc7f5ba3
 occasion: "Assess 2026 computational implementations and evaluations of conjecture, criticism, revision, and persistence for a learning paradigm grounded directly in Popper; distinguish epistemic commitments, implementation choices, and demonstrated effects."
 domains: [agent-development, learning-theory, evaluation, self-improvement]
 learning_claims: true

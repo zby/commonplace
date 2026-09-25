@@ -8,9 +8,9 @@ capture_scope: full-source
 archive_timestamp: "20251208103054"
 capture_note: "Live canonical PDF returned HTTP 403; this complete replay contains Version 4.0, while PMI's current record identifies Version 5.0."
 genre: reference-lexicon
-snapshot_sha256: 9d080714b8d19af34088aa97d6368dc62d24062c90ea7487ed94021621eb0a27
+snapshot_sha256: ecfdbae0318787303c73c0c0febf7dee3d0d0c7c74466631a8a0d7a1a7b1342e
 ingested: "2026-08-28"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [project-management, planning, context-engineering]
 ---
 

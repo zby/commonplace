@@ -5,9 +5,9 @@ captured: "2026-09-24"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: 6f3c0465ca34ae84c5184c4bc697ca3871d8e29514faec95bdbb490f25fce93e
+snapshot_sha256: 2e810ae2c116b2930131494cc923bd0c56a9eb928b53bcba37ec477b134acc6d
 ingested: "2026-09-24"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [agent-evaluation, long-horizon-agents, verification]
 ---
 

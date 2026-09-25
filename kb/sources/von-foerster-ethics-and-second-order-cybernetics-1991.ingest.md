@@ -4,9 +4,9 @@ source: https://uranos.ch/research/references/VonFoerster1992/ethics.pdf
 captured: "2026-07-14"
 capture: pdf-read
 genre: conceptual-essay
-snapshot_sha256: 4d5756d8c4af2617be9b43ca424f06f4d4b71a0eefdc203aca41d4fc75f04339
+snapshot_sha256: e63bb4305be852b50d49a08f73d2ff1751b2d07a5fd23917442f96d2d5177871
 ingested: "2026-07-14"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [second-order-cybernetics, ethics, participation]
 ---
 

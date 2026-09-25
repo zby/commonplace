@@ -4,9 +4,9 @@ source: https://borretti.me/article/human-routers-of-machine-words
 captured: "2026-06-14"
 capture: web-fetch
 genre: conceptual-essay
-snapshot_sha256: d061401a188d0cbf33c5f1a73f1560920eb4719a2508c89784a33783154a43b5
+snapshot_sha256: 3af937878705e957f88c27e36ad1d6b8b7403eabee98179a007c6e3103e73261
 ingested: "2026-06-14"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [writing-is-thinking, reverse-compression, vibe-noting, constraining]
 ---
 

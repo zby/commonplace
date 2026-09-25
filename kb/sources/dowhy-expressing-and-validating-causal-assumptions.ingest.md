@@ -4,9 +4,9 @@ source: https://arxiv.org/abs/2108.13518
 captured: "2026-07-16"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: e918a866be472d575e0025c5bd7de18964a1b06c6e5e3a58d073ec1f6ace06e8
+snapshot_sha256: 235a2f1b0f3cc91323745b22317a6b028ce7f35bea4aac3f8aaaf57268ad12b7
 ingested: "2026-07-16"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [causal-inference, assumptions, reach-assessment]
 ---
 

@@ -4,9 +4,9 @@ source: https://openreview.net/pdf?id=T0EiEuhOOL
 captured: "2026-04-24"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: bd3815e8d12e57a57c26c0976ba6f778fea3da45fe3f9edc4f56cfd38eb9482a
+snapshot_sha256: 9c72f61f362ffdb2c9190b1c6476167312924456bc7b699ea462c64101ec225b
 ingested: "2026-04-24"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [deploy-time-learning, harness-engineering, evaluation, self-improvement]
 ---
 

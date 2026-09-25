@@ -4,9 +4,9 @@ source: https://arxiv.org/abs/2512.22029
 captured: "2026-08-21"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: 5ea8d8c15c4cdbdae7307422c9ac4e19de5d208d04a93f7f37e5c57d719546f4
+snapshot_sha256: 67e158894e8b3a595ee1bbc18b15c14a5cce250751f5eb81216b0174be47aef5
 ingested: "2026-08-21"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [continual-learning, evaluation-methodology, resource-accounting, benchmark-design]
 ---
 

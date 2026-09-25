@@ -4,9 +4,9 @@ source: https://openresearch-repository.anu.edu.au/bitstreams/77077d0f-f636-40a8
 captured: "2026-07-14"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: c1347e7991eba7c5f2b1a903215fe15b957b4546da12b6646f646f68b4afffc8
+snapshot_sha256: e2999a0683f916f8430b38369472644305861067a9c4012b22dc1fe61d0e80cf
 ingested: "2026-07-14"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [theory-taxonomy, design-theory, prescription, information-systems]
 ---
 

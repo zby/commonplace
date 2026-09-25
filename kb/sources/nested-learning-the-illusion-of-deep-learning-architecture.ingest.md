@@ -4,9 +4,9 @@ source: https://arxiv.org/abs/2512.24695
 captured: "2026-07-31"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: f34b33a3121a97592f5beea36f23dc5eec16872ec46670bf83119a7b68228324
+snapshot_sha256: a70b91d059d83ed27ed1216453a04550394a2d68a8ddc0d511c428405bdc0277
 ingested: "2026-07-31"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [continual-learning, learning-theory, optimization, agent-memory]
 ---
 

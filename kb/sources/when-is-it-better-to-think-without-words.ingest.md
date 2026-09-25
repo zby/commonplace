@@ -4,9 +4,9 @@ source: https://www.henrikkarlsson.xyz/p/wordless-thought
 captured: "2026-08-10"
 capture: web-fetch
 genre: conceptual-essay
-snapshot_sha256: b4a7b5f52254c05a62811b8e3c1e84bdbf491d1e0c0e00ba05aa7bce5c0e20b7
+snapshot_sha256: b4b083bb5c9554d9a29d969468728a348b5f515a3770c52bc6b84259ebca1726
 ingested: "2026-08-10"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [writing-as-thinking, epistemic-writing, cognitive-offloading, human-agent-transfer]
 ---
 

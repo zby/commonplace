@@ -1,5 +1,5 @@
 ---
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 description: "MemoryLACE tests sparse lifecycle relations over atomic memories; its ablations separate historical retrieval, temporal interpretation, and the cost of compact merging."
 source: https://arxiv.org/abs/2609.03201
 captured: "2026-09-17"
@@ -7,7 +7,7 @@ ingested: "2026-09-17"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: e8e03ed5c27162c201bd3e915952fbd8f35c42d8f16173de1cc9d6e032423a58
+snapshot_sha256: bd8c47f34cef8c864e0c9921c4158a06038cde32b0d7818b2097e4b7ecac99cd
 domains: [agent-memory, context-engineering, memory-consolidation]
 learning_claims: true
 ---

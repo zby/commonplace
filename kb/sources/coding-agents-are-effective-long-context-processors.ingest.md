@@ -4,9 +4,9 @@ source: https://arxiv.org/html/2603.20432v1
 captured: "2026-03-31"
 capture: web-fetch
 genre: scientific-paper
-snapshot_sha256: 035e98e99dcba36ea17a855bca372bb9ae2300b6ae5ff906d2b2009405f33cd0
+snapshot_sha256: b8f522da0a59e2879c6ffa160bfaf88937fb9508aa5ee651492c56f06bfcd948
 ingested: "2026-03-31"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [context-engineering, long-context, tool-loop, evaluation]
 ---
 

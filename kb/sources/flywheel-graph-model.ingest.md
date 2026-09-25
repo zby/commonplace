@@ -5,9 +5,9 @@ captured: "2026-09-17"
 capture: curl+trafilatura
 capture_scope: partial-source
 genre: practitioner-report
-snapshot_sha256: be9589974de9350838919243ea1717a4c824918fa3f26a2bb105a264027762d8
+snapshot_sha256: 6a0d6117795fa833b9810bca7b87041df4e058cc0d1fdda460274ef72f541faa
 ingested: "2026-09-17"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [research-provenance, knowledge-graphs, evidence-retention]
 ---
 

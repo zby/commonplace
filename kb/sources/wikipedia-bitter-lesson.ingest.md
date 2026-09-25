@@ -4,9 +4,9 @@ source: https://en.wikipedia.org/wiki/Bitter_lesson
 captured: "2026-02-23"
 capture: fetch
 genre: conceptual-essay
-snapshot_sha256: f16838d58d7f4c1693369995f9770aee8bbcd07e5ccd1667050c24b7c516d60d
+snapshot_sha256: 268f8651d14f9610667b40f414d14a9423b9448f9b241dafded0be2e20d92759
 ingested: "2026-04-20"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [ai-philosophy, scaling, learning-theory, system-design]
 ---
 

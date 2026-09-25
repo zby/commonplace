@@ -4,9 +4,9 @@ source: https://arxiv.org/html/2505.18761v2
 captured: "2026-03-26"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: 67a5f637c0e05ac2608dff1eea04f0470d2e1aa55288712c5923d6d68df1342c
+snapshot_sha256: 9923d75a337d0870781fe0a45f43b14c3a9f73e9e38303980b60f26688fa1892
 ingested: "2026-03-26"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [reasoning-robustness, context-degradation, training-methodology, evaluation-benchmarks]
 ---
 

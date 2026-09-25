@@ -5,11 +5,11 @@ captured: "2026-09-17"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: f7cc9de543bfd3b319be88a2267a7ac4b0d7a924ccea5cef58c25865c6112a94
+snapshot_sha256: ad1771e586e530246f26bc89aa343046e0037c853ecb9a7bd7081f1bb9234241
 ingested: "2026-09-17"
 occasion: "The postulates as a citation for what contraction and revision are; explicitly what they do not supply (discovery, empirical reliability)."
 learning_claims: true
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [belief-revision, theory-change, formal-logic]
 ---
 

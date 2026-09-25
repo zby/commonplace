@@ -7,9 +7,9 @@ status_id: 2092280107033616451
 conversation_id: 2092280107033616451
 post_count: 5
 genre: practitioner-report
-snapshot_sha256: a734d19e8064b30ea24374728fc21570b29bd61cd05f5b936780d87eb7205c5b
+snapshot_sha256: 57338f434a5f8d1e7f49fdde69962e2d03dad0611e98eb054e1c15b6d2ecef1c
 ingested: "2026-08-25"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [agent-memory, provenance, freshness, knowledge-maintenance]
 ---
 

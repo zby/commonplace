@@ -4,9 +4,9 @@ source: https://rosebudjournal.notion.site/Everything-you-need-to-know-about-LLM
 captured: "2026-04-13"
 capture: notion-api
 genre: conceptual-essay
-snapshot_sha256: 3cbfd804cfda76b6a1fdac87bd2dbcfce3643a458c646938d0e2fedc193590df
+snapshot_sha256: a4d63694b561ee8c150f95da85d786a5d08cfdca2018473ed2268630473a12ed
 ingested: "2026-04-13"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [agent-memory, context-engineering, memory-evaluation, knowledge-lifecycle]
 ---
 

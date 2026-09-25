@@ -4,9 +4,9 @@ source: https://www.cold-takes.com/learning-by-writing/
 captured: "2026-08-10"
 capture: web-fetch
 genre: conceptual-essay
-snapshot_sha256: d49782e101c992486a80bf932af757ced573ac5ddc38e2e7ce37315d3bf81b36
+snapshot_sha256: 1a4f71542bdaab27fee1397e652b340fbf535378700537e40494440cd2a74ee6
 ingested: "2026-08-10"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [writing-as-thinking, claim-routed-reading, belief-revision, human-agent-transfer]
 ---
 

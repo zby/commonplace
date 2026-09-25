@@ -4,9 +4,9 @@ source: https://arxiv.org/html/2607.14004v1
 captured: "2026-08-04"
 capture: web-fetch
 genre: scientific-paper
-snapshot_sha256: 08b1a1e55d05498fd3e71b2407df86bec90dce73ca7b6ce244c325f3854a0847
+snapshot_sha256: 34eafe98e01a383a2b391eefc35efc30f1724d00b25ce7aec3061a6776be99c0
 ingested: "2026-08-04"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [self-improvement, harness-optimization, continual-learning, evaluation]
 ---
 

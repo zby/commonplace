@@ -4,12 +4,12 @@ source: https://x.com/melodyskim/status/2029332670115614799
 captured: "2026-03-05T15:38:32.676423+00:00"
 capture: xdk
 genre: conversation-thread
-snapshot_sha256: dd40f081cb097d28589824dac4975bee02d7228898747d5d7d86471c461ec215
+snapshot_sha256: 30d38b10f92f1ca7e614aca1dfff588875a39463052a2984d8c253740057d69a
 status_id: 2029332670115614799
 conversation_id: 2029332670115614799
 post_count: 10
 ingested: "2026-03-09"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [domain-onboarding, vocabulary-bootstrapping, learning-theory, prompt-engineering]
 ---
 

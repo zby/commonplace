@@ -4,9 +4,9 @@ source: https://www.henrikkarlsson.xyz/p/writing-to-think
 captured: "2026-08-10"
 capture: web-fetch
 genre: conceptual-essay
-snapshot_sha256: db6be65be8bb012b571d5159e4b51c39bccd63c9cca1c40bcdf0fc55e76b2f52
+snapshot_sha256: aa601887e9836e6b4d66e12283957832b18e07a6a8e4471a278ad5c4ec83f9dc
 ingested: "2026-08-10"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [writing-as-thinking, conjecture-testing, argumentation, constraining]
 ---
 

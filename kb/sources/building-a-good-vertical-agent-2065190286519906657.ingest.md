@@ -4,12 +4,12 @@ source: https://x.com/BrainsAndTennis/status/2065190286519906657
 captured: "2026-06-12T10:11:23.632350+00:00"
 capture: xdk
 genre: practitioner-report
-snapshot_sha256: 2fd8d760ef0acc73ca7871b4753229416cf8331e9a63d653449695cc6d7fb16a
+snapshot_sha256: 5cd1fd290ab86f4b1c53914139ba97cadffcb7ce95b07b4ee9e2e6ffb9019e4a
 status_id: 2065190286519906657
 conversation_id: 2065190286519906657
 post_count: 13
 ingested: "2026-06-12"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [agent-architecture, context-engineering, vertical-agents, tool-design]
 ---
 

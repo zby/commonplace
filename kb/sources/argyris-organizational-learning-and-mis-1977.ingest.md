@@ -4,9 +4,9 @@ source: https://www.uky.edu/~gmswan3/575/Argyris_1982.pdf
 captured: "2026-08-26"
 capture: pdftotext
 genre: conceptual-essay
-snapshot_sha256: c1fcce021224639937784260cc7477d3b2f62782f47e8e9d3fe2d59771ad03ac
+snapshot_sha256: e70247f1bba17f2dbd80571f4c17a468c6ca1e38e39957336e378899a91b018b
 ingested: "2026-08-26"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [organizational-learning, action-models, information-systems, feedback]
 ---
 

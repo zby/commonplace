@@ -4,9 +4,9 @@ source: https://niklas-luhmann-archiv.de/bestand/zettelkasten/schlagwortregister
 captured: "2026-08-26"
 capture: manual-paste
 genre: official-statement
-snapshot_sha256: c46e2c0074e392eaf6dca508b3aab267b9392158fd978a685eb794de51bf87ba
+snapshot_sha256: 475f8c9c946040b1744f6d6b8f218fd631a6ad68b074c7481fcd41eb71925b5c
 ingested: "2026-08-26"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [indexing, zettelkasten, kb-maintenance]
 ---
 

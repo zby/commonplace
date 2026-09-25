@@ -4,9 +4,9 @@ source: https://www.erlang.org/doc/system/code_loading.html
 captured: "2026-08-19"
 capture: web-fetch
 genre: technical-documentation
-snapshot_sha256: a6a0711854629a3ca085a052271a4c040182f2963a92e68e0e55ca9aba5f7574
+snapshot_sha256: b8eb282dbf4f8ebc3e419ce0710971211cf0bebe0269335af22bd44747f55f42
 ingested: "2026-08-19"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [erlang-otp, code-replacement, deployment-governance]
 ---
 

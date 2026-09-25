@@ -4,9 +4,9 @@ source: https://giants-insights.github.io/
 captured: "2026-04-24"
 capture: web-fetch
 genre: scientific-paper
-snapshot_sha256: f858d8129dd04a65d5c1aaa4e93ffbd7428a39d712e5fbfc8022be8db95fd327
+snapshot_sha256: 7441b31707d780487d4f92866fdd97ba911f5b4ad046a933500eddbfc40f945c
 ingested: "2026-04-24"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [learning-theory, oracle-theory, scientific-discovery, evaluation]
 ---
 

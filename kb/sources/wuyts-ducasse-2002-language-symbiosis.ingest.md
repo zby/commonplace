@@ -4,9 +4,9 @@ source: https://www.researchgate.net/publication/2543816_Language_Symbiosis_thro
 captured: "2026-07-14"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: 6fa9d3497eca73e43b51b65bea44709d6a036472d2e6b87e828a854ec88600f7
+snapshot_sha256: 21c27690eebf015bccd42f7a7c9e7efcf8951fa157e10a2b82b19060bb073a8e
 ingested: "2026-07-14"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [reflection, language-symbiosis, source-lineage]
 ---
 

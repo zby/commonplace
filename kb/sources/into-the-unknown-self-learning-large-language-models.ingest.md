@@ -4,9 +4,9 @@ source: https://arxiv.org/html/2402.09147v4
 captured: "2026-04-16"
 capture: lynx-html
 genre: scientific-paper
-snapshot_sha256: 455c4e34ec8559a03e40a72ee2f004e6292b661adf0c221948b789c3dd4553e3
+snapshot_sha256: ff44021237a4c563b70f31e9dcb09be39025bdf5d25ed09127862236301ece4a
 ingested: "2026-04-16"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [learning-theory, continual-learning, evaluation, hallucination]
 ---
 

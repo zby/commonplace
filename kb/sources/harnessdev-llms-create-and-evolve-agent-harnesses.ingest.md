@@ -5,9 +5,9 @@ captured: "2026-09-04"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: efea62ea652086c948aa278def416578de52aa678e8d953e721a2ad98560cb9e
+snapshot_sha256: a24396554379c86fc669d86a5d00342cad928b21a3c365a574a84ce6fc060a8f
 ingested: "2026-09-04"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [agent-harnesses, agent-evaluation, harness-evolution, executor-transfer]
 ---
 

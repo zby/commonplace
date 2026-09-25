@@ -4,9 +4,9 @@ source: https://huggingface.co/papers/2608.14667
 captured: "2026-08-20"
 capture: web-fetch
 genre: scientific-paper
-snapshot_sha256: 1230de7b14abcd6d7e701adfcabf585220d87e52952e2efd0af9c358f79bd977
+snapshot_sha256: 81f01e2982b4928687bb93ae212810617cc29afb62c56b8a8f80f4da938fa69e
 ingested: "2026-08-20"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [human-agent-systems, scientific-discovery, agent-evaluation, function-allocation]
 ---
 

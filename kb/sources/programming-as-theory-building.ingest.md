@@ -4,9 +4,9 @@ source: https://ingenieria-de-software-i.github.io/assets/bibliografia/programmi
 captured: "2026-08-24"
 capture: pdf-read
 genre: conceptual-essay
-snapshot_sha256: 4410928aa7247051a6f65f1fb823c0c57aee3d6394455e592afd1262c1975a9c
+snapshot_sha256: d9398b14c60c9c81dba510b97fa4624c7e978162eb045adfdca9839ca4a83f53
 ingested: "2026-08-24"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [programming-methodology, design-rationale, maintainability, knowledge-transfer]
 ---
 

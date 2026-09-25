@@ -5,10 +5,10 @@ captured: "2026-09-24"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: 05a1bedd050690600e92826bcc5b24247ad52d00166edc9c2d203678215d7155
+snapshot_sha256: ef04b09637010b4da00a1c6fd23358620c505bf8de334f06f43900d892ba7384
 ingested: "2026-09-25"
 learning_claims: true
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [self-improvement, goal-operationalization, evaluation, agent-harnesses]
 ---
 

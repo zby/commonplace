@@ -4,9 +4,9 @@ source: https://arxiv.org/pdf/2602.18333
 captured: "2026-03-03"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: 5dd5c670fc72a96a81812a3bbe6cf41379b2b71113bf52bc9c8424ac5153467d
+snapshot_sha256: a73552314a0226d83acc42244103db332ea61edff78fa801a32f76b9233dbadc
 ingested: "2026-03-09"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [ml-architecture, state-tracking, data-efficiency, inductive-bias]
 ---
 

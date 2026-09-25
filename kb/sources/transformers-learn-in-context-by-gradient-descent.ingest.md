@@ -4,9 +4,9 @@ source: https://arxiv.org/pdf/2212.07677
 captured: "2026-04-20"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: 13ddba02808b6f29e716259e85e508f0edf183fb00003cd96fdccd023df3b0c1
+snapshot_sha256: 8d1268b4088e62eb7c8e2d28a3112e546ad3b428faa8036503c77a3efd9713c1
 ingested: "2026-04-20"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [in-context-learning, meta-learning, transformer-mechanisms, learning-theory]
 ---
 

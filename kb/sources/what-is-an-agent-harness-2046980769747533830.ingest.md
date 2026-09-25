@@ -4,12 +4,12 @@ source: https://x.com/aparnadhinak/status/2046980769747533830
 captured: "2026-04-29T17:20:12.356351+00:00"
 capture: xdk
 genre: conceptual-essay
-snapshot_sha256: f187701c842785ed976a9b98d6052752712649b2729d9ddeac358605d54ea029
+snapshot_sha256: 77408867babc5ba0c87dc1e28629a48d7da68cdd32d8d2624c3be3d100200f40
 status_id: 2046980769747533830
 conversation_id: 2046980769747533830
 post_count: 7
 ingested: "2026-04-23"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [agent-systems, harness-engineering, permission-and-safety, framework-vs-harness]
 ---
 

@@ -5,10 +5,10 @@ captured: "2026-09-24"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: ec97bad6116504fe745c7cdd217d10fa3561b7b4b63030a59a119c2c2430aea0
+snapshot_sha256: 7c623771969197fd5d80d7293c36e61bf5edf977ee2d787d46f0c37537ed07db
 ingested: "2026-09-24"
 occasion: "What do widening and narrowing trade — convergence, precision, soundness — and what constrains narrowing so it cannot drop what is true? (For KB notes on claims that widen or narrow to survive counterexamples.)"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [abstract-interpretation, fixpoint-iteration, termination, precision-tradeoffs]
 ---
 

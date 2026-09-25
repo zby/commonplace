@@ -4,9 +4,9 @@ source: https://arxiv.org/pdf/2607.22688
 captured: "2026-07-28"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: 83c4f1716060cbdb060c50f8a0223e6e8c49f1bee4d2fe7d0b5ffdbd84bb0f45
+snapshot_sha256: 4034a22183d3d56693a9ffe393641f90f175cd9f209fedb7baf2e8e49381201f
 ingested: "2026-07-28"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [representational-form, harness-learning, post-training, trace-learning]
 ---
 

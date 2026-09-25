@@ -5,9 +5,9 @@ captured: "2026-09-24"
 capture: pdftotext
 capture_scope: excerpt
 genre: scientific-paper
-snapshot_sha256: c9f8700e59afb5cf103a115fd33a48a054a0f70b54bed18c24885a5bc0cdb30c
+snapshot_sha256: de4ec74beebce26ce20f4f9e8957e958c2abb0483df7c11ddce20087bcd7dfd4
 ingested: "2026-09-25"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [scientific-method, prediction, evidence-scope]
 ---
 

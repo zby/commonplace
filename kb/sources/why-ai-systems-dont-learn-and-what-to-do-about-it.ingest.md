@@ -4,9 +4,9 @@ source: https://arxiv.org/html/2603.15381v1
 captured: "2026-03-18"
 capture: web-fetch
 genre: conceptual-essay
-snapshot_sha256: 2e3ff65f398baf6d069d2911c04bd7432d0f9aa4ddb18a36e3cb6baea698970c
+snapshot_sha256: 34787ca2004d2d65f068c09a332fae68cbebe0ece0e6561775f3fa765d36fd35
 ingested: "2026-03-18"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [autonomous-learning, continuous-learning, cognitive-architecture, meta-control]
 ---
 

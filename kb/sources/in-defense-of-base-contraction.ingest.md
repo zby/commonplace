@@ -6,11 +6,11 @@ capture: pdftotext
 capture_scope: full-source
 doi: "10.1007/BF00413568"
 genre: conceptual-essay
-snapshot_sha256: 38bf165bb60341e285b1d7f0db343c1ed690f541cf99ee58f26a2e3120bac401
+snapshot_sha256: be3e0f06c669b1e0106a4fb900dc3a8b834323525fe2e78cb1a4841d8cfa5e2d
 ingested: "2026-09-17"
 occasion: "The belief-base versus belief-state distinction and its advantages for repeated change; what a base needs to record."
 learning_claims: true
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [belief-revision, knowledge-representation, learning-theory]
 ---
 

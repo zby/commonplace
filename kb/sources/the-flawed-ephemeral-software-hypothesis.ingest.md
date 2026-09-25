@@ -4,9 +4,9 @@ source: https://www.blackhc.net/essays/future_of_software/
 captured: "2026-03-19"
 capture: web-fetch
 genre: conceptual-essay
-snapshot_sha256: 7eab79ab1a22f4affd64e50ca4ff745482dc936f04fc0afe4967510734570d9b
+snapshot_sha256: 25c3963499276c672ab75df03bd2aecb938879bef367e4d5f1e2138feb644bea
 ingested: "2026-03-19"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [software-engineering, agent-systems, verification, artifact-durability]
 ---
 

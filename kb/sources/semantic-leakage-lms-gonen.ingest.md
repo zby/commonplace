@@ -4,9 +4,9 @@ source: https://arxiv.org/html/2408.06518v3
 captured: "2026-07-13"
 capture: web-fetch
 genre: scientific-paper
-snapshot_sha256: 1a374bd91414dce933613b8ae628f5d7afe6cc5b2d9c3703160c0e2c5e0f64a4
+snapshot_sha256: 6c496da205368bdeb600f11786be570ba2cba78123507c47b9709fc674f4e6bb
 ingested: "2026-07-13"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [context-degradation, reasoning-robustness, llm-bias, evaluation-benchmarks]
 ---
 

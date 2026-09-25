@@ -4,9 +4,9 @@ source: https://arxiv.org/pdf/2603.20105
 captured: "2026-06-11"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: d072bcdcf6d40d56945c780d737a50ef25cf6fb6199291362e989429591b1423
+snapshot_sha256: 96288f5ccd6fba350142f8c1ace4cfa938d5afce67d07887ec3c646a0190a5b8
 ingested: "2026-06-11"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [computational-model, context-engineering, tool-loop, orchestration]
 ---
 

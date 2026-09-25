@@ -4,9 +4,9 @@ source: https://www.answer.ai/posts/2026-08-19-llms-code-simpler.html
 captured: "2026-08-20"
 capture: web-fetch
 genre: practitioner-report
-snapshot_sha256: f42d4546182cc58aeb741b4383eb809ba02228a66a249e5f7c897efe29188c30
+snapshot_sha256: 0960d2792745422b915696b7dc2f9770c7ebe67acb3f63847b167607cb638a3e
 ingested: "2026-08-20"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [agentic-coding, maintainability, evaluation, design-rationale]
 ---
 

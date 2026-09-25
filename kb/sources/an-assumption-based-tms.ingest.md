@@ -6,11 +6,11 @@ capture: pdftotext
 capture_scope: full-source
 doi: "10.1016/0004-3702(86)90080-9"
 genre: scientific-paper
-snapshot_sha256: 52db20eaa2ca01bb0179f8e46376448ef15d93d8799d06b30953d42d88613c50
+snapshot_sha256: c7614538c2948df847c7c6d7a840121fa5672f5988a20ad50ab6fd0dfb3198d4
 ingested: "2026-09-17"
 occasion: "Maintaining conclusions relative to assumption sets and recording dependencies; what it does not establish."
 learning_claims: true
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [truth-maintenance, dependency-tracking, learning-theory]
 ---
 

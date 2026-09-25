@@ -5,11 +5,11 @@ captured: "2026-09-17"
 capture: trafilatura
 capture_scope: full-source
 genre: conceptual-essay
-snapshot_sha256: aa2a527e6a4d2f3e2b0afe6c35ae73087d40f1ebd01aab14de316b6825d424e9
+snapshot_sha256: 571a0466d43f15305515b6b9c2dd9d7ef42b72b592a875ebc587effc35bde45f
 ingested: "2026-09-17"
 occasion: "Convergence guarantees versus current warrant, the distinction the README's source checks require."
 learning_claims: true
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [learning-theory, epistemology, evaluation]
 ---
 

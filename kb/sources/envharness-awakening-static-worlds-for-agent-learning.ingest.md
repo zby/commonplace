@@ -4,9 +4,9 @@ source: https://arxiv.org/abs/2608.19880
 captured: "2026-08-22"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: 3d8cdfbb0d331e1790897dcb6fd41ec02773fe000513f8852f9cf276c798fbe1
+snapshot_sha256: eab102d8b7d0e661945873b93b085e0a3270f346b8f7559cd796ad201192ee56
 ingested: "2026-08-22"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [learning-theory, deploy-time-learning, self-improving-systems, evaluation]
 ---
 

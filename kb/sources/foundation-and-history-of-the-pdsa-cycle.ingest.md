@@ -4,9 +4,9 @@ source: https://deming.org/wp-content/uploads/2020/06/PDSA_History_Ron_Moen.pdf
 captured: "2026-07-22"
 capture: user-supplied-pdf-to-markdown
 genre: scientific-paper
-snapshot_sha256: 4f36793d26a3f48c6a3e0336071ee9f0bbcb3f1a629bd664a151a25c36f2ad25
+snapshot_sha256: bd70d3a001774f7eb07d61187130ac3c589b29923c5c401e46271a9c8b7c6e7c
 ingested: "2026-07-22"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [pdsa, scientific-method, discovery-lifecycle, quality-improvement]
 ---
 

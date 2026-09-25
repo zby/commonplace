@@ -4,9 +4,9 @@ source: https://github.com/cordiverse/paper/blob/main/paper.pdf
 captured: "2026-08-14"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: eabef28217793ee9ee52a6bbba50234b31beac294222058f9df402b9f2b54919
+snapshot_sha256: 3519086e0583f4327f5a902ea0936caf64d1a3a04da994e58f6aeb8f5621d4f1
 ingested: "2026-08-14"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [runtime-composition, harness-engineering, effect-systems, self-improving-systems]
 ---
 

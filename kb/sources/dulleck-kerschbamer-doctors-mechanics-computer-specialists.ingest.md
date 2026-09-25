@@ -4,9 +4,9 @@ source: https://papersecon.univie.ac.at/RePEc/vie/viennp/vie0101.pdf
 captured: "2026-07-06"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: 45d87155c652fe10d0fc4f889ceb1b4ddcdc0db75ed5f4d7e39fae61b493a1d1
+snapshot_sha256: d93800c10ca8927906d4076b291a625c6b63936e86857f1f7e4aeff9a62164ee
 ingested: "2026-07-06"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [verification, information-asymmetry, mechanism-design]
 ---
 

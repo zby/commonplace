@@ -4,9 +4,9 @@ source: https://www.researchgate.net/profile/Howard-Pattee/publication/2515094_E
 captured: "2026-07-14"
 capture: web-fetch
 genre: scientific-paper
-snapshot_sha256: 91085b875d3d0ae89fd7c5d86fb0de8f52f553c03db81fe9be6d6091a77bfc77
+snapshot_sha256: 9b46b9b690b4cc89c5ba2b1e669eab08a9d77ad5bb52547d2b4c1ab26be5220b
 ingested: "2026-07-14"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [semantic-closure, self-reference, representational-regimes]
 ---
 

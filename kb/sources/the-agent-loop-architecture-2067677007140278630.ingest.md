@@ -4,12 +4,12 @@ source: https://x.com/djfarrelly/status/2067677007140278630
 captured: "2026-06-19T06:32:44.632033+00:00"
 capture: xdk
 genre: practitioner-report
-snapshot_sha256: 209febda8bc9daaa438a6b96a53a21d31a0c2659827900252292837da6e3ae19
+snapshot_sha256: 5afc302914c6e17ad8063816e05eacf896464c19ee2b6e075e30fff96d5e38bf
 status_id: 2067677007140278630
 conversation_id: 2067677007140278630
 post_count: 1
 ingested: "2026-06-19"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [agent-orchestration, durable-execution, deploy-time-learning]
 ---
 

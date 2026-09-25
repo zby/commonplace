@@ -5,10 +5,10 @@ captured: "2026-09-24"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: 81e07dd3891542fccf7f9ca70602a1226683c72f72b96b8fdb8eee4c0f317601
+snapshot_sha256: 7bbb5eabea8824019eec903b2483933660444bc9ea69d3e5b499e5add5bba084
 ingested: "2026-09-24"
 occasion: "How do SAT solvers choose which decision to make next when the candidates cannot be ranked by how many options each has left? (For a KB note on solving low-degree-of-freedom subproblems first.)"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [sat-solving, search-heuristics, variable-ordering, search-control]
 learning_claims: true
 ---

@@ -4,9 +4,9 @@ source: https://arxiv.org/abs/2605.26087
 captured: "2026-07-26"
 capture: web-fetch
 genre: scientific-paper
-snapshot_sha256: e3fe2f6800b433fe40329d7c6aa3c05d15c3e6af376e248756e93d08b1d27587
+snapshot_sha256: 28c55efd1d1a815639dfd9a19c0013ddcee6fa748f874bce6f87dcc8b1f0e5da
 ingested: "2026-07-26"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [scientific-discovery, evaluation, oracle-theory, learning-theory]
 ---
 

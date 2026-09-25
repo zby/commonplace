@@ -4,9 +4,9 @@ source: https://arxiv.org/abs/2608.01918
 captured: "2026-08-06"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: 61ecc14ec059bff03f9ee417f0711eb162fde0ad759b8476b6d66e583009910f
+snapshot_sha256: e280044ad022a20d139e8540b26467127d66252cbb0331f9ad309300d81cc8e5
 ingested: "2026-08-06"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [harness-evolution, self-improvement, diagnostic-feedback, evaluation]
 ---
 

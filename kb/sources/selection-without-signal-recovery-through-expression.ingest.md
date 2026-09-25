@@ -1,13 +1,13 @@
 ---
 description: "Frozen small-model falsification operators show limited selection gains; extraction recovery supplies a bounded positive and separates search coverage from criticism."
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 source: https://arxiv.org/abs/2606.16999
 captured: "2026-09-19"
 ingested: "2026-09-19"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: eea89382b3ddfab28253c8de8a078ab52e8ea8d1c8bbae6293a6369d8bb3dd8a
+snapshot_sha256: f83ec090117b519f27bbb05c406d6b48b8dad356a49742ba1b91a6e0c7cbc3f1
 occasion: "Assess 2026 computational implementations and evaluations of conjecture, criticism, revision, and persistence for a learning paradigm grounded directly in Popper; distinguish epistemic commitments, implementation choices, and demonstrated effects."
 domains: [learning-theory, code-generation, falsification, evaluation]
 learning_claims: true

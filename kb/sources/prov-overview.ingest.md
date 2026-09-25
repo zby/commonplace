@@ -4,9 +4,9 @@ source: https://www.w3.org/TR/prov-overview/
 captured: "2026-07-06"
 capture: web-fetch
 genre: design-proposal
-snapshot_sha256: 1d12d336ede0f8937768b2ff71d146c068b2e39704e80088c0136671d39cb360
+snapshot_sha256: 12be2280783fb1cf00067880c090f6edc9f01b7cecbeb13728b3388aefd12c1f
 ingested: "2026-07-06"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [provenance, lineage, standards]
 ---
 

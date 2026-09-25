@@ -4,9 +4,9 @@ source: https://arxiv.org/html/2603.10600v1
 captured: "2026-03-13"
 capture: web-fetch
 genre: scientific-paper
-snapshot_sha256: d7aba0e339835a7b9840cb7469be7d854d889455f996df7a7d62c2dbafb7204c
+snapshot_sha256: 9609bfe47ff1f044208c06f09524b2e5a6b8d47facbf1f8e7390f5c81213fc71
 ingested: "2026-03-13"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [agent-memory, deploy-time-learning, trajectory-analysis, memory-generation]
 ---
 

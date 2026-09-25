@@ -4,9 +4,9 @@ source: https://arxiv.org/html/2606.28277v1
 captured: "2026-07-01"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: f59fc1c24f3f7bbd5b8aa8683a2e94872a6d41c4c844714ddce054449f0a5cb0
+snapshot_sha256: 44346158b64ea73564d0942948903a5a8ef7f95c62d6eb6758e224f97a3206b7
 ingested: "2026-07-01"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [peer-review, agent-orchestration, oracle-theory, agent-reliability]
 ---
 

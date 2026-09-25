@@ -4,12 +4,12 @@ source: https://x.com/augmentcode/status/2025993446633492725
 captured: "2026-03-10T13:09:52.885228+00:00"
 capture: xdk
 genre: practitioner-report
-snapshot_sha256: 3b77dfcef8ff0b5d30ac33cbc4239005ad12c64f5211ae2399477073f87f382f
+snapshot_sha256: 243e558cc22cdd7757e27b108145109fe137a64733f723b67d668e3d70d9ff01
 status_id: 2025993446633492725
 conversation_id: 2025993446633492725
 post_count: 1
 ingested: "2026-03-10"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [spec-driven-development, agent-architecture, documentation-maintenance]
 ---
 

@@ -4,9 +4,9 @@ source: https://arxiv.org/abs/2502.12110
 captured: "2026-02-28"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: be2ed6406d52872b01fa38c014ea4cedad66b8ebb3e654f3d8b44bf487793d44
+snapshot_sha256: 972de45559b7d6f9b568c1b130c0822fa31ac68ada7b3de4a3f556ad09758842
 ingested: "2026-03-09"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [agent-memory, knowledge-management, llm-agents, zettelkasten]
 ---
 

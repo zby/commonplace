@@ -4,9 +4,9 @@ source: https://x.com/matt_slotnick/status/2022428696595108152
 captured: "2026-08-25T11:05:08.259238+00:00"
 capture: xdk
 genre: conceptual-essay
-snapshot_sha256: a1cf7562376bb3ad4e832a0560b7ece4313a0149103a0d0b0172c4d304a6396c
+snapshot_sha256: e5bbf1f166f94fc358232ca11bede4ded61aef7aa3033026e41e6fca60bf6225
 ingested: "2026-08-25"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [agent-orchestration, specification, verification, enterprise-systems]
 status_id: 2022428696595108152
 conversation_id: 2022428696595108152

@@ -4,9 +4,9 @@ source: https://www.experimental-history.com/p/i-like-em-thick
 captured: "2026-08-24"
 capture: trafilatura
 genre: conceptual-essay
-snapshot_sha256: a690c3f91ad38f87329b1230aebbbfb9870f444c15f5595ebf10c446ac2ac597
+snapshot_sha256: 279b24e92336c791bae5a74cbeb6491d75888f159e413ef6eb87d36d88f2d56d
 ingested: "2026-08-24"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [writing-quality, llm-reliability, knowledge-evaluation]
 ---
 

@@ -5,10 +5,10 @@ captured: "2026-09-02"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: 7aa137287871145f89a7dade3e5609f4510775737c8b7ec2318e93c963632579
+snapshot_sha256: 1c4f2e1089e003e7f0713920e9f701d0a27a2b47e656c55b3be509d0b2d149a4
 ingested: "2026-09-02"
 occasion: "for kb/work/factory-theory-restart we need to ground the failure claim - snapshot and ingest a retrospective"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [model-driven-engineering, software-factories, organizational-adoption]
 ---
 

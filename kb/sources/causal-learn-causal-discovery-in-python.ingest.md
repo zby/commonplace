@@ -4,9 +4,9 @@ source: https://arxiv.org/abs/2307.16405
 captured: "2026-07-16"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: 24949c68e81336636e8db27e8e67aeb210754100cb3fe6d50dca3d0de44aa8e9
+snapshot_sha256: 0971805ed25810909498c33248a099e6db3f21e1ff4375d40aea662ffaef341e
 ingested: "2026-07-16"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [causal-inference, causal-discovery, reach-assessment]
 ---
 

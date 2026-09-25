@@ -5,9 +5,9 @@ captured: "2026-09-24"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: f23b079e5d7910b1f8e6a4fca9ee6cf7277670a81e95541ed3f69be9d235a5b2
+snapshot_sha256: aaa78bfe927959a83f74f6d724efa9696dc63bdaf2acb0785d7b5b982d2f1c7f
 ingested: "2026-09-25"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [self-modeling, neural-networks, regularization, learning-theory]
 learning_claims: true
 ---

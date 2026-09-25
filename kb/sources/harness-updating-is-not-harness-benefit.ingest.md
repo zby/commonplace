@@ -4,9 +4,9 @@ source: https://arxiv.org/abs/2605.30621
 captured: "2026-08-04"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: 453897c0e4c13dd6cb076cb2d33fc83fcd3d8bd4348633f4f0d554beb0dbe4cd
+snapshot_sha256: 975801c867366634892450aebcae55e6358c30eda1249afcf2f35efe39ed9ae1
 ingested: "2026-08-04"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [self-improvement, harness-evolution, agent-capability, evaluation]
 ---
 

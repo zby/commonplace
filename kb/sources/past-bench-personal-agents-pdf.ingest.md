@@ -1,13 +1,13 @@
 ---
 description: "PAST-Bench separates fresh-session persistence gains from pathway evidence; its Hermes interventions offer bounded tests for memory activation, correction, and evaluation."
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 source: https://arxiv.org/abs/2608.04003
 captured: "2026-09-17"
 ingested: "2026-09-17"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: ba73d6621148277bfa09054536211d3161b4092da734335eee99b345db4da315
+snapshot_sha256: 25c19ce17c5dff0a246cd3052830d72d230bfa15dfb7e385c56100f1e8810f3f
 domains: [agent-memory, evaluation, deploy-time-learning]
 learning_claims: true
 ---

@@ -4,9 +4,9 @@ source: https://arxiv.org/abs/2608.20195
 captured: "2026-08-24"
 capture: pdftotext
 genre: scientific-paper
-snapshot_sha256: ed5ac4797ee35f236a62d10526e62b33f9765692ddcbff55ca0b634587bd4766
+snapshot_sha256: 140e290bea615931cb16d9a6dbe49b58dd16343118e4545c8b419aa82828fc86
 ingested: "2026-08-24"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [coding-agents, agent-documentation, context-engineering]
 ---
 

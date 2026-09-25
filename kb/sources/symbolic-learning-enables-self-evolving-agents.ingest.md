@@ -4,9 +4,9 @@ source: https://arxiv.org/pdf/2406.18532
 captured: "2026-07-28"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: 4d38688e9e43c43c4220bea8c23ee3e2dd4234fc027ad10222dd1d6d6c8cf650
+snapshot_sha256: 472fabf04a40e001d08b868c8631e25f84818a860f7be97f770754e48e354bcf
 ingested: "2026-07-28"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [agent-learning, harness-optimization, representational-form, self-improvement]
 ---
 

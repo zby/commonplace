@@ -5,9 +5,9 @@ captured: "2026-09-24"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: 2ebeac219f0ce8e98665cf0e3920ac35eb75a3c30993840a6f83182c853e1cc3
+snapshot_sha256: 3aa1e5fa0d62c68a3ab7cb6082a28fad203c03448f293cff5c7ff2111aade7d0
 ingested: "2026-09-25"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [scientific-method, theory-evaluation, measurement]
 ---
 

@@ -4,9 +4,9 @@ source: https://arxiv.org/abs/2605.05851
 captured: "2026-08-20"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: 7bf01e9c3ef61e38841fb0dd963526f02b6d956e7371e0b69f29bddaee7cc0f0
+snapshot_sha256: d5cfa9a74931687840b378c97f31d912d7e42ea55ae914d8287ca63e44b1f1b5
 ingested: "2026-08-20"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [llm-evaluation, inductive-reasoning, scientific-discovery, learning-theory]
 ---
 

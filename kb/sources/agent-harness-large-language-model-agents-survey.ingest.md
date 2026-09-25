@@ -4,9 +4,9 @@ source: https://www.preprints.org/manuscript/202604.0428
 captured: "2026-05-28"
 capture: web-fetch
 genre: scientific-paper
-snapshot_sha256: bd5d44820e83c105809c652913b0f2ad1dcf799a764a678b7a257d74c5a9dcc2
+snapshot_sha256: 1bd1512d54661891ee79ae43eafe047de4f0cc8262c07797db596a47e18101b4
 ingested: "2026-05-28"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [harness-engineering, agent-runtime, context-engineering, agent-reliability]
 ---
 

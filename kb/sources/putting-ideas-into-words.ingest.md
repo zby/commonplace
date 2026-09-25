@@ -4,9 +4,9 @@ source: https://paulgraham.com/words.html
 captured: "2026-08-10"
 capture: web-fetch
 genre: conceptual-essay
-snapshot_sha256: bba48fb235071ceeb14762c91ac2e0635b1d6d0e6a12cc4d8c7b5908fae6066b
+snapshot_sha256: 92afea0b1659c70bc4200247c2810c5f146a922ab982883e297e6081a494597c
 ingested: "2026-08-10"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [writing-as-thinking, epistemic-writing, human-agent-transfer, tacit-knowledge]
 ---
 

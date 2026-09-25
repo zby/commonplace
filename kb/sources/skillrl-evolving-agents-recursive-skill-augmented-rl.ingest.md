@@ -4,9 +4,9 @@ source: https://arxiv.org/abs/2602.08234
 captured: "2026-06-30"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: 6e0ef8941da58926f2fd176f6a36acc300e3d70f0f4893a0ce8eefce07938e71
+snapshot_sha256: c66b81b0e032193496c40bdeb417293c8d1355cc55cb17fd573bf6ca12cf4978
 ingested: "2026-06-30"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [skill-learning, trace-learning, reinforcement-learning, deploy-time-learning]
 ---
 

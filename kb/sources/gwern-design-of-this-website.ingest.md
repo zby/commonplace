@@ -6,10 +6,10 @@ capture: trafilatura
 capture_scope: partial-source
 capture_note: "Main article extraction; the tags section DOM id was renamed in the extraction input to prevent boilerplate removal. Source prose was unchanged. Interactive media and embedded demonstrations are not retained; extractor fragment links may resolve against the site root."
 genre: practitioner-report
-snapshot_sha256: c5d71a5bb83662be0d7c49c1a813978e6a8614fdeaaf8b7b245c36ad8e45dffc
+snapshot_sha256: 9b46de07b97f4909cf8d3b26c6c778c909d740c9a606f67f2b9577bebaa5625b
 ingested: "2026-09-22"
 occasion: "Find the design of Gwern’s tag system, ingest it, and consider whether similar mechanisms should be implemented in Commonplace."
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [knowledge-organization, tags, hypertext, context-engineering]
 learning_claims: true
 ---

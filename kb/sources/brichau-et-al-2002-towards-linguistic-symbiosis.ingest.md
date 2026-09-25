@@ -4,9 +4,9 @@ source: https://soft.vub.ac.be/Publications/2002/vub-prog-tr-02-04.pdf
 captured: "2026-07-14"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: df342492eda6e4ac9100daa9b530845293bed8f57011afc1d9b217879bbc2d5e
+snapshot_sha256: 45fafab72abd1339daac2d8cc5576b59c2a60fdbef4017244142483ea792e1cd
 ingested: "2026-07-14"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [linguistic-symbiosis, protocol-mapping, multiparadigm-programming]
 ---
 

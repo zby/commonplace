@@ -4,9 +4,9 @@ source: https://mechanism.ucsd.edu/bill/teaching/models/craik.pdf
 captured: "2026-08-26"
 capture: user-converted-pdf
 genre: conceptual-essay
-snapshot_sha256: bb62e8eadc80f50b9d9adf8123c0e92e3ab3604ca1a128c83b53568daf565f66
+snapshot_sha256: 91b5d405003432a873437dc23ea0d163e75d92bd3c89f28010b37d6d133a0da0
 ingested: "2026-08-26"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [world-models, action-selection, philosophy-of-mind]
 ---
 

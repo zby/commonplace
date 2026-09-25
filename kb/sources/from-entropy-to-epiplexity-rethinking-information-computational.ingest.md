@@ -4,9 +4,9 @@ source: https://arxiv.org/html/2601.03220v1
 captured: "2026-03-05"
 capture: web-fetch
 genre: scientific-paper
-snapshot_sha256: 26b4a18ec4bb6d004541946818245bd10a588d9e006c80356ea7171d0cc4c7e2
+snapshot_sha256: e2690c9462322a029a8af742a22721f978222f7ea1b3513cd125abb2ce031e6b
 ingested: "2026-04-20"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [information-theory, learning-theory, context-engineering, computational-complexity]
 ---
 

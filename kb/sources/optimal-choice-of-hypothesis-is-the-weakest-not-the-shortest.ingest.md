@@ -4,9 +4,9 @@ source: https://arxiv.org/pdf/2301.12987v4
 captured: "2026-08-04"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: 9afff9545a5a9aab03d98b9c115b06cf0c50f52759b73934b22f30763ba0b621
+snapshot_sha256: f07e9867bac6ff5b221f7de56e58c3b1e96bc6e5314a97f1368bf2d7187e0736
 ingested: "2026-08-04"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [learning-theory, inductive-bias, generalisation, formal-methods]
 ---
 

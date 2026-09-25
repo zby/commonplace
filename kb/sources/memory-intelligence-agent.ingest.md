@@ -4,9 +4,9 @@ source: https://arxiv.org/html/2604.04503v2
 captured: "2026-04-11"
 capture: lynx-html
 genre: scientific-paper
-snapshot_sha256: 7b3835300ee0f6f97e96d86f66f17b890ad1aa3748259f07317eef4920aaff72
+snapshot_sha256: 54be29b77e1ea6e223d4138adcfd62a53c02d04bdf6aed4fe46b0c70bcc234a9
 ingested: "2026-04-11"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [agent-memory, trace-learning, test-time-learning, reinforcement-learning]
 ---
 

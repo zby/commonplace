@@ -5,9 +5,9 @@ captured: "2026-08-28"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: 97c83cbe542bc5dd3befa2e224b6214c7636b669f093f9c8886ede43ef399994
+snapshot_sha256: e3a56b2403764e86632e3463a2b72c00c910736087c32c27d38776b8f0b86d06
 ingested: "2026-08-28"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [adaptive-planning, deep-uncertainty, decision-making]
 ---
 

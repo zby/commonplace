@@ -4,12 +4,12 @@ source: https://x.com/cerebras/status/2077822555159945507
 captured: "2026-07-17T11:11:46.803761+00:00"
 capture: xdk
 genre: practitioner-report
-snapshot_sha256: 35e8de20f5de41216eb8f9822806fc43f8dfea3c0927211a2948d9268988cef7
+snapshot_sha256: fa5a1a80ef3156cf7de5d9425b01ccfe4758365eeb5ebeec2d117314d4cb2f6f
 status_id: 2077822555159945507
 conversation_id: 2077822555159945507
 post_count: 1
 ingested: "2026-07-17"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [agent-memory, context-engineering, enterprise-ai, retrieval]
 ---
 

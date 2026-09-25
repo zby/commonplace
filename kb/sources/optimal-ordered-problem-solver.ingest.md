@@ -6,8 +6,8 @@ ingested: "2026-09-21"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: ce2a5d3b298b1c97527b6a550fdf1510faba48896a7e6407dadf91dfa2da0c5b
-type: kb/sources/types/ingest-report.md
+snapshot_sha256: b6262a3f40bcbcd2dff0e51896a101ae24c5485014124d8bac47c0fc0fc81306
+type: ingest-report
 domains: [program-search, incremental-learning, self-improving-systems]
 learning_claims: true
 ---

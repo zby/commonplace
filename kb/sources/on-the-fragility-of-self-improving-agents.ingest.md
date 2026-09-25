@@ -4,9 +4,9 @@ source: https://arxiv.org/abs/2608.18066
 captured: "2026-08-22"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: a432fc696ee1fce4d986b2fc7de9a337e8a5e463bf22e8e1a621bf7eb43b6339
+snapshot_sha256: e472c1ba7bd5fc54a52cb509d91b843ccc781c4fd65a360401fcd979fdce111b
 ingested: "2026-08-22"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [agent-memory, agent-evaluation, deploy-time-learning, reliability]
 ---
 

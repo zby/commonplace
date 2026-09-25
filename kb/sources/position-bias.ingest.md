@@ -4,9 +4,9 @@ source: https://github.com/lechmazur/position_bias/tree/483150e8e1938c17331f9e82
 captured: "2026-04-21"
 capture: git-checkout
 genre: code-repository
-snapshot_sha256: a211f5c86410fd2c4fdffe50a2e29ea0b9eb4b8ac064e0919238124cdca05471
+snapshot_sha256: 512472d4cfae45c555437d428ffe5140405e609e38d3b1cf8a4b49834a759499
 ingested: "2026-04-23"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [evaluation, judge-reliability, position-bias, llm-as-judge]
 ---
 

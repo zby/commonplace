@@ -4,9 +4,9 @@ source: https://arxiv.org/html/2507.13874v2
 captured: "2026-04-23"
 capture: web-fetch
 genre: scientific-paper
-snapshot_sha256: c9e7695932fec6cadfc1553cdab1d47bddacbd9bad686ed4948deb5e56172197
+snapshot_sha256: 324fa8f1ca7a6ff85893b29ecbab6e5876f649d6ca8536c694c157f9b2e3867e
 ingested: "2026-04-23"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [llm-generation-diversity, latent-space-conditioning, oracle-gap]
 ---
 

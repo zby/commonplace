@@ -4,9 +4,9 @@ source: https://arxiv.org/html/2604.15034v5
 captured: "2026-08-02"
 capture: web-fetch
 genre: scientific-paper
-snapshot_sha256: 631aa4f497520508eed673a06de7d7bc4bd001e92f6823a633bbbac2b835e613
+snapshot_sha256: f920c2d88ab1318d6131cff184801affcd7d7d92399ee6e376404675701e2660
 ingested: "2026-08-02"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [self-improvement, agent-protocols, deploy-time-learning, evaluation]
 ---
 

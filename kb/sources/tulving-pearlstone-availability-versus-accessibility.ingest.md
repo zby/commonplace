@@ -4,9 +4,9 @@ source: "https://www.rotman-baycrest.on.ca/files/publicationmodule/%40random45f5
 captured: "2026-08-26"
 capture: pdftotext
 genre: scientific-paper
-snapshot_sha256: aa4c42278a4e1ad4bb0fd0ba718d40b25d999867318f2d385e4a8235c30d8b77
+snapshot_sha256: 4cdbbf26677ee5d756d5cd86bb99e618073398885cc96f706ae1f4683f486f79
 ingested: "2026-08-26"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [human-memory, retrieval, evaluation]
 ---
 

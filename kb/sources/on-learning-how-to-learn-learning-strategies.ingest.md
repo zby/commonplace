@@ -4,9 +4,9 @@ source: https://people.idsia.ch/~juergen/fki198-94.pdf
 captured: "2026-04-29"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: d86ee69352ebd23010ac5738b71346f50d7cc6cd5bccdb81856e12a2b59fc990
+snapshot_sha256: cb442572de077e5ada89a7b81cf529814aa6989c1e33ed6fe7e0dc4f8aec9e82
 ingested: "2026-04-29"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [learning-theory, self-improvement, oracle-theory, agent-memory]
 ---
 

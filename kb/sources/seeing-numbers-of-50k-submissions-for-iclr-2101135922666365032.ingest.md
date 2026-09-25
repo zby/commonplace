@@ -4,12 +4,12 @@ source: https://x.com/jonathanschloss/status/2101135922666365032
 captured: "2026-09-19T21:41:10.541414+00:00"
 capture: xdk
 genre: conceptual-essay
-snapshot_sha256: 6b585acf59a087a29a122801ea56d7d8d355e40b54e45a6a84a5ed4d096183b7
+snapshot_sha256: 1733aac10bd4571e7c6fdb4a23c881d2c979d969983bf2d86eb9d988f62292d8
 status_id: 2101135922666365032
 conversation_id: 2101135922666365032
 post_count: 2
 ingested: "2026-09-19"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [evaluation, llm-reliability, scholarly-review]
 ---
 

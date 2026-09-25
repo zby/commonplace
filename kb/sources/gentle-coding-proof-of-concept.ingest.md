@@ -4,9 +4,9 @@ source: https://github.com/OttoRenner/Gentle-Coding/blob/main/Proof-of-Concept.m
 captured: "2026-07-17"
 capture: web-fetch
 genre: practitioner-report
-snapshot_sha256: 1a8e61f03823ef1341a1a1f7dfeaa8b763813b5900ae47e046a1fc0d341d189f
+snapshot_sha256: cc51184807497207714064f31837ad92714b17c6c9d7b2882d4c56f44920cf21
 ingested: "2026-08-24"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [prompt-design, evaluation, response-policy]
 ---
 

@@ -4,9 +4,9 @@ source: https://lilianweng.github.io/posts/2026-07-04-harness/
 captured: "2026-08-04"
 capture: web-fetch
 genre: conceptual-essay
-snapshot_sha256: d03b7654b417f28cb3baedab918f5d6cbe276e26e1e0c43a729be7c35a6d8eba
+snapshot_sha256: 6ec5188b87b4ff68f8dcb6a2189f255d360eeaa432ccdc614f213fa516b5b271
 ingested: "2026-08-04"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [harness-engineering, self-improvement, context-engineering, evaluation]
 ---
 

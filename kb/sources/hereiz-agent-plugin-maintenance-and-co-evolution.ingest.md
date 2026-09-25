@@ -5,9 +5,9 @@ captured: "2026-09-03"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: 4409153d9f9d6f56327b6940c165751a3d9814094ee9352d216738f2b1e881d3
+snapshot_sha256: 1eb25c7529f447d85e294d5775c561054d3d2ff311ff5d18c9a4ba985fdd3e27
 ingested: "2026-09-03"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [agent-plugins, software-maintenance, instruction-artifacts, empirical-software-engineering]
 ---
 

@@ -5,9 +5,9 @@ captured: "2026-08-29"
 capture: trafilatura
 capture_scope: full-source
 genre: tool-announcement
-snapshot_sha256: 59aafb3089f5472138b3eb4ca4b326450b3be79fc81503ffdcf3ba36923585fa
+snapshot_sha256: 7d7d9e3ce3642b3a24c8cf6637d4364e36aa8e6764a2522f4543124605b225ee
 ingested: "2026-08-29"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [agent-memory, skill-distillation, provenance, lifecycle-governance]
 ---
 

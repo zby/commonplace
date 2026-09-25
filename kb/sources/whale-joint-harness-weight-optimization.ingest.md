@@ -5,9 +5,9 @@ captured: "2026-09-04"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: 224cd409ca0e6c05103dd9f58b038c818bed7ed0185fde154e248b213bced85d
+snapshot_sha256: ee06d60f3aca30f94ebd015cb4bdc2d2b347f5be03dd0c3e2acdf4f97c92378f
 ingested: "2026-09-04"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [agent-learning, harness-optimization, model-weight-training]
 ---
 

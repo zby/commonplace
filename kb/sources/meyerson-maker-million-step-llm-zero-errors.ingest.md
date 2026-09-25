@@ -4,9 +4,9 @@ source: https://arxiv.org/abs/2511.09030
 captured: "2026-02-26"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: cbfdcd1a4ae7008bf63b22b3654e374acad4992b98be8133b1bcffffb9a58b49
+snapshot_sha256: bdb51f50f7b0bf772b0f37f1b676b1375462e88fccffb9f2a01f0487a7e7dcb8
 ingested: "2026-03-09"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [multi-agent-systems, error-correction, scaling-laws, reliability-engineering]
 ---
 

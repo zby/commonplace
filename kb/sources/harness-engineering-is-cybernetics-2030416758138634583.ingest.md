@@ -4,12 +4,12 @@ source: https://x.com/odysseus0z/status/2030416758138634583
 captured: "2026-03-09T06:54:13.921167+00:00"
 capture: xdk
 genre: conceptual-essay
-snapshot_sha256: 3613a2a2719a5d3aded7c7a5333f3bbdb02959e991f3344370417e1f1a450c4b
+snapshot_sha256: c3b6f03703143f75caa15e27a586c56670cac3c3b5f2014401c9050284a9f258
 status_id: 2030416758138634583
 conversation_id: 2030416758138634583
 post_count: 14
 ingested: "2026-04-20"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [agent-systems, harness-engineering, cybernetics, verification]
 ---
 

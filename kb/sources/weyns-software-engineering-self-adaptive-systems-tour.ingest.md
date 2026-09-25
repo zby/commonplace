@@ -4,9 +4,9 @@ source: https://people.cs.kuleuven.be/~danny.weyns/papers/2017HSE.pdf
 captured: "2026-07-21"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: 6166fb55b965bc7e20549a4aa9a89c24579631c4ddd2bd890f79fd606340f267
+snapshot_sha256: 5ba1e0ea52af1377b41d4e4ec9a4974d2194b3af20bd18f1c857fe5796574c4e
 ingested: "2026-07-21"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [self-adaptation, feedback-loops, uncertainty, systems-engineering]
 ---
 

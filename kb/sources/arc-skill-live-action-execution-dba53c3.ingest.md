@@ -5,10 +5,10 @@ captured: "2026-08-31"
 capture: trafilatura
 capture_scope: full-source
 genre: code-repository
-snapshot_sha256: b9fa5bed86925f39fb7741ac7b053b591f5efbd72ad31c43762c8d786fea4323
+snapshot_sha256: 61cefb45a1fb0fb61b3f06f45053ae45e58868a226a26b2092b32d6852e39fc9
 ingested: "2026-08-31"
 occasion: "Provide durable source grounding for the bounded ARC worked case in the behavioral-authority decomposition proposal."
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [behavioral-authority, action-execution, runtime-controls]
 ---
 

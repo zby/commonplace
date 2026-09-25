@@ -1,5 +1,5 @@
 ---
-type: kb/reports/types/agentic-system-analysis-run-state.md
+type: agentic-system-analysis-run-state
 description: "Operational state for the Academic Research Skills operability replay through retained acceptance handoff"
 run-id: AAS-2026-09-03-academic-research-skills-02
 phase: handoff-ready

@@ -6,9 +6,9 @@ capture: pdftotext
 capture_scope: full-source
 doi: "10.48550/arXiv.2410.10813"
 genre: scientific-paper
-snapshot_sha256: 4ed592b43f1ff88d548d536a67f0bc4b8165c79ef2cf5416226c4f3ecdb7ee5b
+snapshot_sha256: 51ca6da2f6e96e4715115740e6db495900bca78021e7aab870f99c191f459497
 ingested: "2026-09-17"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [agent-memory, context-engineering, memory-evaluation, retrieval]
 learning_claims: true
 ---

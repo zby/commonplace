@@ -4,9 +4,9 @@ source: https://news.ycombinator.com/item?id=49336573
 captured: "2026-08-18"
 capture: web-fetch
 genre: conversation-thread
-snapshot_sha256: 01efcb689b73612d11ba578ea25f69889da1583699c0c9c41b903ecfd24ac8df
+snapshot_sha256: 9fd32068a55535b15ae5316153336f90ba506f2f9cf8b16881d9a4855866c635
 ingested: "2026-08-18"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [llm-writing, review, maintenance, human-ai-collaboration]
 ---
 

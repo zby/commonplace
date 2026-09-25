@@ -5,9 +5,9 @@ captured: "2026-09-24"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: c8cc9287769c93455351c88bfd0d4678b66c33d17e1beb4906342d2e5e08974b
+snapshot_sha256: 0fe140e6b46c688a6cb10ca7c10c7c929a615c7d8b1e06339f11bf23f63eb279
 ingested: "2026-09-25"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [agent-memory, context-engineering, learning-theory, agent-orchestration]
 learning_claims: true
 ---

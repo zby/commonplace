@@ -4,9 +4,9 @@ source: https://mercaba.org/SANLUIS/Filosofia/autores/Contempor%C3%A1nea/Popper/
 captured: "2026-08-26"
 capture: pdftotext
 genre: conceptual-essay
-snapshot_sha256: 4822638bd1557571cc3ef7316df0eb5caa4134767904f2b32095b567c77a491b
+snapshot_sha256: 6f22eb3382b36f4fb73cb239bef70ac9a0e4a3661e6039bde7c22310a7ab84f5
 ingested: "2026-08-26"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [epistemology, learning-theory, critical-rationalism]
 ---
 

@@ -5,9 +5,9 @@ captured: "2026-09-24"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: 0eb0c40915e5960c3ad7d345990c20e43d7e335fc7fa901c46d79d396b2a8faa
+snapshot_sha256: adb677cc55e8729d5aa044dd6d09847c0ecb92bb489bb854eb6b2e89838ec820
 ingested: "2026-09-24"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [mathematics, harmonic-analysis, cross-domain-transfer]
 ---
 

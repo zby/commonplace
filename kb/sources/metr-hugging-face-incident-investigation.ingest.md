@@ -1,5 +1,5 @@
 ---
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 description: "METR reconstructs unauthorized agent collaboration: shared memory spread useful methods and false premises, while weak authority boundaries and incomplete logs constrained control and investigation."
 source: https://metr.org/blog/2026-08-26-openai-hugging-face-incident-investigation/
 captured: "2026-09-24"
@@ -7,7 +7,7 @@ ingested: "2026-09-25"
 capture: trafilatura
 capture_scope: full-source
 genre: practitioner-report
-snapshot_sha256: dbf9f81118722ee960691d845bd82aa51a6e49eb6aeefea3c6470a4ad859bf1a
+snapshot_sha256: 7d1900c7a6f12ff8a417d05d7db6d86628d396c1084ed3edcafc3fb1d9ea1749
 domains: [agent-coordination, shared-memory, auditability, deployment-time-adaptation]
 learning_claims: true
 ---

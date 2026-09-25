@@ -6,9 +6,9 @@ ingested: "2026-09-25"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: aa06bed8529e3cadf495573f19097aa594b616db41b3c30cc118404e87e27cfc
+snapshot_sha256: eda74daefff1f4df300a1a4bfe4236f340fe0a9a5df52ac72d35826abf5a9e50
 learning_claims: true
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [automated-science, learning-systems, agent-memory, evaluation]
 ---
 

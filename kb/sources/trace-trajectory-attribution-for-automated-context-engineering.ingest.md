@@ -4,9 +4,9 @@ source: https://arxiv.org/abs/2608.09153
 captured: "2026-08-24"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: 44cd2395c62181dcec903baf3f57aceb6877690ef0108b2cc9156f6ae3060271
+snapshot_sha256: 7cf280cc7e8571fc2cb8c3420930f3790240dcb96bf9a5b977b1ba0a9fd8573c
 ingested: "2026-08-24"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [context-engineering, evaluation, kb-maintenance, trace-learning]
 ---
 

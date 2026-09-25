@@ -4,12 +4,12 @@ source: https://x.com/koylanai/status/2025286163641118915
 captured: "2026-02-22T11:51:03.499122+00:00"
 capture: xdk
 genre: practitioner-report
-snapshot_sha256: f35ce2cc242c59c8d34ef51155e47e100849a58219124d91420e8ac540313ffa
+snapshot_sha256: 1f0058f3776178bed839f1a565f7832776c0c2718939650e33f30ad5893cec4f
 status_id: 2025286163641118915
 conversation_id: 2025286163641118915
 post_count: 12
 ingested: "2026-03-09"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [context-engineering, agent-architecture, knowledge-management, file-based-systems]
 ---
 

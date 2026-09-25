@@ -4,9 +4,9 @@ source: https://arxiv.org/abs/2607.23809
 captured: "2026-07-30"
 capture: web-fetch
 genre: scientific-paper
-snapshot_sha256: 56d2f596d4bbb9ce785b0de456982a2dfff80af7a50d4f1f4ef16778d79d5de2
+snapshot_sha256: 98d91f41055d7e0c4cc94283d8779c2dc95ea97fe996434a1080173b363c4100
 ingested: "2026-07-30"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [context-engineering, agent-memory, post-training, long-horizon-agents]
 ---
 

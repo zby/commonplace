@@ -5,10 +5,10 @@ captured: "2026-09-17"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: 3e63144551cc5337c5e971e82ff13ee83dd95360f39a2f72df2a680e53bc42d9
+snapshot_sha256: ac9d53426a4ea44e29dfb35b76a44e166bb1f7acf260a5eec4d7b1272f074297
 ingested: "2026-09-17"
 learning_claims: true
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [self-improving-systems, cognitive-architecture, online-learning, resource-allocation]
 ---
 

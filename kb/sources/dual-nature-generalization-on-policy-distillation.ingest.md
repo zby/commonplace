@@ -1,13 +1,13 @@
 ---
 description: "On-policy distillation transfers capabilities and regressions beyond routed prompt domains, supporting broader validation of shared-weight updates while leaving the alignment mechanism unresolved."
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 source: https://arxiv.org/abs/2608.16647
 captured: "2026-09-24"
 ingested: "2026-09-25"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: 8090da703a7a224c02df8fb84333755e8a9590950b772b74367bbd3ab2abcd67
+snapshot_sha256: ebac1a851306befde8978d8e4ad90befa69dc9cf07c997b870bb2cd85c5dd1b7
 domains: [on-policy-distillation, generalization, learning-theory, regression-validation]
 learning_claims: true
 ---

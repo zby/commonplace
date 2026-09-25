@@ -4,12 +4,12 @@ source: https://x.com/jerryjliu0/status/2077537847951945742
 captured: "2026-07-17T11:22:55.473932+00:00"
 capture: xdk
 genre: practitioner-report
-snapshot_sha256: 08bd5981cf7569fa182dc83de337d6b3af4b7b6e054cf1ecb3b0992578ce21fa
+snapshot_sha256: 4bef41d6acba6be9639cf9b6c6ead8ce7f486cd41a6b54a219567c690bb8d070
 status_id: 2077537847951945742
 conversation_id: 2077537847951945742
 post_count: 1
 ingested: "2026-07-17"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [context-engineering, model-routing, vertical-agents, evaluation]
 ---
 

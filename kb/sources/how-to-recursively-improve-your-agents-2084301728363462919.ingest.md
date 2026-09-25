@@ -4,12 +4,12 @@ source: https://x.com/ashpreetbedi/status/2084301728363462919
 captured: "2026-08-03T18:05:02.311358+00:00"
 capture: xdk
 genre: practitioner-report
-snapshot_sha256: d03da8d4a6d955bd8da779ceb1d2496fa7c27473d9208965349c833c59a03b73
+snapshot_sha256: 84fb3086f97e6f65b33b33ad3d4823d2e830f611d2a02c77806e32d266365bc3
 status_id: 2084301728363462919
 conversation_id: 2084301728363462919
 post_count: 1
 ingested: "2026-08-03"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [self-improving-systems, harness-engineering, evaluation, deploy-time-learning]
 ---
 

@@ -4,9 +4,9 @@ source: https://arxiv.org/html/2602.22302v1
 captured: "2026-03-04"
 capture: web-fetch
 genre: scientific-paper
-snapshot_sha256: ade929d5270348c6fceae8745d185ffb452424d81ea48c3813b7123f4250c965
+snapshot_sha256: 0c8dd220500f20e200c4dd21525b3b55bfa0748ccc33d4554b717c8149f89969
 ingested: "2026-03-09"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [agent-reliability, formal-methods, runtime-enforcement, design-by-contract]
 ---
 

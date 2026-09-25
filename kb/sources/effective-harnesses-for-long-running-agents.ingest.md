@@ -4,9 +4,9 @@ source: https://www.anthropic.com/engineering/effective-harnesses-for-long-runni
 captured: "2026-07-28"
 capture: web-fetch
 genre: practitioner-report
-snapshot_sha256: 92e6ec34be4095dd3b069f401b108d983441e9aff28a5c3d9c322dd0d6fe9c03
+snapshot_sha256: 33576b8dac00403c9079c537ab2e49d727cf9824b01f2c82520d0f9e8dfa1a25
 ingested: "2026-07-28"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [context-engineering, agent-memory, agent-harnesses, verification]
 ---
 

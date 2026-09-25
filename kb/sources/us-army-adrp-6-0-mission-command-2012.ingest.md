@@ -5,9 +5,9 @@ captured: "2026-08-28"
 capture: pdftotext
 capture_scope: partial-source
 genre: official-statement
-snapshot_sha256: 0d8051d92a9f0d048265ea02aa2c97b904b7e12cd079208568b61a4b3e6001b7
+snapshot_sha256: 66b0318c59f9e3a5e8c8e55112863718b11d4027e4582209c70edac4c5c274d2
 ingested: "2026-08-28"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [agent-orchestration, delegation, intent, coordination]
 ---
 

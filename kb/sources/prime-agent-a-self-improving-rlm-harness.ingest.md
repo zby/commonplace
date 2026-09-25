@@ -5,9 +5,9 @@ captured: "2026-08-26"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: e43bcbed44c7441ec66352dd5fd354366dc0618034b3a61738891f2e97af2381
+snapshot_sha256: 80c3e560faa59e7670fc22134652be4a175e2b73c9b2029637176d7853322685
 ingested: "2026-08-26"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [agentic-systems, self-improving-systems, orchestration, evaluation]
 secondary_sources:
   - role: implementation

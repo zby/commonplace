@@ -4,9 +4,9 @@ source: https://arxiv.org/abs/2608.14354v1
 captured: "2026-08-18"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: f43b809647d4bb7bcf0b38f98efbe47fb604ee40f5bed5786242d1703c73a1d6
+snapshot_sha256: 3df3da82f1c4d37ea145c4055bc0df3a5ea571a938bdcbc9e81802838c350cb6
 ingested: "2026-08-18"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [agentic-systems, long-horizon-agents, context-engineering, autonomous-research]
 secondary_sources:
   - role: implementation

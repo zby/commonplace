@@ -4,12 +4,12 @@ source: https://x.com/mfpiccolo/status/2060069083878408689
 captured: "2026-05-29T07:13:46.021671+00:00"
 capture: xdk
 genre: practitioner-report
-snapshot_sha256: 726dde47f7f601e5a8293df177150cdf70694cb96952f1a841823ec58a18bfcc
+snapshot_sha256: d86a007e057fd9941a868cade5d5b85a57eae112ee8885731a2046ac55e013ee
 status_id: 2060069083878408689
 conversation_id: 2060069083878408689
 post_count: 2
 ingested: "2026-05-29"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [agent-harness, orchestration, composability, calling-conventions]
 ---
 

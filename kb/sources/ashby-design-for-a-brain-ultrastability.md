@@ -1,6 +1,6 @@
 ---
 description: "Ashby's ultrastable system — the cybernetic precedent for a second loop that reorganizes a system when essential variables leave viable limits, retaining by equilibrium rather than by an evaluator"
-type: kb/sources/types/source-review.md
+type: source-review
 tags: [foundations, computational-model]
 ---
 

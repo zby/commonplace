@@ -4,12 +4,12 @@ source: https://x.com/henrytdowling/status/2054246434506199529
 captured: "2026-08-11T10:29:52.213702+00:00"
 capture: xdk
 genre: conceptual-essay
-snapshot_sha256: 08be0e4be3c71360ce4159d55ec32a00fb63dffa8aba2a99681298c116c574ae
+snapshot_sha256: a76dc549fb5ccf643975a4b39a86df7cb59371b76fece62431e9182d986c795c
 status_id: 2054246434506199529
 conversation_id: 2054246434506199529
 post_count: 1
 ingested: "2026-08-11"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [agent-memory, context-engineering, retrieval, knowledge-bases]
 ---
 

@@ -4,12 +4,12 @@ source: https://x.com/ChristopherA/status/2065234780497883259
 captured: "2026-06-12T12:17:46.079283+00:00"
 capture: xdk
 genre: tool-announcement
-snapshot_sha256: c8a32b5b994e715a6dfbfd7203bc674f3723ce260355618f6aa4bdc766da747e
+snapshot_sha256: f7e4193279d93d2207ce8a0a962356184021aee12ae402ba40560b4bbd57aa29
 status_id: 2065234780497883259
 conversation_id: 2065234780497883259
 post_count: 1
 ingested: "2026-06-12"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [agent-memory, context-engineering, workstreams, claude-code]
 ---
 

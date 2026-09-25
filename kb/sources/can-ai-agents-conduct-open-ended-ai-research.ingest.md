@@ -4,9 +4,9 @@ source: https://cruxevals.com/crux/can-ai-agents-conduct-research/
 captured: "2026-08-06"
 capture: web-fetch
 genre: scientific-paper
-snapshot_sha256: 24132cf17ad499684f2059ccff4dccc6ecd8d3959a7e728b01589352a124b628
+snapshot_sha256: 1926f5e9c491a3f9069dca28de2d3db9e6f4c54474eafdca58590ca32d0a1457
 ingested: "2026-08-06"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [agent-evaluation, scientific-discovery, oracle-theory, context-engineering]
 ---
 

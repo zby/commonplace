@@ -4,9 +4,9 @@ source: https://arxiv.org/abs/2607.11859
 captured: "2026-07-17"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: 2c76c89f8311859973099707a475550c50f336c8c362926dcdebcde94ad8eea9
+snapshot_sha256: f3f683d0eb1f92daf41fd67bd4d999e401dc9b79dbc3c38ba25d7293125ee0ff
 ingested: "2026-07-17"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [multi-agent-systems, scholarly-review, evaluation, synthesis]
 ---
 

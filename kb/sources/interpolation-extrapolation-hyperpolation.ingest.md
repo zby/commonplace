@@ -4,9 +4,9 @@ source: https://arxiv.org/pdf/2409.05513
 captured: "2026-05-19"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: c88e3e1af3156f19d5a9efa2150ead7a76277c4e605d6a5e1f3bcd8c264bb8ee
+snapshot_sha256: 97a5576449418821a4dc3b683f5f1026b5bf71e7df81576842df112ae71d7be0
 ingested: "2026-05-19"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [creativity, generalisation, oracle-theory, ai-limits]
 ---
 

@@ -4,9 +4,9 @@ source: https://cseweb.ucsd.edu/~vahdat/papers/mop.pdf
 captured: "2026-08-19"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: 02cfee9ebe676ff495272a2ed6717b26fd61f907ea70d37deb217d78fdcab957
+snapshot_sha256: 4dcb6757b613660f958a1c3bd61c223029998a39951327f3e5abbaf8473da010
 ingested: "2026-08-19"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [metaobject-protocols, reflective-architecture, language-extensibility]
 ---
 

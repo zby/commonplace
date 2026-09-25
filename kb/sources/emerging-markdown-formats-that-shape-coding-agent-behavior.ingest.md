@@ -4,9 +4,9 @@ source: https://generativeprogrammer.com/p/emerging-markdown-formats-that-shape
 captured: "2026-08-03"
 capture: web-fetch
 genre: conceptual-essay
-snapshot_sha256: fadeacc09687cc0e898e54a8821f72fa50650c88970e6a5aa87e525a711880e9
+snapshot_sha256: 8257e589fb712dedb624fcfbb29db9a11cf9c4ead3bb4da7c9f52d6b198dd3b4
 ingested: "2026-08-03"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [agent-instructions, context-engineering, document-systems, agent-memory]
 ---
 

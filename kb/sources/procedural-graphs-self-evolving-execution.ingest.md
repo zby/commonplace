@@ -1,6 +1,6 @@
 ---
 description: "Procedural Graphs combine localized action guidance with validated graph revision; their experiments separate consumption choices while leaving the surrounding learning machinery fixed."
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 source: https://arxiv.org/abs/2609.09153
 captured: "2026-09-21"
 ingested: "2026-09-21"
@@ -8,7 +8,7 @@ capture: pdftotext
 capture_scope: full-source
 doi: "10.48550/arXiv.2609.09153"
 genre: scientific-paper
-snapshot_sha256: 744632dd6e1db58a0d479d8ae8134e7573416e444eaed517b1c64a471359693c
+snapshot_sha256: c3a1a46ccd3ec509fdf5458cfea47c7f8efc2b7f5bf08281e26658905e30702a
 domains: [context-engineering, procedural-memory, agent-learning]
 learning_claims: true
 ---

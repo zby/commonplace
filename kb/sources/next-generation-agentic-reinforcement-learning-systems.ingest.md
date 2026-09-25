@@ -4,9 +4,9 @@ source: https://arxiv.org/abs/2607.01120v1
 captured: "2026-08-06"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: 9baec5bfaa2a519421a6de15c963929c398ff278c27f661d485b803046833e7f
+snapshot_sha256: 23bc1bfce12b95a00b6ded9bcd8bb539606388bb6e04782e79c9c1e0eb07201b
 ingested: "2026-08-06"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [self-evolving-agents, trajectory-learning, agent-governance, representational-form]
 ---
 

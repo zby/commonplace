@@ -4,9 +4,9 @@ source: https://page.mi.fu-berlin.de/mulzer/pubs/selfimpSICOMP.pdf
 captured: "2026-07-21"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: 1b5b08e6d8a822658bcbba972bc59ec3897c54ca6119f515912af40306311acf
+snapshot_sha256: 7a9731ad18242433100118db4de88e597c353f801d5485e9a60cf3b04a5b556a
 ingested: "2026-07-21"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [self-improvement, online-learning, algorithms, entropy]
 ---
 

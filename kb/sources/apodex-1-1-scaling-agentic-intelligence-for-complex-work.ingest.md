@@ -5,9 +5,9 @@ captured: "2026-08-26"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: 53b456ea6a26ab4dd70b6459ac4d8581d8ab72ef730ce707bf4ee1a1644970ed
+snapshot_sha256: d08deda18ea1c1dd6937d2816a9761b478d4ed8157851d2c0e0e81ec54d9cdf6
 ingested: "2026-08-26"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [agent-orchestration, agent-runtime, agent-evaluation, agent-learning]
 secondary_sources:
   - role: implementation

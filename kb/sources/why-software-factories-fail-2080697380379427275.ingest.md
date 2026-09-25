@@ -4,12 +4,12 @@ source: https://x.com/dexhorthy/status/2080697380379427275
 captured: "2026-07-26T07:15:32.486244+00:00"
 capture: xdk
 genre: practitioner-report
-snapshot_sha256: 9da3d3ce433e580a32bbbf65f089993e678bee2c2c7293a94b4912b707f39d7d
+snapshot_sha256: 94fcb6a8e21d90e7319986976c304a477ee881569c341e8e9274dd23ea98c23b
 status_id: 2080697380379427275
 conversation_id: 2080697380379427275
 post_count: 11
 ingested: "2026-07-26"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [agentic-coding, maintainability, evaluation, verification]
 ---
 

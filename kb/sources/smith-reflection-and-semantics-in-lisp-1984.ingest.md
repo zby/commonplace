@@ -4,9 +4,9 @@ source: https://www.ageofsignificance.org/documents/Reflection%20and%20Semantics
 captured: "2026-07-14"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: 7078f2c86f97612906bfab0479238dfbc6cbd6b48a69281084c38a1129368be6
+snapshot_sha256: b59daf3780b402f57dc8a4d5e2078e2ef2555a514db766057cdcc92d7aecccd9
 ingested: "2026-07-14"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [procedural-reflection, self-reference, programming-language-semantics]
 ---
 

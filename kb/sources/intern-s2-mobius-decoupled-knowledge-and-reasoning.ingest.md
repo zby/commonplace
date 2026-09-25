@@ -4,9 +4,9 @@ source: https://paperswithcode.co/api/v1/papers/2608.14290?include_resources=tru
 captured: "2026-08-18"
 capture: web-fetch
 genre: scientific-paper
-snapshot_sha256: 2588a59801967d1a3d3f55d7b164c0802ebdd451d6084fba1282ca121d77df9d
+snapshot_sha256: 62c7f5883154caf17742e9c4d0f5eb0c2679eb181725ad35c9d1c876d1ef500c
 ingested: "2026-08-18"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [model-architecture, parametric-memory, reasoning, learning-theory]
 ---
 

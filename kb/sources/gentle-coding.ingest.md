@@ -4,9 +4,9 @@ source: https://github.com/OttoRenner/Gentle-Coding
 captured: "2026-07-17"
 capture: web-fetch
 genre: code-repository
-snapshot_sha256: 5c99601b818bcc5461e7c7c2fe4d8776773cca417aee8775d197d0739b65bb56
+snapshot_sha256: 3fb454eccb1a5a0163b2fcd969dda4fc8f18b6449fa1b8fc671f340db47dc957
 ingested: "2026-08-24"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [ai-coding, prompt-framing, context-engineering, llm-evaluation]
 ---
 

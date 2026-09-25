@@ -4,11 +4,11 @@ source: https://www.pnas.org/doi/epdf/10.1073/pnas.2606495123
 captured: "2026-08-18"
 capture: web-fetch
 genre: scientific-paper
-snapshot_sha256: 79188a6fed4a5f81ed20ec3dde4a39657a162ac43d4755b69a50ec94657c8fc4
+snapshot_sha256: 58d654caa281bd4d191a8104ee43b538f56c9ad091c836c6a281f449d6d86e2a
 capture_via: https://www.ncbi.nlm.nih.gov/research/bionlp/RESTful/pmcoa.cgi/BioC_xml/PMC13393493/unicode
 capture_note: The PNAS ePDF endpoint returned HTTP 403; the article text was captured from its open-access NCBI PMC BioC mirror. The mirror omits some inline mathematical glyphs.
 ingested: "2026-08-18"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [agentic-analysis, research-reproducibility, prompt-sensitivity, llm-evaluation]
 ---
 

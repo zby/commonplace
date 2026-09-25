@@ -6,10 +6,10 @@ capture: trafilatura
 capture_scope: abstract
 doi: "10.1109/ACSOS-C66519.2025.00029"
 genre: scientific-paper
-snapshot_sha256: 01c7bd0ac0a81c2cf7fade2e41d9f974317a8c343805cab27815c6b60e7ccd4d
+snapshot_sha256: d8ce3740bac87e8ee4e94ff13c9db6b05ea47c8831ec6ee3f97a309a1b888686
 ingested: "2026-09-19"
 occasion: "Reconsider the learning paradigm from Popperian epistemology: compare the epistemic process, computational realization, changeable representations and tests, fixed-model learning, reflection, and supporting evidence."
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 learning_claims: true
 domains: [computational-reflection, learning-theory, formal-expectations]
 ---

@@ -4,9 +4,9 @@ source: "https://firebasestorage.googleapis.com/v0/b/firescript-577a2.appspot.co
 captured: "2026-08-26"
 capture: pdftotext
 genre: scientific-paper
-snapshot_sha256: c7495e59ca5cfd477aefaf78e3661cc0133cd194152a9dd8324196337171dca7
+snapshot_sha256: 60503a1b2692e3e761f998fa1e9404b7052df98ac5f7e828ffcc31594e323c94
 ingested: "2026-08-26"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [context-engineering, learning-theory, evaluation]
 ---
 

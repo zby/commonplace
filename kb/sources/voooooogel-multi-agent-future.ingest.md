@@ -6,7 +6,7 @@ capture: manual-paste
 genre: conceptual-essay
 snapshot_sha256: ca2d4c52b889db55f68780a0b2132b49747ab21a9ea597f99de5a501888ef91c
 ingested: "2026-03-09"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [multi-agent-systems, bitter-lesson, agent-orchestration, context-management]
 ---
 

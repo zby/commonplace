@@ -6,10 +6,10 @@ capture: pdftotext
 capture_scope: full-source
 capture_url: https://www.cs.utexas.edu/~ai-lab/pubs/either-aij-94.pdf
 genre: scientific-paper
-snapshot_sha256: 2b96da859254945fe46dc4ef1a07ada8a1d9357bfb41f592813bc3a9ae70af29
+snapshot_sha256: 689501ec3637f9decb8fbc9ba0493737960529a0c2f0be7ecd65bcc6c1a8eb1e
 ingested: "2026-08-31"
 occasion: "Determine what this source establishes about learning from an explicit but fallible theory: how theory guides inference, search, or generalization; how empirical success or failure bears on the theory; how defects are localized and repaired; and whether the revised theory changes later learning. Distinguish a theory of an external problem domain from a reflective theory of the learner's own software organization. This is source ingestion, not a request to confirm the proposed synthesis."
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [learning-theory, theory-refinement, knowledge-base-revision, symbolic-machine-learning]
 ---
 

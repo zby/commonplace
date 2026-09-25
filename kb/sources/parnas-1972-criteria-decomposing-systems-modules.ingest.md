@@ -4,9 +4,9 @@ source: https://www.win.tue.nl/~wstomv/edu/2ip30/references/criteria_for_modular
 captured: "2026-07-27"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: 04374212e510279659911a6f60e80be529b0a932c2a7b492bb3fa506c65d0c2d
+snapshot_sha256: f32915eefc58d389b92a25801478123310178ede6012ab64e84cc152a975e0a8
 ingested: "2026-08-24"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [software-architecture, modularity, information-hiding]
 ---
 

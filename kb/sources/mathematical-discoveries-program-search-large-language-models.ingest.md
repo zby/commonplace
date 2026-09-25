@@ -5,10 +5,10 @@ captured: "2026-08-29"
 capture: user-supplied-pdf-to-markdown
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: 641e90a266e4218ed7d4e1a618340650d10cb21121db9e280cf64b0cd24e54f6
+snapshot_sha256: da7e027488477fded125fb8893bc05c943092af47f6ae041f4f24c5c3fac41bf
 ingested: "2026-08-29"
 occasion: "determine whether each system supplies existence evidence for the register’s selected-localized cell, without borrowing its mechanism, and therefore whether the shared response is an `instance`"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [program-search, agent-learning, scientific-discovery]
 ---
 

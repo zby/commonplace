@@ -5,9 +5,9 @@ captured: "2026-08-27"
 capture: pdftotext
 capture_scope: full-source
 genre: conceptual-essay
-snapshot_sha256: 3fb23c0f0718e408105bfffff1b496a34ca1bb36b082731393594ceedae52145
+snapshot_sha256: 1d576d7a16c55869b5b6f8fe697e7b7a0c9daf3c4b31beae0ad9ea0403ed77b7
 ingested: "2026-08-27"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [proof-structure, verifiability, decomposition, writing-conventions]
 ---
 

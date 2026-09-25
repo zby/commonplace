@@ -4,9 +4,9 @@ source: https://www.manning.com/preview/sutskevers-list/chapter-5
 captured: "2026-08-02"
 capture: epub-conversion
 genre: conceptual-essay
-snapshot_sha256: fdddc071deec31676135bb9519a4870aacc88b1e4a0e132801d6d056537e76fb
+snapshot_sha256: 114e307b3297eb4340cfc6931a79ad309a0539f8d39ce9d4864a7ddbffce41e4
 ingested: "2026-08-02"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [learning-theory, foundations, evaluation]
 ---
 

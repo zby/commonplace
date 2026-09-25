@@ -5,10 +5,10 @@ captured: "2026-08-31"
 capture: trafilatura
 capture_scope: full-source
 genre: tool-announcement
-snapshot_sha256: d6f00c9bb65b90bb7b5e2ced711972dc491db9f9800846dd145e53e335c42463
+snapshot_sha256: f0a432a2459568aceadb9a33f062d9979806923d82d9f59ed712faf69de4ca5b
 ingested: "2026-08-31"
 occasion: "Split a legacy source review that combined two source URLs and analysis into one snapshot and ingest pair per primary source."
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [world-models, robot-planning, physical-reasoning]
 ---
 

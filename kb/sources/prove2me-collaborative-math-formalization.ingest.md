@@ -5,9 +5,9 @@ captured: "2026-09-24"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: dd52c9fd8cf0f7c74705d34dd00f288e543ba886f2aaa86f1591486a286adcce
+snapshot_sha256: 287e6431a6fa0dd1244e9a1d840234502cb7ddb4c995242a9183f216b19b8b45
 ingested: "2026-09-25"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [formal-verification, multi-agent-coordination, knowledge-reuse, learning]
 learning_claims: true
 ---

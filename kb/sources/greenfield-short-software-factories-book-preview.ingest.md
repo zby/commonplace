@@ -5,10 +5,10 @@ captured: "2026-08-31"
 capture: trafilatura
 capture_scope: partial-source
 genre: book-preview
-snapshot_sha256: f399cd1603a4940b4900312d7013e046b7733f6a545e2cdef9a3a031da9b45ca
+snapshot_sha256: 96ddb89a8dc9975cb754b99c898ff5b7d1c32cbaa01daec1355fe6e8e70fbdbf
 ingested: "2026-08-31"
 occasion: "Investigate the original 2004 Software Factories book without treating a partial Google Books preview as full-text evidence for the ontology."
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [software-factories, domain-specific-languages, software-development-automation]
 ---
 

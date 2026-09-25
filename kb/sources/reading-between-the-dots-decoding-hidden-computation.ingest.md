@@ -4,9 +4,9 @@ source: https://arxiv.org/abs/2607.03502
 captured: "2026-07-18"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: cd7310681fd221c5ae3dc1d08b62ab842d9a2c7233040d726b2662407be7d77e
+snapshot_sha256: f470aae2c1550d48b6453d44e96e466df1e791b4bddf783fcd0010f1ba2a6fde
 ingested: "2026-07-18"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [mechanistic-interpretability, monitorability, reasoning, evaluation]
 ---
 

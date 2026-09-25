@@ -5,11 +5,11 @@ captured: "2026-09-17"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: 9e2301de1cd82dacf9e6fc8e8fe698a620b4b95f535f4a92d4997f3d0e1aaea7
+snapshot_sha256: aa7a0e1019bcc0d61a1d4bd1f7320cda73a7585db9b4084ae7838a74b7af8eb2
 ingested: "2026-09-17"
 occasion: "Tasks, methods, domain models, ontologies, adapters; what bridges and refiners make explicit; how far configuration was automated."
 learning_claims: true
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [knowledge-engineering, component-reuse, adaptation, ontologies]
 ---
 

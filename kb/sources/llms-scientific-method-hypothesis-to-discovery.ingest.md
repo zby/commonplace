@@ -6,10 +6,10 @@ capture: pdftotext
 capture_scope: full-source
 doi: "10.1038/s44387-025-00019-5"
 genre: scientific-paper
-snapshot_sha256: 161288e80d6230f9581d947f888a7fe181282021121950b79a3d5ae85acdfb9c
+snapshot_sha256: bd2fb510ba9490069a25ebf04693e1d7a88c05e67995e4b1077cee838bbe2360
 ingested: "2026-09-19"
 occasion: "Reconsider the learning paradigm from Popperian epistemology: compare the epistemic process, computational realization, changeable representations and tests, fixed-model learning, reflection, and supporting evidence."
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [scientific-discovery, learning-theory, evaluation]
 learning_claims: true
 ---

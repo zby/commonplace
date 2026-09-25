@@ -4,9 +4,9 @@ source: https://arxiv.org/html/2608.07885v1
 captured: "2026-08-18"
 capture: web-fetch
 genre: scientific-paper
-snapshot_sha256: 5563d6df0d4b948334753135a5d49408cdca7441d39e5fd721b13ceffc02ae9f
+snapshot_sha256: 28981ec29629de92aef6cb1f5c602019b91562745a333842c70b4d11c96fe23f
 ingested: "2026-08-18"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [trace-learning, deploy-time-learning, skill-distillation, reasoning-economics]
 ---
 

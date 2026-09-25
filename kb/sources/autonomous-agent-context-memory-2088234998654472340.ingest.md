@@ -4,12 +4,12 @@ source: https://x.com/marfinxx/status/2088234998654472340
 captured: "2026-08-20T13:27:16.882050+00:00"
 capture: xdk
 genre: conceptual-essay
-snapshot_sha256: 995bb6369c9866ebab2890dd987d8dc7836f848de82ecf40ee3e0f6bfa74ada7
+snapshot_sha256: 21e9561838ec66208c74cbd5272894b58bb506e4dc01ac4da82ede09f981925e
 status_id: 2088234998654472340
 conversation_id: 2088234998654472340
 post_count: 6
 ingested: "2026-08-20"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [context-engineering, agent-memory, memory-curation, retrieval]
 ---
 

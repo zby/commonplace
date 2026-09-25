@@ -5,10 +5,10 @@ captured: "2026-08-31"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: 6d51198ff3fd49120ad3f301ad02935271e20689a53a8a60151fbff1f7a192a1
+snapshot_sha256: 8330946b1cdec7e1a3f20b8299aaa66adf3c3a20bfe6a3101fb0313d95509949
 ingested: "2026-08-31"
 occasion: "reconstruct Greenfield and Short’s original software-factory ontology and distinguish factory construction from family-member production, including their explicit bootstrapping claim."
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [software-factories, software-product-lines, model-driven-development, bootstrapping]
 ---
 

@@ -4,9 +4,9 @@ source: https://arxiv.org/html/2604.02280v1
 captured: "2026-04-04"
 capture: web-fetch
 genre: scientific-paper
-snapshot_sha256: 6b678257a0799f11ea2ce44ed89a565f68c1a27f560ac8b39dcd2d9fd403e873
+snapshot_sha256: e3736ccb5620c67d5b34743b617c3d921be9162d9694c86e8ec40d3839fde8b6
 ingested: "2026-04-04"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [agent-memory, context-efficiency, memory-curation, forgetting]
 ---
 

@@ -4,9 +4,9 @@ source: https://magazine.sebastianraschka.com/p/components-of-a-coding-agent
 captured: "2026-04-05"
 capture: web-fetch
 genre: practitioner-report
-snapshot_sha256: ed70897406230aa1184d33b9e5f516cb078edc489f31c43a84c335b6266e9efa
+snapshot_sha256: bb543884e4cbf128f738bec9a07649dd66ffd6d1b43dc31a2cc9b07031c9cb25
 ingested: "2026-04-05"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [agent-architecture, context-engineering, coding-agents]
 ---
 

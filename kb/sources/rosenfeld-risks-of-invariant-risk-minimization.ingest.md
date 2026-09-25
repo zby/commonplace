@@ -5,9 +5,9 @@ captured: "2026-08-29"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: d539f535d918e5ff6c3a57263092e07debdfc3e1ebddd68a2262a09d384a7fd3
+snapshot_sha256: 4dc0be8b294d5c34476de1c89ec6e8e5d713725126b6996f971d5d35dc7f2ed9
 ingested: "2026-08-29"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [causal-inference, invariance, reach-assessment, learning-theory]
 ---
 

@@ -5,9 +5,9 @@ captured: "2026-09-24"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: 262bcb90b0791f53a37d316e630caa403391d5f36470e1f34b821891ba76f7c3
+snapshot_sha256: f3d3dcc2004a049d8b5153c43d72e81127ebdb5e25bc8451e8fc5d35680cf36c
 ingested: "2026-09-25"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [skill-acquisition, knowledge-compilation, learning-theory]
 learning_claims: true
 ---

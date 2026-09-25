@@ -4,9 +4,9 @@ source: https://arxiv.org/html/2512.14012v1
 captured: "2026-03-09"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: 921751ccdaa195fbdd5cccc318be916d16b7086c111e380a6b09c08991365c3d
+snapshot_sha256: edec1e3809c8dbc9d16b96737f300aa1e022b615c1bad7e538e309353f52a664
 ingested: "2026-03-09"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [agentic-coding, developer-practices, task-suitability, human-ai-collaboration]
 ---
 

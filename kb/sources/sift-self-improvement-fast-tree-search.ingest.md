@@ -1,13 +1,13 @@
 ---
 description: "SIFT uses cheap pairwise code judgments to guide asynchronous harness search; its experiments distinguish search guidance, final selection, and the cost of stronger evaluation."
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 source: https://arxiv.org/abs/2609.19526
 captured: "2026-09-24"
 ingested: "2026-09-25"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: eb90e9a9482059b114863cc1aebf7b2c013030b6a5319715361598245fdb759a
+snapshot_sha256: 12222d175931a4f6ec894e0becf045ad6596388532b8c2762c998e146ddacfb9
 domains: [self-improving-systems, evaluation, search-control]
 learning_claims: true
 ---

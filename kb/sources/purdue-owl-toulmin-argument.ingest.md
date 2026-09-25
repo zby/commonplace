@@ -4,9 +4,9 @@ source: https://owl.purdue.edu/owl/general_writing/academic_writing/historical_p
 captured: "2026-02-26"
 capture: web-fetch
 genre: conceptual-essay
-snapshot_sha256: 45378ed5cecbe29a785644d5400ef2641531e6372321d0889d97fadc1fda97db
+snapshot_sha256: 6ff6aa2ddfbeb281221503257873712b29d4f0e00f46162714d485a2ad1bc5e7
 ingested: "2026-03-09"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [argumentation-theory, knowledge-representation, structured-reasoning]
 ---
 

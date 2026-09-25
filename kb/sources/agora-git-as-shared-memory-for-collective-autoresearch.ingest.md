@@ -5,9 +5,9 @@ captured: "2026-09-17"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: 1f296d63cdcd049c4822a83dd613b3dda3aad01c3e97e415fdc347c46f857a30
+snapshot_sha256: 4d26a1d9d125af102350ee3e3881a4ca239ee255e3cb6e1b66112980293ded1a
 ingested: "2026-09-17"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [multi-agent-systems, shared-memory, autonomous-research, learning-theory]
 learning_claims: true
 ---

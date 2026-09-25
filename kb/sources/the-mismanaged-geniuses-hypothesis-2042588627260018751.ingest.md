@@ -4,12 +4,12 @@ source: https://x.com/a1zhang/status/2042588627260018751
 captured: "2026-04-10T20:39:59.169708+00:00"
 capture: xdk
 genre: conceptual-essay
-snapshot_sha256: bbaa66c579f84a79fc501f5a1b289d088d1ab120f8f22bfc7551267cbe3e4e91
+snapshot_sha256: bffda6f150522946a61abcdfa012c3595e88552576e22f9687a6ea5703f0a37e
 status_id: 2042588627260018751
 conversation_id: 2042588627260018751
 post_count: 5
 ingested: "2026-04-10"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [agent-architecture, orchestration, test-time-scaling, model-harness-coevolution]
 ---
 

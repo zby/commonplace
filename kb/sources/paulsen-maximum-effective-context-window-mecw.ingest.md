@@ -4,9 +4,9 @@ source: https://arxiv.org/pdf/2509.21361
 captured: "2026-03-16"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: 0b473ee651d3cf2b77a96ff9eb097a5f414c8885ee5565cf73ecec7af7af8302
+snapshot_sha256: a5a2a52ded862434c6cc9b8a7c2582c64a5dd495cedad6e7d411f59fa5184332
 ingested: "2026-03-16"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [context-windows, llm-evaluation, rag-systems, agent-architecture]
 ---
 

@@ -4,9 +4,9 @@ source: https://malloc.dog/blog/2021/10/12/mesa-optimizers-and-language-recursio
 captured: "2026-03-31"
 capture: web-fetch
 genre: conceptual-essay
-snapshot_sha256: 0cfc11a8df128465e669232e2b2ec1de564da988f3ac05785c39b8ab6a5fa9c9
+snapshot_sha256: c68a7bd7d8af00c047dfa497e30c594ead032bbad7818c8cd5a41c468e9a5c17
 ingested: "2026-03-31"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [mesa-optimization, language-theory, capability-emergence, learning-theory]
 ---
 

@@ -4,9 +4,9 @@ source: https://alexzhang13.github.io/blog/2026/longcot-rlm/
 captured: "2026-06-25"
 capture: web-fetch
 genre: practitioner-report
-snapshot_sha256: 2f827452949bb409adf674dbb920ca5658f9417048e045a2ebb7b26e8e7d1615
+snapshot_sha256: 50a71b984a68d30cb5853d62c63a4095af908d0091335a660cc92a090341f3c5
 ingested: "2026-06-25"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [orchestration, rlm, decomposition-policy, trajectory-analysis]
 ---
 

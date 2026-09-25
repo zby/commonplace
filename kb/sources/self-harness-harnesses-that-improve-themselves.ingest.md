@@ -4,9 +4,9 @@ source: https://arxiv.org/html/2606.09498v1
 captured: "2026-08-02"
 capture: web-fetch
 genre: scientific-paper
-snapshot_sha256: 28b4792629559f4ffd2bb587a64ee281d5f13a561cc0b49b1d36358cc1d63b11
+snapshot_sha256: 5a6b3e4d51567b2d4be61260446f5cddbf5387f7d90c08b901a7770948a14b54
 ingested: "2026-08-02"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [self-improvement, harness-learning, trace-learning, evaluation]
 ---
 

@@ -5,10 +5,10 @@ captured: "2026-08-31"
 capture: pdftotext
 capture_scope: full-source
 genre: practitioner-report
-snapshot_sha256: 796e51fca6123553583c1e21de5ad603ca1955b2355b80babfd4f864b027da34
+snapshot_sha256: 3409c59f301d9fa1af59212a755527346ef889cc12c4bb968f72a6ffa3236c4c
 ingested: "2026-08-31"
 occasion: "determine whether established universal-factory terminology conflicts with an unqualified claim about computational acquisition of family-specific production knowledge."
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [software-factories, software-configuration, cross-development, product-families]
 ---
 

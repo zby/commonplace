@@ -4,9 +4,9 @@ source: https://code.claude.com/docs/en/workflows
 captured: "2026-06-03"
 capture: web-fetch
 genre: tool-announcement
-snapshot_sha256: 0e0d13fb475b5dadf7cc57f5b1da9534329db9958a62ae6f9802fa19e5d765d3
+snapshot_sha256: efa3652ecbee5235f53e4c4bb9072eaff300cdd1a2d8f600fa7b17e49d9a3c20
 ingested: "2026-06-03"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [orchestration, sub-agents, persistence, context-engineering]
 ---
 

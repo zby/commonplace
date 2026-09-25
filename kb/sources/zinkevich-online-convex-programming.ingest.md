@@ -4,9 +4,9 @@ source: https://www.cs.cmu.edu/~maz/publications/techconvex.pdf
 captured: "2026-07-21"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: 0ee51178a57ff99805f95bee54a123ae773597e04898cc846faac06fe42e2bf2
+snapshot_sha256: b1c16035210ad620ea6dbe501df631702fb1ad21d705fc90374cea9458dc7198
 ingested: "2026-07-21"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [online-learning, regret, self-improving-systems, optimization]
 ---
 

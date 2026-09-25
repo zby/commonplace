@@ -5,9 +5,9 @@ captured: "2026-08-26"
 capture: trafilatura
 capture_scope: full-source
 genre: conversation-thread
-snapshot_sha256: 7100f13baaace6e4b5e5e32594f33f71f602da608b40dff0ea99b09428a23c99
+snapshot_sha256: a01eaf3454a586a318e156e8b8b18140c9f4fbf9fd1d21f50a1d776fe86c9f37
 ingested: "2026-08-26"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [continual-learning, reinforcement-learning, representational-form, agent-architecture]
 ---
 

@@ -4,9 +4,9 @@ source: https://jamesclear.com/great-speeches/creative-thinking-by-claude-shanno
 captured: "2026-03-08"
 capture: web-fetch
 genre: conceptual-essay
-snapshot_sha256: 93575f054f89b1a6ea3eeb6ca533e5665af98ce82eb7aad0d5b1ce72ee07eb2d
+snapshot_sha256: eb0570631b497ece603e9d1fd888d56169f9cdc879f820e4e255fd8786c97e19
 ingested: "2026-03-09"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [creativity, problem-solving, research-methods, agent-orchestration]
 ---
 

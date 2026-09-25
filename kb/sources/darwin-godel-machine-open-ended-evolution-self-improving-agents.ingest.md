@@ -4,9 +4,9 @@ source: https://arxiv.org/abs/2505.22954
 captured: "2026-08-02"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: 9ce2d857b213c66107e0b81be2f281bf691f6812d5146c89a83542e8041aa086
+snapshot_sha256: 05a31de951553910a01b16b684fd04ff05256babd045be77c3008195711088b1
 ingested: "2026-08-02"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [self-improvement, evolutionary-search, harness-learning, evaluation]
 ---
 

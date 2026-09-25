@@ -1,5 +1,5 @@
 ---
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 description: "HEP records evidence-linked hypothesis revision in materials simulations; its audit trail supports inspection, while self-assessed beliefs and bundled comparisons limit epistemic claims."
 source: https://arxiv.org/abs/2607.09195
 captured: "2026-09-19"
@@ -7,7 +7,7 @@ ingested: "2026-09-19"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: 96a598098bb6bfb719eb153c5b19eea8ec20a637ffc3d38d4b273f04065c16aa
+snapshot_sha256: d208cc0502cb0e3a21fc59fd024035e755f486ee6bffe5f3a986fe04cf464515
 occasion: "Assess 2026 computational implementations and evaluations of conjecture, criticism, revision, and persistence for a learning paradigm grounded directly in Popper; distinguish epistemic commitments, implementation choices, and demonstrated effects."
 domains: [scientific-discovery, theory-refinement, agent-harnesses, evidence-provenance]
 learning_claims: true

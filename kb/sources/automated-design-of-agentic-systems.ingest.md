@@ -5,11 +5,11 @@ captured: "2026-09-17"
 capture: pdftotext
 capture_scope: full-source
 genre: scientific-paper
-snapshot_sha256: ab419dcf4a54cbfa54564967d07ed82c1343405b96ad7c173393254b4dadd945
+snapshot_sha256: 38f7d3be224aa14f1b1cc29c83de05de999b7aac84e8ed01af1de880f0c01aef
 ingested: "2026-09-17"
 occasion: "How the meta-agent's archive is consumed; whether discovered agents transfer across domains; where people intervene."
 learning_claims: true
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [agentic-system-design, meta-learning, transfer]
 ---
 

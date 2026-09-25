@@ -5,9 +5,9 @@ captured: "2026-08-28"
 capture: trafilatura
 capture_scope: full-source
 genre: practitioner-report
-snapshot_sha256: 52d13fbb8f9259ebb4b00cf1948b5a743b1bbb8ecd2839a2a8193f7595aff1e5
+snapshot_sha256: de9aa9990b8882c6fb5671dd98d67ce550fb9749cc1c38188a79275b3eb0fc87
 ingested: "2026-08-28"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [agent-learning, human-feedback, instruction-update]
 ---
 

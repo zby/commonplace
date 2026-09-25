@@ -6,10 +6,10 @@ capture: pdftotext
 capture_scope: full-source
 capture_url: https://arxiv.org/pdf/2006.08381
 genre: scientific-paper
-snapshot_sha256: 8d056c1f2216a33a5be196cc7253d95a6d81955b8cb640bcf330163a7028b7a9
+snapshot_sha256: a2f0dce418efd26f741d4c0133996895d32b3b181f7381f9722f4f03f4715f21
 ingested: "2026-08-31"
 occasion: "Determine what this source establishes about learning reusable executable abstractions that restructure later search, including the relation between the learned library and learned search guidance. Distinguish reusable program knowledge from a theory of the learner's own purposes, architecture, or improvement machinery."
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [program-induction, library-learning, search-guidance, neuro-symbolic-learning]
 ---
 

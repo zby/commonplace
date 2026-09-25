@@ -4,9 +4,9 @@ source: https://x.com/DhravyaShah/status/2101745550752428340
 captured: "2026-09-21T17:58:01.983746+00:00"
 capture: xdk
 genre: practitioner-report
-snapshot_sha256: bd5cf1b317f8ea62f66db43b7bbeca2849125ddf787cae46b10fcb031c0256a5
+snapshot_sha256: d2945e651aa1ced8405c4c389052a9df1d17c7adaaa98194ac4405d76e8b2573
 ingested: "2026-09-21"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [agent-memory, context-engineering, memory-evaluation]
 learning_claims: true
 status_id: 2101745550752428340

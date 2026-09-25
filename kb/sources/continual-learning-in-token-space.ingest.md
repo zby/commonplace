@@ -4,9 +4,9 @@ source: https://www.letta.com/blog/continual-learning
 captured: "2026-03-23"
 capture: web-open
 genre: conceptual-essay
-snapshot_sha256: c1860eaa8d9e25ba7389bb00ecadfd11a0eac66214af32526c335fa7580e1706
+snapshot_sha256: 6c9db1021f7aa35d7204b773490688adbef5fc179d63de728d432b7810866389
 ingested: "2026-03-23"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [continuous-learning, agent-memory, context-engineering, learning-theory]
 ---
 

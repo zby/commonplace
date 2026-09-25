@@ -4,9 +4,9 @@ source: https://arxiv.org/abs/2208.11173
 captured: "2026-08-26"
 capture: pdftotext
 genre: design-proposal
-snapshot_sha256: c4953ac382343dc7e9f2e880a868c4d46817c2f4645504964a8da61360d1001f
+snapshot_sha256: 0726778fe4c7d8c729a6db9eb6497a68c2a437fba5ad896f301f12a4acd895d4
 ingested: "2026-08-26"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [continual-learning, reinforcement-learning, agent-architecture, planning]
 ---
 

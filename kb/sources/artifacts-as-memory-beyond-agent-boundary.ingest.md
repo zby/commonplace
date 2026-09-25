@@ -4,9 +4,9 @@ source: https://arxiv.org/abs/2604.08756
 captured: "2026-06-30"
 capture: pdf-read
 genre: scientific-paper
-snapshot_sha256: 21a09181d30d875199af6288820ff6e3ff3d729d6221bcedf9fe4da111cdca88
+snapshot_sha256: 6003eb7acbeeefa3f32a8941a0f0322c746c7ba4b48f567e85457b4f94c8f034
 ingested: "2026-06-30"
-type: kb/sources/types/ingest-report.md
+type: ingest-report
 domains: [agent-memory, learning-theory, situated-cognition, reinforcement-learning]
 ---
 
