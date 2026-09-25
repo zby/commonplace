@@ -49,6 +49,16 @@ criticism. Retained theories can guide diagnosis, test
 selection, and procedure revision; the research objective includes making
 subsequent improvement work more productive.
 
+The program is staged. The first claim is that an autonomous theory builder
+learns, which it can do with a fixed method. Reflection comes next: the
+builder's method becomes one of its criticized theories. Recursive
+self-improvement is the claim after that, that method changes compound by
+making later improvement better. Reflection is not sufficient for it, and it
+is not necessary for recursive self-improvement in general: Schmidhuber's
+realizations select self-modifications by reward rather than by criticizing
+a stated method. What Commonplace aims at is the reflective route, where
+compounding comes through criticism of the stated method.
+
 We start with an incomplete, criticizable account of how to learn and use it
 through interpretation. The LLM and harness supply executable machinery;
 the methodology need not specify every operation before it can be tried.

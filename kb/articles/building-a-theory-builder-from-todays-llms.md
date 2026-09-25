@@ -94,6 +94,17 @@ Current LLMs already appear capable of the main functions the loop requires:
 None of these capabilities needs to be perfect. The point of the cycle is to
 expose and correct errors.
 
+The bet is the first stage of the program, not all of it. A builder that
+learns can do so with a fixed method. Given such a builder, the next stage
+makes it reflective: its own method becomes one of the theories it states,
+criticizes, and revises. The stage after that is compounding, where
+improvements to the method make later improvement cheaper, more reliable, or
+possible where it was not. Reflection opens that path but does not complete
+it; the [bootstrap supplement](./bootstrapping-an-autonomous-theory-builder.md)
+says what else it takes, and the
+[testing supplement](./testing-whether-a-theory-builder-learns.md) tests
+compounding only after learning is shown.
+
 ## Formalize it, or leave it to people
 
 Self-improving machines are not new. Schmidhuber's

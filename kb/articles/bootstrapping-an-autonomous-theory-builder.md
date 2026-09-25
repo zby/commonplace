@@ -74,13 +74,26 @@ consumed by its operations and criticized against records of its own
 operation, is what the knowledge base calls
 [reflective](../notes/definitions/theory-builder.md#qualifiers).
 
-This closes a feedback loop:
+This opens a feedback loop:
 
 > learning → improved learning machinery → greater future learning capacity → further learning
 
 Every later episode that runs through improved machinery reuses the
 improvement, so its return grows with reuse. That is why
 [an optimal long-run learning strategy invests in its own machinery](../notes/an-optimal-long-run-learning-strategy-invests-in-its-own-machinery.md).
+
+Reflection alone does not close the loop. Reflection makes the method open to
+criticism; the loop closes only when method changes also compound, making
+later improvement cheaper, more reliable, or possible where it was not. That
+takes three further things. The builder must be able to change its machinery
+beyond revising text, which the next section takes up. Its evaluators must be
+able to tell a better method from a worse one, since
+[warranted autonomy extends only as far as an evaluator can assess](../notes/warranted-autonomy-is-bounded-by-oracle-domain.md)
+and a self-theory's approval of its own change is not that evidence. And
+method changes must persist into later improvement work and be shown to help
+there, because
+[compounding is measured in the later improvement episode](../notes/compounding-is-tested-in-later-improvement-not-by-the-accepting-metric.md),
+not by the check that accepted the change.
 
 So far the record shows only what the loop starts from.
 [In a 2026-08-30 revision](../notes/evidence/commonplace-revision-used-theory-guided-computational-search.md),

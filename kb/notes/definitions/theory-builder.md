@@ -176,6 +176,12 @@ is an intervention and is recorded as one.
 
 The qualifiers are independent. Commonplace today is a reflective,
 human-staffed theory builder; the research program's bet is an autonomous one that learns.
+Reflection is structural: it makes the method open to criticism and implies
+neither learning nor
+[compounding](../improvements-can-accumulate-without-compounding.md), where
+method changes make later improvement better. A system can also improve its
+own improvement machinery without reflection, by selecting method variants
+on score.
 
 ## Boundary cases
 
