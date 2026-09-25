@@ -68,5 +68,5 @@ analysis; it does not prescribe retry policy for other workflows.
 
 ---
 
-- [Agentic system analysis run state](../../reports/types/agentic-system-analysis-run-state.md) — implemented-by: the minimal completion record
+- [Agentic system analysis run state](../../types/agentic-system-analysis-run-state.md) — implemented-by: the minimal completion record
 - [Analyse an agentic system](../../instructions/analyse-agentic-system/SKILL.md) — implemented-by: the rerun and candidate-publication workflow

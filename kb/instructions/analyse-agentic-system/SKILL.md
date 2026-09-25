@@ -42,7 +42,7 @@ the run owner.
 
 1. Allocate `AAS-<YYYY-MM-DD>-<system-slug>-<nn>`. Create
    `kb/reports/state/agentic-system-analysis/<run-id>/run-state.md` from the
-   [run-state template](../../reports/types/agentic-system-analysis-run-state.md)
+   [run-state template](../../types/agentic-system-analysis-run-state.md)
    with `run-status: running`. The
    exact result path is always `<run-id>/result.md`.
    Run `commonplace-validate <run-state-path>` immediately. Choose the

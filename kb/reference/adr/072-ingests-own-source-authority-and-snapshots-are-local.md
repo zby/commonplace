@@ -148,6 +148,6 @@ Relevant Notes:
 
 - [ADR 073: Untracked source snapshots require ingest grounding](./073-untracked-source-snapshots-require-ingest-grounding.md) — superseded-by: replaces checksum-first lookup for grounding and mutation-bearing ingest paths while retaining this decision's source-authority and cache boundary
 - [ADR 045: source genre is a single open field on the snapshot](./045-source-genre-is-a-single-open-field-on-the-snapshot.md) — supersedes: replaces snapshot genre authority and its mutation exception while retaining the open vocabulary
-- [Ingest-report type](../../sources/types/ingest-report.md) — implemented-by: durable primary, capture, genre, checksum, and secondary-source contract
-- [Snapshot type](../../sources/types/snapshot.md) — implemented-by: ignored local reading-copy boundary and provisional capture metadata
+- [Ingest-report type](../../types/ingest-report.md) — implemented-by: durable primary, capture, genre, checksum, and secondary-source contract
+- [Snapshot type](../../types/snapshot.md) — implemented-by: ignored local reading-copy boundary and provisional capture metadata
 - [Source collection contract](../../sources/COLLECTION.md) — implemented-by: tracked-ingest versus local-snapshot ownership and link boundary

@@ -144,7 +144,7 @@ or reconcile an unfinished active pass, including a keep pass.
 Step 7 and the schema correctly require a `rehome` report to start pending. The
 instruction's rendered Resolution template says pending only for delete and
 merge. Its retention rule likewise names only unactioned delete and merge
-packets. [`full-pass-report.md`](../../reports/types/full-pass-report.md) still
+packets. [`full-pass-report.md`](../../types/full-pass-report.md) still
 documents only delete and merge as pending, although
 [`full-pass-report.schema.yaml`](../../reports/types/full-pass-report.schema.yaml)
 correctly treats every non-keep disposition, including rehome, as pending.

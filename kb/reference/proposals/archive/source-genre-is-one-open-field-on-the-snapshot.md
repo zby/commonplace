@@ -67,5 +67,5 @@ Relevant Notes:
 - [ADR 044: user verification replaces global note status](../../adr/044-user-verification-replaces-global-note-status.md) — see-also: the sibling resolution of an adjacent fused-field problem, fixed by deleting the field rather than relativizing it
 - [ADR 024: schema severity is per-constraint, fail by default](../../adr/024-schema-severity-is-per-constraint-fail-by-default.md) — see-also: the existing per-constraint severity machinery that makes open-vocabulary mechanism B available with no new code
 - [ADR 018: types are path references to instruction docs](../../adr/018-types-are-path-references-to-instruction-docs.md) — see-also: the precedent for a per-value doc carrying a prose payload, if the Limitations lenses become per-genre docs
-- [Snapshot type spec](../../../sources/types/snapshot.md) — see-also: the type that gains the genre field and whose "no analysis" boundary must be reframed
-- [Ingest-report type spec](../../../sources/types/ingest-report.md) — see-also: the type that drops the `source_type` field and reads it from the paired snapshot for lens selection
+- [Snapshot type spec](../../../types/snapshot.md) — see-also: the type that gains the genre field and whose "no analysis" boundary must be reframed
+- [Ingest-report type spec](../../../types/ingest-report.md) — see-also: the type that drops the `source_type` field and reads it from the paired snapshot for lens selection

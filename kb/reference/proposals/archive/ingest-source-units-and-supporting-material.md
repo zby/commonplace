@@ -5,7 +5,7 @@ type: ../../types/design-proposal.md
 
 # Ingest source units and supporting material
 
-> **Archived** (see [archive README](./README.md)). Adopted by [ADR 072](../../adr/072-ingests-own-source-authority-and-snapshots-are-local.md): the live source authority and primary/secondary design now reside in that ADR, the [source collection contract](../../../sources/COLLECTION.md), and the [ingest-report type](../../../sources/types/ingest-report.md). What remains here is the dated pre-migration state and corpus observations that the decision was tested against.
+> **Archived** (see [archive README](./README.md)). Adopted by [ADR 072](../../adr/072-ingests-own-source-authority-and-snapshots-are-local.md): the live source authority and primary/secondary design now reside in that ADR, the [source collection contract](../../../sources/COLLECTION.md), and the [ingest-report type](../../../types/ingest-report.md). What remains here is the dated pre-migration state and corpus observations that the decision was tested against.
 
 ## Current state (as of 2026-08-22)
 

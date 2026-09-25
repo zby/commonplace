@@ -208,7 +208,7 @@ This factoring keeps the advantages of atomic notes without turning them into a 
 
 ## Guarding implications
 
-The [full-pass report type](../../reports/types/full-pass-report.md) captures the source and, for a merge, the merge target. It does not capture the governing collection contract, type contract, traits as interpreted at preflight, or a workshop framing file used to determine function and composition shape.
+The [full-pass report type](../../types/full-pass-report.md) captures the source and, for a merge, the merge target. It does not capture the governing collection contract, type contract, traits as interpreted at preflight, or a workshop framing file used to determine function and composition shape.
 
 That creates a time-of-check/time-of-use gap. A packet may recommend a split under one body-composability rule; the collection or type contract may change to recognize a composite shape; the source bytes remain identical; and `commonplace-guard-full-pass-report` still passes. The same risk applies when an article lifecycle state or local workshop decision changes what edits are authorized.
 

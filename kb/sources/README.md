@@ -35,5 +35,5 @@ The skill chooses the right snapshotting backend based on the URL (GitHub API fo
 This collection operates in the descriptive register. Local source copies are
 captured for fidelity, not transformed; tracked ingests provide the analysis.
 Writing conventions for the reports live in
-[types/ingest-report.md](./types/ingest-report.md). For the discovery and
+[types/ingest-report.md](../types/ingest-report.md). For the discovery and
 connection procedure, see the `cp-skill-ingest` skill.

@@ -50,7 +50,7 @@ Harder:
 
 ## Links
 
-- [Full-pass report type](../../reports/types/full-pass-report.md) — implemented-by: defines the packet's structured state contract
+- [Full-pass report type](../../types/full-pass-report.md) — implemented-by: defines the packet's structured state contract
 - [Run a full improvement pass](../../instructions/run-full-improvement-pass-on-note.md) — procedure: creates captures and typed packets and guards keep application
 - [Resolve a full-pass disposition](../../instructions/resolve-full-pass-disposition.md) — procedure: inspects, guards, and records asynchronous outcomes
 - [Commonplace CLI commands](../commands.md) — implemented-by: documents the deterministic guard command
