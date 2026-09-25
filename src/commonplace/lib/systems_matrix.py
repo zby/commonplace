@@ -3,12 +3,15 @@
 from __future__ import annotations
 
 import csv
+import functools
 import io
 import json
 import re
 from dataclasses import dataclass
 from hashlib import sha256
 from pathlib import Path
+
+import yaml
 
 from commonplace.lib.note_parser import parse_document
 
@@ -229,6 +232,36 @@ class MatrixInputs:
                 raise ValueError(f"input changed: {path}")
 
 
+_MISSING_LINK = re.compile(r"link health: missing target (?P<link>\S+)$")
+
+
+@functools.cache
+def _redirect_sources(root: Path) -> frozenset[Path]:
+    """Paths the published site redirects, as files under its docs_dir."""
+    config_path = root / "properdocs.yml"
+    if not config_path.is_file():
+        return frozenset()
+    config = yaml.safe_load(config_path.read_text(encoding="utf-8")) or {}
+    docs_dir = (root / str(config.get("docs_dir", "kb"))).resolve()
+    maps = next(
+        (
+            plugin["redirects"].get("redirect_maps") or {}
+            for plugin in config.get("plugins") or []
+            if isinstance(plugin, dict) and isinstance(plugin.get("redirects"), dict)
+        ),
+        {},
+    )
+    return frozenset((docs_dir / old).resolve() for old in maps if isinstance(old, str))
+
+
+def _redirected_link(warning: str, source: Path, root: Path) -> bool:
+    match = _MISSING_LINK.search(warning)
+    if match is None:
+        return False
+    target = (source.parent / match.group("link").split("#", 1)[0]).resolve()
+    return target in _redirect_sources(root.resolve())
+
+
 def load_results(root: Path, review_paths: list[Path] | None = None) -> MatrixInputs:
     """Select explicit main reviews, or all generated main reviews; fail on gaps."""
     root = root.resolve()
@@ -268,10 +301,17 @@ def load_results(root: Path, review_paths: list[Path] | None = None) -> MatrixIn
         from commonplace.lib import validation
 
         checks = validation.validate_note(result_path, repo_root=root)
-        if checks.fails or checks.warns:
+        # Retained results keep their link bytes; a link to a retired artifact
+        # resolves through the published redirect map instead.
+        warns = [
+            warn
+            for warn in checks.warns
+            if not _redirected_link(warn, result_path, root)
+        ]
+        if checks.fails or warns:
             raise ValueError(
                 f"invalid retained result {retained}: "
-                + "; ".join([*checks.fails, *checks.warns])
+                + "; ".join([*checks.fails, *warns])
             )
         data = result.frontmatter
         if (
