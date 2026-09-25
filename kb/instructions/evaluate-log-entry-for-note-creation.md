@@ -29,7 +29,7 @@ Rewrite the proposal in one sentence in your own words. If you cannot restate it
 
 ### 2. Scan note descriptions first
 
-List candidate notes at description resolution before opening individual notes — run the scoped `rg` recipes from `kb/reference/navigation.md` over `kb/notes/` (by the proposal's key terms and any matching tags; `rg '^description:' kb/notes/ --glob '*.md'` for a full sweep).
+List candidate notes at description resolution before opening individual notes — run the scoped `rg` recipes from [navigation.md](../reference/navigation.md) over `kb/notes/` (by the proposal's key terms and any matching tags; `rg '^description:' kb/notes/ --glob '*.md'` for a full sweep).
 
 Scan the listing broadly, not just exact keyword matches. Flag notes whose descriptions suggest they may already cover:
 

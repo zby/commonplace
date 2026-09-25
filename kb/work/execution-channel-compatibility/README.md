@@ -17,7 +17,7 @@ The workshop opened on 2026-07-28 under the project-venv command model (ADR 014)
 
 The rebaseline brought the working documents in line: the [solution catalogue](./solution-catalogue.md) marks each option operative, active, open, fallback or retired; the [probe procedure](./probe-procedure.md) is v7 and checks command authority and library reachability instead of venv and direnv state; the [inventory](./inventory.md) has fresh counts and a first classification of non-promoted instructions. The three July [evidence reports](./evidence/README.md) stay as observations of the old model.
 
-**Division of work with E1.** The [E1 plan](../system-contract-consistency/plans/e1-windows-execution.md) owns making the promoted skills work on native Windows: the package commands and paired preflights named in the [E1 rebaseline](./e1-promoted-skill-rebaseline-2026-08-27.md), and one native-Windows run after they land. This workshop keeps what E1 does not cover: non-promoted instructions and the control plane, per-surface command visibility and library reachability, the classification of non-Python tools, and the disposition of the channel-compilation proposal.
+**Division of work with E1.** The [E1 plan](./e1-windows-execution.md), moved into this workshop when the system-contract consistency workshop closed, owns making the promoted skills work on native Windows: the package commands and paired preflights named in the [E1 rebaseline](./e1-promoted-skill-rebaseline-2026-08-27.md), and one native-Windows run after they land. This workshop keeps what E1 does not cover: non-promoted instructions and the control plane, per-surface command visibility and library reachability, the classification of non-Python tools, and the disposition of the channel-compilation proposal.
 
 **Blocking gap.** No native-Windows evidence exists yet. The next useful step is a v7 probe run in the Codex Windows desktop app after a full restart.
 
@@ -148,7 +148,7 @@ The workshop closes when:
 
 - [ADR 064](../../reference/adr/064-install-commonplace-commands-as-a-user-level-uv-tool.md) — commands as a user-level uv tool; restart requirement; one version per user.
 - [ADR 086](../../reference/adr/086-projects-read-the-library-from-the-installed-package.md) — library served from the installed package; init-written pointers; no hooks; Linux-only evidence.
-- [E1 plan](../system-contract-consistency/plans/e1-windows-execution.md) — owner of promoted-skill native-Windows work.
+- [E1 plan](./e1-windows-execution.md) — owner of promoted-skill native-Windows work.
 - [Channel-compiled instruction artifacts](../../reference/proposals/channel-compiled-instruction-artifacts.md) — existing option space for compiling skills, the instructions tree, the control plane, or a later-bound form.
 - [Windows portability for promoted skills](../self-improvement-cluster-operationalization/windows-portability-for-promoted-skills.md) — prior audit finding and narrower portability proposal.
 - [Instruction generation](../../reference/instruction-generation.md) — current install-time generation and canonical/generated boundaries.

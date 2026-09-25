@@ -14,7 +14,7 @@ from the fix queue and reports the pair under `stale_pairs` with
 `note-changed` and/or `criterion-changed`. Re-review it instead of fixing from
 the stale text.
 
-**Fix strategy.** A named pattern of review warning + appropriate fix, catalogued in `kb/instructions/fix-warnings/fix-strategy-taxonomy.md`. Agents classify each fix by strategy name to make fixes auditable and to grow the taxonomy over time.
+**Fix strategy.** A named pattern of review warning + appropriate fix, catalogued in the [fix strategy taxonomy](./fix-warnings/fix-strategy-taxonomy.md). Agents classify each fix by strategy name to make fixes auditable and to grow the taxonomy over time.
 
 **Fix report.** A per-note markdown file in `kb/reports/state/fixes/{note-stem}.fix-report.md` that maps each warning to its disposition, the strategy used when a fix is applied, and the status (`fixed`, `rejected`, or `deferred`). `Rejected` means the finding was judged spurious or inapplicable and the note was deliberately left unchanged; it is distinct from postponing a finding that may be valid.
 
@@ -57,7 +57,7 @@ commonplace-warn-selector --json kb/notes/linking-theory.md
 
 ### Fix strategy taxonomy
 
-`kb/instructions/fix-warnings/fix-strategy-taxonomy.md` — a living codebook of named fix patterns. Strategies are organized by the review check they most commonly address but can apply across checks. Current categories:
+[fix-strategy-taxonomy.md](./fix-warnings/fix-strategy-taxonomy.md) — a living codebook of named fix patterns. Strategies are organized by the review check they most commonly address but can apply across checks. Current categories:
 
 - **Source residue** — stale paths, unframed domain examples, single-source vocabulary, temporal residue
 - **Confidence miscalibration** — hedge own framework, hedge strength mismatch
@@ -70,7 +70,7 @@ New strategies are added when `new-pattern` reports from fix sweeps show recurri
 
 ### Fix one note
 
-Instruction: `kb/instructions/fix-warnings/fix-review-warnings.md`
+Instruction: [fix-review-warnings.md](./fix-warnings/fix-review-warnings.md)
 
 1. `commonplace-warn-selector --json {note-path}` — get actionable findings
 2. Read the target note in full
@@ -80,13 +80,13 @@ Instruction: `kb/instructions/fix-warnings/fix-review-warnings.md`
 
 ### Fix descriptions
 
-Instruction: `kb/instructions/fix-warnings/fix-descriptions.md`
+Instruction: [fix-descriptions.md](./fix-warnings/fix-descriptions.md)
 
 A specialized sub-procedure for description-field warnings from `commonplace-validate`. Called standalone or by the general fix instruction when it encounters description issues.
 
 ### Fix sweep
 
-Instruction: `kb/instructions/fix-warnings/fix-review-warnings-sweep.md`
+Instruction: [fix-review-warnings-sweep.md](./fix-warnings/fix-review-warnings-sweep.md)
 
 1. `commonplace-warn-selector --json` — build priority queue (sorted by finding count descending)
 2. Run locally unless several notes have disjoint note/report paths and a named fresh-context or parallel-capacity benefit; then give each single-use worker the exact note and report paths, the fix instruction, sole write ownership, validation/return requirements, and a substantive-decision stop, and verify each diff/report before closing the worker

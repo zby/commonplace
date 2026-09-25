@@ -104,7 +104,7 @@ This is a library-reachability defect rather than a shell one, but it has the sa
 
 Repo-internal and repo-local files with the same pattern are not listed; they only run in the source checkout. `cp-skill-health-check` (192) and `cp-skill-ground` (63–64) use such paths only in branches guarded for the source checkout, which is correct.
 
-Candidate fix: replace each with a relative link from the instruction's own location, as ADR 086 did for promoted skills. That belongs in a production change, not in this workshop.
+Fixed on 2026-09-25: the unambiguous paths became relative links from each instruction's own location, as ADR 086 did for promoted skills. Two worker-packet templates now ask for the absolute path resolved from the instruction's directory instead. The three ambiguous cases were left as they are, read as naming the project's own collections.
 
 ## Legacy `.venv` / `.envrc` references
 
@@ -112,7 +112,7 @@ No instruction tells an agent to run commands through a project venv. What remai
 
 - `AGENTS.md.template:151` and `AGENTS.md:214` prohibit prepending project-venv paths. Operative and correct.
 - `INSTALL.md:302` and `:312` diagnose a venv shadowing the uv tool and describe removing the old two-line `.envrc`. Troubleshooting for migrated projects.
-- `cp-skill-health-check/SKILL.md:168–169` detect residue. Line 168 runs `sed -n '1,80p' .envrc`, which prints up to 80 lines of the file into the agent transcript. An `.envrc` may hold secrets; the probe procedure forbids reading it for that reason. The health check needs only to know whether the file matches the old two-line signature, which can be tested without printing it. Route this to E1, which already owns the health-check preflight.
+- `cp-skill-health-check/SKILL.md:168–169` detect residue. Line 168 runs `sed -n '1,80p' .envrc`, which prints up to 80 lines of the file into the agent transcript. An `.envrc` may hold secrets; the probe procedure forbids reading it for that reason. The health check needs only to know whether the file matches the old two-line signature, which can be tested without printing it. Routed to [E1](./e1-windows-execution.md) item 5, which already owns the health-check preflight.
 
 ## Inventory record
 

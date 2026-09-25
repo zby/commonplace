@@ -45,7 +45,7 @@ Installation instructions tell the operator how to establish the tool environmen
 
 - Status: adopted by ADR 064. `cp-skill-health-check` checks bare-name resolution and ownership relative to `uv tool dir --bin`; every `commonplace-*` command also warns when init outputs are stale (ADR 086).
 - Strength: tests the effective channel rather than inferring it from files on disk.
-- Limitation: detects but does not provide command discovery. The health check's own preflight still contains POSIX-only blocks; [E1](../system-contract-consistency/plans/e1-windows-execution.md) owns pairing them.
+- Limitation: detects but does not provide command discovery. The health check's own preflight still contains POSIX-only blocks; [E1](./e1-windows-execution.md) owns pairing them.
 
 ### 2. Launch the agent runtime with a prepared environment — retired
 
@@ -93,7 +93,7 @@ A `PreToolUse` hook rewrites each shell call to prepend the command directory.
 
 Move load-bearing `find`/`xargs`/`sed`/pipeline behavior behind tested `commonplace-*` commands, so instructions call one stable entry point.
 
-- Status: selected by [E1](../system-contract-consistency/plans/e1-windows-execution.md) for promoted skills. Planned items: `commonplace-validate all`, a package tag/path resolver replacing `cp-skill-connect`'s `rg -l | xargs -r rg` pipeline, and shared byte operations (checksum, verified copy and restore) for ingest, ground and snapshot-web. The per-skill dispositions are in the [E1 rebaseline](./e1-promoted-skill-rebaseline-2026-08-27.md).
+- Status: selected by [E1](./e1-windows-execution.md) for promoted skills. Planned items: `commonplace-validate all`, a package tag/path resolver replacing `cp-skill-connect`'s `rg -l | xargs -r rg` pipeline, and shared byte operations (checksum, verified copy and restore) for ingest, ground and snapshot-web. The per-skill dispositions are in the [E1 rebaseline](./e1-promoted-skill-rebaseline-2026-08-27.md).
 - Open: the same treatment for non-promoted instructions, which E1 does not cover. [inventory.md](./inventory.md) lists them.
 - Limitation: does not absorb ordinary navigation merely to avoid declaring `rg` as a prerequisite.
 

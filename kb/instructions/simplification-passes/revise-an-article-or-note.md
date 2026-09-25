@@ -68,7 +68,7 @@ recommends.
    ```
    Purpose: {the operator's one line}
    Artifact: {path}
-   Pass: kb/instructions/simplification-passes/{pass}.md
+   Pass: {absolute path of {pass}.md in this instruction's directory}
    Defend: {claims the operator has marked as divergence; a pass may not narrow them}
    Write scope: {the artifact only | none, return proposals}
    Return: the pass's report, plus items noticed but not applied, nothing committed

@@ -48,7 +48,12 @@ package's contract-based discovery.
    - uv command ownership;
    - legacy `.envrc` and `.venv` inspection.
    Keep repair instructions labelled by channel and do not treat the historical
-   `.venv/bin` signature as a current dependency.
+   `.venv/bin` signature as a current dependency. The legacy `.envrc` check
+   must not print the file: the current `sed -n '1,80p' .envrc`
+   (`cp-skill-health-check/SKILL.md`, found by the 2026-09-25
+   [inventory](./inventory.md)) puts up to 80 lines of a file that may hold
+   secrets into the transcript. Report only whether the file exists and
+   whether it matches the old two-line signature.
 6. Implement the audit's remaining package/runtime dispositions: shared
    checksum and byte-preservation operations for write, ingest, ground, and
    multistage writing; portable capture and temporary-file operations for

@@ -20,7 +20,7 @@ provisional findings to check against sources, not accepted conclusions.
 Write only the commissioned `memory-report.md` using the global
 [`agent-memory-analysis-report`](../types/agent-memory-analysis-report.md) type. Read that contract and the
 Memory comparison fields and Status fields sections of
-`kb/types/agentic-system-analysis-result.md`. Do not load the legacy review
+[`agentic-system-analysis-result`](../types/agentic-system-analysis-result.md). Do not load the legacy review
 type, prior system reviews, surveys, matrix outputs, or style exemplars.
 The parent owns canonical IDs, integration, publication and completion. Do not
 publish, modify the parent's input/result, delegate, or stage and commit.

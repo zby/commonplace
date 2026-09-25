@@ -7,7 +7,7 @@ type: types/instruction.md
 
 Review a specific note against the compression criteria without using the review database.
 
-This is deliberately separate from the snapshot-anchored assay pipeline in `kb/instructions/run-review-batches.md`. Its files retain `gate_id` and “compression gate” as local historical names, but they are unanchored edit-strategy criteria, not review-system gates: they never enter `--all-gates`, acquire a persisted result kind, or write freshness-baseline state. Use them when the goal is a disposable report rather than fresh review evidence.
+This is deliberately separate from the snapshot-anchored assay pipeline in [run-review-batches.md](./run-review-batches.md). Its files retain `gate_id` and “compression gate” as local historical names, but they are unanchored edit-strategy criteria, not review-system gates: they never enter `--all-gates`, acquire a persisted result kind, or write freshness-baseline state. Use them when the goal is a disposable report rather than fresh review evidence.
 
 Inputs:
 
@@ -18,12 +18,12 @@ Inputs:
 
 Use these criterion files, in this order:
 
-1. `kb/instructions/compression-bundle/core-claim-obscured.md`
-2. `kb/instructions/compression-bundle/branch-bloat.md`
-3. `kb/instructions/compression-bundle/detail-overhang.md`
-4. `kb/instructions/compression-bundle/marginal-value-redundancy.md`
+1. [core-claim-obscured.md](./compression-bundle/core-claim-obscured.md)
+2. [branch-bloat.md](./compression-bundle/branch-bloat.md)
+3. [detail-overhang.md](./compression-bundle/detail-overhang.md)
+4. [marginal-value-redundancy.md](./compression-bundle/marginal-value-redundancy.md)
 
-After the four criteria, apply `kb/instructions/compression-bundle/high-impact-simplification-synthesis.md` to the artifact and the combined findings. This synthesis has no independent verdict; it selects the few structural changes most worth authorial attention.
+After the four criteria, apply [high-impact-simplification-synthesis.md](./compression-bundle/high-impact-simplification-synthesis.md) to the artifact and the combined findings. This synthesis has no independent verdict; it selects the few structural changes most worth authorial attention.
 
 Do not route these criteria through selectors or review jobs. Do not write review DB state or invoke acknowledgement or ingestion commands.
 
@@ -58,7 +58,7 @@ The sub-agent report should be plain Markdown:
 # Compression Bundle Review: <note title>
 
 **Target:** `<note-path>`
-**Bundle:** `kb/instructions/compression-bundle/`
+**Bundle:** [compression-bundle/](./compression-bundle/README.md)
 
 ## Overall Result
 

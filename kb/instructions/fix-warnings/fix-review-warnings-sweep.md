@@ -35,7 +35,8 @@ report paths and a fresh per-note context or parallel capacity gives a specific
 benefit. When that condition holds, launch one single-use worker per note with
 this complete packet:
 
-- run `kb/instructions/fix-warnings/fix-review-warnings.md` on the exact
+- run [fix-review-warnings.md](./fix-review-warnings.md) (give the worker its
+  absolute path, resolved from this file's location) on the exact
   `{note-path}`;
 - own only that note and
   `kb/reports/state/fixes/{note-stem}.fix-report.md`;
@@ -61,4 +62,4 @@ After sub-agents complete, report:
 
 ### 4. Evolve taxonomy
 
-If new patterns recur (3+ instances of the same pattern), propose adding them to `kb/instructions/fix-warnings/fix-strategy-taxonomy.md`. Present the proposed entry to the user before adding.
+If new patterns recur (3+ instances of the same pattern), propose adding them to the [fix strategy taxonomy](./fix-strategy-taxonomy.md). Present the proposed entry to the user before adding.

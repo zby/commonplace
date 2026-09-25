@@ -7,7 +7,7 @@ type: types/instruction.md
 
 Audit curated tag READMEs (`<tag>-README.md`, type `tag-readme`) for editorial quality, completeness, and coherence. A tag README is the tag's curated head: a hand-written editorial body with groupings and context phrases, small by type contract (weight gates). The complete per-tag listing is not committed — it is generated at ProperDocs build time for the published site (ADR 025); agents reconstruct it on demand with the scoped `rg` recipe below.
 
-This instruction is also the route for fixing validator warnings on tag-READMEs (weight gate, `complete` membership, `covered_by` coverage and fan-out). The marks' maintenance rules — when to declare or drop `complete`/`covered_by`, the lifecycle exits, the smells — live in the type spec, `kb/types/tag-readme.md`; read it before changing a mark.
+This instruction is also the route for fixing validator warnings on tag-READMEs (weight gate, `complete` membership, `covered_by` coverage and fan-out). The marks' maintenance rules — when to declare or drop `complete`/`covered_by`, the lifecycle exits, the smells — live in the [tag-readme type spec](../types/tag-readme.md); read it before changing a mark.
 
 ## When to use
 
@@ -58,7 +58,7 @@ When a tag grows large and internal clusters emerge:
 
 1. Look at the curated groupings — these often reveal natural sub-tags.
 2. Create a new `<tag>-README.md` with `type: types/tag-readme.md`, `index_source: tag`, and `index_key: <tag>` (template in the type spec).
-3. Add the new tag to relevant notes' `tags:` field — keeping the parent tag on every note (never a partial migration; see the split discipline in `kb/types/tag-readme.md`).
+3. Add the new tag to relevant notes' `tags:` field — keeping the parent tag on every note (never a partial migration; see the split discipline in the [tag-readme type spec](../types/tag-readme.md)).
 4. Write the curated body for the new README; the complete listing appears on the published site automatically.
 
 **Split criteria:**
