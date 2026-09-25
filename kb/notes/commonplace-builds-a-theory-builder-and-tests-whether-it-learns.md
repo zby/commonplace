@@ -49,18 +49,19 @@ criticism. Retained theories can guide diagnosis, test
 selection, and procedure revision; the research objective includes making
 subsequent improvement work more productive.
 
-The research claims are ordered by strength. The first is that an
-autonomous theory builder learns, which it can do with a fixed method. A
-reflective builder also criticizes and revises its own stated method.
-Recursive self-improvement is the claim that method changes compound, making
-later improvement better. Reflection is not sufficient for it, and it is not
-necessary for recursive self-improvement in general: Schmidhuber's
-realizations select self-modifications by reward rather than by criticizing
-a stated method. Commonplace aims at the reflective route, where compounding
-comes through criticism of the stated method. Construction runs the other
-way: Commonplace has been reflective from the start, with people performing
-many of its operations, and the work is to move those operations to
-computation.
+The first research claim is that an autonomous theory builder learns, which
+it could do with a fixed method. Commonplace's approach to building one is
+reflective from the start: the builder criticizes and revises its own stated
+method, and people perform many of its operations until they move to
+computation. The approach rests on the return to investing in the method:
+[an improvement to the learning machinery is reused by every later episode](./an-optimal-long-run-learning-strategy-invests-in-its-own-machinery.md),
+so over a long horizon it can pay more than immediate learning. That return
+requires method changes to compound, making later improvement better, which
+is the claim of recursive self-improvement. Reflection is not sufficient for
+it, and it is not necessary for recursive self-improvement in general:
+Schmidhuber's realizations select self-modifications by reward rather than
+by criticizing a stated method. Commonplace takes the reflective route, where
+compounding comes through criticism of the stated method.
 
 We start with an incomplete, criticizable account of how to learn and use it
 through interpretation. The LLM and harness supply executable machinery;
