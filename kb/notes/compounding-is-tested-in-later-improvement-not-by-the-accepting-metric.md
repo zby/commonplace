@@ -28,13 +28,13 @@ Two accounts fit week 1 equally well:
 - **Compounding.** The fix keeps paying off. Diagnoses like episode 2 become cheaper because search is now better.
 - **Repeated maintenance.** The fix is real and is retained, but episode 2 costs what it would have cost anyway. Each new revision is as difficult as the last.
 
-Under both accounts the fix passed its accepting metric. So the record of accepted changes looks the same under both, however long it grows. Every entry in it passed its own check under either hypothesis.
+Under both accounts the fix passed its accepting metric, and so does every later accepted change. So the record of accepted changes looks the same under both accounts, however long it grows.
 
 The reason is that the accepting metric and the compounding claim test different things. The accepting metric checks whether the change achieved its immediate target. The compounding claim says that the retained benefit helped produce a later improvement by making that work cheaper, broader, more reliable, or less dependent on human judgment. This has the shape of [a proximate target's linking claim](./a-proximate-target-is-checked-for-achievement-not-for-warrant.md). The recipe can be measurably better at finding notes while the next diagnosis costs exactly what the last one did. A benchmark increase is evidence about the accepted change, not yet evidence about the productivity of later improvement work.
 
 ## Requirement 1: look at a later improvement episode
 
-The evidence has to come from episode 2, not from episode 1. Episode 2 must itself be improvement work, such as a diagnosis that ends in a retained change. Ordinary task use of the better recipe shows that the change is useful; it does not show that improvement became easier.
+The evidence has to come from episode 2, not from episode 1. Episode 2 must itself be improvement work, such as a diagnosis that ends in a retained change. Ordinary task use of the better recipe shows that the change is useful. It does not show that improvement became easier.
 
 ## Requirement 2: measure something other than the accepting metric
 
@@ -51,7 +51,9 @@ Re-running "does the recipe find the missed note" in week 5 only re-confirms epi
 
 In the example, the natural measures are the turns episode 2 needed and the number of times a human had to point the agent to a note.
 
-Human decisions are the load-bearing denominator in a human-inclusive loop because [automation changes what a fixed amount of judgment buys](./increasing-computational-autonomy-relocates-human-effort.md). Maintenance is easily omitted because it belongs to no single episode. A set of retained artifacts whose upkeep consumes the effort it saves may show a gross gain and no net gain.
+Human decisions are the load-bearing denominator in a human-inclusive loop because [automation changes what a fixed amount of judgment buys](./increasing-computational-autonomy-relocates-human-effort.md).
+
+Maintenance is easily omitted because it belongs to no single episode. A set of retained artifacts whose upkeep consumes the effort it saves may show a gross gain and no net gain.
 
 ## Requirement 3: connect the two with a causal trace
 
@@ -69,7 +71,7 @@ The trace is indirect when the earlier change helps by freeing resources that im
 2. **Reinvestment path.** An allocator or reinvestment path makes that capacity available to improvement work. In the example, the maintainer puts the hour into the improvement queue rather than into another project.
 3. **Consumption.** Later search consumes it while finding, testing, or refining another change. In the example, the hour is spent on episode 2 or on another change.
 
-This mechanism assumes that such a path exists and that another bottleneck does not fix improvement throughput. A fixed budget or an unspent saving can satisfy the first link while leaving the other two absent. If the hour goes to another project, or if review bandwidth caps how many improvements land regardless, the fix saved time but did not feed later improvement. Indirect reinvestment therefore needs the resource path to be observed rather than assumed.
+This mechanism assumes that such a path exists and that no other bottleneck caps improvement throughput. A fixed budget or an unspent saving can satisfy the first link while leaving the other two absent. If the hour goes to another project, or if review bandwidth caps how many improvements land regardless, the fix saved time but did not feed later improvement. Indirect reinvestment therefore needs the resource path to be observed rather than assumed.
 
 ### What the test combines
 
@@ -89,7 +91,7 @@ The comparisons must include evaluation, maintenance, and human judgment on the 
 
 A frozen-artifact replay works only after an improvement episode exists. Some changes improve noticing instead. Suppose the week-1 change had been a status command that surfaces stale artifacts. Such a change alters which episodes are initiated. In the frozen variant, episode 2 might never start, which leaves no matched pair to compare.
 
-The contribution of such a change is therefore read through rates, such as relevant episodes initiated per window, plus a trace showing what surfaced them. Such rates are especially confounded by fluctuating maintainer attention. This is a structural boundary of paired replay, not a reason to assume the contribution.
+The contribution of such a change is therefore read through rates, such as relevant episodes initiated per window, plus a trace showing what surfaced them. Fluctuating maintainer attention confounds such rates especially strongly. That paired replay cannot test noticing is a structural boundary of the method, not a reason to assume the contribution.
 
 ## Reading published studies against the requirements
 
@@ -106,9 +108,9 @@ Uptake, displaced gain, and attribution are joint requirements, not steps taken 
 
 ### HyperAgents shows one bundled cross-domain contribution
 
-The [HyperAgents transfer experiment](https://ar5iv.labs.arxiv.org/html/2603.19461#52-improving-the-ability-to-improve), summarized in the [ingest](../sources/hyperagents.ingest.md), comes close to this test. The authors selected one transfer hyperagent from each of five joint paper-review and robotics runs, moved them into unseen math grading, and ran 50 later agent-generation steps with DGM-H without self-improvement. In that baseline the meta agent that modifies hyperagents is fixed for the entire run. Median Improvement@50 reached 0.630 (95% bootstrap CI 0.540–0.630), significantly above the initial hyperagent.
+The [HyperAgents transfer experiment](https://ar5iv.labs.arxiv.org/html/2603.19461#52-improving-the-ability-to-improve), summarized in the [ingest](../sources/hyperagents.ingest.md), comes close to this test. The authors selected one transfer hyperagent from each of five joint paper-review and robotics runs, moved them into unseen math grading, and ran 50 later agent-generation steps with DGM-H without self-improvement. In that baseline the meta agent that modifies hyperagents is held fixed for the entire run. Median Improvement@50 reached 0.630 (95% bootstrap CI 0.540–0.630), significantly above the initial hyperagent.
 
-The uptake is direct: the transferred improvement procedure generates the later agents. The measure is displaced to a new domain rather than reusing the source-run score. This establishes one cross-domain link in which an earlier retained improvement procedure helps produce later improvements. It does not isolate which bundled task- and meta-agent changes caused the gain. Continued evolution from transferred rather than fresh hyperagents reached 0.640 versus 0.610, but the difference was not statistically significant, so sustained compounding remains unestablished ([HyperAgents experiment (snapshot required)](../sources/hyperagents.ingest.md)).
+The uptake is direct: the transferred improvement procedure generates the later agents. The measure is displaced to a new domain rather than reusing the source-run score. This establishes one cross-domain link in which an earlier retained improvement procedure helps produce later improvements. It does not isolate which bundled task- and meta-agent changes caused the gain. Continued evolution from transferred rather than fresh hyperagents reached 0.640 versus 0.610. The difference was not statistically significant, so sustained compounding remains unestablished ([HyperAgents experiment (snapshot required)](../sources/hyperagents.ingest.md)).
 
 ### Agent Optimizers stops before attribution
 
@@ -116,25 +118,24 @@ The [two-phase Agent Optimizers study](../sources/agent-optimizers-compound-term
 
 Under this note's causal definition, that sequence establishes retained, transferable gains followed by another successful update. It does not yet show that the Phase-1 gain helped produce the Phase-2 improvement. Every Phase-2 run starts from its method's Phase-1 agent, and there is no equally budgeted fresh-start run on the combined task set ([Agent Optimizers protocol (snapshot required)](../sources/agent-optimizers-compound-terminal-bench.ingest.md)). The later result could therefore come from the optimizer's independent strength rather than from productivity supplied by the earlier gain.
 
-The two meanings become compatible if the indirect mechanism is added and measured. Retained competence or in-loop regression control could spare Phase-2 search from reacquiring old capabilities or repairing regressions, saving rollout budget, compute, or evaluation effort. An allocator would have to make those savings available to later improvement search, which would have to consume them. The resource must be usable, and another bottleneck must not cap progress. The study fixes each phase at 200 rollouts and reports no reinvestment trace, so it leaves this mechanism possible rather than established.
+The two meanings become compatible if the indirect mechanism is added and measured. Retained competence, or regression control inside the optimization loop, could spare Phase-2 search from reacquiring old capabilities or repairing regressions. That would save rollout budget, compute, or evaluation effort. For the saving to count, an allocator would have to make it available to later improvement search, and that search would have to consume it. The saved resource must be usable, and no other bottleneck may cap progress. The study gives each phase a fixed budget of 200 rollouts and reports no reinvestment trace. It therefore leaves this mechanism possible but not established.
 
 ### Harness Benefit stops at task gain
 
 The [Harness Updating Is Not Harness Benefit study](../sources/harness-updating-is-not-harness-benefit.ingest.md) separates producing a persistent update from a task-solving agent benefiting from it. This supplies a useful measurement ladder: update production → persistent retention → artifact loading → judged procedural match → task benefit. Its loading and benefit stages happen in ordinary task-solving, not in a later improvement episode. They are therefore not the uptake this note requires. A missing earlier stage can explain a missing benefit. Observing a later stage does not by itself show that the loaded artifact caused the behavior or gain.
 
-The study supports the outcome comparison through controlled evolver-agent cross-pairing. On SkillsBench, it reports skill loading separately from adherence. Its harness-following rate is assigned by a Sonnet 4.6 judge using a generated rubric, without a matched condition that withholds or replaces the target skill ([Harness Updating experiment (snapshot required)](../sources/harness-updating-is-not-harness-benefit.ingest.md)). It therefore measures judged procedural match, not the causal effect of the skill's content.
+The study supports its outcome comparison by cross-pairing evolvers with task-solving agents under controlled conditions. Its update and benefit metrics hold for the tested pairings, with prompts, editable surfaces, task streams, and anchor sets held fixed. Under those conditions, the measurements locate which stage of the ladder falls short.
 
-The update and benefit metrics remain relative to the tested pairings, while prompts, editable surfaces, task streams, and anchor sets stay fixed. The measurements localize shortfalls within that decomposition.
+On SkillsBench, the study reports skill loading separately from adherence. Its harness-following rate is assigned by a Sonnet 4.6 judge using a generated rubric, without a matched condition that withholds or replaces the target skill ([Harness Updating experiment (snapshot required)](../sources/harness-updating-is-not-harness-benefit.ingest.md)). It therefore measures judged procedural match, not the causal effect of the skill's content.
 
-Compounding adds a distinct final step: task benefit → causal contribution to a later improvement episode. Harness benefit is therefore necessary for compounding through a task-side gain, but it is not sufficient. The final step can close when the later improvement episode directly takes up the benefit, or when an observed allocator makes resources freed or preserved by the benefit available to improvement work and later search consumes them. The study does not observe this final feedback step.
+Compounding adds a distinct final step: task benefit → causal contribution to a later improvement episode. Harness benefit is therefore necessary for compounding through a task-side gain, but it is not sufficient. The final step can close in two ways. The later improvement episode can take up the benefit directly. Or an observed allocator can make resources that the benefit freed or preserved available to improvement work, and later search can consume them. The study does not observe this final feedback step.
 
 ## Scope
 
-- One later episode can provide local evidence of compounding; several successive episodes show whether it is sustained over time.
 - A null result still leaves real accumulated improvement. The test distinguishes retained gains from gains that help produce further ones.
 - Human-inclusive samples are small and heterogeneous, so matched episodes are usually stronger than a fitted aggregate trend.
 - A measured contribution can still be bad policy if investment in improvement displaces more valuable task improvement.
-- Nothing here decides whether the earlier change should have been accepted. Acceptance remains bounded by its own warrant; this note constrains what the acceptance record can later support.
+- Nothing here decides whether the earlier change should have been accepted. Acceptance remains bounded by its own warrant. This note constrains what the acceptance record can later support.
 
 ## Open Questions
 
