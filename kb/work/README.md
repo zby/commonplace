@@ -6,7 +6,6 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
-- [theory-builder-from-popper](./theory-builder-from-popper/README.md) — redefining theory builder in Popper's terms (localized content, consumption, criticism, iteration; persistence and addressability graded; no success condition) and migrating consumers off conjectural learning; library migration done, closing checks remain
 - [framework-delivery](./framework-delivery/README.md) — choosing how the framework library, types, gates, and skills reach installed projects without confusing copies that drift; GBrain's delivery methods are the default design to copy, with departures justified
 - [unattended-processing-failure-modes](./unattended-processing-failure-modes/README.md) — cataloguing observable failure modes of chat-tuned models in unattended Commonplace processing, each admitted by a recorded instance and paired with a system-level countermeasure and a regression check; first entries are premature polishing (repair ordering), format-driven fabrication, and finding deference; the post-training cause stays a tentative frame
 - [institution-theory-import](./institution-theory-import/README.md) — assessing institution theory and adjacent semantic frameworks for natural-language interpretation, conformance, and constraining; separates useful conceptual imports from an unproved institutional formalization
