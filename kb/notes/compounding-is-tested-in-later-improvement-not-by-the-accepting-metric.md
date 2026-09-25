@@ -45,8 +45,8 @@ Re-running "does the recipe find the missed note" in week 5 only re-confirms epi
 | Cheaper | Episode cost to completion: tokens, agent turns, wall-clock time, or compute for a comparable episode |
 | Less dependent on human judgment | Human decisions per completed episode, classified by noticing, diagnosis, choice, or acceptance |
 | More reliable | Share of episodes completing without later retraction or repair of what they accepted |
-| Broader | Classes of artifact an episode can change without bespoke human instruction |
-| Reinvestment | Saved time, compute, or judgment that is subsequently spent on improvement work |
+| Broader | Classes of artifact an episode can change without case-specific human instruction |
+| Reinvestment | Saved time, compute, or judgment that is later spent on improvement work |
 | Maintenance debit | Work performed only to keep the retained artifacts current |
 
 In the example, the natural measures are the turns episode 2 needed and the number of times a human had to point the agent to a note.
@@ -87,7 +87,7 @@ A trace shows that the later episode used the earlier change. A baseline shows h
 
 The comparisons must include evaluation, maintenance, and human judgment on the cost side. They should also be repeated across corpus sizes and model strengths: an advantage observed at one point may disappear as either grows.
 
-## Noticing resists paired replay
+## Paired replay cannot test changes to noticing
 
 A frozen-artifact replay works only after an improvement episode exists. Some changes improve noticing instead. Suppose the week-1 change had been a status command that surfaces stale artifacts. Such a change alters which episodes are initiated. In the frozen variant, episode 2 might never start, which leaves no matched pair to compare.
 
@@ -110,7 +110,7 @@ Uptake, displaced gain, and attribution are joint requirements, not steps taken 
 
 The [HyperAgents transfer experiment](https://ar5iv.labs.arxiv.org/html/2603.19461#52-improving-the-ability-to-improve), summarized in the [ingest](../sources/hyperagents.ingest.md), comes close to this test. The authors selected one transfer hyperagent from each of five joint paper-review and robotics runs, moved them into unseen math grading, and ran 50 later agent-generation steps with DGM-H without self-improvement. In that baseline the meta agent that modifies hyperagents is held fixed for the entire run. Median Improvement@50 reached 0.630 (95% bootstrap CI 0.540–0.630), significantly above the initial hyperagent.
 
-The uptake is direct: the transferred improvement procedure generates the later agents. The measure is displaced to a new domain rather than reusing the source-run score. This establishes one cross-domain link in which an earlier retained improvement procedure helps produce later improvements. It does not isolate which bundled task- and meta-agent changes caused the gain. Continued evolution from transferred rather than fresh hyperagents reached 0.640 versus 0.610. The difference was not statistically significant, so sustained compounding remains unestablished ([HyperAgents experiment (snapshot required)](../sources/hyperagents.ingest.md)).
+The uptake is direct: the transferred improvement procedure generates the later agents. The measure is displaced to a new domain. This establishes one cross-domain link in which an earlier retained improvement procedure helps produce later improvements. It does not isolate which bundled task- and meta-agent changes caused the gain. Continued evolution from transferred rather than fresh hyperagents reached 0.640 versus 0.610. The difference was not statistically significant, so sustained compounding remains unestablished ([HyperAgents experiment (snapshot required)](../sources/hyperagents.ingest.md)).
 
 ### Agent Optimizers stops before attribution
 
@@ -128,18 +128,18 @@ The study supports its outcome comparison by cross-pairing evolvers with task-so
 
 On SkillsBench, the study reports skill loading separately from adherence. Its harness-following rate is assigned by a Sonnet 4.6 judge using a generated rubric, without a matched condition that withholds or replaces the target skill ([Harness Updating experiment (snapshot required)](../sources/harness-updating-is-not-harness-benefit.ingest.md)). It therefore measures judged procedural match, not the causal effect of the skill's content.
 
-Compounding adds a distinct final step: task benefit → causal contribution to a later improvement episode. Harness benefit is therefore necessary for compounding through a task-side gain, but it is not sufficient. The final step can close in two ways. The later improvement episode can take up the benefit directly. Or an observed allocator can make resources that the benefit freed or preserved available to improvement work, and later search can consume them. The study does not observe this final feedback step.
+Compounding adds a distinct final step: task benefit → causal contribution to a later improvement episode. Harness benefit is therefore necessary for compounding through a task-side gain, but it is not sufficient. The final step can be completed in two ways. The later improvement episode can take up the benefit directly. Or an observed allocator can make resources that the benefit freed or preserved available to improvement work, and later search can consume them. The study does not observe this final feedback step.
 
 ## Scope
 
 - A null result still leaves real accumulated improvement. The test distinguishes retained gains from gains that help produce further ones.
 - Human-inclusive samples are small and heterogeneous, so matched episodes are usually stronger than a fitted aggregate trend.
 - A measured contribution can still be bad policy if investment in improvement displaces more valuable task improvement.
-- Nothing here decides whether the earlier change should have been accepted. Acceptance remains bounded by its own warrant. This note constrains what the acceptance record can later support.
+- Whether the earlier change should have been accepted is a separate question. Acceptance remains bounded by its own warrant. This note constrains what the acceptance record can later support.
 
 ## Open Questions
 
-- Whether displaced measures and reinvestment traces can be recovered retroactively from repository and session history.
+- Whether displaced measures and reinvestment traces can be recovered afterwards from repository and session history.
 - How many matched episodes are needed before heterogeneity stops dominating the effect.
 - Whether frozen-artifact replay is affordable often enough, or must be approximated between occasional audits.
 
