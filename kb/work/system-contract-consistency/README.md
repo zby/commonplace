@@ -12,33 +12,22 @@ domains
 
 ## Current verdict
 
-The follow-up found four additional contradictions: incomplete type migration
-(I4), missing health-check collision diagnosis (H1), collisions silently
-removing type-review pairs (H2), and incompatible retirement test instructions
-(Q1). Temporary-project probes reproduced I4, H1 and H2. No new P0 was observed.
-Several older findings are receiving concurrent repairs; their rows below
-remain the prior baseline until that cleanup is verified. The follow-up also
-corrects M1's schema-enforcement claim and the implementation plan's obsolete
-instruction to reject path-valued types.
+All findings from the 2026-09-25 rescan and its follow-up are closed except
+X3 (small ADR residue), T1 and E1 (held by owner workshops), and the
+contract-change gate. The closed tables below record how each was resolved.
 
-ADR 086 (projects read the library from the installed package, 2026-09-25)
-removed the project-local library copy. That dissolved the installed-product
-program that dominated the previous cycle: I1, I2 and V1 closed by
-supersession, and I3 closed with a scaffold fix. M1 was already resolved. A
-fresh wheel install initialized and validated in every scaffolded collection
-in that scan. Its migration probe passed; I4 now identifies additional upgrade
-cases that fail.
-
-The 2026-09-25 rescan used three read-only scouts over three surfaces: install
-and delivery, reference and ADRs against code, and the skills, collection
-contracts and type specs that direct agents. It found no P0. It found eight P1
-contradictions and a longer P2 tail. G1 closed with ADR 088, and D1, A1, A2, L1, K1, O1, N1, R1, U1, V2, V3, X1, and X2 closed the same day. The largest cluster is ADR 086 residue:
-the migration rewrote 847 frontmatter `type:` values to bare names but left the
-prose rules that teach the path form, and left older accepted ADRs making
-present-tense guarantees about the copy. That is the "decision reached its
-primary implementation but not every consumer" mechanism again, and the
-workshop's first real evidence for the [contract-change
-gate](./plans/contract-change-gate.md).
+ADR 086 (projects read the library from the installed package) removed the
+project-local library copy, which dissolved the previous cycle's
+installed-product program. The rescan's largest cluster was ADR 086 residue:
+its mechanical rewrite changed 847 frontmatter `type:` values but not the
+prose rules teaching the old form, left older accepted ADRs making present-tense
+guarantees about the copy, and silently broke 33 byte pins on retained
+analysis results. ADRs 087 and 088 then reworked type naming, and the
+follow-up scan found that their migration still missed local schema
+constants, quoted values, and collision reporting (I4, H1, H2). Each case is
+the "decision reached its primary implementation but not every consumer"
+mechanism, and together they are the worked evidence for the
+[contract-change gate](./plans/contract-change-gate.md).
 
 ## Standard used
 
@@ -57,10 +46,6 @@ explicitly historical statement, or an unimplemented proposal does not.
 
 | ID | Pri | Contradiction | Consequence |
 |---|---|---|---|
-| I4 | P1 | Init rewrites local type identities without updating schema identity constraints, and misses single-quoted old type values | An upgrade exits successfully but leaves documents failing validation |
-| H1 | P2 | ADR 088 promises project-wide collision diagnosis in the health check; its checks do not inspect type collisions | Init-pointer and landing checks pass with a conflicting global-type copy present |
-| H2 | P1 | ADR 088 makes type collisions errors wherever resolved; type-review selection catches that error and returns no pair | An explicitly requested type review silently loses the affected note |
-| Q1 | P2 | Retirement unconditionally requires pytest; root doctrine forbids it for Markdown-only KB data changes | The same retirement receives incompatible verification instructions |
 | X3 | P2 | Residue left from the 2026-09-25 cleanup: ADRs 059 and 066 lack the required `## Considered alternatives` section; ADR 073 says the snapshot marker lives in the gate while `job_prompt.py` hardcodes it (uncertain) | A retrofit needs the deciding reasoning, which may only be in git history |
 | T1 | P1 | Tag coverage stated beyond one collection, checked within one | **Transferred** to [tag-contract convergence](../tag-contract-convergence/README.md); [closure tracker](./plans/t1-tag-scope.md) |
 | E1 | P1 | Native Windows supported; promoted skills keep unpaired POSIX commands (health check, connect `xargs -r`, validate's Bash loop) | **Owned** by [execution-channel compatibility](../execution-channel-compatibility/README.md); [plan](./plans/e1-windows-execution.md). E1 now also owns the package-owned `commonplace-validate all` target |
@@ -76,6 +61,10 @@ superseded by ADR 088, which deliberately dropped that eligibility.
 
 | ID | Closed | How |
 |---|---|---|
+| I4 | 2026-09-25 | Init's migration also rewrites a local schema's `kb/...` type constant to the ADR 088 form and handles single-quoted type values; a second run changes nothing |
+| H1 | 2026-09-25 | `commonplace-init --check`, which the health check runs, reports a project `kb/types/<name>.md` that collides with a library global type as `collision` |
+| H2 | 2026-09-25 | Type collisions raise a distinct `TypeCollisionError` that type-review selection lets through, so the selector fails with the collision instead of returning no targets |
+| Q1 | 2026-09-25 | Retirement requires pytest only when it touched code, tests or their inputs, or `properdocs.yml`; Markdown-only retirements rely on the validator checks |
 | N1 | 2026-09-25 | An absent capture is reported as "not available on this machine" instead of routing to re-ingest; a changed source becomes a new observation: `cp-skill-snapshot-web` and the capture commands accept `reobserve`/`--reobserve` and write a date-named capture, `cp-skill-ingest` treats several ingests of one URL as separate observations, and `re-ingest` gains a **New observation** path. The grounding-alignment gate still fails on an absent capture |
 | V2, V3 | 2026-09-25 | The `types` target skips validation-ignored subtrees, so it no longer fails on report cache; `cp-skill-validate all` runs every check and reports failure at the end; the validation contract states the target's real scope. A package-owned `validate all` remains E1's |
 | R1 | 2026-09-25 | Convert, autoreason, and revise-note rename through `commonplace-relocate-note` (dry run, then `--apply`) and commit relocations alone; revise-note leaves renames to a separate step |
@@ -118,22 +107,15 @@ ledger) were deleted on 2026-09-25; git history keeps them.
 
 ## Implementation order
 
-1. **Type migration and remaining delivery residue (I4, H1, H2, A1, K1,
-   X1 type items).** G1 closed with ADR 088. Verify the concurrent cleanup
-   before editing its files again. Reconcile migration with local schema
-   constraints and supported YAML spellings, and reconcile the collision
-   contract with health checking and review selection. Apply the contract-change
-   gate retrospectively to ADRs 086 and 088. Any example guard must require
-   ADR 088's KB-relative path form and reject retired bare names and leading
-   `kb/`, `./`, or `../` forms.
-2. **Workflow fixes (R1, U1, V2/V3, D1, O1).** Each is a local procedure or
-   code change with a clear authority to align with.
-3. **N1.** Needs a design choice for recapturing a source whose snapshot is
-   absent or changed; route to the owner of the ingest workflow.
-4. **P2 sweep (A2, L1, X2, Q1).**
-5. **Owners:** E1 continues in execution-channel compatibility; T1 closes here
-   after the tag workshop's adoption tests.
-6. **Promote the contract-change gate, then delete this workshop.**
+1. **X3.** Retrofit Considered alternatives into ADRs 059 and 066 from their
+   implementing commits, and settle whether ADR 073's marker claim holds.
+2. **Owners:** E1 continues in execution-channel compatibility, including a
+   package-owned `commonplace-validate all`; T1 closes here after the tag
+   workshop's adoption tests.
+3. **Promote the contract-change gate**, using ADRs 086–088 as its worked
+   applications: the byte pins ADR 086 broke, and the schema constants,
+   quoted values, and collision diagnosis ADR 088's migration first missed.
+   Then delete this workshop.
 
 ## Exclusions and non-findings
 

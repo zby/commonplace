@@ -53,7 +53,7 @@ schema: {./{type-name}.schema.yaml or null}
 
 | Field | Required | Use |
 |---|---:|---|
-| `type` | Yes | `{this type spec's own repo path}` |
+| `type` | Yes | `{this type spec's path under its KB root, such as types/{type-name}.md or <collection>/types/{type-name}.md}` |
 | `description` | Yes | {retrieval description for instances of this type} |
 
 ## Template

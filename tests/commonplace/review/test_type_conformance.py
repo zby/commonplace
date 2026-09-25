@@ -22,9 +22,6 @@ from tests.commonplace.review.pair_helpers import accept_pair, insert_completed_
 
 from ._run_cli import run_cli
 
-pytestmark = pytest.mark.usefixtures("tmp_library")
-
-
 TEST_MODEL = "test-model"
 REVIEWED_AT = "2026-07-01T00:00:00+00:00"
 
@@ -222,6 +219,21 @@ class TestNoteTypeSpecPath:
             note_type="notes/types/structured-claim.md",
         )
         assert note_type_spec_path(tmp_path, note) == "kb/notes/types/structured-claim.md"
+
+    def test_type_collision_is_raised_not_skipped(
+        self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+    ) -> None:
+        from commonplace.lib import library
+        from commonplace.lib.type_resolver import TypeCollisionError
+
+        library_root = tmp_path / "library"
+        make_type_spec(library_root / "types" / "note.md", "note")
+        monkeypatch.setattr(library, "_library_root", lambda _override: library_root.resolve())
+        make_type_spec(tmp_path / "kb" / "types" / "note.md", "note")
+        note = make_note(tmp_path / "kb" / "notes" / "example.md", "Example", "\nBody.\n")
+
+        with pytest.raises(TypeCollisionError, match="names two different files"):
+            note_type_spec_path(tmp_path, note)
 
     def test_malformed_type_value_yields_none(self, tmp_path: Path) -> None:
         note = make_note(tmp_path / "kb" / "notes" / "broken.md", "Broken", "\nBody.\n", note_type="Not A Type!")

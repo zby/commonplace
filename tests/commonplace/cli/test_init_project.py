@@ -400,6 +400,49 @@ def test_init_project_repins_results_whose_type_line_it_rewrites(tmp_path: Path)
     assert Path("kb/agentic-systems/reviews/x.md") in report.repinned_result_checksums
 
 
+def test_init_project_migrates_local_schema_identity_and_quoted_values(tmp_path: Path) -> None:
+    types = tmp_path / "kb" / "notes" / "types"
+    types.mkdir(parents=True)
+    (tmp_path / "kb" / "notes" / "COLLECTION.md").write_text("# Notes\n", encoding="utf-8")
+    (types / "custom.md").write_text(
+        "---\ntype: type-spec\nname: custom\ndescription: A custom local type for the check\n"
+        "schema: ./custom.schema.yaml\n---\n# Custom\n",
+        encoding="utf-8",
+    )
+    schema = types / "custom.schema.yaml"
+    schema.write_text(
+        "type: object\nproperties:\n  frontmatter:\n    type: object\n    properties:\n"
+        "      type:\n        const: kb/notes/types/custom.md\n",
+        encoding="utf-8",
+    )
+    instance = tmp_path / "kb" / "notes" / "custom.md"
+    instance.write_text(
+        "---\ndescription: An instance of the custom type\ntype: kb/notes/types/custom.md\n---\n# C\n",
+        encoding="utf-8",
+    )
+    quoted = tmp_path / "kb" / "notes" / "quoted.md"
+    quoted.write_text("---\ndescription: Quoted bare type\ntype: 'note'\n---\n# Q\n", encoding="utf-8")
+
+    init_project(tmp_path)
+    again = init_project(tmp_path)
+
+    assert "const: notes/types/custom.md" in schema.read_text(encoding="utf-8")
+    assert "type: notes/types/custom.md" in instance.read_text(encoding="utf-8")
+    assert "type: types/note.md\n" in quoted.read_text(encoding="utf-8")
+    assert again.rewritten_type_pointers == []
+
+
+def test_check_reports_a_project_copy_of_a_global_type_as_a_collision(tmp_path: Path) -> None:
+    init_project(tmp_path)
+    copy = tmp_path / "kb" / "types" / "note.md"
+    copy.parent.mkdir(parents=True)
+    shutil.copy2(library.library_root() / "types" / "note.md", copy)
+
+    statuses = init_project_module.check_project(tmp_path)
+
+    assert ("collision", copy) in [(item.status, item.path) for item in statuses]
+
+
 def test_init_project_leaves_foreign_skill_directories_alone(tmp_path: Path) -> None:
     dest = tmp_path / ".claude" / "skills" / "cp-skill-write"
     dest.mkdir(parents=True)

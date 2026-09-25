@@ -22,9 +22,6 @@ from tests.commonplace.review.pair_helpers import accept_pair, insert_completed_
 
 from ._run_cli import run_cli
 
-pytestmark = pytest.mark.usefixtures("tmp_library")
-
-
 TEST_MODEL = "test-model"
 REVIEWED_AT = "2026-07-01T00:00:00+00:00"
 

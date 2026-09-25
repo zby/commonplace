@@ -45,6 +45,10 @@ _BARE_NAME = re.compile(r"^[a-z0-9][a-z0-9-]*$")
 SCHEMA_URI_SCHEME = "commonplace"
 
 
+class TypeCollisionError(ValueError):
+    """A type value names two different files on the search path (ADR 088)."""
+
+
 def global_types_dir() -> Path:
     return library_root() / "types"
 
@@ -198,7 +202,7 @@ def validate_type_path(
     found = list(dict.fromkeys(c for c in candidates if c.is_file()))
     if len(found) > 1:
         shown = " and ".join(_display_path(f, repo_root.resolve()) for f in found)
-        raise ValueError(
+        raise TypeCollisionError(
             f"frontmatter.type: {rel} names two different files, {shown}; "
             "delete or rename the project's copy"
         )

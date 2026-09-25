@@ -308,9 +308,11 @@ def _retire_legacy_baselines(project: Path, root: Path, report: InitReport) -> N
 
 
 _TYPE_LINE = re.compile(
-    r"^([ \t]*(?:type|requires_type):[ \t]*)(\"?)([^\s\"]+)\2[ \t]*$", re.MULTILINE
+    r"^([ \t]*(?:type|requires_type):[ \t]*)([\"']?)([^\s\"']+)\2[ \t]*$", re.MULTILINE
 )
 _JSON_TYPE = re.compile(r'("(?:type|requires_type)"\s*:\s*)"([^"]+)"')
+# A local schema pins its own type's identity; before ADR 088 that was a kb/ path.
+_SCHEMA_TYPE_CONST = re.compile(r'((?:"const"|const)\s*:\s*)(["\']?)(kb/[^"\'\s]+\.md)\2')
 _SCHEMA_REF = re.compile(r'(\$ref"?\s*:\s*["\']?)([^"\'\s]+\.schema\.(?:yaml|json))')
 _BARE_TYPE_NAME = re.compile(r"^[a-z0-9][a-z0-9-]*$")
 _RESULT_PIN = re.compile(r'("?analysis-result-sha256"?\s*:\s*"?)([0-9a-f]{64})')
@@ -436,7 +438,11 @@ def _migrate_type_pointers(project: Path, root: Path, report: InitReport) -> Non
                     return match.group(0)
                 return f"{match.group(1)}{library.LIBRARY_IDENTITY_PREFIX}types/{target.name}"
 
-            new = _SCHEMA_REF.sub(schema_ref, text)
+            def schema_const(match: re.Match[str], source: Path = path) -> str:
+                value = new_value(match.group(3), source)
+                return f"{match.group(1)}{match.group(2)}{value}{match.group(2)}" if value else match.group(0)
+
+            new = _SCHEMA_TYPE_CONST.sub(schema_const, _SCHEMA_REF.sub(schema_ref, text))
             if new != text:
                 library.write_text(path, new)
                 report.rewritten_type_pointers.append(path.relative_to(project))
@@ -500,9 +506,27 @@ def init_project(root: Path, name: str | None = None) -> InitReport:
     return report
 
 
+def type_collisions(root: Path, library_root: Path | None = None) -> list[library.OutputStatus]:
+    """Project files that collide with a library global type (ADR 088).
+
+    A value resolves in the library only as `types/<name>.md`, so a collision
+    can only be a project `kb/types/<name>.md` beside a library type of that name.
+    """
+    library_types = (library_root or library.library_root()) / "types"
+    project_types = root / "kb" / "types"
+    if not project_types.is_dir():
+        return []
+    return [
+        library.OutputStatus("collision", path)
+        for path in sorted(project_types.glob("*.md"))
+        if (library_types / path.name).is_file()
+        and (library_types / path.name).resolve() != path.resolve()
+    ]
+
+
 def check_project(root: Path) -> list[library.OutputStatus]:
-    """Init's outputs in a project and their state, without writing anything."""
-    return library.statuses(root)
+    """Init's outputs and type collisions in a project, without writing anything."""
+    return [*library.statuses(root), *type_collisions(root)]
 
 
 # --- installation diagnostics ---------------------------------------------------------

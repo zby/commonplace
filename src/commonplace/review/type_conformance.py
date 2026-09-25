@@ -18,7 +18,7 @@ from pathlib import Path, PurePosixPath
 from commonplace.lib import frontmatter
 from commonplace.lib.library import artifact_identity, is_library_identity, library_root
 from commonplace.lib.project_paths import kb_root
-from commonplace.lib.type_resolver import validate_type_path
+from commonplace.lib.type_resolver import TypeCollisionError, validate_type_path
 
 TYPE_CONFORMANCE_LENS = "type"
 
@@ -94,6 +94,10 @@ def note_type_spec_path(repo_root: Path, note_abs: Path) -> str | None:
             repo_root=repo_root,
             source_file=note_abs,
         )
+    except TypeCollisionError:
+        # A binding error, not a malformed declaration: surface it rather than
+        # reporting the note as having no type pair.
+        raise
     except ValueError:
         return None
     if not resolved.is_file():

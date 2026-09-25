@@ -220,7 +220,11 @@ def load_settings(project: Path) -> dict:
 
 @dataclass(frozen=True)
 class OutputStatus:
-    """One init output and its state: ok, stale, missing, foreign, or extra."""
+    """One init output and its state: ok, stale, missing, foreign, or extra.
+
+    `commonplace-init --check` also reports a project type file that collides
+    with a library global type as `collision`.
+    """
 
     status: str
     path: Path

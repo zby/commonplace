@@ -127,7 +127,7 @@ Two destinations. **Delete** is the default. **Archive** moves the file into a s
 - `commonplace-validate kb/notes` — no new orphan, and no weight-gate warning on a curated head that absorbed routing.
 - `commonplace-freshness-status --missing` — does not name the retired path.
 - `rg -l '<artifact-slug>' -g '*.md' kb/` — for delete, nothing outside gitignored reports; for archive, nothing outside the archive directory and `kb/work/`.
-- `uv run pytest`
+- `uv run pytest` — only when the retirement touched code, tests, test fixtures or test inputs, or `properdocs.yml` (whose redirects tests check). A retirement confined to Markdown KB data relies on the validator checks above, as `AGENTS.md` requires.
 
 ---
 

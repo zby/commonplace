@@ -64,6 +64,7 @@ Interpretation, for an installed project:
 - Every line `ok`: the skill stubs, `.commonplace/library.md`, and the Claude Code read rule match the installed library.
 - `stale` or `missing`: the library changed or moved since init last ran, for example after an upgrade that changed the skill set or a switch between editable and normal installs. Rerun `commonplace-init`. Until then, agents may read an outdated copy of the library without any warning.
 - `foreign`: a skill directory that `commonplace-init` did not write shadows the library's skill. Remove it after checking it holds nothing the user needs, then rerun `commonplace-init`.
+- `collision`: a file in the project's `kb/types/` has the same path as a library global type, so every artifact typed `types/<name>.md` fails validation. It is usually a leftover copy from an older release. Delete it, or move its change into a collection's own `types/` directory.
 - Reads of library files denied in Claude Code: the read rule in `.claude/settings.local.json` is missing or names another library root; `commonplace-init --check` reports it.
 
 In the source repository, `.claude/skills/` and `.agents/skills/` hold committed symlinks into `kb/instructions/`; `commonplace-init --check` does not apply. Do not run `commonplace-init` there; follow the source repository's `AGENTS.md` instead.
