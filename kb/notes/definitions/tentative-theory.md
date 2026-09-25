@@ -40,8 +40,8 @@ stored or edited. Structural properties have their own term,
   tentative theories too. Applying his account of dispositions to weights is
   our interpretation, not a finding about any particular model, and it does
   not establish that nothing in a model is formulated.
-  [Conjectural learning](./conjectural-learning.md) covers only the
-  formulated ones.
+  A [theory builder](./theory-builder.md) works only with the stated ones
+  (its condition 1).
 - **Criticism is broader than empirical test.** A tentative theory may be
   criticized by argument, by comparison with a rival, or by testing a
   prediction. A failed prediction counts against it; surviving a serious
@@ -67,7 +67,7 @@ stored or edited. Structural properties have their own term,
 
 Relevant Notes:
 
-- [Conjectural learning](./conjectural-learning.md) — extends: the paradigm built on formulated tentative theories that guide decisions
+- [Theory builder](./theory-builder.md) — extends: the system that states, consumes, criticizes, and retains tentative theories
 - [Addressable theory](./addressable-theory.md) — contrasts: the structural property, separate from the epistemic status
 - [Popper, A realist view of logic, physics, and history](../../sources/popper-a-realist-view-of-logic-physics-and-history-1966.ingest.md) — evidenced-by: the schema and the place of `TT` in it
 - [Popper, Conjectures and Refutations](../../sources/popper-conjectures-and-refutations.ingest.md) — evidenced-by: tentativeness as a lasting status

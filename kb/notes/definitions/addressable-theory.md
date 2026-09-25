@@ -13,9 +13,10 @@ parts while the rest stays in place.
 
 The KB needs the term to keep a structural property apart from an epistemic
 status. Every theory the KB retains is a [tentative theory](./tentative-theory.md);
-only some are addressable.
-[Conjectural learning](./conjectural-learning.md) does not require it. The
-expected benefit is that criticism can name a part, so a revision keeps what
+only some are addressable. A [theory builder](./theory-builder.md) requires
+only the minimum, localized content: some unit carries what the theory says.
+Finer grades are Commonplace's design commitment, not a membership condition.
+The expected benefit is that criticism can name a part, so a revision keeps what
 still works while changing what failed; whether that benefit arrives is an
 empirical question.
 
@@ -83,7 +84,7 @@ a preference for minimal revision from them.
 Relevant Notes:
 
 - [Tentative theory](./tentative-theory.md) — contrasts: the epistemic status, which requires no structure
-- [Conjectural learning](./conjectural-learning.md) — extends: the paradigm in which addressability is a conjectured benefit
+- [Theory builder](./theory-builder.md) — extends: the system whose condition 1 is addressability's minimum and whose design commits to finer grades
 - [Representational form](./representational-form.md) — grounds: the localization and assigned-consequences axes
 - [Codification](./codification.md) — grounds: the crossing that gives a part computed consequences
 - [Reflection buys addressability](../reflection-buys-addressability.md) — extends: what addressability changes about an improvement pathway

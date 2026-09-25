@@ -44,7 +44,7 @@ Decision numbers D1–D8 refer to the
 - D2: retitle the article series away from "conjectural learning"; redirects
   keep old links working.
 - D4: `conjectural-learning-checks.md` is replaced by
-  [theory-builder-checks.md](./theory-builder-checks.md), promoted with the
+  [theory-builder-checks.md](../../notes/definitions/theory-builder-checks.md), promoted with the
   definition.
 - D5: split the externally tested case. What a claim must supply for itself
   goes to `a-claim-without-external-assessment-carries-three-obligations.md`;
@@ -68,8 +68,8 @@ Decision numbers D1–D8 refer to the
 
 ## Steps
 
-1. Draft [theory-builder.md](./theory-builder.md) and its
-   [checks](./theory-builder-checks.md) — done.
+1. Draft [theory-builder.md](../../notes/definitions/theory-builder.md) and its
+   [checks](../../notes/definitions/theory-builder-checks.md) — done.
 2. Refresh the [consumer inventory](./consumer-inventory.md) against the
    current draft and the decisions above — done.
 3. Operator approves the refreshed edit plan, including D1 and D2 titles —

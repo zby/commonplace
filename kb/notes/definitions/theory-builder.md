@@ -1,236 +1,226 @@
 ---
-description: "Definition — a theory builder is the complete persistent system responsible for developing and revising tentative theories; identified by responsibility and lineage, assessed against a declared boundary, seed, and evidence interface"
+description: "Definition — a theory builder grows objective knowledge by conjecture and refutation: it states theories in localized units, acts on them, criticizes what the units say, and retains the results; learning is tested, not assumed"
 type: kb/types/definition.md
 tags: [foundations, self-improving-systems, learning-theory]
 ---
 
 # Theory builder
 
-A **theory builder** is the complete persistent system responsible for
-developing and revising [tentative theories](./tentative-theory.md)
-about subjects it is asked to investigate. It operates in response to
-questions, cases, evidence, requirements, and the consequences that arise
-when its theories are applied. It is not necessarily a program, a model, or
-a particular method. The KB needs the term because questions about a
-learning methodology are questions about this whole system, and the
-components usually named, a model, a harness, a refinement algorithm, are
-each only part of it.
+<!-- Maintenance: when changing this definition, please apply the checks in
+[theory-builder-checks.md](./theory-builder-checks.md). -->
 
-A theory here must also be an [addressable theory](./addressable-theory.md):
-its assumptions, scope conditions, and parts can be inspected and revised
-individually, in any form that supplies these conditions. Its consequences
-must be capable of being contradicted by a case. These are conditions of this
-builder definition; tentative status alone supplies neither.
+A **theory builder** is a system that grows knowledge by Popper's method of
+conjecture and refutation, applied to theories it keeps as objective
+knowledge. It works through Popper's schema `P1 → TT → EE → P2`: faced with a
+problem, it proposes a [tentative theory](./tentative-theory.md), attempts to
+eliminate its errors, "especially by way of critical discussion", and takes
+up the new problems that result
+([Popper 1966](../../sources/popper-a-realist-view-of-logic-physics-and-history-1966.ingest.md#quotes)).
+The KB needs the term to name the kind of system Commonplace builds and
+studies.
 
-The definition leaves open how a builder revises its theories. It may revise
-an existing theory in response to criticism or reconstruct one from retained
-records. A comparison of retained forms can vary this choice. Constructing a
-first theory is also in scope. Responsibility for this work does not establish [conjectural learning](./conjectural-learning.md),
-which requires an operative formulated theory open to criticism of what it
-says, and an improvement in the system's capacity for future action
-attributable to the process of conjecture and criticism. A builder can
-attempt that process without succeeding. Conversely, conjectural learning
-does not require separately editable theory parts or continuing
-responsibility across demands, so it does not by itself establish builder
-membership.
+A system is a theory builder when it meets four conditions, each stated in
+Popper's terms.
 
-The boundary rule, persistence clause, and evaluation clause below are
-adapted from the [software house](./software-house.md) definition, because
-they are not specific to software.
+1. **Localized content.** Its theories are stated in natural or formal
+   language, so identifiable units carry their content: each unit says
+   something that can be pointed at. This is the localized side of
+   [representational form](./representational-form.md). Popper's objective
+   knowledge is knowledge "contained in a book; or stored in a library"
+   ([Popper 1966](../../sources/popper-a-realist-view-of-logic-physics-and-history-1966.ingest.md#quotes)),
+   and he holds that criticism needs this form: without a descriptive
+   language "there can be no object for our critical discussion"
+   ([Popper 1968](../../sources/popper-epistemology-without-a-knowing-subject-1968.ingest.md#quotes)).
+2. **Consumption.** Its theories guide what it does through what they say.
+   In Popper's words, "all our actions in the first world are influenced by
+   our second-world grasp of the third world"
+   ([Popper 1968](../../sources/popper-epistemology-without-a-knowing-subject-1968.ingest.md#quotes)).
+   A difference in a theory's content that matters to a decision changes the
+   decision ([operative change](./operative-change.md)).
+3. **Criticism.** It has a working process of attempted refutation aimed at
+   what identified units say: critical argument, comparison with rivals, and
+   tests of stated consequences. A criticism is itself stated, so it can be
+   criticized in turn; in particular, it can blame the test, the data, or an
+   auxiliary assumption instead of the theory. Theories that fail are
+   revised, or rejected whole and replaced by a new conjecture. Revision need
+   not be small: it may change a core assumption, the problem, or the
+   machinery.
+4. **Growth.** It retains its theories and the record of their criticism, so
+   that the new problem `P2` becomes the starting point of later work. A
+   builder that keeps only the record of criticism and rebuilds a theory from
+   it when needed also meets this condition: the rebuilt theory is a new
+   conjecture informed by the retained criticism. Later work consumes what is
+   retained, and in Popper's sense consumption includes "criticising them,
+   changing them, and often even demolishing them, in order to replace them
+   by better ones" ([Popper 1966](../../sources/popper-a-realist-view-of-logic-physics-and-history-1966.ingest.md#quotes)).
+   Retention counts when what is kept is taken up on a new problem. Rounds
+   of revision on one problem, however many, are one pass of error
+   elimination; the unit is the problem, not the process run, so a single
+   run that carries its results into later, different problems meets the
+   condition.
+
+**Criticism against gradient descent.** Gradient descent also eliminates
+error, and it assigns blame more finely than any text: every parameter gets
+its share. But no parameter says anything by itself, so the blame cannot be
+stated as an error in what the theory says, and it cannot be argued with; the
+loss and the data are fixed from outside the process. This is Popper's
+distinction between the critical method and trial and error, which is applied
+"in a more dogmatic fashion, by the amoeba also"; the difference "lies not so
+much in the trials as in a critical and constructive attitude towards errors"
+([Conjectures and Refutations, Chapter 1](../../sources/popper-conjectures-and-refutations.ingest.md#quotes)).
+Conditions 1 and 3 together draw this line: localization supplies units that
+say something, and criticism aims at what they say.
+
+**Error elimination is attempted, not guaranteed.** The parentheses in
+Popper's "(attempted) error-elimination" are his. A builder whose criticism
+finds nothing, or whose revisions do not improve later work, is still a
+theory builder. Whether a theory builder learns, in the sense of improving
+its capacity for future action
+([Simon's criterion](../learning-is-not-only-about-generality.md)), is an
+empirical question about it. The definition does not settle it.
+
+## Addressability
+
+Condition 1 sets the minimum: some unit carries content, even if that unit is
+the whole theory. Above the minimum,
+[addressability](./addressable-theory.md) comes in grades: the finer the
+units, the more precisely criticism can name what it blames. At the high end,
+a theory's assumptions, scope conditions, and parts are stated separately and
+can be revised individually. Popper grants Duhem that a test often bears on a
+whole system, but replies: "It is possible in quite a few cases to find which
+hypothesis is responsible for the refutation"
+([Conjectures and Refutations, Chapter 10](../../sources/popper-conjectures-and-refutations.ingest.md#quotes)).
+Commonplace builds for the high end. That this pays is a conjecture, tested
+against builders whose theories are coarser.
+
+Addressability is relative to the unit criticism names, and this applies to
+the machinery as well as to the theories. A model is not localized inside,
+but as a component of the builder it is an addressable part: a method text or
+configuration states which model does which work, criticism can blame that
+choice, and the builder can replace the model whole. What the builder cannot
+do is criticize what the model's weights say, because no unit in them says
+anything.
 
 ## Boundary
 
-The theory builder includes the theories whose revision it remains
-responsible for, the machinery it uses, and every person or computational
-component that fills an internal theory-building role. The machinery
-includes representations and their consequence procedures, repair
-operators, evaluators and evidence procedures, models, retained
-instructions, tools, indexes, validators, and the records from which any of
-these can be reconstructed. The interpreter's current knowledge and
-procedures are the part of this machinery available to interpretation.
-[WikiSkill](../../sources/wikiskill-persistent-knowledge-for-skill-evolution.ingest.md)
-is an external instance of this list with three layers and three roles:
-immutable traces, a persistent wiki of diagnoses and intervention history,
-and active skills, worked by a maintainer, a proposer, and a solver under a
-score gate; the [independent implementation's review](../../agentic-systems/reviews/wikiskill-stahl-g.md)
-records computational roles with an operator outside supplying tasks,
-scoring, and rounds.
+The builder is the whole system that performs the operations above: people,
+models, tools, and retained texts. The operations are proposing a theory,
+deriving what it implies, criticizing it, choosing what to blame, producing a
+revision, selecting the theory to keep, and changing the machinery that does
+these things. Users who supply problems and judge the products are outside
+the builder unless they perform one of these operations. The boundary follows
+the operation, not the person, so a claim about a builder declares the
+boundary it assumes.
 
-The **seed** is the machinery and theories the builder holds at the
-declared start of an assessment. Extension and interventions during the
-assessed run are measured against it. The builder may change its machinery
-through retained instructions, new tools, changes to model weights, model
-replacement, or combinations of these. Fixed models are a constraint on
-particular builders or studies, not part of this definition.
+Retention is the builder's, not the interpreter's: a model may propose and
+evaluators may assess, but what is kept for later work is decided by the
+builder's process.
 
-Users remain outside the builder when they supply questions, cases,
-evidence, preferences, acceptance judgments, or later demands. A person is
-inside the builder only when the system depends on them for an internal
-theory-building role: constructing a first theory, interpreting what a
-theory implies, choosing which part to blame or revise, producing a
-candidate revision, evaluating a candidate theory, selecting the theory to
-retain, or extending and repairing the machinery. The same person can
-occupy both positions in different interactions. The boundary follows the
-role, not the person, so an attribution must declare the boundary it was
-assessed against.
+The builder is identified by its continuing process, not by any component.
+Every theory, procedure, and model in it may be replaced over time through
+its own criticism and revision. A change installed from outside that process
+is an intervention and is recorded as one.
 
-## Evidence interface
+## Qualifiers
 
-An **evidence interface** declares how cases, consequences, and acceptance
-judgments reach the builder, which claims they can assess, and under which
-assumptions. It is a parameter of every assessed builder, alongside its
-boundary and seed, retained as a versioned artifact that states both its
-competence and its applicability assumptions, following the
-[competence-and-assumptions account (snapshot required)](../../sources/knowledge-engineering-principles-and-methods.ingest.md)
-and [explicit interface mappings (snapshot required)](../../sources/upml-framework-for-knowledge-system-reuse.ingest.md).
-The declaration covers the assessed claim and its scope, task supply and
-acquisition mode, consequences and who judges them, consumption evidence,
-feedback, the evaluation protocol, and how evidence is exposed, reserved,
-and renewed. Where a judgment is made internally, or no assessment exists
-for a claim, the declaration says so. The
-[externally tested theory builder](./externally-tested-theory-builder.md)
-is the case in which the interface supplies assessment from outside.
+- **Reflective.** The builder's method is part of its objective knowledge.
+  The problems it works on, its standards of criticism, and its procedures
+  meet the four conditions, as its other theories do. Popper places these
+  objects in the third world: only there "the problems and standards of
+  rational criticism can develop"
+  ([Popper 1968](../../sources/popper-epistemology-without-a-knowing-subject-1968.ingest.md#quotes)).
+  A procedure is a tentative solution to a problem about how to build
+  theories. Criticism aims at its stated conjecture about why it works, so a
+  procedure with no stated purpose can be tried but not criticized.
+  The causal connection that [reflective system](./reflective-system.md)
+  requires runs through conditions 2 and 3: the builder's operations consume
+  the method texts, and criticism tests those texts against records of the
+  builder's own operation. Popper describes the human version as "the give
+  and take between ourselves and our work", with "feed-back that can be
+  amplified by self-criticism"
+  ([Popper 1968](../../sources/popper-epistemology-without-a-knowing-subject-1968.ingest.md#quotes)).
+  Unlike computational reflection, this connection is not kept up
+  automatically. When the machinery changes outside the texts, for example
+  when a model is replaced, text and operation can diverge until criticism
+  finds the gap. Reflection reaches the models only as addressable parts: the
+  builder can hold theories about a model and criticize the choice of it, but
+  it changes the model only through what it gives the model or by replacing
+  it.
+- **Autonomous.** Computation performs every operation inside the boundary.
+  Users still supply problems and judge products. Autonomy does not
+  establish that the operations are reliable.
 
-## Persistence
-
-Persistence means continuity of responsibility for the theories across
-demands and consequences, together with lineage: each successor state of
-the builder is produced through the preceding state's own revision process.
-No particular theory, procedure, evaluator, or part of the seed methodology
-need survive; the builder is identified by responsibility and lineage, not
-by any component. A change installed from outside that process is an
-intervention. It is recorded as one, and the successor it produces is not
-credited to the builder. Whether locally warranted revisions compose into a
-warranted lineage is assessed, not assumed; it is the first open question in
-[a claim without external assessment carries three obligations](../a-claim-without-external-assessment-carries-three-obligations.md).
-In the externally tested case the lineage is assessed at the outcome level
-through the evidence interface, which lies outside the builder and is not
-replaced by it.
-
-Persistence establishes neither retention nor learning. A builder whose
-fixed machinery suffices for every admitted demand still meets this
-definition. So does a builder that regenerates its theories: its continuity
-lies in its records and machinery, and it remains responsible for the
-theories it delivers although it does not retain them. A system that runs once over supplied cases and holds no
-continuing responsibility for the result is not persistent in this sense.
-Retention is the builder's, not the interpreter's: the interpreter
-proposes, the evaluators assess, and the builder retains.
-
-## Extension
-
-An **extension** is a retained change to the machinery that demonstrates a
-capability beyond what the seed delivered on a stated demand under a stated
-budget. It is established by a comparable seed baseline under that budget
-and by later work that consumes the retained change. The baseline is the
-same later demand run without the retained change under matched conditions,
-not the seed's earlier performance on an earlier demand, since a gain
-between episodes confounds the change with task drift, model variance, and
-scoring noise; [PAST-Bench](../../sources/past-bench-personal-agents-pdf.ingest.md)
-builds its evaluation on that matched ablation and names the question
-performance attribution. This is a bounded comparative claim about
-demonstrated capability, not a proof that the seed could never have
-supplied it.
-
-A new artifact, a rewrite of an existing prompt or procedure, or a change
-to model weights can each qualify. Artifact differences identify what
-changed; outcome comparisons and consumption evidence establish the
-extension, and weight changes are probed through their effects on later
-work. Who produced the change, or whether a general constructor could reach
-it in principle, does not bear on whether it qualifies. Extension is
-independent of who performs the roles and of whether machinery changes are
-guided by a theory of the builder itself; the two conditions in Scope
-supply those.
-
-## Scope
-
-- **Two independent conditions** qualify a theory builder, each defined
-  against the same declared boundary. A [reflective theory builder](./reflective-theory-builder.md)
-  revises a causally connected theory of its own theory-building
-  organization. An
-  [autonomous theory builder](./autonomous-theory-builder.md) performs
-  every internal role computationally. Extension is not a third condition;
-  it is the quantity a research question measures.
-- **An evaluation** examines particular demands over a particular period
-  under the declared interface and budget. Those limits bound what its
-  evidence establishes; they do not define the builder's future
-  responsibilities. Outcome performance, interpretive fidelity, and the
-  causal effect of a retained theory are different claims and may require
-  different comparisons.
-- **Interpretation** is a role inside the builder: deriving predictions,
-  identifying candidate faults, and assessing revisions. A failed outcome
-  does not by itself distinguish an interpretation error from a theory
-  error. No standard for that attribution is part of this definition; an
-  outcome comparison records a failure without attributing it, and a claim
-  about the cause needs its own evidence.
-
-## Exclusions
-
-- A model, a prompt, a retrieval index, an agent harness, or a refinement
-  algorithm is not the theory builder merely because the builder uses it.
-- A user is not inside the builder because their evidence changed a theory.
-- Persistence is not evidence that the builder retained experience or
-  learned.
-- Installing a change is not evidence that later work used it, and use is
-  not evidence that it caused an improvement; an extension claim needs an
-  observed [consumption path](../an-action-model-matters-only-through-its-consumption-path.md)
-  and an outcome comparison.
-- Retaining a theory for inquiry neither establishes an extension nor
-  licenses routine reliance on it.
-- An outcome success establishes outcome performance; it does not establish
-  interpretive fidelity or the causal effect of a retained theory, and an
-  internal approval establishes none of the three.
-
-## Misuse Cases
-
-- Calling a language model, an agent harness, or a review pipeline a theory
-  builder when it is one component of the system that holds responsibility.
-- Counting a user inside the builder because their tasks or feedback changed
-  a theory, when they performed no internal role.
-- Crediting the builder with an extension that an operator installed from
-  outside its revision process; that is an intervention and, if it replaces
-  the machinery wholesale, a new seed.
-- Reading persistence as retention or learning, or a stored theory nothing
-  consumes as a theory the builder is responsible for.
+The qualifiers are independent. Commonplace today is a reflective,
+human-staffed theory builder; the research program's bet is an autonomous one.
 
 ## Boundary cases
 
-- **FORTE in a single supplied-theory revision invocation** is not a
-  theory builder: the invocation holds no continuing responsibility for the
-  result. This does not classify a larger system that uses FORTE.
-- **The Gödel machine** is persistent, holds a self-representation, and
-  rewrites itself computationally. Its classification as a theory builder
-  remains open. The existing comparison asks whether its retained theories
-  are revised against evidence, rather than only used as premises that
-  license rewrites; the [proof-governed construction](../goedel-machines-are-a-proof-governed-case-of-self-modification.md)
-  alone does not answer that deployment question. Proof-governed switching
-  neither establishes nor excludes criticism elsewhere in the complete
-  system. An internally represented utility does not by itself decide the
-  classification.
+- **A research community** is a theory builder, with the community as the
+  declared system. It is Popper's own case. No single member holds the whole
+  theory or supplies all the criticism.
 - **Commonplace's note-review loop**, with the operator performing internal
-  roles, is a human-staffed theory builder. A note's approval is internal
-  evaluation, not independent assessment of its downstream consequences.
-- **Commonplace producing a KB for a consuming project** is a theory
-  builder whose product is the delivered KB and its supporting software,
-  and whose evidence interface is that product's use; it becomes an
-  observed externally tested instance when a consuming project supplies the
-  release, consumption, and outcome records.
-- **Total replacement through the builder's own process** is the same
-  builder: a lineage in which every theory, procedure, evaluator, and part
-  of the seed methodology has been revised away still satisfies persistence.
-  An operator installing a different framework in its place starts a new
-  seed.
+  operations, is a human-staffed theory builder.
+- **Criticism applied through weights.** Critique-trained reinforcement
+  learning and "textual gradient" methods state a criticism, then use it to
+  update weights. The revised theory is the weights, where no unit says
+  anything, so the arrangement is outside. It becomes a builder only when the
+  criticism aims at a stated theory that the system retains and consumes.
+- **Content located in weights.** Model editing and interpretability methods
+  can find weights that carry a particular fact. To that extent those parts
+  of a model move toward the localized side, and criticism aimed at them can
+  meet condition 3. The definition tracks localization, not substrate, so
+  whether weights are excluded is an empirical question about a given model
+  and method.
+- **The Gödel machine** stays open. Its switching is governed by proof from
+  premises that the construction does not criticize; whether a deployment
+  criticizes them elsewhere is not settled by the construction. See
+  [Gödel machines are a proof-governed case of self-modification](../goedel-machines-are-a-proof-governed-case-of-self-modification.md).
+
+## Exclusions
+
+- **Dispositions and weight adaptation.** Popper counts expectations and
+  dispositions as tentative theories in a wider sense. Their content is not
+  localized, so they fail condition 1, and adjusting them by gradient fails
+  condition 3. A system whose only change is weight adaptation is not a
+  theory builder. Its models can still be components of one.
+- **Black-box optimization.** Variants of prompts or programs are generated
+  and kept by outcome score, with no stated reason bearing on what a variant
+  says. The variants are localized, but selection does not aim at what they
+  say, so this is trial and error and fails condition 3. Real systems fall
+  between this case and a builder; the test is whether a stated reason bears
+  on what a unit says.
+- **A fixed theory.** A stated theory guides decisions and the system never
+  criticizes it. It fails condition 3.
+- **Work on one problem only.** A theory built while reasoning and then
+  discarded fails condition 4. So does iterated refinement on a single
+  problem, such as one invocation of FORTE over a supplied theory and
+  training set, or counterexample-guided synthesis of one program: the
+  rounds are one pass of error elimination, and nothing is taken up on a new
+  problem. This does not classify a larger system that uses the procedure.
+- **A stored theory nothing consumes.** It fails condition 2. See
+  [an action model matters only through its consumption path](../an-action-model-matters-only-through-its-consumption-path.md).
+
+## Misuse Cases
+
+- Calling a model, a prompt, a harness, or a review pipeline a theory builder
+  when it is one component of the system that performs the operations.
+- Counting a system as a theory builder because it stores prose about its
+  subject or itself. Storage satisfies condition 1 at most.
+- Reading membership as evidence of learning. A builder can criticize and
+  revise without improving; improvement needs its own comparison.
+- Counting a user inside the builder because their problems or verdicts
+  changed a theory, when they performed none of the internal operations.
 
 ---
 
 Relevant Notes:
 
-- [Tentative theory](./tentative-theory.md) — defined-in: the epistemic status of the theories a builder develops
-- [Addressable theory](./addressable-theory.md) — defined-in: the structural condition this builder definition retains
-- [Conjectural learning](./conjectural-learning.md) — contrasts: the learning process a builder may attempt; successful learning and builder membership have different conditions
-- [Software house](./software-house.md) — grounds: the boundary, persistence, and evaluation clauses this definition adapts
-- [Externally tested theory builder](./externally-tested-theory-builder.md) — extends: the case in which the evidence interface supplies assessment from outside
-- [Reflective theory builder](./reflective-theory-builder.md) — extends: the first independent condition
-- [Autonomous theory builder](./autonomous-theory-builder.md) — extends: the second independent condition
-- [A claim without external assessment carries three obligations](../a-claim-without-external-assessment-carries-three-obligations.md) — extends: what the builder must supply for itself when the interface does not assess a claim
-- [An action model matters only through its consumption path](../an-action-model-matters-only-through-its-consumption-path.md) — grounds: why installation and retention alone establish nothing
-- [Gödel machines are a proof-governed case of self-modification](../goedel-machines-are-a-proof-governed-case-of-self-modification.md) — contrasts: the proof-governed admission route and why its classification stays open
+- [Tentative theory](./tentative-theory.md) — defined-in: the status of every theory the builder holds
+- [Representational form](./representational-form.md) — grounds: the localization axis that condition 1 uses
+- [Addressable theory](./addressable-theory.md) — defined-in: the graded property above condition 1's minimum
+- [Reflective system](./reflective-system.md) — defined-in: the causal connection the reflective qualifier requires
+- [Learning is not only about generality](../learning-is-not-only-about-generality.md) — grounds: the sense of learning the definition leaves to test
+- [Commonplace studies conjectural learning through retained theories](../commonplace-studies-conjectural-learning-through-retained-theories.md) — extends: the research program's conjectures about builders
+- [Popper, A realist view of logic, physics, and history](../../sources/popper-a-realist-view-of-logic-physics-and-history-1966.ingest.md) — evidenced-by: the schema, objective knowledge, and consumption
+- [Popper, Epistemology without a knowing subject](../../sources/popper-epistemology-without-a-knowing-subject-1968.ingest.md) — evidenced-by: formulation as a condition of criticism, action guided by objective knowledge, self-criticism
+- [Popper, Conjectures and Refutations](../../sources/popper-conjectures-and-refutations.ingest.md) — evidenced-by: the critical method against trial and error, and locating the refuted hypothesis
