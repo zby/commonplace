@@ -107,7 +107,7 @@ def test_complete_mark_passes_when_all_members_linked(
     results = validate_note(readme, repo_root=tmp_path)
 
     assert not results.fails
-    assert any("complete mark: all 1 members linked" in p for p in results.passes)
+    assert any("complete mark: all 1 members linked or reached" in p for p in results.passes)
 
 
 def test_complete_mark_ranges_over_every_participating_collection(tmp_path: Path) -> None:
@@ -146,7 +146,7 @@ def test_membership_ignores_undeclared_collections_and_the_proposal_archive(
     results = validate_note(readme, repo_root=tmp_path)
 
     assert not results.fails
-    assert any("complete mark: all 1 members linked" in p for p in results.passes)
+    assert any("complete mark: all 1 members linked or reached" in p for p in results.passes)
 
 
 def test_head_outside_the_tag_collection_fails(tmp_path: Path) -> None:
@@ -223,51 +223,50 @@ def test_weight_gates_warn_and_fail(tmp_path: Path) -> None:
     assert any("weight gate" in p and "within" in p for p in small_results.passes)
 
 
-def test_covered_by_fails_on_uncovered_note(tmp_path: Path) -> None:
+def test_complete_mark_counts_members_reached_through_a_linked_head(tmp_path: Path) -> None:
     tags = setup_repo(tmp_path)
     notes = tmp_path / "kb" / "notes"
-    note(notes / "covered-note.md", ["parent", "child-a"])
-    note(notes / "uncovered-note.md", ["parent"])
+    note(notes / "direct-note.md", ["parent"])
+    note(notes / "child-note.md", ["parent", "child-a"])
+    note(notes / "stray-note.md", ["parent"])
     tag_readme(tags / "child-a-README.md", "child-a")
     readme = tag_readme(
         tags / "parent-README.md",
         "parent",
-        marks="covered_by: [child-a]\n",
+        marks="complete: true\n",
+        body="\n- [direct](../notes/direct-note.md) — placed\n- [child-a](./child-a-README.md) — the child area\n",
     )
 
     results = validate_note(readme, repo_root=tmp_path)
 
-    assert any("covered_by" in f and "uncovered-note.md" in f for f in results.fails)
+    assert any("complete mark" in f and "stray-note.md" in f for f in results.fails)
+    assert not any("child-note.md" in f for f in results.fails)
+    assert not any("direct-note.md" in f for f in results.fails)
 
 
-def test_covered_by_requires_a_head_per_child(tmp_path: Path) -> None:
+def test_complete_mark_passes_for_the_mixed_shape(tmp_path: Path) -> None:
     tags = setup_repo(tmp_path)
-    note(tmp_path / "kb" / "notes" / "covered-note.md", ["parent", "child-a"])
+    notes = tmp_path / "kb" / "notes"
+    note(notes / "fundamental.md", ["parent"])
+    note(notes / "child-note.md", ["parent", "child-a"])
+    tag_readme(tags / "child-a-README.md", "child-a")
     readme = tag_readme(
         tags / "parent-README.md",
         "parent",
-        marks="covered_by: [child-a]\n",
-    )
-
-    results = validate_note(readme, repo_root=tmp_path)
-
-    assert any("child `child-a` has no head" in f for f in results.fails)
-
-
-def test_covered_by_passes_and_warns_on_fanout(tmp_path: Path) -> None:
-    tags = setup_repo(tmp_path)
-    note(tmp_path / "kb" / "notes" / "covered-note.md", ["parent", "child-1"])
-    children = [f"child-{i}" for i in range(1, 9)]
-    for child in children:
-        tag_readme(tags / f"{child}-README.md", child)
-    readme = tag_readme(
-        tags / "parent-README.md",
-        "parent",
-        marks=f"covered_by: [{', '.join(children)}]\n",
+        marks="complete: true\n",
+        body="\n- [child-a](./child-a-README.md) — the child area\n- [fundamental](../notes/fundamental.md) — carries only the parent\n",
     )
 
     results = validate_note(readme, repo_root=tmp_path)
 
     assert not results.fails
-    assert any("covered_by fan-out: 8 children" in w for w in results.warns)
-    assert any("covered_by: all tagged notes" in p for p in results.passes)
+    assert any("all 2 members linked or reached through 1 linked heads" in p for p in results.passes)
+
+
+def test_covered_by_is_rejected_by_the_schema(tmp_path: Path) -> None:
+    tags = setup_repo(tmp_path)
+    readme = tag_readme(tags / "parent-README.md", "parent", marks="covered_by: [child-a]\n")
+
+    results = validate_note(readme, repo_root=tmp_path)
+
+    assert any("covered_by" in f for f in results.fails)

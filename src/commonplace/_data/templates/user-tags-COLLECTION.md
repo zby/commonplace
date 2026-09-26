@@ -30,10 +30,10 @@ directory tree.
 
 ## Marks
 
-A head may declare `complete: true` (it links every member) or
-`covered_by: [child, ...]` (every member also carries a listed child tag).
-Both are checked by validation and must be dropped when they cannot be made
-true; see the `tag-readme` type spec in the Commonplace library.
+A head may declare `complete: true`: every member is linked from the head or
+carries a tag whose head is linked from it, so the head reaches every member
+in one hop. Validation checks the claim; drop the mark when it cannot be made
+true. See the `tag-readme` type spec in the Commonplace library.
 
 ## Outbound links
 

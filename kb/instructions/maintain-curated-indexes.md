@@ -7,7 +7,7 @@ type: types/instruction.md
 
 Audit curated tag READMEs (`kb/tags/<tag>-README.md`, type `tag-readme`) for editorial quality, completeness, and coherence. A tag README is the tag's curated head: a hand-written editorial body with groupings and context phrases, small by type contract (weight gates). The complete per-tag listing is not committed — it is generated at ProperDocs build time for the published site (ADR 025); agents reconstruct it on demand with the scoped `rg` recipe below.
 
-This instruction is also the route for fixing validator warnings on tag-READMEs (weight gate, `complete` membership, `covered_by` coverage and fan-out). The marks' maintenance rules — when to declare or drop `complete`/`covered_by`, the lifecycle exits, the smells — live in the [tag-readme type spec](../types/tag-readme.md); read it before changing a mark.
+This instruction is also the route for fixing validator warnings on tag-READMEs (weight gate, `complete` one-hop reach). The mark's maintenance rules — when to declare or drop `complete`, the lifecycle exits, the smells — live in the [tag-readme type spec](../types/tag-readme.md); read it before changing a mark.
 
 ## When to use
 

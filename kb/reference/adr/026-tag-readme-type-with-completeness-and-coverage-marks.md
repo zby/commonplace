@@ -9,7 +9,7 @@ status: accepted
 
 **Status:** accepted
 **Date:** 2026-06-10
-**Amended by:** [ADR 089](./089-tags-are-one-namespace-per-kb-with-heads-in-kb-tags.md) — heads moved to `kb/tags/`, `index_source`/`index_key` retired, marks range over the participating collections, the `tags-README.md` hub replaced by `kb/tags/README.md`.
+**Amended by:** [ADR 090](./090-one-completeness-mark-reaches-members-in-one-hop.md) — `covered_by` retired; `complete` now means every member is reached in one hop, directly or through a linked head. [ADR 089](./089-tags-are-one-namespace-per-kb-with-heads-in-kb-tags.md) — heads moved to `kb/tags/`, `index_source`/`index_key` retired, marks range over the participating collections, the `tags-README.md` hub replaced by `kb/tags/README.md`.
 
 ## Context
 

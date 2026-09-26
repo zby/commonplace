@@ -1,6 +1,7 @@
 ---
 description: "Curated head for the learning-theory tag — how systems learn, verify, and improve, with routes through its major child areas and the fundamentals that sit under no child"
 type: types/tag-readme.md
+complete: true
 ---
 
 # Learning theory
@@ -11,7 +12,7 @@ The area is organized around [deploy-time learning](../notes/retained-artifacts-
 
 ## Major child areas
 
-These child tags route major parts of the area. A few fundamentals carry only the parent tag: [learning is not only about generality](../notes/learning-is-not-only-about-generality.md) (Simon's definition of learning), [LLM learning phases fall between human learning modes](../notes/llm-learning-phases-fall-between-human-learning-modes.md), and [in-context learning presupposes context engineering](../notes/in-context-learning-presupposes-context-engineering.md).
+These child tags route major parts of the area. A few fundamentals carry only the parent tag: [learning is not only about generality](../notes/learning-is-not-only-about-generality.md) (Simon's definition of learning), [LLM learning phases fall between human learning modes](../notes/llm-learning-phases-fall-between-human-learning-modes.md), and [in-context learning presupposes context engineering](../notes/in-context-learning-presupposes-context-engineering.md). Outside the notes collection, [trace-learning techniques in related systems](../agent-memory-systems/trace-learning-techniques-in-related-systems.md) compares the external systems that learn from their own traces.
 
 - [deploy-time-learning](./deploy-time-learning-README.md) — the phenomenon: deployment meets users, surprises, and forces change after first release; what use reveals that design could not
 - [constraining](./constraining-README.md) — narrowing the interpretation space, from conventions to deterministic code; codification, relaxing, and the decision heuristics

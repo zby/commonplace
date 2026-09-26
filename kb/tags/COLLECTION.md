@@ -24,7 +24,7 @@ means and where to go next.
 ## Participating collections
 
 The `participating:` list in this file's frontmatter names the collections
-whose `tags:` lines are membership claims. Every `complete` or `covered_by`
+whose `tags:` lines are membership claims. Every `complete`
 mark, the generated listing on the site, and the head requirement range over
 exactly those collections, through one collector. Tags on artifacts elsewhere
 (`work`, `sources`, `reports`, `types`, and the proposal archive under
@@ -41,10 +41,12 @@ its own head, over grouping inside one head.
 
 ## Marks
 
-`complete: true` and `covered_by: [child, ...]` are validated caches of
-membership, enforced or omitted. Drop a mark rather than force a weak child
-tag or a tag created to hold a few notes; list the uncovered members by hand
-instead. The [`tag-readme` type](../types/tag-readme.md) carries the
+`complete: true` is a validated cache of membership, enforced or omitted: every
+member is linked from the head or carries a tag whose head is linked from it,
+so the head reaches every member in one hop ([ADR 090](../reference/adr/090-one-completeness-mark-reaches-members-in-one-hop.md)).
+Children are the heads the body links; no list names them. Drop the mark
+rather than force a weak child tag or a tag created to hold a few notes;
+listing those members by hand also satisfies it. The [`tag-readme` type](../types/tag-readme.md) carries the
 maintenance procedure; [`maintain-curated-indexes`](../instructions/maintain-curated-indexes.md)
 carries the audit workflow.
 

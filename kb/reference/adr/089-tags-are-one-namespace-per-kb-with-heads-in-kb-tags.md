@@ -33,7 +33,7 @@ Usage evidence bounds how much machinery the decision may carry. A survey of abo
 
 5. **No cross-KB membership.** A host artifact cannot be a member of a library tag, because the library is read-only. A host may reuse a library tag string; it is then the host's own tag, with the host's own head or none. A query that unions two KBs' sweeps is an explicit query and asserts nothing about either KB's marks.
 
-6. **Marks keep ADR 026's semantics at the declared scope, and are never forced.** `complete` and `covered_by` remain validated caches of exact membership, enforced-or-omitted. When a mark cannot be made true without a weak child tag or a tag created to hold a few notes, the mark is dropped and the head lists the uncovered members by hand.
+6. **Marks keep ADR 026's semantics at the declared scope, and are never forced.** `complete` and `covered_by` remain validated caches of exact membership, enforced-or-omitted. (*Amended by [ADR 090](./090-one-completeness-mark-reaches-members-in-one-hop.md): one mark, `complete`, meaning one-hop reach; `covered_by` retired.*) When a mark cannot be made true without a weak child tag or a tag created to hold a few notes, the mark is dropped and the head lists the uncovered members by hand.
 
 7. **No exact resolver and no new tag relations.** The collector that scans participating collections, and the validator and site build that consume it, are the whole membership machinery. `covered_by` remains the only typed tag-to-tag relation.
 

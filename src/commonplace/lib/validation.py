@@ -67,9 +67,6 @@ TAG_README_TYPE = "types/tag-readme.md"
 # count is reported as diagnosis only.
 TAG_README_SOFT_BYTES = 8 * 1024
 TAG_README_HARD_BYTES = 16 * 1024
-# Soft fan-out limit for covered_by: routing value needs the alternatives held
-# in mind at once; past this, group children under intermediate tags.
-TAG_README_MAX_FANOUT = 7
 # Validator messages must name the fixing instruction so the maintenance loop
 # is self-routing (ADR 026).
 _TAG_README_FIX_HINT = "see kb/instructions/maintain-curated-indexes.md"
@@ -338,10 +335,7 @@ class ValidationRun:
                 ):
                     continue
                 frontmatter = readme_parsed.document.frontmatter or {}
-                has_checked_mark = frontmatter.get("complete") is True or bool(
-                    frontmatter.get("covered_by")
-                )
-                if not has_checked_mark:
+                if frontmatter.get("complete") is not True:
                     continue
 
                 impacted.append(readme)
@@ -1025,8 +1019,8 @@ def validate_tag_readme(
     results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
 ) -> None:
     """Enforce the tag-readme type contract: the head's place and identity
-    (ADR 089), weight gates, and the optional `complete` (membership) and
-    `covered_by` (coverage) marks (ADR 026) over the participating scope."""
+    (ADR 089), weight gates, and the optional `complete` mark, which claims the
+    head reaches every member in one hop (ADR 026 as amended by ADR 090)."""
     fm = parsed.document.frontmatter or {}
 
     size = len(parsed.content.encode("utf-8"))
@@ -1066,56 +1060,34 @@ def validate_tag_readme(
 
     if fm.get("complete") is True:
         linked = _linked_md_targets(parsed)
+        linked_heads = [
+            child
+            for target in linked
+            if target.parent == expected_dir and (child := tag_for_head(target))
+        ]
+        covered = {
+            path.resolve()
+            for child in linked_heads
+            for path, _, _ in tag_space.notes_by_tag.get(child, [])
+        }
         missing = [
             path
             for path, _, _ in members
-            if path.resolve() not in linked and path.resolve() != parsed.path.resolve()
+            if path.resolve() not in linked
+            and path.resolve() not in covered
+            and path.resolve() != parsed.path.resolve()
         ]
         if missing:
             for path in missing:
                 results.fails.append(
                     f"complete mark: missing entry for {path.relative_to(run.repo_root)} — "
-                    f"add it with a context phrase or drop the mark; {_TAG_README_FIX_HINT}"
+                    "link it with a context phrase, link its tag's head, or drop the mark; "
+                    f"{_TAG_README_FIX_HINT}"
                 )
         else:
-            results.passes.append(f"complete mark: all {len(members)} members linked")
-
-    covered_by = fm.get("covered_by")
-    if isinstance(covered_by, list) and covered_by:
-        if len(covered_by) > TAG_README_MAX_FANOUT:
-            results.warns.append(
-                f"covered_by fan-out: {len(covered_by)} children exceeds ~{TAG_README_MAX_FANOUT} — "
-                f"group children under intermediate tags; {_TAG_README_FIX_HINT}"
-            )
-        headless_children = [
-            child for child in covered_by if str(child) not in tag_space.heads
-        ]
-        for child in headless_children:
-            results.fails.append(
-                f"covered_by: child `{child}` has no head at "
-                f"{head_path(run.repo_root, str(child)).relative_to(run.repo_root)}; "
-                f"{_TAG_README_FIX_HINT}"
-            )
-        covered_paths = {
-            path.resolve()
-            for child in covered_by
-            for path, _, _ in tag_space.notes_by_tag.get(str(child), [])
-        }
-        uncovered = [
-            path
-            for path, _, _ in members
-            if path.resolve() not in covered_paths
-            and path.resolve() != parsed.path.resolve()
-        ]
-        if uncovered:
-            for path in uncovered:
-                results.fails.append(
-                    f"covered_by: {path.relative_to(run.repo_root)} carries no listed child tag — "
-                    f"tag it with one of {covered_by} or revise the list; {_TAG_README_FIX_HINT}"
-                )
-        elif not headless_children:
             results.passes.append(
-                f"covered_by: all tagged notes carry one of {len(covered_by)} children"
+                f"complete mark: all {len(members)} members linked or reached "
+                f"through {len(linked_heads)} linked heads"
             )
 
 

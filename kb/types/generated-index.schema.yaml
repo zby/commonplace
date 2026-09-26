@@ -15,7 +15,7 @@ allOf:
           index_source:
             enum:
               - directory
-          # Tag sources are retired (ADR 089): a tag head is identified by its
-          # filename under kb/tags/ and carries no index binding.
-          index_key: false
+          index_key:
+            not: {}
+            description: "index_key is retired (ADR 089): tag heads live in kb/tags/ and carry no index binding"
         additionalProperties: true

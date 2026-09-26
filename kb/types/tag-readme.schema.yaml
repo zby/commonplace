@@ -13,17 +13,16 @@ allOf:
             const: types/tag-readme.md
           complete:
             type: boolean
+          # Retired fields are rejected by name so a stale copy cannot claim
+          # the old relation or a second identity.
           covered_by:
-            type: array
-            minItems: 1
-            uniqueItems: true
-            items:
-              type: string
-              minLength: 1
-          # Identity is the filename (kb/tags/<tag>-README.md, ADR 089); the
-          # retired index_source/index_key binding is rejected so a stale copy
-          # cannot claim a second identity.
-          index_source: false
-          index_key: false
+            not: {}
+            description: "covered_by is retired (ADR 090): link the child heads in the body; `complete` counts them"
+          index_source:
+            not: {}
+            description: "index_source is retired (ADR 089): a head is identified by its filename under kb/tags/"
+          index_key:
+            not: {}
+            description: "index_key is retired (ADR 089): a head is identified by its filename under kb/tags/"
           status: false
         additionalProperties: true

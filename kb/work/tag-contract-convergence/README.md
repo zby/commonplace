@@ -20,8 +20,10 @@ built, and heads move to a scaffolded `kb/tags/`. [ADR 089](../../reference/adr/
 adopts them, and the implementation landed the same day: participating
 scope, the head requirement, heads relocated to `kb/tags/`, the scaffold,
 and the docs sweep (see the [change packet](./adr-089-change-packet.md)).
-Remaining: retire the two tag proposals through the proposal lifecycle,
-then close this workshop.
+On 2026-09-26 [ADR 090](../../reference/adr/090-one-completeness-mark-reaches-members-in-one-hop.md)
+folded `complete` and `covered_by` into one mark meaning one-hop reach;
+learning-theory carries it again. Remaining: retire the two tag proposals
+through the proposal lifecycle, then close this workshop.
 
 ## Goal
 
