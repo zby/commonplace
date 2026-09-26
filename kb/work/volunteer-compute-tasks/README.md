@@ -2,7 +2,7 @@
 
 Turn donated agent compute into useful improvements whose evidence costs much
 less to check than to discover. The operator commissioned this workshop on
-2026-09-26, requested three choices, and specified an ordinary repository
+2026-09-26, requested three choices, later added a fourth, and specified an ordinary repository
 checkout with software installed in `.venv`.
 
 The operator's selection criterion is substantial work with cheap verification.
@@ -11,7 +11,7 @@ cost the maintainer as much as discovering it cost the contributor. These tasks
 instead return executable counterexamples or measured improvements. None
 guarantees that more compute will find a result.
 
-All three tasks must be grounded in committed repository content and runnable
+All tasks must be grounded in committed repository content and runnable
 from a fresh checkout. The operator excluded review-state work because the
 operational review history is not committed. Do not substitute synthetic review
 history for that unavailable evidence.
@@ -23,11 +23,13 @@ history for that unavailable evidence.
 | [Relocation stress search](./relocation-stress-search.md) | Generate and shrink combinations of KB graphs and move sequences | A small graph, a command sequence, and a broken preservation property |
 | [Validator defect-detection search](./validator-defect-detection-search.md) | Mutate committed artifacts and generate combinations of explicit structural violations | A small before/after fixture and a required diagnostic the validator misses |
 | [Faster collection validation](./faster-collection-validation.md) | Profile, optimize, and compare the validator across corpus shapes | Identical diagnostics, repeatable timings, and a bounded patch |
+| [Link recognition differential](./link-recognition-differential.md) | Compare each component's link recognition with the site renderer, then propose one shared recognizer | A small Markdown fixture with disagreeing results; a function checked against the same cases |
 
 Each task can absorb sustained search and experimentation. Choose by interest;
-doing all three is not expected. Search strategy, tools, and allocation of the
+doing more than one is not expected. Search strategy, tools, and allocation of the
 contributor's available compute are left to the contributor. The third task
 offers a numeric success measure but also requires code review before merging.
+The fourth task's second stage likewise ends in a patch that needs code review.
 
 ## Shared contributor handoff
 
@@ -77,6 +79,8 @@ the submission summary under this workshop in a contributor-named subdirectory.
 Do not edit the real KB corpus as experimental input. Tasks 1 and 2 initially
 own tests, tooling, and reports only; fixes, if supplied, must be separate
 patches. Task 3 additionally permits a bounded validator implementation patch.
+Task 4 permits a new link-recognition function and one caller adoption, as
+separate patches.
 The maintainer owns acceptance, integration, and any changes to the contracts.
 
 For a bug finding, supply the baseline SHA, practical consequence, exact
@@ -119,7 +123,9 @@ behavior. Validator defect findings and performance patches remain separate:
 the performance comparison preserves baseline output, including known defects;
 a correctness fix changes that output under its own regression test.
 The [graph-loader workshop](../kb-graph-loader/README.md) explores a broader
-architecture; performance work here does not authorize that redesign.
+architecture; performance work here does not authorize that redesign. It also
+owns where a shared positioned link representation lives; task 4 supplies
+evidence and a candidate recognizer for that decision.
 
 Close after the contributed results have been accepted, rejected, or deferred
 with reasons, useful tests and tooling have been integrated, and any lesson
