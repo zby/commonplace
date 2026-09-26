@@ -1,11 +1,11 @@
 ---
-description: Index of notes about document types, writing conventions, validation, and structural quality — how notes are classified, structured, and checked
+description: "Curated head for the document-system tag — how KB documents are typed, written, structured, tested, and retained: type contracts, writing conventions, text testing and validation, documentation retention, and claim repair"
 type: types/tag-readme.md
 ---
 
 # Document system
 
-How documents are classified, structured, and quality-checked. These notes define the type system, writing conventions, and testing framework that make [knowledge artifacts](../notes/definitions/knowledge-artifact.md) machine-verifiable and human-readable.
+This tag gathers how KB documents are typed, written, structured, and checked: document types and type contracts, writing conventions such as claim titles, testing and validating text, how directories and taxonomies organize a KB, what documentation to retain and how to segment it, and how defeated claims get repaired. No single defining note anchors it; [human-LLM differences are load-bearing](../notes/human-llm-differences-are-load-bearing-for-knowledge-system-design.md) states the dual-audience premise most members build on. Members are mostly notes, plus a reference definition and a reference proposal. Nearby but different: [artifact-analysis](./artifact-analysis-README.md) classifies any retained artifact by substrate, form, lineage, and authority; a note belongs here when its question is how a document is written, structured, or checked.
 
 For how the live Commonplace system uses global and collection-local type contracts, see [collections and types](../reference/collections-and-types.md).
 
@@ -29,8 +29,13 @@ For how the live Commonplace system uses global and collection-local type contra
 
 - [automated-tests-for-text](../notes/automated-tests-for-text.md) — text artifacts can be tested with the same pyramid as software: deterministic checks, LLM rubrics, corpus compatibility
 - [text-testing-framework](../notes/text-testing-framework.md) — reference framework: contracts per document type, test pyramid (deterministic/LLM rubric/corpus), production workflow
-- [deterministic-validation-should-be-a-script](../notes/deterministic-validation-should-be-a-script.md) — half of /validate's checks are hard-oracle (enums, link resolution, frontmatter structure) and could run as a Python script instead of burning LLM tokens
+- [deterministic-validation-should-be-a-script](../notes/deterministic-validation-should-be-a-script.md) — hard-oracle checks (enums, link resolution, frontmatter structure) belong in a script, not an LLM skill; the argument behind what is now `commonplace-validate`
 - [unit-testing-llm-instructions-requires-mocking-the-tool-boundary](../notes/unit-testing-llm-instructions-requires-mocking-the-tool-boundary.md) — skills are programs whose I/O boundary is tool calls; mocking that boundary enables instruction-level testing that complements text artifact testing
+
+## Claim Quality and Repair
+
+- [generality bought to avoid counterexamples is paid for in precision](../notes/generality-bought-to-avoid-counterexamples-is-paid-for-in.md) — widening a claim's vocabulary to survive counterexamples keeps content flat; unreadability is the symptom
+- [narrowing bought to survive review is paid for in content](../notes/narrowing-bought-to-survive-review-is-paid-for-in-content.md) — shrinking a defeated claim's subject can end in an analytic title that passes every gate and says nothing
 - [domain-pricing-routes-an-exception-to-idealization-assessment](../notes/domain-pricing-routes-an-exception-to-idealization-assessment.md) — the workflow shape for defeated-but-retainable claims: domain pricing opens an idealization assessment, adequacy evidence decides it, and pricing-gated acceptance is an immunizing slot
 
 ## Decisions

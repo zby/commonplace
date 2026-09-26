@@ -1,11 +1,11 @@
 ---
-description: "Curated head for the trace-learning tag — external systems that learn from agent traces: raw traces accumulate, then a distillation step produces rules, memories, prompts, or weights; the tag marks reviews where the code shows that loop"
+description: "Curated head for the trace-learning tag — external systems that learn from agent traces: raw traces accumulate, then a distillation step produces rules, memories, prompts, or weights; the tag marks system reviews whose analysis found that loop"
 type: types/tag-readme.md
 ---
 
 # Trace-learning
 
-Systems that learn from their own agent traces. The pattern is a two-stage loop: raw traces accumulate as episodes, logs, or transcripts, then a distillation step, automatic or manual, produces something that changes later behavior: a memory entry, a rule, a prompt, a route, or a fine-tune. The tag marks external system reviews in [agent-memory-systems](../agent-memory-systems/README.md) where a code-grounded read found that loop. It is assigned by the review type's rule, not by a system's own claims: add it only when the write side is fed by traces and a distillation mechanism exists. Membership is nearly all reviews, so this head is selective; the scoped `rg` over `kb/agent-memory-systems/` recovers the full set.
+This tag gathers external systems that learn from their own agent traces: memory extraction from sessions, session capture and transcript mining, skill libraries built from past runs, and self-evolving prompts or harnesses. The defining comparison is [trace-learning techniques in related systems](../agent-memory-systems/trace-learning-techniques-in-related-systems.md). The pattern is a two-stage loop: raw traces accumulate as episodes, logs, or transcripts, then a distillation step, automatic or manual, produces something that changes later behavior: a memory entry, a rule, a prompt, a route, or a fine-tune. The tag marks system reviews in [agent-memory-systems](../agent-memory-systems/README.md) whose analysis found that loop, read from code for most reviews and from documentation for the five lightweight ones; it is assigned by the review type's rule, not by a system's own claims, and only when the write side is fed by traces and a distillation mechanism exists. Nearby but different: [agent-memory](./agent-memory-README.md) covers memory architecture whether or not traces feed it. About two thirds of the reviews carry the tag, so this head is selective; the scoped `rg` over `kb/agent-memory-systems/` recovers the full set.
 
 ## Start here
 
