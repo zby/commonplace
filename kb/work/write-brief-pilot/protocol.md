@@ -1,6 +1,6 @@
 # Write-brief pilot: protocol
 
-**Status: DRAFT** — awaiting operator review. Changes are free until the commit that sets this line to `frozen`; after it, changes go to `deviations.md`.
+**Status: frozen** (2026-09-26). The operator accepted the drafted thresholds without tuning them, judging that they could not assess them in advance; they are fixed as written. Changes from here on go to `deviations.md` before the affected run.
 
 The fixed parts below are fixed for comparability, not because the executor could not choose them: results must compare across arms, and a choice made after seeing outputs would let the data pick the hypothesis.
 

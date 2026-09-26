@@ -12,7 +12,7 @@ By the operator, 2026-09-26, after the proposal was decoupled from the context a
 
 ## Status
 
-Protocol drafted, awaiting operator approval. **No run may start before the commit that marks the protocol `frozen`.** That commit is the pre-registration.
+Protocol frozen 2026-09-26; the freeze commit is the pre-registration. Phase 1 runs in progress.
 
 ## What closes this workshop
 
