@@ -2,7 +2,7 @@
 
 ## Goal
 
-Implement the operator's adoption, on 2026-09-26, of Option 3 of the [per-artifact write-brief proposal](../../reference/proposals/per-artifact-write-briefs.md): optional durable write briefs, delivered to writers by a validated pointer (Route A).
+Implement the operator's adoption, on 2026-09-26, of Option 3 of the [per-artifact write-brief proposal](../../reference/proposals/archive/per-artifact-write-briefs.md): optional durable write briefs, delivered to writers by a validated pointer (Route A).
 
 The operator fixed three choices:
 
