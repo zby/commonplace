@@ -1,10 +1,12 @@
 ---
-description: "Proposal: whether to preserve an optional artifact-specific commission stating the intended reader update, delivered to writers by a validated pointer or a context-assembler role"
+description: "Proposal (adopted by ADR 092): whether to preserve an optional artifact-specific commission stating the intended reader update, delivered to writers by a validated pointer or a context-assembler role"
 type: reference/types/design-proposal.md
 tags: [context-engineering]
 ---
 
 # Per-artifact write briefs
+
+> **Archived** (see [archive README](./README.md)). Adopted by [ADR 092](../../adr/092-write-briefs-are-optional-sidecars-named-by-a-validated-pointer.md): Option 3 with the pointer route, as sibling `<stem>.brief.md` sidecars; the [write-brief type](../../../types/write-brief.md) and `cp-skill-write` carry the live design. The 2026-09-26 current state, the pilot and drift-study figures, and the unadopted options remain here — design texture only.
 
 Collection and type contracts say what belongs in a collection and what shape an artifact takes. They do not select why one particular artifact should exist. The ordinary writing skill establishes that contribution from the live request and, for an edit, the incumbent artifact. A completely new note has no incumbent, and later revisions have no independent retained account of the audience, angle, scope, and reader update that commissioned it.
 
