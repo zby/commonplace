@@ -25,7 +25,7 @@ Then delete the workshop. The stripped briefs, rubric, and raw scores stay recov
 
 ## Evaluation boundary
 
-The evidence concerns this installation's `cp-skill-write`, with Claude models as writers and scorers, on seven targets whose briefs the operator wrote inside multistage runs. Those briefs are unusually careful commissions, not typical ones. Generalization beyond that goes through the evidence note's stated limits, not through this record.
+The evidence concerns this installation's `cp-skill-write`, with Claude models as writers and scorers, on thirteen targets whose commissions were written inside multistage runs or workshops before the final draft. Those commissions are unusually careful, not typical ones. Generalization beyond that goes through the evidence note's stated limits, not through this record.
 
 ## Constraints
 
@@ -36,7 +36,7 @@ The evidence concerns this installation's `cp-skill-write`, with Claude models a
 ## Bookkeeping
 
 - `protocol.md` — conjectures, refutation conditions, arms, targets, rubric, and procedure
-- `briefs/` — the seven original briefs with run-bound items removed (prepared before freeze; operator-reviewed)
+- `briefs/` — the thirteen original commissions with run-bound items removed (prepared before freeze; operator-reviewed)
 - `rubric/` — commission items per target and their recoverability classification (prepared before freeze)
 - `runs/` — one directory per run: input packet, output candidate
 - `scores/` — blind scores

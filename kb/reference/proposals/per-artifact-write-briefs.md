@@ -47,6 +47,8 @@ It does not supply warrant for the proposed update, override collection or type 
 
 Under either durable-brief option, a write brief is itself written and revised through the ordinary writing skill. It receives the collection and type context appropriate to whichever storage option is chosen, plus the live request that names the artifact it commissions. It is not eligible for another write brief. That non-recursive role boundary avoids a second writing procedure without creating a commission for the commission.
 
+A brief directs later writers, so it is directive text and the writing skill's existing [directive-text rule](../../instructions/cp-skill-write/SKILL.md#universal-mechanics) already sets its form: intent first (the governing claim or purpose and the reader update), then the boundaries every route must respect (must-keep constraints and exclusions), with the means left to the writer. No separate brief format is needed. The same split suggests when a brief earns its keep: when the commission has boundaries a later writer cannot infer. A commission that is only intent may be fully carried by the title and a sentence of body text.
+
 ## Options
 
 ### 1. Keep intent transient or reconstruct it from the artifact
