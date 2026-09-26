@@ -24,7 +24,7 @@ The two choices are independent. A coded assembler can have a closed set of name
 - Since ADR 086, skills and commands ship from the same installed package. A writing skill that calls a package command no longer risks a skill and command from different versions.
 - [`commonplace-resolve-criteria`](../commands.md#commonplace-resolve-criteria) is a shipped precedent on the review side: code resolves gate, bundle, and conformance requests into criterion definitions, and the review procedure consumes the result.
 - The current skills own semantic as well as mechanical instructions: they say which paths to resolve, what failures stop writing, how contracts combine, and what the writer must decide.
-- The [per-artifact write-brief proposal](./per-artifact-write-briefs.md) is unadopted. It depends on this proposal because it must not add a separate brief-discovery protocol to every writer.
+- The [per-artifact write-brief proposal](./per-artifact-write-briefs.md) is unadopted. It does not depend on this proposal: a validated frontmatter pointer read by the writing skill can deliver a brief without an assembler. This assembler would be an alternative delivery route for it, so briefs are not a reason to adopt this proposal on their own.
 
 ## Problem
 
@@ -112,7 +112,7 @@ This is the most general design and the easiest to accrete. It needs admission, 
 - Tests establish agreement between the assembler, type validation, collection resolution, and the ordinary writing skill's accepted cases.
 - A context-cost comparison counts both output bytes and avoided tool/discovery work; the assembler does not win merely by moving the same complexity behind a command.
 - Failure remains understandable when the command is unavailable in an installed project or a runtime cannot invoke it.
-- The ordinary writing skill can author a write brief. The write-brief role has an explicit eligibility rule that excludes write-brief targets, and the assembler rejects malformed association cycles, so writing a brief never searches for a brief for that brief.
+- If a write-brief role is added, the ordinary writing skill can still author a write brief. The role has an explicit eligibility rule that excludes write-brief targets, and the assembler rejects malformed association cycles, so writing a brief never searches for a brief for that brief.
 
 ## Risks
 
@@ -134,4 +134,4 @@ Relevant Notes:
 - [An author should fix what the executor cannot determine, not what it will](../../notes/fix-what-the-executor-cant-determine-not-what-it-will.md) — rests-on: the assembler may resolve known bindings but must not freeze situation-dependent writing judgments
 - [ADR 018: Types are path references to instruction docs](../adr/018-types-are-path-references-to-instruction-docs.md) — compares-with: the accepted direct-file design and its earlier rejection of a synthesized write-context packet
 - [Collections and types](../collections-and-types.md) — evidenced-by: the current three-input read-time authoring model and absence of a resolver
-- [Per-artifact write briefs](./per-artifact-write-briefs.md) — see-also: the first proposed optional input whose adoption depends on this assembly boundary
+- [Per-artifact write briefs](./per-artifact-write-briefs.md) — see-also: a proposed optional input this assembler could deliver as a named role, though a validated pointer can deliver it without one
