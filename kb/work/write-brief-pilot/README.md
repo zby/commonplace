@@ -27,6 +27,14 @@ Then delete the workshop. The stripped briefs, rubric, and raw scores stay recov
 
 The evidence concerns this installation's `cp-skill-write`, with Claude models as writers and scorers, on ten targets whose commissions were written inside multistage runs or workshops before the final draft. Those commissions are unusually careful, not typical ones. Generalization beyond that goes through the evidence note's stated limits, not through this record.
 
+## Pre-run observations
+
+Recorded before any experimental run, so they cannot be read as results.
+
+- **Target 4 lost its commissioned content within a day.** The commissioned portfolio row landed at `69cbae6a` (2026-08-29) and was removed at `2b406eea` (2026-08-30), inside a large squashed recenter by another model whose messages do not mention it. The per-portion rule itself survives in another note. Whether the removal was deliberate is not recoverable from the record.
+- **Target 5's commissioned rewrite never reached the library.** The candidate passed acceptance and won a blind comparison 3–0 against the incumbent, but the workshop closed at `c7484bea` with the library note untouched pending a human promotion that never happened.
+- **Several targets moved away from their briefs, apparently deliberately** (targets 8 and 10; target 6 through its own amendment). A retained brief would be stale for them. See `drift-at-head/`.
+
 ## Constraints
 
 - No run edits a library artifact. Every write goes to a copy inside this workshop.

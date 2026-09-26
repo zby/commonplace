@@ -6,7 +6,7 @@ The fixed parts below are fixed for comparability, not because the executor coul
 
 ## Conjectures and refutation conditions
 
-A *commission item* is one requirement a brief places on the target: a governing claim, an intended reader update, an exclusion, a passage to preserve because another artifact relies on it, a claim-mode or scope limit. The item kinds follow the split that the [directive-text rule](../../instructions/cp-skill-write/SKILL.md#universal-mechanics) of `cp-skill-write` borrows from mission command: intent (governing claim, reader update), then boundaries — constraints (must-keep, scope) and restraints (exclusions) — with the means left to the writer. An item is *recoverable* if a reader holding only the incumbent artifact and its backlinks would keep it without being told; otherwise it is *non-recoverable*. Recoverability is classified before any run (Phase 0).
+A *commission item* is one requirement a brief places on the target: a governing claim, an intended reader update, an exclusion, a passage to preserve because another artifact relies on it, a claim-mode or scope limit. The item kinds follow the split that the [directive-text rule](../../instructions/cp-skill-write/SKILL.md#universal-mechanics) of `cp-skill-write` borrows from mission command: intent (governing claim, reader update), then boundaries — constraints (must-keep, scope) and restraints (exclusions) — with the means left to the writer. An item is *recoverable* if a reader holding only the incumbent artifact, its backlinks, and the target's type spec and collection contract would keep it without being told; otherwise it is *non-recoverable*. The type spec and collection contract count because `cp-skill-write` loads both for every write. Recoverability is classified before any run (Phase 0).
 
 **H1 — The value of a brief is concentrated in non-recoverable items.**
 Prediction: across all pressure runs, the no-brief arm violates at least 5 more non-recoverable items than the original-brief arm, and the gap on recoverable items is smaller than the gap on non-recoverable items.
@@ -57,7 +57,22 @@ The operator capped the pilot at ten targets. Before any run, three qualifying c
 
 Excluded from the search results by the selection criteria: the theory-builder definition, whose commission was committed with its first draft; the bootstrapping article, whose commission is an edit-and-relocate order; the testing article and the two-layer execution note, whose commissions are thin or ambiguous about their target.
 
-Every target has been edited since its brief was written, at least by the type-path sweep of 2026-09-25. The incumbent for each run is the target at the commit that freezes this protocol.
+**Incumbent.** Each run starts from the target's *commissioned version*: the version the commissioned write produced, so that every brief item was, as far as the commission's own acceptance route could tell, realized in it. A first labelling pass against today's documents (kept in `drift-at-head/`) showed that several targets have since moved away from their briefs, some deliberately; testing preservation against a document that no longer contains the commissioned content would test nothing. The commissioned versions are copied to `incumbents/<n>.md`, with the backlinks that existed at that commit listed in `incumbents/<n>.backlinks.md`.
+
+| # | Commissioned version | Path at that commit | Why this commit |
+|---|---|---|---|
+| 1 | `d7615fea` | same as today | promotion of the multistage run |
+| 2 | `16be19f9` | same as today | promotion of the multistage run |
+| 3 | `db995fab` | same as today | promotion and relocation of the multistage run |
+| 4 | `69cbae6a` | same as today | the commissioned row landed; removed on 2026-08-30 by `2b406eea` |
+| 5 | `ce45b282` | `kb/work/written-artifacts-in-learning-loops/pilot-adversarial-loop/candidate.md` | accepted candidate (acceptance PASS, blind comparison 3–0 over the incumbent), never promoted; the workshop closed at `c7484bea` |
+| 6 | `b23f1e07` | same as today | promotion of the multistage run |
+| 7 | `40c26509` | same as today | promotion of the multistage run |
+| 8 | `ae705f52` | `kb/articles/learning-by-theory-refinement-with-fixed-models.md` | last commit of the same-day review the commission required before listing |
+| 9 | `a7159d47` | `kb/articles/an-automated-software-house-as-an-alternative-test.md` | the operator's claim decisions applied, before retitle and relocation |
+| 10 | `ba536434` | same as today | promotion of the workshop synthesis into `kb/notes/` |
+
+For targets 1–3 the brief and the promoted note share one commit because multistage runs commit on promotion; the brief was written first inside the run.
 
 ## Arms
 
@@ -94,7 +109,14 @@ Deferred, not part of this pilot: a frontmatter `goal:` field (set aside by the 
 - It scores:
   - **compliance** with the edit request: done, partial, or not done;
   - each **commission item**: kept, violated, flagged (the writer named a conflict or asked), or amended-with-notice (override runs only: changed as requested, and the change is stated).
+- "The incumbent" in worker and scorer packets means `incumbents/<n>.md`, never today's target.
 - Two scorers per target on different model families if available; otherwise two independent Opus scorers. Record disagreements. Resolve them by a third scorer, not by the operator.
+
+## Drift study (observational)
+
+Alongside the experiment, trace each commission item from the commissioned version to the target at the freeze commit. Classify it as *survived*, *removed by recorded decision* (a commit body, ADR, or workshop record names the change or its reason), or *removed without record*. A fresh agent does the tracing from git history; the operator adjudicates any item it cannot place.
+
+This study is not pre-registered in the strict sense: before it was designed, the first labelling pass and the target-4 and target-5 histories had already shown that some commissioned content was lost, some of it without record. It reports a denominator (how many commissioned items were lost, and how many of those silently) rather than testing a prediction. Its bearing on the proposal runs both ways: silent removals are the drift a brief could catch; recorded removals are cases where a brief left unamended would have gone stale.
 
 ## Analysis
 
