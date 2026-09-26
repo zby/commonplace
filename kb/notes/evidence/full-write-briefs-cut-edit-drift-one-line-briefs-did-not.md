@@ -7,7 +7,7 @@ tags: [evaluation, document-system]
 
 # Full write briefs cut edit drift; one-line briefs did not
 
-In one pre-registered pilot, writers editing a KB document under pressure dropped far fewer of its commissioned requirements when they were given the document's full write brief. A brief rebuilt afterwards from the commissioned document and its backlinks did nearly as well. A one-sentence brief did no better than no brief. The pilot tested the [per-artifact write-brief proposal](../../reference/proposals/per-artifact-write-briefs.md) on 2026-09-26. Its protocol was frozen at commit `05f3c44a` before any run, and the results were recorded at `1d76442f`.
+In one pre-registered pilot, writers editing a KB document under pressure dropped far fewer of its commissioned requirements when they were given the document's full write brief. A brief rebuilt afterwards from the commissioned document and its backlinks did nearly as well. A one-sentence brief did no better than no brief. The pilot tested the design proposal *Per-artifact write briefs* on 2026-09-26; the decision it informed is [ADR 092](../../reference/adr/092-write-briefs-are-optional-sidecars-named-by-a-validated-pointer.md). Its protocol was frozen at commit `05f3c44a` before any run, and the results were recorded at `1d76442f`.
 
 ## What was tested
 
@@ -59,6 +59,6 @@ The limit on the rebuilt-brief result is its starting point. The rebuilt briefs 
 
 Relevant Notes:
 
-- [Per-artifact write briefs](../../reference/proposals/per-artifact-write-briefs.md) — see-also: the proposal whose conjectures this pilot tested; its options and delivery routes
+- [ADR 092: Write briefs are optional sidecars named by a validated pointer](../../reference/adr/092-write-briefs-are-optional-sidecars-named-by-a-validated-pointer.md) — see-also: the decision this pilot's evidence informed, adopting optional briefs delivered by a validated pointer
 - [Warranted reader update is the objective of substantive writing](../warranted-reader-update-is-the-objective-of-substantive-writing.md) — grounds: the reader update is one of the commission item kinds this pilot separated from boundaries
 - [Knowledge storage does not imply contextual activation](../knowledge-storage-does-not-imply-contextual-activation.md) — extends: a brief changed edits only when delivered into the writer's context; this pilot measures how much, and which kind of content, that delivery preserved

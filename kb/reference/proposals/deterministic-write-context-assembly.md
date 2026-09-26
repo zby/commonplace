@@ -134,4 +134,4 @@ Relevant Notes:
 - [An author should fix what the executor cannot determine, not what it will](../../notes/fix-what-the-executor-cant-determine-not-what-it-will.md) — rests-on: the assembler may resolve known bindings but must not freeze situation-dependent writing judgments
 - [ADR 018: Types are path references to instruction docs](../adr/018-types-are-path-references-to-instruction-docs.md) — compares-with: the accepted direct-file design and its earlier rejection of a synthesized write-context packet
 - [Collections and types](../collections-and-types.md) — evidenced-by: the current three-input read-time authoring model and absence of a resolver
-- [Per-artifact write briefs](./per-artifact-write-briefs.md) — see-also: a proposed optional input this assembler could deliver as a named role, though a validated pointer can deliver it without one
+- [ADR 092: Write briefs are optional sidecars named by a validated pointer](../adr/092-write-briefs-are-optional-sidecars-named-by-a-validated-pointer.md) — see-also: the adopted artifact-specific input this assembler could later deliver as a named role, though a validated pointer already delivers it

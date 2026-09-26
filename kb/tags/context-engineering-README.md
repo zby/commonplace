@@ -27,7 +27,7 @@ This tag gathers work on getting the right knowledge into a bounded LLM context 
 ## Write-Context Assembly
 
 - [Deterministic write-context assembly](../reference/proposals/deterministic-write-context-assembly.md) - proposal: code assembles a target's fixed authoring context with closed input roles
-- [Per-artifact write briefs](../reference/proposals/per-artifact-write-briefs.md) - proposal: keep an artifact-specific commission and deliver it to writers
+- [ADR 092: Write briefs are optional sidecars named by a validated pointer](../reference/adr/092-write-briefs-are-optional-sidecars-named-by-a-validated-pointer.md) - decision: keep an artifact-specific commission beside its document and deliver it to writers
 
 ## Related Tags
 

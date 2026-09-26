@@ -710,7 +710,7 @@ component is new.
 | Existing artifact | Role in the target |
 |---|---|
 | [Deterministic write-context assembly](../../reference/proposals/deterministic-write-context-assembly.md) | Starting design for closed operation-specific context compilation. |
-| [Per-artifact write briefs](../../reference/proposals/per-artifact-write-briefs.md) | Candidate payload within write-operation packets. |
+| Per-artifact write briefs (design proposal, since adopted by ADR 092 and archived) | Candidate payload within write-operation packets. |
 | [KB graph loader workshop](../../work/kb-graph-loader/README.md) | Derived topology and retrieval substrate. |
 | [Backlink surfacing](../../reference/proposals/backlink-surfacing.md) | Cheap inbound relation affordance. |
 | [Lifecycle-management workshop](../../work/lifecycle-management/README.md) | State and retirement semantics for durable artifacts. |
