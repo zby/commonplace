@@ -2,7 +2,7 @@
 description: "LLM↔code boundaries expose concrete inputs and outputs for inspection and replay; deterministic execution preserves rather than corrects a wrongly interpreted argument"
 type: types/note.md
 traits: [title-as-claim]
-tags: [learning-theory, computational-model, constraining]
+tags: [learning-theory, computational-model, llm-reliability]
 ---
 
 # LLM↔code boundaries are natural checkpoints

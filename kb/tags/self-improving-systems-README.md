@@ -6,7 +6,9 @@ complete: true
 
 # Self-improving systems
 
-A [self-improving system](../notes/definitions/self-improving-system.md) makes operative, evidence-responsive changes to its own [behavior-determining organization](../notes/definitions/behavior-determining-organization.md), read against a declared frame of boundary, horizon, and improvement objective. Assign this tag to work on whether or how systems make such changes: their definition and classification, mechanisms, limits, or evidence of improvement. Ordinary task execution or automation is insufficient without that question. Tagging an analysis does not certify that the analyzed system improves. The child areas below cover the specific mechanisms and tests. [Deploy-time-learning](./deploy-time-learning-README.md) covers the post-release demand for change, including changes made by human maintainers; [learning-theory](./learning-theory-README.md) covers learning more broadly, whether or not the learner changes its own organization.
+A [self-improving system](../notes/definitions/self-improving-system.md) makes operative, evidence-responsive changes to its own [behavior-determining organization](../notes/definitions/behavior-determining-organization.md), read against a declared frame of boundary, horizon, and improvement objective. Assign this tag to work on whether or how systems make such changes: their definition and classification, mechanisms, limits, or evidence of improvement. It also includes work that meets a child area's inclusion condition, as specified below. Ordinary task execution or automation alone is insufficient. Tagging an analysis does not certify that the analyzed system improves. [Deploy-time-learning](./deploy-time-learning-README.md) covers the post-release demand for change and responses to it, including human maintenance; work on self-improvement as a response may carry both tags. [Learning-theory](./learning-theory-README.md) covers learning more broadly, whether or not the learner changes its own organization.
+
+The child areas are [theory-builder](./theory-builder-README.md), [software-factory](./software-factory-README.md), [improvement-loop](./improvement-loop-README.md), [reflection](./reflection-README.md), [warranted-autonomy](./warranted-autonomy-README.md), and [continual-learning](./continual-learning-README.md). Substantive fit to any of these heads also qualifies for this parent tag. This includes their definitions, boundary cases, and evaluation questions without requiring a separate claim that a system changes itself. The hierarchy groups areas of inquiry; it does not assert that every factory, theory, or autonomous actor is a self-improving system.
 
 ## Child areas
 
@@ -42,6 +44,6 @@ A [self-improving system](../notes/definitions/self-improving-system.md) makes o
 
 ## Related Tags
 
-- [deploy-time-learning](./deploy-time-learning-README.md) — the phenomenon: deployment forces post-release change, historically the maintainers' work
+- [deploy-time-learning](./deploy-time-learning-README.md) — what deployment reveals and the responses, from human maintenance to self-improvement
 - [learning-theory](./learning-theory-README.md) — the parent area for how systems learn; the six children above are also its routes into self-revision
 - [computational-model](./computational-model-README.md) — the execution substrate these systems run on

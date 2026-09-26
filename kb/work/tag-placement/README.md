@@ -13,7 +13,8 @@ the work; it does not accept the reviewers' proposed removals or additions.
 - [Assigned-tag issues](./assigned-tag-issues.md): 67 possible mismatches and
   one uncertain assignment, with stable issue IDs and retained reviewer reasons.
 - [Parent–child relations](./parent-child-relations.md): 13 conflicts across
-  five child–parent relations. These are dependencies of assigned-tag issues,
+  five child–parent relations in the initial review. Disposition added two cases
+  under a sixth relation and a missing-parent inventory. These are dependencies of assigned-tag issues,
   not 13 additional assignment findings.
 - [Suggested additions](./suggested-additions.md): suggestions for 206 notes,
   retained for disposition separately from the assigned-tag verdicts.
@@ -27,6 +28,30 @@ There were 327 PASS notes, 60 FAIL notes, and one WARN note. A PASS does not
 establish that every useful tag is present. The 27 typed artifacts with no tags
 and artifacts in other collections were outside the sweep. Expanding that
 audit is a separate scope decision, not a hidden closure requirement.
+
+## Progress — 2026-09-26
+
+The [first disposition pass](./parent-membership-decision.md) resolved 19
+assignment findings: 17 parent assignments retained, two incorrect constraining
+tags replaced. Two addition entries were accepted as those replacements.
+Parent openings now explicitly include substantive fit to their declared
+children. PC-01 through PC-06 are resolved; PC-07 tracks
+[129 missing parent assignments](./parent-membership-gaps.md) exposed by the
+membership check. The initial semantic sweep did not cover those absences.
+
+The operator then included responses within deploy-time-learning. The
+[scope decision](./deploy-time-scope-decision.md) retains all eleven assignments
+flagged under its old phenomenon-only rule and aligns neighboring heads.
+The operator also accepted substantive use of one artifact-analysis field.
+The [single-field scope decision](./artifact-analysis-scope-decision.md) retains
+three flagged assignments and removes one unsupported tag. That removal also
+closes PG-035, leaving 128 entries in the parent-gap inventory.
+Thirty-four original assignment findings are now resolved.
+
+Remaining: 34 original assignment findings, 204 suggested-addition entries,
+and PC-07. The [input record](./parent-membership-inputs.md) preserves versions
+used for the first pass. Existing review results and the placement baseline
+remain frozen.
 
 ## Evaluation boundary
 

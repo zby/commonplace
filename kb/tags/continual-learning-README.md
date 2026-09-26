@@ -6,7 +6,7 @@ complete: true
 
 # continual-learning
 
-Assign this tag to work on continued learning through retained changes outside model weights: prompts, rules, tools, schemas, and tests; how those changes are governed; and how this learning relates to updates in other representational forms. Weight-only training and post-release change without an account of learning through retained artifacts are insufficient. Two notes establish the tag: [Retained system-definition artifacts enable persistent deployment-time adaptation](../notes/retained-artifacts-enable-persistent-deployment-time-adaptation.md) and [The readable-artifact loop is the tractable unit for continual learning](../notes/readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md). Bitter Lesson notes defend the bet that learning in readable forms can scale. It is a child of [self-improving-systems](./self-improving-systems-README.md). Boundary: [deploy-time-learning](./deploy-time-learning-README.md) is the phenomenon, that deployment reveals what design could not; this tag holds the mechanisms that answer it.
+Assign this tag to work on continued learning through retained changes outside model weights: prompts, rules, tools, schemas, and tests; how those changes are governed; and how this learning relates to updates in other representational forms. Weight-only training and post-release change without an account of learning through retained artifacts are insufficient. Two notes establish the tag: [Retained system-definition artifacts enable persistent deployment-time adaptation](../notes/retained-artifacts-enable-persistent-deployment-time-adaptation.md) and [The readable-artifact loop is the tractable unit for continual learning](../notes/readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md). Bitter Lesson notes defend the bet that learning in readable forms can scale. It is a child of [self-improving-systems](./self-improving-systems-README.md). Boundary: [deploy-time-learning](./deploy-time-learning-README.md) covers what deployed use reveals and responses to it, including human maintenance. This tag requires learning through retained changes outside weights; work on that learning as a response to deployed experience may carry both tags.
 
 ## Where learning lives in a deployed system
 
@@ -42,7 +42,7 @@ Assign this tag to work on continued learning through retained changes outside m
 ## Related Tags
 
 - [self-improving-systems](./self-improving-systems-README.md) — the parent; continual learning is the deployed-system case of self-improvement
-- [deploy-time-learning](./deploy-time-learning-README.md) — the phenomenon these mechanisms answer; several members carry both tags
+- [deploy-time-learning](./deploy-time-learning-README.md) — what deployed use reveals and how systems respond; retained learning is one response, so several members carry both tags
 - [learning-theory](./learning-theory-README.md) — the general account of learning these notes apply
 - [reflection](./reflection-README.md) — whether the retained changes are represented and selectively revisable
 - [warranted-autonomy](./warranted-autonomy-README.md) — who may authorize the behavior-changing writes

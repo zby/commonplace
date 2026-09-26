@@ -1,12 +1,14 @@
 ---
-description: "Curated head for the deploy-time-learning tag — the phenomenon that deployment meets users, surprises, and forces change after first release; what use reveals that design could not"
+description: "Curated head for the deploy-time-learning tag — what deployed use reveals beyond design and testing, and how people or systems respond through maintenance, adaptation, and learning from experience"
 type: types/tag-readme.md
 complete: true
 ---
 
 # deploy-time-learning
 
-The phenomenon, older than any LLM: a software system meets its users and their needs only after it is deployed, the meeting is surprising, and more often than not it forces changes after the first release. Notes here describe that phenomenon and what use reveals that design and testing could not. The work of responding to it has been done by human maintainers and extenders; it is the natural task for a [self-improving system](./self-improving-systems-README.md) to take on, and the machinery for doing so lives under that tag, not here. A child of [learning-theory](./learning-theory-README.md).
+Deployment brings software into contact with users, changing needs, and operating conditions that design and testing did not fully anticipate. Assign this tag to work on what that use reveals or how people and systems respond: diagnosing failed requirements, modifying software or instructions, evaluating and retaining lessons, or preserving the knowledge needed for later change. Mechanisms and limits of learning from use qualify even when the argument generalizes beyond a particular deployment. Generic improvement or a passing mention of deployment is insufficient; adaptation to experience, new demands, or failures encountered in use must be substantive.
+
+Responses may be human maintenance, automated adaptation, or a combination. [Self-improving-systems](./self-improving-systems-README.md) covers systems that change their own organization; [continual-learning](./continual-learning-README.md) covers continued learning through retained changes outside model weights. Work on those mechanisms as responses to deployed experience may carry both tags. This tag does not require autonomous change, weight updates, or a particular retention mechanism. A child of [learning-theory](./learning-theory-README.md).
 
 ## What deployment reveals
 

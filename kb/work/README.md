@@ -6,7 +6,7 @@ Each workshop is a directory exploring a specific workflow end-to-end: from ques
 
 ## Active Workshops
 
-- [tag-placement](./tag-placement/README.md) — resolving 67 possible tag mismatches, one uncertain assignment, 13 parent–child conflicts, and suggested additions from the 2026-09-26 placement review
+- [tag-placement](./tag-placement/README.md) — tag placement cleanup: 34 assignment findings resolved; 34 original findings, 204 addition entries, and 128 parent-gap entries remain after clarifying parent inclusion, deployment responses, and single-field artifact analysis
 - [volunteer-compute-tasks](./volunteer-compute-tasks/README.md) — four contributor choices grounded in committed content: relocation stress search, validator defect-detection search, faster collection validation, and link recognition differential; shared checkout and `.venv` handoff
 - [decision-lifecycle-evidence](./decision-lifecycle-evidence/README.md) — exploring proposals and ADRs as views of a continuing decision record, separating deliberation, implementation, and outcome evidence; records ADR 089's premature placement as the motivating case
 - [framework-delivery](./framework-delivery/README.md) — follow-ups to ADR 086 (library served from the installed package, adopted 2026-09-25): release, probe replies from other harnesses, sub-agent emulation for `cp-skill-ingest`

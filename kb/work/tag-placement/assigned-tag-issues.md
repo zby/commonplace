@@ -1,6 +1,6 @@
 # Assigned-tag issues
 
-Initial inventory: 67 reviewer mismatch proposals and one uncertain judgment. All 68 are open. Follow the [workshop framing](./README.md) for disposition and closure. Issue IDs remain stable after edits. Thirteen findings depend on a parent–child decision; they are included in these 68.
+Initial inventory: 67 reviewer mismatch proposals and one uncertain judgment. Current status: 34 resolved (31 assignments retained, three retagged); 34 open. Follow the [workshop framing](./README.md) for disposition and closure. Issue IDs remain stable after edits. Fifteen findings depend on a parent–child decision, including two additional llm-reliability cases found during disposition; they are included in these 68.
 
 ## TP-001 — context-engineering
 
@@ -16,7 +16,7 @@ Disposition, reason, and verification: pending.
 
 ## TP-002 — self-improving-systems
 
-- Status: open.
+- Status: resolved — assignment retained.
 - Note: [A claim's warrant does not determine its fit in a working theory](../../notes/a-claims-warrant-does-not-determine-its-fit-in-a-working-theory.md).
 - Head: [self-improving-systems](../../tags/self-improving-systems-README.md).
 - Initial reviewer judgment: mismatch.
@@ -25,19 +25,20 @@ Disposition, reason, and verification: pending.
 
 Reviewer reason: The note discusses claim fit in working theories generally. It does not substantively ask whether or how a system makes evidence-responsive changes to its own organization.
 
-Disposition, reason, and verification: pending.
+Disposition (2026-09-26): Retain self-improving-systems through theory-builder: the note distinguishes warrant from the role a retained claim earns in a revisable working theory. See [parent membership decision](./parent-membership-decision.md) for input versions and verification.
 
 ## TP-003 — learning-theory
 
-- Status: open.
+- Status: resolved — assignment retained.
 - Note: [A goal-holding interpreter fails soft, and its workarounds tax a bounded budget](../../notes/a-goal-holding-interpreter-fails-soft-workarounds-tax-a-bounded-budget.md).
 - Head: [learning-theory](../../tags/learning-theory-README.md).
 - Initial reviewer judgment: mismatch.
+- Dependency: [PC-06](./parent-child-relations.md#pc-06).
 - Local evidence: [review pair 22779](../../reports/state/review-jobs/review-job-8790/pair-12-a-goal-holding-interpreter-fails-soft-workarounds-tax-a-bounded-budget.md).
 
 Reviewer reason: “A procedure is a goal compiled away” and the workaround budget explain execution failure, not how a system learns, verifies, or improves through retained change.
 
-Disposition, reason, and verification: pending.
+Disposition (2026-09-26): Retain learning-theory through llm-reliability: the body explains hidden deviation, correction costs, and semantic checks for goal-holding interpreters. Learning through retained change is not an additional requirement. See [parent membership decision](./parent-membership-decision.md) for input versions and verification.
 
 ## TP-004 — computational-model
 
@@ -65,7 +66,7 @@ Disposition, reason, and verification: pending.
 
 ## TP-006 — deploy-time-learning
 
-- Status: open.
+- Status: resolved — assignment retained under revised scope.
 - Note: [Abstract an experience into a lesson only when you can state where the lesson stops](../../notes/abstract-an-experience-only-when-you-can-state-the-boundary.md).
 - Head: [deploy-time-learning](../../tags/deploy-time-learning-README.md).
 - Initial reviewer judgment: mismatch.
@@ -73,11 +74,11 @@ Disposition, reason, and verification: pending.
 
 Reviewer reason: The episode-to-lesson test and SkillRL examples do not discuss deployed software meeting users, surprising needs after release, or what use reveals beyond design and testing; the tag’s phenomenon is absent.
 
-Disposition, reason, and verification: pending.
+Disposition (2026-09-26): retain deploy-time-learning. The opening makes the episode-to-lesson decision its subject; the success/failure comparison and boundary test govern how an agent responds to experience without installing an overgeneral rule. The operator explicitly included responses in this tag. See [scope decision](./deploy-time-scope-decision.md) for the revised rule, input versions, and verification.
 
 ## TP-007 — deploy-time-learning
 
-- Status: open.
+- Status: resolved — assignment retained under revised scope.
 - Note: [Ad hoc prompts extend the system without schema changes](../../notes/ad-hoc-prompts-extend-the-system-without-schema-changes.md).
 - Head: [deploy-time-learning](../../tags/deploy-time-learning-README.md).
 - Initial reviewer judgment: mismatch.
@@ -85,7 +86,7 @@ Disposition, reason, and verification: pending.
 
 Reviewer reason: “When a requirement doesn’t fit existing code or configuration” describes extension, but does not establish the tag’s post-release encounter with users, surprising needs, or what deployment reveals; the deployment example is only one possible prompt use.
 
-Disposition, reason, and verification: pending.
+Disposition (2026-09-26): retain deploy-time-learning. The body explains how prompts absorb requirements that no longer fit the existing deterministic base, then how recurring responses mature into reusable skills. The KB collections case is a worked response to a need encountered in use. The operator explicitly included responses in this tag. See [scope decision](./deploy-time-scope-decision.md) for the revised rule, input versions, and verification.
 
 ## TP-008 — architecture
 
@@ -101,7 +102,7 @@ Disposition, reason, and verification: pending.
 
 ## TP-009 — self-improving-systems
 
-- Status: open.
+- Status: resolved — assignment retained.
 - Note: [An agentic substrate becomes a software factory through family-specific production machinery](../../notes/agentic-substrate-needs-family-specific-machinery-to-be-a-factory.md).
 - Head: [self-improving-systems](../../tags/self-improving-systems-README.md).
 - Initial reviewer judgment: mismatch.
@@ -110,7 +111,7 @@ Disposition, reason, and verification: pending.
 
 Reviewer reason: “the mapping does not imply learning”; revision by agents is only an optional additional capability. The note does not address operative, evidence-responsive change to the system’s own organization.
 
-Disposition, reason, and verification: pending.
+Disposition (2026-09-26): Retain self-improving-systems through software-factory: the note defines the family-specific machinery that makes an agentic substrate a factory and explicitly separates factory construction from learning. See [parent membership decision](./parent-membership-decision.md) for input versions and verification.
 
 ## TP-010 — architecture
 
@@ -138,7 +139,7 @@ Disposition, reason, and verification: pending.
 
 ## TP-012 — artifact-analysis
 
-- Status: open.
+- Status: resolved — tag removed.
 - Note: [An artifact must preserve the scope of each named system choice](../../notes/artifacts-must-preserve-named-choice-scope.md).
 - Head: [artifact-analysis](../../tags/artifact-analysis-README.md).
 - Initial reviewer judgment: mismatch.
@@ -146,7 +147,7 @@ Disposition, reason, and verification: pending.
 
 Reviewer reason: The note does not define, extend, test, or draw a design consequence from the substrate/form/lineage/authority scheme; its subject is proposition scope and document placement.
 
-Disposition, reason, and verification: pending.
+Disposition (2026-09-26): Remove artifact-analysis and keep document-system. The argument establishes reference/range and role obligations for propositions, then uses them to decide document placement. Guaranteed context matters to claim interpretation, but the note does not derive a design consequence from storage substrate, representational form, source/derivation status, or consumer/channel/force. Its link to an artifact-classification note is supporting context rather than an application of a classification field. See [single-field scope decision](./artifact-analysis-scope-decision.md) for the operator decision and verification.
 
 ## TP-013 — computational-model
 
@@ -210,7 +211,7 @@ Disposition, reason, and verification: pending.
 
 ## TP-018 — learning-theory
 
-- Status: open.
+- Status: resolved — assignment retained.
 - Note: [Code complements the weight–prompt pair with independently executed symbolic operations](../../notes/code-complements-weight-prompt-with-symbolic-operations.md).
 - Head: [learning-theory](../../tags/learning-theory-README.md).
 - Initial reviewer judgment: mismatch.
@@ -219,7 +220,7 @@ Disposition, reason, and verification: pending.
 
 Reviewer reason: The note says a model “may generate, select, explain, or revise the code,” but does not develop how a system learns or improves through those changes; its subject is how installed operations execute.
 
-Disposition, reason, and verification: pending.
+Disposition (2026-09-26): Retain learning-theory through constraining: installing runtime-assigned operations removes model reinterpretation at execution, and the body explains the precision/reliability boundary of that commitment. See [parent membership decision](./parent-membership-decision.md) for input versions and verification.
 
 ## TP-019 — software-factory
 
@@ -235,7 +236,7 @@ Disposition, reason, and verification: pending.
 
 ## TP-020 — deploy-time-learning
 
-- Status: open.
+- Status: resolved — assignment retained under revised scope.
 - Note: [Constraining during deployment is continuous learning](../../notes/constraining-during-deployment-is-continuous-learning.md).
 - Head: [deploy-time-learning](../../tags/deploy-time-learning-README.md).
 - Initial reviewer judgment: mismatch.
@@ -243,7 +244,7 @@ Disposition, reason, and verification: pending.
 
 Reviewer reason: “Constraining is one concrete way continuous learning happens outside weights” describes a retained-change mechanism; the note does not substantively analyze what deployed use reveals that design and testing could not, the head's inclusion condition.
 
-Disposition, reason, and verification: pending.
+Disposition (2026-09-26): retain deploy-time-learning. The note explicitly explains adaptation to new data, tasks, and shifts during deployment through prompts, schemas, tests, and code. It belongs under both deploy-time-learning and continual-learning. The operator explicitly included responses in this tag. See [scope decision](./deploy-time-scope-decision.md) for the revised rule, input versions, and verification.
 
 ## TP-021 — agent-memory
 
@@ -271,7 +272,7 @@ Disposition, reason, and verification: pending.
 
 ## TP-023 — learning-theory
 
-- Status: open.
+- Status: resolved — assignment retained.
 - Note: [Behavioral authority](../../notes/definitions/behavioral-authority.md).
 - Head: [learning-theory](../../tags/learning-theory-README.md).
 - Initial reviewer judgment: mismatch.
@@ -280,7 +281,7 @@ Disposition, reason, and verification: pending.
 
 Reviewer reason: “Learning input” appears in the list of possible forces, but the note does not explain how systems learn, verify, or improve; the head requires theory about those processes rather than a possible use of an artifact.
 
-Disposition, reason, and verification: pending.
+Disposition (2026-09-26): Retain learning-theory through artifact-analysis: consumer, channel, and force define an axis of the retained-artifact scheme and explain its path-relative consequences. See [parent membership decision](./parent-membership-decision.md) for input versions and verification.
 
 ## TP-024 — computational-model
 
@@ -296,7 +297,7 @@ Disposition, reason, and verification: pending.
 
 ## TP-025 — self-improving-systems
 
-- Status: open.
+- Status: resolved — assignment retained.
 - Note: [Software factory](../../notes/definitions/software-factory.md).
 - Head: [self-improving-systems](../../tags/self-improving-systems-README.md).
 - Initial reviewer judgment: mismatch.
@@ -305,11 +306,11 @@ Disposition, reason, and verification: pending.
 
 Reviewer reason: “Core boundary” says the factory label does not imply learning or self-improvement. The note defines family-specific production machinery but does not substantively analyze whether or how it makes evidence-responsive changes to itself.
 
-Disposition, reason, and verification: pending.
+Disposition (2026-09-26): Retain self-improving-systems through software-factory: the definition supplies the child area's subject and boundaries. Its explicit exclusion of implied self-improvement does not exclude it from that subject area. See [parent membership decision](./parent-membership-decision.md) for input versions and verification.
 
 ## TP-026 — self-improving-systems
 
-- Status: open.
+- Status: resolved — assignment retained.
 - Note: [Tentative theory](../../notes/definitions/tentative-theory.md).
 - Head: [self-improving-systems](../../tags/self-improving-systems-README.md).
 - Initial reviewer judgment: mismatch.
@@ -318,7 +319,7 @@ Disposition, reason, and verification: pending.
 
 Reviewer reason: “Independent of the holder” says tentative status holds whatever a system does with the theory. The note does not address whether or how a system makes operative, evidence-responsive changes to its own organization.
 
-Disposition, reason, and verification: pending.
+Disposition (2026-09-26): Retain self-improving-systems through theory-builder: tentative status is defined and distinguished from revision permissions and from the stated theories a builder operates on. See [parent membership decision](./parent-membership-decision.md) for input versions and verification.
 
 ## TP-027 — warranted-autonomy
 
@@ -370,7 +371,7 @@ Disposition, reason, and verification: pending.
 
 ## TP-031 — artifact-analysis
 
-- Status: open.
+- Status: resolved — assignment retained.
 - Note: [Seven documentation cases left routing and synthesis](../../notes/evidence/seven-documentation-cases-left-routing-and-synthesis.md).
 - Head: [artifact-analysis](../../tags/artifact-analysis-README.md).
 - Initial reviewer judgment: mismatch.
@@ -378,11 +379,11 @@ Disposition, reason, and verification: pending.
 
 Reviewer reason: The “Casebook” compares recoverable prose with source and help, but does not define, test, apply, or draw a consequence from the substrate/form/lineage/behavioral-authority classification scheme required by this head.
 
-Disposition, reason, and verification: pending.
+Disposition (2026-09-26): Retain artifact-analysis through lineage. The casebook compares prose content with the source or contract that owns the exact facts, identifies discrepancies and maintenance obligations, and uses that dependency analysis to retire, reduce, or retain content. It draws a maintenance consequence from source relationships without needing the other three fields. See [single-field scope decision](./artifact-analysis-scope-decision.md) for the operator decision and verification.
 
 ## TP-032 — deploy-time-learning
 
-- Status: open.
+- Status: resolved — assignment retained under revised scope.
 - Note: [Exact implementation does not validate a requirement against its objective](../../notes/exact-implementation-does-not-validate-a-requirement.md).
 - Head: [deploy-time-learning](../../tags/deploy-time-learning-README.md).
 - Initial reviewer judgment: mismatch.
@@ -390,7 +391,7 @@ Disposition, reason, and verification: pending.
 
 Reviewer reason: The vision example and “when a hardened link has stopped fitting” concern proxy validity generally. The note does not analyze a released system meeting users, a surprise from use, or the post-release change phenomenon required by this head.
 
-Disposition, reason, and verification: pending.
+Disposition (2026-09-26): retain deploy-time-learning. The body distinguishes local conformance from whether a requirement serves its objective, then prescribes retracting failed requirement–objective claims, rescoping surviving use, and relaxing hardened links when operation exposes poor fit. This is a generalized response mechanism, not merely a deployment example. The operator explicitly included responses in this tag. See [scope decision](./deploy-time-scope-decision.md) for the revised rule, input versions, and verification.
 
 ## TP-033 — computational-model
 
@@ -430,7 +431,7 @@ Disposition, reason, and verification: pending.
 
 ## TP-036 — learning-theory
 
-- Status: open.
+- Status: resolved — assignment retained.
 - Note: [Legal drafting solves the same problem as context engineering](../../notes/legal-drafting-solves-the-same-problem-as-context-engineering.md).
 - Head: [learning-theory](../../tags/learning-theory-README.md).
 - Initial reviewer judgment: mismatch.
@@ -439,7 +440,7 @@ Disposition, reason, and verification: pending.
 
 Reviewer reason: The “Techniques that transfer” and “Law is rich in constraining” sections compare drafting methods for narrowing interpretation. They do not address learning, verification, memory architecture, or system improvement as the learning-theory head requires; using constraining does not alone establish this broader subject.
 
-Disposition, reason, and verification: pending.
+Disposition (2026-09-26): Retain learning-theory through constraining: the body compares mechanisms that narrow interpretations, including definitions, precedent, and statutory text, and distinguishes constraining from codification. See [parent membership decision](./parent-membership-decision.md) for input versions and verification.
 
 ## TP-037 — computational-model
 
@@ -467,7 +468,7 @@ Disposition, reason, and verification: pending.
 
 ## TP-039 — constraining
 
-- Status: open.
+- Status: resolved — retagged.
 - Note: [LLM↔code boundaries are natural checkpoints](../../notes/llm-code-boundaries-are-natural-checkpoints.md).
 - Head: [constraining](../../tags/constraining-README.md).
 - Initial reviewer judgment: mismatch.
@@ -475,11 +476,11 @@ Disposition, reason, and verification: pending.
 
 Reviewer reason: The only application is a refactoring bullet about logic moving “between a prompt and code through constraining.” The note does not explain, test, or decide when to narrow valid interpretations; the term is background to checkpointing.
 
-Disposition, reason, and verification: pending.
+Disposition (2026-09-26): Replace constraining with llm-reliability. The main mechanism is exposing and checking arguments at a boundary; deterministic execution does not correct a wrongly interpreted argument. The brief refactoring application does not analyze interpretation-space narrowing. See [parent membership decision](./parent-membership-decision.md) for input versions and verification.
 
 ## TP-040 — learning-theory
 
-- Status: open.
+- Status: resolved — assignment retained.
 - Note: [LLM↔code boundaries are natural checkpoints](../../notes/llm-code-boundaries-are-natural-checkpoints.md).
 - Head: [learning-theory](../../tags/learning-theory-README.md).
 - Initial reviewer judgment: mismatch.
@@ -487,7 +488,7 @@ Disposition, reason, and verification: pending.
 
 Reviewer reason: The “Debugging” and “Testing” operations concern locating a defect in one execution. The note does not substantively explain learning, retained capacity change, or a verification mechanism for learning as this head describes.
 
-Disposition, reason, and verification: pending.
+Disposition (2026-09-26): Retain learning-theory through the corrected llm-reliability assignment (TP-039 / ADD-110). Checks against intent, replay, and the count=3 example substantively diagnose output deviations. The reviewer imposed an extra learning-through-retention condition. See [parent membership decision](./parent-membership-decision.md) for input versions and verification.
 
 ## TP-041 — computational-model
 
@@ -515,7 +516,7 @@ Disposition, reason, and verification: pending.
 
 ## TP-043 — self-improving-systems
 
-- Status: open.
+- Status: resolved — assignment retained.
 - Note: [Naur's human-only conclusion needs more than the absence of explicit criteria](../../notes/naur-equates-machine-execution-with-formulated-criteria.md).
 - Head: [self-improving-systems](../../tags/self-improving-systems-README.md).
 - Initial reviewer judgment: mismatch.
@@ -524,11 +525,11 @@ Disposition, reason, and verification: pending.
 
 Reviewer reason: The functional tests concern a modifier changing a program across demands. The note does not say the program is the modifier’s own behavior-determining organization or analyze that self-change, which this head requires.
 
-Disposition, reason, and verification: pending.
+Disposition (2026-09-26): Retain self-improving-systems through warranted-autonomy: the body challenges the inference to human-only judgment and sets tests before assigning that function to computation. See [parent membership decision](./parent-membership-decision.md) for input versions and verification.
 
 ## TP-044 — deploy-time-learning
 
-- Status: open.
+- Status: resolved — assignment retained under revised scope.
 - Note: [Naur's compiler case tests one historically bounded documentation-and-consumption system](../../notes/naurs-compiler-case-tests-one-historically-bounded-documentation-and-consumption-system.md).
 - Head: [deploy-time-learning](../../tags/deploy-time-learning-README.md).
 - Initial reviewer judgment: mismatch.
@@ -536,11 +537,11 @@ Disposition, reason, and verification: pending.
 
 Reviewer reason: A successor group’s failed compiler extension is a theory-transfer case. The note does not substantively address deployment meeting users, surprising needs, or changes that use reveals, as this head specifies.
 
-Disposition, reason, and verification: pending.
+Disposition (2026-09-26): retain deploy-time-learning. The compiler case concerns a successor group attempting extensions and failing to preserve structure; the argument compares retained rationale and consumption pathways that could support coherent modification across later demands. It evaluates a response capability without requiring the note to describe the original user surprise. The operator explicitly included responses in this tag. See [scope decision](./deploy-time-scope-decision.md) for the revised rule, input versions, and verification.
 
 ## TP-045 — constraining
 
-- Status: open.
+- Status: resolved — retagged.
 - Note: [Opacity is a scale threshold, not a class property](../../notes/opacity-is-a-scale-threshold.md).
 - Head: [constraining](../../tags/constraining-README.md).
 - Initial reviewer judgment: mismatch.
@@ -548,11 +549,11 @@ Disposition, reason, and verification: pending.
 
 Reviewer reason: “Readable” and “opaque” are analyzed as inspection properties. The note does not explain or apply narrowing or deliberate widening of valid interpretations, the constraining head’s condition.
 
-Disposition, reason, and verification: pending.
+Disposition (2026-09-26): Replace constraining with artifact-analysis. The body qualifies how representational form predicts inspectability at scale; it does not analyze narrowing valid interpretations. The complete artifact-analysis head now links this note. See [parent membership decision](./parent-membership-decision.md) for input versions and verification.
 
 ## TP-046 — learning-theory
 
-- Status: open.
+- Status: resolved — assignment retained.
 - Note: [Opacity is a scale threshold, not a class property](../../notes/opacity-is-a-scale-threshold.md).
 - Head: [learning-theory](../../tags/learning-theory-README.md).
 - Initial reviewer judgment: mismatch.
@@ -560,11 +561,11 @@ Disposition, reason, and verification: pending.
 
 Reviewer reason: The body compares inspectability of representational forms, but does not substantively analyze accumulation, verification, adaptation, or another learning mechanism required by this head.
 
-Disposition, reason, and verification: pending.
+Disposition (2026-09-26): Retain learning-theory through the corrected artifact-analysis assignment (TP-045 / ADD-133). Its scale-dependent qualification of representational form meets that child's inclusion rule. See [parent membership decision](./parent-membership-decision.md) for input versions and verification.
 
 ## TP-047 — artifact-analysis
 
-- Status: open.
+- Status: resolved — assignment retained.
 - Note: [Orchestration strategies and run-state have opposite persistence economics](../../notes/orchestration-strategies-and-run-state-have-opposite-persistence.md).
 - Head: [artifact-analysis](../../tags/artifact-analysis-README.md).
 - Initial reviewer judgment: mismatch.
@@ -572,7 +573,7 @@ Disposition, reason, and verification: pending.
 
 Reviewer reason: The note compares lifecycle value of two scheduler components. It does not define, extend, test, or draw consequences from the artifact-analysis scheme of substrate, form, lineage, and behavioral authority. Merely retaining code is insufficient for this tag.
 
-Disposition, reason, and verification: pending.
+Disposition (2026-09-26): Retain artifact-analysis through behavioral authority and its lifecycle consequences. The opening separates task data from the selection logic that controls calls despite their shared symbolic substrate. Those different consumption roles justify checkpointing task state separately from promoting tested control strategies, whose reuse brings provenance, permission, and staleness obligations. See [single-field scope decision](./artifact-analysis-scope-decision.md) for the operator decision and verification.
 
 ## TP-048 — computational-model
 
@@ -588,7 +589,7 @@ Disposition, reason, and verification: pending.
 
 ## TP-049 — self-improving-systems
 
-- Status: open.
+- Status: resolved — assignment retained.
 - Note: [A theory's prototype standing is its revision cost: external binding plus lost investment](../../notes/prototype-standing-is-revision-cost-binding-plus-lost-investment.md).
 - Head: [self-improving-systems](../../tags/self-improving-systems-README.md).
 - Initial reviewer judgment: mismatch.
@@ -597,11 +598,11 @@ Disposition, reason, and verification: pending.
 
 Reviewer reason: The note discusses theory standing across procedures, audits, contracts, proofs, and models. Its Gödel-machine illustration is an example, but it does not substantively analyze whether or how a system makes evidence-responsive changes to its own behavior-determining organization, the head's inclusion condition.
 
-Disposition, reason, and verification: pending.
+Disposition (2026-09-26): Retain self-improving-systems through theory-builder: the argument explains the costs of revising inspectable theories and how binding and reconstruction constrain later criticism and replacement. See [parent membership decision](./parent-membership-decision.md) for input versions and verification.
 
 ## TP-050 — deploy-time-learning
 
-- Status: open.
+- Status: resolved — assignment retained under revised scope.
 - Note: [Retained system-definition artifacts enable persistent deployment-time adaptation](../../notes/retained-artifacts-enable-persistent-deployment-time-adaptation.md).
 - Head: [deploy-time-learning](../../tags/deploy-time-learning-README.md).
 - Initial reviewer judgment: mismatch.
@@ -609,11 +610,11 @@ Disposition, reason, and verification: pending.
 
 Reviewer reason: The head requires substantive treatment of what use after release reveals that design and testing could not. The note's “Lifecycle phase is not update speed” and “Why localized artifacts are practical now” sections classify and justify adaptation machinery; production feedback is an input to the example rather than an analysis of the post-release surprise phenomenon.
 
-Disposition, reason, and verification: pending.
+Disposition (2026-09-26): retain deploy-time-learning. The note explains how deployment experience drives proposed artifact changes, evaluation selects them, and retention changes later behavior. Human proposal or approval is allowed. The mechanism is now explicitly within the tag. The operator explicitly included responses in this tag. See [scope decision](./deploy-time-scope-decision.md) for the revised rule, input versions, and verification.
 
 ## TP-051 — artifact-analysis
 
-- Status: open.
+- Status: resolved — assignment retained.
 - Note: [RLM, λ-RLM, Tendril, and llm-do separate restriction from persistence](../../notes/rlm-tendril-and-llm-do-place-symbolic-work-at-different-persistence.md).
 - Head: [artifact-analysis](../../tags/artifact-analysis-README.md).
 - Initial reviewer judgment: mismatch.
@@ -621,11 +622,11 @@ Disposition, reason, and verification: pending.
 
 Reviewer reason: The comparison uses substrate and persistence as its own axes, but it does not define, test, or draw design consequences from the artifact-analysis scheme of substrate, form, lineage, and behavioral authority. A persistence comparison alone misses that inclusion condition.
 
-Disposition, reason, and verification: pending.
+Disposition (2026-09-26): Retain artifact-analysis. The live comparison connects representational form and executable authority to design: generated capabilities change what later sessions can execute rather than only what they can retrieve, and switching prompt/code implementations changes verification and maintenance options. The persistence discussion adds provenance, approval, retirement, and dependency-drift consequences. It does more than list a storage location, and it need not enumerate all four fields. See [single-field scope decision](./artifact-analysis-scope-decision.md) for the operator decision and verification.
 
 ## TP-052 — deploy-time-learning
 
-- Status: open.
+- Status: resolved — assignment retained under revised scope.
 - Note: [Scaling absorbs scaffolding at fixed task difficulty, not at the deployment frontier](../../notes/scaling-absorbs-scaffolding-at-fixed-difficulty-not-at-the-frontier.md).
 - Head: [deploy-time-learning](../../tags/deploy-time-learning-README.md).
 - Initial reviewer judgment: mismatch.
@@ -633,19 +634,20 @@ Disposition, reason, and verification: pending.
 
 Reviewer reason: The proposed frontier gap comes from assigning harder tasks as model capability rises. It does not analyze user needs or surprises revealed after release that force changes, which is this head’s inclusion condition.
 
-Disposition, reason, and verification: pending.
+Disposition (2026-09-26): retain deploy-time-learning. The argument examines when deployment-specific scaffolding should disappear and when new task demands call for new external structure. Its substantive subject is whether that adaptation response remains useful as models and assigned difficulty change. The operator explicitly included responses in this tag. See [scope decision](./deploy-time-scope-decision.md) for the revised rule, input versions, and verification.
 
 ## TP-053 — learning-theory
 
-- Status: open.
+- Status: resolved — assignment retained.
 - Note: [Silent disambiguation is the semantic analogue of tool fallback](../../notes/silent-disambiguation-is-the-semantic-analogue-of-tool-fallback.md).
 - Head: [learning-theory](../../tags/learning-theory-README.md).
 - Initial reviewer judgment: mismatch.
+- Dependency: [PC-06](./parent-child-relations.md#pc-06).
 - Local evidence: [review pair 23088](../../reports/state/review-jobs/review-job-8806/pair-1-silent-disambiguation-is-the-semantic-analogue-of-tool-fallback.md).
 
 Reviewer reason: “task completion alone cannot distinguish ‘the spec was sufficient’ from ‘the agent improvised well enough’” concerns diagnosis of an ambiguous instruction, not how a system learns, verifies knowledge, or improves through retained change.
 
-Disposition, reason, and verification: pending.
+Disposition (2026-09-26): Retain learning-theory through llm-reliability: the note distinguishes hidden specification repair from interpreter failure and identifies why success cannot diagnose the intended path. See [parent membership decision](./parent-membership-decision.md) for input versions and verification.
 
 ## TP-054 — architecture
 
@@ -685,7 +687,7 @@ Disposition, reason, and verification: pending.
 
 ## TP-057 — deploy-time-learning
 
-- Status: open.
+- Status: resolved — assignment retained under revised scope.
 - Note: [System use provides evidence of theory fit and causal usefulness, not independent warrant](../../notes/system-use-provides-evidence-of-theory-fit-not-independent-warrant.md).
 - Head: [deploy-time-learning](../../tags/deploy-time-learning-README.md).
 - Initial reviewer judgment: mismatch.
@@ -693,11 +695,11 @@ Disposition, reason, and verification: pending.
 
 Reviewer reason: “Putting a claim to work in a live system” is broader than a deployed system meeting users and surprising its original design; that post-release phenomenon is not substantively analyzed.
 
-Disposition, reason, and verification: pending.
+Disposition (2026-09-26): retain deploy-time-learning. The body explains what live-system consequences warrant and when failures justify rescoping or removing a claim. Those limits govern how a system learns from use; a separate account of a surprising user encounter is no longer required. The operator explicitly included responses in this tag. See [scope decision](./deploy-time-scope-decision.md) for the revised rule, input versions, and verification.
 
 ## TP-058 — self-improving-systems
 
-- Status: open.
+- Status: resolved — assignment retained.
 - Note: [System use provides evidence of theory fit and causal usefulness, not independent warrant](../../notes/system-use-provides-evidence-of-theory-fit-not-independent-warrant.md).
 - Head: [self-improving-systems](../../tags/self-improving-systems-README.md).
 - Initial reviewer judgment: mismatch.
@@ -706,11 +708,11 @@ Disposition, reason, and verification: pending.
 
 Reviewer reason: The scope says the system “does not require ... the system itself [to] perform the independent warrant assessment”; it discusses evidence for theory fit without specifying an operative self-change to the system's organization.
 
-Disposition, reason, and verification: pending.
+Disposition (2026-09-26): Retain self-improving-systems through theory-builder: the note separates criticism from use, theory fit, and independent warrant, including when evidence motivates rescoping or removal. See [parent membership decision](./parent-membership-decision.md) for input versions and verification.
 
 ## TP-059 — deploy-time-learning
 
-- Status: open.
+- Status: resolved — assignment retained under revised scope.
 - Note: [System use is an initial selection environment when theory fit lacks a fixed oracle](../../notes/system-use-selects-theory-fit-without-a-fixed-oracle.md).
 - Head: [deploy-time-learning](../../tags/deploy-time-learning-README.md).
 - Initial reviewer judgment: mismatch.
@@ -718,11 +720,11 @@ Disposition, reason, and verification: pending.
 
 Reviewer reason: “ongoing construction and operation” is the setting, but the note does not substantively describe deployed contact with users exposing needs that force post-release change.
 
-Disposition, reason, and verification: pending.
+Disposition (2026-09-26): retain deploy-time-learning. The argument makes consequential use an initial selection environment for theory candidates and explains correction, delayed consequences, and the danger of self-confirming feedback. That is a substantive learning response to operating experience. The operator explicitly included responses in this tag. See [scope decision](./deploy-time-scope-decision.md) for the revised rule, input versions, and verification.
 
 ## TP-060 — self-improving-systems
 
-- Status: open.
+- Status: resolved — assignment retained.
 - Note: [System use is an initial selection environment when theory fit lacks a fixed oracle](../../notes/system-use-selects-theory-fit-without-a-fixed-oracle.md).
 - Head: [self-improving-systems](../../tags/self-improving-systems-README.md).
 - Initial reviewer judgment: mismatch.
@@ -731,7 +733,7 @@ Disposition, reason, and verification: pending.
 
 Reviewer reason: The note includes human-inclusive selection and future possible machinery; its central claim does not require or explain a system making operative changes to its own organization.
 
-Disposition, reason, and verification: pending.
+Disposition (2026-09-26): Retain self-improving-systems through theory-builder: the argument describes consequential use selecting among stated theory candidates when no fixed global oracle suffices. See [parent membership decision](./parent-membership-decision.md) for input versions and verification.
 
 ## TP-061 — computational-model
 
@@ -747,7 +749,7 @@ Disposition, reason, and verification: pending.
 
 ## TP-062 — self-improving-systems
 
-- Status: open.
+- Status: resolved — assignment retained.
 - Note: [Task families and product families classify different things](../../notes/task-families-and-product-families-classify-different-things.md).
 - Head: [self-improving-systems](../../tags/self-improving-systems-README.md).
 - Initial reviewer judgment: mismatch.
@@ -756,11 +758,11 @@ Disposition, reason, and verification: pending.
 
 Reviewer reason: “The distinction classifies scope. It does not by itself establish learning, improvement, or generality.” Its account of product-family reuse and assessment frames does not address whether or how a system makes evidence-responsive operative changes to itself.
 
-Disposition, reason, and verification: pending.
+Disposition (2026-09-26): Retain self-improving-systems through software-factory: the note establishes the product-family boundary of reusable factory machinery and distinguishes it from benchmark task groupings. See [parent membership decision](./parent-membership-decision.md) for input versions and verification.
 
 ## TP-063 — deploy-time-learning
 
-- Status: open.
+- Status: resolved — assignment retained under revised scope.
 - Note: [The deployed system, not the model alone, is the unit of learning](../../notes/the-deployed-system-not-the-model-is-the-unit-of-learning.md).
 - Head: [deploy-time-learning](../../tags/deploy-time-learning-README.md).
 - Initial reviewer judgment: mismatch.
@@ -768,7 +770,7 @@ Disposition, reason, and verification: pending.
 
 Reviewer reason: The note mentions “a deployment-specific ambiguity,” but it does not analyze surprising user needs revealed after release or the resulting pressure to change, which is this tag's specific subject. It analyzes the mechanisms and boundary of learning.
 
-Disposition, reason, and verification: pending.
+Disposition (2026-09-26): retain deploy-time-learning. The note identifies the deployed system as the evaluation boundary and describes prompt revisions, validators, and other evidence-responsive updates. It explains why responding only through model weights leaves relevant causes fixed. The operator explicitly included responses in this tag. See [scope decision](./deploy-time-scope-decision.md) for the revised rule, input versions, and verification.
 
 ## TP-064 — computational-model
 
@@ -784,7 +786,7 @@ Disposition, reason, and verification: pending.
 
 ## TP-065 — deploy-time-learning
 
-- Status: open.
+- Status: resolved — assignment retained under revised scope.
 - Note: [Use tests a decomposition locally; retained rationale is what makes transfer testable](../../notes/use-tests-a-decomposition-locally-rationale-makes-transfer-testable.md).
 - Head: [deploy-time-learning](../../tags/deploy-time-learning-README.md).
 - Initial reviewer judgment: mismatch.
@@ -792,7 +794,7 @@ Disposition, reason, and verification: pending.
 
 Reviewer reason: The note discusses transfer of design decompositions across contexts; it does not examine deployed software meeting users and revealing needs that force post-release change.
 
-Disposition, reason, and verification: pending.
+Disposition (2026-09-26): retain deploy-time-learning. The body explains why running a design only supports local sufficiency and what rationale must be retained to test transfer under new demands. It governs what can safely be learned and reused from operating experience rather than merely discussing decomposition. The operator explicitly included responses in this tag. See [scope decision](./deploy-time-scope-decision.md) for the revised rule, input versions, and verification.
 
 ## TP-066 — context-engineering
 
@@ -820,7 +822,7 @@ Disposition, reason, and verification: pending.
 
 ## TP-068 — self-improving-systems
 
-- Status: open.
+- Status: resolved — assignment retained.
 - Note: [World models assess explanatory-reach through action-conditioned prediction](../../notes/world-models-assess-explanatory-reach-through-action-conditioned.md).
 - Head: [self-improving-systems](../../tags/self-improving-systems-README.md).
 - Initial reviewer judgment: mismatch.
@@ -829,4 +831,4 @@ Disposition, reason, and verification: pending.
 
 Reviewer reason: “The choice between retaining such a theory and training a predictor” compares representational forms and correction locality. It does not examine whether or how a system makes operative, evidence-responsive changes to its own behavior-determining organization, the head's inclusion condition.
 
-Disposition, reason, and verification: pending.
+Disposition (2026-09-26): Retain self-improving-systems through theory-builder: the final section compares failure and selective revision in addressable theories with fitting an unlocalized predictor. It is a substantive boundary analysis, not a claim that every predictor is a theory builder. See [parent membership decision](./parent-membership-decision.md) for input versions and verification.

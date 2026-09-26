@@ -16,7 +16,7 @@ For current-state documentation about the live Commonplace system rather than tr
 - [Architecture](./architecture-README.md) — how Commonplace is structured and installed: repo layout, control-plane design, file-based storage
 - [Evaluation](./evaluation-README.md) — what works, what doesn't, what needs testing
 - [Learning theory](./learning-theory-README.md) — how systems learn, verify, and improve; covered by six child tags (enforced), so its README routes rather than enumerates:
-  - [Deploy-time learning](./deploy-time-learning-README.md) — the framework: adaptation through durable inspectable artifacts
+  - [Deploy-time learning](./deploy-time-learning-README.md) — what deployed use reveals and how people and systems respond
   - [Constraining](./constraining-README.md) — narrowing interpretation space, codification, relaxing
   - [Discovery](./discovery-README.md) — positing generals, recognizing instances; explanatory-reach
   - [Artifact analysis](./artifact-analysis-README.md) — the four-field vocabulary for retained artifacts

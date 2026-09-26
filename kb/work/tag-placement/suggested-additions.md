@@ -1,6 +1,6 @@
 # Suggested additions
 
-Suggestions for 206 notes, copied from the review for disposition. One entry can contain several proposed tags. All entries are open; no addition has been accepted. This is opportunistic discovery, not an exhaustive missing-tag audit. Follow the [workshop framing](./README.md).
+Suggestions for 206 notes, copied from the review for disposition. One entry can contain several proposed tags. Current status: two entries accepted and implemented; 204 remain open. This is opportunistic discovery, not an exhaustive missing-tag audit. Follow the [workshop framing](./README.md).
 
 ## ADD-001
 
@@ -1534,7 +1534,7 @@ Disposition of each proposed tag, reason, and verification: pending.
 
 ## ADD-110
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [LLM↔code boundaries are natural checkpoints](../../notes/llm-code-boundaries-are-natural-checkpoints.md).
 
@@ -1544,7 +1544,7 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22998](../../reports/state/review-jobs/review-job-8801/pair-11-llm-code-boundaries-are-natural-checkpoints.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-26): added `llm-reliability` while removing `constraining`, as recorded in TP-039. The substantive mechanism matches the new head. See [parent membership decision](./parent-membership-decision.md) for verification.
 
 ## ADD-111
 
@@ -1859,7 +1859,7 @@ Disposition of each proposed tag, reason, and verification: pending.
 
 ## ADD-133
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Opacity is a scale threshold, not a class property](../../notes/opacity-is-a-scale-threshold.md).
 
@@ -1869,7 +1869,7 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23032](../../reports/state/review-jobs/review-job-8803/pair-5-opacity-is-a-scale-threshold.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-26): added `artifact-analysis` while removing `constraining`, as recorded in TP-045. The substantive mechanism matches the new head. See [parent membership decision](./parent-membership-decision.md) for verification.
 
 ## ADD-134
 

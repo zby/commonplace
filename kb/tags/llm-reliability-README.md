@@ -53,5 +53,5 @@ LLM output deviates from what the user intended for three distinct reasons — u
 
 ## Related Tags
 
-- [learning-theory](./learning-theory-README.md) — oracle and verification theory originated there; this area applies it specifically to LLM output deviations
+- [learning-theory](./learning-theory-README.md) — the parent: oracle and verification theory applied here to LLM output deviations
 - [computational-model](./computational-model-README.md) — the scheduling architecture that separation notes describe; error correction explains *why* it works
