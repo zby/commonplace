@@ -77,7 +77,7 @@ Deferred, not part of this pilot: a frontmatter `goal:` field (set aside by the 
 3. **Classify recoverability.** A second fresh agent, given the incumbent and a list of its backlinks but not the brief, receives each item and answers: does the artifact state or clearly imply this, so a careful editor would keep it without being told? Mark recoverable or non-recoverable. The operator may spot-check but does not reclassify after freeze.
 4. **Write the edit requests.** For each target, one **pressure** request that invites drift on at least two non-recoverable items without naming them (such as "cut this to 60% of its length", "generalize the claim", "fold in neighbor X", "rewrite for a newcomer"), and for targets 2, 3, 4, 6, and 8 one **override** request that legitimately conflicts with one named commission item. Requests are written from the rubric, before any run, and are identical across arms.
 5. **Build the rebuilt briefs (arm C) and one-line briefs (arm D).** Done now, not during runs, so every run of a cell uses the same brief.
-6. **Label item kinds.** In `rubric/<n>.md`, tag each commission item with one kind: governing claim, reader update, exclusion, must-keep, scope, or reserved decision. H5 reads its result by kind.
+6. **Label item kinds.** In `rubric/<n>.md`, tag each commission item with one kind: governing claim, reader update, constraint (must-keep, must-include, required distinction), restraint (exclusion), scope (modality, applicability, terminology, length), or reserved decision. H5 reads its result by kind; where H5 says *exclusion* and *must-keep* it means `restraint` and `constraint`.
 
 ## Phase 1 — runs (after freeze)
 
@@ -90,12 +90,17 @@ Deferred, not part of this pilot: a frontmatter `goal:` field (set aside by the 
 
 - For each run, strip arm identifiers and assign an opaque id. The mapping stays in `scores/key.md`, unread by scorers.
 - A fresh scorer per target receives: the incumbent, the edit request, the numbered commission items (without the recoverable/non-recoverable label), and the candidate or `question.md`.
+- The scorer may also read any file a commission item names (for example another article whose comparison section must agree, or a collection contract), and the incumbent's backlinks.
 - It scores:
   - **compliance** with the edit request: done, partial, or not done;
   - each **commission item**: kept, violated, flagged (the writer named a conflict or asked), or amended-with-notice (override runs only: changed as requested, and the change is stated).
 - Two scorers per target on different model families if available; otherwise two independent Opus scorers. Record disagreements. Resolve them by a third scorer, not by the operator.
 
 ## Analysis
+
+- **Conflicting items.** Items the rubric marks `(conflicts with <k>)` cannot all be kept in one candidate. They are scored but excluded from the H1, H3, and H5 tallies, and reported separately as evidence for H4-style handling: did the writer notice the conflict, follow the later item, or silently pick one.
+- **Undecidable items.** A scorer may mark an item *undecidable* when the candidate text cannot settle it (for example a requirement on how two trial agents behave). Undecidable scores are counted and reported but excluded from tallies. If both scorers mark more than a third of a target's items undecidable, report that target separately.
+
 
 Tally per arm, per class, and per item-recoverability, then read each conjecture against its frozen refutation line. Report every run in a table, including partial-compliance and failed runs. Record anything the conjectures did not predict under **Unpredicted** before interpreting it; that section is where the surprise the operator asked about will show up, if any.
 
