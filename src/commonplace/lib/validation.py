@@ -33,7 +33,14 @@ from commonplace.lib.index_generated import (
     tag_for_head,
     tags_collection,
 )
-from commonplace.lib.naming import MAX_NOTE_SLUG_LENGTH, MAX_NOTE_TITLE_LENGTH
+from commonplace.lib.naming import (
+    MAX_NOTE_SLUG_LENGTH,
+    MAX_NOTE_TITLE_LENGTH,
+    WRITE_BRIEF_TYPE,
+    is_write_brief_path,
+    write_brief_name_for,
+    write_brief_target_for,
+)
 from commonplace.lib.note_parser import (
     ParsedDocument,
     find_markdown_links_with_text,
@@ -85,7 +92,9 @@ _UNQUOTED_SOURCES_FIX_HINT = (
 # assumes these reports remain disposable and gitignored; applying a special
 # validator rule is design debt, not a good general naming scheme. The next
 # report-filename redesign should budget for suffixes and remove this exception.
-_NOTE_SLUG_LIMIT_EXEMPT_TYPES = frozenset({"connect-report"})
+# A write brief's name is derived from its target's stem (ADR 092), so the
+# target's slug limit already bounds it.
+_NOTE_SLUG_LIMIT_EXEMPT_TYPES = frozenset({"connect-report", "write-brief"})
 
 _PROPOSAL_ARCHIVE_RELATIVE_PATH = Path("kb/reference/proposals/archive")
 
@@ -1337,6 +1346,89 @@ def validate_tag_heads(
         results.passes.append(f"tags: all {len(tags)} have heads in kb/tags/")
 
 
+def _file_available(path: Path, run: ValidationRun) -> bool:
+    return path.resolve() in run.content_overrides or path.is_file()
+
+
+def validate_write_brief_pairing(
+    results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
+) -> None:
+    """Enforce the write-brief sidecar pairing in both directions (ADR 092).
+
+    A document's `brief:` must be exactly its own `<stem>.brief.md` and name an
+    existing sibling of the write-brief type. A `.brief.md` file must be of that
+    type and be declared by its sibling `<stem>.md`. The suffix and the type
+    must agree. Forbidden fields inside a brief are the brief schema's job.
+    """
+    frontmatter_data = parsed.document.frontmatter
+    is_typed = frontmatter_data is not None
+    type_identity = canonical_type_identity(parsed.profile) if is_typed else None
+    name = parsed.path.name
+
+    if is_write_brief_path(parsed.path):
+        if type_identity != WRITE_BRIEF_TYPE:
+            results.fails.append(
+                f"write brief: {name} has the .brief.md suffix but is not of type "
+                f"{WRITE_BRIEF_TYPE}; rename it or fix its type"
+            )
+            return
+        target = write_brief_target_for(parsed.path)
+        if not _file_available(target, run):
+            results.fails.append(
+                f"write brief: {name} has no sibling document {target.name}"
+            )
+            return
+        loaded = run.load_document(target)
+        declared = (
+            (loaded.document.frontmatter or {}).get("brief")
+            if loaded.document is not None
+            else None
+        )
+        if declared != name:
+            results.fails.append(
+                f"write brief: sibling {target.name} does not declare "
+                f"`brief: {name}`"
+            )
+            return
+        results.passes.append(f"write brief: declared by sibling {target.name}")
+        return
+
+    if type_identity == WRITE_BRIEF_TYPE:
+        results.fails.append(
+            f"write brief: {name} is of type {WRITE_BRIEF_TYPE} but its name "
+            f"lacks the .brief.md suffix; name it <target-stem>.brief.md"
+        )
+        return
+
+    if not is_typed or "brief" not in frontmatter_data:
+        return
+    value = frontmatter_data["brief"]
+    expected = write_brief_name_for(parsed.path)
+    if value != expected:
+        results.fails.append(
+            f"brief: value {value!r} must be the document's own sibling "
+            f"filename {expected!r}"
+        )
+        return
+    brief_path = parsed.path.parent / expected
+    if not _file_available(brief_path, run):
+        results.fails.append(f"brief: {expected} does not exist")
+        return
+    brief_parsed, error = run.parse_note(brief_path)
+    if error or brief_parsed is None:
+        results.fails.append(f"brief: {expected} cannot be resolved: {error}")
+        return
+    if (
+        brief_parsed.document.frontmatter is None
+        or canonical_type_identity(brief_parsed.profile) != WRITE_BRIEF_TYPE
+    ):
+        results.fails.append(
+            f"brief: {expected} is not of type {WRITE_BRIEF_TYPE}"
+        )
+        return
+    results.passes.append(f"brief: {expected} resolves to a write brief")
+
+
 def _validate_parsed_note(parsed: ParsedNote, *, run: ValidationRun) -> CheckResults:
     """Validate a parsed note against the base contract, type rules, and schema.
 
@@ -1371,6 +1463,7 @@ def _validate_parsed_note(parsed: ParsedNote, *, run: ValidationRun) -> CheckRes
             parsed.document.links,
             repo_root=run.repo_root,
         )
+        validate_write_brief_pairing(base, parsed, run=run)
         _merge_labelled(results, base, "base")
         return results
 
@@ -1398,6 +1491,7 @@ def _validate_parsed_note(parsed: ParsedNote, *, run: ValidationRun) -> CheckRes
         repo_root=run.repo_root,
     )
     validate_tag_heads(base, parsed, run=run)
+    validate_write_brief_pairing(base, parsed, run=run)
     validate_verbatim_quotes(base, run.verbatim_quotes(parsed))
     snapshots = run.snapshots(parsed.path.parent / ".snapshots")
     validate_ingest_snapshot_pairing(

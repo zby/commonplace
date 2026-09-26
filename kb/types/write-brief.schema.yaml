@@ -1,0 +1,20 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+allOf:
+  - $ref: "./note-base.schema.yaml"
+  - type: object
+    properties:
+      frontmatter:
+        type: object
+        required:
+          - description
+          - type
+        properties:
+          type:
+            const: types/write-brief.md
+          brief:
+            not: {}
+            description: a write brief must not declare a brief of its own
+          tags:
+            not: {}
+            description: a write brief carries no tags; its document's tags cover it
+        additionalProperties: true

@@ -8,7 +8,14 @@ from pathlib import Path
 import yaml
 
 from commonplace.lib import frontmatter
-from commonplace.lib.naming import MAX_INGEST_SNAPSHOT_SLUG_LENGTH
+from commonplace.lib.naming import (
+    MAX_INGEST_SNAPSHOT_SLUG_LENGTH,
+    WRITE_BRIEF_TYPE,
+    is_write_brief_path,
+    write_brief_name_for,
+    write_brief_target_for,
+)
+from commonplace.lib.project_paths import iter_validation_markdown_files
 from commonplace.lib.type_resolver import validate_type_path
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
@@ -352,3 +359,36 @@ def test_snapshot_and_ingest_skills_budget_the_derived_filename() -> None:
     assert f"max {MAX_INGEST_SNAPSHOT_SLUG_LENGTH} chars" in snapshot_skill
     assert "Before connection discovery" in ingest_skill
     assert "stem (`<slug>.ingest`) to be at most 70 characters" in ingest_skill
+
+
+def test_repository_write_briefs_are_paired() -> None:
+    """Drift guard (ADR 092): every brief is declared and every pointer resolves.
+
+    Passes trivially while the KB holds no briefs; it never counts them.
+    """
+    problems: list[str] = []
+    for path in iter_validation_markdown_files(REPO_ROOT / "kb"):
+        relative = path.relative_to(REPO_ROOT)
+        data = frontmatter.parse(path.read_text(encoding="utf-8")).data or {}
+        if is_write_brief_path(path):
+            if data.get("type") != WRITE_BRIEF_TYPE:
+                problems.append(f"{relative}: brief is not of type {WRITE_BRIEF_TYPE}")
+            target = write_brief_target_for(path)
+            if not target.is_file():
+                problems.append(f"{relative}: no sibling {target.name}")
+                continue
+            target_data = frontmatter.parse(target.read_text(encoding="utf-8")).data or {}
+            if target_data.get("brief") != path.name:
+                problems.append(f"{relative}: sibling {target.name} does not declare it")
+            continue
+        if data.get("type") == WRITE_BRIEF_TYPE:
+            problems.append(f"{relative}: write brief lacks the .brief.md suffix")
+        if "brief" not in data:
+            continue
+        expected = write_brief_name_for(path)
+        if data["brief"] != expected:
+            problems.append(f"{relative}: brief: must be {expected}")
+        elif not (path.parent / expected).is_file():
+            problems.append(f"{relative}: brief {expected} does not exist")
+
+    assert problems == []

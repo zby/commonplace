@@ -11,7 +11,12 @@ import pytest
 
 from commonplace.cli import validate_notes
 from commonplace.lib import validation
-from commonplace.lib.naming import MAX_NOTE_SLUG_LENGTH
+from commonplace.lib.naming import (
+    MAX_NOTE_SLUG_LENGTH,
+    is_write_brief_path,
+    write_brief_name_for,
+    write_brief_target_for,
+)
 from commonplace.lib.snapshot import snapshot_sha256
 
 pytestmark = pytest.mark.usefixtures("tmp_library")
@@ -1190,3 +1195,233 @@ def test_source_snapshot_cache_recognizes_derived_original_by_checksum(
     )
 
     assert warnings == []
+
+
+# --- Write-brief sidecars (ADR 092) ---------------------------------------
+
+BRIEF_NOTE_DESCRIPTION = (
+    "Target note whose commission is carried by a write-brief sidecar next to it"
+)
+
+
+def configure_write_brief_repo(tmp_path: Path) -> Path:
+    notes = configure_temp_repo(tmp_path)
+    copy_repo_file(tmp_path, "kb/types/note-base.schema.yaml")
+    copy_repo_file(tmp_path, "kb/types/write-brief.md")
+    copy_repo_file(tmp_path, "kb/types/write-brief.schema.yaml")
+    return notes
+
+
+def write_brief_note(
+    notes: Path, stem: str = "target", *, brief: str | None = "default"
+) -> Path:
+    pointer = f"{stem}.brief.md" if brief == "default" else brief
+    brief_line = "" if pointer is None else f"brief: {pointer}\n"
+    return write(
+        notes / f"{stem}.md",
+        f"""---
+description: {BRIEF_NOTE_DESCRIPTION}
+type: types/note.md
+{brief_line}---
+
+# Target
+""",
+    )
+
+
+def write_brief_file(
+    notes: Path,
+    name: str = "target.brief.md",
+    *,
+    type_value: str = "types/write-brief.md",
+    extra: str = "",
+) -> Path:
+    return write(
+        notes / name,
+        f"""---
+type: {type_value}
+description: "Commission for the target note: keep what its readers rely on"
+{extra}---
+
+# Brief: Target
+
+## Must keep
+
+- The qualification a later note relies on.
+""",
+    )
+
+
+def brief_fails(results: validation.CheckResults) -> list[str]:
+    return [item for item in results.fails if "brief" in item]
+
+
+def test_write_brief_predicate_and_derived_names() -> None:
+    assert is_write_brief_path("kb/notes/target.brief.md")
+    assert is_write_brief_path(Path("target.brief.md"))
+    assert not is_write_brief_path("kb/notes/target.md")
+    assert not is_write_brief_path("kb/notes/brief.md")
+    assert not is_write_brief_path("kb/notes/target-brief.md")
+    assert write_brief_name_for(Path("kb/notes/target.md")) == "target.brief.md"
+    assert write_brief_target_for(Path("kb/notes/target.brief.md")) == Path(
+        "kb/notes/target.md"
+    )
+
+
+def test_valid_write_brief_pair_validates_clean(tmp_path: Path) -> None:
+    notes = configure_write_brief_repo(tmp_path)
+    note = write_brief_note(notes)
+    brief = write_brief_file(notes)
+
+    note_results = validation.validate_note(note, repo_root=tmp_path)
+    brief_results = validation.validate_note(brief, repo_root=tmp_path)
+
+    assert note_results.fails == []
+    assert brief_results.fails == []
+    assert brief_results.note_type == "write-brief"
+    assert any("resolves to a write brief" in item for item in note_results.passes)
+    assert any("declared by sibling target.md" in item for item in brief_results.passes)
+
+
+def test_quoted_brief_pointer_is_accepted(tmp_path: Path) -> None:
+    notes = configure_write_brief_repo(tmp_path)
+    note = write_brief_note(notes, brief='"target.brief.md"')
+    write_brief_file(notes)
+
+    assert validation.validate_note(note, repo_root=tmp_path).fails == []
+
+
+@pytest.mark.parametrize(
+    "pointer",
+    ["other.brief.md", "./target.brief.md", "sub/target.brief.md", "../target.brief.md", "[]"],
+)
+def test_brief_pointer_must_be_own_sibling_filename(
+    tmp_path: Path, pointer: str
+) -> None:
+    notes = configure_write_brief_repo(tmp_path)
+    note = write_brief_note(notes, brief=pointer)
+    write_brief_file(notes)
+
+    fails = brief_fails(validation.validate_note(note, repo_root=tmp_path))
+
+    assert any("must be the document's own sibling filename" in item for item in fails)
+
+
+def test_missing_brief_file_fails(tmp_path: Path) -> None:
+    notes = configure_write_brief_repo(tmp_path)
+    note = write_brief_note(notes)
+
+    fails = brief_fails(validation.validate_note(note, repo_root=tmp_path))
+
+    assert any("target.brief.md does not exist" in item for item in fails)
+
+
+def test_brief_of_wrong_type_fails_on_both_sides(tmp_path: Path) -> None:
+    notes = configure_write_brief_repo(tmp_path)
+    note = write_brief_note(notes)
+    brief = write_brief_file(notes, type_value="types/note.md")
+
+    note_fails = brief_fails(validation.validate_note(note, repo_root=tmp_path))
+    brief_results = validation.validate_note(brief, repo_root=tmp_path)
+
+    assert any("is not of type types/write-brief.md" in item for item in note_fails)
+    assert any(
+        "has the .brief.md suffix but is not of type" in item
+        for item in brief_results.fails
+    )
+
+
+def test_untyped_brief_suffix_file_fails(tmp_path: Path) -> None:
+    notes = configure_write_brief_repo(tmp_path)
+    stray = write(notes / "loose.brief.md", "# Loose\n")
+
+    results = validation.validate_note(stray, repo_root=tmp_path)
+
+    assert any("has the .brief.md suffix but is not of type" in item for item in results.fails)
+
+
+def test_write_brief_type_without_suffix_fails(tmp_path: Path) -> None:
+    notes = configure_write_brief_repo(tmp_path)
+    misnamed = write_brief_file(notes, name="target-brief.md")
+
+    results = validation.validate_note(misnamed, repo_root=tmp_path)
+
+    assert any("lacks the .brief.md suffix" in item for item in results.fails)
+
+
+def test_brief_without_sibling_document_fails(tmp_path: Path) -> None:
+    notes = configure_write_brief_repo(tmp_path)
+    brief = write_brief_file(notes, name="absent.brief.md")
+
+    results = validation.validate_note(brief, repo_root=tmp_path)
+
+    assert any("has no sibling document absent.md" in item for item in results.fails)
+
+
+def test_brief_not_declared_by_sibling_fails(tmp_path: Path) -> None:
+    notes = configure_write_brief_repo(tmp_path)
+    write_brief_note(notes, brief=None)
+    brief = write_brief_file(notes)
+
+    results = validation.validate_note(brief, repo_root=tmp_path)
+
+    assert any(
+        "sibling target.md does not declare `brief: target.brief.md`" in item
+        for item in results.fails
+    )
+
+
+@pytest.mark.parametrize(
+    ("field", "extra"),
+    [
+        ("brief", "brief: target.brief.brief.md\n"),
+        ("tags", "tags: [learning-theory]\n"),
+    ],
+)
+def test_brief_schema_forbids_brief_and_tags(
+    tmp_path: Path, field: str, extra: str
+) -> None:
+    notes = configure_write_brief_repo(tmp_path)
+    write_brief_note(notes)
+    brief = write_brief_file(notes, extra=extra)
+
+    results = validation.validate_note(brief, repo_root=tmp_path)
+
+    assert any(
+        item.startswith(f"[schema] frontmatter.{field}:") and "write brief" in item
+        for item in results.fails
+    )
+
+
+def test_write_brief_derived_slug_is_exempt_from_note_limit(tmp_path: Path) -> None:
+    notes = configure_write_brief_repo(tmp_path)
+    stem = "a" * MAX_NOTE_SLUG_LENGTH
+    write_brief_note(notes, stem)
+    brief = write_brief_file(notes, name=f"{stem}.brief.md")
+
+    results = validation.validate_note(brief, repo_root=tmp_path)
+
+    assert results.fails == []
+    assert any(
+        "(derived write-brief name; authored-artifact limit not applied)" in item
+        for item in results.passes
+    )
+
+
+def test_collection_validation_checks_pairs_across_files(tmp_path: Path) -> None:
+    notes = configure_write_brief_repo(tmp_path)
+    write_brief_note(notes)
+    write_brief_file(notes)
+    stray = write_brief_file(notes, name="orphan.brief.md")
+
+    target = validate_notes.resolve_validation_target("notes", repo_root=tmp_path)
+    run = validation.run_validation(
+        target.paths, repo_root=tmp_path, collection=target.collection
+    )
+
+    failing = {
+        path.name
+        for path, result in run.results.items()
+        if result.fails and path.parent == notes
+    }
+    assert failing == {stray.name}

@@ -21,7 +21,7 @@ Documents with frontmatter carry a `type:` that names a type-spec doc. The value
 
 ### Step 1 - Parse Arguments
 
-**Edit mode**: first argument is a path to an existing `.md` file. Read it, infer collection from the path, and read its `type:` path from frontmatter. If it has frontmatter but no `type:`, stop and fix that structural problem before editing. If it has no frontmatter, treat it as implicit `text`. Open the type-spec doc named by `type:` before making structural edits.
+**Edit mode**: first argument is a path to an existing `.md` file. Read it, infer collection from the path, and read its `type:` path from frontmatter. If it has frontmatter but no `type:`, stop and fix that structural problem before editing. If it has no frontmatter, treat it as implicit `text`. Open the type-spec doc named by `type:` before making structural edits. If it declares `brief:`, read the sibling brief it names; Step 4 uses it. A target whose own type is `types/write-brief.md` is a brief: edit it like any document, and do not look for a brief of a brief.
 
 **New-write mode**: everything else. Extract collection, type, and topic from the arguments. Default an unspecified collection to `notes` and an unspecified type to `types/note.md`. If the requested type is an instruction and no collection is explicit, use collection `instructions`.
 
@@ -57,6 +57,10 @@ Before drafting, identify from the user's request and the target document in edi
 - any scope or angle needed to distinguish it from materially different documents on the same topic.
 
 The repository and collection contracts constrain the acceptable contribution class, quality bar, and often the default audience. They do not by themselves select a document-specific claim or purpose. Resolve that choice from the task, the incumbent document, and any retained intent supplied for this write. Treat a context block as retained intent only when it identifies its source, subject, scope, and whether its role is authoritative or advisory. Current user direction prevails. If retained intent conflicts with the incumbent or another applicable input and no explicit precedence resolves the conflict, ask the user rather than silently amending the commission.
+
+**Write briefs.** When the target declares a `brief:` ([write-brief type](../../types/write-brief.md)), the brief is this document's retained intent: its source is the brief file, its subject is the target, and it is authoritative for intent until a user amends it. Keep what it says to keep and exclude what it says to exclude. When the current request conflicts with a brief item, the request prevails: make the change, name the brief item it amends in your final report, and update the brief in the same write so it states the new commission. Ask instead only when the request does not settle how the brief should change.
+
+When you commission a document — a new write, or an edit that changes what the document is for — and the request fixes boundaries a later writer could not infer from the finished document (passages another artifact relies on, deliberate exclusions, a claim that must not be expanded, decisions reserved for the user), write a brief for it: the sibling `<stem>.brief.md` under the write-brief type, and `brief: <stem>.brief.md` in the target's frontmatter. Write the brief from the request, not from your draft. Skip it when the commission is only a claim and its reader update; the title and opening carry that.
 
 Remembered intent may complete a bare request, but it is not meaning contained in that request, a choice licensed by model priors, or evidence that warrants factual claims. Do not add an ad hoc history search to this skill; older interaction history counts only when a memory mechanism supplies it through the retained-intent input.
 
@@ -156,7 +160,7 @@ path. This is the first durable target write.
 
 ### Step 9 - Validate
 
-Validate the document you wrote or edited:
+Validate the document you wrote or edited, and its brief if you wrote or changed one:
 
 ```bash
 commonplace-validate path/to/file.md

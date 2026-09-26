@@ -79,6 +79,8 @@ Two destinations. **Delete** is the default. **Archive** moves the file into a s
    git mv kb/<collection>/<artifact>.md <archive-dir>/<artifact>.md
    ```
 
+   If the artifact declares a `brief:`, its sibling `<artifact>.brief.md` goes with it: delete it on either route. A brief commissions future writes of a live document and has nothing to govern once the document leaves the frontier ([ADR 092](../reference/adr/092-write-briefs-are-optional-sidecars-named-by-a-validated-pointer.md)).
+
    Then add a banner immediately below the title, naming the ADR that adopted or retired it, what now carries the live design, and what is left here:
 
    ```markdown

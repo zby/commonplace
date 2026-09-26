@@ -3,6 +3,8 @@ from __future__ import annotations
 import subprocess
 from pathlib import Path
 
+import pytest
+
 from commonplace.lib import relocation
 from commonplace.review import review_db, review_target_selector
 from tests.commonplace.cli.relocation_review_helpers import (
@@ -12,6 +14,11 @@ from tests.commonplace.cli.relocation_review_helpers import (
     make_reviewable_note,
     review_state_rows,
     seed_accepted_review,
+)
+from tests.commonplace.cli.write_brief_helpers import (
+    install_brief_types,
+    pair_fails,
+    write_pair,
 )
 
 
@@ -272,3 +279,24 @@ def test_relocate_directory_rejects_existing_destination(tmp_path: Path) -> None
         apply=False,
     )
     assert exit_code == 1
+
+
+@pytest.mark.usefixtures("tmp_library")
+def test_relocate_directory_keeps_write_brief_pairs_valid(tmp_path: Path) -> None:
+    install_brief_types(tmp_path)
+    write(tmp_path / "kb" / "notes" / "COLLECTION.md", "# Notes collection\n")
+    source_dir = tmp_path / "kb" / "notes" / "cluster"
+    write_pair(source_dir, "target")
+
+    exit_code = relocation.relocate_directory(
+        root=tmp_path,
+        source_arg="kb/notes/cluster",
+        dest_path="kb/notes/moved/cluster",
+        apply=True,
+    )
+
+    dest = tmp_path / "kb" / "notes" / "moved" / "cluster"
+    note, brief = dest / "target.md", dest / "target.brief.md"
+    assert exit_code == 0
+    assert "brief: target.brief.md\n" in note.read_text(encoding="utf-8")
+    assert pair_fails(tmp_path, note, brief) == []

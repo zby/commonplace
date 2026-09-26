@@ -64,3 +64,26 @@ def slugify_note_filename(text: str) -> str:
     slug = slugify_text(stem)
     ensure_note_slug_length(slug)
     return slug
+
+
+# Write briefs are optional sidecars named `<target-stem>.brief.md` next to the
+# document they commission (ADR 092). The suffix is a brief's single identity:
+# every consumer that must recognise a brief asks `is_write_brief_path`
+# rather than repeating the suffix check.
+WRITE_BRIEF_SUFFIX = ".brief.md"
+WRITE_BRIEF_TYPE = "types/write-brief.md"
+
+
+def is_write_brief_path(path: Path | str) -> bool:
+    """Return True when the filename names a write brief sidecar."""
+    return Path(path).name.endswith(WRITE_BRIEF_SUFFIX)
+
+
+def write_brief_name_for(document: Path) -> str:
+    """Return the only legal `brief:` value for a document: `<stem>.brief.md`."""
+    return f"{document.stem}{WRITE_BRIEF_SUFFIX}"
+
+
+def write_brief_target_for(brief: Path) -> Path:
+    """Return the sibling document a write brief belongs to."""
+    return brief.parent / f"{brief.name[: -len(WRITE_BRIEF_SUFFIX)]}.md"

@@ -108,7 +108,9 @@ The ordinary writing path composes three files at read time:
 
 There is no generated write-context packet or resolver command. After writing, validation is authoritative for deterministic conformance.
 
-No third file joins this composition. A subdirectory inside a collection carries no binding rules, and a README there is navigation only. A rule that binds one kind of artifact goes in that kind's type spec — collection-local when the kind exists in one collection — and a rule about what may live where goes in `COLLECTION.md`. Lifecycle operations are instructions in `kb/instructions/`, named from the type spec ([ADR 084](./adr/084-kind-rules-live-in-type-specs-and-operations-in-instructions.md)).
+A document may add one artifact-specific input: an optional [write brief](../types/write-brief.md). The brief is the document's preface for writers and part of it. It is kept in the sibling `<stem>.brief.md`, which the document declares with `brief: <stem>.brief.md`, for two reasons: it stays outside the text a write edits, so a drifting edit cannot rewrite it, and it stays out of the reader's view. The writing skill reads it as retained intent for that document only. It binds as intent until a user amends it, and current user direction prevails ([ADR 092](./adr/092-write-briefs-are-optional-sidecars-named-by-a-validated-pointer.md)).
+
+No other file joins this composition. A subdirectory inside a collection carries no binding rules, and a README there is navigation only. A rule that binds one kind of artifact goes in that kind's type spec — collection-local when the kind exists in one collection — and a rule about what may live where goes in `COLLECTION.md`. Lifecycle operations are instructions in `kb/instructions/`, named from the type spec ([ADR 084](./adr/084-kind-rules-live-in-type-specs-and-operations-in-instructions.md)).
 
 ---
 

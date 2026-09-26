@@ -125,8 +125,10 @@ own the refusal and reconciliation workflow.
 
 ### commonplace-relocate-note
 
-Rename or move one note and rewrite its KB backlinks. The command dry-runs
-unless `--apply` is supplied.
+Rename or move one note and rewrite its KB backlinks. A note that declares a
+write brief moves with it: the `<stem>.brief.md` sidecar is renamed to the new
+stem and the `brief:` pointer rewritten. A brief cannot be relocated on its own.
+The command dry-runs unless `--apply` is supplied.
 
 ### commonplace-relocate-directory
 

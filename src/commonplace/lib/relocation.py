@@ -10,7 +10,12 @@ from pathlib import Path
 import yaml
 from yaml.nodes import MappingNode, ScalarNode, SequenceNode
 
-from commonplace.lib.naming import ensure_note_slug_length, slugify_note_filename
+from commonplace.lib.naming import (
+    ensure_note_slug_length,
+    is_write_brief_path,
+    slugify_note_filename,
+    write_brief_name_for,
+)
 from commonplace.lib.project_paths import (
     find_repo_markdown_files,
 )
@@ -315,6 +320,49 @@ def rewrite_source_notes(
     )
 
 
+def _declared_brief_node(content: str) -> tuple[re.Match[str], ScalarNode] | None:
+    """Locate the scalar node of a frontmatter `brief:` value, if any."""
+    frontmatter_match = FRONTMATTER_PATTERN.match(content)
+    if frontmatter_match is None:
+        return None
+    try:
+        document = yaml.compose(frontmatter_match.group(1))
+    except yaml.YAMLError:
+        return None
+    if not isinstance(document, MappingNode):
+        return None
+    for key, value in document.value:
+        if isinstance(key, ScalarNode) and key.value == "brief":
+            if isinstance(value, ScalarNode) and value.style not in {"|", ">"}:
+                return frontmatter_match, value
+            return None
+    return None
+
+
+def declared_brief(content: str) -> str | None:
+    """Return a document's frontmatter `brief:` value, if it declares one."""
+    located = _declared_brief_node(content)
+    return None if located is None else located[1].value
+
+
+def rewrite_brief_pointer(content: str, new_value: str) -> tuple[str, list[str]]:
+    """Rewrite a frontmatter `brief:` value, keeping its quote style."""
+    located = _declared_brief_node(content)
+    if located is None:
+        return content, []
+    frontmatter_match, node = located
+    if node.value == new_value:
+        return content, []
+    offset = frontmatter_match.start(1)
+    start = offset + node.start_mark.index
+    end = offset + node.end_mark.index
+    replacement = _render_yaml_scalar(new_value, node.style)
+    return (
+        f"{content[:start]}{replacement}{content[end:]}",
+        [f"brief: {node.value} -> {new_value}"],
+    )
+
+
 def rebase_and_rewrite_in_moved_file(
     content: str,
     old_source_file: Path,
@@ -500,7 +548,15 @@ def relocate_note(
     kb_root = project_kb_root(repo_root)
     properdocs_config = repo_root / "properdocs.yml"
 
-    source = resolve_note(note_arg, root=repo_root)
+    source = resolve_note(note_arg, root=repo_root).resolve()
+    if is_write_brief_path(source):
+        print(
+            f"Refusing to relocate a write brief on its own: "
+            f"{source.relative_to(repo_root)}. Relocate the document that "
+            "declares it; its brief moves with it.",
+            file=sys.stderr,
+        )
+        return 1
     destination = resolve_destination_path(
         source,
         new_name,
@@ -508,6 +564,13 @@ def relocate_note(
         repo_root=repo_root,
         kb_root=kb_root,
     )
+    if is_write_brief_path(destination):
+        print(
+            f"Destination uses the write-brief suffix: "
+            f"{destination.relative_to(repo_root)}",
+            file=sys.stderr,
+        )
+        return 1
 
     if destination == source:
         print(f"Destination matches source: {source.relative_to(repo_root)}", file=sys.stderr)
@@ -520,14 +583,55 @@ def relocate_note(
     new_docs_path = destination.relative_to(kb_root).as_posix()
 
     md_moves = {source: destination}
+
+    # A declared write brief moves with its document and takes the new stem
+    # (ADR 092). Briefs are unpublished, so they get no redirect entry.
+    brief_value = declared_brief(source.read_text(encoding="utf-8"))
+    new_brief_value: str | None = None
+    if brief_value is not None:
+        expected = write_brief_name_for(source)
+        brief_source = source.parent / expected
+        if brief_value != expected or not brief_source.is_file():
+            print(
+                f"Refusing to relocate: {source.relative_to(repo_root)} declares "
+                f"`brief: {brief_value}`, which is not an existing {expected}. "
+                "Fix the pairing first (commonplace-validate reports it).",
+                file=sys.stderr,
+            )
+            return 1
+        new_brief_value = write_brief_name_for(destination)
+        brief_destination = destination.parent / new_brief_value
+        if brief_destination.exists():
+            print(
+                f"Brief destination already exists: "
+                f"{brief_destination.relative_to(repo_root)}",
+                file=sys.stderr,
+            )
+            return 1
+        md_moves[brief_source.resolve()] = brief_destination
+    else:
+        stray = source.parent / write_brief_name_for(source)
+        if stray.is_file():
+            print(
+                f"Warning: {stray.relative_to(repo_root)} is not declared by "
+                f"{source.name} and stays in place.",
+                file=sys.stderr,
+            )
+
     markdown_updates: dict[Path, tuple[str, list[str]]] = {}
 
     for md_file in find_repo_markdown_files(repo_root):
         original = md_file.read_text(encoding="utf-8")
-        if md_file.resolve() == source:
+        moved_to = md_moves.get(md_file.resolve())
+        if moved_to is not None:
             updated, changes = rebase_and_rewrite_in_moved_file(
-                original, md_file, destination, md_moves
+                original, md_file, moved_to, md_moves
             )
+            if md_file.resolve() == source and new_brief_value is not None:
+                updated, pointer_changes = rewrite_brief_pointer(
+                    updated, new_brief_value
+                )
+                changes.extend(pointer_changes)
         else:
             updated, changes = rewrite_links_to_moved_files(original, md_file, md_moves)
         updated, source_note_changes = rewrite_source_notes(
@@ -552,6 +656,12 @@ def relocate_note(
     mode = "APPLYING" if apply else "DRY RUN"
     print(f"=== {mode} ===\n")
     print(f"Relocate: {source.relative_to(repo_root)} -> {destination.relative_to(repo_root)}")
+    for moved_from, moved_to in md_moves.items():
+        if moved_from != source:
+            print(
+                f"Move write brief: {moved_from.relative_to(repo_root)} -> "
+                f"{moved_to.relative_to(repo_root)}"
+            )
 
     if markdown_updates:
         print(f"Markdown files to update: {len(markdown_updates)}")
@@ -574,9 +684,10 @@ def relocate_note(
         print("\nThis was a dry run. Pass --apply to execute.")
         return 0
 
-    move_path(source, destination)
+    for moved_from, moved_to in md_moves.items():
+        move_path(moved_from, moved_to)
     for path, (updated, _changes) in markdown_updates.items():
-        target = destination if path.resolve() == source else path
+        target = md_moves.get(path.resolve(), path)
         target.write_text(updated, encoding="utf-8")
     if properdocs_updated is not None:
         properdocs_config.write_text(properdocs_updated, encoding="utf-8")

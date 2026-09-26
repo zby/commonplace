@@ -15,6 +15,11 @@ from tests.commonplace.cli.relocation_review_helpers import (
     review_state_rows,
     seed_accepted_review,
 )
+from tests.commonplace.cli.write_brief_helpers import (
+    install_brief_types,
+    pair_fails,
+    write_pair,
+)
 
 
 def write(path: Path, content: str) -> Path:
@@ -346,3 +351,152 @@ nav:
     assert "'notes/document-classification.md': 'reference/type-system.md'" in properdocs_content
     assert "'notes/already-old.md': 'reference/type-system.md'" in properdocs_content
     assert "- Doc System: reference/type-system.md" in properdocs_content
+
+
+# --- Write-brief sidecars (ADR 092) ---------------------------------------
+
+
+@pytest.mark.usefixtures("tmp_library")
+def test_relocate_note_moves_declared_brief_and_rewrites_pointer(
+    tmp_path: Path,
+) -> None:
+    install_brief_types(tmp_path)
+    notes_root = tmp_path / "kb" / "notes"
+    write(notes_root / "COLLECTION.md", "# Notes collection\n")
+    note, brief = write_pair(notes_root, "old-note")
+    write(tmp_path / "properdocs.yml", "plugins:\n  - redirects:\n      redirect_maps:\n")
+
+    result = relocation.relocate_note(
+        root=tmp_path,
+        note_arg="old-note",
+        new_name="new note",
+        dest_path=None,
+        apply=True,
+    )
+
+    new_note = notes_root / "new-note.md"
+    new_brief = notes_root / "new-note.brief.md"
+    assert result == 0
+    assert not note.exists() and not brief.exists()
+    assert new_note.is_file() and new_brief.is_file()
+    assert "brief: new-note.brief.md\n" in new_note.read_text(encoding="utf-8")
+    assert "[target](./new-note.md)" in new_brief.read_text(encoding="utf-8")
+    properdocs = (tmp_path / "properdocs.yml").read_text(encoding="utf-8")
+    assert "'notes/old-note.md': 'notes/new-note.md'" in properdocs
+    assert "brief" not in properdocs
+    assert pair_fails(tmp_path, new_note, new_brief) == []
+
+
+@pytest.mark.usefixtures("tmp_library")
+def test_relocate_note_moves_brief_across_directories_keeping_quotes(
+    tmp_path: Path,
+) -> None:
+    install_brief_types(tmp_path)
+    notes_root = tmp_path / "kb" / "notes"
+    write(notes_root / "COLLECTION.md", "# Notes collection\n")
+    _note, brief = write_pair(notes_root, "old-note", pointer="'old-note.brief.md'")
+
+    result = relocation.relocate_note(
+        root=tmp_path,
+        note_arg="old-note",
+        dest_path="kb/notes/archive/moved.md",
+        apply=True,
+    )
+
+    new_note = notes_root / "archive" / "moved.md"
+    new_brief = notes_root / "archive" / "moved.brief.md"
+    assert result == 0
+    assert not brief.exists()
+    assert "brief: 'moved.brief.md'\n" in new_note.read_text(encoding="utf-8")
+    assert pair_fails(tmp_path, new_note, new_brief) == []
+
+
+def test_relocate_note_dry_run_reports_brief_without_moving(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    notes_root = tmp_path / "kb" / "notes"
+    write(notes_root / "COLLECTION.md", "# Notes collection\n")
+    note, brief = write_pair(notes_root, "old-note")
+
+    result = relocation.relocate_note(
+        root=tmp_path, note_arg="old-note", new_name="new note", apply=False
+    )
+
+    assert result == 0
+    assert note.exists() and brief.exists()
+    out = capsys.readouterr().out
+    assert "Move write brief: kb/notes/old-note.brief.md -> kb/notes/new-note.brief.md" in out
+    assert "brief: old-note.brief.md -> new-note.brief.md" in out
+
+
+def test_relocate_note_refuses_to_move_a_brief_alone(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    notes_root = tmp_path / "kb" / "notes"
+    write(notes_root / "COLLECTION.md", "# Notes collection\n")
+    _note, brief = write_pair(notes_root, "old-note")
+
+    result = relocation.relocate_note(
+        root=tmp_path,
+        note_arg="kb/notes/old-note.brief.md",
+        new_name="elsewhere",
+        apply=True,
+    )
+
+    assert result == 1
+    assert brief.exists()
+    assert "Refusing to relocate a write brief on its own" in capsys.readouterr().err
+
+
+def test_relocate_note_refuses_brief_suffix_destination(tmp_path: Path) -> None:
+    notes_root = tmp_path / "kb" / "notes"
+    write(notes_root / "COLLECTION.md", "# Notes collection\n")
+    note = write(notes_root / "old-note.md", "# Old note\n")
+
+    result = relocation.relocate_note(
+        root=tmp_path,
+        note_arg="old-note",
+        dest_path="kb/notes/other.brief.md",
+        apply=True,
+    )
+
+    assert result == 1
+    assert note.exists()
+
+
+@pytest.mark.parametrize("pointer", ["other.brief.md", "missing"])
+def test_relocate_note_refuses_broken_brief_pairing(
+    tmp_path: Path, pointer: str, capsys: pytest.CaptureFixture[str]
+) -> None:
+    notes_root = tmp_path / "kb" / "notes"
+    write(notes_root / "COLLECTION.md", "# Notes collection\n")
+    note, brief = write_pair(
+        notes_root, "old-note", pointer=None if pointer == "missing" else pointer
+    )
+    if pointer == "missing":
+        brief.unlink()
+
+    result = relocation.relocate_note(
+        root=tmp_path, note_arg="old-note", new_name="new note", apply=True
+    )
+
+    assert result == 1
+    assert note.exists()
+    assert "Fix the pairing first" in capsys.readouterr().err
+
+
+def test_relocate_note_leaves_undeclared_brief_with_warning(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    notes_root = tmp_path / "kb" / "notes"
+    write(notes_root / "COLLECTION.md", "# Notes collection\n")
+    write(notes_root / "old-note.md", "# Old note\n")
+    stray = write(notes_root / "old-note.brief.md", "# Stray\n")
+
+    result = relocation.relocate_note(
+        root=tmp_path, note_arg="old-note", new_name="new note", apply=True
+    )
+
+    assert result == 0
+    assert stray.exists()
+    assert "is not declared by old-note.md" in capsys.readouterr().err
