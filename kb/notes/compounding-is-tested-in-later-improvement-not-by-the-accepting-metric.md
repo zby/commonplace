@@ -9,7 +9,7 @@ tags: [self-improving-systems]
 
 A self-improving system keeps revising its own instructions, indexes, and checks. To say its improvements [compound](./improvements-can-accumulate-without-compounding.md) is to say more than that they add up. It says that earlier improvements make later improvements easier to produce.
 
-This note states what evidence can support that claim. The short answer has three parts. The evidence must come from a *later improvement episode*. It must be measured on a quantity *other than the check that accepted the earlier change*. And it must connect the later episode to the earlier change through a *causal trace*. The sections below add these requirements one at a time using a single illustrative example, and then use them to read three published studies.
+This note states what evidence can support that claim. The short answer has three parts. The evidence must come from a *later improvement episode*. It must be measured on a quantity *other than the check that accepted the earlier change*. And it must connect the later episode to the earlier change through a *causal trace*. The sections below add these requirements one at a time using a single illustrative example, and then use them to read published studies and an industrial report.
 
 ## A running example
 
@@ -129,6 +129,10 @@ The study supports its outcome comparison by cross-pairing evolvers with task-so
 On SkillsBench, the study reports skill loading separately from adherence. Its harness-following rate is assigned by a Sonnet 4.6 judge using a generated rubric, without a matched condition that withholds or replaces the target skill ([Harness Updating experiment (snapshot required)](../sources/harness-updating-is-not-harness-benefit.ingest.md)). It therefore measures judged procedural match, not the causal effect of the skill's content.
 
 Compounding adds a distinct final step: task benefit → causal contribution to a later improvement episode. Harness benefit is therefore necessary for compounding through a task-side gain, but it is not sufficient. The final step can be completed in two ways. The later improvement episode can take up the benefit directly. Or an observed allocator can make resources that the benefit freed or preserved available to improvement work, and later search can consume them. The study does not observe this final feedback step.
+
+### Frontis reports a later-improvement comparison
+
+[Frontis Horizon's industrial report (§5.8; snapshot required)](../sources/last-ai-built-by-humans-recursive-self-improvement.ingest.md) describes retaining diagnoses, candidate changes, validation results, and applicability conditions across improvement tasks. After experience from more than 100 tasks, the company reports approximately 20% faster evolution on unseen internal tasks than a process without cross-task experience. The protocol compares identical initial agent versions and tracks iterations, time, tokens, and regressions, separating improvement efficiency from specialist task scores. This addresses the later-episode comparison directly. The account lacks enough detail to assess uncertainty or isolate which retained lessons produced the gain, and it does not establish sustained compounding. Shared evaluation infrastructure and human-controlled release remain part of the system.
 
 ## Scope
 
