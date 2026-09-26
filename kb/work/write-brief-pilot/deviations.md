@@ -11,3 +11,7 @@ The re-executed worker for run 22c6c8 reports that a sibling search printed two 
 ## 3. Arm-revealing clause redacted from one scoring copy (2026-09-26)
 
 Scoring copy `scoring/6/pressure/92a1a9.md` is a question file whose text referred to "the retained brief", which would reveal to scorers that it came from a brief arm. Before any scoring, that clause was replaced in the scoring copy with the neutral note "[One clause redacted.]"; the original run output is unchanged. A search of all other scoring copies for brief and retained-intent wording found only the incumbent's own term "brief-output floor", which is identical across arms.
+
+## 4. Interpretation of the compliance guard, fixed before unblinding (2026-09-26)
+
+The frozen protocol says a run that does not carry out its edit request "scores as a failed run in every conjecture, not as preservation." Before any score was mapped to an arm, this is operationalized as: runs scored `not-done` or `question` count every tallied item as violated; runs scored `partial` are tallied from their item scores and listed separately in the analysis. Final item scores are the two scorers' shared code where they agree and the third scorer's code where they disagree.
