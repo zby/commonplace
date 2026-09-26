@@ -81,7 +81,11 @@ jobs:
               ], check=True)
               assert not (project / ".envrc").exists()
               assert not (project / ".venv").exists()
+              assert not (project / "kb" / "commonplace").exists()
+              subprocess.run([
+                  "commonplace-init", "--root", str(project), "--check"
+              ], check=True, cwd=project)
               subprocess.run([
                   "commonplace-validate",
-                  str(project / "kb" / "commonplace" / "reference" / "commands.md"),
-              ], check=True)
+                  "kb/notes/README.md",
+              ], check=True, cwd=project)
