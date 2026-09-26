@@ -5,7 +5,7 @@ traits:
   - title-as-claim
   - has-comparison
   - has-external-sources
-tags: [document-system, foundations]
+tags: [document-system]
 ---
 
 # Current-task fit alone does not warrant costly structural entrenchment

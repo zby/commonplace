@@ -2,7 +2,7 @@
 description: "A 2026-08-30 Commonplace revision shows retained project theory guiding computational search while the operator supplied decisive global-fit selection"
 type: types/note.md
 traits: [title-as-claim]
-tags: [foundations, self-improving-systems, theory-builder, improvement-loop]
+tags: [self-improving-systems, theory-builder, improvement-loop]
 ---
 
 # The 2026-08-30 Commonplace revision used retained theory to guide computational search

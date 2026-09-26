@@ -2,7 +2,7 @@
 description: "Defines resolution-switching as movement among KB views with different scope and detail, then inventories the mechanisms and limits of that qualitative criterion"
 type: types/note.md
 traits: [title-as-claim]
-tags: [foundations]
+tags: [context-engineering]
 ---
 
 # A knowledge base should support fluid resolution-switching

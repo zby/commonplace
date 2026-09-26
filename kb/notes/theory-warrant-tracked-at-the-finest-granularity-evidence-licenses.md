@@ -2,7 +2,7 @@
 description: "Treat support for a theory as warrant for only the most specific claim, conjunction, model, and scope the evidence identifies; do not distribute joint warrant beyond what it entails without additional attribution"
 type: types/note.md
 traits: [title-as-claim]
-tags: [foundations, learning-theory, discovery]
+tags: [learning-theory, discovery]
 ---
 
 # Theory warrant should be tracked at the finest granularity evidence licenses

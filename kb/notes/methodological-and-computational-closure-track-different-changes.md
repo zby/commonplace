@@ -2,7 +2,7 @@
 description: "Methodological closure tracks what a retained method settles; computational closure tracks the absence of human decisions during the assessed operation, without requiring every judgment to have explicit criteria"
 type: types/note.md
 traits: [title-as-claim, synthesis]
-tags: [foundations, self-improving-systems, warranted-autonomy]
+tags: [self-improving-systems, warranted-autonomy]
 ---
 
 # Methodological and computational closure track different changes

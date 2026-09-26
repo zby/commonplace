@@ -2,7 +2,7 @@
 description: "Reproducing a record's content does not transfer its authority. Replacement requires a governed artifact with stable identity, integrity, contestability, and attribution; mutable records also require currentness and addressable revision."
 type: types/note.md
 traits: [title-as-claim]
-tags: [agent-memory, foundations]
+tags: [agent-memory]
 ---
 
 # Parametric reproduction alone cannot replace an authoritative record

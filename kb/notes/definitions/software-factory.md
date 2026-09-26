@@ -1,7 +1,7 @@
 ---
 description: "Definition — in the Greenfield lineage, a software factory is a configured family-specific software-production environment"
 type: types/definition.md
-tags: [foundations, self-improving-systems, software-factory]
+tags: [self-improving-systems, software-factory]
 ---
 
 # Software factory

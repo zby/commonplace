@@ -2,7 +2,7 @@
 description: "Cumulativity counts dependence through the retained result only; counting the evidence channel that result caused would make it coextensive with operativity"
 type: types/note.md
 traits: [title-as-claim]
-tags: [foundations, self-improving-systems]
+tags: [self-improving-systems]
 ---
 
 # Accumulation counts dependence through the retained result, not through the evidence it caused

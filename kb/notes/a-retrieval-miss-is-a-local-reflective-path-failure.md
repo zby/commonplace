@@ -2,7 +2,7 @@
 description: "A missed relevant artifact leaves its represented aspect inert for the affected task and discovery route, while other loading paths and reflective aspects can remain causally connected"
 type: types/note.md
 traits: [title-as-claim]
-tags: [foundations, computational-model, self-improving-systems, reflection]
+tags: [computational-model, self-improving-systems, reflection]
 ---
 
 # A retrieval miss is a local reflective-path failure

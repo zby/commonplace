@@ -2,7 +2,7 @@
 description: Use this note to classify retained KB artifacts without conflating content kind, production lineage, or path-relative behavioral authority with the collection's local writing contract.
 type: types/note.md
 traits: [title-as-claim, synthesis]
-tags: [artifact-analysis, document-system, foundations]
+tags: [artifact-analysis, document-system]
 ---
 
 # Artifact classification separates content kind, lineage, and authority

@@ -2,7 +2,7 @@
 description: "Naur's compiler transfer failure rules out more documentation of the same kind, but tested one historically bounded package and consumption process rather than every possible rationale, indexing, retrieval, and activation system"
 type: types/note.md
 traits: [title-as-claim, has-external-sources]
-tags: [foundations, context-engineering, deploy-time-learning]
+tags: [context-engineering, deploy-time-learning]
 ---
 
 # Naur's compiler case tests one historically bounded documentation-and-consumption system

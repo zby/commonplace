@@ -186,7 +186,7 @@ For the full model, read `kb/reference/navigation.md`. In short: use `rg` for ch
 
 Entry points:
 
-- `kb/tags/README.md` — top-level navigation hub: tag heads (foundations, evaluation, links, and the rest), gaps
+- `kb/tags/README.md` — top-level navigation hub: tag heads (learning-theory, self-improving-systems, links, and the rest), gaps
 - `kb/agent-memory-systems/README.md` — curated index of external agent-memory/knowledge systems
 - `kb/reference/README.md` — shipped-system documentation entry point: architecture, type system, operator guide, and ADR navigation
 - `kb/reports/README.md` — report retention policies and durable report records

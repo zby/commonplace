@@ -1,7 +1,7 @@
 ---
 description: "Definition — retained structure inside a declared system boundary that shapes later operation; a work product belongs when the system also retains and consumes it in that role"
 type: types/definition.md
-tags: [foundations, self-improving-systems]
+tags: [self-improving-systems]
 ---
 
 # Behavior-determining organization

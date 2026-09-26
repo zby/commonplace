@@ -2,7 +2,7 @@
 description: "Experience-responsive retention: production experience determines a retained change to reusable family machinery that later production depends on; factory-level learning is retention that improves the factory relative to a declared objective"
 type: types/note.md
 traits: [title-as-claim]
-tags: [foundations, learning-theory, self-improving-systems, software-factory, continual-learning]
+tags: [learning-theory, self-improving-systems, software-factory, continual-learning]
 ---
 
 # Factory learning is experience-responsive retention that improves the factory

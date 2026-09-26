@@ -2,7 +2,7 @@
 description: "Tentative natural-language project theory may provide an addressable way to coordinate heterogeneous factory development while search, testing, and backtracking construct and revise it"
 type: types/note.md
 traits: [title-as-claim, has-comparison]
-tags: [foundations, learning-theory, self-improving-systems, software-factory]
+tags: [learning-theory, self-improving-systems, software-factory]
 ---
 
 # An addressable theory can coordinate heterogeneous factory development

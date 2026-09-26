@@ -2,7 +2,7 @@
 description: "Distinguishes functions and failure modes suggested by human cognition from the unsupported inference that an engineered agent should bundle the responsible roles along human boundaries."
 type: types/note.md
 traits: [title-as-claim]
-tags: [foundations, computational-model]
+tags: [computational-model]
 ---
 
 # Human analogies can motivate functions without determining component boundaries

@@ -1,7 +1,7 @@
 ---
 description: "What the KB application is for in Commonplace's design program — composition test, two worked provenance instances, and the transfer evidence the repository does not have"
 type: types/note.md
-tags: [foundations]
+tags: []
 ---
 
 # Commonplace as an instrument

@@ -2,7 +2,7 @@
 description: "A Gödel machine admits self-rewrites through proof under its current formalization; this restricts admission without establishing how many useful changes are reachable or how reliably they are found"
 type: types/note.md
 traits: [title-as-claim, has-comparison, has-external-sources]
-tags: [foundations, computational-model, self-improving-systems, reflection]
+tags: [computational-model, self-improving-systems, reflection]
 ---
 
 # Gödel machines are a proof-governed case of reflective self-modification

@@ -2,7 +2,7 @@
 description: "Naur's human-only conclusion needs a further premise connecting unformulated judgment to computational inability; this reading preserves his functional tests without claiming that learned criteria are inexpressible"
 type: types/note.md
 traits: [title-as-claim, has-external-sources]
-tags: [foundations, context-engineering, self-improving-systems, warranted-autonomy]
+tags: [context-engineering, self-improving-systems, warranted-autonomy]
 ---
 
 # Naur's human-only conclusion needs more than the absence of explicit criteria

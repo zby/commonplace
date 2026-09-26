@@ -2,7 +2,7 @@
 description: "Ten boundary cases run against the self-improving-system definition — each classifies by the stated criteria alone; the stress they apply falls on boundary declaration, not on the membership clauses"
 type: types/note.md
 traits: [title-as-claim, has-comparison]
-tags: [foundations, self-improving-systems]
+tags: [self-improving-systems]
 ---
 
 # The self-improving-system definition classifies its boundary cases without ad hoc exceptions

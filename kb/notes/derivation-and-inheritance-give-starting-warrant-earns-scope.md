@@ -2,7 +2,7 @@
 description: "For reusable decompositions, derivation and inheritance supply conditional or transferred starting warrant, while evidence or proof earns only the scope it covers"
 type: types/note.md
 traits: [title-as-claim]
-tags: [learning-theory, discovery, foundations]
+tags: [learning-theory, discovery]
 ---
 
 # Derivation and inheritance give starting warrant; discriminating evidence or proof earns scope

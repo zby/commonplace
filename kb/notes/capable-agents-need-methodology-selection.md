@@ -2,7 +2,7 @@
 description: A capable agent may know many individually relevant but mutually incompatible approaches, so task control requires selecting a governing methodology rather than merely supplying relevant knowledge
 type: types/note.md
 traits: [title-as-claim]
-tags: [foundations, context-engineering, methodology]
+tags: [context-engineering, methodology]
 ---
 
 # A capable agent needs methodology selection, not just relevant knowledge

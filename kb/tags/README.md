@@ -6,7 +6,6 @@ For current-state documentation about the live Commonplace system rather than tr
 
 ## Tag Indexes
 
-- [Foundations](./foundations-README.md) — core theory: contextual competence, bounded context, explanatory-reach, design methodology, composability
 - [Self-improving systems](./self-improving-systems-README.md) — evidence-responsive operative change to a system's own organization; reflective versus non-reflective self-improvement is the central distinction, and the stake is a conjectured sample-efficiency payoff: reflection may cut target data under structured shifts
   - [Theory builder](./theory-builder-README.md) — the theory-builder definition and its companions; the research program Commonplace runs
   - [Software factory](./software-factory-README.md) — factories and houses: family-specific production machinery and factory learning

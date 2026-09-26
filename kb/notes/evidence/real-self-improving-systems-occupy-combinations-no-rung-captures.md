@@ -2,7 +2,7 @@
 description: "Casebook of thirteen placements on selected pathway-profile fields — Homeostat to Commonplace — reflection, cumulativity, allocation, and evidential limit in combinations no rung expresses"
 type: types/note.md
 traits: [title-as-claim, synthesis, has-comparison, has-external-sources]
-tags: [foundations, self-improving-systems]
+tags: [self-improving-systems]
 ---
 
 # Real self-improving systems occupy combinations no single rung captures

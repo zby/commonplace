@@ -2,7 +2,7 @@
 description: "A persistent automated theory builder for external users becomes a software house when genuinely new domains require it to revise the software that performs theory production rather than only the theories produced"
 type: types/note.md
 traits: [title-as-claim]
-tags: [foundations, self-improving-systems, learning-theory, software-factory]
+tags: [self-improving-systems, learning-theory, software-factory]
 ---
 
 # An open-domain theory builder becomes a software house when new domains require production-machinery changes

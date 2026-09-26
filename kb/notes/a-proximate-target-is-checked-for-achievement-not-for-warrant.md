@@ -2,7 +2,7 @@
 description: "Between an improvement objective and its oracles sits a target level — a property pursued because it is held to serve the objective — whose linking claim no check in the loop evaluates"
 type: types/note.md
 traits: [title-as-claim]
-tags: [foundations, self-improving-systems]
+tags: [self-improving-systems]
 ---
 
 # A proximate target is checked for achievement, not for warrant

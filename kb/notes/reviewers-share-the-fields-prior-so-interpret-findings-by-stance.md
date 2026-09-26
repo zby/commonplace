@@ -2,7 +2,7 @@
 description: "Decorrelating reviewers removes the author's errors, not the field's; judges converge on consensus where a claim is original, so findings are read by stance and as reconnaissance: engage where load-bearing, deflect where not"
 type: types/note.md
 traits: [title-as-claim]
-tags: [foundations, methodology]
+tags: [methodology]
 ---
 
 # Decorrelated reviewers still share the field's prior, so read their findings by the claim's stance

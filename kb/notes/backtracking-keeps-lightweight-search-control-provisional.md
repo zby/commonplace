@@ -2,7 +2,7 @@
 description: "Backtracking preserves the provisional status of a heuristic branch choice by restoring an earlier usable state and redirecting search after contrary evidence"
 type: types/note.md
 traits: [title-as-claim]
-tags: [foundations, computational-model, self-improving-systems, improvement-loop]
+tags: [computational-model, self-improving-systems, improvement-loop]
 ---
 
 # Backtracking keeps lightweight search control provisional

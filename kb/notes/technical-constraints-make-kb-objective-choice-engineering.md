@@ -2,7 +2,7 @@
 description: "Three technical constraints and the codification lever make KB objective-function choice testable engineering, not philosophy; goals set the loss, local contracts specialize it, and oracle strength differs by objective"
 type: types/note.md
 traits: [title-as-claim, synthesis]
-tags: [foundations, document-system]
+tags: [document-system]
 ---
 
 # Technical constraints turn KB objective-function choice from philosophy into engineering

@@ -1,7 +1,7 @@
 ---
 description: "Proposal: measure the declared objective — useful and warranted work per unit of human judgment — by running matched repository tasks under ablated conditions (no curated theory, no review, episodes only, stronger bare model)"
 type: reference/types/design-proposal.md
-tags: [foundations]
+tags: [evaluation]
 ---
 
 # Ablation baselines for the declared objective

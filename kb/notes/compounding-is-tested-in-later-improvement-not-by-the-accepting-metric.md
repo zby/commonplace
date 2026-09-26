@@ -2,7 +2,7 @@
 description: "Compounding evidence must come from later improvement episodes through displaced productivity measures and causal traces, not from the metric that accepted the earlier change"
 type: types/note.md
 traits: [title-as-claim, has-external-sources]
-tags: [foundations, self-improving-systems]
+tags: [self-improving-systems]
 ---
 
 # Compounding is tested in later improvement, not by the accepting metric

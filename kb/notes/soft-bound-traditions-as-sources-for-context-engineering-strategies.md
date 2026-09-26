@@ -1,7 +1,7 @@
 ---
 description: Survey of twelve soft-bound traditions as candidate sources for context engineering strategies, with a three-tier assessment of what transfers, what's plausible, and what's blocked
 type: types/note.md
-tags: [foundations, context-engineering]
+tags: [context-engineering]
 ---
 
 # Soft-bound traditions as sources for context engineering strategies

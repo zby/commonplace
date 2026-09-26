@@ -2,7 +2,7 @@
 description: "The natural-language part of project state may specialize general search heuristics already represented in an LLM's weights by supplying current intent, theory, branch history, and constraints"
 type: types/note.md
 traits: [title-as-claim]
-tags: [foundations, context-engineering, self-improving-systems, theory-builder, improvement-loop]
+tags: [context-engineering, self-improving-systems, theory-builder, improvement-loop]
 ---
 
 # Natural-language project state may specialize weight-resident search heuristics

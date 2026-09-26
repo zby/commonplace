@@ -2,7 +2,7 @@
 description: Separates the system-relative cost of finding required inputs from producing an answer, so query systems can diagnose which work remains as retrieval and reasoning interact
 type: types/note.md
 traits: [title-as-claim]
-tags: [foundations, computational-model]
+tags: [computational-model]
 ---
 
 # Access burden and transformation burden are distinct query dimensions

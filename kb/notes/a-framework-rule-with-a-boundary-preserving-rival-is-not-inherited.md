@@ -2,7 +2,7 @@
 description: "A rival design that preserves a framework's boundary invariants while dropping a rule demotes the rule to a design choice; finding no rival certifies nothing — the test cuts one way only"
 type: types/note.md
 traits: [title-as-claim]
-tags: [document-system, foundations]
+tags: [document-system]
 ---
 
 # A framework rule with a boundary-preserving rival is not an inherited constraint
