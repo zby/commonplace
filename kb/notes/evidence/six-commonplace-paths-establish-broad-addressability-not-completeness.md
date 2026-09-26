@@ -49,7 +49,7 @@ This establishes routine gate invocation, not use of the full revised criterion 
 
 ## Tag-README validation supplies the strongest end-to-end trace
 
-The `complete` and `covered_by` marks are declared in the [tag-README type](../../types/tag-readme.md), admitted by its schema, enforced in [`validation.py`](../../../src/commonplace/lib/validation.py), and pinned by executable tests. Applicability includes the canonical tag-README type, affected marked heads, and the explicit validation trigger; consumer–channel–force alone would not say when the rule acts.
+The `complete` and `covered_by` marks (since folded into one `complete` mark by ADR 090) were declared in the [tag-README type](../../types/tag-readme.md), admitted by its schema, enforced in [`validation.py`](../../../src/commonplace/lib/validation.py), and pinned by executable tests. Applicability includes the canonical tag-README type, affected marked heads, and the explicit validation trigger; consumer–channel–force alone would not say when the rule acts.
 
 The [observed trace](./tag-readme-trace-observed-causal-connection.md) records the path from operational strain through ADR 026 into specification, schema, validation, rendering, and tests. The installed `covered_by` rule later found a member missed by the natural-language search recipe, causing that procedure to change. Validation was then extended so checking an ordinary tagged note also checks affected marked heads. This demonstrates identification, revision, operative installation, later dependence, and continuity for one redesign class. The remaining weak edge is generic admission provenance: the repository can reconstruct review and merge, but does not bind authorization to the installed code version.
 

@@ -10,7 +10,7 @@ tags: [kb-maintenance, document-system]
 Within Commonplace, an **enforced tag-README** is a tag-README carrying at least
 one validator-enforced membership mark. It combines two distinct layers. Its
 curated orientation inherits Nick Milo's MOC pattern of contextual mapping. Its
-declared `complete` or `covered_by` relation adds a separate membership contract
+declared `complete` relation adds a separate membership contract
 whose truth the validator re-derives and whose success authorizes a bounded
 stopping shortcut. This is a local design synthesis and a component-level
 analogy, not a genealogy, an exact equivalence between tag-READMEs and MOCs, or
@@ -35,13 +35,13 @@ contextual-map pattern without being asserted to be identical to every MOC.
 
 ## The checked membership contract
 
-Selection is the default. `complete: true` asserts that the README links every
-note carrying its tag. `covered_by: [children]` asserts that every note carrying
-the parent tag also carries at least one listed child tag, so the parent's
-membership is contained in the union of the children's memberships. The
-validator re-derives each relation, and the [local
-contract](../types/tag-readme.md) permits completeness or child coverage to be
-claimed only through its corresponding enforced mark. These exact assertions
+Selection is the default. `complete: true` asserts that every artifact carrying
+the tag is linked from the README or carries a tag whose head the README links,
+so the parent's membership is contained in the union of its direct links and
+the linked children's memberships: the README reaches every member in one hop.
+The validator re-derives the relation, and the [local
+contract](../types/tag-readme.md) permits completeness to be claimed only
+through the enforced mark. These exact assertions
 are the machine-checked addition; they are not part of the inherited MOC
 premise.
 
@@ -53,10 +53,9 @@ answers which items are members; orientation answers how a reader should
 approach and relate them. Validation checks the first answer and therefore does
 not certify the relevance or quality of the second.
 
-A valid `complete` mark permits a consumer to skip the by-tag membership sweep,
-while a valid `covered_by` mark permits trusting the declared child routing.
-Without the relevant mark, the scoped membership query remains the fallback.
-The marks are therefore [non-load-bearing validated
+A valid `complete` mark permits a consumer to skip the by-tag membership sweep
+and to trust the README's routing through its linked child heads. Without the
+mark, the scoped membership query remains the fallback. The mark is therefore [non-load-bearing validated
 copies](./a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md)
 that authorize particular shortcuts rather than replace canonical membership.
 A false trusted copy can hide missing members when it [suppresses the retrieval

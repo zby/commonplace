@@ -23,7 +23,7 @@ The economic and safety constraints remain distinct. Materialization pulls repea
 
 ## An instance, a broader pattern, and a non-instance
 
-- **Instance — a `mark` on a tag README.** A scoped file sweep can recover the answer that `complete` or `covered_by` materializes for an agent to read. A validator re-derives the answer and rejects a false mark; the [`tag-readme` type spec](../types/tag-readme.md) defines the contract.
+- **Instance — a `mark` on a tag README.** A scoped file sweep can recover the answer that `complete` materializes for an agent to read: whether the head reaches every member in one hop. A validator re-derives the answer and rejects a false mark; the [`tag-readme` type spec](../types/tag-readme.md) defines the contract.
 - **Broader pattern — [frontloading spares execution context](./frontloading-spares-execution-context.md).** Frontloading precomputes or generates parts of a call whose inputs are already known, so the call reads an answer instead of doing the work. The inserted material need not be a copy of a derived value, while this note concerns the narrower store-versus-recompute choice.
 - **Non-instance — a content-hash anchor.** A content-hash anchor records an unrecoverable past state so code can detect later divergence. Its value lies in preserving that historical record, not in caching the answer to a recoverable current query for a model reader.
 
