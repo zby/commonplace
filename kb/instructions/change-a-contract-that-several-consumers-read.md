@@ -45,6 +45,10 @@ Use it for a change to something several kinds of consumer read: a frontmatter f
 11. **Drift guard.** A test that compares the declared or discovered set with the consumed set, without hardcoding today's count.
 12. **Historical witnesses.** Old forms that stay because they are history: ADRs marked amended, frozen evidence copies, retained results. Say how each is marked so later scans do not report it.
 
+13. **Identity by convention.** Every filename pattern, directory position, or field the consumers read as an identity, and every file that matches it by accident. A hub named `tags-README.md` served as the head of a `tags` tag until the head requirement asked. List the matches before the change and say what each becomes.
+14. **Shared exclusions of a derived predicate.** When the change introduces a predicate over artifacts, such as "participates" or "in scope", every consumer of the predicate applies the producer's exclusion set: archives, type definitions, collection internals. A membership test that checked the collection but not the archive reported archived proposals. Name the one function that answers the predicate and the consumers that call it.
+15. **Side effects of relocation on gated or pinned artifacts.** A move rewrites every link in the moved file and lengthens or shortens them, so size gates, byte pins, and rename detection change with it. Two heads crossed the weight gate on relocation alone. Re-run the gates on moved files and record which pins were retired.
+
 ## Maintenance
 
 When a rescan or a later scan finds a consumer this packet missed, add its class to field 3, or a new field, in the same commit that fixes the miss. The list grows from observed misses, not from speculation.
