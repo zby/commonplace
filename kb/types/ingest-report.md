@@ -80,6 +80,19 @@ adopted; a collection-local snapshot type does not extend this contract.
 
 - `Classification` justifies the source genre and identifies the author signal.
 - `Summary` is one paragraph for someone deciding whether to read the full source.
+- `Contribution assessment (our opinion)` is an experimental section for
+  scientific papers, including theoretical papers. Include it in new or
+  refreshed paper ingests; existing reports do not need a backfill. It is one
+  short paragraph of the agent's informed guesses about the importance of the
+  problem, what the work adds, and its likely significance given the support
+  available. Assess the contribution to the problem itself, independently of
+  its usefulness to this KB or the caller's occasion. Weigh limitations by
+  whether they undermine the central contribution or only narrow it. Make
+  tentative judgments explicit, distinguish demonstrated value from potential
+  impact, and qualify originality by the available comparisons. The agent's
+  background knowledge may inform guesses but does not establish literature
+  coverage or priority; unknown originality is not itself a paper weakness.
+  Respect the capture boundary. Use no numerical score or checklist.
 - `Code Grounding` is required when `secondary_sources` is present. Link the
   reviewed revisions and pinned source files; distinguish mechanisms confirmed
   by inspection, experiment support artifacts that were present but not run,
@@ -221,6 +234,15 @@ No source quotes have been retained yet.
 ## Recommended Next Action
 
 {One specific action}
+```
+
+For a scientific-paper ingest, add this experimental section after `Summary`:
+
+```markdown
+## Contribution assessment (our opinion)
+
+{One short paragraph of informed guesses about the contribution's significance,
+with uncertainty and the basis for any originality judgment explicit.}
 ```
 
 For a code-grounded paper ingest, add this frontmatter field:

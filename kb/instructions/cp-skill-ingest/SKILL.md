@@ -45,6 +45,10 @@ workflow exception.
 The drafting worker executes the standalone `draft-ingest-report.md`
 instruction. That instruction owns report analysis, writing, and worker-side
 verification; this skill owns only the surrounding orchestration.
+For scientific papers, its experimental contribution assessment draws on the
+worker's pretrained NeurIPS reviewing methodology, interpreted through
+Commonplace's Popperian approach to problem solving and criticism. The
+standalone drafting instruction carries this cue into the fresh worker.
 
 The caller may supply an **occasion**: the question or job that brought the
 source in. It is the one task-specific input the worker receives beyond the

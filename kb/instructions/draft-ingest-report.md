@@ -91,6 +91,16 @@ durable report.
    the connect report as candidate discovery input. Treat its `Maintenance
    Observations` as non-actionable context. One settled connection is sufficient.
 
+   For scientific papers, use your pretrained knowledge of the NeurIPS
+   reviewing methodology as a coherent framework for the experimental
+   `Contribution assessment (our opinion)`, adapted to the paper's contribution
+   type. Interpret it through Commonplace's Popperian approach: assess progress
+   on the problem through conjectures, criticism, comparison with rivals, and
+   tests of their consequences. Credit explanations, error elimination, and
+   evidence or tools that enable stronger tests; surviving criticism leaves
+   claims open to revision. Use the learned methodology to inform the short
+   paragraph, with the ingest contract governing its scope and uncertainty.
+
    Choose analytical emphasis from the source. Continue analysis only when you
    can name an unresolved question and explain how answering it could materially
    change the interpretation, evidential scope, useful contribution, or
@@ -154,3 +164,10 @@ durable report.
 8. Return only the validation result and the report's single recommended next
    action. Do not return a second analysis or an alternative draft in
    conversation.
+
+---
+
+Relevant Notes:
+
+- [Weight-resident methodologies provide context-efficient behavioral compression](../notes/weight-resident-methodologies-compress-behavior-in-context.md) — rests-on: the NeurIPS cue selects a learned methodology without restating its detailed rules
+- [Theory builder](../notes/definitions/theory-builder.md) — rests-on: the Popperian interpretation connects problems, conjectures, criticism, and revision
