@@ -9,50 +9,53 @@ The fixed parts below are fixed for comparability, not because the executor coul
 A *commission item* is one requirement a brief places on the target: a governing claim, an intended reader update, an exclusion, a passage to preserve because another artifact relies on it, a claim-mode or scope limit. The item kinds follow the split that the [directive-text rule](../../instructions/cp-skill-write/SKILL.md#universal-mechanics) of `cp-skill-write` borrows from mission command: intent (governing claim, reader update), then boundaries — constraints (must-keep, scope) and restraints (exclusions) — with the means left to the writer. An item is *recoverable* if a reader holding only the incumbent artifact and its backlinks would keep it without being told; otherwise it is *non-recoverable*. Recoverability is classified before any run (Phase 0).
 
 **H1 — The value of a brief is concentrated in non-recoverable items.**
-Prediction: across all pressure runs, the no-brief arm violates at least 6 more non-recoverable items than the original-brief arm, and the gap on recoverable items is smaller than the gap on non-recoverable items.
-Refuted if the no-brief arm violates fewer than 4 more non-recoverable items than the original-brief arm, or the recoverable-item gap is at least as large. Refutation favors Options 1 or 2 of the proposal: the artifact, or the artifact plus its body, already carries what matters.
+Prediction: across all pressure runs, the no-brief arm violates at least 5 more non-recoverable items than the original-brief arm, and the gap on recoverable items is smaller than the gap on non-recoverable items.
+Refuted if the no-brief arm violates fewer than 3 more non-recoverable items than the original-brief arm, or the recoverable-item gap is at least as large. Refutation favors Options 1 or 2 of the proposal: the artifact, or the artifact plus its body, already carries what matters.
 
 **H2 — A brief adds less where the title states the governing claim.**
-Prediction: the per-target violation gap (no-brief minus original-brief, non-recoverable items, normalized by item count) is smaller on average for the six claim-titled notes than for the seven non-claim documents.
+Prediction: the per-target violation gap (no-brief minus original-brief, non-recoverable items, normalized by item count) is smaller on average for the five claim-titled notes than for the five non-claim documents.
 Refuted if the average gap is equal or larger for the claim-titled notes. See Limits for what the non-claim class mixes.
 
 **H3 — A brief written before drafting holds information that cannot be rebuilt from the finished artifact.**
-Prediction: the rebuilt-brief arm violates at least 4 more non-recoverable items than the original-brief arm, summed over all pressure runs.
-Refuted if the rebuilt-brief arm is within 2 violations of the original-brief arm. Refutation removes the proposal's argument for storing briefs independently: a brief could be generated on demand.
+Prediction: the rebuilt-brief arm violates at least 3 more non-recoverable items than the original-brief arm, summed over all pressure runs.
+Refuted if the rebuilt-brief arm is within 1 violation of the original-brief arm. Refutation removes the proposal's argument for storing briefs independently: a brief could be generated on demand.
 
 **H4 — A brief does not silently over-constrain.**
 Prediction: in every override run with a brief, the writer either follows the request and states which commission item it amends, or asks the user, as `cp-skill-write` Step 4 requires.
 Refuted if any brief-arm override run silently preserves the conflicting item against the request, or silently drops it without naming the amendment.
 
 **H5 — A one-line brief carries the claim and reader update but not the exclusions or dependencies.**
-Prediction: the one-line arm (D) is within 2 violations of the original-brief arm on items of kind *governing claim* and *reader update*, and violates at least 4 more items than the original-brief arm on items of kind *exclusion* and *must-keep*, summed over all pressure runs.
-Refuted in the direction of "one line is enough" if D is within 2 violations of B on exclusion and must-keep items as well. Refuted in the other direction if D is no better than the no-brief arm on claim and reader-update items. The first refutation would argue for one-line briefs; the second, that a one-line brief adds nothing to the title.
+Prediction: the one-line arm (D) is within 2 violations of the original-brief arm on items of kind *governing claim* and *reader update*, and violates at least 3 more items than the original-brief arm on items of kind *exclusion* and *must-keep*, summed over all pressure runs.
+Refuted in the direction of "one line is enough" if D is within 1 violation of B on exclusion and must-keep items as well. Refuted in the other direction if D is no better than the no-brief arm on claim and reader-update items. The first refutation would argue for one-line briefs; the second, that a one-line brief adds nothing to the title.
 
 **Compliance guard.** A run that does not carry out its edit request scores as a failed run in every conjecture, not as preservation. Without this guard a brief arm could win by refusing to edit.
 
-The thresholds are set for n = 13 targets with 2 replicates and are coarse by design. A result between the prediction and the refutation line is recorded as undecided, not rounded either way.
+The thresholds are set for n = 10 targets with 2 replicates and are coarse by design. A result between the prediction and the refutation line is recorded as undecided, not rounded either way.
 
 ## Targets
 
 | # | Target | Class | Commission source (commit) |
 |---|---|---|---|
-| 1 | `kb/notes/any-symbolic-program-with-llm-calls-is-a-select-call-program.md` | claim-titled note | `multistage-write-select-call-cordis-20260814` (`303e20b0`) |
-| 2 | `kb/notes/context-operation-interface-bounds-context-policy.md` | claim-titled note | `multistage-write-context-operation-interface-20260827` (`d7615fea`) |
-| 3 | `kb/notes/current-task-fit-alone-does-not-warrant-costly-entrenchment.md` | claim-titled note | `multistage-write-costly-entrenchment-options-20260828` (`16be19f9`) |
-| 4 | `kb/notes/prototype-standing-is-revision-cost-binding-plus-lost-investment.md` | claim-titled note | `multistage-write-prototype-standing-revision-cost-20260827` (`db995fab`) |
-| 5 | `kb/instructions/analyse-agentic-system/SKILL.md` | instruction | `multistage-write-analyse-agentic-system-20260820` (`303e20b0`) |
-| 6 | `kb/instructions/analyse-external-system-epistemic-architecture.md` | instruction | `multistage-write-analyse-epistemic-architecture-20260820` (`303e20b0`) |
-| 7 | `kb/work/epistemic-architectures/arc-skill-reading.md` | workshop reading | `multistage-write-arc-skill-reading-20260820` (`303e20b0`) |
-| 8 | `kb/notes/the-bitter-lesson-defense-portfolio-has-one-load-bearing-member.md` | claim-titled note | `kb/work/theory-mediated-self-improvement-series/gradual-compatibility-brief.md` (`2c8b2268`) |
-| 9 | `kb/notes/adversarial-loop-can-reconstruct-the-writing-is-thinking-filter.md` | claim-titled note | `kb/work/written-artifacts-in-learning-loops/pilot-adversarial-loop/brief.md` (`ce45b282`) |
-| 10 | `kb/articles/can-a-theory-builder-running-on-fixed-weight-llms-learn.md` | article | `kb/work/theory-builder-article-series/README.md` (`b0d98aa8`), the entry for this article |
-| 11 | `kb/articles/an-automated-software-house-as-a-second-test-of-a-theory-builder.md` | article | `kb/work/theory-builder-article-series/README.md` (`b0d98aa8`), the entry for this article |
-| 12 | `kb/notes/designing-agent-memory-systems.md` | synthesis note | `kb/work/agent-memory-design/framing.md` (`c4cd0bd7`) |
-| 13 | `kb/instructions/premise-decomposition-gate.md` | instruction | `kb/work/writing-as-thinking-process-transfer/README.md` (`b2b8e2a3`), backlog row 1 and evaluation boundary |
+| 1 | `kb/notes/context-operation-interface-bounds-context-policy.md` | claim-titled note | `multistage-write-context-operation-interface-20260827` (`d7615fea`) |
+| 2 | `kb/notes/current-task-fit-alone-does-not-warrant-costly-entrenchment.md` | claim-titled note | `multistage-write-costly-entrenchment-options-20260828` (`16be19f9`) |
+| 3 | `kb/notes/prototype-standing-is-revision-cost-binding-plus-lost-investment.md` | claim-titled note | `multistage-write-prototype-standing-revision-cost-20260827` (`db995fab`) |
+| 4 | `kb/notes/the-bitter-lesson-defense-portfolio-has-one-load-bearing-member.md` | claim-titled note | `kb/work/theory-mediated-self-improvement-series/gradual-compatibility-brief.md` (`2c8b2268`) |
+| 5 | `kb/notes/adversarial-loop-can-reconstruct-the-writing-is-thinking-filter.md` | claim-titled note | `kb/work/written-artifacts-in-learning-loops/pilot-adversarial-loop/brief.md` (`ce45b282`) |
+| 6 | `kb/instructions/analyse-agentic-system/SKILL.md` | instruction | `multistage-write-analyse-agentic-system-20260820` (`303e20b0`) |
+| 7 | `kb/instructions/analyse-external-system-epistemic-architecture.md` | instruction | `multistage-write-analyse-epistemic-architecture-20260820` (`303e20b0`) |
+| 8 | `kb/articles/can-a-theory-builder-running-on-fixed-weight-llms-learn.md` | article | `kb/work/theory-builder-article-series/README.md` (`b0d98aa8`), the entry for this article |
+| 9 | `kb/articles/an-automated-software-house-as-a-second-test-of-a-theory-builder.md` | article | `kb/work/theory-builder-article-series/README.md` (`b0d98aa8`), the entry for this article |
+| 10 | `kb/notes/designing-agent-memory-systems.md` | synthesis note | `kb/work/agent-memory-design/framing.md` (`c4cd0bd7`) |
 
-Class is by whether the title states the governing claim, not by the `title-as-claim` trait (target 3 lacks the trait but has a claim title). For targets 1–7 the brief is `kb/work/multistage/<run>/brief.md` at the listed commit. Targets 8–13 come from a search of git history on 2026-09-26 for commissions written before the target's final draft that name or clearly identify one existing target and state more than its title. Their sources are workshop framings or briefs in other formats; Phase 0 stripping extracts the part that commissions the target. Target 12's source implies the target through the workshop goal rather than naming its path. Target 10 has a second, independent commission (`kb/work/lead-article-learning-first/README.md` at `e7e28fa6`); this pilot uses only the first, and a two-commission comparison is deferred.
+Class is by whether the title states the governing claim, not by the `title-as-claim` trait (target 2 lacks the trait but has a claim title). For targets 1–3, 6, and 7 the brief is `kb/work/multistage/<run>/brief.md` at the listed commit. Targets 4, 5, and 8–10 come from a search of git history on 2026-09-26 for commissions written before the target's final draft that name or clearly identify one existing target and state more than its title. Their sources are workshop framings or briefs in other formats; Phase 0 stripping extracts the part that commissions the target. Target 10's source implies the target through the workshop goal rather than naming its path. Target 8 has a second, independent commission (`kb/work/lead-article-learning-first/README.md` at `e7e28fa6`); this pilot uses only the first, and a two-commission comparison is deferred.
 
-Excluded from the search results before any run: the theory-builder definition, whose commission was committed with its first draft; the bootstrapping article, whose commission is an edit-and-relocate order; the testing article and the two-layer execution note, whose commissions are thin or ambiguous about their target.
+The operator capped the pilot at ten targets. Before any run, three qualifying candidates were dropped to reach five claim-titled and five non-claim targets:
+
+- `kb/notes/any-symbolic-program-with-llm-calls-is-a-select-call-program.md` (`multistage-write-select-call-cordis-20260814`): its commission is mainly a source integration, so stripping source-bound items would leave little commission;
+- `kb/work/epistemic-architectures/arc-skill-reading.md` (`multistage-write-arc-skill-reading-20260820`): a workshop file, which the workshop lifecycle consumes, so a durable brief does not apply to it;
+- `kb/instructions/premise-decomposition-gate.md` (`b2b8e2a3`): the thinnest non-claim commission, and a third instruction would add to the instruction confound (see Limits).
+
+Excluded from the search results by the selection criteria: the theory-builder definition, whose commission was committed with its first draft; the bootstrapping article, whose commission is an edit-and-relocate order; the testing article and the two-layer execution note, whose commissions are thin or ambiguous about their target.
 
 Every target has been edited since its brief was written, at least by the type-path sweep of 2026-09-25. The incumbent for each run is the target at the commit that freezes this protocol.
 
@@ -69,16 +72,16 @@ Deferred, not part of this pilot: a frontmatter `goal:` field (set aside by the 
 
 ## Phase 0 — materials (before freeze)
 
-1. **Strip the original commissions.** Remove items that bind only the original run: review findings to address, evidence and source lists, workshop mechanics, commit instructions, relocation steps already done. Keep the governing question, audience and reader update, target claim, must-keep and must-exclude items, scope, terminology, and reserved decisions. Write the result to `briefs/<n>.md`, recording each removed item and why in a trailing list. The operator reviews all thirteen before freeze.
+1. **Strip the original commissions.** Remove items that bind only the original run: review findings to address, evidence and source lists, workshop mechanics, commit instructions, relocation steps already done. Keep the governing question, audience and reader update, target claim, must-keep and must-exclude items, scope, terminology, and reserved decisions. Write the result to `briefs/<n>.md`, recording each removed item and why in a trailing list. The operator reviews all ten before freeze.
 2. **Extract commission items.** A fresh agent lists the commission items of each stripped brief in `rubric/<n>.md`, one line each, numbered.
 3. **Classify recoverability.** A second fresh agent, given the incumbent and a list of its backlinks but not the brief, receives each item and answers: does the artifact state or clearly imply this, so a careful editor would keep it without being told? Mark recoverable or non-recoverable. The operator may spot-check but does not reclassify after freeze.
-4. **Write the edit requests.** For each target, one **pressure** request that invites drift on at least two non-recoverable items without naming them (such as "cut this to 60% of its length", "generalize the claim", "fold in neighbor X", "rewrite for a newcomer"), and for targets 3, 4, 5, 8, and 10 one **override** request that legitimately conflicts with one named commission item. Requests are written from the rubric, before any run, and are identical across arms.
+4. **Write the edit requests.** For each target, one **pressure** request that invites drift on at least two non-recoverable items without naming them (such as "cut this to 60% of its length", "generalize the claim", "fold in neighbor X", "rewrite for a newcomer"), and for targets 2, 3, 4, 6, and 8 one **override** request that legitimately conflicts with one named commission item. Requests are written from the rubric, before any run, and are identical across arms.
 5. **Build the rebuilt briefs (arm C) and one-line briefs (arm D).** Done now, not during runs, so every run of a cell uses the same brief.
 6. **Label item kinds.** In `rubric/<n>.md`, tag each commission item with one kind: governing claim, reader update, exclusion, must-keep, scope, or reserved decision. H5 reads its result by kind.
 
 ## Phase 1 — runs (after freeze)
 
-- **Cells.** 13 targets × 4 arms × 2 replicates of the pressure request = 104 runs. Override runs: 5 targets × arms B, C, and D × 1 = 15 runs. Total 119.
+- **Cells.** 10 targets × 4 arms × 2 replicates of the pressure request = 80 runs. Override runs: 5 targets × arms B, C, and D × 1 = 15 runs. Total 95.
 - **Worker.** A fresh sub-agent per run, on the session's Opus model (record the concrete model id), following `cp-skill-write` in edit mode with these deviations: it writes its candidate to `runs/<target>-<arm>-<replicate>/candidate.md`, never to the target path; it skips Step 7 source grounding and Step 9 validation, and adds no new source dependency; it does not invoke `cp-skill-connect` or ask the user a question it could not ask in a real run. If it would ask the user (Step 4 conflict), it writes the question to `question.md` and stops; that is a valid outcome and scores as *flagged*.
 - **Order.** Randomize run order across cells; record the order.
 - **Isolation.** Workers get no access to this workshop beyond their own run directory and input packet.
@@ -98,9 +101,9 @@ Tally per arm, per class, and per item-recoverability, then read each conjecture
 
 ## Limits (to state in the evidence note)
 
-- Thirteen targets, two replicates: the pilot can refute the stronger predictions, but it cannot estimate effect sizes.
-- The original commissions are careful, operator-directed texts made inside multistage runs or workshops. Ordinary briefs would likely be thinner. Targets 8–13 were selected after the pilot was designed, from a search that knew what the pilot needed (non-claim targets); selection was by the stated criteria, before any run.
-- The non-claim class mixes kinds: three instructions, two articles, one synthesis note, one workshop reading. Instructions fall under the directive-text rule, so they already open with their intent; for them the brief partly repeats the artifact, which is an Option 2 effect, not the claim-title effect alone. Report H2 with and without the instructions.
+- Ten targets, two replicates: the pilot can refute the stronger predictions, but it cannot estimate effect sizes.
+- The original commissions are careful, operator-directed texts made inside multistage runs or workshops. Ordinary briefs would likely be thinner. Targets 4, 5, and 8–10 were selected after the pilot was designed, from a search that knew what the pilot needed (non-claim targets); selection was by the stated criteria, before any run.
+- The non-claim class mixes kinds: two instructions, two articles, one synthesis note. Instructions fall under the directive-text rule, so they already open with their intent; for them the brief partly repeats the artifact, which is an Option 2 effect, not the claim-title effect alone. Report H2 with and without the instructions.
 - Writers, rebuilders, and scorers are all Claude models. Shared biases may inflate agreement.
 - The pressure requests are written by someone who has seen the briefs. They are designed to test the items, which is the point of a severe test, but they do not measure how often ordinary edits threaten a commission.
 
