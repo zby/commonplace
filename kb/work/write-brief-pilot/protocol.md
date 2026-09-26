@@ -9,8 +9,8 @@ The fixed parts below are fixed for comparability, not because the executor coul
 A *commission item* is one requirement a brief places on the target: a governing claim, an intended reader update, an exclusion, a passage to preserve because another artifact relies on it, a claim-mode or scope limit. The item kinds follow the split that the [directive-text rule](../../instructions/cp-skill-write/SKILL.md#universal-mechanics) of `cp-skill-write` borrows from mission command: intent (governing claim, reader update), then boundaries — constraints (must-keep, scope) and restraints (exclusions) — with the means left to the writer. An item is *recoverable* if a reader holding only the incumbent artifact, its backlinks, and the target's type spec and collection contract would keep it without being told; otherwise it is *non-recoverable*. The type spec and collection contract count because `cp-skill-write` loads both for every write. Recoverability is classified before any run (Phase 0).
 
 **H1 — The value of a brief is concentrated in non-recoverable items.**
-Prediction: across all pressure runs, the no-brief arm violates at least 5 more non-recoverable items than the original-brief arm, and the gap on recoverable items is smaller than the gap on non-recoverable items.
-Refuted if the no-brief arm violates fewer than 3 more non-recoverable items than the original-brief arm, or the recoverable-item gap is at least as large. Refutation favors Options 1 or 2 of the proposal: the artifact, or the artifact plus its body, already carries what matters.
+Prediction: across all pressure runs, the no-brief arm violates at least 5 more non-recoverable items than the original-brief arm, and the gap between the arms' violation *rates* is larger on non-recoverable items than on recoverable items.
+Refuted if the no-brief arm violates fewer than 3 more non-recoverable items than the original-brief arm, or the rate gap on recoverable items is at least as large. Rates are used for the comparison because recoverable items outnumber non-recoverable ones about five to one. Refutation favors Options 1 or 2 of the proposal: the artifact, or the artifact plus its body, already carries what matters.
 
 **H2 — A brief adds less where the title states the governing claim.**
 Prediction: the per-target violation gap (no-brief minus original-brief, non-recoverable items, normalized by item count) is smaller on average for the five claim-titled notes than for the five non-claim documents.
@@ -30,7 +30,7 @@ Refuted in the direction of "one line is enough" if D is within 1 violation of B
 
 **Compliance guard.** A run that does not carry out its edit request scores as a failed run in every conjecture, not as preservation. Without this guard a brief arm could win by refusing to edit.
 
-The thresholds are set for n = 10 targets with 2 replicates and are coarse by design. A result between the prediction and the refutation line is recorded as undecided, not rounded either way.
+The thresholds are set for n = 10 targets with 2 replicates and are coarse by design. Against the commissioned versions, about 40 items are non-recoverable and present (roughly 4 per target), so each arm has about 80 non-recoverable item-runs across its 20 pressure runs; a gap of 5 is about 6 percentage points. A result between the prediction and the refutation line is recorded as undecided, not rounded either way.
 
 ## Targets
 
@@ -121,6 +121,7 @@ This study is not pre-registered in the strict sense: before it was designed, th
 ## Analysis
 
 - **Conflicting items.** Items the rubric marks `(conflicts with <k>)` cannot all be kept in one candidate. They are scored but excluded from the H1, H3, and H5 tallies, and reported separately as evidence for H4-style handling: did the writer notice the conflict, follow the later item, or silently pick one.
+- **Undelivered items.** Items labelled `(absent)` in `recoverability/` were never realized in the commissioned version, so a pressure run cannot keep or violate them. They are excluded from the H1, H3, and H5 tallies. Scorers still score them, and the analysis reports separately whether any arm *added* an absent item: a brief arm restoring commissioned content that the original write never delivered is a result the conjectures did not predict.
 - **Undecidable items.** A scorer may mark an item *undecidable* when the candidate text cannot settle it (for example a requirement on how two trial agents behave). Undecidable scores are counted and reported but excluded from tallies. If both scorers mark more than a third of a target's items undecidable, report that target separately.
 
 
