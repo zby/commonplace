@@ -14,9 +14,18 @@ named system choice is recoverably scoped, does a substantive claim about the
 design space remain?** A fixed choice needs stable reidentification at every
 distinction that could change truth or licensed inference. A ranged choice
 needs a recoverable range and valuation rule. A substantive witness needs the
-proposition the instance supports. If scoping leaves only what Commonplace
+universal prohibition it contradicts or the existence claim it verifies. If scoping leaves only what Commonplace
 selected or the current or historical state that selection produced, the
 artifact belongs in `kb/reference/`.
+
+The claim that remains after scoping is a new universal hypothesis, not a
+summary of the particulars it came from: no number of singular observations
+establishes a universal statement ([Popper, *Logic of Scientific Discovery*,
+§§13–15](../sources/popper-logic-of-scientific-discovery.ingest.md)). Link the
+cases it was generalized from as `abstracted-from`; they explain its origin
+and do not corroborate it. A particular system may still appear as the case a
+universal claim is applied to: the claim supplies the law, and the system's
+selections supply the initial conditions (§12).
 
 Quality goal is **explanatory-reach** — the most general formulation the argument supports, with boundaries mapped. A note with explanatory-reach compresses many situations into one explanation.
 
@@ -45,7 +54,9 @@ Those can come from the surface itself or from context the intended consumer is
 guaranteed to receive. A fixed opaque design may use stable reidentification
 when hidden identity distinctions cannot change truth or licensed inference. A
 ranged variable needs a recoverable range and valuation rule. A substantive
-witness must state what proposition the instance supports. Literal quantifier
+witness must state which universal prohibition the instance contradicts or
+which existence claim it verifies; a single instance cannot support a
+universal claim (§15). Literal quantifier
 syntax is neither necessary nor sufficient. Substitution can expose dependence
 on a local term, but the consumption boundary decides whether its scope is
 missing. If no substantive claim remains after each choice is scoped, move the
@@ -60,7 +71,7 @@ may support the theory without becoming the artifact's intended contribution.
 
 **Hypotheses stay recognizable in prose.** State the conjectural force in the title, description, opening, or a clearly named hypotheses/open-questions section. `user-verified: true` may attest that a note responsibly presents a conjecture; it does not turn the conjecture into established fact.
 
-**Claim modality (ADR 066).** A claim asserts in one of three modes, and the mode determines what refutes it. **Universal** — one genuine counterexample refutes; the default reading for any claim that does not state otherwise. **Statistical** — the claim states a tendency ("usually", "most", "under conditions C"); a single instance does not refute it, prevalence evidence does — and the claim must still forbid something: state the comparison, conditions, or rate that prevalence evidence could refute, or the tendency is vacuous. This stated-refuter requirement is Popper's treatment of probabilistic claims made per-claim: a frequency claim is strictly unfalsifiable until a refuting prevalence is fixed in advance, and here that decision lives in the claim text rather than in a field-wide convention. **Ideal-type** — the claim states a deliberately simple first-order model whose exceptions are conceded and accounted for; what refutes it is an exception the domain treats as ordinary unmarked practice, or the model losing explanatory dominance — see [domain pricing routes an exception to idealization assessment but does not decide it](./domain-pricing-routes-an-exception-to-idealization-assessment.md). Ideal-type acceptance and refutation are comparative — inference to the best explanation with its virtues (declared use, mechanism, bound, dominance) written as attackable commitments rather than reviewer judgment; the bound is absolute, so "best available" alone never suffices. A priced exception is Lakatos's anomaly rather than a refuter: it earns the claim an idealization assessment, and the adequacy record then decides the verdict. Declare the mode in the claim text itself — title, thesis, or a named section; an ideal-type claim carries its adequacy record (declared use, omitted mechanism, consequence bound, explanatory dominance) in the body, where review attacks it like any content. There is no frontmatter mode field: undeclared text reads as universal. Mode is orthogonal to lifecycle stage — a note still at the conjecture stage may conjecture a universal or a tendency; declare both when both apply. Repair under review is mode-aware and runs in both directions: reframing a defeated universal down to statistical or ideal-type requires meeting the target mode's guard, and a claim hedged below its warrant is reframed up, not left vacuous.
+**Claim modality (ADR 066, ADR 091).** A claim asserts in one of three modes, and the mode determines what refutes it. **Universal** — the default reading for any claim that does not state otherwise. A counterexample refutes it when others can check it again: a specified case whose conflict with the claim any reader can re-derive, or an observed effect shown to recur. A single unrepeated report of an exception raises a problem to test; it does not by itself refute ([Popper, *Logic of Scientific Discovery*, §22](../sources/popper-logic-of-scientific-discovery.ingest.md)). A contradiction refutes the claim together with the conditions it was applied under (§18), so a refutation names which part it blames: the claim, or those conditions. **Statistical** — the claim states a tendency ("usually", "most", "under conditions C"); a single instance does not refute it, prevalence evidence does — and the claim must still forbid something: state the comparison, conditions, or rate that prevalence evidence could refute, or the tendency is vacuous. This stated-refuter requirement is Popper's treatment of probabilistic claims (§§65–68) made per-claim: a frequency claim is strictly unfalsifiable until a refuting prevalence is fixed in advance, and here that decision lives in the claim text rather than in a field-wide convention. **Ideal-type** — the claim states a deliberately simple first-order model whose exceptions are conceded and accounted for; what refutes it is an exception the domain treats as ordinary unmarked practice, or the model losing explanatory dominance — see [domain pricing routes an exception to idealization assessment but does not decide it](./domain-pricing-routes-an-exception-to-idealization-assessment.md). Ideal-type acceptance and refutation are comparative — inference to the best explanation with its virtues (declared use, mechanism, bound, dominance) written as attackable commitments rather than reviewer judgment; the bound is absolute, so "best available" alone never suffices. A priced exception is Lakatos's anomaly rather than a refuter: it earns the claim an idealization assessment, and the adequacy record then decides the verdict. Declare the mode in the claim text itself — title, thesis, or a named section; an ideal-type claim carries its adequacy record (declared use, omitted mechanism, consequence bound, explanatory dominance) in the body, where review attacks it like any content. There is no frontmatter mode field: undeclared text reads as universal. Mode is orthogonal to lifecycle stage — a note still at the conjecture stage may conjecture a universal or a tendency; declare both when both apply. Repair under review is mode-aware and runs in both directions: reframing a defeated universal down to statistical or ideal-type requires meeting the target mode's guard, and a claim hedged below its warrant is reframed up, not left vacuous.
 
 ## Title and body composability
 
@@ -83,6 +94,8 @@ Author each outbound link from the reader need at its source. A reciprocal link 
 
 Scan `kb/notes/`, `kb/types/`, `kb/reference/`, `kb/agent-memory-systems/`, `kb/agentic-systems/`, `kb/sources/`, `kb/instructions/`, and `kb/tags/` for link targets. Do not link into `kb/work/` (workshop layer — value is consumed, not imported). Most links land within `kb/notes/` — the densest path. Outbound edges to `kb/instructions/` are rare — the usual direction is inverse (`instruction → note` via `rests-on`) — except `operationalized-from`, recorded as an `Operationalized into:` footer at this collection's methodology note when a procedure in `kb/instructions/` adds ordering, defaults, or stopping conditions the methodology doesn't itself fix; see the lineage semantics in `kb/reference/link-vocabulary.md`. Edges to `kb/sources/` point to the tracked ingest of the source the claim was abstracted from or that corroborates it, never to its local snapshot.
 
+**Origin is not corroboration.** Evidence corroborates a claim only when it reports an attempt to refute that claim which the claim could have failed ([Popper, *Logic of Scientific Discovery*, appendix \*ix](../sources/popper-logic-of-scientific-discovery.ingest.md)). The rule is the same for internal evidence (session traces, reports, ADRs) and external sources; what decides is how the evidence was produced, not where it came from. A case or source the claim was built from is linked `abstracted-from`, never as corroboration of that claim. An `evidenced-by` link that claims corroboration says in its context phrase what the claim risked, and whether the evidence was recorded after the claim or independently of how it was built; otherwise the phrase says the evidence qualifies or bounds the claim. A corroboration appraisal is dated: it holds relative to the evidence accepted when it was made (§84).
+
 **Labels:**
 
 | label | kind | destinations | reader-need |
@@ -95,7 +108,7 @@ Scan `kb/notes/`, `kb/types/`, `kb/reference/`, `kb/agent-memory-systems/`, `kb/
 | `contradicts` | sym | notes | wants to resolve a disagreement |
 | `contrasts` | sym | notes | wants the neighbouring-shape distinction |
 | `defined-in` | asym | notes/definitions, reference/definitions | reader may not know the term |
-| `evidenced-by` | asym | notes, types, reference, agent-memory-systems, agentic-systems, sources, external | the target observation, case, or source corroborates, qualifies, or bounds this assertion |
+| `evidenced-by` | asym | notes, types, reference, agent-memory-systems, agentic-systems, sources, external | the target observation, case, or source corroborates, qualifies, or bounds this assertion; corroboration requires a test the claim could have failed (see "Origin is not corroboration") |
 | `derived-from` | asym | reference, agent-memory-systems, agentic-systems, sources | claim is worked out from this source, adding nothing beyond it — see the lineage semantics in `kb/reference/link-vocabulary.md` |
 | `abstracted-from` | asym | reference, agent-memory-systems, agentic-systems, sources | claim generalizes beyond this source; the source is evidence, authority is earned by testing |
 | `operationalized-from` | asym | instructions | procedure adds ordering, defaults, or stopping conditions this methodology note doesn't itself fix; not claim-preserving — see lineage semantics in `kb/reference/link-vocabulary.md` |

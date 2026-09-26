@@ -75,7 +75,7 @@ Inference relations. Commonly used for outbound links to theoretical destination
 | `contradicts` | symmetric | wants to resolve a disagreement |
 | `contrasts` | symmetric | wants to see the neighbouring-shape distinction |
 | `rests-on` | asymmetric (descriptive/prescriptive/system-definition → theoretical) | source design, rule, description, or contract depends on the target claim; reader wants the theory whose change would trigger reconsideration |
-| `evidenced-by` | asymmetric (assertion → observation/source) | source assertion is evidenced by target; reader wants the corroborating, qualifying, or boundary observation |
+| `evidenced-by` | asymmetric (assertion → observation/source) | source assertion is evidenced by target; reader wants the corroborating, qualifying, or boundary observation. The target corroborates only if it reports a test the assertion could have failed; evidence the assertion was generalized from is `abstracted-from` instead |
 | `is-evidence-for` | asymmetric (observation/source → assertion) | source bears materially on target assertion; reader wants where this observation lands, without implying target-side uptake |
 | `derived-from` | asymmetric | wants the source this was worked out from; asserts no claims beyond it (lineage semantics below) |
 | `abstracted-from` | asymmetric (general → evidence) | wants the instances this generalization came from; the claim exceeds them (lineage semantics below) |

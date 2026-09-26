@@ -7,7 +7,7 @@ status: accepted
 
 # 066-Claims declare modality in text, and passes repair mode mismatch
 
-**Status:** accepted — decision 4 amended by [ADR 080](./080-full-passes-hand-claim-changes-back-as-a-pending-revise.md) (2026-08-26): the full pass no longer converts mode in-pass; a mode mismatch is a pending `revise` whose brief names the target mode and its guard
+**Status:** accepted — decision 4 amended by [ADR 080](./080-full-passes-hand-claim-changes-back-as-a-pending-revise.md) (2026-08-26): the full pass no longer converts mode in-pass; a mode mismatch is a pending `revise` whose brief names the target mode and its guard; decision 1 amended by [ADR 091](./091-refutation-needs-a-checkable-counterexample-corroboration-a-test.md) (2026-09-26): the universal refuter is a counterexample others can check again, not one unrepeated report
 **Date:** 2026-08-19
 
 ## Context
