@@ -39,6 +39,8 @@ Usage evidence bounds how much machinery the decision may carry. A survey of abo
 
 ## Considered alternatives
 
+Two proposals worked out this option space and are archived on adoption: "Tag scope is declared where membership claims are made" and "Semantic contract for tags and tag heads".
+
 **Collection-local tags.** Each collection keeps its own tag space; marks are reworded to "every note in this collection"; the site stops linking tags across collections. Cheapest, and it matches the current code. It lost because the cross-collection topic page is the one thing a human reader gets from a tag, and because the same string meaning different things in two collections of one KB is the confusion the namespace decision exists to remove.
 
 **Heads stay in `kb/notes/`.** Considered first, to avoid relocating twenty-one heads. It lost when the host case was examined: a host has nothing to relocate, so the migration cost was the only reason, and two conventions are worse than one relocation. It also leaves heads as a standing exception to the notes contract.

@@ -16,6 +16,7 @@ Every tag in use has a head. The validator reports a tag on an artifact in a par
 A tag-README is understood standalone — the field names are self-describing and the body is ordinary curated prose. This spec is **maintenance-path only**: load it when writing a head, declaring or dropping the mark, fixing a validator warning, or executing a lifecycle exit.
 
 - Open with what the tag gathers, in the words a reader would search for, and name the defining note if the tag has one. A head that only summarises its picks hides what the tag means.
+- Name the nearby concepts that do not imply membership when a reader could confuse them; a boundary sentence saves more misfiled tags than a longer definition.
 - Curated entries MUST have context phrases — a bare link list is an address book, not a map.
 - Be selective by default. Completeness is the build's job (the published site appends the full generated listing) and the scoped query's job (`rg` recipes in `kb/reference/navigation.md`) — not the author's, unless the `complete` mark is declared.
 - Do not hand-write a complete listing, or claim in body text that the linked child heads cover the tag, without declaring `complete: true` — an unenforced version of that claim decays silently into the stale-index failure.

@@ -13,26 +13,11 @@ into deliberate tag changes. The candidate priority is to test that view before
 adopting a deeper hierarchy or automatic membership assignment. This proposal
 records an option space and an evaluation target; it adopts no new behavior.
 
-## Current state (as of 2026-09-22)
+## Current state (as of 2026-09-26)
 
-Commonplace already has curated tag introductions, selective links with context
-phrases, and complete generated listings for published pages. Agents use
-curated heads and scoped queries. The [navigation contract](../navigation.md)
-keeps generated inventories off the default agent read path.
+Tags are one namespace per KB with a head per tag at `kb/tags/<tag>-README.md`, membership over the collections declared in `kb/tags/COLLECTION.md`, and one validator-enforced mark, `complete`, meaning the head reaches every member in one hop, directly or through a linked child head ([ADR 089](../adr/089-tags-are-one-namespace-per-kb-with-heads-in-kb-tags.md), [ADR 090](../adr/090-one-completeness-mark-reaches-members-in-one-hop.md)). Splitting a tag keeps the parent tag on child members; the child heads a parent links are its children, and the mark counts them. The published site appends the full member listing to each head; agents use heads and scoped queries ([navigation](../navigation.md)). The collector in `src/commonplace/lib/index_generated.py` and the tag-readme rule in `src/commonplace/lib/validation.py` are the implementation surfaces.
 
-The [tag-readme contract](../../types/tag-readme.md) supplies checked
-completeness and coverage marks. Splitting a tag keeps the parent tag on child
-members. The current collector groups explicitly assigned strings within a
-collection; it excludes tag-head artifacts from ordinary membership.
-`collect_collection_tag_index` in `src/commonplace/lib/index_generated.py` and
-`validate_tag_readme` in `src/commonplace/lib/validation.py` are the inspected
-implementation surfaces.
-
-The [semantic-contract proposal](./semantic-contract-for-tags-and-tag-heads.md)
-and [tag-scope proposal](./tag-scope-is-declared-where-membership-claims-are-made.md)
-already own tag meaning, head identity, membership scope, and resolver changes.
-This proposal adds browsing and maintenance options without choosing those
-contracts. Any trial must state the existing collection scope it actually uses.
+The operator set aside the browsing trial this proposal motivated (2026-09-25): their finding failures were vocabulary misses on notes that were present and tagged, which grouping does not address, and child tags already give durable, addressable groups. The Phase 2 trial in the tag workshop was therefore not run, and the workshop closed on 2026-09-26. This proposal stays live for one narrowed question: whether a generated grouping of a large tag is worth producing as a split-candidate generator, the use Gwern's "Sort By Magic" also serves. Five tags here have over a hundred members.
 
 ## External design and evidence boundary
 

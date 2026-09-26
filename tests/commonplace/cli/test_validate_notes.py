@@ -358,6 +358,23 @@ def test_library_artifact_cannot_link_to_archived_proposal(
     )
 
 
+def test_proposal_archive_boundary_ignores_links_between_archived_files(
+    tmp_path: Path,
+) -> None:
+    configure_temp_repo(tmp_path)
+    write(tmp_path / "kb" / "reference" / "COLLECTION.md", "# Reference collection\n")
+    archive = tmp_path / "kb" / "reference" / "proposals" / "archive"
+    write(archive / "older.md", "# Older\n")
+    newer = write(
+        archive / "newer.md",
+        "---\ndescription: An archived proposal that cites its archived sibling for texture\ntype: types/note.md\n---\n\n# Newer\n\nSee [older](./older.md).\n",
+    )
+
+    results = validation.validate_note(newer, repo_root=tmp_path)
+
+    assert not any("archive boundary" in f for f in results.fails)
+
+
 def test_proposal_archive_boundary_allows_readme_and_workshop_links(
     tmp_path: Path,
 ) -> None:

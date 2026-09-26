@@ -522,18 +522,24 @@ def validate_proposal_archive_links(
     *,
     repo_root: Path,
 ) -> None:
-    """Keep archived proposals from becoming load-bearing library sources."""
+    """Keep archived proposals from becoming load-bearing library sources.
+
+    The boundary is crossed only from outside (ADR 056): a link from one
+    archived file to another stays inside the frozen set and re-admits
+    nothing to the frontier, so archive-internal links are not checked here.
+    """
     source = path.resolve()
     kb = kb_root(repo_root).resolve()
     archive = (repo_root / _PROPOSAL_ARCHIVE_RELATIVE_PATH).resolve()
     archive_readme = archive / "README.md"
     work = kb / "work"
 
-    try:
-        source.relative_to(work)
-        return
-    except ValueError:
-        pass
+    for exempt_root in (work, archive):
+        try:
+            source.relative_to(exempt_root)
+            return
+        except ValueError:
+            pass
 
     if source == archive_readme:
         return

@@ -1,11 +1,13 @@
 ---
-description: "Proposal: define tags as KB-wide semantic membership predicates and tag heads as canonical definition and bounded-context routing surfaces"
+description: "Proposal (adopted): define tags as KB-wide semantic membership predicates and tag heads as canonical definition and bounded-context routing surfaces"
 type: reference/types/design-proposal.md
 tags: []
 traits: [has-external-sources]
 ---
 
 # Semantic contract for tags and tag heads
+
+> **Archived** (see [archive README](./README.md)). Adopted by [ADR 089](../../adr/089-tags-are-one-namespace-per-kb-with-heads-in-kb-tags.md) and [ADR 090](../../adr/090-one-completeness-mark-reaches-members-in-one-hop.md): one namespace per KB, heads at `kb/tags/<tag>-README.md` identified by filename, one `complete` mark meaning one-hop reach, and no exact resolver. What remains here — the 2026-07 option space for what a tag assertion means, the head template fields, and the resolver-versus-head-traversal distinction — is design texture only.
 
 Commonplace has machinery for tag membership and routing, but no single
 semantic contract that tells writers what assigning a tag asserts, how a tag
@@ -16,7 +18,7 @@ rather than presenting the contract as shipped behavior.
 
 ## Current state (as of 2026-08-27)
 
-The shared `tags` field accepts free-form strings. [ADR 026](../adr/026-tag-readme-type-with-completeness-and-coverage-marks.md)
+The shared `tags` field accepts free-form strings. [ADR 026](../../adr/026-tag-readme-type-with-completeness-and-coverage-marks.md)
 defines curated tag heads and the `complete` and `covered_by` marks, but it
 deliberately leaves tag selection out of the write path. Membership checks are
 collection-scoped, and no binding surface defines tag membership as a semantic
@@ -30,12 +32,12 @@ system.
 
 Recent grounded navigation work now supplies a bounded evidence boundary for
 the routing half of the design. [Pirolli's information-foraging
-account](../../sources/pirolli-proximal-information-scent-distal-content.ingest.md)
+account](../../../sources/pirolli-proximal-information-scent-distal-content.ingest.md)
 models selection of unseen content from proximal cues; [Teevan and
-colleagues](../../sources/teevan-perfect-search-engine-orienteering.ingest.md)
+colleagues](../../../sources/teevan-perfect-search-engine-orienteering.ingest.md)
 observed human searchers combining contextual local steps with direct jumps;
 and [Tombros and
-Sanderson](../../sources/tombros-sanderson-query-biased-summaries.ingest.md)
+Sanderson](../../../sources/tombros-sanderson-query-biased-summaries.ingest.md)
 found better human relevance judgments from query-biased summaries than from a
 static surrogate. These sources distinguish navigation problems and motivate
 agent-side tests. They do not establish LLM-agent behavior or choose a tag
@@ -43,7 +45,7 @@ interface.
 
 ## External comparison: Gwern (2026-09-22)
 
-[Gwern’s tag design (snapshot required)](../../sources/gwern-design-of-this-website.ingest.md)
+[Gwern’s tag design (snapshot required)](../../../sources/gwern-design-of-this-website.ingest.md)
 supplies a concrete alternative to the proposed separation of heads from
 members. Its tag pages can themselves carry tags, but those assignments serve
 as nonrecursive cross-references and may cycle. That mechanism supports
@@ -57,7 +59,7 @@ curated heads from generated membership views. The remaining questions are
 whether repeated manual bibliographies justify another derived view and whether
 compact previews improve an agent’s next-read decisions. Browser convenience
 alone does not answer either question. The companion
-[tag-maintenance and browsing proposal](./tag-maintenance-and-derived-browsing.md)
+[tag-maintenance and browsing proposal](../tag-maintenance-and-derived-browsing.md)
 records the inspected implementation, candidate experiments, and the boundary
 between temporary generated groups and canonical membership changes.
 
@@ -142,7 +144,7 @@ The remainder of the head may take whatever form best represents the area: a fla
 Uniform routing does not require uniform exposition.
 
 The prefix is a stable pointer, not a relevance oracle. The [proximal-cue
-account](../../notes/agents-navigate-by-deciding-what-to-read-next.md) explains
+account](../../../notes/agents-navigate-by-deciding-what-to-read-next.md) explains
 why meaning, use conditions, boundaries, and context phrases can help a reader
 judge unseen destinations. Their usefulness remains relative to a task and
 consumer, and structural validation cannot establish their editorial quality.
@@ -226,14 +228,14 @@ not which artifacts best answer the current task.
 
 A tag head is a contextual local-navigation surface over that recoverable set.
 Its groupings and context phrases can support a sequence of informed next-read
-decisions. [Teevan and colleagues' human study](../../sources/teevan-perfect-search-engine-orienteering.ingest.md)
+decisions. [Teevan and colleagues' human study](../../../sources/teevan-perfect-search-engine-orienteering.ingest.md)
 shows that contextual local steps and direct jumps can serve different
 information-seeking paths, while withholding any claim that LLM agents prefer
 the same strategy.
 
 Task-level search is the complementary long-range route. It may recover
 relevant artifacts outside one tag or rank members for a narrower query.
-[Tombros and Sanderson's human experiment](../../sources/tombros-sanderson-query-biased-summaries.ingest.md)
+[Tombros and Sanderson's human experiment](../../../sources/tombros-sanderson-query-biased-summaries.ingest.md)
 supports testing query-conditioned result pointers rather than assuming that a
 fixed head or description is sufficient. It does not warrant a required
 agent-facing summarizer.
@@ -241,7 +243,7 @@ agent-facing summarizer.
 Failure or staleness of a curated head must therefore leave exact membership
 recoverable through the resolver. Task discovery may still require search even
 when the head is complete. The [end-to-end access
-account](../../notes/knowledge-access-architecture-must-be-evaluated-end-to-end.md)
+account](../../../notes/knowledge-access-architecture-must-be-evaluated-end-to-end.md)
 also prevents successful membership recovery from standing in for useful
 selection, loading, uptake, or task success.
 
@@ -331,7 +333,7 @@ as current guarantees.
 ## Related design work
 
 - [Tag scope is declared where membership claims are made](./tag-scope-is-declared-where-membership-claims-are-made.md) — part-of: owns the KB-root, projection, resolver, canonical-path, and migration machinery this semantic contract assumes
-- [Write-time vocabulary collision controls](./write-time-vocabulary-collision-controls.md) — see-also: supplies candidate registry and write-time mechanisms for enforcing one-string-one-sense
-- [Link-following and search impose different metadata requirements](../../notes/link-following-and-search-impose-different-metadata-requirements.md) — rests-on: distinguishes contextual local navigation from long-range selection without treating the tool invoked as the strategy
-- [Pointer design tradeoffs in progressive disclosure](../../notes/pointer-design-tradeoffs-in-progressive-disclosure.md) — rests-on: separates fixed, query-time, and authored pointers by specificity, cost, availability, and accuracy
-- [An enforced tag-README combines a MOC pattern with checked membership](../../notes/an-enforced-tag-readme-is-a-moc-with-a-machine-checked-contract.md) — rests-on: separates editorial mapping from the exact checked relation that authorizes a membership shortcut
+- [Write-time vocabulary collision controls](../write-time-vocabulary-collision-controls.md) — see-also: supplies candidate registry and write-time mechanisms for enforcing one-string-one-sense
+- [Link-following and search impose different metadata requirements](../../../notes/link-following-and-search-impose-different-metadata-requirements.md) — rests-on: distinguishes contextual local navigation from long-range selection without treating the tool invoked as the strategy
+- [Pointer design tradeoffs in progressive disclosure](../../../notes/pointer-design-tradeoffs-in-progressive-disclosure.md) — rests-on: separates fixed, query-time, and authored pointers by specificity, cost, availability, and accuracy
+- [An enforced tag-README combines a MOC pattern with checked membership](../../../notes/an-enforced-tag-readme-is-a-moc-with-a-machine-checked-contract.md) — rests-on: separates editorial mapping from the exact checked relation that authorizes a membership shortcut
