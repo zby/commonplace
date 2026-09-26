@@ -32,4 +32,4 @@ Making semantics more focused by narrowing the space of valid interpretations an
 
 ## Related Tags
 
-- [deploy-time-learning](./deploy-time-learning-README.md) — the framework constraining serves; the verifiability gradient locates constrained artifacts
+- [deploy-time-learning](./deploy-time-learning-README.md) — the post-release change constraining absorbs; the verifiability gradient locates constrained artifacts

@@ -5,7 +5,7 @@ type: types/tag-readme.md
 
 # KB maintenance
 
-How an agent-operated KB stays healthy as it grows. Detection, operations, and the dynamics that govern quality over time. For how the KB is *built*, see [tags](./README.md). For document structure, see [document-system](./document-system-README.md).
+How an agent-operated KB stays healthy as it grows. Detection, operations, and the dynamics that govern quality over time. For how the KB is *built*, see [architecture](./architecture-README.md) and [document-system](./document-system-README.md). For document structure, see [document-system](./document-system-README.md).
 
 ## Dynamics
 
@@ -33,6 +33,6 @@ How an agent-operated KB stays healthy as it grows. Detection, operations, and t
 
 ## Related Tags
 
-- [tags](./README.md) — parent area: architecture and design of the KB itself
+- [architecture](./architecture-README.md) — how the KB is laid out and installed
 - [document-system](./document-system-README.md) — type system and validation that maintenance operations check against
 - [links](./links-README.md) — linking methodology that staleness detection and quality signals operate on

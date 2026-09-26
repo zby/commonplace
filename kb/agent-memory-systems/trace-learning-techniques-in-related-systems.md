@@ -2,7 +2,7 @@
 description: Trace-learning systems compared on ingestion pattern, representational form, behavioral authority, artifact structure, and evidence tier across repo reviews and lightweight coverage
 type: types/note.md
 traits: [has-comparison, has-implementation]
-tags: [learning-theory, observability]
+tags: [learning-theory, observability, trace-learning]
 ---
 
 # Trace-learning techniques in related systems

@@ -34,6 +34,6 @@ These child tags route major parts of the area. A few fundamentals carry only th
 
 ## Related Tags
 
-- [tags](./README.md) — the hub; applies learning theory to KB architecture and evaluation
+- [evaluation](./evaluation-README.md) — where learning claims meet oracles, warrant, and experiment design
 - [document-system](./document-system-README.md) — the type ladder (text→note→structured-claim) instantiates the constraining gradient for documents
 - [context-engineering](./context-engineering-README.md) — where in-context learning meets the system layer that selects and organizes knowledge

@@ -6,7 +6,7 @@ complete: true
 
 # discovery
 
-A learning operation distinct from constraining and from source-derived reshaping: positing a new general concept and simultaneously recognizing existing particulars as instances of it. Discovery produces theories — the highest-[explanatory-reach](../notes/first-principles-reasoning-selects-for-explanatory-reach-over.md) items accumulation can store. A child of [learning-theory](./learning-theory-README.md).
+How an ampliative conjecture is made and earns acceptance: the [discovery lifecycle](../notes/definitions/discovery-lifecycle.md) is the staged path from observation through conjecture, derived consequences, and test to acceptance and integration; recognizing existing particulars as instances of the new concept is one of its phases, not the whole. Distinct from constraining, which narrows an interpretation space, and from source-derived reshaping. Discovery produces theories — the highest-[explanatory-reach](../notes/first-principles-reasoning-selects-for-explanatory-reach-over.md) items accumulation can store. A child of [learning-theory](./learning-theory-README.md).
 
 ## The operation
 

@@ -42,7 +42,7 @@ LLM output deviates from what the user intended for three distinct reasons — u
 
 ## Related notes in other areas
 
-- [enforcement-without-structured-recovery-is-incomplete](../notes/enforcement-without-structured-recovery-is-incomplete.md) (kb-design, learning-theory) — the enforcement gradient covers detection and blocking but not recovery; oracle strength constrains viable recovery strategies
+- [enforcement-without-structured-recovery-is-incomplete](../notes/enforcement-without-structured-recovery-is-incomplete.md) (learning-theory, constraining) — the enforcement gradient covers detection and blocking but not recovery; oracle strength constrains viable recovery strategies
 - [semantic-review-catches-content-errors-that-structural-validation-cannot](../notes/semantic-review-catches-content-errors-that-structural-validation.md) (kb-maintenance) — four semantic checks that are decorrelated weak oracles for content errors
 - [spec-mining-as-codification](../notes/spec-mining-as-codification.md) (learning-theory) — the manufacturing step: extracting deterministic checks from observed behavior to construct oracles
 - [silent disambiguation is the semantic analogue of tool fallback](../notes/silent-disambiguation-is-the-semantic-analogue-of-tool-fallback.md) (observability, computational-model) — adjacent distinction: some bad outcomes come from hidden semantic recovery after an ambiguous spec, not from interpreter failure inside a clear spec

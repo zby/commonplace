@@ -1,7 +1,6 @@
 ---
 description: Index of notes about the document type system — why types exist, what roles they serve, how they improve output quality, and how they're structured
 type: types/tag-readme.md
-tags: [document-system]
 ---
 
 # Type system

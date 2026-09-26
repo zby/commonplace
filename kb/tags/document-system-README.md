@@ -35,11 +35,11 @@ For how the live Commonplace system uses global and collection-local type contra
 
 ## Decisions
 
-- [002-inline-global-types-in-writing-guide](../reference/adr/002-inline-global-types-in-writing-guide.md) — inline note and structured-claim templates into WRITING.md, eliminating one hop for the two most common note types
+- [084-kind rules live in type specs and operations in instructions](../reference/adr/084-kind-rules-live-in-type-specs-and-operations-in-instructions.md) — where a document kind's rules are stated and where its procedures live; the collection contracts (`COLLECTION.md`) replaced the old writing guide
 
 ## Related Tags
 
 - [type-system](./type-system-README.md) — sub-area: why documents have types, their roles, and how structured writing improves quality
-- [tags](./README.md) — the document system is infrastructure for the KB; architecture decisions about storage substrate and context loading depend on document structure
+- [architecture](./architecture-README.md) — storage substrate and layout decisions that depend on document structure
 - [links](./links-README.md) — [title-as-claim](../notes/title-as-claim-enables-traversal-as-reasoning.md) bridges both areas: it's a writing convention that enables link semantics
 - [learning-theory](./learning-theory-README.md) — the type ladder instantiates the constraining gradient for documents
