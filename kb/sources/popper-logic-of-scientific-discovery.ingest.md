@@ -31,6 +31,14 @@ Popper replaces verification with falsifiability as the mark of empirical scienc
   - **Source location:** Chapter 10, section 82 "The Positive Theory of Corroboration", starred footnote *1, second paragraph
 - **Source extract (verbatim):** In opposition to this inductivist attitude, I assert that _C_ ( _h_ , _e_ ) must not be interpreted as the degree of corroboration of _h_ by _e_ , unless _e_ reports the results of _our sincere efforts to overthrow h_ . The requirement of sincerity cannot be formalized—no more than the inductivist requirement that _e_ must represent our total observational knowledge.
   - **Source location:** Appendix *ix "Corroboration, the Weight of Evidence, and Statistical Tests", Third Note, point *14, second paragraph
+- **Source extract (verbatim):** To a higher degree of universality _or_ precision corresponds a greater (logical or) empirical content, and thus a higher degree of testability.
+  - **Source location:** Chapter 6, section 36 "Levels of Universality and Degrees of Precision", third paragraph (after the diagram of statements p, q, r, s)
+- **Source extract (verbatim):** If of two statements both their universality _and_ their precision are comparable, then the less universal or less precise is derivable from the more universal or more precise; unless, of course, the one is more universal and the other more precise (as in the case of _q_ and _r_ in my diagram).
+  - **Source location:** Chapter 6, section 36 "Levels of Universality and Degrees of Precision", the derivability rule stated after the definitions of universality and precision for universal conditional statements
+- **Source extract (verbatim):** The falsifying mode of inference here referred to—the way in which the falsification of a conclusion entails the falsification of the system from which it is derived—is the _modus tollens_ of classical logic.
+  - **Source location:** Part II, Chapter 3, section 18 "Levels of Universality. The Modus Tollens", paragraph introducing the modus tollens
+- **Source extract (verbatim):** By means of this mode of inference we falsify _the whole system_ (the theory as well as the initial conditions) which was required for the deduction of the statement _p_ , _i.e._ of the falsified statement. Thus it cannot be asserted of any one statement of the system that it is, or is not, specifically upset by the falsification. Only if _p_ is _independent_ of some part of the system can we say that this part is not involved in the falsification.
+  - **Source location:** Part II, Chapter 3, section 18 "Levels of Universality. The Modus Tollens", paragraph following the symbolized inference ((t → p).p¯) → t¯
 
 ## Connections Found
 
