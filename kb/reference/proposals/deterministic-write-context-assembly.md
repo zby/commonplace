@@ -12,13 +12,17 @@ The design question is whether a narrow tool should compile the authoring contex
 
 The two choices are independent. A coded assembler can have a closed set of named input roles. Making those roles open to arbitrary providers is a separate design with different costs.
 
-## Current state (as of 2026-08-08)
+## Current state (as of 2026-09-26)
 
 - [`cp-skill-write`](../../instructions/cp-skill-write/SKILL.md) implements separate edit and new-write branches in prose. It resolves the target collection and type, reads their contracts, and establishes the intended contribution from the live request plus the incumbent when one exists.
+- The deterministic mechanics in that prose have grown. Type values are now paths on a two-root search path ([ADR 088](../adr/088-type-values-are-paths-on-a-two-root-search-path.md)), and global types are read from the installed package ([ADR 086](../adr/086-projects-read-the-library-from-the-installed-package.md)). Step 1 therefore explains path forms, invalid prefixes, resolution from the skill's real location, and a shorthand lookup that inspects each candidate's frontmatter and stops on zero or several matches. Step 7 resolves an exact ingest for each named source dependency and, on the snapshot route, checks a SHA-256 and canonical source. These are the kind of rule a resolver would own.
 - New-write mode defaults or selects a collection and type before a target artifact exists. It also has to establish audience, purpose, reader update, and distinguishing angle without an incumbent from which to recover them.
-- [`cp-skill-write-multistage`](../../instructions/cp-skill-write-multistage/SKILL.md) is a new, untested experiment. Its separation of task-fixed intent into a temporary workshop `brief.md` is a possible source of features for ordinary writing, not established architecture or a required initial consumer. The standalone [`asd-ste100-inspired-rewrite`](../../instructions/asd-ste100-inspired-rewrite.md) instruction also repeats target, collection-contract, and type-specification reads.
-- [`collections-and-types`](../collections-and-types.md) describes the shipped design as read-time composition of ordinary files. There is no resolver command or generated write-context packet.
-- [ADR 018](../adr/018-types-are-path-references-to-instruction-docs.md) considered and rejected `commonplace-write-context`. The accepted comparison favored direct pointers and ordinary file reads because a synthesized packet introduced another interface for agents to interpret.
+- Step 4 of `cp-skill-write` defines a retained-intent input: a context block that names its source, subject, scope, and force. The skill forbids ad hoc history search and waits for a mechanism to supply that input. No shipped mechanism supplies it; this assembler is one candidate.
+- [`cp-skill-write-multistage`](../../instructions/cp-skill-write-multistage/SKILL.md) has run on at least seven targets (2026-08-14 to 2026-08-28, under `kb/work/multistage/`). Each run separated task-fixed intent into a temporary `brief.md`. It remains a possible source of features for ordinary writing, not a required initial consumer. The standalone [`asd-ste100-inspired-rewrite`](../../instructions/asd-ste100-inspired-rewrite.md) instruction also repeats target, collection-contract, and type-specification reads.
+- [Collections and types](../collections-and-types.md#authoring-composition) describes the shipped design as read-time composition of three ordinary files. There is no resolver command or generated write-context packet, and "no third file joins this composition".
+- [ADR 018](../adr/018-types-are-path-references-to-instruction-docs.md) considered and rejected `commonplace-write-context`. The accepted comparison favored direct pointers and ordinary file reads because a synthesized packet introduced another interface for agents to interpret. That argument still stands for the agent-facing surface; it predates the path-resolution rules that ADRs 086 and 088 added to skill prose.
+- Since ADR 086, skills and commands ship from the same installed package. A writing skill that calls a package command no longer risks a skill and command from different versions.
+- [`commonplace-resolve-criteria`](../commands.md#commonplace-resolve-criteria) is a shipped precedent on the review side: code resolves gate, bundle, and conformance requests into criterion definitions, and the review procedure consumes the result.
 - The current skills own semantic as well as mechanical instructions: they say which paths to resolve, what failures stop writing, how contracts combine, and what the writer must decide.
 - The [per-artifact write-brief proposal](./per-artifact-write-briefs.md) is unadopted. It depends on this proposal because it must not add a separate brief-discovery protocol to every writer.
 
@@ -26,7 +30,7 @@ The two choices are independent. A coded assembler can have a closed set of name
 
 Direct file reads preserve transparency and avoid tooling, but the ordinary skill must encode the mechanics around them. Its new-write branch has to resolve a not-yet-existing target, expose the available structural choices, carry task-fixed information forward, and make missing semantic choices visible. Its edit branch can instead derive some of those facts from the incumbent. As more of that deterministic preparation is expressed in skill prose, the procedure becomes harder to inspect and test even before another consumer exists.
 
-Other writing procedures provide secondary evidence that resolution mechanics can recur, but no design should be justified by treating an untested multistage experiment as a settled consumer. The immediate question is whether the ordinary path itself becomes clearer when code supplies a mode-appropriate context packet and the skill retains the writing judgment.
+Other writing procedures provide secondary evidence that resolution mechanics can recur, but no design should be justified by treating the multistage procedure as a settled consumer. The immediate question is whether the ordinary path itself becomes clearer when code supplies a mode-appropriate context packet and the skill retains the writing judgment.
 
 The opposite response is also dangerous. A generic context-provider interface would make new inputs cheap to add before their loading frequency, authority, context cost, or lifecycle has been justified. The prediction that more inputs will appear can become self-fulfilling because the extension point removes the friction that would otherwise test each addition.
 
@@ -74,7 +78,7 @@ This is the most general design and the easiest to accrete. It needs admission, 
 
 ## Forces
 
-- **Ordinary-path value versus speculative reuse.** The first implementation should earn its cost by improving ordinary new and edit writes. Reuse by the untested multistage procedure or future writers is possible but cannot supply the initial warrant.
+- **Ordinary-path value versus speculative reuse.** The first implementation should earn its cost by improving ordinary new and edit writes. Reuse by the multistage procedure or future writers is possible but cannot supply the initial warrant.
 - **Mode asymmetry.** An edit has an artifact, path, type declaration, and realized prose. A new write has only invocation inputs and defaults. Treating both as the same lookup either hides missing choices or burdens edits with initiation material they do not need.
 - **File authority versus compiled convenience.** Writers should be able to identify the canonical source of every instruction. A transient packet is useful only if it preserves that provenance and does not become a second editable truth.
 - **Context economy.** Assembly can remove discovery, tool calls, and repeated interpretation. It does not automatically reduce raw tokens when it inserts the same complete documents the agent would otherwise read.
