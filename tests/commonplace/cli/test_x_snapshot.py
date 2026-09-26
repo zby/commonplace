@@ -176,7 +176,7 @@ def test_x_snapshot_captures_each_content_family(
     sidecar = json.loads(json_path.read_text(encoding="utf-8"))
 
     assert fm["type"] == "types/snapshot.md"
-    assert fm["tags"] == [expected_family]
+    assert "tags" not in fm
     assert len(md_path.stem) <= MAX_INGEST_SNAPSHOT_SLUG_LENGTH
     assert len(f"{md_path.stem}.ingest") <= 70
     assert md_path.stem.endswith(f"-{target_post['id']}")

@@ -67,7 +67,7 @@ def test_github_snapshot_captures_issue_and_pull_request_families(
     fm = frontmatter(md_path)
 
     assert fm["type"] == "types/snapshot.md"
-    assert fm["tags"] == [expected_family]
+    assert "tags" not in fm
     assert fm["api_url"] == expected_api_url
     assert len(md_path.stem) <= MAX_INGEST_SNAPSHOT_SLUG_LENGTH
     assert len(f"{md_path.stem}.ingest") <= 70

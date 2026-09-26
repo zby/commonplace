@@ -260,7 +260,6 @@ def _render_markdown(
         f'captured: "{timestamp}"',
         "capture: xdk",
         "type: types/snapshot.md",
-        f"tags: [{kind}]",
         f"status_id: {status_id}",
         f"conversation_id: {conversation_id}",
         f"post_count: {len(posts_sorted)}",

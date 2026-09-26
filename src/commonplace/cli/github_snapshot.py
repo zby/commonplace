@@ -59,11 +59,6 @@ def _to_api_url(url: str) -> tuple[str, str]:
     )
 
 
-def _github_family(api_url: str, source_url: str) -> str:
-    if "/pulls/" in api_url or "/pull/" in source_url:
-        return "github-pr"
-    return "github-issue"
-
 
 def _gh_api(url: str, timeout: int = 30) -> str:
     result = subprocess.run(
@@ -120,7 +115,6 @@ def _render_markdown(data: dict) -> str:
 
 def snapshot_github_url(url: str, out_dir: str, *, reobserve: bool = False) -> str:
     api_url, source_url = _to_api_url(url)
-    family = _github_family(api_url, source_url)
 
     now = datetime.now(UTC)
     timestamp = now.isoformat()
@@ -180,7 +174,6 @@ def snapshot_github_url(url: str, out_dir: str, *, reobserve: bool = False) -> s
         f'captured: "{timestamp}"\n'
         f"capture: gh-api\n"
         f"type: types/snapshot.md\n"
-        f"tags: [{family}]\n"
         f"---\n\n"
         f"{md_body}"
     )
