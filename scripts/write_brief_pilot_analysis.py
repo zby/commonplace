@@ -2,6 +2,8 @@
 
 Usage: python3 scripts/write_brief_pilot_analysis.py [workshop_dir]
 Final item score = shared A/B code, else the adjudicator's (C) code.
+The workshop was deleted after closing; restore its data first with
+  git checkout 297c3552 -- kb/work/write-brief-pilot
 """
 import re, sys, collections
 W = sys.argv[1] if len(sys.argv) > 1 else 'kb/work/write-brief-pilot'
