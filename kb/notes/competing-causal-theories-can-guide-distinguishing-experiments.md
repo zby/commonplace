@@ -24,6 +24,8 @@ $$
 
 Under passive observation, both reduce to $Y=U\oplus E$. They therefore give exactly the same joint distribution: $P(0,0)=P(1,1)=0.45$ and $P(0,1)=P(1,0)=0.05$, where each pair denotes $(X,Y)$. In particular, both give $P(Y=1\mid X=1)=0.9$.
 
+For independent passive observations $D$, their likelihoods and ideal data-encoding costs $-\log_2 P(D\mid M)$ are equal, where $M$ is A or B. A shorter model description could favor one by simplicity, but would not supply distinguishing observational evidence.
+
 Replacing $X:=U$ with $X:=1$ leaves different mechanisms for $Y$:
 
 $$
@@ -50,7 +52,9 @@ The limitation concerns evidence and assumptions, not output format. A probabili
 
 For Commonplace's [theory builder](./definitions/theory-builder.md), which consumes and criticizes stated theories and uses the results in later work, our design consequence is that retained theories should help determine what evidence to seek next. When competing explanations matter to a decision, their disagreements should guide a feasible discriminating test. Retaining the predictions, intervention assumptions, testing rule, and results gives later criticism a basis for revising the explanations or the test. This applies established causal inference and critical testing to KB operation. Whether retention improves performance relative to reconstructing theories remains part of [Commonplace's research program](./commonplace-builds-a-theory-builder-and-tests-whether-it-learns.md).
 
-Schmidhuber's [Driven by Compression Progress](../sources/driven-by-compression-progress.ingest.md) supplies a neighboring account of choosing future observations. For curiosity-driven exploration, its controller seeks experiences expected to improve compression; progress compares old and new compressors on the same history. Our comparison is that both approaches let the learner's current state guide evidence acquisition. Their selection criteria differ: here, experiments target disagreement between causal theories; there, exploration targets expected compression improvement. Better compression of the shared observational distribution still cannot distinguish A from B.
+In Schmidhuber's [Driven by Compression Progress](../sources/driven-by-compression-progress.ingest.md), the controller actively seeks experiences expected to improve compression (§2.7), and progress compares old and new compressors on the same history (Appendix A.5). Our connection is that causal disagreement offers a concrete way to locate such opportunities. A tentative theory can guide productive experiments even when it offers no better compression of existing observations. Choosing a promising test, measuring the resulting learning progress, and judging what its results warrant remain separate tasks. A compression gain does not establish causal identification or replace criticism of the experiment's assumptions.
+
+Discovering that a predicted pattern fails can also improve compression. In our example, suppose B holds and an old predictor incorrectly carries $P(Y=X)=0.9$ into the randomized regime. Its expected ideal cost for encoding a match or mismatch is $-\tfrac12\log_2(0.9)-\tfrac12\log_2(0.1)\approx1.737$ bits per trial. A corrected predictor assigning $0.5$ uses one bit. The expected saving is $0.737$ bits on the same intervention data, before model-description costs. Progress here means correcting an expectation about where a regularity holds.
 
 ## Scope
 
