@@ -51,6 +51,9 @@ Popper argues that knowledge grows through tentative solutions to problems, crit
 - **Source extract (verbatim):** Now if a theory stands up to many such tests, then, owing to the incorporation of the results of our tests into our background knowledge, there may be, after a time, no places left where (in the light of our new background knowledge) counter examples can with a high probability be expected to occur. But this means that the degree of severity of our test declines. This is also the reason why an often repeated test will no longer be considered as significant or as severe: there is something like a law of diminishing returns from repeated tests (as opposed to tests which, in the light of our background knowledge, are of a new kind, and which therefore may still be felt to be significant).
   - **Source location:** Chapter 10, 'Truth, Rationality, and the Growth of Scientific Knowledge', subsection 4, 'Background Knowledge and Scientific Growth', section XVII, printed p. 240; paragraph beginning 'A serious empirical test always consists in the attempt to find a refutation'.
 
+- **Source extract (verbatim):** a serious but unsuccessful attempt to falsify the theory. (I now speak in such cases of 'corroborating evidence'.)
+  - **Source location:** Chapter 1, 'Science: Conjectures and Refutations', section I, numbered conclusion 6, printed p. 36.
+
 ## Connections Found
 
 The source supplies a philosophical anchor for [narrowing bought to survive review is paid for in content](../notes/narrowing-bought-to-survive-review-is-paid-for-in-content.md). Chapter 1's numbered conditions connect informative theories to forbidden outcomes and identify rescue by reinterpretation as a loss of scientific standing. Chapter 10 adds a stronger demand: a successor theory should have testable consequences beyond the facts it was constructed to explain. This supports the note's concern about empty repair; it does not establish the note's account of review incentives or its local witness.
@@ -82,3 +85,9 @@ The complete book is captured, but this analysis concentrates on the preface and
 ## Recommended Next Action
 
 Done: [Addressable theory](../notes/definitions/addressable-theory.md) cites Chapter 10, section XVI, for its statement that a failed prediction may implicate several commitments without uniquely locating the fault.
+
+---
+
+Abstracted into:
+
+- [Competing causal theories can guide distinguishing experiments](../notes/competing-causal-theories-can-guide-distinguishing-experiments.md) — applies critical testing and corroboration to retaining rival causal explanations; the note distinguishes finite-sample statistical discrimination from deductive refutation

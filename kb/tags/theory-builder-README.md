@@ -21,6 +21,7 @@ Systems that apply Popper's conjecture and refutation to theories they state: th
 
 ## Criticizing and assessing theories
 
+- [Competing causal theories can guide distinguishing experiments](../notes/competing-causal-theories-can-guide-distinguishing-experiments.md) — unresolved explanations can specify what evidence to seek next, even when their observational predictions agree
 - [A claim's warrant does not determine its fit in a working theory](../notes/a-claims-warrant-does-not-determine-its-fit-in-a-working-theory.md) — warrant and fit are separate questions a builder must answer separately
 - [System use selects theory fit without a fixed oracle](../notes/system-use-selects-theory-fit-without-a-fixed-oracle.md) — live use selects for fit where no oracle decides it
 - [System use provides evidence of theory fit, not independent warrant](../notes/system-use-provides-evidence-of-theory-fit-not-independent-warrant.md) — the limit of that selection: warrant still needs independent evidence
