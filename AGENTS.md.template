@@ -129,6 +129,8 @@ Entry points:
 - `commonplace/kb/tags/README.md` — vendored Commonplace research KB (read-only): agent context engineering, memory, deploy-time learning
 -->
 
+Before assigning a tag, read `kb/tags/<tag>-README.md` and check its inclusion condition and boundaries. The artifact must substantively address the stated subject, question, or mechanism; mention or background use is insufficient. Clarify an ambiguous condition before assigning.
+
 ```bash
 # Find notes by description
 rg "^description:" kb/notes/ kb/reference/ kb/instructions/ --glob "*.md"

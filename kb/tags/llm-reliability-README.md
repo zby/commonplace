@@ -5,7 +5,7 @@ type: types/tag-readme.md
 
 # LLM reliability
 
-LLM output deviates from what the user intended for three distinct reasons — underspecification of the spec, error by the interpreter, and indeterminism in sampling — each diagnosed by a different question and each repaired at a different primary surface. This area covers that taxonomy, the detection and correction machinery (oracles, voting, verification), and architectural responses (separation, bounded context) for managing all three.
+LLM output deviates from what the user intended for three distinct reasons — underspecification of the spec, error by the interpreter, and indeterminism in sampling — each diagnosed by a different question and each repaired at a different primary surface. Assign this tag when an artifact diagnoses those deviations or explains, tests, or improves the machinery that prevents, detects, or corrects them, including oracles, voting, verification, and architectural separation. Merely evaluating an LLM is insufficient: [evaluation](./evaluation-README.md) covers what a check or experiment establishes; this tag requires a substantive connection to output deviation or correction.
 
 ## The Taxonomy
 

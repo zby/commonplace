@@ -5,7 +5,7 @@ type: types/tag-readme.md
 
 # Type system
 
-Why documents have types, what the type system does, and how structured writing improves quality. Sub-area of [document-system](./document-system-README.md).
+Why documents have types, what type contracts require, and how typed or structured writing affects output quality. Assign this tag to work on document types, their roles and enforcement, or the effects of prescribing document structure. Merely using a type or writing a document is insufficient. The parent [document-system](./document-system-README.md) also covers writing, organization, and retention that do not depend on types; programming-language typing of an agent runtime belongs to [computational-model](./computational-model-README.md) unless document contracts are also at issue.
 
 ## Overview
 

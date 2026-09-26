@@ -38,6 +38,7 @@ rg -l '^tags:.*\bTAG\b' kb/notes/ kb/reference/ kb/instructions/ kb/agent-memory
 
 Ask:
 
+- **Can a writer decide placement from the opening?** It must state what an artifact must substantively address to qualify and distinguish confusing neighboring tags. Mention or background use is insufficient. Check a clear member and a nearby non-member against the wording; when both tags fit, allow both. Curated background links do not themselves assert membership.
 - **Do the groupings still make sense?** Sections should reflect natural clusters. If a section has grown to 15+ entries, it may need sub-grouping or splitting into its own index.
 - **Are the context phrases still accurate?** A note's role in the topic may have shifted since the phrase was written.
 - **Are important notes missing?** Compare the curated entries against the tag's full membership from the listing above. Tagged notes absent from the index are either: (a) not important enough to curate, which is fine, or (b) missing editorial placement, which should be fixed.
@@ -50,7 +51,7 @@ Ask:
 rg -L "^tags:" kb/notes/*.md
 ```
 
-For each orphan, consider whether adding tags would help future readers find it.
+For each orphan, consider whether adding tags would help future readers find it. Read each candidate head and assign the tag only when the note meets its inclusion condition. Clarify an ambiguous condition before assigning.
 
 ### 4. Split or promote
 

@@ -5,7 +5,7 @@ type: types/tag-readme.md
 
 # Computational model
 
-What kind of "programs" LLM instructions are, and what programming-language concepts — scoping, homoiconicity, partial evaluation, typing — illuminate their behavior. Unlike [learning-theory](./learning-theory-README.md), it covers the computational properties of the medium itself and the scheduling architecture that follows from context scarcity.
+How LLM-based programs execute: instruction interpretation, scoping, state, tool-call loops, and the scheduling and orchestration of bounded calls. Assign this tag when an artifact explains or compares those execution mechanisms or their computational limits, including through programming-language concepts such as homoiconicity, partial evaluation, and typing. Merely running on an LLM or using tools is insufficient. [Context-engineering](./context-engineering-README.md) asks what knowledge reaches a call; this tag asks how calls and their surrounding control execute. An artifact that explains both may carry both tags. [Learning-theory](./learning-theory-README.md) covers how systems learn and improve.
 
 **The formal computational model with the LLM inside is [Bounded-context orchestration model](../notes/bounded-context-orchestration-model.md):** closed-world orchestration with explicit state and barriered batches of independent LLM calls, in a conditional select/call normal form; its generality lemma is [any symbolic program with LLM calls is a select/call program](../notes/any-symbolic-program-with-llm-calls-is-a-select-call-program.md).
 

@@ -194,6 +194,8 @@ Entry points:
 
 Each tag's curated head is `kb/tags/<tag>-README.md` (type `types/tag-readme.md`), small by type contract; tag membership ranges over the collections listed in `kb/tags/COLLECTION.md`. It may declare one validator-enforced frontmatter mark, `complete: true`: every artifact carrying the tag is linked from the head or carries a tag whose head is linked from it, so the head reaches every member in one hop and a reader can skip the by-tag `rg` sweep. Maintenance of the mark lives in `kb/types/tag-readme.md` (ADR 026, ADR 089, ADR 090).
 
+Before assigning a tag, read `kb/tags/<tag>-README.md` and check its inclusion condition and boundaries. The artifact must substantively address the stated subject, question, or mechanism; mention or background use is insufficient. Clarify an ambiguous condition before assigning.
+
 ```bash
 # Find notes by description
 rg "^description:" kb/notes/ kb/reference/ kb/instructions/ --glob "*.md"

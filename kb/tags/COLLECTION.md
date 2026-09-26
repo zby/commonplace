@@ -37,11 +37,21 @@ reference proposals. Instructions, ADRs, and the other reference pages route
 through their own indexes and carry no tags; that is a rule, not a gap
 (operator decision, 2026-09-26).
 
+## Tag assignment
+
+Before assigning a tag, read its head. Assign it only when the artifact
+substantively addresses the head's stated subject, question, or mechanism;
+mention or background use is insufficient. When the head leaves placement
+ambiguous, clarify its inclusion condition before assigning the tag. An
+artifact may carry neighboring tags when it meets each condition.
+
 ## Quality goal
 
-A head is good when its first paragraph lets a reader decide whether the tag
-is what they are looking for, and its picks let them find the load-bearing
-entries without the full listing. Keep heads small: the type warns past 8 KB
+A head is good when its opening lets a reader decide whether the tag is what
+they are looking for and lets a writer justify or challenge an assignment.
+State the inclusion condition and, where neighboring tags could be confused,
+the boundary. The picks then let readers find the load-bearing entries
+without the full listing. Keep heads small: the type warns past 8 KB
 and fails past 16 KB. Prefer splitting a large tag into child tags, each with
 its own head, over grouping inside one head.
 

@@ -6,7 +6,7 @@ complete: true
 
 # improvement-loop
 
-The machinery of improvement loops: how candidate changes are searched for, evaluated with the possibility of rejection, and retained so that later operation depends on them. The establishing note is [a proposal-selection improvement loop requires search, evaluation, and operative retention](../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md). The parent head's update-architecture distinction applies here: in a direct update, evidence determines a change that is always adopted, as with gradients; in proposal selection, a candidate can be rejected before it becomes operative. Most notes here are about proposal selection. What theory guides the search and how it is criticized belongs to [theory-builder](./theory-builder-README.md). A child of [self-improving-systems](./self-improving-systems-README.md).
+How improvement candidates are searched for, evaluated with the possibility of rejection, and retained so that later operation depends on them. Assign this tag to work on these functions, their coordination and failure, or their boundary with direct updates that adopt a change without a separate candidate-admission decision. The establishing note is [a proposal-selection improvement loop requires search, evaluation, and operative retention](../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md). A recurring task loop alone is insufficient: the subject must be how a change becomes a candidate, is selected, or affects later operation. [Theory-builder](./theory-builder-README.md) covers the stated theories guiding the work and criticism of their content; work on how that criticism controls candidate search can carry both tags. A child of [self-improving-systems](./self-improving-systems-README.md).
 
 ## Loop structure
 
@@ -35,7 +35,7 @@ The machinery of improvement loops: how candidate changes are searched for, eval
 
 ## Related Tags
 
-- [self-improving-systems](./self-improving-systems-README.md) — the parent, whose update-architecture section places proposal selection beside direct update
+- [self-improving-systems](./self-improving-systems-README.md) — the parent: evidence-responsive changes to a system's own organization, whether by proposal selection or direct update
 - [theory-builder](./theory-builder-README.md) — the theories that guide search; shares the notes on theory-guided search
 - [software-factory](./software-factory-README.md) — factory revision is one target a loop can retain changes into
 - [reflection](./reflection-README.md) — loops whose retained changes pass through a self-representation

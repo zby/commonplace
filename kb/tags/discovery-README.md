@@ -6,7 +6,7 @@ complete: true
 
 # discovery
 
-How an ampliative conjecture is made and earns acceptance: the [discovery lifecycle](../notes/definitions/discovery-lifecycle.md) is the staged path from observation through conjecture, derived consequences, and test to acceptance and integration; recognizing existing particulars as instances of the new concept is one of its phases, not the whole. Distinct from constraining, which narrows an interpretation space, and from source-derived reshaping. Discovery produces theories — the highest-[explanatory-reach](../notes/first-principles-reasoning-selects-for-explanatory-reach-over.md) items accumulation can store. A child of [learning-theory](./learning-theory-README.md).
+How a conjecture that goes beyond the available evidence is formed, tested, and accepted. The [discovery lifecycle](../notes/definitions/discovery-lifecycle.md) runs from observation through conjecture, derived consequences, and test to acceptance and integration. Assign this tag to work on those operations, the conditions that enable them, or the [explanatory-reach](../notes/first-principles-reasoning-selects-for-explanatory-reach-over.md) and warrant of what they produce. Recognizing particulars as instances of a new concept belongs here; retrieving an already known document alone belongs to [context-engineering](./context-engineering-README.md). [Constraining](./constraining-README.md) narrows interpretations, and reshaping source material can preserve its claims without adding a conjecture. A child of [learning-theory](./learning-theory-README.md).
 
 ## The operation
 

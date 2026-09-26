@@ -19,6 +19,18 @@ Every tag in use has a head. Validation reports a tag on an artifact in a
 participating collection whose head does not exist; write the head or drop
 the tag. A tag not worth a head is not worth assigning.
 
+## Tag assignment
+
+Before assigning a tag, read its head. Assign it only when the artifact
+substantively addresses the head's stated subject, question, or mechanism;
+mention or background use is insufficient. When the head leaves placement
+ambiguous, clarify its inclusion condition before assigning the tag. An
+artifact may carry neighboring tags when it meets each condition.
+
+A head states that inclusion condition in its opening and distinguishes
+neighboring tags where they could be confused. Assignment fit is judged during
+authoring and semantic review; deterministic validation does not establish it.
+
 ## Participating collections
 
 The `participating:` list in this file's frontmatter names the collections

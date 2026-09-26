@@ -11,19 +11,21 @@ schema: ./tag-readme.schema.yaml
 
 A tag-README is the tag's curated head: a short orientation paragraph plus selective editorial picks with context phrases. It lives at `kb/tags/<tag>-README.md`, and the filename is its identity: the file names the tag, and nothing else does ([ADR 089](../reference/adr/089-tags-are-one-namespace-per-kb-with-heads-in-kb-tags.md)). It mirrors the directory convention — a directory's curated head is `README.md`, a tag's is `<tag>-README.md`.
 
-Every tag in use has a head. The validator reports a tag on an artifact in a participating collection whose head does not exist; the remedy is to write the head or drop the tag. A head may be minimal: what the tag gathers, and a few picks.
+Every tag in use has a head. The validator reports a tag on an artifact in a participating collection whose head does not exist; the remedy is to write the head or drop the tag. A head may be minimal: what qualifies for the tag, and a few picks.
 
 A tag-README is understood standalone — the field names are self-describing and the body is ordinary curated prose. This spec is **maintenance-path only**: load it when writing a head, declaring or dropping the mark, fixing a validator warning, or executing a lifecycle exit.
 
-- Open with what the tag gathers, in the words a reader would search for, and name the defining note if the tag has one. A head that only summarises its picks hides what the tag means.
-- Name the nearby concepts that do not imply membership when a reader could confuse them; a boundary sentence saves more misfiled tags than a longer definition.
+- Open with what the tag gathers, in the words a reader would search for, and name the defining note if the tag has one. State what makes an artifact qualify for the tag: the subject, question, or mechanism it must substantively address. Mentioning the topic or using it as background is insufficient. A writer must be able to justify or challenge an assignment from this opening without inferring the rule from the picks.
+- Where neighboring tags could be confused, state the boundary: what belongs here and what belongs under the neighbor. Tags may overlap when an artifact meets both inclusion conditions; a boundary is not a demand to choose only one tag. Ordinary prose is sufficient; no fixed heading or formal predicate is required.
 - Curated entries MUST have context phrases — a bare link list is an address book, not a map.
 - Be selective by default. Completeness is the build's job (the published site appends the full generated listing) and the scoped query's job (`rg` recipes in `kb/reference/navigation.md`) — not the author's, unless the `complete` mark is declared.
 - Do not hand-write a complete listing, or claim in body text that the linked child heads cover the tag, without declaring `complete: true` — an unenforced version of that claim decays silently into the stale-index failure.
 
+Assignment fit is judged during authoring and semantic review. The deterministic validator checks head existence, structure, links, weight, and declared completeness; it does not establish that an artifact fits the tag's meaning.
+
 ## Scope
 
-Membership ranges over the collections that `kb/tags/COLLECTION.md` declares in its `participating:` list, and over nothing else. Both marks, the generated tail on the published site, and the head requirement read that one declaration. Artifacts outside it may carry `tags:` lines; no tag consumer reads them.
+Membership ranges over the collections that `kb/tags/COLLECTION.md` declares in its `participating:` list, and over nothing else. The mark, the generated tail on the published site, and the head requirement read that one declaration. Artifacts outside it may carry `tags:` lines; no tag consumer reads them.
 
 ## Frontmatter
 
@@ -61,7 +63,7 @@ type: types/tag-readme.md
 
 # {tag-name}
 
-{Orientation: what this tag gathers, the defining note if there is one, and how to use this page.}
+{Opening: what an artifact must substantively address to qualify, the defining note if there is one, the boundary with confusing neighbors, and how to use this page.}
 
 ## {Grouping}
 

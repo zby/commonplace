@@ -5,7 +5,7 @@ type: types/tag-readme.md
 
 # Observability
 
-Observability is about recovering signals that would otherwise stay hidden: execution paths that differ from the intended one, quality drift that has not yet become a visible failure, and system state that operators need in order to debug, maintain, and improve the runtime.
+Making otherwise hidden execution paths, system state, failures, and quality drift visible. Assign this tag when an artifact explains what evidence exposes such a condition, why available evidence cannot expose it, or how that evidence becomes inspectable. Describing a failure without addressing its visibility is insufficient. [Evaluation](./evaluation-README.md) asks what a check establishes; observability asks what can be seen or reconstructed. [KB maintenance](./kb-maintenance-README.md) covers the actions taken to keep the KB healthy. Work on signals used by those actions may carry both tags.
 
 ## Runtime visibility
 

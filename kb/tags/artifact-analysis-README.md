@@ -6,7 +6,7 @@ complete: true
 
 # artifact-analysis
 
-The vocabulary for analyzing retained artifacts: where behavior-shaping state persists, how it is encoded, where it came from, and with what force it acts. The four-field scheme (storage substrate, representational form, lineage, behavioral authority) classifies any retained artifact without collapsing into storage-based taxonomy. A child of [learning-theory](./learning-theory-README.md); the agent-memory-systems reviews apply this vocabulary to external systems.
+[Artifact analysis](../notes/axes-of-artifact-analysis.md) classifies retained artifacts by storage substrate, representational form, lineage, and behavioral authority. Assign this tag to work that defines, extends, tests, or draws design consequences from that scheme. Merely storing artifacts or filling in the fields is insufficient. [Document-system](./document-system-README.md) covers writing and checking documents; this tag covers retained artifacts across forms. A child of [learning-theory](./learning-theory-README.md).
 
 ## The scheme
 

@@ -5,7 +5,7 @@ type: types/tag-readme.md
 
 # constraining
 
-Making semantics more focused by narrowing the space of valid interpretations an artifact admits — from partial narrowing (conventions) to full commitment (deterministic code). The primary mechanism for hardening deployed systems, with relaxing as its deliberate reverse. A child of [learning-theory](./learning-theory-README.md).
+[Constraining](../notes/definitions/constraining.md) narrows the space of valid interpretations an artifact admits, from conventions to deterministic code; relaxing deliberately widens that space again. Assign this tag when an artifact explains, applies, tests, or decides when to use or reverse that narrowing. Merely choosing an output or improving task accuracy is insufficient unless the interpretation space is at issue. [LLM reliability](./llm-reliability-README.md) covers output deviations and their correction more broadly; constraining is one possible response. A child of [learning-theory](./learning-theory-README.md).
 
 ## Definition and spectrum
 
