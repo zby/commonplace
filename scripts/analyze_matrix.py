@@ -13,7 +13,12 @@ import sys
 from collections import Counter
 from pathlib import Path
 
-from commonplace.lib.systems_matrix import AXES, load_results
+from commonplace.lib.systems_matrix import (
+    AXES,
+    complete_values,
+    load_results,
+    supported_values,
+)
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 # Below this fill share a column can't carry the human table yet.
@@ -69,26 +74,26 @@ def main(argv: list[str] | None = None) -> int:
     )
     for path, digest in sorted(inputs.hashes.items()):
         print(f"input: {path} sha256={digest}")
-    rows = []
-    for row in selected:
-        values = {}
-        for axis in AXES:
-            assessed = row[axis + "_assessment"]
-            basis = row[axis + "_basis"]
-            values[axis] = (
-                json.dumps(json.loads(row[axis]), separators=(",", ":"))
-                if assessed == "known"
-                and basis in {"wired", "observed", "causally supported"}
-                else "none"
-                if assessed == "absent"
-                else ""
-            )
-        rows.append(values)
+    rows = [{axis: complete_values(row, axis) for axis in AXES} for row in selected]
     for axis in AXES:
-        dispositions = Counter(
-            row[axis + "_assessment"] + ":" + row[axis + "_basis"] for row in selected
+        dispositions = Counter(row[axis + "_assessment"] for row in selected)
+        bases = Counter(
+            row[axis + "_assessment"] + ":" + support["basis"]
+            for row in selected
+            for support in json.loads(row[axis + "_evidence"]).values()
         )
-        print(f"assessment {axis}: {dict(sorted(dispositions.items()))}")
+        positives = Counter(
+            value for row in selected for value in supported_values(row, axis)
+        )
+        print(
+            f"assessment {axis}: {dict(sorted(dispositions.items()))}; value bases: {dict(sorted(bases.items()))}"
+        )
+        print(
+            f"supported {axis}: {dict(sorted(positives.items()))} / {len(selected)} selected code-grounded systems (positive evidence only; remainder is not absence)"
+        )
+    print(
+        "Profile statistics below require complete coverage and strong evidence for every value."
+    )
     n = len(rows)
     analytic = list(AXES)
 

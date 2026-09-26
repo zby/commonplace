@@ -28,7 +28,7 @@ replace a missing full result or comparison assessment.
 
 Use `kb/types/agentic-system-analysis-result.md` for the `memory-comparison`
 contract. Each row preserves its source revision, run, analysis cutoff, evidence
-tier, compared memory boundary, and per-axis assessment, basis, values, and
+tier, compared memory boundary, and per-axis coverage assessment, values, per-value evidence, and
 canonical records. No legacy review, old CSV, transfer scan, or newly acquired
 source may supply or repair a finding. Missing required inputs block the
 selected population; report the main-analysis regeneration needed. Existing
@@ -77,10 +77,14 @@ A tracked comparison must remain auditable without ignored local run state.
 
 4. **Compute quantitative candidates.** Query the bundled CSV mechanically,
    decoding value cells as JSON arrays. For implementation/operation counts,
-   use code-grounded rows with `known` values at `wired`, `observed`, or
-   `causally supported` basis, plus `absent` assessments for evidenced negatives.
+   decode `<axis>_evidence` as a JSON object and use code-grounded values at
+   `wired`, `observed`, or `causally supported` basis. Both `known` and
+   `partial` coverage can support positive membership. Use `absent` assessments
+   for evidenced negatives; omitted values and weaker evidence are not negatives.
+   Complete-set distributions and set-equality queries require `known` coverage
+   and strong evidence for every member, without filtering away weak members.
    Keep claimed and afforded findings separate. Keep doc-grounded findings in
-   a separate qualitative section. Within each query, report inapplicable,
+   a separate qualitative section. Within each query, report partial, inapplicable,
    uninspected, and not-determinable rows separately; none is an observed
    negative. A structurally valid unknown does not block unrelated findings.
 

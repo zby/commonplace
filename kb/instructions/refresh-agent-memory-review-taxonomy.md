@@ -82,7 +82,9 @@ within that request's scope; do not request authorization again.
 
 5. **Check the aggregate and dependent axes.** Compare values and rationale with
    the cited records and declared memory scope. A known set must cover all
-   scoped parts and use the weakest supporting basis. Match scope across the
+   scoped parts. Each value must have its own warranted evidence basis and
+   supporting records; partial coverage retains positives without asserting a
+   complete set. Match scope across the
    profile, objects, route branches and lens account, including opaque parts and
    explicit exclusions. Preserve per-route distinctions such as a wired push
    consumer and an afforded pull API. Do not

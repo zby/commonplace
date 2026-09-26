@@ -66,7 +66,7 @@ def landscape_source(tmp_path: Path) -> Path:
         data["evidence-tier"] = tier
         data["memory-comparison"]["axes"]["storage_substrate"].update(
             assessment="known" if basis else "uninspected",
-            basis=basis,
+            evidence={v: {"basis": basis, "records": ["OBJ-1"], "note": "Fixture witness."} for v in values},
             values=values,
             records=["OBJ-1"] if basis else [],
         )
@@ -109,7 +109,7 @@ def test_bundle_and_query_use_one_population_without_live_or_legacy_inputs(
         for r in rows
         if r["source_tier"] == "code-grounded"
         and r["storage_substrate_assessment"] == "known"
-        and r["storage_substrate_basis"] in {"wired", "observed", "causally supported"}
+        and all(e["basis"] in {"wired", "observed", "causally supported"} for e in json.loads(r["storage_substrate_evidence"]).values())
     ]
     matched = [r for r in eligible if "files" in json.loads(r["storage_substrate"])]
     assert len(eligible) == len(matched) == 1

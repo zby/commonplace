@@ -440,8 +440,8 @@ disposition, memory report path, and SHA-256 of the report bytes. Put probe
 evidence inline.
 
 Integrate the specialist's `memory-comparison` profile by mapping its proposed
-record IDs to accepted canonical IDs. Preserve its scope, evidence basis,
-uncertainties, and rationale. The parent checks integration and shared-record
+record IDs to accepted canonical IDs. Preserve its scope, per-value evidence bases and records,
+coverage assessments, uncertainties, and rationale. The parent checks integration and shared-record
 conflicts; it does not independently draft a second memory analysis. Include
 all adopted findings and evidence needed to understand the main result without
 opening the local report. The report is provenance, not independent semantic

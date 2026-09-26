@@ -69,7 +69,14 @@ AXES = {
     "distilled_form": {"natural-language", "symbolic", "parametric"},
     "faithfulness_tested": {"yes", "no"},
 }
-ASSESSMENTS = {"known", "absent", "inapplicable", "uninspected", "not-determinable"}
+ASSESSMENTS = {
+    "known",
+    "partial",
+    "absent",
+    "inapplicable",
+    "uninspected",
+    "not-determinable",
+}
 BASES = {"claimed", "afforded", "wired", "observed", "causally supported"}
 METADATA = [
     "system_name",
@@ -89,7 +96,7 @@ METADATA = [
 COLUMNS = METADATA + [
     name + suffix
     for name in AXES
-    for suffix in ("", "_assessment", "_basis", "_records")
+    for suffix in ("", "_assessment", "_evidence", "_records")
 ]
 
 
@@ -141,13 +148,13 @@ def validate_comparison(
         entry = axes[name]
         if not isinstance(entry, dict) or set(entry) != {
             "assessment",
-            "basis",
+            "evidence",
             "values",
             "records",
             "note",
         }:
             raise ValueError(
-                f"{name}: requires assessment, basis, values, records, and note"
+                f"{name}: requires assessment, evidence, values, records, and note"
             )
         values = _strings(entry["values"], name + ".values")
         records = _strings(entry["records"], name + ".records")
@@ -163,20 +170,37 @@ def validate_comparison(
             raise ValueError(f"{name}: unresolved {label} records")
         if not set(values) <= vocabulary:
             raise ValueError(f"{name}: off-vocabulary values")
-        if entry["assessment"] == "known":
-            if (
-                not values
-                or not records
-                or not isinstance(entry["basis"], str)
-                or entry["basis"] not in BASES
-            ):
+        evidence = entry["evidence"]
+        if entry["assessment"] in {"known", "partial"}:
+            if not values or not records:
                 raise ValueError(
-                    f"{name}: known assessment needs values, records, and evidence basis"
+                    f"{name}: known assessment needs values and records; partial does too"
                 )
-        elif values or entry["basis"] is not None:
-            raise ValueError(
-                f"{name}: non-known assessment requires empty values and null basis"
-            )
+        elif values:
+            raise ValueError(f"{name}: non-positive assessment requires empty values")
+        if not isinstance(evidence, dict) or set(evidence) != set(values):
+            raise ValueError(f"{name}: evidence must cover exactly the declared values")
+        for value, support in evidence.items():
+            if not isinstance(support, dict) or set(support) != {
+                "basis",
+                "records",
+                "note",
+            }:
+                raise ValueError(f"{name}.{value}: requires basis, records, and note")
+            if not isinstance(support["basis"], str) or support["basis"] not in BASES:
+                raise ValueError(f"{name}.{value}: invalid evidence basis")
+            refs = _strings(support["records"], f"{name}.{value}.records")
+            if not refs or not set(refs) <= ids:
+                label = "shared or proposed" if memory_report else "canonical"
+                raise ValueError(f"{name}.{value}: unresolved {label} records")
+            if not isinstance(support["note"], str) or not support["note"].strip():
+                raise ValueError(f"{name}.{value}: missing evidence rationale")
+        if (
+            entry["assessment"] == "partial"
+            and name in {"trace_learning", "faithfulness_tested"}
+            and values == ["no"]
+        ):
+            raise ValueError(f"{name}: partial coverage cannot establish no")
         if entry["assessment"] == "absent" and not any(
             r.startswith("ABS-") or (memory_report and r.startswith("MEM-ABS-"))
             for r in records
@@ -206,7 +230,9 @@ def validate_comparison(
             "read_back_signal: must be inapplicable for pull-only read-back"
         )
     faithfulness = axes["faithfulness_tested"]
-    if faithfulness["values"] == ["yes"] and faithfulness["basis"] not in {
+    if faithfulness["values"] == ["yes"] and faithfulness["evidence"]["yes"][
+        "basis"
+    ] not in {
         "observed",
         "causally supported",
     }:
@@ -369,7 +395,9 @@ def load_results(root: Path, review_paths: list[Path] | None = None) -> MatrixIn
         for name, entry in profile["axes"].items():
             row[name] = json.dumps(sorted(entry["values"]), separators=(",", ":"))
             row[name + "_assessment"] = entry["assessment"]
-            row[name + "_basis"] = entry["basis"] or ""
+            row[name + "_evidence"] = json.dumps(
+                entry["evidence"], sort_keys=True, separators=(",", ":")
+            )
             row[name + "_records"] = ";".join(entry["records"])
         rows.append(row)
         hashes[relative.as_posix()] = row["review_sha256"]
@@ -382,6 +410,32 @@ def load_results(root: Path, review_paths: list[Path] | None = None) -> MatrixIn
         ),
         hashes,
     )
+
+
+STRONG_BASES = {"wired", "observed", "causally supported"}
+
+
+def supported_values(row: dict[str, str], axis: str) -> set[str]:
+    """Positive implementation evidence, counted once per value and system."""
+    if row["source_tier"] != "code-grounded":
+        return set()
+    return {
+        value
+        for value, support in json.loads(row[axis + "_evidence"]).items()
+        if support["basis"] in STRONG_BASES
+    }
+
+
+def complete_values(row: dict[str, str], axis: str) -> str:
+    """Complete strong profiles only; a filtered subset is not a full profile."""
+    if row["source_tier"] != "code-grounded":
+        return ""
+    if row[axis + "_assessment"] == "absent":
+        return "none"
+    values = set(json.loads(row[axis]))
+    if row[axis + "_assessment"] == "known" and values == supported_values(row, axis):
+        return json.dumps(sorted(values), separators=(",", ":"))
+    return ""
 
 
 def csv_text(inputs: MatrixInputs) -> str:

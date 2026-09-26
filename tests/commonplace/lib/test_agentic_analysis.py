@@ -96,7 +96,7 @@ def memory_report_fixture(run_dir: Path, revision: str) -> Path:
     handoff = write(run_dir / "memory-input.md", "# Frozen memory input\n\nOBJ-1 fixture object. RTE-1 fixture route.\n")
     profile = {
         "scope": "Fixture scope",
-        "axes": {axis: {"assessment": "uninspected", "basis": None,
+        "axes": {axis: {"assessment": "uninspected", "evidence": {},
                          "values": [], "records": [], "note": "Fixture gap."}
                  for axis in systems_matrix.AXES},
     }
@@ -249,13 +249,14 @@ None.
     profile = {
         "scope": "The fixture's accumulated project memory and retrieval routes",
         "axes": {
-            axis: {"assessment": "uninspected", "basis": None, "values": [],
+            axis: {"assessment": "uninspected", "evidence": {}, "values": [],
                    "records": [], "note": "Not inspected in this fixture."}
             for axis in systems_matrix.AXES
         },
     }
     profile["axes"]["storage_substrate"] = {
-        "assessment": "known", "basis": "wired", "values": ["sqlite", "files"],
+        "assessment": "known", "values": ["sqlite", "files"],
+        "evidence": {v: {"basis": "wired", "records": ["OBJ-1"], "note": "Fixture witness."} for v in ["sqlite", "files"]},
         "records": ["OBJ-1"], "note": "Both stores occur within the fixture boundary.",
     }
     replace_frontmatter(result, {**frontmatter(result), "memory-comparison": profile})
@@ -827,11 +828,12 @@ def test_standing_memory_report_comparison_validation(tmp_path: Path, mutation: 
     metadata = frontmatter(report)
     axes = metadata["memory-comparison"]["axes"]
     axes["storage_substrate"] = {
-        "assessment": "known", "basis": "wired", "values": ["files"],
+        "assessment": "known", "values": ["files"],
+        "evidence": {"files": {"basis": "wired", "records": ["MEM-OBJ-1"], "note": "Fixture witness."}},
         "records": ["MEM-OBJ-1"], "note": "Fixture source writes files.",
     }
     axes["trace_learning"] = {
-        "assessment": "absent", "basis": None, "values": [],
+        "assessment": "absent", "evidence": {}, "values": [],
         "records": ["MEM-ABS-1"], "note": "Fixture source was inspected.",
     }
     expected_error = None
@@ -848,7 +850,7 @@ def test_standing_memory_report_comparison_validation(tmp_path: Path, mutation: 
         axes["trace_learning"]["records"] = ["MEM-OBJ-1"]
         expected_error = "absence requires"
     elif mutation == "dependency":
-        axes["trace_learning"].update({"assessment": "known", "basis": "wired", "values": ["no"]})
+        axes["trace_learning"].update({"assessment": "known", "values": ["no"], "evidence": {"no": {"basis": "wired", "records": ["MEM-ABS-1"], "note": "Fixture absence."}}})
         expected_error = "must be inapplicable"
     replace_frontmatter(report, metadata)
     checked = validation.validate_note(report, repo_root=tmp_path)
@@ -1088,7 +1090,7 @@ def test_comparison_tools_use_retained_results_without_local_or_legacy_inputs(tm
     assert build_systems_matrix.main(["--output", str(matrix)]) == 0
     assert list(csv.DictReader(io.StringIO(matrix.read_text()))) == inputs.rows
     assert render_systems_table.main(["--output", str(table)]) == 0
-    assert "files, sqlite [wired]" in table.read_text()
+    assert "files [wired], sqlite [wired]" in table.read_text()
     assert "## code-grounded (1)" in table.read_text()
     assert digest(retained) in table.read_text()
     assert validation.validate_note(table, repo_root=tmp_path).fails == []
@@ -1096,7 +1098,7 @@ def test_comparison_tools_use_retained_results_without_local_or_legacy_inputs(tm
     output = capsys.readouterr().out
     line = next(line for line in output.splitlines() if line.startswith("storage_substrate "))
     assert line.split()[:3] == ["storage_substrate", "100%", "1"]
-    assert "uninspected:" in output
+    assert "'uninspected':" in output
     assert "doc-grounded excluded from statistics: 0" in output
 
 
@@ -1170,7 +1172,8 @@ def test_statistics_keep_evidence_tiers_and_weaker_bases_separate(tmp_path, monk
     retained = tmp_path / systems_matrix.retained_result_path(RUN_ID)
     data = frontmatter(retained)
     data["evidence-tier"] = tier
-    data["memory-comparison"]["axes"]["storage_substrate"]["basis"] = basis
+    for support in data["memory-comparison"]["axes"]["storage_substrate"]["evidence"].values():
+        support["basis"] = basis
     replace_frontmatter(retained, data)
     review = tmp_path / "kb/agentic-systems/reviews/example-system.md"
     replace_frontmatter(review, {**frontmatter(review), "analysis-result-sha256": digest(retained)})

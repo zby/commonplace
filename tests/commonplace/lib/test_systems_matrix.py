@@ -13,7 +13,7 @@ def profile():
         "axes": {
             axis: {
                 "assessment": "uninspected",
-                "basis": None,
+                "evidence": {},
                 "values": [],
                 "records": [],
                 "note": "The evidence does not cover this mechanism.",
@@ -26,7 +26,14 @@ def profile():
 def known(values, records=None, basis="wired"):
     return {
         "assessment": "known",
-        "basis": basis,
+        "evidence": {
+            value: {
+                "basis": basis,
+                "records": records or ["OBJ-1"],
+                "note": "Fixture witness.",
+            }
+            for value in values
+        },
         "values": values,
         "records": records or ["OBJ-1"],
         "note": "The named records cover the boundary.",
@@ -103,3 +110,71 @@ def test_pulled_memory_without_trace_learning_has_inapplicable_subaxes():
     ):
         data["axes"][axis]["assessment"] = "inapplicable"
     sm.validate_comparison(data, BODY)
+
+
+def test_mixed_strength_and_partial_coverage_preserve_only_supported_positives():
+    import json
+
+    from scripts.render_systems_table import assessment
+
+    data = profile()
+    entry = known(["automatic", "manual"], ["RTE-1"])
+    entry["evidence"]["manual"]["basis"] = "afforded"
+    data["axes"]["write_agency"] = entry
+    for disposition in ("known", "partial"):
+        entry["assessment"] = disposition
+        sm.validate_comparison(data, BODY)
+        row = {
+            "source_tier": "code-grounded",
+            "write_agency": json.dumps(entry["values"]),
+            "write_agency_assessment": disposition,
+            "write_agency_evidence": json.dumps(entry["evidence"]),
+        }
+        assert sm.supported_values(row, "write_agency") == {"automatic"}
+        assert sm.complete_values(row, "write_agency") == ""
+        assert "automatic [wired], manual [afforded]" in assessment(row, "write_agency")
+        assert ("partial coverage" in assessment(row, "write_agency")) == (
+            disposition == "partial"
+        )
+        row["source_tier"] = "doc-grounded"
+        assert sm.supported_values(row, "write_agency") == set()
+    entry["evidence"]["manual"]["basis"] = "wired"
+    row.update(
+        source_tier="code-grounded", write_agency_evidence=json.dumps(entry["evidence"])
+    )
+    assert sm.complete_values(row, "write_agency") == ""  # still partial
+    row["write_agency_assessment"] = "known"
+    assert sm.complete_values(row, "write_agency") == '["automatic","manual"]'
+
+
+@pytest.mark.parametrize(
+    "mutation",
+    ["missing", "extra", "unknown-record", "no-basis", "empty-note", "legacy"],
+)
+def test_each_value_requires_its_own_witness(mutation):
+    data = profile()
+    entry = known(["automatic", "manual"], ["RTE-1"])
+    data["axes"]["write_agency"] = entry
+    if mutation == "missing":
+        del entry["evidence"]["manual"]
+    elif mutation == "extra":
+        entry["evidence"]["invented"] = entry["evidence"]["manual"]
+    elif mutation == "unknown-record":
+        entry["evidence"]["manual"]["records"] = ["RTE-99"]
+    elif mutation == "no-basis":
+        entry["evidence"]["manual"]["basis"] = None
+    elif mutation == "empty-note":
+        entry["evidence"]["manual"]["note"] = ""
+    else:
+        del entry["evidence"]
+        entry["basis"] = "afforded"
+    with pytest.raises(ValueError):
+        sm.validate_comparison(data, BODY)
+
+
+def test_partial_negative_does_not_establish_absence():
+    data = profile()
+    data["axes"]["trace_learning"] = known(["no"], ["ABS-1"])
+    data["axes"]["trace_learning"]["assessment"] = "partial"
+    with pytest.raises(ValueError, match="partial coverage cannot establish no"):
+        sm.validate_comparison(data, BODY)

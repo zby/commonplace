@@ -75,36 +75,46 @@ Each axis has exactly these fields:
 
 ```yaml
 assessment: known
-basis: wired
 values: [pull, push]
+evidence:
+  pull:
+    basis: afforded
+    records: [RTE-2]
+    note: "The documented caller can request memory through this interface."
+  push:
+    basis: wired
+    records: [RTE-3]
+    note: "The internal consumer receives retained memory automatically."
 records: [RTE-2, RTE-3]
-note: "Both read-back routes are wired within the named memory boundary."
+note: "Both scoped routes were inspected; no included branch remains opaque."
 ```
 
-`assessment` is `known`, `absent`, `inapplicable`, `uninspected`, or
-`not-determinable`. The last value means inspected evidence cannot determine
-the classification. These are comparison assessments, distinct from the
-result's conclusion-status vocabulary.
+`assessment` is `known`, `partial`, `absent`, `inapplicable`, `uninspected`, or
+`not-determinable`. These describe coverage, separately from evidence strength.
+`known` asserts that the value set is complete for this axis within the scope.
+`partial` retains supported positive values while its note identifies the
+unresolved included parts and the conclusion they prevent. `not-determinable`
+means inspected evidence cannot establish any controlled classification.
 
-For `known`, give a nonempty set of controlled values, existing canonical
-records declared at the start of a table row, paragraph, list item, or
-subheading under Shared records, and one evidence `basis`: `claimed`,
-`afforded`, `wired`, `observed`, or `causally supported`. Union values across the declared scoped parts; use the
-weakest basis supporting that union and retain per-route differences in the
-records. A known set is complete for this axis within that scope. If an
-uninspected part prevents that assertion, record the uncertainty rather than
-silently omitting the part.
+For `known` or `partial`, give nonempty `values` and exactly one `evidence`
+entry per value. Each entry has `basis`, `records`, and `note`. Its basis is
+`claimed`, `afforded`, `wired`, `observed`, or `causally supported`, warranted
+by its named route or object. Cite the strongest supported witness for that
+value's existence; retain weaker alternatives and their limits in the records.
+A wired witness does not upgrade another route or value. A value counts once
+per system even if several routes support it. The note states which witness
+supports the basis; route-specific questions must inspect the cited records.
+
+Axis-level `records` support the coverage assessment. All referenced records
+must be declared under Shared records. Other assessments require `values: []`
+and `evidence: {}`. `absent` requires an `ABS-*` record establishing bounded
+absence. Every assessment and value has a nonempty explanatory note. An opaque
+included branch prevents complete coverage, not independently supported positive
+findings. A partial boolean assessment cannot assert `"no"`.
 
 The scope must agree across the profile, canonical objects/routes and lens
-account. If a route combines included and excluded alternatives, identify the
-parts on each branch. An inspected container or display summary does not decide
-the representational form of an opaque payload consumed alongside it.
-
-Other assessments require `values: []` and `basis: null`. An `absent`
-assessment references an `ABS-*` record establishing the bounded absence.
-Every assessment has a `note` explaining its mapping, aggregation, or conclusion
-prevented. A term outside the vocabulary requires an explicit partial mapping
-or a not-determinable assessment, not an invented token.
+account. Identify included and excluded alternatives on each branch. An
+inspected display summary does not classify an opaque consumed payload.
 
 Storage and representational form cover the scoped operative parts, not one
 chosen primary store. `parametric` abbreviates distributed-parametric form.
@@ -150,8 +160,15 @@ evidence tests dependence on recalled content; test code or a proposed
 experiment alone cannot support yes. A yes requires observed or causally
 supported basis, with the result's probe or retained evidence records.
 
-CSV readers preserve value sets, assessment, basis, and record references
-separately. The original result retains the rationale and full evidence account.
+CSV readers preserve JSON value arrays, assessments, JSON per-value evidence
+maps (`<axis>_evidence`), and axis-level record references separately. Positive
+implementation counts use code-grounded values at wired, observed, or causally
+supported basis, including partial assessments. The uncounted remainder is
+not absence. Set equality, entropy and redundancy over full profiles require
+known coverage and strong evidence for every value; filtering weaker members
+does not produce a complete profile. Absence is a separate evidenced negative.
+Claimed, afforded, unknown, partial, inapplicable and doc-grounded findings stay
+visible with their dispositions and denominators. The original result retains the rationale and full evidence account.
 No reader recovers missing classifications from a previous CSV, absent tag,
 legacy review, or compact prose.
 

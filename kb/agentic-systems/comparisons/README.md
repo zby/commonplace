@@ -4,8 +4,10 @@ The matrix builder, table renderer, and analyzer read the exact results produced
 by `analyse-agentic-system`. Their common input is each generated review under
 `kb/agentic-systems/reviews/`, its `analysis-result` path and SHA-256, and the
 byte-identical result retained under `kb/reports/retained/agentic-system-analysis/`.
-They do not require local run state, source checkouts, legacy reviews, or a prior
-CSV. The [result contract](../../types/agentic-system-analysis-result.md#memory-comparison-fields)
+Frozen retained snapshots are excluded from collection-wide validation because
+historical contracts differ. Publication and these readers validate each selected
+result explicitly against the current contract. They do not require local run
+state, source checkouts, legacy reviews, or a prior CSV. The [result contract](../../types/agentic-system-analysis-result.md#memory-comparison-fields)
 defines the scoped comparison fields and evidence assessments.
 
 Run from the repository root:
@@ -25,14 +27,17 @@ review per source identity; repeat runs do not count as distinct systems.
 Builder and renderer accept `--output <path>` for an isolated trial.
 
 Each CSV row records the source, run, boundary, tier, compared scope, and hashes
-of both inputs. Axis values are JSON arrays with separate assessment, evidence
-basis, and canonical-record columns. The exact result retains the rationale.
+of both inputs. Axis values are JSON arrays with separate coverage assessment,
+JSON per-value evidence maps, and canonical-record columns. Each evidence entry
+retains its basis, supporting records and rationale. The full result carries
+the source evidence.
 The table separates code-grounded and doc-grounded results and links both the
 public review and full result. Statistics count code-grounded wired, observed,
-or causally supported values and evidenced absences; they report weaker bases
-and uncertain assessments separately. Their entropy and redundancy measures
-treat each complete value set as a category, not each member as an independent
-observation. Denominators describe this selected population only.
+or causally supported values, including supported positives under partial
+coverage; the remainder is not inferred absent. Weaker bases and coverage
+assessments are reported separately. Entropy and redundancy require known
+coverage and strong evidence for every member, treating the complete set as one
+category. Evidenced absences remain a separate category. Denominators describe this selected population only.
 
 Existing reviews without retained-result metadata and normalized comparison
 fields need regeneration through the main analysis before inclusion. Do not

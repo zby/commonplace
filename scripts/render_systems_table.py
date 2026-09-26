@@ -27,9 +27,14 @@ def cell(text: str) -> str:
 
 
 def assessment(row: dict[str, str], axis: str) -> str:
-    if row[axis + "_assessment"] != "known":
-        return row[axis + "_assessment"]
-    return ", ".join(json.loads(row[axis])) + " [" + row[axis + "_basis"] + "]"
+    disposition = row[axis + "_assessment"]
+    if disposition not in {"known", "partial"}:
+        return disposition
+    evidence = json.loads(row[axis + "_evidence"])
+    values = ", ".join(
+        f"{value} [{evidence[value]['basis']}]" for value in json.loads(row[axis])
+    )
+    return values + ("; partial coverage" if disposition == "partial" else "")
 
 
 def render(rows: list[dict[str, str]], output: Path) -> str:

@@ -1,0 +1,1 @@
+Exact immutable analysis snapshots retain their producing contracts. Collection-wide validation does not apply the latest schema to historical bytes. Publication and comparison readers still validate each explicitly selected result against the current contract.

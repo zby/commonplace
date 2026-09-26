@@ -85,9 +85,10 @@ memory boundary warrants short sections with explicit limits.
 Fill all fourteen comparison axes in the report's `memory-comparison`, using
 the main-result contract's assessments, bases and controlled values. You own
 the proposed classifications as well as their supporting analysis. Give each
-known value its supporting records and inference. A complete set covers all
-scoped alternatives; use explicit uncertainty when an included branch remains
-opaque or uninspected. A Session identifier alone supplies no task horizon.
+value its own evidence basis, supporting records and inference. Do not weaken
+a wired value because another value is merely afforded. A known set covers all
+scoped alternatives; use partial coverage to retain supported positives when an
+included branch remains opaque or uninspected. A Session identifier alone supplies no task horizon.
 Distinguish missing evidence from a negative finding. Use local proposal IDs
 where the parent has not yet registered a discovered object or route. Write
 every identifier in full, including lists: `MEM-OBJ-1, MEM-OBJ-2`. Never use

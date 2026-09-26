@@ -94,7 +94,7 @@
                     "type": "object",
                     "required": [
                       "assessment",
-                      "basis",
+                      "evidence",
                       "values",
                       "records",
                       "note"
@@ -103,20 +103,11 @@
                       "assessment": {
                         "enum": [
                           "known",
+                          "partial",
                           "absent",
                           "inapplicable",
                           "uninspected",
                           "not-determinable"
-                        ]
-                      },
-                      "basis": {
-                        "enum": [
-                          "claimed",
-                          "afforded",
-                          "wired",
-                          "observed",
-                          "causally supported",
-                          null
                         ]
                       },
                       "values": {
@@ -134,6 +125,41 @@
                       "note": {
                         "type": "string",
                         "minLength": 1
+                      },
+                      "evidence": {
+                        "type": "object",
+                        "additionalProperties": {
+                          "type": "object",
+                          "required": [
+                            "basis",
+                            "records",
+                            "note"
+                          ],
+                          "properties": {
+                            "basis": {
+                              "enum": [
+                                "claimed",
+                                "afforded",
+                                "wired",
+                                "observed",
+                                "causally supported"
+                              ]
+                            },
+                            "records": {
+                              "type": "array",
+                              "minItems": 1,
+                              "uniqueItems": true,
+                              "items": {
+                                "type": "string"
+                              }
+                            },
+                            "note": {
+                              "type": "string",
+                              "minLength": 1
+                            }
+                          },
+                          "additionalProperties": false
+                        }
                       }
                     },
                     "additionalProperties": false
