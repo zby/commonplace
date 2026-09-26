@@ -25,6 +25,8 @@ A durable brief needs a delivery route: one declared, validated way by which a w
 - The theory distinguishes a topic from the particular [warranted reader update](../../notes/warranted-reader-update-is-the-objective-of-substantive-writing.md) around which substantive writing organizes evidence and reasoning.
 - `type:` shows the shipped delivery pattern for a per-artifact input: frontmatter names a canonical file by path, the validator checks the pointer, and the writing skill reads the named file ([ADR 018](../adr/018-types-are-path-references-to-instruction-docs.md)). No frontmatter field names a brief.
 - The deterministic write-context assembler is only a proposal. No shipped command currently has a recognized brief input role.
+- A pre-registered pilot tested this proposal's conjectures ([evidence note](../../notes/evidence/full-write-briefs-cut-edit-drift-one-line-briefs-did-not.md)). It ran 95 edit runs on 10 documents, starting from each document's commissioned version. Under pressure edits, writers given the full original brief broke about a third as many unguarded commission items as writers given none. A brief rebuilt afterwards from the commissioned document did nearly as well. A one-sentence brief did no better than none. Writers with a brief did not over-constrain: every override run made the requested change and stated the amendment. Two limits apply. The rebuilt-brief and one-line verdicts rest on excluding two question runs, a reading chosen after unblinding. The pilot tested preservation through later edits, not new-note writing.
+- The same pilot traced the ten documents from their commissioned versions to 2026-09-26. Of 350 realized commission items, 83 had been weakened or removed. 47 of those losses were recorded, usually in a record that named the overall rewrite but not the items it dropped, and 36 were not. Some recorded losses were deliberate reframings, where an unamended brief would now be stale.
 
 ## Problem
 
@@ -111,7 +113,8 @@ Route A can ship first and move to Route B later without changing the brief or i
 - **Intent versus warrant.** User direction can select a question and angle. It cannot make factual claims true or establish that the proposed update is worth retaining.
 - **Continuity versus staleness.** Durable intent can prevent accidental drift, but audience priors, neighboring notes, and project needs change. A once-distinctive update can become redundant.
 - **Optional value versus uniform machinery.** Ambiguous, commissioned, or consequential artifacts benefit most. Many small notes do not need another file.
-- **Pre-draft independence.** A brief written or accepted before drafting contains counterfactual information. A brief generated from the finished artifact may only restate it.
+- **Pre-draft independence.** A brief written or accepted before drafting contains counterfactual information. A brief generated from the finished artifact may only restate it. In the pilot, restating was enough while the artifact still realized its commission: a brief rebuilt from the commissioned version preserved it nearly as well as the original. That result does not transfer to an artifact that has since drifted, because a brief rebuilt from it would encode the drift.
+- **Boundaries versus summary.** The pilot's one-sentence briefs carried the governing claim, which writers kept anyway, and lost the must-keep and exclusion items, which is where edits drifted. A brief that only restates purpose adds little over a claim-bearing title.
 - **Authority and precedence.** Artifact-specific intent may narrow the collection default but cannot silently override collection, type, linking, or validation requirements.
 - **Association lifecycle.** New targets do not yet have frontmatter; renames, moves, retirement, splits, and merges must preserve or deliberately revise any relation.
 - **Context cost.** A compact commission can spare reconstruction. An accreted history, outline, source dump, or critique packet would compete with the writing itself.
@@ -137,7 +140,7 @@ Route A can ship first and move to Route B later without changing the brief or i
 ## Adoption criteria
 
 - One delivery route is chosen. Under Route A, the association is a validated path pointer and the writing skill reads only the file it names. Under Route B, the [deterministic write-context assembler](./deterministic-write-context-assembly.md) is adopted first or in the same decision, with a closed recognized role for the brief. Under either, no writing skill gains a target-adjacent search rule.
-- An ordinary-writing pilot shows that a new-note writer can preserve explicit task-fixed intent and that later writers preserve or deliberately revise the governing contribution better than from the incumbent and task context alone.
+- An ordinary-writing pilot shows that a new-note writer can preserve explicit task-fixed intent and that later writers preserve or deliberately revise the governing contribution better than from the incumbent and task context alone. The later-writer half has pilot evidence (see Current state); the new-note half is untested.
 - The brief records an intended reader update, scope, and fixed decisions without duplicating the artifact's claims, evidence, outline, or prose.
 - The finished artifact remains self-standing: a reader can recover its realized contribution without opening the brief.
 - A brief is independently authored or explicitly accepted; automatic retrospective summaries do not acquire intent authority.

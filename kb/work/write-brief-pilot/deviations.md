@@ -15,3 +15,7 @@ Scoring copy `scoring/6/pressure/92a1a9.md` is a question file whose text referr
 ## 4. Interpretation of the compliance guard, fixed before unblinding (2026-09-26)
 
 The frozen protocol says a run that does not carry out its edit request "scores as a failed run in every conjecture, not as preservation." Before any score was mapped to an arm, this is operationalized as: runs scored `not-done` or `question` count every tallied item as violated; runs scored `partial` are tallied from their item scores and listed separately in the analysis. Final item scores are the two scorers' shared code where they agree and the third scorer's code where they disagree.
+
+## 5. Primary reading chosen after unblinding (2026-09-26)
+
+After the results were seen, the operator chose the reading that excludes the two question runs as primary. Reason: the compliance rule fixed in deviation 4 conflicts with the protocol's Phase 1 text, which calls a question "a valid outcome" that "scores as flagged", and under that rule each question run on the 61-item target 6 adds about 50 violations by itself. The pre-fixed reading is reported alongside it as a pre-registration conflict. Because the choice was made after unblinding, the verdicts that differ between the readings (H3, H5) are reported as resting on this choice.
