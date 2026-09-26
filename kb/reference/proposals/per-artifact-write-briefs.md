@@ -1,7 +1,7 @@
 ---
 description: "Proposal: whether to preserve an optional artifact-specific commission stating the intended reader update, delivered to writers by a validated pointer or a context-assembler role"
 type: reference/types/design-proposal.md
-tags: [context-engineering, kb-maintenance]
+tags: [context-engineering]
 ---
 
 # Per-artifact write briefs

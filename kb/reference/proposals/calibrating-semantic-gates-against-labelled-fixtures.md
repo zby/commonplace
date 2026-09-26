@@ -1,7 +1,7 @@
 ---
 description: "Proposal: require non-leaking known-case regression before a semantic gate can advance, and reserve live detection-rate claims for separately sampled field calibration"
 type: reference/types/design-proposal.md
-tags: [kb-maintenance]
+tags: [kb-maintenance, review-system]
 traits: [has-external-sources]
 ---
 

@@ -2,7 +2,7 @@
 description: "Editing quality criteria invalidates verdicts; editing production processes calls for artifact regeneration — verdict freshness includes the artifact and criteria but excludes its production process"
 type: types/note.md
 traits: [title-as-claim, has-external-sources]
-tags: [kb-maintenance]
+tags: [kb-maintenance, review-system]
 ---
 
 # Criteria edits invalidate verdicts; process edits invalidate artifacts

@@ -2,7 +2,7 @@
 description: "Fractal as a code-grounded RLM harness: PredictRLM workspace turns, SBX sandbox mounts, headless delegation, and session continuity outside the repo."
 type: types/note.md
 traits: [has-external-sources]
-tags: [computational-model, tool-loop]
+tags: [computational-model]
 ---
 
 # Fractal
@@ -58,4 +58,4 @@ Relevant Notes:
 - [RLM has the model write ephemeral orchestrators over sub-agents](../../notes/rlm-has-the-model-write-ephemeral-orchestrators-over-sub-agents.md) - see-also: the theoretical pattern Fractal packages into a terminal and headless coding agent.
 - [RLM, Tendril, and llm-do place symbolic work at different persistence boundaries](../../notes/rlm-tendril-and-llm-do-place-symbolic-work-at-different-persistence.md) - see-also: situates Fractal's trace persistence and missing promotion path on the symbolic-work persistence axis.
 - [Claude Code dynamic workflows](./claude-code-dynamic-workflows.md) - see-also: another shipped harness that exposes model-authored symbolic orchestration, but with a different language, sandbox boundary, and promotion surface.
-- [tool loop](../../tags/tool-loop-README.md) - see-also: the local theory cluster for reading Fractal's RLM loop and delegation surface.
+- [computational-model](../../tags/computational-model-README.md) - see-also: the local theory cluster for reading Fractal's RLM loop and delegation surface.

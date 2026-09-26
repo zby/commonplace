@@ -1,7 +1,7 @@
 ---
 description: "How the shipped full-improvement workflow reassays final note bytes, routes residual findings, and stops without claiming convergence"
 type: types/note.md
-tags: [evaluation, kb-maintenance]
+tags: [evaluation, kb-maintenance, review-system]
 ---
 
 # Full improvement pass closure

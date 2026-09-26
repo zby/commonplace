@@ -11,7 +11,7 @@ The [symbolic scheduling model](./bounded-context-orchestration-model.md) requir
 
 This puts part of scheduling inside a bounded call, where it can suffer the same attention dilution and compositional overhead as the work it is trying to orchestrate. The separation between explicit external state and bounded calls is then incomplete.
 
-The framework-design consequence is developed in [tool loop](../tags/tool-loop-README.md): a framework can expose control surfaces that let an application move selected progression decisions out of chat. Whether that is worthwhile still requires a stated comparison criterion.
+The framework-design consequence is developed in [computational-model](../tags/computational-model-README.md): a framework can expose control surfaces that let an application move selected progression decisions out of chat. Whether that is worthwhile still requires a stated comparison criterion.
 
 ## Three recovery strategies
 

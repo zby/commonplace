@@ -1,38 +1,30 @@
 ---
-description: Index of notes about keeping the KB healthy over time — detection of staleness and quality degradation, maintenance operations, and the dynamics that govern system entropy
+description: "Curated head for the kb-maintenance tag — keeping an agent-operated knowledge base healthy as it grows: three child areas (review-system, claims-and-grounding, curation) plus the dynamics, evidence, and open proposals that cut across them"
 type: types/tag-readme.md
+complete: true
 ---
 
 # KB maintenance
 
-How an agent-operated KB stays healthy as it grows. Detection, operations, and the dynamics that govern quality over time. For how the KB is *built*, see [architecture](./architecture-README.md) and [document-system](./document-system-README.md). For document structure, see [document-system](./document-system-README.md).
+How an agent-operated knowledge base stays healthy as it grows: the checks that catch errors, the discipline that keeps claims supportable, and the curation that keeps the library navigable. Three child areas carry most of it. Nearby but different: [observability](./observability-README.md) is about making hidden state and drift visible; maintenance is what acts on it. For how the KB is built rather than kept, see [architecture](./architecture-README.md) and [document-system](./document-system-README.md).
 
-## Dynamics
+## Child areas
 
-- [maintenance-capacity-must-match-harmful-artifact-inflow](../notes/maintenance-capacity-must-match-harmful-artifact-inflow.md) — stable quality requires prevention, containment, detection, and repair capacity to keep pace with risk-weighted harmful-artifact inflow; gross generation is only a proxy
-- [traversal-improves-the-graph](../notes/traversal-improvements-should-be-deferred-via-logging-to-avoid-mid.md) — every traversal is a read-write opportunity; agents should log improvement opportunities during reading, then process them separately to avoid context-switching
-- [title-as-claim-exposes-commitments-enabling-popperian-maintenance](../notes/title-as-claim-exposes-commitments-enabling-popperian-maintenance.md) — claim titles make maintenance cheap: scan the index, ask "do I still believe this?", open only the doubtful ones
+- [review-system](./review-system-README.md) — the review pipeline: gates and criteria, verdicts and outcomes, freshness baselines, the review protocol, its cost evidence, and the proposals that would extend it
+- [claims-and-grounding](./claims-and-grounding-README.md) — claims as units and what supports them: title as claim, claim modality, quotes and source grounding, what creates ground truth, what a superseded belief keeps
+- [curation](./curation-README.md) — keeping the library navigable: indexes and tag heads, quality signals and scores, periodic hygiene, maintenance capacity, retirement
 
-## Detection
+## Across the children
 
-- [quality-signals-for-kb-evaluation](../notes/quality-signals-for-kb-evaluation.md) — composite oracle from graph-topology, content-proxy, and LLM-hybrid signals; the evaluation layer the learning loop needs
-- [notes-need-quality-scores-to-scale-curation](../notes/notes-need-quality-scores-to-scale-curation.md) — recomputable note scores (type, inbound links, review vetting, recency) filter /connect candidates and truncate budget-bounded listings as the KB grows
-- [semantic-review-catches-content-errors-that-structural-validation-cannot](../notes/semantic-review-catches-content-errors-that-structural-validation.md) — four semantic checks (enumeration completeness, grounding alignment, boundary-case coverage, internal consistency) that require LLM adversarial reading
-- [link-graph-plus-timestamps-enables-make-like-staleness-detection](../notes/link-graph-plus-timestamps-enables-make-like-staleness-detection.md) — existing links encode dependencies; comparing note and target timestamps flags staleness without new annotation
-- [indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more](../notes/indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more.md) — an apparently complete index lowers route-specific recall when it suppresses retrieval that would find more
-- [a-derived-copy-of-recomputable-truth-must-be-checked-or-absent](../notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) — a copy of mechanically recomputable information must be validator-checked against its source or not exist; hand-maintained-and-trusted is the forbidden middle
-- [seven documentation cases left routing and synthesis](../notes/evidence/seven-documentation-cases-left-routing-and-synthesis.md) — a bounded Commonplace sweep where direct source access removed exact-fact prose while checked discovery and cross-component synthesis survived
-- [final task success does not establish intended-path health](../notes/final-task-success-does-not-establish-intended-path-health.md) — identical terminal outcomes can conceal broken prescribed paths; maintenance needs independent path events
-- [domain-pricing-routes-an-exception-to-idealization-assessment](../notes/domain-pricing-routes-an-exception-to-idealization-assessment.md) — separates truth verdicts from repair dispositions: pricing routes a defeated claim to idealization assessment, and a retained idealization carries an adequacy record later passes can attack
-
-## Operations
-
-- [maintenance-operations-catalogue-should-stage-stable-procedures](../notes/maintenance-operations-catalogue-should-stage-stable-procedures.md) — staging catalogue for periodic operations before they are turned into reusable procedures
-- [periodic-kb-hygiene-should-be-externally-triggered-not-embedded-in-routing](../notes/periodic-kb-hygiene-should-be-externally-triggered-not-embedded-in.md) — periodic audits belong in externally triggered operations, not always-loaded routing docs
-- [gate-learning-from-accepted-edits](../reference/proposals/gate-learning-from-accepted-edits.md) — proposal: turn accepted edit diffs into review-gate candidates with a promotion/rollback lifecycle and budget-bounded loading; the oracle constraint is [an-accepted-edit-verifies-the-change-not-the-rule](../notes/an-accepted-edit-verifies-the-change-not-the-rule.md)
+- [Attempted recovery identifies informational gaps, not provenance or authority](../notes/documentation-generates-the-system-rather-than-describing-it.md) — what regenerating a system from its documentation does and does not show
+- [Seven documentation cases left routing and synthesis](../notes/evidence/seven-documentation-cases-left-routing-and-synthesis.md) — a bounded sweep: direct source access removed exact-fact prose, checked discovery kept routing and synthesis
+- [Final task success does not establish intended-path health](../notes/final-task-success-does-not-establish-intended-path-health.md) — identical terminal outcomes can hide a broken prescribed path; maintenance needs path evidence
+- [Domain pricing routes an exception to idealization assessment but does not decide it](../notes/domain-pricing-routes-an-exception-to-idealization-assessment.md) — truth verdicts separated from repair dispositions
+- [Brainstorming: how explanatory-reach informs KB design](../notes/brainstorming-how-explanatory-reach-informs-kb-design.md) — working notes on what the quality goal implies for maintenance choices
+- [A reader-facing banner for user verification](../reference/proposals/a-reader-facing-banner-for-user-verification.md) — proposal: show verification status to readers of the published site
 
 ## Related Tags
 
-- [architecture](./architecture-README.md) — how the KB is laid out and installed
-- [document-system](./document-system-README.md) — type system and validation that maintenance operations check against
-- [links](./links-README.md) — linking methodology that staleness detection and quality signals operate on
+- [observability](./observability-README.md) — the signals maintenance acts on
+- [document-system](./document-system-README.md) — the type system and validation that maintenance checks against
+- [links](./links-README.md) — the linking methodology staleness detection and quality signals operate on

@@ -2,7 +2,7 @@
 description: "A Commonplace tag-README can inherit Milo's contextual mapping pattern while validation checks only its declared membership relations, not editorial quality."
 type: types/note.md
 traits: [title-as-claim, has-external-sources]
-tags: [kb-maintenance, document-system]
+tags: [kb-maintenance, document-system, curation]
 ---
 
 # An enforced tag-README combines a MOC pattern with checked membership

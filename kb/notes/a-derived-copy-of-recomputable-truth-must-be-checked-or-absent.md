@@ -2,7 +2,7 @@
 description: "When an artifact carries a copy of information recomputable from a ground-truth source, the copy must be machine-checked against that source or not exist — hand-maintained-and-trusted is forbidden"
 type: types/note.md
 traits: [title-as-claim]
-tags: [context-engineering, kb-maintenance]
+tags: [context-engineering, kb-maintenance, claims-and-grounding]
 ---
 
 # A derived copy of recomputable truth must be checked or absent

@@ -31,6 +31,12 @@ exactly those collections, through one collector. Tags on artifacts elsewhere
 `reference/proposals/archive/`) are not read. Nothing is inferred from the
 directory tree: a collection joins the tag space by being listed here.
 
+Within the participating collections, tags are carried by notes, by the
+system analyses in `agent-memory-systems` and `agentic-systems`, and by
+reference proposals. Instructions, ADRs, and the other reference pages route
+through their own indexes and carry no tags; that is a rule, not a gap
+(operator decision, 2026-09-26).
+
 ## Quality goal
 
 A head is good when its first paragraph lets a reader decide whether the tag

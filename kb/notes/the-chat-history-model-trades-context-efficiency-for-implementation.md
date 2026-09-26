@@ -2,7 +2,7 @@
 description: Chat history persists because appending messages preserves information and avoids interface design, but that convenience trades away selective loading under bounded context
 type: types/note.md
 traits: [has-comparison]
-tags: [computational-model, tool-loop]
+tags: [computational-model]
 ---
 
 # The chat-history model trades context efficiency for implementation simplicity

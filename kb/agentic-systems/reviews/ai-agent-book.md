@@ -2,7 +2,7 @@
 description: "Whole-book comparison of AI Agents in Depth with Commonplace, separating broad architectural convergence from differences in memory admission, epistemic warrant, governance, and orchestration"
 type: types/note.md
 traits: [has-comparison, has-external-sources, synthesis]
-tags: [computational-model, context-engineering, agent-memory, evaluation, self-improving-systems, tool-loop]
+tags: [computational-model, context-engineering, agent-memory, evaluation, self-improving-systems]
 ---
 
 # AI Agents in Depth

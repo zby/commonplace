@@ -2,7 +2,7 @@
 description: "When one agent in an orchestration reads untrusted content, the defense is a role-level privilege quarantine — barring that agent from high-privilege actions entirely — not finer per-call tool scoping"
 type: types/note.md
 traits: [title-as-claim, has-external-sources]
-tags: [computational-model, tool-loop]
+tags: [computational-model]
 ---
 
 # Agent orchestration needs a privilege quarantine, not just a permission scope

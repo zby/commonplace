@@ -2,7 +2,7 @@
 description: A lightweight technical convention — an agent is a tool loop (prompt, capability surface, stop condition) — sidestepping the definitional debate in favor of a unit that organizes code
 type: types/note.md
 traits: [title-as-claim]
-tags: [computational-model, tool-loop]
+tags: [computational-model]
 ---
 
 # "Agent" is a useful technical convention, not a definition
@@ -11,12 +11,12 @@ The word "agent" carries too much philosophical weight to define cleanly. But as
 
 The convention is deliberately minimal — it says nothing about autonomy, planning, or goals. It names the unit of execution that a programmer spawns. A sub-agent is a child loop with its own prompt and capability surface. A multi-agent system is a tree of loops coordinated by code. Two loops with different tool surfaces but the same model are different agents; the same prompt run twice is two invocations. The convention tracks code structure, not character.
 
-That simplicity pays off in framework design. If "agent" means "tool loop," then spawning a sub-agent is spawning a sub-loop — and the question of whether frameworks should [keep the loop optional](../tags/tool-loop-README.md) becomes the question of whether they support sub-agents as a first-class operation.
+That simplicity pays off in framework design. If "agent" means "tool loop," then spawning a sub-agent is spawning a sub-loop — and the question of whether frameworks should [computational-model](../tags/computational-model-README.md) becomes the question of whether they support sub-agents as a first-class operation.
 
 ---
 
 Relevant Notes:
 
-- [Tool loop](../tags/tool-loop-README.md) — context: the index whose argument this convention grounds — sub-agents as sub-loops
+- [computational-model](../tags/computational-model-README.md) — context: the index whose argument this convention grounds — sub-agents as sub-loops
 - [Bounded-context orchestration model](./bounded-context-orchestration-model.md) — foundation: each agent is one bounded call selected from explicit scheduler state
 - [Subtasks that need different tools force loop exposure in agent frameworks](./subtasks-that-need-different-tools-force-loop-exposure-in-agent.md) — motivates: sub-agents are needed precisely because children need different capability surfaces

@@ -25,7 +25,6 @@ What kind of "programs" LLM instructions are, and what programming-language conc
 - [llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model](../notes/llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md) — when the scheduler lives in an LLM conversation it degrades; three recovery strategies
 - [session history should not be the default next context](../notes/session-history-should-not-be-the-default-next-context.md) — stored history and next-context loading are separate decisions; `select` should decide what to load
 - [A context-operation interface bounds the projections its policy can realize](../notes/context-operation-interface-bounds-context-policy.md) — models context assembly as legal interface traces whose reachable projections remain distinct from policy quality
-- [tool loop](./tool-loop-README.md) — the tool-loop area: loop exposure, hidden schedulers, and the observability problems of framework-owned loops (apparent success, semantic recovery)
 - [Claude Code dynamic workflows](../agentic-systems/reviews/claude-code-dynamic-workflows.md) — shipped instance of the cluster: a harness exposing a returning `agent()` plus host-language composition beneath its frozen loop
 
 ## Instruction Properties
@@ -52,7 +51,6 @@ Dual-tagged with [LLM reliability](./llm-reliability-README.md), which provides 
 ## Related Tags
 
 - [llm-reliability](./llm-reliability-README.md) — error correction theory, oracle hardening, and reliability dimensions; explains *why* the scheduling architecture works
-- [tool-loop](./tool-loop-README.md) — the loop-exposure and hidden-scheduler cluster, including the observability failures of framework-owned loops
 - [learning-theory](./learning-theory-README.md) — how systems learn through constraining, codification, and source-derived reshaping; the computational model explains *what kind of programs* these mechanisms operate on
 - [context-engineering](./context-engineering-README.md) — the practical side: frontloading and indirection cost applied to what reaches the context
 

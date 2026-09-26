@@ -2,7 +2,7 @@
 description: "A cited source imposes a grounding obligation; a claim-titled note that already passed its own grounding review imposes only a representation obligation — with the preconditions that keep the distinction and why it is not a paraphrase ledger"
 type: types/note.md
 traits: [title-as-claim]
-tags: [kb-maintenance, links, evaluation]
+tags: [kb-maintenance, links, evaluation, claims-and-grounding]
 ---
 
 # A linked note discharges its own grounding, so a citing note owes representation, not re-grounding

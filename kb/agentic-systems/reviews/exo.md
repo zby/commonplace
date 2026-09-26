@@ -2,7 +2,7 @@
 description: "Exo as a running reflective self-improvement harness: a protected Rust substrate under a fully rewritable executor, allowlisted host control, and a rewind that preserves the record of what was tried"
 type: types/note.md
 traits: [has-external-sources]
-tags: [computational-model, tool-loop, self-improving-systems]
+tags: [computational-model, self-improving-systems]
 ---
 
 # Exo

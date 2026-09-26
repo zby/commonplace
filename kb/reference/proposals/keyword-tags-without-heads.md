@@ -1,7 +1,7 @@
 ---
 description: "Proposal: a second, weaker kind of tag — a keyword with no head, no page, and no marks, for scoped search only — declared per collection; set aside by ADR 089 on YAGNI grounds until search-only tagging shows a need"
 type: reference/types/design-proposal.md
-tags: [kb-maintenance]
+tags: [kb-maintenance, curation]
 ---
 
 # Keyword tags without heads

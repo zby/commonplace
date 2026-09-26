@@ -23,7 +23,6 @@ For current-state documentation about the live Commonplace system rather than tr
   - [Agent memory](./agent-memory-README.md) — memory architecture and policy (also a top-level area)
 - [Document system](./document-system-README.md) — document types, writing conventions, and validation rules for structured notes
 - [Computational model](./computational-model-README.md) — programming-language framing for LLM instructions and orchestration
-- [Tool loop](./tool-loop-README.md) — loop exposure, hidden schedulers, and framework-owned tool-loop failure modes
 - [Context engineering](./context-engineering-README.md) — getting the right knowledge into bounded context at the right time
 - [Failure modes](./failure-modes-README.md) — characteristic ways knowledge can exist without changing agent behavior
 - [Links](./links-README.md) — link semantics, navigation behavior, and link-management methodology
@@ -31,6 +30,9 @@ For current-state documentation about the live Commonplace system rather than tr
 - [LLM reliability](./llm-reliability-README.md) — why LLM output deviates from intent (underspecification, interpreter failure, indeterminism) and the machinery for catching and correcting it: oracle theory, error correction, architectural separation
 - [Observability](./observability-README.md) — making hidden state, hidden failure, and quality drift visible enough for operators and maintenance loops to act on
 - [KB maintenance](./kb-maintenance-README.md) — operations, audits, and maintenance methodology
+  - [Review system](./review-system-README.md) — gates, verdicts, freshness, protocol, and the review proposals
+  - [Claims and grounding](./claims-and-grounding-README.md) — title as claim, modality, quotes, source grounding, ground truth
+  - [Curation](./curation-README.md) — indexes and tag heads, quality signals, hygiene, capacity, retirement
 - [Methodology](./methodology-README.md) — how an agent selects, borrows, and is controlled by a methodology
 - [Trace-learning](./trace-learning-README.md) — external systems that learn from their own agent traces through a raw-to-distilled loop
 - [Related systems](../agent-memory-systems/README.md) — external systems tracked for comparison and convergence signals

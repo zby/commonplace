@@ -25,7 +25,12 @@ Popper replaces verification with falsifiability as the mark of empirical scienc
 
 ## Quotes
 
-No source quotes have been retained yet.
+- **Source extract (verbatim):** We say that a theory is falsified only if we have accepted basic statements which contradict it ( _cf._ section 11, rule 2). This condition is necessary, but not sufficient; for we have seen that non-reproducible single occurrences are of no significance to science. Thus a few stray basic statements contradicting a theory will hardly induce us to reject it as falsified. We shall take it as falsified only if we discover a _reproducible effect_ which refutes the theory. In other words, we only accept the falsification if a low-level empirical hypothesis which describes such an effect is proposed and corroborated. This kind of hypothesis may be called a _falsifying hypothesis_
+  - **Source location:** Part II, Chapter 4, section 22 "Falsifiability and Falsification", second paragraph
+- **Source extract (verbatim):** Secondly, if instead of omitting this restriction we restrict the class of the _derived_ accepted basic statements further, by demanding that they should be accepted as the results of sincere attempts to refute the theory, then our definition becomes an adequate definition of ‘positively corroborated’, though not, of course, of ‘degree of corroboration’.
+  - **Source location:** Chapter 10, section 82 "The Positive Theory of Corroboration", starred footnote *1, second paragraph
+- **Source extract (verbatim):** In opposition to this inductivist attitude, I assert that _C_ ( _h_ , _e_ ) must not be interpreted as the degree of corroboration of _h_ by _e_ , unless _e_ reports the results of _our sincere efforts to overthrow h_ . The requirement of sincerity cannot be formalized—no more than the inductivist requirement that _e_ must represent our total observational knowledge.
+  - **Source location:** Appendix *ix "Corroboration, the Weight of Evidence, and Statistical Tests", Third Note, point *14, second paragraph
 
 ## Connections Found
 

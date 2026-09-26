@@ -2,7 +2,7 @@
 description: As the KB grows, /connect will retrieve too many candidates — evidence, type, inbound links, recency, and link strength can rank what is worth evaluating
 type: types/note.md
 traits: []
-tags: [kb-maintenance, observability]
+tags: [kb-maintenance, observability, curation]
 ---
 
 # Notes need quality scores to scale curation

@@ -1,7 +1,7 @@
 ---
 description: "Proposal: keep review dependencies factored as two-input pairs where that shape fits; type and collection pairs and cohort ack are shipped while a review target with more than two inputs remains"
 type: reference/types/design-proposal.md
-tags: [kb-maintenance, observability]
+tags: [kb-maintenance, observability, review-system]
 ---
 
 # Factored dependency pairs for review freshness

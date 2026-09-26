@@ -2,7 +2,7 @@
 description: "Explains why locally cheap structural additions become routing, maintenance, and migration debt when retirement needs distributed evidence and lacks an equally operative path."
 type: types/note.md
 traits: [title-as-claim, has-comparison]
-tags: [document-system, kb-maintenance]
+tags: [document-system, kb-maintenance, curation]
 ---
 
 # Cheap adoption and weak retirement accumulate cost

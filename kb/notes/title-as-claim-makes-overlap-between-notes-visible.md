@@ -2,7 +2,7 @@
 description: When note titles are claims, overlap between notes is visible at the index level — similar assertions are obvious without opening files; topical titles hide overlap behind different labels for the same territory
 type: types/note.md
 traits: [title-as-claim]
-tags: [kb-maintenance]
+tags: [kb-maintenance, claims-and-grounding]
 ---
 
 # Title as claim makes overlap between notes visible

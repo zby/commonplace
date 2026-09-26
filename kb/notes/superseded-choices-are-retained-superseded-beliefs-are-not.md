@@ -2,7 +2,7 @@
 description: "Retention after supersession follows remaining truth role rather than maintenance operation: preserve a witness to the choice event, while a refuted belief loses subject-matter standing"
 type: types/note.md
 traits: [title-as-claim]
-tags: [kb-maintenance, artifact-analysis]
+tags: [kb-maintenance, artifact-analysis, claims-and-grounding]
 ---
 
 # Superseded choices need a historical witness; refuted beliefs lose subject-matter standing

@@ -2,7 +2,7 @@
 description: "A Commonplace grounding rollout recorded 30% grounded claim uses under a paraphrased claims ledger and 75% under verbatim quotes or pinned snapshots, with no case needing claim identifiers; the non-random cohorts make the gap descriptive"
 type: types/note.md
 traits: [title-as-claim, has-comparison]
-tags: [kb-maintenance]
+tags: [kb-maintenance, claims-and-grounding]
 ---
 
 # A quotes-route rollout grounded more claim uses without earning claim identifiers

@@ -2,7 +2,7 @@
 description: The simplest practical orchestration library demotes the tool loop to a returning, per-call-parameterized function and lets ordinary host-language code play select and K — reifying K only when the run must outlive its process or outgrow its memory
 type: types/note.md
 traits: [title-as-claim]
-tags: [computational-model, context-engineering, tool-loop]
+tags: [computational-model, context-engineering]
 ---
 
 # The practical scheduler is the host language, not a reified select

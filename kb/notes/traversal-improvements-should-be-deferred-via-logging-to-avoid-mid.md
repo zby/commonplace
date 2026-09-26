@@ -2,7 +2,7 @@
 description: Loading writing methodology into an already-committed context window is expensive; a one-line log entry preserves the improvement signal at near-zero cost and lets a separate pass do the fix
 type: types/note.md
 traits: [title-as-claim]
-tags: [kb-maintenance]
+tags: [kb-maintenance, curation]
 ---
 
 # Traversal improvements should be deferred via logging to avoid mid-task context switching

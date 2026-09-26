@@ -2,7 +2,7 @@
 description: "Explains why a disposable local guess can rationally select the next probe when error is cheap and contained, while retained explanations need reach checks"
 type: types/note.md
 traits: [title-as-claim, has-comparison, synthesis]
-tags: [learning-theory, discovery, kb-maintenance]
+tags: [learning-theory, discovery, kb-maintenance, claims-and-grounding]
 ---
 
 # Ad hoc explanation can be rational when error is cheap and local

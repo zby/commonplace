@@ -2,7 +2,7 @@
 description: Existing links already encode dependency information; comparing note and target timestamps flags notes that may be stale without any new annotation, analogous to make's file-based rebuild logic.
 type: types/note.md
 traits: [title-as-claim]
-tags: [kb-maintenance, observability]
+tags: [kb-maintenance, observability, curation]
 ---
 
 # Link graph plus timestamps enables make-like staleness detection

@@ -4,7 +4,15 @@
 
 **Posed by:** the operator: "we still should make a review of the current tags".
 
-**State:** findings recorded; actions await the operator's selection.
+**State:** actions in progress. Done: self-improving-systems split into six
+children (59c89df4); foundations retired (4ff8af80); mechanical fixes
+(d07c6cb1); kb-maintenance split into review-system, claims-and-grounding, and
+curation; tool-loop merged into computational-model, its essay head deleted
+(recoverable from git, a seed for a scheduling child if computational-model is
+split later); architecture kept. Operator decisions of 2026-09-26: tags are
+carried by notes, the two system-analysis collections, and reference
+proposals; instructions, ADRs, and other reference pages carry none (stated
+in `kb/tags/COLLECTION.md`). Remaining: the nine opening rewrites.
 
 ## What was reviewed
 

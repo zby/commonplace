@@ -2,7 +2,7 @@
 description: "How Claude Code's dynamic-workflows API works — a model-authored JS orchestrator over sub-agents — mapped onto the bounded-context orchestration model: what of the tool loop the harness exposes, to whom, and what it withholds"
 type: types/note.md
 traits: [has-external-sources]
-tags: [computational-model, tool-loop]
+tags: [computational-model]
 ---
 
 # Claude Code dynamic workflows
@@ -73,4 +73,4 @@ Relevant Notes:
 - [agent orchestration occupies a multi-dimensional design space](../../notes/agent-orchestration-occupies-a-multi-dimensional-design-space.md) — see-also: the four withholdings read as independent design axes; this note names that independence
 - [RLM has the model write ephemeral orchestrators over sub-agents](../../notes/rlm-has-the-model-write-ephemeral-orchestrators-over-sub-agents.md) — see-also: the same authorship model with persistence added
 - [orchestration strategies and run-state have opposite persistence economics](../../notes/orchestration-strategies-and-run-state-have-opposite-persistence.md) — see-also: the journal/save split instantiates the predicted asymmetric lifecycle; the promotion machinery remains coarse and manual
-- [tool loop](../../tags/tool-loop-README.md) — see-also: the cluster this system is read against
+- [computational-model](../../tags/computational-model-README.md) — see-also: the cluster this system is read against

@@ -2,7 +2,7 @@
 description: "Separates ephemeral task-specific run state from reusable selection strategies inside host schedulers; RLM-style execution discards both and therefore loses the valuable reusable half"
 type: types/note.md
 traits: [title-as-claim]
-tags: [computational-model, learning-theory, tool-loop, artifact-analysis]
+tags: [computational-model, learning-theory, artifact-analysis]
 ---
 
 # Orchestration strategies and run-state have opposite persistence economics

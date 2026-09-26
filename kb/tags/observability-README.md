@@ -9,7 +9,7 @@ Observability is about recovering signals that would otherwise stay hidden: exec
 
 ## Runtime visibility
 
-- [tool loop](./tool-loop-README.md) — inspectable orchestration is a precondition for seeing how a run actually progressed rather than inferring from the final artifact
+- [computational-model](./computational-model-README.md) — inspectable orchestration is a precondition for seeing how a run actually progressed rather than inferring from the final artifact
 - [Designing a Memory System for LLM-Based Agents](../notes/designing-agent-memory-systems.md) — bridges observability to memory: hidden fallback paths and degraded execution become extraction targets for maintenance and repair
 - [Final task success does not establish intended-path health](../notes/final-task-success-does-not-establish-intended-path-health.md) — identical terminal outcomes cannot distinguish a healthy prescribed path from successful fallback without independent execution evidence
 - [Silent disambiguation is the semantic analogue of tool fallback](../notes/silent-disambiguation-is-the-semantic-analogue-of-tool-fallback.md) — extends the same observability problem to underspecified specs: a useful artifact can hide that the contract did not determine the path and the runtime repaired it locally

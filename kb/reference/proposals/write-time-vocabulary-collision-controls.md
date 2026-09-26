@@ -1,7 +1,7 @@
 ---
 description: "Proposal: mechanical controls for the one-term-one-sense invariant — reserved-term registry, slot-escape lint, coinage collision screen, naming-review gate, and clausal-binding link check"
 type: reference/types/design-proposal.md
-tags: [kb-maintenance]
+tags: [kb-maintenance, claims-and-grounding]
 ---
 
 # Write-time vocabulary collision controls
