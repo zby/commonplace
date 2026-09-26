@@ -2,7 +2,7 @@
 description: "The improvement claim's relata are predecessor and operative-successor states and its relation is declared before the development it judges; evaluator location is a separate declaration from the learner boundary"
 type: types/note.md
 traits: [title-as-claim, has-comparison]
-tags: [foundations, learning-theory, self-improving-systems]
+tags: [foundations, learning-theory, self-improving-systems, software-factory]
 ---
 
 # A better-factory claim compares operative states under an antecedent assessment relation

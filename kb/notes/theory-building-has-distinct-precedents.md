@@ -2,7 +2,7 @@
 description: "Conjecture and criticism, causal self-representation, and persistent artifact editing supply different precedents for a theory builder's operations; similarity on one does not establish the others"
 type: types/note.md
 traits: [title-as-claim, synthesis, has-external-sources]
-tags: [learning-theory, self-improving-systems, foundations]
+tags: [learning-theory, self-improving-systems, foundations, theory-builder]
 ---
 
 # Theory building has distinct epistemic, structural, and implementation precedents

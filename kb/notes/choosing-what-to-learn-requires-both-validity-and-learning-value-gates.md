@@ -2,7 +2,7 @@
 description: "Separates two promotion checks for learning loops: whether a candidate is trustworthy enough to learn from, and whether learning it would improve the current system."
 type: types/note.md
 traits: [title-as-claim, has-external-sources]
-tags: [learning-theory, self-improving-systems]
+tags: [learning-theory, self-improving-systems, improvement-loop]
 ---
 
 # Choosing what to learn requires both validity and learning-value gates

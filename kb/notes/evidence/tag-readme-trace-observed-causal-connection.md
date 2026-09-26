@@ -2,7 +2,7 @@
 description: "One bounded Commonplace trace establishes that operative self-representation can exert causal force in both directions; it does not establish system-wide reflective coverage"
 type: types/note.md
 traits: [has-implementation]
-tags: [self-improving-systems]
+tags: [self-improving-systems, reflection]
 ---
 
 # The tag-readme change as an observed causal-connection trace

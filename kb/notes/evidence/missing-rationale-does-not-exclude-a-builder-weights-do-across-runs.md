@@ -2,7 +2,7 @@
 description: "The August 2026 Prime Agent, Recuris, and Apodex reports: retained rules without a recorded rationale leave theory-builder membership open, while Apodex carries only weights across runs, where no unit says anything, so no builder spans its runs"
 type: types/note.md
 traits: [title-as-claim, has-comparison, has-external-sources]
-tags: [self-improving-systems]
+tags: [self-improving-systems, theory-builder]
 ---
 
 # Missing rationale does not exclude a theory builder; weight-only retention excludes one across runs

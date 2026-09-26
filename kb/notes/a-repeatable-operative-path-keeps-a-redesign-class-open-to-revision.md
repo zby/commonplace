@@ -2,7 +2,7 @@
 description: "Operationalizes repeatable operative revision for a named redesign class as a causal path through representation, evidence-bearing determination, admission, installation, dependence, and continuity"
 type: notes/types/structured-claim.md
 traits: [title-as-claim, has-comparison, has-external-sources]
-tags: [foundations, self-improving-systems]
+tags: [foundations, self-improving-systems, reflection]
 ---
 
 # A repeatable operative path keeps a redesign class open to revision

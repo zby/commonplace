@@ -2,7 +2,7 @@
 description: Retaining evaluated changes to behavior-shaping prompts, rules, tools, and tests gives deployed systems a persistent adaptation path outside model-weight updates
 type: types/note.md
 traits: [has-comparison, title-as-claim]
-tags: [learning-theory, deploy-time-learning, self-improving-systems]
+tags: [learning-theory, deploy-time-learning, self-improving-systems, continual-learning]
 ---
 
 # Retained system-definition artifacts enable persistent deployment-time adaptation

@@ -2,7 +2,7 @@
 description: "Broad software demands make exhaustive predefinition of useful family-specific production machinery practically implausible, motivating agentic factory development without ruling out a fixed universal substrate in principle"
 type: types/note.md
 traits: [title-as-claim]
-tags: [foundations, computational-model, self-improving-systems]
+tags: [foundations, computational-model, self-improving-systems, software-factory]
 ---
 
 # Broad software demands create pressure for agentic factory development

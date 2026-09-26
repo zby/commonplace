@@ -2,7 +2,7 @@
 description: "A consumption path can promote content into a higher-force role without checking whether an authorization covers that content, version, and use"
 type: types/note.md
 traits: [title-as-claim, has-external-sources]
-tags: [failure-modes, artifact-analysis, self-improving-systems]
+tags: [failure-modes, artifact-analysis, self-improving-systems, reflection]
 ---
 
 # A consumption channel delivers force without the history that earned it

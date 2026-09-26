@@ -2,7 +2,7 @@
 description: "An improvement whose concepts have no expression in a loop's admitted formal language is reached only through a pre-formal stage, inside the loop or fixed at design time in the choice of language; translation relocates that stage"
 type: types/note.md
 traits: [title-as-claim, has-comparison, has-external-sources]
-tags: [foundations, self-improving-systems, constraining]
+tags: [foundations, self-improving-systems, constraining, continual-learning]
 ---
 
 # Improvements outside the admitted formal language need a pre-formal stage somewhere

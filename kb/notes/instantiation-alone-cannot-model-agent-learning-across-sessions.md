@@ -2,7 +2,7 @@
 description: "The class/instance analogy captures session startup but omits the retained update relation that can revise later agent definitions and reusable-content placement"
 type: types/note.md
 traits: [title-as-claim, has-comparison]
-tags: [computational-model, learning-theory, self-improving-systems]
+tags: [computational-model, learning-theory, self-improving-systems, continual-learning]
 ---
 
 # Instantiation alone cannot model agent learning across sessions

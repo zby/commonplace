@@ -2,7 +2,7 @@
 description: "What artifact drift adds when it is reflexive: the process that would detect it consults the artifact that drifted, the trigger has no edit event to hook, and synchronization load scales with autonomy"
 type: types/note.md
 traits: [title-as-claim]
-tags: [self-improving-systems, artifact-analysis]
+tags: [self-improving-systems, artifact-analysis, reflection]
 ---
 
 # Stale self-description conceals its own staleness

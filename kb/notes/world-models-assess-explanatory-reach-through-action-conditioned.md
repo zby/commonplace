@@ -2,7 +2,7 @@
 description: "Learned world models can assess explanatory-reach when action-conditioned predictions are tested across the interventions or shifts a commitment claims"
 type: types/note.md
 traits: [title-as-claim, has-comparison, has-external-sources]
-tags: [foundations, computational-model, self-improving-systems]
+tags: [foundations, computational-model, self-improving-systems, theory-builder]
 ---
 
 # World models assess explanatory-reach through action-conditioned prediction

@@ -2,7 +2,7 @@
 description: "Commonplace builds a system meeting the theory-builder conditions and tests whether it learns; criticism of content is compared against trial and error, and fine-grained addressability and high persistence against builders with less of each"
 type: types/note.md
 traits: [title-as-claim, has-external-sources]
-tags: [foundations, learning-theory, self-improving-systems]
+tags: [foundations, learning-theory, self-improving-systems, theory-builder]
 ---
 
 # Commonplace builds a theory builder and tests whether it learns

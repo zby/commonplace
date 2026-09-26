@@ -2,7 +2,7 @@
 description: "Self-improvement can accumulate without reflection — parametric learners do — but non-reflective retention gives only indirect handles; reflective retention makes the changed object addressable"
 type: types/note.md
 traits: [title-as-claim]
-tags: [foundations, computational-model, self-improving-systems]
+tags: [foundations, computational-model, self-improving-systems, reflection]
 ---
 
 # Reflection buys addressability

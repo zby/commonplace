@@ -2,7 +2,7 @@
 description: "Conjecture: retained theories may reduce target observations under structured shifts; a useful theory's reuse benefit is separate from selecting it by estimated explanatory-reach"
 type: types/note.md
 traits: [title-as-claim, has-external-sources]
-tags: [learning-theory, discovery, self-improving-systems]
+tags: [learning-theory, discovery, self-improving-systems, theory-builder]
 ---
 
 # Retained theories may improve sample efficiency under structured shifts

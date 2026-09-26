@@ -2,7 +2,7 @@
 description: "The lesson's axis is production method — hand-crafted versus search-and-learning — not representational form. Learned localized forms are therefore a coherent scaling hypothesis, with cross-artifact credit assignment as the decisive open problem"
 type: types/note.md
 traits: [title-as-claim, synthesis, has-external-sources]
-tags: [learning-theory, foundations, self-improving-systems]
+tags: [learning-theory, foundations, self-improving-systems, continual-learning]
 ---
 
 # The bitter lesson selects production methods, not representational forms

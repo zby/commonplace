@@ -2,7 +2,7 @@
 description: "Outer-loop learning depends on inspectable failure evidence, not only on the oracle used to select winning candidates"
 type: types/note.md
 traits: [title-as-claim, has-external-sources]
-tags: [learning-theory, self-improving-systems]
+tags: [learning-theory, self-improving-systems, improvement-loop]
 ---
 
 # Diagnostic richness constrains outer-loop learning quality

@@ -2,7 +2,7 @@
 description: "Tool usefulness, computational autonomy, warrant, and system power move independently in a human-agent system, so a progress claim has to say which one moved and autonomy gains do not license power claims"
 type: types/note.md
 traits: [title-as-claim, has-comparison]
-tags: [foundations, self-improving-systems]
+tags: [foundations, self-improving-systems, warranted-autonomy]
 ---
 
 # Tool usefulness, computational autonomy, warrant, and system power are separate dimensions

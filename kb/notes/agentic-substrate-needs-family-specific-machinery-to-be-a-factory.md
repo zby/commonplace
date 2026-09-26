@@ -2,7 +2,7 @@
 description: "Maps the bounded-call agentic substrate to Greenfield's software-factory ontology without calling every generic harness or generated program a factory"
 type: types/note.md
 traits: [title-as-claim]
-tags: [foundations, computational-model, self-improving-systems]
+tags: [foundations, computational-model, self-improving-systems, software-factory]
 ---
 
 # An agentic substrate becomes a software factory through family-specific production machinery

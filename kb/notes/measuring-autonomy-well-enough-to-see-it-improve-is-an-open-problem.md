@@ -1,7 +1,7 @@
 ---
 description: "Autonomy is reported per function rather than scored as a percentage, but that profile does not yet support comparison across systems or time"
 type: types/note.md
-tags: [foundations, self-improving-systems]
+tags: [foundations, self-improving-systems, warranted-autonomy]
 ---
 
 # Measuring autonomy well enough to see it improve is an open problem

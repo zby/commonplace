@@ -2,7 +2,7 @@
 description: "An intervention on retained theory estimates that surface's causal contribution under matched conditions; influence, explanatory guidance, acquisition, and whole-system theory possession remain different claims"
 type: types/note.md
 traits: [title-as-claim]
-tags: [foundations, self-improving-systems, evaluation]
+tags: [foundations, self-improving-systems, evaluation, theory-builder]
 ---
 
 # A retained-theory intervention isolates one surface, not the whole program theory

@@ -2,7 +2,7 @@
 description: "A fixed-client benchmark measures worker capability; it leaves broader closure untested when the client supplies internal production decisions, while ordinary user requirements and acceptance may remain external"
 type: types/note.md
 traits: [title-as-claim]
-tags: [foundations, self-improving-systems, evaluation]
+tags: [foundations, self-improving-systems, evaluation, warranted-autonomy]
 ---
 
 # A benchmark that holds the client fixed exports the least-warrantable decisions by design

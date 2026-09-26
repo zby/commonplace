@@ -2,7 +2,7 @@
 description: "Why optimization cannot repair consequential distinctions, responses, or mappings outside the effective update space of a fixed task decomposition"
 type: types/note.md
 traits: [title-as-claim, has-external-sources]
-tags: [learning-theory, self-improving-systems]
+tags: [learning-theory, self-improving-systems, continual-learning]
 ---
 
 # Learning inside a fixed decomposition inherits its mistakes

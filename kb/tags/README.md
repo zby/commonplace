@@ -8,6 +8,12 @@ For current-state documentation about the live Commonplace system rather than tr
 
 - [Foundations](./foundations-README.md) — core theory: contextual competence, bounded context, explanatory-reach, design methodology, composability
 - [Self-improving systems](./self-improving-systems-README.md) — evidence-responsive operative change to a system's own organization; reflective versus non-reflective self-improvement is the central distinction, and the stake is a conjectured sample-efficiency payoff: reflection may cut target data under structured shifts
+  - [Theory builder](./theory-builder-README.md) — the theory-builder definition and its companions; the research program Commonplace runs
+  - [Software factory](./software-factory-README.md) — factories and houses: family-specific production machinery and factory learning
+  - [Improvement loop](./improvement-loop-README.md) — the proposal-selection architecture: search control, evaluation, retention
+  - [Reflection](./reflection-README.md) — reflective systems: addressability, second-order lessons, graded coverage
+  - [Warranted autonomy](./warranted-autonomy-README.md) — which decisions a computational actor is warranted to take over, and how far
+  - [Continual learning](./continual-learning-README.md) — how a deployed system keeps learning outside model weights
 - [Architecture](./architecture-README.md) — how Commonplace is structured and installed: repo layout, control-plane design, file-based storage
 - [Evaluation](./evaluation-README.md) — what works, what doesn't, what needs testing
 - [Learning theory](./learning-theory-README.md) — how systems learn, verify, and improve; covered by six child tags (enforced), so its README routes rather than enumerates:

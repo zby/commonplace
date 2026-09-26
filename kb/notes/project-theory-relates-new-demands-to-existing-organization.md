@@ -2,7 +2,7 @@
 description: "For open-ended modification, project-theory possession includes relating a new demand to existing responsibilities before parallel structure becomes the default; an explicit assimilation branch may counter additive coding-agent patches"
 type: types/note.md
 traits: [title-as-claim]
-tags: [foundations, self-improving-systems]
+tags: [foundations, self-improving-systems, theory-builder]
 ---
 
 # Project-theory possession requires comparing new demands with existing organization

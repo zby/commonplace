@@ -1,7 +1,7 @@
 ---
 description: "Definition — judging whether a commitment's claimed explanatory-reach is genuine across natural-language, symbolic, and distributed-parametric forms"
 type: types/definition.md
-tags: [foundations, computational-model, self-improving-systems]
+tags: [foundations, computational-model, self-improving-systems, theory-builder]
 ---
 
 # Reach-assessment

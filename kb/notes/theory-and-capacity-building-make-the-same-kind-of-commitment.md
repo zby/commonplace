@@ -2,7 +2,7 @@
 description: "Theory building and capacity building both retain resolutions their evidence does not entail; an explanatory commitment stays answerable to the object it describes while a constructive commitment changes the object, so retraction differs in kind"
 type: types/note.md
 traits: [title-as-claim]
-tags: [learning-theory, self-improving-systems]
+tags: [learning-theory, self-improving-systems, theory-builder]
 ---
 
 # Theory building and capacity building make the same kind of fallible commitment

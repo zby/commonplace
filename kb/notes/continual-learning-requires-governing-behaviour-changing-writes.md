@@ -2,7 +2,7 @@
 description: For deployed systems, persistence is insufficient; continual learning must select, validate, authorize, and coordinate behaviour-changing updates across the representational forms a system can change
 type: types/note.md
 traits: [title-as-claim]
-tags: [learning-theory, self-improving-systems]
+tags: [learning-theory, self-improving-systems, continual-learning]
 ---
 
 # Continual learning requires governing behaviour-changing writes, not just storing content

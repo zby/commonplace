@@ -2,7 +2,7 @@
 description: "The KB already learns through manual improvement; automating judgment-heavy mutations needs oracles for connections, groupings, and synthesis we cannot yet manufacture"
 type: types/note.md
 traits: [title-as-claim]
-tags: [learning-theory, self-improving-systems]
+tags: [learning-theory, self-improving-systems, continual-learning]
 ---
 
 # Automating KB learning is an open problem

@@ -2,7 +2,7 @@
 description: "When a system preferentially transfers decisions whose premises, criteria, and checks are available, the remaining human decisions become harder to warrant per decision; this predicts a residue composition, not structural computational openness"
 type: types/note.md
 traits: [title-as-claim]
-tags: [foundations, self-improving-systems]
+tags: [foundations, self-improving-systems, warranted-autonomy]
 ---
 
 # Warranted transfer out of the human cut leaves people the hardest-to-warrant decisions

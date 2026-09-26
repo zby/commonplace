@@ -2,7 +2,7 @@
 description: "A six-path Commonplace audit establishes broad path-relative addressability without establishing completeness, while exposing separate admission and model-realization gaps in the broader revision affordance"
 type: types/note.md
 traits: [title-as-claim, synthesis, has-comparison, has-implementation]
-tags: [artifact-analysis, self-improving-systems]
+tags: [artifact-analysis, self-improving-systems, reflection]
 ---
 
 # Six Commonplace paths establish broad addressability, not completeness

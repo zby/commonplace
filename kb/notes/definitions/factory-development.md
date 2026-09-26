@@ -1,7 +1,7 @@
 ---
 description: "Definition — factory development constructs or revises reusable family-level production machinery rather than one product's lifecycle state"
 type: types/definition.md
-tags: [foundations, self-improving-systems]
+tags: [foundations, self-improving-systems, software-factory]
 ---
 
 # Factory development
