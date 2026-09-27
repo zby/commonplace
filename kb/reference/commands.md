@@ -112,9 +112,12 @@ Generate citations from selected text and an analysis run's frozen Git blob or
 capture. One occurrence returns only the Markdown citation, containing the exact
 source excerpt and derived range. Two to ten occurrences return JSON candidates
 with selection metadata. More than ten returns an error asking for a longer
-quote. The author chooses one and inserts it unchanged; the
-tool does not validate an assembled document. Publication uses the regular
-validator. Use `--text-file` or stdin for selected text to avoid shell quoting.
+quote. When repeated occurrences share a line, the returned excerpts include
+enough surrounding source to distinguish them. The author chooses one and
+inserts it unchanged; the tool does not validate an assembled document.
+Publication uses the regular validator. Use `--text-file` or stdin for
+selected text to avoid shell quoting, and omit `--source-path` when the run's
+source is a capture rather than a Git blob.
 
 ### Generated indexes (no command)
 

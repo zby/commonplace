@@ -49,29 +49,20 @@ returns a blocked report with the conclusion it prevents.
 Budget combined tool output as well as individual reads. Inspect the delivered
 output for truncation and reread omitted spans before citing them.
 
-Follow the old memory review's analytical progression: core mechanisms,
-operative artifacts, write side, read-back, then a curiosity pass. Keep each
-finding source-native before giving a Commonplace classification. Retain the
-minimum supporting code or prose for each load-bearing finding. Write the text
-to locate into a UTF-8 selection file and run
+Work through the report's sections in order: core ideas, shared records,
+write side, read-back, then a curiosity pass. Keep each finding source-native
+before giving a Commonplace classification. For each load-bearing finding,
+generate the quote block the main result's Source register requires with
+[`commonplace-quote`](../reference/commands.md#commonplace-quote):
 `commonplace-quote <sibling-run-state-path> --source-path <commit-relative-path>
---text-file <selection-file>`. Omit `--source-path` for the frozen capture.
-One occurrence returns only the Markdown citation. Two to ten occurrences return
-JSON entries containing complete `citation` strings and selection metadata.
-More than ten occurrences returns an error: select a longer quote and retry.
-The tool includes additional source context
-when needed to distinguish occurrences on the same line. Choose the occurrence
-whose context supports the finding and insert its citation unchanged.
-
-Request discontiguous passages separately. A failed lookup requires rereading
-the source and revising the selection. Do not format citations, strip source
-characters, or calculate endpoints yourself. For ordinary source references,
-use the full path without a range, or reuse a generated location. Follow the
-main-result Source register contract. Do not run a separate quote check after
-insertion; publication uses the regular validator on the assembled bundle.
-Assess semantic support yourself, and let the parent retain the chosen quote
-once on the canonical record. A thin memory boundary warrants short sections
-with explicit limits.
+--text-file <selection-file>`, omitting `--source-path` for the frozen
+capture. Choose the occurrence whose context supports the finding and insert
+its citation unchanged. Request discontiguous passages separately. A failed
+lookup requires rereading the source and revising the selection; never format
+a citation, strip source characters, or calculate a range by hand. Assess
+semantic support yourself; publication validates the assembled bundle, so run
+no separate quote check. A thin memory boundary warrants short sections with
+explicit limits.
 
 - **Core mechanisms:** explain what retained material can change in later
   work. Account for context volume and selection complexity, provenance and
