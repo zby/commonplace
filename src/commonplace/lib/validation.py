@@ -53,11 +53,12 @@ from commonplace.lib.project_paths import (
     iter_validation_markdown_files,
     kb_root,
 )
-from commonplace.lib.quote_matching import Normalization, match_quote, parse_blockquotes
+from commonplace.lib.quote_matching import match_quote, parse_blockquotes
 from commonplace.lib.quote_verification import (
     INGEST_QUOTES_HEADING_RE,
     NEXT_H2_RE,
     QuoteResult,
+    ingest_normalization,
     ingest_quotes_section,
     verify_content,
 )
@@ -593,6 +594,8 @@ def validate_quote_citations(results: CheckResults, content: str) -> None:
     flagged = 0
     for citation in citations:
         problems = []
+        if citation.source is not None and citation.error:
+            problems.append(f"source error: {citation.error}")
         if not _SOURCE_REF_RE.search(citation.attribution):
             problems.append("names no source (expected a code-span path or link)")
         if not citation.quote.strip():
@@ -813,17 +816,6 @@ def validate_ingest_snapshot_pairing(
             f"expected {shown} is absent; its source URL matches "
             f"{located(by_url)}, but snapshot_sha256 identifies different bytes"
         )
-
-
-def ingest_normalization(content: str) -> Normalization:
-    """Repository snapshots may contain code even when captured as Markdown."""
-    metadata = frontmatter.parse(content).data
-    source = _http_source_from_content(content)
-    host = urlsplit(source).hostname if source else None
-    return "code" if metadata.get("genre") == "code-repository" or host in {
-        "github.com", "raw.githubusercontent.com", "gist.github.com",
-        "gitlab.com", "bitbucket.org",
-    } else "prose"
 
 
 def validate_ingest_quotes(

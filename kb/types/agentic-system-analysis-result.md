@@ -247,8 +247,16 @@ result; that structural minimum does not certify coverage or semantic support.
 A quote-anchored blockquote in this result or one of its generated review
 projections ends with a `> ---` attribution. For Git, the attribution contains
 either a full-commit GitHub blob URL matching the registered repository or
-`` `commit-relative/path` @ `full-commit` ``. For a capture, it names the
-captured source. Publication normalizes whitespace and requires the quote to
+`` `commit-relative/path` @ `full-commit` ``. For a capture, use
+`` `capture/path[:start-end]` @ `sha256:<checksum>` `` with the registered
+capture checksum and an absolute or matching relative capture path. A bare
+path is insufficient. Alternatively, use the exact registered source URL;
+the run's capture checksum supplies its version binding. Other URLs, including
+member-file URLs inside a bundle, are not capture identities. Retain those as
+locator notes after a pinned capture-path attribution. Capture ranges address
+the capture's own lines; GitHub blob ranges cannot address a bundle.
+
+Publication normalizes whitespace and requires the quote to
 occur exactly once in the Git blob at the recorded commit or in the immutable
 capture, or exactly once within a supplied line range. Ranges use
 `path:start-end` inside the path code span or GitHub `#Lstart-Lend` anchors;

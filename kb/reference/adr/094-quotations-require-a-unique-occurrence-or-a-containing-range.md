@@ -38,9 +38,10 @@ ranges remain separate regions; they cannot form a synthetic passage by
 concatenation. A repeated quote without a range fails with its occurrence
 count. Two occurrences on one line require more quoted context.
 
-Git blobs and analysis captures use whitespace-only normalization. KB
-Markdown and ordinary web or paper snapshots retain typography and Markdown
-emphasis normalization. Repository snapshots use whitespace-only normalization,
+Git blobs and analysis captures use whitespace-only normalization. Ordinary KB
+Markdown and web or paper snapshots retain typography and Markdown
+emphasis normalization. Repository snapshots and citations of their retained
+ingest extracts use whitespace-only normalization,
 including sources declared as code repositories and recognized repository
 hosts. The inspected emphasis-dependent extracts are prose; none requires
 weakening the repository rule. The source resolver selects the rule, never a

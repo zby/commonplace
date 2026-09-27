@@ -3,13 +3,14 @@
 from __future__ import annotations
 
 import re
+from collections.abc import Iterator
 from dataclasses import dataclass
 from typing import Any
 
 from commonplace.lib import frontmatter as fm_mod
 
 _BODY_HEADING_RE = re.compile(r"^(#{1,6})\s+(.+?)\s*$", re.MULTILINE)
-_FENCED_CODE_RE = re.compile(r"```.*?```", re.DOTALL)
+_FENCE_LINE_RE = re.compile(r" {0,3}(`{3,}|~{3,})(.*)")
 _INLINE_CODE_RE = re.compile(r"`[^`\n]+`")
 _LINK_RE = re.compile(r"\[([^\]]+)\]\(([^)]+)\)")
 # A date stands alone: not the tail of a longer hyphenated, slashed, or dotted
@@ -40,9 +41,36 @@ def strip_frontmatter(content: str) -> str:
     return fm_mod.strip(content)
 
 
-def _blank(match: re.Match[str]) -> str:
-    """Replace a matched span with same-shaped whitespace, preserving newlines."""
-    return "".join("\n" if char == "\n" else " " for char in match.group(0))
+def _fenced_code_spans(text: str) -> Iterator[tuple[int, int]]:
+    """Locate top-level fences; inline backticks cannot open or close one."""
+    fence: str | None = None
+    start = offset = 0
+    for line in text.splitlines(keepends=True):
+        marker = _FENCE_LINE_RE.fullmatch(line.rstrip("\r\n"))
+        if marker:
+            run, tail = marker.groups()
+            if fence is None:
+                # Backtick fence info strings cannot contain backticks.
+                if run[0] != "`" or "`" not in tail:
+                    fence, start = run, offset
+            elif run[0] == fence[0] and len(run) >= len(fence) and not tail.strip(" \t"):
+                yield start, offset + len(line)
+                fence = None
+        offset += len(line)
+    if fence is not None:
+        yield start, len(text)
+
+
+def _replace_fenced_code(text: str, *, blank: bool) -> str:
+    parts = []
+    previous = 0
+    for start, end in _fenced_code_spans(text):
+        parts.append(text[previous:start])
+        if blank:
+            parts.append("".join(char if char in "\r\n" else " " for char in text[start:end]))
+        previous = end
+    parts.append(text[previous:])
+    return "".join(parts)
 
 
 def blank_fenced_code_blocks(text: str) -> str:
@@ -58,11 +86,11 @@ def blank_fenced_code_blocks(text: str) -> str:
     proximity (verbatim-quote resolution) require the offsets to survive. One
     primitive serves both, so the two checks cannot disagree about code.
     """
-    return _FENCED_CODE_RE.sub(_blank, text)
+    return _replace_fenced_code(text, blank=True)
 
 
 def remove_fenced_code_blocks(text: str) -> str:
-    return _FENCED_CODE_RE.sub("", text)
+    return _replace_fenced_code(text, blank=False)
 
 
 def remove_code_regions(text: str) -> str:

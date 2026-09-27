@@ -583,7 +583,7 @@ def test_capture_source_is_byte_verified(tmp_path: Path) -> None:
             "source-identity: document bundle",
         )
         + "\n> captured\n> source\n"
-        + "> --- [captured source](https://example.invalid/captured-source)\n",
+        + f"> --- `{capture.as_posix()}` @ `sha256:{digest(capture)}`\n",
         encoding="utf-8",
     )
     sync_retained_fixture(tmp_path, values)

@@ -31,9 +31,16 @@ import re
 from collections.abc import Callable, Iterable, Sequence
 from dataclasses import dataclass
 from pathlib import Path
+from urllib.parse import urlsplit
 
+from commonplace.lib import frontmatter
 from commonplace.lib.note_parser import blank_fenced_code_blocks
-from commonplace.lib.quote_matching import Citation, match_quote, parse_blockquotes
+from commonplace.lib.quote_matching import (
+    Citation,
+    Normalization,
+    match_quote,
+    parse_blockquotes,
+)
 
 LINK_RE = re.compile(r"\[([^]]*)\]\(([^)]+\.md)(?:#[^)]*)?\)")
 VERBATIM_RE = re.compile(r"\bverbatim\b", re.IGNORECASE)
@@ -48,6 +55,20 @@ NEGATED_VERBATIM_RE = re.compile(
 DOUBLE_QUOTE_RE = re.compile(r'"([^"]+)"|“([^”]+)”')
 INGEST_QUOTES_HEADING_RE = re.compile(r"^## Quotes[ \t]*$", re.MULTILINE)
 NEXT_H2_RE = re.compile(r"^##[ \t]+", re.MULTILINE)
+
+
+def ingest_normalization(content: str) -> Normalization:
+    """Use the same source-kind rule for snapshots and their retained extracts."""
+    metadata = frontmatter.parse(content).data
+    source = metadata.get("source")
+    try:
+        host = urlsplit(source).hostname if isinstance(source, str) and source.startswith(("http://", "https://")) else None
+    except ValueError:
+        host = None
+    return "code" if metadata.get("genre") == "code-repository" or host in {
+        "github.com", "raw.githubusercontent.com", "gist.github.com",
+        "gitlab.com", "bitbucket.org",
+    } else "prose"
 
 
 def ingest_quotes_section(content: str) -> str:
@@ -300,11 +321,13 @@ def verify_content(
                 error = "source error: linked source is missing or is not a file"
             else:
                 try:
-                    region = _source_support_text(source, load_source(source))
+                    source_content = load_source(source)
+                    region = _source_support_text(source, source_content)
                 except (OSError, UnicodeError) as exc:
                     error = f"source error: cannot read linked source: {exc}"
                 else:
-                    matched = match_quote(citation.quote, region, kind="prose")
+                    kind = ingest_normalization(source_content) if source.name.endswith(".ingest.md") else "prose"
+                    matched = match_quote(citation.quote, region, kind=kind)
                     status = "match" if matched.matched else "mismatch"
                     error = matched.error
                     if error and source.name.endswith(".ingest.md"):

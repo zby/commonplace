@@ -527,7 +527,9 @@ def _verify_quote_anchors(
             source_text, error = capture_text, capture_error
             location = f"frozen capture {source.revision}"
             if citation.source and citation.source.startswith(("http://", "https://")):
-                if citation.ranges:
+                if citation.source != source.identity:
+                    error = "attribution URL does not match registered capture identity; cite its pinned capture path"
+                elif citation.ranges:
                     error = "a blob line range cannot address the full capture; cite a capture range"
             elif citation.version is not None:
                 if citation.version != f"sha256:{source.expected_sha256}":

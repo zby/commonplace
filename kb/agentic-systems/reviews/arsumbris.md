@@ -7,7 +7,7 @@ analysis-run: AAS-2026-09-23-arsumbris-02
 source-identity: https://github.com/arsumbris/arsumbris
 reviewed-revision: arsumbris-0.0.1-alpha-release-bundle-2026-09-23
 analysis-result: kb/reports/retained/agentic-system-analysis/AAS-2026-09-23-arsumbris-02/result.md
-analysis-result-sha256: 2fe25136603a59388935ba9e9a17e41d77770adad09782390af74d439a5208b4
+analysis-result-sha256: d9846c0a9fd98fc1c05d74d30d3a87ff03ad716e6f77eea6b1b47b6d79c80d82
 ---
 
 # arsumbris
@@ -45,7 +45,7 @@ A selected correction rule instructs an agent to retain reusable human feedback.
 Weave separates graph utility from truth adjudication. Candidates are admitted for their contribution to the graph, and passage checks are prescribed before weaving. Its claim type explicitly leaves standing and contradiction resolution downstream:
 
 > #: Standing and contradiction-resolution are downstream, not here.
-> --- [claim.type.yaml](https://github.com/arsumbris/au-weave/blob/24320734e2436e8c75d44a7ff9afb6a330569840/type/claim.type.yaml)
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-23-arsumbris-02/source-bundle.txt` @ `sha256:b64f3d37b0259ec2e6d116a885c4287c99f69575763f6372ce639d597b533b8a` — original source: [claim.type.yaml](https://github.com/arsumbris/au-weave/blob/24320734e2436e8c75d44a7ff9afb6a330569840/type/claim.type.yaml)
 
 Research, governance and competency skills prescribe consequential checks: compare interpretations with alternatives, verify a critic's finding, repeat the defect check after repair, obtain scoped human approval and demonstrate promised behavior through the intended consumer. These are substantial agent/human procedures. A `researched` or `accepted` type marker does not prove the history occurred; approval to implement is distinct from evidence that a remedy worked (RTE-7, RTE-14, RTE-15, RTE-16).
 

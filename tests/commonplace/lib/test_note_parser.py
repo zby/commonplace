@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import pytest
+
 from commonplace.lib.note_parser import (
     find_markdown_links_with_text,
     parse_document,
@@ -122,3 +124,47 @@ description: Example
 
     assert document is None
     assert error == "frontmatter: missing closing delimiter"
+
+
+@pytest.mark.parametrize("opening,inside,closing", [
+    ("```md", "``` trailing text\n", "```"),
+    ("````md", "```\n", "`````"),
+    ("~~~md", "```\n~~~ trailing text\n", "~~~~"),
+    ("  ```md", "", "   ```\t"),
+])
+def test_quote_parsers_share_fences_and_keep_source_lines(opening, inside, closing):
+    from commonplace.lib.note_parser import blank_fenced_code_blocks
+    from commonplace.lib.quote_matching import parse_blockquotes
+    from commonplace.lib.quote_verification import parse_prose_citations
+
+    example = '> hidden\n> --- `doc.md` @ `abc`\n\n"hidden" ([source](doc.md), verbatim).\n'
+    prefix = opening + '\n' + inside + example + closing + '\n'
+    visible = '> real\n> --- `doc.md` @ `abc`\n\n"real" ([source](doc.md), verbatim).\n'
+    content = prefix + visible
+    cleaned = blank_fenced_code_blocks(content)
+    assert len(cleaned) == len(content)
+    assert cleaned.count('\n') == content.count('\n')
+    assert cleaned[len(prefix):] == visible
+    blocks = parse_blockquotes(content)
+    assert [c.quote for c in blocks] == ['real']
+    assert blocks[0].line == prefix.count('\n') + 2
+    assert [c.quote for c in parse_prose_citations(content)] == ['real']
+
+
+@pytest.mark.parametrize("prefix", ["```example```\n", "    ```\n"])
+def test_non_fence_prefix_does_not_hide_prose(prefix):
+    from commonplace.lib.note_parser import blank_fenced_code_blocks
+
+    content = prefix + "Keep this paragraph.\n"
+    assert blank_fenced_code_blocks(content) == content
+
+
+def test_unclosed_fence_hides_examples_through_end_of_document():
+    from commonplace.lib.note_parser import blank_fenced_code_blocks
+    from commonplace.lib.quote_matching import parse_blockquotes
+    from commonplace.lib.quote_verification import parse_prose_citations
+
+    content = '~~~md\n> example\n> --- `doc.md` @ `abc`\n\n"example" ([source](doc.md), verbatim).\n'
+    assert not blank_fenced_code_blocks(content).strip()
+    assert not parse_blockquotes(content)
+    assert not parse_prose_citations(content)

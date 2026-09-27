@@ -13,6 +13,8 @@ from dataclasses import dataclass
 from typing import Literal
 from urllib.parse import unquote, urlsplit
 
+from commonplace.lib.note_parser import blank_fenced_code_blocks
+
 Normalization = Literal["prose", "code"]
 ATTRIBUTION_RE = re.compile(r"^\s*>\s*---\s*(?P<attribution>.*\S)?\s*$")
 LOCAL_SOURCE_RE = re.compile(
@@ -56,19 +58,27 @@ def _attributed_citation(quote: str, attribution: str, line: int) -> Citation:
     url_match = URL_RE.search(attribution)
     if url_match:
         url = url_match[0].rstrip(".,;")
-        parsed = urlsplit(url)
+        try:
+            parsed = urlsplit(url)
+        except ValueError as exc:
+            return Citation(
+                quote, url, line=line, attribution=attribution,
+                error=f"invalid attribution URL: {exc}",
+            )
         parts = parsed.path.split("/")
         if parsed.hostname == "github.com" and len(parts) > 3 and parts[3] == "blob":
             if len(parts) < 6 or not parts[5]:
                 return Citation(
-                    quote, url, line=line, error="incomplete GitHub blob path"
+                    quote, url, line=line, attribution=attribution,
+                    error="incomplete GitHub blob path"
                 )
             ranges = ()
             if parsed.fragment:
                 anchor = re.fullmatch(r"L([0-9]+)(?:-L([0-9]+))?", parsed.fragment)
                 if anchor is None:
                     return Citation(
-                        quote, url, line=line, error="invalid GitHub line anchor"
+                        quote, url, line=line, attribution=attribution,
+                        error="invalid GitHub line anchor"
                     )
                 ranges = ((int(anchor[1]), int(anchor[2] or anchor[1])),)
             return Citation(quote, url, parts[4], ranges, line, attribution)
@@ -85,18 +95,8 @@ def _attributed_citation(quote: str, attribution: str, line: int) -> Citation:
 def parse_blockquotes(content: str) -> tuple[Citation, ...]:
     """Read attributed blocks, excluding fenced examples and attribution bytes."""
     citations = []
-    lines = content.splitlines()
-    fence: str | None = None
+    lines = blank_fenced_code_blocks(content).splitlines()
     for index, line in enumerate(lines):
-        marker = re.match(r"^ {0,3}(`{3,}|~{3,})", line)
-        if marker:
-            if fence is None:
-                fence = marker[1]
-            elif marker[1][0] == fence[0] and len(marker[1]) >= len(fence):
-                fence = None
-            continue
-        if fence is not None:
-            continue
         match = ATTRIBUTION_RE.fullmatch(line)
         if match is None:
             continue

@@ -252,7 +252,7 @@ CMP-4 — external harness-selected LLMs: distributed-parametric components invo
 
 
 > const binary = resolveAgentBinary(agentBinary)
-> --- [pinned source](https://github.com/arsumbris/au-host/blob/0e85fb1731fdef2d6196618aff5a2a567e621866/app/src/main/agent-launch.ts)
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-23-arsumbris-02/source-bundle.txt` @ `sha256:b64f3d37b0259ec2e6d116a885c4287c99f69575763f6372ce639d597b533b8a` — original source: [pinned source](https://github.com/arsumbris/au-host/blob/0e85fb1731fdef2d6196618aff5a2a567e621866/app/src/main/agent-launch.ts)
 
 ### Operative objects
 
@@ -365,14 +365,14 @@ Guidance is current prompt/skill/rule content plus symbolic API conditions, not 
 > //! Rejection is for malformed requests only (path escape, hash mismatch,
 > //! missing `old_string`); a mutation never rejects because the result has
 > //! validation errors — diagnostics stay advisory.
-> --- [pinned source](https://github.com/arsumbris/au-engine/blob/46f12389d4d4833fed51640a48cf938516433106/crates/au-engine/src/mutate.rs)
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-23-arsumbris-02/source-bundle.txt` @ `sha256:b64f3d37b0259ec2e6d116a885c4287c99f69575763f6372ce639d597b533b8a` — original source: [pinned source](https://github.com/arsumbris/au-engine/blob/46f12389d4d4833fed51640a48cf938516433106/crates/au-engine/src/mutate.rs)
 
 > if let Some(expected) = expected_hash {
 >         match std::fs::read(target) {
 >             Ok(current) => {
 >                 let current_hex = hash_hex(ContentHash::of(&current));
 >                 if current_hex != expected {
-> --- [pinned source](https://github.com/arsumbris/au-engine/blob/46f12389d4d4833fed51640a48cf938516433106/crates/au-engine/src/mutate.rs)
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-23-arsumbris-02/source-bundle.txt` @ `sha256:b64f3d37b0259ec2e6d116a885c4287c99f69575763f6372ce639d597b533b8a` — original source: [pinned source](https://github.com/arsumbris/au-engine/blob/46f12389d4d4833fed51640a48cf938516433106/crates/au-engine/src/mutate.rs)
 
 > blocking_handle.rebuild_paths(saga_dirty_set(&plan));
 > --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-23-arsumbris-02/source-bundle.txt:171802` @ `sha256:b64f3d37b0259ec2e6d116a885c4287c99f69575763f6372ce639d597b533b8a` — original blob: [pinned source](https://github.com/arsumbris/au-engine/blob/46f12389d4d4833fed51640a48cf938516433106/crates/au-engine/src/serve.rs)
@@ -385,7 +385,7 @@ Broker scoping is an API grant, not an OS sandbox: imported module code has ambi
 
 
 > const module = (await import(pathToFileURL(entryPath).href)) as Partial<PluginModule>
-> --- [pinned source](https://github.com/arsumbris/au-mcp/blob/3ddc3b62ed0b339a89a57f11026676df18d3b2eb/src/daemon/discovery.ts)
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-23-arsumbris-02/source-bundle.txt` @ `sha256:b64f3d37b0259ec2e6d116a885c4287c99f69575763f6372ce639d597b533b8a` — original source: [pinned source](https://github.com/arsumbris/au-mcp/blob/3ddc3b62ed0b339a89a57f11026676df18d3b2eb/src/daemon/discovery.ts)
 
 > if (derived.manifest.contractVersion !== PLUGIN_CONTRACT_VERSION) {
 >       const msg = `plugin contract v${derived.manifest.contractVersion} != kernel-expected v${PLUGIN_CONTRACT_VERSION}`
@@ -393,13 +393,13 @@ Broker scoping is an API grant, not an OS sandbox: imported module code has ambi
 >       else process.stderr.write(`au-mcp: skipping ${derived.manifest.id}: ${msg}\n`)
 >       continue
 >     }
-> --- [pinned source](https://github.com/arsumbris/au-mcp/blob/3ddc3b62ed0b339a89a57f11026676df18d3b2eb/src/daemon/discovery.ts)
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-23-arsumbris-02/source-bundle.txt` @ `sha256:b64f3d37b0259ec2e6d116a885c4287c99f69575763f6372ce639d597b533b8a` — original source: [pinned source](https://github.com/arsumbris/au-mcp/blob/3ddc3b62ed0b339a89a57f11026676df18d3b2eb/src/daemon/discovery.ts)
 
 > This is an early alpha. There is **no security hardening or sandboxing** in place.
-> --- [pinned source](https://github.com/arsumbris/arsumbris/blob/a9f6cceedb191b8504443222d55d3106f9f36ba9/SAFETY.md)
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-23-arsumbris-02/source-bundle.txt` @ `sha256:b64f3d37b0259ec2e6d116a885c4287c99f69575763f6372ce639d597b533b8a` — original source: [pinned source](https://github.com/arsumbris/arsumbris/blob/a9f6cceedb191b8504443222d55d3106f9f36ba9/SAFETY.md)
 
 > const bashTool = callable('mcp.bash', 'Bash', async (_input) => ok(BASH_STUB_MESSAGE))
-> --- [pinned source](https://github.com/arsumbris/au-mcp-core/blob/25e0625e553c237671bba9a3a8c173a889dddf02/src/file-tools.ts)
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-23-arsumbris-02/source-bundle.txt` @ `sha256:b64f3d37b0259ec2e6d116a885c4287c99f69575763f6372ce639d597b533b8a` — original source: [pinned source](https://github.com/arsumbris/au-mcp-core/blob/25e0625e553c237671bba9a3a8c173a889dddf02/src/file-tools.ts)
 
 RTE-4 — Claude Code mediation failure and direct-invoke alternative. Implementation conclusion status: wired. The ordinary hook runs a separate mediate request, returning an allow fallback when its connection/session operation fails. The typed MCP call still needs a reachable daemon, but native actions do not gain a fail-closed guarantee from that typed-tool dependency. A direct daemon invoke independently checks tool visibility, continuity and input shape; its inspected branch does not execute the separate mediator chain. Session-less invokes have no profile allowlist. This limits the otherwise broad “every state-touching action” framing in the MCP instructions. SRC-9 `src/bridge.ts:130-153,218-233`, `hooks/pre-tool-use.ts:1-73`, `src/mcp-server.ts:40-45`; SRC-6 `src/daemon/daemon.ts:754-778,830-920`.
 
@@ -407,19 +407,19 @@ Next-step owner: external harness or direct client. Immediate return: allow/deny
 
 
 > return withSession(payload, (client, session) => client.mediate(session, action), { kind: 'allow' })
-> --- [pinned source](https://github.com/arsumbris/au-mcp-adapter-cc/blob/333b2117f338cd4815eeeb9ab7b3932b29fa7d62/src/bridge.ts)
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-23-arsumbris-02/source-bundle.txt` @ `sha256:b64f3d37b0259ec2e6d116a885c4287c99f69575763f6372ce639d597b533b8a` — original source: [pinned source](https://github.com/arsumbris/au-mcp-adapter-cc/blob/333b2117f338cd4815eeeb9ab7b3932b29fa7d62/src/bridge.ts)
 
 > if (!isAllowed(invSession?.toolAllowlist, request.tool)) {
-> --- [pinned source](https://github.com/arsumbris/au-mcp/blob/3ddc3b62ed0b339a89a57f11026676df18d3b2eb/src/daemon/daemon.ts)
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-23-arsumbris-02/source-bundle.txt` @ `sha256:b64f3d37b0259ec2e6d116a885c4287c99f69575763f6372ce639d597b533b8a` — original source: [pinned source](https://github.com/arsumbris/au-mcp/blob/3ddc3b62ed0b339a89a57f11026676df18d3b2eb/src/daemon/daemon.ts)
 
 > if (allowlist === undefined) return { kind: 'allow' } // no allowlist -> inert (all native allowed)
-> --- [pinned source](https://github.com/arsumbris/au-mcp-core/blob/25e0625e553c237671bba9a3a8c173a889dddf02/src/native-tool-redirect.ts)
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-23-arsumbris-02/source-bundle.txt` @ `sha256:b64f3d37b0259ec2e6d116a885c4287c99f69575763f6372ce639d597b533b8a` — original source: [pinned source](https://github.com/arsumbris/au-mcp-core/blob/25e0625e553c237671bba9a3a8c173a889dddf02/src/native-tool-redirect.ts)
 
 RTE-5 — Codex mediation and child identity alternative. Implementation conclusion status: wired. The Codex bridge resolves agent_id before session_id, asserts a launch session, opens the kernel session and denies when mediation fails. Startup delivery has explicit readiness tracking. SRC-10 `src/bridge.ts:30-67,108-130,159-165`. This is an implemented difference from RTE-4; it does not establish provider- or machine-wide isolation. The external Codex process still owns model turns, subagent scheduling and whether the registered hooks run. Trigger: tool hook/startup event; policy: symbolic session and connection guards; context: launch/profile and kernel context. Immediate return: decision or error guidance. Persistence/read-back: session bookkeeping and generated context in memory records; no new knowledge is produced by denying a tool. Delegated visibility: separate child IDs, not proven separate model memory. Selection: launch handle/thread identity; expiry: readiness/connection lifecycle. Recovery: restore daemon/session then retry. Guarantee owner: adapter error handler, protocol strength within this hooked route. Answer oracle and learning assessment are inapplicable to transport failure handling.
 
 
 > catch (error) { report(error); return { kind: 'deny', reason: 'Arsumbris mediation could not complete. The action was blocked; restore the daemon/session connection before retrying.' } }
-> --- [pinned source](https://github.com/arsumbris/au-mcp-adapter-codex/blob/3b0e3a3cf67b3143819c61c590efc85d36c23bc5/src/bridge.ts)
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-23-arsumbris-02/source-bundle.txt` @ `sha256:b64f3d37b0259ec2e6d116a885c4287c99f69575763f6372ce639d597b533b8a` — original source: [pinned source](https://github.com/arsumbris/au-mcp-adapter-codex/blob/3b0e3a3cf67b3143819c61c590efc85d36c23bc5/src/bridge.ts)
 
 #### RTE-6 — Author and request graph content
 
@@ -472,19 +472,19 @@ The external agent following mine/cut/weave/reweave/tend turns sources into cand
 > A successful write or clean diagnostics alone cannot establish this.
 > Save checked, distinct links in `passages` before writing the node.
 > If an anchor cannot be created or checked, leave the candidate pending and report why.
-> --- [pinned source](https://github.com/arsumbris/au-weave/blob/24320734e2436e8c75d44a7ff9afb6a330569840/skills/weave.md)
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-23-arsumbris-02/source-bundle.txt` @ `sha256:b64f3d37b0259ec2e6d116a885c4287c99f69575763f6372ce639d597b533b8a` — original source: [pinned source](https://github.com/arsumbris/au-weave/blob/24320734e2436e8c75d44a7ff9afb6a330569840/skills/weave.md)
 
 > #: sharpened no further than the evidence reaches, so it records the claim without judging its truth. Grounded IN
 > #: its sources (the grounds edge + free backlinks), not narrated FROM them. Every link in the sentence that says why,
 > #: no relation stronger than the sources show.
-> --- [pinned source](https://github.com/arsumbris/au-weave/blob/24320734e2436e8c75d44a7ff9afb6a330569840/type/claim.type.yaml)
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-23-arsumbris-02/source-bundle.txt` @ `sha256:b64f3d37b0259ec2e6d116a885c4287c99f69575763f6372ce639d597b533b8a` — original source: [pinned source](https://github.com/arsumbris/au-weave/blob/24320734e2436e8c75d44a7ff9afb6a330569840/type/claim.type.yaml)
 
 > #: Standing and contradiction-resolution are downstream, not here.
-> --- [pinned source](https://github.com/arsumbris/au-weave/blob/24320734e2436e8c75d44a7ff9afb6a330569840/type/claim.type.yaml)
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-23-arsumbris-02/source-bundle.txt` @ `sha256:b64f3d37b0259ec2e6d116a885c4287c99f69575763f6372ce639d597b533b8a` — original source: [pinned source](https://github.com/arsumbris/au-weave/blob/24320734e2436e8c75d44a7ff9afb6a330569840/type/claim.type.yaml)
 
 > Mark `weave` when the candidate earns a distinct node of its intended kind that the graph lacks.
 > A facet with its own use and query earns a sibling.
-> --- [pinned source](https://github.com/arsumbris/au-weave/blob/24320734e2436e8c75d44a7ff9afb6a330569840/skills/cut.md)
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-23-arsumbris-02/source-bundle.txt` @ `sha256:b64f3d37b0259ec2e6d116a885c4287c99f69575763f6372ce639d597b533b8a` — original source: [pinned source](https://github.com/arsumbris/au-weave/blob/24320734e2436e8c75d44a7ff9afb6a330569840/skills/cut.md)
 
 #### RTE-8 — Interaction feedback to later guidance
 
@@ -648,14 +648,14 @@ The ingest tool runs a format converter over a retained original, previews its t
 >   if (diagnostics.some((diagnostic) => diagnostic.severity === 'error')) {
 >     throw Object.assign(new Error('converted note has structural errors; nothing written'), { diagnostics });
 >   }
-> --- [pinned source](https://github.com/arsumbris/au-ingest/blob/5b3c22f930231ed12c964dce0144a35b5562ef9d/ingest.mjs)
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-23-arsumbris-02/source-bundle.txt` @ `sha256:b64f3d37b0259ec2e6d116a885c4287c99f69575763f6372ce639d597b533b8a` — original source: [pinned source](https://github.com/arsumbris/au-ingest/blob/5b3c22f930231ed12c964dce0144a35b5562ef9d/ingest.mjs)
 
 >       if (hashOf(readRaw(plan.rawPath)) !== derived.rawHash) throw new Error('raw changed during conversion; nothing written');
-> --- [pinned source](https://github.com/arsumbris/au-ingest/blob/5b3c22f930231ed12c964dce0144a35b5562ef9d/ingest.mjs)
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-23-arsumbris-02/source-bundle.txt` @ `sha256:b64f3d37b0259ec2e6d116a885c4287c99f69575763f6372ce639d597b533b8a` — original source: [pinned source](https://github.com/arsumbris/au-ingest/blob/5b3c22f930231ed12c964dce0144a35b5562ef9d/ingest.mjs)
 
 >         // An unreflected acknowledgement has stale metadata. A lost acknowledgement
 >         // may have committed. A live read can confirm bytes, but not index validation.
-> --- [pinned source](https://github.com/arsumbris/au-ingest/blob/5b3c22f930231ed12c964dce0144a35b5562ef9d/ingest.mjs)
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-23-arsumbris-02/source-bundle.txt` @ `sha256:b64f3d37b0259ec2e6d116a885c4287c99f69575763f6372ce639d597b533b8a` — original source: [pinned source](https://github.com/arsumbris/au-ingest/blob/5b3c22f930231ed12c964dce0144a35b5562ef9d/ingest.mjs)
 
 #### RTE-13 — Recompute a research navigation index
 
@@ -678,24 +678,24 @@ A research agent saves an article and answer link; refresh_research_map derives 
 >
 > Distinguish sourced findings, your inferences and illustrative examples.
 > Never invent specifics or imply certainty the evidence does not support.
-> --- [pinned source](https://github.com/arsumbris/au-tree-research/blob/65faf72fc107bb8eef84675e01bda18513d8b49a/skills/research.md)
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-23-arsumbris-02/source-bundle.txt` @ `sha256:b64f3d37b0259ec2e6d116a885c4287c99f69575763f6372ce639d597b533b8a` — original source: [pinned source](https://github.com/arsumbris/au-tree-research/blob/65faf72fc107bb8eef84675e01bda18513d8b49a/skills/research.md)
 
 > #: The workflow checks that a reviewed answer exists before recording completion.
 > #: This type alone does not establish that an answer exists.
-> --- [pinned source](https://github.com/arsumbris/au-tree-research/blob/65faf72fc107bb8eef84675e01bda18513d8b49a/type/question.researched.type.yaml)
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-23-arsumbris-02/source-bundle.txt` @ `sha256:b64f3d37b0259ec2e6d116a885c4287c99f69575763f6372ce639d597b533b8a` — original source: [pinned source](https://github.com/arsumbris/au-tree-research/blob/65faf72fc107bb8eef84675e01bda18513d8b49a/type/question.researched.type.yaml)
 
 #### RTE-15 — Check and repair a semantic finding. Procedure conclusion status: afforded. SRC-19 `skills/check.md`, `skills/fix.md`, `type/finding.type.yaml`, `type/finding.accepted.type.yaml`. A review request triggers a fresh reader to propose OBJ-12 against actual subject/doctrine. The checking agent verifies each catch before admitting repair work. The fix agent changes the subject, repeats the original check and records the result. A human can approve a scoped exception or dismiss a finding; finding.accepted records an exception, not repair success. Guidance and answer reference: the named doctrine, supplied by the workspace/owning author; it governs conformity but is not an independent oracle for the doctrine's truth. Retained finding/evidence and revised subject are later repair/operation inputs. Rejection is unsupported catch or unresolved check; recovery leaves work open, preserves reasons or follows a human ruling. Content-directed criticism of a subject is afforded; criticism of the doctrine itself and improved later capacity are uninspected. Guarantee strength: policy, not enforced lifecycle transitions.
 
 > Check each reader catch against the subject and doctrine before recording it.
 > A reader can lack context.
 > An unsupported finding can prompt a harmful repair.
-> --- [pinned source](https://github.com/arsumbris/au-govern/blob/8bf899b90a80081f328caacb0102ed47145b242d/skills/check.md)
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-23-arsumbris-02/source-bundle.txt` @ `sha256:b64f3d37b0259ec2e6d116a885c4287c99f69575763f6372ce639d597b533b8a` — original source: [pinned source](https://github.com/arsumbris/au-govern/blob/8bf899b90a80081f328caacb0102ed47145b242d/skills/check.md)
 
 > #: The engine checks compatible claims, not transition history.
-> --- [pinned source](https://github.com/arsumbris/au-govern/blob/8bf899b90a80081f328caacb0102ed47145b242d/type/finding.type.yaml)
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-23-arsumbris-02/source-bundle.txt` @ `sha256:b64f3d37b0259ec2e6d116a885c4287c99f69575763f6372ce639d597b533b8a` — original source: [pinned source](https://github.com/arsumbris/au-govern/blob/8bf899b90a80081f328caacb0102ed47145b242d/type/finding.type.yaml)
 
 > #: Acceptance records an exception, not a repair.
-> --- [pinned source](https://github.com/arsumbris/au-govern/blob/8bf899b90a80081f328caacb0102ed47145b242d/type/finding.accepted.type.yaml)
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-23-arsumbris-02/source-bundle.txt` @ `sha256:b64f3d37b0259ec2e6d116a885c4287c99f69575763f6372ce639d597b533b8a` — original source: [pinned source](https://github.com/arsumbris/au-govern/blob/8bf899b90a80081f328caacb0102ed47145b242d/type/finding.accepted.type.yaml)
 
 > Repeat the check that exposed the defect.
 > Use the audit named by caught_by, or the documented direct check when no audit produced the finding.
@@ -703,7 +703,7 @@ A research agent saves an article and answer link; refresh_research_map derives 
 >
 > Keep the repair and observed result on the finding.
 > If the defect remains or the check cannot be completed, leave it open with the remaining work.
-> --- [pinned source](https://github.com/arsumbris/au-govern/blob/8bf899b90a80081f328caacb0102ed47145b242d/skills/fix.md)
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-23-arsumbris-02/source-bundle.txt` @ `sha256:b64f3d37b0259ec2e6d116a885c4287c99f69575763f6372ce639d597b533b8a` — original source: [pinned source](https://github.com/arsumbris/au-govern/blob/8bf899b90a80081f328caacb0102ed47145b242d/skills/fix.md)
 
 #### RTE-16 — Derive, approve, implement and assess a capability change. Procedure conclusion status: afforded. SRC-20 `skills/derive.md`, `skills/propose.md`, `skills/improve.md`, `type/proposal.type.yaml`; SRC-18 `guides/eval-driven-authoring.md`, `guides/guarantee-vs-guidance.md`. Recurring corrections, verified findings or corroborated research motivate a proposed remedy (OBJ-13) to a stated requirement (OBJ-14). The agent diagnoses, compares candidate mechanisms and proposes; the human rules on implementation scope and may veto; an instructed author implements within that scope, checks the intended consumer, and keeps unmet obligations open. No automatic scheduler or measured improvement is asserted. Approval is operational permission; successful completion demands evidence of the promised behavior, not just a saved artifact.
 
@@ -715,32 +715,32 @@ Answer-oracle access: the operator/evaluation designer can specify expected task
 > Silence grants no approval.
 > Resolve ordinary implementation choices within that scope.
 > Return a material scope change through propose for a ruling.
-> --- [pinned source](https://github.com/arsumbris/au-competency/blob/6f23713425b2ba58b7361471badd58f63ca0642b/skills/improve.md)
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-23-arsumbris-02/source-bundle.txt` @ `sha256:b64f3d37b0259ec2e6d116a885c4287c99f69575763f6372ce639d597b533b8a` — original source: [pinned source](https://github.com/arsumbris/au-competency/blob/6f23713425b2ba58b7361471badd58f63ca0642b/skills/improve.md)
 
 > Match checks to the promised behavior.
 > A prevention claim needs an exercised boundary.
 > A semantic claim needs judgment against its doctrine.
-> --- [pinned source](https://github.com/arsumbris/au-competency/blob/6f23713425b2ba58b7361471badd58f63ca0642b/skills/improve.md)
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-23-arsumbris-02/source-bundle.txt` @ `sha256:b64f3d37b0259ec2e6d116a885c4287c99f69575763f6372ce639d597b533b8a` — original source: [pinned source](https://github.com/arsumbris/au-competency/blob/6f23713425b2ba58b7361471badd58f63ca0642b/skills/improve.md)
 
 > Keep the proposal accepted while promised behavior remains unproven.
 > Name the remaining obligation and next action.
 > Continue independent approved work where possible.
 > Never weaken a requirement to make completion appear true.
-> --- [pinned source](https://github.com/arsumbris/au-competency/blob/6f23713425b2ba58b7361471badd58f63ca0642b/skills/improve.md)
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-23-arsumbris-02/source-bundle.txt` @ `sha256:b64f3d37b0259ec2e6d116a885c4287c99f69575763f6372ce639d597b533b8a` — original source: [pinned source](https://github.com/arsumbris/au-competency/blob/6f23713425b2ba58b7361471badd58f63ca0642b/skills/improve.md)
 
 > Choose tasks and expected outcomes before revising the skill.
 > Keep the model and environment comparable across runs with and without it.
-> --- [pinned source](https://github.com/arsumbris/au-skills/blob/d32336d25b6ad2513976cba15ed69f30d6d1b38f/guides/eval-driven-authoring.md)
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-23-arsumbris-02/source-bundle.txt` @ `sha256:b64f3d37b0259ec2e6d116a885c4287c99f69575763f6372ce639d597b533b8a` — original source: [pinned source](https://github.com/arsumbris/au-skills/blob/d32336d25b6ad2513976cba15ed69f30d6d1b38f/guides/eval-driven-authoring.md)
 
 > A check that passes with and without the skill can still protect required behavior.
 > It does not demonstrate the skill's added value.
-> --- [pinned source](https://github.com/arsumbris/au-skills/blob/d32336d25b6ad2513976cba15ed69f30d6d1b38f/guides/eval-driven-authoring.md)
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-23-arsumbris-02/source-bundle.txt` @ `sha256:b64f3d37b0259ec2e6d116a885c4287c99f69575763f6372ce639d597b533b8a` — original source: [pinned source](https://github.com/arsumbris/au-skills/blob/d32336d25b6ad2513976cba15ed69f30d6d1b38f/guides/eval-driven-authoring.md)
 
 > Enforcement also needs a path that runs the check and refuses the invalid action.
-> --- [pinned source](https://github.com/arsumbris/au-skills/blob/d32336d25b6ad2513976cba15ed69f30d6d1b38f/guides/guarantee-vs-guidance.md)
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-23-arsumbris-02/source-bundle.txt` @ `sha256:b64f3d37b0259ec2e6d116a885c4287c99f69575763f6372ce639d597b533b8a` — original source: [pinned source](https://github.com/arsumbris/au-skills/blob/d32336d25b6ad2513976cba15ed69f30d6d1b38f/guides/guarantee-vs-guidance.md)
 
 > A script invoked only at the agent's discretion can be skipped.
-> --- [pinned source](https://github.com/arsumbris/au-skills/blob/d32336d25b6ad2513976cba15ed69f30d6d1b38f/guides/guarantee-vs-guidance.md)
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-23-arsumbris-02/source-bundle.txt` @ `sha256:b64f3d37b0259ec2e6d116a885c4287c99f69575763f6372ce639d597b533b8a` — original source: [pinned source](https://github.com/arsumbris/au-skills/blob/d32336d25b6ad2513976cba15ed69f30d6d1b38f/guides/guarantee-vs-guidance.md)
 
 > Choose checks for the change:
 > 
@@ -757,13 +757,13 @@ CLM-1 — source describes a “malleable, agent-native IDE for typed knowledge�
 
 
 > You and your agent can build tools, add views and modify the app with the same primitives and SDKs we used to build it.
-> --- [pinned source](https://github.com/arsumbris/arsumbris/blob/a9f6cceedb191b8504443222d55d3106f9f36ba9/README.md)
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-23-arsumbris-02/source-bundle.txt` @ `sha256:b64f3d37b0259ec2e6d116a885c4287c99f69575763f6372ce639d597b533b8a` — original source: [pinned source](https://github.com/arsumbris/arsumbris/blob/a9f6cceedb191b8504443222d55d3106f9f36ba9/README.md)
 
 CLM-2 — the Claude Code shim tells agents that state-touching actions are governed and traced. Claim conclusion status: claimed. SRC-9 `src/mcp-server.ts:40-45`. Supported only conditionally: RTE-1 and RTE-2 implement checks and observation on ordinary hooked calls; RTE-3 and RTE-4 prevent upgrading this to a universal invariant. There is no observed deployment supporting universal coverage.
 
 
 > State-touching actions (writes, edits, deletes) route through the gate, so every one is governed and traced.
-> --- [pinned source](https://github.com/arsumbris/au-mcp-adapter-cc/blob/333b2117f338cd4815eeeb9ab7b3932b29fa7d62/src/mcp-server.ts)
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-23-arsumbris-02/source-bundle.txt` @ `sha256:b64f3d37b0259ec2e6d116a885c4287c99f69575763f6372ce639d597b533b8a` — original source: [pinned source](https://github.com/arsumbris/au-mcp-adapter-cc/blob/333b2117f338cd4815eeeb9ab7b3932b29fa7d62/src/mcp-server.ts)
 
 The following claimed procedures retain conclusion status: claimed for their purpose; executable imports/navigation are wired and instructed semantic procedures afforded as recorded in the cited routes. No observed-run or causal support is inferred from source instructions.
 

@@ -122,6 +122,68 @@ def test_wrong_capture_binding_is_source_error(tmp_path):
     ("https://example.com/paper.pdf", "scientific-paper", "prose"),
 ])
 def test_ingest_normalization_uses_source_kind(source, genre, expected):
-    from commonplace.lib.validation import ingest_normalization
+    from commonplace.lib.quote_verification import ingest_normalization
 
     assert ingest_normalization(f"---\nsource: {source}\ngenre: {genre}\n---\n") == expected
+
+
+def test_inline_backticks_do_not_hide_later_fabricated_quote(tmp_path):
+    snapshot = tmp_path / "source.md"
+    snapshot.write_text("real quote")
+    digest = content_sha256_for_text("real quote")
+    attribution = f"> --- `{snapshot}` @ `sha256:{digest}`\n"
+    content = "> real quote\n" + attribution + "\n```example```\n\n> fabricated\n" + attribution
+    passes, failures = _verify_quote_anchors(
+        content, source=SourceIdentity("capture", "doc", digest, snapshot, digest)
+    )
+    assert len(passes) == 1
+    assert len(failures) == 1 and "does not occur" in failures[0]
+
+
+def test_malformed_attribution_url_is_a_diagnostic(tmp_path):
+    from commonplace.lib.validation import validate_quote_citations
+
+    content = "> quote\n> --- [source](https://[broken)\n"
+    citation = parse_blockquotes(content)[0]
+    assert "invalid attribution URL" in citation.error
+    checks = CheckResults(note_type="agentic-system-analysis-result")
+    validate_quote_citations(checks, content)
+    assert any("invalid attribution URL" in message for message in checks.warns)
+    _, failures = _verify_quote_anchors(
+        content, source=SourceIdentity("git", "https://github.com/a/b", "abc", tmp_path, None)
+    )
+    assert len(failures) == 1 and "source error" in failures[0]
+
+
+@pytest.mark.parametrize("source,genre", [
+    ("https://github.com/example/repo", "tool-announcement"),
+    ("https://example.com/repo", "code-repository"),
+])
+@pytest.mark.parametrize("quote,expected", [("return a b", "mismatch"), ("return a ** b", "match")])
+def test_notes_preserve_repository_ingest_operators(tmp_path, source, genre, quote, expected):
+    ingest = tmp_path / "source.ingest.md"
+    ingest.write_text(
+        f"---\nsource: {source}\ngenre: {genre}\n---\n## Quotes\n\n"
+        "> return a ** b\n> --- `snapshot.md` @ `sha256:abc`\n"
+    )
+    results = verify_content(f'"{quote}" ([source](source.ingest.md), verbatim).', tmp_path / "note.md")
+    assert results[0].status == expected
+
+
+@pytest.mark.parametrize("attribution,expected", [
+    ("[source](https://example.com/paper)", True),
+    ("[unrelated](https://example.com/other)", False),
+    ("`source.md`", False),
+    ("`source.md` @ `sha256:{digest}`", True),
+    ("`wrong.md` @ `sha256:{digest}`", False),
+    ("`source.md` @ `sha256:wrong`", False),
+])
+def test_capture_attribution_identifies_registered_source(tmp_path, attribution, expected):
+    snapshot = tmp_path / "source.md"
+    snapshot.write_text("quote")
+    digest = content_sha256_for_text("quote")
+    _, failures = _verify_quote_anchors(
+        "> quote\n> --- " + attribution.format(digest=digest),
+        source=SourceIdentity("capture", "https://example.com/paper", "capture", snapshot, digest),
+    )
+    assert (not failures) is expected
