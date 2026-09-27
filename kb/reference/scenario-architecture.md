@@ -77,7 +77,7 @@ This gives the architecture a falsifiable surface:
 
 Relevant Notes:
 
-- [014-scripts-as-python-package-one-tree-model](./adr/014-scripts-as-python-package-one-tree-model.md) — decision: the one-tree shipped model this scenario note describes
+- [014-scripts-as-python-package-one-tree-model](./adr/014-scripts-as-python-package-one-tree-model.md) — decided-by: the one-tree shipped model this scenario note describes
 - [architecture](./architecture.md) — the broader shipped architecture this scenario view decomposes
 - [control-plane-goals](./control-plane-goals.md) — how the always-loaded control plane carries the inclusion and routing context the scenario depends on
 - [instruction-generation](./instruction-generation.md) — how `commonplace-init` materialises the files this scenario consumes

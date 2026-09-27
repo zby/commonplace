@@ -100,7 +100,7 @@ The agent has no fallback if goals are left unfilled — an empty `## KB Goals` 
 
 Relevant Notes:
 
-- [006-two-tree-installation-layout](./adr/006-two-tree-installation-layout.md) — decision: the installation step that creates the control-plane fragment and copies the template
-- [014-scripts-as-python-package-one-tree-model](./adr/014-scripts-as-python-package-one-tree-model.md) — decision: `commonplace-init` as the scaffold entry point and the one-tree install model
+- [006-two-tree-installation-layout](./adr/006-two-tree-installation-layout.md) — decided-by: the installation step that creates the control-plane fragment and copies the template
+- [014-scripts-as-python-package-one-tree-model](./adr/014-scripts-as-python-package-one-tree-model.md) — decided-by: `commonplace-init` as the scaffold entry point and the one-tree install model
 - [architecture](./architecture.md) — shipped architecture: where the control-plane file sits inside the installed surface
 - [Intent-framed delegation is a control regime; prompt length does not establish it](../notes/intent-framed-delegation-is-a-control-regime-not-a-short-prompt.md) — rationale: the shared mechanism and conditional agent-side control surfaces behind the compact invariant

@@ -88,6 +88,7 @@ Scan `kb/reference/`, `kb/notes/`, `kb/agent-memory-systems/`, `kb/agentic-syste
 | `part-of` / `contains` | reference | situate this in the larger system |
 | `implements` / `implemented-by` | reference | concrete realization ↔ abstract contract |
 | `supersedes` / `superseded-by` | reference (ADR chains) | current or prior version |
+| `decided-by` | reference/adr | the decision record that fixed what this doc describes; read it before changing the described state |
 | `compares-with` | reference | compare this artifact with a peer on a named design or contract axis |
 | `rests-on` | notes | this design, description, or decision depends on this theoretical claim |
 | `defined-in` | notes/definitions, reference/definitions | reader may not know the term |

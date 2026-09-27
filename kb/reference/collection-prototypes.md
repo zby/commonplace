@@ -74,4 +74,4 @@ available starting points fits.
 Relevant Notes:
 
 - [Text contract](./definitions/collection.md#text-contract) — defined-in: distinguishes the binding local declaration from optional creation-time material
-- [ADR 069: Collection contract bundles become one-time prototypes](./adr/069-collection-contract-bundles-become-one-time-prototypes.md) — evidenced-by: records the clone-only semantics and retirement of text-contract profiles
+- [ADR 069: Collection contract bundles become one-time prototypes](./adr/069-collection-contract-bundles-become-one-time-prototypes.md) — decided-by: records the clone-only semantics and retirement of text-contract profiles

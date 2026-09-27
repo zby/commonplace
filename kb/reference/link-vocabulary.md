@@ -89,6 +89,7 @@ Structural relations. Commonly used for outbound links to descriptive destinatio
 | `part-of` / `contains` | wants to situate this in the larger system |
 | `implements` / `implemented-by` | wants the concrete realization or the abstract contract |
 | `supersedes` / `superseded-by` | wants the current or prior version |
+| `decided-by` | (description → ADR) source describes a state the target decision fixed; reader wants the decision and its reasons before changing that state. The ADR records a choice, not an observation, so this is not `evidenced-by` |
 | `compares-with` | self-dual; wants a parallel analysis of the target on the named comparison axis |
 | `procedure` | (descriptive → prescriptive) wants the how-to to act on this |
 

@@ -118,10 +118,10 @@ These could all move to generated form later, but the current build-time step co
 
 Relevant Notes:
 
-- [014-scripts-as-python-package-one-tree-model](./adr/014-scripts-as-python-package-one-tree-model.md) — decision: shipping scripts as an installable Python package and consolidating scaffold into one tree
-- [027-package-scaffold-assets-without-source-tree-symlinks](./adr/027-package-scaffold-assets-without-source-tree-symlinks.md) — decision: package scaffold assets with explicit wheel includes and source-checkout fallback instead of source-tree symlinks
-- [064-install-commonplace-commands-as-a-user-level-uv-tool](./adr/064-install-commonplace-commands-as-a-user-level-uv-tool.md) — decision: user-level command installation and removal of project command-environment scaffolding
-- [013-skills-first-delivery-with-core-local-type-split](./adr/013-skills-first-delivery-with-core-local-type-split.md) — decision: the skills-first delivery model and the core/local type split that `MANIFEST.trees` and `MANIFEST.promoted_skills` implement
-- [006-two-tree-installation-layout](./adr/006-two-tree-installation-layout.md) — decision: the installation layout that `commonplace-init` produces
+- [014-scripts-as-python-package-one-tree-model](./adr/014-scripts-as-python-package-one-tree-model.md) — decided-by: shipping scripts as an installable Python package and consolidating scaffold into one tree
+- [027-package-scaffold-assets-without-source-tree-symlinks](./adr/027-package-scaffold-assets-without-source-tree-symlinks.md) — decided-by: package scaffold assets with explicit wheel includes and source-checkout fallback instead of source-tree symlinks
+- [064-install-commonplace-commands-as-a-user-level-uv-tool](./adr/064-install-commonplace-commands-as-a-user-level-uv-tool.md) — decided-by: user-level command installation and removal of project command-environment scaffolding
+- [013-skills-first-delivery-with-core-local-type-split](./adr/013-skills-first-delivery-with-core-local-type-split.md) — decided-by: the skills-first delivery model and the core/local type split that `MANIFEST.trees` and `MANIFEST.promoted_skills` implement
+- [006-two-tree-installation-layout](./adr/006-two-tree-installation-layout.md) — decided-by: the installation layout that `commonplace-init` produces
 - [architecture](./architecture.md) — shipped architecture: where the generation pipeline sits inside the installed surface
 - [control-plane-goals](./control-plane-goals.md) — how the generated `AGENTS.md.template` carries the `## KB Goals and Scope` section for practitioners to fill in
