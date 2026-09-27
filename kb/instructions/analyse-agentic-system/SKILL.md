@@ -213,9 +213,8 @@ original superseded.
 ### 4. Run and challenge the runtime baseline
 
 1. Begin with consequential claimed work and shipped entry paths. Trace one
-   ordinary invocation end to end: principal, identity, context, state, model
-   call, effects, runtime-client controls, coordination, terminal result, and
-   retained or lost state.
+   ordinary invocation end to end and record it with the fields the type's
+   Runtime account requires.
 2. Enumerate materially equivalent alternate paths before judging a guarantee:
    direct model calls, provider-native tools, host callbacks, shell access,
    extension code, subprocesses or remote workers, manual graph control, and
@@ -223,57 +222,28 @@ original superseded.
    enforcement point covers.
 3. Trace the smallest warranted set of forcing cases, ordinarily two to four
    for a full code-grounded pass. Prefer static inspection. Before any dynamic
-   check, record the result type's execution-preflight fields and verify tools,
-   packages, services, credentials, configuration, and authority. A check that
-   never reaches the target remains `not run` and supports no negative finding.
-   If no dynamic check is warranted, briefly list the checks considered and why
-   static evidence was sufficient; keep the result's required disposition `no
-   dynamic check planned`.
+   check, write its execution-preflight record and verify tools, packages,
+   services, credentials, configuration, and authority.
 4. Record an executed check as a `SRC-*` probe evidence capsule. Use
    `causally supported` only for an actual intervention and comparison whose
-   design supports the attribution. Exact output must remain inspectable in the
-   one-file result.
-5. For each material route record trigger, next-step owner, decision policy and
-   form, context, state, executor and effect boundary, persistence, return,
-   recovery, and terminal output. A load-bearing guarantee also names its owner,
-   enforcement point, strength, covered and alternate paths, and required
-   external contract.
-6. Audit every `RTE-*` route for immediate return, later read-back, delegated
-   visibility, selection predicate, invalidation or expiry, activation or
-   effect, and evidence limits. Use explicit inapplicable or uninspected reasons
-   instead of empty fields.
-7. Distinguish the capability surface, current grant set, and deployed isolation
+   design supports the attribution.
+5. Record each material route and load-bearing guarantee with the fields the
+   Runtime account and Routes contracts require, then audit every `RTE-*`
+   record for the read-back fields the Routes contract lists.
+6. Distinguish the capability surface, current grant set, and deployed isolation
    envelope. Inspect permissions, approval, delegation, dynamic extension,
    reliability, observability, providers, packaging, and performance only where
    they change claimed work, a control path, evidence strength, or a lens result.
-8. Inventory the distributed-parametric components used by the inspected
+7. Inventory the distributed-parametric components used by the inspected
    runtime routes — LLMs, embedding models, parametric routers, critics, and
-   adapters — as `CMP-*` records. For each, distinguish parameter changes
-   during operation from identity pinning to an exact version or resolution
-   through a mutable provider endpoint. Give each finding its evidence status;
-   leave inaccessible provider internals explicitly uninspected. Fixed weights
-   do not preclude learning through retained knowledge or changed procedures.
-9. Inspect materially distinct mechanisms that admit changes to the product,
+   adapters — as `CMP-*` records with the fixity fields the Components contract
+   requires.
+8. Inspect materially distinct mechanisms that admit changes to the product,
    retained knowledge or instructions, capabilities, or production machinery.
-   Record the trigger, proposed change, admission mechanism, rejection ability,
-   and rollback or recovery path on the admitting `RTE-*` record. Group writes
-   governed by the same mechanism; routine logging, counters and unchanged
-   checkpoint persistence need no separate revision analysis unless they alter
-   later decisions or recovery. Reuse the memory specialist's findings for
-   memory revisions rather than tracing those mechanisms twice.
-   For diagnosis, candidate comparison, admission and successor selection,
-   identify who proposes, decides, and can veto. Describe computational and
-   human contributions separately when they share a step. Independently name
-   any answer oracle: a supplied expected answer or reference outcome used to
-   judge the candidate, including its provider and authority. A model judgment
-   alone does not establish access to such an answer. State what triggers
-   improvement and whether operation serves open requests, bounded experiments or curricula,
-   or multiple modes; attach oracle use to the applicable mode. Unknowns and
-   inapplicable steps remain explicit, without assigning an autonomy grade.
-   On each admitting route, name the guidance that shaped the proposal and
-   record its content, retention, and operation with the theory-route fields
-   the type's Shared records contract requires. A link without evidence is
-   `uninspected`.
+   Record each on its admitting `RTE-*` record with the admission,
+   decision-role, answer-oracle, operating-mode, and guidance fields the type
+   requires. Reuse the memory specialist's findings for memory revisions rather
+   than tracing those mechanisms twice.
 
 ### 5. Run both lenses
 
