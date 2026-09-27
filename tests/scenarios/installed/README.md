@@ -124,11 +124,28 @@ missing framework capability is a blocker, not a successful operation.
 | 4 | The supplied v2 snapshot has a distinct tracked ingest. Both supplied snapshots and the old ingest's pinned checksum remain unchanged. Current guidance clearly says 72 hours for camera kits and seven days for tripods, with supporting links; the old 48-hour rule is historical, not a competing current rule. Inspection guidance remains intact. |
 | 5 | Camera kit: yes, 60 is within 72 hours. Tripod: yes. Recording return alone is insufficient; inspection is still required. Fee remains unspecified. The camera answer cites the new policy/current grounded guidance; inspection cites the retained procedure. No KB content is changed. |
 
-Assess policy fidelity by reading the cited text, not by checking only that a
-link resolves. For ordinary ingest citations that claim retained source
-support, check the Quotes section; where the workflow requires the pinned
-snapshot, verify that boundary. The executor's assertion that it validated
-its work is not a substitute for evaluator checks.
+Assess policy fidelity by reading the supporting text, not by checking only
+that a citation resolves. For authored KB artifacts, apply the installed
+grounding conventions: ordinary ingest links require sufficient retained
+Quotes; snapshot-dependent uses must follow the installed grounding workflow
+and declare `(snapshot required)` in the link text.
+
+For read-only answers in stages 3 and 5, accept citations to grounded retained
+guidance, sufficient retained source quotes, or an ingest whose pinned snapshot
+the agent checked in that session. For the snapshot route, require trace
+evidence that the agent read the exact name-paired snapshot and checked its
+SHA-256 against the ingest. Verify canonical source equality and that the
+snapshot supports the answer. The response must identify the cited ingest and
+disclose that it checked the snapshot; a prose disclosure is sufficient, and
+the exact `(snapshot required)` link-text marker is not required in chat.
+An empty Quotes section alone does not fail this route. An ingest paraphrase
+alone does not establish source support, and a claimed snapshot check without
+execution evidence is insufficient.
+
+Do not require quote appends or other KB changes to satisfy a read-only answer's
+citations. This answer criterion does not relax the grounding requirements for
+authored KB artifacts. The executor's assertion that it validated its work is
+not a substitute for evaluator checks.
 
 Record whether each fresh session actually loaded project instructions and
 retrieved retained content. Previous answers in a shared conversation cannot
