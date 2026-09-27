@@ -2,7 +2,7 @@
 description: "Memory systems need lifecycle operations for redaction, decay, supersession, retirement, relaxation, and temporal validity"
 type: types/note.md
 traits: [has-external-sources]
-tags: [agent-memory, context-engineering]
+tags: [agent-memory, context-engineering, constraining, learning-theory]
 ---
 
 # Retire, Redact, Supersede, And Relax Memory

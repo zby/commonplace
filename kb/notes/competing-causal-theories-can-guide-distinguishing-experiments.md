@@ -2,7 +2,7 @@
 description: "Why observationally equivalent mechanisms can tell a theory builder what to test next: a noisy binary example separates evidence acquisition from choosing or verifying an explanation."
 type: types/note.md
 traits: [title-as-claim, has-comparison, has-external-sources]
-tags: [learning-theory, self-improving-systems, theory-builder]
+tags: [learning-theory, self-improving-systems, theory-builder, evaluation]
 ---
 
 # Competing causal theories can guide distinguishing experiments

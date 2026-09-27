@@ -2,7 +2,7 @@
 description: Template generation resolves installation-known values before model execution, trading model-side binding work for setup, regeneration, and derived-copy maintenance
 type: types/note.md
 traits: []
-tags: [architecture]
+tags: [architecture, computational-model]
 ---
 
 # Generate KB skills at build time, don't parameterise them

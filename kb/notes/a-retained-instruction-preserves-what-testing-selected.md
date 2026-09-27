@@ -2,7 +2,7 @@
 description: "Explains why an instruction generated from model weights can still add KB value: testing selects a procedure under a criterion and retention makes that choice reusable."
 type: types/note.md
 traits: [title-as-claim]
-tags: [context-engineering]
+tags: [improvement-loop, continual-learning, self-improving-systems, learning-theory]
 ---
 
 # A retained instruction preserves what testing selected

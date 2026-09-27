@@ -2,7 +2,7 @@
 description: "Selecting one LLM output for operative reuse creates a stable artifact-testing target without resolving ambiguity inside the text, so generator and artifact tests answer different questions"
 type: types/note.md
 traits: [title-as-claim]
-tags: [learning-theory, constraining]
+tags: [learning-theory, constraining, evaluation]
 ---
 
 # Selecting an LLM output fixes a result, not its interpretation

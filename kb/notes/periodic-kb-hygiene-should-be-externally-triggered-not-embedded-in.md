@@ -2,7 +2,7 @@
 description: Routing instructions serve the current task; periodic hygiene is triggered externally (user, heartbeat, CI), so embedding it in always-loaded routing blurs two responsibilities and adds session noise
 type: types/note.md
 traits: [title-as-claim]
-tags: [kb-maintenance, curation]
+tags: [kb-maintenance, curation, context-engineering]
 ---
 
 # Periodic KB hygiene should be externally triggered, not embedded in routing

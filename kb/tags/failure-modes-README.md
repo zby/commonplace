@@ -10,6 +10,10 @@ This tag gathers recurring failure modes of an agent-operated KB: ways knowledge
 
 ## Activation and delivery
 
+- [Memory must be usable under bounded context](../notes/agent-memory-needs-discoverable-composable-trusted-knowledge-under.md) — discovery, loading, composition, trust, and activation can fail separately
+- [False completeness suppresses retrieval](../notes/indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more.md) — an apparently exhaustive index can end discovery before a better route
+- [Trace memory must earn authority](../notes/trace-extracted-memory-earns-authority-per-operation-not-at-capture.md) — unverified diagnoses can masquerade as knowledge and rules can remain inert
+- [A retrieval miss is a local reflective-path failure](../notes/a-retrieval-miss-is-a-local-reflective-path-failure.md) — a retrieval miss leaves one represented constraint inert for the affected task and route, while other delivery paths may still work
 - [Knowledge storage does not imply contextual activation](../notes/knowledge-storage-does-not-imply-contextual-activation.md) — core distinction between knowledge existing, being loaded, and actually affecting behavior
 - [Promotion selects for unreliable activation, and the regress ends only at an external trigger](../notes/promotion-selects-for-unreliable-activation-and-the-regress-ends-only.md) — content is promoted because the consumer will not apply it unprompted, so delivery needs a firing event that does not depend on that activation
 - [A consumption channel delivers force without the history that earned it](../notes/a-consumption-channel-delivers-force-without-the-history-that.md) — a consumption path can raise content into a higher-force role without checking that an authorization covers that content, version, and use
@@ -24,7 +28,6 @@ This tag gathers recurring failure modes of an agent-operated KB: ways knowledge
 ## Over-generalization and false assurance
 
 - [Abstract an experience into a lesson only when you can state where the lesson stops](../notes/abstract-an-experience-only-when-you-can-state-the-boundary.md) — an over-generalized lesson is one that drops its condition clause; without a statable boundary, keep the instance
-- [Generation confidence does not by itself certify soundness](../notes/generation-confidence-does-not-by-itself-certify-soundness.md) — next-token probability is not factual truth or inferential validity; high-assurance acceptance needs a separate check
 
 ## Related Tags
 

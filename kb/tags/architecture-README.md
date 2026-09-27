@@ -1,27 +1,36 @@
 ---
-description: How Commonplace is structured and installed — repo layout, two-tree split, control-plane design, file-based storage
+description: "System structure in agent-operated KBs and agent runtimes: responsibility boundaries, state and storage, control planes, interfaces, and the consequences of their arrangement"
 type: types/tag-readme.md
 ---
 
 # Architecture
 
-How Commonplace is structured and installed: the repository layout, the user's KB living in the project while the library is read in place from the installed package (ADR 086), the control plane in `AGENTS.md`, and the file-based storage decision. Nearby but different: [computational-model](./computational-model-README.md) is about what runs, not where it lives.
+System structure in agent-operated KBs and agent runtimes: how responsibilities, state, authority, and interfaces are divided, and how those arrangements constrain behavior. Assign this tag when an artifact explains, compares, or proposes structural choices such as component boundaries, storage ownership, instruction layers, installation, or where control and enforcement reside. A list of components or an incidental reference to a system is insufficient without an explanation of their relationships or consequences.
 
-For current-state subsystem documentation and ADR navigation, start at [../reference/README.md](../reference/README.md).
+[Commonplace architecture](./commonplace-architecture-README.md) is the child for Commonplace-specific arrangements, worked cases, and design proposals. Its members keep architecture as the parent tag. General architectural claims belong here even when they were developed through work on Commonplace.
 
-## Notes
+[Computational-model](./computational-model-README.md) focuses on how LLM-based programs execute; architecture focuses on the arrangement and boundaries of the system that executes them. [Context-engineering](./context-engineering-README.md) focuses on what reaches a bounded call. A note that explains both a structural choice and an execution or loading mechanism may carry both tags.
 
-- [reference overview](../reference/README.md) — entry point for current-state docs and architecture decisions
-- [commonplace-architecture](../reference/architecture.md) — the Commonplace repo structure: KB collections, packaged runtime, shipped skills, and operational surfaces
-- [086-projects read the library from the installed package](../reference/adr/086-projects-read-the-library-from-the-installed-package.md) — how Commonplace installs into projects today: no copy, init-written stubs and a routing file pointing at the installed library; supersedes the two-tree layout of ADR 006 and the one-tree model of ADR 014
-- [010-review state should move to sqlite once reviews leave git and accumulate operational metadata](../reference/adr/010-review-state-should-move-to-sqlite-once-reviews-leave-git-and.md) — review operational state crosses a deliberate authority boundary once acknowledgements and indexed transitions keyed by `(note, criterion, model_partition)` become database-owned
-- [kb-goals-in-always-loaded-context-guide-inclusion-decisions](../notes/kb-goals-in-always-loaded-context-guide-inclusion-decisions.md) — installed KBs need explicit domain goals in the control-plane file
-- [control-plane-goals](../reference/control-plane-goals.md) — current-state: how Commonplace realises KB goals in `AGENTS.md`, the scaffold template, and the install-time fill-in flow
-- [files-defer-centralized-schema-commitment-until-invariants-stabilize](../notes/files-defer-centralized-schema-commitment-until-invariants-stabilize.md) — canonical files can defer a shared schema while meanings remain unsettled; database authority is a separate commitment made through an operative write path, not a consequence of invariant shape or unowned state
-- [storage-architecture](../reference/storage-architecture.md) — current-state: how Commonplace lays out files as source of truth, regenerable indexes, and the scoped SQLite review-state exception
-- [agents-md-should-be-organized-as-a-control-plane](../notes/agents-md-should-be-organized-as-a-control-plane.md) — theory for AGENTS.md as a control plane: invariants, routing, escalation boundaries
-- [instruction-specificity-should-match-loading-frequency](../notes/instruction-specificity-should-match-loading-frequency.md) — CLAUDE.md should be a slim router; match instruction specificity to loading frequency
-- [generate-instructions-at-build-time](../notes/generate-instructions-at-build-time.md) — generate CLAUDE.md and routing tables at build time rather than maintaining them by hand
-- [instruction-generation](../reference/instruction-generation.md) — current-state: the Commonplace `commonplace-init` build step, scaffold trees, and substitution points that implement build-time generation today
-- [scenario-decomposition-drives-architecture](../notes/scenario-decomposition-drives-architecture.md) — concrete use cases decomposed into step-by-step context needs
-- [scenario-architecture](../reference/scenario-architecture.md) — current-state: the scenario-derived shipped architecture, the user's KB in the project with the library read from the package, package commands, promoted skills, and the `tests/scenarios/` measurement surface
+## Runtime boundaries
+
+- [A context-operation interface bounds the projections its policy can realize](../notes/context-operation-interface-bounds-context-policy.md) — operation vocabulary, controller placement, and exposure boundaries determine which context views can be constructed
+- [Cross-task transition policy remains scheduling behind a tool interface](../notes/cross-task-transition-policy-remains-scheduling-behind-tools.md) — transition authority and intervention points determine the scheduler boundary
+- [Stateful tools recover control by becoming hidden schedulers](../notes/stateful-tools-recover-control-by-becoming-hidden-schedulers.md) — orchestration state relocates control into a tool-owned runtime
+
+- [Separate scheduling, context assembly, and external state](../notes/agent-runtime-analysis-should-separate-scheduling-context-state.md) — assigns distinct diagnostic responsibilities without requiring separate implementation modules
+- [Runtime structure determines governance control surfaces](../notes/runtime-structure-determines-governance-control-surfaces.md) — exposed decisions and state determine where governance can inspect and intervene
+- [Skill discovery re-fires in worker contexts](../notes/skill-discovery-re-fires-in-every-sub-agent-context.md) — harness-owned discovery crosses the context boundary a parent tried to establish
+
+## Control planes and instruction placement
+
+- [AGENTS.md as a control plane](../notes/agents-md-should-be-organized-as-a-control-plane.md) — layers invariants, routing, and escalation by function and scope
+- [Instruction specificity and loading frequency](../notes/instruction-specificity-should-match-loading-frequency.md) — divides guidance between always-loaded and on-demand surfaces
+- [KB goals in always-loaded context](../notes/kb-goals-in-always-loaded-context-guide-inclusion-decisions.md) — places domain scope in the control plane while separating installation-specific inputs from framework defaults
+- [Generate KB skills at build time](../notes/generate-instructions-at-build-time.md) — assigns installation-known binding to setup rather than model execution
+- [Always-loaded context mechanisms](../notes/always-loaded-context-mechanisms-in-agent-harnesses.md) — compares prompt files, capability descriptions, memory, and configuration as distinct surfaces
+- [Scenario decomposition drives architecture](../notes/scenario-decomposition-drives-architecture.md) — derives placement and routing requirements from the context needed at each step of a user story
+
+## Storage and authority
+
+- [Canonical files and database authority](../notes/files-defer-centralized-schema-commitment-until-invariants-stabilize.md) — separates schema timing, storage substrate, and authority over accepted state
+- [Edge ownership and storage choice](../notes/many-to-many-edge-state-is-where-files-yield-to-a-database.md) — complete edge identity determines the key; workload requirements determine the storage comparison

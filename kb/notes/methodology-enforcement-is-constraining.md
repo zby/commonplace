@@ -2,7 +2,7 @@
 description: "Explains why enforcement strength is a partial order over activation and response semantics, rather than a fixed instruction-to-skill-to-hook-to-script ladder"
 type: types/note.md
 traits: [has-comparison, title-as-claim]
-tags: [learning-theory, constraining]
+tags: [learning-theory, constraining, method-guided-action]
 ---
 
 # Methodology enforcement is constraining

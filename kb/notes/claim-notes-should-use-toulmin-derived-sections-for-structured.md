@@ -2,7 +2,7 @@
 description: Three independent threads converged on Toulmin's argument structure — adopting Toulmin sections as base type `structured-claim` separates claim-titled notes (any note) from fully argued claims (the type)
 type: notes/types/structured-claim.md
 traits: [has-comparison, has-external-sources, title-as-claim]
-tags: [type-system]
+tags: [type-system, document-system]
 ---
 
 # Claim notes should use Toulmin-derived sections for structured argument

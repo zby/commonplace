@@ -2,7 +2,7 @@
 description: Separated Evidence and Reasoning sections let human reviewers check facts and logic independently — a purely readability argument that doesn't depend on LLM behavior at all
 type: types/note.md
 traits: [title-as-claim]
-tags: [type-system]
+tags: [type-system, document-system]
 ---
 
 # Structured output is easier for humans to review

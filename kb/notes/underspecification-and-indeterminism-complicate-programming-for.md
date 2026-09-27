@@ -2,7 +2,7 @@
 description: Indeterminism doubles test runs (statistical testing over distributions); underspecification doubles test targets (spec analysis for ambiguity). Conflating the two leads to misdiagnosis
 type: types/note.md
 traits: [title-as-claim]
-tags: [learning-theory, computational-model, constraining]
+tags: [learning-theory, computational-model, constraining, llm-reliability]
 ---
 
 # Underspecification and indeterminism complicate programming for prompts in distinct ways

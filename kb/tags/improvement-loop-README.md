@@ -8,7 +8,12 @@ complete: true
 
 How improvement candidates are searched for, evaluated with the possibility of rejection, and retained so that later operation depends on them. Assign this tag to work on these functions, their coordination and failure, or their boundary with direct updates that adopt a change without a separate candidate-admission decision. The establishing note is [a proposal-selection improvement loop requires search, evaluation, and operative retention](../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md). A recurring task loop alone is insufficient: the subject must be how a change becomes a candidate, is selected, or affects later operation. [Theory-builder](./theory-builder-README.md) covers the stated theories guiding the work and criticism of their content; work on how that criticism controls candidate search can carry both tags. A child of [self-improving-systems](./self-improving-systems-README.md).
 
+The distinction from [continual-learning](./continual-learning-README.md) is **how changes are selected** versus **how learning persists outside model weights**. Candidate search, rejection, backtracking, and acceptance belong here even when the retained form is unspecified. A durable artifact alone does not establish a proposal-selection loop. Assign both tags when the note develops both the selection process and learning through retained non-weight changes.
+
 ## Loop structure
+
+- [Test-gated reuse of orchestration strategies](../notes/orchestration-strategies-and-run-state-have-opposite-persistence.md) — candidate strategies pass separate fit and promotion checks before later reuse
+- [A retained instruction preserves what testing selected](../notes/a-retained-instruction-preserves-what-testing-selected.md) — testing chooses a candidate procedure and retention preserves that evaluated choice for reuse
 
 - [A proposal-selection improvement loop requires search, evaluation, and operative retention](../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md) — the three required functions
 - [An omitted improvement-loop function and a frozen one need different repairs](../notes/an-omitted-loop-function-and-a-frozen-one-need-different-repairs.md) — five systems with frozen functions, and why a direct update lacks a gate without omitting one
@@ -40,4 +45,4 @@ How improvement candidates are searched for, evaluated with the possibility of r
 - [software-factory](./software-factory-README.md) — factory revision is one target a loop can retain changes into
 - [reflection](./reflection-README.md) — loops whose retained changes pass through a self-representation
 - [warranted-autonomy](./warranted-autonomy-README.md) — which evaluation and acceptance decisions a computational actor is warranted to take
-- [continual-learning](./continual-learning-README.md) — retention that accumulates across many loop iterations
+- [continual-learning](./continual-learning-README.md) — learning through persistent non-weight changes; it can use proposal selection or direct updates

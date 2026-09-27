@@ -2,7 +2,7 @@
 description: "Generated cues, prompt files, indexes, and assistant-specific views need lineage and authority rules so they do not drift into independent behavior-shaping force"
 type: types/note.md
 traits: [has-external-sources]
-tags: [agent-memory, context-engineering]
+tags: [agent-memory, context-engineering, artifact-analysis, learning-theory]
 ---
 
 # Keep Lineage And Compiled Views From Drifting

@@ -2,7 +2,7 @@
 description: "Unqualified technical senses have no reliable namespace in natural-language content; schema slots, rare compounds, and linked clause frames scope them at write time; audits and remediation recover when prevention fails"
 type: types/note.md
 traits: [title-as-claim, has-external-sources]
-tags: [computational-model]
+tags: [computational-model, context-engineering, document-system]
 ---
 
 # Load-bearing vocabulary collisions should be prevented or visibly scoped at write time

@@ -2,7 +2,7 @@
 description: Legal drafting parallels context engineering because both write ambiguous natural-language specifications for judgment-based interpreters, but law develops constraining more than codification
 type: types/note.md
 traits: [has-external-sources]
-tags: [learning-theory, constraining]
+tags: [learning-theory, constraining, context-engineering]
 ---
 
 # Legal drafting solves the same problem as context engineering

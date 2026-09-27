@@ -2,7 +2,7 @@
 description: Globally eligible types widen every collection's authoring choices; collection-local types keep specialized contracts scoped while path pointers load either kind on demand
 type: types/note.md
 traits: [title-as-claim]
-tags: [type-system]
+tags: [type-system, document-system]
 ---
 
 # Directory-scoped types are cheaper than global types

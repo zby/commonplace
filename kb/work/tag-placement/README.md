@@ -46,10 +46,93 @@ The operator also accepted substantive use of one artifact-analysis field.
 The [single-field scope decision](./artifact-analysis-scope-decision.md) retains
 three flagged assignments and removes one unsupported tag. That removal also
 closes PG-035, leaving 128 entries in the parent-gap inventory.
-Thirty-four original assignment findings are now resolved.
+The operator renamed methodology to method-guided-action, keeping the narrower
+question of how methods guide decisions and allowing overlap with learning-theory.
+The [disposition](./methodology-scope-decision.md) retains the literature-reuse
+assignment and accepts all six related additions, superseding the initial
+rejection of the theory–methodology execution note.
 
-Remaining: 34 original assignment findings, 204 suggested-addition entries,
-and PC-07. The [input record](./parent-membership-inputs.md) preserves versions
+The operator then split Commonplace-specific architecture from the general
+subject. The [architecture decision](./architecture-placement-decision.md)
+retains all three flagged assignments under the general head, adds the new
+commonplace-architecture child to six qualifying members, and records PC-08
+as resolved with every child member retaining its parent. Three related
+addition entries are accepted; the always-loaded-context survey also has the
+agent-memory parent. Thirty-eight original assignment findings were resolved at that point.
+
+The [computational-model disposition](./computational-model-placement-decision.md)
+removes twelve assignments that do not meet the execution-focused head. It
+accepts nine addition entries and closes one duplicate removal recommendation.
+Child-fit checks also restore eleven learning-theory parents from PC-07, leaving
+117 inventory entries open. Fifty original assignment findings were resolved at that point.
+
+The [context-engineering disposition](./context-engineering-placement-decision.md)
+removes nine context-engineering assignments and one associated llm-reliability
+assignment, accepts five addition entries, and resolves two more parent gaps.
+Sixty original findings were resolved at that point, with 115 parent-gap entries open.
+
+The [remaining-placement disposition](./remaining-placement-decision.md)
+retains the discovery assignment on epiplexity and removes seven unsupported
+assignments. It accepts four additions, closes two duplicate removals, and
+resolves three parent gaps. All 68 original assignment findings now have
+dispositions: 36 retained and 32 corrected.
+
+The [learning-tag boundary and application](./learning-tag-boundary-decision.md)
+clarifies improvement-loop versus continual-learning without merging them.
+It accepts twenty addition entries, adds both tags where both mechanisms
+are developed, and resolves seven more parent gaps.
+
+The [first evaluation-additions pass](./evaluation-additions-01.md) accepts ten
+entries on assessment warrant, human judgment, memory effects, and text testing.
+It also resolves two parent gaps.
+
+The [second evaluation-additions pass](./evaluation-additions-02.md) accepts ten
+entries on check targets, causal tests, compounding, benchmark limits, and
+output diagnosis. It also resolves three parent gaps.
+
+The [third evaluation-additions pass](./evaluation-additions-03.md) accepts ten
+entries on oracle quality, adoption evidence, and experimental interpretation.
+It adds four neighboring assignments and seven required parents, resolving
+three entries in the original parent-gap inventory.
+
+The [fourth evaluation-additions pass](./evaluation-additions-04.md) accepts the
+six remaining evaluation suggestions, covering automation, claim support, and
+transfer tests. It adds three neighboring assignments and six required parents,
+resolving three original parent gaps. No evaluation suggestions remain open
+in this queue; this does not establish exhaustive evaluation-tag coverage.
+
+The [first context-additions pass](./context-additions-01.md) accepts twenty
+entries on routing, prompt assembly, bounded-call budgets, and content retention
+for later loading. It adds three companion assignments and five required
+parents, resolving four original parent gaps.
+
+The [context and document additions pass](./context-document-additions-02.md)
+accepts thirty entries: all sixteen remaining context-engineering suggestions
+and fourteen document-system entries. It implements the companion suggestions
+and seven other required parents, resolving four original parent gaps. No
+context-engineering suggestion remains open in this queue.
+
+The [mechanism additions pass](./mechanism-additions-01.md) accepts thirty entries on
+artifact classification, constraining, execution, reliability, and document
+types. It adds thirteen required parent assignments and resolves six original
+parent gaps. The artifact-analysis head retains complete coverage with shorter
+navigation text and an unchanged inclusion rule.
+
+The [review and evidence additions pass](./evidence-additions-01.md) accepts twenty-three
+entries and closes one duplicate removal already implemented through TP-012.
+It covers semantic review, observability, claim support, failure modes, curation,
+and learning, and resolves nine original parent gaps. Four complete heads gain
+member links without changing their inclusion rules.
+
+The [theory and discovery additions pass](./theory-discovery-additions-01.md) accepts all fourteen
+remaining suggestions, adds eight required parents, and resolves six original
+parent gaps. Four complete heads gain member links; the theory-builder head
+uses shorter navigation text, with all inclusion rules unchanged. The addition
+queue is now fully disposed: 202 accepted entries and four duplicate closures.
+This completes the retained suggestions, not an exhaustive missing-tag audit.
+
+Remaining: the 65 parent-gap entries
+tracked by PC-07. The [input record](./parent-membership-inputs.md) preserves versions
 used for the first pass. Existing review results and the placement baseline
 remain frozen.
 

@@ -8,8 +8,12 @@ complete: true
 
 Assign this tag to work on continued learning through retained changes outside model weights: prompts, rules, tools, schemas, and tests; how those changes are governed; and how this learning relates to updates in other representational forms. Weight-only training and post-release change without an account of learning through retained artifacts are insufficient. Two notes establish the tag: [Retained system-definition artifacts enable persistent deployment-time adaptation](../notes/retained-artifacts-enable-persistent-deployment-time-adaptation.md) and [The readable-artifact loop is the tractable unit for continual learning](../notes/readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md). Bitter Lesson notes defend the bet that learning in readable forms can scale. It is a child of [self-improving-systems](./self-improving-systems-README.md). Boundary: [deploy-time-learning](./deploy-time-learning-README.md) covers what deployed use reveals and responses to it, including human maintenance. This tag requires learning through retained changes outside weights; work on that learning as a response to deployed experience may carry both tags.
 
+The distinction from [improvement-loop](./improvement-loop-README.md) is **how learning persists outside model weights** versus **how changes are selected**. Assign this tag when evidence becomes a retained change used in later operation, or the note develops that path's governance, limits, or relation to weight updates. Saving a file or issuing a one-off prompt is insufficient. A separate candidate-admission gate is not required; a note that also develops proposal selection can carry both tags.
+
 ## Where learning lives in a deployed system
 
+- [Retain reusable orchestration strategies](../notes/orchestration-strategies-and-run-state-have-opposite-persistence.md) — selected control logic persists as tested library code, while task-specific state stays temporary
+- [A retained instruction preserves what testing selected](../notes/a-retained-instruction-preserves-what-testing-selected.md) — an instruction retains an empirically selected procedure outside model weights
 - [Retained system-definition artifacts enable persistent deployment-time adaptation](../notes/retained-artifacts-enable-persistent-deployment-time-adaptation.md) — the framework claim: evaluated artifact changes persist outside weights
 - [The deployed system, not the model alone, is the unit of learning](../notes/the-deployed-system-not-the-model-is-the-unit-of-learning.md) — prompts, retrieval, tools, and runtime policy jointly set behavior, so model-only learning leaves them fixed
 - [Constraining during deployment is continuous learning](../notes/constraining-during-deployment-is-continuous-learning.md) — narrowing interpretations through prompts, schemas, and tests is one form the accumulation takes
@@ -29,7 +33,6 @@ Assign this tag to work on continued learning through retained changes outside m
 
 - [Continual learning requires governing behaviour-changing writes, not just storing content](../notes/continual-learning-requires-governing-behaviour-changing-writes.md) — persistence is not enough: updates must be selected, validated, authorized, and coordinated
 - [Learning inside a fixed decomposition inherits its mistakes](../notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md) — optimization cannot repair distinctions outside the decomposition's update space
-- [An optimal long-run learning strategy invests in its own machinery](../notes/an-optimal-long-run-learning-strategy-invests-in-its-own-machinery.md) — a machinery improvement is reused by every later episode, so it can out-earn immediate learning
 - [Automating KB learning is an open problem](../notes/automating-kb-learning-is-an-open-problem.md) — the KB learns through manual improvement; automating judgment-heavy mutations lacks oracles
 
 ## The Bitter Lesson defense
@@ -46,6 +49,6 @@ Assign this tag to work on continued learning through retained changes outside m
 - [learning-theory](./learning-theory-README.md) — the general account of learning these notes apply
 - [reflection](./reflection-README.md) — whether the retained changes are represented and selectively revisable
 - [warranted-autonomy](./warranted-autonomy-README.md) — who may authorize the behavior-changing writes
-- [improvement-loop](./improvement-loop-README.md) — the search, evaluation, and retention loop each form's learning runs through
+- [improvement-loop](./improvement-loop-README.md) — candidate search, reject-capable evaluation, and retention; one update architecture, distinct from direct updates
 - [software-factory](./software-factory-README.md) — shares the factory-learning note; continual learning applied to production machinery
 - [theory-builder](./theory-builder-README.md) — learning through retained, criticized theory

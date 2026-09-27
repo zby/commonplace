@@ -2,7 +2,7 @@
 description: "False-positive generation faces evaluation before retention, while false-positive acceptance becomes operative and can compound"
 type: types/note.md
 traits: [title-as-claim]
-tags: [self-improving-systems, improvement-loop]
+tags: [self-improving-systems, improvement-loop, evaluation, learning-theory]
 ---
 
 # False-positive generation is filtered; false-positive acceptance becomes operative

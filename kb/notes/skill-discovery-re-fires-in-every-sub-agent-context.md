@@ -2,7 +2,7 @@
 description: Skill discovery is per-context and autonomous — every installed skill is re-matched in each sub-agent context, even ones a parent narrowed, so a delegating skill's own discoverability is a leak vector
 type: notes/types/structured-claim.md
 traits: [title-as-claim]
-tags: [computational-model, architecture]
+tags: [computational-model, architecture, context-engineering]
 ---
 
 # Skill discovery re-fires in every sub-agent context, not just the top-level invocation

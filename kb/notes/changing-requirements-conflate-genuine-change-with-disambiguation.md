@@ -2,7 +2,7 @@
 description: "Separates world change from late discovery that downstream work chose the wrong interpretation of an underspecified requirement; short iterations mainly limit propagation of the latter"
 type: types/note.md
 traits: []
-tags: [learning-theory, deploy-time-learning]
+tags: [learning-theory, deploy-time-learning, constraining]
 ---
 
 # Changing requirements conflate genuine change with disambiguation failure

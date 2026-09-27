@@ -2,7 +2,7 @@
 description: "Self-hosting LLM methodologies are closer to metacircular interpreters than compilers: agents re-interpret natural-language rules each session, while stable paths codify into validators and commands"
 type: types/note.md
 traits: [title-as-claim]
-tags: [constraining, self-improving-systems, continual-learning]
+tags: [constraining, self-improving-systems, continual-learning, computational-model, learning-theory]
 ---
 
 # LLM-executed methodologies are metacircular interpreters, not compilers

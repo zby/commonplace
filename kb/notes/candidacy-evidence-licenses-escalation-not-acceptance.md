@@ -2,7 +2,7 @@
 description: "Separates candidacy evidence, which routes a hypothesis to costly assessment, from verdict evidence, which decides it; pricing and source-grounding cases provide two worked witnesses"
 type: types/note.md
 traits: [title-as-claim]
-tags: [discovery]
+tags: [discovery, evaluation, learning-theory]
 ---
 
 # Candidacy evidence licenses escalation to assessment, not acceptance

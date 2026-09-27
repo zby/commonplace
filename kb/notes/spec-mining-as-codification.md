@@ -2,7 +2,7 @@
 description: "Operationalizes codification by extracting deterministic verifiers from observed stochastic behavior — the mechanism that converts blurry-zone components into calculators"
 type: types/note.md
 traits: [has-external-sources, title-as-claim]
-tags: [learning-theory, constraining]
+tags: [learning-theory, constraining, continual-learning, self-improving-systems]
 ---
 
 # Spec mining is codification's operational mechanism

@@ -2,7 +2,7 @@
 description: "Task families group obligations or evaluations; software product families group products through declared commonality, variability, and reusable production scope"
 type: types/note.md
 traits: [title-as-claim, has-comparison]
-tags: [computational-model, self-improving-systems, software-factory]
+tags: [self-improving-systems, software-factory, evaluation, learning-theory]
 ---
 
 # Task families and product families classify different things

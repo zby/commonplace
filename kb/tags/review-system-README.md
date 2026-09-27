@@ -10,6 +10,12 @@ Semantic review of KB artifacts by an LLM: what a review can catch that validati
 
 ## What review checks and when verdicts go stale
 
+- [Grounding versus representation](../notes/a-linked-note-discharges-its-own-grounding-so-a-citing-note-owes.md) — distinct semantic checks apply to sources and linked claims
+- [Narrowing can empty a reviewed claim](../notes/narrowing-bought-to-survive-review-is-paid-for-in-content.md) — gate success needs a separate check of surviving contribution
+- [Reasoning production versus evaluation](../notes/reasoning-production-is-not-reasoning-evaluation.md) — review must inspect the stated argument rather than reconstruct an answer
+- [Reviewers share the field's prior](../notes/reviewers-share-the-fields-prior-so-interpret-findings-by-stance.md) — read semantic findings against correlated priors and the claim's stance
+- [Verifiable review subroles](../notes/verifiable-subroles-before-reviewer-identity.md) — narrow evidence targets precede reviewer-level authority
+- [A five-link cap missed four grounding findings in twelve reviews](../notes/evidence/a-five-link-cap-missed-four-grounding-findings-in-twelve-reviews.md) — paired reviews test how the linked-reading budget changes which grounding errors a gate detects
 - [Semantic review catches content errors that structural validation cannot](../notes/semantic-review-catches-content-errors-that-structural-validation.md) — why review exists beside validation: enumeration completeness, grounding drift, boundary cases, internal contradictions
 - [A note is an atomic step relative to the check that reads it](../notes/a-note-is-an-atomic-step-relative-to-the-check-that-reads-it.md) — sizes a note to one inference a reviewer can check in a single pass
 - [Criteria edits invalidate verdicts; process edits invalidate artifacts](../notes/criteria-edits-invalidate-verdicts-process-edits-invalidate-artifacts.md) — which edits make a verdict stale: the note and the criterion count, the production process does not

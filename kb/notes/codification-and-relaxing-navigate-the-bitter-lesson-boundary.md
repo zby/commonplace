@@ -2,7 +2,7 @@
 description: Since you can't identify which side of the bitter lesson boundary you're on until scale tests it, practical systems must codify and relax — with spec mining avoiding the vision-feature failure mode
 type: types/note.md
 traits: [has-external-sources]
-tags: [learning-theory, constraining]
+tags: [learning-theory, constraining, continual-learning, self-improving-systems]
 ---
 
 # Codification and relaxing navigate the bitter lesson boundary

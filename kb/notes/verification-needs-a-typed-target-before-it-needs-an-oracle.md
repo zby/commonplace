@@ -2,7 +2,7 @@
 description: "A check's warrant depends on a declared target class, so an unverifiable heterogeneous layer is usually blocked by missing artifact classification, not oracle difficulty — ontology precedes oracle"
 type: types/note.md
 traits: [title-as-claim]
-tags: [learning-theory, artifact-analysis]
+tags: [learning-theory, artifact-analysis, type-system, document-system]
 ---
 
 # Verification needs a typed target before it needs an oracle

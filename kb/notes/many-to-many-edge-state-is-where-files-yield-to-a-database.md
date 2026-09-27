@@ -2,7 +2,7 @@
 description: Distinguishes the complete edge key required by relation-owned mutable state from the workload-specific choice between edge files and a database.
 type: types/note.md
 traits: [title-as-claim]
-tags: [architecture]
+tags: [architecture, commonplace-architecture, artifact-analysis, learning-theory]
 ---
 
 # Edge ownership selects the key; choosing files or a database requires a workload comparison

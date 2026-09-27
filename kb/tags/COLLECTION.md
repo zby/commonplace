@@ -45,6 +45,15 @@ mention or background use is insufficient. When the head leaves placement
 ambiguous, clarify its inclusion condition before assigning the tag. An
 artifact may carry neighboring tags when it meets each condition.
 
+## Tag names
+
+A tag name should communicate its scope in the KB-wide namespace. Qualify a
+narrow subject when an unqualified name would suggest a broader one: for
+example, `commonplace-architecture` for this system and `architecture` for the
+general subject. Use hyphens between words in a compound identifier. Prefer a
+meaningful scope qualifier over relying on the head to reveal a surprising
+restriction; existing clear names need no mechanical expansion.
+
 ## Quality goal
 
 A head is good when its opening lets a reader decide whether the tag is what

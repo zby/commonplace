@@ -2,7 +2,7 @@
 description: "Without external assessment a claim needs its own contradiction-and-support rule, a comparison level for objective change, and a performance measure it does not grade itself, plus attribution when it asserts a cause"
 type: types/note.md
 traits: [title-as-claim]
-tags: [self-improving-systems, learning-theory, warranted-autonomy]
+tags: [self-improving-systems, learning-theory, warranted-autonomy, evaluation]
 ---
 
 # A claim without external assessment carries three obligations

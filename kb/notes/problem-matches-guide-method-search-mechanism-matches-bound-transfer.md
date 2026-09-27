@@ -2,7 +2,7 @@
 description: Explains why problem matches generate source-method candidates rather than transfer warrant, why mechanism matches bound what transfers, and why composing bounded mechanisms requires target-side interaction checks.
 type: types/note.md
 traits: [title-as-claim, synthesis, has-comparison]
-tags: [methodology]
+tags: [method-guided-action]
 ---
 
 # Problem matches guide method search; mechanism matches bound transfer

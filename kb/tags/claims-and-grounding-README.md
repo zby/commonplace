@@ -10,6 +10,12 @@ How KB content commits to claims and how those claims stay tied to what supports
 
 ## Claims as commitments
 
+- [Idealization requires adequacy commitments](../notes/domain-pricing-routes-an-exception-to-idealization-assessment.md) — declared use and bounded exceptions keep a repaired claim refutable
+- [Defensive generality spends precision](../notes/generality-bought-to-avoid-counterexamples-is-paid-for-in.md) — ask what revised wording rules out and state counterexamples openly
+- [Claim titles enable reasoning traversal](../notes/title-as-claim-enables-traversal-as-reasoning.md) — titles expose premises; topical and definitional references serve different roles
+- [Theory warrant should be tracked at the finest granularity evidence licenses](../notes/theory-warrant-tracked-at-the-finest-granularity-evidence-licenses.md) — support stays with the claim, conjunction, or model and scope identified by the evidence; joint comparative support does not automatically support each component
+- [Mixed epistemic status must be preserved below the document level](../notes/mixed-epistemic-status-must-be-preserved-below-the-document-level.md) — observations, deductions, and plausible explanations need separate warrants inside one document
+
 - [Title as claim exposes commitments, enabling Popperian maintenance](../notes/title-as-claim-exposes-commitments-enabling-popperian-maintenance.md) — a list of claim titles can be scanned with "do I still believe this?" without opening files
 - [Title as claim makes overlap between notes visible](../notes/title-as-claim-makes-overlap-between-notes-visible.md) — similar assertions show at the index level, where topical titles hide them
 - [Claim modality is the inference form of the refuter](../notes/claim-modality-is-the-inference-form-of-the-refuter.md) — the three claim modes follow from how a claim would be refuted, which closes the mode list for empirical claims
@@ -24,9 +30,11 @@ How KB content commits to claims and how those claims stay tied to what supports
 
 ## Grounding in sources
 
+- [History must become checkable at production](../notes/history-has-one-chance-to-become-checkable.md) — provenance and quote anchors preserve evidence a later reviewer cannot recreate
+- [A citation cannot assert more fidelity than its capture preserved](../notes/a-citation-cannot-assert-more-fidelity-than-its-capture-preserved.md) — capture fixes the evidence a citation can claim; stronger notation cannot restore lost fidelity
+
 - [A linked note discharges its own grounding, so a citing note owes representation, not re-grounding](../notes/a-linked-note-discharges-its-own-grounding-so-a-citing-note-owes.md) — citing a source imposes a grounding obligation; citing a grounded note imposes only faithful representation
 - [A quotes-route rollout grounded more claim uses without earning claim identifiers](../notes/evidence/quotes-route-rollout-grounded-more-uses-without-earning-claim-ids.md) — evidence for verbatim quotes over a paraphrased claims ledger: 75% versus 30% grounded uses, descriptive only
-- [A five-link cap missed four grounding findings in twelve reviews](../notes/evidence/a-five-link-cap-missed-four-grounding-findings-in-twelve-reviews.md) — evidence that capping linked reading hides grounding findings
 - [An independent pass tightened three of four Pirolli grounding verdicts](../notes/evidence/independent-pass-tightened-three-of-four-pirolli-verdicts.md) — evidence that separating source reconstruction from claim judgment changes grounding verdicts; a candidate control, not a proven cause
 
 ## Related Tags

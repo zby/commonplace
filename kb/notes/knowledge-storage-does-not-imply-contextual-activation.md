@@ -2,7 +2,7 @@
 description: Separates knowledge that exists, knowledge loaded into context (read-back), and knowledge that actually changes behavior (activation); explains why retrieval and long context do not guarantee activation
 type: types/note.md
 traits: [has-external-sources]
-tags: [llm-reliability, failure-modes, evaluation]
+tags: [llm-reliability, failure-modes, evaluation, context-engineering, learning-theory]
 ---
 
 # Knowledge storage does not imply contextual activation

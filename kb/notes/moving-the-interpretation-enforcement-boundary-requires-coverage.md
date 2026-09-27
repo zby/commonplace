@@ -2,7 +2,7 @@
 description: "Moving responsibility between model-interpreted rules and formal enforcement crosses natural-language and symbolic forms, so governing the transfer requires coverage of both and their mapping"
 type: types/note.md
 traits: [title-as-claim]
-tags: [constraining, self-improving-systems, continual-learning]
+tags: [constraining, self-improving-systems, continual-learning, reflection, learning-theory]
 ---
 
 # Moving the interpretation–enforcement boundary requires cross-form coverage

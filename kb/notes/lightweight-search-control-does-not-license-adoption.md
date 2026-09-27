@@ -2,7 +2,7 @@
 description: "A search judgment is lightweight when its authority stops at allocating further investigation, probing, continuation, suspension, or abandonment rather than licensing an operative change"
 type: types/note.md
 traits: [title-as-claim]
-tags: [computational-model, self-improving-systems, improvement-loop]
+tags: [self-improving-systems, improvement-loop, learning-theory]
 ---
 
 # Lightweight search control allocates further search without licensing adoption

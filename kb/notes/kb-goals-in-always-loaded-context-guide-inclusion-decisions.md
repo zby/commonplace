@@ -1,7 +1,7 @@
 ---
 description: Without explicit goals in the always-loaded control-plane file, agents cannot reject well-written but off-scope material — a universal quality guide provides writing criteria but not domain scope
 type: types/note.md
-tags: [architecture]
+tags: [architecture, context-engineering]
 ---
 
 # KB goals in always-loaded context guide inclusion decisions

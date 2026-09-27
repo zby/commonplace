@@ -1,10 +1,10 @@
 # Suggested additions
 
-Suggestions for 206 notes, copied from the review for disposition. One entry can contain several proposed tags. Current status: two entries accepted and implemented; 204 remain open. This is opportunistic discovery, not an exhaustive missing-tag audit. Follow the [workshop framing](./README.md).
+Suggestions for 206 notes, copied from the review for disposition. One entry can contain several proposed tags. Current status: 202 entries accepted and implemented, four duplicate removals closed; none remain open. This is opportunistic discovery, not an exhaustive missing-tag audit. Follow the [workshop framing](./README.md).
 
 ## ADD-001
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [A better-factory claim compares operative states under an antecedent assessment relation](../../notes/a-better-factory-claim-compares-operative-states.md).
 
@@ -14,11 +14,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22769](../../reports/state/review-jobs/review-job-8790/pair-2-a-better-factory-claim-compares-operative-states.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): The note fixes the comparison states, antecedent assessment relation, non-regression scope, and evaluator role needed for a better-factory claim, and separates passing that comparison from attribution of learning. See the [first evaluation-additions pass](./evaluation-additions-01.md) for versions, parent checks, and verification.
 
 ## ADD-002
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [A citation cannot assert more fidelity than its capture preserved](../../notes/a-citation-cannot-assert-more-fidelity-than-its-capture-preserved.md).
 
@@ -28,11 +28,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22771](../../reports/state/review-jobs/review-job-8790/pair-4-a-citation-cannot-assert-more-fidelity-than-its-capture-preserved.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-26): Accept claims-and-grounding: the capture layer bounds the evidence a citation may assert. Add its kb-maintenance parent. See the [context-engineering disposition](./context-engineering-placement-decision.md) for versions and verification.
 
 ## ADD-003
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [A claim without external assessment carries three obligations](../../notes/a-claim-without-external-assessment-carries-three-obligations.md).
 
@@ -42,11 +42,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22772](../../reports/state/review-jobs/review-job-8790/pair-5-a-claim-without-external-assessment-carries-three-obligations.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): The note specifies external falsifiers, independently assessed performance, and the support needed for a proposed use. It explicitly distinguishes outcome measurement from causal attribution and internal approval. See the [first evaluation-additions pass](./evaluation-additions-01.md) for versions, parent checks, and verification.
 
 ## ADD-004
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [A complete theory path does not establish improved capacity](../../notes/a-complete-theory-path-does-not-establish-improved-capacity.md).
 
@@ -56,11 +56,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22774](../../reports/state/review-jobs/review-job-8790/pair-7-a-complete-theory-path-does-not-establish-improved-capacity.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept theory-builder. The note distinguishes theory-builder membership, causal theory use, criticism, and recurrent mediation from evidence that the process improves capacity. See the [theory and discovery additions pass](./theory-discovery-additions-01.md) for boundary calls, parent checks, versions, and verification.
 
 ## ADD-005
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [A fixed-model house must retain missing procedures for theory use](../../notes/a-fixed-model-house-must-retain-missing-procedures-for-theory-use.md).
 
@@ -70,11 +70,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22777](../../reports/state/review-jobs/review-job-8790/pair-10-a-fixed-model-house-must-retain-missing-procedures-for-theory-use.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-26): add method-guided-action (the renamed methodology tag). Existing operations can make a new theory usable; when they cannot, a fixed-model system must retain the missing procedure and make it operative. See the [method-guided-action disposition](./methodology-scope-decision.md) for the boundary, input versions, and verification.
 
 ## ADD-006
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [A goal-holding interpreter fails soft, and its workarounds tax a bounded budget](../../notes/a-goal-holding-interpreter-fails-soft-workarounds-tax-a-bounded-budget.md).
 
@@ -84,11 +84,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22779](../../reports/state/review-jobs/review-job-8790/pair-12-a-goal-holding-interpreter-fails-soft-workarounds-tax-a-bounded-budget.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept computational-model. Goal-holding interpretation is compared with compiled execution through failure recovery, rerouting, and bounded runtime costs. See the [mechanism additions pass](./mechanism-additions-01.md) for parent checks, versions, and verification.
 
 ## ADD-007
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [A linked note discharges its own grounding, so a citing note owes representation, not re-grounding](../../notes/a-linked-note-discharges-its-own-grounding-so-a-citing-note-owes.md).
 
@@ -98,11 +98,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22781](../../reports/state/review-jobs/review-job-8790/pair-14-a-linked-note-discharges-its-own-grounding-so-a-citing-note-owes.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept review-system. The note separates source grounding from faithful representation and analyzes the concept-attribution and misleading-link-text semantic criteria. See the [review and evidence additions pass](./evidence-additions-01.md) for versions, parent checks, and verification.
 
 ## ADD-008
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [A methodology governs its own extension only as far as it settles the meta-decisions it raises](../../notes/a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md).
 
@@ -112,11 +112,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22783](../../reports/state/review-jobs/review-job-8790/pair-16-a-methodology-governs-its-own-extension-only-as-far-as-it-settles.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-26): add method-guided-action (the renamed methodology tag). The note distinguishes decisions a held method settles from decisions it merely routes to an actor, including representation, checking, and authority. See the [method-guided-action disposition](./methodology-scope-decision.md) for the boundary, input versions, and verification.
 
 ## ADD-009
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [A note is an atomic step relative to the check that reads it](../../notes/a-note-is-an-atomic-step-relative-to-the-check-that-reads-it.md).
 
@@ -126,11 +126,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22784](../../reports/state/review-jobs/review-job-8790/pair-17-a-note-is-an-atomic-step-relative-to-the-check-that-reads-it.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept document-system: the note distinguishes reader co-loading size from checker-relative inference size and explains how splitting or retained quotations make a document checkable. See the [context and document additions pass](./context-document-additions-02.md) for versions, parent checks, and verification.
 
 ## ADD-010
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [A proximate target is checked for achievement, not for warrant](../../notes/a-proximate-target-is-checked-for-achievement-not-for-warrant.md).
 
@@ -140,11 +140,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22786](../../reports/state/review-jobs/review-job-8790/pair-19-a-proximate-target-is-checked-for-achievement-not-for-warrant.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): The note separates checking a proximate target's achievement from testing whether that target serves the improvement objective. It explains the independent outcome evidence needed to test the linking claim. See the [first evaluation-additions pass](./evaluation-additions-01.md) for versions, parent checks, and verification.
 
 ## ADD-011
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [A repeatable operative path keeps a redesign class open to revision](../../notes/a-repeatable-operative-path-keeps-a-redesign-class-open-to-revision.md).
 
@@ -154,11 +154,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22787](../../reports/state/review-jobs/review-job-8790/pair-20-a-repeatable-operative-path-keeps-a-redesign-class-open-to-revision.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept improvement-loop: the six-part operative path separates determination, admission, installation, dependence, and continuity; worked examples explain how an admission rule can close later proposal selection. Required self-improving-systems and learning-theory parents are present. See the [learning-tag boundary and application](./learning-tag-boundary-decision.md) for versions and verification.
 
 ## ADD-012
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [A retained instruction preserves what testing selected](../../notes/a-retained-instruction-preserves-what-testing-selected.md).
 
@@ -168,11 +168,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22788](../../reports/state/review-jobs/review-job-8791/pair-1-a-retained-instruction-preserves-what-testing-selected.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-26): Accept both improvement-loop and continual-learning: testing selects a candidate instruction, and retention preserves that empirical choice in a reusable artifact outside weights. Add self-improving-systems and learning-theory parents. See the [context-engineering disposition](./context-engineering-placement-decision.md) for versions and verification.
 
 ## ADD-013
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [A retrieval miss is a local reflective-path failure](../../notes/a-retrieval-miss-is-a-local-reflective-path-failure.md).
 
@@ -182,11 +182,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22789](../../reports/state/review-jobs/review-job-8791/pair-2-a-retrieval-miss-is-a-local-reflective-path-failure.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept context-engineering, failure-modes, and curation: the note traces how discovery and mandatory loading deliver a self-representation, how a retrieval miss leaves it inert, and how unenforced index completeness suppresses the search needed to recover missing members. See the [first context-additions pass](./context-additions-01.md) for versions, parent checks, and verification.
 
 ## ADD-014
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [A universal knowledge framework demotes content taxonomies to defaults](../../notes/a-universal-knowledge-framework-demotes-content-taxonomies-to-defaults.md).
 
@@ -196,11 +196,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22791](../../reports/state/review-jobs/review-job-8791/pair-4-a-universal-knowledge-framework-demotes-content-taxonomies-to-defaults.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept type-system. The note argues for extensible document contracts and local type taxonomies under shared interoperability requirements. See the [mechanism additions pass](./mechanism-additions-01.md) for parent checks, versions, and verification.
 
 ## ADD-015
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Abstract an experience into a lesson only when you can state where the lesson stops](../../notes/abstract-an-experience-only-when-you-can-state-the-boundary.md).
 
@@ -210,11 +210,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22792](../../reports/state/review-jobs/review-job-8791/pair-5-abstract-an-experience-only-when-you-can-state-the-boundary.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept agent-memory, discovery. The note decides whether to retain an episode or form a bounded general lesson, directly addressing both memory formation and the explanatory-reach of conjectures. See the [theory and discovery additions pass](./theory-discovery-additions-01.md) for boundary calls, parent checks, versions, and verification.
 
 ## ADD-016
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Access burden and transformation burden are distinct query dimensions](../../notes/access-burden-and-transformation-burden-are-distinct-query-dimensions.md).
 
@@ -224,11 +224,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22793](../../reports/state/review-jobs/review-job-8791/pair-6-access-burden-and-transformation-burden-are-distinct-query-dimensions.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept context-engineering: the note separates finding required inputs from transforming them, then develops a repeated acquire/transform/check route that exposes only the inputs and unresolved judgment needed for each bounded semantic call. See the [first context-additions pass](./context-additions-01.md) for versions, parent checks, and verification.
 
 ## ADD-017
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Accumulation counts dependence through the retained result, not through the evidence it caused](../../notes/accumulation-counts-dependence-through-the-retained-result.md).
 
@@ -238,11 +238,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22794](../../reports/state/review-jobs/review-job-8791/pair-7-accumulation-counts-dependence-through-the-retained-result.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept learning-theory. The note defines when later improvement consumes or preserves earlier retained results and distinguishes accumulation from merely operative change. See the [review and evidence additions pass](./evidence-additions-01.md) for versions, parent checks, and verification.
 
 ## ADD-018
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Ad hoc prompts extend the system without schema changes](../../notes/ad-hoc-prompts-extend-the-system-without-schema-changes.md).
 
@@ -252,11 +252,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22797](../../reports/state/review-jobs/review-job-8791/pair-10-ad-hoc-prompts-extend-the-system-without-schema-changes.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept computational-model for the interpreted prompt layer, shared token medium, and sub-agent frame. Accept continual-learning for the developed progression from repeated ad hoc prompts to a retained skill. The one-off prompt alone would not qualify. Required self-improving-systems and learning-theory parents are present. See the [learning-tag boundary and application](./learning-tag-boundary-decision.md) for versions and verification.
 
 ## ADD-019
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [An addressable theory can coordinate heterogeneous factory development](../../notes/addressable-theory-can-coordinate-heterogeneous-factory-development.md).
 
@@ -266,11 +266,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22799](../../reports/state/review-jobs/review-job-8791/pair-12-addressable-theory-can-coordinate-heterogeneous-factory-development.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept theory-builder. An addressable project theory guides cross-artifact search, diagnosis, and change, and later evidence criticizes and revises that same theory. See the [theory and discovery additions pass](./theory-discovery-additions-01.md) for boundary calls, parent checks, versions, and verification.
 
 ## ADD-020
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [An adversarial human-agent loop can reconstruct the writing-is-thinking filter](../../notes/adversarial-loop-can-reconstruct-the-writing-is-thinking-filter.md).
 
@@ -280,11 +280,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22800](../../reports/state/review-jobs/review-job-8791/pair-13-adversarial-loop-can-reconstruct-the-writing-is-thinking-filter.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): The note separates rendering a draft from judging it, explains the role and competence limits of adversarial checks, and states what would refute the claim that the loop reconstructs the writing filter. See the [first evaluation-additions pass](./evaluation-additions-01.md) for versions, parent checks, and verification.
 
 ## ADD-021
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Agent memory is a crosscutting concern, not a separable niche](../../notes/agent-memory-is-a-crosscutting-concern-not-a-separable-niche.md).
 
@@ -294,11 +294,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22802](../../reports/state/review-jobs/review-job-8791/pair-15-agent-memory-is-a-crosscutting-concern-not-a-separable-niche.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept context-engineering: retrieval and activation are developed as the memory subsystem problem of getting stored knowledge into the right bounded call; the runtime decomposition assigns that work to the context engine. See the [first context-additions pass](./context-additions-01.md) for versions, parent checks, and verification.
 
 ## ADD-022
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Agent memory needs discoverable, loadable, composable, trusted knowledge under bounded context](../../notes/agent-memory-needs-discoverable-composable-trusted-knowledge-under.md).
 
@@ -308,11 +308,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22803](../../reports/state/review-jobs/review-job-8791/pair-16-agent-memory-needs-discoverable-composable-trusted-knowledge-under.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept failure-modes. The developed failure cases distinguish undiscovered, stranded, isolated, and uncalibrated memory, plus the gap between available and activated knowledge. See the [review and evidence additions pass](./evidence-additions-01.md) for versions, parent checks, and verification.
 
 ## ADD-023
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Activate Behavior-Changing Memory Before The Mistake](../../notes/agent-memory-requirements/activate-behavior-changing-memory.md).
 
@@ -322,11 +322,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22805](../../reports/state/review-jobs/review-job-8791/pair-18-activate-behavior-changing-memory.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): The behavioral-faithfulness section requires WITH/WITHOUT comparisons, perturbations, or trace audits to establish that activated memory changes action. Delivery alone is explicitly insufficient. See the [first evaluation-additions pass](./evaluation-additions-01.md) for versions, parent checks, and verification.
 
 ## ADD-024
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [The adaptation survey corroborates memory requirements but misses artifact governance](../../notes/agent-memory-requirements/adaptation-survey-corroborates-memory-requirements.md).
 
@@ -336,11 +336,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22806](../../reports/state/review-jobs/review-job-8791/pair-19-adaptation-survey-corroborates-memory-requirements.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept artifact-analysis. The four-field scheme exposes authority, inspectability, rollback, and lifecycle requirements missing from an optimization taxonomy. See the [mechanism additions pass](./mechanism-additions-01.md) for parent checks, versions, and verification.
 
 ## ADD-025
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Evaluate Memory By Effects, Not By Existence](../../notes/agent-memory-requirements/evaluate-memory-by-effects.md).
 
@@ -350,11 +350,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22808](../../reports/state/review-jobs/review-job-8792/pair-1-evaluate-memory-by-effects.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): The note separates retrieval, activation, behavioral uptake, and final outcome, then maps those distinctions to tests and causal limits. Its evaluation subject is the intended effect of memory, not merely its existence. See the [first evaluation-additions pass](./evaluation-additions-01.md) for versions, parent checks, and verification.
 
 ## ADD-026
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Keep Lineage And Compiled Views From Drifting](../../notes/agent-memory-requirements/keep-compiled-views-aligned.md).
 
@@ -364,11 +364,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22810](../../reports/state/review-jobs/review-job-8792/pair-3-keep-compiled-views-aligned.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept artifact-analysis. Lineage and source authority determine regeneration and drift checks for compiled memory views. See the [mechanism additions pass](./mechanism-additions-01.md) for parent checks, versions, and verification.
 
 ## ADD-027
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Make Authority Explicit](../../notes/agent-memory-requirements/make-authority-explicit.md).
 
@@ -378,11 +378,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22811](../../reports/state/review-jobs/review-job-8792/pair-4-make-authority-explicit.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept warranted-autonomy. The authority rules allocate memory operations between automation and human or reviewed-agent approval according to risk, source interpretation, and available verification. See the [theory and discovery additions pass](./theory-discovery-additions-01.md) for boundary calls, parent checks, versions, and verification.
 
 ## ADD-028
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Promote Only When Future Value Exceeds Maintenance Cost](../../notes/agent-memory-requirements/promote-only-when-value-exceeds-cost.md).
 
@@ -392,11 +392,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22813](../../reports/state/review-jobs/review-job-8792/pair-6-promote-only-when-value-exceeds-cost.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept continual-learning: observations can become maintained notes, procedures, tests, or scripts that affect later work. Also add improvement-loop: the note separates cheap candidates from durable promotion and makes future value versus review and maintenance cost an admission condition. Required self-improving-systems and learning-theory parents are present. See the [learning-tag boundary and application](./learning-tag-boundary-decision.md) for versions and verification.
 
 ## ADD-029
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Retire, Redact, Supersede, And Relax Memory](../../notes/agent-memory-requirements/retire-redact-supersede-relax.md).
 
@@ -406,11 +406,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22814](../../reports/state/review-jobs/review-job-8792/pair-7-retire-redact-supersede-relax.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept constraining. The Methods section specifically proposes relaxing brittle codified enforcement back to natural-language guidance; retirement alone would not qualify. See the [mechanism additions pass](./mechanism-additions-01.md) for parent checks, versions, and verification.
 
 ## ADD-030
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Use Trace Extraction As Meta-Learning](../../notes/agent-memory-requirements/use-trace-extraction-as-meta-learning.md).
 
@@ -420,11 +420,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22816](../../reports/state/review-jobs/review-job-8792/pair-9-use-trace-extraction-as-meta-learning.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept continual-learning: new evidence revises readable memory instead of only appending records, with a separate comparison to policy training. Also add improvement-loop: strong and weak signals require different review and promotion paths, and weak candidates must not gain durable authority by default. Required self-improving-systems and learning-theory parents are present. See the [learning-tag boundary and application](./learning-tag-boundary-decision.md) for versions and verification.
 
 ## ADD-031
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Agent orchestration needs coordination guarantees, not just coordination channels](../../notes/agent-orchestration-needs-coordination-guarantees-not-just.md).
 
@@ -434,11 +434,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22817](../../reports/state/review-jobs/review-job-8792/pair-10-agent-orchestration-needs-coordination-guarantees-not-just.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept llm-reliability. Cross-agent contamination, inconsistency, and error amplification motivate isolation, ownership, and adjudication mechanisms. See the [mechanism additions pass](./mechanism-additions-01.md) for parent checks, versions, and verification.
 
 ## ADD-032
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Agent-runtime analysis should separate scheduling, context assembly, and external state](../../notes/agent-runtime-analysis-should-separate-scheduling-context-state.md).
 
@@ -448,11 +448,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22819](../../reports/state/review-jobs/review-job-8792/pair-12-agent-runtime-analysis-should-separate-scheduling-context-state.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-26): Accept context-engineering. Context assembly, retrieval, framing, and what each bounded call receives are one of the three analyzed responsibilities. See the [architecture disposition](./architecture-placement-decision.md) for input versions and verification.
 
 ## ADD-033
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [AGENTS.md should be organized as a control plane](../../notes/agents-md-should-be-organized-as-a-control-plane.md).
 
@@ -462,11 +462,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22822](../../reports/state/review-jobs/review-job-8792/pair-15-agents-md-should-be-organized-as-a-control-plane.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept context-engineering: loading frequency and omission cost govern what stays always loaded, what routes to task-specific material, and what should be externally triggered, with token pressure and attention dilution as distinct costs. See the [first context-additions pass](./context-additions-01.md) for versions, parent checks, and verification.
 
 ## ADD-034
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Agents navigate by deciding what to read next](../../notes/agents-navigate-by-deciding-what-to-read-next.md).
 
@@ -476,11 +476,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22823](../../reports/state/review-jobs/review-job-8792/pair-16-agents-navigate-by-deciding-what-to-read-next.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept context-engineering: follow/skip decisions allocate a bounded reading budget; pointer cues must reduce uncertainty enough to justify their context cost before the target is loaded. See the [first context-additions pass](./context-additions-01.md) for versions, parent checks, and verification.
 
 ## ADD-035
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Alexander's patterns connect to knowledge system design at multiple levels](../../notes/alexander-patterns-and-knowledge-system-design.md).
 
@@ -491,11 +491,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22824](../../reports/state/review-jobs/review-job-8792/pair-17-alexander-patterns-and-knowledge-system-design.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept type-system, constraining. Patterns are treated as document types with required sections, and the codification trajectory explains when repeated practice should become formal rules. See the [mechanism additions pass](./mechanism-additions-01.md) for parent checks, versions, and verification.
 
 ## ADD-036
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Always-loaded context mechanisms in agent harnesses](../../notes/always-loaded-context-mechanisms-in-agent-harnesses.md).
 
@@ -506,11 +506,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22825](../../reports/state/review-jobs/review-job-8792/pair-18-always-loaded-context-mechanisms-in-agent-harnesses.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-26): Accept context-engineering and agent-memory. The note compares ambient and on-demand loading under a shared context budget, then compares three authorities for writing persistent memory across sessions. Add learning-theory under the existing parent-inclusion rule for agent-memory. See the [architecture disposition](./architecture-placement-decision.md) for input versions and verification.
 
 ## ADD-037
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [An accepted edit verifies the change, not the rule](../../notes/an-accepted-edit-verifies-the-change-not-the-rule.md).
 
@@ -520,11 +520,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22826](../../reports/state/review-jobs/review-job-8792/pair-19-an-accepted-edit-verifies-the-change-not-the-rule.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Human acceptance warrants the local edit, while a mined rule needs separate evidence of generalization. The note develops coupled-edit attribution, overfitting, independent confirmation, and rollback. See the [first evaluation-additions pass](./evaluation-additions-01.md) for versions, parent checks, and verification.
 
 ## ADD-038
 
-Status: open.
+Status: resolved — duplicate removal.
 
 Note: [An optimal long-run learning strategy invests in its own machinery](../../notes/an-optimal-long-run-learning-strategy-invests-in-its-own-machinery.md).
 
@@ -534,11 +534,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22833](../../reports/state/review-jobs/review-job-8793/pair-6-an-optimal-long-run-learning-strategy-invests-in-its-own-machinery.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-26): Close as a duplicate removal, not a tag addition: this repeats TP-011, now resolved by removing continual-learning. The note is not rewritten to qualify for the tag. See the [remaining-placement disposition](./remaining-placement-decision.md) for versions and verification.
 
 ## ADD-039
 
-Status: open.
+Status: resolved — duplicate removal.
 
 Note: [An artifact must preserve the scope of each named system choice](../../notes/artifacts-must-preserve-named-choice-scope.md).
 
@@ -548,11 +548,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22836](../../reports/state/review-jobs/review-job-8793/pair-9-artifacts-must-preserve-named-choice-scope.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): This repeats TP-012, which already removed artifact-analysis and retained document-system. The live tags match that disposition; no additional note edit is needed. See the [review and evidence additions pass](./evidence-additions-01.md) for versions, parent checks, and verification.
 
 ## ADD-040
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Automated synthesis is missing good oracles](../../notes/automated-synthesis-is-missing-good-oracles.md).
 
@@ -562,11 +562,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22838](../../reports/state/review-jobs/review-job-8793/pair-11-automated-synthesis-is-missing-good-oracles.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): The note compares extraction and synthesis oracles and separates fidelity, novelty, and validity. It identifies what current candidate-generation evidence leaves unevaluated and proposes testable alternatives. See the [first evaluation-additions pass](./evaluation-additions-01.md) for versions, parent checks, and verification.
 
 ## ADD-041
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Automated tests for text](../../notes/automated-tests-for-text.md).
 
@@ -577,11 +577,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22839](../../reports/state/review-jobs/review-job-8793/pair-12-automated-tests-for-text.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept evaluation for the deterministic, rubric, and corpus-testing pyramid and the distinction between testing a generator and its output. Also accept type-system: document type and trait contracts explicitly determine the required checks; document-system is already present as its parent. See the [first evaluation-additions pass](./evaluation-additions-01.md) for versions, parent checks, and verification.
 
 ## ADD-042
 
-Status: open.
+Status: resolved — duplicate removal.
 
 Note: [Backtracking keeps lightweight search control provisional](../../notes/backtracking-keeps-lightweight-search-control-provisional.md).
 
@@ -591,11 +591,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22842](../../reports/state/review-jobs/review-job-8793/pair-15-backtracking-keeps-lightweight-search-control-provisional.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-26): This entry contains a removal recommendation, not a proposed addition. Close it as a duplicate of TP-013; no additional tag change is needed. See the [computational-model disposition](./computational-model-placement-decision.md) for verification.
 
 ## ADD-043
 
-Status: open.
+Status: resolved — duplicate removal.
 
 Note: [The bitter lesson selects against unearned reach, not against structure](../../notes/bitter-lesson-selects-against-unearned-reach-not-against-structure.md).
 
@@ -605,11 +605,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22843](../../reports/state/review-jobs/review-job-8793/pair-16-bitter-lesson-selects-against-unearned-reach-not-against-structure.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-26): Close as a duplicate removal, not a tag addition: this repeats TP-014, now resolved by removing constraining. The note is not rewritten to qualify for the tag. See the [remaining-placement disposition](./remaining-placement-decision.md) for versions and verification.
 
 ## ADD-044
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Candidacy evidence licenses escalation to assessment, not acceptance](../../notes/candidacy-evidence-licenses-escalation-not-acceptance.md).
 
@@ -619,11 +619,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22851](../../reports/state/review-jobs/review-job-8794/pair-4-candidacy-evidence-licenses-escalation-not-acceptance.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): The worked idealization and source-grounding cases distinguish evidence that justifies assessment cost from evidence that warrants a verdict. The note directly analyzes what each check may establish. See the [first evaluation-additions pass](./evaluation-additions-01.md) for versions, parent checks, and verification.
 
 ## ADD-045
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Changing requirements conflate genuine change with disambiguation failure](../../notes/changing-requirements-conflate-genuine-change-with-disambiguation.md).
 
@@ -633,11 +633,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22853](../../reports/state/review-jobs/review-job-8794/pair-6-changing-requirements-conflate-genuine-change-with-disambiguation.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept constraining. The note distinguishes genuine requirement changes from disambiguation and explains narrowing a specification to prevent repeated wrong interpretations. See the [mechanism additions pass](./mechanism-additions-01.md) for parent checks, versions, and verification.
 
 ## ADD-046
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Cheap generation breaks text volume as an effort signal](../../notes/cheap-generation-breaks-text-volume-as-an-effort-signal.md).
 
@@ -647,11 +647,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22855](../../reports/state/review-jobs/review-job-8794/pair-8-cheap-generation-breaks-text-volume-as-an-effort-signal.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-26): Accept evaluation: the note distinguishes what text volume can establish from what requires tests, evidence, or review. See the [context-engineering disposition](./context-engineering-placement-decision.md) for versions and verification.
 
 ## ADD-047
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [A checked outcome licenses retaining an episode, not abstracting its explanation](../../notes/checked-outcome-licenses-episode-retention-not-abstraction.md).
 
@@ -661,11 +661,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22856](../../reports/state/review-jobs/review-job-8794/pair-9-checked-outcome-licenses-episode-retention-not-abstraction.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept evaluation. The note separates outcome checks from valid and faithful process evidence, explains what one checked episode warrants, and requires separate evidence before abstracting its explanation. See the [second evaluation-additions pass](./evaluation-additions-02.md) for versions, parent checks, and verification.
 
 ## ADD-048
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Citing retained theory at the decision point is a mediation trace](../../notes/citing-retained-theory-at-the-decision-point-is-a-mediation-trace.md).
 
@@ -675,11 +675,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22858](../../reports/state/review-jobs/review-job-8794/pair-11-citing-retained-theory-at-the-decision-point-is-a-mediation-trace.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept observability. Contemporaneous decision citations expose which theory was reportedly consumed, while post-hoc and decorative citations limit what can be reconstructed. See the [review and evidence additions pass](./evidence-additions-01.md) for versions, parent checks, and verification.
 
 ## ADD-049
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Claim notes should use Toulmin-derived sections for structured argument](../../notes/claim-notes-should-use-toulmin-derived-sections-for-structured.md).
 
@@ -689,11 +689,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22860](../../reports/state/review-jobs/review-job-8794/pair-13-claim-notes-should-use-toulmin-derived-sections-for-structured.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept document-system: required Evidence, Reasoning, and Caveats sections turn argument structure into a document contract, with separate structural and semantic checks and an explicit readability cost. See the [context and document additions pass](./context-document-additions-02.md) for versions, parent checks, and verification.
 
 ## ADD-050
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Code complements the weight–prompt pair with independently executed symbolic operations](../../notes/code-complements-weight-prompt-with-symbolic-operations.md).
 
@@ -703,11 +703,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22861](../../reports/state/review-jobs/review-job-8794/pair-14-code-complements-weight-prompt-with-symbolic-operations.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept artifact-analysis. The same code can be prompt evidence or a symbolic operation; its consumption path changes how form governs behavior. See the [mechanism additions pass](./mechanism-additions-01.md) for parent checks, versions, and verification.
 
 ## ADD-051
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Codification and relaxing navigate the bitter lesson boundary](../../notes/codification-and-relaxing-navigate-the-bitter-lesson-boundary.md).
 
@@ -717,11 +717,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22862](../../reports/state/review-jobs/review-job-8794/pair-15-codification-and-relaxing-navigate-the-bitter-lesson-boundary.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept continual-learning: observations and later failures guide codification and relaxation of retained tests, specifications, and conventions. The representational-form comparison concerns how this retained learning changes over time. Required self-improving-systems and learning-theory parents are present. See the [learning-tag boundary and application](./learning-tag-boundary-decision.md) for versions and verification.
 
 ## ADD-052
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Codify-versus-LLM decision heuristics](../../notes/codify-versus-llm-decision-heuristics.md).
 
@@ -731,11 +731,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22863](../../reports/state/review-jobs/review-job-8794/pair-16-codify-versus-llm-decision-heuristics.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept computational-model. The four decision lenses compare symbolic and model-mediated execution, exact transitions, and mixed procedures. See the [mechanism additions pass](./mechanism-additions-01.md) for parent checks, versions, and verification.
 
 ## ADD-053
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Preferential codification concentrates less predictable work at the agent boundary](../../notes/codifying-predictable-choices-leaves-agents-with-less-predictable-work.md).
 
@@ -745,11 +745,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22864](../../reports/state/review-jobs/review-job-8794/pair-17-codifying-predictable-choices-leaves-agents-with-less-predictable-work.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-26): Accept constraining: the note explicitly explains migration from model interpretation into symbolic commitment and its effect on the residual work. Add learning-theory; self-improving-systems remains supported by verified later codification. See the [remaining-placement disposition](./remaining-placement-decision.md) for versions and verification.
 
 ## ADD-054
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Commitment, not derivation, creates new ground truth](../../notes/commitment-not-derivation-creates-new-ground-truth.md).
 
@@ -759,11 +759,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22865](../../reports/state/review-jobs/review-job-8794/pair-18-commitment-not-derivation-creates-new-ground-truth.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept artifact-analysis. Derivation and commitment determine which artifact is authoritative and whether repair means regeneration or supersession. See the [mechanism additions pass](./mechanism-additions-01.md) for parent checks, versions, and verification.
 
 ## ADD-055
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Commonplace builds a theory builder and tests whether it learns](../../notes/commonplace-builds-a-theory-builder-and-tests-whether-it-learns.md).
 
@@ -773,11 +773,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22866](../../reports/state/review-jobs/review-job-8794/pair-19-commonplace-builds-a-theory-builder-and-tests-whether-it-learns.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept reflection. The development path explicitly makes the builder's own method a subject of criticism and operative revision through retained instructions and procedures. See the [theory and discovery additions pass](./theory-discovery-additions-01.md) for boundary calls, parent checks, versions, and verification.
 
 ## ADD-056
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Competing causal theories can guide distinguishing experiments](../../notes/competing-causal-theories-can-guide-distinguishing-experiments.md).
 
@@ -787,11 +787,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22867](../../reports/state/review-jobs/review-job-8794/pair-20-competing-causal-theories-can-guide-distinguishing-experiments.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept evaluation. The constructed causal models agree observationally but disagree under intervention. The note specifies a discriminating experiment and explains why finite results provide statistical discrimination rather than final verification. See the [second evaluation-additions pass](./evaluation-additions-02.md) for versions, parent checks, and verification.
 
 ## ADD-057
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Compounding is tested in later improvement, not by the accepting metric](../../notes/compounding-is-tested-in-later-improvement-not-by-the-accepting-metric.md).
 
@@ -801,11 +801,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22869](../../reports/state/review-jobs/review-job-8795/pair-2-compounding-is-tested-in-later-improvement-not-by-the-accepting-metric.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept evaluation. The note requires later improvement episodes, displaced productivity measures, causal traces, and baselines before claiming compounding. Its worked studies explicitly distinguish acceptance, uptake, attribution, and sustained effects. See the [second evaluation-additions pass](./evaluation-additions-02.md) for versions, parent checks, and verification.
 
 ## ADD-058
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Continual learning requires governing behaviour-changing writes, not just storing content](../../notes/continual-learning-requires-governing-behaviour-changing-writes.md).
 
@@ -815,11 +815,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22876](../../reports/state/review-jobs/review-job-8795/pair-9-continual-learning-requires-governing-behaviour-changing-writes.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept improvement-loop: the final paragraph explicitly distinguishes evidence-responsive candidate search, reject-capable evaluation, and operative retention from arbitrary durable maintenance. Keep continual-learning for governing retained non-weight changes. Required self-improving-systems and learning-theory parents are present. See the [learning-tag boundary and application](./learning-tag-boundary-decision.md) for versions and verification.
 
 ## ADD-059
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Conversation vs prompt refinement in agent-to-agent coordination](../../notes/conversation-vs-prompt-refinement-in-agent-to-agent-coordination.md).
 
@@ -829,11 +829,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22877](../../reports/state/review-jobs/review-job-8795/pair-10-conversation-vs-prompt-refinement-in-agent-to-agent-coordination.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept context-engineering: conversational continuation, prompt refinement, and shared-prefix forking are compared by what intermediate work and misleading history cross the next call boundary. See the [first context-additions pass](./context-additions-01.md) for versions, parent checks, and verification.
 
 ## ADD-060
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Cost-sensitive formalisms for tentative theory search](../../notes/cost-sensitive-formalisms-for-tentative-theory-search.md).
 
@@ -843,11 +843,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22878](../../reports/state/review-jobs/review-job-8795/pair-11-cost-sensitive-formalisms-for-tentative-theory-search.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept improvement-loop: the proposed composite assigns separate costs to candidate search, evaluation, recovery, and operative retention. It is a model of selection machinery, not merely a mention of repeated computation. Required self-improving-systems and learning-theory parents are present. See the [learning-tag boundary and application](./learning-tag-boundary-decision.md) for versions and verification.
 
 ## ADD-061
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Decomposition heuristics for bounded-context scheduling](../../notes/decomposition-heuristics-for-bounded-context-scheduling.md).
 
@@ -857,11 +857,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22882](../../reports/state/review-jobs/review-job-8795/pair-15-decomposition-heuristics-for-bounded-context-scheduling.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept context-engineering: the scheduling heuristics decide what each call receives, which intermediates stay outside it, when items must be co-loaded, and which information compression must preserve. See the [first context-additions pass](./context-additions-01.md) for versions, parent checks, and verification.
 
 ## ADD-062
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Reach-assessment](../../notes/definitions/reach-assessment.md).
 
@@ -871,11 +871,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22898](../../reports/state/review-jobs/review-job-8796/pair-11-reach-assessment.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-26): Accept evaluation. The definition states what an assessment must test to distinguish genuine explanatory reach from fitted correlation. See the [computational-model disposition](./computational-model-placement-decision.md) for verification.
 
 ## ADD-063
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Diagnostic richness constrains outer-loop learning quality](../../notes/diagnostic-richness-constrains-outer-loop-learning-quality.md).
 
@@ -885,11 +885,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22914](../../reports/state/review-jobs/review-job-8797/pair-7-diagnostic-richness-constrains-outer-loop-learning-quality.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept observability. The note identifies which traces, tool calls, memory reads, and drill-down paths expose mechanisms that candidate scores alone cannot reveal. See the [review and evidence additions pass](./evidence-additions-01.md) for versions, parent checks, and verification.
 
 ## ADD-064
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Directory-scoped types are cheaper than global types](../../notes/directory-scoped-types-are-cheaper-than-global-types.md).
 
@@ -899,11 +899,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22916](../../reports/state/review-jobs/review-job-8797/pair-9-directory-scoped-types-are-cheaper-than-global-types.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept document-system: the note compares global and collection-local document contracts by authoring eligibility, portability, discovery, and validation. See the [context and document additions pass](./context-document-additions-02.md) for versions, parent checks, and verification.
 
 ## ADD-065
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Disconnected witnesses do not establish a full causal path through theory](../../notes/disconnected-witnesses-do-not-establish-a-causal-path-through-theory.md).
 
@@ -913,11 +913,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22917](../../reports/state/review-jobs/review-job-8797/pair-10-disconnected-witnesses-do-not-establish-a-causal-path-through-theory.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-26): Accept theory-builder: the note specifies evidence connecting stated theory, criticism, and recurrent use. Add learning-theory and retain self-improving-systems through that child fit. See the [remaining-placement disposition](./remaining-placement-decision.md) for versions and verification.
 
 ## ADD-066
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Document types should be verifiable](../../notes/document-types-should-be-verifiable.md).
 
@@ -927,11 +927,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22918](../../reports/state/review-jobs/review-job-8797/pair-11-document-types-should-be-verifiable.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept document-system: the note specifies which structural promises document types and traits should make, how they are checked, and how semantic misclassification differs from structural failure. See the [context and document additions pass](./context-document-additions-02.md) for versions, parent checks, and verification.
 
 ## ADD-067
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Attempted recovery identifies informational gaps, not provenance or authority](../../notes/documentation-generates-the-system-rather-than-describing-it.md).
 
@@ -941,11 +941,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22919](../../reports/state/review-jobs/review-job-8797/pair-12-documentation-generates-the-system-rather-than-describing-it.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept document-system: recovery assays identify which units of documentation can be reconstructed and which rationale or choices need retention, while separating those judgments from provenance and authority. See the [context and document additions pass](./context-document-additions-02.md) for versions, parent checks, and verification.
 
 ## ADD-068
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Domain pricing routes an exception to idealization assessment but does not decide it](../../notes/domain-pricing-routes-an-exception-to-idealization-assessment.md).
 
@@ -955,11 +955,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22920](../../reports/state/review-jobs/review-job-8797/pair-13-domain-pricing-routes-an-exception-to-idealization-assessment.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept claims-and-grounding. The note specifies the scope, omitted mechanism, consequence bound, and explanatory dominance an idealized claim must commit to and support. See the [review and evidence additions pass](./evidence-additions-01.md) for versions, parent checks, and verification.
 
 ## ADD-069
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Elicitation requires maintained question-generation systems](../../notes/elicitation-requires-maintained-question-generation-systems.md).
 
@@ -969,11 +969,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22921](../../reports/state/review-jobs/review-job-8797/pair-14-elicitation-requires-maintained-question-generation-systems.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept context-engineering: the note assembles review calls from perspective assignments, explicit domain checklists, and targeted probes, then maintains those inputs as failure families change. The fit is to constructing and refreshing the supplied context, not a claim that all parametric knowledge activation is retrieval. See the [first context-additions pass](./context-additions-01.md) for versions, parent checks, and verification.
 
 ## ADD-070
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Enforcement without structured recovery is incomplete](../../notes/enforcement-without-structured-recovery-is-incomplete.md).
 
@@ -983,11 +983,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22922](../../reports/state/review-jobs/review-job-8797/pair-15-enforcement-without-structured-recovery-is-incomplete.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept llm-reliability. Corrective, fallback, and escalation paths complete machinery that detects and repairs agent output violations. See the [mechanism additions pass](./mechanism-additions-01.md) for parent checks, versions, and verification.
 
 ## ADD-071
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Error correction works with above-chance oracles and decorrelated checks](../../notes/error-correction-works-above-chance-oracles-with-decorrelated-checks.md).
 
@@ -997,11 +997,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22926](../../reports/state/review-jobs/review-job-8797/pair-19-error-correction-works-above-chance-oracles-with-decorrelated-checks.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept learning-theory. The note develops verification and error correction through discriminative oracles and decorrelated checks, fitting both the broad head and its llm-reliability child. See the [review and evidence additions pass](./evidence-additions-01.md) for versions, parent checks, and verification.
 
 ## ADD-072
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Error messages that teach are a constraining technique](../../notes/error-messages-that-teach-are-a-constraining-technique.md).
 
@@ -1011,11 +1011,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22927](../../reports/state/review-jobs/review-job-8797/pair-20-error-messages-that-teach-are-a-constraining-technique.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept llm-reliability. Remediation messages teach an agent how to repair a rejected output, separating corrective guidance from blocking strength. See the [mechanism additions pass](./mechanism-additions-01.md) for parent checks, versions, and verification.
 
 ## ADD-073
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [A five-link cap missed four grounding findings in twelve reviews](../../notes/evidence/a-five-link-cap-missed-four-grounding-findings-in-twelve-reviews.md).
 
@@ -1025,11 +1025,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22929](../../reports/state/review-jobs/review-job-8798/pair-2-a-five-link-cap-missed-four-grounding-findings-in-twelve-reviews.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-26): Accept review-system: the study varies a semantic criterion's reading budget and measures resulting findings and verdicts. Existing kb-maintenance supplies its parent. See the [remaining-placement disposition](./remaining-placement-decision.md) for versions and verification.
 
 ## ADD-074
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Commonplace as a reflective self-improving system](../../notes/evidence/commonplace-as-a-reflective-system.md).
 
@@ -1039,11 +1039,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22930](../../reports/state/review-jobs/review-job-8798/pair-3-commonplace-as-a-reflective-system.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-26): Accept improvement-loop. The observed change traces candidate framing, evaluation, operative retention, and later dependence on the result. See the [computational-model disposition](./computational-model-placement-decision.md) for verification.
 
 ## ADD-075
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [A quotes-route rollout grounded more claim uses without earning claim identifiers](../../notes/evidence/quotes-route-rollout-grounded-more-uses-without-earning-claim-ids.md).
 
@@ -1053,11 +1053,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22936](../../reports/state/review-jobs/review-job-8798/pair-9-quotes-route-rollout-grounded-more-uses-without-earning-claim-ids.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept evaluation. The rollout fixes the claim-use unit, compares non-random cohorts, and limits its conclusion to a descriptive gap rather than a causal effect of representation. Those are substantive assessment and inference boundaries. See the [second evaluation-additions pass](./evaluation-additions-02.md) for versions, parent checks, and verification.
 
 ## ADD-076
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Seven documentation cases left routing and synthesis](../../notes/evidence/seven-documentation-cases-left-routing-and-synthesis.md).
 
@@ -1068,11 +1068,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22938](../../reports/state/review-jobs/review-job-8798/pair-11-seven-documentation-cases-left-routing-and-synthesis.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept document-system and context-engineering: the casebook tests which documentation units remain worth retaining and routes exact questions to live source while preserving unknown-name discovery maps and cross-component synthesis. See the [first context-additions pass](./context-additions-01.md) for versions, parent checks, and verification.
 
 ## ADD-077
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Six reported self-improvement paths expose bounded redesign surfaces within supplied methods](../../notes/evidence/six-reported-self-improvement-paths-expose-bounded-redesign-surfaces.md).
 
@@ -1082,11 +1082,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22941](../../reports/state/review-jobs/review-job-8798/pair-14-six-reported-self-improvement-paths-expose-bounded-redesign-surfaces.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept improvement-loop: the six-path comparison distinguishes five proposal-selection paths from a direct-update path and examines admission, installation, and later dependence. Classification does not certify improvement. Required self-improving-systems and learning-theory parents are present. See the [learning-tag boundary and application](./learning-tag-boundary-decision.md) for versions and verification.
 
 ## ADD-078
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Exact implementation does not validate a requirement against its objective](../../notes/exact-implementation-does-not-validate-a-requirement.md).
 
@@ -1096,11 +1096,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22947](../../reports/state/review-jobs/review-job-8798/pair-20-exact-implementation-does-not-validate-a-requirement.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept evaluation. The note separates local conformance to a requirement from evidence that the requirement serves an objective. It specifies the outcome, ablation, and composition checks needed for the latter relation and competing failure explanations. See the [second evaluation-additions pass](./evaluation-additions-02.md) for versions, parent checks, and verification.
 
 ## ADD-079
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Factory construction is not evidence of production-knowledge acquisition](../../notes/factory-construction-does-not-establish-knowledge-acquisition.md).
 
@@ -1110,11 +1110,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22949](../../reports/state/review-jobs/review-job-8799/pair-2-factory-construction-does-not-establish-knowledge-acquisition.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept learning-theory. The construction/acquisition distinction states what evidence would establish learning of reusable production knowledge rather than realization of supplied machinery. See the [review and evidence additions pass](./evidence-additions-01.md) for versions, parent checks, and verification.
 
 ## ADD-080
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Factory-learning mechanisms should be compared on the same causal job](../../notes/factory-learning-mechanisms-should-be-compared-on-the-same-causal-job.md).
 
@@ -1124,11 +1124,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22951](../../reports/state/review-jobs/review-job-8799/pair-4-factory-learning-mechanisms-should-be-compared-on-the-same-causal-job.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept improvement-loop: the note explains candidate search, evaluation, and operative retention, then contrasts that architecture with direct updates and reuse. It does not require every learning mechanism to expose a candidate gate. Required self-improving-systems and learning-theory parents are present. See the [learning-tag boundary and application](./learning-tag-boundary-decision.md) for versions and verification.
 
 ## ADD-081
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [False-positive generation is filtered; false-positive acceptance becomes operative](../../notes/false-positive-generation-is-filtered-before-retention.md).
 
@@ -1138,11 +1138,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22953](../../reports/state/review-jobs/review-job-8799/pair-6-false-positive-generation-is-filtered-before-retention.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept evaluation. The note explains what an acceptance oracle filters, why its false positives become operative, and why later correction requires further evaluation. Its oracle-limit analysis is substantive alongside its improvement-loop mechanism. See the [second evaluation-additions pass](./evaluation-additions-02.md) for versions, parent checks, and verification.
 
 ## ADD-082
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Under sub-agent decomposition, feasibility is the heaviest fork's net load](../../notes/feasibility-is-the-heaviest-forks-net-load.md).
 
@@ -1152,11 +1152,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22954](../../reports/state/review-jobs/review-job-8799/pair-7-feasibility-is-the-heaviest-forks-net-load.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept context-engineering: feasibility depends on the largest residual context load after work is moved to siblings or a parent; the note separates token volume, processing complexity, and interference. See the [first context-additions pass](./context-additions-01.md) for versions, parent checks, and verification.
 
 ## ADD-083
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Canonical files may defer a shared schema while database authority remains a separate commitment](../../notes/files-defer-centralized-schema-commitment-until-invariants-stabilize.md).
 
@@ -1166,11 +1166,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22955](../../reports/state/review-jobs/review-job-8799/pair-8-files-defer-centralized-schema-commitment-until-invariants-stabilize.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept artifact-analysis. The note separates substrate, form, lineage, and authority to explain when database state becomes canonical and how derived views remain accountable. See the [mechanism additions pass](./mechanism-additions-01.md) for parent checks, versions, and verification.
 
 ## ADD-084
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [First-principles analysis maps a design space before selecting within it](../../notes/first-principles-analysis-maps-design-space-before-selection.md).
 
@@ -1180,11 +1180,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22957](../../reports/state/review-jobs/review-job-8799/pair-10-first-principles-analysis-maps-design-space-before-selection.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept discovery. Candidate design axes and rival decompositions are formed, challenged by counterexamples, and tested through their predicted consequences before closure. See the [theory and discovery additions pass](./theory-discovery-additions-01.md) for boundary calls, parent checks, versions, and verification.
 
 ## ADD-085
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [First-principles reasoning selects for explanatory-reach over adaptive fit](../../notes/first-principles-reasoning-selects-for-explanatory-reach-over.md).
 
@@ -1194,11 +1194,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22958](../../reports/state/review-jobs/review-job-8799/pair-11-first-principles-reasoning-selects-for-explanatory-reach-over.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept document-system: the KB application gives explicit tests for the quality of written theoretical notes beyond structural validity, including premise variation, transfer boundaries, criticism, and observed fit. See the [context and document additions pass](./context-document-additions-02.md) for versions, parent checks, and verification.
 
 ## ADD-086
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Flat memory predicts specific cross-contamination failures that are empirically testable](../../notes/flat-memory-predicts-specific-cross-contamination-failures-that-are.md).
 
@@ -1208,11 +1208,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22959](../../reports/state/review-jobs/review-job-8799/pair-12-flat-memory-predicts-specific-cross-contamination-failures-that-are.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept context-engineering: search pollution, scattered operational knowledge, and trapped session insights are analyzed through whether useful material reaches later sessions and which retained spaces make it findable. See the [first context-additions pass](./context-additions-01.md) for versions, parent checks, and verification.
 
 ## ADD-087
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Causal and proof obligations are two formal routes to assessing explanatory-reach](../../notes/formal-systems-assess-explanatory-reach-through-causal-and-proof.md).
 
@@ -1222,11 +1222,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22960](../../reports/state/review-jobs/review-job-8799/pair-13-formal-systems-assess-explanatory-reach-through-causal-and-proof.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-26): Accept evaluation, discovery. Formal consequences test the reach of a proposed commitment; the note explains what those tests warrant and where formalization leaves judgment. See the [computational-model disposition](./computational-model-placement-decision.md) for verification.
 
 ## ADD-088
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Frontloading spares execution context](../../notes/frontloading-spares-execution-context.md).
 
@@ -1236,11 +1236,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22961](../../reports/state/review-jobs/review-job-8799/pair-14-frontloading-spares-execution-context.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept context-engineering: precomputed results replace discovery, source loading, and derivation inside a later call; the note specifies token, interference, validity-window, and prompt-assembly tradeoffs. See the [first context-additions pass](./context-additions-01.md) for versions, parent checks, and verification.
 
 ## ADD-089
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Generality bought to avoid counterexamples is paid for in precision](../../notes/generality-bought-to-avoid-counterexamples-is-paid-for-in.md).
 
@@ -1250,11 +1250,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22963](../../reports/state/review-jobs/review-job-8799/pair-16-generality-bought-to-avoid-counterexamples-is-paid-for-in.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept claims-and-grounding. The note tests what revised claim wording forbids and requires counterexamples to become explicit scope or exceptions rather than disappear into abstraction. See the [review and evidence additions pass](./evidence-additions-01.md) for versions, parent checks, and verification.
 
 ## ADD-090
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Generate KB skills at build time, don't parameterise them](../../notes/generate-instructions-at-build-time.md).
 
@@ -1264,11 +1264,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22964](../../reports/state/review-jobs/review-job-8799/pair-17-generate-instructions-at-build-time.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept computational-model. Build-time substitution removes repeated model-side binding work from instruction execution and makes the resulting runtime inputs literal. See the [mechanism additions pass](./mechanism-additions-01.md) for parent checks, versions, and verification.
 
 ## ADD-091
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Generation confidence does not by itself certify soundness](../../notes/generation-confidence-does-not-by-itself-certify-soundness.md).
 
@@ -1278,11 +1278,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22965](../../reports/state/review-jobs/review-job-8799/pair-18-generation-confidence-does-not-by-itself-certify-soundness.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-26): Accept evaluation: the note distinguishes what confidence, calibration, discrimination, and independent verification can establish. See the [remaining-placement disposition](./remaining-placement-decision.md) for versions and verification.
 
 ## ADD-092
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Gödel machines are a proof-governed case of reflective self-modification](../../notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md).
 
@@ -1292,11 +1292,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22966](../../reports/state/review-jobs/review-job-8799/pair-19-goedel-machines-are-a-proof-governed-case-of-self-modification.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-26): Accept improvement-loop. The change-loop table maps search, evaluation, authority, and retention under a proof gate. See the [computational-model disposition](./computational-model-placement-decision.md) for verification.
 
 ## ADD-093
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [History has one chance to become checkable](../../notes/history-has-one-chance-to-become-checkable.md).
 
@@ -1306,11 +1306,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22967](../../reports/state/review-jobs/review-job-8799/pair-20-history-has-one-chance-to-become-checkable.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept claims-and-grounding, observability. Provenance, citations, and quote anchors preserve evidence for later review; the production-time boundary also explains why unrecorded history cannot be reliably reconstructed. See the [review and evidence additions pass](./evidence-additions-01.md) for versions, parent checks, and verification.
 
 ## ADD-094
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Improvements can accumulate without compounding](../../notes/improvements-can-accumulate-without-compounding.md).
 
@@ -1320,11 +1320,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22972](../../reports/state/review-jobs/review-job-8800/pair-5-improvements-can-accumulate-without-compounding.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept learning-theory. The note separates retained accumulation from causal gains in later improvement productivity and states the evidence needed for compounding. See the [review and evidence additions pass](./evidence-additions-01.md) for versions, parent checks, and verification.
 
 ## ADD-095
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [In-context learning presupposes context engineering](../../notes/in-context-learning-presupposes-context-engineering.md).
 
@@ -1334,11 +1334,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22973](../../reports/state/review-jobs/review-job-8800/pair-6-in-context-learning-presupposes-context-engineering.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept continual-learning: deployment experience changes versioned prompts, routing rules, retrieval strategies, schemas, and evaluations used by later calls. This persistent system-layer adaptation is explicitly contrasted with within-session in-context learning. Required self-improving-systems and learning-theory parents are present. See the [learning-tag boundary and application](./learning-tag-boundary-decision.md) for versions and verification.
 
 ## ADD-096
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Increasing computational autonomy relocates human effort to the frontier instead of reducing it](../../notes/increasing-computational-autonomy-relocates-human-effort.md).
 
@@ -1348,11 +1348,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22975](../../reports/state/review-jobs/review-job-8800/pair-8-increasing-computational-autonomy-relocates-human-effort.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept observability. The recurring-intervention record reveals which pathway functions remain human and where the intervention frontier lies; total hours obscure that distinction. See the [review and evidence additions pass](./evidence-additions-01.md) for versions, parent checks, and verification.
 
 ## ADD-097
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Indexes lower recall when they suppress retrieval that would find more](../../notes/indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more.md).
 
@@ -1362,11 +1362,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22977](../../reports/state/review-jobs/review-job-8800/pair-10-indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept failure-modes. The note explains an activation failure in which a false completeness signal suppresses a retrieval route that would have found more relevant knowledge. See the [review and evidence additions pass](./evidence-additions-01.md) for versions, parent checks, and verification.
 
 ## ADD-098
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Information value is observer-relative](../../notes/information-value-is-observer-relative.md).
 
@@ -1376,11 +1376,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22978](../../reports/state/review-jobs/review-job-8800/pair-11-information-value-is-observer-relative.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept context-engineering: the KB application chooses retained content by what the intended bounded reader cannot reliably supply, and develops descriptions, claim titles, and short notes as ways to select and load useful content. See the [first context-additions pass](./context-additions-01.md) for versions, parent checks, and verification.
 
 ## ADD-099
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Instruction specificity should match loading frequency](../../notes/instruction-specificity-should-match-loading-frequency.md).
 
@@ -1390,11 +1390,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22981](../../reports/state/review-jobs/review-job-8800/pair-14-instruction-specificity-should-match-loading-frequency.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept context-engineering: the note directly allocates universal rules, skill descriptions, skill bodies, and task documents across always-loaded and on-demand context. See the [first context-additions pass](./context-additions-01.md) for versions, parent checks, and verification.
 
 ## ADD-100
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [KB goals in always-loaded context guide inclusion decisions](../../notes/kb-goals-in-always-loaded-context-guide-inclusion-decisions.md).
 
@@ -1404,11 +1404,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22983](../../reports/state/review-jobs/review-job-8800/pair-16-kb-goals-in-always-loaded-context-guide-inclusion-decisions.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept context-engineering: the dedicated placement argument puts frequently used inclusion criteria in always-loaded context, comparing their availability with the retrieval hop and search pollution of alternative arrangements. See the [first context-additions pass](./context-additions-01.md) for versions, parent checks, and verification.
 
 ## ADD-101
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Knowledge-access architecture must be evaluated end to end, not by retrieval alone](../../notes/knowledge-access-architecture-must-be-evaluated-end-to-end.md).
 
@@ -1418,11 +1418,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22984](../../reports/state/review-jobs/review-job-8800/pair-17-knowledge-access-architecture-must-be-evaluated-end-to-end.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept evaluation. The note separates retrieval, loading, transformation, activation, outcome, and upkeep, then fixes the task and conditions needed for an end-to-end comparison. Retrieval metrics alone are explicitly insufficient. See the [second evaluation-additions pass](./evaluation-additions-02.md) for versions, parent checks, and verification.
 
 ## ADD-102
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Knowledge storage does not imply contextual activation](../../notes/knowledge-storage-does-not-imply-contextual-activation.md).
 
@@ -1432,11 +1432,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22985](../../reports/state/review-jobs/review-job-8800/pair-18-knowledge-storage-does-not-imply-contextual-activation.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept context-engineering: the note distinguishes storage-to-context delivery from context-to-action uptake, specifies routing and loading remedies, and explains why adding context can also dilute relevant cues. See the [first context-additions pass](./context-additions-01.md) for versions, parent checks, and verification.
 
 ## ADD-103
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Known-target discovery benchmarks show reachability, not discovery closure](../../notes/known-target-discovery-benchmarks-show-reachability-not-discovery.md).
 
@@ -1446,11 +1446,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22986](../../reports/state/review-jobs/review-job-8800/pair-19-known-target-discovery-benchmarks-show-reachability-not-discovery.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept evaluation. The note distinguishes target reconstruction from prospective discovery, explains leakage controls and proxy-oracle construction, and states which research decisions remain outside the benchmark. See the [second evaluation-additions pass](./evaluation-additions-02.md) for versions, parent checks, and verification.
 
 ## ADD-104
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Learning inside a fixed decomposition inherits its mistakes](../../notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md).
 
@@ -1460,11 +1460,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22987](../../reports/state/review-jobs/review-job-8800/pair-20-learning-inside-a-fixed-decomposition-inherits-its-mistakes.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept evaluation. The dedicated fixed-layer section explains why improvement within one effective update space cannot validate alternatives held outside the experiment. The ACM and Meta-Harness cases develop that inference limit. See the [second evaluation-additions pass](./evaluation-additions-02.md) for versions, parent checks, and verification.
 
 ## ADD-105
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Legal drafting solves the same problem as context engineering](../../notes/legal-drafting-solves-the-same-problem-as-context-engineering.md).
 
@@ -1474,11 +1474,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22989](../../reports/state/review-jobs/review-job-8801/pair-2-legal-drafting-solves-the-same-problem-as-context-engineering.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept context-engineering: the worked transfer to prompt and knowledge-system design includes term definitions, instruction precedence and routing, reusable prompt components, and task-targeted compression under page and attention limits. The placement rests on these applications, not the title alone. See the [first context-additions pass](./context-additions-01.md) for versions, parent checks, and verification.
 
 ## ADD-106
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Link-following and search impose different metadata requirements](../../notes/link-following-and-search-impose-different-metadata-requirements.md).
 
@@ -1488,11 +1488,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22991](../../reports/state/review-jobs/review-job-8801/pair-4-link-following-and-search-impose-different-metadata-requirements.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept context-engineering: link-following, search, index entries, and skill descriptions provide different cues for deciding which artifact to load next, requiring different routing metadata. See the [first context-additions pass](./context-additions-01.md) for versions, parent checks, and verification.
 
 ## ADD-107
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Link strength is encoded in position and prose](../../notes/link-strength-is-encoded-in-position-and-prose.md).
 
@@ -1502,11 +1502,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22993](../../reports/state/review-jobs/review-job-8801/pair-6-link-strength-is-encoded-in-position-and-prose.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept curation. The Note scoring and Quality signals sections use weighted links to rank notes and assess graph health as the collection grows. See the [review and evidence additions pass](./evidence-additions-01.md) for versions, parent checks, and verification.
 
 ## ADD-108
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [A linked note's durable payload is what its consumption path cannot reliably supply](../../notes/linked-note-durable-payload-is-what-consumption-path-cannot-supply.md).
 
@@ -1516,11 +1516,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22994](../../reports/state/review-jobs/review-job-8801/pair-7-linked-note-durable-payload-is-what-consumption-path-cannot-supply.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept document-system: the note gives an explicit segmentation and retention rule for shared framework exposition, local recognition cues, unrecoverable reasons, and inline versus linked content. See the [context and document additions pass](./context-document-additions-02.md) for versions, parent checks, and verification.
 
 ## ADD-109
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Links encode conditional possibilities, not obligations](../../notes/links-encode-conditional-possibilities-not-obligations.md).
 
@@ -1530,7 +1530,7 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22996](../../reports/state/review-jobs/review-job-8801/pair-9-links-encode-conditional-possibilities-not-obligations.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept context-engineering: inline-versus-link decisions depend on the reader state, what is already loaded, and which unmet need justifies bringing another artifact into context. See the [first context-additions pass](./context-additions-01.md) for versions, parent checks, and verification.
 
 ## ADD-110
 
@@ -1548,7 +1548,7 @@ Disposition (2026-09-26): added `llm-reliability` while removing `constraining`,
 
 ## ADD-111
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [LLM contexts interpret instructions and content through the same token medium](../../notes/llm-context-interprets-instructions-and-content-through-one-medium.md).
 
@@ -1558,11 +1558,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 22999](../../reports/state/review-jobs/review-job-8801/pair-12-llm-context-interprets-instructions-and-content-through-one-medium.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept context-engineering: the shared instruction/content medium creates scope contamination and authority confusion during context assembly, and routing is needed to identify which prose should change behavior. See the [first context-additions pass](./context-additions-01.md) for versions, parent checks, and verification.
 
 ## ADD-112
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [LLM context is composed without scoping](../../notes/llm-context-is-composed-without-scoping.md).
 
@@ -1572,11 +1572,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23000](../../reports/state/review-jobs/review-job-8801/pair-13-llm-context-is-composed-without-scoping.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept context-engineering: the note analyzes flat context composition, contamination, name capture, and the fresh call boundaries that isolate inputs. See the [context and document additions pass](./context-document-additions-02.md) for versions, parent checks, and verification.
 
 ## ADD-113
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [LLM-executed methodologies are metacircular interpreters, not compilers](../../notes/llm-executed-methodologies-are-metacircular-interpreters.md).
 
@@ -1586,11 +1586,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23002](../../reports/state/review-jobs/review-job-8801/pair-15-llm-executed-methodologies-are-metacircular-interpreters.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept computational-model. The interpreter/compiler comparison explains repeated natural-language execution, symbolic consumers, and partial self-hosting. See the [mechanism additions pass](./mechanism-additions-01.md) for parent checks, versions, and verification.
 
 ## ADD-114
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [LLM generation can hide a relaxed goal where human writing exposes a stall](../../notes/llm-generation-relaxes-goals-where-human-writing-stalls.md).
 
@@ -1600,11 +1600,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23004](../../reports/state/review-jobs/review-job-8801/pair-17-llm-generation-relaxes-goals-where-human-writing-stalls.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept discovery. The note treats concretization as a search testing the conjecture that a joint design goal is reachable, and analyzes how fluent generation can conceal the unresolved constraint. See the [theory and discovery additions pass](./theory-discovery-additions-01.md) for boundary calls, parent checks, versions, and verification.
 
 ## ADD-115
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [LLM-mediated schedulers are a degraded variant of the clean model](../../notes/llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md).
 
@@ -1614,11 +1614,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23006](../../reports/state/review-jobs/review-job-8801/pair-19-llm-mediated-schedulers-are-a-degraded-variant-of-the-clean-model.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept context-engineering: compaction and externalization are compared as ways to reduce accumulated conversational load and selectively recover transition-relevant state. See the [context and document additions pass](./context-document-additions-02.md) for versions, parent checks, and verification.
 
 ## ADD-116
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [LLM output deviation requires three-way diagnosis because remedies target different relations](../../notes/llm-output-deviation-requires-three-way-diagnosis.md).
 
@@ -1628,11 +1628,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23007](../../reports/state/review-jobs/review-job-8801/pair-20-llm-output-deviation-requires-three-way-diagnosis.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept evaluation. The note compares fixed-input resampling, meaning-preserving prompt variation, and conformance checks, specifying what each can identify. Worked studies separate observed variation from causal attribution and distinguish masking from repair. See the [second evaluation-additions pass](./evaluation-additions-02.md) for versions, parent checks, and verification.
 
 ## ADD-117
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Local materialization should outperform distant natural-language declarations](../../notes/local-materialization-should-outperform-distant-declarations.md).
 
@@ -1642,11 +1642,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23009](../../reports/state/review-jobs/review-job-8802/pair-2-local-materialization-should-outperform-distant-declarations.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept context-engineering: local rendering of a canonical fact is a prompt-assembly intervention, tested against distance, competing content, and the cost of added tokens. See the [context and document additions pass](./context-document-additions-02.md) for versions, parent checks, and verification.
 
 ## ADD-118
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Localized retention pays when sparse changes have bounded impact in a matching decomposition](../../notes/localized-retention-pays-where-change-is-sparse-in-a-matching.md).
 
@@ -1656,11 +1656,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23010](../../reports/state/review-jobs/review-job-8802/pair-3-localized-retention-pays-where-change-is-sparse-in-a-matching.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept continual-learning: the note develops when changes to retained prose rules, schemas, tests, and adapters have local edit and validation costs, while comparing those properties with weight-based approaches. Required self-improving-systems and learning-theory parents are present. See the [learning-tag boundary and application](./learning-tag-boundary-decision.md) for versions and verification.
 
 ## ADD-119
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Edge ownership selects the key; choosing files or a database requires a workload comparison](../../notes/many-to-many-edge-state-is-where-files-yield-to-a-database.md).
 
@@ -1670,11 +1670,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23014](../../reports/state/review-jobs/review-job-8802/pair-7-many-to-many-edge-state-is-where-files-yield-to-a-database.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept artifact-analysis. Changing storage substrate does not settle lineage or authority; canonical database state needs a separate governing commitment. See the [mechanism additions pass](./mechanism-additions-01.md) for parent checks, versions, and verification.
 
 ## ADD-120
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Mechanistic constraints make Popperian KB recommendations actionable](../../notes/mechanistic-constraints-make-popperian-kb-recommendations-actionable.md).
 
@@ -1684,11 +1684,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23016](../../reports/state/review-jobs/review-job-8802/pair-9-mechanistic-constraints-make-popperian-kb-recommendations-actionable.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept discovery. The note develops falsifier blocks and contradiction-first checks as explicit operations for testing conjectures, with separate treatment of rejected interpretations. See the [theory and discovery additions pass](./theory-discovery-additions-01.md) for boundary calls, parent checks, versions, and verification.
 
 ## ADD-121
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Memory-backed personalization can look like model improvement](../../notes/memory-backed-personalization-can-look-like-model-improvement.md).
 
@@ -1699,11 +1699,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23017](../../reports/state/review-jobs/review-job-8802/pair-10-memory-backed-personalization-can-look-like-model-improvement.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-26): Accept context-engineering, evaluation. Activation determines whether retained intent reaches the call; crossed model/memory interventions bound which effects can be attributed. See the [computational-model disposition](./computational-model-placement-decision.md) for verification.
 
 ## ADD-122
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Feedback-trained memory management is oracle-dependent even when its operations are hand-designed](../../notes/memory-management-policy-is-learnable-but-oracle-dependent.md).
 
@@ -1713,11 +1713,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23019](../../reports/state/review-jobs/review-job-8802/pair-12-memory-management-policy-is-learnable-but-oracle-dependent.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept evaluation: the note explains how noisy, delayed, composite, and misaligned outcome signals limit feedback-trained policy updates, and what a controlled comparison would need to isolate oracle quality. See the [third evaluation-additions pass](./evaluation-additions-03.md) for versions, parent checks, and verification.
 
 ## ADD-123
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Methodological and computational closure track different changes](../../notes/methodological-and-computational-closure-track-different-changes.md).
 
@@ -1727,11 +1727,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23020](../../reports/state/review-jobs/review-job-8802/pair-13-methodological-and-computational-closure-track-different-changes.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-26): add method-guided-action (the renamed methodology tag). The note explains how to assess what a retained method settles, separately from whether a human or computation supplies the decision. See the [method-guided-action disposition](./methodology-scope-decision.md) for the boundary, input versions, and verification.
 
 ## ADD-124
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Methodology enforcement is constraining](../../notes/methodology-enforcement-is-constraining.md).
 
@@ -1741,11 +1741,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23021](../../reports/state/review-jobs/review-job-8802/pair-14-methodology-enforcement-is-constraining.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-26): add method-guided-action (the renamed methodology tag). The activation and response distinction explains how instructions, skills, hooks, and validators make a method govern execution. See the [method-guided-action disposition](./methodology-scope-decision.md) for the boundary, input versions, and verification.
 
 ## ADD-125
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Minimum viable vocabulary is the naming set that most reduces extraction cost for a bounded observer](../../notes/minimum-viable-vocabulary-is-the-naming-set-that-most-reduces.md).
 
@@ -1755,11 +1755,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23022](../../reports/state/review-jobs/review-job-8802/pair-15-minimum-viable-vocabulary-is-the-naming-set-that-most-reduces.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept context-engineering: the note selects a vocabulary for a particular bounded observer and context budget, and explicitly distinguishes loading vocabulary into agent sessions from human learning across sessions. See the [context and document additions pass](./context-document-additions-02.md) for versions, parent checks, and verification.
 
 ## ADD-126
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Mixed epistemic status must be preserved below the document level](../../notes/mixed-epistemic-status-must-be-preserved-below-the-document-level.md).
 
@@ -1770,11 +1770,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23023](../../reports/state/review-jobs/review-job-8802/pair-16-mixed-epistemic-status-must-be-preserved-below-the-document-level.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-26): Accept document-system for claim-level writing and checking, and claims-and-grounding for preserving the different warrants of observations, deductions, and explanations. Add kb-maintenance. See the [context-engineering disposition](./context-engineering-placement-decision.md) for versions and verification.
 
 ## ADD-127
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Model-resolved indirection adds interpretation work to LLM execution](../../notes/model-resolved-indirection-adds-interpretation-work-to-llm-execution.md).
 
@@ -1785,11 +1785,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23024](../../reports/state/review-jobs/review-job-8802/pair-17-model-resolved-indirection-adds-interpretation-work-to-llm-execution.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept context-engineering and constraining: the note compares full delivered prompt forms, model-side binding work, and token costs, then explains when upstream resolution narrows valid interpretations. See the [context and document additions pass](./context-document-additions-02.md) for versions, parent checks, and verification.
 
 ## ADD-128
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Moving the interpretation–enforcement boundary requires cross-form coverage](../../notes/moving-the-interpretation-enforcement-boundary-requires-coverage.md).
 
@@ -1799,11 +1799,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23025](../../reports/state/review-jobs/review-job-8802/pair-18-moving-the-interpretation-enforcement-boundary-requires-coverage.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept reflection. The central claim requires a causally connected self-representation with modification-grade coverage of both interpreted and symbolic forms and their mapping. See the [theory and discovery additions pass](./theory-discovery-additions-01.md) for boundary calls, parent checks, versions, and verification.
 
 ## ADD-129
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Narrowing bought to survive review is paid for in content](../../notes/narrowing-bought-to-survive-review-is-paid-for-in-content.md).
 
@@ -1813,11 +1813,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23026](../../reports/state/review-jobs/review-job-8802/pair-19-narrowing-bought-to-survive-review-is-paid-for-in-content.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept review-system. The note analyzes how semantic gate/revise loops can accept empty claims and proposes contribution checks that can reject such repairs. See the [review and evidence additions pass](./evidence-additions-01.md) for versions, parent checks, and verification.
 
 ## ADD-130
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Naur's human-only conclusion needs more than the absence of explicit criteria](../../notes/naur-equates-machine-execution-with-formulated-criteria.md).
 
@@ -1827,11 +1827,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23028](../../reports/state/review-jobs/review-job-8803/pair-1-naur-equates-machine-execution-with-formulated-criteria.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept theory-builder. The note analyzes program-theory possession, coherent modification under later criticism, and tests for a computational bearer; program theory is explicitly within the live head. See the [theory and discovery additions pass](./theory-discovery-additions-01.md) for boundary calls, parent checks, versions, and verification.
 
 ## ADD-131
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Naur's compiler case tests one historically bounded documentation-and-consumption system](../../notes/naurs-compiler-case-tests-one-historically-bounded-documentation-and-consumption-system.md).
 
@@ -1841,11 +1841,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23029](../../reports/state/review-jobs/review-job-8803/pair-2-naurs-compiler-case-tests-one-historically-bounded-documentation-and-consumption-system.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept document-system: the note compares ordinary documentation with structured rationale and raw records, and asks which retained content and consumption process can support later program modification. See the [context and document additions pass](./context-document-additions-02.md) for versions, parent checks, and verification.
 
 ## ADD-132
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Explicit retention provides direct targets for selective revision](../../notes/only-explicit-retention-is-durable-writable-and-addressable.md).
 
@@ -1855,7 +1855,7 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23031](../../reports/state/review-jobs/review-job-8803/pair-4-only-explicit-retention-is-durable-writable-and-addressable.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept artifact-analysis. Representational forms are compared through available inspection and revision operations, with consequences for selective changes and their validation. See the [mechanism additions pass](./mechanism-additions-01.md) for parent checks, versions, and verification.
 
 ## ADD-133
 
@@ -1873,7 +1873,7 @@ Disposition (2026-09-26): added `artifact-analysis` while removing `constraining
 
 ## ADD-134
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Open-ended improvement must allocate search before decisive evaluation is available](../../notes/open-ended-improvement-allocates-search-before-evaluation.md).
 
@@ -1883,11 +1883,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23035](../../reports/state/review-jobs/review-job-8803/pair-8-open-ended-improvement-allocates-search-before-evaluation.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept evaluation: the note separates provisional branch evidence from criterion-relative adoption evidence and explains why even a proof gate cannot evaluate branches search never reaches. See the [third evaluation-additions pass](./evaluation-additions-03.md) for versions, parent checks, and verification.
 
 ## ADD-135
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Open-ended theory learning and factory learning close the same reflective loop](../../notes/open-ended-theory-learning-and-factory-learning-close-the-same.md).
 
@@ -1897,11 +1897,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23036](../../reports/state/review-jobs/review-job-8803/pair-9-open-ended-theory-learning-and-factory-learning-close-the-same.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept reflection, theory-builder. The shared path uses a revisable theory of the system's own organization to guide operative changes, then lets consequences and criticism shape later theory use. See the [theory and discovery additions pass](./theory-discovery-additions-01.md) for boundary calls, parent checks, versions, and verification.
 
 ## ADD-136
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Operational signals that a component is a relaxing candidate](../../notes/operational-signals-that-a-component-is-a-relaxing-candidate.md).
 
@@ -1911,11 +1911,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23037](../../reports/state/review-jobs/review-job-8803/pair-10-operational-signals-that-a-component-is-a-relaxing-candidate.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept llm-reliability. Paraphrase brittleness and integration failures are operational diagnoses of unreliable components, with replacement and testing responses. See the [mechanism additions pass](./mechanism-additions-01.md) for parent checks, versions, and verification.
 
 ## ADD-137
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Oracle accumulation improves selection for later candidates in its maintained domain](../../notes/oracle-accumulation-improves-the-selection-environment.md).
 
@@ -1925,11 +1925,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23039](../../reports/state/review-jobs/review-job-8803/pair-12-oracle-accumulation-improves-the-selection-environment.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept evaluation and warranted-autonomy: regression coverage is distinguished from evidence that a check discriminates beyond its originating case; held-out incidents, fault injection, adversarial cases, calibration, and monitoring condition expansion of warranted evaluation autonomy. See the [third evaluation-additions pass](./evaluation-additions-03.md) for versions, parent checks, and verification.
 
 ## ADD-138
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Oracle strength spectrum](../../notes/oracle-strength-spectrum.md).
 
@@ -1939,11 +1939,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23040](../../reports/state/review-jobs/review-job-8803/pair-13-oracle-strength-spectrum.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept evaluation and constraining: the oracle spectrum distinguishes what checks can establish, while schema validation and mined deterministic rules explicitly replace softer interpretations with enforceable criteria. See the [third evaluation-additions pass](./evaluation-additions-03.md) for versions, parent checks, and verification.
 
 ## ADD-139
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Orchestration strategies and run-state have opposite persistence economics](../../notes/orchestration-strategies-and-run-state-have-opposite-persistence.md).
 
@@ -1953,11 +1953,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23042](../../reports/state/review-jobs/review-job-8803/pair-15-orchestration-strategies-and-run-state-have-opposite-persistence.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept improvement-loop and self-improving-systems: generated control strategies pass test and promotion gates before entering later scheduler operation. Also add continual-learning: retaining reusable strategies while discarding task state is the central account of persistent non-weight learning. Required self-improving-systems and learning-theory parents are present. See the [learning-tag boundary and application](./learning-tag-boundary-decision.md) for versions and verification.
 
 ## ADD-140
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Parametric reproduction alone cannot replace an authoritative record](../../notes/parametric-reproduction-cannot-replace-an-authoritative-record.md).
 
@@ -1967,11 +1967,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23044](../../reports/state/review-jobs/review-job-8803/pair-17-parametric-reproduction-cannot-replace-an-authoritative-record.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept artifact-analysis. Reproducing explicit records in weights does not transfer authority; versioning, attribution, and revision guarantees determine acceptable replacement. See the [mechanism additions pass](./mechanism-additions-01.md) for parent checks, versions, and verification.
 
 ## ADD-141
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Periodic KB hygiene should be externally triggered, not embedded in routing](../../notes/periodic-kb-hygiene-should-be-externally-triggered-not-embedded-in.md).
 
@@ -1981,11 +1981,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23045](../../reports/state/review-jobs/review-job-8803/pair-18-periodic-kb-hygiene-should-be-externally-triggered-not-embedded-in.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept context-engineering: always-loaded routing and occasional hygiene procedures have different triggers and loading frequencies, so the note argues for loading the latter only when invoked. See the [context and document additions pass](./context-document-additions-02.md) for versions, parent checks, and verification.
 
 ## ADD-142
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Pointer design tradeoffs in progressive disclosure](../../notes/pointer-design-tradeoffs-in-progressive-disclosure.md).
 
@@ -1995,11 +1995,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23046](../../reports/state/review-jobs/review-job-8803/pair-19-pointer-design-tradeoffs-in-progressive-disclosure.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-26): Accept context-engineering. The pointer comparison guides content selection and progressive loading, including the cost and availability of the routing information. See the [computational-model disposition](./computational-model-placement-decision.md) for verification.
 
 ## ADD-143
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Process structure and output structure are independent levers](../../notes/process-structure-and-output-structure-are-independent-levers.md).
 
@@ -2009,11 +2009,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23048](../../reports/state/review-jobs/review-job-8804/pair-1-process-structure-and-output-structure-are-independent-levers.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept evaluation and constraining: the note explains how result-form and process constraints narrow different interpretation spaces and identifies experimental contrasts and ablation limits needed to separate their effects. See the [third evaluation-additions pass](./evaluation-additions-03.md) for versions, parent checks, and verification.
 
 ## ADD-144
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Holding a program theory means sustaining coherent search under delayed feedback](../../notes/program-theory-sustains-search-under-delayed-feedback.md).
 
@@ -2023,11 +2023,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23049](../../reports/state/review-jobs/review-job-8804/pair-2-program-theory-sustains-search-under-delayed-feedback.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept improvement-loop: program theory shapes candidate generation, provisional evaluation, backtracking, recovery, and retained revision under delayed evidence. Required self-improving-systems and learning-theory parents are present. See the [learning-tag boundary and application](./learning-tag-boundary-decision.md) for versions and verification.
 
 ## ADD-145
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Project-theory possession requires comparing new demands with existing organization](../../notes/project-theory-relates-new-demands-to-existing-organization.md).
 
@@ -2037,11 +2037,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23051](../../reports/state/review-jobs/review-job-8804/pair-4-project-theory-relates-new-demands-to-existing-organization.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept improvement-loop: an explicit search branch compares assimilation with new responsibility, makes a provisional change, tests consequences, then retains, consolidates, backtracks, or revises the theory. Required self-improving-systems and learning-theory parents are present. See the [learning-tag boundary and application](./learning-tag-boundary-decision.md) for versions and verification.
 
 ## ADD-146
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Psychology-to-agent transfer needs per-principle failure-mode testing](../../notes/psychology-to-agent-transfer-needs-per-principle-failure-mode-testing.md).
 
@@ -2051,11 +2051,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23055](../../reports/state/review-jobs/review-job-8804/pair-8-psychology-to-agent-transfer-needs-per-principle-failure-mode-testing.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept agent-memory. The worked cases substantively analyze persistent memory organization, retrieval priorities, retention policies, and a self-model shaped by accumulated experience. See the [theory and discovery additions pass](./theory-discovery-additions-01.md) for boundary calls, parent checks, versions, and verification.
 
 ## ADD-147
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Quality signals for KB evaluation](../../notes/quality-signals-for-kb-evaluation.md).
 
@@ -2065,11 +2065,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23056](../../reports/state/review-jobs/review-job-8804/pair-9-quality-signals-for-kb-evaluation.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept evaluation: the note develops candidate structural and LLM-based quality signals, their calibration, independence, and Goodhart limits, and before/after checks on KB mutations. See the [third evaluation-additions pass](./evaluation-additions-03.md) for versions, parent checks, and verification.
 
 ## ADD-148
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Reasoning production is not reasoning evaluation](../../notes/reasoning-production-is-not-reasoning-evaluation.md).
 
@@ -2079,11 +2079,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23059](../../reports/state/review-jobs/review-job-8804/pair-12-reasoning-production-is-not-reasoning-evaluation.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept review-system. The note diagnoses answer reconstruction substituting for argument evaluation and applies that failure to semantic gates, critique, and fix review. See the [review and evidence additions pass](./evidence-additions-01.md) for versions, parent checks, and verification.
 
 ## ADD-149
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Reliability dimensions map to oracle-hardening stages](../../notes/reliability-dimensions-map-to-oracle-hardening-stages.md).
 
@@ -2093,11 +2093,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23064](../../reports/state/review-jobs/review-job-8804/pair-17-reliability-dimensions-map-to-oracle-hardening-stages.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept evaluation: the note maps reliability dimensions to distinct verification questions and contrasts aggregate calibration with per-instance discrimination. See the [third evaluation-additions pass](./evaluation-additions-03.md) for versions, parent checks, and verification.
 
 ## ADD-150
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Adaptation signals choose pressure; artifact analysis chooses the retained surface](../../notes/research/adaptation-agentic-ai-analysis.md).
 
@@ -2107,11 +2107,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23065](../../reports/state/review-jobs/review-job-8804/pair-18-adaptation-agentic-ai-analysis.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept constraining. The developed constraining/relaxing section distinguishes when adaptation evidence justifies formal checks from when brittle rules should return to judgment. See the [mechanism additions pass](./mechanism-additions-01.md) for parent checks, versions, and verification.
 
 ## ADD-151
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Retained system-definition artifacts enable persistent deployment-time adaptation](../../notes/retained-artifacts-enable-persistent-deployment-time-adaptation.md).
 
@@ -2121,11 +2121,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23067](../../reports/state/review-jobs/review-job-8804/pair-20-retained-artifacts-enable-persistent-deployment-time-adaptation.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept improvement-loop: the note specifies an evidence-responsive selection path, including a worked gated-promotion case. Keep continual-learning for persistent adaptation through system-definition artifacts. Required self-improving-systems and learning-theory parents are present. See the [learning-tag boundary and application](./learning-tag-boundary-decision.md) for versions and verification.
 
 ## ADD-152
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Reverse compression is when LLM output expands without adding information](../../notes/reverse-compression-is-when-llm-output-expands-without-adding.md).
 
@@ -2135,11 +2135,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23071](../../reports/state/review-jobs/review-job-8805/pair-4-reverse-compression-is-when-llm-output-expands-without-adding.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept document-system: the note diagnoses verbose KB writing that adds no reader-accessible structure and proposes a semantic check over the body and its load-bearing links. See the [context and document additions pass](./context-document-additions-02.md) for versions, parent checks, and verification.
 
 ## ADD-153
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Decorrelated reviewers still share the field's prior, so read their findings by the claim's stance](../../notes/reviewers-share-the-fields-prior-so-interpret-findings-by-stance.md).
 
@@ -2149,11 +2149,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23072](../../reports/state/review-jobs/review-job-8805/pair-5-reviewers-share-the-fields-prior-so-interpret-findings-by-stance.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept review-system. The note centers on correlated reviewer priors, verdict interpretation, and author-side triage of semantic findings. See the [review and evidence additions pass](./evidence-additions-01.md) for versions, parent checks, and verification.
 
 ## ADD-154
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [RLM, λ-RLM, Tendril, and llm-do separate restriction from persistence](../../notes/rlm-tendril-and-llm-do-place-symbolic-work-at-different-persistence.md).
 
@@ -2163,11 +2163,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23076](../../reports/state/review-jobs/review-job-8805/pair-9-rlm-tendril-and-llm-do-place-symbolic-work-at-different-persistence.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept continual-learning: the Tendril comparison develops cross-session generated capabilities and their governance, and the proposed combined system separates exploration from durable promotion. The note preserves uncertainty about the RLM sources' post-return lifecycle; tagging does not resolve that uncertainty. Required self-improving-systems and learning-theory parents are present. See the [learning-tag boundary and application](./learning-tag-boundary-decision.md) for versions and verification.
 
 ## ADD-155
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Runtime structure determines the control surfaces available to governance](../../notes/runtime-structure-determines-governance-control-surfaces.md).
 
@@ -2177,11 +2177,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23078](../../reports/state/review-jobs/review-job-8805/pair-11-runtime-structure-determines-governance-control-surfaces.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept observability. The scheduler, context-engine, and substrate analysis explains which decisions, loaded inputs, and state changes governance can inspect. See the [review and evidence additions pass](./evidence-additions-01.md) for versions, parent checks, and verification.
 
 ## ADD-156
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Selecting an LLM output fixes a result, not its interpretation](../../notes/selecting-an-llm-output-fixes-a-result-not-its-interpretation.md).
 
@@ -2191,11 +2191,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23081](../../reports/state/review-jobs/review-job-8805/pair-14-selecting-an-llm-output-fixes-a-result-not-its-interpretation.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept evaluation: generator tests and selected-artifact tests have different targets and license different inferences; the note states the discrimination, time, and cost conditions for artifact filtering. See the [third evaluation-additions pass](./evaluation-additions-03.md) for versions, parent checks, and verification.
 
 ## ADD-157
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Semantic review catches content errors that structural validation cannot](../../notes/semantic-review-catches-content-errors-that-structural-validation.md).
 
@@ -2205,11 +2205,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23083](../../reports/state/review-jobs/review-job-8805/pair-16-semantic-review-catches-content-errors-that-structural-validation.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept document-system: structural validation and semantic review are compared as complementary ways to check KB documents, including enumerations, grounding, boundary cases, and internal consistency. See the [context and document additions pass](./context-document-additions-02.md) for versions, parent checks, and verification.
 
 ## ADD-158
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Session history should not be the default next context](../../notes/session-history-should-not-be-the-default-next-context.md).
 
@@ -2219,11 +2219,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23086](../../reports/state/review-jobs/review-job-8805/pair-19-session-history-should-not-be-the-default-next-context.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept context-engineering: retaining execution history is separated from selecting and assembling the next call context, including goal-specific compression and failure handoffs. See the [context and document additions pass](./context-document-additions-02.md) for versions, parent checks, and verification.
 
 ## ADD-159
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Short composable notes maximize combinatorial discovery](../../notes/short-composable-notes-maximize-combinatorial-discovery.md).
 
@@ -2233,11 +2233,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23087](../../reports/state/review-jobs/review-job-8805/pair-20-short-composable-notes-maximize-combinatorial-discovery.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept context-engineering and document-system: co-loading capacity motivates a one-claim writing rule and selective resolution, with explicit limits from argument coherence. See the [context and document additions pass](./context-document-additions-02.md) for versions, parent checks, and verification.
 
 ## ADD-160
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Skill discovery re-fires in every sub-agent context, not just the top-level invocation](../../notes/skill-discovery-re-fires-in-every-sub-agent-context.md).
 
@@ -2247,11 +2247,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23089](../../reports/state/review-jobs/review-job-8806/pair-2-skill-discovery-re-fires-in-every-sub-agent-context.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-26): Accept context-engineering. The note explains how autonomous skill matching changes what reaches a fresh worker context and how the worker brief can limit the resulting role confusion. See the [architecture disposition](./architecture-placement-decision.md) for input versions and verification.
 
 ## ADD-161
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Soft degradation can bind before the hard cap even when required evidence fits](../../notes/soft-degradation-often-binds-before-the-hard-cap-when-evidence-fits.md).
 
@@ -2261,11 +2261,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23091](../../reports/state/review-jobs/review-job-8806/pair-4-soft-degradation-often-binds-before-the-hard-cap-when-evidence-fits.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept observability. The soft-bound section explains why fluent output and the absence of a hard-limit error fail to expose degraded processing; downstream quality reveals it. See the [review and evidence additions pass](./evidence-additions-01.md) for versions, parent checks, and verification.
 
 ## ADD-162
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Spec mining is codification's operational mechanism](../../notes/spec-mining-as-codification.md).
 
@@ -2275,11 +2275,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23093](../../reports/state/review-jobs/review-job-8806/pair-6-spec-mining-as-codification.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept continual-learning: the production-log workflow extracts rules, helpers, and regression tests, reruns with those artifacts, and revises or relaxes them under later evidence without weight updates. Required self-improving-systems and learning-theory parents are present. See the [learning-tag boundary and application](./learning-tag-boundary-decision.md) for versions and verification.
 
 ## ADD-163
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Specification-level separation recovers scoping before it recovers error correction](../../notes/specification-level-separation-recovers-scoping-before-it-recovers.md).
 
@@ -2289,11 +2289,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23095](../../reports/state/review-jobs/review-job-8806/pair-8-specification-level-separation-recovers-scoping-before-it-recovers.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept context-engineering: external state protocols and explicit frame boundaries recover some scoping before scheduling becomes symbolic; the note distinguishes that context benefit from error correction. See the [context and document additions pass](./context-document-additions-02.md) for versions, parent checks, and verification.
 
 ## ADD-164
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Specification strategy should follow where understanding lives](../../notes/specification-strategy-should-follow-where-understanding-lives.md).
 
@@ -2303,11 +2303,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23096](../../reports/state/review-jobs/review-job-8806/pair-9-specification-strategy-should-follow-where-understanding-lives.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-26): add method-guided-action (the renamed methodology tag). The note supplies selection criteria for spec-first, live specification, and spec mining based on when relevant understanding becomes available. See the [method-guided-action disposition](./methodology-scope-decision.md) for the boundary, input versions, and verification.
 
 ## ADD-165
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Stale self-description conceals its own staleness](../../notes/stale-self-description-conceals-its-own-staleness.md).
 
@@ -2317,11 +2317,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23097](../../reports/state/review-jobs/review-job-8806/pair-10-stale-self-description-conceals-its-own-staleness.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept observability. A consulted stale self-map can suppress evidence of its own drift; operation-triggered synchronization exposes changes that file-edit events miss. See the [review and evidence additions pass](./evidence-additions-01.md) for versions, parent checks, and verification.
 
 ## ADD-166
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Structured output is easier for humans to review](../../notes/structured-output-is-easier-for-humans-to-review.md).
 
@@ -2331,11 +2331,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23100](../../reports/state/review-jobs/review-job-8806/pair-13-structured-output-is-easier-for-humans-to-review.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept document-system: separating Evidence and Reasoning is developed as a document-structure choice that supports independent checks by human readers. See the [context and document additions pass](./context-document-additions-02.md) for versions, parent checks, and verification.
 
 ## ADD-167
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Structured-prompt gains do not establish training-distribution selection](../../notes/structured-prompt-gains-do-not-establish-distribution-selection.md).
 
@@ -2345,11 +2345,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23101](../../reports/state/review-jobs/review-job-8806/pair-14-structured-prompt-gains-do-not-establish-distribution-selection.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept evaluation: matched heading-only, process-only, combined, and unstructured prompts are proposed to distinguish causal explanations, with task accuracy measured separately from format compliance. See the [third evaluation-additions pass](./evaluation-additions-03.md) for versions, parent checks, and verification.
 
 ## ADD-168
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Synthesis is not error correction](../../notes/synthesis-is-not-error-correction.md).
 
@@ -2359,11 +2359,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23104](../../reports/state/review-jobs/review-job-8806/pair-17-synthesis-is-not-error-correction.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept computational-model. Aggregation is a scheduler operation: redundant calls require selection, while complementary calls require assembly. See the [mechanism additions pass](./mechanism-additions-01.md) for parent checks, versions, and verification.
 
 ## ADD-169
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [System-definition artifacts are crystallized reasoning under context scarcity](../../notes/system-definition-artifacts-are-crystallized-reasoning-under-context.md).
 
@@ -2373,11 +2373,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23105](../../reports/state/review-jobs/review-job-8806/pair-18-system-definition-artifacts-are-crystallized-reasoning-under-context.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept context-engineering: the thought experiment tests which heuristic guidance exists to avoid read-time reconstruction under scarce context, distinguishing that role from commitments and independent benefits of symbolic execution. See the [context and document additions pass](./context-document-additions-02.md) for versions, parent checks, and verification.
 
 ## ADD-170
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [System use is an initial selection environment when theory fit lacks a fixed oracle](../../notes/system-use-selects-theory-fit-without-a-fixed-oracle.md).
 
@@ -2387,11 +2387,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23107](../../reports/state/review-jobs/review-job-8806/pair-20-system-use-selects-theory-fit-without-a-fixed-oracle.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept improvement-loop: rival theory states earn provisional retention through a portfolio of live consequences; the note develops evaluation under an incomplete oracle and safeguards against self-confirming selection. Required self-improving-systems and learning-theory parents are present. See the [learning-tag boundary and application](./learning-tag-boundary-decision.md) for versions and verification.
 
 ## ADD-171
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Task families and product families classify different things](../../notes/task-families-and-product-families-classify-different-things.md).
 
@@ -2401,11 +2401,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23109](../../reports/state/review-jobs/review-job-8807/pair-2-task-families-and-product-families-classify-different-things.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-26): Accept evaluation. The task-family frame specifies prospective sampling, acceptance, permitted interactions, resource limits, and failure accounting. See the [computational-model disposition](./computational-model-placement-decision.md) for verification.
 
 ## ADD-172
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Technical constraints turn KB objective-function choice from philosophy into engineering](../../notes/technical-constraints-make-kb-objective-choice-engineering.md).
 
@@ -2416,11 +2416,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23110](../../reports/state/review-jobs/review-job-8807/pair-3-technical-constraints-make-kb-objective-choice-engineering.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept evaluation and constraining: the note compares evidence and oracles for reference descriptions, instructions, and theory, and develops codification as a change from natural-language interpretation to formal checks. See the [third evaluation-additions pass](./evaluation-additions-03.md) for versions, parent checks, and verification.
 
 ## ADD-173
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [The augmentation-automation boundary is discrimination not accuracy](../../notes/the-augmentation-automation-boundary-is-discrimination-not-accuracy.md).
 
@@ -2431,11 +2431,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23111](../../reports/state/review-jobs/review-job-8807/pair-4-the-augmentation-automation-boundary-is-discrimination-not-accuracy.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept evaluation and warranted-autonomy: the note distinguishes aggregate accuracy from per-instance discrimination and uses that distinction to judge when verification can replace human output review. See the [fourth evaluation-additions pass](./evaluation-additions-04.md) for versions, parent checks, and verification.
 
 ## ADD-174
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [The bitter lesson selects production methods, not representational forms](../../notes/the-bitter-lesson-selects-production-methods-not-representational.md).
 
@@ -2445,11 +2445,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23113](../../reports/state/review-jobs/review-job-8807/pair-6-the-bitter-lesson-selects-production-methods-not-representational.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept artifact-analysis. The production-method/form matrix separates how artifacts are learned from how they are represented, changing the design and scaling questions. See the [mechanism additions pass](./mechanism-additions-01.md) for parent checks, versions, and verification.
 
 ## ADD-175
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [The boundary of automation is the boundary of verification](../../notes/the-boundary-of-automation-is-the-boundary-of-verification.md).
 
@@ -2460,11 +2460,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23114](../../reports/state/review-jobs/review-job-8807/pair-7-the-boundary-of-automation-is-the-boundary-of-verification.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept evaluation and warranted-autonomy: the note compares hard, soft, and missing verification, asks which automated decisions can replace manual checking, and identifies error tolerance and oracle quality as limits on that argument. See the [fourth evaluation-additions pass](./evaluation-additions-04.md) for versions, parent checks, and verification.
 
 ## ADD-176
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [The chat-history model trades context efficiency for implementation simplicity](../../notes/the-chat-history-model-trades-context-efficiency-for-implementation.md).
 
@@ -2474,11 +2474,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23115](../../reports/state/review-jobs/review-job-8807/pair-8-the-chat-history-model-trades-context-efficiency-for-implementation.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept context-engineering: chronological transcript inheritance is compared with selective loading, scoped calls, and task-shaped handoff artifacts under bounded context. See the [context and document additions pass](./context-document-additions-02.md) for versions, parent checks, and verification.
 
 ## ADD-177
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [The four-field record exposes an efficiency, security, and sovereignty risk triad](../../notes/the-four-field-record-exposes-an-efficiency-security-and-sovereignty.md).
 
@@ -2488,11 +2488,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23117](../../reports/state/review-jobs/review-job-8807/pair-10-the-four-field-record-exposes-an-efficiency-security-and-sovereignty.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept context-engineering: the efficiency analysis connects repeated loading of natural-language guidance to token and context costs and asks when a cheaper operational form removes that burden. See the [context and document additions pass](./context-document-additions-02.md) for versions, parent checks, and verification.
 
 ## ADD-178
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [The self-improving-system definition classifies its boundary cases without ad hoc exceptions](../../notes/the-self-improving-system-definition-classifies-its-boundary-cases.md).
 
@@ -2503,11 +2503,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23119](../../reports/state/review-jobs/review-job-8807/pair-12-the-self-improving-system-definition-classifies-its-boundary-cases.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept reflection for the sustained comparison of causally connected self-representation with non-reflective updates, including memory read failures. Accept improvement-loop for the worked direct-update/proposal-selection distinction and the answer-only loop boundary. Required self-improving-systems and learning-theory parents are present. See the [learning-tag boundary and application](./learning-tag-boundary-decision.md) for versions and verification.
 
 ## ADD-179
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Theory building and capacity building make the same kind of fallible commitment](../../notes/theory-and-capacity-building-make-the-same-kind-of-commitment.md).
 
@@ -2517,11 +2517,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23120](../../reports/state/review-jobs/review-job-8807/pair-13-theory-and-capacity-building-make-the-same-kind-of-commitment.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept discovery. Explanatory commitment is an ampliative conjecture whose consequences can defeat or rescope it; the note distinguishes this revision from changing constructed machinery. See the [theory and discovery additions pass](./theory-discovery-additions-01.md) for boundary calls, parent checks, versions, and verification.
 
 ## ADD-180
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Methodology with incomplete coverage and its live theory fallback form a two-layer execution system](../../notes/theory-and-methodology-form-a-two-layer-execution-system.md).
 
@@ -2531,11 +2531,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23121](../../reports/state/review-jobs/review-job-8807/pair-14-theory-and-methodology-form-a-two-layer-execution-system.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-26): add method-guided-action. The operator accepted the narrower topic under a clearer name and removed the exclusive theory–methodology boundary. Coverage tests govern when the agent follows the method, falls back to theory, or promotes verified handling into the method. This supersedes the earlier rejection under the old head. See the [method-guided-action disposition](./methodology-scope-decision.md) for the decision, input versions, and verification.
 
 ## ADD-181
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Theory building has distinct epistemic, structural, and implementation precedents](../../notes/theory-building-has-distinct-precedents.md).
 
@@ -2545,11 +2545,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23122](../../reports/state/review-jobs/review-job-8807/pair-15-theory-building-has-distinct-precedents.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept reflection. The reflection section analyzes causal self-representation, runtime models, and their limits separately from theory criticism and persistent editing. See the [theory and discovery additions pass](./theory-discovery-additions-01.md) for boundary calls, parent checks, versions, and verification.
 
 ## ADD-182
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Theory warrant should be tracked at the finest granularity evidence licenses](../../notes/theory-warrant-tracked-at-the-finest-granularity-evidence-licenses.md).
 
@@ -2560,11 +2560,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23123](../../reports/state/review-jobs/review-job-8807/pair-16-theory-warrant-tracked-at-the-finest-granularity-evidence-licenses.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept evaluation and claims-and-grounding: the note distinguishes what interventions, comparisons, proof, and joint tests warrant, then requires support to remain attached to the specific claim, bundle, and scope the evidence identifies. See the [fourth evaluation-additions pass](./evaluation-additions-04.md) for versions, parent checks, and verification.
 
 ## ADD-183
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Title as claim enables traversal as reasoning](../../notes/title-as-claim-enables-traversal-as-reasoning.md).
 
@@ -2574,11 +2574,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23125](../../reports/state/review-jobs/review-job-8807/pair-18-title-as-claim-enables-traversal-as-reasoning.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept claims-and-grounding. The title convention makes each note's asserted commitment available as a premise and distinguishes claims from topical or definitional references. See the [review and evidence additions pass](./evidence-additions-01.md) for versions, parent checks, and verification.
 
 ## ADD-184
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Title as claim exposes commitments, enabling Popperian maintenance](../../notes/title-as-claim-exposes-commitments-enabling-popperian-maintenance.md).
 
@@ -2588,11 +2588,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23126](../../reports/state/review-jobs/review-job-8807/pair-19-title-as-claim-exposes-commitments-enabling-popperian-maintenance.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept document-system: the claim-title writing convention makes a document commitment visible in an index and changes which notes a maintainer must open. See the [context and document additions pass](./context-document-additions-02.md) for versions, parent checks, and verification.
 
 ## ADD-185
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Title as claim makes overlap between notes visible](../../notes/title-as-claim-makes-overlap-between-notes-visible.md).
 
@@ -2602,11 +2602,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23127](../../reports/state/review-jobs/review-job-8807/pair-20-title-as-claim-makes-overlap-between-notes-visible.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept document-system: the note explains how claim-title wording exposes overlap between documents before their bodies are read. See the [context and document additions pass](./context-document-additions-02.md) for versions, parent checks, and verification.
 
 ## ADD-186
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Topology, isolation, and verification form a causal chain for reliable agent scaling](../../notes/topology-isolation-and-verification-form-a-causal-chain-for-reliable.md).
 
@@ -2616,11 +2616,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23128](../../reports/state/review-jobs/review-job-8808/pair-1-topology-isolation-and-verification-form-a-causal-chain-for-reliable.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept context-engineering: the proposed dependency chain develops fresh scoped calls, shared-context contamination, and the distinct risks of private conversational state and shared mutable state. See the [context and document additions pass](./context-document-additions-02.md) for versions, parent checks, and verification.
 
 ## ADD-187
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Trace-extracted memory earns authority per operation, not at capture](../../notes/trace-extracted-memory-earns-authority-per-operation-not-at-capture.md).
 
@@ -2630,11 +2630,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23129](../../reports/state/review-jobs/review-job-8808/pair-2-trace-extracted-memory-earns-authority-per-operation-not-at-capture.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept failure-modes. The note develops the authority failure in which unverified diagnoses are consumed as established knowledge, and the separate failure of retained rules never being activated. See the [review and evidence additions pass](./evidence-additions-01.md) for versions, parent checks, and verification.
 
 ## ADD-188
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Traditional software can bracket executor conformance; LLM systems cannot](../../notes/traditional-software-can-bracket-executor-conformance-llm-systems.md).
 
@@ -2644,11 +2644,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23130](../../reports/state/review-jobs/review-job-8808/pair-3-traditional-software-can-bracket-executor-conformance-llm-systems.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept constraining. The practical-consequence section explains narrowing interpretation and moving exact work to symbolic execution to recover conformance guarantees. See the [mechanism additions pass](./mechanism-additions-01.md) for parent checks, versions, and verification.
 
 ## ADD-189
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Treat continual learning as representational-form coevolution](../../notes/treat-continual-learning-as-representational-form-coevolution.md).
 
@@ -2658,11 +2658,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23132](../../reports/state/review-jobs/review-job-8808/pair-5-treat-continual-learning-as-representational-form-coevolution.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept artifact-analysis. Cross-form learning has different review, update, credit-assignment, and rollback requirements for natural-language, symbolic, and parametric artifacts. See the [mechanism additions pass](./mechanism-additions-01.md) for parent checks, versions, and verification.
 
 ## ADD-190
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Type system enforces metadata that navigation depends on](../../notes/type-system-enforces-metadata-that-navigation-depends-on.md).
 
@@ -2672,11 +2672,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23133](../../reports/state/review-jobs/review-job-8808/pair-6-type-system-enforces-metadata-that-navigation-depends-on.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept document-system: document types create enforceable metadata obligations that make descriptions available for navigation. See the [context and document additions pass](./context-document-additions-02.md) for versions, parent checks, and verification.
 
 ## ADD-191
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Types give agents structural hints before opening documents](../../notes/types-give-agents-structural-hints-before-opening-documents.md).
 
@@ -2686,11 +2686,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23134](../../reports/state/review-jobs/review-job-8808/pair-7-types-give-agents-structural-hints-before-opening-documents.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept context-engineering: type and description metadata let agents select relevant artifacts before loading full documents. See the [context and document additions pass](./context-document-additions-02.md) for versions, parent checks, and verification.
 
 ## ADD-192
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Underspecification and indeterminism complicate programming for prompts in distinct ways](../../notes/underspecification-and-indeterminism-complicate-programming-for.md).
 
@@ -2700,11 +2700,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23135](../../reports/state/review-jobs/review-job-8808/pair-8-underspecification-and-indeterminism-complicate-programming-for.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept llm-reliability. The testing argument separates specification gaps, instruction violations, and run-to-run variation and gives different diagnostic methods. See the [mechanism additions pass](./mechanism-additions-01.md) for parent checks, versions, and verification.
 
 ## ADD-193
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Improvements outside the admitted formal language need a pre-formal stage somewhere](../../notes/unformalized-improvements-need-a-pre-formal-stage-in-the-loop.md).
 
@@ -2714,11 +2714,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23136](../../reports/state/review-jobs/review-job-8808/pair-9-unformalized-improvements-need-a-pre-formal-stage-in-the-loop.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept improvement-loop: the note distinguishes admission from warrant limits, locates criticism before formalization, and requires accepted changes to become operative. Keep continual-learning for revision across retained forms. Required self-improving-systems and learning-theory parents are present. See the [learning-tag boundary and application](./learning-tag-boundary-decision.md) for versions and verification.
 
 ## ADD-194
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Unit testing LLM instructions requires mocking the tool boundary](../../notes/unit-testing-llm-instructions-requires-mocking-the-tool-boundary.md).
 
@@ -2728,11 +2728,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23138](../../reports/state/review-jobs/review-job-8808/pair-11-unit-testing-llm-instructions-requires-mocking-the-tool-boundary.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept constraining. Tool-boundary tests bound admissible instruction behavior and expose regressions after instruction or model changes. See the [mechanism additions pass](./mechanism-additions-01.md) for parent checks, versions, and verification.
 
 ## ADD-195
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Universal software factory needs a declared universality axis](../../notes/universal-software-factory-needs-a-declared-universality-axis.md).
 
@@ -2742,11 +2742,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23139](../../reports/state/review-jobs/review-job-8808/pair-12-universal-software-factory-needs-a-declared-universality-axis.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-26): Accept evaluation. Each universality claim needs a declared axis, covered class, inputs, adequacy relation, and resource bounds. See the [computational-model disposition](./computational-model-placement-decision.md) for verification.
 
 ## ADD-196
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Use tests a decomposition locally; retained rationale is what makes transfer testable](../../notes/use-tests-a-decomposition-locally-rationale-makes-transfer-testable.md).
 
@@ -2756,11 +2756,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23140](../../reports/state/review-jobs/review-job-8808/pair-13-use-tests-a-decomposition-locally-rationale-makes-transfer-testable.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept evaluation: the note separates evidence that a decomposition worked locally from tests of transfer, and requires interventions on the stated rationale or varied-context checks to examine the broader claim. See the [fourth evaluation-additions pass](./evaluation-additions-04.md) for versions, parent checks, and verification.
 
 ## ADD-197
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [The verifiability gradient](../../notes/verifiability-gradient.md).
 
@@ -2770,11 +2770,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23142](../../reports/state/review-jobs/review-job-8808/pair-15-verifiability-gradient.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept evaluation: the verifiability grades distinguish shape checks, statistical output tests, and deterministic checks, including cases where passing a check fails to establish quality. See the [fourth evaluation-additions pass](./evaluation-additions-04.md) for versions, parent checks, and verification.
 
 ## ADD-198
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Review automation should target verifiable subroles before reviewer identity](../../notes/verifiable-subroles-before-reviewer-identity.md).
 
@@ -2784,11 +2784,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23143](../../reports/state/review-jobs/review-job-8808/pair-16-verifiable-subroles-before-reviewer-identity.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept review-system. The Commonplace-gates section decomposes semantic review into inspectable subroles with explicit evidence targets and calibrated authority. See the [review and evidence additions pass](./evidence-additions-01.md) for versions, parent checks, and verification.
 
 ## ADD-199
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Verification needs a typed target before it needs an oracle](../../notes/verification-needs-a-typed-target-before-it-needs-an-oracle.md).
 
@@ -2798,11 +2798,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23144](../../reports/state/review-jobs/review-job-8808/pair-17-verification-needs-a-typed-target-before-it-needs-an-oracle.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept type-system. Declared, checkable document classes provide the attachment points and dispatch conditions for reusable verification. See the [mechanism additions pass](./mechanism-additions-01.md) for parent checks, versions, and verification.
 
 ## ADD-200
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Load-bearing vocabulary collisions should be prevented or visibly scoped at write time](../../notes/vocabulary-collisions-prevented-at-write-time-not-read-time.md).
 
@@ -2813,11 +2813,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23145](../../reports/state/review-jobs/review-job-8808/pair-18-vocabulary-collisions-prevented-at-write-time-not-read-time.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept context-engineering and document-system: cross-note co-loading creates vocabulary collisions, and write-time naming, visible scope, and checking conventions are proposed to keep documents composable. See the [context and document additions pass](./context-document-additions-02.md) for versions, parent checks, and verification.
 
 ## ADD-201
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Warranted reader update is the objective of substantive writing](../../notes/warranted-reader-update-is-the-objective-of-substantive-writing.md).
 
@@ -2827,11 +2827,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23147](../../reports/state/review-jobs/review-job-8808/pair-20-warranted-reader-update-is-the-objective-of-substantive-writing.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-26): Accept document-system: the note specifies the contribution objective and acceptance test for substantive knowledge writing. See the [context-engineering disposition](./context-engineering-placement-decision.md) for versions and verification.
 
 ## ADD-202
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Warranted transfer out of the human cut leaves people the hardest-to-warrant decisions](../../notes/warranted-transfer-leaves-people-the-hardest-to-warrant-decisions.md).
 
@@ -2841,11 +2841,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23148](../../reports/state/review-jobs/review-job-8809/pair-1-warranted-transfer-leaves-people-the-hardest-to-warrant-decisions.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept evaluation: the note specifies before-and-after evidence for preferential transfer, contrasts it with cross-sectional observations, and proposes a separate test of the effect on remaining human judgment. See the [fourth evaluation-additions pass](./evaluation-additions-04.md) for versions, parent checks, and verification.
 
 ## ADD-203
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Why notes have types](../../notes/why-notes-have-types.md).
 
@@ -2855,11 +2855,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23152](../../reports/state/review-jobs/review-job-8809/pair-5-why-notes-have-types.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept document-system. The note develops document structure, metadata requirements, type contracts, validation, and structured writing. See the [mechanism additions pass](./mechanism-additions-01.md) for parent checks, versions, and verification.
 
 ## ADD-204
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [The wikiwiki principle: lowest-friction capture, then progressive refinement in place](../../notes/wikiwiki-principle-lowest-friction-capture-then-progressive-refinement.md).
 
@@ -2869,11 +2869,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23153](../../reports/state/review-jobs/review-job-8809/pair-6-wikiwiki-principle-lowest-friction-capture-then-progressive-refinement.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept document-system. The note develops low-friction capture, progressive document structure, and when required sections become appropriate. See the [mechanism additions pass](./mechanism-additions-01.md) for parent checks, versions, and verification.
 
 ## ADD-205
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [World models assess explanatory-reach through action-conditioned prediction](../../notes/world-models-assess-explanatory-reach-through-action-conditioned.md).
 
@@ -2883,11 +2883,11 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23154](../../reports/state/review-jobs/review-job-8809/pair-7-world-models-assess-explanatory-reach-through-action-conditioned.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-26): Accept learning-theory, discovery. Action-conditioned prediction and shift tests assess a commitment's explanatory reach; comparison with addressable theories explains different learning and correction paths. See the [computational-model disposition](./computational-model-placement-decision.md) for verification.
 
 ## ADD-206
 
-Status: open.
+Status: resolved — accepted.
 
 Note: [Writing styles are strategies for managing underspecification](../../notes/writing-styles-are-strategies-for-managing-underspecification.md).
 
@@ -2897,4 +2897,4 @@ Reviewer suggestion:
 
 Local evidence: [review pair 23155](../../reports/state/review-jobs/review-job-8809/pair-8-writing-styles-are-strategies-for-managing-underspecification.md).
 
-Disposition of each proposed tag, reason, and verification: pending.
+Disposition (2026-09-27): Accept context-engineering and constraining: five writing styles are analyzed as different restrictions on interpretation, and style choice is tied to the token cost of always-loaded versus on-demand guidance. See the [context and document additions pass](./context-document-additions-02.md) for versions, parent checks, and verification.

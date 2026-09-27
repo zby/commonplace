@@ -2,7 +2,7 @@
 description: Formatting compliance, extra computation, and task decomposition can mimic distribution-selection gains, so prompt performance alone cannot identify the mechanism
 type: types/note.md
 traits: [has-external-sources, title-as-claim]
-tags: [type-system]
+tags: [type-system, evaluation, document-system]
 ---
 
 # Structured-prompt gains do not establish training-distribution selection

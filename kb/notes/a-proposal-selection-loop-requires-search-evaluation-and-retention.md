@@ -2,7 +2,7 @@
 description: "A proposal-selection improvement loop — candidates generated, evaluated with possible non-adoption, and accepted changes made operative — requires search, reject-capable evaluation, and operative retention"
 type: types/note.md
 traits: [title-as-claim, has-external-sources]
-tags: [computational-model, self-improving-systems, improvement-loop]
+tags: [self-improving-systems, improvement-loop, learning-theory]
 ---
 
 # A proposal-selection improvement loop requires search, evaluation, and operative retention

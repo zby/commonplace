@@ -2,7 +2,7 @@
 description: A compact cue can activate a much larger methodology already represented in model weights, trading very low context cost for model-dependent reconstruction rather than exact retained specification
 type: types/note.md
 traits: [title-as-claim]
-tags: [context-engineering, methodology]
+tags: [context-engineering, method-guided-action]
 ---
 
 # Weight-resident methodologies provide context-efficient behavioral compression

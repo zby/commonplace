@@ -2,7 +2,7 @@
 description: "Repairing a defeated claim by shrinking its subject is justified at every step, but shrinking the subject into the predicate's own extension yields an analytic title that passes every gate and says nothing."
 type: types/note.md
 traits: [title-as-claim]
-tags: [document-system, failure-modes]
+tags: [document-system, failure-modes, review-system, kb-maintenance]
 ---
 
 # Narrowing bought to survive review is paid for in content

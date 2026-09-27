@@ -2,7 +2,7 @@
 description: Compares contextual local steps with long-range search and explains why these recurring navigation modes impose different metadata requirements on an agent knowledge base
 type: types/note.md
 traits: [has-external-sources]
-tags: [links]
+tags: [links, context-engineering]
 ---
 
 # Link-following and search impose different metadata requirements

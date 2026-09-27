@@ -2,7 +2,7 @@
 description: A reference adds model-side interpretation only when the model must resolve it; upstream literalization is worthwhile when binding, token, authority, and regeneration costs favor it
 type: types/note.md
 traits: [title-as-claim]
-tags: [computational-model]
+tags: [computational-model, context-engineering, constraining, learning-theory]
 ---
 
 # Model-resolved indirection adds interpretation work to LLM execution

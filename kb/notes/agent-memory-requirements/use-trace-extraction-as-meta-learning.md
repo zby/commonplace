@@ -2,7 +2,7 @@
 description: "Trace extraction is an after-the-fact learning path that must respect signal quality, review, and readable-artifact versus distributed-parametric learning boundaries"
 type: types/note.md
 traits: [has-external-sources]
-tags: [agent-memory, context-engineering, learning-theory]
+tags: [agent-memory, context-engineering, learning-theory, continual-learning, improvement-loop, self-improving-systems]
 ---
 
 # Use Trace Extraction As Meta-Learning

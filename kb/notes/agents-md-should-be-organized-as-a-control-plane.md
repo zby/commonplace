@@ -2,7 +2,7 @@
 description: Theory for deciding what belongs in AGENTS.md using loading frequency and failure cost, with layers, exclusion rules, and migration paths
 type: types/note.md
 traits: [title-as-claim]
-tags: [architecture]
+tags: [architecture, context-engineering]
 ---
 
 # AGENTS.md should be organized as a control plane

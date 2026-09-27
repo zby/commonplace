@@ -2,7 +2,7 @@
 description: "Memory should be evaluated by downstream effects on tasks, artifacts, answers, behavior, context efficiency, and lineage alignment"
 type: types/note.md
 traits: [has-external-sources]
-tags: [agent-memory, context-engineering, learning-theory]
+tags: [agent-memory, context-engineering, learning-theory, evaluation]
 ---
 
 # Evaluate Memory By Effects, Not By Existence

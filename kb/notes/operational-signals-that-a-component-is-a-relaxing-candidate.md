@@ -2,7 +2,7 @@
 description: "Operational signals for when a component likely encodes a brittle proxy theory rather than an exact specification and should be relaxed instead of codified harder"
 type: types/note.md
 traits: [title-as-claim]
-tags: [learning-theory, constraining]
+tags: [learning-theory, constraining, llm-reliability]
 ---
 
 # Operational signals that a component is a relaxing candidate

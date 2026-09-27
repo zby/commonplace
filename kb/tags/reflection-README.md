@@ -18,6 +18,10 @@ Notes on reflective systems: systems that read and change their own organization
 
 ## Scope and limits of reflective coverage
 
+- [Commonplace's reflective development path](../notes/commonplace-builds-a-theory-builder-and-tests-whether-it-learns.md) — method texts govern operation and undergo criticism
+- [Moving interpretation into enforcement](../notes/moving-the-interpretation-enforcement-boundary-requires-coverage.md) — governing the transfer needs coverage of both forms and their mapping
+- [Theory and factory learning share a path](../notes/open-ended-theory-learning-and-factory-learning-close-the-same.md) — a revisable self-theory guides changes and meets their consequences
+- [Distinct precedents for theory building](../notes/theory-building-has-distinct-precedents.md) — causal self-representation is separate from criticism and persistence
 - [Reflective coverage is graded across representational forms](../notes/reflective-coverage-is-graded-across-representational-forms.md) — coverage is stated per form and operation; controlling an external dependency does not bring it inside
 - [A repeatable operative path keeps a redesign class open to revision](../notes/a-repeatable-operative-path-keeps-a-redesign-class-open-to-revision.md) — the causal path a redesign class needs, from representation through admission to continuity
 - [Machinery persists by warrant, not position, in a reflective loop](../notes/machinery-persists-by-warrant-not-position-in-a-reflective-loop.md) — being revisable does not oblige revision; fixed general machinery may stay when its role is earned

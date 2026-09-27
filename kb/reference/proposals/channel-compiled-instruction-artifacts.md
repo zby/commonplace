@@ -1,7 +1,7 @@
 ---
 description: "Proposal: resolve execution channel at install time so an agent reads one literal procedure, extending build-time generation from paths to shell and command form"
 type: reference/types/design-proposal.md
-tags: [architecture]
+tags: [architecture, commonplace-architecture]
 ---
 
 # Channel-compiled instruction artifacts

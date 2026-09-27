@@ -2,7 +2,7 @@
 description: One result-only check can warrant retaining an episode as evidence, but abstracting its explanation also needs evidence about a faithful producing process and an explicit scope boundary
 type: types/note.md
 traits: [title-as-claim]
-tags: [learning-theory, agent-memory]
+tags: [learning-theory, agent-memory, evaluation]
 ---
 
 # A checked outcome licenses retaining an episode, not abstracting its explanation

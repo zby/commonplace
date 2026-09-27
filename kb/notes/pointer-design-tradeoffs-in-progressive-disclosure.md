@@ -2,7 +2,7 @@
 description: "Compares fixed, query-time, and crafted retrieval pointers across specificity, cost, availability, accuracy, and authoring dependence"
 type: types/note.md
 traits: [has-external-sources]
-tags: [links, computational-model]
+tags: [links, context-engineering]
 ---
 
 # Pointer design tradeoffs in progressive disclosure

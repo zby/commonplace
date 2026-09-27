@@ -2,7 +2,7 @@
 description: "Derivation — claims recoverable from the source, nothing added — leaves the source as ground truth; what adds unentailed resolutions becomes ground truth at commit, repaired by supersession"
 type: types/note.md
 traits: [title-as-claim, has-comparison]
-tags: [kb-maintenance, learning-theory, constraining, claims-and-grounding]
+tags: [kb-maintenance, learning-theory, constraining, claims-and-grounding, artifact-analysis]
 ---
 
 # Commitment, not derivation, creates new ground truth

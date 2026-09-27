@@ -2,7 +2,7 @@
 description: "Retain the recognition anchor and rationale the intended consumption path cannot reliably supply — an enforced path can carry the anchor itself; reconstructable framework recap factors into the linked artifact, tested by downstream effects"
 type: types/note.md
 traits: [title-as-claim]
-tags: [context-engineering]
+tags: [context-engineering, document-system]
 ---
 
 # A linked note's durable payload is what its consumption path cannot reliably supply

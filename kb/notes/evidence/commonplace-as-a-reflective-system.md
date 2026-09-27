@@ -2,7 +2,7 @@
 description: "Commonplace witnesses that a human-inclusive KB can be reflectively self-improving on one pathway despite uneven coverage and human-gated design judgment"
 type: types/note.md
 traits: [has-implementation]
-tags: [computational-model, self-improving-systems, reflection]
+tags: [self-improving-systems, reflection, improvement-loop, learning-theory]
 ---
 
 # Commonplace as a reflective self-improving system

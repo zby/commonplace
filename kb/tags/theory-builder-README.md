@@ -10,22 +10,23 @@ Systems that apply Popper's conjecture and refutation to theories they state: th
 
 ## Definitions and the research program
 
-- [Theory builder](../notes/definitions/theory-builder.md) — the four conditions: localized content, guidance through content, criticism of content, iteration
-- [Tentative theory](../notes/definitions/tentative-theory.md) — the status of every retained theory; it licenses no use
-- [Addressable theory](../notes/definitions/addressable-theory.md) — the graded structural property that lets criticism name a part and revision keep the rest
-- [Reach-assessment](../notes/definitions/reach-assessment.md) — judging whether a commitment's claimed explanatory-reach is genuine, across representational forms
-- [Commonplace builds a theory builder and tests whether it learns](../notes/commonplace-builds-a-theory-builder-and-tests-whether-it-learns.md) — the research program and its comparisons
-- [Theory building has distinct epistemic, structural, and implementation precedents](../notes/theory-building-has-distinct-precedents.md) — resembling one precedent does not establish the others
-- [Mechanistic constraints make Popperian KB recommendations actionable](../notes/mechanistic-constraints-make-popperian-kb-recommendations-actionable.md) — bounded context requires conjecture and refutation; three KB practices follow
-- [Missing rationale does not exclude a theory builder; weight-only retention does](../notes/evidence/missing-rationale-does-not-exclude-a-builder-weights-do-across-runs.md) — membership tested on three external reports
+- [Theory builder](../notes/definitions/theory-builder.md) — localized theories guide action, meet criticism, and shape later rounds
+- [Tentative theory](../notes/definitions/tentative-theory.md) — all retained theories remain open to criticism
+- [Addressable theory](../notes/definitions/addressable-theory.md) — separately inspectable and revisable assumptions, scope, and parts
+- [Reach-assessment](../notes/definitions/reach-assessment.md) — judging generality across representational forms
+- [Commonplace's theory-builder program](../notes/commonplace-builds-a-theory-builder-and-tests-whether-it-learns.md) — membership and learning are separate claims
+- [Distinct theory-building precedents](../notes/theory-building-has-distinct-precedents.md) — epistemic, structural, and implementation comparisons
+- [Popperian KB practices](../notes/mechanistic-constraints-make-popperian-kb-recommendations-actionable.md) — falsifiers, contradiction checks, and rejected interpretations
+- [Missing rationale versus weight-only retention](../notes/evidence/missing-rationale-does-not-exclude-a-builder-weights-do-across-runs.md) — boundary checks across three external reports
 
 ## Criticizing and assessing theories
 
-- [Competing causal theories can guide distinguishing experiments](../notes/competing-causal-theories-can-guide-distinguishing-experiments.md) — unresolved explanations can specify what evidence to seek next, even when their observational predictions agree
-- [A claim's warrant does not determine its fit in a working theory](../notes/a-claims-warrant-does-not-determine-its-fit-in-a-working-theory.md) — warrant and fit are separate questions a builder must answer separately
+- [Disconnected theory-path witnesses](../notes/disconnected-witnesses-do-not-establish-a-causal-path-through-theory.md) — theory use, criticism, and later operation must connect
+- [Competing causal theories](../notes/competing-causal-theories-can-guide-distinguishing-experiments.md) — rivals guide discriminating experiments
+- [Warrant and theory fit](../notes/a-claims-warrant-does-not-determine-its-fit-in-a-working-theory.md) — distinct questions require separate assessment
 - [System use selects theory fit without a fixed oracle](../notes/system-use-selects-theory-fit-without-a-fixed-oracle.md) — live use selects for fit where no oracle decides it
 - [System use provides evidence of theory fit, not independent warrant](../notes/system-use-provides-evidence-of-theory-fit-not-independent-warrant.md) — the limit of that selection: warrant still needs independent evidence
-- [Revision guided by rationale needs faithfulness, not just legibility](../notes/revision-guided-by-rationale-needs-faithfulness-not-just-legibility.md) — misleading rationale directs repair to the wrong premise
+- [Faithful rationale](../notes/revision-guided-by-rationale-needs-faithfulness-not-just-legibility.md) — a legible but misleading dependency can misdirect repair
 - [A theory's prototype standing is its revision cost](../notes/prototype-standing-is-revision-cost-binding-plus-lost-investment.md) — external binding plus lost investment, independent of representational form
 - [Causal and proof obligations assess explanatory-reach formally](../notes/formal-systems-assess-explanatory-reach-through-causal-and-proof.md) — reach-assessment in symbolic systems
 - [World models assess explanatory-reach through action-conditioned prediction](../notes/world-models-assess-explanatory-reach-through-action-conditioned.md) — reach-assessment in learned parametric models
@@ -33,6 +34,10 @@ Systems that apply Popper's conjecture and refutation to theories they state: th
 
 ## Program theory and use
 
+- [A theory path does not establish improvement](../notes/a-complete-theory-path-does-not-establish-improved-capacity.md) — separates membership, mediation, criticism, and capacity
+- [Theory coordinates factory development](../notes/addressable-theory-can-coordinate-heterogeneous-factory-development.md) — stated explanations guide search and remain open to revision
+- [Naur and computational theory possession](../notes/naur-equates-machine-execution-with-formulated-criteria.md) — functional tests keep the human-only inference contestable
+- [Theory and factory learning](../notes/open-ended-theory-learning-and-factory-learning-close-the-same.md) — recurrent criticism connects theory use to production changes
 - [Open-ended construction builds an object and a theory of it](../notes/open-ended-construction-builds-an-object-and-a-theory-of-it.md) — why construction that discovers an object's organization also produces a theory of it
 - [Holding a program theory means sustaining coherent search under delayed feedback](../notes/program-theory-sustains-search-under-delayed-feedback.md) — possession is tested by coherent search, not a right first change
 - [Project-theory possession compares new demands with existing organization](../notes/project-theory-relates-new-demands-to-existing-organization.md) — relating a demand to existing responsibilities before adding parallel structure

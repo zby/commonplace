@@ -2,7 +2,7 @@
 description: "Distinguishes backcast and reinvention benchmarks from autonomous discovery: they show that target insights are reachable from supplied ingredients, not that a system can select and verify new discoveries prospectively."
 type: types/note.md
 traits: [title-as-claim, has-external-sources]
-tags: [learning-theory, discovery]
+tags: [learning-theory, discovery, evaluation]
 ---
 
 # Known-target discovery benchmarks show reachability, not discovery closure

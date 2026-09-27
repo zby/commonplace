@@ -2,7 +2,7 @@
 description: "An LLM can ship fluent output after silently relaxing an unmet goal, while human composition may expose the same gap as a stall; a conjectural mechanism for why readers inherit the check"
 type: types/note.md
 traits: [title-as-claim]
-tags: [learning-theory, llm-reliability]
+tags: [learning-theory, llm-reliability, discovery]
 ---
 
 # LLM generation can hide a relaxed goal where human writing exposes a stall

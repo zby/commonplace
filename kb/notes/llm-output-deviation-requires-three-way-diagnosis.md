@@ -2,7 +2,7 @@
 description: "For a fixed assembled input, whether V exceeds I, whether D escapes V, and how D's spread affects realization are three diagnostic questions with different primary repair surfaces"
 type: types/note.md
 traits: [title-as-claim, synthesis, has-external-sources]
-tags: [llm-reliability, computational-model]
+tags: [llm-reliability, computational-model, evaluation, learning-theory]
 ---
 
 # LLM output deviation requires three-way diagnosis because remedies target different relations

@@ -1,7 +1,7 @@
 ---
 description: Structural validation catches form errors; semantic review catches content errors like incomplete enumerations, grounding drift, boundary-case gaps, and internal contradictions
 type: types/note.md
-tags: [kb-maintenance, observability, review-system]
+tags: [kb-maintenance, observability, review-system, document-system]
 ---
 
 # Semantic review catches content errors that structural validation cannot

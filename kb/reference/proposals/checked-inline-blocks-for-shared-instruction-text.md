@@ -1,7 +1,7 @@
 ---
 description: "Proposal: reuse natural-language authoring mechanics in specialized writer prompts through literal inlining backed by deterministic source-to-copy checks"
 type: reference/types/design-proposal.md
-tags: [architecture, context-engineering]
+tags: [architecture, context-engineering, commonplace-architecture]
 ---
 
 # Checked inline blocks for shared instruction text

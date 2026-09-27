@@ -2,7 +2,7 @@
 description: Survey of always-loaded context mechanisms across agent harnesses — system prompt files, capability descriptions, memory, and configuration injection — cataloguing what each carries, how write policies differ, and where the gaps are
 type: types/note.md
 traits: []
-tags: [computational-model, architecture]
+tags: [computational-model, architecture, context-engineering, agent-memory, learning-theory, commonplace-architecture]
 ---
 
 # Always-loaded context mechanisms in agent harnesses

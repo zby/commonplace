@@ -2,7 +2,7 @@
 description: "LLMs can inflate compact seeds into verbose artifacts without adding extractable structure; a KB resists this only when links make additional structure accessible"
 type: types/note.md
 traits: [title-as-claim]
-tags: [learning-theory, discovery]
+tags: [learning-theory, discovery, document-system]
 ---
 
 # Reverse compression is when LLM output expands without adding information

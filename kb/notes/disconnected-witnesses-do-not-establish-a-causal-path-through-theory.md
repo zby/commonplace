@@ -2,7 +2,7 @@
 description: "Evidence of recurrent learning through theory must identify the joins of one causal path; connected use and criticism still need separate evidence of improved capacity"
 type: types/note.md
 traits: [title-as-claim, synthesis]
-tags: [self-improving-systems, evaluation, warranted-autonomy]
+tags: [self-improving-systems, evaluation, theory-builder, learning-theory]
 ---
 
 # Disconnected witnesses do not establish a full causal path through theory

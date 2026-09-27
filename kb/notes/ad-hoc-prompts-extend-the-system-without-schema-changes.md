@@ -2,7 +2,7 @@
 description: Any system with an LLM agent layer can absorb new requirements through natural language prompts without changing the deterministic base
 type: types/note.md
 traits: []
-tags: [learning-theory, constraining, deploy-time-learning]
+tags: [learning-theory, constraining, deploy-time-learning, continual-learning, computational-model, self-improving-systems]
 ---
 
 # Ad hoc prompts extend the system without schema changes

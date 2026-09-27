@@ -2,7 +2,7 @@
 description: "Causal and proof obligations demonstrate two ways formal symbolic systems can assess explanatory-reach inside a warranted model"
 type: types/note.md
 traits: [title-as-claim, has-comparison, has-external-sources]
-tags: [computational-model, self-improving-systems, theory-builder]
+tags: [self-improving-systems, theory-builder, evaluation, discovery, learning-theory]
 ---
 
 # Causal and proof obligations are two formal routes to assessing explanatory-reach

@@ -2,7 +2,7 @@
 description: "Separates heuristic rules that substitute for unavailable read-time reasoning from authority-bearing constraints and symbolic codification, which remain useful even with abundant context"
 type: types/note.md
 traits: [has-comparison, title-as-claim]
-tags: [learning-theory, artifact-analysis]
+tags: [learning-theory, artifact-analysis, context-engineering]
 ---
 
 # System-definition artifacts are crystallized reasoning under context scarcity

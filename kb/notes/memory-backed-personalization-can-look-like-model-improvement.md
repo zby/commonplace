@@ -2,7 +2,7 @@
 description: "Distinguishes user-specific gains supplied by retained intent from gains in the model that interprets the assembled context."
 type: types/note.md
 traits: [title-as-claim]
-tags: [agent-memory, computational-model, llm-reliability]
+tags: [agent-memory, llm-reliability, context-engineering, evaluation, learning-theory]
 ---
 
 # Memory-backed personalization can look like model improvement

@@ -2,7 +2,7 @@
 type: types/note.md
 description: Explains why improving context selection within a fixed operation interface cannot establish that the interface admits every useful active-context projection.
 traits: [title-as-claim, has-comparison, has-external-sources]
-tags: [context-engineering, computational-model, agent-memory]
+tags: [context-engineering, computational-model, architecture, evaluation]
 ---
 
 # A context-operation interface bounds the projections its policy can realize

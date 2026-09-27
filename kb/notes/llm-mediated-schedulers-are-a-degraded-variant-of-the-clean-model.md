@@ -2,7 +2,7 @@
 description: When the agent scheduler lives inside an LLM conversation it becomes bounded and degrades; three recovery strategies — compaction, externalisation, factoring into code — restore the clean separation to increasing degrees
 type: types/note.md
 traits: [title-as-claim]
-tags: [computational-model]
+tags: [computational-model, context-engineering]
 ---
 
 # LLM-mediated schedulers are a degraded variant of the clean model

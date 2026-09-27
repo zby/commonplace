@@ -27,7 +27,6 @@ This tag gathers what agents retain across sessions and how that retention becom
 ## Boundaries And Failure Modes
 
 - [Active work state is not retrospective memory or chat history](../notes/active-work-state-is-not-retrospective-memory-or-chat-history.md) — separates live task state from retained retrospective memory
-- [A context-operation interface bounds the projections its policy can realize](../notes/context-operation-interface-bounds-context-policy.md) — separates retained substrate, available projection operations, controller policy, and active-context exposure
 - [Preserve Evidence Without Making History The Next Context](../notes/agent-memory-requirements/preserve-evidence-without-loading-history.md) — keeps trace evidence available for audit and extraction without loading raw history by default
 - [Flat memory predicts specific cross-contamination failures that are empirically testable](../notes/flat-memory-predicts-specific-cross-contamination-failures-that-are.md) — predicts search pollution, identity scatter, and insight trapping when memory roles collapse
 - [Trace-extracted memory earns authority per operation, not at capture](../notes/trace-extracted-memory-earns-authority-per-operation-not-at-capture.md) — trace-extracted records become knowledge only after operations such as verification, abstraction, and consultation

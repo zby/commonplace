@@ -2,7 +2,7 @@
 description: Widening a claim's vocabulary to survive counterexamples raises universality by spending precision, so content stays flat — and the unreadability that follows is the symptom, not the price of rigor
 type: types/note.md
 traits: [title-as-claim]
-tags: [document-system, failure-modes]
+tags: [document-system, failure-modes, claims-and-grounding, kb-maintenance]
 ---
 
 # Generality bought to avoid counterexamples is paid for in precision

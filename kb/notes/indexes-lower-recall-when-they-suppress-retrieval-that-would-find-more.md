@@ -2,7 +2,7 @@
 description: "A plausibly exhaustive index lowers route-level recall only when it prevents retrieval that would have produced greater task-relevant coverage"
 type: types/note.md
 traits: [title-as-claim]
-tags: [kb-maintenance, curation]
+tags: [kb-maintenance, curation, failure-modes]
 ---
 
 # Indexes lower recall when they suppress retrieval that would find more

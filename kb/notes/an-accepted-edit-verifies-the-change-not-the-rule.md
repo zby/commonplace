@@ -2,7 +2,7 @@
 description: "Human acceptance of an edit is a strong oracle for 'this change was wanted here' but a weak oracle for 'this generalizes' — mining rules from accepted edits inherits instance-level verification while the generalization step stays oracle-poor"
 type: types/note.md
 traits: [title-as-claim, has-external-sources]
-tags: [learning-theory, agent-memory]
+tags: [learning-theory, agent-memory, evaluation]
 ---
 
 # An accepted edit verifies the change, not the rule

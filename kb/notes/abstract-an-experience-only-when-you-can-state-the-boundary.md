@@ -2,7 +2,7 @@
 description: Abstract an episode into a lesson only when you can state its boundary, else preserve the instance; an over-generalized lesson is one that drops the condition clause
 type: types/note.md
 traits: [title-as-claim, has-external-sources]
-tags: [learning-theory, deploy-time-learning, failure-modes]
+tags: [learning-theory, deploy-time-learning, failure-modes, agent-memory, discovery]
 ---
 
 # Abstract an experience into a lesson only when you can state where the lesson stops

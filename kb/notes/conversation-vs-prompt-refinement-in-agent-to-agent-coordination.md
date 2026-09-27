@@ -2,7 +2,7 @@
 description: Conversation preserves the execution trace; prompt refinement compresses it into a clean handoff. The right choice depends on architecture and how much intermediate work should survive
 type: types/note.md
 traits: []
-tags: [computational-model]
+tags: [computational-model, context-engineering]
 ---
 
 # Conversation vs prompt refinement in agent-to-agent coordination

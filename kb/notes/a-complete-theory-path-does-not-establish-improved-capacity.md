@@ -2,7 +2,7 @@
 description: "Mediation, empirical contact, response to criticism, and recurrent mediation support different claims; none alone establishes improved capacity, and retained addressable theory is one realization"
 type: types/note.md
 traits: [title-as-claim]
-tags: [self-improving-systems, warranted-autonomy]
+tags: [self-improving-systems, warranted-autonomy, theory-builder, learning-theory]
 ---
 
 # A complete theory path does not establish improved capacity

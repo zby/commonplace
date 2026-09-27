@@ -2,7 +2,7 @@
 description: Links encode conditional possibilities, not obligations — every label must name a specific reader-need (the condition under which following pays off); content required for all reachable readers should be inlined, not linked
 type: types/note.md
 traits: [title-as-claim]
-tags: [links]
+tags: [links, context-engineering]
 ---
 
 # Links encode conditional possibilities, not obligations

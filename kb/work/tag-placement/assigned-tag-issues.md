@@ -1,10 +1,10 @@
 # Assigned-tag issues
 
-Initial inventory: 67 reviewer mismatch proposals and one uncertain judgment. Current status: 34 resolved (31 assignments retained, three retagged); 34 open. Follow the [workshop framing](./README.md) for disposition and closure. Issue IDs remain stable after edits. Fifteen findings depend on a parent–child decision, including two additional llm-reliability cases found during disposition; they are included in these 68.
+Initial inventory: 67 reviewer mismatch proposals and one uncertain judgment. Current status: 68 resolved (36 assignments retained, 32 corrected); none open. Follow the [workshop framing](./README.md) for disposition and closure. Issue IDs remain stable after edits. Fifteen findings depend on a parent–child decision, including two additional llm-reliability cases found during disposition; they are included in these 68.
 
 ## TP-001 — context-engineering
 
-- Status: open.
+- Status: resolved — retagged.
 - Note: [A citation cannot assert more fidelity than its capture preserved](../../notes/a-citation-cannot-assert-more-fidelity-than-its-capture-preserved.md).
 - Head: [context-engineering](../../tags/context-engineering-README.md).
 - Initial reviewer judgment: mismatch.
@@ -12,7 +12,7 @@ Initial inventory: 67 reviewer mismatch proposals and one uncertain judgment. Cu
 
 Reviewer reason: “Fidelity is fixed at ingest” concerns provenance and source grounding. It does not substantively address routing, loading, scoping, or assembling knowledge for a bounded call.
 
-Disposition, reason, and verification: pending.
+Disposition (2026-09-26): The finite context window motivates lossy capture, but the developed mechanism governs citation fidelity and recapture, not knowledge loading. Replace context-engineering with claims-and-grounding and its kb-maintenance parent. See the [context-engineering disposition](./context-engineering-placement-decision.md) for checked versions and verification.
 
 ## TP-002 — self-improving-systems
 
@@ -42,7 +42,7 @@ Disposition (2026-09-26): Retain learning-theory through llm-reliability: the bo
 
 ## TP-004 — computational-model
 
-- Status: open.
+- Status: resolved — retagged.
 - Note: [A proposal-selection improvement loop requires search, evaluation, and operative retention](../../notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md).
 - Head: [computational-model](../../tags/computational-model-README.md).
 - Initial reviewer judgment: mismatch.
@@ -50,11 +50,11 @@ Disposition (2026-09-26): Retain learning-theory through llm-reliability: the bo
 
 Reviewer reason: “The decomposition specifies what the loop must accomplish, not a sequence, a component diagram, or a division of labour.” It is a general learning architecture, not LLM call execution or orchestration.
 
-Disposition, reason, and verification: pending.
+Disposition (2026-09-26): remove computational-model. The three functions define candidate search, reject-capable evaluation, and operative retention across human and computational systems. They do not explain bounded-call execution. Keep improvement-loop and its parent areas. See the [computational-model disposition](./computational-model-placement-decision.md) for additions, parent checks, input versions, and verification.
 
 ## TP-005 — context-engineering
 
-- Status: open.
+- Status: resolved — retagged.
 - Note: [A retained instruction preserves what testing selected](../../notes/a-retained-instruction-preserves-what-testing-selected.md).
 - Head: [context-engineering](../../tags/context-engineering-README.md).
 - Initial reviewer judgment: mismatch.
@@ -62,7 +62,7 @@ Disposition, reason, and verification: pending.
 
 Reviewer reason: “Retaining the winner commits that evaluated choice for reuse” concerns selection and operative retention. It does not address routing, loading, scoping, context budget, or a storage choice made for later loading; the context-engineering inclusion condition is unmet.
 
-Disposition, reason, and verification: pending.
+Disposition (2026-09-26): Testing selects a candidate procedure and retention makes the evaluated choice reusable outside weights. Replace context-engineering with improvement-loop and continual-learning, plus self-improving-systems and learning-theory. No loading mechanism is developed. See the [context-engineering disposition](./context-engineering-placement-decision.md) for checked versions and verification.
 
 ## TP-006 — deploy-time-learning
 
@@ -90,7 +90,7 @@ Disposition (2026-09-26): retain deploy-time-learning. The body explains how pro
 
 ## TP-008 — architecture
 
-- Status: open.
+- Status: resolved — assignment retained under revised scope.
 - Note: [Agent-runtime analysis should separate scheduling, context assembly, and external state](../../notes/agent-runtime-analysis-should-separate-scheduling-context-state.md).
 - Head: [architecture](../../tags/architecture-README.md).
 - Initial reviewer judgment: mismatch.
@@ -98,7 +98,7 @@ Disposition (2026-09-26): retain deploy-time-learning. The body explains how pro
 
 Reviewer reason: The note analyzes generic agent runtimes and practitioner mappings; it does not substantively address Commonplace repository structure, installation, AGENTS.md control plane, or file-storage decision required by this head.
 
-Disposition, reason, and verification: pending.
+Disposition (2026-09-26): Retain architecture under the revised general head, superseding the removal under its old Commonplace-only scope. The note separates runtime responsibilities and explains why those boundaries locate failures. Keep the accepted context-engineering addition and computational-model. It does not qualify for commonplace-architecture. See the [architecture split](./architecture-placement-decision.md) for the operator decision, membership check, input versions, and verification.
 
 ## TP-009 — self-improving-systems
 
@@ -115,7 +115,7 @@ Disposition (2026-09-26): Retain self-improving-systems through software-factory
 
 ## TP-010 — architecture
 
-- Status: open.
+- Status: resolved — assignment retained under revised scope.
 - Note: [Always-loaded context mechanisms in agent harnesses](../../notes/always-loaded-context-mechanisms-in-agent-harnesses.md).
 - Head: [architecture](../../tags/architecture-README.md).
 - Initial reviewer judgment: mismatch.
@@ -123,11 +123,11 @@ Disposition (2026-09-26): Retain self-improving-systems through software-factory
 
 Reviewer reason: The note surveys cross-platform harness context mechanisms; the Commonplace installation example is incidental. It does not substantively address Commonplace’s repository structure, installed library, AGENTS.md control plane, or file-storage decision.
 
-Disposition, reason, and verification: pending.
+Disposition (2026-09-26): Retain architecture and add commonplace-architecture. The survey compares architectural context surfaces, and its configuration-injection section develops a Commonplace installation example. Keep the accepted context-engineering and agent-memory additions, with learning-theory as the latter's parent. See the [architecture split](./architecture-placement-decision.md) for the operator decision, membership check, input versions, and verification.
 
 ## TP-011 — continual-learning
 
-- Status: open.
+- Status: resolved — tag removed.
 - Note: [An optimal long-run learning strategy invests in its own machinery](../../notes/an-optimal-long-run-learning-strategy-invests-in-its-own-machinery.md).
 - Head: [continual-learning](../../tags/continual-learning-README.md).
 - Initial reviewer judgment: mismatch.
@@ -135,7 +135,7 @@ Disposition, reason, and verification: pending.
 
 Reviewer reason: The note leaves the machinery and its retention form unspecified; it does not substantively address continued learning through retained changes outside model weights, the head’s inclusion condition.
 
-Disposition, reason, and verification: pending.
+Disposition (2026-09-26): Remove continual-learning. The return on persistent improvements to learning machinery is developed without specifying retained non-weight artifacts. Keep learning-theory and self-improving-systems, and move the curated route to the latter head. See the [remaining-placement disposition](./remaining-placement-decision.md) for versions and verification.
 
 ## TP-012 — artifact-analysis
 
@@ -151,7 +151,7 @@ Disposition (2026-09-26): Remove artifact-analysis and keep document-system. The
 
 ## TP-013 — computational-model
 
-- Status: open.
+- Status: resolved — retagged.
 - Note: [Backtracking keeps lightweight search control provisional](../../notes/backtracking-keeps-lightweight-search-control-provisional.md).
 - Head: [computational-model](../../tags/computational-model-README.md).
 - Initial reviewer judgment: mismatch.
@@ -159,11 +159,11 @@ Disposition (2026-09-26): Remove artifact-analysis and keep document-system. The
 
 Reviewer reason: The note does not explain LLM call execution, scheduling, scoping, or orchestration; its “return path” is a general search-recovery condition.
 
-Disposition, reason, and verification: pending.
+Disposition (2026-09-26): remove computational-model. The return path preserves a provisional search choice across artifacts, plans, or theories; it supplies no LLM execution or scheduling mechanism. Keep improvement-loop and its parent areas. See the [computational-model disposition](./computational-model-placement-decision.md) for additions, parent checks, input versions, and verification.
 
 ## TP-014 — constraining
 
-- Status: open.
+- Status: resolved — tag removed.
 - Note: [The bitter lesson selects against unearned reach, not against structure](../../notes/bitter-lesson-selects-against-unearned-reach-not-against-structure.md).
 - Head: [constraining](../../tags/constraining-README.md).
 - Initial reviewer judgment: mismatch.
@@ -171,11 +171,11 @@ Disposition, reason, and verification: pending.
 
 Reviewer reason: The note discusses structure, formalization, and exactness as examples, but never explains or decides when to narrow the interpretations an artifact admits.
 
-Disposition, reason, and verification: pending.
+Disposition (2026-09-26): Remove constraining. The argument concerns whether tests earn a generalization's claimed reach, not narrowing or widening an artifact's valid interpretations. Formalization and exactness are cases in that warrant argument. Keep learning-theory, self-improving-systems, and continual-learning for the developed defense of learning in retained readable forms. See the [remaining-placement disposition](./remaining-placement-decision.md) for versions and verification.
 
 ## TP-015 — context-engineering
 
-- Status: open.
+- Status: resolved — retagged.
 - Note: [Brainstorming: how to test whether pairwise comparison can harden soft oracles](../../notes/brainstorming-how-to-test-whether-pairwise-comparison-can-harden.md).
 - Head: [context-engineering](../../tags/context-engineering-README.md).
 - Initial reviewer judgment: mismatch.
@@ -183,11 +183,11 @@ Disposition, reason, and verification: pending.
 
 Reviewer reason: “Prompt rewrite selection” is a benchmark candidate, and “useful in context engineering” names an application; the note does not substantively address routing, loading, scoping, or scheduling knowledge into bounded calls.
 
-Disposition, reason, and verification: pending.
+Disposition (2026-09-26): Prompt rewrites are one proposed benchmark. The experiment concerns judge discrimination, variance, bias, and correction of selection errors, so keep evaluation and llm-reliability, remove context-engineering, and add the learning-theory parent. See the [context-engineering disposition](./context-engineering-placement-decision.md) for checked versions and verification.
 
 ## TP-016 — context-engineering
 
-- Status: open.
+- Status: resolved — retagged.
 - Note: [Cheap generation breaks text volume as an effort signal](../../notes/cheap-generation-breaks-text-volume-as-an-effort-signal.md).
 - Head: [context-engineering](../../tags/context-engineering-README.md).
 - Initial reviewer judgment: mismatch.
@@ -195,11 +195,11 @@ Disposition, reason, and verification: pending.
 
 Reviewer reason: “A large artifact can then require more reviewer effort” concerns human inspection cost, with no developed question about getting knowledge into a bounded LLM call.
 
-Disposition, reason, and verification: pending.
+Disposition (2026-09-26): Text volume is assessed as a triage signal for reviewer effort. This develops neither bounded-context operations nor an LLM deviation or correction mechanism. Replace context-engineering and llm-reliability with evaluation. See the [context-engineering disposition](./context-engineering-placement-decision.md) for checked versions and verification.
 
 ## TP-017 — llm-reliability
 
-- Status: open.
+- Status: resolved — retagged.
 - Note: [Cheap generation breaks text volume as an effort signal](../../notes/cheap-generation-breaks-text-volume-as-an-effort-signal.md).
 - Head: [llm-reliability](../../tags/llm-reliability-README.md).
 - Initial reviewer judgment: mismatch.
@@ -207,7 +207,7 @@ Disposition, reason, and verification: pending.
 
 Reviewer reason: Cheap generation changes the evidential value of text volume; the note explicitly says this “does not show that the text is false, incorrect, or machine-generated” and does not diagnose or correct an LLM output deviation.
 
-Disposition, reason, and verification: pending.
+Disposition (2026-09-26): The note expressly separates its triage signal from evidence that an output is false or incorrect. Remove llm-reliability along with context-engineering; evaluation covers what the signal establishes. See the [context-engineering disposition](./context-engineering-placement-decision.md) for checked versions and verification.
 
 ## TP-018 — learning-theory
 
@@ -224,7 +224,7 @@ Disposition (2026-09-26): Retain learning-theory through constraining: installin
 
 ## TP-019 — software-factory
 
-- Status: open.
+- Status: resolved — retagged.
 - Note: [Preferential codification concentrates less predictable work at the agent boundary](../../notes/codifying-predictable-choices-leaves-agents-with-less-predictable-work.md).
 - Head: [software-factory](../../tags/software-factory-README.md).
 - Initial reviewer judgment: mismatch.
@@ -232,7 +232,7 @@ Disposition (2026-09-26): Retain learning-theory through constraining: installin
 
 Reviewer reason: The note's examples concern generic decision cases, agent planning, and later codification. It does not substantively address reusable production machinery for a declared product family, its development, or a software house.
 
-Disposition, reason, and verification: pending.
+Disposition (2026-09-26): Replace software-factory with constraining. The shift from model interpretation to symbolic enforcement is substantive; a declared product family is absent. Keep computational-model and self-improving-systems: verified later codification changes the system's operative division of work. Add learning-theory through the supported child assignments. See the [remaining-placement disposition](./remaining-placement-decision.md) for versions and verification.
 
 ## TP-020 — deploy-time-learning
 
@@ -248,7 +248,7 @@ Disposition (2026-09-26): retain deploy-time-learning. The note explicitly expla
 
 ## TP-021 — agent-memory
 
-- Status: open.
+- Status: resolved — retagged.
 - Note: [A context-operation interface bounds the projections its policy can realize](../../notes/context-operation-interface-bounds-context-policy.md).
 - Head: [agent-memory](../../tags/agent-memory-README.md).
 - Initial reviewer judgment: mismatch.
@@ -256,11 +256,11 @@ Disposition (2026-09-26): retain deploy-time-learning. The note explicitly expla
 
 Reviewer reason: “Retained state and active context are different runtime layers” establishes an input distinction, but the note does not substantively ask what persists between sessions or under what retention authority; the agent-memory head requires that question.
 
-Disposition, reason, and verification: pending.
+Disposition (2026-09-26): Remove agent-memory. Persistence horizons are comparison coordinates, while the question is which active-context projections an interface admits. Keep context-engineering and computational-model; add architecture for operation and controller boundaries and evaluation for the explicit limits on fixed-interface comparisons. No claim about what should persist across sessions or retention authority is developed. See the [remaining-placement disposition](./remaining-placement-decision.md) for versions and verification.
 
 ## TP-022 — context-engineering
 
-- Status: open.
+- Status: resolved — retagged.
 - Note: [Cross-task transition policy remains scheduling behind a tool interface](../../notes/cross-task-transition-policy-remains-scheduling-behind-tools.md).
 - Head: [context-engineering](../../tags/context-engineering-README.md).
 - Initial reviewer judgment: mismatch.
@@ -268,7 +268,7 @@ Disposition, reason, and verification: pending.
 
 Reviewer reason: Its transitions choose independently steerable goals and control handoff; no substantive claim concerns knowledge reaching a bounded call, context assembly, or scheduling across context windows as the head requires.
 
-Disposition, reason, and verification: pending.
+Disposition (2026-09-26): The substantive mechanism locates transition authority and interceptable control boundaries. Keep computational-model and add architecture; scheduling independently steerable goals does not by itself establish a bounded-context question. See the [context-engineering disposition](./context-engineering-placement-decision.md) for checked versions and verification.
 
 ## TP-023 — learning-theory
 
@@ -285,7 +285,7 @@ Disposition (2026-09-26): Retain learning-theory through artifact-analysis: cons
 
 ## TP-024 — computational-model
 
-- Status: open.
+- Status: resolved — retagged.
 - Note: [Reach-assessment](../../notes/definitions/reach-assessment.md).
 - Head: [computational-model](../../tags/computational-model-README.md).
 - Initial reviewer judgment: mismatch.
@@ -293,7 +293,7 @@ Disposition (2026-09-26): Retain learning-theory through artifact-analysis: cons
 
 Reviewer reason: “Scope” compares semantic, proof, and predictive assessment routes across forms. It does not explain how LLM calls or orchestration execute, the computational-model inclusion condition.
 
-Disposition, reason, and verification: pending.
+Disposition (2026-09-26): remove computational-model. The definition compares what semantic, formal, and predictive assessment can establish. The prompt-length example tests a generalization, not call execution. Add evaluation and retain theory-builder with its parents. See the [computational-model disposition](./computational-model-placement-decision.md) for additions, parent checks, input versions, and verification.
 
 ## TP-025 — self-improving-systems
 
@@ -323,7 +323,7 @@ Disposition (2026-09-26): Retain self-improving-systems through theory-builder: 
 
 ## TP-027 — warranted-autonomy
 
-- Status: open.
+- Status: resolved — retagged.
 - Note: [Disconnected witnesses do not establish a full causal path through theory](../../notes/disconnected-witnesses-do-not-establish-a-causal-path-through-theory.md).
 - Head: [warranted-autonomy](../../tags/warranted-autonomy-README.md).
 - Initial reviewer judgment: mismatch.
@@ -331,11 +331,11 @@ Disposition (2026-09-26): Retain self-improving-systems through theory-builder: 
 
 Reviewer reason: The note's boundary says “The path can cross model, symbolic, environmental, and human components” and discusses evidence of causal learning, but it does not ask which decisions an agent is warranted to take over or measure decision autonomy.
 
-Disposition, reason, and verification: pending.
+Disposition (2026-09-26): Replace warranted-autonomy with theory-builder. The causal path joins stated theory, criticism, and later operation, while explicitly allowing human and computational components without asserting autonomy. Keep evaluation and self-improving-systems; add learning-theory through theory-builder and its parent. See the [remaining-placement disposition](./remaining-placement-decision.md) for versions and verification.
 
 ## TP-028 — discovery
 
-- Status: open.
+- Status: resolved — assignment retained.
 - Note: [Epiplexity by example: what entropy and complexity miss](../../notes/epiplexity-by-example-what-entropy-and-complexity-miss.md).
 - Head: [discovery](../../tags/discovery-README.md).
 - Initial reviewer judgment: mismatch.
@@ -343,11 +343,11 @@ Disposition, reason, and verification: pending.
 
 Reviewer reason: The four measures and worked examples concern extractable pattern and observer capacity. They do not develop formation, testing, acceptance, explanatory reach, or warrant of a conjecture, as the discovery head requires.
 
-Disposition, reason, and verification: pending.
+Disposition (2026-09-26): Retain discovery under its unchanged inclusion rule for enabling conditions. The bounded-learner examples explain how tools, prior knowledge, and ordering permit or prevent pattern extraction; the AB example distinguishes acquired regularity from irreducible noise. This is substantive work on conditions for recognizing structure, not a claim that extraction establishes explanatory-reach or warrants acceptance. Clarify the curated entry to state this narrower reason. See the [remaining-placement disposition](./remaining-placement-decision.md) for versions and verification.
 
 ## TP-029 — claims-and-grounding
 
-- Status: open.
+- Status: resolved — retagged.
 - Note: [A five-link cap missed four grounding findings in twelve reviews](../../notes/evidence/a-five-link-cap-missed-four-grounding-findings-in-twelve-reviews.md).
 - Head: [claims-and-grounding](../../tags/claims-and-grounding-README.md).
 - Initial reviewer judgment: mismatch.
@@ -355,11 +355,11 @@ Disposition, reason, and verification: pending.
 
 Reviewer reason: “A five-link cap missed four grounding findings” analyzes an LLM gate's reading budget and verdicts, rather than what makes a claim grounded; the head expressly assigns running a grounding check as a gate to review-system.
 
-Disposition, reason, and verification: pending.
+Disposition (2026-09-26): Replace claims-and-grounding with review-system. The criterion's substantive grounding question is held fixed while its linked-reading budget changes. The outcome table names detected grounding defects but does not develop a separate account of what constitutes support. Keep evaluation and kb-maintenance, and move the curated entry to review-system. See the [remaining-placement disposition](./remaining-placement-decision.md) for versions and verification.
 
 ## TP-030 — computational-model
 
-- Status: open.
+- Status: resolved — retagged.
 - Note: [Commonplace as a reflective self-improving system](../../notes/evidence/commonplace-as-a-reflective-system.md).
 - Head: [computational-model](../../tags/computational-model-README.md).
 - Initial reviewer judgment: mismatch.
@@ -367,7 +367,7 @@ Disposition, reason, and verification: pending.
 
 Reviewer reason: “The full mapping locates problem selection, semantic evaluation, and adoption with the maintainer” reports actor allocation. It does not explain instruction interpretation, call state, tool loops, or orchestration mechanisms required by this head.
 
-Disposition, reason, and verification: pending.
+Disposition (2026-09-26): remove computational-model. The Commonplace trace establishes reflective coverage and actor allocation through a retained change. It does not develop LLM execution semantics. Add improvement-loop for the documented search, evaluation, and retention mapping. See the [computational-model disposition](./computational-model-placement-decision.md) for additions, parent checks, input versions, and verification.
 
 ## TP-031 — artifact-analysis
 
@@ -395,7 +395,7 @@ Disposition (2026-09-26): retain deploy-time-learning. The body distinguishes lo
 
 ## TP-033 — computational-model
 
-- Status: open.
+- Status: resolved — retagged.
 - Note: [Causal and proof obligations are two formal routes to assessing explanatory-reach](../../notes/formal-systems-assess-explanatory-reach-through-causal-and-proof.md).
 - Head: [computational-model](../../tags/computational-model-README.md).
 - Initial reviewer judgment: mismatch.
@@ -403,11 +403,11 @@ Disposition (2026-09-26): retain deploy-time-learning. The body distinguishes lo
 
 Reviewer reason: The note’s “causal route,” “proof route,” and “formalization boundary” concern theory assessment and warrant. It does not explain an LLM-based program’s instruction interpretation, state, tool loop, scheduling, or execution limit, which the computational-model head requires.
 
-Disposition, reason, and verification: pending.
+Disposition (2026-09-26): remove computational-model. Causal and proof obligations assess a claim inside a formalized domain and expose the translation boundary. That is theory assessment, not an LLM computational limit. Add evaluation and discovery. See the [computational-model disposition](./computational-model-placement-decision.md) for additions, parent checks, input versions, and verification.
 
 ## TP-034 — failure-modes
 
-- Status: open.
+- Status: resolved — retagged.
 - Note: [Generation confidence does not by itself certify soundness](../../notes/generation-confidence-does-not-by-itself-certify-soundness.md).
 - Head: [failure-modes](../../tags/failure-modes-README.md).
 - Initial reviewer judgment: mismatch.
@@ -415,11 +415,11 @@ Disposition, reason, and verification: pending.
 
 Reviewer reason: The failure described is an LLM’s fluent but unsound output and overtrust in generation probability. The note does not analyze a failure caused by how the KB stores, delivers, states, or repairs knowledge, as this tag requires.
 
-Disposition, reason, and verification: pending.
+Disposition (2026-09-26): Remove failure-modes and add evaluation. The failure is overtrust in generation probability, not KB storage, delivery, or claim repair. Keep llm-reliability and learning-theory; calibration, discrimination, and verifier validation are substantive evaluation questions. See the [remaining-placement disposition](./remaining-placement-decision.md) for versions and verification.
 
 ## TP-035 — computational-model
 
-- Status: open.
+- Status: resolved — retagged.
 - Note: [Gödel machines are a proof-governed case of reflective self-modification](../../notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md).
 - Head: [computational-model](../../tags/computational-model-README.md).
 - Initial reviewer judgment: mismatch.
@@ -427,7 +427,7 @@ Disposition, reason, and verification: pending.
 
 Reviewer reason: “The change loop” describes a formal self-rewriting machine, and the prompt-editing loop is only a comparison case. The note does not explain how an LLM-based program interprets instructions or runs bounded calls, tools, state, or scheduling, as this head requires.
 
-Disposition, reason, and verification: pending.
+Disposition (2026-09-26): remove computational-model. The proof-gated self-rewrite construction is not an LLM execution model. The prompt-editing comparison concerns admission warrant, without developing instruction interpretation or bounded-call orchestration. Add improvement-loop for the explicit change-function mapping. See the [computational-model disposition](./computational-model-placement-decision.md) for additions, parent checks, input versions, and verification.
 
 ## TP-036 — learning-theory
 
@@ -444,7 +444,7 @@ Disposition (2026-09-26): Retain learning-theory through constraining: the body 
 
 ## TP-037 — computational-model
 
-- Status: open.
+- Status: resolved — retagged.
 - Note: [Lightweight search control allocates further search without licensing adoption](../../notes/lightweight-search-control-does-not-license-adoption.md).
 - Head: [computational-model](../../tags/computational-model-README.md).
 - Initial reviewer judgment: mismatch.
@@ -452,19 +452,19 @@ Disposition (2026-09-26): Retain learning-theory through constraining: the body 
 
 Reviewer reason: “Lightweight names the judgment's authority, not its cost, formality, or confidence.” The note defines an improvement judgment's consequence, without explaining LLM execution mechanisms, state, scheduling, or bounded calls required by this head.
 
-Disposition, reason, and verification: pending.
+Disposition (2026-09-26): remove computational-model. The claim distinguishes authority to allocate search from authority to adopt. It explicitly leaves the allocation mechanism unspecified. Keep improvement-loop and its parent areas. See the [computational-model disposition](./computational-model-placement-decision.md) for additions, parent checks, input versions, and verification.
 
 ## TP-038 — methodology
 
-- Status: open.
+- Status: resolved — assignment retained.
 - Note: [Literature reuse can reverse a paper’s hierarchy of contributions](../../notes/literature-reuse-can-reverse-a-papers-hierarchy-of-contributions.md).
-- Head: [methodology](../../tags/method-guided-action-README.md).
+- Head: [method-guided-action](../../tags/method-guided-action-README.md), renamed from methodology.
 - Initial reviewer judgment: uncertain.
 - Local evidence: [review pair 22997](../../reports/state/review-jobs/review-job-8801/pair-10-literature-reuse-can-reverse-a-papers-hierarchy-of-contributions.md).
 
 Reviewer reason: “Ingestion should also ask what distinctions the authors had to construct” is guidance for selecting reusable conceptual machinery. The head requires a methodology an agent holds and applies; an operator must decide whether adopting an ontology for classification counts as adopting a method, or whether this is solely literature analysis.
 
-Disposition, reason, and verification: pending.
+Disposition (2026-09-26): retain the assignment under the renamed method-guided-action tag. The note supplies a method for selecting and checking reusable conceptual distinctions during literature ingestion; it need not establish that every ontology is itself a methodology. See the [methodology disposition](./methodology-scope-decision.md) for the boundary, input versions, and verification.
 
 ## TP-039 — constraining
 
@@ -492,7 +492,7 @@ Disposition (2026-09-26): Retain learning-theory through the corrected llm-relia
 
 ## TP-041 — computational-model
 
-- Status: open.
+- Status: resolved — retagged.
 - Note: [Memory-backed personalization can look like model improvement](../../notes/memory-backed-personalization-can-look-like-model-improvement.md).
 - Head: [computational-model](../../tags/computational-model-README.md).
 - Initial reviewer judgment: mismatch.
@@ -500,11 +500,11 @@ Disposition (2026-09-26): Retain learning-theory through the corrected llm-relia
 
 Reviewer reason: The note identifies retention, activation, and model use as diagnostic stages but does not explain or compare how bounded calls, instruction interpretation, state, or orchestration execute. The computational-model head requires an execution mechanism or computational limit, rather than a model being one component in a comparison.
 
-Disposition, reason, and verification: pending.
+Disposition (2026-09-26): remove computational-model. The note separates retained intent, activation, and use, then designs crossed model/memory comparisons. It diagnoses missing information and intervention effects without developing interpreter semantics or call execution. Add context-engineering and evaluation; retain agent-memory and llm-reliability. See the [computational-model disposition](./computational-model-placement-decision.md) for additions, parent checks, input versions, and verification.
 
 ## TP-042 — context-engineering
 
-- Status: open.
+- Status: resolved — retagged.
 - Note: [Mixed epistemic status must be preserved below the document level](../../notes/mixed-epistemic-status-must-be-preserved-below-the-document-level.md).
 - Head: [context-engineering](../../tags/context-engineering-README.md).
 - Initial reviewer judgment: mismatch.
@@ -512,7 +512,7 @@ Disposition, reason, and verification: pending.
 
 Reviewer reason: The proposed tests vary output and process structure, but the note does not discuss getting knowledge into a bounded LLM context. The tag head requires routing, retrieval, loading, prompt assembly, scoping, or related context operations.
 
-Disposition, reason, and verification: pending.
+Disposition (2026-09-26): The note preserves separate warrant for observations, deductions, and compatible explanations inside a document. Replace context-engineering with document-system and claims-and-grounding, plus kb-maintenance; keep evaluation. See the [context-engineering disposition](./context-engineering-placement-decision.md) for checked versions and verification.
 
 ## TP-043 — self-improving-systems
 
@@ -577,7 +577,7 @@ Disposition (2026-09-26): Retain artifact-analysis through behavioral authority 
 
 ## TP-048 — computational-model
 
-- Status: open.
+- Status: resolved — retagged.
 - Note: [Pointer design tradeoffs in progressive disclosure](../../notes/pointer-design-tradeoffs-in-progressive-disclosure.md).
 - Head: [computational-model](../../tags/computational-model-README.md).
 - Initial reviewer judgment: mismatch.
@@ -585,7 +585,7 @@ Disposition (2026-09-26): Retain artifact-analysis through behavioral authority 
 
 Reviewer reason: Fixed abstracts, query-time snippets, and crafted links determine which knowledge reaches a call. The note does not explain call scheduling, instruction execution, orchestration, or another execution mechanism required by this head.
 
-Disposition, reason, and verification: pending.
+Disposition (2026-09-26): remove computational-model. The comparison explains which pointer helps select content for loading, with availability and accuracy tradeoffs. It does not explain the execution of the retrieval pipeline or surrounding calls. Replace computational-model with context-engineering and keep links. See the [computational-model disposition](./computational-model-placement-decision.md) for additions, parent checks, input versions, and verification.
 
 ## TP-049 — self-improving-systems
 
@@ -651,7 +651,7 @@ Disposition (2026-09-26): Retain learning-theory through llm-reliability: the no
 
 ## TP-054 — architecture
 
-- Status: open.
+- Status: resolved — assignment retained under revised scope.
 - Note: [Skill discovery re-fires in every sub-agent context, not just the top-level invocation](../../notes/skill-discovery-re-fires-in-every-sub-agent-context.md).
 - Head: [architecture](../../tags/architecture-README.md).
 - Initial reviewer judgment: mismatch.
@@ -659,11 +659,11 @@ Disposition (2026-09-26): Retain learning-theory through llm-reliability: the no
 
 Reviewer reason: The case is “Observed on Claude Code's harness”; the argument concerns skill advertisement and worker behavior, not how Commonplace is structured or installed.
 
-Disposition, reason, and verification: pending.
+Disposition (2026-09-26): Retain architecture under the revised general head, superseding the removal under its old scope. Harness-owned discovery crosses a worker context boundary and constrains the available mitigations. Keep context-engineering and computational-model. A historical Commonplace skill is the observed case, but the note does not explain Commonplace's own layout, installation, or subsystem arrangement, so do not add commonplace-architecture. See the [architecture split](./architecture-placement-decision.md) for the operator decision, membership check, input versions, and verification.
 
 ## TP-055 — context-engineering
 
-- Status: open.
+- Status: resolved — retagged.
 - Note: [Stateful tools recover control by becoming hidden schedulers](../../notes/stateful-tools-recover-control-by-becoming-hidden-schedulers.md).
 - Head: [context-engineering](../../tags/context-engineering-README.md).
 - Initial reviewer judgment: mismatch.
@@ -671,11 +671,11 @@ Disposition, reason, and verification: pending.
 
 Reviewer reason: The brief mention of “sub-goals that exceed one context window” names a limit, but the note's argument is where the scheduler lives; it does not substantively address knowledge routing, loading, scoping, or context budgets.
 
-Disposition, reason, and verification: pending.
+Disposition (2026-09-26): The argument relocates scheduler state and control behind a tool boundary. Context overflow is only a named limit delegated to another note. Keep computational-model, replace context-engineering with architecture, and move its curated entry to the architecture head. See the [context-engineering disposition](./context-engineering-placement-decision.md) for checked versions and verification.
 
 ## TP-056 — context-engineering
 
-- Status: open.
+- Status: resolved — tag removed.
 - Note: [Bottom-up structure inference needs capture at the decision surface, not the state](../../notes/structure-inference-needs-capture-at-the-decision-surface.md).
 - Head: [context-engineering](../../tags/context-engineering-README.md).
 - Initial reviewer judgment: mismatch.
@@ -683,7 +683,7 @@ Disposition, reason, and verification: pending.
 
 Reviewer reason: The decision-surface argument concerns evidence capture for later structure inference; it does not analyze how knowledge is routed into or loaded for a bounded LLM call.
 
-Disposition, reason, and verification: pending.
+Disposition (2026-09-26): The capture point determines which rationale-bearing structure can later be inferred. This explains memory ingress, not activation or loading into bounded calls. Remove context-engineering; retain agent-memory and learning-theory. See the [context-engineering disposition](./context-engineering-placement-decision.md) for checked versions and verification.
 
 ## TP-057 — deploy-time-learning
 
@@ -737,7 +737,7 @@ Disposition (2026-09-26): Retain self-improving-systems through theory-builder: 
 
 ## TP-061 — computational-model
 
-- Status: open.
+- Status: resolved — retagged.
 - Note: [Task families and product families classify different things](../../notes/task-families-and-product-families-classify-different-things.md).
 - Head: [computational-model](../../tags/computational-model-README.md).
 - Initial reviewer judgment: mismatch.
@@ -745,7 +745,7 @@ Disposition (2026-09-26): Retain self-improving-systems through theory-builder: 
 
 Reviewer reason: “Tasks requiring map-reduce over intermediate results” is an example of a task family. The note does not explain how LLM calls, state, scheduling, or surrounding control execute, which this tag requires.
 
-Disposition, reason, and verification: pending.
+Disposition (2026-09-26): remove computational-model. Task and product families classify different reuse and assessment scopes. Map-reduce is a single example of a task grouping, not an execution analysis. Add evaluation for the declared sampling and acceptance frame. See the [computational-model disposition](./computational-model-placement-decision.md) for additions, parent checks, input versions, and verification.
 
 ## TP-062 — self-improving-systems
 
@@ -774,7 +774,7 @@ Disposition (2026-09-26): retain deploy-time-learning. The note identifies the d
 
 ## TP-064 — computational-model
 
-- Status: open.
+- Status: resolved — retagged.
 - Note: [Universal software factory needs a declared universality axis](../../notes/universal-software-factory-needs-a-declared-universality-axis.md).
 - Head: [computational-model](../../tags/computational-model-README.md).
 - Initial reviewer judgment: mismatch.
@@ -782,7 +782,7 @@ Disposition (2026-09-26): retain deploy-time-learning. The note identifies the d
 
 Reviewer reason: The four universality axes classify software factories and acquisition claims; the note does not explain LLM call execution, state, scheduling, or an LLM computational limit.
 
-Disposition, reason, and verification: pending.
+Disposition (2026-09-26): remove computational-model. The four universality axes constrain what factory capability claims and their evidence mean. Generic compiler expressivity is a contrast, not an LLM execution analysis. Add evaluation for the required evidence and resource frame. See the [computational-model disposition](./computational-model-placement-decision.md) for additions, parent checks, input versions, and verification.
 
 ## TP-065 — deploy-time-learning
 
@@ -798,7 +798,7 @@ Disposition (2026-09-26): retain deploy-time-learning. The body explains why run
 
 ## TP-066 — context-engineering
 
-- Status: open.
+- Status: resolved — retagged.
 - Note: [Warranted reader update is the objective of substantive writing](../../notes/warranted-reader-update-is-the-objective-of-substantive-writing.md).
 - Head: [context-engineering](../../tags/context-engineering-README.md).
 - Initial reviewer judgment: mismatch.
@@ -806,11 +806,11 @@ Disposition (2026-09-26): retain deploy-time-learning. The body explains why run
 
 Reviewer reason: “Search brings sources and existing notes into co-presence” is one workflow ingredient; the note’s question is how writing selects a warranted reader update, not how knowledge reaches a bounded call.
 
-Disposition, reason, and verification: pending.
+Disposition (2026-09-26): The workflow searches for a warranted contribution and judges its value relative to the reader. Co-presence is one ingredient, not a developed loading mechanism. Replace context-engineering with document-system; retain learning-theory and discovery. See the [context-engineering disposition](./context-engineering-placement-decision.md) for checked versions and verification.
 
 ## TP-067 — computational-model
 
-- Status: open.
+- Status: resolved — retagged.
 - Note: [World models assess explanatory-reach through action-conditioned prediction](../../notes/world-models-assess-explanatory-reach-through-action-conditioned.md).
 - Head: [computational-model](../../tags/computational-model-README.md).
 - Initial reviewer judgment: mismatch.
@@ -818,7 +818,7 @@ Disposition, reason, and verification: pending.
 
 Reviewer reason: “The retained artifact is ... a learned representation plus predictor” describes a predictive model and reach testing. The head requires an explanation of how LLM-based programs execute—their instruction interpretation, scoping, state, tool-call loops, or orchestration—which this note does not supply.
 
-Disposition, reason, and verification: pending.
+Disposition (2026-09-26): remove computational-model. The note compares predictive, symbolic, and natural-language assessment and selective correction. World-model planning is not bounded LLM-call execution. Add discovery and learning-theory while retaining the theory-builder boundary assignment. See the [computational-model disposition](./computational-model-placement-decision.md) for additions, parent checks, input versions, and verification.
 
 ## TP-068 — self-improving-systems
 

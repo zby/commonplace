@@ -2,7 +2,7 @@
 description: When note titles are claims rather than topics, following links between them reads as a chain of reasoning — the file tree becomes a scan of arguments, and link semantics (since, because, but) encode relationship types
 type: types/note.md
 traits: [has-external-sources, title-as-claim]
-tags: [document-system, links]
+tags: [document-system, links, claims-and-grounding, kb-maintenance]
 ---
 
 # Title as claim enables traversal as reasoning

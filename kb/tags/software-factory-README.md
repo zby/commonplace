@@ -21,7 +21,6 @@ Software factories in the Greenfield sense: configured, family-specific software
 - [An agentic substrate becomes a software factory through family-specific production machinery](../notes/agentic-substrate-needs-family-specific-machinery-to-be-a-factory.md) — a generic harness is not yet a factory
 - [Broad software demands create pressure for agentic factory development](../notes/broad-software-demands-create-pressure-for-agentic-factory-development.md) — why predefining every family's machinery is implausible
 - [Factory construction is not evidence of production-knowledge acquisition](../notes/factory-construction-does-not-establish-knowledge-acquisition.md) — prior recursive constructors were handed the knowledge that determined their factories
-- [Preferential codification concentrates less predictable work at the agent boundary](../notes/codifying-predictable-choices-leaves-agents-with-less-predictable-work.md) — what remains for agents as a factory codifies its predictable steps
 - [An addressable theory can coordinate heterogeneous factory development](../notes/addressable-theory-can-coordinate-heterogeneous-factory-development.md) — natural-language project theory as the coordinating layer
 - [An open-domain theory builder becomes a software house when new domains require production-machinery changes](../notes/an-open-domain-theory-builder-becomes-a-software-house-when-new-domains-require-production-machinery-changes.md) — where the Commonplace arrangement crosses into software-house territory
 

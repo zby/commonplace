@@ -10,6 +10,11 @@ How a conjecture that goes beyond the available evidence is formed, tested, and 
 
 ## The operation
 
+- [Bounded lessons from episodes](../notes/abstract-an-experience-only-when-you-can-state-the-boundary.md) — forming a general rule requires stating its limits
+- [First-principles design-space analysis](../notes/first-principles-analysis-maps-design-space-before-selection.md) — rival axes and decompositions face counterexamples
+- [Generation can hide an unmet goal](../notes/llm-generation-relaxes-goals-where-human-writing-stalls.md) — concretization tests whether a proposed design is feasible
+- [Popperian KB practices](../notes/mechanistic-constraints-make-popperian-kb-recommendations-actionable.md) — falsifiers and contradiction checks make criticism explicit
+- [Explanatory and constructive commitments](../notes/theory-and-capacity-building-make-the-same-kind-of-commitment.md) — conjectures meet later evidence and revision
 - [recognition, not linking, is the hard problem in knowledge systems](../notes/recognition-not-linking-is-the-hard-problem-in-knowledge-systems.md) — recognizing shared structure is the expensive step, articulating a seen link is cheap; naming a recognized structure amortizes later recognition
 - [discovery lifecycle](../notes/definitions/discovery-lifecycle.md) — definition: the staged path from conjecture to accepted discovery (observe → conjecture → consequences → test → accept → integrate); ampliative traffic enters at the conjecture stage, and the co-arising insight is the degenerate case with the phases telescoped
 - [candidacy evidence licenses escalation to assessment, not acceptance](../notes/candidacy-evidence-licenses-escalation-not-acceptance.md) — conjecture: cheap evidence can route a hypothesis to expensive assessment without gaining verdict authority; Peirce's economy of research, witnessed by pricing-versus-adequacy and source-grounding cases
@@ -26,11 +31,14 @@ How a conjecture that goes beyond the available evidence is formed, tested, and 
 - [revision guided by rationale needs faithfulness, not just legibility](../notes/revision-guided-by-rationale-needs-faithfulness-not-just-legibility.md) — when repair uses a recorded rationale, misleading dependencies can direct it to the wrong premise; test that guide by intervention
 - [Derivation and inheritance give starting warrant; discriminating evidence or proof earns scope](../notes/derivation-and-inheritance-give-starting-warrant-earns-scope.md) — provenance grades a posited carve's starting warrant and relocates its untested part to a statable place; an underdetermined choice gets none, and scope is earned only over the domain evidence or proof actually covers
 
+- [Causal and proof obligations assess explanatory-reach](../notes/formal-systems-assess-explanatory-reach-through-causal-and-proof.md) — formal tests assess the claimed generality within the assumptions and domain that make the obligation meaningful
+- [World models assess explanatory-reach through action-conditioned prediction](../notes/world-models-assess-explanatory-reach-through-action-conditioned.md) — shift and intervention tests probe the reach of a learned commitment without making its parts separately revisable
+
 ## Conditions for discovery
 
 - [ad hoc explanation can be rational when error is cheap and local](../notes/ad-hoc-explanation-can-be-rational-when-error-is-cheap-and-local.md) — prices the lifecycle's heavy phases: derive/test/integrate controls errors that can propagate, while disposable guesses can select cheap local probes before the reach toll is paid at promotion
 - [short composable notes maximize combinatorial discovery](../notes/short-composable-notes-maximize-combinatorial-discovery.md) — the artifact-shape argument: small claims compose into more candidate generalizations
 - [information value is observer-relative](../notes/information-value-is-observer-relative.md) — the gap discovery (and consumer-directed reshaping) bridges: structure exists but is inaccessible to the bounded observer until transformed
-- [Epiplexity by example](../notes/epiplexity-by-example-what-entropy-and-complexity-miss.md) — worked examples: encrypted messages, shuffled textbooks, CSPRNGs, and chess notation make observer-relative extractable structure concrete
+- [Epiplexity by example](../notes/epiplexity-by-example-what-entropy-and-complexity-miss.md) — conditions for pattern discovery: tools, prior knowledge, and ordering determine what structure a bounded learner can extract; this does not establish a discovered claim's warrant
 - [reverse-compression is when LLM output expands without adding information](../notes/reverse-compression-is-when-llm-output-expands-without-adding.md) — the failure inverse: expansion that adds no extractable structure, where productive transformation makes structure accessible
 - [minimum viable vocabulary](../notes/minimum-viable-vocabulary-is-the-naming-set-that-most-reduces.md) — naming as the discovery lever: the vocabulary that most reduces extraction cost for an observer entering a domain

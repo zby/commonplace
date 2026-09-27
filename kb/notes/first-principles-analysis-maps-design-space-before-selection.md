@@ -2,7 +2,7 @@
 description: "Why deriving independent choice dimensions from boundary constraints exposes rival designs that inherited solution categories hide"
 type: types/note.md
 traits: [title-as-claim]
-tags: [artifact-analysis]
+tags: [artifact-analysis, discovery, learning-theory]
 ---
 
 # First-principles analysis maps a design space before selecting within it

@@ -2,7 +2,7 @@
 description: For runtimes composed of bounded model calls, separating control progression, per-call context, and external state or action services localizes failures even when one implementation owns all three
 type: types/note.md
 traits: [has-external-sources, title-as-claim]
-tags: [computational-model, architecture]
+tags: [computational-model, architecture, context-engineering]
 ---
 
 # Agent-runtime analysis should separate scheduling, context assembly, and external state

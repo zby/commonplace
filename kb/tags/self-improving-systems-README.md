@@ -30,6 +30,7 @@ The child areas are [theory-builder](./theory-builder-README.md), [software-fact
 
 ## Accumulation and compounding
 
+- [An optimal long-run learning strategy invests in its own machinery](../notes/an-optimal-long-run-learning-strategy-invests-in-its-own-machinery.md) — a lasting machinery improvement can repay its cost across later learning episodes, without fixing its representational form
 - [Accumulation counts dependence through the retained result](../notes/accumulation-counts-dependence-through-the-retained-result.md) — cumulativity is later dependence on what was retained, not on the evidence it caused
 - [Improvements can accumulate without compounding](../notes/improvements-can-accumulate-without-compounding.md) — compounding needs an earlier benefit to counterfactually improve a later episode
 - [Compounding is tested in later improvement, not by the accepting metric](../notes/compounding-is-tested-in-later-improvement-not-by-the-accepting-metric.md) — displaced productivity measures and causal traces, not the metric that accepted the change

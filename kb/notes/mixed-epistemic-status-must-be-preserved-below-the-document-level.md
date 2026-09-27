@@ -2,7 +2,7 @@
 description: "A document can combine observations, deductions, and plausible explanations; KB writing and review must retain which claims and transitions have which warrant."
 type: types/note.md
 traits: [title-as-claim]
-tags: [evaluation, context-engineering]
+tags: [evaluation, document-system, claims-and-grounding, kb-maintenance]
 ---
 
 # Mixed epistemic status must be preserved below the document level

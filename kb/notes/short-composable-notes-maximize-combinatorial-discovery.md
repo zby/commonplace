@@ -1,7 +1,7 @@
 ---
 description: The library's purpose is to produce notes that can be co-loaded for combinatorial discovery — short atomic notes are a consequence of this goal; longer synthesized artifacts belong in workshops or derived instructions
 type: types/note.md
-tags: [learning-theory, discovery]
+tags: [learning-theory, discovery, context-engineering, document-system]
 ---
 
 # Short composable notes maximize combinatorial discovery

@@ -13,7 +13,8 @@ For current-state documentation about the live Commonplace system rather than tr
   - [Reflection](./reflection-README.md) — reflective systems: addressability, second-order lessons, graded coverage
   - [Warranted autonomy](./warranted-autonomy-README.md) — which decisions a computational actor is warranted to take over, and how far
   - [Continual learning](./continual-learning-README.md) — how a deployed system keeps learning outside model weights
-- [Architecture](./architecture-README.md) — how Commonplace is structured and installed: repo layout, control-plane design, file-based storage
+- [Architecture](./architecture-README.md) — responsibility boundaries, state, control planes, and interfaces in agent-operated KBs and runtimes
+  - [Commonplace architecture](./commonplace-architecture-README.md) — Commonplace-specific structure, installation, storage choices, subsystem boundaries, and design proposals
 - [Evaluation](./evaluation-README.md) — what works, what doesn't, what needs testing
 - [Learning theory](./learning-theory-README.md) — how systems learn, verify, and improve; covered by six child tags (enforced), so its README routes rather than enumerates:
   - [Deploy-time learning](./deploy-time-learning-README.md) — what deployed use reveals and how people and systems respond
@@ -33,7 +34,7 @@ For current-state documentation about the live Commonplace system rather than tr
   - [Review system](./review-system-README.md) — gates, verdicts, freshness, protocol, and the review proposals
   - [Claims and grounding](./claims-and-grounding-README.md) — title as claim, modality, quotes, source grounding, ground truth
   - [Curation](./curation-README.md) — indexes and tag heads, quality signals, hygiene, capacity, retirement
-- [Methodology](./method-guided-action-README.md) — how an agent selects, borrows, and is controlled by a methodology
+- [Method-guided action](./method-guided-action-README.md) — how an agent selects or acquires a method, brings it into use, and lets it guide decisions
 - [Trace-learning](./trace-learning-README.md) — external systems that learn from their own agent traces through a raw-to-distilled loop
 - [Related systems](../agent-memory-systems/README.md) — external systems tracked for comparison and convergence signals
 

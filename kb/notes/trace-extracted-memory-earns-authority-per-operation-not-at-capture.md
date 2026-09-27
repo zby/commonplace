@@ -2,7 +2,7 @@
 description: "Trace memories begin as records; verification, abstraction, and consultation earn authority under progressively harder oracles, while unverified stores accumulate guesses presented as knowledge"
 type: types/note.md
 traits: [title-as-claim, has-external-sources]
-tags: [agent-memory, learning-theory, context-engineering]
+tags: [agent-memory, learning-theory, context-engineering, failure-modes]
 ---
 
 # Trace-extracted memory earns authority per operation, not at capture

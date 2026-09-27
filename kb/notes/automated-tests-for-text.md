@@ -2,7 +2,7 @@
 description: Text artifacts can be tested with the same pyramid as software — deterministic checks, LLM rubrics, corpus compatibility — built from real failures not taxonomy
 type: types/note.md
 traits: []
-tags: [document-system]
+tags: [document-system, evaluation, type-system]
 ---
 
 # Automated tests for text

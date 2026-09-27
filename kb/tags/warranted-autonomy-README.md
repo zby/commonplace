@@ -10,6 +10,9 @@ Notes on handing decisions from humans to a computational actor: which decisions
 
 ## What bounds warranted transfer
 
+- [The augmentation-automation boundary is discrimination not accuracy](../notes/the-augmentation-automation-boundary-is-discrimination-not-accuracy.md) — aggregate accuracy does not identify which individual outputs need review; discrimination bears on transferring that decision
+- [The boundary of automation is the boundary of verification](../notes/the-boundary-of-automation-is-the-boundary-of-verification.md) — verification cost and quality limit replacing human checking with automated decisions
+- [Oracle accumulation improves selection for later candidates in its maintained domain](../notes/oracle-accumulation-improves-the-selection-environment.md) — retained checks expand warranted evaluation autonomy only after demonstrating discrimination beyond the originating failure and maintaining it
 - [Warranted autonomy is bounded by oracle domain](../notes/warranted-autonomy-is-bounded-by-oracle-domain.md) — the establishing claim: autonomy is warranted only where an oracle can assess the candidates
 - [A claim without external assessment carries three obligations](../notes/a-claim-without-external-assessment-carries-three-obligations.md) — what a computational actor must supply when no outside assessor grades its claim
 - [Naur's human-only conclusion needs more than the absence of explicit criteria](../notes/naur-equates-machine-execution-with-formulated-criteria.md) — unformulated judgment does not by itself put a decision beyond computation
@@ -17,6 +20,7 @@ Notes on handing decisions from humans to a computational actor: which decisions
 
 ## The human–computation allocation
 
+- [Make memory authority explicit](../notes/agent-memory-requirements/make-authority-explicit.md) — risk and verification govern automation, review, and approval
 - [Computationally directed self-improvement is a fixed-boundary reallocation ending in contraction](../notes/computationally-directed-self-improvement-is-a-reallocation.md) — progress is which decision-bearing functions humans still supply; the endpoint is contracting the boundary to exclude them
 - [Methodological and computational closure track different changes](../notes/methodological-and-computational-closure-track-different-changes.md) — what a method settles and whether a human decided during operation are separate questions
 - [Warranted transfer out of the human cut leaves people the hardest-to-warrant decisions](../notes/warranted-transfer-leaves-people-the-hardest-to-warrant-decisions.md) — easy-to-warrant decisions move first, so the human residue gets harder per decision
@@ -29,7 +33,6 @@ Notes on handing decisions from humans to a computational actor: which decisions
 - [Tool usefulness, computational autonomy, warrant, and system power are separate dimensions](../notes/usefulness-autonomy-warrant-and-power-are-separate-dimensions.md) — a progress claim must name which one moved; autonomy gains do not license power claims
 - [A benchmark that holds the client fixed exports the least-warrantable decisions by design](../notes/holding-the-client-fixed-exports-the-least-warrantable-decisions.md) — fixed-client benchmarks measure worker capability and leave broader closure untested
 - [A complete theory path does not establish improved capacity](../notes/a-complete-theory-path-does-not-establish-improved-capacity.md) — mediation, empirical contact, and response to criticism each support a different claim
-- [Disconnected witnesses do not establish a full causal path through theory](../notes/disconnected-witnesses-do-not-establish-a-causal-path-through-theory.md) — evidence must show the joins of one path, and still separately show improved capacity
 
 ## Related Tags
 

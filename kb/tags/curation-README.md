@@ -10,6 +10,7 @@ How the KB's indexes, tag heads, and body of notes stay usable as it grows: what
 
 ## Indexes and tag heads
 
+- [A retrieval miss is a local reflective-path failure](../notes/a-retrieval-miss-is-a-local-reflective-path-failure.md) — unchecked completeness claims can suppress a needed search; enforced membership and repaired retrieval recipes restore the missing path
 - [An enforced tag-README combines a MOC pattern with checked membership](../notes/an-enforced-tag-readme-is-a-moc-with-a-machine-checked-contract.md) — a tag head keeps the map-of-content pattern while validation checks only declared membership
 - [Indexes lower recall when they suppress retrieval that would find more](../notes/indexes-lower-recall-when-they-suppress-retrieval-that-would-find-more.md) — why a completeness claim must be enforced or omitted
 - [Index completeness does not determine editorial orientation](../notes/index-completeness-does-not-determine-editorial-orientation.md) — a complete listing gives membership, not grouping, role phrases, or reading order
@@ -18,6 +19,7 @@ How the KB's indexes, tag heads, and body of notes stay usable as it grows: what
 
 ## Ranking and staleness signals
 
+- [Link strength follows position and prose](../notes/link-strength-is-encoded-in-position-and-prose.md) — weighted links support note ranking and graph-health signals
 - [Quality signals for KB evaluation](../notes/quality-signals-for-kb-evaluation.md) — graph-topology, content-proxy, and LLM-hybrid signals combined into a weak composite oracle
 - [Notes need quality scores to scale curation](../notes/notes-need-quality-scores-to-scale-curation.md) — recomputable scores rank candidates once connect retrieves too many
 - [Link graph plus timestamps enables make-like staleness detection](../notes/link-graph-plus-timestamps-enables-make-like-staleness-detection.md) — existing links plus timestamps flag possibly stale notes without new annotation

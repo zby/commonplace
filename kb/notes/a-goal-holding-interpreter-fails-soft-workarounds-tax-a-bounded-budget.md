@@ -2,7 +2,7 @@
 description: "A procedure compiles its goal away, so a blocked step fails loud and hard; an interpreter holds the goal and re-routes, so failures are absorbed as a per-encounter tax on bounded capacity — silent, accumulating, and softly saturating"
 type: types/note.md
 traits: [title-as-claim]
-tags: [learning-theory, llm-reliability]
+tags: [learning-theory, llm-reliability, computational-model]
 ---
 
 # A goal-holding interpreter fails soft, and its workarounds tax a bounded budget

@@ -2,7 +2,7 @@
 description: Ward Cunningham's wiki design principle — minimize capture friction, refine in place — drives the text→note→structured-claim codification ladder
 type: types/note.md
 traits: [has-external-sources]
-tags: [type-system]
+tags: [type-system, document-system]
 ---
 
 # The wikiwiki principle: lowest-friction capture, then progressive refinement in place

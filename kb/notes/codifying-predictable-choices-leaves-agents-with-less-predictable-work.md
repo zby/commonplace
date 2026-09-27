@@ -2,7 +2,7 @@
 description: "Explains the negative-selection mechanism by which preferential codification changes the composition of work retained at an agent boundary"
 type: types/note.md
 traits: [title-as-claim]
-tags: [computational-model, self-improving-systems, software-factory]
+tags: [computational-model, self-improving-systems, constraining, learning-theory]
 ---
 
 # Preferential codification concentrates less predictable work at the agent boundary

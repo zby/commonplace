@@ -1,6 +1,6 @@
 # Parent–child relations
 
-The initial five relations produced 13 cases in which the reviewer accepted a child tag and rejected its parent. Disposition found two more cases under a sixth relation. PC-01 through PC-06 are resolved; the assignment cases overlap the assigned-tag queue. PC-07 remains open for missing parent assignments. The [current type contract](../../types/tag-readme.md) requires retaining the parent when splitting with overlap; the [workshop framing](./README.md) states the evaluation boundary.
+The initial five relations produced 13 cases in which the reviewer accepted a child tag and rejected its parent. Disposition found two more cases under a sixth relation. PC-01 through PC-06 are resolved; the assignment cases overlap the assigned-tag queue. PC-07 remains open for missing parent assignments. PC-08 records the later architecture split and is resolved. The [current type contract](../../types/tag-readme.md) requires retaining the parent when splitting with overlap; the [workshop framing](./README.md) states the evaluation boundary.
 
 Resolve each relation using its live heads and affected notes. Record what the relationship means, whether either inclusion definition or the relation changes, and which accepted assignments need rechecking. The counts below are observed conflicts, not the full membership affected by a rule change.
 
@@ -147,6 +147,21 @@ Decision (2026-09-26): both notes fit llm-reliability. The parent already lists 
 
 Question: which missing parent tags should be restored after checking the child assignments?
 
-Status: open — 128 inventory entries remain. The initial inventory had 129 missing learning-theory assignments supported by 139 child–parent pairs. PG-035 is resolved by removing its unsupported artifact-analysis assignment in TP-012.
+Status: open — 65 inventory entries remain. The initial inventory had 129 missing learning-theory assignments supported by 139 child–parent pairs. PG-035 is resolved by removing its unsupported artifact-analysis assignment in TP-012. Eleven more entries are resolved by adding learning-theory after child-fit checks in the [computational-model pass](./computational-model-placement-decision.md). The [context-engineering pass](./context-engineering-placement-decision.md) resolves PG-037 by adding the parent after checking llm-reliability and PG-040 by removing the unsupported child. The [remaining-placement pass](./remaining-placement-decision.md) restores learning-theory in PG-042 and PG-056 after child-fit checks and closes PG-046 by removing unsupported agent-memory. The [learning-tag application](./learning-tag-boundary-decision.md) adds learning-theory in PG-017, PG-028, PG-066, PG-095, PG-096, PG-116, and PG-119 after child-fit checks. The [first evaluation-additions pass](./evaluation-additions-01.md) resolves PG-016 and PG-039 by restoring learning-theory after checking their children. The [second evaluation-additions pass](./evaluation-additions-02.md) does the same for PG-043, PG-071, and PG-081. The [third evaluation-additions pass](./evaluation-additions-03.md) restores learning-theory in PG-091, PG-092, and PG-102 after checking their children. The [fourth evaluation-additions pass](./evaluation-additions-04.md) does the same for PG-114, PG-115, and PG-124. The [first context-additions pass](./context-additions-01.md) restores learning-theory in PG-018, PG-058, PG-064, and PG-078 after checking their children. The [context and document additions pass](./context-document-additions-02.md) does the same for PG-057, PG-089, PG-109, and PG-117. The [mechanism additions pass](./mechanism-additions-01.md) restores learning-theory in PG-025, PG-029, PG-080, PG-094, PG-112, and PG-118 after checking their children. The [review and evidence additions pass](./evidence-additions-01.md) does the same for PG-020, PG-041, PG-059, PG-070, PG-076, PG-077, PG-098, PG-110, and PG-122. The [theory and discovery additions pass](./theory-discovery-additions-01.md) restores learning-theory in PG-011, PG-026, PG-072, PG-083, PG-086, and PG-088 after checking the supporting children.
 
 The [working inventory](./parent-membership-gaps.md) gives exact artifacts and input versions. All six children of self-improving-systems already carry that parent. Resolve the learning-theory gaps by checking the supporting child and then adding the parent, correcting the child, or revising the relation with a reason. Recheck the inventory after corrections; do not infer semantic fit from metadata alone. Non-note artifacts need a specific semantic check because they were outside the original review.
+
+## PC-08
+
+Relation: [commonplace-architecture](../../tags/commonplace-architecture-README.md) → [architecture](../../tags/architecture-README.md).
+
+Status: resolved — split with overlap at the operator's request.
+
+Decision (2026-09-26): architecture now covers structural questions across
+agent-operated KBs and agent runtimes. The child covers substantive
+Commonplace-specific arrangements, worked cases, and design proposals.
+All six child members keep architecture; all twelve resulting parent members
+were checked against the revised scope. The three original architecture
+findings are retained under that scope. See the [architecture split](./architecture-placement-decision.md)
+for the membership decisions, input versions, and verification. This creates
+no missing-parent entry and leaves PC-07's frozen inventory unchanged.

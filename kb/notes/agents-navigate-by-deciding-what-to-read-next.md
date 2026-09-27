@@ -2,7 +2,7 @@
 description: "Models agent navigation as repeated follow/skip judgment under bounded context: cue diagnosticity must repay its own context cost, so longer pointer context is not automatically better"
 type: types/note.md
 traits: [title-as-claim, has-external-sources]
-tags: [links]
+tags: [links, context-engineering]
 ---
 
 # Agents navigate by deciding what to read next
