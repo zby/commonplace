@@ -1,7 +1,7 @@
 ---
 description: "Definition — an artifact is answerable when its collection contract can name what it answers to, the correctness or currency property asserted, and the discrepancy that triggers correction"
 type: types/definition.md
-tags: [document-system, artifact-analysis]
+tags: [document-system, artifact-analysis, learning-theory]
 ---
 
 # Answerability

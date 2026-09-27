@@ -2,7 +2,7 @@
 description: "Agent memory systems need import paths when authoritative project knowledge already exists outside the memory substrate"
 type: types/note.md
 traits: [has-external-sources]
-tags: [agent-memory, context-engineering]
+tags: [agent-memory, context-engineering, learning-theory]
 ---
 
 # Import External Knowledge Into Internal Form

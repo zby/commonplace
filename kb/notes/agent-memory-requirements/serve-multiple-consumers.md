@@ -2,7 +2,7 @@
 description: "Memory systems need multiple surfaces because acting, scheduling, review, learning, governance, and active work consume memory differently"
 type: types/note.md
 traits: [has-external-sources]
-tags: [agent-memory, context-engineering]
+tags: [agent-memory, context-engineering, learning-theory]
 ---
 
 # Serve Multiple Consumers, Not One Retrieval Interface

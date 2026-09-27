@@ -2,7 +2,7 @@
 description: "Separates envelope expansion, where a responsibility leaves the residual human work, from performance gains inside a fixed envelope, so a bounded method reaching its ceiling does not retract the transfer it already made"
 type: types/note.md
 traits: [title-as-claim]
-tags: [self-improving-systems, warranted-autonomy]
+tags: [self-improving-systems, warranted-autonomy, learning-theory]
 ---
 
 # A method's ceiling bounds the method, not the transfer it already made

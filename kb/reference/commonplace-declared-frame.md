@@ -1,7 +1,7 @@
 ---
 description: "The declared boundary under which Commonplace's self-improvement, reflectivity, and allocation attributions are assessed — what is inside, what is outside, and how to cite or depart from it"
 type: types/note.md
-tags: [computational-model, self-improving-systems]
+tags: [computational-model, self-improving-systems, learning-theory]
 ---
 
 # The declared Commonplace frame

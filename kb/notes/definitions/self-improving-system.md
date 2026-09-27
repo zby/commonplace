@@ -1,7 +1,7 @@
 ---
 description: "Definition — operative, evidence-responsive change to a system's own behavior-determining organization, read against a declared boundary, horizon, and improvement objective"
 type: types/definition.md
-tags: [computational-model, self-improving-systems]
+tags: [computational-model, self-improving-systems, learning-theory]
 ---
 
 # Self-improving system

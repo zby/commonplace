@@ -2,7 +2,7 @@
 description: "Objective change is improvement only against a level outside both objectives; proxy revision, re-indexing, and surfaced under-specification subtract most apparent cases"
 type: types/note.md
 traits: [title-as-claim]
-tags: [self-improving-systems]
+tags: [self-improving-systems, learning-theory]
 ---
 
 # Revising an improvement objective is licensed from outside it or is not improvement

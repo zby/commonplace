@@ -2,7 +2,7 @@
 description: "A rule-based selector can target one case only when a rule-ready signal already distinguishes it; otherwise the system must wait, load broadly, or infer relevance from task and candidate content"
 type: types/note.md
 traits: [title-as-claim]
-tags: [context-engineering, agent-memory]
+tags: [context-engineering, agent-memory, learning-theory]
 ---
 
 # Rule-based context selection needs a pre-existing signal

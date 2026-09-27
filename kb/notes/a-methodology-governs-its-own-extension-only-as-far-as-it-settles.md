@@ -2,7 +2,7 @@
 description: "A retained methodology governs the consequential extension decisions it supplies or imports; actor competence can carry the process further without making those choices settled by the method"
 type: types/note.md
 traits: [title-as-claim]
-tags: [constraining, self-improving-systems, warranted-autonomy, method-guided-action]
+tags: [constraining, self-improving-systems, warranted-autonomy, method-guided-action, learning-theory]
 ---
 
 # A methodology governs its own extension only as far as it settles the meta-decisions it raises

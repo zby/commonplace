@@ -2,7 +2,7 @@
 description: "Explains why an input stream alone can't answer 'what to store' in open-domain memory design; a declared output spec supplies the missing inclusion criterion."
 type: types/note.md
 traits: [title-as-claim, has-comparison]
-tags: [agent-memory, context-engineering]
+tags: [agent-memory, context-engineering, learning-theory]
 ---
 
 # Open-domain memory retention needs a declared output spec

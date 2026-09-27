@@ -2,7 +2,7 @@
 description: "Different reasons for an untransferred decision identify different missing functions; a single process can supply several, and the current carrier split is not a permanent requirement"
 type: types/note.md
 traits: [title-as-claim]
-tags: [self-improving-systems, improvement-loop]
+tags: [self-improving-systems, improvement-loop, learning-theory]
 ---
 
 # Distinct residue classes require distinct functions in a self-improving architecture

@@ -2,7 +2,7 @@
 description: "Separates the contribution a bare writing prompt leaves underdetermined from empirical claims about how experts and LLMs supply the missing purpose."
 type: types/note.md
 traits: [title-as-claim]
-tags: [llm-reliability, computational-model]
+tags: [llm-reliability, computational-model, learning-theory]
 ---
 
 # A bare writing prompt does not determine its intended contribution

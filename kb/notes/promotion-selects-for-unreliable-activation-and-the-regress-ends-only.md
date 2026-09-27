@@ -2,7 +2,7 @@
 description: "Recasts promotion from 'the consumer lacks this' to 'the consumer will not apply this unprompted', and requires delivery to have a root firing event independent of that prior activation"
 type: types/note.md
 traits: [title-as-claim, has-comparison]
-tags: [agent-memory, context-engineering, failure-modes]
+tags: [agent-memory, context-engineering, failure-modes, learning-theory]
 ---
 
 # Promotion selects for unreliable activation, and the regress ends only at an external trigger

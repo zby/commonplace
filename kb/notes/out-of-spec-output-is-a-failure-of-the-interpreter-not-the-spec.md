@@ -2,7 +2,7 @@
 description: Interpreter failure is output that a spec's public meaning rules out; the fault attaches to the interpreter's role, so repair uses detection and correction rather than narrowing an already sufficient spec
 type: types/note.md
 traits: [title-as-claim]
-tags: [llm-reliability]
+tags: [llm-reliability, learning-theory]
 ---
 
 # Out-of-spec output is a failure of the interpreter, not the spec
