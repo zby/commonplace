@@ -121,8 +121,13 @@ chosen primary store. `parametric` abbreviates distributed-parametric form.
 Lineage covers their derivation paths. Behavioral authority names the force
 in actual memory consumer paths; `knowledge` abbreviates advisory/evidential
 consumption. A human-triggered automatic extraction remains automatic write
-agency. Curation operates over retained memory; acquisition and primary-key
-collision checks alone are not memory consolidation or deduplication.
+agency. Curation operates over retained memory: `consolidate` reduces
+retained content without new claims; `dedup` merges near duplicates; `evolve`
+revises an existing entry; `synthesize` creates a claim absent from the
+inputs; `invalidate` withdraws current reliance while retaining history;
+`decay` forgets or downweights; `promote` raises tier or salience. Index
+rebuilds, acquisition and primary-key collision checks alone establish none
+of these.
 
 Read-back concerns accumulated memory, not static routing instructions. Use
 both `pull` and `push` when both routes exist. Read-back signal characterizes

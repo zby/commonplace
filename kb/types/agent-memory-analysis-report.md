@@ -13,14 +13,10 @@ It is not a published system review or independent approval of the main result.
 
 ## Identity and retention
 
-Write `memory-report.md` inside the parent's
-`kb/reports/state/agentic-system-analysis/<run-id>/` directory. The parent
-consumes this file before writing the integrated result. Retain it with
-`memory-input.md` for local completion verification; do not delete either at
-publication cleanup. The workflow owner may remove the whole local run when
-its operational verification is no longer needed. Public consumers read the
-retained main result, which must contain every adopted finding, limitation and
-integration decision without requiring these local files.
+The report is `memory-report.md` inside the parent's
+`kb/reports/state/agentic-system-analysis/<run-id>/` directory, beside the
+frozen `memory-input.md` it answers. It is local provenance for the main
+result, which carries every adopted finding without requiring it.
 
 Required frontmatter:
 
@@ -37,10 +33,10 @@ Required frontmatter:
 | `method-sha256` | SHA-256 of the specialist instruction `kb/instructions/analyse-agent-memory.md` used |
 | `memory-comparison` | Proposed scope and all fourteen axes using the main-result comparison contract |
 
-A complete report can contain explicit unknown classifications. A blocked
-report names missing access, changed input, or an unresolved scope decision
-that prevents completing the assigned analysis. It still keeps all sections;
-unreached axes use explicit uninspected assessments rather than guessed values.
+A blocked report names missing access, changed input, or an unresolved scope
+decision that prevents completing the assigned analysis. It still keeps all
+sections; unreached axes use explicit uninspected assessments rather than
+guessed values.
 
 ## Report sections
 
@@ -69,10 +65,14 @@ observed behavior.
 Use relevant parent canonical IDs with short source-native descriptions,
 evidence anchors and memory-specific fields. Do not copy the entire runtime
 inventory. New records use local IDs such as `MEM-OBJ-1` or `MEM-RTE-1`;
-these are proposals and never reassign a canonical ID. Write every ID in full in lists; no abbreviated suffixes or ranges. Records distinguish
-operative parts, raw and derived forms, their storage, lineage, consumers,
-authority, and limits. A route identifies trigger, producer or selector,
-retained input, persistence, delivery, later consumer and status.
+these are proposals and never reassign a canonical ID. IDs follow the main
+result's [Canonical identity](./agentic-system-analysis-result.md#canonical-identity)
+rules, written in full in every list. Records distinguish operative parts,
+raw traces from derived memory, content from access metadata, opaque payloads
+from their readable display summaries, and give storage, representational
+form, lineage, consumers, authority at the actual consumer, and limits. A
+route identifies trigger, producer or selector, retained input, persistence,
+delivery, later consumer and status.
 
 Declare each proposed record with a heading such as `### MEM-OBJ-1 — Label`.
 Use only `MEM-CMP-*`, `MEM-OBJ-*`, `MEM-RTE-*`, `MEM-CLM-*`, `MEM-ABS-*` or
@@ -82,9 +82,11 @@ MEM-OBJ-1 ...` and `Evidence: SRC-1 ...`, keeping ID-leading lines for declarati
 
 ### Write side
 
-Trace acquisition, authoring, automatic transformation and maintenance. For
-trace-fed transformations, show the raw-to-derived-to-later-consumer chain,
-including alternative checkpoint forms. Give task/project horizons and timing
+Trace acquisition, authoring, automatic transformation, maintenance,
+rejection and withdrawal, separating manual authoring, automatic acquisition,
+and automatic operations over already retained material. For trace-fed
+transformations, including compaction, show the raw-to-derived-to-later-consumer
+chain, including alternative checkpoint forms. Give task/project horizons and timing
 only when established by that route. State whether derived behavior-shaping
 material retains its reasons and whether a later route reads them. Link to the
 shared records rather than repeating their full artifact classifications.
@@ -93,8 +95,12 @@ shared records rather than repeating their full artifact classifications.
 
 Identify the later consumer, selection operation and delivery channel for each
 route. Distinguish requested reads from automatic supply, API affordance from
-wiring, and delivery from activation or benefit. A storage method alone does
-not establish a consumer route. Record targeting inputs, budgets and authority
+wiring, and availability, delivery, activation and demonstrated benefit. A
+storage method or an API with an unspecified hypothetical caller establishes
+only a storage capability, not a consumer route; a documented external
+consumer role may establish an afforded route without deployed wiring. A push
+route names its automatic selector's trigger, inputs, selected parts, budget
+and consumption channel. Record targeting inputs, budgets and authority
 where they affect a conclusion.
 
 ### Comparison rationale
@@ -112,8 +118,9 @@ List every proposed record, correction to a supplied fact, and unresolved
 question with its evidence and analytical consequence. Identify the proposed
 record kind and referenced IDs so the parent can assign canonical IDs without
 rediscovering its meaning. State `none` when no issues remain. A complete
-report may contain supported correction proposals; a required unresolved
-decision is blocking. Side-channel messages never substitute for this section.
+report may contain supported correction proposals and justified unknown
+classifications; an unresolved question that prevents integration sets
+`report-status: blocked`. Side-channel messages never substitute for this section.
 
 ### Limitations and checks
 
@@ -121,13 +128,3 @@ Name prevented conclusions, source and method identity rechecks, and the
 deterministic validation result. A self-check does not attest independence or
 correctness of the final integrated analysis. Do not omit weaknesses to make
 the report appear ready for integration.
-
-## Integration contract
-
-The orchestrator verifies run/source/input identity and report bytes, reads
-the report, registers proposals, and records the ID mapping and issue
-dispositions in the main result. Adopted classifications retain their evidence
-and uncertainty. A substantive disagreement goes back to the specialist with
-the conflicting evidence or is retained as explicit uncertainty; the parent
-does not silently strengthen it. Any changed input is a fresh handoff. After
-integration the main result is authoritative for downstream consumers.
