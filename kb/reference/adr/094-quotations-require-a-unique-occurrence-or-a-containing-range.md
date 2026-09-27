@@ -31,6 +31,16 @@ and the citing line. Prose citations and attributed blockquotes remain two
 syntax forms. Source resolution keeps each contract's identity and
 availability rules.
 
+Analysis authors use `commonplace-quote` to construct citations from selected
+text and the run's frozen source. It returns only the citation for a unique
+occurrence, or exact source excerpts, derived ranges and selection metadata for
+two to ten occurrences. More than ten asks the author for a longer quote instead
+of emitting an unwieldy candidate set. The author chooses
+an occurrence and inserts its citation unchanged. Occurrences on the same line
+receive additional source context when needed. The generator does not validate
+documents; publication invokes regular run-state validation on the assembled
+bundle. No separate authoring-time source-check command is required.
+
 Require exactly one occurrence in the eligible source region. If a citation
 supplies a range, require exactly one complete occurrence inside it. Slice
 original source lines before normalization. Separate extracts and disjoint
@@ -77,10 +87,14 @@ checks but keeps a third parser and an unchecked location field. Attributed
 blocks let the existing analysis syntax carry both identity and optional
 checked ranges, including multiline passages.
 
-**A locator command and mandatory selected-occurrence syntax.** This would
-rewrite citations whose quoted text already identifies an occurrence and add
-another operation for authors. Counts and optional ranges provide the needed
-failure signal without a new command surface.
+**Checking author-written citations without a constructor.** This leaves range
+calculation and formatting to the author and catches mistakes only after
+drafting. Source-derived construction now replaces that authoring step. It
+returns all candidates rather than choosing an occurrence for the author.
+
+**Mandatory selected-occurrence syntax.** An occurrence ordinal would add a
+new persistent citation form. Generated excerpts with containing ranges use
+the existing form; same-line repetition is handled with source context.
 
 **Hash-pin every living KB target.** This detects all target edits but cannot
 distinguish relevant changes from unrelated appends. Current-byte quote
@@ -89,8 +103,13 @@ interpretive context when the quoted words remain unchanged.
 
 ## Consequences
 
-The deterministic validator, source-check command, and publication command
-consume the matching rules through the shared core. The ingest and analysis
+The deterministic validator consumes the matching rules through the shared
+core; publication uses that validator. The coordinator and fresh memory
+specialist load the generation requirement through their instructions and type
+contracts. Structural citation checks use the same parser. Document link and
+ordinary source-anchor scans exclude recognized quotation bodies while keeping
+their attributions, so source examples are not treated as author assertions.
+The ingest and analysis
 types define the citation form; grounding and writing instructions teach it;
 fresh-project collection templates expose the same form. Existing projects
 retain their own content on initialization and must migrate old quote items

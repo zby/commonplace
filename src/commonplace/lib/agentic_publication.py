@@ -15,12 +15,10 @@ import yaml
 from commonplace.lib import validation
 from commonplace.lib.agentic_analysis import (
     AgenticAnalysisRunState,
-    _verify_quote_anchors,
-    _verify_source_anchors,
     parse_agentic_analysis_run_state,
 )
 from commonplace.lib.note_parser import ParsedDocument, parse_document
-from commonplace.lib.systems_matrix import retained_result_path, validate_comparison
+from commonplace.lib.systems_matrix import retained_result_path
 
 
 @dataclass(frozen=True)
@@ -114,17 +112,6 @@ def _parse(content: str, *, label: str) -> ParsedDocument:
     return document
 
 
-def _clean_validation(content: str, *, path: Path, repo_root: Path, label: str) -> None:
-    results = validation.validate_note_text_at_path(
-        content,
-        path=path,
-        repo_root=repo_root,
-    )
-    diagnostics = [*results.warns, *results.fails]
-    if diagnostics:
-        raise ValueError(f"{label} validation failed: " + "; ".join(diagnostics))
-
-
 def _load_running_state(path: Path, *, repo_root: Path) -> tuple[AgenticAnalysisRunState, ParsedDocument]:
     if not path.is_file():
         raise ValueError(f"run state does not exist: {path}")
@@ -152,44 +139,6 @@ def _require_candidate_in_run(candidate: Path, state: AgenticAnalysisRunState) -
         "incumbent-review.md", "incumbent-result.md"
     }:
         raise ValueError(f"candidate path is reserved: {candidate}")
-
-
-def verify_sources(*, repo_root: Path, run_state_path: Path, artifact_path: Path) -> dict[str, object]:
-    """Check a draft or specialist report using publication's frozen-source checks.
-
-    This reads only the running state and the selected artifact; it needs no
-    assembled result, candidate review, or publication. Semantic support and
-    integration identity still require the full publication workflow.
-    """
-    state, _ = _load_running_state(_repo_path(repo_root, run_state_path), repo_root=repo_root)
-    artifact = _repo_path(repo_root, artifact_path)
-    if artifact not in {state.run_dir / "result.md", state.run_dir / "memory-report.md"}:
-        raise ValueError("verify-sources requires this run's result.md or memory-report.md")
-    raw, content = _read_utf8(artifact, label="source-check artifact")
-    document = _parse(content, label="source-check artifact")
-    expected_type = (
-        "types/agent-memory-analysis-report.md" if artifact.name == "memory-report.md"
-        else "types/agentic-system-analysis-result.md"
-    )
-    if (document.frontmatter or {}).get("type") != expected_type:
-        raise ValueError(f"source-check artifact must have type {expected_type}")
-    _clean_validation(content, path=artifact, repo_root=repo_root, label="source-check artifact")
-    source = state.source
-    assert source is not None  # _load_running_state requires a frozen source.
-    passes, errors = _verify_quote_anchors(content, source=source)
-    if source.kind == "git":
-        anchor_passes, anchor_errors = _verify_source_anchors(
-            content, source_root=source.path,
-            source_identity=source.identity, source_revision=source.revision,
-        )
-        passes.extend(anchor_passes)
-        errors.extend(anchor_errors)
-    if errors:
-        raise ValueError("source verification failed: " + "; ".join(errors))
-    return {
-        "source_verified": True, "artifact": artifact.relative_to(repo_root).as_posix(),
-        "sha256": sha256(raw).hexdigest(), "checks": len(passes),
-    }
 
 
 def _check_incumbent(
@@ -340,13 +289,8 @@ def _check_bundle(spec: PublicationSpec) -> _CheckedBundle:
     result_document = _parse(result_text, label="exact result")
     if result_document.frontmatter.get("result-disposition") != "complete":
         raise ValueError("publication requires a complete exact result")
-    _clean_validation(
-        result_text,
-        path=result_path,
-        repo_root=repo_root,
-        label="exact result",
-    )
-    validate_comparison(result_document.frontmatter.get("memory-comparison"), result_document.body)
+    if "memory-comparison" not in result_document.frontmatter:
+        raise ValueError("publication requires memory-comparison")
     retained_path = _repo_path(repo_root, retained_result_path(running_state.run_id))
     if retained_path.relative_to(repo_root) != retained_result_path(running_state.run_id):
         raise ValueError("retained result must use its canonical path")
@@ -425,8 +369,8 @@ def publish_publication(spec: PublicationSpec) -> PublishedPublication:
     targets: list[tuple[Path, bytes]] = [
         (bundle.retained_path, bundle.result_bytes),
         (generated_path, bundle.generated_bytes),
+        (state_path, bundle.final_state_text.encode("utf-8")),
     ]
-    targets.append((state_path, bundle.final_state_text.encode("utf-8")))
     if bundle.incumbent.review_bytes is not None:
         backups = [
             (state_path.parent / "incumbent-review.md", bundle.incumbent.review_bytes),
@@ -474,15 +418,11 @@ def publish_publication(spec: PublicationSpec) -> PublishedPublication:
         raise
 
     cleanup_warnings: list[str] = []
-    for candidate in (
-        bundle.spec.generated_candidate_path,
-    ):
-        if candidate is None:
-            continue
-        try:
-            candidate.unlink(missing_ok=True)
-        except OSError as exc:
-            cleanup_warnings.append(f"could not remove candidate {candidate}: {exc}")
+    candidate = bundle.spec.generated_candidate_path
+    try:
+        candidate.unlink(missing_ok=True)
+    except OSError as exc:
+        cleanup_warnings.append(f"could not remove candidate {candidate}: {exc}")
     return PublishedPublication(
         generated_path=bundle.spec.generated_destination,
         retained_path=bundle.retained_path.relative_to(repo_root).as_posix(),

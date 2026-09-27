@@ -45,13 +45,10 @@ The command is read-only. It refuses a running, failed, or invalid run.
 
 ### commonplace-agentic-analysis-publication
 
-`verify-sources <run-state-path> --artifact <artifact-path>` checks one running
-run's `result.md` or `memory-report.md` before integration or publication. It
-validates the artifact's type and structure and resolves quotes and citation
-ranges against the run's frozen source. It returns a nonzero status on failure,
-otherwise the checked artifact's SHA-256 and check count. It writes nothing,
-needs no public-review candidate, and does not establish semantic support or
-completion of the run. The publication operations repeat source checking.
+Publication invokes the regular validator on the prospective complete run
+bundle, including quotation occurrence and source ranges. Quotation generation
+belongs to `commonplace-quote`; there is no separate authoring-time source-check
+operation in this command.
 
 Inspect a destination, prepare or publish the compact review of one running
 agentic-system analysis. `inspect-destination` takes `--generated-destination`
@@ -108,6 +105,16 @@ already exist. The
 Audit `verbatim`-marked quotations over one or more Markdown files or
 directories, including unresolved pairings that do not fail ordinary
 validation.
+
+### commonplace-quote
+
+Generate citations from selected text and an analysis run's frozen Git blob or
+capture. One occurrence returns only the Markdown citation, containing the exact
+source excerpt and derived range. Two to ten occurrences return JSON candidates
+with selection metadata. More than ten returns an error asking for a longer
+quote. The author chooses one and inserts it unchanged; the
+tool does not validate an assembled document. Publication uses the regular
+validator. Use `--text-file` or stdin for selected text to avoid shell quoting.
 
 ### Generated indexes (no command)
 

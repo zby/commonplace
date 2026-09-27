@@ -117,6 +117,24 @@ def parse_blockquotes(content: str) -> tuple[Citation, ...]:
     return tuple(citations)
 
 
+def blank_quote_bodies(content: str) -> str:
+    """Keep attributions, but hide recognized source text from author-link scans.
+
+    Preserve offsets for consumers reporting positions. Unattributed or
+    unparseable blocks remain ordinary document content. Quote verification
+    must always receive the original content, never this filtered view.
+    """
+    lines = content.splitlines(keepends=True)
+    for citation in parse_blockquotes(content):
+        if citation.error or not citation.quote:
+            continue
+        end = citation.line - 1
+        start = end - len(citation.quote.split("\n"))
+        for index in range(start, end):
+            lines[index] = re.sub(r"[^\r\n]", " ", lines[index])
+    return "".join(lines)
+
+
 def git_citation_path(citation: Citation) -> tuple[str, str | None]:
     """Return commit-relative path and optional repository from a parsed citation."""
     source = citation.source or ""

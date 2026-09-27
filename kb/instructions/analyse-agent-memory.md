@@ -19,7 +19,7 @@ provisional findings to check against sources, not accepted conclusions.
 
 Write only the commissioned `memory-report.md` using the global
 [`agent-memory-analysis-report`](../types/agent-memory-analysis-report.md) type. Read that contract and the
-Memory comparison fields and Status fields sections of
+Memory comparison fields, Status fields, and Source register sections of
 [`agentic-system-analysis-result`](../types/agentic-system-analysis-result.md). Do not load the legacy review
 type, prior system reviews, surveys, matrix outputs, or style exemplars.
 The parent owns canonical IDs, integration, publication and completion. Do not
@@ -52,15 +52,26 @@ output for truncation and reread omitted spans before citing them.
 Follow the old memory review's analytical progression: core mechanisms,
 operative artifacts, write side, read-back, then a curiosity pass. Keep each
 finding source-native before giving a Commonplace classification. Retain the
-minimum verbatim supporting code or prose for each load-bearing finding as a
-blockquote ending with ``> --- `commit-relative/path` @ `full-commit` `` or a
-matching commit-pinned GitHub blob link (the frozen source identity for a
-capture). Do not include display line numbers or invented ellipses. Separate
-discontiguous passages. Publication searches the full frozen source for that
-text; checking a file and line range alone is insufficient. Explain the
-passage's support for the finding, and let the parent retain it once on the
-canonical record. A thin
-memory boundary warrants short sections with explicit limits.
+minimum supporting code or prose for each load-bearing finding. Write the text
+to locate into a UTF-8 selection file and run
+`commonplace-quote <sibling-run-state-path> --source-path <commit-relative-path>
+--text-file <selection-file>`. Omit `--source-path` for the frozen capture.
+One occurrence returns only the Markdown citation. Two to ten occurrences return
+JSON entries containing complete `citation` strings and selection metadata.
+More than ten occurrences returns an error: select a longer quote and retry.
+The tool includes additional source context
+when needed to distinguish occurrences on the same line. Choose the occurrence
+whose context supports the finding and insert its citation unchanged.
+
+Request discontiguous passages separately. A failed lookup requires rereading
+the source and revising the selection. Do not format citations, strip source
+characters, or calculate endpoints yourself. For ordinary source references,
+use the full path without a range, or reuse a generated location. Follow the
+main-result Source register contract. Do not run a separate quote check after
+insertion; publication uses the regular validator on the assembled bundle.
+Assess semantic support yourself, and let the parent retain the chosen quote
+once on the canonical record. A thin memory boundary warrants short sections
+with explicit limits.
 
 - **Core mechanisms:** explain what retained material can change in later
   work. Account for context volume and selection complexity, provenance and
@@ -118,13 +129,8 @@ complete report. Validate the report with `commonplace-validate --full
 <report-path>` and correct structural errors. This is specialist analysis,
 not independent semantic clearance of the main result.
 
-Before returning, run the read-only command
-`commonplace-agentic-analysis-publication verify-sources <sibling-run-state-path>
---artifact <report-path>`. It checks this report against the frozen source without
-needing the parent's result or a publication candidate. Correct source errors
-and repeat it; a line-range repair also requires rechecking claim support.
-Use this shared checker rather than an ad hoc quote parser. Inspect exit status
-and stderr, not only stdout. Run dependent checks separately or with `&&`
+Inspect exit status and stderr, not only stdout. Run dependent commands
+separately or with `&&`
 (and `set -o pipefail` for pipelines); later validation or hashing cannot clear
 an earlier failure. Rehash only the final corrected report.
 

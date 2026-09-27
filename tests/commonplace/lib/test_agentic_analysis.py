@@ -12,7 +12,11 @@ from pathlib import Path
 import pytest
 import yaml
 
-from commonplace.cli import agentic_analysis_handoff, agentic_analysis_publication
+from commonplace.cli import (
+    agentic_analysis_handoff,
+    agentic_analysis_publication,
+    quote,
+)
 from commonplace.lib import agentic_publication, systems_matrix, validation
 from commonplace.lib.agentic_analysis import (
     parse_agentic_analysis_run_state,
@@ -824,6 +828,22 @@ def test_prepare_checks_handoff_without_publishing(tmp_path: Path) -> None:
     assert frontmatter(state)["run-status"] == "running"
 
 
+def test_prepare_validates_result_once_through_regular_bundle_validation(tmp_path, monkeypatch):
+    state, spec, _ = publication_fixture(tmp_path)
+    result = state.parent / "result.md"
+    validate = validation._validate_parsed_note
+    visits = []
+
+    def track(parsed, *, run):
+        if parsed.path == result:
+            visits.append(parsed.path)
+        return validate(parsed, run=run)
+
+    monkeypatch.setattr(validation, "_validate_parsed_note", track)
+    assert prepare_publication(spec).prepared
+    assert visits == [result]
+
+
 @pytest.mark.parametrize("mutation", ["valid", "vocabulary", "empty", "outside", "absence", "dependency"])
 def test_standing_memory_report_comparison_validation(tmp_path: Path, mutation: str) -> None:
     state = valid_run_state(tmp_path)
@@ -1407,24 +1427,96 @@ def test_quoted_code_must_occur_inside_the_cited_range(tmp_path: Path) -> None:
     assert any("quote does not occur" in error for error in errors)
 
 
-@pytest.mark.parametrize("name", ["memory-report.md", "result.md"])
-def test_early_source_check_needs_no_publication_or_integrated_result(tmp_path, capsys, name):
+def test_quote_generation_needs_no_report_or_publication(tmp_path, capsys):
     state, spec, _ = publication_fixture(tmp_path)
-    artifact = state.parent / name
-    if name == "memory-report.md":
-        (state.parent / "result.md").unlink()
+    (state.parent / "result.md").unlink()
+    (state.parent / "memory-report.md").unlink()
     spec.generated_candidate_path.unlink()
-    original = artifact.read_bytes()
-    assert agentic_analysis_publication.main([
-        "verify-sources", str(state), "--artifact", str(artifact),
+    text = write(tmp_path / "selection.txt", "Frozen source")
+    before = {p: p.read_bytes() for p in state.parent.iterdir() if p.is_file()}
+    assert quote.main([
+        str(state), "--source-path", "README.md", "--text-file", str(text),
     ], cwd=tmp_path) == 0
-    result = json.loads(capsys.readouterr().out)
-    assert result["source_verified"] is True
-    assert result["sha256"] == sha256(original).hexdigest()
-    assert result["checks"] > 0
-    assert artifact.read_bytes() == original
+    output = capsys.readouterr().out
+    revision = frontmatter(state)["source"]["revision"]
+    assert output == f"> Frozen source\n> --- `README.md:1-1` @ `{revision}`\n"
+    assert before == {p: p.read_bytes() for p in state.parent.iterdir() if p.is_file()}
     assert frontmatter(state)["run-status"] == "running"
     assert not (tmp_path / spec.generated_destination).exists()
+
+
+@pytest.mark.parametrize("count", [10, 11])
+def test_quote_cli_emits_candidates_or_requests_longer_selection(tmp_path, capsys, count):
+    state, _, _ = publication_fixture(tmp_path)
+    snapshot = write(tmp_path / "capture.md", "repeated phrase\n" * count)
+    values = frontmatter(state)
+    values["source"] = {
+        "kind": "capture", "identity": "https://example.com/source",
+        "revision": "capture", "path": str(snapshot), "sha256": digest(snapshot),
+    }
+    replace_frontmatter(state, values)
+    selection = write(tmp_path / "selection.txt", "repeated phrase")
+    status = quote.main([str(state), "--text-file", str(selection)], cwd=tmp_path)
+    output = capsys.readouterr()
+    if count == 10:
+        assert status == 0 and not output.err
+        assert len(json.loads(output.out)["occurrences"]) == 10
+    else:
+        assert status == 1 and not output.out
+        assert "more than 10 occurrences; choose a longer quote" in output.err
+
+
+def test_generated_source_links_publish_through_regular_validator(tmp_path, monkeypatch):
+    original_checkout = git_checkout
+    foreign = "https://github.com/other/repo/blob/" + "b" * 40 + "/example.md#L1"
+    source_text = (
+        "# Frozen source\n"
+        "![Diagram](figures/source.png)\n"
+        f"[Upstream]({foreign})\n"
+        "Use `fictional/file.py:12-20` as an example.\n"
+        " * repeated comment\n * repeated comment\n"
+    )
+
+    def source_with_examples(path):
+        root, _ = original_checkout(path)
+        readme = write(root / "README.md", source_text)
+        commit_incumbent(root, readme)
+        revision = subprocess.check_output(["git", "-C", str(root), "rev-parse", "HEAD"], text=True).strip()
+        return root, revision
+
+    monkeypatch.setattr(sys.modules[__name__], "git_checkout", source_with_examples)
+    state, spec, _ = publication_fixture(tmp_path)
+    from commonplace.lib.agentic_analysis import SourceIdentity
+    from commonplace.lib.quote_generation import generate_quotes
+
+    source = frontmatter(state)["source"]
+    identity = SourceIdentity("git", source["identity"], source["revision"], Path(source["path"]), None)
+    # The worktree must not supply either the selected text or its locations.
+    write(identity.path / "README.md", "uncommitted replacement\n")
+    result = state.parent / "result.md"
+    for text in [*source_text.splitlines()[1:4], "* repeated comment"]:
+        payload = generate_quotes(text, source=identity, source_path="README.md")
+        if text == "* repeated comment":
+            assert [entry["start_line"] for entry in payload["occurrences"]] == [5, 6]
+        citation = payload if isinstance(payload, str) else payload["occurrences"][-1]["citation"]
+        result.write_text(result.read_text() + "\n" + citation)
+    replace_frontmatter(spec.generated_candidate_path, {
+        **frontmatter(spec.generated_candidate_path), "analysis-result-sha256": digest(result),
+    })
+    assert prepare_publication(spec).prepared
+    published = publish_publication(spec)
+    checked = validation.validate_note(state, repo_root=tmp_path)
+    assert not checked.warns and not checked.fails
+    assert (tmp_path / published.retained_path).read_bytes() == result.read_bytes()
+
+    # An author-added bad range is still rejected by the same ordinary validator.
+    result.write_text(result.read_text() + "\nAuthor anchor: `README.md:999`.\n")
+    values = frontmatter(state)
+    sync_retained_fixture(tmp_path, values)
+    values["generated-review"]["sha256"] = digest(tmp_path / values["generated-review"]["path"])
+    replace_frontmatter(state, values)
+    checked = validation.validate_note(state, repo_root=tmp_path)
+    assert any("outside the recorded blob" in error for error in checked.fails)
 
 
 @pytest.mark.parametrize("addition,diagnostic", [
@@ -1433,18 +1525,14 @@ def test_early_source_check_needs_no_publication_or_integrated_result(tmp_path, 
     ("\n> Frozen source\n> --- `README.md` @ `" + "0" * 40 + "`\n", "revision"),
     ("\n> --- `README.md` @ `{revision}`\n", "no quoted text"),
 ])
-def test_early_source_check_rejects_bad_evidence_without_writes(tmp_path, capsys, addition, diagnostic):
+def test_publication_validator_rejects_bad_evidence_without_writes(tmp_path, addition, diagnostic):
     state, spec, _ = publication_fixture(tmp_path)
     artifact = state.parent / "memory-report.md"
     revision = frontmatter(state)["source"]["revision"]
     artifact.write_text(artifact.read_text() + addition.format(revision=revision))
     before = {p: p.read_bytes() for p in state.parent.iterdir() if p.is_file()}
-    assert agentic_analysis_publication.main([
-        "verify-sources", str(state), "--artifact", str(artifact),
-    ], cwd=tmp_path) == 1
-    output = capsys.readouterr()
-    assert diagnostic in output.err
-    assert "source_verified" not in output.out
+    with pytest.raises(ValueError, match=diagnostic):
+        prepare_publication(spec)
     assert before == {p: p.read_bytes() for p in state.parent.iterdir() if p.is_file()}
     assert not (tmp_path / spec.generated_destination).exists()
 
@@ -1456,7 +1544,9 @@ def test_source_failure_stops_dependent_shell_command(tmp_path):
     marker = tmp_path / "incorrect-success"
     command = shlex.join([
         sys.executable, "-m", "commonplace.cli.agentic_analysis_publication",
-        "verify-sources", str(state), "--artifact", str(artifact),
+        "prepare", str(state), "--generated-candidate", str(spec.generated_candidate_path),
+        "--generated-destination", spec.generated_destination,
+        "--expected-incumbent-sha256", "absent",
     ])
     later = shlex.join([sys.executable, "-c", "from pathlib import Path; Path('incorrect-success').touch()"])
     result = subprocess.run(["bash", "-c", command + " && " + later], cwd=tmp_path, capture_output=True, text=True, check=False)
@@ -1507,9 +1597,7 @@ def test_publication_trial_stops_wrong_specialist_range_then_publishes_unranged(
     with report.open("a") as handle:
         handle.write(f"\n> Frozen source\n> --- `README.md:2` @ `{revision}`\n")
     with pytest.raises(ValueError, match="cited line range"):
-        agentic_publication.verify_sources(
-            repo_root=tmp_path, run_state_path=state, artifact_path=report,
-        )
+        prepare_publication(spec)
     assert not (tmp_path / spec.generated_destination).exists()
     report.write_bytes(original)
     published = publish_publication(spec)

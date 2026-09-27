@@ -550,7 +550,7 @@ tags: [learning-theory]
         (
             "> p95 retrieval latency was 340ms\n> --- the documentation\n",
             None,
-            "names no source",
+            "expected a pinned source path or source URL",
         ),
         ("Some prose.\n\n> --- `src/memory/store.py`\n", None, "no quoted text above"),
     ],

@@ -155,6 +155,33 @@ def test_malformed_attribution_url_is_a_diagnostic(tmp_path):
     assert len(failures) == 1 and "source error" in failures[0]
 
 
+@pytest.mark.parametrize("wrapper", ["{}", "<{}>", "[source]({})", "`{}`"])
+def test_structural_and_source_checks_accept_registered_urls(tmp_path, wrapper):
+    from commonplace.lib.validation import validate_quote_citations
+
+    source = tmp_path / "snapshot.md"
+    source.write_text("one")
+    digest = content_sha256_for_text("one")
+    identity = "https://example.com/source"
+    content = "> one\n> --- " + wrapper.format(identity) + "\n"
+    results = CheckResults(note_type="agentic-system-analysis-result")
+    validate_quote_citations(results, content)
+    assert not results.warns
+    _, errors = _verify_quote_anchors(
+        content, source=SourceIdentity("capture", identity, "capture", source, digest),
+    )
+    assert not errors
+
+
+@pytest.mark.parametrize("attribution", ["`README.md`", "[source](README.md)", "`documentation`"])
+def test_structural_validation_reports_missing_parsed_source(attribution):
+    from commonplace.lib.validation import validate_quote_citations
+
+    results = CheckResults(note_type="agentic-system-analysis-result")
+    validate_quote_citations(results, "> quote\n> --- " + attribution + "\n")
+    assert any("expected a pinned source path or source URL" in message for message in results.warns)
+
+
 @pytest.mark.parametrize("source,genre", [
     ("https://github.com/example/repo", "tool-announcement"),
     ("https://example.com/repo", "code-repository"),

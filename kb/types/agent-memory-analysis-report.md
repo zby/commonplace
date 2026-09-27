@@ -58,8 +58,19 @@ later work, including context selection and budget, source trust, and material
 editing/adoption surfaces. Findings carry primary-source anchors and evidence
 status. Load-bearing findings retain minimal verbatim source code or prose in
 quote blocks with full-commit path/URL attribution (or frozen capture identity).
-The source text, not a line number, is matched at publication; the parent
-retains it once on the corresponding canonical record. A complete report must
+Generate them with `commonplace-quote` from the parent's frozen run source;
+choose one returned occurrence and insert its citation unchanged.
+Use the citation syntax and matching rules in the main result's
+[Source register](./agentic-system-analysis-result.md#source-register) contract.
+Under whitespace normalization, each quote must occur exactly once in the
+complete pinned blob or frozen capture, or exactly once within a supplied
+line range. Retain enough context to identify one occurrence, or provide a
+valid range containing exactly one complete occurrence. Preserve source
+characters, including code-comment markers. Line ranges are optional; supplied
+endpoints come from the generator and must resolve in the frozen source.
+Publication checks the assembled bundle through regular run-state validation;
+the author does not run a separate quotation check. The parent retains the quote once
+on the corresponding canonical record. A complete report must
 contain quote anchors; that minimum does not certify every claim's support. Do not turn source claims into implemented or observed behavior.
 
 ### Shared records

@@ -168,3 +168,21 @@ def test_unclosed_fence_hides_examples_through_end_of_document():
     assert not blank_fenced_code_blocks(content).strip()
     assert not parse_blockquotes(content)
     assert not parse_prose_citations(content)
+
+
+def test_source_quote_links_keep_their_context_and_attribution_stays_visible():
+    from commonplace.lib.note_parser import find_markdown_links
+    from commonplace.lib.quote_matching import blank_quote_bodies
+
+    content = (
+        "> ![quoted image](source/figure.png)\n"
+        "> --- [source](https://example.com/doc)\n\n"
+        "> [author link](missing.md)\n\n"
+        "> [malformed quotation](still-missing.md)\n> --- not a source\n"
+    )
+    assert find_markdown_links(content) == (
+        "https://example.com/doc", "missing.md", "still-missing.md",
+    )
+    filtered = blank_quote_bodies(content)
+    assert len(filtered) == len(content)
+    assert filtered.count("\n") == content.count("\n")

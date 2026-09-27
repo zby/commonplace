@@ -118,7 +118,10 @@ def _is_inside_span(start: int, end: int, spans: tuple[tuple[int, int], ...]) ->
 
 
 def _iter_markdown_link_matches(body: str) -> tuple[re.Match[str], ...]:
-    cleaned = blank_fenced_code_blocks(body)
+    # Import at call time: quotation parsing itself uses the fence lexer here.
+    from commonplace.lib.quote_matching import blank_quote_bodies
+
+    cleaned = blank_quote_bodies(blank_fenced_code_blocks(body))
     inline_code_spans = tuple(match.span() for match in _INLINE_CODE_RE.finditer(cleaned))
     return tuple(
         match

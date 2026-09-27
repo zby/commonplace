@@ -200,7 +200,7 @@ Put simultaneous claims at different layers in separately labelled fields or row
 
 The epistemic lens preserves its own two independent fields. **Architectural status** contains one value from the invoked epistemic procedure (`implemented`, `observed, implementation uninspected`, `doctrine only`, `no route found within boundary`, or `not determinable`). **Observed candidate state** contains one value from that procedure. Neither field is a conclusion-status field, and they are never concatenated with one another or translated into this type's conclusion vocabulary. In particular, `implemented and observed` is not a value in any field.
 
-Every negative, thin, conflicting, or uncertain finding names its inspected boundary and the exact conclusion it prevents. Every source-dependent record cites a `SRC-*` ID plus a local anchor. For a Git source, write the local anchor as one code span containing the full commit-relative path and one or more line ranges, for example `packages/runtime/src/agent-run.ts:595-641,944-1012`. A basename denotes a repository-root file, not an arbitrary matching file. Commit-pinned GitHub blob links use the same full path and the result's reviewed revision. Commonplace ontology may annotate a source-native mechanism, but it never replaces the operational account.
+Every negative, thin, conflicting, or uncertain finding names its inspected boundary and the exact conclusion it prevents. Every source-dependent record cites a `SRC-*` ID plus a local anchor. For a Git source, write the local anchor as one code span containing the full commit-relative path, optionally followed by one or more line ranges, for example `packages/runtime/src/agent-run.ts` or `packages/runtime/src/agent-run.ts:595-641,944-1012`. Supplied ranges must resolve in the reviewed commit. A basename denotes a repository-root file, not an arbitrary matching file. Commit-pinned GitHub blob links use the same full path and the result's reviewed revision. Commonplace ontology may annotate a source-native mechanism, but it never replaces the operational account.
 
 ## Required sections
 
@@ -244,6 +244,15 @@ and the compact review referring to that record. An absence additionally needs
 its searched boundary. At least one quote anchor is required for a complete
 result; that structural minimum does not certify coverage or semantic support.
 
+Authors generate quotation blocks with `commonplace-quote` from selected text
+and the run's frozen source. The tool returns an exact source excerpt, derived
+range and formatted attribution for each of up to ten occurrences; a larger
+match set requires a longer quote. The author chooses
+the occurrence that supports the claim and inserts its citation unchanged.
+If repeated occurrences share a line, generated excerpts include additional
+source context. Ordinary navigation references may omit ranges; any supplied
+range should reuse a generated source location.
+
 A quote-anchored blockquote in this result or one of its generated review
 projections ends with a `> ---` attribution. For Git, the attribution contains
 either a full-commit GitHub blob URL matching the registered repository or
@@ -256,7 +265,8 @@ member-file URLs inside a bundle, are not capture identities. Retain those as
 locator notes after a pinned capture-path attribution. Capture ranges address
 the capture's own lines; GitHub blob ranges cannot address a bundle.
 
-Publication normalizes whitespace and requires the quote to
+Regular validation of the complete run, also invoked by publication,
+normalizes whitespace and requires the quote to
 occur exactly once in the Git blob at the recorded commit or in the immutable
 capture, or exactly once within a supplied line range. Ranges use
 `path:start-end` inside the path code span or GitHub `#Lstart-Lend` anchors;

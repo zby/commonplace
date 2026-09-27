@@ -13,6 +13,7 @@ from urllib.parse import unquote, urlsplit
 
 from commonplace.lib.note_parser import ParsedDocument, parse_document
 from commonplace.lib.quote_matching import (
+    blank_quote_bodies,
     git_citation_path,
     match_quote,
     parse_blockquotes,
@@ -415,6 +416,7 @@ def _git_blob_lines(
 def _verify_source_anchors(
     content: str, *, source_root: Path, source_identity: str, source_revision: str
 ) -> tuple[list[str], list[str]]:
+    content = blank_quote_bodies(content)
     passes: list[str] = []
     failures: list[str] = []
     anchors: dict[tuple[str, tuple[tuple[int, int], ...]], set[str]] = {}

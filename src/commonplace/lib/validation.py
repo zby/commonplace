@@ -109,11 +109,6 @@ _PROPOSAL_ARCHIVE_RELATIVE_PATH = Path("kb/reference/proposals/archive")
 # kb/reference/adr/024-schema-severity-is-per-constraint-fail-by-default.md.
 _DEFAULT_SCHEMA_SEVERITY = "fail"
 
-# A quote-anchored citation's attribution line: a blockquote line of the form `> --- ...`.
-# The trailing group is the attribution (source path or link).
-# A source reference inside an attribution: a markdown link or a code span.
-_SOURCE_REF_RE = re.compile(r"\[[^\]]+\]\([^)]+\)|`[^`]+`")
-
 
 @dataclass
 class CheckResults:
@@ -594,10 +589,8 @@ def validate_quote_citations(results: CheckResults, content: str) -> None:
     flagged = 0
     for citation in citations:
         problems = []
-        if citation.source is not None and citation.error:
+        if citation.error:
             problems.append(f"source error: {citation.error}")
-        if not _SOURCE_REF_RE.search(citation.attribution):
-            problems.append("names no source (expected a code-span path or link)")
         if not citation.quote.strip():
             problems.append("no quoted text above the attribution")
         if problems:

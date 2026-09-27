@@ -13,7 +13,6 @@ from commonplace.lib.agentic_publication import (
     inspect_destination,
     prepare_publication,
     publish_publication,
-    verify_sources,
 )
 from commonplace.lib.library import checks_library
 
@@ -24,9 +23,6 @@ def _parser() -> argparse.ArgumentParser:
     inspection = subparsers.add_parser("inspect-destination")
     inspection.add_argument("--generated-destination", required=True)
     inspection.add_argument("--source-identity", required=True)
-    sources = subparsers.add_parser("verify-sources", help="Check result or specialist sources before integration")
-    sources.add_argument("run_state", help="Path to the running run-state.md")
-    sources.add_argument("--artifact", required=True, help="This run's result.md or memory-report.md")
     for operation in ("prepare", "publish"):
         command = subparsers.add_parser(operation)
         command.add_argument("run_state", help="Path to the running run-state.md")
@@ -56,13 +52,6 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
             payload = inspect_destination(
                 repo_root=repo_root, generated_destination=args.generated_destination,
                 source_identity=args.source_identity,
-            )
-            print(json.dumps(payload, sort_keys=True))
-            return 0
-        if args.operation == "verify-sources":
-            payload = verify_sources(
-                repo_root=repo_root, run_state_path=Path(args.run_state),
-                artifact_path=Path(args.artifact),
             )
             print(json.dumps(payload, sort_keys=True))
             return 0
