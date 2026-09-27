@@ -25,16 +25,20 @@ The file places several mechanical checks at different stages of paid ARC action
 
 ## Quotes
 
-- **Source extract (verbatim):** def parse_step(raw: str) -> tuple[str, str]: action, separator, predict = raw.partition("::") if not separator or not action.strip() or not predict.strip(): raise ArcSkillError( 'each step needs its own prediction: --step "ACTION1 :: <claims>"' ) return action.strip().upper(), predict.strip()
-  - **Source location:** `live.py`, `parse_step`, pinned revision `dba53c3`
-- **Source extract (verbatim):** current = { "event": int(latest["id"]), "observation_hash": observation_hash(frame_at(latest)), "rules_hash": rules_hash(paths), } source = plan.get("source") if not isinstance(source, dict): raise ArcSkillError("plan has no source provenance; rerun `arc rules solve`") stale = [name for name, expected in current.items() if source.get(name) != expected] if stale: raise ArcSkillError( f"plan is stale ({', '.join(stale)} changed); rerun `arc rules solve`" )
-  - **Source location:** `live.py`, `execute_solve_plan`, provenance and freshness guard, pinned revision `dba53c3`
-- **Source extract (verbatim):** remaining = len(parsed) - index - 1 discarded = f"; {remaining} remaining steps were discarded" if remaining else ""
-  - **Source location:** `live.py`, `execute_steps`, remaining-suffix calculation, pinned revision `dba53c3`
-- **Source extract (verbatim):** if not ok: outcome = "SURPRISE" detail = f"step {index + 1} missed: {failed[0][2:]}{discarded}" break
-  - **Source location:** `live.py`, `execute_steps`, prediction-miss branch, pinned revision `dba53c3`
-- **Source extract (verbatim):** parsed: list[tuple[str, str, list[dict[str, Any]]]] = [] for raw in raw_steps: token, predict = parse_step(raw) parsed.append((token, predict, parse_claims(predict))) _validate_batch_tokens([token for token, _, _ in parsed]) events = _head_events(paths, at_event) start_event = int(events[-1]["id"]) records: list[dict[str, Any]] = [] outcome = "PREDICTED" detail = f"all {len(parsed)} steps landed as predicted" last_warning: str | None = None for index, (token, predict, claims) in enumerate(parsed): pending, before, warning = _paid_step(paths, token, {"predict": predict}) last_warning = warning or last_warning graded = grade_claims(claims, before, pending) ok = all(item["ok"] for item in graded) pending["predict"] = predict pending["predict_ok"] = ok pending["grade"] = graded event = _record(paths, pending) failed = [line for line in grade_lines(graded) if line.startswith("✗")]
-  - **Source location:** `live.py`, `execute_steps`, batch parsing through the first paid-action grade, pinned revision `dba53c3`
+> def parse_step(raw: str) -> tuple[str, str]: action, separator, predict = raw.partition("::") if not separator or not action.strip() or not predict.strip(): raise ArcSkillError( 'each step needs its own prediction: --step "ACTION1 :: <claims>"' ) return action.strip().upper(), predict.strip()
+> --- `kb/sources/.snapshots/arc-skill-live-action-execution-dba53c3.md` @ `sha256:3231304bb8a84e529435f04265e8cb9201a463b015cc396781e3acdfe9011aa9` — `live.py`, `parse_step`, pinned revision `dba53c3`
+
+> current = { "event": int(latest["id"]), "observation_hash": observation_hash(frame_at(latest)), "rules_hash": rules_hash(paths), } source = plan.get("source") if not isinstance(source, dict): raise ArcSkillError("plan has no source provenance; rerun `arc rules solve`") stale = [name for name, expected in current.items() if source.get(name) != expected] if stale: raise ArcSkillError( f"plan is stale ({', '.join(stale)} changed); rerun `arc rules solve`" )
+> --- `kb/sources/.snapshots/arc-skill-live-action-execution-dba53c3.md` @ `sha256:3231304bb8a84e529435f04265e8cb9201a463b015cc396781e3acdfe9011aa9` — `live.py`, `execute_solve_plan`, provenance and freshness guard, pinned revision `dba53c3`
+
+> remaining = len(parsed) - index - 1 discarded = f"; {remaining} remaining steps were discarded" if remaining else ""
+> --- `kb/sources/.snapshots/arc-skill-live-action-execution-dba53c3.md` @ `sha256:3231304bb8a84e529435f04265e8cb9201a463b015cc396781e3acdfe9011aa9` — `live.py`, `execute_steps`, remaining-suffix calculation, pinned revision `dba53c3`
+
+> if not ok: outcome = "SURPRISE" detail = f"step {index + 1} missed: {failed[0][2:]}{discarded}" break
+> --- `kb/sources/.snapshots/arc-skill-live-action-execution-dba53c3.md` @ `sha256:3231304bb8a84e529435f04265e8cb9201a463b015cc396781e3acdfe9011aa9` — `live.py`, `execute_steps`, prediction-miss branch, pinned revision `dba53c3`
+
+> parsed: list[tuple[str, str, list[dict[str, Any]]]] = [] for raw in raw_steps: token, predict = parse_step(raw) parsed.append((token, predict, parse_claims(predict))) _validate_batch_tokens([token for token, _, _ in parsed]) events = _head_events(paths, at_event) start_event = int(events[-1]["id"]) records: list[dict[str, Any]] = [] outcome = "PREDICTED" detail = f"all {len(parsed)} steps landed as predicted" last_warning: str | None = None for index, (token, predict, claims) in enumerate(parsed): pending, before, warning = _paid_step(paths, token, {"predict": predict}) last_warning = warning or last_warning graded = grade_claims(claims, before, pending) ok = all(item["ok"] for item in graded) pending["predict"] = predict pending["predict_ok"] = ok pending["grade"] = graded event = _record(paths, pending) failed = [line for line in grade_lines(graded) if line.startswith("✗")]
+> --- `kb/sources/.snapshots/arc-skill-live-action-execution-dba53c3.md` @ `sha256:3231304bb8a84e529435f04265e8cb9201a463b015cc396781e3acdfe9011aa9` — `live.py`, `execute_steps`, batch parsing through the first paid-action grade, pinned revision `dba53c3`
 
 ## Connections Found
 

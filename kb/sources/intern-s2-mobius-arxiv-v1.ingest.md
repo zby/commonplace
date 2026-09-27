@@ -36,12 +36,14 @@ The association is direct: its [README](https://github.com/internlm/intern-s2-mo
 
 ## Quotes
 
-- **Source extract (verbatim):** We introduce Mobius-v0, an architecture that comprises a globally shared Memory (FFN) that stores knowledge vectors and multiple Reasoners (Self-Attn) that iteratively achieve compositional reasoning.
-  - **Source location:** Abstract.
-- **Source extract (verbatim):** Using hidden states as cache and carrier, reasoners repeatedly query memory for required knowledge-vectors, while the knowledge is transmitted back to reasoning operators.
-  - **Source location:** Abstract.
-- **Source extract (verbatim):** Therefore, at larger parameter scales, we employ a block-wise partitioning technique analogous to MoE [63] to partition the FFN, with sparse activation during forward propagation.
-  - **Source location:** Section 2.3, “Disentangling Knowledge Vectors and Reasoning Operators.”
+> We introduce Mobius-v0, an architecture that comprises a globally shared Memory (FFN) that stores knowledge vectors and multiple Reasoners (Self-Attn) that iteratively achieve compositional reasoning.
+> --- `kb/sources/.snapshots/intern-s2-mobius-arxiv-v1.md` @ `sha256:1f4f72f33705315138ccd78fb5da0751cdd7acd4482703a3e4a58f816c43bc39` — Abstract.
+
+> Using hidden states as cache and carrier, reasoners repeatedly query memory for required knowledge-vectors, while the knowledge is transmitted back to reasoning operators.
+> --- `kb/sources/.snapshots/intern-s2-mobius-arxiv-v1.md` @ `sha256:1f4f72f33705315138ccd78fb5da0751cdd7acd4482703a3e4a58f816c43bc39` — Abstract.
+
+> Therefore, at larger parameter scales, we employ a block-wise partitioning technique analogous to MoE [63] to partition the FFN, with sparse activation during forward propagation.
+> --- `kb/sources/.snapshots/intern-s2-mobius-arxiv-v1.md` @ `sha256:1f4f72f33705315138ccd78fb5da0751cdd7acd4482703a3e4a58f816c43bc39` — Section 2.3, “Disentangling Knowledge Vectors and Reasoning Operators.”
 
 ## Connections Found
 

@@ -23,16 +23,20 @@ The paper argues that a domain-generalization algorithm without a stated model-s
 
 ## Quotes
 
-- **Source extract (verbatim):** They introduce **DomainBed**, a unified testbed featuring:
-  - **Source location:** “Abstract,” immediately before the dataset, algorithm, and selection-criterion counts.
-- **Source extract (verbatim):** Seven multi-domain datasets
-  - **Source location:** “Abstract,” DomainBed feature list.
-- **Source extract (verbatim):** Nine baseline algorithms
-  - **Source location:** “Abstract,” DomainBed feature list.
-- **Source extract (verbatim):** Three model selection criteria
-  - **Source location:** “Abstract,” DomainBed feature list.
-- **Source extract (verbatim):** Through extensive experiments, the researchers found that empirical risk minimization (ERM), when properly implemented, achieves state-of-the-art performance across all tested datasets—challenging the superiority of more complex domain generalization methods.
-  - **Source location:** “Key Findings.”
+> They introduce **DomainBed**, a unified testbed featuring:
+> --- `kb/sources/.snapshots/in-search-of-lost-domain-generalization.md` @ `sha256:b0de7578ed2bdc5465c762aead40220c0191756743224fb9215b9813ac1425ec` — “Abstract,” immediately before the dataset, algorithm, and selection-criterion counts.
+
+> Seven multi-domain datasets
+> --- `kb/sources/.snapshots/in-search-of-lost-domain-generalization.md` @ `sha256:b0de7578ed2bdc5465c762aead40220c0191756743224fb9215b9813ac1425ec` — “Abstract,” DomainBed feature list.
+
+> Nine baseline algorithms
+> --- `kb/sources/.snapshots/in-search-of-lost-domain-generalization.md` @ `sha256:b0de7578ed2bdc5465c762aead40220c0191756743224fb9215b9813ac1425ec` — “Abstract,” DomainBed feature list.
+
+> Three model selection criteria
+> --- `kb/sources/.snapshots/in-search-of-lost-domain-generalization.md` @ `sha256:b0de7578ed2bdc5465c762aead40220c0191756743224fb9215b9813ac1425ec` — “Abstract,” DomainBed feature list.
+
+> Through extensive experiments, the researchers found that empirical risk minimization (ERM), when properly implemented, achieves state-of-the-art performance across all tested datasets—challenging the superiority of more complex domain generalization methods.
+> --- `kb/sources/.snapshots/in-search-of-lost-domain-generalization.md` @ `sha256:b0de7578ed2bdc5465c762aead40220c0191756743224fb9215b9813ac1425ec` — “Key Findings.”
 
 ## Connections Found
 

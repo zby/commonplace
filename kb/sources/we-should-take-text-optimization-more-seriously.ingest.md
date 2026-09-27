@@ -26,10 +26,11 @@ The essay argues that the mutable "text layer" around a model (prompts, context,
 
 ## Quotes
 
-- **Source extract (verbatim):** The important question is which update target is the most appropriate for a given piece of information.
-  - **Source location:** “Learning Outside the Weights.”
-- **Source extract (verbatim):** I think this is a strong argument for many types of information to ultimately belong in weights. I agree; for example, LLMs should not need a long prompt to explain basic arithmetic for every request. Even here, though, many pieces of useful information are not stable or general enough to be worth the cost of amortization: user preferences, API contracts, or facts that frequently change. I think the right framing is as a routing problem: weights are where stable, repeatedly useful information belongs, while text is where information stays while it is volatile, local, auditable, or not yet trusted enough to amortize.
-  - **Source location:** “The Strongest Case for Weights, and My Counterpoints,” response to the amortization argument.
+> The important question is which update target is the most appropriate for a given piece of information.
+> --- `kb/sources/.snapshots/we-should-take-text-optimization-more-seriously.md` @ `sha256:cbdf0d6ed24b758cbfada14208457f79ecb96245b89fb80a6bd7f660a56b2796` — “Learning Outside the Weights.”
+
+> I think this is a strong argument for many types of information to ultimately belong in weights. I agree; for example, LLMs should not need a long prompt to explain basic arithmetic for every request. Even here, though, many pieces of useful information are not stable or general enough to be worth the cost of amortization: user preferences, API contracts, or facts that frequently change. I think the right framing is as a routing problem: weights are where stable, repeatedly useful information belongs, while text is where information stays while it is volatile, local, auditable, or not yet trusted enough to amortize.
+> --- `kb/sources/.snapshots/we-should-take-text-optimization-more-seriously.md` @ `sha256:cbdf0d6ed24b758cbfada14208457f79ecb96245b89fb80a6bd7f660a56b2796` — “The Strongest Case for Weights, and My Counterpoints,” response to the amortization argument.
 
 ## Connections Found
 

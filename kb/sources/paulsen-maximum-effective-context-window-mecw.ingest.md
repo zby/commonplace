@@ -24,19 +24,23 @@ Paulsen defines the Maximum Effective Context Window (MECW) as the longest span 
 
 ## Quotes
 
-- **Source extract (verbatim):** All models fell far short of their Maximum Context Window by as much as >99%.
-  - **Source location:** Abstract.
-- **Source extract (verbatim):** Our findings show that the MECW is, not only, drastically different from the MCW but also shifts based on the problem type.
-  - **Source location:** Abstract.
-- **Source extract (verbatim):** Models perform vastly differently to the type of question asked.
-  - **Source location:** Section 5, “Findings for Q2.”
+> All models fell far short of their Maximum Context Window by as much as >99%.
+> --- `kb/sources/.snapshots/paulsen-maximum-effective-context-window-mecw.md` @ `sha256:7360671bf3be0d0e6cadfe2ad6f5ec426d367d111dbf5fd31c85df3d558ae933` — Abstract.
 
-- **Source extract (verbatim):** 11 models selected spanning open and closed weight:
-  - **Source location:** Section 3.1, “Model Selection”
-- **Source extract (verbatim):** Dataset: 10,000 unique names of individuals, each assigned a random number 1-20, a random item from a list of 15 possibilities, and a random color out of 9 possibilities. Example data row: "Abigail Holmes has 19 red balloons."
-  - **Source location:** Section 3.1, “Framework Design,” Dataset
-- **Source extract (verbatim):** Question types (four distinct types): 1. Needle-in-a-Haystack: Search for a single data point — "How many objects does {person} have?" 2. Needles-in-a-Haystack: Search for multiple data points and sum — "How many {color} objects are there?" or "How many {object} are there?" 3. Summarization: Full sum of all data points — "How many objects are there total?" 4. Find and Sort: Search for multiple data points then sort alphabetically by name — "Find all people with {color} objects. Sort them by first and last name. Concatenate the number of objects they have into one long string value in the order they were sorted."
-  - **Source location:** Section 3.1, “Framework Design,” Question types
+> Our findings show that the MECW is, not only, drastically different from the MCW but also shifts based on the problem type.
+> --- `kb/sources/.snapshots/paulsen-maximum-effective-context-window-mecw.md` @ `sha256:7360671bf3be0d0e6cadfe2ad6f5ec426d367d111dbf5fd31c85df3d558ae933` — Abstract.
+
+> Models perform vastly differently to the type of question asked.
+> --- `kb/sources/.snapshots/paulsen-maximum-effective-context-window-mecw.md` @ `sha256:7360671bf3be0d0e6cadfe2ad6f5ec426d367d111dbf5fd31c85df3d558ae933` — Section 5, “Findings for Q2.”
+
+> 11 models selected spanning open and closed weight:
+> --- `kb/sources/.snapshots/paulsen-maximum-effective-context-window-mecw.md` @ `sha256:7360671bf3be0d0e6cadfe2ad6f5ec426d367d111dbf5fd31c85df3d558ae933` — Section 3.1, “Model Selection”
+
+> Dataset: 10,000 unique names of individuals, each assigned a random number 1-20, a random item from a list of 15 possibilities, and a random color out of 9 possibilities. Example data row: "Abigail Holmes has 19 red balloons."
+> --- `kb/sources/.snapshots/paulsen-maximum-effective-context-window-mecw.md` @ `sha256:7360671bf3be0d0e6cadfe2ad6f5ec426d367d111dbf5fd31c85df3d558ae933` — Section 3.1, “Framework Design,” Dataset
+
+> Question types (four distinct types): 1. Needle-in-a-Haystack: Search for a single data point — "How many objects does {person} have?" 2. Needles-in-a-Haystack: Search for multiple data points and sum — "How many {color} objects are there?" or "How many {object} are there?" 3. Summarization: Full sum of all data points — "How many objects are there total?" 4. Find and Sort: Search for multiple data points then sort alphabetically by name — "Find all people with {color} objects. Sort them by first and last name. Concatenate the number of objects they have into one long string value in the order they were sorted."
+> --- `kb/sources/.snapshots/paulsen-maximum-effective-context-window-mecw.md` @ `sha256:7360671bf3be0d0e6cadfe2ad6f5ec426d367d111dbf5fd31c85df3d558ae933` — Section 3.1, “Framework Design,” Question types
 
 ## Connections Found
 

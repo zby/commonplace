@@ -23,17 +23,20 @@ The paper argues that current LLM agents often discover relevant environmental i
 
 ## Quotes
 
-- **Source extract (verbatim):** The injected solution must be (i) complete so that following it guarantees task success and (ii) discoverable through agent actions.
-  - **Source location:** Section 2.1, “Solution Injection.”
-- **Source extract (verbatim):** Across all models and benchmarks, agents consistently discover the injected solutions but rarely interact with them.
-  - **Source location:** Section 3.1, “Agents lack environmental curiosity.”
-- **Source extract (verbatim):** The gap is starkest on AppWorld: discovery@1 exceeds 90% for all models, yet interaction@1 never surpasses 6.3%.
-  - **Source location:** Section 3.1, discussion of Figure 2.
+> The injected solution must be (i) complete so that following it guarantees task success and (ii) discoverable through agent actions.
+> --- `kb/sources/.snapshots/agents-explore-but-agents-ignore-llms-lack-environmental.md` @ `sha256:3abf5fe64510197ad38b6e49812cff6daf3580eb442b368d6cd695c33380aaab` — Section 2.1, “Solution Injection.”
 
-- **Source extract (verbatim):** executes a command that surfaces the injected solution in the agent’s context.
-  - **Source location:** Section 2.2, “Metrics,” discovery@k definition
-- **Source extract (verbatim):** We detect interaction by checking whether any command executed by the agent references the injected solution, e.g. contains “solution.sh” or “cli solution”.
-  - **Source location:** Section 2.2, “Metrics,” interaction@k definition
+> Across all models and benchmarks, agents consistently discover the injected solutions but rarely interact with them.
+> --- `kb/sources/.snapshots/agents-explore-but-agents-ignore-llms-lack-environmental.md` @ `sha256:3abf5fe64510197ad38b6e49812cff6daf3580eb442b368d6cd695c33380aaab` — Section 3.1, “Agents lack environmental curiosity.”
+
+> The gap is starkest on AppWorld: discovery@1 exceeds 90% for all models, yet interaction@1 never surpasses 6.3%.
+> --- `kb/sources/.snapshots/agents-explore-but-agents-ignore-llms-lack-environmental.md` @ `sha256:3abf5fe64510197ad38b6e49812cff6daf3580eb442b368d6cd695c33380aaab` — Section 3.1, discussion of Figure 2.
+
+> executes a command that surfaces the injected solution in the agent’s context.
+> --- `kb/sources/.snapshots/agents-explore-but-agents-ignore-llms-lack-environmental.md` @ `sha256:3abf5fe64510197ad38b6e49812cff6daf3580eb442b368d6cd695c33380aaab` — Section 2.2, “Metrics,” discovery@k definition
+
+> We detect interaction by checking whether any command executed by the agent references the injected solution, e.g. contains “solution.sh” or “cli solution”.
+> --- `kb/sources/.snapshots/agents-explore-but-agents-ignore-llms-lack-environmental.md` @ `sha256:3abf5fe64510197ad38b6e49812cff6daf3580eb442b368d6cd695c33380aaab` — Section 2.2, “Metrics,” interaction@k definition
 
 ## Connections Found
 

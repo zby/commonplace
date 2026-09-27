@@ -22,12 +22,14 @@ Lopopolo reports on OpenAI's Codex team shipping an internal beta product with o
 
 ## Quotes
 
-- **Source extract (verbatim):** Early on, the team spent roughly 20% of their time (Fridays) manually cleaning "AI slop" — low-quality generated artifacts accumulating in the codebase. This did not scale. The solution: encode standards directly into the repository and automate cleanup.
-  - **Source location:** “Entropy Management” section.
-- **Source extract (verbatim):** Structural tests validate compliance and prevent layer violations before merge. Custom linters enforce naming conventions, module boundaries, and semantic correctness.
-  - **Source location:** “Architectural Constraints” section.
-- **Source extract (verbatim):** When agents struggled, engineers asked: what capability is missing? What constraint is unenforced? They then built the tool, wrote the linter, or added the structural test to make the failure category impossible.
-  - **Source location:** “What humans started doing” section.
+> Early on, the team spent roughly 20% of their time (Fridays) manually cleaning "AI slop" — low-quality generated artifacts accumulating in the codebase. This did not scale. The solution: encode standards directly into the repository and automate cleanup.
+> --- `kb/sources/.snapshots/harness-engineering-leveraging-codex-agent-first-world.md` @ `sha256:c381abf662a98ecfc76d86ac1cdb39ef2e974552b591546fb5b6eb17e4b167a2` — “Entropy Management” section.
+
+> Structural tests validate compliance and prevent layer violations before merge. Custom linters enforce naming conventions, module boundaries, and semantic correctness.
+> --- `kb/sources/.snapshots/harness-engineering-leveraging-codex-agent-first-world.md` @ `sha256:c381abf662a98ecfc76d86ac1cdb39ef2e974552b591546fb5b6eb17e4b167a2` — “Architectural Constraints” section.
+
+> When agents struggled, engineers asked: what capability is missing? What constraint is unenforced? They then built the tool, wrote the linter, or added the structural test to make the failure category impossible.
+> --- `kb/sources/.snapshots/harness-engineering-leveraging-codex-agent-first-world.md` @ `sha256:c381abf662a98ecfc76d86ac1cdb39ef2e974552b591546fb5b6eb17e4b167a2` — “What humans started doing” section.
 
 ## Connections Found
 

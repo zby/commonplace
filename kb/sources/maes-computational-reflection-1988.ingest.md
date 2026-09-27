@@ -23,12 +23,14 @@ Maes defines computational reflection for any computational model as the behavio
 
 ## Quotes
 
-- **Source extract (verbatim):** The self-representation that is given to a system is exactly the meta-circular interpretation-process that is running the system. Since this is a procedural representation of the system, i.e. a representation of the system in terms of the program that implements the system, we say these architectures support procedural reflection. The consistency between the self-representation and the system itself is automatically guaranteed because the self-representation is actually used to implement the system. So there is not really a causal connection problem. There only exists one representation which is both used to implement the system and to reason about the system.
-  - **Source location:** §6.1, “Procedural versus declarative reflection” (printed p. 14; PDF p. 14)
-- **Source extract (verbatim):** Since it serves as the data for reflective reasoning, it has to be designed in such a way that it provides a good basis on which to reason about the system. But at the same time it is used to implement the system, which means that it has to be effective and efficient. These are often contradicting requirements.
-  - **Source location:** §6.1, “Procedural versus declarative reflection” (printed p. 14; PDF p. 14)
-- **Source extract (verbatim):** The implicit (procedural) representation serves the implementation of the system, while the explicit (declarative) representation serves the reasoning about the system.
-  - **Source location:** §6.1, “Procedural versus declarative reflection” (printed p. 14; PDF p. 14)
+> The self-representation that is given to a system is exactly the meta-circular interpretation-process that is running the system. Since this is a procedural representation of the system, i.e. a representation of the system in terms of the program that implements the system, we say these architectures support procedural reflection. The consistency between the self-representation and the system itself is automatically guaranteed because the self-representation is actually used to implement the system. So there is not really a causal connection problem. There only exists one representation which is both used to implement the system and to reason about the system.
+> --- `kb/sources/.snapshots/maes-computational-reflection-1988.md` @ `sha256:bfe6b75490ed0a1e075b1048a10613750e8a66a2e9b2028c176e0d6a359a3cc0` — §6.1, “Procedural versus declarative reflection” (printed p. 14; PDF p. 14)
+
+> Since it serves as the data for reflective reasoning, it has to be designed in such a way that it provides a good basis on which to reason about the system. But at the same time it is used to implement the system, which means that it has to be effective and efficient. These are often contradicting requirements.
+> --- `kb/sources/.snapshots/maes-computational-reflection-1988.md` @ `sha256:bfe6b75490ed0a1e075b1048a10613750e8a66a2e9b2028c176e0d6a359a3cc0` — §6.1, “Procedural versus declarative reflection” (printed p. 14; PDF p. 14)
+
+> The implicit (procedural) representation serves the implementation of the system, while the explicit (declarative) representation serves the reasoning about the system.
+> --- `kb/sources/.snapshots/maes-computational-reflection-1988.md` @ `sha256:bfe6b75490ed0a1e075b1048a10613750e8a66a2e9b2028c176e0d6a359a3cc0` — §6.1, “Procedural versus declarative reflection” (printed p. 14; PDF p. 14)
 
 ## Connections Found
 

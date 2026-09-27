@@ -26,29 +26,29 @@ Popper distinguishes physical objects, subjective acts or dispositions, and obje
 
 ## Quotes
 
-- **Source extract (verbatim):** (1) Without the development of an exosomatic descriptive language - a language which, like a tool, develops outside the body - there can be no object for our critical discussion. But with the development of a descriptive language (and further, of a written language), a linguistic third world can emerge; and it is only in this way, and only in this third world, that the problems and standards of rational criticism can develop.
-  - **Source location:** Section 4, Language, criticism, and the third world, printed p. 346; first of the two all-important points.
+> (1) Without the development of an exosomatic descriptive language - a language which, like a tool, develops outside the body - there can be no object for our critical discussion. But with the development of a descriptive language (and further, of a written language), a linguistic third world can emerge; and it is only in this way, and only in this third world, that the problems and standards of rational criticism can develop.
+> --- `kb/sources/.snapshots/popper-epistemology-without-a-knowing-subject-1968.md` @ `sha256:11d8a52e58a660a115f877db34a4472af0b52c9a851ba7883dfdc95f49efca25` — Section 4, Language, criticism, and the third world, printed p. 346; first of the two all-important points.
 
-- **Source extract (verbatim):** The main point here I owe to Lakatos’s philosophy of mathematics. It is that mathematics grows through criticism of guesses and bold informal proofs. This presupposes their linguistic formulation, and their status in the third world.
-  - **Source location:** Section 6, Appreciation and criticism of Brouwer’s epistemology, printed p. 360; opening paragraph.
+> The main point here I owe to Lakatos’s philosophy of mathematics. It is that mathematics grows through criticism of guesses and bold informal proofs. This presupposes their linguistic formulation, and their status in the third world.
+> --- `kb/sources/.snapshots/popper-epistemology-without-a-knowing-subject-1968.md` @ `sha256:11d8a52e58a660a115f877db34a4472af0b52c9a851ba7883dfdc95f49efca25` — Section 6, Appreciation and criticism of Brouwer’s epistemology, printed p. 360; opening paragraph.
 
-- **Source extract (verbatim):** Scientists try to eliminate their false theories, they try to let them die in their stead.
-  - **Source location:** Section 4, printed p. 347; final paragraph before section 5.
+> Scientists try to eliminate their false theories, they try to let them die in their stead.
+> --- `kb/sources/.snapshots/popper-epistemology-without-a-knowing-subject-1968.md` @ `sha256:11d8a52e58a660a115f877db34a4472af0b52c9a851ba7883dfdc95f49efca25` — Section 4, printed p. 347; final paragraph before section 5.
 
-- **Source extract (verbatim):** As against this I suggest that everything depends upon the give and take between ourselves and our work; upon the product which we contribute to the third world, and upon that constant feed-back that can be amplified by self-criticism.
-  - **Source location:** Section 9, Discovery, humanism and self-transcendence, printed p. 370; paragraph beginning As against this.
+> As against this I suggest that everything depends upon the give and take between ourselves and our work; upon the product which we contribute to the third world, and upon that constant feed-back that can be amplified by self-criticism.
+> --- `kb/sources/.snapshots/popper-epistemology-without-a-knowing-subject-1968.md` @ `sha256:11d8a52e58a660a115f877db34a4472af0b52c9a851ba7883dfdc95f49efca25` — Section 9, Discovery, humanism and self-transcendence, printed p. 370; paragraph beginning As against this.
 
-- **Source extract (verbatim):** What may be called the second world -the world of the mind - becomes, on the human level, more and more the link between the fis t and the third world: all our actions in the first world are influenced by our second-world grasp of the third world.
-  - **Source location:** Section 9, printed p. 371; paragraph beginning What may be called the second world.
+> What may be called the second world -the world of the mind - becomes, on the human level, more and more the link between the fis t and the third world: all our actions in the first world are influenced by our second-world grasp of the third world.
+> --- `kb/sources/.snapshots/popper-epistemology-without-a-knowing-subject-1968.md` @ `sha256:11d8a52e58a660a115f877db34a4472af0b52c9a851ba7883dfdc95f49efca25` — Section 9, printed p. 371; paragraph beginning What may be called the second world.
 
-- **Source extract (verbatim):** Thus I do admit that in order t o belong t o the third world of objective knowledge, a book should - in principle, or virtually - be capable of being grasped (or decyphered, or understood, or ‘known’) by somebody. But I do not admit more.
-  - **Source location:** Section 3, The objectivity and the autonomy of the third world, printed p. 342; paragraph beginning Thus I do admit.
+> Thus I do admit that in order t o belong t o the third world of objective knowledge, a book should - in principle, or virtually - be capable of being grasped (or decyphered, or understood, or ‘known’) by somebody. But I do not admit more.
+> --- `kb/sources/.snapshots/popper-epistemology-without-a-knowing-subject-1968.md` @ `sha256:11d8a52e58a660a115f877db34a4472af0b52c9a851ba7883dfdc95f49efca25` — Section 3, The objectivity and the autonomy of the third world, printed p. 342; paragraph beginning Thus I do admit.
 
-- **Source extract (verbatim):** My schema works through error elimination, and on the scientific level through conscious criticism under the regulative idea of the search for truth.
-  - **Source location:** Section 5.2 on Hegel, printed p. 351; sentence immediately following the evolutionary schema P1→TT→EE→P2, in the contrast with Hegel's dialectic.
+> My schema works through error elimination, and on the scientific level through conscious criticism under the regulative idea of the search for truth.
+> --- `kb/sources/.snapshots/popper-epistemology-without-a-knowing-subject-1968.md` @ `sha256:11d8a52e58a660a115f877db34a4472af0b52c9a851ba7883dfdc95f49efca25` — Section 5.2 on Hegel, printed p. 351; sentence immediately following the evolutionary schema P1→TT→EE→P2, in the contrast with Hegel's dialectic.
 
-- **Source extract (verbatim):** Language, the formulation of problems, the emergence of new problem situations, competing theories, mutual criticism by way of argument, all these are the indispensible means of scientific growth.
-  - **Source location:** Section 4, printed p. 347; paragraph following the two senses of 'knowledge', immediately before the sentences on the descriptive and argumentative functions of human language.
+> Language, the formulation of problems, the emergence of new problem situations, competing theories, mutual criticism by way of argument, all these are the indispensible means of scientific growth.
+> --- `kb/sources/.snapshots/popper-epistemology-without-a-knowing-subject-1968.md` @ `sha256:11d8a52e58a660a115f877db34a4472af0b52c9a851ba7883dfdc95f49efca25` — Section 4, printed p. 347; paragraph following the two senses of 'knowledge', immediately before the sentences on the descriptive and argumentative functions of human language.
 
 ## Connections Found
 

@@ -22,12 +22,14 @@ Ashby asks how a mechanistic system can produce adaptive behaviour and answers b
 
 ## Quotes
 
-- **Source extract (verbatim):** The basic rule for adaptation by trial and error is: — If the trial is unsuccessful, change the way of behaving ; when and only when it is successful, retain the way of behaving.
-  - **Source location:** Section 7/7, printed p. 84
-- **Source extract (verbatim):** Thus, if set at 3-second intervals, at every third second the uniselector will either move to new values (if F be receiving a current exceeding the limits) or stay where it is (if F's current be within).
-  - **Source location:** Section 8/2, printed p. 103
-- **Source extract (verbatim):** These new values have no special relation either to the previous values or to the problem in hand — they are just the values that next follow in Fisher and Yates' table.
-  - **Source location:** Section 8/3, printed p. 104
+> The basic rule for adaptation by trial and error is: — If the trial is unsuccessful, change the way of behaving ; when and only when it is successful, retain the way of behaving.
+> --- `kb/sources/.snapshots/ashby-design-for-a-brain-1960.md` @ `sha256:70c9db4fc4b5e5823547c13d819589c4e42376c4a3f869e7e21e3cbda7ff24ec` — Section 7/7, printed p. 84
+
+> Thus, if set at 3-second intervals, at every third second the uniselector will either move to new values (if F be receiving a current exceeding the limits) or stay where it is (if F's current be within).
+> --- `kb/sources/.snapshots/ashby-design-for-a-brain-1960.md` @ `sha256:70c9db4fc4b5e5823547c13d819589c4e42376c4a3f869e7e21e3cbda7ff24ec` — Section 8/2, printed p. 103
+
+> These new values have no special relation either to the previous values or to the problem in hand — they are just the values that next follow in Fisher and Yates' table.
+> --- `kb/sources/.snapshots/ashby-design-for-a-brain-1960.md` @ `sha256:70c9db4fc4b5e5823547c13d819589c4e42376c4a3f869e7e21e3cbda7ff24ec` — Section 8/3, printed p. 104
 
 ## Connections Found
 

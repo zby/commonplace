@@ -24,17 +24,20 @@ The paper introduces ConvexBench, a benchmark testing whether LLMs can determine
 
 ## Quotes
 
-- **Source extract (verbatim):** Experiments reveal a sharp compositional reasoning gap: performance drops from F1=1.0 at depth 2 to approximately 0.2 at depth 100.
-  - **Source location:** Abstract.
-- **Source extract (verbatim):** A critical finding: even with token counts (5,331 at depth 100) far below LLM context limits (128k+), models degrade substantially.
-  - **Source location:** “Context and Long-Horizon Reasoning.”
-- **Source extract (verbatim):** Agentic framework with focused context achieves F1=1.0 across all depths
-  - **Source location:** “Experimental Results.”
+> Experiments reveal a sharp compositional reasoning gap: performance drops from F1=1.0 at depth 2 to approximately 0.2 at depth 100.
+> --- `kb/sources/.snapshots/convexbench-can-llms-recognize-convex-functions.md` @ `sha256:b117dd8714594cf9a885735797f55ea99d555cc3a575f7619f73118149bda03d` — Abstract.
 
-- **Source extract (verbatim):** This paper introduces ConvexBench, a mechanically verifiable benchmark for evaluating whether large language models can identify convexity in deeply composed symbolic functions.
-  - **Source location:** Abstract
-- **Source extract (verbatim):** Testing on frontier models (GPT-5, Gemini-2.5-Pro, Qwen3-8B/30B):
-  - **Source location:** “Experimental Results”
+> A critical finding: even with token counts (5,331 at depth 100) far below LLM context limits (128k+), models degrade substantially.
+> --- `kb/sources/.snapshots/convexbench-can-llms-recognize-convex-functions.md` @ `sha256:b117dd8714594cf9a885735797f55ea99d555cc3a575f7619f73118149bda03d` — “Context and Long-Horizon Reasoning.”
+
+> Agentic framework with focused context achieves F1=1.0 across all depths
+> --- `kb/sources/.snapshots/convexbench-can-llms-recognize-convex-functions.md` @ `sha256:b117dd8714594cf9a885735797f55ea99d555cc3a575f7619f73118149bda03d` — “Experimental Results.”
+
+> This paper introduces ConvexBench, a mechanically verifiable benchmark for evaluating whether large language models can identify convexity in deeply composed symbolic functions.
+> --- `kb/sources/.snapshots/convexbench-can-llms-recognize-convex-functions.md` @ `sha256:b117dd8714594cf9a885735797f55ea99d555cc3a575f7619f73118149bda03d` — Abstract
+
+> Testing on frontier models (GPT-5, Gemini-2.5-Pro, Qwen3-8B/30B):
+> --- `kb/sources/.snapshots/convexbench-can-llms-recognize-convex-functions.md` @ `sha256:b117dd8714594cf9a885735797f55ea99d555cc3a575f7619f73118149bda03d` — “Experimental Results”
 
 ## Connections Found
 

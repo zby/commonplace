@@ -24,12 +24,14 @@ Santos recounts how Raytheon's Aspen program adopted Microsoft's Software Factor
 
 ## Quotes
 
-- **Source extract (verbatim):** The Visual Studio team had suddenly decided to pivot and go the way of UML, and effectively abandon the Software Factories strategy that we had predicated our program on.
-  - **Source location:** “Software Factories” section
-- **Source extract (verbatim):** In the end, this coupling became totally unmanageable for a small team like us given the resources we had in the open source community, as other small VS partners have learned the hard way. As a result, the NuPattern product died a slow death, and is no longer supported in any recent version of Visual Studio today.
-  - **Source location:** “Free and open” section
-- **Source extract (verbatim):** The Aspen program however, was a great success and lived on for many years after, led by John, long after I had to disengage.
-  - **Source location:** “Free and open” section
+> The Visual Studio team had suddenly decided to pivot and go the way of UML, and effectively abandon the Software Factories strategy that we had predicated our program on.
+> --- `kb/sources/.snapshots/jezz-santos-i-once-worked-in-buenos-aires.md` @ `sha256:9bda7480ab96e7bfcb7e5a054d374b00ae199926ce760ef1c6ae7ca2cadde040` — “Software Factories” section
+
+> In the end, this coupling became totally unmanageable for a small team like us given the resources we had in the open source community, as other small VS partners have learned the hard way. As a result, the NuPattern product died a slow death, and is no longer supported in any recent version of Visual Studio today.
+> --- `kb/sources/.snapshots/jezz-santos-i-once-worked-in-buenos-aires.md` @ `sha256:9bda7480ab96e7bfcb7e5a054d374b00ae199926ce760ef1c6ae7ca2cadde040` — “Free and open” section
+
+> The Aspen program however, was a great success and lived on for many years after, led by John, long after I had to disengage.
+> --- `kb/sources/.snapshots/jezz-santos-i-once-worked-in-buenos-aires.md` @ `sha256:9bda7480ab96e7bfcb7e5a054d374b00ae199926ce760ef1c6ae7ca2cadde040` — “Free and open” section
 
 ## Connections Found
 

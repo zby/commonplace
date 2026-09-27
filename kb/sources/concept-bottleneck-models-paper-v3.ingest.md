@@ -24,26 +24,26 @@ Concept bottleneck models learn an input-to-concept predictor and a concept-to-l
 
 ## Quotes
 
-- **Source extract (verbatim):** By construction, we can intervene on these concept bottleneck models by editing their predicted concept values and propagating these changes to the final prediction.
-  - **Source location:** Abstract: editing predicted concepts at test time.
+> By construction, we can intervene on these concept bottleneck models by editing their predicted concept values and propagating these changes to the final prediction.
+> --- `kb/sources/.snapshots/concept-bottleneck-models-paper-v3.md` @ `sha256:27520275d8164589630d8e6367c79ee9b96afefb56d61ef2b5f3f1137f77ae84` — Abstract: editing predicted concepts at test time.
 
-- **Source extract (verbatim):** To study this setting, we use an oracle that can query the true value of any concept for a test input.
-  - **Source location:** Section 6, Test-time intervention: oracle protocol.
+> To study this setting, we use an oracle that can query the true value of any concept for a test input.
+> --- `kb/sources/.snapshots/concept-bottleneck-models-paper-v3.md` @ `sha256:27520275d8164589630d8e6367c79ee9b96afefb56d61ef2b5f3f1137f77ae84` — Section 6, Test-time intervention: oracle protocol.
 
-- **Source extract (verbatim):** Specifically, the joint model with λ = 0.01 learned a concept representation that was not as well-aligned with the true concepts, and replacing ĉ with the true c at test time slightly increased test error (“control” model in Figure 4-Left).
-  - **Source location:** Section 6.1, Intervening on OAI: low-concept-loss control, Figure 4-left.
+> Specifically, the joint model with λ = 0.01 learned a concept representation that was not as well-aligned with the true concepts, and replacing ĉ with the true c at test time slightly increased test error (“control” model in Figure 4-Left).
+> --- `kb/sources/.snapshots/concept-bottleneck-models-paper-v3.md` @ `sha256:27520275d8164589630d8e6367c79ee9b96afefb56d61ef2b5f3f1137f77ae84` — Section 6.1, Intervening on OAI: low-concept-loss control, Figure 4-left.
 
-- **Source extract (verbatim):** c → y model from the 3-layer multi-layer perceptron used throughout the paper to a single linear layer. Surprisingly, test-time intervention was less effective here compared to the non-linear counterparts (Figure 4-Mid), even though task and concept accuracies were similar before intervention (concept RMSEs of the sequential and independent models are not even affected by the change in c → y).
-  - **Source location:** Section 6.1, Intervening on OAI: linear versus nonlinear downstream predictor, Figure 4-middle.
+> c → y model from the 3-layer multi-layer perceptron used throughout the paper to a single linear layer. Surprisingly, test-time intervention was less effective here compared to the non-linear counterparts (Figure 4-Mid), even though task and concept accuracies were similar before intervention (concept RMSEs of the sequential and independent models are not even affected by the change in c → y).
+> --- `kb/sources/.snapshots/concept-bottleneck-models-paper-v3.md` @ `sha256:27520275d8164589630d8e6367c79ee9b96afefb56d61ef2b5f3f1137f77ae84` — Section 6.1, Intervening on OAI: linear versus nonlinear downstream predictor, Figure 4-middle.
 
-- **Source extract (verbatim):** Altogether, these results suggest that task and concept accuracies alone are insufficient for determining how effective test-time intervention will be on a model.
-  - **Source location:** Section 6.1, conclusion of the two OAI ablations.
+> Altogether, these results suggest that task and concept accuracies alone are insufficient for determining how effective test-time intervention will be on a model.
+> --- `kb/sources/.snapshots/concept-bottleneck-models-paper-v3.md` @ `sha256:27520275d8164589630d8e6367c79ee9b96afefb56d61ef2b5f3f1137f77ae84` — Section 6.1, conclusion of the two OAI ablations.
 
-- **Source extract (verbatim):** We emphasize that we study interventions on the value of a predicted concept within the model, not on that concept in reality.
-  - **Source location:** Section 2, Causal models: within-model rather than real-world intervention.
+> We emphasize that we study interventions on the value of a predicted concept within the model, not on that concept in reality.
+> --- `kb/sources/.snapshots/concept-bottleneck-models-paper-v3.md` @ `sha256:27520275d8164589630d8e6367c79ee9b96afefb56d61ef2b5f3f1137f77ae84` — Section 2, Causal models: within-model rather than real-world intervention.
 
-- **Source extract (verbatim):** Finally, how might we have models learn from interventions to avoid making similar mistakes in the future?
-  - **Source location:** Section 8, Discussion: Intervention effectiveness, future-work question.
+> Finally, how might we have models learn from interventions to avoid making similar mistakes in the future?
+> --- `kb/sources/.snapshots/concept-bottleneck-models-paper-v3.md` @ `sha256:27520275d8164589630d8e6367c79ee9b96afefb56d61ef2b5f3f1137f77ae84` — Section 8, Discussion: Intervention effectiveness, future-work question.
 
 ## Connections Found
 

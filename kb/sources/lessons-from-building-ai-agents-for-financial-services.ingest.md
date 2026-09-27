@@ -27,22 +27,23 @@ A comprehensive practitioner report covering 11 architectural lessons from build
 
 ## Quotes
 
-- **Source extract (verbatim):** Fiscal period normalization is critical. “Q1 2024” is ambiguous:
-  - **Source location:** “The Parsing Problem,” fiscal-period-normalization discussion.
-- **Source extract (verbatim):** We maintain a fiscal calendar database for 10,000+ companies. Every date reference gets normalized to absolute date ranges. When the agent retrieves “Apple Q1 2024 revenue,” it knows to look for data from October-December 2023.
-  - **Source location:** “The Parsing Problem,” immediately after the company-specific examples.
-- **Source extract (verbatim):** We maintain fiscal calendars for 10,000+ companies. Every period reference gets normalized to absolute date ranges. We have 200+ test cases just for period extraction.
-  - **Source location:** “The Evaluation Suite,” fiscal-period discussion.
+> Fiscal period normalization is critical. “Q1 2024” is ambiguous:
+> --- `kb/sources/.snapshots/lessons-from-building-ai-agents-for-financial-services.md` @ `sha256:ec8622be9dcf6f93c92b85cd0291330621aafa3173537665cc7fe5899133cf01` — “The Parsing Problem,” fiscal-period-normalization discussion.
 
-- **Source extract (verbatim):** We store user data (watchlists, portfolio, preferences, memories, skills) in S3 as YAML files. S3 is the source of truth. A Lambda function syncs changes to PostgreSQL for fast queries.
-  - **Source location:** “The S3-First Architecture,” opening description of the storage pattern.
-- **Source extract (verbatim):** The pattern: - Writes go to S3 directly - List queries hit the database (fast) - Single-item reads go to S3 (freshest data)
-  - **Source location:** “The S3-First Architecture,” access-pattern list immediately before the sync architecture.
+> We maintain a fiscal calendar database for 10,000+ companies. Every date reference gets normalized to absolute date ranges. When the agent retrieves “Apple Q1 2024 revenue,” it knows to look for data from October-December 2023.
+> --- `kb/sources/.snapshots/lessons-from-building-ai-agents-for-financial-services.md` @ `sha256:ec8622be9dcf6f93c92b85cd0291330621aafa3173537665cc7fe5899133cf01` — “The Parsing Problem,” immediately after the company-specific examples.
 
-- **Source extract (verbatim):** Models are getting better. Fast. Every few months, there’s a new model that makes half your code obsolete. The elaborate scaffolding you built to handle edge cases? The model just... handles them now. When we started, we needed detailed skills with step-by-step instructions for some simple tasks. “First do X, then do Y, then check Z.” Now? We can often just say for simple task “do an earnings preview” and the model figures it out (kinda of!)
-  - **Source location:** “The Model Will Eat Your Scaffolding,” opening account of changing skill detail for simple tasks.
-- **Source extract (verbatim):** We maintain fiscal calendars for 10,000+ companies. Every period reference gets normalized to absolute date ranges. We have 200+ test cases just for period extraction.
-  - **Source location:** “The Evaluation Suite,” fiscal-period discussion.
+> We maintain fiscal calendars for 10,000+ companies. Every period reference gets normalized to absolute date ranges. We have 200+ test cases just for period extraction.
+> --- `kb/sources/.snapshots/lessons-from-building-ai-agents-for-financial-services.md` @ `sha256:ec8622be9dcf6f93c92b85cd0291330621aafa3173537665cc7fe5899133cf01` — “The Evaluation Suite,” fiscal-period discussion.
+
+> We store user data (watchlists, portfolio, preferences, memories, skills) in S3 as YAML files. S3 is the source of truth. A Lambda function syncs changes to PostgreSQL for fast queries.
+> --- `kb/sources/.snapshots/lessons-from-building-ai-agents-for-financial-services.md` @ `sha256:ec8622be9dcf6f93c92b85cd0291330621aafa3173537665cc7fe5899133cf01` — “The S3-First Architecture,” opening description of the storage pattern.
+
+> The pattern: - Writes go to S3 directly - List queries hit the database (fast) - Single-item reads go to S3 (freshest data)
+> --- `kb/sources/.snapshots/lessons-from-building-ai-agents-for-financial-services.md` @ `sha256:ec8622be9dcf6f93c92b85cd0291330621aafa3173537665cc7fe5899133cf01` — “The S3-First Architecture,” access-pattern list immediately before the sync architecture.
+
+> Models are getting better. Fast. Every few months, there’s a new model that makes half your code obsolete. The elaborate scaffolding you built to handle edge cases? The model just... handles them now. When we started, we needed detailed skills with step-by-step instructions for some simple tasks. “First do X, then do Y, then check Z.” Now? We can often just say for simple task “do an earnings preview” and the model figures it out (kinda of!)
+> --- `kb/sources/.snapshots/lessons-from-building-ai-agents-for-financial-services.md` @ `sha256:ec8622be9dcf6f93c92b85cd0291330621aafa3173537665cc7fe5899133cf01` — “The Model Will Eat Your Scaffolding,” opening account of changing skill detail for simple tasks.
 
 ## Connections Found
 

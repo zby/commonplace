@@ -24,23 +24,23 @@ Greenfield defines a software factory as a specialized development and runtime e
 
 ## Quotes
 
-- **Source extract (verbatim):** A software factory is a specialized development and runtime environment that supplies an integrated set of special purpose assets encapsulating proven patterns and practices, including tools, processes and content. Examples of content assets include partial or prototypical life cycle artifacts, such as requirements, logical and technical architectures, test suites, deployment topologies, operational facilities, maintenance plans and migration pathways, and implementation artifacts, such as guidelines, patterns, code samples, templates, libraries, frameworks, models, and configuration files.
-  - **Source location:** “What Is A Software Factory?”
+> A software factory is a specialized development and runtime environment that supplies an integrated set of special purpose assets encapsulating proven patterns and practices, including tools, processes and content. Examples of content assets include partial or prototypical life cycle artifacts, such as requirements, logical and technical architectures, test suites, deployment topologies, operational facilities, maintenance plans and migration pathways, and implementation artifacts, such as guidelines, patterns, code samples, templates, libraries, frameworks, models, and configuration files.
+> --- `kb/sources/.snapshots/greenfield-mass-customizing-software-factories-2007.md` @ `sha256:fe5ba3788aa779d872c31cea60a0c2735bdeff9f407df57151ce90a709e43c44` — “What Is A Software Factory?”
 
-- **Source extract (verbatim):** The assets are delivered in a structured and installable package called a software factory template. The assets are usually customizable, and the organization of the template is designed to make it easy to select, adapt, configure, complete, assemble and parameterize the assets, enabling the factory to produce a wide range of solutions with varying features and operational qualities.
-  - **Source location:** “What Is A Software Factory?”
+> The assets are delivered in a structured and installable package called a software factory template. The assets are usually customizable, and the organization of the template is designed to make it easy to select, adapt, configure, complete, assemble and parameterize the assets, enabling the factory to produce a wide range of solutions with varying features and operational qualities.
+> --- `kb/sources/.snapshots/greenfield-mass-customizing-software-factories-2007.md` @ `sha256:fe5ba3788aa779d872c31cea60a0c2735bdeff9f407df57151ce90a709e43c44` — “What Is A Software Factory?”
 
-- **Source extract (verbatim):** In addition to a set of stakeholder concerns, a viewpoint in a software factory schema defines a set of related artifacts relevant to those concerns, the activities that act upon the artifacts, and the assets used to perform the activities. The schema organizes the factory, and uses the relationships among viewpoints to integrate the activities, artifacts and assets across the software architecture and life cycle.
-  - **Source location:** “Architecture Frameworks”
+> In addition to a set of stakeholder concerns, a viewpoint in a software factory schema defines a set of related artifacts relevant to those concerns, the activities that act upon the artifacts, and the assets used to perform the activities. The schema organizes the factory, and uses the relationships among viewpoints to integrate the activities, artifacts and assets across the software architecture and life cycle.
+> --- `kb/sources/.snapshots/greenfield-mass-customizing-software-factories-2007.md` @ `sha256:fe5ba3788aa779d872c31cea60a0c2735bdeff9f407df57151ce90a709e43c44` — “Architecture Frameworks”
 
-- **Source extract (verbatim):** A factory uses two interacting development processes. The first is the traditional development process by which solution developers build solutions for customers who use them to automate business processes, and who provide feedback to the solution developers, such as defect reports and feature requests. The second is a separate and more specialized development process by which factory developers build assets for solution developers who use them to build solutions, and who provide feedback to the factory developers, such as defect reports and feature requests.
-  - **Source location:** “Factory Partitioning”
+> A factory uses two interacting development processes. The first is the traditional development process by which solution developers build solutions for customers who use them to automate business processes, and who provide feedback to the solution developers, such as defect reports and feature requests. The second is a separate and more specialized development process by which factory developers build assets for solution developers who use them to build solutions, and who provide feedback to the factory developers, such as defect reports and feature requests.
+> --- `kb/sources/.snapshots/greenfield-mass-customizing-software-factories-2007.md` @ `sha256:fe5ba3788aa779d872c31cea60a0c2735bdeff9f407df57151ce90a709e43c44` — “Factory Partitioning”
 
-- **Source extract (verbatim):** Factory composition involves combining the viewpoints of the constituent factories, and factory specialization involves adding or removing viewpoints, and modifying viewpoints of the base factory by changing the artifacts produced, the activities that produce them, and the assets used to support and automate the activities.
-  - **Source location:** “Factory Assembly”
+> Factory composition involves combining the viewpoints of the constituent factories, and factory specialization involves adding or removing viewpoints, and modifying viewpoints of the base factory by changing the artifacts produced, the activities that produce them, and the assets used to support and automate the activities.
+> --- `kb/sources/.snapshots/greenfield-mass-customizing-software-factories-2007.md` @ `sha256:fe5ba3788aa779d872c31cea60a0c2735bdeff9f407df57151ce90a709e43c44` — “Factory Assembly”
 
-- **Source extract (verbatim):** A key feature of the methodology is that the products of two or more factories can be composed. Instead of a single factory that helps them build the ultimate deliverable in its entirety, users can work with multiple factories, each helping them build a portion of the ultimate deliverable.
-  - **Source location:** “Factory Composition”
+> A key feature of the methodology is that the products of two or more factories can be composed. Instead of a single factory that helps them build the ultimate deliverable in its entirety, users can work with multiple factories, each helping them build a portion of the ultimate deliverable.
+> --- `kb/sources/.snapshots/greenfield-mass-customizing-software-factories-2007.md` @ `sha256:fe5ba3788aa779d872c31cea60a0c2735bdeff9f407df57151ce90a709e43c44` — “Factory Composition”
 
 ## Connections Found
 

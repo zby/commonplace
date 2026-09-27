@@ -23,11 +23,11 @@ The authors argue that evaluating autonomous “AI Scientists” in isolation mi
 
 ## Quotes
 
-- **Source extract (verbatim):** Large language model-based agents are increasingly deployed as collaborators in scientific discovery yet most current work focuses on the autonomous capabilities of "AI Scientists". We argue that this overlooks the social aspects of scientific teamwork, and that studying AI Scientists as human-agent systems (HAS)--where the unit of analysis is the human-agent pair--is both underexplored and undervalued.
-  - **Source location:** Authors' abstract
+> Large language model-based agents are increasingly deployed as collaborators in scientific discovery yet most current work focuses on the autonomous capabilities of "AI Scientists". We argue that this overlooks the social aspects of scientific teamwork, and that studying AI Scientists as human-agent systems (HAS)--where the unit of analysis is the human-agent pair--is both underexplored and undervalued.
+> --- `kb/sources/.snapshots/position-ai-agents-in-scientific-teams-as-human-agent-systems.md` @ `sha256:d05d9328ff1b26a37a032e1b43a597baa6f91995d07a7c0a50ffc81f1203ff34` — Authors' abstract
 
-- **Source extract (verbatim):** We call for new research that adopts the HAS lens to develop mathematical frameworks for understanding and fostering human-AI synergy in scientific discovery.
-  - **Source location:** Authors' abstract, closing sentence
+> We call for new research that adopts the HAS lens to develop mathematical frameworks for understanding and fostering human-AI synergy in scientific discovery.
+> --- `kb/sources/.snapshots/position-ai-agents-in-scientific-teams-as-human-agent-systems.md` @ `sha256:d05d9328ff1b26a37a032e1b43a597baa6f91995d07a7c0a50ffc81f1203ff34` — Authors' abstract, closing sentence
 
 ## Connections Found
 

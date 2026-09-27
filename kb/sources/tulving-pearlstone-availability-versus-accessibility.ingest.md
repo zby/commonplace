@@ -22,12 +22,14 @@ Tulving and Pearlstone tested 929 Toronto-area high-school students on one-trial
 
 ## Quotes
 
-- **Source extract (verbatim):** Cued recall was higher than noncued recall
-  - **Source location:** Opening abstract, reprinted article page 194; result of the category-cue comparison.
-- **Source extract (verbatim):** available in the memory storage, but not accessible for retrieval
-  - **Source location:** Opening abstract, reprinted article page 194; authors' interpretation of the category-cue result.
-- **Source extract (verbatim):** Immediate recall was tested either in presence or absedce of category names as retrieval cues. Cued recall was higher than noncued recall, the difference varying directly with list length and inversely with number of items per category. This finding was interpreted as indicating that suficiently intact memory traces of many words not recalled under the noncued recall conditions were available in the memory storage, but not accessible for retrieval.
-  - **Source location:** Opening abstract, reprinted article page 194; manipulation, result, and authors' bounded interpretation.
+> Cued recall was higher than noncued recall
+> --- `kb/sources/.snapshots/tulving-pearlstone-availability-versus-accessibility.md` @ `sha256:658fe144fe1ab9d523e74083814790cd34fb7c606b1db6adc2b6eb6f88f656a4` — Opening abstract, reprinted article page 194; result of the category-cue comparison.
+
+> available in the memory storage, but not accessible for retrieval
+> --- `kb/sources/.snapshots/tulving-pearlstone-availability-versus-accessibility.md` @ `sha256:658fe144fe1ab9d523e74083814790cd34fb7c606b1db6adc2b6eb6f88f656a4` — Opening abstract, reprinted article page 194; authors' interpretation of the category-cue result.
+
+> Immediate recall was tested either in presence or absedce of category names as retrieval cues. Cued recall was higher than noncued recall, the difference varying directly with list length and inversely with number of items per category. This finding was interpreted as indicating that suficiently intact memory traces of many words not recalled under the noncued recall conditions were available in the memory storage, but not accessible for retrieval.
+> --- `kb/sources/.snapshots/tulving-pearlstone-availability-versus-accessibility.md` @ `sha256:658fe144fe1ab9d523e74083814790cd34fb7c606b1db6adc2b6eb6f88f656a4` — Opening abstract, reprinted article page 194; manipulation, result, and authors' bounded interpretation.
 
 ## Connections Found
 

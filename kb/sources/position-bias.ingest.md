@@ -37,14 +37,17 @@ Files read in full:
 
 ## Quotes
 
-- **Source extract (verbatim):** The current public snapshot is: 193 verified story pairs, 27 judge models, and 386 prompts per full model. The headline result is not a small tie-breaker: across the report view, the model-average first-shown pick rate is 63.3%, and the median model flips its underlying choice in 44.8% of decisive swapped-order case pairs.
-  - **Source location:** Opening summary
-- **Source extract (verbatim):** `Order Flip` is the share of decisive two-view case pairs where the model changed its underlying canonical choice after the order swap. Lower is better.
-  - **Source location:** “How To Read This,” metric definitions
-- **Source extract (verbatim):** The direction is not universal. Most models prefer the first-shown version too often, but **Mistral Large 3** goes the other way, choosing the first-shown version only 27.4% of the time and giving the same story a -0.408 rating shift when shown first.
-  - **Source location:** “First-Position Lift,” paragraph before the directional-results table
-- **Source extract (verbatim):** The source-pair design is intentionally narrow in this snapshot: all 193 accepted story pairs compare sibling edits from **Claude Sonnet 4.6 (high reasoning)** and **GPT-5.4 (high reasoning)**, with slot assignment randomized by case. These results are about judge sensitivity to order over that controlled sibling-edit surface, not a universal statement about every possible answer pair.
-  - **Source location:** “What Stands Out,” final bullet
+> The current public snapshot is: 193 verified story pairs, 27 judge models, and 386 prompts per full model. The headline result is not a small tie-breaker: across the report view, the model-average first-shown pick rate is 63.3%, and the median model flips its underlying choice in 44.8% of decisive swapped-order case pairs.
+> --- `kb/sources/.snapshots/position-bias.md` @ `sha256:c3fc298bbc445f10a7b03bb8d875cc4a2b3539c64885e7f6c38c1da80b7985cb` — Opening summary
+
+> `Order Flip` is the share of decisive two-view case pairs where the model changed its underlying canonical choice after the order swap. Lower is better.
+> --- `kb/sources/.snapshots/position-bias.md` @ `sha256:c3fc298bbc445f10a7b03bb8d875cc4a2b3539c64885e7f6c38c1da80b7985cb` — “How To Read This,” metric definitions
+
+> The direction is not universal. Most models prefer the first-shown version too often, but **Mistral Large 3** goes the other way, choosing the first-shown version only 27.4% of the time and giving the same story a -0.408 rating shift when shown first.
+> --- `kb/sources/.snapshots/position-bias.md` @ `sha256:c3fc298bbc445f10a7b03bb8d875cc4a2b3539c64885e7f6c38c1da80b7985cb` — “First-Position Lift,” paragraph before the directional-results table
+
+> The source-pair design is intentionally narrow in this snapshot: all 193 accepted story pairs compare sibling edits from **Claude Sonnet 4.6 (high reasoning)** and **GPT-5.4 (high reasoning)**, with slot assignment randomized by case. These results are about judge sensitivity to order over that controlled sibling-edit surface, not a universal statement about every possible answer pair.
+> --- `kb/sources/.snapshots/position-bias.md` @ `sha256:c3fc298bbc445f10a7b03bb8d875cc4a2b3539c64885e7f6c38c1da80b7985cb` — “What Stands Out,” final bullet
 
 ## Connections Found
 

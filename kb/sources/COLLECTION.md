@@ -79,12 +79,17 @@ No source quotes have been retained yet.
 A populated quote item has this shape:
 
 ```markdown
-- **Source extract (verbatim):** <exact supporting content>
-  - **Source location:** <human-resolvable locator for that extract>
+> <exact supporting content>
+> --- `kb/sources/.snapshots/<slug>.md` @ `sha256:<snapshot_sha256>` — <optional locator note>
 ```
 
-Repeat the adjacent `Source extract (verbatim)` / `Source location` pair when
-support is non-contiguous. The section is an append-only quote pool: an
+The attribution must name the exact name-paired snapshot and the ingest
+checksum. An optional `:start-end` range follows the path inside its code span.
+The quote must occur exactly once in the snapshot, or exactly once within
+that range. Supplied ranges must contain the complete quote. Locator notes
+are context, never quoted evidence.
+
+Repeat the attributed blockquote when support is non-contiguous. The section is an append-only quote pool: an
 append may add quotes but must not rewrite or delete incumbent items.
 
 ## Declaring how a source use is checked

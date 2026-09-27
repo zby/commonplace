@@ -25,12 +25,14 @@ V8 turns a JavaScript object's named-property layout into a runtime identity: ev
 
 ## Quotes
 
-- **Source extract (verbatim):** Hence, in this case V8, HiddenClasses are created on the fly and updated dynamically as objects change. HiddenClasses serve as an identifier for the shape of an object and as such a very important ingredient for V8's optimizing compiler and inline caches. The optimizing compiler for instance can directly inline property accesses if it can ensure a compatible objects structure through the HiddenClass.
-  - **Source location:** “HiddenClasses and DescriptorArrays,” opening explanation
-- **Source extract (verbatim):** Every time a new property is added, the object's HiddenClass is changed. In the background V8 creates a transition tree that links the HiddenClasses together.
-  - **Source location:** “HiddenClasses and DescriptorArrays,” transition-tree explanation
-- **Source extract (verbatim):** Changing the property or element type typically causes V8 to create a different HiddenClass which can lead to type pollution which [prevents V8 from generating optimal code](http://mrale.ph/blog/2015/01/11/whats-up-with-monomorphism.html).
-  - **Source location:** Closing paragraph
+> Hence, in this case V8, HiddenClasses are created on the fly and updated dynamically as objects change. HiddenClasses serve as an identifier for the shape of an object and as such a very important ingredient for V8's optimizing compiler and inline caches. The optimizing compiler for instance can directly inline property accesses if it can ensure a compatible objects structure through the HiddenClass.
+> --- `kb/sources/.snapshots/fast-properties-in-v8.md` @ `sha256:8a20a63137b184d3c8166260dcce9f7b04ccbebb616093a8a6d5267e79da646e` — “HiddenClasses and DescriptorArrays,” opening explanation
+
+> Every time a new property is added, the object's HiddenClass is changed. In the background V8 creates a transition tree that links the HiddenClasses together.
+> --- `kb/sources/.snapshots/fast-properties-in-v8.md` @ `sha256:8a20a63137b184d3c8166260dcce9f7b04ccbebb616093a8a6d5267e79da646e` — “HiddenClasses and DescriptorArrays,” transition-tree explanation
+
+> Changing the property or element type typically causes V8 to create a different HiddenClass which can lead to type pollution which [prevents V8 from generating optimal code](http://mrale.ph/blog/2015/01/11/whats-up-with-monomorphism.html).
+> --- `kb/sources/.snapshots/fast-properties-in-v8.md` @ `sha256:8a20a63137b184d3c8166260dcce9f7b04ccbebb616093a8a6d5267e79da646e` — Closing paragraph
 
 ## Connections Found
 

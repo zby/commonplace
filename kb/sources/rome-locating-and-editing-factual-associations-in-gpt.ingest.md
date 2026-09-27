@@ -23,10 +23,11 @@ ROME asks where an autoregressive transformer stores a factual association such 
 
 ## Quotes
 
-- **Source extract (verbatim):** This research examines how transformer language models store and retrieve factual information, demonstrating that "factual associations correspond to localized, directly-editable computations."
-  - **Source location:** “Overview.”
-- **Source extract (verbatim):** The team introduced **Rank-One Model Editing (ROME)**, a technique that modifies feed-forward weights to update specific factual associations. Testing on a zero-shot relation extraction task showed ROME performed comparably to existing methods while offering advantages in maintaining both specificity and generalization on counterfactual assertions.
-  - **Source location:** “Methodology.”
+> This research examines how transformer language models store and retrieve factual information, demonstrating that "factual associations correspond to localized, directly-editable computations."
+> --- `kb/sources/.snapshots/rome-locating-and-editing-factual-associations-in-gpt.md` @ `sha256:1567e3a99679e5cea2679ea920b47d4809bc6ef43d412b7cbf0453073c9b7860` — “Overview.”
+
+> The team introduced **Rank-One Model Editing (ROME)**, a technique that modifies feed-forward weights to update specific factual associations. Testing on a zero-shot relation extraction task showed ROME performed comparably to existing methods while offering advantages in maintaining both specificity and generalization on counterfactual assertions.
+> --- `kb/sources/.snapshots/rome-locating-and-editing-factual-associations-in-gpt.md` @ `sha256:1567e3a99679e5cea2679ea920b47d4809bc6ef43d412b7cbf0453073c9b7860` — “Methodology.”
 
 ## Connections Found
 

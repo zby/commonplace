@@ -24,17 +24,17 @@ Yegge reports operating a software factory of roughly 50–60 agents whose accum
 
 ## Quotes
 
-- **Source extract (verbatim):** Over time, my "rulings" and "verdicts" became a body of case law. Every daily incident postmortem led to new rulings and new doctrine.
-  - **Source location:** “The Rise of Rule of Law,” paragraph beginning “Over time, my ‘rulings’ and ‘verdicts’...”
+> Over time, my "rulings" and "verdicts" became a body of case law. Every daily incident postmortem led to new rulings and new doctrine.
+> --- `kb/sources/.snapshots/steve-yegge-fences-not-sandboxes.md` @ `sha256:4e2543d98342ee36d8e6953ee02c247b93dc6972ab2a8c283df101fb687d1337` — “The Rise of Rule of Law,” paragraph beginning “Over time, my ‘rulings’ and ‘verdicts’...”
 
-- **Source extract (verbatim):** Once I popped the hood, I saw that they hadn't been curating it, just growing it. It had a lot of cruft — for instance, old rulings that were obsolete or had changed.
-  - **Source location:** “The Rise of Rule of Law,” paragraph beginning “Did they do a good job of all this?”
+> Once I popped the hood, I saw that they hadn't been curating it, just growing it. It had a lot of cruft — for instance, old rulings that were obsolete or had changed.
+> --- `kb/sources/.snapshots/steve-yegge-fences-not-sandboxes.md` @ `sha256:4e2543d98342ee36d8e6953ee02c247b93dc6972ab2a8c283df101fb687d1337` — “The Rise of Rule of Law,” paragraph beginning “Did they do a good job of all this?”
 
-- **Source extract (verbatim):** I minted a new Officer seat, Frog (Head of Wheelhouse Law), and put Frog to work on folding successive cancelled rulings, and a whole bunch of other stuff the agents had overlooked. It's a work in progress.
-  - **Source location:** “The Rise of Rule of Law,” paragraph beginning “I minted a new Officer seat, Frog...”
+> I minted a new Officer seat, Frog (Head of Wheelhouse Law), and put Frog to work on folding successive cancelled rulings, and a whole bunch of other stuff the agents had overlooked. It's a work in progress.
+> --- `kb/sources/.snapshots/steve-yegge-fences-not-sandboxes.md` @ `sha256:4e2543d98342ee36d8e6953ee02c247b93dc6972ab2a8c283df101fb687d1337` — “The Rise of Rule of Law,” paragraph beginning “I minted a new Officer seat, Frog...”
 
-- **Source extract (verbatim):** Wheelhouse has a whole system just for the lifecycle of rules/laws: proposing, evaluating, ratifying, enacting, enforcing, measuring, amending, and retiring them.
-  - **Source location:** “The Rise of Rule of Law,” paragraph beginning “But on the whole, it was already a pretty solid system.”
+> Wheelhouse has a whole system just for the lifecycle of rules/laws: proposing, evaluating, ratifying, enacting, enforcing, measuring, amending, and retiring them.
+> --- `kb/sources/.snapshots/steve-yegge-fences-not-sandboxes.md` @ `sha256:4e2543d98342ee36d8e6953ee02c247b93dc6972ab2a8c283df101fb687d1337` — “The Rise of Rule of Law,” paragraph beginning “But on the whole, it was already a pretty solid system.”
 
 ## Connections Found
 

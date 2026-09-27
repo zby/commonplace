@@ -23,10 +23,11 @@ Karpathy frames "Claws" as a new layer above LLM agents: systems that add orches
 
 ## Quotes
 
-- **Source extract (verbatim):** But I do love the concept and I think that just like LLM agents were a new layer on top of LLMs, Claws are now a new layer on top of LLM agents, taking the orchestration, scheduling, context, tool calls and a kind of persistence to a next level.
-  - **Source location:** Quoted Andrej Karpathy mini-essay, first blockquote paragraph
-- **Source extract (verbatim):** "Claw" is becoming a term of art for the entire category of OpenClaw-like agent systems - AI agents that generally run on personal hardware, communicate via messaging protocols and can both act on direct instructions and schedule tasks.
-  - **Source location:** Simon Willison's paragraph following the Karpathy quotation
+> But I do love the concept and I think that just like LLM agents were a new layer on top of LLMs, Claws are now a new layer on top of LLM agents, taking the orchestration, scheduling, context, tool calls and a kind of persistence to a next level.
+> --- `kb/sources/.snapshots/simon-willison-karpathy-claws.md` @ `sha256:9572ff0f6238b880e7889f69ccef59c70b758eb26d1c4f8e95eeed3aa1db18de` — Quoted Andrej Karpathy mini-essay, first blockquote paragraph
+
+> "Claw" is becoming a term of art for the entire category of OpenClaw-like agent systems - AI agents that generally run on personal hardware, communicate via messaging protocols and can both act on direct instructions and schedule tasks.
+> --- `kb/sources/.snapshots/simon-willison-karpathy-claws.md` @ `sha256:9572ff0f6238b880e7889f69ccef59c70b758eb26d1c4f8e95eeed3aa1db18de` — Simon Willison's paragraph following the Karpathy quotation
 
 ## Connections Found
 

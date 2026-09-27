@@ -26,10 +26,11 @@ The source argues that for AI agent products, evaluation and QA should be the sa
 
 ## Quotes
 
-- **Source extract (verbatim):** Grade the outcome, not the trajectory. Agents often take paths that look inefficient or strange to humans, but still produce the right answer.
-  - **Source location:** Opening “two lessons” list.
-- **Source extract (verbatim):** We don’t need to know the root cause at scoring time, we just need to catch the failure fast. Then our triage system can pick it up and work backward from the signal.
-  - **Source location:** “The Thesis: Evaluation and QA Are the Same Loop,” after the failure-cause list.
+> Grade the outcome, not the trajectory. Agents often take paths that look inefficient or strange to humans, but still produce the right answer.
+> --- `kb/sources/.snapshots/the-self-healing-agent-harness-2048912026018484317.md` @ `sha256:dffb4c774942dc2a0e6e92efa39e89d21c64c3205144fd0ce48041aaf800d591` — Opening “two lessons” list.
+
+> We don’t need to know the root cause at scoring time, we just need to catch the failure fast. Then our triage system can pick it up and work backward from the signal.
+> --- `kb/sources/.snapshots/the-self-healing-agent-harness-2048912026018484317.md` @ `sha256:dffb4c774942dc2a0e6e92efa39e89d21c64c3205144fd0ce48041aaf800d591` — “The Thesis: Evaluation and QA Are the Same Loop,” after the failure-cause list.
 
 ## Connections Found
 

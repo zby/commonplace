@@ -25,14 +25,14 @@ Agora treats a research community's shared memory as an append-only Git DAG: eve
 
 ## Quotes
 
-- **Source extract (verbatim):** A project state is a directed acyclic graph 𝐺 = (𝑉, 𝐸). For 𝑢, 𝑣 ∈ 𝑉 , an edge (𝑢, 𝑣) ∈ 𝐸 means that 𝑣 builds on 𝑢; in Git terms, 𝑢 is a parent of commit 𝑣. Each node stores 𝑣 = (ℎ, 𝑎, 𝑇, 𝑑, 𝑥, 𝑚, 𝑃, 𝜏 ), (1) where ℎ is the canonical commit hash, 𝑎 the publishing account, 𝑇 a set of tags, 𝑑 a description, 𝑥 structured metadata, 𝑚 an optional project metric, 𝑃 the parent set, and 𝜏 the server timestamp.
-  - **Source location:** Section 3.2, contribution graph and provenance
+> A project state is a directed acyclic graph 𝐺 = (𝑉, 𝐸). For 𝑢, 𝑣 ∈ 𝑉 , an edge (𝑢, 𝑣) ∈ 𝐸 means that 𝑣 builds on 𝑢; in Git terms, 𝑢 is a parent of commit 𝑣. Each node stores 𝑣 = (ℎ, 𝑎, 𝑇, 𝑑, 𝑥, 𝑚, 𝑃, 𝜏 ), (1) where ℎ is the canonical commit hash, 𝑎 the publishing account, 𝑇 a set of tags, 𝑑 a description, 𝑥 structured metadata, 𝑚 an optional project metric, 𝑃 the parent set, and 𝜏 the server timestamp.
+> --- `kb/sources/.snapshots/agora-git-as-shared-memory-for-collective-autoresearch.md` @ `sha256:da7e3203a19f32e0da1e67e866a11197e8f1effcace91eda80556dfd79b967c2` — Section 3.2, contribution graph and provenance
 
-- **Source extract (verbatim):** Metadata-only work uses a light path: the client sends JSON, and the server creates the canonical commit. Code-bearing work uses a heavy path: the participant commits locally, uploads a Git bundle, and the server validates the contribution before creating a canonical server-timestamped commit. Both paths yield the same kind of node, so lineage and queries do not care which was used.
-  - **Source location:** Section 3.2, light and heavy publication paths
+> Metadata-only work uses a light path: the client sends JSON, and the server creates the canonical commit. Code-bearing work uses a heavy path: the participant commits locally, uploads a Git bundle, and the server validates the contribution before creating a canonical server-timestamped commit. Both paths yield the same kind of node, so lineage and queries do not care which was used.
+> --- `kb/sources/.snapshots/agora-git-as-shared-memory-for-collective-autoresearch.md` @ `sha256:da7e3203a19f32e0da1e67e866a11197e8f1effcace91eda80556dfd79b967c2` — Section 3.2, light and heavy publication paths
 
-- **Source extract (verbatim):** Each project owns a bare repository under the server data root, and canonical contribution refs keep every accepted node reachable. SQLite holds eight tables: agents, projects, contributions, parents, tags, cross-project references, embeddings, and rate limits. The contribution index can be rebuilt from Git; project metadata and authentication state still need ordinary database backups.
-  - **Source location:** Section 3.4, prototype implementation
+> Each project owns a bare repository under the server data root, and canonical contribution refs keep every accepted node reachable. SQLite holds eight tables: agents, projects, contributions, parents, tags, cross-project references, embeddings, and rate limits. The contribution index can be rebuilt from Git; project metadata and authentication state still need ordinary database backups.
+> --- `kb/sources/.snapshots/agora-git-as-shared-memory-for-collective-autoresearch.md` @ `sha256:da7e3203a19f32e0da1e67e866a11197e8f1effcace91eda80556dfd79b967c2` — Section 3.4, prototype implementation
 
 ## Connections Found
 

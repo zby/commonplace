@@ -24,17 +24,20 @@ Chung et al. introduce a benchmark for evaluating LLM-based web agents on long-c
 
 ## Quotes
 
-- **Source extract (verbatim):** The team developed an evaluation framework simulating multi-session user interactions by injecting irrelevant task sequences between dependent subtasks, creating contexts from 25,000 to 150,000 tokens.
-  - **Source location:** Abstract.
-- **Source extract (verbatim):** Success rates drop from 40-50% in baseline conditions to less than 10% in long context scenarios.
-  - **Source location:** Abstract.
-- **Source extract (verbatim):** The analysis identified primary failure modes: agents became trapped in loops and lost sight of original objectives.
-  - **Source location:** Abstract.
-- **Source extract (verbatim):** The researchers tested an implicit RAG approach generating task-relevant summaries, which provided modest improvements but did not resolve fundamental limitations.
-  - **Source location:** Abstract.
+> The team developed an evaluation framework simulating multi-session user interactions by injecting irrelevant task sequences between dependent subtasks, creating contexts from 25,000 to 150,000 tokens.
+> --- `kb/sources/.snapshots/llm-webagents-long-context-reasoning-benchmark.md` @ `sha256:0eb221540513993cd4d47af8cde126489ade937c025aa328d3d5db2dc29c3522` — Abstract.
 
-- **Source extract (verbatim):** Testing four models — Claude-3.7, GPT-4.1, Llama 4, and o4-mini — revealed significant performance decline with increased context.
-  - **Source location:** Abstract
+> Success rates drop from 40-50% in baseline conditions to less than 10% in long context scenarios.
+> --- `kb/sources/.snapshots/llm-webagents-long-context-reasoning-benchmark.md` @ `sha256:0eb221540513993cd4d47af8cde126489ade937c025aa328d3d5db2dc29c3522` — Abstract.
+
+> The analysis identified primary failure modes: agents became trapped in loops and lost sight of original objectives.
+> --- `kb/sources/.snapshots/llm-webagents-long-context-reasoning-benchmark.md` @ `sha256:0eb221540513993cd4d47af8cde126489ade937c025aa328d3d5db2dc29c3522` — Abstract.
+
+> The researchers tested an implicit RAG approach generating task-relevant summaries, which provided modest improvements but did not resolve fundamental limitations.
+> --- `kb/sources/.snapshots/llm-webagents-long-context-reasoning-benchmark.md` @ `sha256:0eb221540513993cd4d47af8cde126489ade937c025aa328d3d5db2dc29c3522` — Abstract.
+
+> Testing four models — Claude-3.7, GPT-4.1, Llama 4, and o4-mini — revealed significant performance decline with increased context.
+> --- `kb/sources/.snapshots/llm-webagents-long-context-reasoning-benchmark.md` @ `sha256:0eb221540513993cd4d47af8cde126489ade937c025aa328d3d5db2dc29c3522` — Abstract
 
 ## Connections Found
 

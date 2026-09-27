@@ -23,12 +23,14 @@ The paper argues that current AI systems do not truly learn after deployment bec
 
 ## Quotes
 
-- **Source extract (verbatim):** The paper argues that observation and action learning should not remain separate paradigms.
-  - **Source location:** “Interaction Between Systems” section, opening sentence.
-- **Source extract (verbatim):** System A can help System B by compressing state spaces, building predictive world models, and generating intrinsic rewards for exploration.
-  - **Source location:** “Interaction Between Systems” section.
-- **Source extract (verbatim):** System B can help System A by collecting better data, disambiguating perception through intervention, and generating task-relevant trajectories rather than passive, uncurated streams. System M sits above both, deciding when and how these interactions should occur.
-  - **Source location:** “Interaction Between Systems” section, closing sentences.
+> The paper argues that observation and action learning should not remain separate paradigms.
+> --- `kb/sources/.snapshots/why-ai-systems-dont-learn-and-what-to-do-about-it.md` @ `sha256:223632eff5364818cda452976cc9b3164489d6673e606dc881e6b1d5484b3fd5` — “Interaction Between Systems” section, opening sentence.
+
+> System A can help System B by compressing state spaces, building predictive world models, and generating intrinsic rewards for exploration.
+> --- `kb/sources/.snapshots/why-ai-systems-dont-learn-and-what-to-do-about-it.md` @ `sha256:223632eff5364818cda452976cc9b3164489d6673e606dc881e6b1d5484b3fd5` — “Interaction Between Systems” section.
+
+> System B can help System A by collecting better data, disambiguating perception through intervention, and generating task-relevant trajectories rather than passive, uncurated streams. System M sits above both, deciding when and how these interactions should occur.
+> --- `kb/sources/.snapshots/why-ai-systems-dont-learn-and-what-to-do-about-it.md` @ `sha256:223632eff5364818cda452976cc9b3164489d6673e606dc881e6b1d5484b3fd5` — “Interaction Between Systems” section, closing sentences.
 
 ## Connections Found
 

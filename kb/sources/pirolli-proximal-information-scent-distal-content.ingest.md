@@ -24,41 +24,53 @@ Pirolli frames Web navigation as a Brunswikian lens-model judgment problem: the 
 
 ## Quotes
 
-- **Source extract (verbatim):** scent refers to the cues used by information foragers to make judgments related
-  - **Source location:** Introduction, PDF page 3.
-- **Source extract (verbatim):** to the selection of information sources to pursue and consume. These cues
-  - **Source location:** Introduction, PDF page 3.
-- **Source extract (verbatim):** concise information about content that is not immediately available. The
-  - **Source location:** Introduction, PDF page 3.
-- **Source extract (verbatim):** assessments of proximal information scent cues in order to make action choices
-  - **Source location:** Introduction, PDF page 4.
-- **Source extract (verbatim):** that lead to distal information sources. This view is a variant of Brunswik’s Lens
-  - **Source location:** Introduction, PDF page 4.
+> scent refers to the cues used by information foragers to make judgments related
+> --- `kb/sources/.snapshots/pirolli-proximal-information-scent-distal-content.md` @ `sha256:37818993dacf91b7a45cedda36be797eeaf692b4efd1118fc647c11577125b13` — Introduction, PDF page 3.
 
-- **Source extract (verbatim):** Human-information interaction systems will tend to maximize the
-  - **Source location:** Adaptation framework and Equation 1, PDF page 5.
-- **Source extract (verbatim):** value of external knowledge gained relative to the cost of
-  - **Source location:** Adaptation framework and Equation 1, PDF page 5.
-- **Source extract (verbatim):** (the anchor plus additional surrounding text, having a mean of 11.02 terms) to a
-  - **Source location:** Topical Patches and Diminishing Returns, PDF page 10.
-- **Source extract (verbatim):** Linked r = .16 and Random r ≈ 0. Davison’s analysis of the correlation of
-  - **Source location:** Topical Patches and Diminishing Returns, PDF page 10.
-- **Source extract (verbatim):** proximal cues to distal content confirms our intuition that the cues have
-  - **Source location:** Topical Patches and Diminishing Returns, PDF page 10.
-- **Source extract (verbatim):** The stronger the associations (reflecting greater predictive strength)
-  - **Source location:** Mapping the Bayesian Rational Analysis to Spreading Activation, PDF page 14.
+> to the selection of information sources to pursue and consume. These cues
+> --- `kb/sources/.snapshots/pirolli-proximal-information-scent-distal-content.md` @ `sha256:37818993dacf91b7a45cedda36be797eeaf692b4efd1118fc647c11577125b13` — Introduction, PDF page 3.
 
-- **Source extract (verbatim):** Information scent refers to the cues used by information foragers to make judgments related to the selection of information sources to pursue and consume. These cues include items such as Web links or bibliographic citations that provide users with concise information about content that is not immediately available.
-  - **Source location:** Introduction, PDF pages 3–4
-- **Source extract (verbatim):** Davison (2000) compared elaborated anchor text (the anchor plus additional surrounding text, having a mean of 11.02 terms) to a paired document that was either Linked (the page linked to the anchor) or Random (a random page). The normalized correlation (cosine) similarities were Linked r = .16 and Random r ≈ 0.
-  - **Source location:** “Topical Patches and Diminishing Returns,” PDF page 10
+> concise information about content that is not immediately available. The
+> --- `kb/sources/.snapshots/pirolli-proximal-information-scent-distal-content.md` @ `sha256:37818993dacf91b7a45cedda36be797eeaf692b4efd1118fc647c11577125b13` — Introduction, PDF page 3.
 
-- **Source extract (verbatim):** Human-information interaction systems will tend to maximize the value of external knowledge gained relative to the cost of interaction.
-  - **Source location:** Adaptation framework and Equation 1, PDF page 5
-- **Source extract (verbatim):** From proximal information scent cues, the user predicts the utility of a distal information source and makes choices based on the utilities of alternatives.
-  - **Source location:** “The Random Utility Model,” PDF page 15
-- **Source extract (verbatim):** Because of the stochastic nature of the utilities UK|G it is not the case that one alternative will always be chosen over another.
-  - **Source location:** “The Random Utility Model,” PDF page 16
+> assessments of proximal information scent cues in order to make action choices
+> --- `kb/sources/.snapshots/pirolli-proximal-information-scent-distal-content.md` @ `sha256:37818993dacf91b7a45cedda36be797eeaf692b4efd1118fc647c11577125b13` — Introduction, PDF page 4.
+
+> that lead to distal information sources. This view is a variant of Brunswik’s Lens
+> --- `kb/sources/.snapshots/pirolli-proximal-information-scent-distal-content.md` @ `sha256:37818993dacf91b7a45cedda36be797eeaf692b4efd1118fc647c11577125b13` — Introduction, PDF page 4.
+
+> Human-information interaction systems will tend to maximize the
+> --- `kb/sources/.snapshots/pirolli-proximal-information-scent-distal-content.md` @ `sha256:37818993dacf91b7a45cedda36be797eeaf692b4efd1118fc647c11577125b13` — Adaptation framework and Equation 1, PDF page 5.
+
+> value of external knowledge gained relative to the cost of
+> --- `kb/sources/.snapshots/pirolli-proximal-information-scent-distal-content.md` @ `sha256:37818993dacf91b7a45cedda36be797eeaf692b4efd1118fc647c11577125b13` — Adaptation framework and Equation 1, PDF page 5.
+
+> (the anchor plus additional surrounding text, having a mean of 11.02 terms) to a
+> --- `kb/sources/.snapshots/pirolli-proximal-information-scent-distal-content.md` @ `sha256:37818993dacf91b7a45cedda36be797eeaf692b4efd1118fc647c11577125b13` — Topical Patches and Diminishing Returns, PDF page 10.
+
+> Linked r = .16 and Random r ≈ 0. Davison’s analysis of the correlation of
+> --- `kb/sources/.snapshots/pirolli-proximal-information-scent-distal-content.md` @ `sha256:37818993dacf91b7a45cedda36be797eeaf692b4efd1118fc647c11577125b13` — Topical Patches and Diminishing Returns, PDF page 10.
+
+> proximal cues to distal content confirms our intuition that the cues have
+> --- `kb/sources/.snapshots/pirolli-proximal-information-scent-distal-content.md` @ `sha256:37818993dacf91b7a45cedda36be797eeaf692b4efd1118fc647c11577125b13` — Topical Patches and Diminishing Returns, PDF page 10.
+
+> The stronger the associations (reflecting greater predictive strength)
+> --- `kb/sources/.snapshots/pirolli-proximal-information-scent-distal-content.md` @ `sha256:37818993dacf91b7a45cedda36be797eeaf692b4efd1118fc647c11577125b13` — Mapping the Bayesian Rational Analysis to Spreading Activation, PDF page 14.
+
+> Information scent refers to the cues used by information foragers to make judgments related to the selection of information sources to pursue and consume. These cues include items such as Web links or bibliographic citations that provide users with concise information about content that is not immediately available.
+> --- `kb/sources/.snapshots/pirolli-proximal-information-scent-distal-content.md` @ `sha256:37818993dacf91b7a45cedda36be797eeaf692b4efd1118fc647c11577125b13` — Introduction, PDF pages 3–4
+
+> Davison (2000) compared elaborated anchor text (the anchor plus additional surrounding text, having a mean of 11.02 terms) to a paired document that was either Linked (the page linked to the anchor) or Random (a random page). The normalized correlation (cosine) similarities were Linked r = .16 and Random r ≈ 0.
+> --- `kb/sources/.snapshots/pirolli-proximal-information-scent-distal-content.md` @ `sha256:37818993dacf91b7a45cedda36be797eeaf692b4efd1118fc647c11577125b13` — “Topical Patches and Diminishing Returns,” PDF page 10
+
+> Human-information interaction systems will tend to maximize the value of external knowledge gained relative to the cost of interaction.
+> --- `kb/sources/.snapshots/pirolli-proximal-information-scent-distal-content.md` @ `sha256:37818993dacf91b7a45cedda36be797eeaf692b4efd1118fc647c11577125b13` — Adaptation framework and Equation 1, PDF page 5
+
+> From proximal information scent cues, the user predicts the utility of a distal information source and makes choices based on the utilities of alternatives.
+> --- `kb/sources/.snapshots/pirolli-proximal-information-scent-distal-content.md` @ `sha256:37818993dacf91b7a45cedda36be797eeaf692b4efd1118fc647c11577125b13` — “The Random Utility Model,” PDF page 15
+
+> Because of the stochastic nature of the utilities UK|G it is not the case that one alternative will always be chosen over another.
+> --- `kb/sources/.snapshots/pirolli-proximal-information-scent-distal-content.md` @ `sha256:37818993dacf91b7a45cedda36be797eeaf692b4efd1118fc647c11577125b13` — “The Random Utility Model,” PDF page 16
 
 ## Connections Found
 

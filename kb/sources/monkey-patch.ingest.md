@@ -23,14 +23,17 @@ The article defines monkey patching as modifying a dynamic language's runtime co
 
 ## Quotes
 
-- **Source extract (verbatim):** **Monkey patch** is the act of dynamically modifying the runtime code (not the [source code](https://en.wikipedia.org/wiki/Source_code)) of a [dynamic programming language](https://en.wikipedia.org/wiki/Dynamic_programming_language), and it is the information (data/code) used to modify the runtime code. Monkey patching adds or replaces programming aspects like [methods](https://en.wikipedia.org/wiki/Method_(computer_science)), [classes](https://en.wikipedia.org/wiki/Class_(programming)), [attributes](https://en.wikipedia.org/wiki/Attribute_(computing)), and [functions](https://en.wikipedia.org/wiki/Subroutine) in [memory](https://en.wikipedia.org/wiki/Computer_memory).
-  - **Source location:** Opening definition
-- **Source extract (verbatim):** A new release of the patched software may break the patch. For this reason, a monkey patch may be conditional and thus only applied if appropriate.[^5]
-  - **Source location:** “Pitfalls,” “Incompatibility”
-- **Source extract (verbatim):** If the same [method](https://en.wikipedia.org/wiki/Method_(computer_science)) is patched multiple times, then only the last one is used; the other patches have no effect, unless monkey patches are written with a pattern like *alias_method_chain*.[^6]
-  - **Source location:** “Pitfalls,” “Overwriting”
-- **Source extract (verbatim):** A monkey patch creates a discrepancy between the source code and actual behavior that can confuse developers.
-  - **Source location:** “Pitfalls,” “Confusion”
+> **Monkey patch** is the act of dynamically modifying the runtime code (not the [source code](https://en.wikipedia.org/wiki/Source_code)) of a [dynamic programming language](https://en.wikipedia.org/wiki/Dynamic_programming_language), and it is the information (data/code) used to modify the runtime code. Monkey patching adds or replaces programming aspects like [methods](https://en.wikipedia.org/wiki/Method_(computer_science)), [classes](https://en.wikipedia.org/wiki/Class_(programming)), [attributes](https://en.wikipedia.org/wiki/Attribute_(computing)), and [functions](https://en.wikipedia.org/wiki/Subroutine) in [memory](https://en.wikipedia.org/wiki/Computer_memory).
+> --- `kb/sources/.snapshots/monkey-patch.md` @ `sha256:2369acdaab95957501d5c4528450ea63f159fbfce5e3b6ac7fde32f852c991dd` — Opening definition
+
+> A new release of the patched software may break the patch. For this reason, a monkey patch may be conditional and thus only applied if appropriate.[^5]
+> --- `kb/sources/.snapshots/monkey-patch.md` @ `sha256:2369acdaab95957501d5c4528450ea63f159fbfce5e3b6ac7fde32f852c991dd` — “Pitfalls,” “Incompatibility”
+
+> If the same [method](https://en.wikipedia.org/wiki/Method_(computer_science)) is patched multiple times, then only the last one is used; the other patches have no effect, unless monkey patches are written with a pattern like *alias_method_chain*.[^6]
+> --- `kb/sources/.snapshots/monkey-patch.md` @ `sha256:2369acdaab95957501d5c4528450ea63f159fbfce5e3b6ac7fde32f852c991dd` — “Pitfalls,” “Overwriting”
+
+> A monkey patch creates a discrepancy between the source code and actual behavior that can confuse developers.
+> --- `kb/sources/.snapshots/monkey-patch.md` @ `sha256:2369acdaab95957501d5c4528450ea63f159fbfce5e3b6ac7fde32f852c991dd` — “Pitfalls,” “Confusion”
 
 ## Connections Found
 

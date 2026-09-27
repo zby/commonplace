@@ -26,17 +26,20 @@ The post argues that pre-LLM enterprise data platforms optimized different surfa
 
 ## Quotes
 
-- **Source extract (verbatim):** Platform-first (example: Palantir): prescribe the unified world model upfront.
-  - **Source location:** Post 1, the "multiple architectural solutions" list, first item.
-- **Source extract (verbatim):** Workflow-first (decision traces): don’t start by rebuilding the world. Instrument the moments where the world changes.
-  - **Source location:** Post 1, the same list, second item.
-- **Source extract (verbatim):** Palantir prescribes the ontology first. Our take is that startups can learn it bottom-up from traces.
-  - **Source location:** Post 1, the "this is still an ontology approach" paragraph.
+> Platform-first (example: Palantir): prescribe the unified world model upfront.
+> --- `kb/sources/.snapshots/palantir-ontology-vs-decision-traces.md` @ `sha256:aae363b3dd9b5892cc898f1896edd7a6ab2674ee3044658f1f3dcf9f065c4fa2` — Post 1, the "multiple architectural solutions" list, first item.
 
-- **Source extract (verbatim):** The missing piece is decision traces: without them, you have state, but not the legible “why”!!
-  - **Source location:** Post 1, closing sentence.
-- **Source extract (verbatim):** Capture decision receipts at commit surfaces: inputs referenced, policy/constraints, exception path, approvals, action taken, outcome.
-  - **Source location:** Post 1, the "multiple architectural solutions" list, second item.
+> Workflow-first (decision traces): don’t start by rebuilding the world. Instrument the moments where the world changes.
+> --- `kb/sources/.snapshots/palantir-ontology-vs-decision-traces.md` @ `sha256:aae363b3dd9b5892cc898f1896edd7a6ab2674ee3044658f1f3dcf9f065c4fa2` — Post 1, the same list, second item.
+
+> Palantir prescribes the ontology first. Our take is that startups can learn it bottom-up from traces.
+> --- `kb/sources/.snapshots/palantir-ontology-vs-decision-traces.md` @ `sha256:aae363b3dd9b5892cc898f1896edd7a6ab2674ee3044658f1f3dcf9f065c4fa2` — Post 1, the "this is still an ontology approach" paragraph.
+
+> The missing piece is decision traces: without them, you have state, but not the legible “why”!!
+> --- `kb/sources/.snapshots/palantir-ontology-vs-decision-traces.md` @ `sha256:aae363b3dd9b5892cc898f1896edd7a6ab2674ee3044658f1f3dcf9f065c4fa2` — Post 1, closing sentence.
+
+> Capture decision receipts at commit surfaces: inputs referenced, policy/constraints, exception path, approvals, action taken, outcome.
+> --- `kb/sources/.snapshots/palantir-ontology-vs-decision-traces.md` @ `sha256:aae363b3dd9b5892cc898f1896edd7a6ab2674ee3044658f1f3dcf9f065c4fa2` — Post 1, the "multiple architectural solutions" list, second item.
 
 ## Connections Found
 

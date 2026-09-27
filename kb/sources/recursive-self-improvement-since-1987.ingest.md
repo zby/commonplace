@@ -24,11 +24,11 @@ Schmidhuber traces recursive self-improvement from 1987 program evolution throug
 
 ## Quotes
 
-- **Source extract (verbatim):** *True RSI* is about encoding the initial learning algorithm in a universal programming language
-  - **Source location:** Introduction, paragraph immediately before Section 1, opening clause; the sentence continues with a neural-network example and code-modification requirements.
+> *True RSI* is about encoding the initial learning algorithm in a universal programming language
+> --- `kb/sources/.snapshots/recursive-self-improvement-since-1987.md` @ `sha256:c9d7553279358d1b6f3d7c40ea38a9cc730db35384b95ef86f5526c3e756c890` — Introduction, paragraph immediately before Section 1, opening clause; the sentence continues with a neural-network example and code-modification requirements.
 
-- **Source extract (verbatim):** recurrent neural network or RNN
-  - **Source location:** Same sentence, parenthetical example immediately after “universal programming language”.
+> recurrent neural network or RNN
+> --- `kb/sources/.snapshots/recursive-self-improvement-since-1987.md` @ `sha256:c9d7553279358d1b6f3d7c40ea38a9cc730db35384b95ef86f5526c3e756c890` — Same sentence, parenthetical example immediately after “universal programming language”.
 
 ## Connections Found
 

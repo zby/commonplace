@@ -23,27 +23,32 @@ The paper unifies Make, Excel, Shake, Bazel, CloudBuild, Buck, and Nix as points
 
 ## Quotes
 
-- **Source extract (verbatim):** The scheduler (which decides which tasks to execute and in what order) can be cleanly separated from the rebuilder (which decides whether a key needs to be rebuilt).
-  - **Source location:** §4, “Build Systems à la Carte,” opening paragraph
-- **Source extract (verbatim):** Shake stores the dependency graph discovered in the previous build, annotated with file content hashes for efficient checking of file changes.
-  - **Source location:** §2.5, “Summary,” persistent-build-information list
-- **Source extract (verbatim):** Crucially, the archive will only be rebuilt if one of the dependencies (static or dynamic) has changed.
-  - **Source location:** §2.3, “Shake: Dynamic Dependencies with No Remorse,” release-archive example
+> The scheduler (which decides which tasks to execute and in what order) can be cleanly separated from the rebuilder (which decides whether a key needs to be rebuilt).
+> --- `kb/sources/.snapshots/build-systems-a-la-carte.md` @ `sha256:909b0b8f5fd6ba38f2c491d92d981870e00ee5c5f21a2b4cd8fcb089e68ab921` — §4, “Build Systems à la Carte,” opening paragraph
 
-- **Source extract (verbatim):** We identify two key design choices that are typically deeply wired into any build system: *the order in which tasks are built* (§4.1) and *whether or not a task is (re-)built* (§4.2). These choices turn out to be orthogonal, which leads us to a new classification of the design space (§4.4).
-  - **Source location:** §1, “Introduction,” contribution list
-- **Source extract (verbatim):** With this classification, the paper tabulates 12 possible build systems (scheduler × rebuilder), 8 of which are inhabited by existing build systems. Of the remaining 4 spots, all result in workable build systems.
-  - **Source location:** §4, Table 2 discussion
-- **Source extract (verbatim):** These two abstractions are the key to modularity: *we can combine any scheduler with any rebuilder, and obtain a correct build system.*
-  - **Source location:** §5, “Build Systems, Concretely,” scheduler and rebuilder composition
+> Shake stores the dependency graph discovered in the previous build, annotated with file content hashes for efficient checking of file changes.
+> --- `kb/sources/.snapshots/build-systems-a-la-carte.md` @ `sha256:909b0b8f5fd6ba38f2c491d92d981870e00ee5c5f21a2b4cd8fcb089e68ab921` — §2.5, “Summary,” persistent-build-information list
 
-- **Source extract (verbatim):** Most build systems only track changes of inputs and intermediate results, but Excel also tracks changes in the tasks themselves — if a formula is modified, Excel will recompute it and propagate the changes. Self-tracking is uncommon in software build systems, where one often needs to manually initiate a full rebuild even if just a single task has changed.
-  - **Source location:** §2.2, “Excel: Dynamic Dependencies at the Cost of Minimality,” self-tracking discussion
+> Crucially, the archive will only be rebuilt if one of the dependencies (static or dynamic) has changed.
+> --- `kb/sources/.snapshots/build-systems-a-la-carte.md` @ `sha256:909b0b8f5fd6ba38f2c491d92d981870e00ee5c5f21a2b4cd8fcb089e68ab921` — §2.3, “Shake: Dynamic Dependencies with No Remorse,” release-archive example
 
-- **Source extract (verbatim):** The authors have investigated multiple build systems, showing how their properties are consequences of two implementation choices: what order you build in and how you decide whether to rebuild. By first decomposing the pieces, they show how to recompose the pieces to find new points in the design space. In particular, a simple recombination leads to a design for a monadic suspending cloud build system. Armed with that blueprint they hope to actually implement such a system as future work.
-  - **Source location:** §8, “Conclusions”
-- **Source extract (verbatim):** | Verifying traces | Ninja | – | Shake |
-  - **Source location:** §4, Table 2, “Build systems à la carte”
+> We identify two key design choices that are typically deeply wired into any build system: *the order in which tasks are built* (§4.1) and *whether or not a task is (re-)built* (§4.2). These choices turn out to be orthogonal, which leads us to a new classification of the design space (§4.4).
+> --- `kb/sources/.snapshots/build-systems-a-la-carte.md` @ `sha256:909b0b8f5fd6ba38f2c491d92d981870e00ee5c5f21a2b4cd8fcb089e68ab921` — §1, “Introduction,” contribution list
+
+> With this classification, the paper tabulates 12 possible build systems (scheduler × rebuilder), 8 of which are inhabited by existing build systems. Of the remaining 4 spots, all result in workable build systems.
+> --- `kb/sources/.snapshots/build-systems-a-la-carte.md` @ `sha256:909b0b8f5fd6ba38f2c491d92d981870e00ee5c5f21a2b4cd8fcb089e68ab921` — §4, Table 2 discussion
+
+> These two abstractions are the key to modularity: *we can combine any scheduler with any rebuilder, and obtain a correct build system.*
+> --- `kb/sources/.snapshots/build-systems-a-la-carte.md` @ `sha256:909b0b8f5fd6ba38f2c491d92d981870e00ee5c5f21a2b4cd8fcb089e68ab921` — §5, “Build Systems, Concretely,” scheduler and rebuilder composition
+
+> Most build systems only track changes of inputs and intermediate results, but Excel also tracks changes in the tasks themselves — if a formula is modified, Excel will recompute it and propagate the changes. Self-tracking is uncommon in software build systems, where one often needs to manually initiate a full rebuild even if just a single task has changed.
+> --- `kb/sources/.snapshots/build-systems-a-la-carte.md` @ `sha256:909b0b8f5fd6ba38f2c491d92d981870e00ee5c5f21a2b4cd8fcb089e68ab921` — §2.2, “Excel: Dynamic Dependencies at the Cost of Minimality,” self-tracking discussion
+
+> The authors have investigated multiple build systems, showing how their properties are consequences of two implementation choices: what order you build in and how you decide whether to rebuild. By first decomposing the pieces, they show how to recompose the pieces to find new points in the design space. In particular, a simple recombination leads to a design for a monadic suspending cloud build system. Armed with that blueprint they hope to actually implement such a system as future work.
+> --- `kb/sources/.snapshots/build-systems-a-la-carte.md` @ `sha256:909b0b8f5fd6ba38f2c491d92d981870e00ee5c5f21a2b4cd8fcb089e68ab921` — §8, “Conclusions”
+
+> | Verifying traces | Ninja | – | Shake |
+> --- `kb/sources/.snapshots/build-systems-a-la-carte.md` @ `sha256:909b0b8f5fd6ba38f2c491d92d981870e00ee5c5f21a2b4cd8fcb089e68ab921` — §4, Table 2, “Build systems à la carte”
 
 ## Connections Found
 

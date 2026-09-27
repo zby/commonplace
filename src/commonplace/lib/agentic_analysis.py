@@ -12,6 +12,12 @@ from typing import Any
 from urllib.parse import unquote, urlsplit
 
 from commonplace.lib.note_parser import ParsedDocument, parse_document
+from commonplace.lib.quote_matching import (
+    git_citation_path,
+    match_quote,
+    parse_blockquotes,
+    parse_line_ranges,
+)
 
 AGENTIC_ANALYSIS_RUN_TYPE = "types/agentic-system-analysis-run-state.md"
 AGENTIC_ANALYSIS_RESULT_TYPE = "types/agentic-system-analysis-result.md"
@@ -23,12 +29,6 @@ _LOCAL_SOURCE_ANCHOR_RE = re.compile(
 )
 _GITHUB_URL_RE = re.compile(
     r"https?://github\.com/[^\s<>()`\"']+", re.IGNORECASE
-)
-_QUOTE_CITE_ATTR_RE = re.compile(r"^\s*>\s*---\s*(?P<attribution>.*\S)?\s*$")
-_LOCAL_QUOTE_SOURCE_RE = re.compile(
-    r"`(?P<path>[A-Za-z0-9._/-]+\.[A-Za-z0-9._-]+)"
-    r"(?::(?P<ranges>[0-9]+(?:-[0-9]+)?(?:,[0-9]+(?:-[0-9]+)?)*)?)?`"
-    r"\s*@\s*`(?P<revision>[^`]+)`"
 )
 
 
@@ -411,15 +411,6 @@ def _git_blob_lines(
     return len(content.splitlines()), None
 
 
-def _parse_line_ranges(value: str) -> tuple[tuple[int, int], ...]:
-    ranges: list[tuple[int, int]] = []
-    for item in value.split(","):
-        start_text, separator, end_text = item.partition("-")
-        start = int(start_text)
-        end = int(end_text) if separator else start
-        ranges.append((start, end))
-    return tuple(ranges)
-
 
 def _verify_source_anchors(
     content: str, *, source_root: Path, source_identity: str, source_revision: str
@@ -429,7 +420,7 @@ def _verify_source_anchors(
     anchors: dict[tuple[str, tuple[tuple[int, int], ...]], set[str]] = {}
 
     for match in _LOCAL_SOURCE_ANCHOR_RE.finditer(content):
-        key = (match.group("path"), _parse_line_ranges(match.group("ranges")))
+        key = (match.group("path"), parse_line_ranges(match.group("ranges")))
         anchors.setdefault(key, set()).add("local")
     for match in _GITHUB_URL_RE.finditer(content):
         url = match.group().rstrip(".,;")
@@ -498,87 +489,13 @@ def _verify_source_anchors(
     return passes, failures
 
 
-def _quote_citations(content: str) -> tuple[tuple[int, str, str], ...]:
-    """Return attribution-line number, quote body, and attribution."""
-    lines = content.splitlines()
-    citations: list[tuple[int, str, str]] = []
-    for index, line in enumerate(lines):
-        match = _QUOTE_CITE_ATTR_RE.fullmatch(line)
-        if match is None:
-            continue
-        quote_lines: list[str] = []
-        cursor = index - 1
-        while cursor >= 0 and re.match(r"^\s*>", lines[cursor]):
-            if _QUOTE_CITE_ATTR_RE.fullmatch(lines[cursor]):
-                break
-            quote_lines.append(re.sub(r"^\s*> ?", "", lines[cursor], count=1))
-            cursor -= 1
-        citations.append(
-            (
-                index + 1,
-                "\n".join(reversed(quote_lines)).strip(),
-                (match.group("attribution") or "").strip(),
-            )
-        )
-    return tuple(citations)
-
-
-def _normalized_whitespace(value: str) -> str:
-    return " ".join(value.split())
-
-
-def _github_quote_source(
-    attribution: str, *, source_identity: str, source_revision: str
-) -> tuple[str | None, str | None]:
-    match = _GITHUB_URL_RE.search(attribution)
-    if match is None:
-        return None, None
-    url = match.group().rstrip(".,;")
-    parsed = urlsplit(url)
-    parts = parsed.path.split("/")
-    if len(parts) < 6 or parts[3] != "blob" or not parts[5]:
-        return None, f"incomplete GitHub blob path: {url}"
-    repository = f"https://github.com/{parts[1]}/{parts[2]}"
-    expected_repository = source_identity.rstrip("/").removesuffix(".git")
-    if repository.casefold() != expected_repository.casefold():
-        return None, (
-            f"GitHub attribution uses repository {repository}, "
-            f"expected {source_identity}"
-        )
-    revision = parts[4]
-    if revision != source_revision:
-        return None, (
-            f"GitHub attribution uses revision {revision}, "
-            f"expected {source_revision}"
-        )
-    return unquote("/".join(parts[5:])), None
-
-
-def _local_quote_source(
-    attribution: str, *, source_revision: str
-) -> tuple[str | None, str | None]:
-    match = _LOCAL_QUOTE_SOURCE_RE.search(attribution)
-    if match is None:
-        return None, (
-            "expected a commit-pinned GitHub blob URL or "
-            "`commit-relative/path` @ `full-commit`"
-        )
-    revision = match.group("revision")
-    if revision != source_revision:
-        return None, (
-            f"local attribution uses revision {revision}, "
-            f"expected {source_revision}"
-        )
-    return match.group("path"), None
-
-
 def _verify_quote_anchors(
     content: str, *, source: SourceIdentity
 ) -> tuple[list[str], list[str]]:
     """Resolve quote-anchored citations against one frozen source."""
     passes: list[str] = []
     failures: list[str] = []
-    citations = _quote_citations(content)
+    citations = parse_blockquotes(content)
     if not citations:
         return passes, failures
 
@@ -598,43 +515,47 @@ def _verify_quote_anchors(
         except (OSError, UnicodeError) as exc:
             capture_error = f"cannot read frozen capture as UTF-8 text: {exc}"
 
-    for line_number, quote, attribution in citations:
-        label = f"quote-anchored citation at output line {line_number}"
-        if not quote:
+    for citation in citations:
+        label = f"quote-anchored citation at output line {citation.line}"
+        if not citation.quote.strip():
             failures.append(f"{label}: quote body is empty")
             continue
-        if not attribution:
-            failures.append(f"{label}: attribution is empty")
+        if citation.error:
+            failures.append(f"{label}: source error: {citation.error}")
             continue
-
         if source.kind == "capture":
             source_text, error = capture_text, capture_error
             location = f"frozen capture {source.revision}"
+            if citation.source and citation.source.startswith(("http://", "https://")):
+                if citation.ranges:
+                    error = "a blob line range cannot address the full capture; cite a capture range"
+            elif citation.version is not None:
+                if citation.version != f"sha256:{source.expected_sha256}":
+                    error = "attribution checksum does not match frozen capture"
+                elif Path(citation.source or "").as_posix() != source.path.as_posix() and not source.path.as_posix().endswith("/" + (citation.source or "")):
+                    error = "attribution path does not identify frozen capture"
         else:
-            source_path, error = _github_quote_source(
-                attribution,
-                source_identity=source.identity,
-                source_revision=source.revision,
-            )
-            if source_path is None and error is None:
-                source_path, error = _local_quote_source(
-                    attribution, source_revision=source.revision
-                )
-            if error is not None or source_path is None:
-                failures.append(f"{label}: {error}")
+            try:
+                source_path, repository = git_citation_path(citation)
+            except ValueError as exc:
+                failures.append(f"{label}: source error: {exc}")
+                continue
+            if repository and repository.casefold() != source.identity.rstrip("/").removesuffix(".git").casefold():
+                failures.append(f"{label}: source error: attribution uses repository {repository}, expected {source.identity}")
+                continue
+            if citation.version != source.revision:
+                failures.append(f"{label}: source error: attribution uses revision {citation.version}, expected {source.revision}")
                 continue
             source_text, error = _git_blob_text(
-                source_root=source.path,
-                revision=source.revision,
-                source_path=source_path,
+                source_root=source.path, revision=source.revision, source_path=source_path,
             )
             location = f"{source_path} at the recorded commit"
-
         if error is not None or source_text is None:
-            failures.append(f"{label}: {error}")
+            failures.append(f"{label}: source error: {error}")
             continue
-        if _normalized_whitespace(quote) not in _normalized_whitespace(source_text):
-            failures.append(f"{label}: quote does not occur in {location}")
+        matched = match_quote(citation.quote, source_text, kind="code", ranges=citation.ranges)
+        if not matched.matched:
+            failures.append(f"{label}: {matched.error} ({location})")
             continue
         passes.append(f"{label}: quote resolves in {location}")
     return passes, failures

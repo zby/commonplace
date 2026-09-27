@@ -53,11 +53,12 @@ from commonplace.lib.project_paths import (
     iter_validation_markdown_files,
     kb_root,
 )
+from commonplace.lib.quote_matching import Normalization, match_quote, parse_blockquotes
 from commonplace.lib.quote_verification import (
     INGEST_QUOTES_HEADING_RE,
     NEXT_H2_RE,
     QuoteResult,
-    normalize_text,
+    ingest_quotes_section,
     verify_content,
 )
 from commonplace.lib.type_resolver import (
@@ -109,7 +110,6 @@ _DEFAULT_SCHEMA_SEVERITY = "fail"
 
 # A quote-anchored citation's attribution line: a blockquote line of the form `> --- ...`.
 # The trailing group is the attribution (source path or link).
-_QUOTE_CITE_ATTR_RE = re.compile(r"^\s*>\s*---\s*(.*\S)?\s*$")
 # A source reference inside an attribution: a markdown link or a code span.
 _SOURCE_REF_RE = re.compile(r"\[[^\]]+\]\([^)]+\)|`[^`]+`")
 
@@ -589,28 +589,22 @@ def validate_quote_citations(results: CheckResults, content: str) -> None:
     source. The source is not retained in the KB, so standing validation only
     confirms that each citation is well-formed and names a source.
     """
-    lines = content.splitlines()
-    found = 0
+    citations = parse_blockquotes(content)
     flagged = 0
-    for index, line in enumerate(lines):
-        match = _QUOTE_CITE_ATTR_RE.match(line)
-        if not match:
-            continue
-        found += 1
-        problems: list[str] = []
-        attribution = (match.group(1) or "").strip()
-        if not _SOURCE_REF_RE.search(attribution):
+    for citation in citations:
+        problems = []
+        if not _SOURCE_REF_RE.search(citation.attribution):
             problems.append("names no source (expected a code-span path or link)")
-        previous = lines[index - 1] if index > 0 else ""
-        if not previous.lstrip().startswith(">") or _QUOTE_CITE_ATTR_RE.match(previous):
+        if not citation.quote.strip():
             problems.append("no quoted text above the attribution")
         if problems:
             flagged += 1
             results.warns.append(
-                "quote-anchored citation: " + "; ".join(problems) + f": {line.strip()}"
+                "quote-anchored citation: " + "; ".join(problems)
+                + f": > --- {citation.attribution}"
             )
-    if found and not flagged:
-        results.passes.append(f"quote-anchored citations: {found} well-formed")
+    if citations and not flagged:
+        results.passes.append(f"quote-anchored citations: {len(citations)} well-formed")
 
 
 def validate_verbatim_quotes(
@@ -639,7 +633,7 @@ def validate_verbatim_quotes(
     for result in mismatches:
         source = result.source.name if result.source else "linked source"
         results.fails.append(
-            f"verbatim quote: not found in {source} (line {result.line}): {result.quote!r}"
+            f"verbatim quote: {result.detail} in {source} (line {result.line}): {result.quote!r}"
         )
 
     if resolved:
@@ -654,10 +648,6 @@ def validate_verbatim_quotes(
         )
 
 
-INGEST_QUOTE_RE = re.compile(
-    r"^\s*-\s*\*\*Source extract \(verbatim\):\*\*\s*(?P<text>.+?)\s*$",
-    re.MULTILINE,
-)
 EMPTY_INGEST_QUOTES_SENTENCE = "No source quotes have been retained yet."
 SNAPSHOT_REQUIRED_MARKER = "(snapshot required)"
 SNAPSHOT_SHA256_RE = re.compile(
@@ -825,81 +815,85 @@ def validate_ingest_snapshot_pairing(
         )
 
 
+def ingest_normalization(content: str) -> Normalization:
+    """Repository snapshots may contain code even when captured as Markdown."""
+    metadata = frontmatter.parse(content).data
+    source = _http_source_from_content(content)
+    host = urlsplit(source).hostname if source else None
+    return "code" if metadata.get("genre") == "code-repository" or host in {
+        "github.com", "raw.githubusercontent.com", "gist.github.com",
+        "gitlab.com", "bitbucket.org",
+    } else "prose"
+
+
 def validate_ingest_quotes(
-    results: CheckResults,
-    content: str,
-    path: Path,
-    *,
+    results: CheckResults, content: str, path: Path, *,
     snapshots: SnapshotDirectory | None = None,
 ) -> None:
-    """Resolve an ingest's retained quotes against its name-paired snapshot.
+    """Verify attributed extracts when name-paired, checksum-pinned bytes exist.
 
-    A `Source extract (verbatim)` asserts the span occurs in the observation the
-    ingest's `snapshot_sha256` names. That is mechanically decidable whenever the
-    snapshot is present, so leaving it hand-trusted is the state the derived-copy
-    rule forbids — and a measured sweep found five false extracts that the
-    grounding instruction, the ingest skill's append path, and ADR 073 all
-    require to be checked while no code checked any of them.
-
-    The check is *conditional* on retention, because `kb/sources/.snapshots/` is
-    ignored: a fresh clone has the ingest and the checksum but not the bytes.
-    Absent snapshot is silence, not a finding. A checksum that disagrees warns
-    rather than fails, because the local file is then not the recorded
-    observation and the extracts cannot be judged against it either way.
-    ADR 023 settled this split for code-grounded quotes; this is the
-    `kb/sources/` half it named and deferred.
+    Missing bytes remain conditional under ADR 073, but are explicitly reported
+    as unverified, never as a successful quote check. Pairing owns checksum and
+    canonical-source diagnostics independently of the populated Quotes section.
     """
     if not path.name.endswith(".ingest.md"):
-        # Instructions and type specs display the quote template; only a tracked
-        # ingest report asserts one. Warning on the others is the cries-wolf
-        # failure ADR 046 names, and it teaches authors to ignore the check.
         return
-
-    extracts = [m.group("text") for m in INGEST_QUOTE_RE.finditer(content)]
-    if not extracts:
+    section = ingest_quotes_section(content)
+    citations = parse_blockquotes(section)
+    if not citations:
+        if section.strip() and section.strip() != EMPTY_INGEST_QUOTES_SENTENCE:
+            results.fails.append("source quotes: expected attributed blockquotes in Quotes section")
         return
-
+    covered = set()
+    for citation in citations:
+        covered.update(range(citation.line - len(citation.quote.split("\n")) - 1, citation.line))
+    if any(line.strip() and index not in covered for index, line in enumerate(section.splitlines())):
+        results.fails.append("source quotes: Quotes contains text outside attributed extracts")
     outside_quotes = _content_outside_ingest_quotes(content)
     if EMPTY_INGEST_QUOTES_SENTENCE in outside_quotes:
-        results.fails.append(
-            "source quotes: populated Quotes section conflicts with "
-            f"{EMPTY_INGEST_QUOTES_SENTENCE!r} elsewhere in the ingest"
-        )
+        results.fails.append("source quotes: populated Quotes section conflicts with "
+                             f"{EMPTY_INGEST_QUOTES_SENTENCE!r} elsewhere in the ingest")
     if SNAPSHOT_REQUIRED_MARKER in outside_quotes:
-        results.warns.append(
-            "source quotes: populated Quotes section coexists with "
-            f"{SNAPSHOT_REQUIRED_MARKER!r}; verify the marker still names a claim "
-            "that needs broader snapshot context"
-        )
-
+        results.warns.append("source quotes: populated Quotes section coexists with "
+                            f"{SNAPSHOT_REQUIRED_MARKER!r}; verify the marker still names a claim "
+                            "that needs broader snapshot context")
     recorded = SNAPSHOT_SHA256_RE.search(content)
     if recorded is None:
+        results.fails.append("source quotes: source error: missing snapshot_sha256")
         return
-
-    # The pairing check owns missing, unreadable, and mismatched snapshot
-    # diagnostics independently of whether Quotes happens to be populated.
     snapshot = _name_paired_snapshot(path)
-    if not snapshot.is_file():
-        return
+    # Attribution paths are repository-relative, as in analysis results. Compare
+    # against the exact name-paired path even when no local snapshot is retained.
+    expected_path = (Path("kb/sources/.snapshots") / snapshot.name).as_posix()
+    valid = []
+    for citation in citations:
+        error = citation.error
+        if not error and citation.source != expected_path:
+            error = f"attribution must name {expected_path}"
+        if not error and citation.version != "sha256:" + recorded["checksum"]:
+            error = "attribution checksum differs from snapshot_sha256"
+        if error:
+            results.fails.append(f"source quote: source error at Quotes line {citation.line}: {error}")
+        else:
+            valid.append(citation)
     if snapshots is None:
         snapshots = SnapshotDirectory(snapshot.parent)
-    if snapshots.read(snapshot).sha256 != recorded.group("checksum"):
+    facts = snapshots.read(snapshot)
+    if facts.sha256 != recorded["checksum"]:
+        results.infos.append("source quotes: source error: pinned snapshot unavailable or checksum differs; extracts unverified")
         return
     try:
         snapshot_text = snapshot.read_text(encoding="utf-8")
-    except OSError:
+    except (OSError, UnicodeError) as exc:
+        results.infos.append(f"source quotes: source error: cannot read pinned snapshot; extracts unverified: {exc}")
         return
-
-    haystack = normalize_text(snapshot_text)
-    missing = [e for e in extracts if normalize_text(e) not in haystack]
-    for extract in missing:
-        results.fails.append(
-            f"source quote: not found in the checksum-verified snapshot: {extract!r}"
-        )
-    if not missing:
-        results.passes.append(
-            f"source quotes: {len(extracts)} resolve against the pinned snapshot"
-        )
+    failures = len(results.fails)
+    for citation in valid:
+        matched = match_quote(citation.quote, snapshot_text, kind=ingest_normalization(content), ranges=citation.ranges)
+        if not matched.matched:
+            results.fails.append(f"source quote: {matched.error} in the checksum-verified snapshot: {citation.quote!r}")
+    if len(valid) == len(citations) and len(results.fails) == failures:
+        results.passes.append(f"source quotes: {len(citations)} resolve against the pinned snapshot")
 
 
 def _linked_md_targets(parsed: ParsedNote) -> set[Path]:
@@ -945,7 +939,6 @@ def _quote_citation_rule(
 def _agentic_evidence_and_references_rule(
     results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
 ) -> None:
-    from commonplace.lib.agentic_analysis import _quote_citations
     from commonplace.lib.agentic_records import record_reference_errors
 
     metadata = parsed.document.frontmatter or {}
@@ -957,7 +950,7 @@ def _agentic_evidence_and_references_rule(
     validate_quote_citations(results, parsed.content)
     disposition = metadata.get("report-status" if is_report else "result-disposition")
     if disposition == "complete" and not any(
-        quote and attribution for _, quote, attribution in _quote_citations(parsed.document.body)
+        citation.quote and citation.attribution for citation in parse_blockquotes(parsed.document.body)
     ):
         results.fails.append(
             "source evidence: complete analysis requires quoted source evidence; "

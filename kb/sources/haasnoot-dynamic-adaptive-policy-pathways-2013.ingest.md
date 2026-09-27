@@ -23,36 +23,39 @@ Dynamic Adaptive Policy Pathways (DAPP) combines Adaptive Policymaking with Adap
 
 ## Quotes
 
-- **Source extract (verbatim):** The seventh step is to improve the robustness of the preferred
-  pathways through contingency planning – in other words, to deﬁne
-  actions to get and keep each of the pathways on track for success.
-  In general, these are actions to anticipate and prepare for one or
-  more preferred pathway (e.g. keep options open), and corrective
-  actions to stay on track in case the future turns out differently than
-  expected. We distinguish three types of contingency actions from
-  Adaptive Policymaking: corrective, defensive, and capitalizing
-  actions, which are associated with a monitoring system and trigger
-  values. The monitoring system speciﬁes what to monitor, and the
-  triggers specify when a contingency action should be activated.
-  - **Source location:** Section 3, “A new approach: dynamic adaptive policy pathways,” step 7, paper p. 490
-- **Source extract (verbatim):** Finally, the actions to be taken immediately are implemented
-  and the monitoring system is established. Then, time starts running,
-  signpost information related to the triggers is collected, and actions
-  are started, altered, stopped, or expanded in response to this
-  information. After implementation of the initial actions, activation of
-  other actions is suspended until a trigger event occurs.
-  - **Source location:** Section 3, implementation-and-monitoring paragraph after step 8, paper p. 490
-- **Source extract (verbatim):** An adaptation tipping
-  point is the point at which a particular action is no longer adequate
-  for meeting the plan’s objectives. A new action is therefore
-  necessary. A trigger speciﬁes the conditions under which a prespeciﬁed action to change the plan is to be taken.
-  - **Source location:** Section 1, paragraph comparing adaptation tipping points and triggers, paper p. 486
-- **Source extract (verbatim):** The moment of an adaptation tipping point (the sell-by date)
-  helps in identifying possible paths. However, most actions cannot
-  be implemented immediately at their sell-by date. For those, we
-  need to include a lead time. The thinking behind triggers helps in
-  identifying required lead times.
-  - **Source location:** Section 5, “Evaluation of the method,” lead-time paragraph, paper p. 495
+> The seventh step is to improve the robustness of the preferred
+>   pathways through contingency planning – in other words, to deﬁne
+>   actions to get and keep each of the pathways on track for success.
+>   In general, these are actions to anticipate and prepare for one or
+>   more preferred pathway (e.g. keep options open), and corrective
+>   actions to stay on track in case the future turns out differently than
+>   expected. We distinguish three types of contingency actions from
+>   Adaptive Policymaking: corrective, defensive, and capitalizing
+>   actions, which are associated with a monitoring system and trigger
+>   values. The monitoring system speciﬁes what to monitor, and the
+>   triggers specify when a contingency action should be activated.
+> --- `kb/sources/.snapshots/haasnoot-dynamic-adaptive-policy-pathways-2013.md` @ `sha256:7aec62ded21d0e6ba30949a1e3c42b204d29f93473aa452bb00cab1b40d08fa0` — Section 3, “A new approach: dynamic adaptive policy pathways,” step 7, paper p. 490
+
+> Finally, the actions to be taken immediately are implemented
+>   and the monitoring system is established. Then, time starts running,
+>   signpost information related to the triggers is collected, and actions
+>   are started, altered, stopped, or expanded in response to this
+>   information. After implementation of the initial actions, activation of
+>   other actions is suspended until a trigger event occurs.
+> --- `kb/sources/.snapshots/haasnoot-dynamic-adaptive-policy-pathways-2013.md` @ `sha256:7aec62ded21d0e6ba30949a1e3c42b204d29f93473aa452bb00cab1b40d08fa0` — Section 3, implementation-and-monitoring paragraph after step 8, paper p. 490
+
+> An adaptation tipping
+>   point is the point at which a particular action is no longer adequate
+>   for meeting the plan’s objectives. A new action is therefore
+>   necessary. A trigger speciﬁes the conditions under which a prespeciﬁed action to change the plan is to be taken.
+> --- `kb/sources/.snapshots/haasnoot-dynamic-adaptive-policy-pathways-2013.md` @ `sha256:7aec62ded21d0e6ba30949a1e3c42b204d29f93473aa452bb00cab1b40d08fa0` — Section 1, paragraph comparing adaptation tipping points and triggers, paper p. 486
+
+> The moment of an adaptation tipping point (the sell-by date)
+>   helps in identifying possible paths. However, most actions cannot
+>   be implemented immediately at their sell-by date. For those, we
+>   need to include a lead time. The thinking behind triggers helps in
+>   identifying required lead times.
+> --- `kb/sources/.snapshots/haasnoot-dynamic-adaptive-policy-pathways-2013.md` @ `sha256:7aec62ded21d0e6ba30949a1e3c42b204d29f93473aa452bb00cab1b40d08fa0` — Section 5, “Evaluation of the method,” lead-time paragraph, paper p. 495
 
 ## Connections Found
 

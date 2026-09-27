@@ -26,16 +26,20 @@ The source argues that agents with many tools hit three walls: context pollution
 
 ## Quotes
 
-- **Source extract (verbatim):** Each ContextProvider wraps one source (e.g. Slack, FileSystem, Drive)
-  - **Source location:** “The missing layer” section.
-- **Source extract (verbatim):** To the calling agent, it exposes exactly two tools: query_<source>(question) for natural-language reads update_<source>(instruction) for natural-language writes
-  - **Source location:** “The missing layer” section, immediately after the one-source description.
-- **Source extract (verbatim):** Behind each tool is a sub-agent scoped to that one source. The sub-agent owns the source's tools, the source's quirks, the lookup-before-write patterns, the pagination weirdness.
-  - **Source location:** “The missing layer” section, provider implementation paragraph.
-- **Source extract (verbatim):** A Slack ContextProvider's sub-agent can itself load a Slack skill
-  - **Source location:** “What about Skills?” section.
-- **Source extract (verbatim):** On Scout's workload, total tokens are roughly flat at low source counts and improve as the source count grows. Wall-clock latency drops at every source count I've measured.
-  - **Source location:** “Surprises and open questions” section.
+> Each ContextProvider wraps one source (e.g. Slack, FileSystem, Drive)
+> --- `kb/sources/.snapshots/context-providers-the-missing-layer-between-agents-and-tools.md` @ `sha256:dd8711d78914d8c36c4cb746bd1906528d5501b4400c4d899922fda3bbf55562` — “The missing layer” section.
+
+> To the calling agent, it exposes exactly two tools: query_<source>(question) for natural-language reads update_<source>(instruction) for natural-language writes
+> --- `kb/sources/.snapshots/context-providers-the-missing-layer-between-agents-and-tools.md` @ `sha256:dd8711d78914d8c36c4cb746bd1906528d5501b4400c4d899922fda3bbf55562` — “The missing layer” section, immediately after the one-source description.
+
+> Behind each tool is a sub-agent scoped to that one source. The sub-agent owns the source's tools, the source's quirks, the lookup-before-write patterns, the pagination weirdness.
+> --- `kb/sources/.snapshots/context-providers-the-missing-layer-between-agents-and-tools.md` @ `sha256:dd8711d78914d8c36c4cb746bd1906528d5501b4400c4d899922fda3bbf55562` — “The missing layer” section, provider implementation paragraph.
+
+> A Slack ContextProvider's sub-agent can itself load a Slack skill
+> --- `kb/sources/.snapshots/context-providers-the-missing-layer-between-agents-and-tools.md` @ `sha256:dd8711d78914d8c36c4cb746bd1906528d5501b4400c4d899922fda3bbf55562` — “What about Skills?” section.
+
+> On Scout's workload, total tokens are roughly flat at low source counts and improve as the source count grows. Wall-clock latency drops at every source count I've measured.
+> --- `kb/sources/.snapshots/context-providers-the-missing-layer-between-agents-and-tools.md` @ `sha256:dd8711d78914d8c36c4cb746bd1906528d5501b4400c4d899922fda3bbf55562` — “Surprises and open questions” section.
 
 ## Connections Found
 

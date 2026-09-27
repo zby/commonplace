@@ -125,7 +125,10 @@ unambiguous source identity. Read its complete Quotes section and the
 `semantic/grounding-alignment` gate from the library's review-gate catalog (`../review-gates/`, resolved from this skill's real location).
 
 - When the retained verbatim quotes contain enough source material for the
-  gate to judge the candidate's use, apply the gate directly to that use. Link
+  gate to judge the candidate's use, apply the gate directly to that use.
+  Quote enough that a verbatim passage is unique in its eligible source region;
+  if the citation form supports a range and you give one, the quote must fall
+  wholly inside it. Link
   the ingest without a snapshot marker and keep target-specific transfer
   reasoning in the target. Ignore every ingest section outside Quotes as source
   support.

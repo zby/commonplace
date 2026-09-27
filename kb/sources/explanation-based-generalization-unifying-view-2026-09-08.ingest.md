@@ -25,17 +25,17 @@ Explanation-based generalization (EBG) takes a goal concept, one positive exampl
 
 ## Quotes
 
-- **Source extract (verbatim):** 1. Explain: Construct an explanation in terms of the domain theory that proves how the training example satisfies the goal concept definition. • This explanation must be constructed so that each branch of the explanation structure terminates in an expression that satisfies the operationality criterion. 2. Generalize: Determine a set of sufficient conditions under which the explanation structure holds, stated in terms that satisfy the operationality criterion. • This is accomplished by regressing the goal concept through the explanation structure. The conjunction of the resulting regressed expressions constitutes the desired concept definition.
-  - **Source location:** Section 2.2, “The EBG method,” printed p. 52, steps 1–2.
+> 1. Explain: Construct an explanation in terms of the domain theory that proves how the training example satisfies the goal concept definition. • This explanation must be constructed so that each branch of the explanation structure terminates in an expression that satisfies the operationality criterion. 2. Generalize: Determine a set of sufficient conditions under which the explanation structure holds, stated in terms that satisfy the operationality criterion. • This is accomplished by regressing the goal concept through the explanation structure. The conjunction of the resulting regressed expressions constitutes the desired concept definition.
+> --- `kb/sources/.snapshots/explanation-based-generalization-unifying-view-2026-09-08.md` @ `sha256:8f9e5e4119b6dd58d1213af014e6cd6a5d53b2efb655f73d6b85981b8074951a` — Section 2.2, “The EBG method,” printed p. 52, steps 1–2.
 
-- **Source extract (verbatim):** A final point illustrated by this example is that the final concept definition produced by EBG is typically a specialization of the goal concept rather than a direct reexpression of the concept. This is largely due to the fact that the explanation structure is created for the given training example, and does not explain every possible example of the goal concept.
-  - **Source location:** Section 2.3, printed p. 57, final paragraph.
+> A final point illustrated by this example is that the final concept definition produced by EBG is typically a specialization of the goal concept rather than a direct reexpression of the concept. This is largely due to the fact that the explanation structure is created for the given training example, and does not explain every possible example of the goal concept.
+> --- `kb/sources/.snapshots/explanation-based-generalization-unifying-view-2026-09-08.md` @ `sha256:8f9e5e4119b6dd58d1213af014e6cd6a5d53b2efb655f73d6b85981b8074951a` — Section 2.3, printed p. 57, final paragraph.
 
-- **Source extract (verbatim):** Thus, although the EBG method is restricted to compiling the deductive consequences of its existing domain theory, this kind of learning is often nontrivial (as is the case for learning chess strategies).
-  - **Source location:** Section 4.1, printed p. 68, “EBG as Reformulating/Operationalizing/Deducing from what is already known.”
+> Thus, although the EBG method is restricted to compiling the deductive consequences of its existing domain theory, this kind of learning is often nontrivial (as is the case for learning chess strategies).
+> --- `kb/sources/.snapshots/explanation-based-generalization-unifying-view-2026-09-08.md` @ `sha256:8f9e5e4119b6dd58d1213af014e6cd6a5d53b2efb655f73d6b85981b8074951a` — Section 4.1, printed p. 68, “EBG as Reformulating/Operationalizing/Deducing from what is already known.”
 
-- **Source extract (verbatim):** Thus, a major research issue for explanation-based generalization is to develop methods that utilize imperfect domain theories to guide generalization, as well as methods for improving imperfect theories as learning proceeds.
-  - **Source location:** Section 4.2.1, printed p. 69, opening paragraph.
+> Thus, a major research issue for explanation-based generalization is to develop methods that utilize imperfect domain theories to guide generalization, as well as methods for improving imperfect theories as learning proceeds.
+> --- `kb/sources/.snapshots/explanation-based-generalization-unifying-view-2026-09-08.md` @ `sha256:8f9e5e4119b6dd58d1213af014e6cd6a5d53b2efb655f73d6b85981b8074951a` — Section 4.2.1, printed p. 69, opening paragraph.
 
 ## Connections Found
 

@@ -26,22 +26,29 @@ The thread reports that ICLR's 2026 abstract submissions are approaching 50,000 
 
 ## Quotes
 
-- **Source extract (verbatim):** Yes, probably a lot of AI papers. And yes, it'll probably need AI review at that scale. But @NeurIPSConf just ran into this exact wall, and the results were... interesting.
-  - **Source location:** Post 1 of the thread (status 2101135922666365032, 2026-09-19T02:26:55Z), paragraph 2
-- **Source extract (verbatim):** Based on some blogs that have come out, NeurIPS screened all 969 submissions through an AI detector. Out of those, 42.7% of submissions initially scored in the 90-100% AI-generated range, and 273 papers hit a full 100%.
-  - **Source location:** Post 1 of the thread (status 2101135922666365032, 2026-09-19T02:26:55Z), paragraph 3
-- **Source extract (verbatim):** Resultantly, 178 papers were desk-rejected with no appeal and 123 were told to produce version histories or also be desk-rejected.
-  - **Source location:** Post 1 of the thread (status 2101135922666365032, 2026-09-19T02:26:55Z), paragraph 4
-- **Source extract (verbatim):** There are reports that people's submission numbers are getting real close to 50k. The one that I saw plainly stated was 47647.
-  - **Source location:** Post 1 of the thread (status 2101135922666365032, 2026-09-19T02:26:55Z), paragraph 6
-- **Source extract (verbatim):** Compared to last year, there were 19,525 valid submissions to ICLR, with 779 desk rejected and 5,042 withdrawn. This left 13,763 papers that needed a decision.
-  - **Source location:** Post 1 of the thread (status 2101135922666365032, 2026-09-19T02:26:55Z), paragraph 7
-- **Source extract (verbatim):** To do this, ICLR organized 76,139 reviews from 18,054 reviewers.
-  - **Source location:** Post 1 of the thread (status 2101135922666365032, 2026-09-19T02:26:55Z), paragraph 8
-- **Source extract (verbatim):** At ~50k submissions, ICLR is definitely going to have to use some AI review processes, but can the human-review layer scale as well, or is it something that may end up getting dropped?
-  - **Source location:** Post 1 of the thread (status 2101135922666365032, 2026-09-19T02:26:55Z), paragraph 10
-- **Source extract (verbatim):** This is speculation at this point, and is based solely on the abstract submissions so far, but the final paper deadline is Sept 25th, and it will sure be interesting how this all plays out.
-  - **Source location:** Post 1 of the thread (status 2101135922666365032, 2026-09-19T02:26:55Z), paragraph 11
+> Yes, probably a lot of AI papers. And yes, it'll probably need AI review at that scale. But @NeurIPSConf just ran into this exact wall, and the results were... interesting.
+> --- `kb/sources/.snapshots/seeing-numbers-of-50k-submissions-for-iclr-2101135922666365032.md` @ `sha256:af02e9a84b010ece453b577f38777cc7cf4f8c7b94a1355b53749a7e1513af7e` — Post 1 of the thread (status 2101135922666365032, 2026-09-19T02:26:55Z), paragraph 2
+
+> Based on some blogs that have come out, NeurIPS screened all 969 submissions through an AI detector. Out of those, 42.7% of submissions initially scored in the 90-100% AI-generated range, and 273 papers hit a full 100%.
+> --- `kb/sources/.snapshots/seeing-numbers-of-50k-submissions-for-iclr-2101135922666365032.md` @ `sha256:af02e9a84b010ece453b577f38777cc7cf4f8c7b94a1355b53749a7e1513af7e` — Post 1 of the thread (status 2101135922666365032, 2026-09-19T02:26:55Z), paragraph 3
+
+> Resultantly, 178 papers were desk-rejected with no appeal and 123 were told to produce version histories or also be desk-rejected.
+> --- `kb/sources/.snapshots/seeing-numbers-of-50k-submissions-for-iclr-2101135922666365032.md` @ `sha256:af02e9a84b010ece453b577f38777cc7cf4f8c7b94a1355b53749a7e1513af7e` — Post 1 of the thread (status 2101135922666365032, 2026-09-19T02:26:55Z), paragraph 4
+
+> There are reports that people's submission numbers are getting real close to 50k. The one that I saw plainly stated was 47647.
+> --- `kb/sources/.snapshots/seeing-numbers-of-50k-submissions-for-iclr-2101135922666365032.md` @ `sha256:af02e9a84b010ece453b577f38777cc7cf4f8c7b94a1355b53749a7e1513af7e` — Post 1 of the thread (status 2101135922666365032, 2026-09-19T02:26:55Z), paragraph 6
+
+> Compared to last year, there were 19,525 valid submissions to ICLR, with 779 desk rejected and 5,042 withdrawn. This left 13,763 papers that needed a decision.
+> --- `kb/sources/.snapshots/seeing-numbers-of-50k-submissions-for-iclr-2101135922666365032.md` @ `sha256:af02e9a84b010ece453b577f38777cc7cf4f8c7b94a1355b53749a7e1513af7e` — Post 1 of the thread (status 2101135922666365032, 2026-09-19T02:26:55Z), paragraph 7
+
+> To do this, ICLR organized 76,139 reviews from 18,054 reviewers.
+> --- `kb/sources/.snapshots/seeing-numbers-of-50k-submissions-for-iclr-2101135922666365032.md` @ `sha256:af02e9a84b010ece453b577f38777cc7cf4f8c7b94a1355b53749a7e1513af7e` — Post 1 of the thread (status 2101135922666365032, 2026-09-19T02:26:55Z), paragraph 8
+
+> At ~50k submissions, ICLR is definitely going to have to use some AI review processes, but can the human-review layer scale as well, or is it something that may end up getting dropped?
+> --- `kb/sources/.snapshots/seeing-numbers-of-50k-submissions-for-iclr-2101135922666365032.md` @ `sha256:af02e9a84b010ece453b577f38777cc7cf4f8c7b94a1355b53749a7e1513af7e` — Post 1 of the thread (status 2101135922666365032, 2026-09-19T02:26:55Z), paragraph 10
+
+> This is speculation at this point, and is based solely on the abstract submissions so far, but the final paper deadline is Sept 25th, and it will sure be interesting how this all plays out.
+> --- `kb/sources/.snapshots/seeing-numbers-of-50k-submissions-for-iclr-2101135922666365032.md` @ `sha256:af02e9a84b010ece453b577f38777cc7cf4f8c7b94a1355b53749a7e1513af7e` — Post 1 of the thread (status 2101135922666365032, 2026-09-19T02:26:55Z), paragraph 11
 
 ## Connections Found
 

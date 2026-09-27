@@ -26,14 +26,17 @@ OpenClaw-RL introduces a framework that treats "next-state signals" — user rep
 
 ## Quotes
 
-- **Source extract (verbatim):** This paper introduces OpenClaw-RL, a framework that leverages next-state signals—user replies, tool outputs, terminal feedback, or GUI state changes—as live learning sources for training agents. Rather than discarding this data, the system recovers two types of information: evaluative signals (how well an action performed) converted to scalar rewards via process reward models, and directive signals (how actions should differ) extracted through Hindsight-Guided On-Policy Distillation providing token-level supervision.
-  - **Source location:** Abstract
-- **Source extract (verbatim):** A single policy can learn simultaneously from all these interaction types using an asynchronous, fully decoupled architecture.
-  - **Source location:** “Key Innovation”
-- **Source extract (verbatim):** **Infrastructure:** Four independent asynchronous loops handle policy serving (SGLang), environment management, PRM judging, and training (Megatron) with zero coordination overhead.
-  - **Source location:** “Core Components,” “Infrastructure”
-- **Source extract (verbatim):** The work unifies previously separate training pipelines into one framework where "a model simultaneously personalizes to individual users and improves at long-horizon agentic tasks, trained entirely from interactions it is already having."
-  - **Source location:** “Significance”
+> This paper introduces OpenClaw-RL, a framework that leverages next-state signals—user replies, tool outputs, terminal feedback, or GUI state changes—as live learning sources for training agents. Rather than discarding this data, the system recovers two types of information: evaluative signals (how well an action performed) converted to scalar rewards via process reward models, and directive signals (how actions should differ) extracted through Hindsight-Guided On-Policy Distillation providing token-level supervision.
+> --- `kb/sources/.snapshots/openclaw-rl-train-any-agent-simply-by-talking.md` @ `sha256:1a966f721eb4242f034f4faef772abdd0237092457396e4457f8435b7eeb61af` — Abstract
+
+> A single policy can learn simultaneously from all these interaction types using an asynchronous, fully decoupled architecture.
+> --- `kb/sources/.snapshots/openclaw-rl-train-any-agent-simply-by-talking.md` @ `sha256:1a966f721eb4242f034f4faef772abdd0237092457396e4457f8435b7eeb61af` — “Key Innovation”
+
+> **Infrastructure:** Four independent asynchronous loops handle policy serving (SGLang), environment management, PRM judging, and training (Megatron) with zero coordination overhead.
+> --- `kb/sources/.snapshots/openclaw-rl-train-any-agent-simply-by-talking.md` @ `sha256:1a966f721eb4242f034f4faef772abdd0237092457396e4457f8435b7eeb61af` — “Core Components,” “Infrastructure”
+
+> The work unifies previously separate training pipelines into one framework where "a model simultaneously personalizes to individual users and improves at long-horizon agentic tasks, trained entirely from interactions it is already having."
+> --- `kb/sources/.snapshots/openclaw-rl-train-any-agent-simply-by-talking.md` @ `sha256:1a966f721eb4242f034f4faef772abdd0237092457396e4457f8435b7eeb61af` — “Significance”
 
 ## Connections Found
 

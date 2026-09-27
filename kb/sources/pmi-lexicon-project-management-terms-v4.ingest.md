@@ -27,10 +27,11 @@ The 2024 Version 4.0 lexicon defines project-management vocabulary across predic
 
 ## Quotes
 
-- **Source extract (verbatim):** progressive elaboration. The iterative process of increasing the level of detail in a project management plan as greater amounts of information and more accurate estimates become available.
-  - **Source location:** PMI Lexicon of Project Management Terms, Version 4.0, p. 18, “progressive elaboration” entry
-- **Source extract (verbatim):** rolling wave planning. An iterative planning technique in which the work to be accomplished in the near term is planned in detail, while the work in the future is planned at a higher level.
-  - **Source location:** PMI Lexicon of Project Management Terms, Version 4.0, p. 24, “rolling wave planning” entry
+> progressive elaboration. The iterative process of increasing the level of detail in a project management plan as greater amounts of information and more accurate estimates become available.
+> --- `kb/sources/.snapshots/pmi-lexicon-project-management-terms-v4.md` @ `sha256:f80154ac9ebcb7ece155b00548d53f4cf2854f407a44fff78efbeecb2b07e2f5` — PMI Lexicon of Project Management Terms, Version 4.0, p. 18, “progressive elaboration” entry
+
+> rolling wave planning. An iterative planning technique in which the work to be accomplished in the near term is planned in detail, while the work in the future is planned at a higher level.
+> --- `kb/sources/.snapshots/pmi-lexicon-project-management-terms-v4.md` @ `sha256:f80154ac9ebcb7ece155b00548d53f4cf2854f407a44fff78efbeecb2b07e2f5` — PMI Lexicon of Project Management Terms, Version 4.0, p. 24, “rolling wave planning” entry
 
 ## Connections Found
 

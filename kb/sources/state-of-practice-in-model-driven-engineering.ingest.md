@@ -24,12 +24,14 @@ The study argues that model-driven engineering (MDE) was more widespread in indu
 
 ## Quotes
 
-- **Source extract (verbatim):** Findings suggest that MDE may be more widespread than commonly believed, but developers rarely use it to generate whole systems; rather, they apply it to develop key parts of a system often using domain-specific modeling languages developed specifically for the purpose.
-  - **Source location:** Abstract, manuscript page 1
-- **Source extract (verbatim):** Interview data shows that it is common to develop small domain-specific languages (DSLs) for narrow, well-understood domains.
-  - **Source location:** “MDE Use is Widespread,” manuscript page 2
-- **Source extract (verbatim):** 4. Most Projects Fail at Scale-Up. As noted above, MDE may work best when driven from the ground-up. A natural point, of course, arises when an organization wishes to unite such grassroots efforts and effect organizational change. This is, not surprisingly, where problems start to arise and managers should be careful to allocate appropriate resources during this transition phase.
-  - **Source location:** “Tips of the Trade,” item 4, manuscript page 7
+> Findings suggest that MDE may be more widespread than commonly believed, but developers rarely use it to generate whole systems; rather, they apply it to develop key parts of a system often using domain-specific modeling languages developed specifically for the purpose.
+> --- `kb/sources/.snapshots/state-of-practice-in-model-driven-engineering.md` @ `sha256:e1d25191edfb4a0c39f288e0736917a029a21e0efacbfd818b4bbb017dd3c91f` — Abstract, manuscript page 1
+
+> Interview data shows that it is common to develop small domain-specific languages (DSLs) for narrow, well-understood domains.
+> --- `kb/sources/.snapshots/state-of-practice-in-model-driven-engineering.md` @ `sha256:e1d25191edfb4a0c39f288e0736917a029a21e0efacbfd818b4bbb017dd3c91f` — “MDE Use is Widespread,” manuscript page 2
+
+> 4. Most Projects Fail at Scale-Up. As noted above, MDE may work best when driven from the ground-up. A natural point, of course, arises when an organization wishes to unite such grassroots efforts and effect organizational change. This is, not surprisingly, where problems start to arise and managers should be careful to allocate appropriate resources during this transition phase.
+> --- `kb/sources/.snapshots/state-of-practice-in-model-driven-engineering.md` @ `sha256:e1d25191edfb4a0c39f288e0736917a029a21e0efacbfd818b4bbb017dd3c91f` — “Tips of the Trade,” item 4, manuscript page 7
 
 ## Connections Found
 

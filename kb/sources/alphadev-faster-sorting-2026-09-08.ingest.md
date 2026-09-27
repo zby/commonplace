@@ -26,26 +26,26 @@ AlphaDev turns assembly program construction into a single-player game and train
 
 ## Quotes
 
-- **Source extract (verbatim):** The agent’s primary learning algorithm is an extension of the AlphaZero agent32 and guides a Monte Carlo tree search (MCTS) planning procedure using a deep neural network33,38.
-  - **Source location:** Main text, “DRL for discovering faster algorithms,” p. 259, paragraph beginning “We refer to the agent”.
+> The agent’s primary learning algorithm is an extension of the AlphaZero agent32 and guides a Monte Carlo tree search (MCTS) planning procedure using a deep neural network33,38.
+> --- `kb/sources/.snapshots/alphadev-faster-sorting-2026-09-08.md` @ `sha256:411944cbe26e885662278b45ab118c1eede22f65cc33521737d2a961fd805302` — Main text, “DRL for discovering faster algorithms,” p. 259, paragraph beginning “We refer to the agent”.
 
-- **Source extract (verbatim):** The generated games are then used to update the network’s parameters, enabling the agent to learn.
-  - **Source location:** Main text, “DRL for discovering faster algorithms,” p. 259, same paragraph.
+> The generated games are then used to update the network’s parameters, enabling the agent to learn.
+> --- `kb/sources/.snapshots/alphadev-faster-sorting-2026-09-08.md` @ `sha256:411944cbe26e885662278b45ab118c1eede22f65cc33521737d2a961fd805302` — Main text, “DRL for discovering faster algorithms,” p. 259, same paragraph.
 
-- **Source extract (verbatim):** The latency head is used to directly predict the latency of a given program by using the program’s actual computed latency as a Monte Carlo target for AlphaDev during training.
-  - **Source location:** Main text, “Latency value functions,” p. 259.
+> The latency head is used to directly predict the latency of a given program by using the program’s actual computed latency as a Monte Carlo target for AlphaDev during training.
+> --- `kb/sources/.snapshots/alphadev-faster-sorting-2026-09-08.md` @ `sha256:411944cbe26e885662278b45ab118c1eede22f65cc33521737d2a961fd805302` — Main text, “Latency value functions,” p. 259.
 
-- **Source extract (verbatim):** AlphaDev-S-WS’s buffer is warm started with a correct sorting program (for example, optimal sorting network assembly program) and it edits the program to optimize it further.
-  - **Source location:** Methods, “Investigative studies for AlphaDev variants,” opening paragraph.
+> AlphaDev-S-WS’s buffer is warm started with a correct sorting program (for example, optimal sorting network assembly program) and it edits the program to optimize it further.
+> --- `kb/sources/.snapshots/alphadev-faster-sorting-2026-09-08.md` @ `sha256:411944cbe26e885662278b45ab118c1eede22f65cc33521737d2a961fd805302` — Methods, “Investigative studies for AlphaDev variants,” opening paragraph.
 
-- **Source extract (verbatim):** However, a comparator on wires B and C precedes this operator and therefore input sequences where B ≤ C are guaranteed. This means that it is enough to compute min(A, B) as the first output instead of min(A, B, C) as shown in Table 2a (right).
-  - **Source location:** Main text, “AlphaDev swap move,” p. 261.
+> However, a comparator on wires B and C precedes this operator and therefore input sequences where B ≤ C are guaranteed. This means that it is enough to compute min(A, B) as the first output instead of min(A, B, C) as shown in Table 2a (right).
+> --- `kb/sources/.snapshots/alphadev-faster-sorting-2026-09-08.md` @ `sha256:411944cbe26e885662278b45ab118c1eede22f65cc33521737d2a961fd805302` — Main text, “AlphaDev swap move,” p. 261.
 
-- **Source extract (verbatim):** We reverse engineered the low-level assembly sorting algorithms discovered by AlphaDev for sort 3, sort 4 and sort 5 to C++ and discovered that our sort implementations led to improvements of up to 70% for sequences of a length of five and roughly 1.7% for sequences exceeding 250,000 elements.
-  - **Source location:** Main text, “Libc++ sort patch,” p. 262.
+> We reverse engineered the low-level assembly sorting algorithms discovered by AlphaDev for sort 3, sort 4 and sort 5 to C++ and discovered that our sort implementations led to improvements of up to 70% for sequences of a length of five and roughly 1.7% for sequences exceeding 250,000 elements.
+> --- `kb/sources/.snapshots/alphadev-faster-sorting-2026-09-08.md` @ `sha256:411944cbe26e885662278b45ab118c1eede22f65cc33521737d2a961fd805302` — Main text, “Libc++ sort patch,” p. 262.
 
-- **Source extract (verbatim):** These algorithms were sent for review and have officially been included in the libc++ standard sorting library3.
-  - **Source location:** Main text, “Libc++ sort patch,” p. 262.
+> These algorithms were sent for review and have officially been included in the libc++ standard sorting library3.
+> --- `kb/sources/.snapshots/alphadev-faster-sorting-2026-09-08.md` @ `sha256:411944cbe26e885662278b45ab118c1eede22f65cc33521737d2a961fd805302` — Main text, “Libc++ sort patch,” p. 262.
 
 ## Connections Found
 

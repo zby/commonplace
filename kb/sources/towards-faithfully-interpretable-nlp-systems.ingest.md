@@ -23,12 +23,14 @@ Jacovi and Goldberg argue that explanation quality must separate **plausibility*
 
 ## Quotes
 
-- **Source extract (verbatim):** Our main focus is the _evaluation of the faithfulness_ of an explanation: a faithful interpretation is one that accurately represents the reasoning process behind the model’s prediction.
-  - **Source location:** Introduction.
-- **Source extract (verbatim):** Two particularly notable criteria, each useful for a different purposes, are _plausibility_ and _faithfulness_ . “Plausibility” refers to how convincing the interpretation is to humans, while “faithfulness” refers to how accurately it reflects the true reasoning process of the model (Herman, 2017; Wiegreffe and Pinter, 2019). Naturally, it is possible to satisfy one of these properties without the other.
-  - **Source location:** Section 2, “Faithfulness vs. Plausibility.”
-- **Source extract (verbatim):** Faithfulness evaluation should not involve human-judgement on the quality of interpretation. We note that: (1) humans cannot judge if an interpretation is faithful or not: if they understood the model, interpretation would be unnecessary; (2) for similar reasons, we cannot obtain supervision for this problem, either. Therefore, human judgement should not be involved in evaluation for faithfulness, as human judgement measures plausability.
-  - **Source location:** Section 5, evaluation guidelines; source spelling preserved.
+> Our main focus is the _evaluation of the faithfulness_ of an explanation: a faithful interpretation is one that accurately represents the reasoning process behind the model’s prediction.
+> --- `kb/sources/.snapshots/towards-faithfully-interpretable-nlp-systems.md` @ `sha256:6aa4cd943530f2b94cae51e3aa7e02b42bc30469bf50655a0876b6390ea72cc1` — Introduction.
+
+> Two particularly notable criteria, each useful for a different purposes, are _plausibility_ and _faithfulness_ . “Plausibility” refers to how convincing the interpretation is to humans, while “faithfulness” refers to how accurately it reflects the true reasoning process of the model (Herman, 2017; Wiegreffe and Pinter, 2019). Naturally, it is possible to satisfy one of these properties without the other.
+> --- `kb/sources/.snapshots/towards-faithfully-interpretable-nlp-systems.md` @ `sha256:6aa4cd943530f2b94cae51e3aa7e02b42bc30469bf50655a0876b6390ea72cc1` — Section 2, “Faithfulness vs. Plausibility.”
+
+> Faithfulness evaluation should not involve human-judgement on the quality of interpretation. We note that: (1) humans cannot judge if an interpretation is faithful or not: if they understood the model, interpretation would be unnecessary; (2) for similar reasons, we cannot obtain supervision for this problem, either. Therefore, human judgement should not be involved in evaluation for faithfulness, as human judgement measures plausability.
+> --- `kb/sources/.snapshots/towards-faithfully-interpretable-nlp-systems.md` @ `sha256:6aa4cd943530f2b94cae51e3aa7e02b42bc30469bf50655a0876b6390ea72cc1` — Section 5, evaluation guidelines; source spelling preserved.
 
 ## Connections Found
 

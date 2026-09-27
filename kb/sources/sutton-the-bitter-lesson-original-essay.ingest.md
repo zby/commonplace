@@ -22,10 +22,11 @@ Sutton argues that AI methods built around general search and learning eventuall
 
 ## Quotes
 
-- **Source extract (verbatim):** methods that continue to scale with increased computation
-  - **Source location:** Penultimate paragraph, beginning “One thing that should be learned”, description of general purpose methods.
-- **Source extract (verbatim):** The two methods that seem to scale arbitrarily in this way are search and learning.
-  - **Source location:** Penultimate paragraph, final sentence; “this way” refers to continuing to scale with increased computation.
+> methods that continue to scale with increased computation
+> --- `kb/sources/.snapshots/sutton-the-bitter-lesson-original-essay.md` @ `sha256:9d7a5590d0a9f3061392807fd9591eee4e7489d1abe7fb78d8d7d19d26323e6d` — Penultimate paragraph, beginning “One thing that should be learned”, description of general purpose methods.
+
+> The two methods that seem to scale arbitrarily in this way are search and learning.
+> --- `kb/sources/.snapshots/sutton-the-bitter-lesson-original-essay.md` @ `sha256:9d7a5590d0a9f3061392807fd9591eee4e7489d1abe7fb78d8d7d19d26323e6d` — Penultimate paragraph, final sentence; “this way” refers to continuing to scale with increased computation.
 
 ## Connections Found
 

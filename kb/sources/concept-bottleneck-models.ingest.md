@@ -32,17 +32,20 @@ The paper builds a predictor as `f(g(x))`, where `g` maps the raw input to a vec
 
 ## Quotes
 
-- **Source extract (verbatim):** We revisit the classic idea of first predicting concepts that are provided at training time, and then using these concepts to predict the label. By construction, we can intervene on these concept bottleneck models by editing their predicted concept values and propagating these changes to the final prediction.
-  - **Source location:** Abstract.
-- **Source extract (verbatim):** Interventions replace predicted concept values `ĉ_j` with ground-truth `c_j` and propagate through `f`.
-  - **Source location:** “Test-time intervention.”
+> We revisit the classic idea of first predicting concepts that are provided at training time, and then using these concepts to predict the label. By construction, we can intervene on these concept bottleneck models by editing their predicted concept values and propagating these changes to the final prediction.
+> --- `kb/sources/.snapshots/concept-bottleneck-models.md` @ `sha256:6f2346692b5a758d18c5021b8952475e9164c668c5fcc2da91980c713e8ea4b1` — Abstract.
 
-- **Source extract (verbatim):** The paper reports that bottleneck models achieve both competitive task accuracy and high concept accuracy, with no apparent fundamental tradeoff on these two tasks.
-  - **Source location:** “Accuracy.”
-- **Source extract (verbatim):** Linear `c → y` maps handled interventions notably worse than nonlinear ones even when pre-intervention task and concept accuracies were similar. - When `λ` is too small, joint models learn misaligned concept representations and intervention *increases* error.
-  - **Source location:** “Stated caveats”; list whitespace normalized.
-- **Source extract (verbatim):** Conclusion drawn by the authors: task and concept accuracy alone are insufficient to predict how effective test-time intervention will be.
-  - **Source location:** “Stated caveats,” concluding bullet.
+> Interventions replace predicted concept values `ĉ_j` with ground-truth `c_j` and propagate through `f`.
+> --- `kb/sources/.snapshots/concept-bottleneck-models.md` @ `sha256:6f2346692b5a758d18c5021b8952475e9164c668c5fcc2da91980c713e8ea4b1` — “Test-time intervention.”
+
+> The paper reports that bottleneck models achieve both competitive task accuracy and high concept accuracy, with no apparent fundamental tradeoff on these two tasks.
+> --- `kb/sources/.snapshots/concept-bottleneck-models.md` @ `sha256:6f2346692b5a758d18c5021b8952475e9164c668c5fcc2da91980c713e8ea4b1` — “Accuracy.”
+
+> Linear `c → y` maps handled interventions notably worse than nonlinear ones even when pre-intervention task and concept accuracies were similar. - When `λ` is too small, joint models learn misaligned concept representations and intervention *increases* error.
+> --- `kb/sources/.snapshots/concept-bottleneck-models.md` @ `sha256:6f2346692b5a758d18c5021b8952475e9164c668c5fcc2da91980c713e8ea4b1` — “Stated caveats”; list whitespace normalized.
+
+> Conclusion drawn by the authors: task and concept accuracy alone are insufficient to predict how effective test-time intervention will be.
+> --- `kb/sources/.snapshots/concept-bottleneck-models.md` @ `sha256:6f2346692b5a758d18c5021b8952475e9164c668c5fcc2da91980c713e8ea4b1` — “Stated caveats,” concluding bullet.
 
 ## Connections Found
 

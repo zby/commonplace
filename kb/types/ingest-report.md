@@ -142,12 +142,18 @@ No source quotes have been retained yet.
 Use this shape for every populated item:
 
 ```markdown
-- **Source extract (verbatim):** <exact supporting content>
-  - **Source location:** <human-resolvable locator for that extract>
+> <exact supporting content>
+> --- `kb/sources/.snapshots/<slug>.md` @ `sha256:<snapshot_sha256>` — <optional locator note>
 ```
 
-Use one or more adjacent `Source extract (verbatim)` / `Source location` pairs,
-repeating both when support is non-contiguous. Copy exact snapshot text;
+The attribution must name the exact name-paired snapshot and the ingest
+checksum. An optional `:start-end` range follows the path inside its code span.
+The quote must occur exactly once in the snapshot, or exactly once within
+that range. Supplied ranges must contain the complete quote. Locator notes
+are context, never quoted evidence.
+
+Use one attributed blockquote per contiguous passage. Repeat the whole block
+when support is non-contiguous. Copy exact snapshot text;
 whitespace normalization lets one extract span wrapped lines. Do not put a
 paraphrase, scope judgment, confidence assessment, limitation, or
 target-specific transfer argument in this section.

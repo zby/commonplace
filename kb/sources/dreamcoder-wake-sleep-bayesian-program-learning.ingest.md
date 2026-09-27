@@ -23,12 +23,14 @@ DreamCoder learns to solve inductive programming tasks by growing its own domain
 
 ## Quotes
 
-- **Source extract (verbatim):** The paper presents DreamCoder, a system that learns to solve problems through program writing. The system builds expertise by developing programming languages that express domain-specific concepts alongside neural networks that direct the search for programs within those languages.
-  - **Source location:** Abstract capture, first paragraph.
-- **Source extract (verbatim):** The approach employs a "wake-sleep" learning algorithm that iteratively extends the language with new symbolic abstractions and trains neural networks on both imagined and replayed problems.
-  - **Source location:** Abstract capture, second paragraph.
-- **Source extract (verbatim):** The resulting knowledge representations are compositional, building hierarchically from previously learned concepts. This approach yields interpretable and transferable multi-layered symbolic structures that scale flexibly with accumulated experience.
-  - **Source location:** Abstract capture, final paragraph.
+> The paper presents DreamCoder, a system that learns to solve problems through program writing. The system builds expertise by developing programming languages that express domain-specific concepts alongside neural networks that direct the search for programs within those languages.
+> --- `kb/sources/.snapshots/dreamcoder-wake-sleep-bayesian-program-learning.md` @ `sha256:53db65d35f605205e92a8dea7183acab5d1b370ff7e9902800d3d29ea6612e94` — Abstract capture, first paragraph.
+
+> The approach employs a "wake-sleep" learning algorithm that iteratively extends the language with new symbolic abstractions and trains neural networks on both imagined and replayed problems.
+> --- `kb/sources/.snapshots/dreamcoder-wake-sleep-bayesian-program-learning.md` @ `sha256:53db65d35f605205e92a8dea7183acab5d1b370ff7e9902800d3d29ea6612e94` — Abstract capture, second paragraph.
+
+> The resulting knowledge representations are compositional, building hierarchically from previously learned concepts. This approach yields interpretable and transferable multi-layered symbolic structures that scale flexibly with accumulated experience.
+> --- `kb/sources/.snapshots/dreamcoder-wake-sleep-bayesian-program-learning.md` @ `sha256:53db65d35f605205e92a8dea7183acab5d1b370ff7e9902800d3d29ea6612e94` — Abstract capture, final paragraph.
 
 ## Connections Found
 

@@ -25,11 +25,11 @@ The paper asks how often developers used design models to guide development rath
 
 ## Quotes
 
-- **Source extract (verbatim):** About half of the respondents (48.6%, see Figure 7 and Table 2) never or rarely use design models as a guide for development. Almost 70% of the respon- dents use models in less than 25% of the cases, compared to about 11% that use models more than 75% of the time.
-  - **Source location:** Section 4.2, “Extent of Design Model Use (RQ1)”
+> About half of the respondents (48.6%, see Figure 7 and Table 2) never or rarely use design models as a guide for development. Almost 70% of the respon- dents use models in less than 25% of the cases, compared to about 11% that use models more than 75% of the time.
+> --- `kb/sources/.snapshots/software-design-model-use-in-practice.md` @ `sha256:3b50b9ad7b5cd8db0664dac764e8e8d942f71533760501c91ee26314ca3c41ba` — Section 4.2, “Extent of Design Model Use (RQ1)”
 
-- **Source extract (verbatim):** However, the widespread use of at least basic modeling is a pre-requisite for the spread of model-drive engineering. Based on our survey, this pre-requisite is not being met.
-  - **Source location:** Section 5, “Conclusions”
+> However, the widespread use of at least basic modeling is a pre-requisite for the spread of model-drive engineering. Based on our survey, this pre-requisite is not being met.
+> --- `kb/sources/.snapshots/software-design-model-use-in-practice.md` @ `sha256:3b50b9ad7b5cd8db0664dac764e8e8d942f71533760501c91ee26314ca3c41ba` — Section 5, “Conclusions”
 
 ## Connections Found
 

@@ -23,8 +23,8 @@ The Archive says its digital keyword-register presentation is still being assemb
 
 ## Quotes
 
-- **Source extract (verbatim):** Die von Luhmann angelegten Verzeichnisse erfüllen dezidiert keine Ansprüche auf Vollständigkeit hinsichtlich der Fundstellen der jeweiligen Begriffe, sondern benennen nur die für den jeweils aufgelisteten Begriff einschlägigen Einstiegsstellen in die Sammlung.
-  - **Source location:** “Schlagwortregister,” opening description
+> Die von Luhmann angelegten Verzeichnisse erfüllen dezidiert keine Ansprüche auf Vollständigkeit hinsichtlich der Fundstellen der jeweiligen Begriffe, sondern benennen nur die für den jeweils aufgelisteten Begriff einschlägigen Einstiegsstellen in die Sammlung.
+> --- `kb/sources/.snapshots/luhmann-archive-schlagwortregister.md` @ `sha256:b7ddce114e71695b8330d419beeb36300707ecfeec1d65453c4374a216e44a47` — “Schlagwortregister,” opening description
 
 ## Connections Found
 

@@ -23,12 +23,14 @@ Erlang can replace a module while the system is running, but the runtime does no
 
 ## Quotes
 
-- **Source extract (verbatim):** The code of a module can exist in two variants in a system: _current_ and _old_. When a module is loaded into the system for the first time, the code becomes 'current'. If then a new instance of the module is loaded, the code of the previous instance becomes 'old' and the new instance becomes 'current'.
-  - **Source location:** “Code Replacement,” opening description
-- **Source extract (verbatim):** Both old and current code are valid, and can be evaluated concurrently. Fully qualified function calls always refer to current code. Old code can still be evaluated because of processes lingering in the old code.
-  - **Source location:** “Code Replacement,” current/old execution rules
-- **Source extract (verbatim):** If a third instance of the module is loaded, the code server removes (purges) the old code and any processes lingering in it are terminated. Then the third instance becomes 'current' and the previously current code becomes 'old'.
-  - **Source location:** “Code Replacement,” third-load behavior
+> The code of a module can exist in two variants in a system: _current_ and _old_. When a module is loaded into the system for the first time, the code becomes 'current'. If then a new instance of the module is loaded, the code of the previous instance becomes 'old' and the new instance becomes 'current'.
+> --- `kb/sources/.snapshots/erlang-compilation-and-code-loading.md` @ `sha256:0f6eba3efa03463c61731bdc3ef479939bf9d949bf4e20cf373bcb7ef9d45d87` — “Code Replacement,” opening description
+
+> Both old and current code are valid, and can be evaluated concurrently. Fully qualified function calls always refer to current code. Old code can still be evaluated because of processes lingering in the old code.
+> --- `kb/sources/.snapshots/erlang-compilation-and-code-loading.md` @ `sha256:0f6eba3efa03463c61731bdc3ef479939bf9d949bf4e20cf373bcb7ef9d45d87` — “Code Replacement,” current/old execution rules
+
+> If a third instance of the module is loaded, the code server removes (purges) the old code and any processes lingering in it are terminated. Then the third instance becomes 'current' and the previously current code becomes 'old'.
+> --- `kb/sources/.snapshots/erlang-compilation-and-code-loading.md` @ `sha256:0f6eba3efa03463c61731bdc3ef479939bf9d949bf4e20cf373bcb7ef9d45d87` — “Code Replacement,” third-load behavior
 
 ## Connections Found
 

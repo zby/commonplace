@@ -23,12 +23,14 @@ Wuyts and Ducasse define **symbiotic reflection** as an extension of reflective 
 
 ## Quotes
 
-- **Source extract (verbatim):** New to this approach is that any element of the imple- mentation language can be reasoned about and acted upon (not only the self representation), and that both languages are of different paradigms. Moreover, every language implementer that is faced with the problem of allowing the base language to access the underlying meta-language has to solve the problem of enabling entity transfer between both worlds. We propose a uniform schema, called upping/downing, to this problem that avoid explicit wrapping or typechecking.
-  - **Source location:** Abstract (printed p. 1; PDF p. 1)
-- **Source extract (verbatim):** In symbiotic reﬂection, as the meta-language implements the base language and the base language can reason about and act on the meta-language, both the base language and the meta-language can then act and reason on each other.
-  - **Source location:** §1.2, “Example Analysis” (printed p. 4; PDF p. 4)
-- **Source extract (verbatim):** Enabling the access and manipulation of down level structure (the object- oriented programming language) from the up level (the logic programming lan- guage) in a unified way is possible by following the simple transfer rule: upping a down entity should return an upped entity and downing an upped entity should return a down entity. Applied to SOUL, this rule reads: upping an object should return a term and downing a term should return an object.
-  - **Source location:** §3.2, “The Upping/Downing Schema” (printed p. 7; PDF p. 7)
+> New to this approach is that any element of the imple- mentation language can be reasoned about and acted upon (not only the self representation), and that both languages are of different paradigms. Moreover, every language implementer that is faced with the problem of allowing the base language to access the underlying meta-language has to solve the problem of enabling entity transfer between both worlds. We propose a uniform schema, called upping/downing, to this problem that avoid explicit wrapping or typechecking.
+> --- `kb/sources/.snapshots/wuyts-ducasse-2001-symbiotic-reflection.md` @ `sha256:1de71eb977c22d898ff2db307c6c8e62814ee57b4d05ddea9b2a3b22a57d9a33` — Abstract (printed p. 1; PDF p. 1)
+
+> In symbiotic reﬂection, as the meta-language implements the base language and the base language can reason about and act on the meta-language, both the base language and the meta-language can then act and reason on each other.
+> --- `kb/sources/.snapshots/wuyts-ducasse-2001-symbiotic-reflection.md` @ `sha256:1de71eb977c22d898ff2db307c6c8e62814ee57b4d05ddea9b2a3b22a57d9a33` — §1.2, “Example Analysis” (printed p. 4; PDF p. 4)
+
+> Enabling the access and manipulation of down level structure (the object- oriented programming language) from the up level (the logic programming lan- guage) in a unified way is possible by following the simple transfer rule: upping a down entity should return an upped entity and downing an upped entity should return a down entity. Applied to SOUL, this rule reads: upping an object should return a term and downing a term should return an object.
+> --- `kb/sources/.snapshots/wuyts-ducasse-2001-symbiotic-reflection.md` @ `sha256:1de71eb977c22d898ff2db307c6c8e62814ee57b4d05ddea9b2a3b22a57d9a33` — §3.2, “The Upping/Downing Schema” (printed p. 7; PDF p. 7)
 
 ## Connections Found
 

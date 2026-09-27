@@ -25,29 +25,29 @@ The paper argues that reusable software production should move from manually ada
 
 ## Quotes
 
-- **Source extract (verbatim):** development for reuse is referred to as Domain Engineering.5 Development with reuse, on the other hand, is referred to as Application Engineering.
-  - **Source location:** Section 3, “System Family Approach,” page 3
+> development for reuse is referred to as Domain Engineering.5 Development with reuse, on the other hand, is referred to as Application Engineering.
+> --- `kb/sources/.snapshots/components-and-generative-programming.md` @ `sha256:fb274dd864ed734ff4fbcccd8f5a12245277dd7d54f9da04a4e7a0ca6544e6eb` — Section 3, “System Family Approach,” page 3
 
-- **Source extract (verbatim):** Domain Analysis involves domain scoping and feature modeling. Domain scoping determines which systems and features belong to the domain and which not. This process is driven not only by technical but also marketing and economic aspects (i.e. there is an economic analysis as in the case of any investment) and involves all the stakeholders of the domain. For this reason, the resulting domain is often referred to as a product line. Feature modeling identifies the common and variable features of the domain concepts and the dependencies between the variable features. Refining the semantic contents of the features usually requires several other modeling techniques such as modeling relationships and interactions between objects (e.g. using UML).
-  - **Source location:** Section 3, “System Family Approach,” page 3
+> Domain Analysis involves domain scoping and feature modeling. Domain scoping determines which systems and features belong to the domain and which not. This process is driven not only by technical but also marketing and economic aspects (i.e. there is an economic analysis as in the case of any investment) and involves all the stakeholders of the domain. For this reason, the resulting domain is often referred to as a product line. Feature modeling identifies the common and variable features of the domain concepts and the dependencies between the variable features. Refining the semantic contents of the features usually requires several other modeling techniques such as modeling relationships and interactions between objects (e.g. using UML).
+> --- `kb/sources/.snapshots/components-and-generative-programming.md` @ `sha256:fb274dd864ed734ff4fbcccd8f5a12245277dd7d54f9da04a4e7a0ca6544e6eb` — Section 3, “System Family Approach,” page 3
 
-- **Source extract (verbatim):** The purpose of domain design is to develop a common architecture for the system family.
-  - **Source location:** Section 3, “System Family Approach,” page 3
+> The purpose of domain design is to develop a common architecture for the system family.
+> --- `kb/sources/.snapshots/components-and-generative-programming.md` @ `sha256:fb274dd864ed734ff4fbcccd8f5a12245277dd7d54f9da04a4e7a0ca6544e6eb` — Section 3, “System Family Approach,” page 3
 
-- **Source extract (verbatim):** Domain Implementation: Finally, we need to implement the components, generators, and the reuse infrastructure (dissemination, feedback loop from application engineering, quality control, etc.).
-  - **Source location:** Section 3, “System Family Approach,” page 3
+> Domain Implementation: Finally, we need to implement the components, generators, and the reuse infrastructure (dissemination, feedback loop from application engineering, quality control, etc.).
+> --- `kb/sources/.snapshots/components-and-generative-programming.md` @ `sha256:fb274dd864ed734ff4fbcccd8f5a12245277dd7d54f9da04a4e7a0ca6544e6eb` — Section 3, “System Family Approach,” page 3
 
-- **Source extract (verbatim):** Once we have the architecture, we can implement the components. As stated, a component from a given layer takes a component from the layer below it as a parameter, i.e. we need to implement the components as parameterized components.
-  - **Source location:** Section 5.3, “Implementation Components,” page 9
+> Once we have the architecture, we can implement the components. As stated, a component from a given layer takes a component from the layer below it as a parameter, i.e. we need to implement the components as parameterized components.
+> --- `kb/sources/.snapshots/components-and-generative-programming.md` @ `sha256:fb274dd864ed734ff4fbcccd8f5a12245277dd7d54f9da04a4e7a0ca6544e6eb` — Section 5.3, “Implementation Components,” page 9
 
-- **Source extract (verbatim):** Once we have the “right” components, the next step is to provide means of mapping abstract requirements onto appropriate configurations of components, i.e. automate the component assembly. The key to this automation is the configuration knowledge, which maps between the problem space and the solution space (Fig. 1).
-  - **Source location:** Section 4, “Problem vs. Solution Space and Configuration Knowledge,” page 4
+> Once we have the “right” components, the next step is to provide means of mapping abstract requirements onto appropriate configurations of components, i.e. automate the component assembly. The key to this automation is the configuration knowledge, which maps between the problem space and the solution space (Fig. 1).
+> --- `kb/sources/.snapshots/components-and-generative-programming.md` @ `sha256:fb274dd864ed734ff4fbcccd8f5a12245277dd7d54f9da04a4e7a0ca6544e6eb` — Section 4, “Problem vs. Solution Space and Configuration Knowledge,” page 4
 
-- **Source extract (verbatim):** Finally, the configuration knowledge is implemented using generators. Depending on the complexity of the configuration space, the configuration process may be an algorithmic one (for simple configuration spaces) or search-based (for more complex configuration spaces).
-  - **Source location:** Section 4, “Problem vs. Solution Space and Configuration Knowledge,” page 5
+> Finally, the configuration knowledge is implemented using generators. Depending on the complexity of the configuration space, the configuration process may be an algorithmic one (for simple configuration spaces) or search-based (for more complex configuration spaces).
+> --- `kb/sources/.snapshots/components-and-generative-programming.md` @ `sha256:fb274dd864ed734ff4fbcccd8f5a12245277dd7d54f9da04a4e7a0ca6544e6eb` — Section 4, “Problem vs. Solution Space and Configuration Knowledge,” page 5
 
-- **Source extract (verbatim):** The generator takes a specification of a system or component and returns the finished system or component.
-  - **Source location:** Section 5.6, “The Generator,” page 11
+> The generator takes a specification of a system or component and returns the finished system or component.
+> --- `kb/sources/.snapshots/components-and-generative-programming.md` @ `sha256:fb274dd864ed734ff4fbcccd8f5a12245277dd7d54f9da04a4e7a0ca6544e6eb` — Section 5.6, “The Generator,” page 11
 
 ## Connections Found
 

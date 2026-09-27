@@ -23,21 +23,26 @@ The paper asks whether self-evolving LLM agents actually depend on the experienc
 
 ## Quotes
 
-- **Source extract (verbatim):** Using controlled causal interventions on both raw and condensed forms of experience, we comprehensively evaluate four representative frameworks across 13 LLM backbones and 9 environments.
-  - **Source location:** Abstract.
-- **Source extract (verbatim):** Our analysis uncovers a striking asymmetry: while agents consistently depend on raw experience, they often disregard or misinterpret condensed experience, even when it is the only experience provided.
-  - **Source location:** Abstract.
-- **Source extract (verbatim):** We first show that agents are consistently more faithful to raw experiences than to condensed ones when both are present, exhibiting substantial behavioral changes under raw experience perturbations but not under condensed ones (§[4.1](https://arxiv.org/html/2601.22436v2#S4.SS1 "4.1 Faithfulness under Joint Raw & Condensed Access ‣ 4 Evaluation of Experience Faithfulness ‣ Large Language Model Agents Are Not Always Faithful Self-Evolvers")).
-  - **Source location:** Introduction, summary of RQ1 findings.
-- **Source extract (verbatim):** We further demonstrate that this lack of faithfulness to condensed inputs persists even when raw experience is entirely absent, indicating that the problem is not due to competition or overshadowing (§[4.2](https://arxiv.org/html/2601.22436v2#S4.SS2 "4.2 Faithfulness under Condensed-Only Input ‣ 4 Evaluation of Experience Faithfulness ‣ Large Language Model Agents Are Not Always Faithful Self-Evolvers")).
-  - **Source location:** Introduction, summary of RQ1 findings.
+> Using controlled causal interventions on both raw and condensed forms of experience, we comprehensively evaluate four representative frameworks across 13 LLM backbones and 9 environments.
+> --- `kb/sources/.snapshots/llm-agents-are-not-always-faithful-self-evolvers.md` @ `sha256:b1e4a82c0aaefdfd531d805f1a8ab68e03067a6b0e9150ea3ee29f29ef8ed4c2` — Abstract.
 
-- **Source extract (verbatim):** Empty: Remove all semantic content from retrieved raw experiences, while retaining their formatting cues (e.g., prompts like “Here are two examples of successful trajectories:”). This differs from a simple ablation (w/o raw), which omits the experience section entirely. Shuffle: Randomly shuffle the order of steps within each trajectory, preserving content tokens but disrupting temporal coherence and causal structure. Irrelevant: Replace retrieved trajectories with ones sampled from other unrelated tasks, preserving format and structure but removing topical and semantic relevance.
-  - **Source location:** Section 3.2, "Raw Experience Interventions"
-- **Source extract (verbatim):** Empty: Remove all semantic content from the condensed experience while preserving the formatting cues (e.g., “Here is a distilled insight from past trajectories:” followed by an empty slot). This is distinct from a full ablation (w/o cond), which omits the condensed experience entirely. Corrupt: Randomly alter key components (e.g., distorting action references) to break internal coherence. Irrelevant: Replace the condensed summary with one that is entirely unrelated to the current task goal, using a generic and task-agnostic description. Filler: Replace the entire content of condensed experience with semantically empty placeholder tokens (e.g., special characters such as “%$#&”), preserving surface structure while removing all meaningful information.
-  - **Source location:** Section 3.3, "Condensed Experience Interventions"
-- **Source extract (verbatim):** Faithfulness is determined by whether the agent’s behavior causally changes in response to the perturbed input.
-  - **Source location:** Figure 1 caption
+> Our analysis uncovers a striking asymmetry: while agents consistently depend on raw experience, they often disregard or misinterpret condensed experience, even when it is the only experience provided.
+> --- `kb/sources/.snapshots/llm-agents-are-not-always-faithful-self-evolvers.md` @ `sha256:b1e4a82c0aaefdfd531d805f1a8ab68e03067a6b0e9150ea3ee29f29ef8ed4c2` — Abstract.
+
+> We first show that agents are consistently more faithful to raw experiences than to condensed ones when both are present, exhibiting substantial behavioral changes under raw experience perturbations but not under condensed ones (§[4.1](https://arxiv.org/html/2601.22436v2#S4.SS1 "4.1 Faithfulness under Joint Raw & Condensed Access ‣ 4 Evaluation of Experience Faithfulness ‣ Large Language Model Agents Are Not Always Faithful Self-Evolvers")).
+> --- `kb/sources/.snapshots/llm-agents-are-not-always-faithful-self-evolvers.md` @ `sha256:b1e4a82c0aaefdfd531d805f1a8ab68e03067a6b0e9150ea3ee29f29ef8ed4c2` — Introduction, summary of RQ1 findings.
+
+> We further demonstrate that this lack of faithfulness to condensed inputs persists even when raw experience is entirely absent, indicating that the problem is not due to competition or overshadowing (§[4.2](https://arxiv.org/html/2601.22436v2#S4.SS2 "4.2 Faithfulness under Condensed-Only Input ‣ 4 Evaluation of Experience Faithfulness ‣ Large Language Model Agents Are Not Always Faithful Self-Evolvers")).
+> --- `kb/sources/.snapshots/llm-agents-are-not-always-faithful-self-evolvers.md` @ `sha256:b1e4a82c0aaefdfd531d805f1a8ab68e03067a6b0e9150ea3ee29f29ef8ed4c2` — Introduction, summary of RQ1 findings.
+
+> Empty: Remove all semantic content from retrieved raw experiences, while retaining their formatting cues (e.g., prompts like “Here are two examples of successful trajectories:”). This differs from a simple ablation (w/o raw), which omits the experience section entirely. Shuffle: Randomly shuffle the order of steps within each trajectory, preserving content tokens but disrupting temporal coherence and causal structure. Irrelevant: Replace retrieved trajectories with ones sampled from other unrelated tasks, preserving format and structure but removing topical and semantic relevance.
+> --- `kb/sources/.snapshots/llm-agents-are-not-always-faithful-self-evolvers.md` @ `sha256:b1e4a82c0aaefdfd531d805f1a8ab68e03067a6b0e9150ea3ee29f29ef8ed4c2` — Section 3.2, "Raw Experience Interventions"
+
+> Empty: Remove all semantic content from the condensed experience while preserving the formatting cues (e.g., “Here is a distilled insight from past trajectories:” followed by an empty slot). This is distinct from a full ablation (w/o cond), which omits the condensed experience entirely. Corrupt: Randomly alter key components (e.g., distorting action references) to break internal coherence. Irrelevant: Replace the condensed summary with one that is entirely unrelated to the current task goal, using a generic and task-agnostic description. Filler: Replace the entire content of condensed experience with semantically empty placeholder tokens (e.g., special characters such as “%$#&”), preserving surface structure while removing all meaningful information.
+> --- `kb/sources/.snapshots/llm-agents-are-not-always-faithful-self-evolvers.md` @ `sha256:b1e4a82c0aaefdfd531d805f1a8ab68e03067a6b0e9150ea3ee29f29ef8ed4c2` — Section 3.3, "Condensed Experience Interventions"
+
+> Faithfulness is determined by whether the agent’s behavior causally changes in response to the perturbed input.
+> --- `kb/sources/.snapshots/llm-agents-are-not-always-faithful-self-evolvers.md` @ `sha256:b1e4a82c0aaefdfd531d805f1a8ab68e03067a6b0e9150ea3ee29f29ef8ed4c2` — Figure 1 caption
 
 ## Connections Found
 

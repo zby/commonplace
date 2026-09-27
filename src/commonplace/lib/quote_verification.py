@@ -8,16 +8,16 @@ leaving it hand-trusted is the state the derived-copy rule forbids.
 The checker targets the prose convention used by dialectical/evidential
 collections: a quoted span, a ``verbatim`` marker, and a Markdown link to the
 source, in one paragraph. It discovers quoted spans near a marker, associates
-each with the nearest linked Markdown source, and checks normalized substring
-containment. Unclear pairings are reported as ``unresolved`` rather than
+each with the nearest linked Markdown source, and checks normalized occurrence
+uniqueness. Unclear pairings are reported as ``unresolved`` rather than
 guessed, so parser coverage gaps stay visible instead of passing silently.
 
 Three outcomes per candidate:
 
 ``match``
-    the quote occurs in the linked source
+    the quote occurs exactly once in the linked source
 ``mismatch``
-    the quote does not occur — the ``verbatim`` claim is false
+    the quote is absent or ambiguous in the linked source
 ``unresolved``
     no quote could be confidently paired with the citation
 
@@ -27,14 +27,13 @@ Three outcomes per candidate:
 
 from __future__ import annotations
 
-import html
 import re
-import unicodedata
 from collections.abc import Callable, Iterable, Sequence
 from dataclasses import dataclass
 from pathlib import Path
 
 from commonplace.lib.note_parser import blank_fenced_code_blocks
+from commonplace.lib.quote_matching import Citation, match_quote, parse_blockquotes
 
 LINK_RE = re.compile(r"\[([^]]*)\]\(([^)]+\.md)(?:#[^)]*)?\)")
 VERBATIM_RE = re.compile(r"\bverbatim\b", re.IGNORECASE)
@@ -65,7 +64,7 @@ def ingest_quotes_section(content: str) -> str:
     return content[heading.end() : end]
 
 
-def _source_support_text(source: Path, content: str) -> str:
+def _source_support_text(source: Path, content: str) -> str | list[str]:
     """Return the span of a source that can support a verbatim quotation.
 
     An ingest's own analysis prose is not source support (ADR 073): only the
@@ -74,7 +73,7 @@ def _source_support_text(source: Path, content: str) -> str:
     never carries. Other sources are searched whole.
     """
     if source.name.endswith(".ingest.md"):
-        return ingest_quotes_section(content)
+        return [c.quote for c in parse_blockquotes(ingest_quotes_section(content))]
     return content
 
 
@@ -101,30 +100,6 @@ class _Quote:
     end: int
     text: str
 
-
-def normalize_text(text: str) -> str:
-    """Normalize capture-level typography without weakening word matching."""
-
-    text = html.unescape(unicodedata.normalize("NFKC", text))
-    text = text.translate(
-        str.maketrans(
-            {
-                "‘": "'",
-                "’": "'",
-                "‚": "'",
-                "‛": "'",
-                "“": '"',
-                "”": '"',
-                "„": '"',
-                "‟": '"',
-                "…": "...",
-                "\u00ad": "",
-            }
-        )
-    )
-    # Markdown emphasis is presentation, not part of a quoted source span.
-    text = re.sub(r"(?<!\\)(?:\*\*|__)", "", text)
-    return " ".join(text.split())
 
 
 def _paragraphs(text: str) -> Iterable[tuple[int, str]]:
@@ -276,27 +251,10 @@ def _marker_is_confident(
     return positive_marker(prose[max(0, link.start - 80) : quote.start])
 
 
-def verify_content(
-    content: str,
-    note: Path,
-    *,
-    load_source: Callable[[Path], str] | None = None,
-) -> list[QuoteResult]:
-    """Verify verbatim quotations in already-read note content.
-
-    Code fences are neutralized through the shared parser primitive, so this
-    check and link health agree on what counts as code: a fence *demonstrating*
-    the citation convention is showing it, not asserting it, and scanning one
-    would report a false mismatch against whatever source the example links.
-    """
-    if load_source is None:
-
-        def load_source(path: Path) -> str:
-            return path.read_text(encoding="utf-8")
-
+def parse_prose_citations(content: str) -> list[Citation]:
+    """Pair prose quotations and links without reading or resolving a source."""
     text = blank_fenced_code_blocks(content)
-    results: list[QuoteResult] = []
-
+    citations: list[Citation] = []
     for start_line, paragraph in _paragraphs(text):
         if not VERBATIM_RE.search(paragraph):
             continue
@@ -307,79 +265,57 @@ def verify_content(
         prose = _mask_link_targets(paragraph, links)
         if not VERBATIM_RE.search(prose):
             continue
-
         paired_links: set[_Link] = set()
         for quote in quotes:
             link, ambiguous = _nearest_link(quote, links)
             if link is None or not _marker_is_confident(paragraph, quote, link, prose):
                 continue
             paired_links.add(link)
-            line = start_line + paragraph.count("\n", 0, quote.start)
-            source = (note.parent / link.target).resolve()
-            if ambiguous:
-                results.append(
-                    QuoteResult(
-                        "unresolved",
-                        note,
-                        line,
-                        quote.text,
-                        source,
-                        "quotation is equally close to multiple source links",
-                    )
-                )
-            elif not source.is_file():
-                results.append(
-                    QuoteResult(
-                        "unresolved",
-                        note,
-                        line,
-                        quote.text,
-                        source,
-                        "linked source is missing or is not a file",
-                    )
-                )
-            elif normalize_text(quote.text) in normalize_text(
-                _source_support_text(source, load_source(source))
-            ):
-                results.append(QuoteResult("match", note, line, quote.text, source, ""))
-            else:
-                detail = (
-                    "normalized quotation does not occur in the linked ingest's "
-                    "Quotes section"
-                    if source.name.endswith(".ingest.md")
-                    else "normalized quotation does not occur in linked source"
-                )
-                results.append(
-                    QuoteResult("mismatch", note, line, quote.text, source, detail)
-                )
-
-        # An explicit citation-level marker is a candidate even when quote
-        # extraction fails. Surface that coverage gap instead of silently
-        # treating the paragraph as checked.
+            citations.append(Citation(
+                quote.text, link.target,
+                line=start_line + paragraph.count("\n", 0, quote.start),
+                error="quotation is equally close to multiple source links" if ambiguous else None,
+            ))
         for link in links:
             if link in paired_links:
                 continue
-            citation = next(
-                (
-                    prose[start:end]
-                    for start, end in _citation_ranges(paragraph, [link])
-                    if start <= link.start < end
-                ),
-                "",
-            )
+            citation = next((prose[start:end] for start, end in _citation_ranges(paragraph, [link])
+                             if start <= link.start < end), "")
             if VERBATIM_RE.search(citation) and not NEGATED_VERBATIM_RE.search(citation):
-                line = start_line + paragraph.count("\n", 0, link.start)
-                results.append(
-                    QuoteResult(
-                        "unresolved",
-                        note,
-                        line,
-                        None,
-                        (note.parent / link.target).resolve(),
-                        "verbatim citation has no confidently paired quotation",
-                    )
-                )
+                citations.append(Citation(
+                    "", link.target, line=start_line + paragraph.count("\n", 0, link.start),
+                    error="verbatim citation has no confidently paired quotation",
+                ))
+    return citations
 
+
+def verify_content(
+    content: str, note: Path, *, load_source: Callable[[Path], str] | None = None,
+) -> list[QuoteResult]:
+    """Resolve parsed prose citations against current KB source bytes."""
+    if load_source is None:
+        def load_source(path: Path) -> str:
+            return path.read_text(encoding="utf-8")
+    results = []
+    for citation in parse_prose_citations(content):
+        source = (note.parent / citation.source).resolve() if citation.source else None
+        error = citation.error
+        status = "unresolved"
+        if error is None:
+            if source is None or not source.is_file():
+                error = "source error: linked source is missing or is not a file"
+            else:
+                try:
+                    region = _source_support_text(source, load_source(source))
+                except (OSError, UnicodeError) as exc:
+                    error = f"source error: cannot read linked source: {exc}"
+                else:
+                    matched = match_quote(citation.quote, region, kind="prose")
+                    status = "match" if matched.matched else "mismatch"
+                    error = matched.error
+                    if error and source.name.endswith(".ingest.md"):
+                        error += " (linked ingest's Quotes section)"
+        results.append(QuoteResult(status, note, citation.line, citation.quote or None, source, error or ""))
     return results
 
 

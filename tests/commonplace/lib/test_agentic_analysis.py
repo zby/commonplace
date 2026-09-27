@@ -567,6 +567,11 @@ def test_capture_source_is_byte_verified(tmp_path: Path) -> None:
         ),
         encoding="utf-8",
     )
+    for artifact in (result, state.parent / "memory-report.md"):
+        artifact.write_text(artifact.read_text().replace(
+            f"`README.md` @ `{old_revision}`",
+            f"`{capture.as_posix()}` @ `sha256:{digest(capture)}`",
+        ))
     values["result"]["sha256"] = digest(result)  # type: ignore[index]
     generated = tmp_path / values["generated-review"]["path"]  # type: ignore[index]
     generated.write_text(
@@ -740,7 +745,7 @@ def test_quote_anchor_rejects_a_local_revision_mismatch(tmp_path: Path) -> None:
 
     results = validation.validate_note(state, repo_root=tmp_path)
 
-    assert any("local attribution uses revision" in item for item in results.fails)
+    assert any("attribution uses revision" in item for item in results.fails)
 
 
 def test_operator_handoff_is_rendered_from_complete_state(tmp_path: Path) -> None:
@@ -1384,7 +1389,7 @@ def test_git_source_example_can_initialize_running_state(tmp_path: Path) -> None
     assert validation.validate_note(state, repo_root=tmp_path).fails == []
 
 
-def test_quoted_code_is_searched_in_the_full_pinned_blob(tmp_path: Path) -> None:
+def test_quoted_code_must_occur_inside_the_cited_range(tmp_path: Path) -> None:
     from commonplace.lib.agentic_analysis import SourceIdentity, _verify_quote_anchors
 
     root, _ = git_checkout(tmp_path / "source")
@@ -1394,7 +1399,9 @@ def test_quoted_code_is_searched_in_the_full_pinned_blob(tmp_path: Path) -> None
     identity = SourceIdentity("git", "https://github.com/example/system", revision, root, None)
     quote = f"> rebuild_prompt()\n> --- [operation](https://github.com/example/system/blob/{revision}/operation.py#L1)\n"
     _, errors = _verify_quote_anchors(quote, source=identity)
-    assert errors == []  # L1 is navigation; the text match is elsewhere in the blob.
+    assert any("cited line range" in error for error in errors)
+    _, errors = _verify_quote_anchors(quote.replace("#L1", "#L4"), source=identity)
+    assert errors == []
     source.write_text("rebuild_prompt_WRONG()\n")
     _, errors = _verify_quote_anchors(quote.replace("rebuild_prompt()", "rebuild_prompt_WRONG()"), source=identity)
     assert any("quote does not occur" in error for error in errors)
@@ -1476,3 +1483,35 @@ def test_adjacent_attributed_quotes_are_checked_independently(tmp_path):
     _, errors = _verify_quote_anchors(text.replace("> Frozen source", "> fabricated text"), source=identity)
     assert len(errors) == 1
     assert "quote does not occur" in errors[0]
+
+
+def test_publication_trial_stops_wrong_specialist_range_then_publishes_unranged(
+    tmp_path: Path, monkeypatch,
+):
+    original_checkout = git_checkout
+
+    def two_line_checkout(path):
+        root, _ = original_checkout(path)
+        readme = write(root / "README.md", "# Frozen source\nUnrelated second line.\n")
+        commit_incumbent(root, readme)
+        revision = subprocess.check_output(
+            ["git", "-C", str(root), "rev-parse", "HEAD"], text=True,
+        ).strip()
+        return root, revision
+
+    monkeypatch.setattr(sys.modules[__name__], "git_checkout", two_line_checkout)
+    state, spec, _ = publication_fixture(tmp_path)
+    report = state.parent / "memory-report.md"
+    original = report.read_bytes()
+    revision = frontmatter(state)["source"]["revision"]
+    with report.open("a") as handle:
+        handle.write(f"\n> Frozen source\n> --- `README.md:2` @ `{revision}`\n")
+    with pytest.raises(ValueError, match="cited line range"):
+        agentic_publication.verify_sources(
+            repo_root=tmp_path, run_state_path=state, artifact_path=report,
+        )
+    assert not (tmp_path / spec.generated_destination).exists()
+    report.write_bytes(original)
+    published = publish_publication(spec)
+    assert (tmp_path / published.retained_path).exists()
+    assert frontmatter(state)["run-status"] == "complete"

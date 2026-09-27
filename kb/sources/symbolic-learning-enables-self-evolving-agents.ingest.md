@@ -23,16 +23,20 @@ The paper models an agent pipeline as a network whose editable “weights” are
 
 ## Quotes
 
-- **Source extract (verbatim):** Afterward, we back-propagate the language loss from the last to the first node along the trajectory, resulting in textual analyses and reflections for the symbolic components within each node, we call them language gradients. Finally, we update all symbolic components in each node, as well as the computational graph consisting of the nodes and their connections, according to the language gradients with another carefully designed prompt.
-  - **Source location:** Introduction, framework summary
-- **Source extract (verbatim):** The language loss consists of both natural language comments and a numerical score (also generated via prompting).
-  - **Source location:** "Agent Symbolic Learning Procedure," Language Loss Computation
-- **Source extract (verbatim):** The final step in the framework is to update the prompts and tools in each node and optimize the overall agent pipeline with the help of language gradients. This is accomplished via “symbolic optimizers”. Symbolic optimizers are carefully designed prompt pipelines that can optimize the symbolic weights of an agent. We create three types of symbolic optimizers: PromptOptimizer, ToolOptimizer, and PipelineOptimizer.
-  - **Source location:** "Agent Symbolic Learning Procedure," Language Gradient-based Update
-- **Source extract (verbatim):** We also use a rollback strategy that re-runs the current example after optimization and rolls back to the original agent if the performance evaluated using the language-based loss function drops.
-  - **Source location:** "Agent Symbolic Learning Procedure," update safeguards
-- **Source extract (verbatim):** Agents can also collect training data in the wild and update the LLM backbone via fine-tuning. In this way, all components in the agent can be updated. We leave this for future work.
-  - **Source location:** Section 2.2 footnote
+> Afterward, we back-propagate the language loss from the last to the first node along the trajectory, resulting in textual analyses and reflections for the symbolic components within each node, we call them language gradients. Finally, we update all symbolic components in each node, as well as the computational graph consisting of the nodes and their connections, according to the language gradients with another carefully designed prompt.
+> --- `kb/sources/.snapshots/symbolic-learning-enables-self-evolving-agents.md` @ `sha256:ddf54057f3aa6606917d03cd32af6c1ee83885896d4692d59ae2f114047b3c44` — Introduction, framework summary
+
+> The language loss consists of both natural language comments and a numerical score (also generated via prompting).
+> --- `kb/sources/.snapshots/symbolic-learning-enables-self-evolving-agents.md` @ `sha256:ddf54057f3aa6606917d03cd32af6c1ee83885896d4692d59ae2f114047b3c44` — "Agent Symbolic Learning Procedure," Language Loss Computation
+
+> The final step in the framework is to update the prompts and tools in each node and optimize the overall agent pipeline with the help of language gradients. This is accomplished via “symbolic optimizers”. Symbolic optimizers are carefully designed prompt pipelines that can optimize the symbolic weights of an agent. We create three types of symbolic optimizers: PromptOptimizer, ToolOptimizer, and PipelineOptimizer.
+> --- `kb/sources/.snapshots/symbolic-learning-enables-self-evolving-agents.md` @ `sha256:ddf54057f3aa6606917d03cd32af6c1ee83885896d4692d59ae2f114047b3c44` — "Agent Symbolic Learning Procedure," Language Gradient-based Update
+
+> We also use a rollback strategy that re-runs the current example after optimization and rolls back to the original agent if the performance evaluated using the language-based loss function drops.
+> --- `kb/sources/.snapshots/symbolic-learning-enables-self-evolving-agents.md` @ `sha256:ddf54057f3aa6606917d03cd32af6c1ee83885896d4692d59ae2f114047b3c44` — "Agent Symbolic Learning Procedure," update safeguards
+
+> Agents can also collect training data in the wild and update the LLM backbone via fine-tuning. In this way, all components in the agent can be updated. We leave this for future work.
+> --- `kb/sources/.snapshots/symbolic-learning-enables-self-evolving-agents.md` @ `sha256:ddf54057f3aa6606917d03cd32af6c1ee83885896d4692d59ae2f114047b3c44` — Section 2.2 footnote
 
 ## Connections Found
 

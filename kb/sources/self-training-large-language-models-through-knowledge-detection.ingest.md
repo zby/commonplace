@@ -24,16 +24,20 @@ The paper proposes a self-training pipeline where an LLM generates or receives W
 
 ## Quotes
 
-- **Source extract (verbatim):** This section introduces the details of our selftraining framework, broken down into four sequential steps: Instruction Generation, SFT stage, Preference Labeling and Knowledge Filtering. As a start, we assume access to a knowledge source as the main source of material to perform both training and truthfulness evaluation.
-  - **Source location:** §3, “Self-training” (printed p. 3)
-- **Source extract (verbatim):** We utilize Wikipedia2 as the foundation of our knowledge source given its widespread acceptance and reliability.
-  - **Source location:** §3.1, “Instruction generation” (printed p. 3)
-- **Source extract (verbatim):** This filtering procedure is implemented across each sample in DDPO and involves two stages: (1) consistency filtering and (2) knowledge filtering.
-  - **Source location:** §3.4, “Knowledge Filtering” (printed p. 4)
-- **Source extract (verbatim):** In the first stage, DDPO from step three undergoes a consistency filtering to filter out lowconfidence responses.
-  - **Source location:** §3.4, “Knowledge Filtering” (printed p. 4)
-- **Source extract (verbatim):** The second stage, knowledge filtering, removes samples where the model is considered knowledgeable.
-  - **Source location:** §3.4, “Knowledge Filtering” (printed p. 4)
+> This section introduces the details of our selftraining framework, broken down into four sequential steps: Instruction Generation, SFT stage, Preference Labeling and Knowledge Filtering. As a start, we assume access to a knowledge source as the main source of material to perform both training and truthfulness evaluation.
+> --- `kb/sources/.snapshots/self-training-large-language-models-through-knowledge-detection.md` @ `sha256:918e06e7cf9068daa8797a79e9b241deb68c21071f10c536c589f3a5b99d2d65` — §3, “Self-training” (printed p. 3)
+
+> We utilize Wikipedia2 as the foundation of our knowledge source given its widespread acceptance and reliability.
+> --- `kb/sources/.snapshots/self-training-large-language-models-through-knowledge-detection.md` @ `sha256:918e06e7cf9068daa8797a79e9b241deb68c21071f10c536c589f3a5b99d2d65` — §3.1, “Instruction generation” (printed p. 3)
+
+> This filtering procedure is implemented across each sample in DDPO and involves two stages: (1) consistency filtering and (2) knowledge filtering.
+> --- `kb/sources/.snapshots/self-training-large-language-models-through-knowledge-detection.md` @ `sha256:918e06e7cf9068daa8797a79e9b241deb68c21071f10c536c589f3a5b99d2d65` — §3.4, “Knowledge Filtering” (printed p. 4)
+
+> In the first stage, DDPO from step three undergoes a consistency filtering to filter out lowconfidence responses.
+> --- `kb/sources/.snapshots/self-training-large-language-models-through-knowledge-detection.md` @ `sha256:918e06e7cf9068daa8797a79e9b241deb68c21071f10c536c589f3a5b99d2d65` — §3.4, “Knowledge Filtering” (printed p. 4)
+
+> The second stage, knowledge filtering, removes samples where the model is considered knowledgeable.
+> --- `kb/sources/.snapshots/self-training-large-language-models-through-knowledge-detection.md` @ `sha256:918e06e7cf9068daa8797a79e9b241deb68c21071f10c536c589f3a5b99d2d65` — §3.4, “Knowledge Filtering” (printed p. 4)
 
 ## Connections Found
 

@@ -23,12 +23,14 @@ FALSIFYBENCH adapts the Wason 2-4-6 rule-discovery game into an interactive benc
 
 ## Quotes
 
-- **Source extract (verbatim):** This paper introduces FALSIFYBENCH, an evaluation framework designed to assess hypothesis-driven reasoning in large language models. The framework draws inspiration from the classic Wason 2-4-6 task, where agents discover hidden properties by proposing examples and receiving iterative feedback.
-  - **Source location:** Abstract.
-- **Source extract (verbatim):** Key findings from evaluating 12 LLMs include:
-  - **Source location:** Abstract, result-population lead-in.
-- **Source extract (verbatim):** "The primary driver of success is the capacity for negative testing" — models actively seeking to falsify hypotheses outperform those seeking confirmation
-  - **Source location:** Abstract, second findings bullet.
+> This paper introduces FALSIFYBENCH, an evaluation framework designed to assess hypothesis-driven reasoning in large language models. The framework draws inspiration from the classic Wason 2-4-6 task, where agents discover hidden properties by proposing examples and receiving iterative feedback.
+> --- `kb/sources/.snapshots/falsifybench-inductive-reasoning-rule-discovery-games.md` @ `sha256:c4a1ae71f3071fa60e6c4a9a9c8273b38772851d1487533f2fd78510d608b93b` — Abstract.
+
+> Key findings from evaluating 12 LLMs include:
+> --- `kb/sources/.snapshots/falsifybench-inductive-reasoning-rule-discovery-games.md` @ `sha256:c4a1ae71f3071fa60e6c4a9a9c8273b38772851d1487533f2fd78510d608b93b` — Abstract, result-population lead-in.
+
+> "The primary driver of success is the capacity for negative testing" — models actively seeking to falsify hypotheses outperform those seeking confirmation
+> --- `kb/sources/.snapshots/falsifybench-inductive-reasoning-rule-discovery-games.md` @ `sha256:c4a1ae71f3071fa60e6c4a9a9c8273b38772851d1487533f2fd78510d608b93b` — Abstract, second findings bullet.
 
 ## Connections Found
 

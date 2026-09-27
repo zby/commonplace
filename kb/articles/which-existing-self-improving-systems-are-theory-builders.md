@@ -47,7 +47,7 @@ claims as well as benchmark evaluation.
 
 The paper freezes a learned knowledge bundle and transfers it to unseen tasks;
 a task-conditioned adapter "converts the shared donor asset into a short
-memo" for the task at hand before the solver acts
+memo tailored to the current task." The adapter runs before the solver acts
 ([Knowledge-Centric Self-Improvement](../sources/knowledge-centric-self-improvement-2607.19592.ingest.md),
 verbatim). It reports
 improved zero-shot performance on Polyglot and ARC-AGI-1. This tests

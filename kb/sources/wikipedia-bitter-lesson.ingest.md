@@ -23,10 +23,11 @@ The bitter lesson is Sutton's observation that across AI history, general-purpos
 
 ## Quotes
 
-- **Source extract (verbatim):** The bitter lesson is the observation in artificial intelligence that, in the long run, approaches that scale with available computational power (such as brute-force search or statistical learning from large datasets) tend to outperform ones based on domain-specific understanding because they are better at taking advantage of Moore's law.
-  - **Source location:** Opening paragraph.
-- **Source extract (verbatim):** Sutton concludes that time is better invested in finding simple scalable solutions that can take advantage of Moore's law, rather than introducing ever-more-complex human insights, and calls this the "bitter lesson".
-  - **Source location:** “The Essay.”
+> The bitter lesson is the observation in artificial intelligence that, in the long run, approaches that scale with available computational power (such as brute-force search or statistical learning from large datasets) tend to outperform ones based on domain-specific understanding because they are better at taking advantage of Moore's law.
+> --- `kb/sources/.snapshots/wikipedia-bitter-lesson.md` @ `sha256:8f6cc3cd4a0cb876bc79748d5e48f9a703ecb31f41f182fb8fc3bd04026615dd` — Opening paragraph.
+
+> Sutton concludes that time is better invested in finding simple scalable solutions that can take advantage of Moore's law, rather than introducing ever-more-complex human insights, and calls this the "bitter lesson".
+> --- `kb/sources/.snapshots/wikipedia-bitter-lesson.md` @ `sha256:8f6cc3cd4a0cb876bc79748d5e48f9a703ecb31f41f182fb8fc3bd04026615dd` — “The Essay.”
 
 ## Connections Found
 

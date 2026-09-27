@@ -28,29 +28,29 @@ The paper appears to make its strongest contribution by sharpening the explanato
 
 ## Quotes
 
-- **Source extract (verbatim):** What we mean when we say that linguistic capacities are systematic is that the ability to produce/understand some sentences is intrinsically connected to the ability to produce/understand certain others.
-  - **Source location:** Part 3, “Systematicity of cognitive representation,” manuscript p. 25.
+> What we mean when we say that linguistic capacities are systematic is that the ability to produce/understand some sentences is intrinsically connected to the ability to produce/understand certain others.
+> --- `kb/sources/.snapshots/fodor-pylyshyn-1988-connectionism-cognitive-architecture.md` @ `sha256:028059c1fccb4ef6146dbed5cc1a30ffdc3b24f5ed9d98c114f308a3939d0828` — Part 3, “Systematicity of cognitive representation,” manuscript p. 25.
 
-- **Source extract (verbatim):** But thought is systematic too, so there is a precisely parallel argument from the systematicity of thought to syntactic and semantic structure in mental representations.
-  - **Source location:** Part 3, “Systematicity of cognitive representation,” manuscript p. 26.
+> But thought is systematic too, so there is a precisely parallel argument from the systematicity of thought to syntactic and semantic structure in mental representations.
+> --- `kb/sources/.snapshots/fodor-pylyshyn-1988-connectionism-cognitive-architecture.md` @ `sha256:028059c1fccb4ef6146dbed5cc1a30ffdc3b24f5ed9d98c114f308a3939d0828` — Part 3, “Systematicity of cognitive representation,” manuscript p. 26.
 
-- **Source extract (verbatim):** But, in fact, you need a further assumption, which we’ll call the ‘principle of compositionality’: insofar as a language is systematic, a lexical item must make approximately the same semantic contribution to each expression in which it occurs.
-  - **Source location:** Part 3, “Compositionality of representations,” manuscript p. 28.
+> But, in fact, you need a further assumption, which we’ll call the ‘principle of compositionality’: insofar as a language is systematic, a lexical item must make approximately the same semantic contribution to each expression in which it occurs.
+> --- `kb/sources/.snapshots/fodor-pylyshyn-1988-connectionism-cognitive-architecture.md` @ `sha256:028059c1fccb4ef6146dbed5cc1a30ffdc3b24f5ed9d98c114f308a3939d0828` — Part 3, “Compositionality of representations,” manuscript p. 28.
 
-- **Source extract (verbatim):** From now on, when we speak of ‘Classical’ models, we will have in mind any model that has complex mental representations, as characterized in (1) and structure-sensitive mental processes, as characterized in (2).
-  - **Source location:** Part 2, “The nature of the dispute,” manuscript p. 9.
+> From now on, when we speak of ‘Classical’ models, we will have in mind any model that has complex mental representations, as characterized in (1) and structure-sensitive mental processes, as characterized in (2).
+> --- `kb/sources/.snapshots/fodor-pylyshyn-1988-connectionism-cognitive-architecture.md` @ `sha256:028059c1fccb4ef6146dbed5cc1a30ffdc3b24f5ed9d98c114f308a3939d0828` — Part 2, “The nature of the dispute,” manuscript p. 9.
 
-- **Source extract (verbatim):** Classical machines can be rule implicit with respect to their programs, and the mechanism of their state transitions is entirely subcomputational (i.e. subsymbolic).
-  - **Source location:** Part 4, “Explicitness of rules,” manuscript p. 43.
+> Classical machines can be rule implicit with respect to their programs, and the mechanism of their state transitions is entirely subcomputational (i.e. subsymbolic).
+> --- `kb/sources/.snapshots/fodor-pylyshyn-1988-connectionism-cognitive-architecture.md` @ `sha256:028059c1fccb4ef6146dbed5cc1a30ffdc3b24f5ed9d98c114f308a3939d0828` — Part 4, “Explicitness of rules,” manuscript p. 43.
 
-- **Source extract (verbatim):** Students are taught the notion of a “virtual machine” and shown that some virtual machines can learn, forget, get bored, make mistakes and whatever else one likes, providing one has a theory of the origins of each of the empirical phenomena in question.
-  - **Source location:** Part 4, “Concluding comments: Connectionism as a theory of implementation,” manuscript p. 47.
+> Students are taught the notion of a “virtual machine” and shown that some virtual machines can learn, forget, get bored, make mistakes and whatever else one likes, providing one has a theory of the origins of each of the empirical phenomena in question.
+> --- `kb/sources/.snapshots/fodor-pylyshyn-1988-connectionism-cognitive-architecture.md` @ `sha256:028059c1fccb4ef6146dbed5cc1a30ffdc3b24f5ed9d98c114f308a3939d0828` — Part 4, “Concluding comments: Connectionism as a theory of implementation,” manuscript p. 47.
 
-- **Source extract (verbatim):** We have, in short, no objection at all to networks as potential implementation models, nor do we suppose that any of the arguments we’ve given are incompatible with this proposal.
-  - **Source location:** Part 4, “Concluding comments: Connectionism as a theory of implementation,” manuscript p. 48.
+> We have, in short, no objection at all to networks as potential implementation models, nor do we suppose that any of the arguments we’ve given are incompatible with this proposal.
+> --- `kb/sources/.snapshots/fodor-pylyshyn-1988-connectionism-cognitive-architecture.md` @ `sha256:028059c1fccb4ef6146dbed5cc1a30ffdc3b24f5ed9d98c114f308a3939d0828` — Part 4, “Concluding comments: Connectionism as a theory of implementation,” manuscript p. 48.
 
-- **Source extract (verbatim):** It’s not enough just to stipulate systematicity; one is also required to specify a mechanism that is able to enforce the stipulation.
-  - **Source location:** Part 3, closing discussion after “The systematicity of inference,” manuscript p. 35.
+> It’s not enough just to stipulate systematicity; one is also required to specify a mechanism that is able to enforce the stipulation.
+> --- `kb/sources/.snapshots/fodor-pylyshyn-1988-connectionism-cognitive-architecture.md` @ `sha256:028059c1fccb4ef6146dbed5cc1a30ffdc3b24f5ed9d98c114f308a3939d0828` — Part 3, closing discussion after “The systematicity of inference,” manuscript p. 35.
 
 ## Connections Found
 

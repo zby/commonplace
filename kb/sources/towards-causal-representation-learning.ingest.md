@@ -23,38 +23,50 @@ The paper reviews why causal models matter for machine learning: they add the no
 
 ## Quotes
 
-- **Source extract (verbatim):** Fig. 1. Difference between statistical (left) and causal models (right) on a given set of three variables. While a statistical model specifies a single probability distribution, a causal model represents a set of distributions, one for each possible intervention (indicated with a in the figure).
-  - **Source location:** Figure 1 caption.
-- **Source extract (verbatim):** pute interventional distributions, only the SCMs allow to com-
-  - **Source location:** Section III.D, first captured fragment of the SCM comparison; two-column PDF text.
-- **Source extract (verbatim):** pute counterfactuals. To compute counterfactuals, we need to fix
-  - **Source location:** Section III.D, second captured fragment; next line.
-- **Source extract (verbatim):** the value of the noise variables.
-  - **Source location:** Section III.D, completion of the counterfactual statement.
+> Fig. 1. Difference between statistical (left) and causal models (right) on a given set of three variables. While a statistical model specifies a single probability distribution, a causal model represents a set of distributions, one for each possible intervention (indicated with a in the figure).
+> --- `kb/sources/.snapshots/towards-causal-representation-learning.md` @ `sha256:287307700657e800d31d902abcacfec18e287c0c4f6dfcf3e386e2efdb991f42` — Figure 1 caption.
 
-- **Source extract (verbatim):** Independent Causal Mechanisms (ICM) Principle.
-  - **Source location:** Section IV, named principle.
-- **Source extract (verbatim):** The causal generative process of a system’s variables
-  - **Source location:** Section IV, first captured line of the ICM definition; two-column PDF text.
-- **Source extract (verbatim):** is composed of autonomous modules that do not inform
-  - **Source location:** Section IV, next captured line of the ICM definition.
-- **Source extract (verbatim):** or influence the other mechanisms.
-  - **Source location:** Section IV, final captured line of the ICM definition.
-- **Source extract (verbatim):** models that contain independent mechanisms may help in
-  - **Source location:** Section VI, “Learning Transferable Mechanisms”; first captured line of the transfer proposal.
-- **Source extract (verbatim):** transferring modules across substantially different domains.
-  - **Source location:** Section VI, next captured line.
+> pute interventional distributions, only the SCMs allow to com-
+> --- `kb/sources/.snapshots/towards-causal-representation-learning.md` @ `sha256:287307700657e800d31d902abcacfec18e287c0c4f6dfcf3e386e2efdb991f42` — Section III.D, first captured fragment of the SCM comparison; two-column PDF text.
 
-- **Source extract (verbatim):** assumed that all common causes of measured variables are also
-  - **Source location:** Section II.B, causal-data assumptions; first captured line of the causal-sufficiency statement.
-- **Source extract (verbatim):** observed (causal sufficiency).3
-  - **Source location:** Section II.B, next captured line.
-- **Source extract (verbatim):** causal graph may be unobserved, which can make causal
-  - **Source location:** Section III.C.b, “Latent variables and Confounders”; first captured fragment.
-- **Source extract (verbatim):** inference particularly challenging. Unobserved variables may
-  - **Source location:** Section III.C.b, continuation of the captured fragment.
-- **Source extract (verbatim):** confound two observed variables so that they either appear
-  - **Source location:** Section III.C.b, next captured line.
+> pute counterfactuals. To compute counterfactuals, we need to fix
+> --- `kb/sources/.snapshots/towards-causal-representation-learning.md` @ `sha256:287307700657e800d31d902abcacfec18e287c0c4f6dfcf3e386e2efdb991f42` — Section III.D, second captured fragment; next line.
+
+> the value of the noise variables.
+> --- `kb/sources/.snapshots/towards-causal-representation-learning.md` @ `sha256:287307700657e800d31d902abcacfec18e287c0c4f6dfcf3e386e2efdb991f42` — Section III.D, completion of the counterfactual statement.
+
+> Independent Causal Mechanisms (ICM) Principle.
+> --- `kb/sources/.snapshots/towards-causal-representation-learning.md` @ `sha256:287307700657e800d31d902abcacfec18e287c0c4f6dfcf3e386e2efdb991f42` — Section IV, named principle.
+
+> The causal generative process of a system’s variables
+> --- `kb/sources/.snapshots/towards-causal-representation-learning.md` @ `sha256:287307700657e800d31d902abcacfec18e287c0c4f6dfcf3e386e2efdb991f42` — Section IV, first captured line of the ICM definition; two-column PDF text.
+
+> is composed of autonomous modules that do not inform
+> --- `kb/sources/.snapshots/towards-causal-representation-learning.md` @ `sha256:287307700657e800d31d902abcacfec18e287c0c4f6dfcf3e386e2efdb991f42` — Section IV, next captured line of the ICM definition.
+
+> or influence the other mechanisms.
+> --- `kb/sources/.snapshots/towards-causal-representation-learning.md` @ `sha256:287307700657e800d31d902abcacfec18e287c0c4f6dfcf3e386e2efdb991f42` — Section IV, final captured line of the ICM definition.
+
+> models that contain independent mechanisms may help in
+> --- `kb/sources/.snapshots/towards-causal-representation-learning.md` @ `sha256:287307700657e800d31d902abcacfec18e287c0c4f6dfcf3e386e2efdb991f42` — Section VI, “Learning Transferable Mechanisms”; first captured line of the transfer proposal.
+
+> transferring modules across substantially different domains.
+> --- `kb/sources/.snapshots/towards-causal-representation-learning.md` @ `sha256:287307700657e800d31d902abcacfec18e287c0c4f6dfcf3e386e2efdb991f42` — Section VI, next captured line.
+
+> assumed that all common causes of measured variables are also
+> --- `kb/sources/.snapshots/towards-causal-representation-learning.md` @ `sha256:287307700657e800d31d902abcacfec18e287c0c4f6dfcf3e386e2efdb991f42` — Section II.B, causal-data assumptions; first captured line of the causal-sufficiency statement.
+
+> observed (causal sufficiency).3
+> --- `kb/sources/.snapshots/towards-causal-representation-learning.md` @ `sha256:287307700657e800d31d902abcacfec18e287c0c4f6dfcf3e386e2efdb991f42` — Section II.B, next captured line.
+
+> causal graph may be unobserved, which can make causal
+> --- `kb/sources/.snapshots/towards-causal-representation-learning.md` @ `sha256:287307700657e800d31d902abcacfec18e287c0c4f6dfcf3e386e2efdb991f42` — Section III.C.b, “Latent variables and Confounders”; first captured fragment.
+
+> inference particularly challenging. Unobserved variables may
+> --- `kb/sources/.snapshots/towards-causal-representation-learning.md` @ `sha256:287307700657e800d31d902abcacfec18e287c0c4f6dfcf3e386e2efdb991f42` — Section III.C.b, continuation of the captured fragment.
+
+> confound two observed variables so that they either appear
+> --- `kb/sources/.snapshots/towards-causal-representation-learning.md` @ `sha256:287307700657e800d31d902abcacfec18e287c0c4f6dfcf3e386e2efdb991f42` — Section III.C.b, next captured line.
 
 ## Connections Found
 

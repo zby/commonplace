@@ -52,8 +52,8 @@ routes:
 
 - When the ingest link text does not contain the exact marker `(snapshot
   required)`, read only the ingest's `## Quotes` section as source support.
-  Its `Source extract (verbatim)` fields may be combined, and their `Source
-  location` fields identify context, but no paraphrase or analysis elsewhere in
+  Its blockquote bodies may be combined, and their attributions identify
+  context, but no paraphrase or analysis elsewhere in
   the ingest supplies support. If the retained extracts do not contain enough
   source material to judge the note's use, return FAIL. Do not silently fall
   back to a local snapshot.

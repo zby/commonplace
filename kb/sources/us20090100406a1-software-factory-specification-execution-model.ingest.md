@@ -24,26 +24,26 @@ The application presents a two-level model for product-family development. A met
 
 ## Quotes
 
-- **Source extract (verbatim):** The factory schema and the editor(s), task template(s) and asset(s) described collectively form a “software factory’, or simply a “factory”
-  - **Source location:** Paragraph 0006, PDF page 2
+> The factory schema and the editor(s), task template(s) and asset(s) described collectively form a “software factory’, or simply a “factory”
+> --- `kb/sources/.snapshots/us20090100406a1-software-factory-specification-execution-model.md` @ `sha256:9c9456c6461a058028741a7353c47d671a5c93809fd4b5c12f70d218159183b7` — Paragraph 0006, PDF page 2
 
-- **Source extract (verbatim):** Such a model can be defined, for example, by a factory developer. In one implementation, the model and the editor(s), task template(s) and asset(s) defined can be collec tively employed in an interactive development environment by a development team to produce a specific type of product (e.g., client application, mobile client, web service(s), etc.).
-  - **Source location:** Paragraph 0021, PDF page 3
+> Such a model can be defined, for example, by a factory developer. In one implementation, the model and the editor(s), task template(s) and asset(s) defined can be collec tively employed in an interactive development environment by a development team to produce a specific type of product (e.g., client application, mobile client, web service(s), etc.).
+> --- `kb/sources/.snapshots/us20090100406a1-software-factory-specification-execution-model.md` @ `sha256:9c9456c6461a058028741a7353c47d671a5c93809fd4b5c12f70d218159183b7` — Paragraph 0021, PDF page 3
 
-- **Source extract (verbatim):** The factory schema 130 can be employed in an interactive development environment, along with the editor (S), task template(s) and asset(s) described, to support the specification, development, deployment and maintenance of a product (e.g., client application, mobile client, web service (s), etc.). The factory schema 130 and the editor(s), task template(s) and asset(s) described collectively form a “soft ware factory’, or simply a “factory’, that can be employed to improve the productivity of software development team(s) by enabling systematic reuse of Software assets that can be applied to produce a wide range of variants of a specific type of software system by exploiting well-defined variability points.
-  - **Source location:** Paragraph 0024, PDF page 3
+> The factory schema 130 can be employed in an interactive development environment, along with the editor (S), task template(s) and asset(s) described, to support the specification, development, deployment and maintenance of a product (e.g., client application, mobile client, web service (s), etc.). The factory schema 130 and the editor(s), task template(s) and asset(s) described collectively form a “soft ware factory’, or simply a “factory’, that can be employed to improve the productivity of software development team(s) by enabling systematic reuse of Software assets that can be applied to produce a wide range of variants of a specific type of software system by exploiting well-defined variability points.
+> --- `kb/sources/.snapshots/us20090100406a1-software-factory-specification-execution-model.md` @ `sha256:9c9456c6461a058028741a7353c47d671a5c93809fd4b5c12f70d218159183b7` — Paragraph 0024, PDF page 3
 
-- **Source extract (verbatim):** 4. The system of claim 1, wherein the factory schema further comprises a definition of the types of work products consumed by a particular task. 5. The system of claim 1, wherein the factory schema further comprises a definition of the types of work products to be produced by a particular task. 6. The system of claim 1, wherein the factory schema comprises a particular viewpoint that maps to a designer. 7. The system of claim 1, wherein the factory schema is a schema for a software factory system. 8. The system of claim 1, wherein each task template is part of a workstream template describing a workstream that com prises a custom process. 9. The system of claim 1, wherein the factory schema comprises a description of assets available to each task tem plate.
-  - **Source location:** Claims 4–9, PDF page 10
+> 4. The system of claim 1, wherein the factory schema further comprises a definition of the types of work products consumed by a particular task. 5. The system of claim 1, wherein the factory schema further comprises a definition of the types of work products to be produced by a particular task. 6. The system of claim 1, wherein the factory schema comprises a particular viewpoint that maps to a designer. 7. The system of claim 1, wherein the factory schema is a schema for a software factory system. 8. The system of claim 1, wherein each task template is part of a workstream template describing a workstream that com prises a custom process. 9. The system of claim 1, wherein the factory schema comprises a description of assets available to each task tem plate.
+> --- `kb/sources/.snapshots/us20090100406a1-software-factory-specification-execution-model.md` @ `sha256:9c9456c6461a058028741a7353c47d671a5c93809fd4b5c12f70d218159183b7` — Claims 4–9, PDF page 10
 
-- **Source extract (verbatim):** in order to evaluate and modify the state of the product 420 under development expressed as a collection of work products (i.e., instances of work product type(s) 260)
-  - **Source location:** Paragraph 0040, PDF page 4
+> in order to evaluate and modify the state of the product 420 under development expressed as a collection of work products (i.e., instances of work product type(s) 260)
+> --- `kb/sources/.snapshots/us20090100406a1-software-factory-specification-execution-model.md` @ `sha256:9c9456c6461a058028741a7353c47d671a5c93809fd4b5c12f70d218159183b7` — Paragraph 0040, PDF page 4
 
-- **Source extract (verbatim):** factory schema, instances of the viewpoints it describes (i.e., views), and instances of the work product types it describes (i.e., work products)
-  - **Source location:** Paragraph 0040, PDF page 4
+> factory schema, instances of the viewpoints it describes (i.e., views), and instances of the work product types it describes (i.e., work products)
+> --- `kb/sources/.snapshots/us20090100406a1-software-factory-specification-execution-model.md` @ `sha256:9c9456c6461a058028741a7353c47d671a5c93809fd4b5c12f70d218159183b7` — Paragraph 0040, PDF page 4
 
-- **Source extract (verbatim):** The team member(s) can further retrieve and use relationships 220 and operations 230 across viewpoints 210, generate tasks and workstream(s) (i.e., cus tomized processes) from task template(s) 240 and work stream templates 270, and access associated asset(s) 250 for those tasks, in order to evaluate and modify the state of the product 420 under development expressed as a collection of work products (i.e., instances of work product type(s) 260)
-  - **Source location:** Paragraph 0040, PDF page 4
+> The team member(s) can further retrieve and use relationships 220 and operations 230 across viewpoints 210, generate tasks and workstream(s) (i.e., cus tomized processes) from task template(s) 240 and work stream templates 270, and access associated asset(s) 250 for those tasks, in order to evaluate and modify the state of the product 420 under development expressed as a collection of work products (i.e., instances of work product type(s) 260)
+> --- `kb/sources/.snapshots/us20090100406a1-software-factory-specification-execution-model.md` @ `sha256:9c9456c6461a058028741a7353c47d671a5c93809fd4b5c12f70d218159183b7` — Paragraph 0040, PDF page 4
 
 ## Connections Found
 

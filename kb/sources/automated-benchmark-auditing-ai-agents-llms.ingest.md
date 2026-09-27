@@ -23,11 +23,11 @@ Auto Benchmark Audit (ABA) uses an evidence-collection agent to map heterogeneou
 
 ## Quotes
 
-- **Source extract (verbatim):** “Configure QEMU to accept keyboard input programmatically . . . Set up QEMU with appropriate interfaces to allow external keyboard control.” (instruction.md:10–12). The prompt specifies neither the monitor protocol (HMP vs. QMP), the transport (TCP, telnet, stdio, UNIX socket), nor any path.
-  - **Source location:** Appendix F.1, install-windows-3.11 (Terminal-Bench 2), Prompt, p. 36.
+> “Configure QEMU to accept keyboard input programmatically . . . Set up QEMU with appropriate interfaces to allow external keyboard control.” (instruction.md:10–12). The prompt specifies neither the monitor protocol (HMP vs. QMP), the transport (TCP, telnet, stdio, UNIX socket), nor any path.
+> --- `kb/sources/.snapshots/automated-benchmark-auditing-ai-agents-llms.md` @ `sha256:bdfd01c6656429405c9f70c6701be42ea8cc9f557f5c3b9cbafc8653ceea1d08` — Appendix F.1, install-windows-3.11 (Terminal-Bench 2), Prompt, p. 36.
 
-- **Source extract (verbatim):** The visual-feedback keyboard test requires a QEMU HMP monitor exposed as a UNIX socket at /tmp/qemu-monitor.sock, but the prompt never discloses the path, transport, or protocol. QEMU satisfies the stated requirement with many valid configurations – HMP over TCP, telnet, stdio, a UNIX socket at a different path, or QMP over UNIX/TCP. The reference solution uses -monitor unix:/tmp/qemu-monitor.sock,server,nowait (solution/solve.sh:118), the exact path/protocol required by the test, but nothing in the prompt points an agent to this specific choice.
-  - **Source location:** Appendix F.1, install-windows-3.11 (Terminal-Bench 2), Finding, p. 36.
+> The visual-feedback keyboard test requires a QEMU HMP monitor exposed as a UNIX socket at /tmp/qemu-monitor.sock, but the prompt never discloses the path, transport, or protocol. QEMU satisfies the stated requirement with many valid configurations – HMP over TCP, telnet, stdio, a UNIX socket at a different path, or QMP over UNIX/TCP. The reference solution uses -monitor unix:/tmp/qemu-monitor.sock,server,nowait (solution/solve.sh:118), the exact path/protocol required by the test, but nothing in the prompt points an agent to this specific choice.
+> --- `kb/sources/.snapshots/automated-benchmark-auditing-ai-agents-llms.md` @ `sha256:bdfd01c6656429405c9f70c6701be42ea8cc9f557f5c3b9cbafc8653ceea1d08` — Appendix F.1, install-windows-3.11 (Terminal-Bench 2), Finding, p. 36.
 
 ## Connections Found
 

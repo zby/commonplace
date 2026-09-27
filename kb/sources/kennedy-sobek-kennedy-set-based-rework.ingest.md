@@ -23,18 +23,23 @@ The paper distinguishes rework caused by reversing an apparently final decision 
 
 ## Quotes
 
-- **Source extract (verbatim):** By taking just enough test points to identify the limit curve, the team has available to them an infinite number of points, a “ set” of possible designs, from which to choose. Any point in the safe region of Figure 11 is a valid design.
-  - **Source location:** Section 3.2, “Limit Curves and Set-Based Knowledge,” paragraph beginning “By taking just enough test points”
-- **Source extract (verbatim):** Investigate alternative ideas in parallel when uncertainty is high or when teams must select from among fundamentally different technologies or design approaches, but do so with a focus on quickly identifying and eliminating the weak alternatives.
-  - **Source location:** Section 7, remedy for decisions made before needed knowledge is developed
-- **Source extract (verbatim):** The key is to focus on designing the minimal tests that will yield sufficient data needed to close the identified knowledge gaps. This does not mean designing, building, and testing full system prototypes (which is time-consuming and expensive) but rather innovating ways to test (via prototype, simulation, or analysis) the critical elements of a system quickly and inexpensively.
-  - **Source location:** Section 3.3, “Systematic, Innovative Testing,” paragraph beginning “The key is to focus”
-- **Source extract (verbatim):** Parallel exploration of alternatives, which is similar to selectionism [Sommer and Loch, 2004], can require additional resources upfront [Gil and Beckman, 2007]. That investment is likely worth it if the uncertainty as to which alternative is most desirable is high, the learning from parallel exploration is high, and the cost of rework is high [Sommer and Loch, 2004].
-  - **Source location:** Section 4.3, “Set-Based Management of Major Alternative Concepts,” final paragraph
-- **Source extract (verbatim):** The start of detailed design is an important boundary in any project cycle. First, detailed design necessarily involves moving into the world of CAD/CAM/CAE tools, SPICEbased simulators, and so on which require highly detailed models. Second, the start of detailed design marks a significant increase in development costs. Taken together, this means that most of the critical design decisions cannot be delayed beyond that point. Like it or not, most if not all will have to be made to allow detailed design to proceed.
-  - **Source location:** Section 6, “A Set-Based Front End for Systems Engineering,” paragraph defining the detailed-design boundary
-- **Source extract (verbatim):** Have teams create project plans that show how and when they will generate the knowledge needed to make good decisions. Plan backwards to find the latest possible convergence date for each decision, and use those key convergence dates to pull the development process by establishing due dates for that knowledge.
-  - **Source location:** Section 7, implementation recommendation on convergence planning
+> By taking just enough test points to identify the limit curve, the team has available to them an infinite number of points, a “ set” of possible designs, from which to choose. Any point in the safe region of Figure 11 is a valid design.
+> --- `kb/sources/.snapshots/kennedy-sobek-kennedy-set-based-rework.md` @ `sha256:fed998b5171e42c035603653748dc9e25797129e89a1e92595c08fa48702d6ff` — Section 3.2, “Limit Curves and Set-Based Knowledge,” paragraph beginning “By taking just enough test points”
+
+> Investigate alternative ideas in parallel when uncertainty is high or when teams must select from among fundamentally different technologies or design approaches, but do so with a focus on quickly identifying and eliminating the weak alternatives.
+> --- `kb/sources/.snapshots/kennedy-sobek-kennedy-set-based-rework.md` @ `sha256:fed998b5171e42c035603653748dc9e25797129e89a1e92595c08fa48702d6ff` — Section 7, remedy for decisions made before needed knowledge is developed
+
+> The key is to focus on designing the minimal tests that will yield sufficient data needed to close the identified knowledge gaps. This does not mean designing, building, and testing full system prototypes (which is time-consuming and expensive) but rather innovating ways to test (via prototype, simulation, or analysis) the critical elements of a system quickly and inexpensively.
+> --- `kb/sources/.snapshots/kennedy-sobek-kennedy-set-based-rework.md` @ `sha256:fed998b5171e42c035603653748dc9e25797129e89a1e92595c08fa48702d6ff` — Section 3.3, “Systematic, Innovative Testing,” paragraph beginning “The key is to focus”
+
+> Parallel exploration of alternatives, which is similar to selectionism [Sommer and Loch, 2004], can require additional resources upfront [Gil and Beckman, 2007]. That investment is likely worth it if the uncertainty as to which alternative is most desirable is high, the learning from parallel exploration is high, and the cost of rework is high [Sommer and Loch, 2004].
+> --- `kb/sources/.snapshots/kennedy-sobek-kennedy-set-based-rework.md` @ `sha256:fed998b5171e42c035603653748dc9e25797129e89a1e92595c08fa48702d6ff` — Section 4.3, “Set-Based Management of Major Alternative Concepts,” final paragraph
+
+> The start of detailed design is an important boundary in any project cycle. First, detailed design necessarily involves moving into the world of CAD/CAM/CAE tools, SPICEbased simulators, and so on which require highly detailed models. Second, the start of detailed design marks a significant increase in development costs. Taken together, this means that most of the critical design decisions cannot be delayed beyond that point. Like it or not, most if not all will have to be made to allow detailed design to proceed.
+> --- `kb/sources/.snapshots/kennedy-sobek-kennedy-set-based-rework.md` @ `sha256:fed998b5171e42c035603653748dc9e25797129e89a1e92595c08fa48702d6ff` — Section 6, “A Set-Based Front End for Systems Engineering,” paragraph defining the detailed-design boundary
+
+> Have teams create project plans that show how and when they will generate the knowledge needed to make good decisions. Plan backwards to find the latest possible convergence date for each decision, and use those key convergence dates to pull the development process by establishing due dates for that knowledge.
+> --- `kb/sources/.snapshots/kennedy-sobek-kennedy-set-based-rework.md` @ `sha256:fed998b5171e42c035603653748dc9e25797129e89a1e92595c08fa48702d6ff` — Section 7, implementation recommendation on convergence planning
 
 ## Connections Found
 

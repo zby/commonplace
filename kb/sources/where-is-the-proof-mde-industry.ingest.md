@@ -24,8 +24,8 @@ The review asks whether published industrial evidence supported claimed MDE bene
 
 ## Quotes
 
-- **Source extract (verbatim):** In most cases the maturity of third-party tool environments is still perceived as unsatisfactory for large-scale industrial adoption. We found reports of improvements in software quality and of both productivity gains and losses, but these reports were mainly from small-scale studies. There are a few reports on advantages of applying MDE in larger projects, however, more empirical studies and detailed data are needed to strengthen the evidence. We conclude that there is too little evidence to allow generalization of the results at this stage.
-  - **Source location:** Abstract
+> In most cases the maturity of third-party tool environments is still perceived as unsatisfactory for large-scale industrial adoption. We found reports of improvements in software quality and of both productivity gains and losses, but these reports were mainly from small-scale studies. There are a few reports on advantages of applying MDE in larger projects, however, more empirical studies and detailed data are needed to strengthen the evidence. We conclude that there is too little evidence to allow generalization of the results at this stage.
+> --- `kb/sources/.snapshots/where-is-the-proof-mde-industry.md` @ `sha256:2388e13c532e9057d31c52b8ccaa0ad5c055f9b4847d000f5bb871979269a2ea` — Abstract
 
 ## Connections Found
 

@@ -23,15 +23,17 @@ The paper argues that LLM "semantic knowledge" is organised on clustered manifol
 
 ## Quotes
 
-- **Source extract (verbatim):** Rather than VAEs (which require fine-tuning and face topological misalignment), the method uses anchor-based exploration. Initial diverse outputs are embedded into semantic space, forming discrete anchors. New vectors are sampled through interpolation and perturbation of these anchors, creating a continuous latent region supporting geometric search.
-  - **Source location:** "Method Overview," "Exploration Strategy"
-- **Source extract (verbatim):** NoveltyBench: The method consistently outperforms baselines across generation budgets (10–30 samples), uncovering new semantic classes while maintaining high utility scores. At k=30, the approach achieves 16.65 distinct outputs versus 13.60 for G2 guidance.
-  - **Source location:** "Experimental Results," "NoveltyBench"
-- **Source extract (verbatim):** AUT (Divergent Thinking): Latent-space exploration reaches Top-1 originality of 4.99 — approaching the practical upper bound of 5 — compared to 4.93 for G2 and 4.58 for multi-agent discussion.
-  - **Source location:** "Experimental Results," "AUT (Divergent Thinking)"
+> Rather than VAEs (which require fine-tuning and face topological misalignment), the method uses anchor-based exploration. Initial diverse outputs are embedded into semantic space, forming discrete anchors. New vectors are sampled through interpolation and perturbation of these anchors, creating a continuous latent region supporting geometric search.
+> --- `kb/sources/.snapshots/geometry-of-knowledge-extending-diversity-boundaries-llms.md` @ `sha256:78ad34c8c17ce3fa267ae0c559023ce5fc9705c255040c9827116d407c9bb0ed` — "Method Overview," "Exploration Strategy"
 
-- **Source extract (verbatim):** Lacks explicit low-quality or out-of-distribution generation detection beyond heuristic realignment
-  - **Source location:** "Limitations," first item
+> NoveltyBench: The method consistently outperforms baselines across generation budgets (10–30 samples), uncovering new semantic classes while maintaining high utility scores. At k=30, the approach achieves 16.65 distinct outputs versus 13.60 for G2 guidance.
+> --- `kb/sources/.snapshots/geometry-of-knowledge-extending-diversity-boundaries-llms.md` @ `sha256:78ad34c8c17ce3fa267ae0c559023ce5fc9705c255040c9827116d407c9bb0ed` — "Experimental Results," "NoveltyBench"
+
+> AUT (Divergent Thinking): Latent-space exploration reaches Top-1 originality of 4.99 — approaching the practical upper bound of 5 — compared to 4.93 for G2 and 4.58 for multi-agent discussion.
+> --- `kb/sources/.snapshots/geometry-of-knowledge-extending-diversity-boundaries-llms.md` @ `sha256:78ad34c8c17ce3fa267ae0c559023ce5fc9705c255040c9827116d407c9bb0ed` — "Experimental Results," "AUT (Divergent Thinking)"
+
+> Lacks explicit low-quality or out-of-distribution generation detection beyond heuristic realignment
+> --- `kb/sources/.snapshots/geometry-of-knowledge-extending-diversity-boundaries-llms.md` @ `sha256:78ad34c8c17ce3fa267ae0c559023ce5fc9705c255040c9827116d407c9bb0ed` — "Limitations," first item
 
 ## Connections Found
 

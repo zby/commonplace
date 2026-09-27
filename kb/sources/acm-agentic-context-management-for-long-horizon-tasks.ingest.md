@@ -23,25 +23,32 @@ ACM turns context management into two agent actions: `manage_context` summarizes
 
 ## Quotes
 
-- **Source extract (verbatim):** We introduce only two context management tools to enable the agent to mimic the human memory mechanism: manage_context, which compresses previous turns into a concise summary and offloads the raw messages to an external file on disk; and query_memory, which allows the agent to query the stored raw messages to retrieve information precisely.
-  - **Source location:** Section 3.2, “ACM Agent”
-- **Source extract (verbatim):** When the agent decides to manage its context, it invokes manage_context (action a_{2},a_{6} in Figure 1) to compress all messages up to the previous summary boundary using a summarizer LLM. Crucially, the original messages are not discarded but saved to the agent’s external workspace. Each summary is assigned a unique identifier that maps the summary to the corresponding raw messages in external memory.
-  - **Source location:** Section 3.2, mechanism description
-- **Source extract (verbatim):** Under this objective, the student jointly learns when to invoke context management and when to refrain from doing so because a search, retrieval, or commit-to-answer action is more appropriate.
-  - **Source location:** Section 4.1, on-policy distillation objective
-- **Source extract (verbatim):** We compare ACM against three agent frameworks: (1) ReAct (Yao et al., 2022), the standard reasoning-and-acting agent without any context management; (2) Summary Agent (Wu et al., 2025; Kang et al., 2025), which triggers summarization when context usage exceeds a fixed threshold; and (3)  Memory Agent (Zhang et al., 2026), which accumulates experiences from previous rollouts but does not dynamically manage its intra-trajectory context.
-  - **Source location:** Section 5.1, “Baselines”
+> We introduce only two context management tools to enable the agent to mimic the human memory mechanism: manage_context, which compresses previous turns into a concise summary and offloads the raw messages to an external file on disk; and query_memory, which allows the agent to query the stored raw messages to retrieve information precisely.
+> --- `kb/sources/.snapshots/acm-agentic-context-management-for-long-horizon-tasks.md` @ `sha256:5c043566c90ef1811bcb20a475d49e0cb941b78c0fb5499c2a85b4007369d67f` — Section 3.2, “ACM Agent”
 
-- **Source extract (verbatim):** BrowseComp-Plus          DeepSearchQA       SWE-Bench Verified
-  - **Source location:** Table 3, benchmark column groups
-- **Source extract (verbatim):** Method        Pass@1 Tools Peak Tok. Pass@1 Tools Peak Tok. Pass@1 Tools Peak Tok.
-  - **Source location:** Table 3, metric header row
-- **Source extract (verbatim):** Qwen3.5-9B 0.635 30.8 59k 0.405 88.7 42K 0.508 77.6 46K
-  - **Source location:** Table 3, Qwen3.5-9B baseline row
-- **Source extract (verbatim):** + ACM 0.727 46.2 54k 0.425 58.8 41K 0.530 79.3 50K
-  - **Source location:** Table 3, ACM-training row
-- **Source extract (verbatim):** Table 3: Ablation of distillation and ACM training on Qwen3.5-9B. Pass@1 reports accuracy. Tools is the average number of tool calls per episode. Peak Tok. is the average peak token count across episodes.
-  - **Source location:** Table 3 caption
+> When the agent decides to manage its context, it invokes manage_context (action a_{2},a_{6} in Figure 1) to compress all messages up to the previous summary boundary using a summarizer LLM. Crucially, the original messages are not discarded but saved to the agent’s external workspace. Each summary is assigned a unique identifier that maps the summary to the corresponding raw messages in external memory.
+> --- `kb/sources/.snapshots/acm-agentic-context-management-for-long-horizon-tasks.md` @ `sha256:5c043566c90ef1811bcb20a475d49e0cb941b78c0fb5499c2a85b4007369d67f` — Section 3.2, mechanism description
+
+> Under this objective, the student jointly learns when to invoke context management and when to refrain from doing so because a search, retrieval, or commit-to-answer action is more appropriate.
+> --- `kb/sources/.snapshots/acm-agentic-context-management-for-long-horizon-tasks.md` @ `sha256:5c043566c90ef1811bcb20a475d49e0cb941b78c0fb5499c2a85b4007369d67f` — Section 4.1, on-policy distillation objective
+
+> We compare ACM against three agent frameworks: (1) ReAct (Yao et al., 2022), the standard reasoning-and-acting agent without any context management; (2) Summary Agent (Wu et al., 2025; Kang et al., 2025), which triggers summarization when context usage exceeds a fixed threshold; and (3)  Memory Agent (Zhang et al., 2026), which accumulates experiences from previous rollouts but does not dynamically manage its intra-trajectory context.
+> --- `kb/sources/.snapshots/acm-agentic-context-management-for-long-horizon-tasks.md` @ `sha256:5c043566c90ef1811bcb20a475d49e0cb941b78c0fb5499c2a85b4007369d67f` — Section 5.1, “Baselines”
+
+> BrowseComp-Plus          DeepSearchQA       SWE-Bench Verified
+> --- `kb/sources/.snapshots/acm-agentic-context-management-for-long-horizon-tasks.md:310-310` @ `sha256:5c043566c90ef1811bcb20a475d49e0cb941b78c0fb5499c2a85b4007369d67f` — Table 3, benchmark column groups
+
+> Method        Pass@1 Tools Peak Tok. Pass@1 Tools Peak Tok. Pass@1 Tools Peak Tok.
+> --- `kb/sources/.snapshots/acm-agentic-context-management-for-long-horizon-tasks.md:311-311` @ `sha256:5c043566c90ef1811bcb20a475d49e0cb941b78c0fb5499c2a85b4007369d67f` — Table 3, metric header row
+
+> Qwen3.5-9B 0.635 30.8 59k 0.405 88.7 42K 0.508 77.6 46K
+> --- `kb/sources/.snapshots/acm-agentic-context-management-for-long-horizon-tasks.md` @ `sha256:5c043566c90ef1811bcb20a475d49e0cb941b78c0fb5499c2a85b4007369d67f` — Table 3, Qwen3.5-9B baseline row
+
+> + ACM 0.727 46.2 54k 0.425 58.8 41K 0.530 79.3 50K
+> --- `kb/sources/.snapshots/acm-agentic-context-management-for-long-horizon-tasks.md` @ `sha256:5c043566c90ef1811bcb20a475d49e0cb941b78c0fb5499c2a85b4007369d67f` — Table 3, ACM-training row
+
+> Table 3: Ablation of distillation and ACM training on Qwen3.5-9B. Pass@1 reports accuracy. Tools is the average number of tool calls per episode. Peak Tok. is the average peak token count across episodes.
+> --- `kb/sources/.snapshots/acm-agentic-context-management-for-long-horizon-tasks.md` @ `sha256:5c043566c90ef1811bcb20a475d49e0cb941b78c0fb5499c2a85b4007369d67f` — Table 3 caption
 
 ## Connections Found
 

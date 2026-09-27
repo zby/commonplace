@@ -22,40 +22,42 @@ The paper compares query-biased extractive summaries with static title-and-leadi
 
 ## Quotes
 
-- **Source extract (verbatim):** Experimental conditions. We are interested in two levels of
-  an independent variable in our experimental design: the use of
-  query-biased summaries in a ranked list of retrieved
-  documents; and the use of static pre-defined summaries (the
-  title and first few lines of a document) in such a list. In this
-  way, the design comprises two tasks that a group of subjects
-  will have to perform: to judge the relevance of the documents
-  in a ranked list, with either query biased or predefined
-  summaries.
-  - **Source location:** Section 3.1, “Design considerations,” paper p. 4 (PDF p. 4)
-- **Source extract (verbatim):** Therefore, we conclude that subjects using query biased
-  summaries in a retrieved document list, performed their
-  relevance judgements significantly better than those using the
-  classic IR standard: the title and first few lines of a document.
-  In essence this means that query biased summaries allow
-  users to identify more relevant documents, and identify them
-  more accurately.
-  - **Source location:** Section 4.1, “Recall and Precision,” paper p. 7 (PDF p. 6)
-- **Source extract (verbatim):** The new results show that the accuracy of the judgements
-  and the opinion of the users about the system were not
-  significantly affected by the amount of text shown. The
-  number of times that users had to refer to the full text of the
-  documents was decreased (by approximately 8%), but it still
-  remained significantly higher than the other group’s figure
-  (14.42% higher). Finally, users examined more documents per
-  query with the new settings (3.24 more documents on
-  average), but just 0.62 documents more than the group using
-  the summaries.
-  Based on the new results, we can conclude that the amount
-  of text shown was not a significant factor, and that the
-  difference in performance in the two experimental groups can
-  be attributed to the presence of the query biased summaries in
-  the retrieved document list.
-  - **Source location:** Appendix, paper p. 10 (PDF p. 9)
+> Experimental conditions. We are interested in two levels of
+>   an independent variable in our experimental design: the use of
+>   query-biased summaries in a ranked list of retrieved
+>   documents; and the use of static pre-defined summaries (the
+>   title and first few lines of a document) in such a list. In this
+>   way, the design comprises two tasks that a group of subjects
+>   will have to perform: to judge the relevance of the documents
+>   in a ranked list, with either query biased or predefined
+>   summaries.
+> --- `kb/sources/.snapshots/tombros-sanderson-query-biased-summaries.md` @ `sha256:145d1e67cfb52ff6684ccd90ec0bdeb45e1258c38c5b2a8d0f2fe3b4e2924720` — Section 3.1, “Design considerations,” paper p. 4 (PDF p. 4)
+
+> Therefore, we conclude that subjects using query biased
+>   summaries in a retrieved document list, performed their
+>   relevance judgements significantly better than those using the
+>   classic IR standard: the title and first few lines of a document.
+>   In essence this means that query biased summaries allow
+>   users to identify more relevant documents, and identify them
+>   more accurately.
+> --- `kb/sources/.snapshots/tombros-sanderson-query-biased-summaries.md` @ `sha256:145d1e67cfb52ff6684ccd90ec0bdeb45e1258c38c5b2a8d0f2fe3b4e2924720` — Section 4.1, “Recall and Precision,” paper p. 7 (PDF p. 6)
+
+> The new results show that the accuracy of the judgements
+>   and the opinion of the users about the system were not
+>   significantly affected by the amount of text shown. The
+>   number of times that users had to refer to the full text of the
+>   documents was decreased (by approximately 8%), but it still
+>   remained significantly higher than the other group’s figure
+>   (14.42% higher). Finally, users examined more documents per
+>   query with the new settings (3.24 more documents on
+>   average), but just 0.62 documents more than the group using
+>   the summaries.
+>   Based on the new results, we can conclude that the amount
+>   of text shown was not a significant factor, and that the
+>   difference in performance in the two experimental groups can
+>   be attributed to the presence of the query biased summaries in
+>   the retrieved document list.
+> --- `kb/sources/.snapshots/tombros-sanderson-query-biased-summaries.md` @ `sha256:145d1e67cfb52ff6684ccd90ec0bdeb45e1258c38c5b2a8d0f2fe3b4e2924720` — Appendix, paper p. 10 (PDF p. 9)
 
 ## Connections Found
 

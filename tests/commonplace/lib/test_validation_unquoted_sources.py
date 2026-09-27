@@ -43,8 +43,8 @@ source: https://example.com/{slug}
 
 ## Quotes
 
-- **Source extract (verbatim):** {passage}
-  - **Source location:** Section 1.
+> {passage}
+> --- `kb/sources/.snapshots/source.md` @ `sha256:example` — Section 1.
 """,
     )
 

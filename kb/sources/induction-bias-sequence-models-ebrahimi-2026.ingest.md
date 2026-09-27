@@ -24,21 +24,26 @@ The paper conducts a large-scale empirical study comparing transformers and recu
 
 ## Quotes
 
-- **Source extract (verbatim):** This amounts to over 190,000 training runs for the results reported in this paper, excluding development runs.
-  - **Source location:** Section 2, “Methodology,” Experimental Setup.
-- **Source extract (verbatim):** We observe that recurrent models significantly outperform transformers in this regime. While transformers fail to converge for all but the most trivial configurations (very small m and n), the recurrent architectures successfully learn the task for higher moduli and extended sequence lengths, achieving convergence with orders of magnitude fewer training samples.
-  - **Source location:** Section 3, Observation 3.3, outcome supervision.
-- **Source extract (verbatim):** We observe a clear preference for CoT over the Aligned CoT format for transformers.
-  - **Source location:** Section 3, Observation 3.1.
-- **Source extract (verbatim):** Conversely, recurrent models (LSTMs and Dense-SSMs) demonstrate superior sample efficiency when trained with the Aligned CoT (ACoT) format, which provides supervision aligned with the evolution of the hidden state.
-  - **Source location:** Section 3, Observation 3.2.
+> This amounts to over 190,000 training runs for the results reported in this paper, excluding development runs.
+> --- `kb/sources/.snapshots/induction-bias-sequence-models-ebrahimi-2026.md` @ `sha256:37669e4757f836dc2708f9ec6e862f5812e55635d934f07602eff41d591f9892` — Section 2, “Methodology,” Experimental Setup.
 
-- **Source extract (verbatim):** We consider the task of modular addition, where a model is provided a sequence of n integers x = (x_1, x_2, ..., x_n) with each x_i drawn uniformly at random from Z_m = {0, 1, ..., m-1}.
-  - **Source location:** Section 2, “Methodology,” Task
-- **Source extract (verbatim):** The transformer model used is based on the GPT-2 architecture (Radford et al., 2019) with 6 layers and a model (embedding/hidden) dimension of 256. Both the LSTM and Dense-SSM models use a single-layer recurrent cell followed by a linear classification head. We use an input and hidden dimension of 768 for the LSTM and 256 for the Dense-SSM. We also experiment with a 2-layer transformer and a LSTM with hidden dimension of 256.
-  - **Source location:** Section 2, “Methodology,” Experimental Setup
-- **Source extract (verbatim):** We study performance across a limited, albeit representative, number of models and task types.
-  - **Source location:** Section 5, “Conclusions”
+> We observe that recurrent models significantly outperform transformers in this regime. While transformers fail to converge for all but the most trivial configurations (very small m and n), the recurrent architectures successfully learn the task for higher moduli and extended sequence lengths, achieving convergence with orders of magnitude fewer training samples.
+> --- `kb/sources/.snapshots/induction-bias-sequence-models-ebrahimi-2026.md` @ `sha256:37669e4757f836dc2708f9ec6e862f5812e55635d934f07602eff41d591f9892` — Section 3, Observation 3.3, outcome supervision.
+
+> We observe a clear preference for CoT over the Aligned CoT format for transformers.
+> --- `kb/sources/.snapshots/induction-bias-sequence-models-ebrahimi-2026.md` @ `sha256:37669e4757f836dc2708f9ec6e862f5812e55635d934f07602eff41d591f9892` — Section 3, Observation 3.1.
+
+> Conversely, recurrent models (LSTMs and Dense-SSMs) demonstrate superior sample efficiency when trained with the Aligned CoT (ACoT) format, which provides supervision aligned with the evolution of the hidden state.
+> --- `kb/sources/.snapshots/induction-bias-sequence-models-ebrahimi-2026.md` @ `sha256:37669e4757f836dc2708f9ec6e862f5812e55635d934f07602eff41d591f9892` — Section 3, Observation 3.2.
+
+> We consider the task of modular addition, where a model is provided a sequence of n integers x = (x_1, x_2, ..., x_n) with each x_i drawn uniformly at random from Z_m = {0, 1, ..., m-1}.
+> --- `kb/sources/.snapshots/induction-bias-sequence-models-ebrahimi-2026.md` @ `sha256:37669e4757f836dc2708f9ec6e862f5812e55635d934f07602eff41d591f9892` — Section 2, “Methodology,” Task
+
+> The transformer model used is based on the GPT-2 architecture (Radford et al., 2019) with 6 layers and a model (embedding/hidden) dimension of 256. Both the LSTM and Dense-SSM models use a single-layer recurrent cell followed by a linear classification head. We use an input and hidden dimension of 768 for the LSTM and 256 for the Dense-SSM. We also experiment with a 2-layer transformer and a LSTM with hidden dimension of 256.
+> --- `kb/sources/.snapshots/induction-bias-sequence-models-ebrahimi-2026.md` @ `sha256:37669e4757f836dc2708f9ec6e862f5812e55635d934f07602eff41d591f9892` — Section 2, “Methodology,” Experimental Setup
+
+> We study performance across a limited, albeit representative, number of models and task types.
+> --- `kb/sources/.snapshots/induction-bias-sequence-models-ebrahimi-2026.md` @ `sha256:37669e4757f836dc2708f9ec6e862f5812e55635d934f07602eff41d591f9892` — Section 5, “Conclusions”
 
 ## Connections Found
 

@@ -23,24 +23,24 @@ The authors studied how 15 MIT computer-science graduate students found known an
 
 ## Quotes
 
-- **Source extract (verbatim):** This paper presents a modified diary study that investigated
-  how people performed personally motivated searches in
-  their email, in their files, and on the Web. Although earlier
-  studies of directed search focused on keyword search, most
-  of the search behavior we observed did not involve
-  keyword search. Instead of jumping directly to their
-  information target using keywords, our participants
-  navigated to their target with small, local steps using their
-  contextual knowledge as a guide, even when they knew
-  exactly what they were looking for in advance. This
-  stepping behavior was especially common for participants
-  with unstructured information organization. The observed
-  advantages of searching by taking small steps include that it
-  allowed users to specify less of their information need and
-  provided a context in which to understand their results. We
-  discuss the implications of such advantages for the design
-  of personal information management tools.
-  - **Source location:** Abstract, paper p. 415 (PDF p. 1)
+> This paper presents a modified diary study that investigated
+>   how people performed personally motivated searches in
+>   their email, in their files, and on the Web. Although earlier
+>   studies of directed search focused on keyword search, most
+>   of the search behavior we observed did not involve
+>   keyword search. Instead of jumping directly to their
+>   information target using keywords, our participants
+>   navigated to their target with small, local steps using their
+>   contextual knowledge as a guide, even when they knew
+>   exactly what they were looking for in advance. This
+>   stepping behavior was especially common for participants
+>   with unstructured information organization. The observed
+>   advantages of searching by taking small steps include that it
+>   allowed users to specify less of their information need and
+>   provided a context in which to understand their results. We
+>   discuss the implications of such advantages for the design
+>   of personal information management tools.
+> --- `kb/sources/.snapshots/teevan-perfect-search-engine-orienteering.md` @ `sha256:f55060fbd9c74257fdceac34ed7d9a26defa5f86b2bbb374b15698cb7f2bbe78` — Abstract, paper p. 415 (PDF p. 1)
 
 ## Connections Found
 

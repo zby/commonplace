@@ -23,8 +23,8 @@ PROV is the W3C's standardized model for representing and interchanging provenan
 
 ## Quotes
 
-- **Source extract (verbatim):** Provenance describes "information about entities, activities, and people involved in producing a piece of data or thing" and can assess quality, reliability, and trustworthiness. The PROV Family of Documents enables interoperable provenance interchange across heterogeneous web environments through standardized models and serializations.
-  - **Source location:** Abstract
+> Provenance describes "information about entities, activities, and people involved in producing a piece of data or thing" and can assess quality, reliability, and trustworthiness. The PROV Family of Documents enables interoperable provenance interchange across heterogeneous web environments through standardized models and serializations.
+> --- `kb/sources/.snapshots/prov-overview.md` @ `sha256:ea66375e7f01671e8178c5433835c58c2158a58148fb095e951c8c7b135fce67` — Abstract
 
 ## Connections Found
 

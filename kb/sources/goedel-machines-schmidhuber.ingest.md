@@ -25,14 +25,17 @@ A Gödel machine is a universal problem solver whose entire initial software `p(
 
 ## Quotes
 
-- **Source extract (verbatim):** it finds a proof of a target theorem which essentially states: ‘the immediate rewrite of p through current program switchprog on the given machine implies higher utility than leaving p as is’. Then it executes switchprog, which may completely rewrite p, including the proof searcher.
-  - **Source location:** Section 2.2, architecture overview.
-- **Source extract (verbatim):** A target theorem states that given the current axiomatized utility function u (Item 1f), the utility of a switch from p to the current switchprog would be higher than the utility of continuing the execution of p (which would keep searching for alternative switchprogs).
-  - **Source location:** Section 3.2, definition of `check()` and the target theorem.
-- **Source extract (verbatim):** Theorem 4.1 Given any formalizable utility function u (Item 1f), and assuming consistency of the underlying formal system A, any self-change of p obtained through execution of some program switchprog identified through the proof of a target theorem (2) is globally optimal in the following sense: the utility of starting the execution of the present switchprog is higher than the utility of waiting for the proof searcher to produce an alternative switchprog later.
-  - **Source location:** Theorem 4.1.
-- **Source extract (verbatim):** must ignore those self-improvements whose effectiveness it cannot prove
-  - **Source location:** Section 2.4, limitations of Gödel machines (printed p. 5; PDF p. 6).
+> it finds a proof of a target theorem which essentially states: ‘the immediate rewrite of p through current program switchprog on the given machine implies higher utility than leaving p as is’. Then it executes switchprog, which may completely rewrite p, including the proof searcher.
+> --- `kb/sources/.snapshots/goedel-machines-schmidhuber.md` @ `sha256:df6b68e5da8b6d04404ad8bf5ba694617bb43b22b8fdbf061acc29cedacbc345` — Section 2.2, architecture overview.
+
+> A target theorem states that given the current axiomatized utility function u (Item 1f), the utility of a switch from p to the current switchprog would be higher than the utility of continuing the execution of p (which would keep searching for alternative switchprogs).
+> --- `kb/sources/.snapshots/goedel-machines-schmidhuber.md` @ `sha256:df6b68e5da8b6d04404ad8bf5ba694617bb43b22b8fdbf061acc29cedacbc345` — Section 3.2, definition of `check()` and the target theorem.
+
+> Theorem 4.1 Given any formalizable utility function u (Item 1f), and assuming consistency of the underlying formal system A, any self-change of p obtained through execution of some program switchprog identified through the proof of a target theorem (2) is globally optimal in the following sense: the utility of starting the execution of the present switchprog is higher than the utility of waiting for the proof searcher to produce an alternative switchprog later.
+> --- `kb/sources/.snapshots/goedel-machines-schmidhuber.md` @ `sha256:df6b68e5da8b6d04404ad8bf5ba694617bb43b22b8fdbf061acc29cedacbc345` — Theorem 4.1.
+
+> must ignore those self-improvements whose effectiveness it cannot prove
+> --- `kb/sources/.snapshots/goedel-machines-schmidhuber.md` @ `sha256:df6b68e5da8b6d04404ad8bf5ba694617bb43b22b8fdbf061acc29cedacbc345` — Section 2.4, limitations of Gödel machines (printed p. 5; PDF p. 6).
 
 ## Connections Found
 

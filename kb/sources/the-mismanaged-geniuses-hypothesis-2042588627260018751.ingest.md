@@ -27,10 +27,11 @@ The source argues that frontier language models may already contain much of the 
 
 ## Quotes
 
-- **Source extract (verbatim):** In particular, we believe that existing systems that let LMs decompose tasks are the limiting bottleneck, and the first step would be to define the space of decompositions the LM has access to. Upon figuring out this space of decompositions, the “bitter-lesson”-pilled allocation of compute would go towards training models to perform the correct decompositions
-  - **Source location:** Opening statement of the Mismanaged Geniuses Hypothesis, fourth paragraph
-- **Source extract (verbatim):** Training and scaling the ability to compose. LMs need to be trained to correctly decompose tasks under any scaffold, but the correct decompositions are likely already within the distribution of what LMs can generate.
-  - **Source location:** Research and engineering directions, “Training and scaling the ability to compose” paragraph
+> In particular, we believe that existing systems that let LMs decompose tasks are the limiting bottleneck, and the first step would be to define the space of decompositions the LM has access to. Upon figuring out this space of decompositions, the “bitter-lesson”-pilled allocation of compute would go towards training models to perform the correct decompositions
+> --- `kb/sources/.snapshots/the-mismanaged-geniuses-hypothesis-2042588627260018751.md` @ `sha256:d607f2dc6713686e1f2b713b623be49f936bed5cf89a4ae2433dc9245bf6a6dc` — Opening statement of the Mismanaged Geniuses Hypothesis, fourth paragraph
+
+> Training and scaling the ability to compose. LMs need to be trained to correctly decompose tasks under any scaffold, but the correct decompositions are likely already within the distribution of what LMs can generate.
+> --- `kb/sources/.snapshots/the-mismanaged-geniuses-hypothesis-2042588627260018751.md` @ `sha256:d607f2dc6713686e1f2b713b623be49f936bed5cf89a4ae2433dc9245bf6a6dc` — Research and engineering directions, “Training and scaling the ability to compose” paragraph
 
 ## Connections Found
 

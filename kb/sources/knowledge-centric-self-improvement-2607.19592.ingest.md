@@ -23,48 +23,59 @@ The paper proposes knowledge-centric self-improvement: keep task-solving agents 
 
 ## Quotes
 
-- **Source extract (verbatim):** To isolate persistent curated knowledge as the improvement mechanism, we keep agents generic, stateless, and disposable. Each agent starts with a fresh context, receives the relevant distilled knowledge bundle, attempts one task with standard tool use, and contributes its experience back to the shared knowledge base. Agents do not carry persistent private memory, role specialization, task-specific architecture, or custom orchestration. The only object that changes is the curated knowledge base.
-  - **Source location:** §1, “Introduction,” controlled-design paragraph
-- **Source extract (verbatim):** The knowledge base stores three artifacts: a typed attempt table, forum posts, and distilled bundles.
-  - **Source location:** §3.1, “System Overview,” artifact inventory
-- **Source extract (verbatim):** The attempt table records each attempt and outcome.
-  - **Source location:** §3.1, “System Overview,” artifact roles
-- **Source extract (verbatim):** Distilled bundles compress the surviving claims into reusable guidance for future agents.
-  - **Source location:** §3.1, “System Overview,” artifact roles
+> To isolate persistent curated knowledge as the improvement mechanism, we keep agents generic, stateless, and disposable. Each agent starts with a fresh context, receives the relevant distilled knowledge bundle, attempts one task with standard tool use, and contributes its experience back to the shared knowledge base. Agents do not carry persistent private memory, role specialization, task-specific architecture, or custom orchestration. The only object that changes is the curated knowledge base.
+> --- `kb/sources/.snapshots/knowledge-centric-self-improvement-2607.19592.md` @ `sha256:79a6b6abc8caafa35547248136e74247f760df132e16788162bef82215eaf339` — §1, “Introduction,” controlled-design paragraph
 
-- **Source extract (verbatim):** We instantiate this design with a deliberately simple three-stage curation protocol, organized as threaded discussions in which agents post claims, cite one another, and reply with supporting or challenging evidence. After task execution, each agent posts to a task-level forum, turning its attempt into evidence-grounded local claims about what worked, what failed, and which constraints or hypotheses mattered, which peer agents then support or challenge. A cross-task forum then brings these claims into open discussion across tasks: agents respond to peers’ posts, and recurring principles, disagreements, and failure modes surface through this exchange.
-  - **Source location:** §1, “Introduction,” protocol overview
-- **Source extract (verbatim):** The cross-task forum decides which local observations should survive beyond the task that produced them. Agents discuss task-level posts from the current generation and propose claims that recur across tasks, such as common error types, verification strategies, invariants, environment assumptions, or decomposition patterns. To prevent generic advice from accumulating, each cross-task claim must be grounded in concrete evidence from one or more attempts, and later posts take an explicit stance toward prior claims: agree, disagree, or synthesize.
-  - **Source location:** §3, Stage 2, “Cross-task forum”
-- **Source extract (verbatim):** Stage 3: Distillation. The third stage turns the accumulated evidence into the artifact consumed by future agents. Distillation produces per-task bundles and a cross-task bundle. Both bundle types use the same typed fields, namely transferable insights, confirmed constraints, rejected hypotheses, pitfalls, checks, and next steps.
-  - **Source location:** §3, Stage 3, “Distillation”
-- **Source extract (verbatim):** Distillation is therefore designed as a selection step that is tailored to the new task rather than a generic summarization step: the distiller LLM is instructed to keep claims that are actionable, evidence-grounded, and scoped, and to drop vague advice that does not name the condition under which it applies.
-  - **Source location:** §3, Stage 3, “Distillation”
+> The knowledge base stores three artifacts: a typed attempt table, forum posts, and distilled bundles.
+> --- `kb/sources/.snapshots/knowledge-centric-self-improvement-2607.19592.md` @ `sha256:79a6b6abc8caafa35547248136e74247f760df132e16788162bef82215eaf339` — §3.1, “System Overview,” artifact inventory
 
-- **Source extract (verbatim):** The two forum stages take the familiar form of an online discussion board: each task has its own thread, a shared thread spans all tasks in the generation, and agents post evidence-grounded claims, cite earlier posts by id, and reply with supporting or challenging evidence.
-  - **Source location:** §3, protocol overview after Figure 2
-- **Source extract (verbatim):** Each agent receives the typed attempt table for its assigned task, the per-task distilled insights for that task, and the cross-task distilled insights from the global knowledge base.
-  - **Source location:** §4.1, “Agent-Centric Baselines,” benchmark protocol
+> The attempt table records each attempt and outcome.
+> --- `kb/sources/.snapshots/knowledge-centric-self-improvement-2607.19592.md` @ `sha256:79a6b6abc8caafa35547248136e74247f760df132e16788162bef82215eaf339` — §3.1, “System Overview,” artifact roles
 
-- **Source extract (verbatim):** ARC-AGI-1 and ARC-AGI-2 [ 7, 8 ] evaluate abstract visual reasoning by requiring exact-grid reconstruction from a few input-output examples, and we sample 50 tasks from each benchmark using the official exact-match scoring protocol. Terminal-Bench 2 [ 19] evaluates agents in 89 real terminal environments with containerized tasks, human-written reference solutions, and verification tests.
-  - **Source location:** §4.1, “Agent-Centric Baselines,” benchmarks and protocol
-- **Source extract (verbatim):** For swebench_pro, our framework captures the resulting workspace diff as the candidate patch and evaluates it with the SWE-bench Pro harness. For polyglot, our framework evaluates the edited exercise workspace using the language-specific test command and Docker-based evaluator.
-  - **Source location:** Appendix F, “Tool Surfaces by Benchmark,” coding benchmarks
-- **Source extract (verbatim):** Results. Table 1 shows that agents using our knowledge curation protocol achieve the highest solve rates among the listed Haiku-based methods on ARC-AGI-1, ARC-AGI-2, Polyglot, and SWE-bench Pro, while also using the lowest reported costs. On Terminal-Bench 2, one of the hardest agentic benchmarks, our simple agent framework equipped with knowledge-centric improvement achieves competitive performance against multiple strong agentic coding systems.
-  - **Source location:** §4.1, “Agent-Centric Baselines,” results
+> Distilled bundles compress the surviving claims into reusable guidance for future agents.
+> --- `kb/sources/.snapshots/knowledge-centric-self-improvement-2607.19592.md` @ `sha256:79a6b6abc8caafa35547248136e74247f760df132e16788162bef82215eaf339` — §3.1, “System Overview,” artifact roles
 
-- **Source extract (verbatim):** The curated knowledge base is itself an output of the protocol. We finally ask whether it carries standalone value, that is, whether the artifact, separated from the procedure that produced it, improves performance on unseen tasks.
-  - **Source location:** §4.4, “Held-Out Knowledge Transfer,” opening
-- **Source extract (verbatim):** task solving, discussion, and distillation produce a structured knowledge asset containing cross-task heuristics, constraints, pitfalls, and validation strategies. We then freeze that generation-10 asset and transfer it to a disjoint evaluation split. The recipient run is zero-shot and task-execution-only: it uses no new forum discussion and no recipient-side distillation. A task-conditioned adapter converts the shared donor asset into a short memo tailored to the current task.
-  - **Source location:** §4.4, “Held-Out Knowledge Transfer,” setup
-- **Source extract (verbatim):** Results. Table 4 shows that transferred knowledge improves zero-shot performance on both Polyglot and ARC-AGI-1 in every donor–recipient pairing. Across all cells the GPT-authored bundle is the stronger donor, yet cross-family transfer remains positive in both directions. Because the recipient runs no new forum or distillation, these gains come from the frozen donor bundle at inference time, indicating that the bundle carries donor-agnostic structure rather than donor-specific habits.
-  - **Source location:** §4.4, “Held-Out Knowledge Transfer,” results
+> We instantiate this design with a deliberately simple three-stage curation protocol, organized as threaded discussions in which agents post claims, cite one another, and reply with supporting or challenging evidence. After task execution, each agent posts to a task-level forum, turning its attempt into evidence-grounded local claims about what worked, what failed, and which constraints or hypotheses mattered, which peer agents then support or challenge. A cross-task forum then brings these claims into open discussion across tasks: agents respond to peers’ posts, and recurring principles, disagreements, and failure modes surface through this exchange.
+> --- `kb/sources/.snapshots/knowledge-centric-self-improvement-2607.19592.md` @ `sha256:79a6b6abc8caafa35547248136e74247f760df132e16788162bef82215eaf339` — §1, “Introduction,” protocol overview
 
-- **Source extract (verbatim):** A single persistent agent must absorb many ``` local lessons, some of which are task-specific, redundant, or mutually inconsistent; as the agent ``` grows, useful behavior can be diluted by conflicting updates, and each new adaptation might degrade performance on the previous tasks.
-  - **Source location:** §1, “Introduction,” agent-centric motivation (the snapshot preserves two PDF code-fence artifacts inside the sentence)
+> The cross-task forum decides which local observations should survive beyond the task that produced them. Agents discuss task-level posts from the current generation and propose claims that recur across tasks, such as common error types, verification strategies, invariants, environment assumptions, or decomposition patterns. To prevent generic advice from accumulating, each cross-task claim must be grounded in concrete evidence from one or more attempts, and later posts take an explicit stance toward prior claims: agree, disagree, or synthesize.
+> --- `kb/sources/.snapshots/knowledge-centric-self-improvement-2607.19592.md` @ `sha256:79a6b6abc8caafa35547248136e74247f760df132e16788162bef82215eaf339` — §3, Stage 2, “Cross-task forum”
 
-- **Source extract (verbatim):** Task-conditioned adapter. To make the frozen asset operational at inference time, a task- conditioned adapter converts the shared donor asset into a short memo tailored to the cur- ``` rent task before the solver acts.
-  - **Source location:** Appendix L, “Knowledge Transfer,” task-conditioned adapter (the snapshot preserves a PDF code-fence artifact and two line-break hyphenations inside the sentence)
+> Stage 3: Distillation. The third stage turns the accumulated evidence into the artifact consumed by future agents. Distillation produces per-task bundles and a cross-task bundle. Both bundle types use the same typed fields, namely transferable insights, confirmed constraints, rejected hypotheses, pitfalls, checks, and next steps.
+> --- `kb/sources/.snapshots/knowledge-centric-self-improvement-2607.19592.md` @ `sha256:79a6b6abc8caafa35547248136e74247f760df132e16788162bef82215eaf339` — §3, Stage 3, “Distillation”
+
+> Distillation is therefore designed as a selection step that is tailored to the new task rather than a generic summarization step: the distiller LLM is instructed to keep claims that are actionable, evidence-grounded, and scoped, and to drop vague advice that does not name the condition under which it applies.
+> --- `kb/sources/.snapshots/knowledge-centric-self-improvement-2607.19592.md` @ `sha256:79a6b6abc8caafa35547248136e74247f760df132e16788162bef82215eaf339` — §3, Stage 3, “Distillation”
+
+> The two forum stages take the familiar form of an online discussion board: each task has its own thread, a shared thread spans all tasks in the generation, and agents post evidence-grounded claims, cite earlier posts by id, and reply with supporting or challenging evidence.
+> --- `kb/sources/.snapshots/knowledge-centric-self-improvement-2607.19592.md` @ `sha256:79a6b6abc8caafa35547248136e74247f760df132e16788162bef82215eaf339` — §3, protocol overview after Figure 2
+
+> Each agent receives the typed attempt table for its assigned task, the per-task distilled insights for that task, and the cross-task distilled insights from the global knowledge base.
+> --- `kb/sources/.snapshots/knowledge-centric-self-improvement-2607.19592.md` @ `sha256:79a6b6abc8caafa35547248136e74247f760df132e16788162bef82215eaf339` — §4.1, “Agent-Centric Baselines,” benchmark protocol
+
+> ARC-AGI-1 and ARC-AGI-2 [ 7, 8 ] evaluate abstract visual reasoning by requiring exact-grid reconstruction from a few input-output examples, and we sample 50 tasks from each benchmark using the official exact-match scoring protocol. Terminal-Bench 2 [ 19] evaluates agents in 89 real terminal environments with containerized tasks, human-written reference solutions, and verification tests.
+> --- `kb/sources/.snapshots/knowledge-centric-self-improvement-2607.19592.md` @ `sha256:79a6b6abc8caafa35547248136e74247f760df132e16788162bef82215eaf339` — §4.1, “Agent-Centric Baselines,” benchmarks and protocol
+
+> For swebench_pro, our framework captures the resulting workspace diff as the candidate patch and evaluates it with the SWE-bench Pro harness. For polyglot, our framework evaluates the edited exercise workspace using the language-specific test command and Docker-based evaluator.
+> --- `kb/sources/.snapshots/knowledge-centric-self-improvement-2607.19592.md` @ `sha256:79a6b6abc8caafa35547248136e74247f760df132e16788162bef82215eaf339` — Appendix F, “Tool Surfaces by Benchmark,” coding benchmarks
+
+> Results. Table 1 shows that agents using our knowledge curation protocol achieve the highest solve rates among the listed Haiku-based methods on ARC-AGI-1, ARC-AGI-2, Polyglot, and SWE-bench Pro, while also using the lowest reported costs. On Terminal-Bench 2, one of the hardest agentic benchmarks, our simple agent framework equipped with knowledge-centric improvement achieves competitive performance against multiple strong agentic coding systems.
+> --- `kb/sources/.snapshots/knowledge-centric-self-improvement-2607.19592.md` @ `sha256:79a6b6abc8caafa35547248136e74247f760df132e16788162bef82215eaf339` — §4.1, “Agent-Centric Baselines,” results
+
+> The curated knowledge base is itself an output of the protocol. We finally ask whether it carries standalone value, that is, whether the artifact, separated from the procedure that produced it, improves performance on unseen tasks.
+> --- `kb/sources/.snapshots/knowledge-centric-self-improvement-2607.19592.md` @ `sha256:79a6b6abc8caafa35547248136e74247f760df132e16788162bef82215eaf339` — §4.4, “Held-Out Knowledge Transfer,” opening
+
+> task solving, discussion, and distillation produce a structured knowledge asset containing cross-task heuristics, constraints, pitfalls, and validation strategies. We then freeze that generation-10 asset and transfer it to a disjoint evaluation split. The recipient run is zero-shot and task-execution-only: it uses no new forum discussion and no recipient-side distillation. A task-conditioned adapter converts the shared donor asset into a short memo tailored to the current task.
+> --- `kb/sources/.snapshots/knowledge-centric-self-improvement-2607.19592.md` @ `sha256:79a6b6abc8caafa35547248136e74247f760df132e16788162bef82215eaf339` — §4.4, “Held-Out Knowledge Transfer,” setup
+
+> Results. Table 4 shows that transferred knowledge improves zero-shot performance on both Polyglot and ARC-AGI-1 in every donor–recipient pairing. Across all cells the GPT-authored bundle is the stronger donor, yet cross-family transfer remains positive in both directions. Because the recipient runs no new forum or distillation, these gains come from the frozen donor bundle at inference time, indicating that the bundle carries donor-agnostic structure rather than donor-specific habits.
+> --- `kb/sources/.snapshots/knowledge-centric-self-improvement-2607.19592.md` @ `sha256:79a6b6abc8caafa35547248136e74247f760df132e16788162bef82215eaf339` — §4.4, “Held-Out Knowledge Transfer,” results
+
+> A single persistent agent must absorb many ``` local lessons, some of which are task-specific, redundant, or mutually inconsistent; as the agent ``` grows, useful behavior can be diluted by conflicting updates, and each new adaptation might degrade performance on the previous tasks.
+> --- `kb/sources/.snapshots/knowledge-centric-self-improvement-2607.19592.md` @ `sha256:79a6b6abc8caafa35547248136e74247f760df132e16788162bef82215eaf339` — §1, “Introduction,” agent-centric motivation (the snapshot preserves two PDF code-fence artifacts inside the sentence)
+
+> Task-conditioned adapter. To make the frozen asset operational at inference time, a task- conditioned adapter converts the shared donor asset into a short memo tailored to the cur- ``` rent task before the solver acts.
+> --- `kb/sources/.snapshots/knowledge-centric-self-improvement-2607.19592.md` @ `sha256:79a6b6abc8caafa35547248136e74247f760df132e16788162bef82215eaf339` — Appendix L, “Knowledge Transfer,” task-conditioned adapter (the snapshot preserves a PDF code-fence artifact and two line-break hyphenations inside the sentence)
 
 ## Connections Found
 

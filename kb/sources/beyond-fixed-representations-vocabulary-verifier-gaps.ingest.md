@@ -23,8 +23,8 @@ The paper argues that stronger search, reasoning, and tool use do not by themsel
 
 ## Quotes
 
-- **Source extract (verbatim):** The ladder is organized in three dimensions: 1) Search pattern: is the system searching within a fixed representational space, or can it modify the space being searched? 2) Vocabulary autonomy: can it create and reuse new conceptual primitives? 3) Verifier autonomy: does it own the verifier and evolve it as needed, or is the success criteria supplied and fixed from outside?
-  - **Source location:** Section 4, “Levels of Innovation Autonomy,” opening taxonomy paragraph
+> The ladder is organized in three dimensions: 1) Search pattern: is the system searching within a fixed representational space, or can it modify the space being searched? 2) Vocabulary autonomy: can it create and reuse new conceptual primitives? 3) Verifier autonomy: does it own the verifier and evolve it as needed, or is the success criteria supplied and fixed from outside?
+> --- `kb/sources/.snapshots/beyond-fixed-representations-vocabulary-verifier-gaps.md` @ `sha256:f32380b3058afcd37ba90932662e24079b418e4bdae6f24bbaf4f44fa57f41f6` — Section 4, “Levels of Innovation Autonomy,” opening taxonomy paragraph
 
 ## Connections Found
 

@@ -23,12 +23,14 @@ The paper presents `causal-learn`, a Python library for causal discovery. Its re
 
 ## Quotes
 
-- **Source extract (verbatim):** Causal discovery aims at revealing causal relations from observational data, which is a fun- damental task in science and engineering. We describe causal-learn, an open-source Python library for causal discovery. This library focuses on bringing a comprehensive collection of causal discovery methods to both practitioners and researchers.
-  - **Source location:** Abstract.
-- **Source extract (verbatim):** Current strategies for causal discovery can be broadly classified into constraint-based, score-based, functional causal models-based, and methods that recover latent variables. Constraint-based and score-based methods have been employed for causal discovery since the 1990s, using conditional independence relationships in data to uncover information about the underlying causal structure. Algorithms such as Peter-Clark (PC) (Spirtes et al., 2000) and Fast Causal Inference (FCI) (Spirtes et al., 1995) are popular, with PC assuming causal sufficiency and FCI handling latent confounders.
-  - **Source location:** Section 1, method-family overview.
-- **Source extract (verbatim):** PC is a classical and widely-used algorithm with consistency guarantee under independent and identically distributed (i.i.d.) sampling assuming no latent confounders, the faithfulness assumption, and the causal Markov condition, which has been extensively applied in many fields.
-  - **Source location:** Section 2.1, constraint-based methods.
+> Causal discovery aims at revealing causal relations from observational data, which is a fun- damental task in science and engineering. We describe causal-learn, an open-source Python library for causal discovery. This library focuses on bringing a comprehensive collection of causal discovery methods to both practitioners and researchers.
+> --- `kb/sources/.snapshots/causal-learn-causal-discovery-in-python.md` @ `sha256:32af3e08407cd6b0a88890e4a2561c8baa8efc09d71ce96c642396e491ea6e61` — Abstract.
+
+> Current strategies for causal discovery can be broadly classified into constraint-based, score-based, functional causal models-based, and methods that recover latent variables. Constraint-based and score-based methods have been employed for causal discovery since the 1990s, using conditional independence relationships in data to uncover information about the underlying causal structure. Algorithms such as Peter-Clark (PC) (Spirtes et al., 2000) and Fast Causal Inference (FCI) (Spirtes et al., 1995) are popular, with PC assuming causal sufficiency and FCI handling latent confounders.
+> --- `kb/sources/.snapshots/causal-learn-causal-discovery-in-python.md` @ `sha256:32af3e08407cd6b0a88890e4a2561c8baa8efc09d71ce96c642396e491ea6e61` — Section 1, method-family overview.
+
+> PC is a classical and widely-used algorithm with consistency guarantee under independent and identically distributed (i.i.d.) sampling assuming no latent confounders, the faithfulness assumption, and the causal Markov condition, which has been extensively applied in many fields.
+> --- `kb/sources/.snapshots/causal-learn-causal-discovery-in-python.md` @ `sha256:32af3e08407cd6b0a88890e4a2561c8baa8efc09d71ce96c642396e491ea6e61` — Section 2.1, constraint-based methods.
 
 ## Connections Found
 

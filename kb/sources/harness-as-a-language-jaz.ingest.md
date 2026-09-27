@@ -29,17 +29,17 @@ The useful contribution appears to be a small, testable extension of code-mode a
 
 ## Quotes
 
-- **Source extract (verbatim):** However, every delegation preserves the full history completely through the prev_history, which has accumulated every prior agent’s __history__. The agent spent one turn searching all protocol names in its prev_history. All the relevant lectures were correctly retrieved, and the agent answered correctly in its next turn.
-  - **Source location:** Section 4.1, Analysis, p. 7: JAZ on StuLife task 1282.
+> However, every delegation preserves the full history completely through the prev_history, which has accumulated every prior agent’s __history__. The agent spent one turn searching all protocol names in its prev_history. All the relevant lectures were correctly retrieved, and the agent answered correctly in its next turn.
+> --- `kb/sources/.snapshots/harness-as-a-language-jaz.md` @ `sha256:e5421e433ba0c6a06a1af7debee98a1419160d128edab016dfe6bb175d0eb4f7` — Section 4.1, Analysis, p. 7: JAZ on StuLife task 1282.
 
-- **Source extract (verbatim):** Letta Agent used its conversation_search tool to search through its conversation history for exact protocol names mentioned in the question. Using a combination of keyword search and vector search, the tool returned the top-ranked hits, which were either the quiz question itself, or earlier messages about similarly named but different protocols. In this scenario where the agent needs exact substring matching, the only tool Letta had (conversation_search) did not support it.
-  - **Source location:** Section 4.1, Analysis, p. 7: Letta on the same recall question.
+> Letta Agent used its conversation_search tool to search through its conversation history for exact protocol names mentioned in the question. Using a combination of keyword search and vector search, the tool returned the top-ranked hits, which were either the quiz question itself, or earlier messages about similarly named but different protocols. In this scenario where the agent needs exact substring matching, the only tool Letta had (conversation_search) did not support it.
+> --- `kb/sources/.snapshots/harness-as-a-language-jaz.md` @ `sha256:e5421e433ba0c6a06a1af7debee98a1419160d128edab016dfe6bb175d0eb4f7` — Section 4.1, Analysis, p. 7: Letta on the same recall question.
 
-- **Source extract (verbatim):** We apply the CodeAct hook that removes __history__ and the user prompt(s) from the REPL of every invoke, and make the minimal modification to the long-horizon guidance and ContextWindowWarning prompt to accommodate the removal.
-  - **Source location:** Appendix C.2.2, Method Details, p. 16: joint removal and guidance adaptation.
+> We apply the CodeAct hook that removes __history__ and the user prompt(s) from the REPL of every invoke, and make the minimal modification to the long-horizon guidance and ContextWindowWarning prompt to accommodate the removal.
+> --- `kb/sources/.snapshots/harness-as-a-language-jaz.md` @ `sha256:e5421e433ba0c6a06a1af7debee98a1419160d128edab016dfe6bb175d0eb4f7` — Appendix C.2.2, Method Details, p. 16: joint removal and guidance adaptation.
 
-- **Source extract (verbatim):** Letta provides two search backends. The SQL backend caused most search results to turn up empty: it applies exact substring search to the entire search query, yet the agent issues search queries that are more appropriate for conventional search engines and thus frequently do not appear as an exact substring of anything in the history. We thus used Letta’s more powerful search backend, Turbopuffer, which implements hybrid search, combining BM25 keyword-based search and vector-embedding-based search.
-  - **Source location:** Appendix C.2.2, Method Details, p. 16: SQL query mismatch and choice of hybrid backend.
+> Letta provides two search backends. The SQL backend caused most search results to turn up empty: it applies exact substring search to the entire search query, yet the agent issues search queries that are more appropriate for conventional search engines and thus frequently do not appear as an exact substring of anything in the history. We thus used Letta’s more powerful search backend, Turbopuffer, which implements hybrid search, combining BM25 keyword-based search and vector-embedding-based search.
+> --- `kb/sources/.snapshots/harness-as-a-language-jaz.md` @ `sha256:e5421e433ba0c6a06a1af7debee98a1419160d128edab016dfe6bb175d0eb4f7` — Appendix C.2.2, Method Details, p. 16: SQL query mismatch and choice of hybrid backend.
 
 ## Connections Found
 

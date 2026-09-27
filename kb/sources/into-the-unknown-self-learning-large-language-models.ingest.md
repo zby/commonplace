@@ -23,10 +23,11 @@ The paper proposes a self-learning LLM loop organized around "Points in the Unkn
 
 ## Quotes
 
-- **Source extract (verbatim):** We address the main problem of self-learning LLM: the question of what to learn. We propose a self-learning LLM framework that enables an LLM to independently learn previously unknown knowledge through self-assessment of their own hallucinations. We introduce a concept called Point in the Unknown (PiU) to identify atomic knowledge unknown to a model, along with four methods for automatic PiUs identification, facilitating the creation of a self-learning loop that focuses exclusively on the absorption of currently unknown knowledge into the model.
-  - **Source location:** Abstract
-- **Source extract (verbatim):** It is the persistent acquisition of new knowledge by the model without data provision, taking advantage of three fundamental mechanisms that are integrated in a continuous loop: (1) identification of what knowledge to learn, (2) gathering new relevant data, and (3) continuous model training.
-  - **Source location:** §I, “Introduction”
+> We address the main problem of self-learning LLM: the question of what to learn. We propose a self-learning LLM framework that enables an LLM to independently learn previously unknown knowledge through self-assessment of their own hallucinations. We introduce a concept called Point in the Unknown (PiU) to identify atomic knowledge unknown to a model, along with four methods for automatic PiUs identification, facilitating the creation of a self-learning loop that focuses exclusively on the absorption of currently unknown knowledge into the model.
+> --- `kb/sources/.snapshots/into-the-unknown-self-learning-large-language-models.md` @ `sha256:a095f64403b8c1a74010290cbfa2433cfc0448e2e87fd1997b85275f6871cf3f` — Abstract
+
+> It is the persistent acquisition of new knowledge by the model without data provision, taking advantage of three fundamental mechanisms that are integrated in a continuous loop: (1) identification of what knowledge to learn, (2) gathering new relevant data, and (3) continuous model training.
+> --- `kb/sources/.snapshots/into-the-unknown-self-learning-large-language-models.md` @ `sha256:a095f64403b8c1a74010290cbfa2433cfc0448e2e87fd1997b85275f6871cf3f` — §I, “Introduction”
 
 ## Connections Found
 

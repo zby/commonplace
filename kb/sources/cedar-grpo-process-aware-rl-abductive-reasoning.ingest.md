@@ -23,29 +23,38 @@ CEDAR-GRPO post-trains four open-weight 4--8B models on 1,920 training examples 
 
 ## Quotes
 
-- **Source extract (verbatim):** Models generate structured outputs of the form ⟨think⟩ β ⟨/think⟩⟨answer⟩ α ⟨/answer⟩, where β is the reasoning trace and α is the final answer. Task correctness is computed from α, whereas the process rewards are computed from the user prompt and β.
-  - **Source location:** Section 4.2, "Structured CoT Prompting"
-- **Source extract (verbatim):** We compare the original base model, the correctness-only GRPO checkpoint (denoted Cor- GRPO), and our main composite-reward check- point, CEDAR-GRPO.
-  - **Source location:** Section 5.1, opening comparison; capture retains line-break hyphenation
-- **Source extract (verbatim):** No additional transformation is applied before GRPO. Cor-GRPO uses only rcor.
-  - **Source location:** Appendix D.1, "Composite Objective"
-- **Source extract (verbatim):** and 2.7 points over Cor-GRPO
-  - **Source location:** Introduction, reported average improvement over the correctness-only comparator
-- **Source extract (verbatim):** Baseline 0.69 1.22 0.79 0.59 0.87 33.1% 0.21
-  - **Source location:** Table 3, DeepSeek-R1-Distill-Qwen-7B mean process metrics; columns are Backtracking, Branchiness, Differential Elimination, Prior, Uncertainty, Coverage, and Directionality
-- **Source extract (verbatim):** Cor-GRPO 0.93 1.16 0.97 0.53 0.92 39.1% 0.16
-  - **Source location:** Table 3, DeepSeek-R1-Distill-Qwen-7B mean process metrics; same columns
+> Models generate structured outputs of the form ⟨think⟩ β ⟨/think⟩⟨answer⟩ α ⟨/answer⟩, where β is the reasoning trace and α is the final answer. Task correctness is computed from α, whereas the process rewards are computed from the user prompt and β.
+> --- `kb/sources/.snapshots/cedar-grpo-process-aware-rl-abductive-reasoning.md` @ `sha256:bda3b2fbd652ba45beda9470f58da2e0fe571112c5b6d64ebcddf4298400f409` — Section 4.2, "Structured CoT Prompting"
 
-- **Source extract (verbatim):** CEDAR-GRPO, a process-aware framework that combines final-answer correctness with abductive rewards for evidence coverage and evidence-to-explanation directionality.
-  - **Source location:** Abstract
-- **Source extract (verbatim):** Our experiments use four open-weight backbones:
-  - **Source location:** Section 4.1, “Model Families”
-- **Source extract (verbatim):** We evaluate them on 11 unseen tasks
-  - **Source location:** Abstract
-- **Source extract (verbatim):** to a total number of 2400 samples, consisting of 1920 training and 480 validation samples.
-  - **Source location:** Appendix A, Table 5 caption
-- **Source extract (verbatim):** Each reasoning trace is passed to Gemini 3 Flash together with a structured system prompt specific to the metric and a short dataset-specific contextual framing.
-  - **Source location:** Appendix E.1, “Evaluation Framework”
+> We compare the original base model, the correctness-only GRPO checkpoint (denoted Cor- GRPO), and our main composite-reward check- point, CEDAR-GRPO.
+> --- `kb/sources/.snapshots/cedar-grpo-process-aware-rl-abductive-reasoning.md` @ `sha256:bda3b2fbd652ba45beda9470f58da2e0fe571112c5b6d64ebcddf4298400f409` — Section 5.1, opening comparison; capture retains line-break hyphenation
+
+> No additional transformation is applied before GRPO. Cor-GRPO uses only rcor.
+> --- `kb/sources/.snapshots/cedar-grpo-process-aware-rl-abductive-reasoning.md` @ `sha256:bda3b2fbd652ba45beda9470f58da2e0fe571112c5b6d64ebcddf4298400f409` — Appendix D.1, "Composite Objective"
+
+> and 2.7 points over Cor-GRPO
+> --- `kb/sources/.snapshots/cedar-grpo-process-aware-rl-abductive-reasoning.md` @ `sha256:bda3b2fbd652ba45beda9470f58da2e0fe571112c5b6d64ebcddf4298400f409` — Introduction, reported average improvement over the correctness-only comparator
+
+> Baseline 0.69 1.22 0.79 0.59 0.87 33.1% 0.21
+> --- `kb/sources/.snapshots/cedar-grpo-process-aware-rl-abductive-reasoning.md` @ `sha256:bda3b2fbd652ba45beda9470f58da2e0fe571112c5b6d64ebcddf4298400f409` — Table 3, DeepSeek-R1-Distill-Qwen-7B mean process metrics; columns are Backtracking, Branchiness, Differential Elimination, Prior, Uncertainty, Coverage, and Directionality
+
+> Cor-GRPO 0.93 1.16 0.97 0.53 0.92 39.1% 0.16
+> --- `kb/sources/.snapshots/cedar-grpo-process-aware-rl-abductive-reasoning.md` @ `sha256:bda3b2fbd652ba45beda9470f58da2e0fe571112c5b6d64ebcddf4298400f409` — Table 3, DeepSeek-R1-Distill-Qwen-7B mean process metrics; same columns
+
+> CEDAR-GRPO, a process-aware framework that combines final-answer correctness with abductive rewards for evidence coverage and evidence-to-explanation directionality.
+> --- `kb/sources/.snapshots/cedar-grpo-process-aware-rl-abductive-reasoning.md` @ `sha256:bda3b2fbd652ba45beda9470f58da2e0fe571112c5b6d64ebcddf4298400f409` — Abstract
+
+> Our experiments use four open-weight backbones:
+> --- `kb/sources/.snapshots/cedar-grpo-process-aware-rl-abductive-reasoning.md` @ `sha256:bda3b2fbd652ba45beda9470f58da2e0fe571112c5b6d64ebcddf4298400f409` — Section 4.1, “Model Families”
+
+> We evaluate them on 11 unseen tasks
+> --- `kb/sources/.snapshots/cedar-grpo-process-aware-rl-abductive-reasoning.md` @ `sha256:bda3b2fbd652ba45beda9470f58da2e0fe571112c5b6d64ebcddf4298400f409` — Abstract
+
+> to a total number of 2400 samples, consisting of 1920 training and 480 validation samples.
+> --- `kb/sources/.snapshots/cedar-grpo-process-aware-rl-abductive-reasoning.md` @ `sha256:bda3b2fbd652ba45beda9470f58da2e0fe571112c5b6d64ebcddf4298400f409` — Appendix A, Table 5 caption
+
+> Each reasoning trace is passed to Gemini 3 Flash together with a structured system prompt specific to the metric and a short dataset-specific contextual framing.
+> --- `kb/sources/.snapshots/cedar-grpo-process-aware-rl-abductive-reasoning.md` @ `sha256:bda3b2fbd652ba45beda9470f58da2e0fe571112c5b6d64ebcddf4298400f409` — Appendix E.1, “Evaluation Framework”
 
 ## Connections Found
 

@@ -27,18 +27,23 @@ The thread walks through a progressively more capable set of agent architectures
 
 ## Quotes
 
-- **Source extract (verbatim):** A language model interacts with arbitrarily long prompts through an external programmable environment or an REPL. Printed outputs are truncated at the scaffold layer.
-  - **Source location:** “Recursive Language Models,” first mechanism point
-- **Source extract (verbatim):** The LLM can write code to programmatically explore, and create new transformations of the prompt
-  - **Source location:** “Recursive Language Models,” second mechanism point
-- **Source extract (verbatim):** It can recursively invoke sub-agents to complete smaller subtasks - basically zoom in on specific strategic regions of the prompt and call separate LLMs to work on them
-  - **Source location:** “Recursive Language Models,” third mechanism point
-- **Source extract (verbatim):** The subagent responses do not get automatically loaded into the parent agent's context, it gets returned as symbols or variables inside the parent's REPL
-  - **Source location:** “Recursive Language Models,” fourth mechanism point
-- **Source extract (verbatim):** RLM agents can return responses in two ways - (a) auto-regressively generated answers like normal LLMs, and (b) construct answers into a python variable and return the variable instead.
-  - **Source location:** “Recursive Language Models,” fifth mechanism point
-- **Source extract (verbatim):** Remember, python variables persist across different REPL execution calls. I keep coming back to the Jupyter Notebook example coz it is absolutely essential that you make this connection. Each time the LLM writes a block of code and executes is equivalent to us humans writing a block of code and executing a cell!
-  - **Source location:** “The REPL,” programmatic-exploration explanation
+> A language model interacts with arbitrarily long prompts through an external programmable environment or an REPL. Printed outputs are truncated at the scaffold layer.
+> --- `kb/sources/.snapshots/recursive-language-models-what-finally-gave-me-the-aha-moment.md` @ `sha256:bcfc99a9d88933d60f603a1419da423fdabd4d665782aa9f6a225d141d609201` — “Recursive Language Models,” first mechanism point
+
+> The LLM can write code to programmatically explore, and create new transformations of the prompt
+> --- `kb/sources/.snapshots/recursive-language-models-what-finally-gave-me-the-aha-moment.md` @ `sha256:bcfc99a9d88933d60f603a1419da423fdabd4d665782aa9f6a225d141d609201` — “Recursive Language Models,” second mechanism point
+
+> It can recursively invoke sub-agents to complete smaller subtasks - basically zoom in on specific strategic regions of the prompt and call separate LLMs to work on them
+> --- `kb/sources/.snapshots/recursive-language-models-what-finally-gave-me-the-aha-moment.md` @ `sha256:bcfc99a9d88933d60f603a1419da423fdabd4d665782aa9f6a225d141d609201` — “Recursive Language Models,” third mechanism point
+
+> The subagent responses do not get automatically loaded into the parent agent's context, it gets returned as symbols or variables inside the parent's REPL
+> --- `kb/sources/.snapshots/recursive-language-models-what-finally-gave-me-the-aha-moment.md` @ `sha256:bcfc99a9d88933d60f603a1419da423fdabd4d665782aa9f6a225d141d609201` — “Recursive Language Models,” fourth mechanism point
+
+> RLM agents can return responses in two ways - (a) auto-regressively generated answers like normal LLMs, and (b) construct answers into a python variable and return the variable instead.
+> --- `kb/sources/.snapshots/recursive-language-models-what-finally-gave-me-the-aha-moment.md` @ `sha256:bcfc99a9d88933d60f603a1419da423fdabd4d665782aa9f6a225d141d609201` — “Recursive Language Models,” fifth mechanism point
+
+> Remember, python variables persist across different REPL execution calls. I keep coming back to the Jupyter Notebook example coz it is absolutely essential that you make this connection. Each time the LLM writes a block of code and executes is equivalent to us humans writing a block of code and executing a cell!
+> --- `kb/sources/.snapshots/recursive-language-models-what-finally-gave-me-the-aha-moment.md` @ `sha256:bcfc99a9d88933d60f603a1419da423fdabd4d665782aa9f6a225d141d609201` — “The REPL,” programmatic-exploration explanation
 
 ## Connections Found
 

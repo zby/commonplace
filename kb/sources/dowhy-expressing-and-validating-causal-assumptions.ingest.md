@@ -23,18 +23,23 @@ The paper argues that causal-effect estimation depends on assumptions about the 
 
 ## Quotes
 
-- **Source extract (verbatim):** four steps: model, identify, estimate, and validate.
-  - **Source location:** Introduction, “DoWhy: Expressing and validating assumptions”; short fragment required by the two-column PDF capture.
-- **Source extract (verbatim):** Before starting any causal analysis, DoWhy stipulates that
-  - **Source location:** Section 3.1, first half of the user-graph requirement; two-column capture.
-- **Source extract (verbatim):** the user provide a causal graph over the observed variables.
-  - **Source location:** Section 3.1, second half of the user-graph requirement; next captured line.
-- **Source extract (verbatim):** DoWhy uses graph-based criteria and do-calculus to find
-  - **Source location:** Section 3.1, first half of the identification statement; two-column capture.
-- **Source extract (verbatim):** expressions that can identify the causal effect.
-  - **Source location:** Section 3.1, second half of the identification statement; next captured line.
-- **Source extract (verbatim):** It is important to note here that causal assumptions cannot be fully verified. Rather, the intent is to validate some
-  - **Source location:** Section 3.2, validation boundary; the right PDF column is contiguous across these two captured lines.
+> four steps: model, identify, estimate, and validate.
+> --- `kb/sources/.snapshots/dowhy-expressing-and-validating-causal-assumptions.md` @ `sha256:b932c5b444675e9b0db8aed388b76c3e7c6ef10424cfe71e59fa6fc68996fd12` — Introduction, “DoWhy: Expressing and validating assumptions”; short fragment required by the two-column PDF capture.
+
+> Before starting any causal analysis, DoWhy stipulates that
+> --- `kb/sources/.snapshots/dowhy-expressing-and-validating-causal-assumptions.md` @ `sha256:b932c5b444675e9b0db8aed388b76c3e7c6ef10424cfe71e59fa6fc68996fd12` — Section 3.1, first half of the user-graph requirement; two-column capture.
+
+> the user provide a causal graph over the observed variables.
+> --- `kb/sources/.snapshots/dowhy-expressing-and-validating-causal-assumptions.md` @ `sha256:b932c5b444675e9b0db8aed388b76c3e7c6ef10424cfe71e59fa6fc68996fd12` — Section 3.1, second half of the user-graph requirement; next captured line.
+
+> DoWhy uses graph-based criteria and do-calculus to find
+> --- `kb/sources/.snapshots/dowhy-expressing-and-validating-causal-assumptions.md` @ `sha256:b932c5b444675e9b0db8aed388b76c3e7c6ef10424cfe71e59fa6fc68996fd12` — Section 3.1, first half of the identification statement; two-column capture.
+
+> expressions that can identify the causal effect.
+> --- `kb/sources/.snapshots/dowhy-expressing-and-validating-causal-assumptions.md` @ `sha256:b932c5b444675e9b0db8aed388b76c3e7c6ef10424cfe71e59fa6fc68996fd12` — Section 3.1, second half of the identification statement; next captured line.
+
+> It is important to note here that causal assumptions cannot be fully verified. Rather, the intent is to validate some
+> --- `kb/sources/.snapshots/dowhy-expressing-and-validating-causal-assumptions.md` @ `sha256:b932c5b444675e9b0db8aed388b76c3e7c6ef10424cfe71e59fa6fc68996fd12` — Section 3.2, validation boundary; the right PDF column is contiguous across these two captured lines.
 
 ## Connections Found
 

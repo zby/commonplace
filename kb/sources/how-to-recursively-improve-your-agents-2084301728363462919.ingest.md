@@ -26,19 +26,20 @@ The article presents “recursive auto-improvement” as a coding agent improvin
 
 ## Quotes
 
-- **Source extract (verbatim):** Here, one AI improves another. A coding agent edits a target agent's instructions, tools, and parameters.
-  - **Source location:** "Not RSI" paragraph beginning "Recursive self-improvement (RSI)"
-- **Source extract (verbatim):** The coding agent reads Radar's instructions and mines the sessions to build a set of probes: golden path, edge cases, tool selection, adversarial. For each probe it writes a one-line expected behavior, drawn from the spec. Then it runs them against the live agent, reads the tool calls, errors, and debug messages from the container logs, and judges every response.
-  - **Source location:** "Here's how it works" paragraph beginning "The coding agent reads Radar's instructions"
-- **Source extract (verbatim):** For every failure it picks one lever to change: tighten a rule, add a rule, swap a tool. It edits the agent code in agents/radar.py, restarts, and re-runs only what failed. Most fixes are one sentence or one parameter change.
-  - **Source location:** "Here's how it works" paragraph beginning "For every failure"
+> Here, one AI improves another. A coding agent edits a target agent's instructions, tools, and parameters.
+> --- `kb/sources/.snapshots/how-to-recursively-improve-your-agents-2084301728363462919.md` @ `sha256:a7f2db8e77cd68a7bef8f9a60189ae401ceade3b747d2ac96d9f1d01e6e23753` — "Not RSI" paragraph beginning "Recursive self-improvement (RSI)"
 
-- **Source extract (verbatim):** Recursive auto-improvement (RAI) is a convergent process: it pulls the agent toward a fixed point, i.e. its own spec.
-  - **Source location:** "Not RSI" paragraph beginning "Recursive self-improvement (RSI)"
-- **Source extract (verbatim):** Today I'm going to show you how to recursively improve your agents. We'll build an agent that starts at 7/10, then run a recursive auto-improvement loop until every probe passes.
-  - **Source location:** Opening paragraph
-- **Source extract (verbatim):** The coding agent reads Radar's instructions and mines the sessions to build a set of probes: golden path, edge cases, tool selection, adversarial. For each probe it writes a one-line expected behavior, drawn from the spec. Then it runs them against the live agent, reads the tool calls, errors, and debug messages from the container logs, and judges every response.
-  - **Source location:** "Here's how it works" paragraph beginning "The coding agent reads Radar's instructions"
+> The coding agent reads Radar's instructions and mines the sessions to build a set of probes: golden path, edge cases, tool selection, adversarial. For each probe it writes a one-line expected behavior, drawn from the spec. Then it runs them against the live agent, reads the tool calls, errors, and debug messages from the container logs, and judges every response.
+> --- `kb/sources/.snapshots/how-to-recursively-improve-your-agents-2084301728363462919.md` @ `sha256:a7f2db8e77cd68a7bef8f9a60189ae401ceade3b747d2ac96d9f1d01e6e23753` — "Here's how it works" paragraph beginning "The coding agent reads Radar's instructions"
+
+> For every failure it picks one lever to change: tighten a rule, add a rule, swap a tool. It edits the agent code in agents/radar.py, restarts, and re-runs only what failed. Most fixes are one sentence or one parameter change.
+> --- `kb/sources/.snapshots/how-to-recursively-improve-your-agents-2084301728363462919.md` @ `sha256:a7f2db8e77cd68a7bef8f9a60189ae401ceade3b747d2ac96d9f1d01e6e23753` — "Here's how it works" paragraph beginning "For every failure"
+
+> Recursive auto-improvement (RAI) is a convergent process: it pulls the agent toward a fixed point, i.e. its own spec.
+> --- `kb/sources/.snapshots/how-to-recursively-improve-your-agents-2084301728363462919.md` @ `sha256:a7f2db8e77cd68a7bef8f9a60189ae401ceade3b747d2ac96d9f1d01e6e23753` — "Not RSI" paragraph beginning "Recursive self-improvement (RSI)"
+
+> Today I'm going to show you how to recursively improve your agents. We'll build an agent that starts at 7/10, then run a recursive auto-improvement loop until every probe passes.
+> --- `kb/sources/.snapshots/how-to-recursively-improve-your-agents-2084301728363462919.md` @ `sha256:a7f2db8e77cd68a7bef8f9a60189ae401ceade3b747d2ac96d9f1d01e6e23753` — Opening paragraph
 
 ## Connections Found
 

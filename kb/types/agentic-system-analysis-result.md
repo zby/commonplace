@@ -249,8 +249,10 @@ projections ends with a `> ---` attribution. For Git, the attribution contains
 either a full-commit GitHub blob URL matching the registered repository or
 `` `commit-relative/path` @ `full-commit` ``. For a capture, it names the
 captured source. Publication normalizes whitespace and requires the quote to
-occur in the Git blob at the recorded commit or in the immutable capture. This
-is a structural occurrence check. Line numbers are navigation only. Omit
+occur exactly once in the Git blob at the recorded commit or in the immutable
+capture, or exactly once within a supplied line range. Ranges use
+`path:start-end` inside the path code span or GitHub `#Lstart-Lend` anchors;
+they must contain the entire quote. This is a structural occurrence check. Omit
 numbers added for display, invented ellipses and formatting fences from the
 quoted text; discontiguous passages use separate blocks. Semantic support
 remains part of semantic verification.

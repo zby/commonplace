@@ -23,14 +23,17 @@ Pindyck argues that the standard net-present-value rule is incomplete when an in
 
 ## Quotes
 
-- **Source extract (verbatim):** When a firm makes an irreversible investment expenditure, it exercises, or "kills," its option to invest. It gives up the possibility of waiting -4for new information to arrive that might affect the desirability or timing of the expenditure; it cannot disinvest should market conditions change adversely.
-  - **Source location:** Section 1, “Introduction,” printed pp. 3–4.
-- **Source extract (verbatim):** Firms do not always have an opportunity to delay investments. There can be occasions, for example, in which strategic considerations make it imperative for a firm to invest quickly and thereby preempt investment by existing or potential competitors.2 But in most cases, delay is at least feasible. There may be a cost to delay -. the risk of entry by other firms, or simply foregone cash flows - - but this cost must be weighed against the benefits of waiting for new information.
-  - **Source location:** Section 1, “Introduction,” printed p. 2.
-- **Source extract (verbatim):** However, by first spending $50 to research the widget market, one could determine whether widget prices will rise or fall next year. Clearly one should spend this $50, even though the NPV of the entire project (the research plus the construction of the factory) is negative. One would then build the factory only if the research showed that widget prices will rise.
-  - **Source location:** Section 5, “Extensions,” subsection “Sequential Investment,” printed p. 40.
-- **Source extract (verbatim):** Another example is a patent or mineral resource lease that is about to expire.) The less time there is to delay, and the greater the cost of delaying, the less will irreversibility affect the investment decision.
-  - **Source location:** Section 1, discussion of limited opportunities to delay, printed p. 8.
+> When a firm makes an irreversible investment expenditure, it exercises, or "kills," its option to invest. It gives up the possibility of waiting -4for new information to arrive that might affect the desirability or timing of the expenditure; it cannot disinvest should market conditions change adversely.
+> --- `kb/sources/.snapshots/pindyck-irreversibility-uncertainty-investment.md` @ `sha256:8639afd19b29c0d0702d8492df1ee7347229b7ebc5ca3d9cab8a34490d9edac8` — Section 1, “Introduction,” printed pp. 3–4.
+
+> Firms do not always have an opportunity to delay investments. There can be occasions, for example, in which strategic considerations make it imperative for a firm to invest quickly and thereby preempt investment by existing or potential competitors.2 But in most cases, delay is at least feasible. There may be a cost to delay -. the risk of entry by other firms, or simply foregone cash flows - - but this cost must be weighed against the benefits of waiting for new information.
+> --- `kb/sources/.snapshots/pindyck-irreversibility-uncertainty-investment.md` @ `sha256:8639afd19b29c0d0702d8492df1ee7347229b7ebc5ca3d9cab8a34490d9edac8` — Section 1, “Introduction,” printed p. 2.
+
+> However, by first spending $50 to research the widget market, one could determine whether widget prices will rise or fall next year. Clearly one should spend this $50, even though the NPV of the entire project (the research plus the construction of the factory) is negative. One would then build the factory only if the research showed that widget prices will rise.
+> --- `kb/sources/.snapshots/pindyck-irreversibility-uncertainty-investment.md` @ `sha256:8639afd19b29c0d0702d8492df1ee7347229b7ebc5ca3d9cab8a34490d9edac8` — Section 5, “Extensions,” subsection “Sequential Investment,” printed p. 40.
+
+> Another example is a patent or mineral resource lease that is about to expire.) The less time there is to delay, and the greater the cost of delaying, the less will irreversibility affect the investment decision.
+> --- `kb/sources/.snapshots/pindyck-irreversibility-uncertainty-investment.md` @ `sha256:8639afd19b29c0d0702d8492df1ee7347229b7ebc5ca3d9cab8a34490d9edac8` — Section 1, discussion of limited opportunities to delay, printed p. 8.
 
 ## Connections Found
 

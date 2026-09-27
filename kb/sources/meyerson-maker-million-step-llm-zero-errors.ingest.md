@@ -24,21 +24,26 @@ MAKER introduces "massively decomposed agentic processes" (MDAPs), a framework t
 
 ## Quotes
 
-- **Source extract (verbatim):** This paper describes MAKER, the first system that successfully solves a task with over one million LLM steps with zero errors, and, in principle, scales far beyond this level.
-  - **Source location:** Abstract.
-- **Source extract (verbatim):** The approach relies on an extreme decomposition of a task into subtasks, each of which can be tackled by focused microagents.
-  - **Source location:** Abstract.
-- **Source extract (verbatim):** Since k_min = 3, at least three responses were generated in parallel for each step.
-  - **Source location:** Section 4.4, “Solving the 20-disk problem.”
+> This paper describes MAKER, the first system that successfully solves a task with over one million LLM steps with zero errors, and, in principle, scales far beyond this level.
+> --- `kb/sources/.snapshots/meyerson-maker-million-step-llm-zero-errors.md` @ `sha256:fc2a9e63f8202af628d850c8985764699da2a85bdbde1edc63823755cf52f646` — Abstract.
 
-- **Source extract (verbatim):** This paper provides a first implementation of the MDAP framework: MAKER (for Maximal Agentic decomposition, first-to-ahead-by-K Error correction, and Red-flagging), evaluated on the Towers of Hanoi domain. MAKER is a system of *agents* in which each agent is assigned a single subtask to solve.
-  - **Source location:** Section 1, “Introduction”
-- **Source extract (verbatim):** Maximal agentic decomposition (MAD), i.e., m = 1
-  - **Source location:** Section 3.1, “Maximal Agentic Decomposition,” extreme-cases list
-- **Source extract (verbatim):** Solving the 20-disk problem: Over one million steps with zero errors
-  - **Source location:** Section 4.4 heading
-- **Source extract (verbatim):** With `gpt-4.1-mini` as the base model, the maximum output token threshold was set to 750, and a red-flagging output parser was used to enforce the basic formatting requirements. Since k_min = 3, at least three responses were generated in parallel for each step.
-  - **Source location:** Section 4.4, experiment configuration
+> The approach relies on an extreme decomposition of a task into subtasks, each of which can be tackled by focused microagents.
+> --- `kb/sources/.snapshots/meyerson-maker-million-step-llm-zero-errors.md` @ `sha256:fc2a9e63f8202af628d850c8985764699da2a85bdbde1edc63823755cf52f646` — Abstract.
+
+> Since k_min = 3, at least three responses were generated in parallel for each step.
+> --- `kb/sources/.snapshots/meyerson-maker-million-step-llm-zero-errors.md` @ `sha256:fc2a9e63f8202af628d850c8985764699da2a85bdbde1edc63823755cf52f646` — Section 4.4, “Solving the 20-disk problem.”
+
+> This paper provides a first implementation of the MDAP framework: MAKER (for Maximal Agentic decomposition, first-to-ahead-by-K Error correction, and Red-flagging), evaluated on the Towers of Hanoi domain. MAKER is a system of *agents* in which each agent is assigned a single subtask to solve.
+> --- `kb/sources/.snapshots/meyerson-maker-million-step-llm-zero-errors.md` @ `sha256:fc2a9e63f8202af628d850c8985764699da2a85bdbde1edc63823755cf52f646` — Section 1, “Introduction”
+
+> Maximal agentic decomposition (MAD), i.e., m = 1
+> --- `kb/sources/.snapshots/meyerson-maker-million-step-llm-zero-errors.md` @ `sha256:fc2a9e63f8202af628d850c8985764699da2a85bdbde1edc63823755cf52f646` — Section 3.1, “Maximal Agentic Decomposition,” extreme-cases list
+
+> Solving the 20-disk problem: Over one million steps with zero errors
+> --- `kb/sources/.snapshots/meyerson-maker-million-step-llm-zero-errors.md` @ `sha256:fc2a9e63f8202af628d850c8985764699da2a85bdbde1edc63823755cf52f646` — Section 4.4 heading
+
+> With `gpt-4.1-mini` as the base model, the maximum output token threshold was set to 750, and a red-flagging output parser was used to enforce the basic formatting requirements. Since k_min = 3, at least three responses were generated in parallel for each step.
+> --- `kb/sources/.snapshots/meyerson-maker-million-step-llm-zero-errors.md` @ `sha256:fc2a9e63f8202af628d850c8985764699da2a85bdbde1edc63823755cf52f646` — Section 4.4, experiment configuration
 
 ## Connections Found
 

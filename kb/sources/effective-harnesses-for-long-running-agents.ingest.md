@@ -23,14 +23,17 @@ Anthropic reports that repeatedly running a frontier coding model with compactio
 
 ## Quotes
 
-- **Source extract (verbatim):** However, compaction isn’t sufficient. Out of the box, even a frontier coding model like Opus 4.5 running on the Claude Agent SDK in a loop across multiple context windows will fall short of building a production-quality web app if it’s only given a high-level prompt, such as “build a clone of claude.ai.”
-  - **Source location:** “The long-running agent problem.”
-- **Source extract (verbatim):** We developed a two-fold solution to enable the Claude Agent SDK to work effectively across many context windows: an initializer agent that sets up the environment on the first run, and a coding agent that is tasked with making incremental progress in every session, while leaving clear artifacts for the next session.
-  - **Source location:** Introduction.
-- **Source extract (verbatim):** To address the problem of the agent one-shotting an app or prematurely considering the project complete, we prompted the initializer agent to write a comprehensive file of feature requirements expanding on the user’s initial prompt.
-  - **Source location:** “Feature list.”
-- **Source extract (verbatim):** In the case of building a web app, Claude mostly did well at verifying features end-to-end once explicitly prompted to use browser automation tools and do all testing as a human user would.
-  - **Source location:** “Testing.”
+> However, compaction isn’t sufficient. Out of the box, even a frontier coding model like Opus 4.5 running on the Claude Agent SDK in a loop across multiple context windows will fall short of building a production-quality web app if it’s only given a high-level prompt, such as “build a clone of claude.ai.”
+> --- `kb/sources/.snapshots/effective-harnesses-for-long-running-agents.md` @ `sha256:4a5788553fb66a66c7d305584ddfae593ff9f2837c992b3f217009d2e435d239` — “The long-running agent problem.”
+
+> We developed a two-fold solution to enable the Claude Agent SDK to work effectively across many context windows: an initializer agent that sets up the environment on the first run, and a coding agent that is tasked with making incremental progress in every session, while leaving clear artifacts for the next session.
+> --- `kb/sources/.snapshots/effective-harnesses-for-long-running-agents.md` @ `sha256:4a5788553fb66a66c7d305584ddfae593ff9f2837c992b3f217009d2e435d239` — Introduction.
+
+> To address the problem of the agent one-shotting an app or prematurely considering the project complete, we prompted the initializer agent to write a comprehensive file of feature requirements expanding on the user’s initial prompt.
+> --- `kb/sources/.snapshots/effective-harnesses-for-long-running-agents.md` @ `sha256:4a5788553fb66a66c7d305584ddfae593ff9f2837c992b3f217009d2e435d239` — “Feature list.”
+
+> In the case of building a web app, Claude mostly did well at verifying features end-to-end once explicitly prompted to use browser automation tools and do all testing as a human user would.
+> --- `kb/sources/.snapshots/effective-harnesses-for-long-running-agents.md` @ `sha256:4a5788553fb66a66c7d305584ddfae593ff9f2837c992b3f217009d2e435d239` — “Testing.”
 
 ## Connections Found
 

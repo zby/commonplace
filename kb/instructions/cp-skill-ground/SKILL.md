@@ -41,8 +41,7 @@ collection's edit-time rule.
 2. Resolve one ingest. For a URL with no ingest, invoke `cp-skill-ingest` on the
    exact URL and use its validated result. Stop on ambiguity.
 3. Read the complete `## Quotes` section. Judge the requested source-side
-   proposition directly against its retained `Source extract (verbatim)`
-   values. Ignore the ingest's Summary, Connections Found, Extractable Value,
+   proposition directly against its retained blockquote bodies. Ignore the ingest's Summary, Connections Found, Extractable Value,
    and Limitations as support.
    - If the retained quotes are sufficient, return the ingest path and
      `quotes sufficient` without mutation.
@@ -74,14 +73,17 @@ collection's edit-time rule.
      adjacent quote items in this exact shape:
 
      ```markdown
-     - **Source extract (verbatim):** <exact supporting content>
-       - **Source location:** <human-resolvable locator for that extract>
+     > <exact supporting content>
+     > --- `kb/sources/.snapshots/<slug>.md` @ `sha256:<snapshot_sha256>` — <optional locator note>
      ```
 
-     Repeat the complete pair when support is non-contiguous. Line wrapping is
+     Repeat the complete block when support is non-contiguous. Line wrapping is
      not non-contiguity: verbatim matching normalizes whitespace. Copy the
      snapshot's text exactly and retain only the minimum passages needed for a
-     sound check.
+     sound check. Quote enough that the passage is unique in its source; if
+     you supply a `:start-end` range after the snapshot path, the whole quote
+     must occur exactly once inside it. Reuse an existing exact extract
+     rather than appending it again.
    - If sound checking depends on broad or distributed context that should not
      be retained as a bounded set of quotes, do not append a substitute
      paraphrase or an oversized extract. Return `snapshot required` and tell
@@ -100,8 +102,8 @@ collection's edit-time rule.
    - Recheck the paired paths, source identity, and checksum against the
      current bytes, write the candidate once, then run
      `commonplace-validate kb/sources/<slug>.ingest.md`. The validator resolves
-     each `Source extract (verbatim)` against the name-paired snapshot and
-     fails on one that does not occur; that check, not your own reading, is
+     each attributed extract against the name-paired snapshot and
+     fails on an absent, ambiguous, or out-of-range quote; that check, not your own reading, is
      the verification — an agent checking text it just transcribed confirms
      its own copy. Earlier grounding runs produced false extracts by silently
      repairing capture artifacts (line-break hyphenation, an inline footnote

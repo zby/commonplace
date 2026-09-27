@@ -24,8 +24,8 @@ Microsoft's product page states that the Smart Client Software Factory is retire
 
 ## Quotes
 
-- **Source extract (verbatim):** This project is retired. No future releases are planned.
-  - **Source location:** “RETIRED DOWNLOAD” notice
+> This project is retired. No future releases are planned.
+> --- `kb/sources/.snapshots/microsoft-retired-smart-client-software-factory.md:20-20` @ `sha256:25f9287756b0f3daa5ec53f45ebe330a4fa5e4f62c41444719e3ccf8aca110e1` — “RETIRED DOWNLOAD” notice
 
 ## Connections Found
 

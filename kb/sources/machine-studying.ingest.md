@@ -23,38 +23,47 @@ The authors define **machine studying** as any pre-task change an agent makes to
 
 ## Quotes
 
-- **Source extract (verbatim):** We keep only the must-cite papers that *both* models actually encountered, then ask what fraction each one keeps, so both now judge an identical pile.
-  - **Source location:** Section 8, discussion of Figure 8.
-- **Source extract (verbatim):** From 2023 on, GPT-5.1 falls behind by around twenty points, on papers it had already found and read.
-  - **Source location:** Section 8, discussion of Figure 8.
-- **Source extract (verbatim):** By year (≤2020 … 2025). GPT-5.1: 88.1, 87.0, 83.8, 68.9, 72.5, 65.6. GPT-5.5: 95.2, 95.7, 89.2, 91.9, 88.7, 89.3 (percent). Gap in points: +7, +9, +5, +23, +16, +24.
-  - **Source location:** Figure 8, “Retrieval-Controlled Selection Rate by Year.”
+> We keep only the must-cite papers that *both* models actually encountered, then ask what fraction each one keeps, so both now judge an identical pile.
+> --- `kb/sources/.snapshots/machine-studying.md` @ `sha256:96fd135e5337c3adad1cc7fc3dede93aae987e852865d71d980eccd41dbb3919` — Section 8, discussion of Figure 8.
 
-- **Source extract (verbatim):** We call this problem **Machine Studying**. Given nothing but a corpus $\mathbf{D} = (d_1, \ldots, d_n)$, can AI systems autonomously develop *expertise* in the underlying domain? A studying algorithm is **whatever the agent does *to itself* using $\mathbf{D}$ before anything is known about downstream evaluation**. Studying may update the agent’s weights or anything in its harness.
-  - **Source location:** Introduction, definition of Machine Studying
-- **Source extract (verbatim):** **Machine Studying asks what an agent should do when it’s given a declarative corpus and no downstream task.** Of course, this requires pre-trained agents that have accurate priors about the world. The agent may pose its own questions and rubrics while it studies, much like a student quizzing themselves, but it can’t assume that we’ll tell it much about the task distribution or the reward that will eventually score it.
-  - **Source location:** Section 1, closing paragraph
+> From 2023 on, GPT-5.1 falls behind by around twenty points, on papers it had already found and read.
+> --- `kb/sources/.snapshots/machine-studying.md` @ `sha256:96fd135e5337c3adad1cc7fc3dede93aae987e852865d71d980eccd41dbb3919` — Section 8, discussion of Figure 8.
 
-- **Source extract (verbatim):** An agent here is just a model and a harness, $\Sigma = (\mathbf{M}, \mathbf{H})$, and a studying algorithm may change the weights or the agent’s prompts, tools, or the indexes and notes it maintains in the environment.
-  - **Source location:** Section 1, definition of the agent and studying surface
+> By year (≤2020 … 2025). GPT-5.1: 88.1, 87.0, 83.8, 68.9, 72.5, 65.6. GPT-5.5: 95.2, 95.7, 89.2, 91.9, 88.7, 89.3 (percent). Gap in points: +7, +9, +5, +23, +16, +24.
+> --- `kb/sources/.snapshots/machine-studying.md` @ `sha256:96fd135e5337c3adad1cc7fc3dede93aae987e852865d71d980eccd41dbb3919` — Figure 8, “Retrieval-Controlled Selection Rate by Year.”
 
-- **Source extract (verbatim):** In this initial blog, we report on the simplest instantiation of this bet, i.e., **writing a cheatsheet**, in which the agent explores the repository with the same three tools for dozens of steps and writes itself a note, which is then prepended to every future question. This is a very simple approach that won’t change the weights, but it’s an essential baseline to compare against approaches that do.
-  - **Source location:** Section 6, “Amortized context management”
-- **Source extract (verbatim):** Figure 6 below shows the cheatsheet runs. On Studying-DSPy, the gains from the cheatsheet are concentrated at the low inference budgets. That’s arguably where a studying algorithm should help first: the cheatsheet note hands the agent a map of the repository that it would otherwise rebuild from scratch on every question. At the forced 20-iteration budget, the unmodified agent catches up, since enough search eventually recovers what the note knew (studying by cramming together a cheatsheet is *still* a very shallow mechanism, after all!). We do not believe a cheatsheet is the final form of studying, and indeed we don’t see the same effects on Studying-OpenClaw.
-  - **Source location:** Section 7, discussion of Figure 6
+> We call this problem **Machine Studying**. Given nothing but a corpus $\mathbf{D} = (d_1, \ldots, d_n)$, can AI systems autonomously develop *expertise* in the underlying domain? A studying algorithm is **whatever the agent does *to itself* using $\mathbf{D}$ before anything is known about downstream evaluation**. Studying may update the agent’s weights or anything in its harness.
+> --- `kb/sources/.snapshots/machine-studying.md` @ `sha256:96fd135e5337c3adad1cc7fc3dede93aae987e852865d71d980eccd41dbb3919` — Introduction, definition of Machine Studying
 
-- **Source extract (verbatim):** | Qwen3.5-9B (base) | 6.49 | 7.64 |
-  - **Source location:** Section 7, “Expertise (lenient WAUC)” table, Studying-DSPy and Studying-OpenClaw columns
-- **Source extract (verbatim):** | SFT + OPSD | 3.29 | — |
-  - **Source location:** Section 7, “Expertise (lenient WAUC)” table
-- **Source extract (verbatim):** | CPT(code) | 3.71 | 7.82 |
-  - **Source location:** Section 7, “Expertise (lenient WAUC)” table
-- **Source extract (verbatim):** | CPT(doc) | 3.92 | — |
-  - **Source location:** Section 7, “Expertise (lenient WAUC)” table
-- **Source extract (verbatim):** | + cheatsheet | **9.65** | **8.18** |
-  - **Source location:** Section 7, “Expertise (lenient WAUC)” table
-- **Source extract (verbatim):** In our preliminary runs here, the cheatsheet is the only procedure that ends up developing noticeable expertise in one of the the two domains.
-  - **Source location:** Section 7, sentence following the expertise table
+> **Machine Studying asks what an agent should do when it’s given a declarative corpus and no downstream task.** Of course, this requires pre-trained agents that have accurate priors about the world. The agent may pose its own questions and rubrics while it studies, much like a student quizzing themselves, but it can’t assume that we’ll tell it much about the task distribution or the reward that will eventually score it.
+> --- `kb/sources/.snapshots/machine-studying.md` @ `sha256:96fd135e5337c3adad1cc7fc3dede93aae987e852865d71d980eccd41dbb3919` — Section 1, closing paragraph
+
+> An agent here is just a model and a harness, $\Sigma = (\mathbf{M}, \mathbf{H})$, and a studying algorithm may change the weights or the agent’s prompts, tools, or the indexes and notes it maintains in the environment.
+> --- `kb/sources/.snapshots/machine-studying.md` @ `sha256:96fd135e5337c3adad1cc7fc3dede93aae987e852865d71d980eccd41dbb3919` — Section 1, definition of the agent and studying surface
+
+> In this initial blog, we report on the simplest instantiation of this bet, i.e., **writing a cheatsheet**, in which the agent explores the repository with the same three tools for dozens of steps and writes itself a note, which is then prepended to every future question. This is a very simple approach that won’t change the weights, but it’s an essential baseline to compare against approaches that do.
+> --- `kb/sources/.snapshots/machine-studying.md` @ `sha256:96fd135e5337c3adad1cc7fc3dede93aae987e852865d71d980eccd41dbb3919` — Section 6, “Amortized context management”
+
+> Figure 6 below shows the cheatsheet runs. On Studying-DSPy, the gains from the cheatsheet are concentrated at the low inference budgets. That’s arguably where a studying algorithm should help first: the cheatsheet note hands the agent a map of the repository that it would otherwise rebuild from scratch on every question. At the forced 20-iteration budget, the unmodified agent catches up, since enough search eventually recovers what the note knew (studying by cramming together a cheatsheet is *still* a very shallow mechanism, after all!). We do not believe a cheatsheet is the final form of studying, and indeed we don’t see the same effects on Studying-OpenClaw.
+> --- `kb/sources/.snapshots/machine-studying.md` @ `sha256:96fd135e5337c3adad1cc7fc3dede93aae987e852865d71d980eccd41dbb3919` — Section 7, discussion of Figure 6
+
+> | Qwen3.5-9B (base) | 6.49 | 7.64 |
+> --- `kb/sources/.snapshots/machine-studying.md` @ `sha256:96fd135e5337c3adad1cc7fc3dede93aae987e852865d71d980eccd41dbb3919` — Section 7, “Expertise (lenient WAUC)” table, Studying-DSPy and Studying-OpenClaw columns
+
+> | SFT + OPSD | 3.29 | — |
+> --- `kb/sources/.snapshots/machine-studying.md` @ `sha256:96fd135e5337c3adad1cc7fc3dede93aae987e852865d71d980eccd41dbb3919` — Section 7, “Expertise (lenient WAUC)” table
+
+> | CPT(code) | 3.71 | 7.82 |
+> --- `kb/sources/.snapshots/machine-studying.md` @ `sha256:96fd135e5337c3adad1cc7fc3dede93aae987e852865d71d980eccd41dbb3919` — Section 7, “Expertise (lenient WAUC)” table
+
+> | CPT(doc) | 3.92 | — |
+> --- `kb/sources/.snapshots/machine-studying.md` @ `sha256:96fd135e5337c3adad1cc7fc3dede93aae987e852865d71d980eccd41dbb3919` — Section 7, “Expertise (lenient WAUC)” table
+
+> | + cheatsheet | **9.65** | **8.18** |
+> --- `kb/sources/.snapshots/machine-studying.md` @ `sha256:96fd135e5337c3adad1cc7fc3dede93aae987e852865d71d980eccd41dbb3919` — Section 7, “Expertise (lenient WAUC)” table
+
+> In our preliminary runs here, the cheatsheet is the only procedure that ends up developing noticeable expertise in one of the the two domains.
+> --- `kb/sources/.snapshots/machine-studying.md` @ `sha256:96fd135e5337c3adad1cc7fc3dede93aae987e852865d71d980eccd41dbb3919` — Section 7, sentence following the expertise table
 
 ## Connections Found
 

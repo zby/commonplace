@@ -24,12 +24,14 @@ DiscoverPhysics builds 22 simulated worlds whose laws of motion deliberately dev
 
 ## Quotes
 
-- **Source extract (verbatim):** This paper introduces DiscoverPhysics, an interactive benchmark designed to assess whether large language models can genuinely reason scientifically or merely recall established knowledge. The benchmark tasks LLM agents with discovering the laws of motion in simulated worlds that deliberately deviate from our universe's physics.
-  - **Source location:** Abstract.
-- **Source extract (verbatim):** Agents must "propose several rounds of experiments, observe raw trajectory data" and submit both natural language explanations and Python implementations of the inferred physical laws.
-  - **Source location:** “Key Features.”
-- **Source extract (verbatim):** Strong predictive accuracy doesn't guarantee quality conceptual explanations
-  - **Source location:** “Findings,” fourth bullet.
+> This paper introduces DiscoverPhysics, an interactive benchmark designed to assess whether large language models can genuinely reason scientifically or merely recall established knowledge. The benchmark tasks LLM agents with discovering the laws of motion in simulated worlds that deliberately deviate from our universe's physics.
+> --- `kb/sources/.snapshots/discoverphysics-benchmarking-llms-out-of-the-box-scientific.md` @ `sha256:744275ce98bedc5e0895ff48082ea40407c6665dc230b87a8f425420a82ec602` — Abstract.
+
+> Agents must "propose several rounds of experiments, observe raw trajectory data" and submit both natural language explanations and Python implementations of the inferred physical laws.
+> --- `kb/sources/.snapshots/discoverphysics-benchmarking-llms-out-of-the-box-scientific.md` @ `sha256:744275ce98bedc5e0895ff48082ea40407c6665dc230b87a8f425420a82ec602` — “Key Features.”
+
+> Strong predictive accuracy doesn't guarantee quality conceptual explanations
+> --- `kb/sources/.snapshots/discoverphysics-benchmarking-llms-out-of-the-box-scientific.md` @ `sha256:744275ce98bedc5e0895ff48082ea40407c6665dc230b87a8f425420a82ec602` — “Findings,” fourth bullet.
 
 ## Connections Found
 

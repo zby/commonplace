@@ -23,12 +23,14 @@ The discussion responding to Rick Manelius's “AI;DR” post centers on an effo
 
 ## Quotes
 
-- **Source extract (verbatim):** Comments become a huge maintenance burden, especially in the age of AI. They just grow and grow, and then mislead the AI later on.
-  - **Source location:** Comment by `preg_match`, item 49339942.
-- **Source extract (verbatim):** Now the code is fully uncommented and it has saved lots of input tokens and also lots of meandering because the model is no longer getting stuck on bad ideas it told itself about.
-  - **Source location:** Reply by `Taek`, item 49342055.
-- **Source extract (verbatim):** It's probably also a compounding source of context poisoning when a minority of the comments/documentation are about how the current code actually works.
-  - **Source location:** Comment by `_--__--__`, item 49338569.
+> Comments become a huge maintenance burden, especially in the age of AI. They just grow and grow, and then mislead the AI later on.
+> --- `kb/sources/.snapshots/hacker-news-ai-dr-ai-didnt-read.md` @ `sha256:c46326cc89ce164041bcbdc35628471baaffe787989354fb5c24928a2e7ae2b0` — Comment by `preg_match`, item 49339942.
+
+> Now the code is fully uncommented and it has saved lots of input tokens and also lots of meandering because the model is no longer getting stuck on bad ideas it told itself about.
+> --- `kb/sources/.snapshots/hacker-news-ai-dr-ai-didnt-read.md` @ `sha256:c46326cc89ce164041bcbdc35628471baaffe787989354fb5c24928a2e7ae2b0` — Reply by `Taek`, item 49342055.
+
+> It's probably also a compounding source of context poisoning when a minority of the comments/documentation are about how the current code actually works.
+> --- `kb/sources/.snapshots/hacker-news-ai-dr-ai-didnt-read.md` @ `sha256:c46326cc89ce164041bcbdc35628471baaffe787989354fb5c24928a2e7ae2b0` — Comment by `_--__--__`, item 49338569.
 
 ## Connections Found
 

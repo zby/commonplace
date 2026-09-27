@@ -137,7 +137,7 @@ construction. Keep subsequent analytical changes outside that exposed context.
    output cap alone does not bound the inspection. Treat truncated output as
    non-evidence. Narrow and repeat the read before citing it. For Git, cite the
    `SRC-*` ID plus a full commit-relative path; line ranges are optional
-   navigation, not evidence-text verification. For each load-bearing finding
+   navigation that is checked when supplied. For each load-bearing finding
    (a disputed mechanism, comparison classification or assessment), retain the
    minimum verbatim supporting code or prose as an attributed blockquote.
    Number excerpts when locating statements, but omit display line numbers,
@@ -146,7 +146,9 @@ construction. Keep subsequent analytical changes outside that exposed context.
    matching full-commit GitHub blob URL or
    ``> --- `commit-relative/path` @ `full-commit` ``. For captures, name the
    frozen captured source. Publication searches the complete pinned blob or
-   capture for the quoted text with whitespace normalization. It never uses
+   capture for a unique occurrence with whitespace normalization. Quote enough
+   to be unique, or supply a range containing exactly one complete occurrence.
+   It never uses
    the worktree or line numbers as a substitute for matching source text.
    Verify that the matched passage supports its attached finding separately.
    An absence still requires the searched boundary; a quotation cannot prove

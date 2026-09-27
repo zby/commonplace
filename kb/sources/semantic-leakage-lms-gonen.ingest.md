@@ -24,12 +24,14 @@ Gonen et al. define **semantic leakage**: generations that reflect undue semanti
 
 ## Quotes
 
-- **Source extract (verbatim):** From this formulation, we derive the **Semantic Leakage Rate** metric (Leak-Rate), the percentage of instances in which the concept is semantically closer to the test generation than the control generation. When the model does not exhibit semantic leakage at all, we expect a Leak-Rate of 50% — an even split between test vs. control having higher similarity. We expect Leak-Rate higher than 50% when the model exhibits semantic leakage.
-  - **Source location:** Section 2.2, “Operationalizing the Measurement of Semantic Leakage.”
-- **Source extract (verbatim):** **Models:** 13 models — GPT-3.5, GPT-4, GPT-4o; Llama 2 (7B, 7B-chat, 13B, 13B-chat, 70B, 70B-chat); Llama 3 (8B, 8B-Instruct, 70B, 70B-Instruct).
-  - **Source location:** Section 3, experimental setup.
-- **Source extract (verbatim):** Semantic leakage is exhibited by all model variations, and is detected by all embedding models we use. Leak-Rate values are all well above the 50% random mark and statistically significant. **Instruction tuning increases leakage:** For Llama models we consistently see that the instruction-tuned models (chat version in Llama 2 and instruct version in Llama 3) leak more than their pretrained-only counterparts. All the differences are statistically significant except for Llama-2-13b. GPT-4o consistently leaks more than GPT-4 and GPT-3.5.
-  - **Source location:** Section 4, results.
+> From this formulation, we derive the **Semantic Leakage Rate** metric (Leak-Rate), the percentage of instances in which the concept is semantically closer to the test generation than the control generation. When the model does not exhibit semantic leakage at all, we expect a Leak-Rate of 50% — an even split between test vs. control having higher similarity. We expect Leak-Rate higher than 50% when the model exhibits semantic leakage.
+> --- `kb/sources/.snapshots/semantic-leakage-lms-gonen.md` @ `sha256:09cd3f08809132f1007b98ac94ca47e63e414be75b6cc75fab8ef10e7801a820` — Section 2.2, “Operationalizing the Measurement of Semantic Leakage.”
+
+> **Models:** 13 models — GPT-3.5, GPT-4, GPT-4o; Llama 2 (7B, 7B-chat, 13B, 13B-chat, 70B, 70B-chat); Llama 3 (8B, 8B-Instruct, 70B, 70B-Instruct).
+> --- `kb/sources/.snapshots/semantic-leakage-lms-gonen.md` @ `sha256:09cd3f08809132f1007b98ac94ca47e63e414be75b6cc75fab8ef10e7801a820` — Section 3, experimental setup.
+
+> Semantic leakage is exhibited by all model variations, and is detected by all embedding models we use. Leak-Rate values are all well above the 50% random mark and statistically significant. **Instruction tuning increases leakage:** For Llama models we consistently see that the instruction-tuned models (chat version in Llama 2 and instruct version in Llama 3) leak more than their pretrained-only counterparts. All the differences are statistically significant except for Llama-2-13b. GPT-4o consistently leaks more than GPT-4 and GPT-3.5.
+> --- `kb/sources/.snapshots/semantic-leakage-lms-gonen.md` @ `sha256:09cd3f08809132f1007b98ac94ca47e63e414be75b6cc75fab8ef10e7801a820` — Section 4, results.
 
 ## Connections Found
 

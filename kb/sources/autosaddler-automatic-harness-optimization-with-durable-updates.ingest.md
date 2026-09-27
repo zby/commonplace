@@ -23,10 +23,11 @@ AutoSaddler treats harness improvement as offline learning: optimizer agents ins
 
 ## Quotes
 
-- **Source extract (verbatim):** Specifically, we evaluate a “w/o in-depth diagnosis” variant that replaces CA-SDK-based diagnosis with a shallow diagnostic baseline: a single LLM call receives the execution trace and evaluation results, and infers the failure reason, a strategy commonly used in automatic prompt optimization pipelines for failure reflection [36, 1]. The inferred failure reason is then passed back to CA-SDK for patch generation. In contrast, AutoSaddler’s in-depth diagnosis actively explores both execution traces and source code to investigate failures.
-  - **Source location:** Section 5.3, RQ1, p. 8
-- **Source extract (verbatim):** As shown in Table 2, removing in-depth diagnosis substantially degrades test-set performance on GAIA2, reducing Pass@1 from 62.0 to 57.8.
-  - **Source location:** Section 5.3, RQ1, p. 8
+> Specifically, we evaluate a “w/o in-depth diagnosis” variant that replaces CA-SDK-based diagnosis with a shallow diagnostic baseline: a single LLM call receives the execution trace and evaluation results, and infers the failure reason, a strategy commonly used in automatic prompt optimization pipelines for failure reflection [36, 1]. The inferred failure reason is then passed back to CA-SDK for patch generation. In contrast, AutoSaddler’s in-depth diagnosis actively explores both execution traces and source code to investigate failures.
+> --- `kb/sources/.snapshots/autosaddler-automatic-harness-optimization-with-durable-updates.md` @ `sha256:766ac2524317884b6a531f6577101a889365e4ecefb9b933b67b8172e0e79dab` — Section 5.3, RQ1, p. 8
+
+> As shown in Table 2, removing in-depth diagnosis substantially degrades test-set performance on GAIA2, reducing Pass@1 from 62.0 to 57.8.
+> --- `kb/sources/.snapshots/autosaddler-automatic-harness-optimization-with-durable-updates.md` @ `sha256:766ac2524317884b6a531f6577101a889365e4ecefb9b933b67b8172e0e79dab` — Section 5.3, RQ1, p. 8
 
 ## Connections Found
 

@@ -25,14 +25,14 @@ Part II gives four precepts that Descartes offers as a sufficient replacement fo
 
 ## Quotes
 
-- **Source extract (verbatim):** The second, to divide each of the difficulties under examination into as many parts as possible, and as might be necessary for its adequate solution.
-  - **Source location:** Part II, the four precepts, second precept
+> The second, to divide each of the difficulties under examination into as many parts as possible, and as might be necessary for its adequate solution.
+> --- `kb/sources/.snapshots/descartes-discourse-on-the-method.md` @ `sha256:532a7afab3e36ad64850c74adb8944a24fc4d850d6880f4c7de10c5b95d66fba` — Part II, the four precepts, second precept
 
-- **Source extract (verbatim):** The third, to conduct my thoughts in such order that, by commencing with objects the simplest and easiest to know, I might ascend by little and little, and, as it were, step by step, to the knowledge of the more complex; assigning in thought a certain order even to those objects which in their own nature do not stand in a relation of antecedence and sequence.
-  - **Source location:** Part II, the four precepts, third precept
+> The third, to conduct my thoughts in such order that, by commencing with objects the simplest and easiest to know, I might ascend by little and little, and, as it were, step by step, to the knowledge of the more complex; assigning in thought a certain order even to those objects which in their own nature do not stand in a relation of antecedence and sequence.
+> --- `kb/sources/.snapshots/descartes-discourse-on-the-method.md` @ `sha256:532a7afab3e36ad64850c74adb8944a24fc4d850d6880f4c7de10c5b95d66fba` — Part II, the four precepts, third precept
 
-- **Source extract (verbatim):** The long chains of simple and easy reasonings by means of which geometers are accustomed to reach the conclusions of their most difficult demonstrations, had led me to imagine that all things, to the knowledge of which man is competent, are mutually connected in the same way, and that there is nothing so far removed from us as to be beyond our reach, or so hidden that we cannot discover it, provided only we abstain from accepting the false for the true, and always preserve in our thoughts the order necessary for the deduction of one truth from another.
-  - **Source location:** Part II, paragraph following the four precepts (opening sentence)
+> The long chains of simple and easy reasonings by means of which geometers are accustomed to reach the conclusions of their most difficult demonstrations, had led me to imagine that all things, to the knowledge of which man is competent, are mutually connected in the same way, and that there is nothing so far removed from us as to be beyond our reach, or so hidden that we cannot discover it, provided only we abstain from accepting the false for the true, and always preserve in our thoughts the order necessary for the deduction of one truth from another.
+> --- `kb/sources/.snapshots/descartes-discourse-on-the-method.md` @ `sha256:532a7afab3e36ad64850c74adb8944a24fc4d850d6880f4c7de10c5b95d66fba` — Part II, paragraph following the four precepts (opening sentence)
 
 ## Connections Found
 

@@ -23,12 +23,14 @@ Kiczales et al. present a metaobject protocol (MOP) as a documented interface th
 
 ## Quotes
 
-- **Source extract (verbatim):** The CLOS MOP on the other hand, “opens up” the CLOS abstraction, and its implementation to the programmer. The programmer can, for example, adjust aspects of the implementation strategy such as instance representation, or aspects of the language semantics such as multiple inheritance behavior. The design of the CLOS MOP is such that this opening up does not expose the programmer to arbitrary details of the implementation, nor does it tie the implementor’s hand unecessarily—only the essential structure of the implementation is exposed.
-  - **Source location:** Introduction, CLOS MOP motivation
-- **Source extract (verbatim):** Three generic functions in the protocol suffice: `allocate-instance`, `get-value` and `set-value`.[^2] We require that the runtime, whenever it needs to create an instance or access a slot, do so by calling these generic functions.
-  - **Source location:** “Simple Metaobject Protocols,” instance-representation protocol
-- **Source extract (verbatim):** Then, in their base program, programmers can request that the metaobject for specific classes they define be instances of `hash-table-class` rather than `standard-class`. This is done by marking the definition of those classes using the `:metaclass` option.
-  - **Source location:** “Simple Metaobject Protocols,” application of `hash-table-class`
+> The CLOS MOP on the other hand, “opens up” the CLOS abstraction, and its implementation to the programmer. The programmer can, for example, adjust aspects of the implementation strategy such as instance representation, or aspects of the language semantics such as multiple inheritance behavior. The design of the CLOS MOP is such that this opening up does not expose the programmer to arbitrary details of the implementation, nor does it tie the implementor’s hand unecessarily—only the essential structure of the implementation is exposed.
+> --- `kb/sources/.snapshots/metaobject-protocols-why-we-want-them-and-what-else-they-can-do.md` @ `sha256:5829d712867655d092e5e36fa7800e6dbdf834720aaea34ac4042522353adfa4` — Introduction, CLOS MOP motivation
+
+> Three generic functions in the protocol suffice: `allocate-instance`, `get-value` and `set-value`.[^2] We require that the runtime, whenever it needs to create an instance or access a slot, do so by calling these generic functions.
+> --- `kb/sources/.snapshots/metaobject-protocols-why-we-want-them-and-what-else-they-can-do.md` @ `sha256:5829d712867655d092e5e36fa7800e6dbdf834720aaea34ac4042522353adfa4` — “Simple Metaobject Protocols,” instance-representation protocol
+
+> Then, in their base program, programmers can request that the metaobject for specific classes they define be instances of `hash-table-class` rather than `standard-class`. This is done by marking the definition of those classes using the `:metaclass` option.
+> --- `kb/sources/.snapshots/metaobject-protocols-why-we-want-them-and-what-else-they-can-do.md` @ `sha256:5829d712867655d092e5e36fa7800e6dbdf834720aaea34ac4042522353adfa4` — “Simple Metaobject Protocols,” application of `hash-table-class`
 
 ## Connections Found
 

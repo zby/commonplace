@@ -23,12 +23,14 @@ in-toto is a framework that cryptographically verifies the integrity of an entir
 
 ## Quotes
 
-- **Source extract (verbatim):** **Roles.** *Project owner* — defines the supply chain *layout* (which steps, by whom, in what order) and signs it with their private key. *Functionaries* — the parties that perform steps and produce signed *link metadata* recording what they did; can be human or automated (e.g., a build farm). *Client* (end user) — inspects and uses the *delivered product*, using the layout plus the collected links to verify it.
-  - **Source location:** Condensed snapshot, §2, “System model and threat model,” Roles
-- **Source extract (verbatim):** Each executed step produces a *link*: `_type: "link"`, `name` (matches the step definition), `command` run, `materials` and `products` (paths with cryptographic hashes), `byproducts` (stdout/stderr/return-value), and a `signature` from the functionary's key. Links are the chain's actual evidence: they tie each step's real inputs/outputs together and let a verifier reconstruct what happened and confirm it matches the layout's requirements.
-  - **Source location:** Condensed snapshot, §3.2, “Link metadata”
-- **Source extract (verbatim):** This is the mechanism giving the end user assurance that the delivered artifact's *history* — not just its present bytes — met every declared requirement, without the user re-executing the pipeline.
-  - **Source location:** Condensed snapshot, §3.4, “Verification (`VERIFY_FINAL_PRODUCT`)”
+> **Roles.** *Project owner* — defines the supply chain *layout* (which steps, by whom, in what order) and signs it with their private key. *Functionaries* — the parties that perform steps and produce signed *link metadata* recording what they did; can be human or automated (e.g., a build farm). *Client* (end user) — inspects and uses the *delivered product*, using the layout plus the collected links to verify it.
+> --- `kb/sources/.snapshots/in-toto-farm-to-table-guarantees.md` @ `sha256:8e8d6cf8c1445ea068931bbbda34644e6b3d7c0865717d2c9b8cf64b2f8d7ea4` — Condensed snapshot, §2, “System model and threat model,” Roles
+
+> Each executed step produces a *link*: `_type: "link"`, `name` (matches the step definition), `command` run, `materials` and `products` (paths with cryptographic hashes), `byproducts` (stdout/stderr/return-value), and a `signature` from the functionary's key. Links are the chain's actual evidence: they tie each step's real inputs/outputs together and let a verifier reconstruct what happened and confirm it matches the layout's requirements.
+> --- `kb/sources/.snapshots/in-toto-farm-to-table-guarantees.md` @ `sha256:8e8d6cf8c1445ea068931bbbda34644e6b3d7c0865717d2c9b8cf64b2f8d7ea4` — Condensed snapshot, §3.2, “Link metadata”
+
+> This is the mechanism giving the end user assurance that the delivered artifact's *history* — not just its present bytes — met every declared requirement, without the user re-executing the pipeline.
+> --- `kb/sources/.snapshots/in-toto-farm-to-table-guarantees.md` @ `sha256:8e8d6cf8c1445ea068931bbbda34644e6b3d7c0865717d2c9b8cf64b2f8d7ea4` — Condensed snapshot, §3.4, “Verification (`VERIFY_FINAL_PRODUCT`)”
 
 ## Connections Found
 

@@ -22,26 +22,32 @@ TRACE turns complete agent trajectories into context-maintenance recommendations
 
 ## Quotes
 
-- **Source extract (verbatim):** The delta—the discrepancy between what the user expected and what the agent produced—serves as the “loss signal” that guides attribution.
-  - **Source location:** Section 5.2, "Delta-Guided Holistic Attribution"
-- **Source extract (verbatim):** The Root Cause reads only the agent’s execution trace—chain-of-thought, tool calls, and tool outputs—and does not separately inspect raw context files; the chain-of-thought is the key diagnostic signal, since the agent’s own reasoning names the sources that shaped each decision (e.g., “According to the KB …” or “Following the SOP for …”), letting the Root Cause identify candidate root-cause sources by reading the trace alone. Verification of those candidate files is deferred to the Recommender stage.
-  - **Source location:** Section 5.2, "Delta-Guided Holistic Attribution"
-- **Source extract (verbatim):** The LLM is instructed to reason over the trace in reverse temporal order—gradient-descent style: starting from the final response (where the loss is observed), it walks backward (response $\rightarrow$ tool outputs $\rightarrow$ thinking $\rightarrow$ inputs) to locate the earliest node whose content is inconsistent with the delta.
-  - **Source location:** Section 5.2, "Delta-Guided Holistic Attribution"
+> The delta—the discrepancy between what the user expected and what the agent produced—serves as the “loss signal” that guides attribution.
+> --- `kb/sources/.snapshots/trace-trajectory-attribution-for-automated-context-engineering.md` @ `sha256:c3337943e62f33b10e2492dd506137ef2129678fee1f3549911e19cc5665c35d` — Section 5.2, "Delta-Guided Holistic Attribution"
 
-- **Source extract (verbatim):** A fundamental design principle of Trace is that the Recommender treats the Root Cause’s root cause analysis as a hypothesis to verify, not a conclusion to accept.
-  - **Source location:** Section 6.1, "Independent Exploration: Hypothesis Verification, Not Passive Acceptance"
-- **Source extract (verbatim):** Upon receiving a RootCauseAnalysis, the Recommender executes a multi-phase exploration—read the implicated component, search authoritative sources, cross-reference to validate, and explore related components (full procedure in Appendix C). This exploration may confirm the Root Cause’s attribution, refine it with additional context, expand it to include related issues, or in some cases override it when exploration reveals the true root cause lies elsewhere.
-  - **Source location:** Section 6.1, "Independent Exploration: Hypothesis Verification, Not Passive Acceptance"
-- **Source extract (verbatim):** The system consists of three specialized agents: Detector identifies dissatisfaction signals from agent trajectories, Root Cause performs holistic attribution to identify root causes, and Recommender generates CRUD recommendations for human review.
-  - **Source location:** Section 3, "System Architecture," Figure 1 caption
+> The Root Cause reads only the agent’s execution trace—chain-of-thought, tool calls, and tool outputs—and does not separately inspect raw context files; the chain-of-thought is the key diagnostic signal, since the agent’s own reasoning names the sources that shaped each decision (e.g., “According to the KB …” or “Following the SOP for …”), letting the Root Cause identify candidate root-cause sources by reading the trace alone. Verification of those candidate files is deferred to the Recommender stage.
+> --- `kb/sources/.snapshots/trace-trajectory-attribution-for-automated-context-engineering.md` @ `sha256:c3337943e62f33b10e2492dd506137ef2129678fee1f3549911e19cc5665c35d` — Section 5.2, "Delta-Guided Holistic Attribution"
 
-- **Source extract (verbatim):** We evaluate Trace on a synthetic dataset of agent conversation traces designed to simulate realistic failure modes encountered in enterprise AI agent deployments.
-  - **Source location:** Section 7, "Evaluation Setup"
-- **Source extract (verbatim):** End-to-End Evaluation: We report component-level accuracies and compute fix effectiveness as the fraction of traces where the full pipeline produces a correct, actionable recommendation (correct operation AND correct target path).
-  - **Source location:** Section 7.3, "Evaluation Protocol"
-- **Source extract (verbatim):** Fix Effectiveness measures correct CRUD operation AND target path.
-  - **Source location:** Section 8.4, Table 3 caption
+> The LLM is instructed to reason over the trace in reverse temporal order—gradient-descent style: starting from the final response (where the loss is observed), it walks backward (response $\rightarrow$ tool outputs $\rightarrow$ thinking $\rightarrow$ inputs) to locate the earliest node whose content is inconsistent with the delta.
+> --- `kb/sources/.snapshots/trace-trajectory-attribution-for-automated-context-engineering.md` @ `sha256:c3337943e62f33b10e2492dd506137ef2129678fee1f3549911e19cc5665c35d` — Section 5.2, "Delta-Guided Holistic Attribution"
+
+> A fundamental design principle of Trace is that the Recommender treats the Root Cause’s root cause analysis as a hypothesis to verify, not a conclusion to accept.
+> --- `kb/sources/.snapshots/trace-trajectory-attribution-for-automated-context-engineering.md` @ `sha256:c3337943e62f33b10e2492dd506137ef2129678fee1f3549911e19cc5665c35d` — Section 6.1, "Independent Exploration: Hypothesis Verification, Not Passive Acceptance"
+
+> Upon receiving a RootCauseAnalysis, the Recommender executes a multi-phase exploration—read the implicated component, search authoritative sources, cross-reference to validate, and explore related components (full procedure in Appendix C). This exploration may confirm the Root Cause’s attribution, refine it with additional context, expand it to include related issues, or in some cases override it when exploration reveals the true root cause lies elsewhere.
+> --- `kb/sources/.snapshots/trace-trajectory-attribution-for-automated-context-engineering.md` @ `sha256:c3337943e62f33b10e2492dd506137ef2129678fee1f3549911e19cc5665c35d` — Section 6.1, "Independent Exploration: Hypothesis Verification, Not Passive Acceptance"
+
+> The system consists of three specialized agents: Detector identifies dissatisfaction signals from agent trajectories, Root Cause performs holistic attribution to identify root causes, and Recommender generates CRUD recommendations for human review.
+> --- `kb/sources/.snapshots/trace-trajectory-attribution-for-automated-context-engineering.md` @ `sha256:c3337943e62f33b10e2492dd506137ef2129678fee1f3549911e19cc5665c35d` — Section 3, "System Architecture," Figure 1 caption
+
+> We evaluate Trace on a synthetic dataset of agent conversation traces designed to simulate realistic failure modes encountered in enterprise AI agent deployments.
+> --- `kb/sources/.snapshots/trace-trajectory-attribution-for-automated-context-engineering.md` @ `sha256:c3337943e62f33b10e2492dd506137ef2129678fee1f3549911e19cc5665c35d` — Section 7, "Evaluation Setup"
+
+> End-to-End Evaluation: We report component-level accuracies and compute fix effectiveness as the fraction of traces where the full pipeline produces a correct, actionable recommendation (correct operation AND correct target path).
+> --- `kb/sources/.snapshots/trace-trajectory-attribution-for-automated-context-engineering.md:390-391` @ `sha256:c3337943e62f33b10e2492dd506137ef2129678fee1f3549911e19cc5665c35d` — Section 7.3, "Evaluation Protocol"
+
+> Fix Effectiveness measures correct CRUD operation AND target path.
+> --- `kb/sources/.snapshots/trace-trajectory-attribution-for-automated-context-engineering.md` @ `sha256:c3337943e62f33b10e2492dd506137ef2129678fee1f3549911e19cc5665c35d` — Section 8.4, Table 3 caption
 
 ## Connections Found
 

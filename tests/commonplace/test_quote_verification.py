@@ -5,9 +5,9 @@ from pathlib import Path
 import pytest
 
 from commonplace.lib.hashing import content_sha256_for_text
+from commonplace.lib.quote_matching import normalize_text
 from commonplace.lib.quote_verification import (
     ingest_quotes_section,
-    normalize_text,
     verify_content,
     verify_note,
 )
@@ -44,16 +44,16 @@ _INGEST_WITH_SUMMARY_PHRASE = (
     "## Summary\n\n"
     "The paper argues that shorter contexts help.\n\n"
     "## Quotes\n\n"
-    "- **Source extract (verbatim):** an unrelated retained passage\n"
-    "  - **Source location:** Section 1.\n"
+    "> an unrelated retained passage\n"
+    "> --- `kb/sources/.snapshots/source.md` @ `sha256:example` — Section 1.\n"
 )
 
 _INGEST_WITH_QUOTED_PHRASE = (
     "## Summary\n\n"
     "Analysis prose that does not repeat the passage.\n\n"
     "## Quotes\n\n"
-    "- **Source extract (verbatim):** shorter contexts help\n"
-    "  - **Source location:** Section 1.\n"
+    "> shorter contexts help\n"
+    "> --- `kb/sources/.snapshots/source.md` @ `sha256:example` — Section 1.\n"
 )
 
 
@@ -301,7 +301,7 @@ def test_ingest_analysis_prose_does_not_satisfy_a_verbatim_quote(
 
     assert [result.status for result in results] == ["mismatch"]
     assert results[0].detail == (
-        "normalized quotation does not occur in the linked ingest's Quotes section"
+        "quote does not occur in the source region (linked ingest's Quotes section)"
     )
 
 
@@ -318,7 +318,7 @@ def test_validator_fails_a_false_verbatim_claim(tmp_path: Path):
 
     results = _check(note)
 
-    assert any("verbatim quote: not found" in fail for fail in results.fails)
+    assert any("verbatim quote: quote does not occur" in fail for fail in results.fails)
     assert not results.warns
 
 
@@ -432,10 +432,10 @@ def test_line_numbers_survive_a_preceding_code_fence(tmp_path: Path):
 
 
 class TestIngestQuoteValidation:
-    """`Source extract (verbatim)` resolves against the ingest's pinned snapshot.
+    """An attributed extract resolves against the ingest's pinned snapshot.
 
     Conditional on retention: `kb/sources/.snapshots/` is gitignored, so a fresh
-    clone has the checksum but not the bytes. Absent snapshot is silence.
+    clone has the checksum but not the bytes. Absent snapshot is explicitly unverified.
     """
 
     @staticmethod
@@ -459,7 +459,7 @@ class TestIngestQuoteValidation:
         quotes = (
             "No source quotes have been retained yet.\n"
             if extract is None
-            else f"- **Source extract (verbatim):** {extract}\n"
+            else f"> {extract}\n> --- `kb/sources/.snapshots/src.md` @ `sha256:{digest}`\n"
         )
         source_line = f"source: {source}\n" if source is not None else ""
         ingest = sources / "src.ingest.md"
@@ -491,7 +491,7 @@ class TestIngestQuoteValidation:
     def test_extract_absent_from_snapshot_fails(self, tmp_path):
         ingest = self._ingest(tmp_path, "words never written", snapshot="something else entirely")
         results = self._run(ingest)
-        assert any("not found in the checksum-verified snapshot" in f for f in results.fails)
+        assert any("quote does not occur in the source region in the checksum-verified snapshot" in f for f in results.fails)
 
     def test_extract_spanning_wrapped_lines_passes(self, tmp_path):
         """Normalization collapses whitespace, so a quote may cross a wrapped line."""
@@ -539,10 +539,11 @@ class TestIngestQuoteValidation:
             for item in results.warns
         )
 
-    def test_missing_snapshot_is_silent(self, tmp_path):
+    def test_missing_snapshot_is_explicitly_unverified(self, tmp_path):
         ingest = self._ingest(tmp_path, "anything at all", snapshot=None, sha="0" * 64)
         results = self._run(ingest)
-        assert not results.fails and not results.warns and not results.passes
+        assert not results.fails and not results.passes
+        assert any("extracts unverified" in w for w in results.infos)
 
     def test_snapshot_disagreeing_with_checksum_warns_without_failing(self, tmp_path):
         ingest = self._ingest(tmp_path, "absent text", snapshot="other bytes", sha="1" * 64)

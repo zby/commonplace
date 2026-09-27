@@ -23,16 +23,20 @@ Githens's source method is rolling-wave program management for uncertain develop
 
 ## Quotes
 
-- **Source extract (verbatim):** In this step, the team details out individual work packages for the first horizon, “bottom up.” (This includes estimating task durations, resources, and cost.)
-  - **Source location:** “Process of Rolling Wave,” Step 3: Perform the First Planning Iteration, Starting Bottom-Up
-- **Source extract (verbatim):** Include any identifiable work in the later time buckets, using what I call a “black box” placeholder to indicate that you expect to define certain work later.
-  - **Source location:** “Process of Rolling Wave,” Step 3, later-horizons bullet
-- **Source extract (verbatim):** ■ *Establish a work package and fixed date for replanning for the next time horizon.* The deliverable of the replanning work package is an updated rolling wave plan.
-  - **Source location:** “Process of Rolling Wave,” Step 3, replanning bullet
-- **Source extract (verbatim):** **Step 5: Execute the Planned Work in the First Time Bucket.** Inside the time buckets, work is straightforward: plan your work, and work your plan. For rolling wave it is particularly important to have a learning orientation. Capture learning for feed-forwarding to anticipate and avoid future problems, or to quickly react to the risks that the team decides to accept.
-  - **Source location:** “Process of Rolling Wave,” Step 5: Execute the Planned Work in the First Time Bucket
-- **Source extract (verbatim):** ■ Assess the team's learning, the needed work, and replan the next horizon of the program (go back to Step 3).
-  - **Source location:** “Process of Rolling Wave,” Step 6: Iterate Through the Planning Horizons and Close the Project
+> In this step, the team details out individual work packages for the first horizon, “bottom up.” (This includes estimating task durations, resources, and cost.)
+> --- `kb/sources/.snapshots/githens-manage-innovation-programs-rolling-wave.md` @ `sha256:45e07692a4da588bf4a0ad376c9bd6821f7f5cf030f8bd411c12384db07aa53d` — “Process of Rolling Wave,” Step 3: Perform the First Planning Iteration, Starting Bottom-Up
+
+> Include any identifiable work in the later time buckets, using what I call a “black box” placeholder to indicate that you expect to define certain work later.
+> --- `kb/sources/.snapshots/githens-manage-innovation-programs-rolling-wave.md` @ `sha256:45e07692a4da588bf4a0ad376c9bd6821f7f5cf030f8bd411c12384db07aa53d` — “Process of Rolling Wave,” Step 3, later-horizons bullet
+
+> ■ *Establish a work package and fixed date for replanning for the next time horizon.* The deliverable of the replanning work package is an updated rolling wave plan.
+> --- `kb/sources/.snapshots/githens-manage-innovation-programs-rolling-wave.md` @ `sha256:45e07692a4da588bf4a0ad376c9bd6821f7f5cf030f8bd411c12384db07aa53d` — “Process of Rolling Wave,” Step 3, replanning bullet
+
+> **Step 5: Execute the Planned Work in the First Time Bucket.** Inside the time buckets, work is straightforward: plan your work, and work your plan. For rolling wave it is particularly important to have a learning orientation. Capture learning for feed-forwarding to anticipate and avoid future problems, or to quickly react to the risks that the team decides to accept.
+> --- `kb/sources/.snapshots/githens-manage-innovation-programs-rolling-wave.md` @ `sha256:45e07692a4da588bf4a0ad376c9bd6821f7f5cf030f8bd411c12384db07aa53d` — “Process of Rolling Wave,” Step 5: Execute the Planned Work in the First Time Bucket
+
+> ■ Assess the team's learning, the needed work, and replan the next horizon of the program (go back to Step 3).
+> --- `kb/sources/.snapshots/githens-manage-innovation-programs-rolling-wave.md` @ `sha256:45e07692a4da588bf4a0ad376c9bd6821f7f5cf030f8bd411c12384db07aa53d` — “Process of Rolling Wave,” Step 6: Iterate Through the Planning Horizons and Close the Project
 
 ## Connections Found
 

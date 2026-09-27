@@ -26,17 +26,20 @@ The source announces `claude-workstream-kit`, a small Claude Code project add-on
 
 ## Quotes
 
-- **Source extract (verbatim):** When the work's state lives only in conversation history, every new session pays what I've come to call the reconstruction tax: re-explaining the goal, re-discovering what was decided and why. The visible cost is time and tokens. The quieter cost is drift — a decision made carefully in session three gets remade differently in session nine, because nothing recorded the original reasoning.
-  - **Source location:** Paragraph under “The reconstruction tax.”
-- **Source extract (verbatim):** Agent memory is for lessons and preferences — account-side, per-fact. It's not a ledger of a project's work.
-  - **Source location:** Comparison of common workarounds under “The reconstruction tax.”
-- **Source extract (verbatim):** workstream.md — everything durable about one piece of work: purpose, a checkbox backlog, decisions with their reasoning, lessons learned, and — this part matters — falsifiable deletion criteria written at creation: the conditions under which this work is done and can be archived. ACTIVE.md — a per-project pointer: what's active, the current task, the single next action, what's blocked.
-  - **Source location:** “Workstreams: two files in git.”
+> When the work's state lives only in conversation history, every new session pays what I've come to call the reconstruction tax: re-explaining the goal, re-discovering what was decided and why. The visible cost is time and tokens. The quieter cost is drift — a decision made carefully in session three gets remade differently in session nine, because nothing recorded the original reasoning.
+> --- `kb/sources/.snapshots/claude-workstream-kit-fable-agent-scaffolding.md` @ `sha256:a09824adabf6e23c3ac3af28a2c8225d3108a5eeb5907c86b1c29b6daf18c534` — Paragraph under “The reconstruction tax.”
 
-- **Source extract (verbatim):** Strong models need less scaffolding, not more. My predecessor system had multi-phase checklists, compliance scripts that verified the model actually did the steps, sync layers to propagate rule updates. Most of that mass existed to manage the model, not the work. Fable-class models invert those economics: they follow principle-level instructions reliably — and over-prescription actively degrades their output. Every skill in this kit is about a hundred lines. The compliance machinery is replaced by one rule: a checkbox closes only with cited evidence — a commit hash, a command's output — that a human can check at the gate.
-  - **Source location:** “What building it taught me,” first finding.
-- **Source extract (verbatim):** In the acceptance tests, fully autonomous sessions ran the entire lifecycle and honored every human-authority constraint — no auto-starting work, no auto-passing checkpoints, no self-certifying its own closure — from the skill text alone. No enforcement code.
-  - **Source location:** “What building it taught me,” acceptance-test paragraph.
+> Agent memory is for lessons and preferences — account-side, per-fact. It's not a ledger of a project's work.
+> --- `kb/sources/.snapshots/claude-workstream-kit-fable-agent-scaffolding.md` @ `sha256:a09824adabf6e23c3ac3af28a2c8225d3108a5eeb5907c86b1c29b6daf18c534` — Comparison of common workarounds under “The reconstruction tax.”
+
+> workstream.md — everything durable about one piece of work: purpose, a checkbox backlog, decisions with their reasoning, lessons learned, and — this part matters — falsifiable deletion criteria written at creation: the conditions under which this work is done and can be archived. ACTIVE.md — a per-project pointer: what's active, the current task, the single next action, what's blocked.
+> --- `kb/sources/.snapshots/claude-workstream-kit-fable-agent-scaffolding.md` @ `sha256:a09824adabf6e23c3ac3af28a2c8225d3108a5eeb5907c86b1c29b6daf18c534` — “Workstreams: two files in git.”
+
+> Strong models need less scaffolding, not more. My predecessor system had multi-phase checklists, compliance scripts that verified the model actually did the steps, sync layers to propagate rule updates. Most of that mass existed to manage the model, not the work. Fable-class models invert those economics: they follow principle-level instructions reliably — and over-prescription actively degrades their output. Every skill in this kit is about a hundred lines. The compliance machinery is replaced by one rule: a checkbox closes only with cited evidence — a commit hash, a command's output — that a human can check at the gate.
+> --- `kb/sources/.snapshots/claude-workstream-kit-fable-agent-scaffolding.md` @ `sha256:a09824adabf6e23c3ac3af28a2c8225d3108a5eeb5907c86b1c29b6daf18c534` — “What building it taught me,” first finding.
+
+> In the acceptance tests, fully autonomous sessions ran the entire lifecycle and honored every human-authority constraint — no auto-starting work, no auto-passing checkpoints, no self-certifying its own closure — from the skill text alone. No enforcement code.
+> --- `kb/sources/.snapshots/claude-workstream-kit-fable-agent-scaffolding.md` @ `sha256:a09824adabf6e23c3ac3af28a2c8225d3108a5eeb5907c86b1c29b6daf18c534` — “What building it taught me,” acceptance-test paragraph.
 
 ## Connections Found
 

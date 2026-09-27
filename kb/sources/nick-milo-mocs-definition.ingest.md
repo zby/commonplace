@@ -23,14 +23,16 @@ Milo defines a Map of Content (MOC) as a cluster that maps things in context and
 
 ## Quotes
 
-- **Source extract (verbatim):** An M—O—C is a cluster of information that maps “things” in context with other “things”.
+> An M—O—C is a cluster of information that maps “things” in context with other “things”.
+>
+>   Practically, this means that MOCs can help you *gather, develop, and navigate ideas*. That’s why its important to view MOC’s as “mapping” notes. You are the map-maker. You are the cartographer. As you make and customize the map, you are making sense of some part of the world that matters to you.
+> --- `kb/sources/.snapshots/nick-milo-mocs-definition.md` @ `sha256:10b80411e30f98716fbd592b3c8a224f576336a7553545e98cb920c669f3a5d0` — Opening definition
 
-  Practically, this means that MOCs can help you *gather, develop, and navigate ideas*. That’s why its important to view MOC’s as “mapping” notes. You are the map-maker. You are the cartographer. As you make and customize the map, you are making sense of some part of the world that matters to you.
-  - **Source location:** Opening definition
-- **Source extract (verbatim):** In link-based thinking tools (like Obsidian), an MOC often gets mistaken as a boring index. Sure, the end-product sometimes resembles an index. But an MOC is so much more. It is a new kind of thinking tool that supports and extends cognition.
-  - **Source location:** Opening comparison with an index
-- **Source extract (verbatim):** A digital note with a bunch of links to other notes clustered into groups.
-  - **Source location:** “Examples of Maps of Content,” first bullet
+> In link-based thinking tools (like Obsidian), an MOC often gets mistaken as a boring index. Sure, the end-product sometimes resembles an index. But an MOC is so much more. It is a new kind of thinking tool that supports and extends cognition.
+> --- `kb/sources/.snapshots/nick-milo-mocs-definition.md` @ `sha256:10b80411e30f98716fbd592b3c8a224f576336a7553545e98cb920c669f3a5d0` — Opening comparison with an index
+
+> A digital note with a bunch of links to other notes clustered into groups.
+> --- `kb/sources/.snapshots/nick-milo-mocs-definition.md` @ `sha256:10b80411e30f98716fbd592b3c8a224f576336a7553545e98cb920c669f3a5d0` — “Examples of Maps of Content,” first bullet
 
 ## Connections Found
 

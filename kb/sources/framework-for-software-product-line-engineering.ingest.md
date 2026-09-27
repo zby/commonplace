@@ -24,17 +24,17 @@ The chapter divides software product line engineering into domain engineering an
 
 ## Quotes
 
-- **Source extract (verbatim):** Domain engineering: This process is responsible for establishing the reusable platform and thus for defining the commonality and the variability of the product line (Definition 2-1). The platform consists of all types of software artefacts (requirements, design, realisation, tests, etc.). Traceability links between these artefacts facilitate systematic and consistent reuse.
-  - **Source location:** Section 2.3, “Overview of the Framework,” page 20
+> Domain engineering: This process is responsible for establishing the reusable platform and thus for defining the commonality and the variability of the product line (Definition 2-1). The platform consists of all types of software artefacts (requirements, design, realisation, tests, etc.). Traceability links between these artefacts facilitate systematic and consistent reuse.
+> --- `kb/sources/.snapshots/framework-for-software-product-line-engineering.md` @ `sha256:9951334fe5fc6deba86648969ad3411d6cf7caf78ab0c45a2fc412b87b507b62` — Section 2.3, “Overview of the Framework,” page 20
 
-- **Source extract (verbatim):** Application engineering is the process of software product line engineering in which the applications of the product line are built by reusing domain artefacts and exploiting the product line variability.
-  - **Source location:** Section 2.3, “Overview of the Framework,” pages 20–21
+> Application engineering is the process of software product line engineering in which the applications of the product line are built by reusing domain artefacts and exploiting the product line variability.
+> --- `kb/sources/.snapshots/framework-for-software-product-line-engineering.md` @ `sha256:9951334fe5fc6deba86648969ad3411d6cf7caf78ab0c45a2fc412b87b507b62` — Section 2.3, “Overview of the Framework,” pages 20–21
 
-- **Source extract (verbatim):** Define the set of applications the software product line is planned for, i.e. define the scope of the software product line.
-  - **Source location:** Section 2.4, “Domain Engineering,” pages 23–24
+> Define the set of applications the software product line is planned for, i.e. define the scope of the software product line.
+> --- `kb/sources/.snapshots/framework-for-software-product-line-engineering.md` @ `sha256:9951334fe5fc6deba86648969ad3411d6cf7caf78ab0c45a2fc412b87b507b62` — Section 2.4, “Domain Engineering,” pages 23–24
 
-- **Source extract (verbatim):** The framework introduces four application engineering sub-processes: application requirements engineering, application design, application realisation, and application test. Each of the sub-processes uses domain artefacts and produces application artefacts.
-  - **Source location:** Section 2.6, “Application Engineering,” page 31
+> The framework introduces four application engineering sub-processes: application requirements engineering, application design, application realisation, and application test. Each of the sub-processes uses domain artefacts and produces application artefacts.
+> --- `kb/sources/.snapshots/framework-for-software-product-line-engineering.md` @ `sha256:9951334fe5fc6deba86648969ad3411d6cf7caf78ab0c45a2fc412b87b507b62` — Section 2.6, “Application Engineering,” page 31
 
 ## Connections Found
 

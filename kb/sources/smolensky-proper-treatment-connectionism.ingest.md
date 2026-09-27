@@ -29,11 +29,11 @@ The likely durable contribution is a sharper scientific disagreement: computatio
 
 ## Quotes
 
-- **Source extract (verbatim):** Thus, at the cultural level, the goal is to express knowledge in a form that can be executed reliably by different people, even inexperienced ones.
-  - **Source location:** Section 2.1, “Cultural knowledge and conscious rule interpretation,” paragraph beginning “Thus, at the cultural level”.
+> Thus, at the cultural level, the goal is to express knowledge in a form that can be executed reliably by different people, even inexperienced ones.
+> --- `kb/sources/.snapshots/smolensky-proper-treatment-connectionism.md` @ `sha256:73681b8da6caa3125c6bec4d71debec15fe21c81e796dbb7a60b3c34a040df95` — Section 2.1, “Cultural knowledge and conscious rule interpretation,” paragraph beginning “Thus, at the cultural level”.
 
-- **Source extract (verbatim):** The constraints on cultural knowledge formalization are not the same as those on individual knowledge formalization. The intuitive knowledge in a physics expert or a native speaker may demand, for a truly accurate description, a formalism that is not a good one for cultural purposes. After all, the individual knowledge in an expert's head does not possess the properties (2) of cultural knowledge: It is not publically accessible or completely reliable, and it is completely dependent on ample experience.
-  - **Source location:** Section 2.2, “Individual knowledge, skill, and intuition in the symbolic paradigm,” opening paragraph.
+> The constraints on cultural knowledge formalization are not the same as those on individual knowledge formalization. The intuitive knowledge in a physics expert or a native speaker may demand, for a truly accurate description, a formalism that is not a good one for cultural purposes. After all, the individual knowledge in an expert's head does not possess the properties (2) of cultural knowledge: It is not publically accessible or completely reliable, and it is completely dependent on ample experience.
+> --- `kb/sources/.snapshots/smolensky-proper-treatment-connectionism.md` @ `sha256:73681b8da6caa3125c6bec4d71debec15fe21c81e796dbb7a60b3c34a040df95` — Section 2.2, “Individual knowledge, skill, and intuition in the symbolic paradigm,” opening paragraph.
 
 ## Connections Found
 

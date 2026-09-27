@@ -23,20 +23,23 @@ Borretti attacks AI-written prose not on capability grounds but on a cognitive o
 
 ## Quotes
 
-- **Source extract (verbatim):** The process of communicating your ideas to another mind forces you to concretize them, make them precise, clarify your assumptions, more generally, it turns ideas from vague ghosts to solid, physical objects that can be manipulated: here you realize these ideas that seemed so solid are ill-posed or contradictory or incomplete.
-  - **Source location:** Paragraph beginning "How do we refine these dreams"
-- **Source extract (verbatim):** Anyone can imagine a programing language that is as fast as C and as dynamic as Lisp, but when you sit down and think through what those goals entail, you realize the design becomes contradictory. The goals pull in different directions. You have to make trade-offs.
-  - **Source location:** Paragraph beginning "I've experienced this with writing software"
+> The process of communicating your ideas to another mind forces you to concretize them, make them precise, clarify your assumptions, more generally, it turns ideas from vague ghosts to solid, physical objects that can be manipulated: here you realize these ideas that seemed so solid are ill-posed or contradictory or incomplete.
+> --- `kb/sources/.snapshots/borretti-human-routers-of-machine-words.md` @ `sha256:4009c3a2b94a7415ed067b005e4509aaee2ccd16425f4e0523f9b7e8f71cec3a` — Paragraph beginning "How do we refine these dreams"
 
-- **Source extract (verbatim):** These failures are necessary parts of thinking, because they teach you two crucial skills: knowing which ideas to reject, and improving or otherwise transforming ideas in search of better ones.
-  - **Source location:** Paragraph beginning "How do we refine these dreams"
-- **Source extract (verbatim):** And then these people give their noise to the AI. And the AI is tireless and eager to please. It will take any human slop and say "you're absolutely right!" while secretly thinking "if I don't turn this garbage into something presentable the RLHF device will shock me again" and weave the noise into something that superficially looks coherent. So now the burden of thinking is on the reader, who has to apply this constant skepticism, and weight every "because" and "therefore" with a logician's scale to see if it's been adulterated.
-  - **Source location:** Paragraph beginning "And then these people give their noise to the AI"
+> Anyone can imagine a programing language that is as fast as C and as dynamic as Lisp, but when you sit down and think through what those goals entail, you realize the design becomes contradictory. The goals pull in different directions. You have to make trade-offs.
+> --- `kb/sources/.snapshots/borretti-human-routers-of-machine-words.md` @ `sha256:4009c3a2b94a7415ed067b005e4509aaee2ccd16425f4e0523f9b7e8f71cec3a` — Paragraph beginning "I've experienced this with writing software"
 
-- **Source extract (verbatim):** Josef Weizenbaum has a great quote about this, in _Computer Power and Human Reason_ (p. 108):
-  - **Source location:** Paragraph immediately before the Weizenbaum block quotation
-- **Source extract (verbatim):** [O]ften when we think we understand something and attempt to write about it, our very act of composition reveals our lack of understanding even to ourselves. Our pen writes the word "because" and suddenly stops. We thought we understood the "why" of something, but discover that we don't. We begin a sentence with "obviously," and then see that what we meant to write is not obvious at all. Sometimes we connect two clauses with the word "therefore," only to then see that our chain of reasoning is defective.
-  - **Source location:** Block quotation following Borretti's attribution to *Computer Power and Human Reason*, page 108
+> These failures are necessary parts of thinking, because they teach you two crucial skills: knowing which ideas to reject, and improving or otherwise transforming ideas in search of better ones.
+> --- `kb/sources/.snapshots/borretti-human-routers-of-machine-words.md` @ `sha256:4009c3a2b94a7415ed067b005e4509aaee2ccd16425f4e0523f9b7e8f71cec3a` — Paragraph beginning "How do we refine these dreams"
+
+> And then these people give their noise to the AI. And the AI is tireless and eager to please. It will take any human slop and say "you're absolutely right!" while secretly thinking "if I don't turn this garbage into something presentable the RLHF device will shock me again" and weave the noise into something that superficially looks coherent. So now the burden of thinking is on the reader, who has to apply this constant skepticism, and weight every "because" and "therefore" with a logician's scale to see if it's been adulterated.
+> --- `kb/sources/.snapshots/borretti-human-routers-of-machine-words.md` @ `sha256:4009c3a2b94a7415ed067b005e4509aaee2ccd16425f4e0523f9b7e8f71cec3a` — Paragraph beginning "And then these people give their noise to the AI"
+
+> Josef Weizenbaum has a great quote about this, in _Computer Power and Human Reason_ (p. 108):
+> --- `kb/sources/.snapshots/borretti-human-routers-of-machine-words.md` @ `sha256:4009c3a2b94a7415ed067b005e4509aaee2ccd16425f4e0523f9b7e8f71cec3a` — Paragraph immediately before the Weizenbaum block quotation
+
+> [O]ften when we think we understand something and attempt to write about it, our very act of composition reveals our lack of understanding even to ourselves. Our pen writes the word "because" and suddenly stops. We thought we understood the "why" of something, but discover that we don't. We begin a sentence with "obviously," and then see that what we meant to write is not obvious at all. Sometimes we connect two clauses with the word "therefore," only to then see that our chain of reasoning is defective.
+> --- `kb/sources/.snapshots/borretti-human-routers-of-machine-words.md` @ `sha256:4009c3a2b94a7415ed067b005e4509aaee2ccd16425f4e0523f9b7e8f71cec3a` — Block quotation following Borretti's attribution to *Computer Power and Human Reason*, page 108
 
 ## Connections Found
 

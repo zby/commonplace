@@ -42,10 +42,11 @@ The only code executed was `python3 scripts/reanchor_integrity.py --check`; it p
 
 ## Quotes
 
-- **Source extract (verbatim):** This is a repair decision rather than a claim of causal identification: multiple mechanisms may contribute to a failed trajectory, and Recuris attributes each diagnosed failure to the component on which a localized intervention is most likely to help.
-  - **Source location:** Section 2.3.1, "Trace-Based Failure Localization"
-- **Source extract (verbatim):** The memory only grows, and it can afford to. Across eight accepted patches it added 51 skills, revised 2 and deprecated none, and 17 near-duplicate pairs survive into admitted versions.
-  - **Source location:** Section 3.4.4, "Gated Updates Preserve Existing Abilities"
+> This is a repair decision rather than a claim of causal identification: multiple mechanisms may contribute to a failed trajectory, and Recuris attributes each diagnosed failure to the component on which a localized intervention is most likely to help.
+> --- `kb/sources/.snapshots/recursive-experiential-working-memory-evolution.md` @ `sha256:42d46f99719a253bd249c6ca35b31af190029a8e4511195580deb4f52525ea67` — Section 2.3.1, "Trace-Based Failure Localization"
+
+> The memory only grows, and it can afford to. Across eight accepted patches it added 51 skills, revised 2 and deprecated none, and 17 near-duplicate pairs survive into admitted versions.
+> --- `kb/sources/.snapshots/recursive-experiential-working-memory-evolution.md` @ `sha256:42d46f99719a253bd249c6ca35b31af190029a8e4511195580deb4f52525ea67` — Section 3.4.4, "Gated Updates Preserve Existing Abilities"
 
 ## Connections Found
 

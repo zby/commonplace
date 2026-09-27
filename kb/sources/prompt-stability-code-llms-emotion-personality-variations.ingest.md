@@ -24,22 +24,26 @@ Ma et al. introduce PromptSE, a framework for measuring how sensitive code gener
 
 ## Quotes
 
-- **Source extract (verbatim):** Our approach generates semantically equivalent prompt variants through emotion and personality templates, then evaluates model sensitivity using probability-aware continuous scoring (PromptSE) or binary evaluation (PromptSELight) depending on model accessibility. The framework operates under strict semantic and interface invariance constraints, ensuring that all variants preserve computational requirements (e.g., preserving input-output constraints, and complexity bounds) and functional specifications.
-  - **Source location:** §2, “PromptSE: Proposed Prompt Sensitivity Evaluation Framework”
-- **Source extract (verbatim):** We apply a uniform decoding policy with temperature 0.2 and draw 16 independent samples per prompt at each distance level.
-  - **Source location:** §3.2, “Models and Decoding Settings”
-- **Source extract (verbatim):** We compute model-level rank correlation, obtaining Spearman ρ = −0.433 (p = 0.122; 95% CI [−0.875, 0.249]), which does not reach statistical significance in the current sample, suggesting no unified negative correlation trend.
-  - **Source location:** §4.1, “RQ1: Joint Structure of Performance and Prompt Stability”
+> Our approach generates semantically equivalent prompt variants through emotion and personality templates, then evaluates model sensitivity using probability-aware continuous scoring (PromptSE) or binary evaluation (PromptSELight) depending on model accessibility. The framework operates under strict semantic and interface invariance constraints, ensuring that all variants preserve computational requirements (e.g., preserving input-output constraints, and complexity bounds) and functional specifications.
+> --- `kb/sources/.snapshots/prompt-stability-code-llms-emotion-personality-variations.md` @ `sha256:d29f22a52f74d5469e11d11c2ed3e446b60190ee2f7d4fe94116a03521e016fc` — §2, “PromptSE: Proposed Prompt Sensitivity Evaluation Framework”
 
-- **Source extract (verbatim):** We evaluate 14 models across three architecture families (Llama, Qwen, DeepSeek) using HumanEval with semantically equivalent variants (14,760 in total). Each variant prompt generates 16 samples under uniform decoding, with statistical analysis employing robust methods including correlation tests, confidence intervals (CI), and false discovery rate (FDR) correction.
-  - **Source location:** §1, “Introduction”
-- **Source extract (verbatim):** For each prompt p and distance d, compute individual elasticity using the formulations from Equations 4 and 5. For PromptSE mode, average across all prompts to obtain the elasticity curve E(d). Second, average across all prompts for PromptSELight mode.
-  - **Source location:** §2.3, “AUC-E: Area Under Curve of Elasticity,” Elasticity Curve Construction
+> We apply a uniform decoding policy with temperature 0.2 and draw 16 independent samples per prompt at each distance level.
+> --- `kb/sources/.snapshots/prompt-stability-code-llms-emotion-personality-variations.md` @ `sha256:d29f22a52f74d5469e11d11c2ed3e446b60190ee2f7d4fe94116a03521e016fc` — §3.2, “Models and Decoding Settings”
 
-- **Source extract (verbatim):** We adopt model-level Pass@1 as the performance indicator and quantify prompt stability through AUC-E.
-  - **Source location:** §4.1, “RQ1: Joint Structure of Performance and Prompt Stability”
-- **Source extract (verbatim):** Under valence×arousal conditions, performance–sensitivity coupling and confidence patterns show cross-model differences. For some models, emotional prompting mildly reshapes correctness and calibration, but effects vary by model and family. Probability-layer diagnostics (ECE, bias, and elasticity) complement discrete indicators, helping make "calibration-aware" model selections. High-arousal negative-valence prompts inducing confidence miscalibration in certain models (particularly the Qwen family) suggest that emotional coloring can serve as a practical probe for model brittleness. Model × emotion ECE ranges from approximately 0.055 (Qwen-1.5B) to 0.622 (DS-Coder-6.7B).
-  - **Source location:** §4.4, “RQ4: Effects of Valence×Arousal on Correctness and Calibration”
+> We compute model-level rank correlation, obtaining Spearman ρ = −0.433 (p = 0.122; 95% CI [−0.875, 0.249]), which does not reach statistical significance in the current sample, suggesting no unified negative correlation trend.
+> --- `kb/sources/.snapshots/prompt-stability-code-llms-emotion-personality-variations.md` @ `sha256:d29f22a52f74d5469e11d11c2ed3e446b60190ee2f7d4fe94116a03521e016fc` — §4.1, “RQ1: Joint Structure of Performance and Prompt Stability”
+
+> We evaluate 14 models across three architecture families (Llama, Qwen, DeepSeek) using HumanEval with semantically equivalent variants (14,760 in total). Each variant prompt generates 16 samples under uniform decoding, with statistical analysis employing robust methods including correlation tests, confidence intervals (CI), and false discovery rate (FDR) correction.
+> --- `kb/sources/.snapshots/prompt-stability-code-llms-emotion-personality-variations.md` @ `sha256:d29f22a52f74d5469e11d11c2ed3e446b60190ee2f7d4fe94116a03521e016fc` — §1, “Introduction”
+
+> For each prompt p and distance d, compute individual elasticity using the formulations from Equations 4 and 5. For PromptSE mode, average across all prompts to obtain the elasticity curve E(d). Second, average across all prompts for PromptSELight mode.
+> --- `kb/sources/.snapshots/prompt-stability-code-llms-emotion-personality-variations.md` @ `sha256:d29f22a52f74d5469e11d11c2ed3e446b60190ee2f7d4fe94116a03521e016fc` — §2.3, “AUC-E: Area Under Curve of Elasticity,” Elasticity Curve Construction
+
+> We adopt model-level Pass@1 as the performance indicator and quantify prompt stability through AUC-E.
+> --- `kb/sources/.snapshots/prompt-stability-code-llms-emotion-personality-variations.md` @ `sha256:d29f22a52f74d5469e11d11c2ed3e446b60190ee2f7d4fe94116a03521e016fc` — §4.1, “RQ1: Joint Structure of Performance and Prompt Stability”
+
+> Under valence×arousal conditions, performance–sensitivity coupling and confidence patterns show cross-model differences. For some models, emotional prompting mildly reshapes correctness and calibration, but effects vary by model and family. Probability-layer diagnostics (ECE, bias, and elasticity) complement discrete indicators, helping make "calibration-aware" model selections. High-arousal negative-valence prompts inducing confidence miscalibration in certain models (particularly the Qwen family) suggest that emotional coloring can serve as a practical probe for model brittleness. Model × emotion ECE ranges from approximately 0.055 (Qwen-1.5B) to 0.622 (DS-Coder-6.7B).
+> --- `kb/sources/.snapshots/prompt-stability-code-llms-emotion-personality-variations.md` @ `sha256:d29f22a52f74d5469e11d11c2ed3e446b60190ee2f7d4fe94116a03521e016fc` — §4.4, “RQ4: Effects of Valence×Arousal on Correctness and Calibration”
 
 ## Connections Found
 

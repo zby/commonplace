@@ -23,29 +23,35 @@ Memento-Skills treats a folder containing a declarative `SKILL.md`, prompts, and
 
 ## Quotes
 
-- **Source extract (verbatim):** To test whether offline retrieval gains translate into real execution improvements, we measure two end-to-end metrics: route hit rate (whether the router’s top-1 choice is an appropriate skill for the task) and judge success rate (whether the full trajectory actually solves the task). Fig. 9 (right) reveals that Memento-Qwen lifts route hit rate from 0.29 (BM25) and 0.53 (Qwen3) to 0.58, and judge success rate from 0.50 and 0.79 to 0.80.
-  - **Source location:** p. 12, "Router Evaluation," Figure 9 results paragraph
+> To test whether offline retrieval gains translate into real execution improvements, we measure two end-to-end metrics: route hit rate (whether the router’s top-1 choice is an appropriate skill for the task) and judge success rate (whether the full trajectory actually solves the task). Fig. 9 (right) reveals that Memento-Qwen lifts route hit rate from 0.29 (BM25) and 0.53 (Qwen3) to 0.58, and judge success rate from 0.50 and 0.79 to 0.80.
+> --- `kb/sources/.snapshots/memento-skills-let-agents-design-agents.md` @ `sha256:a177d423295693c419e29e54d58161782f208aca22ee3f0f96979975a93a7e89` — p. 12, "Router Evaluation," Figure 9 results paragraph
 
-- **Source extract (verbatim):** To isolate the contribution of the self-evolving mechanism, we compare Memento-Skills (the full system) against a Read-Write ablation that retains the same read–write reflective learning loop—skill retrieval, LLM execution, and feedback collection— but disables all skill-level optimisation: no failure attribution, no skill rewriting, and no skill discovery. All the experiments in this paper use the Gemini-3.1-Flash as the underlying LLM.
-  - **Source location:** p. 15, "Experimental Settings," Baselines paragraph
-- **Source extract (verbatim):** On the unseen test set, the full Memento-Skills system achieves 66.0% overall accuracy, compared with 52.3% for the Read-Write ablation, confirming that the skill optimisation pipeline contributes a 13.7 percentage-point gain beyond what retrieval and execution alone can provide.
-  - **Source location:** p. 15, "Results of GAIA"
-- **Source extract (verbatim):** On the test set, Memento-Skills achieves 38.7% overall, more than doubling the Read-Write baseline (17.9%).
-  - **Source location:** p. 17, "Results of HLE"
+> To isolate the contribution of the self-evolving mechanism, we compare Memento-Skills (the full system) against a Read-Write ablation that retains the same read–write reflective learning loop—skill retrieval, LLM execution, and feedback collection— but disables all skill-level optimisation: no failure attribution, no skill rewriting, and no skill discovery. All the experiments in this paper use the Gemini-3.1-Flash as the underlying LLM.
+> --- `kb/sources/.snapshots/memento-skills-let-agents-design-agents.md` @ `sha256:a177d423295693c419e29e54d58161782f208aca22ee3f0f96979975a93a7e89` — p. 15, "Experimental Settings," Baselines paragraph
 
-- **Source extract (verbatim):** The system is built on a memory-based reinforcement learning framework with stateful prompts, where reusable skills (stored as structured markdown files) serve as persistent, evolving memory. These skills encode both behaviour and context, enabling the agent to carry forward knowledge across interactions.
-  - **Source location:** p. 1, abstract
-- **Source extract (verbatim):** In the read phase, a behaviour-trainable skill router selects the most relevant skill conditioned on the current stateful prompt; in the write phase, the agent updates and expands its skill library based on new experience. This closed-loop design enables continual learning without updating LLM parameters, as all adaptation is realised through the evolution of externalised skills and prompts.
-  - **Source location:** p. 1, abstract
-- **Source extract (verbatim):** Crucially, the memory is not limited to episodic traces but consists of reusable skills, each containing a declarative specification (SKILL.md) together with helper scripts and prompts. Because the write operation rewrites the prompt or program that will be executed next, each write step directly improves the policy embodied in the skill.
-  - **Source location:** p. 9, "The Skill-Level Read–Write Loop"
-- **Source extract (verbatim):** Behaviour-aligned skill router. We train a contrastive retrieval model via single-step offline RL, casting skill routing as a KL-regularised Boltzmann policy that optimises for execution success rather than semantic similarity.
-  - **Source location:** p. 8, Contributions, item 2
+> On the unseen test set, the full Memento-Skills system achieves 66.0% overall accuracy, compared with 52.3% for the Read-Write ablation, confirming that the skill optimisation pipeline contributes a 13.7 percentage-point gain beyond what retrieval and execution alone can provide.
+> --- `kb/sources/.snapshots/memento-skills-let-agents-design-agents.md` @ `sha256:a177d423295693c419e29e54d58161782f208aca22ee3f0f96979975a93a7e89` — p. 15, "Results of GAIA"
 
-- **Source extract (verbatim):** To prevent regression, all mutations are guarded by an automatic unit-test gate, a synthetic test case is generated, executed through the updated skill, and scored by the judge [21].
-  - **Source location:** p. 10, section 2.1 "The Skill-Level Read–Write Loop", failure-attribution and skill-rewriting paragraph
-- **Source extract (verbatim):** 17: if Ut (c† ) < δ and n(c† ) ≥ nmin : 18: c′ ← DiscoverSkill(c† , xt , tracet ); St+1 ← St ∪ {c′ } 19: else: {optimise existing skill in-place} 20: St+1 ← OptimiseSkill(c† , xt , tracet , St ) 21: if UnitTestGate: validate St+1 (c† ); rollback on failure
-  - **Source location:** p. 10, section 2.1, Algorithm "Read–Write Reflective Learning", steps 17–21
+> On the test set, Memento-Skills achieves 38.7% overall, more than doubling the Read-Write baseline (17.9%).
+> --- `kb/sources/.snapshots/memento-skills-let-agents-design-agents.md` @ `sha256:a177d423295693c419e29e54d58161782f208aca22ee3f0f96979975a93a7e89` — p. 17, "Results of HLE"
+
+> The system is built on a memory-based reinforcement learning framework with stateful prompts, where reusable skills (stored as structured markdown files) serve as persistent, evolving memory. These skills encode both behaviour and context, enabling the agent to carry forward knowledge across interactions.
+> --- `kb/sources/.snapshots/memento-skills-let-agents-design-agents.md` @ `sha256:a177d423295693c419e29e54d58161782f208aca22ee3f0f96979975a93a7e89` — p. 1, abstract
+
+> In the read phase, a behaviour-trainable skill router selects the most relevant skill conditioned on the current stateful prompt; in the write phase, the agent updates and expands its skill library based on new experience. This closed-loop design enables continual learning without updating LLM parameters, as all adaptation is realised through the evolution of externalised skills and prompts.
+> --- `kb/sources/.snapshots/memento-skills-let-agents-design-agents.md` @ `sha256:a177d423295693c419e29e54d58161782f208aca22ee3f0f96979975a93a7e89` — p. 1, abstract
+
+> Crucially, the memory is not limited to episodic traces but consists of reusable skills, each containing a declarative specification (SKILL.md) together with helper scripts and prompts. Because the write operation rewrites the prompt or program that will be executed next, each write step directly improves the policy embodied in the skill.
+> --- `kb/sources/.snapshots/memento-skills-let-agents-design-agents.md` @ `sha256:a177d423295693c419e29e54d58161782f208aca22ee3f0f96979975a93a7e89` — p. 9, "The Skill-Level Read–Write Loop"
+
+> Behaviour-aligned skill router. We train a contrastive retrieval model via single-step offline RL, casting skill routing as a KL-regularised Boltzmann policy that optimises for execution success rather than semantic similarity.
+> --- `kb/sources/.snapshots/memento-skills-let-agents-design-agents.md` @ `sha256:a177d423295693c419e29e54d58161782f208aca22ee3f0f96979975a93a7e89` — p. 8, Contributions, item 2
+
+> To prevent regression, all mutations are guarded by an automatic unit-test gate, a synthetic test case is generated, executed through the updated skill, and scored by the judge [21].
+> --- `kb/sources/.snapshots/memento-skills-let-agents-design-agents.md` @ `sha256:a177d423295693c419e29e54d58161782f208aca22ee3f0f96979975a93a7e89` — p. 10, section 2.1 "The Skill-Level Read–Write Loop", failure-attribution and skill-rewriting paragraph
+
+> 17: if Ut (c† ) < δ and n(c† ) ≥ nmin : 18: c′ ← DiscoverSkill(c† , xt , tracet ); St+1 ← St ∪ {c′ } 19: else: {optimise existing skill in-place} 20: St+1 ← OptimiseSkill(c† , xt , tracet , St ) 21: if UnitTestGate: validate St+1 (c† ); rollback on failure
+> --- `kb/sources/.snapshots/memento-skills-let-agents-design-agents.md` @ `sha256:a177d423295693c419e29e54d58161782f208aca22ee3f0f96979975a93a7e89` — p. 10, section 2.1, Algorithm "Read–Write Reflective Learning", steps 17–21
 
 ## Connections Found
 

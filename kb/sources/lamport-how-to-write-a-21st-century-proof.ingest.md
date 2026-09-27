@@ -57,12 +57,14 @@ arguing that learning to write the formal form teaches the informal one.
 
 ## Quotes
 
-- **Source extract (verbatim):** How much detail is necessary? For example, why do 1.1 and the hypothesis of the corollary, which asserts that f is differentiable on I , imply that f is differentiable on [a, b]? The proof is assuming the fact that a and b in the interval I implies that [a, b] is a subset of I . Should this also be mentioned? If you are writing the proof to show someone else that the theorem is correct, then the answer depends on the sophistication of the reader. A beginning student needs more help understanding a proof than does a mathematician. If you are writing the proof for yourself to make sure that the theorem is correct, then the answer is simple: if the truth of a statement is not completely obvious, or if you suspect that there may be just the slightest possibility that it is not correct, then more detail is needed.
-  - **Source location:** Section 3, "Hierarchical Structure", p. 7 (paragraphs beginning "How much detail is necessary?")
-- **Source extract (verbatim):** My earlier paper on structured proofs described how effective they are at catching errors. It recounted how only by writing such a proof was I able to re-discover an error in a proof of the Schroeder-Bernstein theorem in a well-known topology text [2, page 28].
-  - **Source location:** Section 5, "Experience", p. 16
-- **Source extract (verbatim):** Eliminating errors requires care. Structured proofs make it possible, not inevitable.
-  - **Source location:** Section 5, "Experience", p. 17 (immediately after the correspondent's quoted email)
+> How much detail is necessary? For example, why do 1.1 and the hypothesis of the corollary, which asserts that f is differentiable on I , imply that f is differentiable on [a, b]? The proof is assuming the fact that a and b in the interval I implies that [a, b] is a subset of I . Should this also be mentioned? If you are writing the proof to show someone else that the theorem is correct, then the answer depends on the sophistication of the reader. A beginning student needs more help understanding a proof than does a mathematician. If you are writing the proof for yourself to make sure that the theorem is correct, then the answer is simple: if the truth of a statement is not completely obvious, or if you suspect that there may be just the slightest possibility that it is not correct, then more detail is needed.
+> --- `kb/sources/.snapshots/lamport-how-to-write-a-21st-century-proof.md` @ `sha256:e38cc80009dc9a90da49a8e0ad7aa05ed9eb9b8c11dd189e1c6441051c1a4e3f` — Section 3, "Hierarchical Structure", p. 7 (paragraphs beginning "How much detail is necessary?")
+
+> My earlier paper on structured proofs described how effective they are at catching errors. It recounted how only by writing such a proof was I able to re-discover an error in a proof of the Schroeder-Bernstein theorem in a well-known topology text [2, page 28].
+> --- `kb/sources/.snapshots/lamport-how-to-write-a-21st-century-proof.md` @ `sha256:e38cc80009dc9a90da49a8e0ad7aa05ed9eb9b8c11dd189e1c6441051c1a4e3f` — Section 5, "Experience", p. 16
+
+> Eliminating errors requires care. Structured proofs make it possible, not inevitable.
+> --- `kb/sources/.snapshots/lamport-how-to-write-a-21st-century-proof.md` @ `sha256:e38cc80009dc9a90da49a8e0ad7aa05ed9eb9b8c11dd189e1c6441051c1a4e3f` — Section 5, "Experience", p. 17 (immediately after the correspondent's quoted email)
 
 ## Connections Found
 

@@ -22,20 +22,26 @@ Gick and Holyoak ask when a solution from a semantically distant story changes p
 
 ## Quotes
 
-- **Source extract (verbatim):** 11 out of 12 subjects (92%)
-  - **Source location:** Experiment IV, Results and Discussion, page 342; Hint-condition subjects producing the complete dispersion solution.
-- **Source extract (verbatim):** only 20% (3 out of 15)
-  - **Source location:** Experiment IV, Results and Discussion, page 342; No Hint-condition subjects producing the dispersion solution.
-- **Source extract (verbatim):** did not differ significantly between the Hint and No Hint groups
-  - **Source location:** Experiment IV, gist-recall check, page 343; comparison of mean propositions recalled from the critical story.
-- **Source extract (verbatim):** For subjects in the “Hint” condition, the instructions on solving the radiation problem included the following sentence: “In solving this problem you may find that one of the stories you read before will give you a hint for a solution of this problem.” For subjects in the “No Hint” condition, this sentence was deleted from the instructions.
-  - **Source location:** Experiment IV, Method, pages 341–342; the varied relevance-cue instruction.
-- **Source extract (verbatim):** For the Hint condition, 11 out of 12 subjects (92%) produced the complete dispersion solution.
-  - **Source location:** Experiment IV, Results and Discussion, page 342; hinted participants producing the target solution.
-- **Source extract (verbatim):** Whereas 92% of the subjects in the Hint condition produced the dispersion solution, only 20% (3 out of 15) of those in the No Hint condition did so,
-  - **Source location:** Experiment IV, Results and Discussion, page 342; direct condition comparison.
-- **Source extract (verbatim):** Since subjects were randomly assigned to the two conditions, degree of memory for the critical story should have been equalized across the two conditions. To confirm this, the protocols for the Attack-Dispersion story were scored for gist recall. For this purpose the story was divided into 43 propositions (see Appendix III). This propositional division was made using the procedure outlined by Thorndyke (1977), with the addition that adjectives and prepositional phrases that seemed intuitively important to the story were counted as separate propositions. As anticipated, the mean number of propositions recalled did not differ significantly between the Hint and No Hint groups (32.08 versus 33.53), f < 1.
-  - **Source location:** Experiment IV, recall check, page 343; scoring method and null group difference.
+> 11 out of 12 subjects (92%)
+> --- `kb/sources/.snapshots/gick-holyoak-analogical-problem-solving.md` @ `sha256:1b07162bb90d7bdbda3203be8b359739f81144394f8d7585e5d463cb4660c128` — Experiment IV, Results and Discussion, page 342; Hint-condition subjects producing the complete dispersion solution.
+
+> only 20% (3 out of 15)
+> --- `kb/sources/.snapshots/gick-holyoak-analogical-problem-solving.md` @ `sha256:1b07162bb90d7bdbda3203be8b359739f81144394f8d7585e5d463cb4660c128` — Experiment IV, Results and Discussion, page 342; No Hint-condition subjects producing the dispersion solution.
+
+> did not differ significantly between the Hint and No Hint groups
+> --- `kb/sources/.snapshots/gick-holyoak-analogical-problem-solving.md` @ `sha256:1b07162bb90d7bdbda3203be8b359739f81144394f8d7585e5d463cb4660c128` — Experiment IV, gist-recall check, page 343; comparison of mean propositions recalled from the critical story.
+
+> For subjects in the “Hint” condition, the instructions on solving the radiation problem included the following sentence: “In solving this problem you may find that one of the stories you read before will give you a hint for a solution of this problem.” For subjects in the “No Hint” condition, this sentence was deleted from the instructions.
+> --- `kb/sources/.snapshots/gick-holyoak-analogical-problem-solving.md` @ `sha256:1b07162bb90d7bdbda3203be8b359739f81144394f8d7585e5d463cb4660c128` — Experiment IV, Method, pages 341–342; the varied relevance-cue instruction.
+
+> For the Hint condition, 11 out of 12 subjects (92%) produced the complete dispersion solution.
+> --- `kb/sources/.snapshots/gick-holyoak-analogical-problem-solving.md` @ `sha256:1b07162bb90d7bdbda3203be8b359739f81144394f8d7585e5d463cb4660c128` — Experiment IV, Results and Discussion, page 342; hinted participants producing the target solution.
+
+> Whereas 92% of the subjects in the Hint condition produced the dispersion solution, only 20% (3 out of 15) of those in the No Hint condition did so,
+> --- `kb/sources/.snapshots/gick-holyoak-analogical-problem-solving.md` @ `sha256:1b07162bb90d7bdbda3203be8b359739f81144394f8d7585e5d463cb4660c128` — Experiment IV, Results and Discussion, page 342; direct condition comparison.
+
+> Since subjects were randomly assigned to the two conditions, degree of memory for the critical story should have been equalized across the two conditions. To confirm this, the protocols for the Attack-Dispersion story were scored for gist recall. For this purpose the story was divided into 43 propositions (see Appendix III). This propositional division was made using the procedure outlined by Thorndyke (1977), with the addition that adjectives and prepositional phrases that seemed intuitively important to the story were counted as separate propositions. As anticipated, the mean number of propositions recalled did not differ significantly between the Hint and No Hint groups (32.08 versus 33.53), f < 1.
+> --- `kb/sources/.snapshots/gick-holyoak-analogical-problem-solving.md` @ `sha256:1b07162bb90d7bdbda3203be8b359739f81144394f8d7585e5d463cb4660c128` — Experiment IV, recall check, page 343; scoring method and null group difference.
 
 ## Connections Found
 

@@ -23,14 +23,17 @@ OTP turns its runtime code-replacement capability into a versioned release proce
 
 ## Quotes
 
-- **Source extract (verbatim):** This file describes how to upgrade and/or downgrade between the old and new version of the entire release.
-  - **Source location:** “Release Handling Workflow,” Step 6 description of `relup`
-- **Source extract (verbatim):** If a more complex change has been made, for example, a change to the format of the internal state of a `m:gen_server`, simple code replacement is not sufficient. Instead, it is necessary to: - Suspend the processes using the module (to avoid that they try to handle any requests before the code replacement is completed). - Ask them to transform the internal state format and switch to the new version of the module. - Remove the old version. - Resume the processes.
-  - **Source location:** “Release Handling Instructions,” `update`
-- **Source extract (verbatim):** If an error occurs during the installation, the system is rebooted using the old version of the release. If installation succeeds, the system is afterwards using the new version of the release, but if anything happens and the system is rebooted, it starts using the previous version again.
-  - **Source location:** “Installing a Release,” post-install behavior
-- **Source extract (verbatim):** To downgrade from `Vsn` to `FromVsn`, `install_release` must be called again:
-  - **Source location:** “Installing a Release,” downgrade procedure
+> This file describes how to upgrade and/or downgrade between the old and new version of the entire release.
+> --- `kb/sources/.snapshots/erlang-release-handling.md` @ `sha256:3b81192a9e44981d72acc5f570a25dcc3b187caaf1d40b60186f661069756935` — “Release Handling Workflow,” Step 6 description of `relup`
+
+> If a more complex change has been made, for example, a change to the format of the internal state of a `m:gen_server`, simple code replacement is not sufficient. Instead, it is necessary to: - Suspend the processes using the module (to avoid that they try to handle any requests before the code replacement is completed). - Ask them to transform the internal state format and switch to the new version of the module. - Remove the old version. - Resume the processes.
+> --- `kb/sources/.snapshots/erlang-release-handling.md` @ `sha256:3b81192a9e44981d72acc5f570a25dcc3b187caaf1d40b60186f661069756935` — “Release Handling Instructions,” `update`
+
+> If an error occurs during the installation, the system is rebooted using the old version of the release. If installation succeeds, the system is afterwards using the new version of the release, but if anything happens and the system is rebooted, it starts using the previous version again.
+> --- `kb/sources/.snapshots/erlang-release-handling.md` @ `sha256:3b81192a9e44981d72acc5f570a25dcc3b187caaf1d40b60186f661069756935` — “Installing a Release,” post-install behavior
+
+> To downgrade from `Vsn` to `FromVsn`, `install_release` must be called again:
+> --- `kb/sources/.snapshots/erlang-release-handling.md` @ `sha256:3b81192a9e44981d72acc5f570a25dcc3b187caaf1d40b60186f661069756935` — “Installing a Release,” downgrade procedure
 
 ## Connections Found
 

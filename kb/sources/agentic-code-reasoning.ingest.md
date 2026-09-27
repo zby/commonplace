@@ -22,18 +22,23 @@ The paper introduces "semi-formal reasoning" — structured prompting templates 
 
 ## Quotes
 
-- **Source extract (verbatim):** We study this capability, which we call agentic code reasoning, and introduce semi-formal reasoning: a structured prompting methodology that requires agents to construct explicit premises, trace execution paths, and derive formal conclusions.
-  - **Source location:** Abstract.
-- **Source extract (verbatim):** Crucially, the agent cannot execute repository code or run its test suite: dependencies are not installed and the environment is not sandboxed.
-  - **Source location:** Section 2.1, Agentic vs. Single-Shot Verification.
-- **Source extract (verbatim):** For fault localization on Defects4J just2014defects4j, semi-formal reasoning improves Top-5 accuracy by 5-12 percentage points over standard agentic reasoning.
-  - **Source location:** Section 1, Contributions.
-- **Source extract (verbatim):** Even with semi-formal analysis, 19 cases are incorrect.
-  - **Source location:** Section 4.1.1, Curated Dataset Evaluation.
-- **Source extract (verbatim):** The results reveal that structured semi-formal reasoning provides substantial gains: Opus improves from 78.3% (standard agentic) to 87.0% with the semi-formal template (+8.7pp). For Sonnet, standard agentic reasoning already achieves 85.3%, and the semi-formal template does not yield further gains (84.8%), suggesting that the benefit of structured reasoning varies by model capability and may plateau when the base model is already strong.
-  - **Source location:** Section 4.3, Code Question Answering.
-- **Source extract (verbatim):** The structured template requires the agent to fill in a function trace table (listing every function examined with file:line locations and verified behavior), data flow analysis (tracing how key variables flow through the code), semantic properties with explicit evidence, and an alternative hypothesis check.
-  - **Source location:** Section 4.3, Code Question Answering.
+> We study this capability, which we call agentic code reasoning, and introduce semi-formal reasoning: a structured prompting methodology that requires agents to construct explicit premises, trace execution paths, and derive formal conclusions.
+> --- `kb/sources/.snapshots/agentic-code-reasoning.md` @ `sha256:19f33415923cf24ea366560df5f62c897f6ef94c5cee0891c54abfeae2e37a76` — Abstract.
+
+> Crucially, the agent cannot execute repository code or run its test suite: dependencies are not installed and the environment is not sandboxed.
+> --- `kb/sources/.snapshots/agentic-code-reasoning.md` @ `sha256:19f33415923cf24ea366560df5f62c897f6ef94c5cee0891c54abfeae2e37a76` — Section 2.1, Agentic vs. Single-Shot Verification.
+
+> For fault localization on Defects4J just2014defects4j, semi-formal reasoning improves Top-5 accuracy by 5-12 percentage points over standard agentic reasoning.
+> --- `kb/sources/.snapshots/agentic-code-reasoning.md` @ `sha256:19f33415923cf24ea366560df5f62c897f6ef94c5cee0891c54abfeae2e37a76` — Section 1, Contributions.
+
+> Even with semi-formal analysis, 19 cases are incorrect.
+> --- `kb/sources/.snapshots/agentic-code-reasoning.md` @ `sha256:19f33415923cf24ea366560df5f62c897f6ef94c5cee0891c54abfeae2e37a76` — Section 4.1.1, Curated Dataset Evaluation.
+
+> The results reveal that structured semi-formal reasoning provides substantial gains: Opus improves from 78.3% (standard agentic) to 87.0% with the semi-formal template (+8.7pp). For Sonnet, standard agentic reasoning already achieves 85.3%, and the semi-formal template does not yield further gains (84.8%), suggesting that the benefit of structured reasoning varies by model capability and may plateau when the base model is already strong.
+> --- `kb/sources/.snapshots/agentic-code-reasoning.md` @ `sha256:19f33415923cf24ea366560df5f62c897f6ef94c5cee0891c54abfeae2e37a76` — Section 4.3, Code Question Answering.
+
+> The structured template requires the agent to fill in a function trace table (listing every function examined with file:line locations and verified behavior), data flow analysis (tracing how key variables flow through the code), semantic properties with explicit evidence, and an alternative hypothesis check.
+> --- `kb/sources/.snapshots/agentic-code-reasoning.md` @ `sha256:19f33415923cf24ea366560df5f62c897f6ef94c5cee0891c54abfeae2e37a76` — Section 4.3, Code Question Answering.
 
 ## Connections Found
 

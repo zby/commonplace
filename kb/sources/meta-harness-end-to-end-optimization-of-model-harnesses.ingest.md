@@ -24,23 +24,29 @@ Meta-Harness is an outer-loop system that searches over LLM harness code by givi
 
 ## Quotes
 
-- **Source extract (verbatim):** It uses an agentic proposer that accesses the source code, scores, and execution traces of all prior candidates through a filesystem.
-  - **Source location:** Abstract
-- **Source extract (verbatim):** | Method | Scores | Code | Summaries | Traces | Median | Best Acc | >ZS |
-  - **Source location:** Section 4.1, “Ablation: information available to the proposer,” table header
-- **Source extract (verbatim):** | Scores Only | ✓ | ✓ | ✗ | ✗ | 34.6 | 41.3 | 26 |
-  - **Source location:** Section 4.1, "Ablation: information available to the proposer" table
-- **Source extract (verbatim):** | Scores + Summary | ✓ | ✓ | ✓ | ✗ | 34.9 | 38.7 | 23 |
-  - **Source location:** Section 4.1, "Ablation: information available to the proposer" table
-- **Source extract (verbatim):** | **Meta-Harness** (full) | ✓ | ✓ | - | ✓ | 50.0 | 56.7 | 39 |
-  - **Source location:** Section 4.1, "Ablation: information available to the proposer" table
-- **Source extract (verbatim):** Summaries do not recover the missing signal, and may even hurt by compressing away diagnostically useful details.
-  - **Source location:** Section 4.1, paragraph following the ablation table
+> It uses an agentic proposer that accesses the source code, scores, and execution traces of all prior candidates through a filesystem.
+> --- `kb/sources/.snapshots/meta-harness-end-to-end-optimization-of-model-harnesses.md` @ `sha256:a4b0731ef434a7734ac5ce37ce9a88aee5105c9b48f28a2cc683b68ea568bf73` — Abstract
 
-- **Source extract (verbatim):** Meta-Harness is an outer-loop procedure for searching over task-specific harnesses.
-  - **Source location:** Section 3, opening paragraph
-- **Source extract (verbatim):** Each harness is a single-file Python program that modifies task-specific prompting, retrieval, memory, and orchestration logic. The proposer is Claude Code with Opus-4.6, guided by a minimal domain-specific skill that describes where to write new harnesses, how to inspect previous harnesses and their execution traces, and what files it can and cannot modify. The base model M varies by domain and is always frozen.
-  - **Source location:** Section 3, “Practical implementation”
+> | Method | Scores | Code | Summaries | Traces | Median | Best Acc | >ZS |
+> --- `kb/sources/.snapshots/meta-harness-end-to-end-optimization-of-model-harnesses.md` @ `sha256:a4b0731ef434a7734ac5ce37ce9a88aee5105c9b48f28a2cc683b68ea568bf73` — Section 4.1, “Ablation: information available to the proposer,” table header
+
+> | Scores Only | ✓ | ✓ | ✗ | ✗ | 34.6 | 41.3 | 26 |
+> --- `kb/sources/.snapshots/meta-harness-end-to-end-optimization-of-model-harnesses.md` @ `sha256:a4b0731ef434a7734ac5ce37ce9a88aee5105c9b48f28a2cc683b68ea568bf73` — Section 4.1, "Ablation: information available to the proposer" table
+
+> | Scores + Summary | ✓ | ✓ | ✓ | ✗ | 34.9 | 38.7 | 23 |
+> --- `kb/sources/.snapshots/meta-harness-end-to-end-optimization-of-model-harnesses.md` @ `sha256:a4b0731ef434a7734ac5ce37ce9a88aee5105c9b48f28a2cc683b68ea568bf73` — Section 4.1, "Ablation: information available to the proposer" table
+
+> | **Meta-Harness** (full) | ✓ | ✓ | - | ✓ | 50.0 | 56.7 | 39 |
+> --- `kb/sources/.snapshots/meta-harness-end-to-end-optimization-of-model-harnesses.md` @ `sha256:a4b0731ef434a7734ac5ce37ce9a88aee5105c9b48f28a2cc683b68ea568bf73` — Section 4.1, "Ablation: information available to the proposer" table
+
+> Summaries do not recover the missing signal, and may even hurt by compressing away diagnostically useful details.
+> --- `kb/sources/.snapshots/meta-harness-end-to-end-optimization-of-model-harnesses.md` @ `sha256:a4b0731ef434a7734ac5ce37ce9a88aee5105c9b48f28a2cc683b68ea568bf73` — Section 4.1, paragraph following the ablation table
+
+> Meta-Harness is an outer-loop procedure for searching over task-specific harnesses.
+> --- `kb/sources/.snapshots/meta-harness-end-to-end-optimization-of-model-harnesses.md` @ `sha256:a4b0731ef434a7734ac5ce37ce9a88aee5105c9b48f28a2cc683b68ea568bf73` — Section 3, opening paragraph
+
+> Each harness is a single-file Python program that modifies task-specific prompting, retrieval, memory, and orchestration logic. The proposer is Claude Code with Opus-4.6, guided by a minimal domain-specific skill that describes where to write new harnesses, how to inspect previous harnesses and their execution traces, and what files it can and cannot modify. The base model M varies by domain and is always frozen.
+> --- `kb/sources/.snapshots/meta-harness-end-to-end-optimization-of-model-harnesses.md` @ `sha256:a4b0731ef434a7734ac5ce37ce9a88aee5105c9b48f28a2cc683b68ea568bf73` — Section 3, “Practical implementation”
 
 ## Connections Found
 
