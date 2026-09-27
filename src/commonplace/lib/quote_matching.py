@@ -1,7 +1,6 @@
 """Shared quotation records, attributed-block parsing, and occurrence matching.
 
-Resolvers choose normalization and eligible source regions. Positions below are
-normalized offsets within each region, never original-source line numbers.
+Resolvers choose normalization and eligible source regions.
 """
 
 from __future__ import annotations
@@ -155,12 +154,8 @@ def normalize_text(text: str, kind: Normalization = "prose") -> str:
 
 @dataclass(frozen=True)
 class QuoteMatch:
-    positions: tuple[tuple[int, int], ...]
+    count: int
     error: str | None = None
-
-    @property
-    def count(self) -> int:
-        return len(self.positions)
 
     @property
     def matched(self) -> bool:
@@ -183,11 +178,11 @@ def match_quote(
     regions = [source] if isinstance(source, str) else list(source)
     if ranges:
         if not isinstance(source, str):
-            return QuoteMatch((), "line ranges require one original source")
+            return QuoteMatch(0, "line ranges require one original source")
         lines = source.splitlines()
         if any(start < 1 or end < start or end > len(lines) for start, end in ranges):
             return QuoteMatch(
-                (), f"line range is outside source's 1-{len(lines)} lines"
+                0, f"line range is outside source's 1-{len(lines)} lines"
             )
         merged: list[tuple[int, int]] = []
         for start, end in sorted(ranges):
@@ -198,26 +193,21 @@ def match_quote(
         regions = ["\n".join(lines[start - 1 : end]) for start, end in merged]
     needle = normalize_text(quote, kind)
     if not needle:
-        return QuoteMatch((), "quote body is empty after normalization")
-    positions = []
-    for index, region in enumerate(regions):
+        return QuoteMatch(0, "quote body is empty after normalization")
+    count = 0
+    for region in regions:
         haystack = normalize_text(region, kind)
         offset = haystack.find(needle)
         while offset >= 0:
-            positions.append((index, offset))
+            count += 1
             offset = haystack.find(needle, offset + 1)
-    result = tuple(positions)
-    if not result:
+    location = "the cited line range" if ranges else "the source region"
+    if count == 0:
+        return QuoteMatch(count, f"quote does not occur in {location}")
+    if count > 1:
         return QuoteMatch(
-            result,
-            "quote does not occur in "
-            + ("the cited line range" if ranges else "the source region"),
+            count,
+            f"quote occurs {count} times in {location}; "
+            "quote more context or supply a range containing one occurrence",
         )
-    if len(result) > 1:
-        return QuoteMatch(
-            result,
-            f"quote occurs {len(result)} times in "
-            + ("the cited line range" if ranges else "the source region")
-            + "; quote more context or supply a range containing one occurrence",
-        )
-    return QuoteMatch(result)
+    return QuoteMatch(count)

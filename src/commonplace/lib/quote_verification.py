@@ -101,7 +101,6 @@ class _Quote:
     text: str
 
 
-
 def _paragraphs(text: str) -> Iterable[tuple[int, str]]:
     raw = [
         (text.count("\n", 0, match.start(1)) + 1, match.group(1))
@@ -187,10 +186,8 @@ def _quotes(paragraph: str, links: Sequence[_Link]) -> list[_Quote]:
     return found
 
 
-def _nearest_link(quote: _Quote, links: Sequence[_Link]) -> tuple[_Link | None, bool]:
-    if not links:
-        return None, False
-
+def _nearest_link(quote: _Quote, links: Sequence[_Link]) -> tuple[_Link, bool]:
+    """Choose among the paragraph's nonempty source links."""
     def distance(link: _Link) -> int:
         if link.start >= quote.end:
             return link.start - quote.end
@@ -200,13 +197,13 @@ def _nearest_link(quote: _Quote, links: Sequence[_Link]) -> tuple[_Link | None, 
     # so a quote at the start of the next list item is not captured by the
     # preceding item's nearby citation.
     following = [link for link in links if link.start >= quote.end]
-    ordered = sorted(following or list(links), key=distance)
+    ordered = sorted(following or links, key=distance)
     ambiguous = len(ordered) > 1 and distance(ordered[0]) == distance(ordered[1])
     return ordered[0], ambiguous
 
 
 def _marker_is_confident(
-    paragraph: str, quote: _Quote, link: _Link, prose: str | None = None
+    paragraph: str, quote: _Quote, link: _Link, prose: str
 ) -> bool:
     """Return whether local prose explicitly marks this quote as verbatim.
 
@@ -215,9 +212,6 @@ def _marker_is_confident(
     never counts as a citation marker. Structure is still read from
     ``paragraph``.
     """
-    if prose is None:
-        prose = _mask_link_targets(paragraph, [link])
-
     def positive_marker(text: str) -> bool:
         return bool(VERBATIM_RE.search(text) and not NEGATED_VERBATIM_RE.search(text))
 
@@ -268,7 +262,7 @@ def parse_prose_citations(content: str) -> list[Citation]:
         paired_links: set[_Link] = set()
         for quote in quotes:
             link, ambiguous = _nearest_link(quote, links)
-            if link is None or not _marker_is_confident(paragraph, quote, link, prose):
+            if not _marker_is_confident(paragraph, quote, link, prose):
                 continue
             paired_links.add(link)
             citations.append(Citation(

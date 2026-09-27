@@ -888,8 +888,9 @@ def validate_ingest_quotes(
         results.infos.append(f"source quotes: source error: cannot read pinned snapshot; extracts unverified: {exc}")
         return
     failures = len(results.fails)
+    normalization = ingest_normalization(content)
     for citation in valid:
-        matched = match_quote(citation.quote, snapshot_text, kind=ingest_normalization(content), ranges=citation.ranges)
+        matched = match_quote(citation.quote, snapshot_text, kind=normalization, ranges=citation.ranges)
         if not matched.matched:
             results.fails.append(f"source quote: {matched.error} in the checksum-verified snapshot: {citation.quote!r}")
     if len(valid) == len(citations) and len(results.fails) == failures:
