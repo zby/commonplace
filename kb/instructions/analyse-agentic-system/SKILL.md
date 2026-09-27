@@ -81,8 +81,7 @@ hash or later successful command does not clear an earlier failure. Use
    narrower mechanism whose operation depends on model calls it issues or
    serves. An MCP server, tool, or returning computation may qualify without
    owning the enclosing runtime. If the target is outside this boundary, write
-   and validate an `out-of-scope` result, complete the run without a public
-   review, and stop.
+   an `out-of-scope` result and continue at step 7.
 5. Classify the target as an `enclosing runtime`, `embedded inner runtime`,
    `runtime client`, `returning computation`, `workflow`, `extension or tool
    mechanism`, `builder or improvement plane`, `host integration`,
@@ -92,13 +91,12 @@ hash or later successful command does not clear an earlier failure. Use
    `complete artifact, partial loop`. Do not assign responsibilities owned by
    an excluded host to the selected target.
 
-If no coherent boundary or reachable source can be established, write a typed
-`blocked` result with every required section and explicit unreached
-dispositions. Complete the run without publishing a review.
+If no coherent boundary or reachable source can be established, write a
+`blocked` result and continue at step 7.
 
 If a coordinator reads prior-review prose or substantive prior audit findings
-before freezing the exact result and candidate, disclosure does not restore a
-source-only pass. Stop that analysis, mark the run `failed` for prior-analysis
+through any tool before freezing the exact result and candidate, disclosure
+does not restore a source-only pass. Stop that analysis, mark the run `failed` for prior-analysis
 exposure, and require a fresh coordinator context with a new run ID and clean
 source-only inputs. Do not publish the exposed draft or try to repair its
 independence claim. A later, separately commissioned audit after both artifacts
@@ -129,10 +127,7 @@ construction. Keep subsequent analytical changes outside that exposed context.
    layer, inspected scope, citation anchors, and access gaps. Keep
    implementation, doctrine/design, reported operation, observed runs, and
    causal experiments distinct.
-5. Use a recorded search boundary only for a load-bearing absence claim. Name
-   the searched roots or files, query, and revision; a casual search miss is a
-   limitation, not an `ABS-*` record.
-6. Select files and line ranges before reading content. Budget the aggregate
+5. Select files and line ranges before reading content. Budget the aggregate
    output of parallel reads against the tool wrapper's delivery limit; an
    output cap alone does not bound the inspection. Treat truncated output as
    non-evidence. Narrow and repeat the read before citing it. For each
@@ -183,7 +178,9 @@ Judging norms:
 - Describe every external mechanism in source-native terms before mapping it
   to Commonplace ontology. Explain the fit and mark partial or unresolved
   mappings. Do not turn omission of an open-ended mechanism into evidence of
-  absence; an `uninspected` gap is a limitation, not an `ABS-*` record.
+  absence. An `uninspected` gap or a casual search miss is a limitation, not
+  an `ABS-*` record; record the searched boundary only for a load-bearing
+  absence claim.
 
 Register ownership: the coordinator owns canonical IDs and generic identity. A
 lens annotates existing IDs and proposes new records under local tags that
@@ -266,9 +263,7 @@ Off-band messages may carry progress or access problems; all findings and
 integration issues must be retained in the report. Check its run, source,
 boundary, input hash, completion status, and source anchors before integration.
 If the frozen input changes, commission a new report against the new bytes.
-Prior-analysis exposure through any tool has the same consequence as reading
-an incumbent: abandon the exposed run and use a fresh coordinator and run ID.
-Do not reuse its analytical draft.
+Prior-analysis exposure has the consequence step 1 states.
 
 Invoke
 [`analyse-external-system-epistemic-architecture.md`](../analyse-external-system-epistemic-architecture.md)
@@ -279,20 +274,20 @@ section under the type's contract.
 
 ### 6. Reconcile and synthesize
 
-Require complete identifiers in worker returns and integration: `OBJ-1, OBJ-2`,
-never `OBJ-1/O2` or an ID range. Return abbreviated proposals for expansion
-before assigning canonical IDs. Map exact identifier tokens, not substrings;
-verify that every mapped target is declared and unique. Keep proposal-to-ID
-mappings in Reconciliation; outside it, refer to accepted canonical IDs.
-
-Resolve proposed records into canonical IDs, attach corrections and amendments
-to the affected records, preserve anchored conflicts, and report independent
-convergence only when the lenses reached it independently. Recheck shared-route
-ownership. Record mappings from specialist proposal IDs to canonical IDs and
-the disposition of every material integration issue. Return substantive
-conflicts to the specialist or retain explicit uncertainty; do not silently
-strengthen its findings. If reconciliation exposes stale or unsupported lens
-work, rerun that lens before continuing.
+Resolve proposed records into canonical IDs: return a worker's abbreviated
+proposals for expansion first, map exact identifier tokens rather than
+substrings, and verify that every mapped target is declared and unique.
+Attach corrections and amendments to the affected records, preserve anchored
+conflicts, and report independent convergence only when the lenses reached it
+independently. Recheck shared-route ownership. Integrate the specialist's
+`memory-comparison` profile with its scope, per-value evidence bases and
+records, coverage assessments, uncertainties, and rationale preserved, and
+carry each specialist quote onto the canonical record it supports; the parent
+checks integration and shared-record conflicts and does not draft a second
+memory analysis. Return substantive conflicts to the specialist or retain
+explicit uncertainty; do not silently strengthen its findings. If
+reconciliation exposes stale or unsupported lens work, rerun that lens before
+continuing.
 
 If a specialist correction cannot be delivered, wait for capacity or retain
 the blocker. The coordinator may replace a malformed citation with a generated
@@ -324,15 +319,6 @@ Write `<run-id>/result.md` using
 required headings. Its Run identity names the run state, generated review
 disposition, memory report path, and SHA-256 of the report bytes. Put probe
 evidence inline.
-
-Integrate the specialist's `memory-comparison` profile by mapping its proposed
-record IDs to accepted canonical IDs, and carry each specialist quote onto the
-canonical record it supports. Preserve its scope, per-value evidence bases and records,
-coverage assessments, uncertainties, and rationale. The parent checks integration and shared-record
-conflicts; it does not independently draft a second memory analysis. Include
-all adopted findings and evidence needed to understand the main result without
-opening the local report. The report is provenance, not independent semantic
-clearance.
 
 After reconciliation, check the integrated result against the type's comparison
 rules, not just the separate lens returns:
