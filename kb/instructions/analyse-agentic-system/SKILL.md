@@ -243,7 +243,7 @@ and depth, exclusions, and the question the report must answer. Records are
 source-checkable seeds, not accepted conclusions. Do not supply legacy reviews
 or precomputed memory classifications. Hash the complete input file.
 
-Launch a fresh sub-agent to execute the standalone
+Launch a fresh sub-agent to execute the
 [Analyse agent memory](../analyse-agent-memory.md) instruction with that input
 and `<run-id>/memory-report.md` as its sole output. The worker owns source-native
 memory analysis and the proposed `memory-comparison` profile. Its typed report
@@ -274,10 +274,8 @@ Invoke
 [`analyse-external-system-epistemic-architecture.md`](../analyse-external-system-epistemic-architecture.md)
 for the epistemic lens, locally or in a separate worker with the same frozen
 boundary. Pass the frozen boundary, registers, statuses, scoping record, and
-classify-only routes. Require a sparse overlay on canonical IDs.
-Keep that procedure's architectural status and observed candidate state in
-their own vocabulary; never translate `implemented` into this workflow's
-conclusion-status field.
+classify-only routes. Its output is the result's `### Epistemic lens`
+section under the type's contract.
 
 ### 6. Reconcile and synthesize
 
