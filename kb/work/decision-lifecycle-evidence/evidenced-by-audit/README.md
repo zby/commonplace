@@ -77,10 +77,20 @@ fix is not a permitted label.
    `notes/evidence/commonplace-as-a-reflective-system.md` ("direct evidence
    base"). Options: permit `abstracted-from` toward `notes/evidence/`, or use
    `grounds`/`extends` and accept that the origin reading is lost.
+   **Decided 2026-09-27:** `abstracted-from` now admits `notes/evidence`
+   (`e42117e0`). Origin links to ordinary notes relabel as `grounds`, or
+   as `exemplifies` on the narrower note.
 2. **Origin toward an external URL.** No origin label may target `external`.
    Workers suggest ingesting the source first (Toulmin, Lampinen, Bainbridge)
    or rephrasing as qualifying in the meantime. Three arXiv links already
    have ingests and can be re-pointed.
+   **Decided 2026-09-27:** a check found ingests for every external origin
+   source except two Stanford Encyclopedia entries, including Toulmin,
+   Lampinen, Bainbridge, Parnas, blackhc, and KatanaLarp. Re-point those
+   links to their ingests and use `abstracted-from`. The two encyclopedia
+   links in `discovery-lifecycle.md` were reworded as origin (`b36ef407`).
+   Re-pointing adds tracked sources under the ADR 082 bound; validate each
+   note, especially `the-boundary-of-automation-is-the-boundary-of-verification.md`.
 3. **Reference edges into notes.** `kb/reference/COLLECTION.md` does not allow
    `evidenced-by` toward `kb/notes/`, yet five reference edges do (ADRs 068,
    079, 082, and two in the change-candidates doc). This is existing data
