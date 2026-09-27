@@ -10,6 +10,32 @@ If a script's docstring says "one-off" or "temporary," whoever finishes using it
 
 A script graduates to a `commonplace-*` command when it has been invoked, unmodified in its core logic, across multiple unrelated sessions or triage passes — repetition with a stable interface. A script whose interface is still changing hasn't stabilized enough to promote yet, no matter how many times it's been touched. This is a judgment call exercised periodically (e.g., at monthly triage), not a mechanical trigger.
 
+## Isolated installation rehearsal
+
+Start with [the orchestrator instruction](../kb/instructions/test-installed-commonplace.md)
+and [the installed-wiki scenarios](../tests/scenarios/installed/README.md).
+By default, build and install a wheel from the working checkout, including
+uncommitted package changes. Select a PyPI release explicitly to test a
+published version; development rehearsals require no publication.
+The orchestrator selects stages, prepares prompts and inputs, assigns budgets,
+inspects evidence, judges outcomes, and decides whether to continue. It looks
+for a CLI counterpart of its own agent runtime and reports a blocker if none
+is available with the required isolation. Capture project inventories per
+stage, archive the project at the start and end, and check the read-only
+installation once at the end. Detailed context accounting is optional.
+
+Two mechanical helpers support it:
+
+- `run_isolated_codex.py`: optional implementation for Codex CLI on Linux;
+  enforce a Bubblewrap boundary, launch one supplied prompt with explicit
+  access and timeout settings, and retain raw process/session logs. Network
+  access is shared with the host. Use only when Codex is the selected runtime.
+- `capture_test_state.py`: archive bytes, hash files, and compare inventories
+  for any runtime. Differences are data for the orchestrator to assess.
+
+Each helper has `--help`. Neither helper assigns scenario verdicts or advances
+the test sequence.
+
 ## X likes reading inbox
 
 Run from this checkout:
