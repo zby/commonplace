@@ -14,6 +14,7 @@ This README is navigation only; it states no rules ([ADR 084](../../adr/084-kind
 
 ## Contents
 
+- [Quote occurrence location and verification](./quote-occurrence-location-and-verification.md) — adopted by ADR 094, 2026-09-27. Counts of citations, repeated occurrences, emphasis-dependent matches, and recovered range errors before the shared matcher.
 - [Per-artifact write briefs](./per-artifact-write-briefs.md) — adopted by ADR 092, 2026-09-26. The pre-adoption state (seven deleted multistage briefs, an unfilled retained-intent slot), the pilot and drift-study figures behind adoption, and the options not taken: frontmatter intent, mandatory briefs, assembler delivery.
 - [External articles collection](./external-articles-collection.md) — adopted by ADR 057, 2026-07-26. Editorial/expository profile, ProperDocs publication channel, excluded draft subtree, dated-body lifecycle, and searchable source lineage; the first-article test configuration is the texture behind the shipped procedure.
 - [Harness capture for agentic-analysis diagnostics](./harness-capture-for-agentic-analysis-diagnostics.md) — retired by ADR 083, 2026-09-04. The rejected diagnostic-ledger options and observed gap between harness events and repository-visible execution remain as texture behind rerun-on-failure semantics.
