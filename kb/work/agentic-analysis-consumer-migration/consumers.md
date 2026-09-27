@@ -259,6 +259,16 @@ validation checks recorded in the acceptance file. Historical reviews were not
 retroactively attested. C11 adds no consumer-facing secondary analysis and no
 legacy-format adapter.
 
+The 2026-09-27 reliability work exposes those same frozen-source checks as
+`commonplace-agentic-analysis-publication verify-sources` for running results
+and independent memory reports. Publication still repeats them; early success
+is not semantic approval or completion. Adjacent quote attributions are checked
+independently. C04 bundle capture also records these source/record checkers and
+publication code, with explicit linked ontology inputs required before capture.
+This is hardening of the migrated consumers, not a new comparison format. See the
+[retained reliability acceptance](../../reports/retained/agentic-analysis-reliability-20260927/README.md)
+for the fresh analysis and three-system comparison/synthesis trial.
+
 
 ### C12/C14 — Memory specialist and legacy production retirement
 

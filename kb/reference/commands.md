@@ -45,6 +45,14 @@ The command is read-only. It refuses a running, failed, or invalid run.
 
 ### commonplace-agentic-analysis-publication
 
+`verify-sources <run-state-path> --artifact <artifact-path>` checks one running
+run's `result.md` or `memory-report.md` before integration or publication. It
+validates the artifact's type and structure and resolves quotes and citation
+ranges against the run's frozen source. It returns a nonzero status on failure,
+otherwise the checked artifact's SHA-256 and check count. It writes nothing,
+needs no public-review candidate, and does not establish semantic support or
+completion of the run. The publication operations repeat source checking.
+
 Inspect a destination, prepare or publish the compact review of one running
 agentic-system analysis. `inspect-destination` takes `--generated-destination`
 and `--source-identity`; it returns a replacement decision and incumbent digest

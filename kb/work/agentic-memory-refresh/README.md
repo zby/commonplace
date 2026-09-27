@@ -99,6 +99,15 @@ remain historical. There are still 159 current legacy artifacts pending. Bulk
 execution has not started; the next bounded batch should cover document-only
 sources, duplicate legacy boundaries and a larger eligible statistical sample.
 
+The reliability repairs commissioned after the [trace audit](./trace-audit.md)
+completed on 2026-09-27. The [retained acceptance record](../../reports/retained/agentic-analysis-reliability-20260927/README.md)
+contains the eight repair dispositions, fresh Napkin publication, verified
+three-system comparison and synthesis, exact query replay, and trace recoveries.
+The repair workshop is closed. The inventory now points to Napkin run
+`AAS-2026-09-27-napkin-01`; its predecessor remains historical. This is bounded
+acceptance for expanding the refresh, not full-corpus completion. Scheduling,
+Pond regeneration and the remaining 159 artifacts remain owned here.
+
 The pilot is accepted only when:
 
 1. Each selected analysis completes the current workflow, including both

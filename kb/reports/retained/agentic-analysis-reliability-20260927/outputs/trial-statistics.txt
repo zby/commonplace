@@ -1,0 +1,62 @@
+selected: 3; doc-grounded excluded from statistics: 0
+input: kb/agentic-systems/reviews/dynamic-cheatsheet.md sha256=76c76c5e7e2aea281012933a60b42b338f68e6363f98e0b5a02ff7cad0a36445
+input: kb/agentic-systems/reviews/mem0.md sha256=f0ed4295059b4885a886892e7731bda966eb8a89dba4c51366cfb5aac70abfe4
+input: kb/agentic-systems/reviews/napkin.md sha256=1d5b8e3ef19c834de3242ebf99002010e83fd7413256bcd6995f66fb4c3fdae7
+input: kb/reports/retained/agentic-system-analysis/AAS-2026-09-26-dynamic-cheatsheet-02/result.md sha256=69cf228433d975ac518c02f315ac81aaa26a6b29c3e3db63b932e6a199194cfa
+input: kb/reports/retained/agentic-system-analysis/AAS-2026-09-26-mem0-02/result.md sha256=b4a541c5e6a90e37dbb0115bf9e230c41c5fc635023b519a57c447d4b7ffabd1
+input: kb/reports/retained/agentic-system-analysis/AAS-2026-09-27-napkin-01/result.md sha256=8484f622335c134237968326c9971d8fbb1e71f97128e411f96b8d46ccba41db
+assessment storage_substrate: {'known': 2, 'partial': 1}; value bases: {'known:wired': 5, 'partial:observed': 1, 'partial:wired': 3}
+supported storage_substrate: {'files': 2, 'in-memory': 2, 'service-object': 1, 'sqlite': 2, 'vector': 2} / 3 selected code-grounded systems (positive evidence only; remainder is not absence)
+assessment representational_form: {'known': 2, 'partial': 1}; value bases: {'known:wired': 4, 'partial:observed': 1, 'partial:wired': 1}
+supported representational_form: {'natural-language': 3, 'symbolic': 3} / 3 selected code-grounded systems (positive evidence only; remainder is not absence)
+assessment lineage: {'known': 2, 'partial': 1}; value bases: {'known:afforded': 2, 'known:wired': 6, 'partial:afforded': 1, 'partial:wired': 2}
+supported lineage: {'authored': 1, 'imported': 3, 'other-compiled': 2, 'trace-extracted': 2} / 3 selected code-grounded systems (positive evidence only; remainder is not absence)
+assessment behavioral_authority: {'known': 2, 'partial': 1}; value bases: {'known:afforded': 3, 'known:wired': 4, 'partial:observed': 1, 'partial:wired': 2}
+supported behavioral_authority: {'instruction': 1, 'knowledge': 2, 'ranking': 3, 'routing': 1} / 3 selected code-grounded systems (positive evidence only; remainder is not absence)
+assessment write_agency: {'known': 2, 'partial': 1}; value bases: {'known:afforded': 1, 'known:wired': 3, 'partial:afforded': 1, 'partial:wired': 1}
+supported write_agency: {'automatic': 3, 'manual': 1} / 3 selected code-grounded systems (positive evidence only; remainder is not absence)
+assessment curation_operations: {'known': 2, 'partial': 1}; value bases: {'known:afforded': 4, 'known:claimed': 1, 'known:wired': 6, 'partial:wired': 6}
+supported curation_operations: {'consolidate': 1, 'decay': 3, 'dedup': 2, 'evolve': 3, 'invalidate': 1, 'promote': 1, 'synthesize': 1} / 3 selected code-grounded systems (positive evidence only; remainder is not absence)
+assessment read_back_direction: {'known': 2, 'partial': 1}; value bases: {'known:afforded': 3, 'known:wired': 1, 'partial:observed': 1, 'partial:wired': 1}
+supported read_back_direction: {'pull': 1, 'push': 2} / 3 selected code-grounded systems (positive evidence only; remainder is not absence)
+assessment read_back_signal: {'known': 1, 'partial': 2}; value bases: {'known:wired': 2, 'partial:afforded': 1, 'partial:observed': 1, 'partial:wired': 2}
+supported read_back_signal: {'coarse': 1, 'identifier': 1, 'inferred-embedding': 2, 'inferred-judgment': 1} / 3 selected code-grounded systems (positive evidence only; remainder is not absence)
+assessment trace_learning: {'known': 2, 'partial': 1}; value bases: {'known:afforded': 1, 'known:wired': 1, 'partial:wired': 1}
+supported trace_learning: {'yes': 2} / 3 selected code-grounded systems (positive evidence only; remainder is not absence)
+assessment trace_source: {'known': 2, 'partial': 1}; value bases: {'known:afforded': 3, 'known:wired': 1, 'partial:wired': 2}
+supported trace_source: {'session-logs': 1, 'tool-traces': 1, 'trajectories': 1} / 3 selected code-grounded systems (positive evidence only; remainder is not absence)
+assessment learning_scope: {'known': 1, 'partial': 2}; value bases: {'known:afforded': 2, 'partial:afforded': 1, 'partial:wired': 2}
+supported learning_scope: {'cross-task': 1, 'per-task': 1} / 3 selected code-grounded systems (positive evidence only; remainder is not absence)
+assessment learning_timing: {'known': 2, 'partial': 1}; value bases: {'known:afforded': 2, 'known:wired': 1, 'partial:wired': 1}
+supported learning_timing: {'online': 2} / 3 selected code-grounded systems (positive evidence only; remainder is not absence)
+assessment distilled_form: {'known': 2, 'partial': 1}; value bases: {'known:afforded': 1, 'known:wired': 1, 'partial:observed': 1, 'partial:wired': 1}
+supported distilled_form: {'natural-language': 2, 'symbolic': 1} / 3 selected code-grounded systems (positive evidence only; remainder is not absence)
+assessment faithfulness_tested: {'not-determinable': 3}; value bases: {}
+supported faithfulness_tested: {} / 3 selected code-grounded systems (positive evidence only; remainder is not absence)
+Profile statistics below require complete coverage and strong evidence for every value.
+rows: 3  (code-grounded main-review results only)
+
+column                     fill  vals  entropy  top-value (share)
+------------------------------------------------------------------------
+storage_substrate           67%     2     1.00  ["sqlite","vector"] (50%)
+representational_form       67%     1     0.00  ["natural-language","symbolic"] (100%)
+lineage                      0%     0     0.00  - (0%)
+behavioral_authority        33%     1     0.00  ["knowledge","ranking","routing"] (100%)
+write_agency                33%     1     0.00  ["automatic","manual"] (100%)
+curation_operations         33%     1     0.00  ["decay","dedup","evolve","invalidate"] (100%)
+read_back_direction          0%     0     0.00  - (0%)
+read_back_signal            33%     1     0.00  ["identifier","inferred-embedding"] (100%)
+trace_learning              33%     1     0.00  ["yes"] (100%)
+trace_source                 0%     0     0.00  - (0%)
+learning_scope               0%     0     0.00  - (0%)
+learning_timing             33%     1     0.00  ["online"] (100%)
+distilled_form              33%     1     0.00  ["natural-language"] (100%)
+faithfulness_tested          0%     0     0.00  - (0%)
+
+=== column verdicts (heuristic) ===
+candidate human columns (1): storage_substrate
+too sparse to use yet  (<60% fill): lineage, behavioral_authority, write_agency, curation_operations, read_back_direction, read_back_signal, trace_learning, trace_source, learning_scope, learning_timing, distilled_form, faithfulness_tested
+near-constant -> footnote (>85% one value): representational_form
+
+=== near-redundant column pairs (normalised MI) ===
+  (none above threshold)

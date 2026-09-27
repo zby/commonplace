@@ -120,6 +120,21 @@ def test_bundle_and_query_use_one_population_without_live_or_legacy_inputs(
     assert "not an observed run" in text
 
 
+def test_linked_ontology_must_be_captured_before_a_bundle_is_published(landscape_source, tmp_path):
+    root = landscape_source
+    ontology = write(root / "kb/notes/reliability-ontology.md", "# Ontology witness\n")
+    review = root / "kb/agentic-systems/reviews/wired-fixture.md"
+    result = root / frontmatter(review)["analysis-result"]
+    result.write_text(result.read_text() + "\n[Ontology witness](../../../../notes/reliability-ontology.md)\n")
+    replace_frontmatter(review, {**frontmatter(review), "analysis-result-sha256": digest(result)})
+    output = tmp_path / "bundle"
+    with pytest.raises(ValueError, match="missing target.*reliability-ontology"):
+        bundle.prepare(root, output)
+    assert not output.exists()
+    accepted = bundle.prepare(root, output, ontology=[ontology])
+    assert bundle.verify(output, accepted["manifest_sha256"], source_root=root) == accepted
+
+
 @pytest.mark.parametrize("changed", ["result", "matrix", "manifest", "extra"])
 def test_verify_rejects_drift_from_the_pinned_bundle(
     landscape_source, tmp_path, changed

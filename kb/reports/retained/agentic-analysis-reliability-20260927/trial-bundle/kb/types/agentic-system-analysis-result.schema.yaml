@@ -1,0 +1,218 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+allOf:
+  - $ref: "./note.schema.yaml"
+  - type: object
+    properties:
+      frontmatter:
+        type: object
+        required:
+          - description
+          - type
+          - run-id
+          - system
+          - run-date
+          - result-disposition
+          - target-class
+          - boundary-kind
+          - reviewed-boundary
+          - analysis-cutoff
+          - evidence-tier
+        properties:
+          type:
+            const: types/agentic-system-analysis-result.md
+          run-id:
+            type: string
+            pattern: '^AAS-\d{4}-\d{2}-\d{2}-[a-z0-9]+(?:-[a-z0-9]+)*-\d{2}$'
+          system:
+            type: string
+            minLength: 1
+            pattern: '\S'
+          run-date:
+            type: string
+            format: date
+          result-disposition:
+            enum: [complete, blocked, out-of-scope]
+          target-class:
+            type: [string, "null"]
+            minLength: 1
+          boundary-kind:
+            enum:
+              - whole-system
+              - subsystem-only
+              - "complete artifact, partial loop"
+              - null
+          reviewed-boundary:
+            type: [string, "null"]
+            minLength: 1
+          analysis-cutoff:
+            type: [string, "null"]
+            format: date
+          evidence-tier:
+            enum: [code-grounded, doc-grounded, null]
+          memory-comparison:
+            type: object
+        additionalProperties: true
+      headings:
+        description: "One H1 followed by the eleven ordered result sections; shared-record, lens, and verification subheadings remain explicit in every result disposition."
+        type: array
+        minItems: 25
+        prefixItems:
+          - pattern: '^# [^#].+$'
+        items:
+          anyOf:
+            - enum:
+                - "## Run identity"
+                - "## Boundary and evidence"
+                - "## Source register"
+                - "## Shared records"
+                - "## Runtime account"
+                - "## Lens scoping"
+                - "## Lens outputs"
+                - "## Reconciliation"
+                - "## Bounded synthesis"
+                - "## Limitations"
+                - "## Verification and blockers"
+            - pattern: '^#{3,6} .+$'
+        allOf:
+          - contains:
+              const: "## Run identity"
+            minContains: 1
+            maxContains: 1
+          - contains:
+              const: "## Boundary and evidence"
+            minContains: 1
+            maxContains: 1
+          - contains:
+              const: "## Source register"
+            minContains: 1
+            maxContains: 1
+          - contains:
+              const: "## Shared records"
+            minContains: 1
+            maxContains: 1
+          - contains:
+              const: "## Runtime account"
+            minContains: 1
+            maxContains: 1
+          - contains:
+              const: "## Lens scoping"
+            minContains: 1
+            maxContains: 1
+          - contains:
+              const: "## Lens outputs"
+            minContains: 1
+            maxContains: 1
+          - contains:
+              const: "## Reconciliation"
+            minContains: 1
+            maxContains: 1
+          - contains:
+              const: "## Bounded synthesis"
+            minContains: 1
+            maxContains: 1
+          - contains:
+              const: "## Limitations"
+            minContains: 1
+            maxContains: 1
+          - contains:
+              const: "## Verification and blockers"
+            minContains: 1
+            maxContains: 1
+          - contains:
+              const: "### Components"
+            minContains: 1
+            maxContains: 1
+          - contains:
+              const: "### Operative objects"
+            minContains: 1
+            maxContains: 1
+          - contains:
+              const: "### Routes"
+            minContains: 1
+            maxContains: 1
+          - contains:
+              const: "### Claims"
+            minContains: 1
+            maxContains: 1
+          - contains:
+              const: "### Evidenced absences"
+            minContains: 1
+            maxContains: 1
+          - contains:
+              const: "### Behavioral-authority paths"
+            minContains: 1
+            maxContains: 1
+          - contains:
+              const: "### Memory/context scope"
+            minContains: 1
+            maxContains: 1
+          - contains:
+              const: "### Epistemic scope"
+            minContains: 1
+            maxContains: 1
+          - contains:
+              const: "### Memory/context lens"
+            minContains: 1
+            maxContains: 1
+          - contains:
+              const: "### Epistemic lens"
+            minContains: 1
+            maxContains: 1
+          - contains:
+              const: "### Semantic verification"
+            minContains: 1
+            maxContains: 1
+          - contains:
+              const: "### Deterministic validation"
+            minContains: 1
+            maxContains: 1
+          - contains:
+              const: "### Blockers"
+            minContains: 1
+            maxContains: 1
+      body:
+        allOf:
+          - description: "The eleven logical records must appear in their canonical reading order."
+            pattern: '(?ms)^## Run identity\s*$.*?^## Boundary and evidence\s*$.*?^## Source register\s*$.*?^## Shared records\s*$.*?^## Runtime account\s*$.*?^## Lens scoping\s*$.*?^## Lens outputs\s*$.*?^## Reconciliation\s*$.*?^## Bounded synthesis\s*$.*?^## Limitations\s*$.*?^## Verification and blockers\s*$'
+          - description: "Run identity must identify the complete run state."
+            pattern: '(?ms)^## Run identity\s*$.*?^\*\*Run state:\*\*[ \t]+\S[^\r\n]*$.*?(?=^## Boundary and evidence\s*$)'
+          - description: "Run identity must identify the generated review disposition."
+            pattern: '(?ms)^## Run identity\s*$.*?^\*\*Generated review:\*\*[ \t]+\S[^\r\n]*$.*?(?=^## Boundary and evidence\s*$)'
+          - description: "Run identity identifies the specialist report or its non-complete disposition."
+            pattern: '(?ms)^## Run identity\s*$.*?^\*\*Memory analysis report:\*\*[ \t]+\S[^\r\n]*$.*?(?=^## Boundary and evidence\s*$)'
+          - description: "Run identity binds the exact specialist report bytes or states not applicable."
+            pattern: '(?ms)^## Run identity\s*$.*?^\*\*Memory analysis report SHA-256:\*\*[ \t]+\S[^\r\n]*$.*?(?=^## Boundary and evidence\s*$)'
+          - description: "Shared-record subheadings must appear under Shared records in canonical order."
+            pattern: '(?ms)^## Shared records\s*$.*?^### Components\s*$.*?^### Operative objects\s*$.*?^### Routes\s*$.*?^### Claims\s*$.*?^### Evidenced absences\s*$.*?^### Behavioral-authority paths\s*$.*?(?=^## Runtime account\s*$)'
+          - description: "Lens-scoping subheadings must appear under Lens scoping in canonical order."
+            pattern: '(?ms)^## Lens scoping\s*$.*?^### Memory/context scope\s*$.*?^### Epistemic scope\s*$.*?(?=^## Lens outputs\s*$)'
+          - description: "Lens-output subheadings must appear under Lens outputs in canonical order."
+            pattern: '(?ms)^## Lens outputs\s*$.*?^### Memory/context lens\s*$.*?^### Epistemic lens\s*$.*?(?=^## Reconciliation\s*$)'
+          - description: "Verification subheadings must appear under Verification and blockers in canonical order."
+            pattern: '(?ms)^## Verification and blockers\s*$.*?^### Semantic verification\s*$.*?^### Deterministic validation\s*$.*?^### Blockers\s*$'
+  - if:
+      properties:
+        frontmatter:
+          properties:
+            result-disposition:
+              const: complete
+    then:
+      properties:
+        frontmatter:
+          properties:
+            target-class:
+              type: string
+              minLength: 1
+            boundary-kind:
+              enum:
+                - whole-system
+                - subsystem-only
+                - "complete artifact, partial loop"
+            reviewed-boundary:
+              type: string
+              minLength: 1
+            analysis-cutoff:
+              type: string
+              format: date
+            evidence-tier:
+              enum: [code-grounded, doc-grounded]

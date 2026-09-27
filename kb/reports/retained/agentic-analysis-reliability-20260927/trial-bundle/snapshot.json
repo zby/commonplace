@@ -1,0 +1,62 @@
+{
+  "analysis_cutoffs": [
+    "2026-09-26",
+    "2026-09-27"
+  ],
+  "format": "commonplace.agentic-landscape.v1",
+  "input_paths": [
+    "AGENTS.md",
+    "kb/agentic-systems/COLLECTION.md",
+    "kb/agentic-systems/reviews/dynamic-cheatsheet.md",
+    "kb/agentic-systems/reviews/mem0.md",
+    "kb/agentic-systems/reviews/napkin.md",
+    "kb/instructions/COLLECTION.md",
+    "kb/instructions/analyse-agent-memory.md",
+    "kb/instructions/analyse-agentic-system/SKILL.md",
+    "kb/instructions/synthesize-agent-memory-landscape/SKILL.md",
+    "kb/notes/definitions/reflective-system.md",
+    "kb/notes/definitions/self-improving-system.md",
+    "kb/notes/definitions/theory-builder.md",
+    "kb/reports/COLLECTION.md",
+    "kb/reports/retained/agentic-system-analysis/AAS-2026-09-26-dynamic-cheatsheet-02/result.md",
+    "kb/reports/retained/agentic-system-analysis/AAS-2026-09-26-mem0-02/result.md",
+    "kb/reports/retained/agentic-system-analysis/AAS-2026-09-27-napkin-01/result.md",
+    "kb/types/agent-memory-analysis-report.md",
+    "kb/types/agent-memory-analysis-report.schema.yaml",
+    "kb/types/agentic-system-analysis-result.md",
+    "kb/types/agentic-system-analysis-result.schema.yaml",
+    "kb/types/note-base.schema.yaml",
+    "kb/types/note.schema.yaml",
+    "pyproject.toml",
+    "scripts/analyze_matrix.py",
+    "scripts/build_systems_matrix.py",
+    "scripts/bundle_agentic_landscape.py",
+    "scripts/render_systems_table.py",
+    "src/commonplace/cli/agentic_analysis_publication.py",
+    "src/commonplace/lib/agentic_analysis.py",
+    "src/commonplace/lib/agentic_publication.py",
+    "src/commonplace/lib/agentic_records.py",
+    "src/commonplace/lib/note_parser.py",
+    "src/commonplace/lib/systems_matrix.py",
+    "src/commonplace/lib/validation.py",
+    "uv.lock"
+  ],
+  "matrix_sha256": "fb2f5e4554e24e9514afe71ea6c75b7f6e7b12e0f0082de02d92a0d4f097ed06",
+  "ontology": [
+    "kb/notes/definitions/reflective-system.md",
+    "kb/notes/definitions/self-improving-system.md",
+    "kb/notes/definitions/theory-builder.md"
+  ],
+  "python_version": "3.13.1",
+  "repository_revision": "34dc62e3b936c97b9d7424a4b2e232dfd0b0272b",
+  "reviews": [
+    "kb/agentic-systems/reviews/dynamic-cheatsheet.md",
+    "kb/agentic-systems/reviews/mem0.md",
+    "kb/agentic-systems/reviews/napkin.md"
+  ],
+  "rows": 3,
+  "selection": "explicit",
+  "source_tiers": {
+    "code-grounded": 3
+  }
+}

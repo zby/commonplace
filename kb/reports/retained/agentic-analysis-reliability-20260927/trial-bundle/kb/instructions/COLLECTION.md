@@ -1,0 +1,146 @@
+# Writing conventions for kb/instructions/
+
+## Text contract and precision
+
+This collection contains procedures, conventions, skill bodies, and operational rules. It directs what to do — optimised for an agent (or human) executing on first reading, without prior context.
+
+Quality goal is **executability + precision** — the result, authority, interfaces,
+and acceptance boundary are unambiguous, while choices that depend on execution
+evidence remain deliberately open. A vague prescription wastes bounded context
+on interpretation; an over-specified one freezes choices before the relevant
+evidence exists.
+
+Tests for precision:
+- Could an agent with no prior context execute each step without asking a clarifying question?
+- Are decision points explicit — "if X, do A; otherwise do B" — rather than implied?
+- Are scope boundaries stated — when does this NOT apply, and what to do instead?
+- Does each fixed choice encode a stable rule, external commitment, or coordination
+  need rather than an author-time guess about future execution state?
+- Is reasoning minimal — just enough for edge cases, with the "why" living in theory notes?
+
+**Context completeness.** An instruction is self-contained relative to its
+declared consumption path. It may rely on root Commonplace doctrine, an
+applicable collection or type contract, and an invoked skill only when the
+actual worker runtime supplies those surfaces with binding force. Carry every
+task-specific purpose, exception, and constraint that those surfaces cannot
+determine. Never rely on accidental conversation history or an unverified link
+chase. If no shared baseline is verified, frontload the needed rule into the
+instruction or worker packet.
+
+**Reasoning constraint.** Keep the procedure's goal — one sentence at the top saying what it exists to make true — and cut explanations of *why* each step exists from the body. The goal is not regenerable from the steps; the per-step reasons are regenerable from the goal plus the step, and if worth preserving they go in a theory note linked via `rests-on` (for meta-readers only). Keep only enough further reasoning for edge cases and decisions.
+
+**Delegated work.** Treat a worker packet as a delta from the Commonplace
+doctrine that its runtime verifiably delivers. State the commissioned result's
+purpose, deviations from inherited rules, and consequential choices left to
+execution, then carry the task-specific authority, inputs, owned output,
+coordination, acceptance, and return conditions that the doctrine cannot
+determine. The stable default is that delegation does not expand authority, the
+parent retains scheduling, integration, and recovery, and nested delegation may
+proceed within the worker's existing task authority and coordination boundary;
+a packet need not repeat that default when the worker receives it. Any transfer
+of those responsibilities and every task-specific mutation boundary remain
+explicit. An unstated consequential choice must be
+governed by an inherited rule, deliberately delegated to judgment from
+authorized evidence, irrelevant to acceptance and coupling, or treated as a
+gap. This is a classification test, not a mandatory packet template. Use clean
+context when isolation, later evidence, or independent judgment creates a
+specific benefit, not as an automatic reason to pay handoff cost.
+
+**Instruction duality.** These docs are both content and working system — changing an instruction changes agent behaviour immediately. Treat edits as deployments, not documentation updates: before changing one, name what consumes it and through which channel (the type spec's Operativity section states the test); the edit is live for the next agent that loads the text, with no separate release step. The same duality means an instruction nothing loads is inert — it deploys to no one, and nothing will report that (rationale: [operative change](../notes/definitions/operative-change.md)).
+
+## Composition siblings
+
+Skills and plain instructions can be parts of one operation rather than independent procedures. A composition sibling is a direct caller, callee, conditional instruction loaded by the artifact, or producer or consumer of its named arguments and result protocol.
+
+Before editing an instruction or skill, search `kb/instructions/` for its exact filename, skill name, and any named result literals. Read every direct composition sibling before drafting. If the change affects a trigger, argument, result, mutation authority, stop condition, or path-resolution rule, update the affected siblings in the same change or report the unresolved interface mismatch as a blocker. Do not rewrite artifacts that merely mention the procedure without consuming its interface.
+
+An inherited rule is also a composition dependency when a worker packet omits
+the rule because an upstream contract supplies it. Editing that contract
+recommissions the dependent packets. For a narrow methodological dependency,
+record source-side lineage under the existing link contract. For a universal
+rule in root `AGENTS.md`, this collection contract, or the instruction type,
+the reliance cohort is all commissioning instructions that use that verified
+baseline; review that cohort through repository search when the rule changes.
+Commonplace accepts this broad cohort instead of adding per-packet dependency
+fields or consumer-visible maintenance links.
+
+For a promoted skill, edit its directory under `kb/instructions/`; installed projects run it in place through the stubs `commonplace-init` writes, and this checkout through symlinks. Inspect the promotion manifest and the stub rendering only when the skill name, directory, promotion status, or frontmatter change.
+
+## Title and description conventions
+
+**Imperative titles.** Answer "what does this tell me to do?" — "Write an instruction", "Review triage", "Fix warnings". For promoted skills, the skill name is the title (`cp-skill-write/SKILL.md`).
+
+**Description** (frontmatter) should name the trigger condition — when to use this procedure.
+
+## Outbound links
+
+**Links are exceptional in this collection.** A procedure must execute from its own text; an executing agent should not follow outbound links to complete the task. Permitted cases:
+
+- **Context-transfer** — sub-agent invocations (link is a bootstrap for a new, clean context, not a required read in the current one).
+- **Conditional deviations** — error procedures, specialised branches, paths followed only on a specific trigger. Frontloading every deviation would bloat the main path.
+- **Meta-reader needs** — `rests-on` links serve reviewers and developers updating the procedure, never executing agents.
+
+Author each outbound link from the reader need at its source. A reciprocal link is allowed when the reverse direction independently helps readers, subject to this collection's exceptional-link posture; never add one merely to mirror an existing edge. Find inbound links on demand with repository search; no backlink view is currently generated. Inline for strongest commitment, with a connective word that fits (e.g. `after [title](path)`, `if [title](path)`). Footer for labelled — `- [title](path) — label: context phrase`.
+
+Scan `kb/instructions/`, `kb/notes/`, `kb/reference/`, and `kb/tags/` for link targets. Do not link into `kb/agent-memory-systems/`, `kb/agentic-systems/`, or `kb/work/`. Keep chains shallow — a procedure that requires chasing five other procedures to execute isn't a procedure, it's a reading list.
+
+**Labels:**
+
+| label | destinations | reader-need / when to use |
+|---|---|---|
+| `composition` | instructions | sequential: complete this, then follow the target. Reader drops current context |
+| `precondition` | instructions | conditional: verify target is done/true before starting; skip if already satisfied |
+| `invokes` | instructions | subroutine call. Use a fresh worker only when isolation, later-produced evidence, or independent judgment gives that worker a specific advantage and its packet fixes consequential controls; otherwise invoke in the current context |
+| `applies-when` | instructions | conditional branch; reader follows only if the trigger applies |
+| `see-also` | instructions | reserved for error procedures and conditional fallbacks |
+| `operates-on` | reference | the system component this procedure acts on |
+| `rests-on` | notes | (meta-reader) this procedure or rule depends on the target theoretical claim |
+
+## Frontmatter
+
+Minimal. Plain instructions need `description` and `type: types/instruction.md`. Promoted skills add skill-specific fields (`name`, `allowed-tools`, `context`, `model`) in their `SKILL.md`. Review gates use `type: types/review-gate.md` and the gate-specific fields documented in that type spec; see `../reference/README-REVIEW-SYSTEM.md` for runtime concepts.
+
+## Promoted skills
+
+Some subdirectories are promoted skills, listed in `MANIFEST.promoted_skills`. In this checkout the runtime skill directories (`.claude/skills/`, `.agents/skills/`) hold relative symlinks to them; in an installed project `commonplace-init` writes a stub per skill that points to the real `SKILL.md` in the installed library. Promoted skills:
+
+- Link to other library files by relative paths, which resolve from the skill's own file in the library
+- Name the invoking project's own collections by workspace-root paths (`kb/notes/`, `kb/instructions/COLLECTION.md`)
+- Treat `kb/instructions/` as the only source; runtime skill directories hold stubs or symlinks, never copies
+
+## Default template
+
+```markdown
+---
+description: ""
+type: types/instruction.md
+---
+
+# {Imperative title}
+
+{Opening: what this procedure does and when to use it.}
+
+## Prerequisites
+
+- {What must be true before starting}
+
+## Steps
+
+1. {Step}
+2. {Step}
+
+## Verify
+
+- {How to confirm the procedure succeeded}
+```
+
+## Type eligibility
+
+A typed artifact in this collection may use a global type, named by its path under the library root such as `type: types/note.md`, or a local type spec under this collection's `types/` directory, named by its path under the KB root such as `type: instructions/types/<name>.md`. Frontmatter-free Markdown is implicit `text`.
+
+## What does NOT belong here
+
+- Transferable claims about KB methodology → `kb/notes/`
+- Descriptions of how the system works → `kb/reference/`
+- Report outputs and review evidence → choose `kb/reports/cache/`, `state/`, or `retained/` from the reports collection contract
+- Work in progress → `kb/work/` (workshops)

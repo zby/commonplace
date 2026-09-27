@@ -2,8 +2,10 @@ from __future__ import annotations
 
 import json
 import re
+import shlex
 import shutil
 import subprocess
+import sys
 from hashlib import sha256
 from pathlib import Path
 
@@ -1396,3 +1398,81 @@ def test_quoted_code_is_searched_in_the_full_pinned_blob(tmp_path: Path) -> None
     source.write_text("rebuild_prompt_WRONG()\n")
     _, errors = _verify_quote_anchors(quote.replace("rebuild_prompt()", "rebuild_prompt_WRONG()"), source=identity)
     assert any("quote does not occur" in error for error in errors)
+
+
+@pytest.mark.parametrize("name", ["memory-report.md", "result.md"])
+def test_early_source_check_needs_no_publication_or_integrated_result(tmp_path, capsys, name):
+    state, spec, _ = publication_fixture(tmp_path)
+    artifact = state.parent / name
+    if name == "memory-report.md":
+        (state.parent / "result.md").unlink()
+    spec.generated_candidate_path.unlink()
+    original = artifact.read_bytes()
+    assert agentic_analysis_publication.main([
+        "verify-sources", str(state), "--artifact", str(artifact),
+    ], cwd=tmp_path) == 0
+    result = json.loads(capsys.readouterr().out)
+    assert result["source_verified"] is True
+    assert result["sha256"] == sha256(original).hexdigest()
+    assert result["checks"] > 0
+    assert artifact.read_bytes() == original
+    assert frontmatter(state)["run-status"] == "running"
+    assert not (tmp_path / spec.generated_destination).exists()
+
+
+@pytest.mark.parametrize("addition,diagnostic", [
+    ("\nBad range: `README.md:999`.\n", "outside the recorded blob"),
+    ("\n> absent source text\n> --- `README.md` @ `{revision}`\n", "quote does not occur"),
+    ("\n> Frozen source\n> --- `README.md` @ `" + "0" * 40 + "`\n", "revision"),
+    ("\n> --- `README.md` @ `{revision}`\n", "no quoted text"),
+])
+def test_early_source_check_rejects_bad_evidence_without_writes(tmp_path, capsys, addition, diagnostic):
+    state, spec, _ = publication_fixture(tmp_path)
+    artifact = state.parent / "memory-report.md"
+    revision = frontmatter(state)["source"]["revision"]
+    artifact.write_text(artifact.read_text() + addition.format(revision=revision))
+    before = {p: p.read_bytes() for p in state.parent.iterdir() if p.is_file()}
+    assert agentic_analysis_publication.main([
+        "verify-sources", str(state), "--artifact", str(artifact),
+    ], cwd=tmp_path) == 1
+    output = capsys.readouterr()
+    assert diagnostic in output.err
+    assert "source_verified" not in output.out
+    assert before == {p: p.read_bytes() for p in state.parent.iterdir() if p.is_file()}
+    assert not (tmp_path / spec.generated_destination).exists()
+
+
+def test_source_failure_stops_dependent_shell_command(tmp_path):
+    state, spec, _ = publication_fixture(tmp_path)
+    artifact = state.parent / "memory-report.md"
+    artifact.write_text(artifact.read_text() + "\nBad range: `README.md:999`.\n")
+    marker = tmp_path / "incorrect-success"
+    command = shlex.join([
+        sys.executable, "-m", "commonplace.cli.agentic_analysis_publication",
+        "verify-sources", str(state), "--artifact", str(artifact),
+    ])
+    later = shlex.join([sys.executable, "-c", "from pathlib import Path; Path('incorrect-success').touch()"])
+    result = subprocess.run(["bash", "-c", command + " && " + later], cwd=tmp_path, capture_output=True, text=True, check=False)
+    assert result.returncode == 1
+    assert "outside the recorded blob" in result.stderr
+    assert not marker.exists()
+    assert not (tmp_path / spec.generated_destination).exists()
+
+
+def test_adjacent_attributed_quotes_are_checked_independently(tmp_path):
+    from commonplace.lib.agentic_analysis import SourceIdentity, _verify_quote_anchors
+
+    root, revision = git_checkout(tmp_path / "source")
+    identity = SourceIdentity("git", "https://github.com/example/system", revision, root, None)
+    text = f"""Inline `>` and `> ---` are ordinary prose.
+> # Frozen source
+> --- `README.md` @ `{revision}`
+> Frozen source
+> --- `README.md` @ `{revision}`
+"""
+    checks, errors = _verify_quote_anchors(text, source=identity)
+    assert len(checks) == 2
+    assert errors == []
+    _, errors = _verify_quote_anchors(text.replace("> Frozen source", "> fabricated text"), source=identity)
+    assert len(errors) == 1
+    assert "quote does not occur" in errors[0]

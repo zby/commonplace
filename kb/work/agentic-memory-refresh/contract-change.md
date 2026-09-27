@@ -116,7 +116,8 @@ pull remain afforded. Both complete-profile columns remain unfilled. This is
 the intended separation between supported membership and complete-profile
 statistics on source-grounded evidence.
 
-Publication caught out-of-range citation endpoints. The coordinator corrected
+A coordinator source diagnostic caught out-of-range citation endpoints before
+publication preparation. The coordinator corrected
 only those mechanical endpoints, disclosed the correction in the specialist
 report and reconciliation, refreshed its hash, and passed frozen-source checks.
 No substantive specialist finding or comparison value was changed by that fix.

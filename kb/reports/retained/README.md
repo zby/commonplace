@@ -7,6 +7,7 @@ a library claim or system definition.
 
 Current retained sets:
 
+- [Agentic-analysis reliability trial](./agentic-analysis-reliability-20260927/README.md) — eight repair dispositions, fresh analysis, comparison/query replay and recovered-failure audit.
 - [AutoReason compounding trial](./autoreason-compounding-trial-20260925/README.md) — model-preferred revision remained hard to read; experiment closed without application, with autorevision kept experimental.
 - [Curiosity prompts experiment](./curiosity-prompts-20260310/README.md)
 - [Epistemic-architecture analysis trials](./epistemic-architecture-analysis-trials-20260820/README.md)
