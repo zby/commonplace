@@ -57,8 +57,7 @@ quote blocks under the main result's
 [Source register](./agentic-system-analysis-result.md#source-register)
 contract, which fixes the attribution grammar and the occurrence rule. A
 complete report contains at least one quote anchor; that minimum does not
-certify every claim's support. Do not turn source claims into implemented or
-observed behavior.
+certify every claim's support.
 
 ### Shared records
 

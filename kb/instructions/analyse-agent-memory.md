@@ -77,8 +77,8 @@ no separate quote check.
 ## Classify and hand back
 
 You own the proposed classifications in `memory-comparison` as well as their
-supporting analysis. Give each value its own evidence basis, supporting
-records and inference. Do not weaken a wired value because another value is
+supporting analysis, under the result type's per-value evidence contract. Do
+not weaken a wired value because another value is
 merely afforded. Distinguish missing evidence from a negative finding. Use
 local proposal IDs where the parent has not yet registered a discovered
 object or route; the parent maps exact tokens.

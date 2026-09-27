@@ -82,14 +82,10 @@ hash or later successful command does not clear an earlier failure. Use
    serves. An MCP server, tool, or returning computation may qualify without
    owning the enclosing runtime. If the target is outside this boundary, write
    an `out-of-scope` result and continue at step 7.
-5. Classify the target as an `enclosing runtime`, `embedded inner runtime`,
-   `runtime client`, `returning computation`, `workflow`, `extension or tool
-   mechanism`, `builder or improvement plane`, `host integration`,
-   `memory/knowledge/context-engineering system`, or another defined class.
-   State functional inclusions, exclusions, external dependencies, and one
-   boundary kind: `whole-system`, `subsystem-only`, or
-   `complete artifact, partial loop`. Do not assign responsibilities owned by
-   an excluded host to the selected target.
+5. Classify the target with one `target-class` and one `boundary-kind` value
+   from the result type's frontmatter table, and state functional inclusions,
+   exclusions, and external dependencies. Do not assign responsibilities
+   owned by an excluded host to the selected target.
 
 If no coherent boundary or reachable source can be established, write a
 `blocked` result and continue at step 7.
@@ -123,10 +119,8 @@ construction. Keep subsequent analytical changes outside that exposed context.
 4. Put the Git commit or capture identity in `run-state.source` while the state
    remains `running`, using the source mapping in the run-state type. Validate
    that state again before inspecting sources or delegating. Build one `SRC-*`
-   register in the result with evidence
-   layer, inspected scope, citation anchors, and access gaps. Keep
-   implementation, doctrine/design, reported operation, observed runs, and
-   causal experiments distinct.
+   register with the columns and evidence layers the type's Source register
+   requires.
 5. Select files and line ranges before reading content. Budget the aggregate
    output of parallel reads against the tool wrapper's delivery limit; an
    output cap alone does not bound the inspection. Treat truncated output as
@@ -167,11 +161,8 @@ Judging norms:
   affordance to wiring, wiring to observation, observation to causality, or
   curation to warrant.
 - Give each theory-builder condition, and learning, reflection and autonomy,
-  its own conclusion status from its own evidence. Never infer a missing link
-  from its neighbours, upgrade a citation to consumption, an edit following an
-  outcome to criticism, or later use to improvement. Do not classify a rule
-  set from its storage label. Opacity of model processing establishes neither
-  presence nor absence of formulation or criticism.
+  its own conclusion status from its own evidence, under the Shared records
+  rules for theory routes.
 - When describing revision selection, write that it prefers reach among
   revisions that fit the evidence, not "reach rather than fit". This applies
   whether or not the route is reflective.
@@ -205,20 +196,18 @@ original superseded.
    for a full code-grounded pass. Prefer static inspection. Before any dynamic
    check, write its execution-preflight record and verify tools, packages,
    services, credentials, configuration, and authority.
-4. Record an executed check as a `SRC-*` probe evidence capsule. Use
-   `causally supported` only for an actual intervention and comparison whose
-   design supports the attribution.
+4. Record an executed check as a `SRC-*` probe evidence capsule.
 5. Record each material route and load-bearing guarantee with the fields the
-   Runtime account and Routes contracts require, then audit every `RTE-*`
-   record for the read-back fields the Routes contract lists.
+   type's Runtime account and Routes records require, then audit every
+   `RTE-*` record for the read-back fields the Routes records list.
 6. Distinguish the capability surface, current grant set, and deployed isolation
    envelope. Inspect permissions, approval, delegation, dynamic extension,
    reliability, observability, providers, packaging, and performance only where
    they change claimed work, a control path, evidence strength, or a lens result.
 7. Inventory the distributed-parametric components used by the inspected
    runtime routes — LLMs, embedding models, parametric routers, critics, and
-   adapters — as `CMP-*` records with the fixity fields the Components contract
-   requires.
+   adapters — as `CMP-*` records with the fixity fields the type's
+   Components records require.
 8. Inspect materially distinct mechanisms that admit changes to the product,
    retained knowledge or instructions, capabilities, or production machinery.
    Record each on its admitting `RTE-*` record with the admission,
@@ -228,10 +217,10 @@ original superseded.
 
 ### 5. Run both lenses
 
-For memory/context and epistemic, first record trigger evidence, inspected
-boundary, pointed-to routes and objects, warranted `brief` or `full` depth, and
-rationale. Both lenses always run. A brief result still states what was
-inventoried, what was found, and which conclusions its thin evidence prevents.
+For memory/context and epistemic, first write the scoping record the type's
+Lens scoping section requires, choosing `brief` or `full` depth from the
+trigger evidence. Both lenses always run; thin evidence produces a bounded
+brief result, not a skipped lens.
 
 Write `<run-id>/memory-input.md` before launching the specialist. Freeze the
 run identity, source register (full revisions or capture hashes and access
@@ -268,9 +257,9 @@ Prior-analysis exposure has the consequence step 1 states.
 Invoke
 [`analyse-external-system-epistemic-architecture.md`](../analyse-external-system-epistemic-architecture.md)
 for the epistemic lens, locally or in a separate worker with the same frozen
-boundary. Pass the frozen boundary, registers, statuses, scoping record, and
-classify-only routes. Its output is the result's `### Epistemic lens`
-section under the type's contract.
+boundary. Pass the frozen boundary, registers, statuses, and scoping record.
+Its output is the result's `### Epistemic lens` section under the type's
+contract.
 
 ### 6. Reconcile and synthesize
 
@@ -295,45 +284,19 @@ citation only after checking the selected occurrence still supports the same
 finding. Disclose such mechanical edits in the report and Reconciliation and
 bind the new report hash. A substantive change requires specialist reanalysis.
 
-Write a system-organized synthesis: evidence basis and boundary,
-architectural characterization and claimed work, runtime map, discriminating
-mechanisms, scenario-relative assessment, limitations, and evidence or system
-changes that would alter the assessment. Do not concatenate lens reports or add
-a product ranking, generic adoption advice, system-wide epistemic grade,
-Commonplace delta, transfer recommendation, or universal maturity model.
-Where the runtime account supports them, state separately whether the system
-meets theory-builder conditions 1–4, whether it learns (criticism of a
-consumed theory improved its capacity for future action), whether it is
-reflective or autonomous, and whether it is self-improving at the declared
-boundary. Give each property its own evidence status. They are
-independent properties, not a grade or a ladder.
-
-For learning and self-improvement findings, lead with the strongest supported
-contribution, including partial results, then state the unresolved question.
-Keep each result at the level of the comparison actually performed.
+Write the Bounded synthesis the type requires from the reconciled records,
+organized around the system's operational progression rather than by lens.
 
 ### 7. Write and validate the exact result
 
-Write `<run-id>/result.md` using
-`kb/types/agentic-system-analysis-result.md`. Every disposition keeps all
-required headings. Its Run identity names the run state, generated review
-disposition, memory report path, and SHA-256 of the report bytes. Put probe
-evidence inline.
+Write `<run-id>/result.md` under the result type, naming the memory report
+path and the SHA-256 of its bytes in Run identity.
 
-After reconciliation, check the integrated result against the type's comparison
-rules, not just the separate lens returns:
-
-- Match the profile scope to canonical objects, route branches and lens scope.
-  Account for included alternatives and opaque parts in each known aggregate;
-  distinguish excluded branches explicitly.
-- Check every scoped trace-fed write against the learning criterion, including
-  compaction. Carry each qualifying route into the dependent assessments with
-  its own source, task horizon, timing and form.
-- For each push signal, identify the consumer, trigger, selector input and
-  selected retained part. Separate requested reads from automatic selection;
-  a named object alone does not establish identifier-based push.
-- Check that source/status amendments still concern the same canonical IDs,
-  and that overlays cite rather than duplicate their generic records.
+After reconciliation, check the integrated result, not just the separate
+lens returns, against the type's Memory comparison fields: scope agreement
+with the canonical records, every scoped trace-fed write including
+compaction, each push signal's consumer and selector, and amendments and
+overlays on the same canonical IDs.
 
 Record the checked routes and material dispositions in the existing Semantic
 verification section. A known assessment unsupported by its records blocks
@@ -349,8 +312,7 @@ Correct deterministic formatting errors before continuing. An unresolved
 evidence or semantic failure blocks publication. Correct it while the run stays
 `running`, or abandon the run under the failure rule. The result's `complete`
 disposition means its analysis content is complete; it does not claim that the
-review projections have been published. Do not persist a JSON validation
-receipt or review-job details in the result.
+review projections have been published.
 
 ### 8. Publish validated candidates
 
