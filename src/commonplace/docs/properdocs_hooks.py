@@ -22,9 +22,9 @@ from commonplace.lib.project_paths import collection_dirs
 # and the review-gates/ tree is a deep but flat catalog of gate definitions.
 COLLECTION_MAX_DEPTH = {"instructions": 1}
 
-# Operational collections can require a local contract and landing without
-# becoming part of the public documentation surface.
-UNPUBLISHED_COLLECTIONS = frozenset({"reports"})
+# Operational directories can have local landings without appearing in the
+# public navigation or receiving generated directory listings.
+UNPUBLISHED_COLLECTIONS = frozenset({"messages", "reports"})
 
 # Directories that received a virtual dir-index page in on_files, so
 # on_page_markdown can link each collection README to its full listing.
@@ -34,14 +34,17 @@ _generated_index_dirs: set[Path] = set()
 def on_config(config):
     """Generate top-level nav from kb/<collection>/README.md files.
 
-    Any directory directly under docs_dir containing a README.md becomes a
-    top-nav entry pointing at that README. Discovery is alphabetical;
-    fixed Home and external entries bracket the auto-discovered list.
+    Public directories directly under docs_dir with a README.md become
+    top-nav entries. Tags comes first, followed by alphabetical discovery;
+    the operational mailbox is omitted. Fixed Home and external entries
+    bracket the auto-discovered list.
     """
     _tag_space.cache_clear()
     docs_dir = Path(config["docs_dir"])
     collection_entries = []
-    for child in sorted(docs_dir.iterdir()):
+    for child in sorted(
+        docs_dir.iterdir(), key=lambda path: (path.name != "tags", path.name)
+    ):
         if not child.is_dir() or child.name.startswith("."):
             continue
         if child.name in UNPUBLISHED_COLLECTIONS:

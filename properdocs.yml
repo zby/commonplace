@@ -362,8 +362,8 @@ plugins:
         'work/tag-contract-convergence/plans/04-cleanup-and-follow-up.md': 'reference/adr/089-tags-are-one-namespace-per-kb-with-heads-in-kb-tags.md'
         'work/theory-mediated-self-improvement-series/computational-theory-guided-conversation-episode-2026-08-30.md': 'notes/evidence/commonplace-revision-used-theory-guided-computational-search.md'
 # nav is generated dynamically by src/commonplace/docs/properdocs_hooks.py:on_config
-# from kb/<collection>/README.md files. To add a collection to the nav, create
-# its README.md.
+# from kb/<collection>/README.md files, with Tags first after Home. Reports
+# and the operational Messages mailbox are omitted from the navigation.
 hooks:
   - src/commonplace/docs/properdocs_hooks.py
   - properdocs_site_assets.py
