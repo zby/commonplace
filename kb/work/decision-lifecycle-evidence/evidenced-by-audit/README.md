@@ -100,12 +100,17 @@ fix is not a permitted label.
    `abstracted-from` toward reference and no registered label for "the
    decision this doc describes"; an unregistered `decision:` label already
    appears eight times. Falling back to `see-also` loses meaning.
+   **Decided 2026-09-27:** `decided-by` is registered toward `reference/adr`
+   (`f13aa2bd`); the eight `decision:` uses and four `evidenced-by` edges
+   (collection-prototypes, collections-and-types, validation-contract ×2)
+   already moved. Batch rows proposing `see-also` for a doc describing its
+   ADR should use `decided-by` instead.
 5. **Ingests use `evidenced-by`.** `kb/sources/COLLECTION.md` does not permit
    it; the direction from source to claim is `is-evidence-for` (three edges).
 
 ## Proposed next steps
 
-1. Operator decides gaps 1, 2, and 4 (gap 3 and 5 are plain cleanup).
+1. ~~Operator decides gaps 1, 2, and 4~~ — decided 2026-09-27; gaps 3 and 5 are plain cleanup. The "may support the theory" rewording landed in `ca9888c8`.
 2. Apply CORROB-OK upgrades and CORROB-UNTESTED rephrasings first: about 25
    edges, each a phrase edit with no label-vocabulary question.
 3. Apply ORIGIN and MISLABEL relabels per batch after spot-checking a sample
