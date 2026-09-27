@@ -33,7 +33,7 @@ For current-state documentation about the live Commonplace system rather than tr
   - [Review system](./review-system-README.md) — gates, verdicts, freshness, protocol, and the review proposals
   - [Claims and grounding](./claims-and-grounding-README.md) — title as claim, modality, quotes, source grounding, ground truth
   - [Curation](./curation-README.md) — indexes and tag heads, quality signals, hygiene, capacity, retirement
-- [Methodology](./methodology-README.md) — how an agent selects, borrows, and is controlled by a methodology
+- [Methodology](./method-guided-action-README.md) — how an agent selects, borrows, and is controlled by a methodology
 - [Trace-learning](./trace-learning-README.md) — external systems that learn from their own agent traces through a raw-to-distilled loop
 - [Related systems](../agent-memory-systems/README.md) — external systems tracked for comparison and convergence signals
 

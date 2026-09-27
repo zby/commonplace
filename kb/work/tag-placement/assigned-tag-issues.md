@@ -458,7 +458,7 @@ Disposition, reason, and verification: pending.
 
 - Status: open.
 - Note: [Literature reuse can reverse a paper’s hierarchy of contributions](../../notes/literature-reuse-can-reverse-a-papers-hierarchy-of-contributions.md).
-- Head: [methodology](../../tags/methodology-README.md).
+- Head: [methodology](../../tags/method-guided-action-README.md).
 - Initial reviewer judgment: uncertain.
 - Local evidence: [review pair 22997](../../reports/state/review-jobs/review-job-8801/pair-10-literature-reuse-can-reverse-a-papers-hierarchy-of-contributions.md).
 
