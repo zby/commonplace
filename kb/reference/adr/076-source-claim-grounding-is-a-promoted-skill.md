@@ -11,6 +11,8 @@ status: accepted
 **Amended by:** [ADR 078](./078-writers-invoke-grounding-and-evidence-stays-in-the-ingest.md) — writers no longer stop when Quotes are insufficient; they invoke `cp-skill-ground` automatically.
 **Date:** 2026-08-25
 
+**Amended 2026-09-27:** [ADR 094](./094-quotations-require-a-unique-occurrence-or-a-containing-range.md) replaces the ingest list-item quote form with attributed blocks and requires unique occurrences and checked ranges. The text below records the earlier decision.
+
 ## Context
 
 [ADR 073](./073-untracked-source-snapshots-require-ingest-grounding.md) made one

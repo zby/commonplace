@@ -11,6 +11,8 @@ status: accepted
 **Date:** 2026-08-25
 **Amended by:** [ADR 081](./081-literature-disposition-is-explicit-and-claim-grained.md) — an explicit literature-disposition branch may pass a user-supplied or separately authorized canonical URL to `cp-skill-ground`; the ordinary writer's missing-ingest stop remains
 
+**Amended 2026-09-27:** [ADR 094](./094-quotations-require-a-unique-occurrence-or-a-containing-range.md) replaces the ingest list-item quote form with attributed blocks and requires unique occurrences and checked ranges. The text below records the earlier decision.
+
 ## Context
 
 [ADR 076](./076-source-claim-grounding-is-a-promoted-skill.md) gave grounding a

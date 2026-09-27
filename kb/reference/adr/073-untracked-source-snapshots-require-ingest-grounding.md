@@ -12,6 +12,8 @@ status: accepted
 **Date:** 2026-08-24
 **Revised:** 2026-08-25
 
+**Amended 2026-09-27:** [ADR 094](./094-quotations-require-a-unique-occurrence-or-a-containing-range.md) replaces the ingest list-item quote form with attributed blocks and requires unique occurrences and checked ranges. The text below records the earlier decision.
+
 ## Context
 
 Primary-source snapshots are ignored local reading copies. A fresh checkout
