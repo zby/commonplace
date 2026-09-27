@@ -30,7 +30,7 @@ a new analysis run, never by editing the retained copy.
 | `system` | Yes | Source-native system name or the caller's unambiguous identifier |
 | `run-date` | Yes | Date the run opened |
 | `result-disposition` | Yes | `complete`, `blocked`, or `out-of-scope` |
-| `target-class` | Yes | Selected target class, or `null` when the run stopped before classification |
+| `target-class` | Yes | `enclosing runtime`, `embedded inner runtime`, `runtime client`, `returning computation`, `workflow`, `extension or tool mechanism`, `builder or improvement plane`, `host integration`, `memory/knowledge/context-engineering system`, or another defined class; `null` when the run stopped before classification |
 | `boundary-kind` | Yes | `whole-system`, `subsystem-only`, `complete artifact, partial loop`, or `null` before a boundary could be established |
 | `reviewed-boundary` | Yes | Immutable revision or capture identity shared by the run, or `null` before one could be established |
 | `analysis-cutoff` | Yes | Applicability cutoff for the frozen evidence, or `null` before one could be established |
@@ -196,7 +196,7 @@ A conclusion-status field contains exactly one of these values:
 
 `absent` · `inapplicable` · `uninspected` · `claimed` · `afforded` · `wired` · `observed` · `causally supported`
 
-Put simultaneous claims at different layers in separately labelled fields or rows. For example, a route can carry `implementation conclusion status: wired` and `operation conclusion status: observed`; it cannot carry one value such as `wired; observed`. Keep guarantee strength in its own field.
+Put simultaneous claims at different layers in separately labelled fields or rows. For example, a route can carry `implementation conclusion status: wired` and `operation conclusion status: observed`; it cannot carry one value such as `wired; observed`. Keep guarantee strength in its own field, separate from evidence status: `invariant`, `protocol`, `policy`, `best effort`, `deployment guarantee`, or `no claimed guarantee`.
 
 The epistemic lens preserves its own two independent fields. **Architectural status** contains one value from the invoked epistemic procedure (`implemented`, `observed, implementation uninspected`, `doctrine only`, `no route found within boundary`, or `not determinable`). **Observed candidate state** contains one value from that procedure. Neither field is a conclusion-status field, and they are never concatenated with one another or translated into this type's conclusion vocabulary. In particular, `implemented and observed` is not a value in any field.
 
@@ -309,17 +309,25 @@ A theory route gives separate conclusion statuses and evidence for each
 [theory-builder](../notes/definitions/theory-builder.md) condition, labelled
 "theory-builder conditions 1–4": localized content, consumption,
 content-directed criticism with its resulting revision or changed reliance,
-and iteration. No condition is inferred from its neighbours. Criticism is
-itself stated and can blame the test, the data, or an auxiliary assumption; a
-score selecting variants does not count. A theory can survive criticism
-without a text change. Iteration counts when the result of criticism is
+and iteration. No condition is inferred from its neighbours. Consumption
+means decisions depend on what the theory says; storage, citation, or
+delivery alone does not establish it, and derivation under an unchanged
+theory does not establish criticism. Criticism is itself stated and can blame
+the test, the data, or an auxiliary assumption; the record names the claim
+challenged, the result, and where blame was placed. A score selecting
+variants does not count. For prose, a contradiction is an interpretation
+unless a codified check produced it. A theory can survive criticism without a
+text change, with changed reliance or test selection. A theory rejected whole
+and replaced by a new conjecture has been revised. Iteration counts when the result of criticism is
 kept and shapes the next round, including rounds within one run; a
 critic whose report no next round takes up fails it. Rebuilding a theory
 from retained criticisms counts; retained input/outcome records alone do not.
 Whole replacement of a theory meets condition 1 at its minimum. Persistence
 is a graded finding recorded separately, like addressability: within one
 reasoning episode, across the rounds of one run, across runs on the same
-task, or across problems and sessions.
+task, or across problems and sessions; the record names what persists, the
+grade it reaches, and the later consumer that takes it up. Freezing a product
+for deployment by another system ends the builder at the freeze.
 
 Membership has no success condition, so learning is a separate claim,
 labelled "learning". It identifies the improved capacity for future action,
@@ -336,13 +344,15 @@ model processing: opacity alone establishes neither presence nor absence.
 For reflection it identifies selected aspects inside the declared system
 boundary, their self-representation, and the two-way causal path: aspect
 changes can update the representation, and representation-mediated operations
-can affect later behavior. Direct modification of represented machinery is
-not required. The reflective theory-builder qualifier is more specific: the
-builder's method texts meet conditions 1–4 and are criticized against records
-of the builder's own operation. The autonomous qualifier is recorded role by
-role: computation performs every operation inside the builder's boundary.
-Reflection, autonomy, and improved capacity remain separate claims. The producing skill's step 3 supplies the matching
-vocabulary.
+can affect later behavior. Subject matter alone does not establish that
+path, and direct modification of represented machinery is not required. The
+reflective theory-builder qualifier is more specific: the builder's method
+texts meet conditions 1–4 and are criticized against records of the builder's
+own operation. The autonomous qualifier is recorded role by role, from the
+decision roles in the Runtime account: computation performs every operation
+inside the builder's boundary, and users who only supply problems and judge
+products are outside it. Autonomy does not establish that the operations are
+reliable. Reflection, autonomy, and improved capacity remain separate claims.
 
 Claim records preserve claimed operation and source. An evidenced absence carries an `absent` conclusion status, searched boundary, evidence, and the conclusion it supports or prevents. A behavioral-authority path records consumer, channel, force, and horizon.
 

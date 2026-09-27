@@ -175,137 +175,40 @@ or cannot be verified, fail the run and start another one.
 
 ### 3. Use one vocabulary and one record set
 
-Use the result type's conclusion statuses exactly: `absent`, `inapplicable`,
-`uninspected`, `claimed`, `afforded`, `wired`, `observed`, and
-`causally supported`. Never upgrade context presence to activation, a claim to
-an affordance, an affordance to wiring, wiring to observation, observation to
-causality, or curation to warrant. Every negative or uncertain finding names
-the inspected boundary and conclusion prevented.
+Load the [result type](../../types/agentic-system-analysis-result.md) before
+recording findings. It owns the record fields, the conclusion-status values,
+the `memory-comparison` contract, and the meaning of every controlled value
+and theory-builder term used below. Load the
+[epistemic instruction](../analyse-external-system-epistemic-architecture.md)
+at the same point: the route records written in step 4 feed its ledger.
 
-Keep these distinctions:
+Judging norms:
 
-- **Memory read-back** means material accumulated or changed through use affects
-  a later consumer invocation. Static shipped material and ordinary current-run
-  state are not read-back.
-- **Activation** requires evidence that delivered material changed behavior.
-- **Behavioral authority** records consumer, channel, force, and horizon.
-  Epistemic and operational authority remain separate.
-- **Guarantee strength** is separate from evidence status: invariant, protocol,
-  policy, best effort, deployment guarantee, or no claimed guarantee.
-- **Formulated tentative theories** are proposed solutions stated in natural
-  or formal language, so identifiable units carry their content
-  (theory-builder condition 1, localized content). Record what a theory says
-  and which decisions depend on that content (condition 2, consumption);
-  storage, citation, or delivery alone does not establish consumption.
-  Describe applying a theory, deriving a consequence or rule, criticizing it,
-  revising or replacing it, and retaining or reconstructing it in ordinary
-  terms. Derivation under an unchanged theory does not by itself establish
-  criticism or learning. For prose, record a contradiction as an
-  interpretation unless a codified check produced it.
-- **Criticism** (condition 3) is a formulated attempt to find an error in
-  what the theory says, by argument, comparison with a rival, or a test of a
-  stated consequence. A score selecting variants does not alone establish
-  this. Record the claim challenged and the result. A criticism is itself
-  stated, so it can blame the test, the data, or an auxiliary assumption
-  instead of the theory; record where it placed the blame. A theory can
-  survive criticism: the result may change later reliance or test selection
-  without changing its content. A theory rejected whole and replaced by a
-  new conjecture has been revised.
-- **Iteration** (condition 4) counts when the result of criticism is kept
-  and shapes the next round. The kept result may be the revised theory,
-  the formulated criticism, or both; rebuilding a theory from retained
-  criticisms counts, input/outcome records alone do not. A critic whose
-  report no next round takes up fails the condition. Rounds of revision
-  within one run meet it; a revised theory re-tested on the cases that
-  refuted its predecessor faces a real test.
-- **Persistence** is a separate graded finding above condition 4's minimum:
-  within one reasoning episode, across the rounds of one run, across runs on
-  the same task, or across problems and sessions. Record what persists
-  (theories, formulated criticisms, input/outcome records, parameters, or
-  other source-native material), the grade it reaches, and the later
-  consumer that takes it up. Storage form does not decide retained content
-  or the process used to reconstruct it. Freezing a product for deployment
-  by another system ends the builder at the freeze.
-- **Theory-builder membership** requires all four conditions of
-  [theory builder](../../notes/definitions/theory-builder.md). Give each
-  condition its own conclusion status and never infer one from its
-  neighbours. Membership has no success condition: a system can meet all
-  four without improving.
-- **Learning** is improved capacity for future action attributable to
-  holding and criticizing theories; it is a separate claim from membership.
-  Record the capacity, assessment boundary, evidence of improvement,
-  attribution, and causal limits. The capacity need not already have been
-  exercised; a claim that it remains available later requires the effect to
-  persist to that time. Membership, revision, persistence, or a connected
-  route alone does not establish learning.
-- **Addressability** is a separate graded finding above condition 1's
-  minimum, where the whole theory is the one unit that carries content.
-  Record the degree to which assumptions, scope conditions, and parts can be
-  inspected and revised individually, and the boundary over which that
-  judgment holds. Whole replacement of a theory meets the minimum and can
-  support membership.
-- **Rationale and criticism** are separate findings. Rules can express a
-  theory without preserving why they were adopted. Record what a rule set
-  claims and how its structure exposes assumptions, scope conditions, and
-  parts; do not classify it from the storage label alone. Missing
-  historical rationale does not establish absent formulated criticism of
-  their content. Where rationale persists, record whether a later route reads
-  it. Inaccessible model processing leaves formulation or criticism
-  unestablished unless other evidence supports an inference; opacity alone
-  establishes neither presence nor absence.
-- **Reflection** requires a causally connected self-representation of selected
-  aspects inside the declared system boundary. Changes in those aspects can
-  update the representation, and operations mediated through it can affect
-  later system behavior. Subject matter alone does not establish that path;
-  direct modification of the represented machinery is not required. The
-  reflective theory-builder qualifier is more specific: the builder's method
-  texts (its problems, standards of criticism, and procedures) meet
-  conditions 1–4, and criticism tests them against records of the builder's
-  own operation. Reflection and improved capacity are separate claims.
-- **Autonomy** is a qualifier of a theory builder: computation performs every
-  operation inside its boundary. Record it role by role from the decision
-  roles in step 4: who proposes, derives, criticizes, assigns blame, revises,
-  selects what to keep, and changes the machinery. Users who only supply
-  problems and judge products are outside the boundary. Autonomy does not
-  establish that the operations are reliable.
-- **Revision selection** prefers reach among revisions that fit the evidence;
-  do not write "reach rather than fit". This preference applies whether or
-  not the route is reflective.
+- Never upgrade context presence to activation, a claim to an affordance, an
+  affordance to wiring, wiring to observation, observation to causality, or
+  curation to warrant.
+- Give each theory-builder condition, and learning, reflection and autonomy,
+  its own conclusion status from its own evidence. Never infer a missing link
+  from its neighbours, upgrade a citation to consumption, an edit following an
+  outcome to criticism, or later use to improvement. Do not classify a rule
+  set from its storage label. Opacity of model processing establishes neither
+  presence nor absence of formulation or criticism.
+- When describing revision selection, write that it prefers reach among
+  revisions that fit the evidence, not "reach rather than fit". This applies
+  whether or not the route is reflective.
+- Describe every external mechanism in source-native terms before mapping it
+  to Commonplace ontology. Explain the fit and mark partial or unresolved
+  mappings. Do not turn omission of an open-ended mechanism into evidence of
+  absence; an `uninspected` gap is a limitation, not an `ABS-*` record.
 
-On a theory route, give each claim its own conclusion status: localized
-content, consumption, content-directed criticism, the resulting revision or
-changed reliance, iteration into the next round with its persistence
-grade, and any improved capacity attributable to that process. Report them under the free-text labels
-"theory-builder conditions 1–4" and "learning". For a claim about later or
-recurrent use, also trace what persisted and the later consumer.
-Never infer a missing link from its neighbours or upgrade a citation to use,
-an edit following an outcome to criticism, or later use to improvement.
-The existing `trace_learning` comparison axis describes its specified memory
-write route; its value alone does not establish learning.
-
-Describe every external mechanism in source-native terms before mapping it to
-Commonplace ontology. Explain the fit and mark partial or unresolved mappings.
-Do not turn omission of an open-ended mechanism into evidence of absence.
-
-Maintain one canonical register: `SRC-*` sources, `CMP-*` components, `OBJ-*`
-operative objects, `RTE-*` routes, `CLM-*` claims, `ABS-*` evidenced absences,
-and `BAP-*` behavioral-authority paths. The orchestrator owns IDs and generic
-identity. A lens annotates existing IDs and proposes new records under local
-tags that disappear when the orchestrator registers or merges them. An
-`uninspected` gap is a limitation, not an `ABS-*` record.
-Allocate canonical IDs monotonically. Never reuse an ID after merging or
-rejecting its record; gaps are harmless. An ID shared with a worker is canonical
-before final integration. Amend its evidence or status without changing its
-referent. Splitting a combined record requires new IDs for the parts and an
-explicit superseded disposition on the original record; do not assign its ID
-to one part. Use local labels for provisional seeds.
-
-The memory/context lens runs in a fresh specialist context under step 5. The
-parent owns scheduling, canonical IDs, integration, and recovery. The epistemic
-lens may run locally or in a separate worker with the same frozen boundary and
-sparse overlay contract. Workers do not publish or delegate. If a fresh memory
-worker is unavailable, report the execution blocker; do not silently perform
-that specialist pass in the coordinator's context.
+Register ownership: the coordinator owns canonical IDs and generic identity. A
+lens annotates existing IDs and proposes new records under local tags that
+disappear when the coordinator registers or merges them. Allocate IDs
+monotonically and never reuse one after merging or rejecting its record; gaps
+are harmless. An ID shared with a worker is canonical before final
+integration: amend its evidence or status without changing its referent, and
+split a combined record only by giving the parts new IDs and marking the
+original superseded.
 
 ### 4. Run and challenge the runtime baseline
 
@@ -368,18 +271,9 @@ that specialist pass in the coordinator's context.
    or multiple modes; attach oracle use to the applicable mode. Unknowns and
    inapplicable steps remain explicit, without assigning an autonomy grade.
    On each admitting route, name the guidance that shaped the proposal and
-   classify its content, retention, and operation under step 3. For a theory,
-   record separately each theory-builder condition (localized content,
-   consumption, content-directed criticism with the resulting revision or
-   changed reliance, and iteration with its persistence grade) and any
-   supported learning. Give each
-   finding its own conclusion status.
-   A link without evidence is `uninspected`, not inferred from its neighbours.
-   When later or recurrent use is claimed, identify what persisted and its
-   later consumer. A retained prediction, rationale, or expected outcome is
-   a model assertion; record whether a later route reads it. Its presence
-   does not establish criticism, and its absence does not exclude criticism
-   formulated during the operation.
+   record its content, retention, and operation with the theory-route fields
+   the type's Shared records contract requires. A link without evidence is
+   `uninspected`.
 
 ### 5. Run both lenses
 
@@ -399,7 +293,10 @@ Launch a fresh sub-agent to execute the standalone
 [Analyse agent memory](../analyse-agent-memory.md) instruction with that input
 and `<run-id>/memory-report.md` as its sole output. The worker owns source-native
 memory analysis and the proposed `memory-comparison` profile. Its typed report
-is the substantive handoff.
+is the substantive handoff. The parent owns scheduling, canonical IDs,
+integration, and recovery; workers do not publish or delegate. If a fresh
+memory worker is unavailable, report the execution blocker; do not perform
+that specialist pass in the coordinator's context.
 Reserve capacity for that worker before opening another analysis coordinator.
 Do not use agent listings to wait or obtain status in a source-only worker:
 even filtered listings can return completed reports. Use the commissioned
@@ -421,8 +318,9 @@ Do not reuse its analytical draft.
 
 Invoke
 [`analyse-external-system-epistemic-architecture.md`](../analyse-external-system-epistemic-architecture.md)
-for the epistemic lens. Pass the frozen boundary, registers, statuses, scoping
-record, and classify-only routes. Require a sparse overlay on canonical IDs.
+for the epistemic lens, locally or in a separate worker with the same frozen
+boundary. Pass the frozen boundary, registers, statuses, scoping record, and
+classify-only routes. Require a sparse overlay on canonical IDs.
 Keep that procedure's architectural status and observed candidate state in
 their own vocabulary; never translate `implemented` into this workflow's
 conclusion-status field.
@@ -599,10 +497,8 @@ A failed run reports its failure reason and does not use the handoff command.
 - Component fixity, material revision admission, decision roles, improvement
   triggers, operating modes and answer-oracle access are recorded or carry
   explicit `uninspected` or `inapplicable` reasons.
-- Every admitting route classifies its guidance and retention under step 3;
-  a theory route names the operations and gives each theory-builder
-  condition its own status, and states improved capacity when learning is
-  claimed.
+- Every admitting route records its guidance and retention with the type's
+  theory-route fields, each condition at its own status.
 - Both lenses and both scoping records exist; thin evidence produces a bounded
   brief result, not a skipped lens.
 - Source-native mechanisms remain visible beneath Commonplace mappings, and no
