@@ -188,7 +188,7 @@ memory-comparison:
 **Generated review:** `kb/agentic-systems/reviews/jaz.md`
 
 **Memory analysis report:** `kb/reports/state/agentic-system-analysis/AAS-2026-09-26-jaz-01/memory-report.md`
-**Memory analysis report SHA-256:** b13893eb63d54c5554a945d41eccc89ef9c3edb8a659d79a44d50d503afc22b7
+**Memory analysis report SHA-256:** a9ee02820c6140458e81e4fa0893a0906d2e0ef187ee52b8784ddfaca99c4bd8
 
 Run AAS-2026-09-26-jaz-01 analyses JAZ at commit `0803d4971be785e95b80054b02259664d70fa3da`, cutoff 2026-09-26. Coordinator model: GPT-6; exact runtime model identifier unavailable. Method: `kb/instructions/analyse-agentic-system/SKILL.md`, with its mandatory memory and epistemic procedures. No prior system analysis supplied the findings.
 
@@ -231,7 +231,7 @@ OBJ-3 — Console helper proposal and configuration representation. Request, ref
 OBJ-4 — Per-invoke message buffer and `__history__`. In-memory, automatic trace acquisition. The buffer is model context; the history list is an agent-visible structured record holding code/text and raw exceptions. Created afresh per invoke, with no automatic transfer into a later root invoke. Comparison inclusion: none for ordinary current-run use; only an explicit later-invoke handoff through RTE-8 can make this accumulated material memory read-back. SRC-1 `src/jaz/_agent.py:968-1005`, `src/jaz/_agent.py:601-638`, `src/jaz/protocol/code_only.py:527-567`; quoted support establishes new allocation and untruncated available output.
 
 >             repl_history: list[object] = []
-> --- `src/jaz/_agent.py` @ `0803d4971be785e95b80054b02259664d70fa3da`
+> --- `src/jaz/_agent.py:977` @ `0803d4971be785e95b80054b02259664d70fa3da`
 
 >         return REPLHistoryEntry(
 >             llm_response=content or "",
@@ -276,7 +276,7 @@ RTE-1 — Core invocation and recursive execution. Trigger: host call to invoke/
 > resolved_inputs = resolve_inputs(inputs)
 > resolved_scope = resolve_inputs(scope)
 > resolved_bound = {**resolved_scope, **resolved_inputs}
-> --- `src/jaz/_agent.py` @ `0803d4971be785e95b80054b02259664d70fa3da`
+> --- `src/jaz/_agent.py:898-900` @ `0803d4971be785e95b80054b02259664d70fa3da`
 
 > exec_result = self.repl_template.exec(
 >     state, span.committed_code, str(iteration), exec_timeout_override
@@ -286,7 +286,7 @@ RTE-1 — Core invocation and recursive execution. Trigger: host call to invoke/
 RTE-2 — Optional return checking and revision. Trigger: a candidate Return. Owner/evaluator: ReturnType checks the declared type; ValidateReturn calls the supplied validator. These are separate check predicates using the same return-admission mechanism. A validation exception rejects the candidate, yields corrective feedback for another model turn, or terminates after configured failures; the completion backstop rechecks a replaced terminal value. The model proposes revisions; the host chooses the validator and can veto through it. Guidance consists of the task, type/predicate contract and returned error, not a built-in epistemic theory. Immediate return is withheld or released; the error is read on the next turn, within the same invocation. Scope and expiry match that invocation. The host may provide an answer oracle through its validator, but an arbitrary predicate is not evidence of one. Guarantee: protocol at hook boundaries, conditional on the hook being active and on validator meaning; no generic truth warrant or rollback of already performed actions. Status: wired. SRC-1 `src/jaz/hooks/builtin/return_hooks.py:288-360,455-521`.
 
 > self.validator(result.return_value)
-> --- `src/jaz/hooks/builtin/return_hooks.py` @ `0803d4971be785e95b80054b02259664d70fa3da`
+> --- `src/jaz/hooks/builtin/return_hooks.py:489` @ `0803d4971be785e95b80054b02259664d70fa3da`
 
 > effects = [ModifyInvokeResult(result=Raise(exception=exc))]
 > --- `src/jaz/hooks/builtin/return_hooks.py` @ `0803d4971be785e95b80054b02259664d70fa3da`
@@ -395,7 +395,7 @@ RTE-10 — Console helper read-back. Trigger: `%` request. Selector: both curren
 
 >             main_conversation=main_conversation,
 >             helper_conversation=helper_conversation,
-> --- `src/jaz/console.py` @ `0803d4971be785e95b80054b02259664d70fa3da`
+> --- `src/jaz/console.py:1317-1318` @ `0803d4971be785e95b80054b02259664d70fa3da`
 
 >             content, _ = abbreviate_string(exchange.content, _HISTORY_TEXT_CAP)
 >             if exchange.kind == "answer":
@@ -453,7 +453,7 @@ RTE-12 — WorkflowReplay trace-to-program-to-execution. Trigger: hooked invoke/
 >             lines.append(f"    result = {func_name}()")
 > 
 >         lines.append("    print(result)")
-> --- `src/jaz/hooks/builtin/workflow_replay.py` @ `0803d4971be785e95b80054b02259664d70fa3da`
+> --- `src/jaz/hooks/builtin/workflow_replay.py:485-497` @ `0803d4971be785e95b80054b02259664d70fa3da`
 
 RTE-13 — Rollout export to an external trainer role. Producer: RolloutRecorder collects completed-query token stamps and freezes at invoke exit. Consumer role: training driver requests `to_flat`, `to_pieces` or `to_turn_samples`; these expose concrete conditioning/sample/loss-mask interfaces. Status: afforded pull to a documented external learner; recording/export wired, driver/parameter update/later model use excluded. Nonmonotone contexts reject flat export; alternate pieces and per-turn exports preserve differing contexts. It does not independently meet trace-learning requirements because this tree shows no durable learned behavior artifact from the external learner. SRC-1 `src/jaz/hooks/builtin/rollout.py:1-26,185-240,338-385`.
 
@@ -519,12 +519,12 @@ Sync and async invoke are shipped alternatives; async uses the same input distin
 Three forcing cases were traced statically. First, an invalid return is converted to feedback or terminal failure, but this does not undo earlier tool actions (RTE-2). Second, a supplied invocation result still crosses InvokeComplete validation, so bypassing generation does not alone bypass return checks (SRC-1 `src/jaz/_agent.py:1062-1073`). Third, a settings proposal cannot use the % application path without human confirmation; after confirmation, its code runs as console code rather than under the proposal helper's restriction (RTE-4). Budget checks and host-exposed overrides define additional limits on enforcement (RTE-3, RTE-5).
 
 > prehook = get_active_prehook() or Prehook(repl_depth=1)
-> --- `src/jaz/invoke.py` @ `0803d4971be785e95b80054b02259664d70fa3da`
+> --- `src/jaz/invoke.py:884` @ `0803d4971be785e95b80054b02259664d70fa3da`
 
 > if span.supplied is not None:
 >     span.complete(result=span.supplied)
 >     break
-> --- `src/jaz/_agent.py` @ `0803d4971be785e95b80054b02259664d70fa3da`
+> --- `src/jaz/_agent.py:1071-1073` @ `0803d4971be785e95b80054b02259664d70fa3da`
 
 There is no dynamic check planned. Mock execution of validators was considered, but static branches suffice for the bounded wiring conclusions; it would not establish model activation or sandbox security. Live agent tasks and hostile-code probes would require a separate execution boundary and add little to this descriptive pass. No package installation, credential access or model call was attempted.
 

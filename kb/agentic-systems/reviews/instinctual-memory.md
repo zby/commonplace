@@ -7,7 +7,7 @@ analysis-run: AAS-2026-09-25-instinctual-memory-01
 source-identity: https://github.com/jasonkneen/instinctual-memory
 reviewed-revision: 6acb13dc35765bf5ccfc87e445dd09c480f1c28a
 analysis-result: kb/reports/retained/agentic-system-analysis/AAS-2026-09-25-instinctual-memory-01/result.md
-analysis-result-sha256: e84ebd9e68f376b0f3bb91d87492bc51239b76fe0ee796b2665bf1d77cb9d105
+analysis-result-sha256: bce3cf2b188d9e155481ac02d7711d018598ab6876ced5a8fdca8c81c94dcb06
 ---
 
 # mem: sourced facts and host context

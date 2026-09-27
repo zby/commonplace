@@ -6,7 +6,7 @@ analysis-run: AAS-2026-09-25-wikiskill-01
 source-identity: https://arxiv.org/abs/2608.27454
 reviewed-revision: "sha256:c093e240375e9780468edca9aa91aefecb8714ebdbef40810316644d9b2822d0"
 analysis-result: kb/reports/retained/agentic-system-analysis/AAS-2026-09-25-wikiskill-01/result.md
-analysis-result-sha256: 1b27b3f32961a43c1df6a9bd0fc742d07785d9ab2ba0b1951b4d37195175f82b
+analysis-result-sha256: b95421f94915a868aade71c3084eb2ecdc2ebff87fd69b263a6d66e2b93da269
 ---
 
 # WikiSkill

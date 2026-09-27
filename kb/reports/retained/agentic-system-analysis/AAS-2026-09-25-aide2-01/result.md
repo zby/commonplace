@@ -109,7 +109,7 @@ memory-comparison:
 
 **Memory analysis report:** `kb/reports/state/agentic-system-analysis/AAS-2026-09-25-aide2-01/memory-report.md`
 
-**Memory analysis report SHA-256:** eed1b0ea8e7a981962ba5b8ee36aec6eb4fcad52ead2b747090c3232f6513009
+**Memory analysis report SHA-256:** 9fcad62cd948e0461de8d466497d87a90732a457ec05bda4e27b47ff4f7fbf2e
 
 This source-only run names intended destinations; run-state completion separately establishes publication.
 
@@ -137,7 +137,7 @@ CMP-2 — Inner-loop generation/reviewer model: Gemini 3 Flash, SRC-1 §2.2. Dis
 > During the recursive self-improvement run, we hold the model fixed within each
 > loop. The outer-loop agent runs on claude opus 4.7 (Anthropic, 2026b), while every inner-loop
 > agent is evaluated with gemini 3 flash (Google DeepMind, 2025).
-> --- `kb/sources/.snapshots/aide2-recursive-self-improvement-research-agents.md` @ `sha256:86d1b094380280450bf2281b1e38945a4f0c2528f2b88aebdf9ea8b9a1e8da8e`
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-25-aide2-01/source-capture.md:308-310` @ `sha256:86d1b094380280450bf2281b1e38945a4f0c2528f2b88aebdf9ea8b9a1e8da8e`
 
 ### Operative objects
 
@@ -166,11 +166,11 @@ RTE-2 — Review: after execution, a reviewer extracts score and relevant feedba
 
 > highest-scoring solution becomes the parent for the next operation. AIDE0 employs a reviewer agent
 > that reads execution outputs from evaluating solutions and extracts a score and any relevant feedback.
-> --- `kb/sources/.snapshots/aide2-recursive-self-improvement-research-agents.md` @ `sha256:86d1b094380280450bf2281b1e38945a4f0c2528f2b88aebdf9ea8b9a1e8da8e`
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-25-aide2-01/source-capture.md:295-296` @ `sha256:86d1b094380280450bf2281b1e38945a4f0c2528f2b88aebdf9ea8b9a1e8da8e`
 
 > the inner-loop reviewer makes a single LLM call over each solution’s execution output, while
 > the outer-loop agent’s reviewer explores the evaluation artifacts over several steps.
-> --- `kb/sources/.snapshots/aide2-recursive-self-improvement-research-agents.md` @ `sha256:86d1b094380280450bf2281b1e38945a4f0c2528f2b88aebdf9ea8b9a1e8da8e`
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-25-aide2-01/source-capture.md:314-315` @ `sha256:86d1b094380280450bf2281b1e38945a4f0c2528f2b88aebdf9ea8b9a1e8da8e`
 
 RTE-3 — Context management: in AIDE0, draft/improve receive concatenated previous candidate code and outputs. In AIDE85, those operators receive OBJ-3 rather than full history, plus up to three OBJ-4 error signatures only when candidate bug rate reaches 15%. The harness selects the root/recent candidates and deduplicated recent error lines; consumer did not request each retained item. Immediate return is assembled context for a later model call, not a user answer. Per-run retention of input history is described; whether summaries persist independently or are rebuilt, and exact selector identities/forms, remain uninspected. No cross-task error-memory lifetime is established. SRC-1 §3.5; SRC-2 Appendix E; BAP-3.
 
@@ -178,16 +178,16 @@ RTE-3 — Context management: in AIDE0, draft/improve receive concatenated previ
 > the full history. AIDE85 also uses a form of failure memory in the context. When a run’s candidates
 > show a bug rate of at least 15%, the agent injects up to three recurring error signatures (the final error
 > lines of recent buggy candidates, deduplicated) into draft and improve prompts.
-> --- `kb/sources/.snapshots/aide2-recursive-self-improvement-research-agents.md` @ `sha256:86d1b094380280450bf2281b1e38945a4f0c2528f2b88aebdf9ea8b9a1e8da8e`
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-25-aide2-01/source-capture.md:694-697` @ `sha256:86d1b094380280450bf2281b1e38945a4f0c2528f2b88aebdf9ea8b9a1e8da8e`
 
 RTE-4 — Outer proposal: AIDEhuman, driven by CMP-1, reads prior agents/grades (OBJ-5), edits the current incumbent OBJ-6 and proposes a runnable harness rewrite. Guidance consists of code, evaluation outcomes and reviewer diagnosis, not a supplied catalogue of proven improvements. Changes can affect search, memory, prompts and inner final selection. Proposal writer is computational; humans define initial agents, task suite, budgets and protocol. RTE-6 decides promotion; no human per-rewrite veto is specified in the reported autonomous run. A new candidate is returned to RTE-5 and remains in the outer search history. Exact recovery of malformed or crashing rewrites is uninspected; SRC-2 Figure 2 reports buggy proposals receive no grade. BAP-4; SRC-1 §2.1.
 
 > In practice, the outer-loop agent edits the current incumbent, so each accepted rewrite becomes
 > the codebase that is edited at the next step. At step 𝑘, the incumbent is the best agent graded so far.
-> --- `kb/sources/.snapshots/aide2-recursive-self-improvement-research-agents.md` @ `sha256:86d1b094380280450bf2281b1e38945a4f0c2528f2b88aebdf9ea8b9a1e8da8e`
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-25-aide2-01/source-capture.md:215-216` @ `sha256:86d1b094380280450bf2281b1e38945a4f0c2528f2b88aebdf9ea8b9a1e8da8e`
 
 > level up. At step 𝑘, the outer-loop agent 𝑎out reads the previously proposed agents and their grades
-> --- `kb/sources/.snapshots/aide2-recursive-self-improvement-research-agents.md` @ `sha256:86d1b094380280450bf2281b1e38945a4f0c2528f2b88aebdf9ea8b9a1e8da8e`
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-25-aide2-01/source-capture.md:209` @ `sha256:86d1b094380280450bf2281b1e38945a4f0c2528f2b88aebdf9ea8b9a1e8da8e`
 
 RTE-5 — Grading check: each proposed agent runs as an inner optimizer on the fixed selection suite of ML, heuristic and harness engineering tasks. It receives public optimization scores and a fixed per-task cost budget including tokens and solution execution. It selects a final solution. Held-out private scoring evaluates that returned solution and aggregates scores over tasks and repeats into OBJ-7. Check output is a grade to the outer loop, not immediate successor admission. Benchmark designers supply reference outcomes/data and scoring authority; exact formulas, access enforcement and oracle validity remain uninspected. Hidden data are hidden from the optimizing inner agent; aggregate grade is visible to outer search, so it is itself a selection signal rather than untouched external validation. BAP-5; SRC-1 §2.1–2.2.
 
@@ -195,7 +195,7 @@ RTE-5 — Grading check: each proposed agent runs as an inner optimizer on the f
 > policy and is repeatedly rewritten during the run, whereas outer-loop selection is fixed by:
 > 𝑎∗𝑘 = arg max 𝑔 ( 𝑎)
 > 𝑎 ∈ 𝑎≤ 𝑘
-> --- `kb/sources/.snapshots/aide2-recursive-self-improvement-research-agents.md` @ `sha256:86d1b094380280450bf2281b1e38945a4f0c2528f2b88aebdf9ea8b9a1e8da8e`
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-25-aide2-01/source-capture.md:221-224` @ `sha256:86d1b094380280450bf2281b1e38945a4f0c2528f2b88aebdf9ea8b9a1e8da8e`
 
 RTE-6 — Incumbent admission: the fixed outer selector chooses the highest private grade among evaluated agents. Only an improvement replaces the incumbent; later RTE-4 edits that code and later RTE-5 evaluates it. Rejection leaves the incumbent intact but proposal/grade history remains available. Guarantee owner is the outer protocol; point is max-grade selection; strength protocol; conclusion status claimed. Required external contracts: comparable grades, fixed task budgets and reliable private scoring. The gate can reject public-score wins; SRC-2 Appendix D reports this for about a quarter of graded rejected rewrites. Crash recovery and external manual bypasses are uninspected. BAP-6.
 
@@ -204,18 +204,18 @@ RTE-7 — Inner final selection and generation guard: inner agent code chooses r
 > Because the penalty preserves the
 > ordering of the candidates, replaying the rule over the held-out runs shows that it never changed
 > which candidate the agent selected.
-> --- `kb/sources/.snapshots/aide2-recursive-self-improvement-research-agents.md` @ `sha256:86d1b094380280450bf2281b1e38945a4f0c2528f2b88aebdf9ea8b9a1e8da8e`
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-25-aide2-01/source-capture.md:815-817` @ `sha256:86d1b094380280450bf2281b1e38945a4f0c2528f2b88aebdf9ea8b9a1e8da8e`
 
 > a fixed instruction in every code-generation prompt reminding the model that solutions are scored on
 > a private split it cannot see and that it should prefer robust, generalizable approaches, and a guard that
 > re-prompts when generated code is nearly empty (under 40 characters, e.g. a stub or placeholder).
-> --- `kb/sources/.snapshots/aide2-recursive-self-improvement-research-agents.md` @ `sha256:86d1b094380280450bf2281b1e38945a4f0c2528f2b88aebdf9ea8b9a1e8da8e`
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-25-aide2-01/source-capture.md:811-813` @ `sha256:86d1b094380280450bf2281b1e38945a4f0c2528f2b88aebdf9ea8b9a1e8da8e`
 
 RTE-8 — Evaluator repair: SRC-2 §3.5 reports an agent patch to OBJ-8 so one failed test case no longer crashes the whole held-out evaluation. Trigger is evaluator failure; proposal is code correction; claimed effect is narrower failure propagation. Who independently verified/admitted that evaluator change, ability to veto it, preservation of scoring semantics and rollback are uninspected. This is a distinct revision mechanism, not silently folded into performance-gated harness admission. A favorable narrative cannot establish protected measurement integrity. BAP-8.
 
 > One task’s held-out scoring script crashed on all of its test cases whenever
 > any single test case failed, and AIDE85 adds a small patch,
-> --- `kb/sources/.snapshots/aide2-recursive-self-improvement-research-agents.md` @ `sha256:86d1b094380280450bf2281b1e38945a4f0c2528f2b88aebdf9ea8b9a1e8da8e`
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-25-aide2-01/source-capture.md:818-819` @ `sha256:86d1b094380280450bf2281b1e38945a4f0c2528f2b88aebdf9ea8b9a1e8da8e`
 
 ### Claims
 
@@ -225,7 +225,7 @@ CLM-1 — Repeated harness improvements transfer to held-out tasks. Conclusion s
 > the recursive self-improvement trace is not meant to demonstrate generalization beyond the selection
 > pub
 > benchmark.
-> --- `kb/sources/.snapshots/aide2-recursive-self-improvement-research-agents.md` @ `sha256:86d1b094380280450bf2281b1e38945a4f0c2528f2b88aebdf9ea8b9a1e8da8e`
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-25-aide2-01/source-capture.md:344-347` @ `sha256:86d1b094380280450bf2281b1e38945a4f0c2528f2b88aebdf9ea8b9a1e8da8e`
 
 CLM-2 — Bounded context reduces prompt growth. Conclusion status claimed; SRC-2 §3.5/Appendix E report rebuilt prompts from held-out runs, with late-run reductions from 7× to around 50× versus AIDE0 depending on benchmark, and context-limit failures only in the baseline comparisons. This is a reported size/recovery result, not a faithful-recall test or isolated proof of task-performance gains from compaction.
 
@@ -233,7 +233,7 @@ CLM-3 — Discovered agents can drive further outer-loop improvement; superiorit
 
 > with only three seeds per outer-loop agent, we find these results to be inconclusive; they do not
 > establish that AIDE47 is more sample-efficient as a self-improver than AIDEhuman .
-> --- `kb/sources/.snapshots/aide2-recursive-self-improvement-research-agents.md` @ `sha256:86d1b094380280450bf2281b1e38945a4f0c2528f2b88aebdf9ea8b9a1e8da8e`
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-25-aide2-01/source-capture.md:836-837` @ `sha256:86d1b094380280450bf2281b1e38945a4f0c2528f2b88aebdf9ea8b9a1e8da8e`
 
 CLM-4 — Reduced reward hacking. Conclusion status claimed; SRC-2 §3.4 reports 55% to 32% across 38 held-out kernel/training-context pairs, using proxy versus downstream behavior. The paper explicitly does not identify which rewrites caused the change. It is not a general guarantee against metric exploitation.
 

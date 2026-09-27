@@ -211,7 +211,7 @@ memory-comparison:
 
 **Memory analysis report:** `kb/reports/state/agentic-system-analysis/AAS-2026-09-25-reflexion-02/memory-report.md`
 
-**Memory analysis report SHA-256:** 2becf30aa863f6e9cc42884148023e9177c6445f349a75dc1ea2f58795393ce9
+**Memory analysis report SHA-256:** 9e39ec202e0f5495afb3ca69f85673f2c91756e035a646c3555b11ccc837f8cf
 
 ## Boundary and evidence
 
@@ -272,7 +272,7 @@ OBJ-4 — Saved artifacts combine two distinct export surfaces: text logs recons
 >     log += '------------- BEGIN INCORRECT AGENTS -----------\n\n'
 >     for agent in incorrect:
 >         log += remove_fewshot(agent._build_agent_prompt()) + f'\nCorrect answer: {agent.key}\n\n'
-> --- `hotpotqa_runs/util.py` @ `218cf0ef1df84b05ce379dd4a8e47f17766733a0`
+> --- `hotpotqa_runs/util.py:50-56` @ `218cf0ef1df84b05ce379dd4a8e47f17766733a0`
 
 > def save_agents(agents, dir: str):
 >     os.makedirs(dir, exist_ok=True)
@@ -317,7 +317,7 @@ RTE-1 — Notebook/operator creates an agent with a question and supplied key, a
 >         self.scratchpad += 'Answer is CORRECT'
 >     else:
 >         self.scratchpad += 'Answer is INCORRECT'
-> --- `hotpotqa_runs/agents.py` @ `218cf0ef1df84b05ce379dd4a8e47f17766733a0`
+> --- `hotpotqa_runs/agents.py:207-212` @ `218cf0ef1df84b05ce379dd4a8e47f17766733a0`
 
 RTE-2 — Answer-key evaluator normalizes case, punctuation, articles and whitespace, then compares equality. A Finish both marks the attempt finished and records correctness feedback. The notebook selects only agents not yet correct for later trials. Implementation conclusion status: wired; guarantee strength: invariant for equality under this normalization, not semantic correctness outside that domain. The supplied answer key is an explicit oracle, distinct from the reflection model's judgment. It checks the final answer, not the truth of the diagnosis or plan. Principal is experiment operator; code controls retry selection; no human approval is required by this loop. Source: SRC-1, `hotpotqa_runs/agents.py`, `normalize_answer`/`EM`; notebook cell 12.
 
@@ -451,13 +451,13 @@ CLM-1 — README presents failed-attempt traces/reflections as strategies for th
 CLM-2 — a sampled ReAct log displays a reflection that distinguishes release dates from air dates, followed by search/reasoning and a correct finish. This supports presence of a reason-plus-plan in retained text. The log is a reconstructed display, not a recorded intervention on memory; it cannot establish causal use, fidelity to an internal reason, or a performance gain from reflection. The implementation places the complete string in later prompts, but sampled old logs are not guaranteed executions of this exact code revision. SRC-3 `hotpotqa_runs/root/ReAct/reflexion/100_questions_5_trials.txt:1927-1943`; `hotpotqa_runs/util.py:40-60`. Display conclusion status: observed.
 
 > - I assumed that the dates of the episodes' releases were the same as the dates of the episodes' airings, when in fact they were different. I should have searched for the air dates of the episodes instead of the release dates.
-> --- `hotpotqa_runs/root/ReAct/reflexion/100_questions_5_trials.txt` @ `218cf0ef1df84b05ce379dd4a8e47f17766733a0`
+> --- `hotpotqa_runs/root/ReAct/reflexion/100_questions_5_trials.txt:1929` @ `218cf0ef1df84b05ce379dd4a8e47f17766733a0`
 
 > Thought 3: To SquarePants or Not to SquarePants aired on July 17, 2009. 2009 (To SquarePants or Not to SquarePants) < 2010 (The Clash of Triton), so To SquarePants or Not to SquarePants aired first.
 > Action 3: Finish[To SquarePants or Not to SquarePants]
 > Observation 3: Answer is CORRECT
 > Correct answer: To SquarePants or Not to SquarePants
-> --- `hotpotqa_runs/root/ReAct/reflexion/100_questions_5_trials.txt` @ `218cf0ef1df84b05ce379dd4a8e47f17766733a0`
+> --- `hotpotqa_runs/root/ReAct/reflexion/100_questions_5_trials.txt:1940-1943` @ `218cf0ef1df84b05ce379dd4a8e47f17766733a0`
 
 CLM-3 — Historical context-notebook output records a HumanMessage validation error, while pinned `llm.py` uses the corrected content parameter. Display conclusion status: observed; failure of the current pinned wrapper: uninspected. This demonstrates why stored outputs must not automatically be attributed to current source. SRC-3 `hotpotqa_runs/notebooks/CotQA_context.ipynb:151-165`; SRC-1 `hotpotqa_runs/llm.py:23-29`.
 

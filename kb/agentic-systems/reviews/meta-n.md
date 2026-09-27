@@ -6,7 +6,7 @@ analysis-run: AAS-2026-09-24-meta-n-01
 source-identity: https://github.com/minnesotanlp/meta-n
 reviewed-revision: b7081843d3c7b0e0f418ca10aaf2ccbff856e7f8
 analysis-result: kb/reports/retained/agentic-system-analysis/AAS-2026-09-24-meta-n-01/result.md
-analysis-result-sha256: fb252da4610374093d302a11bb4e7ca6cb9a521dbd9c27ef89822ba58386fefa
+analysis-result-sha256: 9650f608684b43bd44da354dd055f4cbeba5eab3a38f285f3ea351f6d73ec17e
 ---
 
 # Meta^n

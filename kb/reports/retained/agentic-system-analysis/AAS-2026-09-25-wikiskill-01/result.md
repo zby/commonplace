@@ -109,7 +109,7 @@ memory-comparison:
 
 **Memory analysis report:** `kb/reports/state/agentic-system-analysis/AAS-2026-09-25-wikiskill-01/memory-report.md`
 
-**Memory analysis report SHA-256:** 8d9a31663c9138fcd91c82972efe0deba205a9f3d9e164816f46e7b2b75fa19b
+**Memory analysis report SHA-256:** 8a8ea4b7e69b9a90b18ad771541ff158fe82d6aea90429f86ce6bbf843eb1f2b
 
 Source-only documentary run; these are intended output paths, not declarations of publication completion.
 
@@ -134,7 +134,7 @@ CMP-1 — Model instances for inference, wiki maintenance and proposal. Distribu
 
 > At its core, a skill packages instructions, scripts, and other resources into a reusable
 > filesystem-based module (i.e., an organized directory)
-> --- `kb/sources/.snapshots/wikiskill-persistent-knowledge-for-skill-evolution.md` @ `sha256:c093e240375e9780468edca9aa91aefecb8714ebdbef40810316644d9b2822d0`
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-25-wikiskill-01/source-capture.md:81-82` @ `sha256:c093e240375e9780468edca9aa91aefecb8714ebdbef40810316644d9b2822d0`
 
 ### Operative objects
 
@@ -154,18 +154,18 @@ All following object existence/form/storage findings have conclusion status: cla
 > Each skill directory in WikiSkill contains
 > two files: SKILL.md, which contains the full content of the skill; and PURPOSE.md, which maps
 > the skill back to the motivating Wiki patterns that inspired its creation or modification.
-> --- `kb/sources/.snapshots/wikiskill-persistent-knowledge-for-skill-evolution.md` @ `sha256:c093e240375e9780468edca9aa91aefecb8714ebdbef40810316644d9b2822d0`
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-25-wikiskill-01/source-capture.md:273-275` @ `sha256:c093e240375e9780468edca9aa91aefecb8714ebdbef40810316644d9b2822d0`
 
 OBJ-9 — Concise current training-outcome summary: pass/fail, predictions and ground-truth answers supplied initially to proposer. Derived delivery view, not established as an independently retained artifact; conclusion status claimed for delivery, uninspected for separate persistence. SRC-1 §3.2.3; RTE-3.
 
 > These traces capture the agent’s complete step-by-step interactions,
 > including reasoning, tool calls, tool-call outputs, and final answers.
-> --- `kb/sources/.snapshots/wikiskill-persistent-knowledge-for-skill-evolution.md` @ `sha256:c093e240375e9780468edca9aa91aefecb8714ebdbef40810316644d9b2822d0`
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-25-wikiskill-01/source-capture.md:252-253` @ `sha256:c093e240375e9780468edca9aa91aefecb8714ebdbef40810316644d9b2822d0`
 
 > - Root cause analysis (WHY it happens, not just WHAT happens)
 > - Exact command sequences from traces (what the agent did wrong / right)
 > - Known solutions or workarounds (concrete action patterns with exact syntax)
-> --- `kb/sources/.snapshots/wikiskill-persistent-knowledge-for-skill-evolution.md` @ `sha256:c093e240375e9780468edca9aa91aefecb8714ebdbef40810316644d9b2822d0`
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-25-wikiskill-01/source-capture.md:2043-2045` @ `sha256:c093e240375e9780468edca9aa91aefecb8714ebdbef40810316644d9b2822d0`
 
 ### Routes
 
@@ -175,29 +175,29 @@ RTE-1 — Inference: a supplied training, validation or test task triggers a mod
 
 > In WikiSkill, the full content of active skills 𝑆𝑘 −1 is injected directly into the Inference Agent’s system
 > prompt.
-> --- `kb/sources/.snapshots/wikiskill-persistent-knowledge-for-skill-evolution.md` @ `sha256:c093e240375e9780468edca9aa91aefecb8714ebdbef40810316644d9b2822d0`
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-25-wikiskill-01/source-capture.md:297-298` @ `sha256:c093e240375e9780468edca9aa91aefecb8714ebdbef40810316644d9b2822d0`
 
 RTE-2 — Wiki maintenance: after training rollouts, the harness samples up to five failures and three successes and caps each trace at 15000 characters (SRC-1 Appendix C). A model receives sampled OBJ-1 plus existing wiki and emits new/patch OBJ-2, replacement OBJ-3 and appended OBJ-4. The model proposes and decides substantive wiki changes; patch application is harness-owned. Guidance asks for root causes, success/failure contrasts, concrete workarounds and no duplicate patterns. Wiki changes survive skill rejection. Semantic veto, patch-failure recovery and pruning implementation are uninspected. Immediate return: patches/catalog/log; later consumers: maintainer/proposer. Full-context automatic supply is described; no expiry. Separate content-directed assessment is prescribed, while its actual reasoning and correctness are uninspected. BAP-2.
 
 > 4. Check whether the agent followed any active skills, and whether the skill guidance
 > was helpful or not
-> --- `kb/sources/.snapshots/wikiskill-persistent-knowledge-for-skill-evolution.md` @ `sha256:c093e240375e9780468edca9aa91aefecb8714ebdbef40810316644d9b2822d0`
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-25-wikiskill-01/source-capture.md:2038-2039` @ `sha256:c093e240375e9780468edca9aa91aefecb8714ebdbef40810316644d9b2822d0`
 
 > The Wiki Maintainer agent receives the full wiki context 𝑊𝑘 −1 alongside sampled traces Tsample,𝑘 . It
 > performs root cause analysis on the failing tasks, and extracts successful strategies from the passing
 > tasks.
-> --- `kb/sources/.snapshots/wikiskill-persistent-knowledge-for-skill-evolution.md` @ `sha256:c093e240375e9780468edca9aa91aefecb8714ebdbef40810316644d9b2822d0`
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-25-wikiskill-01/source-capture.md:317-319` @ `sha256:c093e240375e9780468edca9aa91aefecb8714ebdbef40810316644d9b2822d0`
 
 > Whenever patterns are modified, the Wiki Maintainer revises the index.md catalog to reflect
 > the current state and appends a summary of the iteration’s findings to the evolution log logs.md.
-> --- `kb/sources/.snapshots/wikiskill-persistent-knowledge-for-skill-evolution.md` @ `sha256:c093e240375e9780468edca9aa91aefecb8714ebdbef40810316644d9b2822d0`
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-25-wikiskill-01/source-capture.md:322-323` @ `sha256:c093e240375e9780468edca9aa91aefecb8714ebdbef40810316644d9b2822d0`
 
 RTE-3 — Skill proposal: the model initially receives OBJ-3, OBJ-5 and a training-outcome summary including predictions and ground-truth answers, then requests selected pages or traces through `read_file`. It must inspect at least four traces under Appendix E.3. The ReAct process terminates with `finish`: create a skill and PURPOSE, patch an existing skill, or `no_action`. The model proposes; RTE-5 decides admission. Guidance is the retained failure explanations and strategies in OBJ-2, rejected-edit evidence in OBJ-5 and current procedures in OBJ-6. Parts can be changed by exact-text patch, exposing local conditions and instructions; completeness of assumptions is uninspected. Immediate return is one atomic skill proposal; later effect only after gate acceptance. Requested file returns are pull, initial context is push. Tool alias `traces/<task_id>` maps to raw traces (Appendix E.3). No proposal grants runtime deployment authority. BAP-3.
 
 > it is initially provided with the wiki index 𝐼 (𝑊𝑘′ ), the historical skill impact
 > tracker (skill-impact.md), and a concise summary of all training task outcomes (pass/fail status,
 > predictions and ground-truth answers).
-> --- `kb/sources/.snapshots/wikiskill-persistent-knowledge-for-skill-evolution.md` @ `sha256:c093e240375e9780468edca9aa91aefecb8714ebdbef40810316644d9b2822d0`
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-25-wikiskill-01/source-capture.md:329-331` @ `sha256:c093e240375e9780468edca9aa91aefecb8714ebdbef40810316644d9b2822d0`
 
 RTE-4 — Validation check: harness applies a candidate proposal temporarily, runs RTE-1 over the disjoint validation split, and obtains OBJ-8 through domain-specific scoring against supplied expected answers/outcomes (SRC-1 §2, §3.2.4). Dataset creators supply the reference; scorer implementation/validity is uninspected. This check produces evidence, not admission. Immediate return is score/validation trajectories; the score enters RTE-5 and RTE-6. No subsequent validation-trace selection route is established. External effects belong to domain tools; isolation/recovery uninspected. BAP-4.
 
@@ -206,13 +206,13 @@ RTE-5 — Admission/rollback: the harness accepts candidate OBJ-6 only if valida
 > If rejected, the system discards the candidate skill modifications and reverts
 > the skill set to the most recent successful configuration 𝑆𝑘 −1 . Notably, the wiki 𝑊𝑘 is never rolled
 > back regardless of the acceptance decision;
-> --- `kb/sources/.snapshots/wikiskill-persistent-knowledge-for-skill-evolution.md` @ `sha256:c093e240375e9780468edca9aa91aefecb8714ebdbef40810316644d9b2822d0`
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-25-wikiskill-01/source-capture.md:354-356` @ `sha256:c093e240375e9780468edca9aa91aefecb8714ebdbef40810316644d9b2822d0`
 
 RTE-6 — Outcome retention: after either RTE-5 decision, the harness appends proposal metadata, target skill, diff, score and decision to OBJ-5, so a later RTE-3 can avoid repeating failed interventions. The write is automatic and does not certify pattern explanations. Immediate return: updated wiki state; later read-back: full impact history in initial proposer context. No human curator, expiry, independent semantic check or crash-recovery protocol established. BAP-6. SRC-1 §3.2.4.
 
 > recording the proposal metadata, target skill name, unified diff of the
 > modification, validation score R (Tval,𝑘 ), and final acceptance outcome 𝑎𝑘 ∈ {Accepted, Rejected}.
-> --- `kb/sources/.snapshots/wikiskill-persistent-knowledge-for-skill-evolution.md` @ `sha256:c093e240375e9780468edca9aa91aefecb8714ebdbef40810316644d9b2822d0`
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-25-wikiskill-01/source-capture.md:359-360` @ `sha256:c093e240375e9780468edca9aa91aefecb8714ebdbef40810316644d9b2822d0`
 
 RTE-7 — Wiki-access ablation: SRC-2 §5.1 permits inference wiki access during training. Operation conclusion status claimed; implementation conclusion status uninspected. The inference agent is consumer, but automatic versus requested delivery, selected files, context placement, selector, budget, lifetime and authority are uninspected. Immediate return remains task rollout; later retained products follow the otherwise described evolution. No distinct write admission or recovery mechanism established. The branch stays separate from default RTE-1 and prevents a complete push-signal/authority profile.
 
@@ -222,21 +222,21 @@ CLM-1 — Persistent wiki supports skill evolution. Conclusion status: claimed; 
 
 > When the Skill Proposer has no Wiki access, we also remove the
 > Wiki Maintainer, eliminating persistent knowledge accumulation across iterations.
-> --- `kb/sources/.snapshots/wikiskill-persistent-knowledge-for-skill-evolution.md` @ `sha256:c093e240375e9780468edca9aa91aefecb8714ebdbef40810316644d9b2822d0`
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-25-wikiskill-01/source-capture.md:990-991` @ `sha256:c093e240375e9780468edca9aa91aefecb8714ebdbef40810316644d9b2822d0`
 
 CLM-2 — Evolved skills transfer across models and can outperform self-evolved skills. Conclusion status: claimed; SRC-2 §4.2.2/Table 2 report cross-model skill injection. The paper also reports regressions in some model/task settings (§4.2.1); transfer is conditional, and retrieval was excluded.
 
 CLM-3 — Prior rejection and recurring failure evidence inform later concrete rules. Conclusion status: claimed; SRC-2 §5.3/Figure 3 describes rejected `goal-directed-action`, accepted `break-repetition-loop`, then a later refinement. The displayed contents are simplified, not original run artifacts. This is evidence of the authors' process account, not independent observed criticism or causal credit for any rule.
 
 > File contents are simplified for clarity.
-> --- `kb/sources/.snapshots/wikiskill-persistent-knowledge-for-skill-evolution.md` @ `sha256:c093e240375e9780468edca9aa91aefecb8714ebdbef40810316644d9b2822d0`
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-25-wikiskill-01/source-capture.md:1113` @ `sha256:c093e240375e9780468edca9aa91aefecb8714ebdbef40810316644d9b2822d0`
 
 ### Evidenced absences
 
 ABS-1 — Conclusion status absent, bounded to the described paper method: no automated wiki pruning or within-rollout online skill adaptation. Searched SRC-1 method, Appendix A/E and Limitations in the frozen capture for pruning, online adaptation and maintenance routes; explicit limitation says pruning is lacking and online adaptation is future work. This is an absence in described workflow coverage, not inspected code.
 
 > WikiSkill currently lacks an automated mechanism to prune the wiki.
-> --- `kb/sources/.snapshots/wikiskill-persistent-knowledge-for-skill-evolution.md` @ `sha256:c093e240375e9780468edca9aa91aefecb8714ebdbef40810316644d9b2822d0`
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-25-wikiskill-01/source-capture.md:1310` @ `sha256:c093e240375e9780468edca9aa91aefecb8714ebdbef40810316644d9b2822d0`
 
 ABS-2 — Conclusion status absent, bounded to retained execution evidence of recall dependence in this capture. Inspected SRC-2 §§4–5, Tables 1–5, Appendix B–C and case study; performance/ablation/transfer/statistical reports and simplified cases do not test dependence on particular recalled content. The search boundary is these experimental sections, using recall, faithful, ablation, transfer, case and access queries plus full relevant passages. This prevents faithfulness-tested yes, not claims about unavailable experiments.
 

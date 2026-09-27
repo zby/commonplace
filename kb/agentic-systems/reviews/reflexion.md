@@ -7,7 +7,7 @@ analysis-run: AAS-2026-09-25-reflexion-02
 source-identity: https://github.com/noahshinn/reflexion
 reviewed-revision: 218cf0ef1df84b05ce379dd4a8e47f17766733a0
 analysis-result: kb/reports/retained/agentic-system-analysis/AAS-2026-09-25-reflexion-02/result.md
-analysis-result-sha256: 93285ee41e4ffa28444c2b5b7818fd771c7878cd25fd7923e5f17938c267219e
+analysis-result-sha256: 5997394e8f6eba2e74619b08ac4db69d90d234185f4319ab442e80e270c1e772
 ---
 
 # Reflexion HotPotQA reasoning agents
@@ -25,14 +25,14 @@ The strategies retain different material. Reflection-only appends generated refl
 > elif strategy == ReflexionStrategy.REFLEXION:
 >     self.reflections += [self.prompt_reflection()]
 >     self.reflections_str = format_reflections(self.reflections)
-> --- https://github.com/noahshinn/reflexion/blob/218cf0ef1df84b05ce379dd4a8e47f17766733a0/hotpotqa_runs/agents.py
+> --- https://github.com/noahshinn/reflexion/blob/218cf0ef1df84b05ce379dd4a8e47f17766733a0/hotpotqa_runs/agents.py#L304-L306
 
 The operative memory is natural-language text retained in the agent and automatically supplied on later attempts for the same question. Reflection branches establish a wired, online trace-learning route. Search and Lookup pull Wikipedia information; they are not retrieval tools for accumulated reflection memory. Logs and saved joblib objects provide exports, but no saved-agent-to-solver restoration route was found in the inspected HotPotQA code/notebooks.
 
 A sampled historical log contains a concrete criticism of confusing episode release dates with air dates, followed by a changed search plan and a displayed correct answer. That is useful partial evidence of a reason-bearing artifact. It does not isolate reflection as the cause of success, and retained notebook outputs can come from code older than the pinned wrapper. The analysis therefore leaves recall faithfulness and achieved improvement unresolved. See CLM-2, CLM-3 and ABS-2.
 
 > - I assumed that the dates of the episodes' releases were the same as the dates of the episodes' airings, when in fact they were different. I should have searched for the air dates of the episodes instead of the release dates.
-> --- https://github.com/noahshinn/reflexion/blob/218cf0ef1df84b05ce379dd4a8e47f17766733a0/hotpotqa_runs/root/ReAct/reflexion/100_questions_5_trials.txt
+> --- https://github.com/noahshinn/reflexion/blob/218cf0ef1df84b05ce379dd4a8e47f17766733a0/hotpotqa_runs/root/ReAct/reflexion/100_questions_5_trials.txt#L1929
 
 The agent's attempt/outcome-to-reflection-to-next-prompt connection supports a structural reflection finding. Conjectural learning and self-improvement in achieved future capacity require stronger outcome and attribution evidence. A later correct answer checks the retried solution as a bundle; it does not validate the proposed failure explanation.
 

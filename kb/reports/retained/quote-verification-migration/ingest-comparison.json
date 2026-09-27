@@ -1,0 +1,6028 @@
+{
+  "ingests": [
+    {
+      "path": "kb/sources/a-programming-paradigm-for-spatiotemporal-composability.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/acm-agentic-context-management-for-long-horizon-tasks.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/agent-optimizers-compound-terminal-bench.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/agentic-code-reasoning.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/agents-explore-but-agents-ignore-llms-lack-environmental.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/agora-git-as-shared-memory-for-collective-autoresearch.ingest.md",
+      "before": [
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/alphadev-faster-sorting-2026-09-08.ingest.md",
+      "before": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "after": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/an-enigma-of-artificial-reason-production-evaluation-gap-lrms.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/apodex-1-1-scaling-agentic-intelligence-for-complex-work.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/arc-skill-live-action-execution-dba53c3.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/argyris-organizational-learning-and-mis-1977.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/ashby-design-for-a-brain-1960.ingest.md",
+      "before": [
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/autogenesis-a-self-evolving-agent-protocol.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/automated-benchmark-auditing-ai-agents-llms.ingest.md",
+      "before": [
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/automated-refinement-first-order-horn-clause-domain-theories.ingest.md",
+      "before": [
+        null,
+        null,
+        null
+      ],
+      "after": [
+        null,
+        null,
+        null
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/autosaddler-automatic-harness-optimization-with-durable-updates.ingest.md",
+      "before": [
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/beyond-fixed-representations-vocabulary-verifier-gaps.ingest.md",
+      "before": [
+        true
+      ],
+      "after": [
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/borretti-human-routers-of-machine-words.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/build-systems-a-la-carte.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/causal-inference-using-invariant-prediction.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/causal-learn-causal-discovery-in-python.ingest.md",
+      "before": [
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/cedar-grpo-process-aware-rl-abductive-reasoning.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/claude-workstream-kit-fable-agent-scaffolding.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/co-harness-co-evolving-harness-and-model-weights.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/components-and-generative-programming.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/concept-bottleneck-models-paper-v3.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/concept-bottleneck-models.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/context-providers-the-missing-layer-between-agents-and-tools.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/continual-harness-online-adaptation-foundation-agents.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/convexbench-can-llms-recognize-convex-functions.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/cook-kent-tool-factory-2003.ingest.md",
+      "before": [
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/darwin-godel-machine-open-ended-evolution-self-improving-agents.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/david-stahel-auftragstaktik-mission-command.ingest.md",
+      "before": [
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/defining-self-adaptive-systems-systematic-literature-review.ingest.md",
+      "before": [
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/descartes-discourse-on-the-method.ingest.md",
+      "before": [
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/di-giovanni-padella-universal-software-factory-1983.ingest.md",
+      "before": [
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/discoverphysics-benchmarking-llms-out-of-the-box-scientific.ingest.md",
+      "before": [
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/dowhy-expressing-and-validating-causal-assumptions.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/dreamcoder-wake-sleep-bayesian-program-learning.ingest.md",
+      "before": [
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/driven-by-compression-progress.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/effective-harnesses-for-long-running-agents.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/erlang-compilation-and-code-loading.ingest.md",
+      "before": [
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/erlang-release-handling.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/explanation-based-generalization-unifying-view-2026-09-08.ingest.md",
+      "before": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "after": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/falsifybench-inductive-reasoning-rule-discovery-games.ingest.md",
+      "before": [
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/fast-properties-in-v8.ingest.md",
+      "before": [
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/fodor-pylyshyn-1988-connectionism-cognitive-architecture.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/framework-for-software-product-line-engineering.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/from-agent-behaviour-to-agent-friendly-documentation.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/from-entropy-to-epiplexity-rethinking-information-computational.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/geometry-of-knowledge-extending-diversity-boundaries-llms.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/gick-holyoak-analogical-problem-solving.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/githens-manage-innovation-programs-rolling-wave.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/goedel-machines-schmidhuber.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/greenfield-mass-customizing-software-factories-2007.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/greenfield-short-software-factories-oopsla-2003.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/gsm-dc-llm-reasoning-distracted-irrelevant-context.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/gybels-et-al-2006-inter-language-reflection.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/haasnoot-dynamic-adaptive-policy-pathways-2013.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/hacker-news-ai-dr-ai-didnt-read.ingest.md",
+      "before": [
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/harness-as-a-language-jaz.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md",
+      "before": [
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/harness-if-instruction-following-across-instruction-surfaces.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/harness-updating-is-not-harness-benefit.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/how-to-recursively-improve-your-agents-2084301728363462919.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/hyperagents.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/improving-ai-skills-with-autoresearch-evals-skills-203525743436.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/in-search-of-lost-domain-generalization.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/in-toto-farm-to-table-guarantees.ingest.md",
+      "before": [
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/induction-bias-sequence-models-ebrahimi-2026.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/intern-s2-mobius-arxiv-v1.ingest.md",
+      "before": [
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/into-the-unknown-self-learning-large-language-models.ingest.md",
+      "before": [
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/jezz-santos-i-once-worked-in-buenos-aires.ingest.md",
+      "before": [
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/kennedy-sobek-kennedy-set-based-rework.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/knowledge-centric-self-improvement-2607.19592.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/koylanai-personal-brain-os.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/lamport-how-to-write-a-21st-century-proof.ingest.md",
+      "before": [
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/langlois-exertier-mdsofa-software-factory-factory-2004.ingest.md",
+      "before": [
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/language-models-dont-always-say-what-they-think.ingest.md",
+      "before": [
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/language-models-like-humans-show-content-effects-on-reasoning.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/lessons-from-building-ai-agents-for-financial-services.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/llm-agents-are-not-always-faithful-self-evolvers.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/llm-webagents-long-context-reasoning-benchmark.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/luhmann-archive-schlagwortregister.ingest.md",
+      "before": [
+        true
+      ],
+      "after": [
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/machine-studying.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/maes-computational-reflection-1988.ingest.md",
+      "before": [
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/many-ai-analysts-one-dataset-agentic-data-science-multiverse.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/marine-corps-mcdp-1-warfighting-1997.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/memento-skills-let-agents-design-agents.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/meta-harness-end-to-end-optimization-of-model-harnesses.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/metaobject-protocols-why-we-want-them-and-what-else-they-can-do.ingest.md",
+      "before": [
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/meyerson-maker-million-step-llm-zero-errors.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/microsoft-retired-smart-client-software-factory.ingest.md",
+      "before": [
+        true
+      ],
+      "after": [
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/mini-exercise-mismanaged-geniuses-longcot-rlm.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/monkey-patch.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/nick-milo-mocs-definition.ingest.md",
+      "before": [
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/on-learning-how-to-learn-learning-strategies.ingest.md",
+      "before": [
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/openclaw-rl-train-any-agent-simply-by-talking.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/palantir-ontology-vs-decision-traces.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/paulsen-maximum-effective-context-window-mecw.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/pindyck-irreversibility-uncertainty-investment.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/pirolli-proximal-information-scent-distal-content.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/pmi-lexicon-project-management-terms-v4.ingest.md",
+      "before": [
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/popper-a-realist-view-of-logic-physics-and-history-1966.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/popper-conjectures-and-refutations.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/popper-epistemology-without-a-knowing-subject-1968.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/popper-logic-of-scientific-discovery.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/position-ai-agents-in-scientific-teams-as-human-agent-systems.ingest.md",
+      "before": [
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/position-bias.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/prime-agent-a-self-improving-rlm-harness.ingest.md",
+      "before": [
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/program-synthesis-gulwani-polozov-singh-2017.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/programming-as-theory-building.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/prompt-stability-code-llms-emotion-personality-variations.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/prov-overview.ingest.md",
+      "before": [
+        true
+      ],
+      "after": [
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/recursive-experiential-working-memory-evolution.ingest.md",
+      "before": [
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/recursive-language-models-what-finally-gave-me-the-aha-moment.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/recursive-self-improvement-since-1987.ingest.md",
+      "before": [
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/rome-locating-and-editing-factual-associations-in-gpt.ingest.md",
+      "before": [
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/rosenfeld-risks-of-invariant-risk-minimization.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/seeing-numbers-of-50k-submissions-for-iclr-2101135922666365032.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/self-harness-harnesses-that-improve-themselves.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/self-improving-ai-coding-agents-through-accumulated-rules.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/self-training-large-language-models-through-knowledge-detection.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/semantic-leakage-lms-gonen.ingest.md",
+      "before": [
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/simon-willison-karpathy-claws.ingest.md",
+      "before": [
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/skillopt-executive-strategy-self-evolving-agent-skills.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/smolensky-proper-treatment-connectionism.ingest.md",
+      "before": [
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/software-design-model-use-in-practice.ingest.md",
+      "before": [
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/state-of-practice-in-model-driven-engineering.ingest.md",
+      "before": [
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/steve-yegge-fences-not-sandboxes.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/superarc-ait-benchmark-llm-compression-abstraction.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/sutton-javed-why-ai-models-stop-learning.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/sutton-the-bitter-lesson-original-essay.ingest.md",
+      "before": [
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/symbolic-learning-enables-self-evolving-agents.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/symbols-neural-networks-mathematical-intelligence.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/teevan-perfect-search-engine-orienteering.ingest.md",
+      "before": [
+        true
+      ],
+      "after": [
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/the-mismanaged-geniuses-hypothesis-2042588627260018751.ingest.md",
+      "before": [
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/the-second-brain-trap-2041486539067154753.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/the-self-healing-agent-harness-2048912026018484317.ingest.md",
+      "before": [
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/the-vision-of-autonomic-computing.ingest.md",
+      "before": [
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/the-y-combinator-for-llms-solving-long-context-rot.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/tombros-sanderson-query-biased-summaries.ingest.md",
+      "before": [
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/towards-automating-eval-engineering-2079976006644072796.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/towards-causal-representation-learning.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/towards-faithfully-interpretable-nlp-systems.ingest.md",
+      "before": [
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/trace-trajectory-attribution-for-automated-context-engineering.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/tulving-pearlstone-availability-versus-accessibility.ingest.md",
+      "before": [
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/us-army-adrp-6-0-mission-command-2012.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/us20090100406a1-software-factory-specification-execution-model.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/verbalizable-representations-global-workspace-llms.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/we-should-take-text-optimization-more-seriously.ingest.md",
+      "before": [
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/weyns-software-engineering-self-adaptive-systems-tour.ingest.md",
+      "before": [
+        true
+      ],
+      "after": [
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/where-is-the-proof-mde-industry.ingest.md",
+      "before": [
+        true
+      ],
+      "after": [
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/why-ai-systems-dont-learn-and-what-to-do-about-it.ingest.md",
+      "before": [
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/why-software-factories-fail-slopcodebench-2081797628552270027.ingest.md",
+      "before": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/wikipedia-bitter-lesson.ingest.md",
+      "before": [
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/wuyts-ducasse-2001-symbiotic-reflection.ingest.md",
+      "before": [
+        true,
+        true,
+        true
+      ],
+      "after": [
+        true,
+        true,
+        true
+      ],
+      "quoted_bytes_preserved": true
+    },
+    {
+      "path": "kb/sources/zinkevich-online-convex-programming.ingest.md",
+      "before": [
+        true
+      ],
+      "after": [
+        true
+      ],
+      "quoted_bytes_preserved": true
+    }
+  ],
+  "duplicates": [
+    {
+      "ingest": "kb/sources/how-to-recursively-improve-your-agents-2084301728363462919.ingest.md",
+      "removed_extract": 6,
+      "kept_extract": 2,
+      "quote": "The coding agent reads Radar's instructions and mines the sessions to build a set of probes: golden path, edge cases, tool selection, adversarial. For each probe it writes a one-line expected behavior, drawn from the spec. Then it runs them against the live agent, reads the tool calls, errors, and debug messages from the container logs, and judges every response.",
+      "location": "\"Here's how it works\" paragraph beginning \"The coding agent reads Radar's instructions\"",
+      "claim_changed": false
+    },
+    {
+      "ingest": "kb/sources/lessons-from-building-ai-agents-for-financial-services.ingest.md",
+      "removed_extract": 7,
+      "kept_extract": 3,
+      "quote": "We maintain fiscal calendars for 10,000+ companies. Every period reference gets normalized to absolute date ranges. We have 200+ test cases just for period extraction.",
+      "location": "\u201cThe Evaluation Suite,\u201d fiscal-period discussion.",
+      "claim_changed": false
+    }
+  ],
+  "ranges": [
+    {
+      "ingest": "kb/sources/acm-agentic-context-management-for-long-horizon-tasks.ingest.md",
+      "extract": 5,
+      "range": [
+        310,
+        310
+      ],
+      "location": [
+        "Table 3, benchmark column groups"
+      ],
+      "claim_changed": false
+    },
+    {
+      "ingest": "kb/sources/acm-agentic-context-management-for-long-horizon-tasks.ingest.md",
+      "extract": 6,
+      "range": [
+        311,
+        311
+      ],
+      "location": [
+        "Table 3, metric header row"
+      ],
+      "claim_changed": false
+    },
+    {
+      "ingest": "kb/sources/gybels-et-al-2006-inter-language-reflection.ingest.md",
+      "extract": 2,
+      "range": [
+        156,
+        158
+      ],
+      "location": [
+        "\u00a73, \u201cLinguistic symbiosis model overview\u201d (printed pp. 111\u2013112; PDF pp. 3\u20134)"
+      ],
+      "claim_changed": false
+    },
+    {
+      "ingest": "kb/sources/microsoft-retired-smart-client-software-factory.ingest.md",
+      "extract": 1,
+      "range": [
+        20,
+        20
+      ],
+      "location": [
+        "\u201cRETIRED DOWNLOAD\u201d notice"
+      ],
+      "claim_changed": false
+    },
+    {
+      "ingest": "kb/sources/the-second-brain-trap-2041486539067154753.ingest.md",
+      "extract": 4,
+      "range": [
+        20,
+        20
+      ],
+      "location": [
+        "Opening sentence"
+      ],
+      "claim_changed": false
+    },
+    {
+      "ingest": "kb/sources/trace-trajectory-attribution-for-automated-context-engineering.ingest.md",
+      "extract": 8,
+      "range": [
+        390,
+        391
+      ],
+      "location": [
+        "Section 7.3, \"Evaluation Protocol\""
+      ],
+      "claim_changed": false
+    }
+  ],
+  "notes": [
+    {
+      "path": "kb/articles/COLLECTION.md",
+      "before": [
+        "unresolved"
+      ],
+      "after": [
+        "unresolved"
+      ],
+      "after_repairs": [
+        "unresolved"
+      ]
+    },
+    {
+      "path": "kb/articles/what-an-automated-reviewer-should-measure.md",
+      "before": [
+        "match"
+      ],
+      "after": [
+        "match"
+      ],
+      "after_repairs": [
+        "match"
+      ]
+    },
+    {
+      "path": "kb/articles/which-existing-self-improving-systems-are-theory-builders.md",
+      "before": [
+        "match",
+        "match",
+        "match",
+        "match",
+        "match",
+        "match",
+        "match",
+        "match"
+      ],
+      "after": [
+        "match",
+        "mismatch",
+        "match",
+        "match",
+        "match",
+        "match",
+        "match",
+        "match"
+      ],
+      "after_repairs": [
+        "match",
+        "match",
+        "match",
+        "match",
+        "match",
+        "match",
+        "match",
+        "match"
+      ]
+    },
+    {
+      "path": "kb/notes/a-note-is-an-atomic-step-relative-to-the-check-that-reads-it.md",
+      "before": [
+        "match",
+        "match",
+        "match",
+        "match",
+        "match"
+      ],
+      "after": [
+        "match",
+        "match",
+        "match",
+        "match",
+        "match"
+      ],
+      "after_repairs": [
+        "match",
+        "match",
+        "match",
+        "match",
+        "match"
+      ]
+    },
+    {
+      "path": "kb/notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md",
+      "before": [
+        "match",
+        "match",
+        "match"
+      ],
+      "after": [
+        "match",
+        "match",
+        "match"
+      ],
+      "after_repairs": [
+        "match",
+        "match",
+        "match"
+      ]
+    },
+    {
+      "path": "kb/notes/an-omitted-loop-function-and-a-frozen-one-need-different-repairs.md",
+      "before": [
+        "match",
+        "match",
+        "match",
+        "match"
+      ],
+      "after": [
+        "match",
+        "match",
+        "match",
+        "match"
+      ],
+      "after_repairs": [
+        "match",
+        "match",
+        "match",
+        "match"
+      ]
+    },
+    {
+      "path": "kb/notes/evidence/real-self-improving-systems-occupy-combinations-no-rung-captures.md",
+      "before": [
+        "match",
+        "match",
+        "match",
+        "match",
+        "match"
+      ],
+      "after": [
+        "match",
+        "match",
+        "match",
+        "match",
+        "match"
+      ],
+      "after_repairs": [
+        "match",
+        "match",
+        "match",
+        "match",
+        "match"
+      ]
+    },
+    {
+      "path": "kb/notes/evidence/six-reported-self-improvement-paths-expose-bounded-redesign-surfaces.md",
+      "before": [
+        "match",
+        "match",
+        "match",
+        "match"
+      ],
+      "after": [
+        "match",
+        "match",
+        "match",
+        "match"
+      ],
+      "after_repairs": [
+        "match",
+        "match",
+        "match",
+        "match"
+      ]
+    },
+    {
+      "path": "kb/notes/formal-systems-assess-explanatory-reach-through-causal-and-proof.md",
+      "before": [
+        "match",
+        "match",
+        "match",
+        "match"
+      ],
+      "after": [
+        "match",
+        "match",
+        "match",
+        "match"
+      ],
+      "after_repairs": [
+        "match",
+        "match",
+        "match",
+        "match"
+      ]
+    },
+    {
+      "path": "kb/notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md",
+      "before": [
+        "match"
+      ],
+      "after": [
+        "match"
+      ],
+      "after_repairs": [
+        "match"
+      ]
+    },
+    {
+      "path": "kb/notes/instantiation-alone-cannot-model-agent-learning-across-sessions.md",
+      "before": [
+        "match"
+      ],
+      "after": [
+        "match"
+      ],
+      "after_repairs": [
+        "match"
+      ]
+    },
+    {
+      "path": "kb/notes/knowledge-storage-does-not-imply-contextual-activation.md",
+      "before": [
+        "match",
+        "match",
+        "match",
+        "match"
+      ],
+      "after": [
+        "match",
+        "match",
+        "match",
+        "mismatch"
+      ],
+      "after_repairs": [
+        "match",
+        "match",
+        "match",
+        "match"
+      ]
+    },
+    {
+      "path": "kb/notes/natural-language-meaning-is-coordination-among-learned-approximations.md",
+      "before": [
+        "match",
+        "match",
+        "match",
+        "match",
+        "match"
+      ],
+      "after": [
+        "match",
+        "match",
+        "match",
+        "match",
+        "match"
+      ],
+      "after_repairs": [
+        "match",
+        "match",
+        "match",
+        "match",
+        "match"
+      ]
+    },
+    {
+      "path": "kb/notes/retained-theories-may-improve-sample-efficiency.md",
+      "before": [
+        "match",
+        "match",
+        "match",
+        "match",
+        "match"
+      ],
+      "after": [
+        "match",
+        "match",
+        "match",
+        "match",
+        "match"
+      ],
+      "after_repairs": [
+        "match",
+        "match",
+        "match",
+        "match",
+        "match"
+      ]
+    },
+    {
+      "path": "kb/work/dialectical-sample/notes/whether-the-lhc-could-produce-a-dangerous-micro-black-hole.md",
+      "before": [
+        "match",
+        "match"
+      ],
+      "after": [
+        "match",
+        "match"
+      ],
+      "after_repairs": [
+        "match",
+        "match"
+      ]
+    },
+    {
+      "path": "kb/work/kb-graph-loader/README.md",
+      "before": [
+        "mismatch",
+        "mismatch"
+      ],
+      "after": [
+        "mismatch",
+        "mismatch"
+      ],
+      "after_repairs": [
+        "mismatch",
+        "mismatch"
+      ]
+    }
+  ],
+  "note_repairs": [
+    {
+      "path": "kb/articles/which-existing-self-improving-systems-are-theory-builders.md",
+      "change": "Extend quotation through \u201cmemo tailored to the current task.\u201d to select the section 4.4 extract.",
+      "claim_changed": false
+    },
+    {
+      "path": "kb/notes/knowledge-storage-does-not-imply-contextual-activation.md",
+      "change": "Extend quotation with \u201cwere\u201d to select the complete abstract extract; adjust surrounding grammar.",
+      "claim_changed": false
+    }
+  ],
+  "citing_artifacts": [
+    {
+      "path": "kb/agentic-systems/reviews/agno-agentos.md",
+      "ingests": [
+        "kb/sources/how-to-recursively-improve-your-agents-2084301728363462919.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/articles/testing-whether-a-theory-builder-learns.md",
+      "ingests": [
+        "kb/sources/darwin-godel-machine-open-ended-evolution-self-improving-agents.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/articles/what-an-automated-reviewer-should-measure.md",
+      "ingests": [
+        "kb/sources/driven-by-compression-progress.ingest.md"
+      ],
+      "before": [
+        "match"
+      ],
+      "after": [
+        "match"
+      ]
+    },
+    {
+      "path": "kb/articles/which-existing-self-improving-systems-are-theory-builders.md",
+      "ingests": [
+        "kb/sources/darwin-godel-machine-open-ended-evolution-self-improving-agents.ingest.md",
+        "kb/sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md",
+        "kb/sources/knowledge-centric-self-improvement-2607.19592.ingest.md",
+        "kb/sources/memento-skills-let-agents-design-agents.ingest.md",
+        "kb/sources/prime-agent-a-self-improving-rlm-harness.ingest.md",
+        "kb/sources/recursive-experiential-working-memory-evolution.ingest.md",
+        "kb/sources/steve-yegge-fences-not-sandboxes.ingest.md"
+      ],
+      "before": [
+        "match",
+        "match",
+        "match",
+        "match",
+        "match",
+        "match",
+        "match",
+        "match"
+      ],
+      "after": [
+        "match",
+        "match",
+        "match",
+        "match",
+        "match",
+        "match",
+        "match",
+        "match"
+      ]
+    },
+    {
+      "path": "kb/notes/COLLECTION.md",
+      "ingests": [
+        "kb/sources/popper-logic-of-scientific-discovery.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/a-fixed-model-house-must-retain-missing-procedures-for-theory-use.md",
+      "ingests": [
+        "kb/sources/memento-skills-let-agents-design-agents.ingest.md",
+        "kb/sources/self-harness-harnesses-that-improve-themselves.ingest.md",
+        "kb/sources/skillopt-executive-strategy-self-evolving-agent-skills.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/a-note-is-an-atomic-step-relative-to-the-check-that-reads-it.md",
+      "ingests": [
+        "kb/sources/descartes-discourse-on-the-method.ingest.md",
+        "kb/sources/lamport-how-to-write-a-21st-century-proof.ingest.md"
+      ],
+      "before": [
+        "match",
+        "match",
+        "match",
+        "match",
+        "match"
+      ],
+      "after": [
+        "match",
+        "match",
+        "match",
+        "match",
+        "match"
+      ]
+    },
+    {
+      "path": "kb/notes/a-proposal-selection-loop-requires-search-evaluation-and-retention.md",
+      "ingests": [
+        "kb/sources/ashby-design-for-a-brain-1960.ingest.md",
+        "kb/sources/defining-self-adaptive-systems-systematic-literature-review.ingest.md",
+        "kb/sources/goedel-machines-schmidhuber.ingest.md",
+        "kb/sources/the-vision-of-autonomic-computing.ingest.md",
+        "kb/sources/weyns-software-engineering-self-adaptive-systems-tour.ingest.md",
+        "kb/sources/zinkevich-online-convex-programming.ingest.md"
+      ],
+      "before": [
+        "match",
+        "match",
+        "match"
+      ],
+      "after": [
+        "match",
+        "match",
+        "match"
+      ]
+    },
+    {
+      "path": "kb/notes/a-repeatable-operative-path-keeps-a-redesign-class-open-to-revision.md",
+      "ingests": [
+        "kb/sources/how-to-recursively-improve-your-agents-2084301728363462919.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/a-retrieval-miss-is-a-local-reflective-path-failure.md",
+      "ingests": [
+        "kb/sources/memento-skills-let-agents-design-agents.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/a-software-factory-is-family-scoped-lifecycle-production-machinery.md",
+      "ingests": [
+        "kb/sources/greenfield-mass-customizing-software-factories-2007.ingest.md",
+        "kb/sources/greenfield-short-software-factories-oopsla-2003.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/active-work-state-is-not-retrospective-memory-or-chat-history.md",
+      "ingests": [
+        "kb/sources/claude-workstream-kit-fable-agent-scaffolding.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/agent-memory-requirements/activate-behavior-changing-memory.md",
+      "ingests": [
+        "kb/sources/from-agent-behaviour-to-agent-friendly-documentation.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/agent-memory-requirements/evaluate-memory-by-effects.md",
+      "ingests": [
+        "kb/sources/memento-skills-let-agents-design-agents.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/agent-orchestration-occupies-a-multi-dimensional-design-space.md",
+      "ingests": [
+        "kb/sources/mini-exercise-mismanaged-geniuses-longcot-rlm.ingest.md",
+        "kb/sources/the-mismanaged-geniuses-hypothesis-2042588627260018751.ingest.md",
+        "kb/sources/the-y-combinator-for-llms-solving-long-context-rot.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/agents-navigate-by-deciding-what-to-read-next.md",
+      "ingests": [
+        "kb/sources/pirolli-proximal-information-scent-distal-content.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/an-enforced-tag-readme-is-a-moc-with-a-machine-checked-contract.md",
+      "ingests": [
+        "kb/sources/luhmann-archive-schlagwortregister.ingest.md",
+        "kb/sources/nick-milo-mocs-definition.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/an-experiment-identifies-only-the-contrast-it-actually-runs.md",
+      "ingests": [
+        "kb/sources/harness-if-instruction-following-across-instruction-surfaces.ingest.md",
+        "kb/sources/llm-agents-are-not-always-faithful-self-evolvers.ingest.md",
+        "kb/sources/memento-skills-let-agents-design-agents.ingest.md",
+        "kb/sources/meta-harness-end-to-end-optimization-of-model-harnesses.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/an-omitted-loop-function-and-a-frozen-one-need-different-repairs.md",
+      "ingests": [
+        "kb/sources/autogenesis-a-self-evolving-agent-protocol.ingest.md",
+        "kb/sources/continual-harness-online-adaptation-foundation-agents.ingest.md",
+        "kb/sources/darwin-godel-machine-open-ended-evolution-self-improving-agents.ingest.md",
+        "kb/sources/hyperagents.ingest.md",
+        "kb/sources/self-harness-harnesses-that-improve-themselves.ingest.md",
+        "kb/sources/self-improving-ai-coding-agents-through-accumulated-rules.ingest.md"
+      ],
+      "before": [
+        "match",
+        "match",
+        "match",
+        "match"
+      ],
+      "after": [
+        "match",
+        "match",
+        "match",
+        "match"
+      ]
+    },
+    {
+      "path": "kb/notes/an-optimal-long-run-learning-strategy-invests-in-its-own-machinery.md",
+      "ingests": [
+        "kb/sources/sutton-the-bitter-lesson-original-essay.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/any-symbolic-program-with-llm-calls-is-a-select-call-program.md",
+      "ingests": [
+        "kb/sources/a-programming-paradigm-for-spatiotemporal-composability.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/automated-synthesis-is-missing-good-oracles.md",
+      "ingests": [
+        "kb/sources/geometry-of-knowledge-extending-diversity-boundaries-llms.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/automating-kb-learning-is-an-open-problem.md",
+      "ingests": [
+        "kb/sources/knowledge-centric-self-improvement-2607.19592.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/axes-of-artifact-analysis.md",
+      "ingests": [
+        "kb/sources/beyond-fixed-representations-vocabulary-verifier-gaps.ingest.md",
+        "kb/sources/intern-s2-mobius-arxiv-v1.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/bitter-lesson-selects-against-unearned-reach-not-against-structure.md",
+      "ingests": [
+        "kb/sources/in-search-of-lost-domain-generalization.ingest.md",
+        "kb/sources/rosenfeld-risks-of-invariant-risk-minimization.ingest.md",
+        "kb/sources/wikipedia-bitter-lesson.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/bounded-context-orchestration-model.md",
+      "ingests": [
+        "kb/sources/context-providers-the-missing-layer-between-agents-and-tools.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/brainstorming-how-to-test-whether-pairwise-comparison-can-harden.md",
+      "ingests": [
+        "kb/sources/position-bias.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/brainstorming-maintainability-oracles-for-agentic-development.md",
+      "ingests": [
+        "kb/sources/agentic-code-reasoning.ingest.md",
+        "kb/sources/towards-automating-eval-engineering-2079976006644072796.ingest.md",
+        "kb/sources/why-software-factories-fail-slopcodebench-2081797628552270027.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/checked-outcome-licenses-episode-retention-not-abstraction.md",
+      "ingests": [
+        "kb/sources/an-enigma-of-artificial-reason-production-evaluation-gap-lrms.ingest.md",
+        "kb/sources/language-models-dont-always-say-what-they-think.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/choosing-what-to-learn-requires-both-validity-and-learning-value-gates.md",
+      "ingests": [
+        "kb/sources/into-the-unknown-self-learning-large-language-models.ingest.md",
+        "kb/sources/self-training-large-language-models-through-knowledge-detection.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/claim-modality-is-the-inference-form-of-the-refuter.md",
+      "ingests": [
+        "kb/sources/popper-logic-of-scientific-discovery.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/claw-learning-loops-must-improve-action-capacity-not-just-retrieval.md",
+      "ingests": [
+        "kb/sources/koylanai-personal-brain-os.ingest.md",
+        "kb/sources/llm-agents-are-not-always-faithful-self-evolvers.ingest.md",
+        "kb/sources/simon-willison-karpathy-claws.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/commonplace-builds-a-theory-builder-and-tests-whether-it-learns.md",
+      "ingests": [
+        "kb/sources/popper-epistemology-without-a-knowing-subject-1968.ingest.md",
+        "kb/sources/recursive-self-improvement-since-1987.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/competing-causal-theories-can-guide-distinguishing-experiments.md",
+      "ingests": [
+        "kb/sources/driven-by-compression-progress.ingest.md",
+        "kb/sources/popper-conjectures-and-refutations.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/compounding-is-tested-in-later-improvement-not-by-the-accepting-metric.md",
+      "ingests": [
+        "kb/sources/agent-optimizers-compound-terminal-bench.ingest.md",
+        "kb/sources/harness-updating-is-not-harness-benefit.ingest.md",
+        "kb/sources/hyperagents.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/context-contamination-operates-below-an-agents-compliance-reasoning.md",
+      "ingests": [
+        "kb/sources/language-models-like-humans-show-content-effects-on-reasoning.ingest.md",
+        "kb/sources/semantic-leakage-lms-gonen.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/context-operation-interface-bounds-context-policy.md",
+      "ingests": [
+        "kb/sources/acm-agentic-context-management-for-long-horizon-tasks.ingest.md",
+        "kb/sources/harness-as-a-language-jaz.ingest.md",
+        "kb/sources/recursive-language-models-what-finally-gave-me-the-aha-moment.ingest.md",
+        "kb/sources/the-y-combinator-for-llms-solving-long-context-rot.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/criteria-edits-invalidate-verdicts-process-edits-invalidate-artifacts.md",
+      "ingests": [
+        "kb/sources/build-systems-a-la-carte.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/current-task-fit-alone-does-not-warrant-costly-entrenchment.md",
+      "ingests": [
+        "kb/sources/pindyck-irreversibility-uncertainty-investment.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/definitions/addressable-theory.md",
+      "ingests": [
+        "kb/sources/automated-refinement-first-order-horn-clause-domain-theories.ingest.md",
+        "kb/sources/popper-conjectures-and-refutations.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/definitions/reflective-system.md",
+      "ingests": [
+        "kb/sources/maes-computational-reflection-1988.ingest.md",
+        "kb/sources/wuyts-ducasse-2001-symbiotic-reflection.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/definitions/software-factory.md",
+      "ingests": [
+        "kb/sources/greenfield-mass-customizing-software-factories-2007.ingest.md",
+        "kb/sources/greenfield-short-software-factories-oopsla-2003.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/definitions/tentative-theory.md",
+      "ingests": [
+        "kb/sources/popper-a-realist-view-of-logic-physics-and-history-1966.ingest.md",
+        "kb/sources/popper-conjectures-and-refutations.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/definitions/theory-builder.md",
+      "ingests": [
+        "kb/sources/popper-a-realist-view-of-logic-physics-and-history-1966.ingest.md",
+        "kb/sources/popper-conjectures-and-refutations.ingest.md",
+        "kb/sources/popper-epistemology-without-a-knowing-subject-1968.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/design-rationale-must-preserve-unregenerable-decision-premises.md",
+      "ingests": [
+        "kb/sources/programming-as-theory-building.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/diagnostic-richness-constrains-outer-loop-learning-quality.md",
+      "ingests": [
+        "kb/sources/autosaddler-automatic-harness-optimization-with-durable-updates.ingest.md",
+        "kb/sources/meta-harness-end-to-end-optimization-of-model-harnesses.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/epiplexity-by-example-what-entropy-and-complexity-miss.md",
+      "ingests": [
+        "kb/sources/from-entropy-to-epiplexity-rethinking-information-computational.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/evaluation-automation-is-phase-gated-by-comprehension.md",
+      "ingests": [
+        "kb/sources/improving-ai-skills-with-autoresearch-evals-skills-203525743436.ingest.md",
+        "kb/sources/meta-harness-end-to-end-optimization-of-model-harnesses.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/evidence/independent-pass-tightened-three-of-four-pirolli-verdicts.md",
+      "ingests": [
+        "kb/sources/pirolli-proximal-information-scent-distal-content.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/evidence/missing-rationale-does-not-exclude-a-builder-weights-do-across-runs.md",
+      "ingests": [
+        "kb/sources/apodex-1-1-scaling-agentic-intelligence-for-complex-work.ingest.md",
+        "kb/sources/prime-agent-a-self-improving-rlm-harness.ingest.md",
+        "kb/sources/recursive-experiential-working-memory-evolution.ingest.md",
+        "kb/sources/sutton-javed-why-ai-models-stop-learning.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/evidence/real-self-improving-systems-occupy-combinations-no-rung-captures.md",
+      "ingests": [
+        "kb/sources/autogenesis-a-self-evolving-agent-protocol.ingest.md",
+        "kb/sources/continual-harness-online-adaptation-foundation-agents.ingest.md",
+        "kb/sources/darwin-godel-machine-open-ended-evolution-self-improving-agents.ingest.md",
+        "kb/sources/dreamcoder-wake-sleep-bayesian-program-learning.ingest.md",
+        "kb/sources/knowledge-centric-self-improvement-2607.19592.ingest.md",
+        "kb/sources/self-harness-harnesses-that-improve-themselves.ingest.md",
+        "kb/sources/self-improving-ai-coding-agents-through-accumulated-rules.ingest.md"
+      ],
+      "before": [
+        "match",
+        "match",
+        "match",
+        "match",
+        "match"
+      ],
+      "after": [
+        "match",
+        "match",
+        "match",
+        "match",
+        "match"
+      ]
+    },
+    {
+      "path": "kb/notes/evidence/six-reported-self-improvement-paths-expose-bounded-redesign-surfaces.md",
+      "ingests": [
+        "kb/sources/autogenesis-a-self-evolving-agent-protocol.ingest.md",
+        "kb/sources/continual-harness-online-adaptation-foundation-agents.ingest.md",
+        "kb/sources/darwin-godel-machine-open-ended-evolution-self-improving-agents.ingest.md",
+        "kb/sources/hyperagents.ingest.md",
+        "kb/sources/self-harness-harnesses-that-improve-themselves.ingest.md",
+        "kb/sources/self-improving-ai-coding-agents-through-accumulated-rules.ingest.md"
+      ],
+      "before": [
+        "match",
+        "match",
+        "match",
+        "match"
+      ],
+      "after": [
+        "match",
+        "match",
+        "match",
+        "match"
+      ]
+    },
+    {
+      "path": "kb/notes/exact-implementation-does-not-validate-a-requirement.md",
+      "ingests": [
+        "kb/sources/induction-bias-sequence-models-ebrahimi-2026.ingest.md",
+        "kb/sources/lessons-from-building-ai-agents-for-financial-services.ingest.md",
+        "kb/sources/meyerson-maker-million-step-llm-zero-errors.ingest.md",
+        "kb/sources/superarc-ait-benchmark-llm-compression-abstraction.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/factory-construction-does-not-establish-knowledge-acquisition.md",
+      "ingests": [
+        "kb/sources/cook-kent-tool-factory-2003.ingest.md",
+        "kb/sources/greenfield-mass-customizing-software-factories-2007.ingest.md",
+        "kb/sources/greenfield-short-software-factories-oopsla-2003.ingest.md",
+        "kb/sources/langlois-exertier-mdsofa-software-factory-factory-2004.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/files-defer-centralized-schema-commitment-until-invariants-stabilize.md",
+      "ingests": [
+        "kb/sources/lessons-from-building-ai-agents-for-financial-services.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/final-task-success-does-not-establish-intended-path-health.md",
+      "ingests": [
+        "kb/sources/the-self-healing-agent-harness-2048912026018484317.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/first-principles-analysis-maps-design-space-before-selection.md",
+      "ingests": [
+        "kb/sources/build-systems-a-la-carte.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/first-principles-reasoning-selects-for-explanatory-reach-over.md",
+      "ingests": [
+        "kb/sources/superarc-ait-benchmark-llm-compression-abstraction.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/fix-what-the-executor-cant-determine-not-what-it-will.md",
+      "ingests": [
+        "kb/sources/automated-benchmark-auditing-ai-agents-llms.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/formal-systems-assess-explanatory-reach-through-causal-and-proof.md",
+      "ingests": [
+        "kb/sources/causal-inference-using-invariant-prediction.ingest.md",
+        "kb/sources/causal-learn-causal-discovery-in-python.ingest.md",
+        "kb/sources/discoverphysics-benchmarking-llms-out-of-the-box-scientific.ingest.md",
+        "kb/sources/dowhy-expressing-and-validating-causal-assumptions.ingest.md",
+        "kb/sources/goedel-machines-schmidhuber.ingest.md",
+        "kb/sources/rosenfeld-risks-of-invariant-risk-minimization.ingest.md",
+        "kb/sources/towards-causal-representation-learning.ingest.md"
+      ],
+      "before": [
+        "match",
+        "match",
+        "match",
+        "match"
+      ],
+      "after": [
+        "match",
+        "match",
+        "match",
+        "match"
+      ]
+    },
+    {
+      "path": "kb/notes/frontloading-spares-execution-context.md",
+      "ingests": [
+        "kb/sources/machine-studying.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/generality-bought-to-avoid-counterexamples-is-paid-for-in.md",
+      "ingests": [
+        "kb/sources/popper-logic-of-scientific-discovery.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/git-provenance-requires-contribution-and-dependency-semantics.md",
+      "ingests": [
+        "kb/sources/agora-git-as-shared-memory-for-collective-autoresearch.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/goedel-machines-are-a-proof-governed-case-of-self-modification.md",
+      "ingests": [
+        "kb/sources/darwin-godel-machine-open-ended-evolution-self-improving-agents.ingest.md",
+        "kb/sources/goedel-machines-schmidhuber.ingest.md",
+        "kb/sources/on-learning-how-to-learn-learning-strategies.ingest.md"
+      ],
+      "before": [
+        "match"
+      ],
+      "after": [
+        "match"
+      ]
+    },
+    {
+      "path": "kb/notes/history-has-one-chance-to-become-checkable.md",
+      "ingests": [
+        "kb/sources/in-toto-farm-to-table-guarantees.ingest.md",
+        "kb/sources/prov-overview.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/instantiation-alone-cannot-model-agent-learning-across-sessions.md",
+      "ingests": [
+        "kb/sources/erlang-release-handling.ingest.md",
+        "kb/sources/fast-properties-in-v8.ingest.md",
+        "kb/sources/machine-studying.ingest.md",
+        "kb/sources/metaobject-protocols-why-we-want-them-and-what-else-they-can-do.ingest.md",
+        "kb/sources/monkey-patch.ingest.md"
+      ],
+      "before": [
+        "match"
+      ],
+      "after": [
+        "match"
+      ]
+    },
+    {
+      "path": "kb/notes/intent-framed-delegation-is-a-control-regime-not-a-short-prompt.md",
+      "ingests": [
+        "kb/sources/david-stahel-auftragstaktik-mission-command.ingest.md",
+        "kb/sources/marine-corps-mcdp-1-warfighting-1997.ingest.md",
+        "kb/sources/us-army-adrp-6-0-mission-command-2012.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/knowledge-storage-does-not-imply-contextual-activation.md",
+      "ingests": [
+        "kb/sources/agents-explore-but-agents-ignore-llms-lack-environmental.ingest.md",
+        "kb/sources/from-agent-behaviour-to-agent-friendly-documentation.ingest.md",
+        "kb/sources/gick-holyoak-analogical-problem-solving.ingest.md",
+        "kb/sources/llm-agents-are-not-always-faithful-self-evolvers.ingest.md",
+        "kb/sources/the-second-brain-trap-2041486539067154753.ingest.md",
+        "kb/sources/tulving-pearlstone-availability-versus-accessibility.ingest.md",
+        "kb/sources/verbalizable-representations-global-workspace-llms.ingest.md"
+      ],
+      "before": [
+        "match",
+        "match",
+        "match",
+        "match"
+      ],
+      "after": [
+        "match",
+        "match",
+        "match",
+        "match"
+      ]
+    },
+    {
+      "path": "kb/notes/learning-inside-a-fixed-decomposition-inherits-its-mistakes.md",
+      "ingests": [
+        "kb/sources/acm-agentic-context-management-for-long-horizon-tasks.ingest.md",
+        "kb/sources/co-harness-co-evolving-harness-and-model-weights.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/learning-is-not-only-about-generality.md",
+      "ingests": [
+        "kb/sources/argyris-organizational-learning-and-mis-1977.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/link-following-and-search-impose-different-metadata-requirements.md",
+      "ingests": [
+        "kb/sources/teevan-perfect-search-engine-orienteering.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/linked-note-durable-payload-is-what-consumption-path-cannot-supply.md",
+      "ingests": [
+        "kb/sources/lessons-from-building-ai-agents-for-financial-services.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/linking-theory.md",
+      "ingests": [
+        "kb/sources/pirolli-proximal-information-scent-distal-content.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/llm-generation-relaxes-goals-where-human-writing-stalls.md",
+      "ingests": [
+        "kb/sources/borretti-human-routers-of-machine-words.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/llm-output-deviation-requires-three-way-diagnosis.md",
+      "ingests": [
+        "kb/sources/many-ai-analysts-one-dataset-agentic-data-science-multiverse.ingest.md",
+        "kb/sources/prompt-stability-code-llms-emotion-personality-variations.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/maintenance-capacity-must-match-harmful-artifact-inflow.md",
+      "ingests": [
+        "kb/sources/hacker-news-ai-dr-ai-didnt-read.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/measuring-autonomy-well-enough-to-see-it-improve-is-an-open-problem.md",
+      "ingests": [
+        "kb/sources/position-ai-agents-in-scientific-teams-as-human-agent-systems.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/memory-design-adds-operational-axes-to-artifact-analysis.md",
+      "ingests": [
+        "kb/sources/machine-studying.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/moving-the-interpretation-enforcement-boundary-requires-coverage.md",
+      "ingests": [
+        "kb/sources/knowledge-centric-self-improvement-2607.19592.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/natural-language-meaning-is-coordination-among-learned-approximations.md",
+      "ingests": [
+        "kb/sources/fodor-pylyshyn-1988-connectionism-cognitive-architecture.ingest.md",
+        "kb/sources/smolensky-proper-treatment-connectionism.ingest.md",
+        "kb/sources/symbols-neural-networks-mathematical-intelligence.ingest.md"
+      ],
+      "before": [
+        "match",
+        "match",
+        "match",
+        "match",
+        "match"
+      ],
+      "after": [
+        "match",
+        "match",
+        "match",
+        "match",
+        "match"
+      ]
+    },
+    {
+      "path": "kb/notes/naur-equates-machine-execution-with-formulated-criteria.md",
+      "ingests": [
+        "kb/sources/programming-as-theory-building.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/naurs-compiler-case-tests-one-historically-bounded-documentation-and-consumption-system.md",
+      "ingests": [
+        "kb/sources/programming-as-theory-building.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/open-ended-construction-builds-an-object-and-a-theory-of-it.md",
+      "ingests": [
+        "kb/sources/programming-as-theory-building.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/open-ended-theory-learning-and-factory-learning-close-the-same.md",
+      "ingests": [
+        "kb/sources/goedel-machines-schmidhuber.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/operational-signals-that-a-component-is-a-relaxing-candidate.md",
+      "ingests": [
+        "kb/sources/position-bias.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/oracle-accumulation-improves-the-selection-environment.md",
+      "ingests": [
+        "kb/sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/out-of-spec-output-is-a-failure-of-the-interpreter-not-the-spec.md",
+      "ingests": [
+        "kb/sources/convexbench-can-llms-recognize-convex-functions.ingest.md",
+        "kb/sources/position-bias.ingest.md",
+        "kb/sources/prompt-stability-code-llms-emotion-personality-variations.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/parametric-reproduction-cannot-replace-an-authoritative-record.md",
+      "ingests": [
+        "kb/sources/claude-workstream-kit-fable-agent-scaffolding.ingest.md",
+        "kb/sources/rome-locating-and-editing-factual-associations-in-gpt.ingest.md",
+        "kb/sources/we-should-take-text-optimization-more-seriously.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/pointer-design-tradeoffs-in-progressive-disclosure.md",
+      "ingests": [
+        "kb/sources/tombros-sanderson-query-biased-summaries.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/process-structure-and-output-structure-are-independent-levers.md",
+      "ingests": [
+        "kb/sources/cedar-grpo-process-aware-rl-abductive-reasoning.ingest.md",
+        "kb/sources/gsm-dc-llm-reasoning-distracted-irrelevant-context.ingest.md",
+        "kb/sources/verbalizable-representations-global-workspace-llms.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/productive-deferral-requires-option-evidence-and-convergence.md",
+      "ingests": [
+        "kb/sources/githens-manage-innovation-programs-rolling-wave.ingest.md",
+        "kb/sources/haasnoot-dynamic-adaptive-policy-pathways-2013.ingest.md",
+        "kb/sources/kennedy-sobek-kennedy-set-based-rework.ingest.md",
+        "kb/sources/pindyck-irreversibility-uncertainty-investment.ingest.md",
+        "kb/sources/pmi-lexicon-project-management-terms-v4.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/proposals/revise-behavioral-authority-decomposition.md",
+      "ingests": [
+        "kb/sources/arc-skill-live-action-execution-dba53c3.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/readable-artifact-loop-is-the-tractable-unit-for-continual-learning.md",
+      "ingests": [
+        "kb/sources/co-harness-co-evolving-harness-and-model-weights.ingest.md",
+        "kb/sources/memento-skills-let-agents-design-agents.ingest.md",
+        "kb/sources/symbolic-learning-enables-self-evolving-agents.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/reasoning-production-is-not-reasoning-evaluation.md",
+      "ingests": [
+        "kb/sources/an-enigma-of-artificial-reason-production-evaluation-gap-lrms.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/reflective-coverage-is-graded-across-representational-forms.md",
+      "ingests": [
+        "kb/sources/gybels-et-al-2006-inter-language-reflection.ingest.md",
+        "kb/sources/maes-computational-reflection-1988.ingest.md",
+        "kb/sources/wuyts-ducasse-2001-symbiotic-reflection.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/retained-artifacts-enable-persistent-deployment-time-adaptation.md",
+      "ingests": [
+        "kb/sources/machine-studying.ingest.md",
+        "kb/sources/openclaw-rl-train-any-agent-simply-by-talking.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/retained-theories-may-improve-sample-efficiency.md",
+      "ingests": [
+        "kb/sources/causal-inference-using-invariant-prediction.ingest.md",
+        "kb/sources/concept-bottleneck-models-paper-v3.ingest.md",
+        "kb/sources/discoverphysics-benchmarking-llms-out-of-the-box-scientific.ingest.md",
+        "kb/sources/dreamcoder-wake-sleep-bayesian-program-learning.ingest.md",
+        "kb/sources/falsifybench-inductive-reasoning-rule-discovery-games.ingest.md",
+        "kb/sources/in-search-of-lost-domain-generalization.ingest.md",
+        "kb/sources/rome-locating-and-editing-factual-associations-in-gpt.ingest.md",
+        "kb/sources/rosenfeld-risks-of-invariant-risk-minimization.ingest.md",
+        "kb/sources/towards-causal-representation-learning.ingest.md"
+      ],
+      "before": [
+        "match",
+        "match",
+        "match",
+        "match",
+        "match"
+      ],
+      "after": [
+        "match",
+        "match",
+        "match",
+        "match",
+        "match"
+      ]
+    },
+    {
+      "path": "kb/notes/reverse-compression-is-when-llm-output-expands-without-adding.md",
+      "ingests": [
+        "kb/sources/superarc-ait-benchmark-llm-compression-abstraction.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/revision-guided-by-rationale-needs-faithfulness-not-just-legibility.md",
+      "ingests": [
+        "kb/sources/concept-bottleneck-models-paper-v3.ingest.md",
+        "kb/sources/language-models-dont-always-say-what-they-think.ingest.md",
+        "kb/sources/towards-faithfully-interpretable-nlp-systems.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/rlm-tendril-and-llm-do-place-symbolic-work-at-different-persistence.md",
+      "ingests": [
+        "kb/sources/recursive-language-models-what-finally-gave-me-the-aha-moment.ingest.md",
+        "kb/sources/the-y-combinator-for-llms-solving-long-context-rot.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/scaling-absorbs-scaffolding-at-fixed-difficulty-not-at-the-frontier.md",
+      "ingests": [
+        "kb/sources/claude-workstream-kit-fable-agent-scaffolding.ingest.md",
+        "kb/sources/effective-harnesses-for-long-running-agents.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/soft-degradation-often-binds-before-the-hard-cap-when-evidence-fits.md",
+      "ingests": [
+        "kb/sources/convexbench-can-llms-recognize-convex-functions.ingest.md",
+        "kb/sources/gsm-dc-llm-reasoning-distracted-irrelevant-context.ingest.md",
+        "kb/sources/llm-webagents-long-context-reasoning-benchmark.ingest.md",
+        "kb/sources/paulsen-maximum-effective-context-window-mecw.ingest.md",
+        "kb/sources/verbalizable-representations-global-workspace-llms.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/specific-intent-may-out-yield-local-rationales-facts-stay-separate.md",
+      "ingests": [
+        "kb/sources/programming-as-theory-building.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/structure-inference-needs-capture-at-the-decision-surface.md",
+      "ingests": [
+        "kb/sources/palantir-ontology-vs-decision-traces.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/structured-prompt-gains-do-not-establish-distribution-selection.md",
+      "ingests": [
+        "kb/sources/agentic-code-reasoning.ingest.md",
+        "kb/sources/from-entropy-to-epiplexity-rethinking-information-computational.ingest.md",
+        "kb/sources/language-models-like-humans-show-content-effects-on-reasoning.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/task-families-and-product-families-classify-different-things.md",
+      "ingests": [
+        "kb/sources/program-synthesis-gulwani-polozov-singh-2017.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/the-bitter-lesson-selects-production-methods-not-representational.md",
+      "ingests": [
+        "kb/sources/sutton-javed-why-ai-models-stop-learning.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/the-deployed-system-not-the-model-is-the-unit-of-learning.md",
+      "ingests": [
+        "kb/sources/co-harness-co-evolving-harness-and-model-weights.ingest.md",
+        "kb/sources/machine-studying.ingest.md",
+        "kb/sources/meta-harness-end-to-end-optimization-of-model-harnesses.ingest.md",
+        "kb/sources/position-ai-agents-in-scientific-teams-as-human-agent-systems.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/theory-building-has-distinct-precedents.md",
+      "ingests": [
+        "kb/sources/popper-a-realist-view-of-logic-physics-and-history-1966.ingest.md",
+        "kb/sources/popper-epistemology-without-a-knowing-subject-1968.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/topology-isolation-and-verification-form-a-causal-chain-for-reliable.md",
+      "ingests": [
+        "kb/sources/convexbench-can-llms-recognize-convex-functions.ingest.md",
+        "kb/sources/knowledge-centric-self-improvement-2607.19592.ingest.md",
+        "kb/sources/language-models-like-humans-show-content-effects-on-reasoning.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/trace-extracted-memory-earns-authority-per-operation-not-at-capture.md",
+      "ingests": [
+        "kb/sources/trace-trajectory-attribution-for-automated-context-engineering.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/treat-continual-learning-as-representational-form-coevolution.md",
+      "ingests": [
+        "kb/sources/co-harness-co-evolving-harness-and-model-weights.ingest.md",
+        "kb/sources/memento-skills-let-agents-design-agents.ingest.md",
+        "kb/sources/symbolic-learning-enables-self-evolving-agents.ingest.md",
+        "kb/sources/verbalizable-representations-global-workspace-llms.ingest.md",
+        "kb/sources/wikipedia-bitter-lesson.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/unformalized-improvements-need-a-pre-formal-stage-in-the-loop.md",
+      "ingests": [
+        "kb/sources/discoverphysics-benchmarking-llms-out-of-the-box-scientific.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/universal-software-factory-needs-a-declared-universality-axis.md",
+      "ingests": [
+        "kb/sources/di-giovanni-padella-universal-software-factory-1983.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/verifiable-subroles-before-reviewer-identity.md",
+      "ingests": [
+        "kb/sources/agentic-code-reasoning.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/notes/world-models-assess-explanatory-reach-through-action-conditioned.md",
+      "ingests": [
+        "kb/sources/why-ai-systems-dont-learn-and-what-to-do-about-it.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/reference/adr/091-refutation-needs-a-checkable-counterexample-corroboration-a-test.md",
+      "ingests": [
+        "kb/sources/popper-logic-of-scientific-discovery.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/reference/proposals/archive/semantic-contract-for-tags-and-tag-heads.md",
+      "ingests": [
+        "kb/sources/pirolli-proximal-information-scent-distal-content.ingest.md",
+        "kb/sources/teevan-perfect-search-engine-orienteering.ingest.md",
+        "kb/sources/tombros-sanderson-query-biased-summaries.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/reference/proposals/calibrating-semantic-gates-against-labelled-fixtures.md",
+      "ingests": [
+        "kb/sources/improving-ai-skills-with-autoresearch-evals-skills-203525743436.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/reports/retained/planning-delegation-theory/source-grounded-evaluation.md",
+      "ingests": [
+        "kb/sources/david-stahel-auftragstaktik-mission-command.ingest.md",
+        "kb/sources/githens-manage-innovation-programs-rolling-wave.ingest.md",
+        "kb/sources/haasnoot-dynamic-adaptive-policy-pathways-2013.ingest.md",
+        "kb/sources/kennedy-sobek-kennedy-set-based-rework.ingest.md",
+        "kb/sources/marine-corps-mcdp-1-warfighting-1997.ingest.md",
+        "kb/sources/pindyck-irreversibility-uncertainty-investment.ingest.md",
+        "kb/sources/pmi-lexicon-project-management-terms-v4.ingest.md",
+        "kb/sources/us-army-adrp-6-0-mission-command-2012.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/reports/retained/theory-builder-boundary-cases-20260917.md",
+      "ingests": [
+        "kb/sources/automated-refinement-first-order-horn-clause-domain-theories.ingest.md",
+        "kb/sources/darwin-godel-machine-open-ended-evolution-self-improving-agents.ingest.md",
+        "kb/sources/goedel-machines-schmidhuber.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/a-new-way-to-think-about-composing-skills-to-increase.ingest.md",
+      "ingests": [
+        "kb/sources/improving-ai-skills-with-autoresearch-evals-skills-203525743436.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/acm-agentic-context-management-for-long-horizon-tasks.ingest.md",
+      "ingests": [
+        "kb/sources/llm-agents-are-not-always-faithful-self-evolvers.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/agent-optimizers-compound-terminal-bench.ingest.md",
+      "ingests": [
+        "kb/sources/meta-harness-end-to-end-optimization-of-model-harnesses.ingest.md",
+        "kb/sources/self-harness-harnesses-that-improve-themselves.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/agentic-code-reasoning.ingest.md",
+      "ingests": [
+        "kb/sources/convexbench-can-llms-recognize-convex-functions.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/argyris-organizational-learning-and-mis-1977.ingest.md",
+      "ingests": [
+        "kb/sources/ashby-design-for-a-brain-1960.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/assessing-llm-reasoning-evidence-based-claim-verification.ingest.md",
+      "ingests": [
+        "kb/sources/cedar-grpo-process-aware-rl-abductive-reasoning.ingest.md",
+        "kb/sources/language-models-like-humans-show-content-effects-on-reasoning.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/autogenesis-a-self-evolving-agent-protocol.ingest.md",
+      "ingests": [
+        "kb/sources/symbolic-learning-enables-self-evolving-agents.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/autoreason-self-refinement-that-knows-when-to-stop.ingest.md",
+      "ingests": [
+        "kb/sources/improving-ai-skills-with-autoresearch-evals-skills-203525743436.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/autosaddler-automatic-harness-optimization-with-durable-updates.ingest.md",
+      "ingests": [
+        "kb/sources/agent-optimizers-compound-terminal-bench.ingest.md",
+        "kb/sources/meta-harness-end-to-end-optimization-of-model-harnesses.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/beyond-fixed-representations-vocabulary-verifier-gaps.ingest.md",
+      "ingests": [
+        "kb/sources/dreamcoder-wake-sleep-bayesian-program-learning.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/beyond-not-novel-enough-llm-assisted-scholarly-critique.ingest.md",
+      "ingests": [
+        "kb/sources/agentic-code-reasoning.ingest.md",
+        "kb/sources/an-enigma-of-artificial-reason-production-evaluation-gap-lrms.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/building-a-repo-centric-modular-agent-stack-2085784422339768686.ingest.md",
+      "ingests": [
+        "kb/sources/effective-harnesses-for-long-running-agents.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/can-llm-agents-infer-world-models-agentic-automata-learning.ingest.md",
+      "ingests": [
+        "kb/sources/agentic-code-reasoning.ingest.md",
+        "kb/sources/agents-explore-but-agents-ignore-llms-lack-environmental.ingest.md",
+        "kb/sources/llm-agents-are-not-always-faithful-self-evolvers.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/causal-learn-causal-discovery-in-python.ingest.md",
+      "ingests": [
+        "kb/sources/causal-inference-using-invariant-prediction.ingest.md",
+        "kb/sources/dowhy-expressing-and-validating-causal-assumptions.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/cedar-grpo-process-aware-rl-abductive-reasoning.ingest.md",
+      "ingests": [
+        "kb/sources/falsifybench-inductive-reasoning-rule-discovery-games.ingest.md",
+        "kb/sources/language-models-dont-always-say-what-they-think.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/claude-obsidian-second-brain-guide-2068306794116501544.ingest.md",
+      "ingests": [
+        "kb/sources/the-second-brain-trap-2041486539067154753.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/co-harness-co-evolving-harness-and-model-weights.ingest.md",
+      "ingests": [
+        "kb/sources/meta-harness-end-to-end-optimization-of-model-harnesses.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/combinatorial-sketching-finite-programs.ingest.md",
+      "ingests": [
+        "kb/sources/program-synthesis-gulwani-polozov-singh-2017.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/concept-bottleneck-models.ingest.md",
+      "ingests": [
+        "kb/sources/concept-bottleneck-models-paper-v3.ingest.md",
+        "kb/sources/language-models-dont-always-say-what-they-think.ingest.md",
+        "kb/sources/rosenfeld-risks-of-invariant-risk-minimization.ingest.md",
+        "kb/sources/towards-causal-representation-learning.ingest.md",
+        "kb/sources/towards-faithfully-interpretable-nlp-systems.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/context-as-an-environment.ingest.md",
+      "ingests": [
+        "kb/sources/acm-agentic-context-management-for-long-horizon-tasks.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/continual-harness-online-adaptation-foundation-agents.ingest.md",
+      "ingests": [
+        "kb/sources/co-harness-co-evolving-harness-and-model-weights.ingest.md",
+        "kb/sources/self-harness-harnesses-that-improve-themselves.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/continual-learning-in-token-space.ingest.md",
+      "ingests": [
+        "kb/sources/why-ai-systems-dont-learn-and-what-to-do-about-it.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/convexbench-can-llms-recognize-convex-functions.ingest.md",
+      "ingests": [
+        "kb/sources/agentic-code-reasoning.ingest.md",
+        "kb/sources/induction-bias-sequence-models-ebrahimi-2026.ingest.md",
+        "kb/sources/meyerson-maker-million-step-llm-zero-errors.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/cook-kent-tool-factory-2003.ingest.md",
+      "ingests": [
+        "kb/sources/dreamcoder-wake-sleep-bayesian-program-learning.ingest.md",
+        "kb/sources/greenfield-short-software-factories-oopsla-2003.ingest.md",
+        "kb/sources/langlois-exertier-mdsofa-software-factory-factory-2004.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/dario-amodei-we-are-near-the-end-of-the-exponential.ingest.md",
+      "ingests": [
+        "kb/sources/meyerson-maker-million-step-llm-zero-errors.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/david-stahel-auftragstaktik-mission-command.ingest.md",
+      "ingests": [
+        "kb/sources/marine-corps-mcdp-1-warfighting-1997.ingest.md",
+        "kb/sources/us-army-adrp-6-0-mission-command-2012.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/descartes-discourse-on-the-method.ingest.md",
+      "ingests": [
+        "kb/sources/convexbench-can-llms-recognize-convex-functions.ingest.md",
+        "kb/sources/meyerson-maker-million-step-llm-zero-errors.ingest.md",
+        "kb/sources/popper-a-realist-view-of-logic-physics-and-history-1966.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/dfa-moe-dual-forgetting-vision-language-continual-learning.ingest.md",
+      "ingests": [
+        "kb/sources/harness-if-instruction-following-across-instruction-surfaces.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/di-giovanni-padella-universal-software-factory-1983.ingest.md",
+      "ingests": [
+        "kb/sources/greenfield-short-software-factories-oopsla-2003.ingest.md",
+        "kb/sources/program-synthesis-gulwani-polozov-singh-2017.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/does-an-llm-keep-the-same-judgment-when-you-swap-the-answer.ingest.md",
+      "ingests": [
+        "kb/sources/position-bias.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/dreamcoder-wake-sleep-bayesian-program-learning.ingest.md",
+      "ingests": [
+        "kb/sources/discoverphysics-benchmarking-llms-out-of-the-box-scientific.ingest.md",
+        "kb/sources/superarc-ait-benchmark-llm-compression-abstraction.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/emergent-analogical-reasoning-transformers.ingest.md",
+      "ingests": [
+        "kb/sources/from-entropy-to-epiplexity-rethinking-information-computational.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/emerging-markdown-formats-that-shape-coding-agent-behavior.ingest.md",
+      "ingests": [
+        "kb/sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/fast-properties-in-v8.ingest.md",
+      "ingests": [
+        "kb/sources/metaobject-protocols-why-we-want-them-and-what-else-they-can-do.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/fodor-pylyshyn-1988-connectionism-cognitive-architecture.ingest.md",
+      "ingests": [
+        "kb/sources/symbols-neural-networks-mathematical-intelligence.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/from-agent-behaviour-to-agent-friendly-documentation.ingest.md",
+      "ingests": [
+        "kb/sources/harness-if-instruction-following-across-instruction-surfaces.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/from-agent-memory-to-portable-skills.ingest.md",
+      "ingests": [
+        "kb/sources/memento-skills-let-agents-design-agents.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/frontis-ma1-training-ai4ai-recursive-self-improvement.ingest.md",
+      "ingests": [
+        "kb/sources/co-harness-co-evolving-harness-and-model-weights.ingest.md",
+        "kb/sources/continual-harness-online-adaptation-foundation-agents.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/gentle-coding-research.ingest.md",
+      "ingests": [
+        "kb/sources/language-models-like-humans-show-content-effects-on-reasoning.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/gentle-coding.ingest.md",
+      "ingests": [
+        "kb/sources/prompt-stability-code-llms-emotion-personality-variations.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/giants-generative-insight-anticipation-scientific-literature.ingest.md",
+      "ingests": [
+        "kb/sources/meta-harness-end-to-end-optimization-of-model-harnesses.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/goedel-machines-schmidhuber.ingest.md",
+      "ingests": [
+        "kb/sources/on-learning-how-to-learn-learning-strategies.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/greenfield-mass-customizing-software-factories-2007.ingest.md",
+      "ingests": [
+        "kb/sources/greenfield-short-software-factories-oopsla-2003.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/greenfield-short-software-factories-book-preview.ingest.md",
+      "ingests": [
+        "kb/sources/cook-kent-tool-factory-2003.ingest.md",
+        "kb/sources/greenfield-short-software-factories-oopsla-2003.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/gsm-dc-llm-reasoning-distracted-irrelevant-context.ingest.md",
+      "ingests": [
+        "kb/sources/semantic-leakage-lms-gonen.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/haasnoot-dynamic-adaptive-policy-pathways-2013.ingest.md",
+      "ingests": [
+        "kb/sources/githens-manage-innovation-programs-rolling-wave.ingest.md",
+        "kb/sources/pindyck-irreversibility-uncertainty-investment.ingest.md",
+        "kb/sources/weyns-software-engineering-self-adaptive-systems-tour.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/harness-continual-learning-adaptation-beyond-model-parameters.ingest.md",
+      "ingests": [
+        "kb/sources/continual-harness-online-adaptation-foundation-agents.ingest.md",
+        "kb/sources/self-harness-harnesses-that-improve-themselves.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/harness-engineering-for-self-improvement.ingest.md",
+      "ingests": [
+        "kb/sources/meta-harness-end-to-end-optimization-of-model-harnesses.ingest.md",
+        "kb/sources/self-harness-harnesses-that-improve-themselves.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/harness-engineering-is-cybernetics-2030416758138634583.ingest.md",
+      "ingests": [
+        "kb/sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/harness-if-instruction-following-across-instruction-surfaces.ingest.md",
+      "ingests": [
+        "kb/sources/harness-updating-is-not-harness-benefit.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/harnesscompass-guiding-automatic-harness-evolution.ingest.md",
+      "ingests": [
+        "kb/sources/agent-optimizers-compound-terminal-bench.ingest.md",
+        "kb/sources/meta-harness-end-to-end-optimization-of-model-harnesses.ingest.md",
+        "kb/sources/self-harness-harnesses-that-improve-themselves.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/hart-high-resolution-annotation-free-reasoning-technique.ingest.md",
+      "ingests": [
+        "kb/sources/an-enigma-of-artificial-reason-production-evaluation-gap-lrms.ingest.md",
+        "kb/sources/cedar-grpo-process-aware-rl-abductive-reasoning.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/hereiz-agent-plugin-maintenance-and-co-evolution.ingest.md",
+      "ingests": [
+        "kb/sources/harness-if-instruction-following-across-instruction-surfaces.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/hot-take-llm-can-jump.ingest.md",
+      "ingests": [
+        "kb/sources/machine-studying.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/how-to-recursively-improve-your-agents-2084301728363462919.ingest.md",
+      "ingests": [
+        "kb/sources/self-harness-harnesses-that-improve-themselves.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/how-warp-builds-self-improving-agents-on-claude.ingest.md",
+      "ingests": [
+        "kb/sources/harness-updating-is-not-harness-benefit.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/huxley-godel-machine-human-level-coding-agent-development.ingest.md",
+      "ingests": [
+        "kb/sources/darwin-godel-machine-open-ended-evolution-self-improving-agents.ingest.md",
+        "kb/sources/meta-harness-end-to-end-optimization-of-model-harnesses.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/hyperagents.ingest.md",
+      "ingests": [
+        "kb/sources/darwin-godel-machine-open-ended-evolution-self-improving-agents.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/hypothesis-generation-and-updating-in-large-language-models.ingest.md",
+      "ingests": [
+        "kb/sources/falsifybench-inductive-reasoning-rule-discovery-games.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/im-becoming-ai-blind.ingest.md",
+      "ingests": [
+        "kb/sources/hacker-news-ai-dr-ai-didnt-read.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/in-search-of-lost-domain-generalization.ingest.md",
+      "ingests": [
+        "kb/sources/causal-inference-using-invariant-prediction.ingest.md",
+        "kb/sources/position-bias.ingest.md",
+        "kb/sources/towards-causal-representation-learning.ingest.md",
+        "kb/sources/wikipedia-bitter-lesson.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/induction-bias-sequence-models-ebrahimi-2026.ingest.md",
+      "ingests": [
+        "kb/sources/from-entropy-to-epiplexity-rethinking-information-computational.ingest.md",
+        "kb/sources/meyerson-maker-million-step-llm-zero-errors.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/intelligent-ai-delegation-tomasev-franklin-osindero.ingest.md",
+      "ingests": [
+        "kb/sources/meyerson-maker-million-step-llm-zero-errors.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/intention-is-all-you-need-2022428696595108152.ingest.md",
+      "ingests": [
+        "kb/sources/palantir-ontology-vs-decision-traces.ingest.md",
+        "kb/sources/programming-as-theory-building.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/interpolation-extrapolation-hyperpolation.ingest.md",
+      "ingests": [
+        "kb/sources/geometry-of-knowledge-extending-diversity-boundaries-llms.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/jezz-santos-i-once-worked-in-buenos-aires.ingest.md",
+      "ingests": [
+        "kb/sources/greenfield-mass-customizing-software-factories-2007.ingest.md",
+        "kb/sources/greenfield-short-software-factories-oopsla-2003.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/jit-agent-scaling-harness-intelligence.ingest.md",
+      "ingests": [
+        "kb/sources/meta-harness-end-to-end-optimization-of-model-harnesses.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/kennedy-sobek-kennedy-set-based-rework.ingest.md",
+      "ingests": [
+        "kb/sources/githens-manage-innovation-programs-rolling-wave.ingest.md",
+        "kb/sources/haasnoot-dynamic-adaptive-policy-pathways-2013.ingest.md",
+        "kb/sources/pindyck-irreversibility-uncertainty-investment.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/knowledge-centric-self-improvement-2607.19592.ingest.md",
+      "ingests": [
+        "kb/sources/llm-agents-are-not-always-faithful-self-evolvers.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/knowledge-flywheels-2085043769297277114.ingest.md",
+      "ingests": [
+        "kb/sources/knowledge-centric-self-improvement-2607.19592.ingest.md",
+        "kb/sources/llm-agents-are-not-always-faithful-self-evolvers.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/lamport-how-to-write-a-21st-century-proof.ingest.md",
+      "ingests": [
+        "kb/sources/agentic-code-reasoning.ingest.md",
+        "kb/sources/meyerson-maker-million-step-llm-zero-errors.ingest.md",
+        "kb/sources/programming-as-theory-building.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/langlois-exertier-mdsofa-software-factory-factory-2004.ingest.md",
+      "ingests": [
+        "kb/sources/greenfield-mass-customizing-software-factories-2007.ingest.md",
+        "kb/sources/greenfield-short-software-factories-oopsla-2003.ingest.md",
+        "kb/sources/program-synthesis-gulwani-polozov-singh-2017.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/language-models-need-sleep-self-modify-consolidate-memories.ingest.md",
+      "ingests": [
+        "kb/sources/dreamcoder-wake-sleep-bayesian-program-learning.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/last-ai-built-by-humans-recursive-self-improvement.ingest.md",
+      "ingests": [
+        "kb/sources/harness-updating-is-not-harness-benefit.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/lessons-from-building-ai-agents-for-financial-services.ingest.md",
+      "ingests": [
+        "kb/sources/koylanai-personal-brain-os.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/llms-cant-jump.ingest.md",
+      "ingests": [
+        "kb/sources/discoverphysics-benchmarking-llms-out-of-the-box-scientific.ingest.md",
+        "kb/sources/falsifybench-inductive-reasoning-rule-discovery-games.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/machine-studying.ingest.md",
+      "ingests": [
+        "kb/sources/knowledge-centric-self-improvement-2607.19592.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/many-ai-analysts-one-dataset-agentic-data-science-multiverse.ingest.md",
+      "ingests": [
+        "kb/sources/prompt-stability-code-llms-emotion-personality-variations.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/maps-hidden-classes-in-v8.ingest.md",
+      "ingests": [
+        "kb/sources/fast-properties-in-v8.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/maybe-we-shouldnt-be-reviewing-all-this-code.ingest.md",
+      "ingests": [
+        "kb/sources/programming-as-theory-building.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/memento-skills-let-agents-design-agents.ingest.md",
+      "ingests": [
+        "kb/sources/llm-agents-are-not-always-faithful-self-evolvers.ingest.md",
+        "kb/sources/skillopt-executive-strategy-self-evolving-agent-skills.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/mesa-optimizers-and-language-recursion.ingest.md",
+      "ingests": [
+        "kb/sources/superarc-ait-benchmark-llm-compression-abstraction.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/metaobject-protocols-why-we-want-them-and-what-else-they-can-do.ingest.md",
+      "ingests": [
+        "kb/sources/maes-computational-reflection-1988.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/meyerson-maker-million-step-llm-zero-errors.ingest.md",
+      "ingests": [
+        "kb/sources/induction-bias-sequence-models-ebrahimi-2026.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/microsoft-retired-smart-client-software-factory.ingest.md",
+      "ingests": [
+        "kb/sources/greenfield-mass-customizing-software-factories-2007.ingest.md",
+        "kb/sources/jezz-santos-i-once-worked-in-buenos-aires.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/mini-exercise-mismanaged-geniuses-longcot-rlm.ingest.md",
+      "ingests": [
+        "kb/sources/meta-harness-end-to-end-optimization-of-model-harnesses.ingest.md",
+        "kb/sources/the-mismanaged-geniuses-hypothesis-2042588627260018751.ingest.md",
+        "kb/sources/the-y-combinator-for-llms-solving-long-context-rot.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/model-discovery-agent-bayesian-experiment-design.ingest.md",
+      "ingests": [
+        "kb/sources/discoverphysics-benchmarking-llms-out-of-the-box-scientific.ingest.md",
+        "kb/sources/falsifybench-inductive-reasoning-rule-discovery-games.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/monkey-patch.ingest.md",
+      "ingests": [
+        "kb/sources/fast-properties-in-v8.ingest.md",
+        "kb/sources/metaobject-protocols-why-we-want-them-and-what-else-they-can-do.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/next-generation-agentic-reinforcement-learning-systems.ingest.md",
+      "ingests": [
+        "kb/sources/co-harness-co-evolving-harness-and-model-weights.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/nick-milo-mocs-definition.ingest.md",
+      "ingests": [
+        "kb/sources/luhmann-archive-schlagwortregister.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/no-free-lunch-theorem-no-universal-learning-algorithm.ingest.md",
+      "ingests": [
+        "kb/sources/induction-bias-sequence-models-ebrahimi-2026.ingest.md",
+        "kb/sources/on-learning-how-to-learn-learning-strategies.ingest.md",
+        "kb/sources/wikipedia-bitter-lesson.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/on-the-fragility-of-self-improving-agents.ingest.md",
+      "ingests": [
+        "kb/sources/llm-agents-are-not-always-faithful-self-evolvers.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/optimal-choice-of-hypothesis-is-the-weakest-not-the-shortest.ingest.md",
+      "ingests": [
+        "kb/sources/dreamcoder-wake-sleep-bayesian-program-learning.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/pathway-beyond-transformers-sudoku-bench.ingest.md",
+      "ingests": [
+        "kb/sources/convexbench-can-llms-recognize-convex-functions.ingest.md",
+        "kb/sources/induction-bias-sequence-models-ebrahimi-2026.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/paulsen-maximum-effective-context-window-mecw.ingest.md",
+      "ingests": [
+        "kb/sources/convexbench-can-llms-recognize-convex-functions.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/pearl-a-probabilistic-calculus-of-actions-1994.ingest.md",
+      "ingests": [
+        "kb/sources/dowhy-expressing-and-validating-causal-assumptions.ingest.md",
+        "kb/sources/towards-causal-representation-learning.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/pilot-live-self-improvement-long-horizon-agents.ingest.md",
+      "ingests": [
+        "kb/sources/continual-harness-online-adaptation-foundation-agents.ingest.md",
+        "kb/sources/harness-updating-is-not-harness-benefit.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/pindyck-irreversibility-uncertainty-investment.ingest.md",
+      "ingests": [
+        "kb/sources/githens-manage-innovation-programs-rolling-wave.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/pmi-lexicon-project-management-terms-v4.ingest.md",
+      "ingests": [
+        "kb/sources/githens-manage-innovation-programs-rolling-wave.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/popper-logic-of-scientific-discovery.ingest.md",
+      "ingests": [
+        "kb/sources/popper-conjectures-and-refutations.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/posthog-semantic-layer-2090858894419693598.ingest.md",
+      "ingests": [
+        "kb/sources/palantir-ontology-vs-decision-traces.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/prov-overview.ingest.md",
+      "ingests": [
+        "kb/sources/in-toto-farm-to-table-guarantees.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/reading-between-the-dots-decoding-hidden-computation.ingest.md",
+      "ingests": [
+        "kb/sources/verbalizable-representations-global-workspace-llms.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/reason-wide-not-deep-distilled-skills.ingest.md",
+      "ingests": [
+        "kb/sources/llm-agents-are-not-always-faithful-self-evolvers.ingest.md",
+        "kb/sources/skillopt-executive-strategy-self-evolving-agent-skills.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/reflective-architecture-llm-based-systems-abstract.ingest.md",
+      "ingests": [
+        "kb/sources/maes-computational-reflection-1988.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/repo-to-skill-disco-ai4ai-skills.ingest.md",
+      "ingests": [
+        "kb/sources/machine-studying.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/requirements-reflection-runtime-entities.ingest.md",
+      "ingests": [
+        "kb/sources/maes-computational-reflection-1988.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/researchers-asked-llms-strategic-advice-trendslop.ingest.md",
+      "ingests": [
+        "kb/sources/language-models-like-humans-show-content-effects-on-reasoning.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/rlm-depth-one-recursion-2085469602017161229.ingest.md",
+      "ingests": [
+        "kb/sources/recursive-language-models-what-finally-gave-me-the-aha-moment.ingest.md",
+        "kb/sources/the-y-combinator-for-llms-solving-long-context-rot.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/rome-locating-and-editing-factual-associations-in-gpt.ingest.md",
+      "ingests": [
+        "kb/sources/verbalizable-representations-global-workspace-llms.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/rosenfeld-risks-of-invariant-risk-minimization.ingest.md",
+      "ingests": [
+        "kb/sources/causal-inference-using-invariant-prediction.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/rsiagent-autonomous-exploration.ingest.md",
+      "ingests": [
+        "kb/sources/machine-studying.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/scienceflow-long-horizon-agent-for-ml-research-and-discovery.ingest.md",
+      "ingests": [
+        "kb/sources/acm-agentic-context-management-for-long-horizon-tasks.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/self-harness-harnesses-that-improve-themselves.ingest.md",
+      "ingests": [
+        "kb/sources/co-harness-co-evolving-harness-and-model-weights.ingest.md",
+        "kb/sources/meta-harness-end-to-end-optimization-of-model-harnesses.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/self-the-power-of-simplicity.ingest.md",
+      "ingests": [
+        "kb/sources/metaobject-protocols-why-we-want-them-and-what-else-they-can-do.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/self-training-large-language-models-through-knowledge-detection.ingest.md",
+      "ingests": [
+        "kb/sources/into-the-unknown-self-learning-large-language-models.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/semantic-leakage-lms-gonen.ingest.md",
+      "ingests": [
+        "kb/sources/gsm-dc-llm-reasoning-distracted-irrelevant-context.ingest.md",
+        "kb/sources/language-models-like-humans-show-content-effects-on-reasoning.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/shi-agenti-chotiri-navichki-vazhlivishi-za-dobriy-prompt.en.ingest.md",
+      "ingests": [
+        "kb/sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md",
+        "kb/sources/lessons-from-building-ai-agents-for-financial-services.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/skillglow-procedural-family-consolidation.ingest.md",
+      "ingests": [
+        "kb/sources/skillopt-executive-strategy-self-evolving-agent-skills.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/skillopt-executive-strategy-self-evolving-agent-skills.ingest.md",
+      "ingests": [
+        "kb/sources/improving-ai-skills-with-autoresearch-evals-skills-203525743436.ingest.md",
+        "kb/sources/meta-harness-end-to-end-optimization-of-model-harnesses.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/skillrl-evolving-agents-recursive-skill-augmented-rl.ingest.md",
+      "ingests": [
+        "kb/sources/skillopt-executive-strategy-self-evolving-agent-skills.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/software-design-model-use-in-practice.ingest.md",
+      "ingests": [
+        "kb/sources/greenfield-mass-customizing-software-factories-2007.ingest.md",
+        "kb/sources/state-of-practice-in-model-driven-engineering.ingest.md",
+        "kb/sources/where-is-the-proof-mde-industry.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/spade-self-play-in-adaptive-synthetic-executable-environments.ingest.md",
+      "ingests": [
+        "kb/sources/co-harness-co-evolving-harness-and-model-weights.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/state-of-practice-in-model-driven-engineering.ingest.md",
+      "ingests": [
+        "kb/sources/greenfield-mass-customizing-software-factories-2007.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/steve-yegge-fences-not-sandboxes.ingest.md",
+      "ingests": [
+        "kb/sources/claude-workstream-kit-fable-agent-scaffolding.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/sutton-the-bitter-lesson-original-essay.ingest.md",
+      "ingests": [
+        "kb/sources/wikipedia-bitter-lesson.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/symbols-neural-networks-mathematical-intelligence.ingest.md",
+      "ingests": [
+        "kb/sources/language-models-like-humans-show-content-effects-on-reasoning.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/the-alberta-plan-for-ai-research.ingest.md",
+      "ingests": [
+        "kb/sources/ashby-design-for-a-brain-1960.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/the-logic-of-scientific-discovery-wikipedia.ingest.md",
+      "ingests": [
+        "kb/sources/popper-conjectures-and-refutations.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/the-self-healing-agent-harness-2048912026018484317.ingest.md",
+      "ingests": [
+        "kb/sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md",
+        "kb/sources/meta-harness-end-to-end-optimization-of-model-harnesses.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/the-what-and-when-of-self-evolving-agents.ingest.md",
+      "ingests": [
+        "kb/sources/llm-agents-are-not-always-faithful-self-evolvers.ingest.md",
+        "kb/sources/meta-harness-end-to-end-optimization-of-model-harnesses.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/tombros-sanderson-query-biased-summaries.ingest.md",
+      "ingests": [
+        "kb/sources/teevan-perfect-search-engine-orienteering.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/toward-measuring-recursive-self-improvement-2090411367819809047.ingest.md",
+      "ingests": [
+        "kb/sources/agent-optimizers-compound-terminal-bench.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/towards-a-science-of-ai-agent-reliability.ingest.md",
+      "ingests": [
+        "kb/sources/meyerson-maker-million-step-llm-zero-errors.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/towards-a-science-of-scaling-agent-systems.ingest.md",
+      "ingests": [
+        "kb/sources/meyerson-maker-million-step-llm-zero-errors.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/towards-automating-eval-engineering-2079976006644072796.ingest.md",
+      "ingests": [
+        "kb/sources/improving-ai-skills-with-autoresearch-evals-skills-203525743436.ingest.md",
+        "kb/sources/meta-harness-end-to-end-optimization-of-model-harnesses.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/towards-automating-scientific-review-google-paper-assistant.ingest.md",
+      "ingests": [
+        "kb/sources/an-enigma-of-artificial-reason-production-evaluation-gap-lrms.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/transformers-learn-in-context-by-gradient-descent.ingest.md",
+      "ingests": [
+        "kb/sources/induction-bias-sequence-models-ebrahimi-2026.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/us20090100406a1-software-factory-specification-execution-model.ingest.md",
+      "ingests": [
+        "kb/sources/greenfield-mass-customizing-software-factories-2007.ingest.md",
+        "kb/sources/greenfield-short-software-factories-oopsla-2003.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/verbalizable-representations-global-workspace-llms.ingest.md",
+      "ingests": [
+        "kb/sources/an-enigma-of-artificial-reason-production-evaluation-gap-lrms.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/whale-joint-harness-weight-optimization.ingest.md",
+      "ingests": [
+        "kb/sources/co-harness-co-evolving-harness-and-model-weights.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/what-is-an-agent-harness-2046980769747533830.ingest.md",
+      "ingests": [
+        "kb/sources/the-mismanaged-geniuses-hypothesis-2042588627260018751.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/what-spec-driven-development-gets-wrong-2025993446633492725.ingest.md",
+      "ingests": [
+        "kb/sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/when-is-it-better-to-think-without-words.ingest.md",
+      "ingests": [
+        "kb/sources/verbalizable-representations-global-workspace-llms.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/where-is-the-proof-mde-industry.ingest.md",
+      "ingests": [
+        "kb/sources/greenfield-mass-customizing-software-factories-2007.ingest.md",
+        "kb/sources/state-of-practice-in-model-driven-engineering.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/why-ai-systems-dont-learn-and-what-to-do-about-it.ingest.md",
+      "ingests": [
+        "kb/sources/openclaw-rl-train-any-agent-simply-by-talking.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/sources/why-large-language-models-fail-at-tabular-prediction.ingest.md",
+      "ingests": [
+        "kb/sources/convexbench-can-llms-recognize-convex-functions.ingest.md",
+        "kb/sources/language-models-dont-always-say-what-they-think.ingest.md",
+        "kb/sources/paulsen-maximum-effective-context-window-mecw.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/work/agent-curiosity-and-structural-coherence/README.md",
+      "ingests": [
+        "kb/sources/driven-by-compression-progress.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/work/agent-curiosity-and-structural-coherence/local-case-corpus.md",
+      "ingests": [
+        "kb/sources/agents-explore-but-agents-ignore-llms-lack-environmental.ingest.md",
+        "kb/sources/why-software-factories-fail-slopcodebench-2081797628552270027.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/work/agent-memory-design/2026-04-23-critique.md",
+      "ingests": [
+        "kb/sources/agents-explore-but-agents-ignore-llms-lack-environmental.ingest.md",
+        "kb/sources/meta-harness-end-to-end-optimization-of-model-harnesses.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/work/commonplace-nearest-constructions/landscape.md",
+      "ingests": [
+        "kb/sources/autosaddler-automatic-harness-optimization-with-durable-updates.ingest.md",
+        "kb/sources/cook-kent-tool-factory-2003.ingest.md",
+        "kb/sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md",
+        "kb/sources/knowledge-centric-self-improvement-2607.19592.ingest.md",
+        "kb/sources/langlois-exertier-mdsofa-software-factory-factory-2004.ingest.md",
+        "kb/sources/memento-skills-let-agents-design-agents.ingest.md",
+        "kb/sources/prime-agent-a-self-improving-rlm-harness.ingest.md",
+        "kb/sources/recursive-experiential-working-memory-evolution.ingest.md",
+        "kb/sources/self-harness-harnesses-that-improve-themselves.ingest.md",
+        "kb/sources/self-improving-ai-coding-agents-through-accumulated-rules.ingest.md",
+        "kb/sources/steve-yegge-fences-not-sandboxes.ingest.md",
+        "kb/sources/symbolic-learning-enables-self-evolving-agents.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/work/condensation-faithfulness-experiment/README.md",
+      "ingests": [
+        "kb/sources/llm-agents-are-not-always-faithful-self-evolvers.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/work/continual-harness-governance-experiment/README.md",
+      "ingests": [
+        "kb/sources/continual-harness-online-adaptation-foundation-agents.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/work/epistemic-architectures/README.md",
+      "ingests": [
+        "kb/sources/arc-skill-live-action-execution-dba53c3.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/work/epistemic-architectures/arc-skill-reading.md",
+      "ingests": [
+        "kb/sources/arc-skill-live-action-execution-dba53c3.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/work/error-catching/run-01/items/confidence-C.md",
+      "ingests": [
+        "kb/sources/superarc-ait-benchmark-llm-compression-abstraction.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/work/explanatory-theories-deployment-time-learning/exo-evidence.md",
+      "ingests": [
+        "kb/sources/agent-optimizers-compound-terminal-bench.ingest.md",
+        "kb/sources/co-harness-co-evolving-harness-and-model-weights.ingest.md",
+        "kb/sources/hyperagents.ingest.md",
+        "kb/sources/knowledge-centric-self-improvement-2607.19592.ingest.md",
+        "kb/sources/llm-agents-are-not-always-faithful-self-evolvers.ingest.md",
+        "kb/sources/memento-skills-let-agents-design-agents.ingest.md",
+        "kb/sources/meta-harness-end-to-end-optimization-of-model-harnesses.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/work/lineage-mechanisms/verification-locus-and-provenance-theory.md",
+      "ingests": [
+        "kb/sources/build-systems-a-la-carte.ingest.md",
+        "kb/sources/in-toto-farm-to-table-guarantees.ingest.md",
+        "kb/sources/prov-overview.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/work/linking-contract-consistency/evidence-direction-review.md",
+      "ingests": [
+        "kb/sources/falsifybench-inductive-reasoning-rule-discovery-games.ingest.md",
+        "kb/sources/goedel-machines-schmidhuber.ingest.md",
+        "kb/sources/in-search-of-lost-domain-generalization.ingest.md",
+        "kb/sources/language-models-dont-always-say-what-they-think.ingest.md",
+        "kb/sources/towards-faithfully-interpretable-nlp-systems.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/work/popperian-maintenance-episode/fifth-episode-record/versions/v0-first-draft-cp-skill-write-13-48.md",
+      "ingests": [
+        "kb/sources/programming-as-theory-building.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/work/popperian-maintenance-episode/fifth-episode-record/versions/v1-full-pass-reframe-def1280a.md",
+      "ingests": [
+        "kb/sources/programming-as-theory-building.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/work/popperian-maintenance-episode/fifth-episode-record/versions/v2-defensive-trim-4d707961.md",
+      "ingests": [
+        "kb/sources/programming-as-theory-building.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/work/popperian-maintenance-episode/fifth-episode-record/versions/v3-essay-level-rewrite.md",
+      "ingests": [
+        "kb/sources/programming-as-theory-building.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/work/popperian-maintenance-episode/fifth-episode-record/versions/v4-second-pass-reframe.md",
+      "ingests": [
+        "kb/sources/programming-as-theory-building.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/work/popperian-maintenance-episode/fifth-episode-record/versions/v5-bridge-as-equation.md",
+      "ingests": [
+        "kb/sources/programming-as-theory-building.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/work/self-improvement-cluster-operationalization/literature-offload-analysis.md",
+      "ingests": [
+        "kb/sources/the-vision-of-autonomic-computing.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/work/self-revision-design-space/discriminating-tests.md",
+      "ingests": [
+        "kb/sources/continual-harness-online-adaptation-foundation-agents.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/work/self-revision-design-space/hostile-reading.md",
+      "ingests": [
+        "kb/sources/how-to-recursively-improve-your-agents-2084301728363462919.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/work/self-revision-design-space/problem-map.md",
+      "ingests": [
+        "kb/sources/darwin-godel-machine-open-ended-evolution-self-improving-agents.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    },
+    {
+      "path": "kb/work/theory-refinement-interface/theory-refinement-interface.md",
+      "ingests": [
+        "kb/sources/automated-refinement-first-order-horn-clause-domain-theories.ingest.md"
+      ],
+      "before": [],
+      "after": []
+    }
+  ]
+}

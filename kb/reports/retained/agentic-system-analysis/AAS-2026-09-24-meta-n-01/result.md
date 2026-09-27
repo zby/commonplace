@@ -235,7 +235,7 @@ memory-comparison:
 
 **Memory analysis report:** `kb/reports/state/agentic-system-analysis/AAS-2026-09-24-meta-n-01/memory-report.md`
 
-**Memory analysis report SHA-256:** ff2961d6b190b25acf1c00705ade6c1217d983abab365edc73d2468231dab8f1
+**Memory analysis report SHA-256:** 9abe57200aeec02b9c357a2c2cca9db671caff498d883e617abd3d82d8670fc4
 
 Run AAS-2026-09-24-meta-n-01 opened on 2026-09-24 before local midnight. System name: Meta^n. The run state declares publication completion.
 
@@ -331,7 +331,7 @@ Implementation conclusion status: wired within the declared object boundary. Der
 > --- `meta_n/core/omega.py` @ `b7081843d3c7b0e0f418ca10aaf2ccbff856e7f8`
 
 > injected.raw_omega_prompt = prompt
-> --- `meta_n/core/omega.py` @ `b7081843d3c7b0e0f418ca10aaf2ccbff856e7f8`
+> --- `meta_n/core/omega.py:168` @ `b7081843d3c7b0e0f418ca10aaf2ccbff856e7f8`
 
 OBJ-6 — candidate archive and access structures
 
@@ -443,7 +443,7 @@ Implementation conclusion status: wired. Immediate return is startup refusal or 
 > --- `meta_n/configs/benchmark_features.yaml` @ `b7081843d3c7b0e0f418ca10aaf2ccbff856e7f8`
 
 > if not getattr(args, "use_archive", False):
-> --- `meta_n/main.py` @ `b7081843d3c7b0e0f418ca10aaf2ccbff856e7f8`
+> --- `meta_n/main.py:1641` @ `b7081843d3c7b0e0f418ca10aaf2ccbff856e7f8`
 
 RTE-2 — Native single-shot solve and execution. Trigger: candidate evaluation on a task. Model receives task/language-selected prompt plus any accepted injection context and returns OBJ-2. At depth one, orchestration calls `solve` then executor. A MetaLayer chain can first run retained preprocessing, advertise/prepend helpers or directly replay a frozen winner; its outermost execute path may self-debug a low score by asking its inner solver again and keeping the better trace. Generic memory details belong to the integrated injection/retry records. SRC-1 `meta_n/core/solver.py:125-211`; `meta_n/core/meta_layer.py:494-680`; `meta_n/core/evolutionary_orchestrator.py:2274-2433`.
 

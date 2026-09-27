@@ -285,7 +285,7 @@
 
 **Memory analysis report:** `kb/reports/state/agentic-system-analysis/AAS-2026-09-25-dualgraph-01/memory-report.md`
 
-**Memory analysis report SHA-256:** `1477e69def70f140d5be8c9988aac6cc6f7f5878e786c4cf3917d93a490dba8a`
+**Memory analysis report SHA-256:** `161508fb3a848fb5e54a44f23bc1fd9a8557ee1bd3f7293240a2377016538936`
 
 Frozen specialist input SHA-256: `f36aaa4b767977d891b6299b65c872e668f406b81a5e04d3413a680e3902e9b0`.
 
@@ -396,7 +396,7 @@ RTE-4 — Graph extraction, admission and maintenance. Trigger: each evidence ba
 >             if llm_output is None:
 >                 raise ValueError("safe_json_loads returned None")
 >             knowledge_graph.apply_merge_node_results(llm_output)
-> --- `DualGraph/deepresearch/baselines/knowledge_graph_module.py` @ `c090b7d57e3996c8900e86fecd16085b27e07f29`
+> --- `DualGraph/deepresearch/baselines/knowledge_graph_module.py:1836-1840` @ `c090b7d57e3996c8900e86fecd16085b27e07f29`
 
 
 RTE-5 — Graph access metadata and exploration planning. Trigger: graph creation/update before next iteration. Producers: embedding client, HDBSCAN, Leiden, graph scoring code and model selector. Inputs: graph labels/edges, evidence counts, community memberships, visited keys, outline and query history. Cached vectors and graph metadata support later algorithms; generated chains and query strings become next-round search controls. Ordinary quotas total at most 60 candidates; the empty-candidate fallback supplies all graph edges and can exceed that budget. Status: wired, conditional on data, dependencies and configuration. SRC-1 `DualGraph/deepresearch/baselines/knowledge_graph_module.py:26-169,172-314,415-462,465-659,662-779,782-967,1097-1432,1952-1976,2015-2148`.
@@ -432,7 +432,7 @@ RTE-7 — Report context assembly and continuation. Trigger: final writing phase
 
 >             if full_report.strip():
 >                 user_prompt += f"PREVIOUS CONTENT:\n{full_report}\n\n"
-> --- `DualGraph/deepresearch/baselines/write_module.py` @ `c090b7d57e3996c8900e86fecd16085b27e07f29`
+> --- `DualGraph/deepresearch/baselines/write_module.py:387-388` @ `c090b7d57e3996c8900e86fecd16085b27e07f29`
 
 
 RTE-8 — Persistence and human read-back. Trigger: graph update or human demo/live report use. Neo4j replace_graph clears the report projection before rewriting it. A configured main path calls GDS then copies returned cluster labels back to in-memory nodes. Human `demo` requests replay of saved outlines/search queries/report; live polling supplies newly appeared outlines and final report. No admitted run attests either. Database load_graph is a storage API with no call site in the pinned baselines subtree, so it is not an agent restart route. Status: wired serialization/demo/GDS call sites, live path limited by RTE-9; afforded graph load API only. SRC-1 `DualGraph/deepresearch/baselines/main.py:270-295,449-459,616-628`; `DualGraph/deepresearch/baselines/neo4j_kg_store.py:110-122,212-283,347-385`; `DualGraph/deepresearch/baselines/app.py:278-287,293-366,446-539`.
@@ -450,7 +450,7 @@ RTE-8 — Persistence and human read-back. Trigger: graph update or human demo/l
 > 
 >         async with cl.Step(name=f"{_ts()} Iteration {i} — Outline") as step:
 >             step.output = outline_md
-> --- `DualGraph/deepresearch/baselines/app.py` @ `c090b7d57e3996c8900e86fecd16085b27e07f29`
+> --- `DualGraph/deepresearch/baselines/app.py:464-468` @ `c090b7d57e3996c8900e86fecd16085b27e07f29`
 
 
 RTE-9 — Static entry/default defects: pinned default-route defects. First, both extraction helpers call `_extract_summary_from_content` when use_summary_only is true. The module neither defines nor imports it; scoped commit grep finds only the two call sites. The `data_model` wildcard import cannot supply this absent name. Defaults are true in create/update; main does not override them. Any nonempty evidence group entering that branch should raise NameError before the model extraction call; this is a static consequence, not an observed failure. Second, search_with_filtering_visited_urls passes its Pydantic Field default for bingsearch_num_results into Serper, whose `num_results * 2` arithmetic has no FieldInfo normalization (Bing has one). Third, app.py imports RunConfig from the local main module and live app constructs it with multiple keywords absent from its three-field dataclass. Under the shipped local module resolution this raises TypeError before process_single_report_og_kg is submitted; demo branches earlier and does not construct this configuration. These prevent assuming normal default execution, even though downstream memory code is inspectable. SRC-1 `DualGraph/deepresearch/baselines/knowledge_graph_module.py:1-23,1465-1473,1557-1567,1632-1634,1753-1755`; `DualGraph/deepresearch/baselines/main.py:17-23,424-432,589-597,837-851`; `DualGraph/deepresearch/baselines/search_module.py:91-100,164-170,206-212,693-695,757-770`; `DualGraph/deepresearch/baselines/app.py:24-39,410-419`.
@@ -593,7 +593,7 @@ The supporting excerpts below attach jointly to RTE-2 (outline preservation/cont
 >         section_content = response.content.strip()
 > 
 >         full_report += f"{section_content}\n\n"
-> --- `DualGraph/deepresearch/baselines/write_module.py` @ `c090b7d57e3996c8900e86fecd16085b27e07f29`
+> --- `DualGraph/deepresearch/baselines/write_module.py:410-412` @ `c090b7d57e3996c8900e86fecd16085b27e07f29`
 
 >         "knowledge_nodes": [
 >           {

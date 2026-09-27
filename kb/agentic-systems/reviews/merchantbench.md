@@ -7,7 +7,7 @@ analysis-run: AAS-2026-09-25-merchantbench-01
 source-identity: https://github.com/KhanCold/merchantbench
 reviewed-revision: f44ce969aeccfd65d1eef6afe50f69868e510946
 analysis-result: kb/reports/retained/agentic-system-analysis/AAS-2026-09-25-merchantbench-01/result.md
-analysis-result-sha256: 615a4b3b68f419eb12331d03f36166f166e384ace782fc2743ab7e180b74215b
+analysis-result-sha256: 87c9575282d4fe2062c634d799e61eb86a1566f2fe32f8100cb97bfb8eea0def
 ---
 
 # MerchantBench: ReAct and optional persistent notes

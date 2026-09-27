@@ -678,7 +678,7 @@ RTE-5 — Product editing and diagnostic feedback. Conclusion status: wired for 
 > written: request.content,
 > diagnosticsJson: diagnostics ? JSON.stringify(diagnostics) : undefined,
 > };
-> --- `packages/coding-agent/src/edit/index.ts` @ `be6cb8217cd4c1dafcc86793ae5d809ea4d7396a`
+> --- `packages/coding-agent/src/edit/index.ts:649-652` @ `be6cb8217cd4c1dafcc86793ae5d809ea4d7396a`
 
 RTE-6 — Patch reviewer generation and output-shape parsing. Conclusion status: afforded for evidence-directed review through the task runtime; parser conclusion status: wired. Trigger: assigned diff; owner: reviewer model for bug/correctness judgment, renderer for structural checks. Guidance demands patch-anchored findings; parsing tests field shape, not truth of a bug. Immediate return is prioritized findings/verdict; parent or operator can accept, reject or request revision. Persistence/read-back follows task/session records, but a mandatory next-round criticism loop is uninspected. Selection is assigned diff; scope is that patch, not global product safety. No correction guarantee or answer oracle follows. SRC-1 `packages/coding-agent/src/tools/review.ts`; SRC-2 `packages/coding-agent/src/prompts/agents/reviewer.md`.
 

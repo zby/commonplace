@@ -1,0 +1,1004 @@
+[
+  {
+    "path": "kb/sources/a-programming-paradigm-for-spatiotemporal-composability.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/a-programming-paradigm-for-spatiotemporal-composability.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/a-programming-paradigm-for-spatiotemporal-composability.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/a-programming-paradigm-for-spatiotemporal-composability.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/a-programming-paradigm-for-spatiotemporal-composability.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/acm-agentic-context-management-for-long-horizon-tasks.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/acm-agentic-context-management-for-long-horizon-tasks.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/acm-agentic-context-management-for-long-horizon-tasks.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/acm-agentic-context-management-for-long-horizon-tasks.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/acm-agentic-context-management-for-long-horizon-tasks.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/agent-optimizers-compound-terminal-bench.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/agent-optimizers-compound-terminal-bench.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/agent-optimizers-compound-terminal-bench.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/agent-optimizers-compound-terminal-bench.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/agent-optimizers-compound-terminal-bench.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/agentic-code-reasoning.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/agentic-code-reasoning.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/agentic-code-reasoning.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/agentic-code-reasoning.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/agentic-code-reasoning.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/agents-explore-but-agents-ignore-llms-lack-environmental.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/agents-explore-but-agents-ignore-llms-lack-environmental.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/agents-explore-but-agents-ignore-llms-lack-environmental.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/agents-explore-but-agents-ignore-llms-lack-environmental.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/agents-explore-but-agents-ignore-llms-lack-environmental.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/agora-git-as-shared-memory-for-collective-autoresearch.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/agora-git-as-shared-memory-for-collective-autoresearch.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/agora-git-as-shared-memory-for-collective-autoresearch.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/agora-git-as-shared-memory-for-collective-autoresearch.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/agora-git-as-shared-memory-for-collective-autoresearch.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/alphadev-faster-sorting-2026-09-08.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/alphadev-faster-sorting-2026-09-08.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 1\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/alphadev-faster-sorting-2026-09-08.ingest.md\",\n  \"diagnostics\": [\n    {\n      \"id\": \"validation.base.snapshot-pairing\",\n      \"reason\": \"[base] snapshot pairing: expected .snapshots/alphadev-faster-sorting-2026-09-08.md is absent; its source URL matches .snapshots/faster-sorting-algorithms-deep-reinforcement-learning.md, .snapshots/faster-sorting-algorithms-discovered-using-deep-rl.md, but snapshot_sha256 identifies different bytes\",\n      \"severity\": \"warning\",\n      \"subject\": \"kb/sources/alphadev-faster-sorting-2026-09-08.ingest.md\"\n    },\n    {\n      \"id\": \"validation.base.source-quotes\",\n      \"reason\": \"[base] source quotes: source error: pinned snapshot unavailable or checksum differs; extracts unverified\",\n      \"severity\": \"info\",\n      \"subject\": \"kb/sources/alphadev-faster-sorting-2026-09-08.ingest.md\"\n    }\n  ],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/alphadev-faster-sorting-2026-09-08.ingest.md\",\n  \"status\": \"warning\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 1,\n    \"warnings\": 1\n  },\n  \"target\": \"kb/sources/alphadev-faster-sorting-2026-09-08.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/an-enigma-of-artificial-reason-production-evaluation-gap-lrms.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/an-enigma-of-artificial-reason-production-evaluation-gap-lrms.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/an-enigma-of-artificial-reason-production-evaluation-gap-lrms.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/an-enigma-of-artificial-reason-production-evaluation-gap-lrms.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/an-enigma-of-artificial-reason-production-evaluation-gap-lrms.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/apodex-1-1-scaling-agentic-intelligence-for-complex-work.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/apodex-1-1-scaling-agentic-intelligence-for-complex-work.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/apodex-1-1-scaling-agentic-intelligence-for-complex-work.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/apodex-1-1-scaling-agentic-intelligence-for-complex-work.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/apodex-1-1-scaling-agentic-intelligence-for-complex-work.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/arc-skill-live-action-execution-dba53c3.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/arc-skill-live-action-execution-dba53c3.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/arc-skill-live-action-execution-dba53c3.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/arc-skill-live-action-execution-dba53c3.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/arc-skill-live-action-execution-dba53c3.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/argyris-organizational-learning-and-mis-1977.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/argyris-organizational-learning-and-mis-1977.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 1\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/argyris-organizational-learning-and-mis-1977.ingest.md\",\n  \"diagnostics\": [\n    {\n      \"id\": \"validation.base.source-quotes\",\n      \"reason\": \"[base] source quotes: populated Quotes section coexists with '(snapshot required)'; verify the marker still names a claim that needs broader snapshot context\",\n      \"severity\": \"warning\",\n      \"subject\": \"kb/sources/argyris-organizational-learning-and-mis-1977.ingest.md\"\n    }\n  ],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/argyris-organizational-learning-and-mis-1977.ingest.md\",\n  \"status\": \"warning\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 1,\n    \"warnings\": 1\n  },\n  \"target\": \"kb/sources/argyris-organizational-learning-and-mis-1977.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/ashby-design-for-a-brain-1960.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/ashby-design-for-a-brain-1960.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/ashby-design-for-a-brain-1960.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/ashby-design-for-a-brain-1960.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/ashby-design-for-a-brain-1960.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/autogenesis-a-self-evolving-agent-protocol.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/autogenesis-a-self-evolving-agent-protocol.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/autogenesis-a-self-evolving-agent-protocol.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/autogenesis-a-self-evolving-agent-protocol.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/autogenesis-a-self-evolving-agent-protocol.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/automated-benchmark-auditing-ai-agents-llms.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/automated-benchmark-auditing-ai-agents-llms.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/automated-benchmark-auditing-ai-agents-llms.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/automated-benchmark-auditing-ai-agents-llms.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/automated-benchmark-auditing-ai-agents-llms.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/automated-refinement-first-order-horn-clause-domain-theories.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/automated-refinement-first-order-horn-clause-domain-theories.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/automated-refinement-first-order-horn-clause-domain-theories.ingest.md\",\n  \"diagnostics\": [\n    {\n      \"id\": \"validation.base.source-quotes\",\n      \"reason\": \"[base] source quotes: source error: pinned snapshot unavailable or checksum differs; extracts unverified\",\n      \"severity\": \"info\",\n      \"subject\": \"kb/sources/automated-refinement-first-order-horn-clause-domain-theories.ingest.md\"\n    }\n  ],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/automated-refinement-first-order-horn-clause-domain-theories.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/automated-refinement-first-order-horn-clause-domain-theories.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/autosaddler-automatic-harness-optimization-with-durable-updates.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/autosaddler-automatic-harness-optimization-with-durable-updates.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 1\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/autosaddler-automatic-harness-optimization-with-durable-updates.ingest.md\",\n  \"diagnostics\": [\n    {\n      \"id\": \"validation.base.source-quotes\",\n      \"reason\": \"[base] source quotes: populated Quotes section coexists with '(snapshot required)'; verify the marker still names a claim that needs broader snapshot context\",\n      \"severity\": \"warning\",\n      \"subject\": \"kb/sources/autosaddler-automatic-harness-optimization-with-durable-updates.ingest.md\"\n    }\n  ],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/autosaddler-automatic-harness-optimization-with-durable-updates.ingest.md\",\n  \"status\": \"warning\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 1,\n    \"warnings\": 1\n  },\n  \"target\": \"kb/sources/autosaddler-automatic-harness-optimization-with-durable-updates.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/beyond-fixed-representations-vocabulary-verifier-gaps.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/beyond-fixed-representations-vocabulary-verifier-gaps.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/beyond-fixed-representations-vocabulary-verifier-gaps.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/beyond-fixed-representations-vocabulary-verifier-gaps.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/beyond-fixed-representations-vocabulary-verifier-gaps.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/borretti-human-routers-of-machine-words.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/borretti-human-routers-of-machine-words.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/borretti-human-routers-of-machine-words.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/borretti-human-routers-of-machine-words.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/borretti-human-routers-of-machine-words.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/build-systems-a-la-carte.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/build-systems-a-la-carte.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/build-systems-a-la-carte.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/build-systems-a-la-carte.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/build-systems-a-la-carte.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/causal-inference-using-invariant-prediction.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/causal-inference-using-invariant-prediction.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/causal-inference-using-invariant-prediction.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/causal-inference-using-invariant-prediction.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/causal-inference-using-invariant-prediction.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/causal-learn-causal-discovery-in-python.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/causal-learn-causal-discovery-in-python.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/causal-learn-causal-discovery-in-python.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/causal-learn-causal-discovery-in-python.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/causal-learn-causal-discovery-in-python.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/cedar-grpo-process-aware-rl-abductive-reasoning.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/cedar-grpo-process-aware-rl-abductive-reasoning.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/cedar-grpo-process-aware-rl-abductive-reasoning.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/cedar-grpo-process-aware-rl-abductive-reasoning.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/cedar-grpo-process-aware-rl-abductive-reasoning.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/claude-workstream-kit-fable-agent-scaffolding.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/claude-workstream-kit-fable-agent-scaffolding.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/claude-workstream-kit-fable-agent-scaffolding.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/claude-workstream-kit-fable-agent-scaffolding.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/claude-workstream-kit-fable-agent-scaffolding.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/co-harness-co-evolving-harness-and-model-weights.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/co-harness-co-evolving-harness-and-model-weights.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/co-harness-co-evolving-harness-and-model-weights.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/co-harness-co-evolving-harness-and-model-weights.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/co-harness-co-evolving-harness-and-model-weights.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/components-and-generative-programming.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/components-and-generative-programming.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/components-and-generative-programming.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/components-and-generative-programming.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/components-and-generative-programming.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/concept-bottleneck-models-paper-v3.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/concept-bottleneck-models-paper-v3.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/concept-bottleneck-models-paper-v3.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/concept-bottleneck-models-paper-v3.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/concept-bottleneck-models-paper-v3.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/concept-bottleneck-models.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/concept-bottleneck-models.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/concept-bottleneck-models.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/concept-bottleneck-models.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/concept-bottleneck-models.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/context-providers-the-missing-layer-between-agents-and-tools.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/context-providers-the-missing-layer-between-agents-and-tools.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/context-providers-the-missing-layer-between-agents-and-tools.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/context-providers-the-missing-layer-between-agents-and-tools.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/context-providers-the-missing-layer-between-agents-and-tools.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/continual-harness-online-adaptation-foundation-agents.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/continual-harness-online-adaptation-foundation-agents.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/continual-harness-online-adaptation-foundation-agents.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/continual-harness-online-adaptation-foundation-agents.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/continual-harness-online-adaptation-foundation-agents.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/convexbench-can-llms-recognize-convex-functions.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/convexbench-can-llms-recognize-convex-functions.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/convexbench-can-llms-recognize-convex-functions.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/convexbench-can-llms-recognize-convex-functions.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/convexbench-can-llms-recognize-convex-functions.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/cook-kent-tool-factory-2003.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/cook-kent-tool-factory-2003.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/cook-kent-tool-factory-2003.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/cook-kent-tool-factory-2003.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/cook-kent-tool-factory-2003.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/darwin-godel-machine-open-ended-evolution-self-improving-agents.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/darwin-godel-machine-open-ended-evolution-self-improving-agents.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/darwin-godel-machine-open-ended-evolution-self-improving-agents.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/darwin-godel-machine-open-ended-evolution-self-improving-agents.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/darwin-godel-machine-open-ended-evolution-self-improving-agents.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/david-stahel-auftragstaktik-mission-command.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/david-stahel-auftragstaktik-mission-command.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/david-stahel-auftragstaktik-mission-command.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/david-stahel-auftragstaktik-mission-command.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/david-stahel-auftragstaktik-mission-command.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/defining-self-adaptive-systems-systematic-literature-review.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/defining-self-adaptive-systems-systematic-literature-review.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/defining-self-adaptive-systems-systematic-literature-review.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/defining-self-adaptive-systems-systematic-literature-review.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/defining-self-adaptive-systems-systematic-literature-review.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/descartes-discourse-on-the-method.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/descartes-discourse-on-the-method.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/descartes-discourse-on-the-method.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/descartes-discourse-on-the-method.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/descartes-discourse-on-the-method.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/di-giovanni-padella-universal-software-factory-1983.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/di-giovanni-padella-universal-software-factory-1983.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/di-giovanni-padella-universal-software-factory-1983.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/di-giovanni-padella-universal-software-factory-1983.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/di-giovanni-padella-universal-software-factory-1983.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/discoverphysics-benchmarking-llms-out-of-the-box-scientific.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/discoverphysics-benchmarking-llms-out-of-the-box-scientific.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/discoverphysics-benchmarking-llms-out-of-the-box-scientific.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/discoverphysics-benchmarking-llms-out-of-the-box-scientific.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/discoverphysics-benchmarking-llms-out-of-the-box-scientific.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/dowhy-expressing-and-validating-causal-assumptions.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/dowhy-expressing-and-validating-causal-assumptions.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/dowhy-expressing-and-validating-causal-assumptions.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/dowhy-expressing-and-validating-causal-assumptions.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/dowhy-expressing-and-validating-causal-assumptions.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/dreamcoder-wake-sleep-bayesian-program-learning.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/dreamcoder-wake-sleep-bayesian-program-learning.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/dreamcoder-wake-sleep-bayesian-program-learning.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/dreamcoder-wake-sleep-bayesian-program-learning.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/dreamcoder-wake-sleep-bayesian-program-learning.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/driven-by-compression-progress.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/driven-by-compression-progress.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/driven-by-compression-progress.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/driven-by-compression-progress.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/driven-by-compression-progress.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/effective-harnesses-for-long-running-agents.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/effective-harnesses-for-long-running-agents.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/effective-harnesses-for-long-running-agents.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/effective-harnesses-for-long-running-agents.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/effective-harnesses-for-long-running-agents.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/erlang-compilation-and-code-loading.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/erlang-compilation-and-code-loading.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 1\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/erlang-compilation-and-code-loading.ingest.md\",\n  \"diagnostics\": [\n    {\n      \"id\": \"validation.schema.frontmatter-genre\",\n      \"reason\": \"[schema] frontmatter.genre: 'technical-documentation' is not one of ['scientific-paper', 'practitioner-report', 'conceptual-essay', 'design-proposal', 'tool-announcement', 'github-issue', 'conversation-thread', 'code-repository', 'court-opinion', 'news-article', 'official-statement']\",\n      \"severity\": \"warning\",\n      \"subject\": \"kb/sources/erlang-compilation-and-code-loading.ingest.md\"\n    }\n  ],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/erlang-compilation-and-code-loading.ingest.md\",\n  \"status\": \"warning\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 1,\n    \"warnings\": 1\n  },\n  \"target\": \"kb/sources/erlang-compilation-and-code-loading.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/erlang-release-handling.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/erlang-release-handling.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 1\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/erlang-release-handling.ingest.md\",\n  \"diagnostics\": [\n    {\n      \"id\": \"validation.schema.frontmatter-genre\",\n      \"reason\": \"[schema] frontmatter.genre: 'technical-documentation' is not one of ['scientific-paper', 'practitioner-report', 'conceptual-essay', 'design-proposal', 'tool-announcement', 'github-issue', 'conversation-thread', 'code-repository', 'court-opinion', 'news-article', 'official-statement']\",\n      \"severity\": \"warning\",\n      \"subject\": \"kb/sources/erlang-release-handling.ingest.md\"\n    }\n  ],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/erlang-release-handling.ingest.md\",\n  \"status\": \"warning\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 1,\n    \"warnings\": 1\n  },\n  \"target\": \"kb/sources/erlang-release-handling.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/explanation-based-generalization-unifying-view-2026-09-08.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/explanation-based-generalization-unifying-view-2026-09-08.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/explanation-based-generalization-unifying-view-2026-09-08.ingest.md\",\n  \"diagnostics\": [\n    {\n      \"id\": \"validation.base.source-quotes\",\n      \"reason\": \"[base] source quotes: source error: pinned snapshot unavailable or checksum differs; extracts unverified\",\n      \"severity\": \"info\",\n      \"subject\": \"kb/sources/explanation-based-generalization-unifying-view-2026-09-08.ingest.md\"\n    }\n  ],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/explanation-based-generalization-unifying-view-2026-09-08.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/explanation-based-generalization-unifying-view-2026-09-08.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/falsifybench-inductive-reasoning-rule-discovery-games.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/falsifybench-inductive-reasoning-rule-discovery-games.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/falsifybench-inductive-reasoning-rule-discovery-games.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/falsifybench-inductive-reasoning-rule-discovery-games.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/falsifybench-inductive-reasoning-rule-discovery-games.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/fast-properties-in-v8.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/fast-properties-in-v8.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/fast-properties-in-v8.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/fast-properties-in-v8.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/fast-properties-in-v8.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/fodor-pylyshyn-1988-connectionism-cognitive-architecture.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/fodor-pylyshyn-1988-connectionism-cognitive-architecture.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/fodor-pylyshyn-1988-connectionism-cognitive-architecture.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/fodor-pylyshyn-1988-connectionism-cognitive-architecture.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/fodor-pylyshyn-1988-connectionism-cognitive-architecture.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/framework-for-software-product-line-engineering.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/framework-for-software-product-line-engineering.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/framework-for-software-product-line-engineering.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/framework-for-software-product-line-engineering.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/framework-for-software-product-line-engineering.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/from-agent-behaviour-to-agent-friendly-documentation.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/from-agent-behaviour-to-agent-friendly-documentation.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/from-agent-behaviour-to-agent-friendly-documentation.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/from-agent-behaviour-to-agent-friendly-documentation.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/from-agent-behaviour-to-agent-friendly-documentation.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/from-entropy-to-epiplexity-rethinking-information-computational.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/from-entropy-to-epiplexity-rethinking-information-computational.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/from-entropy-to-epiplexity-rethinking-information-computational.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/from-entropy-to-epiplexity-rethinking-information-computational.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/from-entropy-to-epiplexity-rethinking-information-computational.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/geometry-of-knowledge-extending-diversity-boundaries-llms.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/geometry-of-knowledge-extending-diversity-boundaries-llms.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/geometry-of-knowledge-extending-diversity-boundaries-llms.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/geometry-of-knowledge-extending-diversity-boundaries-llms.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/geometry-of-knowledge-extending-diversity-boundaries-llms.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/gick-holyoak-analogical-problem-solving.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/gick-holyoak-analogical-problem-solving.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 1\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/gick-holyoak-analogical-problem-solving.ingest.md\",\n  \"diagnostics\": [\n    {\n      \"id\": \"validation.base.source-quotes\",\n      \"reason\": \"[base] source quotes: populated Quotes section coexists with '(snapshot required)'; verify the marker still names a claim that needs broader snapshot context\",\n      \"severity\": \"warning\",\n      \"subject\": \"kb/sources/gick-holyoak-analogical-problem-solving.ingest.md\"\n    }\n  ],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/gick-holyoak-analogical-problem-solving.ingest.md\",\n  \"status\": \"warning\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 1,\n    \"warnings\": 1\n  },\n  \"target\": \"kb/sources/gick-holyoak-analogical-problem-solving.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/githens-manage-innovation-programs-rolling-wave.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/githens-manage-innovation-programs-rolling-wave.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/githens-manage-innovation-programs-rolling-wave.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/githens-manage-innovation-programs-rolling-wave.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/githens-manage-innovation-programs-rolling-wave.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/goedel-machines-schmidhuber.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/goedel-machines-schmidhuber.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/goedel-machines-schmidhuber.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/goedel-machines-schmidhuber.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/goedel-machines-schmidhuber.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/greenfield-mass-customizing-software-factories-2007.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/greenfield-mass-customizing-software-factories-2007.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/greenfield-mass-customizing-software-factories-2007.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/greenfield-mass-customizing-software-factories-2007.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/greenfield-mass-customizing-software-factories-2007.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/greenfield-short-software-factories-oopsla-2003.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/greenfield-short-software-factories-oopsla-2003.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/greenfield-short-software-factories-oopsla-2003.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/greenfield-short-software-factories-oopsla-2003.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/greenfield-short-software-factories-oopsla-2003.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/gsm-dc-llm-reasoning-distracted-irrelevant-context.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/gsm-dc-llm-reasoning-distracted-irrelevant-context.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/gsm-dc-llm-reasoning-distracted-irrelevant-context.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/gsm-dc-llm-reasoning-distracted-irrelevant-context.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/gsm-dc-llm-reasoning-distracted-irrelevant-context.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/gybels-et-al-2006-inter-language-reflection.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/gybels-et-al-2006-inter-language-reflection.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/gybels-et-al-2006-inter-language-reflection.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/gybels-et-al-2006-inter-language-reflection.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/gybels-et-al-2006-inter-language-reflection.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/haasnoot-dynamic-adaptive-policy-pathways-2013.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/haasnoot-dynamic-adaptive-policy-pathways-2013.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/haasnoot-dynamic-adaptive-policy-pathways-2013.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/haasnoot-dynamic-adaptive-policy-pathways-2013.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/haasnoot-dynamic-adaptive-policy-pathways-2013.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/hacker-news-ai-dr-ai-didnt-read.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/hacker-news-ai-dr-ai-didnt-read.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/hacker-news-ai-dr-ai-didnt-read.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/hacker-news-ai-dr-ai-didnt-read.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/hacker-news-ai-dr-ai-didnt-read.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/harness-as-a-language-jaz.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/harness-as-a-language-jaz.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/harness-as-a-language-jaz.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/harness-as-a-language-jaz.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/harness-as-a-language-jaz.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/harness-engineering-leveraging-codex-agent-first-world.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/harness-if-instruction-following-across-instruction-surfaces.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/harness-if-instruction-following-across-instruction-surfaces.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/harness-if-instruction-following-across-instruction-surfaces.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/harness-if-instruction-following-across-instruction-surfaces.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/harness-if-instruction-following-across-instruction-surfaces.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/harness-updating-is-not-harness-benefit.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/harness-updating-is-not-harness-benefit.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/harness-updating-is-not-harness-benefit.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/harness-updating-is-not-harness-benefit.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/harness-updating-is-not-harness-benefit.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/how-to-recursively-improve-your-agents-2084301728363462919.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/how-to-recursively-improve-your-agents-2084301728363462919.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/how-to-recursively-improve-your-agents-2084301728363462919.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/how-to-recursively-improve-your-agents-2084301728363462919.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/how-to-recursively-improve-your-agents-2084301728363462919.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/hyperagents.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/hyperagents.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/hyperagents.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/hyperagents.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/hyperagents.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/improving-ai-skills-with-autoresearch-evals-skills-203525743436.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/improving-ai-skills-with-autoresearch-evals-skills-203525743436.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/improving-ai-skills-with-autoresearch-evals-skills-203525743436.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/improving-ai-skills-with-autoresearch-evals-skills-203525743436.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/improving-ai-skills-with-autoresearch-evals-skills-203525743436.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/in-search-of-lost-domain-generalization.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/in-search-of-lost-domain-generalization.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/in-search-of-lost-domain-generalization.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/in-search-of-lost-domain-generalization.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/in-search-of-lost-domain-generalization.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/in-toto-farm-to-table-guarantees.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/in-toto-farm-to-table-guarantees.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/in-toto-farm-to-table-guarantees.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/in-toto-farm-to-table-guarantees.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/in-toto-farm-to-table-guarantees.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/induction-bias-sequence-models-ebrahimi-2026.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/induction-bias-sequence-models-ebrahimi-2026.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/induction-bias-sequence-models-ebrahimi-2026.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/induction-bias-sequence-models-ebrahimi-2026.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/induction-bias-sequence-models-ebrahimi-2026.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/intern-s2-mobius-arxiv-v1.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/intern-s2-mobius-arxiv-v1.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/intern-s2-mobius-arxiv-v1.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/intern-s2-mobius-arxiv-v1.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/intern-s2-mobius-arxiv-v1.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/into-the-unknown-self-learning-large-language-models.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/into-the-unknown-self-learning-large-language-models.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/into-the-unknown-self-learning-large-language-models.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/into-the-unknown-self-learning-large-language-models.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/into-the-unknown-self-learning-large-language-models.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/jezz-santos-i-once-worked-in-buenos-aires.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/jezz-santos-i-once-worked-in-buenos-aires.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/jezz-santos-i-once-worked-in-buenos-aires.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/jezz-santos-i-once-worked-in-buenos-aires.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/jezz-santos-i-once-worked-in-buenos-aires.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/kennedy-sobek-kennedy-set-based-rework.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/kennedy-sobek-kennedy-set-based-rework.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/kennedy-sobek-kennedy-set-based-rework.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/kennedy-sobek-kennedy-set-based-rework.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/kennedy-sobek-kennedy-set-based-rework.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/knowledge-centric-self-improvement-2607.19592.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/knowledge-centric-self-improvement-2607.19592.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/knowledge-centric-self-improvement-2607.19592.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/knowledge-centric-self-improvement-2607.19592.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/knowledge-centric-self-improvement-2607.19592.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/koylanai-personal-brain-os.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/koylanai-personal-brain-os.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/koylanai-personal-brain-os.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/koylanai-personal-brain-os.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/koylanai-personal-brain-os.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/lamport-how-to-write-a-21st-century-proof.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/lamport-how-to-write-a-21st-century-proof.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/lamport-how-to-write-a-21st-century-proof.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/lamport-how-to-write-a-21st-century-proof.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/lamport-how-to-write-a-21st-century-proof.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/langlois-exertier-mdsofa-software-factory-factory-2004.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/langlois-exertier-mdsofa-software-factory-factory-2004.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/langlois-exertier-mdsofa-software-factory-factory-2004.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/langlois-exertier-mdsofa-software-factory-factory-2004.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/langlois-exertier-mdsofa-software-factory-factory-2004.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/language-models-dont-always-say-what-they-think.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/language-models-dont-always-say-what-they-think.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/language-models-dont-always-say-what-they-think.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/language-models-dont-always-say-what-they-think.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/language-models-dont-always-say-what-they-think.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/language-models-like-humans-show-content-effects-on-reasoning.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/language-models-like-humans-show-content-effects-on-reasoning.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/language-models-like-humans-show-content-effects-on-reasoning.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/language-models-like-humans-show-content-effects-on-reasoning.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/language-models-like-humans-show-content-effects-on-reasoning.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/lessons-from-building-ai-agents-for-financial-services.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/lessons-from-building-ai-agents-for-financial-services.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/lessons-from-building-ai-agents-for-financial-services.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/lessons-from-building-ai-agents-for-financial-services.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/lessons-from-building-ai-agents-for-financial-services.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/llm-agents-are-not-always-faithful-self-evolvers.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/llm-agents-are-not-always-faithful-self-evolvers.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/llm-agents-are-not-always-faithful-self-evolvers.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/llm-agents-are-not-always-faithful-self-evolvers.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/llm-agents-are-not-always-faithful-self-evolvers.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/llm-webagents-long-context-reasoning-benchmark.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/llm-webagents-long-context-reasoning-benchmark.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/llm-webagents-long-context-reasoning-benchmark.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/llm-webagents-long-context-reasoning-benchmark.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/llm-webagents-long-context-reasoning-benchmark.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/luhmann-archive-schlagwortregister.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/luhmann-archive-schlagwortregister.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/luhmann-archive-schlagwortregister.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/luhmann-archive-schlagwortregister.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/luhmann-archive-schlagwortregister.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/machine-studying.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/machine-studying.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/machine-studying.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/machine-studying.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/machine-studying.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/maes-computational-reflection-1988.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/maes-computational-reflection-1988.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/maes-computational-reflection-1988.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/maes-computational-reflection-1988.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/maes-computational-reflection-1988.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/many-ai-analysts-one-dataset-agentic-data-science-multiverse.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/many-ai-analysts-one-dataset-agentic-data-science-multiverse.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/many-ai-analysts-one-dataset-agentic-data-science-multiverse.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/many-ai-analysts-one-dataset-agentic-data-science-multiverse.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/many-ai-analysts-one-dataset-agentic-data-science-multiverse.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/marine-corps-mcdp-1-warfighting-1997.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/marine-corps-mcdp-1-warfighting-1997.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/marine-corps-mcdp-1-warfighting-1997.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/marine-corps-mcdp-1-warfighting-1997.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/marine-corps-mcdp-1-warfighting-1997.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/memento-skills-let-agents-design-agents.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/memento-skills-let-agents-design-agents.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/memento-skills-let-agents-design-agents.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/memento-skills-let-agents-design-agents.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/memento-skills-let-agents-design-agents.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/meta-harness-end-to-end-optimization-of-model-harnesses.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/meta-harness-end-to-end-optimization-of-model-harnesses.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/meta-harness-end-to-end-optimization-of-model-harnesses.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/meta-harness-end-to-end-optimization-of-model-harnesses.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/meta-harness-end-to-end-optimization-of-model-harnesses.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/metaobject-protocols-why-we-want-them-and-what-else-they-can-do.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/metaobject-protocols-why-we-want-them-and-what-else-they-can-do.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/metaobject-protocols-why-we-want-them-and-what-else-they-can-do.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/metaobject-protocols-why-we-want-them-and-what-else-they-can-do.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/metaobject-protocols-why-we-want-them-and-what-else-they-can-do.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/meyerson-maker-million-step-llm-zero-errors.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/meyerson-maker-million-step-llm-zero-errors.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/meyerson-maker-million-step-llm-zero-errors.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/meyerson-maker-million-step-llm-zero-errors.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/meyerson-maker-million-step-llm-zero-errors.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/microsoft-retired-smart-client-software-factory.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/microsoft-retired-smart-client-software-factory.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/microsoft-retired-smart-client-software-factory.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/microsoft-retired-smart-client-software-factory.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/microsoft-retired-smart-client-software-factory.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/mini-exercise-mismanaged-geniuses-longcot-rlm.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/mini-exercise-mismanaged-geniuses-longcot-rlm.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/mini-exercise-mismanaged-geniuses-longcot-rlm.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/mini-exercise-mismanaged-geniuses-longcot-rlm.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/mini-exercise-mismanaged-geniuses-longcot-rlm.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/monkey-patch.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/monkey-patch.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/monkey-patch.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/monkey-patch.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/monkey-patch.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/nick-milo-mocs-definition.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/nick-milo-mocs-definition.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/nick-milo-mocs-definition.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/nick-milo-mocs-definition.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/nick-milo-mocs-definition.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/on-learning-how-to-learn-learning-strategies.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/on-learning-how-to-learn-learning-strategies.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/on-learning-how-to-learn-learning-strategies.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/on-learning-how-to-learn-learning-strategies.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/on-learning-how-to-learn-learning-strategies.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/openclaw-rl-train-any-agent-simply-by-talking.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/openclaw-rl-train-any-agent-simply-by-talking.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/openclaw-rl-train-any-agent-simply-by-talking.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/openclaw-rl-train-any-agent-simply-by-talking.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/openclaw-rl-train-any-agent-simply-by-talking.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/palantir-ontology-vs-decision-traces.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/palantir-ontology-vs-decision-traces.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/palantir-ontology-vs-decision-traces.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/palantir-ontology-vs-decision-traces.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/palantir-ontology-vs-decision-traces.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/paulsen-maximum-effective-context-window-mecw.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/paulsen-maximum-effective-context-window-mecw.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/paulsen-maximum-effective-context-window-mecw.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/paulsen-maximum-effective-context-window-mecw.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/paulsen-maximum-effective-context-window-mecw.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/pindyck-irreversibility-uncertainty-investment.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/pindyck-irreversibility-uncertainty-investment.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/pindyck-irreversibility-uncertainty-investment.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/pindyck-irreversibility-uncertainty-investment.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/pindyck-irreversibility-uncertainty-investment.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/pirolli-proximal-information-scent-distal-content.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/pirolli-proximal-information-scent-distal-content.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 1\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/pirolli-proximal-information-scent-distal-content.ingest.md\",\n  \"diagnostics\": [\n    {\n      \"id\": \"validation.base.source-quotes\",\n      \"reason\": \"[base] source quotes: populated Quotes section coexists with '(snapshot required)'; verify the marker still names a claim that needs broader snapshot context\",\n      \"severity\": \"warning\",\n      \"subject\": \"kb/sources/pirolli-proximal-information-scent-distal-content.ingest.md\"\n    }\n  ],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/pirolli-proximal-information-scent-distal-content.ingest.md\",\n  \"status\": \"warning\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 1,\n    \"warnings\": 1\n  },\n  \"target\": \"kb/sources/pirolli-proximal-information-scent-distal-content.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/pmi-lexicon-project-management-terms-v4.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/pmi-lexicon-project-management-terms-v4.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 1\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/pmi-lexicon-project-management-terms-v4.ingest.md\",\n  \"diagnostics\": [\n    {\n      \"id\": \"validation.schema.frontmatter-genre\",\n      \"reason\": \"[schema] frontmatter.genre: 'reference-lexicon' is not one of ['scientific-paper', 'practitioner-report', 'conceptual-essay', 'design-proposal', 'tool-announcement', 'github-issue', 'conversation-thread', 'code-repository', 'court-opinion', 'news-article', 'official-statement']\",\n      \"severity\": \"warning\",\n      \"subject\": \"kb/sources/pmi-lexicon-project-management-terms-v4.ingest.md\"\n    }\n  ],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/pmi-lexicon-project-management-terms-v4.ingest.md\",\n  \"status\": \"warning\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 1,\n    \"warnings\": 1\n  },\n  \"target\": \"kb/sources/pmi-lexicon-project-management-terms-v4.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/popper-a-realist-view-of-logic-physics-and-history-1966.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/popper-a-realist-view-of-logic-physics-and-history-1966.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 1\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/popper-a-realist-view-of-logic-physics-and-history-1966.ingest.md\",\n  \"diagnostics\": [\n    {\n      \"id\": \"validation.base.source-quotes\",\n      \"reason\": \"[base] source quotes: populated Quotes section coexists with '(snapshot required)'; verify the marker still names a claim that needs broader snapshot context\",\n      \"severity\": \"warning\",\n      \"subject\": \"kb/sources/popper-a-realist-view-of-logic-physics-and-history-1966.ingest.md\"\n    }\n  ],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/popper-a-realist-view-of-logic-physics-and-history-1966.ingest.md\",\n  \"status\": \"warning\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 1,\n    \"warnings\": 1\n  },\n  \"target\": \"kb/sources/popper-a-realist-view-of-logic-physics-and-history-1966.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/popper-conjectures-and-refutations.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/popper-conjectures-and-refutations.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/popper-conjectures-and-refutations.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/popper-conjectures-and-refutations.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/popper-conjectures-and-refutations.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/popper-epistemology-without-a-knowing-subject-1968.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/popper-epistemology-without-a-knowing-subject-1968.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/popper-epistemology-without-a-knowing-subject-1968.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/popper-epistemology-without-a-knowing-subject-1968.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/popper-epistemology-without-a-knowing-subject-1968.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/popper-logic-of-scientific-discovery.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/popper-logic-of-scientific-discovery.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/popper-logic-of-scientific-discovery.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/popper-logic-of-scientific-discovery.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/popper-logic-of-scientific-discovery.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/position-ai-agents-in-scientific-teams-as-human-agent-systems.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/position-ai-agents-in-scientific-teams-as-human-agent-systems.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/position-ai-agents-in-scientific-teams-as-human-agent-systems.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/position-ai-agents-in-scientific-teams-as-human-agent-systems.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/position-ai-agents-in-scientific-teams-as-human-agent-systems.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/position-bias.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/position-bias.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/position-bias.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/position-bias.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/position-bias.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/prime-agent-a-self-improving-rlm-harness.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/prime-agent-a-self-improving-rlm-harness.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/prime-agent-a-self-improving-rlm-harness.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/prime-agent-a-self-improving-rlm-harness.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/prime-agent-a-self-improving-rlm-harness.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/program-synthesis-gulwani-polozov-singh-2017.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/program-synthesis-gulwani-polozov-singh-2017.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/program-synthesis-gulwani-polozov-singh-2017.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/program-synthesis-gulwani-polozov-singh-2017.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/program-synthesis-gulwani-polozov-singh-2017.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/programming-as-theory-building.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/programming-as-theory-building.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/programming-as-theory-building.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/programming-as-theory-building.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/programming-as-theory-building.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/prompt-stability-code-llms-emotion-personality-variations.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/prompt-stability-code-llms-emotion-personality-variations.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/prompt-stability-code-llms-emotion-personality-variations.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/prompt-stability-code-llms-emotion-personality-variations.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/prompt-stability-code-llms-emotion-personality-variations.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/prov-overview.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/prov-overview.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/prov-overview.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/prov-overview.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/prov-overview.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/recursive-experiential-working-memory-evolution.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/recursive-experiential-working-memory-evolution.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/recursive-experiential-working-memory-evolution.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/recursive-experiential-working-memory-evolution.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/recursive-experiential-working-memory-evolution.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/recursive-language-models-what-finally-gave-me-the-aha-moment.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/recursive-language-models-what-finally-gave-me-the-aha-moment.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/recursive-language-models-what-finally-gave-me-the-aha-moment.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/recursive-language-models-what-finally-gave-me-the-aha-moment.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/recursive-language-models-what-finally-gave-me-the-aha-moment.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/recursive-self-improvement-since-1987.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/recursive-self-improvement-since-1987.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/recursive-self-improvement-since-1987.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/recursive-self-improvement-since-1987.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/recursive-self-improvement-since-1987.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/rome-locating-and-editing-factual-associations-in-gpt.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/rome-locating-and-editing-factual-associations-in-gpt.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/rome-locating-and-editing-factual-associations-in-gpt.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/rome-locating-and-editing-factual-associations-in-gpt.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/rome-locating-and-editing-factual-associations-in-gpt.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/rosenfeld-risks-of-invariant-risk-minimization.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/rosenfeld-risks-of-invariant-risk-minimization.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/rosenfeld-risks-of-invariant-risk-minimization.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/rosenfeld-risks-of-invariant-risk-minimization.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/rosenfeld-risks-of-invariant-risk-minimization.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/seeing-numbers-of-50k-submissions-for-iclr-2101135922666365032.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/seeing-numbers-of-50k-submissions-for-iclr-2101135922666365032.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/seeing-numbers-of-50k-submissions-for-iclr-2101135922666365032.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/seeing-numbers-of-50k-submissions-for-iclr-2101135922666365032.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/seeing-numbers-of-50k-submissions-for-iclr-2101135922666365032.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/self-harness-harnesses-that-improve-themselves.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/self-harness-harnesses-that-improve-themselves.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/self-harness-harnesses-that-improve-themselves.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/self-harness-harnesses-that-improve-themselves.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/self-harness-harnesses-that-improve-themselves.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/self-improving-ai-coding-agents-through-accumulated-rules.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/self-improving-ai-coding-agents-through-accumulated-rules.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/self-improving-ai-coding-agents-through-accumulated-rules.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/self-improving-ai-coding-agents-through-accumulated-rules.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/self-improving-ai-coding-agents-through-accumulated-rules.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/self-training-large-language-models-through-knowledge-detection.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/self-training-large-language-models-through-knowledge-detection.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/self-training-large-language-models-through-knowledge-detection.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/self-training-large-language-models-through-knowledge-detection.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/self-training-large-language-models-through-knowledge-detection.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/semantic-leakage-lms-gonen.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/semantic-leakage-lms-gonen.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/semantic-leakage-lms-gonen.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/semantic-leakage-lms-gonen.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/semantic-leakage-lms-gonen.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/simon-willison-karpathy-claws.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/simon-willison-karpathy-claws.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/simon-willison-karpathy-claws.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/simon-willison-karpathy-claws.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/simon-willison-karpathy-claws.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/skillopt-executive-strategy-self-evolving-agent-skills.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/skillopt-executive-strategy-self-evolving-agent-skills.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/skillopt-executive-strategy-self-evolving-agent-skills.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/skillopt-executive-strategy-self-evolving-agent-skills.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/skillopt-executive-strategy-self-evolving-agent-skills.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/smolensky-proper-treatment-connectionism.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/smolensky-proper-treatment-connectionism.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/smolensky-proper-treatment-connectionism.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/smolensky-proper-treatment-connectionism.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/smolensky-proper-treatment-connectionism.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/software-design-model-use-in-practice.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/software-design-model-use-in-practice.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/software-design-model-use-in-practice.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/software-design-model-use-in-practice.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/software-design-model-use-in-practice.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/state-of-practice-in-model-driven-engineering.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/state-of-practice-in-model-driven-engineering.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/state-of-practice-in-model-driven-engineering.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/state-of-practice-in-model-driven-engineering.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/state-of-practice-in-model-driven-engineering.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/steve-yegge-fences-not-sandboxes.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/steve-yegge-fences-not-sandboxes.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/steve-yegge-fences-not-sandboxes.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/steve-yegge-fences-not-sandboxes.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/steve-yegge-fences-not-sandboxes.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/superarc-ait-benchmark-llm-compression-abstraction.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/superarc-ait-benchmark-llm-compression-abstraction.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/superarc-ait-benchmark-llm-compression-abstraction.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/superarc-ait-benchmark-llm-compression-abstraction.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/superarc-ait-benchmark-llm-compression-abstraction.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/sutton-javed-why-ai-models-stop-learning.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/sutton-javed-why-ai-models-stop-learning.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/sutton-javed-why-ai-models-stop-learning.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/sutton-javed-why-ai-models-stop-learning.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/sutton-javed-why-ai-models-stop-learning.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/sutton-the-bitter-lesson-original-essay.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/sutton-the-bitter-lesson-original-essay.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/sutton-the-bitter-lesson-original-essay.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/sutton-the-bitter-lesson-original-essay.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/sutton-the-bitter-lesson-original-essay.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/symbolic-learning-enables-self-evolving-agents.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/symbolic-learning-enables-self-evolving-agents.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/symbolic-learning-enables-self-evolving-agents.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/symbolic-learning-enables-self-evolving-agents.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/symbolic-learning-enables-self-evolving-agents.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/symbols-neural-networks-mathematical-intelligence.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/symbols-neural-networks-mathematical-intelligence.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/symbols-neural-networks-mathematical-intelligence.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/symbols-neural-networks-mathematical-intelligence.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/symbols-neural-networks-mathematical-intelligence.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/teevan-perfect-search-engine-orienteering.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/teevan-perfect-search-engine-orienteering.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/teevan-perfect-search-engine-orienteering.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/teevan-perfect-search-engine-orienteering.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/teevan-perfect-search-engine-orienteering.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/the-mismanaged-geniuses-hypothesis-2042588627260018751.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/the-mismanaged-geniuses-hypothesis-2042588627260018751.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/the-mismanaged-geniuses-hypothesis-2042588627260018751.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/the-mismanaged-geniuses-hypothesis-2042588627260018751.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/the-mismanaged-geniuses-hypothesis-2042588627260018751.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/the-second-brain-trap-2041486539067154753.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/the-second-brain-trap-2041486539067154753.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/the-second-brain-trap-2041486539067154753.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/the-second-brain-trap-2041486539067154753.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/the-second-brain-trap-2041486539067154753.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/the-self-healing-agent-harness-2048912026018484317.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/the-self-healing-agent-harness-2048912026018484317.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/the-self-healing-agent-harness-2048912026018484317.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/the-self-healing-agent-harness-2048912026018484317.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/the-self-healing-agent-harness-2048912026018484317.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/the-vision-of-autonomic-computing.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/the-vision-of-autonomic-computing.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/the-vision-of-autonomic-computing.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/the-vision-of-autonomic-computing.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/the-vision-of-autonomic-computing.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/the-y-combinator-for-llms-solving-long-context-rot.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/the-y-combinator-for-llms-solving-long-context-rot.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/the-y-combinator-for-llms-solving-long-context-rot.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/the-y-combinator-for-llms-solving-long-context-rot.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/the-y-combinator-for-llms-solving-long-context-rot.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/tombros-sanderson-query-biased-summaries.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/tombros-sanderson-query-biased-summaries.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/tombros-sanderson-query-biased-summaries.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/tombros-sanderson-query-biased-summaries.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/tombros-sanderson-query-biased-summaries.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/towards-automating-eval-engineering-2079976006644072796.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/towards-automating-eval-engineering-2079976006644072796.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/towards-automating-eval-engineering-2079976006644072796.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/towards-automating-eval-engineering-2079976006644072796.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/towards-automating-eval-engineering-2079976006644072796.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/towards-causal-representation-learning.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/towards-causal-representation-learning.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/towards-causal-representation-learning.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/towards-causal-representation-learning.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/towards-causal-representation-learning.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/towards-faithfully-interpretable-nlp-systems.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/towards-faithfully-interpretable-nlp-systems.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/towards-faithfully-interpretable-nlp-systems.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/towards-faithfully-interpretable-nlp-systems.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/towards-faithfully-interpretable-nlp-systems.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/trace-trajectory-attribution-for-automated-context-engineering.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/trace-trajectory-attribution-for-automated-context-engineering.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/trace-trajectory-attribution-for-automated-context-engineering.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/trace-trajectory-attribution-for-automated-context-engineering.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/trace-trajectory-attribution-for-automated-context-engineering.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/tulving-pearlstone-availability-versus-accessibility.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/tulving-pearlstone-availability-versus-accessibility.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/tulving-pearlstone-availability-versus-accessibility.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/tulving-pearlstone-availability-versus-accessibility.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/tulving-pearlstone-availability-versus-accessibility.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/us-army-adrp-6-0-mission-command-2012.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/us-army-adrp-6-0-mission-command-2012.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/us-army-adrp-6-0-mission-command-2012.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/us-army-adrp-6-0-mission-command-2012.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/us-army-adrp-6-0-mission-command-2012.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/us20090100406a1-software-factory-specification-execution-model.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/us20090100406a1-software-factory-specification-execution-model.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/us20090100406a1-software-factory-specification-execution-model.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/us20090100406a1-software-factory-specification-execution-model.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/us20090100406a1-software-factory-specification-execution-model.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/verbalizable-representations-global-workspace-llms.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/verbalizable-representations-global-workspace-llms.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/verbalizable-representations-global-workspace-llms.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/verbalizable-representations-global-workspace-llms.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/verbalizable-representations-global-workspace-llms.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/we-should-take-text-optimization-more-seriously.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/we-should-take-text-optimization-more-seriously.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/we-should-take-text-optimization-more-seriously.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/we-should-take-text-optimization-more-seriously.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/we-should-take-text-optimization-more-seriously.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/weyns-software-engineering-self-adaptive-systems-tour.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/weyns-software-engineering-self-adaptive-systems-tour.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/weyns-software-engineering-self-adaptive-systems-tour.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/weyns-software-engineering-self-adaptive-systems-tour.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/weyns-software-engineering-self-adaptive-systems-tour.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/where-is-the-proof-mde-industry.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/where-is-the-proof-mde-industry.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/where-is-the-proof-mde-industry.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/where-is-the-proof-mde-industry.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/where-is-the-proof-mde-industry.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/why-ai-systems-dont-learn-and-what-to-do-about-it.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/why-ai-systems-dont-learn-and-what-to-do-about-it.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/why-ai-systems-dont-learn-and-what-to-do-about-it.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/why-ai-systems-dont-learn-and-what-to-do-about-it.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/why-ai-systems-dont-learn-and-what-to-do-about-it.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/why-software-factories-fail-slopcodebench-2081797628552270027.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/why-software-factories-fail-slopcodebench-2081797628552270027.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/why-software-factories-fail-slopcodebench-2081797628552270027.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/why-software-factories-fail-slopcodebench-2081797628552270027.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/why-software-factories-fail-slopcodebench-2081797628552270027.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/wikipedia-bitter-lesson.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/wikipedia-bitter-lesson.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/wikipedia-bitter-lesson.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/wikipedia-bitter-lesson.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/wikipedia-bitter-lesson.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/wuyts-ducasse-2001-symbiotic-reflection.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/wuyts-ducasse-2001-symbiotic-reflection.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/wuyts-ducasse-2001-symbiotic-reflection.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/wuyts-ducasse-2001-symbiotic-reflection.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/wuyts-ducasse-2001-symbiotic-reflection.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/zinkevich-online-convex-programming.ingest.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/zinkevich-online-convex-programming.ingest.md\",\n      \"type\": \"ingest-report\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/zinkevich-online-convex-programming.ingest.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/zinkevich-online-convex-programming.ingest.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/zinkevich-online-convex-programming.ingest.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/articles/which-existing-self-improving-systems-are-theory-builders.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/articles/which-existing-self-improving-systems-are-theory-builders.md\",\n      \"type\": \"article\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/articles/which-existing-self-improving-systems-are-theory-builders.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/articles/which-existing-self-improving-systems-are-theory-builders.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/articles/which-existing-self-improving-systems-are-theory-builders.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/notes/knowledge-storage-does-not-imply-contextual-activation.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/notes/knowledge-storage-does-not-imply-contextual-activation.md\",\n      \"type\": \"note\",\n      \"warnings\": 0\n    },\n    {\n      \"failures\": 0,\n      \"path\": \"kb/tags/failure-modes-README.md\",\n      \"type\": \"tag-readme\",\n      \"warnings\": 0\n    },\n    {\n      \"failures\": 0,\n      \"path\": \"kb/tags/learning-theory-README.md\",\n      \"type\": \"tag-readme\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/notes/knowledge-storage-does-not-imply-contextual-activation.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/notes/knowledge-storage-does-not-imply-contextual-activation.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 3,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/notes/knowledge-storage-does-not-imply-contextual-activation.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/types/ingest-report.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/types/ingest-report.md\",\n      \"type\": \"type-spec\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/types/ingest-report.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/types/ingest-report.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/types/ingest-report.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/sources/COLLECTION.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/sources/COLLECTION.md\",\n      \"type\": \"text\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/sources/COLLECTION.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/sources/COLLECTION.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 1,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/sources/COLLECTION.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/instructions/cp-skill-ground/SKILL.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/instructions/cp-skill-ground/SKILL.md\",\n      \"type\": \"instruction\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/instructions/cp-skill-ground/SKILL.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/instructions/cp-skill-ground/SKILL.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/instructions/cp-skill-ground/SKILL.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/instructions/cp-skill-write/SKILL.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/instructions/cp-skill-write/SKILL.md\",\n      \"type\": \"instruction\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/instructions/cp-skill-write/SKILL.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/instructions/cp-skill-write/SKILL.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/instructions/cp-skill-write/SKILL.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/instructions/analyse-agentic-system/SKILL.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/instructions/analyse-agentic-system/SKILL.md\",\n      \"type\": \"instruction\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/instructions/analyse-agentic-system/SKILL.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/instructions/analyse-agentic-system/SKILL.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/instructions/analyse-agentic-system/SKILL.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/types/agentic-system-analysis-result.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/types/agentic-system-analysis-result.md\",\n      \"type\": \"type-spec\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/types/agentic-system-analysis-result.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/types/agentic-system-analysis-result.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/types/agentic-system-analysis-result.md\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "path": "kb/instructions/review-gates/semantic/grounding-alignment.md",
+    "returncode": 0,
+    "output": "{\n  \"analysed_artifacts\": [\n    {\n      \"failures\": 0,\n      \"path\": \"kb/instructions/review-gates/semantic/grounding-alignment.md\",\n      \"type\": \"review-gate\",\n      \"warnings\": 0\n    }\n  ],\n  \"details_command\": \"commonplace-validate --full kb/instructions/review-gates/semantic/grounding-alignment.md\",\n  \"diagnostics\": [],\n  \"excluded_subtrees\": [],\n  \"schema\": \"commonplace.validation.v1\",\n  \"scope\": \"kb/instructions/review-gates/semantic/grounding-alignment.md\",\n  \"status\": \"success\",\n  \"summary\": {\n    \"failing_subjects\": 0,\n    \"failures\": 0,\n    \"files_analysed\": 1,\n    \"text_files\": 0,\n    \"warning_subjects\": 0,\n    \"warnings\": 0\n  },\n  \"target\": \"kb/instructions/review-gates/semantic/grounding-alignment.md\"\n}\n",
+    "stderr": ""
+  }
+]

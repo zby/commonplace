@@ -6,7 +6,7 @@ analysis-run: AAS-2026-09-26-openrsi-01
 source-identity: https://github.com/FrontisAI/OpenRSI
 reviewed-revision: "71ae803a035d5e3b78c19fa49ed9f67d0550cbaa"
 analysis-result: kb/reports/retained/agentic-system-analysis/AAS-2026-09-26-openrsi-01/result.md
-analysis-result-sha256: 1c38740d9385e44d06ec249887e01889d41af107039bb249accac74a51e6e35e
+analysis-result-sha256: 4c4a30190d73f0632d21c5c8e3b79247e2c4fdbf7fbd75f4f952de80a57d2d79
 ---
 
 # OpenRSI: OpenMLE search, experience and training

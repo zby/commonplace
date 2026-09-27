@@ -1,0 +1,242 @@
+[
+  {
+    "path": "kb/agentic-systems/reviews/aide2.md",
+    "run": "kb/reports/state/agentic-system-analysis/AAS-2026-09-25-aide2-01/run-state.md",
+    "passed": 0,
+    "failures": []
+  },
+  {
+    "path": "kb/agentic-systems/reviews/apache-maka.md",
+    "run": "kb/reports/state/agentic-system-analysis/AAS-2026-09-05-apache-maka-06/run-state.md",
+    "passed": 0,
+    "failures": []
+  },
+  {
+    "path": "kb/agentic-systems/reviews/arex-skill.md",
+    "run": "kb/reports/state/agentic-system-analysis/AAS-2026-09-25-arex-skill-01/run-state.md",
+    "passed": 0,
+    "failures": []
+  },
+  {
+    "path": "kb/agentic-systems/reviews/arsumbris.md",
+    "run": "kb/reports/state/agentic-system-analysis/AAS-2026-09-23-arsumbris-02/run-state.md",
+    "passed": 1,
+    "failures": []
+  },
+  {
+    "path": "kb/agentic-systems/reviews/company-brain.md",
+    "run": "kb/reports/state/agentic-system-analysis/AAS-2026-09-26-company-brain-01/run-state.md",
+    "passed": 2,
+    "failures": []
+  },
+  {
+    "path": "kb/agentic-systems/reviews/contextpilot.md",
+    "run": "kb/reports/state/agentic-system-analysis/AAS-2026-09-25-contextpilot-01/run-state.md",
+    "passed": 0,
+    "failures": []
+  },
+  {
+    "path": "kb/agentic-systems/reviews/dualgraph.md",
+    "run": "kb/reports/state/agentic-system-analysis/AAS-2026-09-25-dualgraph-01/run-state.md",
+    "passed": 0,
+    "failures": []
+  },
+  {
+    "path": "kb/agentic-systems/reviews/dynamic-cheatsheet.md",
+    "run": "kb/reports/state/agentic-system-analysis/AAS-2026-09-27-dynamic-cheatsheet-01/run-state.md",
+    "passed": 1,
+    "failures": []
+  },
+  {
+    "path": "kb/agentic-systems/reviews/eal-bench.md",
+    "run": "kb/reports/state/agentic-system-analysis/AAS-2026-09-25-eal-bench-01/run-state.md",
+    "passed": 0,
+    "failures": []
+  },
+  {
+    "path": "kb/agentic-systems/reviews/ecdysis.md",
+    "run": "kb/reports/state/agentic-system-analysis/AAS-2026-09-25-ecdysis-01/run-state.md",
+    "passed": 0,
+    "failures": []
+  },
+  {
+    "path": "kb/agentic-systems/reviews/enoch.md",
+    "run": "kb/reports/state/agentic-system-analysis/AAS-2026-09-25-enoch-01/run-state.md",
+    "passed": 0,
+    "failures": []
+  },
+  {
+    "path": "kb/agentic-systems/reviews/evoontology.md",
+    "run": "kb/reports/state/agentic-system-analysis/AAS-2026-09-25-evoontology-01/run-state.md",
+    "passed": 0,
+    "failures": []
+  },
+  {
+    "path": "kb/agentic-systems/reviews/fragility-grid.md",
+    "run": "kb/reports/state/agentic-system-analysis/AAS-2026-09-25-fragility-grid-01/run-state.md",
+    "passed": 0,
+    "failures": []
+  },
+  {
+    "path": "kb/agentic-systems/reviews/gbrain-garrytan.md",
+    "run": "kb/reports/state/agentic-system-analysis/AAS-2026-09-23-gbrain-01/run-state.md",
+    "passed": 0,
+    "failures": []
+  },
+  {
+    "path": "kb/agentic-systems/reviews/instinctual-memory.md",
+    "run": "kb/reports/state/agentic-system-analysis/AAS-2026-09-25-instinctual-memory-01/run-state.md",
+    "passed": 0,
+    "failures": []
+  },
+  {
+    "path": "kb/agentic-systems/reviews/jaz-evals.md",
+    "run": "kb/reports/state/agentic-system-analysis/AAS-2026-09-26-jaz-evals-01/run-state.md",
+    "passed": 0,
+    "failures": []
+  },
+  {
+    "path": "kb/agentic-systems/reviews/jaz.md",
+    "run": "kb/reports/state/agentic-system-analysis/AAS-2026-09-26-jaz-01/run-state.md",
+    "passed": 0,
+    "failures": []
+  },
+  {
+    "path": "kb/agentic-systems/reviews/jepa-anything.md",
+    "run": "kb/reports/state/agentic-system-analysis/AAS-2026-09-25-jepa-anything-01/run-state.md",
+    "passed": 2,
+    "failures": []
+  },
+  {
+    "path": "kb/agentic-systems/reviews/lhtb.md",
+    "run": "kb/reports/state/agentic-system-analysis/AAS-2026-09-25-lhtb-01/run-state.md",
+    "passed": 0,
+    "failures": []
+  },
+  {
+    "path": "kb/agentic-systems/reviews/mem0.md",
+    "run": "kb/reports/state/agentic-system-analysis/AAS-2026-09-27-mem0-01/run-state.md",
+    "passed": 0,
+    "failures": []
+  },
+  {
+    "path": "kb/agentic-systems/reviews/merchantbench.md",
+    "run": "kb/reports/state/agentic-system-analysis/AAS-2026-09-25-merchantbench-01/run-state.md",
+    "passed": 0,
+    "failures": []
+  },
+  {
+    "path": "kb/agentic-systems/reviews/meta-n.md",
+    "run": "kb/reports/state/agentic-system-analysis/AAS-2026-09-24-meta-n-01/run-state.md",
+    "passed": 0,
+    "failures": []
+  },
+  {
+    "path": "kb/agentic-systems/reviews/modularrsi.md",
+    "run": "kb/reports/state/agentic-system-analysis/AAS-2026-09-25-modularrsi-01/run-state.md",
+    "passed": 0,
+    "failures": []
+  },
+  {
+    "path": "kb/agentic-systems/reviews/napkin.md",
+    "run": "kb/reports/state/agentic-system-analysis/AAS-2026-09-27-napkin-02/run-state.md",
+    "passed": 1,
+    "failures": []
+  },
+  {
+    "path": "kb/agentic-systems/reviews/oh-my-pi.md",
+    "run": "kb/reports/state/agentic-system-analysis/AAS-2026-09-26-oh-my-pi-01/run-state.md",
+    "passed": 0,
+    "failures": []
+  },
+  {
+    "path": "kb/agentic-systems/reviews/openrsi.md",
+    "run": "kb/reports/state/agentic-system-analysis/AAS-2026-09-26-openrsi-01/run-state.md",
+    "passed": 0,
+    "failures": []
+  },
+  {
+    "path": "kb/agentic-systems/reviews/openviking.md",
+    "run": "kb/reports/state/agentic-system-analysis/AAS-2026-09-25-openviking-01/run-state.md",
+    "passed": 2,
+    "failures": []
+  },
+  {
+    "path": "kb/agentic-systems/reviews/pi-posthorse.md",
+    "run": "kb/reports/state/agentic-system-analysis/AAS-2026-09-25-pi-posthorse-01/run-state.md",
+    "passed": 0,
+    "failures": []
+  },
+  {
+    "path": "kb/agentic-systems/reviews/prime-agent.md",
+    "run": "kb/reports/state/agentic-system-analysis/AAS-2026-09-05-prime-agent-01/run-state.md",
+    "passed": 0,
+    "failures": []
+  },
+  {
+    "path": "kb/agentic-systems/reviews/primescientist.md",
+    "run": "kb/reports/state/agentic-system-analysis/AAS-2026-09-25-primescientist-01/run-state.md",
+    "passed": 0,
+    "failures": []
+  },
+  {
+    "path": "kb/agentic-systems/reviews/prove2me.md",
+    "run": "kb/reports/state/agentic-system-analysis/AAS-2026-09-25-prove2me-01/run-state.md",
+    "passed": 0,
+    "failures": []
+  },
+  {
+    "path": "kb/agentic-systems/reviews/reflexion.md",
+    "run": "kb/reports/state/agentic-system-analysis/AAS-2026-09-25-reflexion-02/run-state.md",
+    "passed": 3,
+    "failures": []
+  },
+  {
+    "path": "kb/agentic-systems/reviews/rsiagent.md",
+    "run": "kb/reports/state/agentic-system-analysis/AAS-2026-09-24-rsiagent-01/run-state.md",
+    "passed": 0,
+    "failures": []
+  },
+  {
+    "path": "kb/agentic-systems/reviews/skilllift.md",
+    "run": "kb/reports/state/agentic-system-analysis/AAS-2026-09-25-skilllift-01/run-state.md",
+    "passed": 0,
+    "failures": []
+  },
+  {
+    "path": "kb/agentic-systems/reviews/sol-pi.md",
+    "run": "kb/reports/state/agentic-system-analysis/AAS-2026-09-24-sol-pi-01/run-state.md",
+    "passed": 0,
+    "failures": []
+  },
+  {
+    "path": "kb/agentic-systems/reviews/supermemory.md",
+    "run": "kb/reports/state/agentic-system-analysis/AAS-2026-09-25-supermemory-02/run-state.md",
+    "passed": 0,
+    "failures": []
+  },
+  {
+    "path": "kb/agentic-systems/reviews/swarmworld.md",
+    "run": "kb/reports/state/agentic-system-analysis/AAS-2026-09-25-swarmworld-01/run-state.md",
+    "passed": 0,
+    "failures": []
+  },
+  {
+    "path": "kb/agentic-systems/reviews/tardigrade.md",
+    "run": "kb/reports/state/agentic-system-analysis/AAS-2026-09-25-tardigrade-01/run-state.md",
+    "passed": 0,
+    "failures": []
+  },
+  {
+    "path": "kb/agentic-systems/reviews/wikiskill-stahl-g.md",
+    "run": "kb/reports/state/agentic-system-analysis/AAS-2026-09-17-wikiskill-stahl-g-01/run-state.md",
+    "passed": 1,
+    "failures": []
+  },
+  {
+    "path": "kb/agentic-systems/reviews/wikiskill.md",
+    "run": "kb/reports/state/agentic-system-analysis/AAS-2026-09-25-wikiskill-01/run-state.md",
+    "passed": 0,
+    "failures": []
+  }
+]

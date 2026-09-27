@@ -192,7 +192,7 @@ memory-comparison:
 **Generated review:** `kb/agentic-systems/reviews/arsumbris.md`
 
 **Memory analysis report:** `kb/reports/state/agentic-system-analysis/AAS-2026-09-23-arsumbris-02/memory-report.md`
-**Memory analysis report SHA-256:** 36c972988a0b3efba6c11953cb66c2c4dfdccdfb33aa56d437ab851f7b705c7d
+**Memory analysis report SHA-256:** 27dccc63d9dafce957af7468b155e485de8f0797c215f626a612607d695990b6
 
 Run AAS-2026-09-23-arsumbris-02 opened 2026-09-23; system name is arsumbris. The retained exact result is intended for `kb/reports/retained/agentic-system-analysis/AAS-2026-09-23-arsumbris-02/result.md`. Only the complete run state declares successful publication. No prior review or substantive prior analysis was read. Fresh memory and epistemic specialists received only this frozen source boundary and source-checkable seeds. Specialist model identity is unknown; instruction and input byte identities are retained with the local report.
 
@@ -271,7 +271,7 @@ Evidence: SRC-2 `crates/au-engine/src/build.rs:1206-1220`; SRC-2 `crates/au-engi
 >         indexes,
 >         instances,
 >         backlinks: backlinks.into_iter().collect(),
-> --- [crates/au-engine/src/build.rs](https://github.com/arsumbris/au-engine/blob/46f12389d4d4833fed51640a48cf938516433106/crates/au-engine/src/build.rs#L1206)
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-23-arsumbris-02/source-bundle.txt:135288-135294` @ `sha256:b64f3d37b0259ec2e6d116a885c4287c99f69575763f6372ce639d597b533b8a` — original blob: [pinned source](https://github.com/arsumbris/au-engine/blob/46f12389d4d4833fed51640a48cf938516433106/crates/au-engine/src/build.rs)
 
 #### OBJ-4 — Auxiliary current-run read/served hashes (outside memory profile)
 
@@ -284,7 +284,7 @@ Evidence: SRC-6 `src/daemon/session.ts:18-50`; SRC-6 `src/daemon/freshness.ts:45
 >    * text sentinel::au-harness]]). SEPARATE from `readView`: a served VIEW satisfies a read-
 >    * PRECONDITION (a knowledge gate) but must NOT satisfy read-before-WRITE (a safety gate on
 >    * the exact current bytes) — so the write floor consults `readView` only. Reaped on close.
-> --- [src/daemon/session.ts](https://github.com/arsumbris/au-mcp/blob/3ddc3b62ed0b339a89a57f11026676df18d3b2eb/src/daemon/session.ts#L29)
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-23-arsumbris-02/source-bundle.txt:415434-415440` @ `sha256:b64f3d37b0259ec2e6d116a885c4287c99f69575763f6372ce639d597b533b8a` — original blob: [pinned source](https://github.com/arsumbris/au-mcp/blob/3ddc3b62ed0b339a89a57f11026676df18d3b2eb/src/daemon/session.ts)
 
 #### OBJ-5 — Raw session facts and continuity record
 
@@ -297,7 +297,7 @@ Evidence: SRC-6 `src/daemon/crash-recovery.ts:25-55,70-104,237-263`; SRC-6 `src/
 >   } catch {
 >     /* best-effort */
 >   }
-> --- [src/daemon/crash-recovery.ts](https://github.com/arsumbris/au-mcp/blob/3ddc3b62ed0b339a89a57f11026676df18d3b2eb/src/daemon/crash-recovery.ts#L52)
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-23-arsumbris-02/source-bundle.txt:412573-412579` @ `sha256:b64f3d37b0259ec2e6d116a885c4287c99f69575763f6372ce639d597b533b8a` — original blob: [pinned source](https://github.com/arsumbris/au-mcp/blob/3ddc3b62ed0b339a89a57f11026676df18d3b2eb/src/daemon/crash-recovery.ts)
 
 #### OBJ-6 — Corrections, dispositions and their remedies
 
@@ -315,7 +315,7 @@ Evidence: SRC-19 `type/correction.type.yaml:1-17`; SRC-19 `type/correction.forge
 >   #: Forge the root before a recurrence.
 >   #: An incompatible root produces a diagnostic.
 >   recurs?: correction.forged*
-> --- [type/correction.forged.type.yaml](https://github.com/arsumbris/au-govern/blob/8bf899b90a80081f328caacb0102ed47145b242d/type/correction.forged.type.yaml#L1)
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-23-arsumbris-02/source-bundle.txt:465203-465214` @ `sha256:b64f3d37b0259ec2e6d116a885c4287c99f69575763f6372ce639d597b533b8a` — original blob: [pinned source](https://github.com/arsumbris/au-govern/blob/8bf899b90a80081f328caacb0102ed47145b242d/type/correction.forged.type.yaml)
 
 #### OBJ-7 — Generated launch and navigation material
 
@@ -324,7 +324,7 @@ Evidence: SRC-6 `src/skills/materialize.ts:1-16,33-43`; SRC-6 `src/inject/materi
 > // Skills are launch-time-STATIC, the mirror of runtime-dynamic tools: a harness scans
 > // its skill folders once at startup, so skills are written to DISK before launch rather
 > // than riding the live MCP wire. See [[c - skills are launch-time-static the mirror of
-> --- [src/skills/materialize.ts](https://github.com/arsumbris/au-mcp/blob/3ddc3b62ed0b339a89a57f11026676df18d3b2eb/src/skills/materialize.ts#L3)
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-23-arsumbris-02/source-bundle.txt:417346-417348` @ `sha256:b64f3d37b0259ec2e6d116a885c4287c99f69575763f6372ce639d597b533b8a` — original blob: [pinned source](https://github.com/arsumbris/au-mcp/blob/3ddc3b62ed0b339a89a57f11026676df18d3b2eb/src/skills/materialize.ts)
 
 The research-map branch is the computed Index consumed by research/mediation; it reorganizes stored question/article relations, not the truth of their answers (SRC-22 `refresh-research-map.mjs`).
 
@@ -349,11 +349,11 @@ Immediate return: launch JSON or error, then tool result/error to the harness. L
 
 
 > const child = spawn(paths.node, args, { cwd: adapter.dir, env: process.env })
-> --- [pinned source](https://github.com/arsumbris/au-host/blob/0e85fb1731fdef2d6196618aff5a2a567e621866/app/src/main/agent-launch.ts)
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-23-arsumbris-02/source-bundle.txt:272131` @ `sha256:b64f3d37b0259ec2e6d116a885c4287c99f69575763f6372ce639d597b533b8a` — original blob: [pinned source](https://github.com/arsumbris/au-host/blob/0e85fb1731fdef2d6196618aff5a2a567e621866/app/src/main/agent-launch.ts)
 
 > const { result, isError } = await client.invoke(handle, `mcp.${name}`, args)
 >       return ok(result, isError)
-> --- [pinned source](https://github.com/arsumbris/au-mcp-adapter-cc/blob/333b2117f338cd4815eeeb9ab7b3932b29fa7d62/src/mcp-server.ts)
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-23-arsumbris-02/source-bundle.txt:440546-440547` @ `sha256:b64f3d37b0259ec2e6d116a885c4287c99f69575763f6372ce639d597b533b8a` — original blob: [pinned source](https://github.com/arsumbris/au-mcp-adapter-cc/blob/333b2117f338cd4815eeeb9ab7b3932b29fa7d62/src/mcp-server.ts)
 
 RTE-2 — ordinary file change admission. Implementation conclusion status: wired. Trigger: a write/edit/delete request proposed by an agent, human-driven client or plugin. Admission is split: profile/continuity and input schema in invoke; read-before-write and native redirects in separately requested mediation; path guards in file tools; optional content-hash comparison and exact replacement in engine mutation. SRC-6 `src/daemon/daemon.ts:830-920`; SRC-8 `src/read-guard.ts:76-100`, `src/file-tools.ts:239-319`; SRC-2 `crates/au-engine/src/mutate.rs:45-145`, `crates/au-engine/src/serve.rs:3970-4020`.
 
@@ -375,7 +375,7 @@ Guidance is current prompt/skill/rule content plus symbolic API conditions, not 
 > --- [pinned source](https://github.com/arsumbris/au-engine/blob/46f12389d4d4833fed51640a48cf938516433106/crates/au-engine/src/mutate.rs)
 
 > blocking_handle.rebuild_paths(saga_dirty_set(&plan));
-> --- [pinned source](https://github.com/arsumbris/au-engine/blob/46f12389d4d4833fed51640a48cf938516433106/crates/au-engine/src/serve.rs)
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-23-arsumbris-02/source-bundle.txt:171802` @ `sha256:b64f3d37b0259ec2e6d116a885c4287c99f69575763f6372ce639d597b533b8a` — original blob: [pinned source](https://github.com/arsumbris/au-engine/blob/46f12389d4d4833fed51640a48cf938516433106/crates/au-engine/src/serve.rs)
 
 RTE-3 — admit executable extensions and operational configuration. Implementation conclusion status: wired. Mounted type definitions name a module entry and declare contract version and broker access. Discovery checks contract equality, imports the module in-process and requires createPlugin. A failed critical plugin prevents serving or poisons the daemon; noncritical version/load failures are skipped. Profiles then select which registered tools and hooks apply. SRC-6 `src/daemon/discovery.ts:307-400`, `src/daemon/daemon.ts:603-616,691-722`; `src/daemon/broker.ts:105-135`. The proposer is the package author or editing agent/human; the loader makes structural admission decisions, while the operator controls mounting. Its oracle is a required contract integer/export shape, not a behavioral reference result. Guidance includes SDK contracts and editable metadata, symbolic and inspectable by field; no evidence-responsive code improvement follows merely from passing these checks.
 
@@ -431,7 +431,7 @@ A human editor or agent supplies text; the host and MCP tool call the engine mut
 >       // the read itself records nothing.
 >       if (typeof result.commit === 'string') anchorCommit = result.commit
 >       if (typeof result.hash === 'string') contentHash = result.hash
-> --- [src/file-tools.ts](https://github.com/arsumbris/au-mcp-core/blob/25e0625e553c237671bba9a3a8c173a889dddf02/src/file-tools.ts#L209)
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-23-arsumbris-02/source-bundle.txt:430076-430081` @ `sha256:b64f3d37b0259ec2e6d116a885c4287c99f69575763f6372ce639d597b533b8a` — original blob: [pinned source](https://github.com/arsumbris/au-mcp-core/blob/25e0625e553c237671bba9a3a8c173a889dddf02/src/file-tools.ts)
 
 >   async writeFile(
 >     entryPath: string,
@@ -440,7 +440,7 @@ A human editor or agent supplies text; the host and MCP tool call the engine mut
 >     expectedHash?: string,
 >   ): Promise<FileWriteResult> {
 >     return this.mutate(entryPath, (client) => client.writeFile(filePath, content, { expectedHash }))
-> --- [app/src/main/engine-connections.ts](https://github.com/arsumbris/au-host/blob/0e85fb1731fdef2d6196618aff5a2a567e621866/app/src/main/engine-connections.ts#L151)
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-23-arsumbris-02/source-bundle.txt:272866-272872` @ `sha256:b64f3d37b0259ec2e6d116a885c4287c99f69575763f6372ce639d597b533b8a` — original blob: [pinned source](https://github.com/arsumbris/au-host/blob/0e85fb1731fdef2d6196618aff5a2a567e621866/app/src/main/engine-connections.ts)
 
 #### RTE-7 — Source-grounded graph growth and maintenance
 
@@ -457,7 +457,7 @@ The external agent following mine/cut/weave/reweave/tend turns sources into cand
 > Fold related facets into one revision serving the premise and target's purpose.
 > Use the cut's target.
 > Preserve its required structure and accurate prose.
-> --- [skills/reweave.md](https://github.com/arsumbris/au-weave/blob/24320734e2436e8c75d44a7ff9afb6a330569840/skills/reweave.md#L35)
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-23-arsumbris-02/source-bundle.txt:458789-458799` @ `sha256:b64f3d37b0259ec2e6d116a885c4287c99f69575763f6372ce639d597b533b8a` — original blob: [pinned source](https://github.com/arsumbris/au-weave/blob/24320734e2436e8c75d44a7ff9afb6a330569840/skills/reweave.md)
 
 > **Interpret the chain explicitly**
 > 
@@ -467,7 +467,7 @@ The external agent following mine/cut/weave/reweave/tend turns sources into cand
 > 
 > To find the current version, query within the intended versioned family and check the chain.
 > A missing successor field alone does not make every node current.
-> --- [guides/base-layer/supersede.md](https://github.com/arsumbris/au-agent-guides/blob/ddc33339c73278ed2b9a178030d9d94924e43224/guides/base-layer/supersede.md#L28)
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-23-arsumbris-02/source-bundle.txt:460668-460675` @ `sha256:b64f3d37b0259ec2e6d116a885c4287c99f69575763f6372ce639d597b533b8a` — original blob: [pinned source](https://github.com/arsumbris/au-agent-guides/blob/ddc33339c73278ed2b9a178030d9d94924e43224/guides/base-layer/supersede.md)
 
 > A successful write or clean diagnostics alone cannot establish this.
 > Save checked, distinct links in `passages` before writing the node.
@@ -503,12 +503,12 @@ A selected capture-correction inject supplies the correction rule (SRC-19 `profi
 > 
 > Mark an assessed correction reviewed when no action is pending.
 > Preserve the feedback and record the reason there.
-> --- [skills/improve.md](https://github.com/arsumbris/au-competency/blob/6f23713425b2ba58b7361471badd58f63ca0642b/skills/improve.md#L17)
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-23-arsumbris-02/source-bundle.txt:465575-465587` @ `sha256:b64f3d37b0259ec2e6d116a885c4287c99f69575763f6372ce639d597b533b8a` — original blob: [pinned source](https://github.com/arsumbris/au-competency/blob/6f23713425b2ba58b7361471badd58f63ca0642b/skills/improve.md)
 
 > When a run exposes a mistake in the procedure, revise the step that led to it.
 > Give the next caller enough information to recognize the situation and choose the correct action.
 > Label an anticipated problem as a possibility until it has been observed.
-> --- [guides/gotchas-first.md](https://github.com/arsumbris/au-skills/blob/d32336d25b6ad2513976cba15ed69f30d6d1b38f/guides/gotchas-first.md#L9)
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-23-arsumbris-02/source-bundle.txt:464385-464387` @ `sha256:b64f3d37b0259ec2e6d116a885c4287c99f69575763f6372ce639d597b533b8a` — original blob: [pinned source](https://github.com/arsumbris/au-skills/blob/d32336d25b6ad2513976cba15ed69f30d6d1b38f/guides/gotchas-first.md)
 
 > **Trim from evidence**
 > 
@@ -519,19 +519,19 @@ A selected capture-correction inject supplies the correction rule (SRC-19 `profi
 > A self-authored skill needs the same evidence as a borrowed one.
 > Use [[when-a-skill-helps]] to identify its contribution.
 > Use [[eval-driven-authoring]] when that contribution needs measurement.
-> --- [guides/curate-dont-accumulate.md](https://github.com/arsumbris/au-skills/blob/d32336d25b6ad2513976cba15ed69f30d6d1b38f/guides/curate-dont-accumulate.md#L29)
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-23-arsumbris-02/source-bundle.txt:464243-464251` @ `sha256:b64f3d37b0259ec2e6d116a885c4287c99f69575763f6372ce639d597b533b8a` — original blob: [pinned source](https://github.com/arsumbris/au-skills/blob/d32336d25b6ad2513976cba15ed69f30d6d1b38f/guides/curate-dont-accumulate.md)
 
 The correction retains reasons for the requested change, and improve explicitly reads them. Gotcha guidance retains the symptom and mistaken action beside the corrected step. A writing-rule body must explain the move, but the contract does not require copying the original correction's full rationale or making the future runtime read its provenance. Reason retention therefore differs between the correction record, the adopted rule and a code remedy.
 
 > goal: Place advice about a known mistake at the decision where it can prevent a repeat.
 > rule: Describe the symptom, the mistaken action and the correction beside the affected step.
-> --- [guides/gotchas-first.md](https://github.com/arsumbris/au-skills/blob/d32336d25b6ad2513976cba15ed69f30d6d1b38f/guides/gotchas-first.md#L3)
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-23-arsumbris-02/source-bundle.txt:464379-464380` @ `sha256:b64f3d37b0259ec2e6d116a885c4287c99f69575763f6372ce639d597b533b8a` — original blob: [pinned source](https://github.com/arsumbris/au-skills/blob/d32336d25b6ad2513976cba15ed69f30d6d1b38f/guides/gotchas-first.md)
 
 > **Check delivery**
 > 
 > Check the profile's diagnostics and generated launch output.
 > An unbundled rule stays inert.
-> --- [skills/write-a-rule.md](https://github.com/arsumbris/au-writing-style/blob/163b5597583364649b0bd896575ae4167e436719/skills/write-a-rule.md#L65)
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-23-arsumbris-02/source-bundle.txt:463948-463951` @ `sha256:b64f3d37b0259ec2e6d116a885c4287c99f69575763f6372ce639d597b533b8a` — original blob: [pinned source](https://github.com/arsumbris/au-writing-style/blob/163b5597583364649b0bd896575ae4167e436719/skills/write-a-rule.md)
 
 > Capture a recurring correction as one reusable `writing-rule`.
 > 
@@ -540,7 +540,7 @@ The correction retains reasons for the requested change, and improve explicitly 
 > 
 > A rule becomes active when a profile's `rules` field names it.
 > Writing and bundling are separate steps.
-> --- [skills/write-a-rule.md](https://github.com/arsumbris/au-writing-style/blob/163b5597583364649b0bd896575ae4167e436719/skills/write-a-rule.md#L9)
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-23-arsumbris-02/source-bundle.txt:463892-463898` @ `sha256:b64f3d37b0259ec2e6d116a885c4287c99f69575763f6372ce639d597b533b8a` — original blob: [pinned source](https://github.com/arsumbris/au-writing-style/blob/163b5597583364649b0bd896575ae4167e436719/skills/write-a-rule.md)
 
 
 > Capture feedback that changes how the agent should work as a `correction.open`.
@@ -554,7 +554,7 @@ The correction retains reasons for the requested change, and improve explicitly 
 > The relation preserves which friction returned.
 > 
 > A useful correction lets a future agent recognize the situation and choose the better behavior.
-> --- [rules/capture a correction when the human redirects you.md](https://github.com/arsumbris/au-govern/blob/8bf899b90a80081f328caacb0102ed47145b242d/rules/capture%20a%20correction%20when%20the%20human%20redirects%20you.md#L9)
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-23-arsumbris-02/source-bundle.txt:465021-465031` @ `sha256:b64f3d37b0259ec2e6d116a885c4287c99f69575763f6372ce639d597b533b8a` — original blob: [pinned source](https://github.com/arsumbris/au-govern/blob/8bf899b90a80081f328caacb0102ed47145b242d/rules/capture%20a%20correction%20when%20the%20human%20redirects%20you.md)
 
 
 #### RTE-9 — Automatic launch selection and delivery
@@ -569,12 +569,12 @@ At launch, au-mcp discovers typed injects with member ownership and role. Exact 
 >   const injects = select
 >     ? discovered.filter((i) => select.includes(injectKey(i)))
 >     : discovered.filter(inDefaultSet)
-> --- [src/inject/materialize.ts](https://github.com/arsumbris/au-mcp/blob/3ddc3b62ed0b339a89a57f11026676df18d3b2eb/src/inject/materialize.ts#L181)
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-23-arsumbris-02/source-bundle.txt:416839-416846` @ `sha256:b64f3d37b0259ec2e6d116a885c4287c99f69575763f6372ce639d597b533b8a` — original blob: [pinned source](https://github.com/arsumbris/au-mcp/blob/3ddc3b62ed0b339a89a57f11026676df18d3b2eb/src/inject/materialize.ts)
 
 >   const delivery = await recoverStartupContext(payload)
 >   if (delivery.context) { outputAttempted = true; await emitHookOutput({ hookSpecificOutput: { hookEventName: 'SessionStart', additionalContext: delivery.context } }) }
 >   markStartupContextEmitted(delivery)
-> --- [hooks/session-start.ts](https://github.com/arsumbris/au-mcp-adapter-codex/blob/3b0e3a3cf67b3143819c61c590efc85d36c23bc5/hooks/session-start.ts#L15)
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-23-arsumbris-02/source-bundle.txt:443135-443137` @ `sha256:b64f3d37b0259ec2e6d116a885c4287c99f69575763f6372ce639d597b533b8a` — original blob: [pinned source](https://github.com/arsumbris/au-mcp-adapter-codex/blob/3b0e3a3cf67b3143819c61c590efc85d36c23bc5/hooks/session-start.ts)
 
 CC packs into 8,500-character slots; its default has no total slot cap, while an optional cap reports dropped whole blocks. Codex's optional byte budget counts envelopes and overflow notices and drops whole blocks. These are context-volume controls, not relevance learning. Exact profile keys and reference traversal are identifier selection; default member role and total budgeting are coarse selection. Live repository overview additionally pushes current editable README tldr content, discovery names and dependency counts at session open (SRC-8 `src/repo-overview.ts:3-18,68-111`). Graph pull interfaces and skill descriptions leave content choice with the requesting agent/harness; no inferred-embedding or inferred-judgment push selector was found in these paths.
 
@@ -589,7 +589,7 @@ The daemon appends stamped events, persists emitted governance facts, and reload
 >   function makeConsultTrace(session: Session): ConsultTrace {
 >     return async (query) => ({ events: queryLog(session, query), headSeq: sessions.headSeq(session.id) })
 >   }
-> --- [src/daemon/daemon.ts](https://github.com/arsumbris/au-mcp/blob/3ddc3b62ed0b339a89a57f11026676df18d3b2eb/src/daemon/daemon.ts#L344)
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-23-arsumbris-02/source-bundle.txt:413170-413176` @ `sha256:b64f3d37b0259ec2e6d116a885c4287c99f69575763f6372ce639d597b533b8a` — original blob: [pinned source](https://github.com/arsumbris/au-mcp/blob/3ddc3b62ed0b339a89a57f11026676df18d3b2eb/src/daemon/daemon.ts)
 
 >   for (const s of listSessions(workspace)) {
 >     const window = s.dormant ? opts.dormantWindowMs : opts.orphanWindowMs
@@ -597,14 +597,14 @@ The daemon appends stamped events, persists emitted governance facts, and reload
 >       retire(s.id)
 >       retired.push(s.id)
 >     }
-> --- [src/daemon/crash-recovery.ts](https://github.com/arsumbris/au-mcp/blob/3ddc3b62ed0b339a89a57f11026676df18d3b2eb/src/daemon/crash-recovery.ts#L250)
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-23-arsumbris-02/source-bundle.txt:412771-412776` @ `sha256:b64f3d37b0259ec2e6d116a885c4287c99f69575763f6372ce639d597b533b8a` — original blob: [pinned source](https://github.com/arsumbris/au-mcp/blob/3ddc3b62ed0b339a89a57f11026676df18d3b2eb/src/daemon/crash-recovery.ts)
 
 >         // A clean close leaves the session DORMANT, not gone. Its governance slice + run record are
 >         // KEPT (for resume rehydration) and only `retire` clears them; here we just flag dormancy and
 >         // preserve the run index as the resume marker, so a later open bumps the run (resume) rather
 >         // than reusing it. The orphan age-sweep bounds a session that never resumes.
 >         markSessionDormant(opts.workspace, request.session)
-> --- [src/daemon/daemon.ts](https://github.com/arsumbris/au-mcp/blob/3ddc3b62ed0b339a89a57f11026676df18d3b2eb/src/daemon/daemon.ts#L738)
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-23-arsumbris-02/source-bundle.txt:413564-413568` @ `sha256:b64f3d37b0259ec2e6d116a885c4287c99f69575763f6372ce639d597b533b8a` — original blob: [pinned source](https://github.com/arsumbris/au-mcp/blob/3ddc3b62ed0b339a89a57f11026676df18d3b2eb/src/daemon/daemon.ts)
 
 
 #### RTE-11 — Auxiliary current-run access gating and freshness (outside memory profile)
@@ -619,7 +619,7 @@ Reads/served content update OBJ-4. At a later mediated overwrite, the read-guard
 >     if (now !== null && now !== seen) {
 >       return deny(ctx, action, `${path} changed on disk since you read it — re-read it before overwriting (read-before-write)`)
 >     }
-> --- [src/read-guard.ts](https://github.com/arsumbris/au-mcp-core/blob/25e0625e553c237671bba9a3a8c173a889dddf02/src/read-guard.ts#L88)
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-23-arsumbris-02/source-bundle.txt:432316-432323` @ `sha256:b64f3d37b0259ec2e6d116a885c4287c99f69575763f6372ce639d597b533b8a` — original blob: [pinned source](https://github.com/arsumbris/au-mcp-core/blob/25e0625e553c237671bba9a3a8c173a889dddf02/src/read-guard.ts)
 
 >         if (s.readView.has(path) && s.readView.get(path) !== current) {
 >           s.readView.delete(path)
@@ -628,7 +628,7 @@ Reads/served content update OBJ-4. At a later mediated overwrite, the read-guard
 >         if (s.servedView.has(path) && s.servedView.get(path) !== current) {
 >           s.servedView.delete(path)
 >           invalidated = true
-> --- [src/daemon/freshness.ts](https://github.com/arsumbris/au-mcp/blob/3ddc3b62ed0b339a89a57f11026676df18d3b2eb/src/daemon/freshness.ts#L62)
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-23-arsumbris-02/source-bundle.txt:414490-414496` @ `sha256:b64f3d37b0259ec2e6d116a885c4287c99f69575763f6372ce639d597b533b8a` — original blob: [pinned source](https://github.com/arsumbris/au-mcp/blob/3ddc3b62ed0b339a89a57f11026676df18d3b2eb/src/daemon/freshness.ts)
 
 #### RTE-12 — Import originals as readable source notes
 
@@ -643,7 +643,7 @@ The ingest tool runs a format converter over a retained original, previews its t
 >       if (before && before.text !== content && !input.refresh) {
 >         Object.assign(item, { status: 'conflict', hash: before.hash, error: 'existing note preserved; use refresh: true to replace its full content' });
 >         continue;
-> --- [ingest.mjs](https://github.com/arsumbris/au-ingest/blob/5b3c22f930231ed12c964dce0144a35b5562ef9d/ingest.mjs#L208)
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-23-arsumbris-02/source-bundle.txt:467803-467811` @ `sha256:b64f3d37b0259ec2e6d116a885c4287c99f69575763f6372ce639d597b533b8a` — original blob: [pinned source](https://github.com/arsumbris/au-ingest/blob/5b3c22f930231ed12c964dce0144a35b5562ef9d/ingest.mjs)
 
 >   if (diagnostics.some((diagnostic) => diagnostic.severity === 'error')) {
 >     throw Object.assign(new Error('converted note has structural errors; nothing written'), { diagnostics });
@@ -669,7 +669,7 @@ A research agent saves an article and answer link; refresh_research_map derives 
 > #: Question parents determine nesting; researched and dropped question entries and tldrs are hidden.
 > #: An open question and any answers share one row, with descendants beneath it.
 > #: The map inherits map::au-base-types for navigation discovery.
-> --- [type/map.computed-index.type.yaml](https://github.com/arsumbris/au-tree-research/blob/65faf72fc107bb8eef84675e01bda18513d8b49a/type/map.computed-index.type.yaml#L1)
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-23-arsumbris-02/source-bundle.txt:468893-468898` @ `sha256:b64f3d37b0259ec2e6d116a885c4287c99f69575763f6372ce639d597b533b8a` — original blob: [pinned source](https://github.com/arsumbris/au-tree-research/blob/65faf72fc107bb8eef84675e01bda18513d8b49a/type/map.computed-index.type.yaml)
 
 #### RTE-14 — Research an answer and update the research agenda. Procedure conclusion status: afforded. SRC-22 `skills/research.md`, `skills/mediate.md`, `type/question.researched.type.yaml`; SRC-20 `skills/self-research.md`. A user/question premise triggers an instructed research agent to gather sources, develop OBJ-11, check consequential claims and plausible alternatives, save/review the article and mark the question researched only after the answer exists. The agent proposes and evaluates content; a later mediation task ranks follow-up questions. Human scope controls the task. Expected answers are not generally supplied: external sources provide evidence, while model judgment is the semantic evaluator. Typed completion is a declaration, not a history check. The process can preserve explanations and inferences; no specific operative theory or improved capacity is observed. Retained article/reference/answer links supply later source and inquiry consumers. Recovery is to keep incomplete work open or revise the article; reverting an inadequate conclusion remains an agent/human decision. Guarantee strength: policy.
 
@@ -749,7 +749,7 @@ Answer-oracle access: the operator/evaluation designer can specify expected task
 > - For a delivery change, inspect discovery and the intended launch artifact through [[author-a-skill]].
 > 
 > Reuse evidence while its task, model and environment remain applicable.
-> --- [skills/write-a-skill.md](https://github.com/arsumbris/au-skills/blob/d32336d25b6ad2513976cba15ed69f30d6d1b38f/skills/write-a-skill.md#L28)
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-23-arsumbris-02/source-bundle.txt:464881-464887` @ `sha256:b64f3d37b0259ec2e6d116a885c4287c99f69575763f6372ce639d597b533b8a` — original blob: [pinned source](https://github.com/arsumbris/au-skills/blob/d32336d25b6ad2513976cba15ed69f30d6d1b38f/skills/write-a-skill.md)
 
 ### Claims
 
@@ -790,14 +790,14 @@ Evidence: SRC-9 `hooks/pre-compact.ts:1-11`; SRC-10 `hooks/pre-compact.ts:1-13`;
 >   trigger: payload.trigger ?? null,
 >   custom_instructions: payload.custom_instructions ?? null,
 > })
-> --- [hooks/pre-compact.ts](https://github.com/arsumbris/au-mcp-adapter-codex/blob/3b0e3a3cf67b3143819c61c590efc85d36c23bc5/hooks/pre-compact.ts#L7)
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-23-arsumbris-02/source-bundle.txt:443052-443057` @ `sha256:b64f3d37b0259ec2e6d116a885c4287c99f69575763f6372ce639d597b533b8a` — original blob: [pinned source](https://github.com/arsumbris/au-mcp-adapter-codex/blob/3b0e3a3cf67b3143819c61c590efc85d36c23bc5/hooks/pre-compact.ts)
 
 > /** Capture only explicitly exposed text. Encrypted-only reasoning contributes no fabricated content. */
 > function reasoningText(p: ResponseItemPayload): string {
 >   const texts = (arr: Array<{ text?: unknown }> | undefined): string =>
 >     Array.isArray(arr) ? arr.map((x) => (typeof x?.text === 'string' ? x.text : '')).filter(Boolean).join('\n') : ''
 >   return [texts(p.summary), texts(p.content)].filter(Boolean).join('\n\n').trim()
-> --- [src/lift.ts](https://github.com/arsumbris/au-mcp-adapter-codex/blob/3b0e3a3cf67b3143819c61c590efc85d36c23bc5/src/lift.ts#L42)
+> --- `kb/reports/state/agentic-system-analysis/AAS-2026-09-23-arsumbris-02/source-bundle.txt:445740-445744` @ `sha256:b64f3d37b0259ec2e6d116a885c4287c99f69575763f6372ce639d597b533b8a` — original blob: [pinned source](https://github.com/arsumbris/au-mcp-adapter-codex/blob/3b0e3a3cf67b3143819c61c590efc85d36c23bc5/src/lift.ts)
 
 No other absence is asserted. Missing product runs and provider internals are limitations.
 

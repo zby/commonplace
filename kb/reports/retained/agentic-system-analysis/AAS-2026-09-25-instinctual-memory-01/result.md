@@ -245,7 +245,7 @@ memory-comparison:
 
 **Memory analysis report:** `kb/reports/state/agentic-system-analysis/AAS-2026-09-25-instinctual-memory-01/memory-report.md`
 
-**Memory analysis report SHA-256:** 0d0859caab64bcf292453fedb7ec637fff4bf31a41fbea1fc68971b1e474f10f
+**Memory analysis report SHA-256:** 164bc08c360c7ffc7821a18a567ceb84a8929c87c54f7c73975dcb39578e3c7f
 
 ## Boundary and evidence
 
@@ -317,7 +317,7 @@ OBJ-4 — Delivered natural-language facts and raw-event text, with symbolic res
 OBJ-5 — versioned root-level `tasks.json`, separate from Git facts and journal. Natural-language titles with symbolic task IDs/version; caller-authored, retained across calls. The file is protected by a task lock, and updates require `expected_version`; the writer truncates and fsyncs the same file rather than using the Git intent/receipt pipeline. Evidence: SRC-1 `src/ops.rs:485-529,688-743`, `src/mcp.rs:131-145`. It is a named external-agent pull surface, not evidence of task-scoped trace learning.
 
 > let path = root.join("tasks.json");
-> --- `src/ops.rs` @ `6acb13dc35765bf5ccfc87e445dd09c480f1c28a`
+> --- `src/ops.rs:718` @ `6acb13dc35765bf5ccfc87e445dd09c480f1c28a`
 
 ### Routes
 

@@ -307,7 +307,7 @@ Implementation conclusion status: wired. A candidate is sent to the configured t
 The immediate result is feedback/fitness; later consumers are archive ranking, diagnosis and training rewards. Execution feedback is visible to the model after prompt sanitization, but score sanitization does not hide files from executed code. Candidate effects are arbitrary submitted Python within the selected executor's granted filesystem/network/device envelope. The published worker launcher mounts the shared task tree read-only with writable scratch/cache subtrees. Read-only is not unreadable; private answers under that tree are not isolated from candidate code by that mount. This is a deployment-contract limit, not evidence of actual benchmark cheating. SRC-1 `OpenMLE-Gym/openmle-sandbox/node_workers/sandbox_builder/start_sandboxes.sh:145-191`; SRC-2 `OpenMLE-Gym/openmle-sandbox/README.md:105-119`.
 
 > -v "$NFS_MOUNT:$CONTAINER_WORKSPACE:ro" \
-> --- `OpenMLE-Gym/openmle-sandbox/node_workers/sandbox_builder/start_sandboxes.sh` @ `71ae803a035d5e3b78c19fa49ed9f67d0550cbaa`
+> --- `OpenMLE-Gym/openmle-sandbox/node_workers/sandbox_builder/start_sandboxes.sh:150` @ `71ae803a035d5e3b78c19fa49ed9f67d0550cbaa`
 
 Guarantee strength: protocol for score selection; configured deployment guarantee for isolation, not established across all adapters. The evaluator owns the score; operators can choose evaluator and trust override. Remote failures/timeouts yield feedback and buggy candidates; model and sandbox concurrency controls do not establish exactly-once external effects. NatureBench uses its external evaluator contract; no claim that this worker mount describes that separate deployment.
 
@@ -455,7 +455,7 @@ Message deduplication is an actual operation over retained training examples:
 The retained SFT implementation makes actual actor-training calls:
 
 > ray.get(actor_model.async_train(rollout_id, rollout_data_curr_ref))
-> --- `OpenMLE-ERL/SFT/slime/train_async.py` @ `71ae803a035d5e3b78c19fa49ed9f67d0550cbaa`
+> --- `OpenMLE-ERL/SFT/slime/train_async.py:53` @ `71ae803a035d5e3b78c19fa49ed9f67d0550cbaa`
 
 Admission/revision audit: operator-selected sources and paths trigger collection/selection; success criteria, annotation-selected indices, complete-message hashes and token limits reject examples before training. Dataset guidance includes task prompts and generated reasoning/code, but gradient fitting is not criticism of stated theory content. Changed parameters persist in model checkpoints for later generation. Immediate return is selected files/checkpoints; named trainers pull batches and model loaders pull checkpoints. Withdrawals/rollback beyond operator-selected previous files/checkpoints are uninspected; no automatic validation-based deployment gate is established. Training adjusts parameters; it does not preserve addressable theory content in those parameters. Theory-builder conditions 1–4 for weight adaptation alone are inapplicable to its non-localized representation; criticism on generated program routes remains separately assessed at RTE-7. Learning through criticism is uninspected. Execution benefits are claimed only at CLM-2's coarser comparison grain.
 

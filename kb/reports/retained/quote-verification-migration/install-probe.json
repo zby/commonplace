@@ -1,0 +1,243 @@
+{
+  "fresh_init": "passed",
+  "existing_ingest_preserved": true,
+  "old_form_validation": {
+    "analysed_artifacts": [
+      {
+        "failures": 1,
+        "path": "kb/sources/acm-agentic-context-management-for-long-horizon-tasks.ingest.md",
+        "type": "ingest-report",
+        "warnings": 15
+      }
+    ],
+    "details_command": "commonplace-validate --full kb/sources/acm-agentic-context-management-for-long-horizon-tasks.ingest.md",
+    "diagnostics": [
+      {
+        "id": "validation.base.link-health",
+        "reason": "[base] link health: missing target ../notes/use-tests-a-decomposition-locally-rationale-makes-transfer-testable.md",
+        "severity": "warning",
+        "subject": "kb/sources/acm-agentic-context-management-for-long-horizon-tasks.ingest.md"
+      },
+      {
+        "id": "validation.base.link-health",
+        "reason": "[base] link health: missing target ../notes/derivation-and-inheritance-give-starting-warrant-earns-scope.md",
+        "severity": "warning",
+        "subject": "kb/sources/acm-agentic-context-management-for-long-horizon-tasks.ingest.md"
+      },
+      {
+        "id": "validation.base.link-health",
+        "reason": "[base] link health: missing target ../notes/memory-management-policy-is-learnable-but-oracle-dependent.md",
+        "severity": "warning",
+        "subject": "kb/sources/acm-agentic-context-management-for-long-horizon-tasks.ingest.md"
+      },
+      {
+        "id": "validation.base.link-health",
+        "reason": "[base] link health: missing target ../notes/agent-memory-requirements/preserve-evidence-without-loading-history.md",
+        "severity": "warning",
+        "subject": "kb/sources/acm-agentic-context-management-for-long-horizon-tasks.ingest.md"
+      },
+      {
+        "id": "validation.base.link-health",
+        "reason": "[base] link health: missing target ../notes/knowledge-storage-does-not-imply-contextual-activation.md",
+        "severity": "warning",
+        "subject": "kb/sources/acm-agentic-context-management-for-long-horizon-tasks.ingest.md"
+      },
+      {
+        "id": "validation.base.link-health",
+        "reason": "[base] link health: missing target ../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md",
+        "severity": "warning",
+        "subject": "kb/sources/acm-agentic-context-management-for-long-horizon-tasks.ingest.md"
+      },
+      {
+        "id": "validation.base.link-health",
+        "reason": "[base] link health: missing target ../agent-memory-systems/lightweight/agemem.md",
+        "severity": "warning",
+        "subject": "kb/sources/acm-agentic-context-management-for-long-horizon-tasks.ingest.md"
+      },
+      {
+        "id": "validation.base.link-health",
+        "reason": "[base] link health: missing target ../agent-memory-systems/reviews/virtual-context.md",
+        "severity": "warning",
+        "subject": "kb/sources/acm-agentic-context-management-for-long-horizon-tasks.ingest.md"
+      },
+      {
+        "id": "validation.base.link-health",
+        "reason": "[base] link health: missing target ./llm-agents-are-not-always-faithful-self-evolvers.ingest.md",
+        "severity": "warning",
+        "subject": "kb/sources/acm-agentic-context-management-for-long-horizon-tasks.ingest.md"
+      },
+      {
+        "id": "validation.base.link-health",
+        "reason": "[base] link health: missing target ../notes/use-tests-a-decomposition-locally-rationale-makes-transfer-testable.md",
+        "severity": "warning",
+        "subject": "kb/sources/acm-agentic-context-management-for-long-horizon-tasks.ingest.md"
+      },
+      {
+        "id": "validation.base.link-health",
+        "reason": "[base] link health: missing target ../notes/derivation-and-inheritance-give-starting-warrant-earns-scope.md",
+        "severity": "warning",
+        "subject": "kb/sources/acm-agentic-context-management-for-long-horizon-tasks.ingest.md"
+      },
+      {
+        "id": "validation.base.link-health",
+        "reason": "[base] link health: missing target ../notes/use-tests-a-decomposition-locally-rationale-makes-transfer-testable.md",
+        "severity": "warning",
+        "subject": "kb/sources/acm-agentic-context-management-for-long-horizon-tasks.ingest.md"
+      },
+      {
+        "id": "validation.base.link-health",
+        "reason": "[base] link health: missing target ../notes/derivation-and-inheritance-give-starting-warrant-earns-scope.md",
+        "severity": "warning",
+        "subject": "kb/sources/acm-agentic-context-management-for-long-horizon-tasks.ingest.md"
+      },
+      {
+        "id": "validation.base.link-health",
+        "reason": "[base] link health: missing target ./llm-agents-are-not-always-faithful-self-evolvers.ingest.md",
+        "severity": "warning",
+        "subject": "kb/sources/acm-agentic-context-management-for-long-horizon-tasks.ingest.md"
+      },
+      {
+        "id": "validation.base.link-health",
+        "reason": "[base] link health: missing target ../notes/context-operation-interface-bounds-context-policy.md",
+        "severity": "warning",
+        "subject": "kb/sources/acm-agentic-context-management-for-long-horizon-tasks.ingest.md"
+      },
+      {
+        "id": "validation.base.source-quotes",
+        "reason": "[base] source quotes: expected attributed blockquotes in Quotes section",
+        "severity": "failure",
+        "subject": "kb/sources/acm-agentic-context-management-for-long-horizon-tasks.ingest.md"
+      }
+    ],
+    "excluded_subtrees": [],
+    "schema": "commonplace.validation.v1",
+    "scope": "kb/sources/acm-agentic-context-management-for-long-horizon-tasks.ingest.md",
+    "status": "failed",
+    "summary": {
+      "failing_subjects": 1,
+      "failures": 1,
+      "files_analysed": 1,
+      "text_files": 0,
+      "warning_subjects": 1,
+      "warnings": 15
+    },
+    "target": "kb/sources/acm-agentic-context-management-for-long-horizon-tasks.ingest.md"
+  },
+  "new_form_validation": {
+    "analysed_artifacts": [
+      {
+        "failures": 0,
+        "path": "kb/sources/acm-agentic-context-management-for-long-horizon-tasks.ingest.md",
+        "type": "ingest-report",
+        "warnings": 15
+      }
+    ],
+    "details_command": "commonplace-validate --full kb/sources/acm-agentic-context-management-for-long-horizon-tasks.ingest.md",
+    "diagnostics": [
+      {
+        "id": "validation.base.link-health",
+        "reason": "[base] link health: missing target ../notes/use-tests-a-decomposition-locally-rationale-makes-transfer-testable.md",
+        "severity": "warning",
+        "subject": "kb/sources/acm-agentic-context-management-for-long-horizon-tasks.ingest.md"
+      },
+      {
+        "id": "validation.base.link-health",
+        "reason": "[base] link health: missing target ../notes/derivation-and-inheritance-give-starting-warrant-earns-scope.md",
+        "severity": "warning",
+        "subject": "kb/sources/acm-agentic-context-management-for-long-horizon-tasks.ingest.md"
+      },
+      {
+        "id": "validation.base.link-health",
+        "reason": "[base] link health: missing target ../notes/memory-management-policy-is-learnable-but-oracle-dependent.md",
+        "severity": "warning",
+        "subject": "kb/sources/acm-agentic-context-management-for-long-horizon-tasks.ingest.md"
+      },
+      {
+        "id": "validation.base.link-health",
+        "reason": "[base] link health: missing target ../notes/agent-memory-requirements/preserve-evidence-without-loading-history.md",
+        "severity": "warning",
+        "subject": "kb/sources/acm-agentic-context-management-for-long-horizon-tasks.ingest.md"
+      },
+      {
+        "id": "validation.base.link-health",
+        "reason": "[base] link health: missing target ../notes/knowledge-storage-does-not-imply-contextual-activation.md",
+        "severity": "warning",
+        "subject": "kb/sources/acm-agentic-context-management-for-long-horizon-tasks.ingest.md"
+      },
+      {
+        "id": "validation.base.link-health",
+        "reason": "[base] link health: missing target ../notes/context-efficiency-is-the-central-design-concern-in-agent-systems.md",
+        "severity": "warning",
+        "subject": "kb/sources/acm-agentic-context-management-for-long-horizon-tasks.ingest.md"
+      },
+      {
+        "id": "validation.base.link-health",
+        "reason": "[base] link health: missing target ../agent-memory-systems/lightweight/agemem.md",
+        "severity": "warning",
+        "subject": "kb/sources/acm-agentic-context-management-for-long-horizon-tasks.ingest.md"
+      },
+      {
+        "id": "validation.base.link-health",
+        "reason": "[base] link health: missing target ../agent-memory-systems/reviews/virtual-context.md",
+        "severity": "warning",
+        "subject": "kb/sources/acm-agentic-context-management-for-long-horizon-tasks.ingest.md"
+      },
+      {
+        "id": "validation.base.link-health",
+        "reason": "[base] link health: missing target ./llm-agents-are-not-always-faithful-self-evolvers.ingest.md",
+        "severity": "warning",
+        "subject": "kb/sources/acm-agentic-context-management-for-long-horizon-tasks.ingest.md"
+      },
+      {
+        "id": "validation.base.link-health",
+        "reason": "[base] link health: missing target ../notes/use-tests-a-decomposition-locally-rationale-makes-transfer-testable.md",
+        "severity": "warning",
+        "subject": "kb/sources/acm-agentic-context-management-for-long-horizon-tasks.ingest.md"
+      },
+      {
+        "id": "validation.base.link-health",
+        "reason": "[base] link health: missing target ../notes/derivation-and-inheritance-give-starting-warrant-earns-scope.md",
+        "severity": "warning",
+        "subject": "kb/sources/acm-agentic-context-management-for-long-horizon-tasks.ingest.md"
+      },
+      {
+        "id": "validation.base.link-health",
+        "reason": "[base] link health: missing target ../notes/use-tests-a-decomposition-locally-rationale-makes-transfer-testable.md",
+        "severity": "warning",
+        "subject": "kb/sources/acm-agentic-context-management-for-long-horizon-tasks.ingest.md"
+      },
+      {
+        "id": "validation.base.link-health",
+        "reason": "[base] link health: missing target ../notes/derivation-and-inheritance-give-starting-warrant-earns-scope.md",
+        "severity": "warning",
+        "subject": "kb/sources/acm-agentic-context-management-for-long-horizon-tasks.ingest.md"
+      },
+      {
+        "id": "validation.base.link-health",
+        "reason": "[base] link health: missing target ./llm-agents-are-not-always-faithful-self-evolvers.ingest.md",
+        "severity": "warning",
+        "subject": "kb/sources/acm-agentic-context-management-for-long-horizon-tasks.ingest.md"
+      },
+      {
+        "id": "validation.base.link-health",
+        "reason": "[base] link health: missing target ../notes/context-operation-interface-bounds-context-policy.md",
+        "severity": "warning",
+        "subject": "kb/sources/acm-agentic-context-management-for-long-horizon-tasks.ingest.md"
+      }
+    ],
+    "excluded_subtrees": [],
+    "schema": "commonplace.validation.v1",
+    "scope": "kb/sources/acm-agentic-context-management-for-long-horizon-tasks.ingest.md",
+    "status": "warning",
+    "summary": {
+      "failing_subjects": 0,
+      "failures": 0,
+      "files_analysed": 1,
+      "text_files": 0,
+      "warning_subjects": 1,
+      "warnings": 15
+    },
+    "target": "kb/sources/acm-agentic-context-management-for-long-horizon-tasks.ingest.md"
+  },
+  "second_init_byte_idempotent": true
+}

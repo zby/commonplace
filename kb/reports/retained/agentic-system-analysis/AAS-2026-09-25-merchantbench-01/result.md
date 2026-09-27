@@ -194,7 +194,7 @@ memory-comparison:
 
 **Memory analysis report:** `kb/reports/state/agentic-system-analysis/AAS-2026-09-25-merchantbench-01/memory-report.md`
 
-**Memory analysis report SHA-256:** 59893535acfe7179e420f3708a4044ee48e33cbad077bfe56e4a3a965e0f77e4
+**Memory analysis report SHA-256:** e9e741409b7192f935fe6306c6e1bb871997b7410b06ee1e5117b6d455ae65cc
 
 ## Boundary and evidence
 
@@ -371,7 +371,7 @@ Context maintenance reads positive last-provider prompt usage, falling back to t
 
 >             self._remember_act(assistant_msg, act_resp)
 >             self._compact_history_if_pending()
-> --- `agent/baselines/react_160k_compact_30k.py` @ `f44ce969aeccfd65d1eef6afe50f69868e510946`
+> --- `agent/baselines/react_160k_compact_30k.py:717-718` @ `f44ce969aeccfd65d1eef6afe50f69868e510946`
 
 >         last_prompt_tokens = int(getattr(self, "last_prompt_tokens", 0) or 0)
 >         trigger_tokens = (
@@ -396,7 +396,7 @@ RTE-4 — Recovery. Provider errors map to bounded retry schedules; Forbidden ge
 >                         f"[act-error] {type(e).__name__}: {e}"
 >                     )
 >                 return
-> --- `agent/baselines/react_160k_compact_30k.py` @ `f44ce969aeccfd65d1eef6afe50f69868e510946`
+> --- `agent/baselines/react_160k_compact_30k.py:705-715` @ `f44ce969aeccfd65d1eef6afe50f69868e510946`
 
 One Forbidden retry replaces the most recent contiguous group of tool-result contents with a reason/hint placeholder and rebuilds the request. It preserves other messages and identifiers; it does not redact the server trace or scratchpad. Retryable provider failures have bounded delay lists; other/exhausted errors force end-of-step. HTTP 425 slices history to its saved pre-observation length, intended to discard that step; it is a length slice, not an immutable checkpoint, so intervening trimming can weaken that rollback. Pending notices survive ordinary failed actions, and a failed forced end-of-step clears pending state. SRC-1 `agent/baselines/react_160k_compact_30k.py:58-73,422-481,564-570,656-669,702-718,736-757`. Implementation conclusion status: wired.
 

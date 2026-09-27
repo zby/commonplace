@@ -1,0 +1,14 @@
+{
+  "date": "2026-09-27",
+  "pytest": {
+    "passed": 899,
+    "seconds": 91.68
+  },
+  "ruff": "pass",
+  "redirects": "pass",
+  "affected_run_integrity": "15 of 15 pass",
+  "current_analysis_quotes": "3613 pass",
+  "current_review_projection_sweep": "40 pass",
+  "comparison_frontmatter_unchanged": true,
+  "retired_paths_missing_baselines": 0
+}

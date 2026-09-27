@@ -7,7 +7,7 @@ analysis-run: AAS-2026-09-23-arsumbris-02
 source-identity: https://github.com/arsumbris/arsumbris
 reviewed-revision: arsumbris-0.0.1-alpha-release-bundle-2026-09-23
 analysis-result: kb/reports/retained/agentic-system-analysis/AAS-2026-09-23-arsumbris-02/result.md
-analysis-result-sha256: 2745f83c243adeaeb224e17a2b8733be833977274156d8b855acebc8b4aed54a
+analysis-result-sha256: 2fe25136603a59388935ba9e9a17e41d77770adad09782390af74d439a5208b4
 ---
 
 # arsumbris

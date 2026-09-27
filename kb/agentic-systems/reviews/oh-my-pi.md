@@ -6,7 +6,7 @@ analysis-run: AAS-2026-09-26-oh-my-pi-01
 source-identity: https://github.com/can1357/oh-my-pi
 reviewed-revision: be6cb8217cd4c1dafcc86793ae5d809ea4d7396a
 analysis-result: kb/reports/retained/agentic-system-analysis/AAS-2026-09-26-oh-my-pi-01/result.md
-analysis-result-sha256: 74786c9df528b7060aa64405570829e1ce7ee8f0eb06b1ddad49c7878af71c3c
+analysis-result-sha256: 8fbc0efeeebf2ac41b15a843ef3533bed2e28067a76e96a4df751fafe18b43e0
 ---
 
 # oh-my-pi

@@ -109,7 +109,7 @@ memory-comparison:
 
 **Memory analysis report:** `kb/reports/state/agentic-system-analysis/AAS-2026-09-25-modularrsi-01/memory-report.md`
 
-**Memory analysis report SHA-256:** `a72d514ba58c78fa445bd589b350617ddba2078dce48afcf1021909a89171a30`
+**Memory analysis report SHA-256:** `ffc8344590382a6a584908c2e2a0f20a5302ffe8cdd8bcdce937459dffd63083`
 
 Source-only independent construction. No earlier target review, ingest or cross-system findings supplied analytical evidence. No target code was executed. The specialist input hash is `53959a6cc29639bb2ea21445e0c081de2d129fcc3c7733d9033fccf6c7a1eb36`.
 
@@ -532,7 +532,7 @@ The package resets history to the system message on the two fallback branches. T
 >             return CompressResult(
 >                 chat=chat,
 >                 handoff_prompt=handoff_prompt,
-> --- `src/harbor/agents/terminus_2_modular/modules/context_mgmt/baseline.py` @ `b5c72c36b0d08ff93f00ee202a8fbdebe849dfb9`
+> --- `src/harbor/agents/terminus_2_modular/modules/context_mgmt/baseline.py:196-199` @ `b5c72c36b0d08ff93f00ee202a8fbdebe849dfb9`
 
 Source anchor: `src/harbor/agents/terminus_2_modular/modules/context_mgmt/baseline.py:196-199`.
 
@@ -684,7 +684,7 @@ Source anchor: `trajectories/mergefinal/README.md:12-13`.
 >           "module": "context_mgmt:baseline",
 >           "call": "maybe_compress",
 >           "summary": "→ no-op"
-> --- `trajectories/mergefinal/run-1/tasks/fix-git/agent/trajectory.json` @ `b5c72c36b0d08ff93f00ee202a8fbdebe849dfb9`
+> --- `trajectories/mergefinal/run-1/tasks/fix-git/agent/trajectory.json:27-29` @ `b5c72c36b0d08ff93f00ee202a8fbdebe849dfb9`
 
 Source anchor: `trajectories/mergefinal/run-1/tasks/fix-git/agent/trajectory.json:27-29`.
 

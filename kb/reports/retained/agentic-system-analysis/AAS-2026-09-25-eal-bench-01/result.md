@@ -116,7 +116,7 @@ memory-comparison:
 **Generated review:** `kb/agentic-systems/reviews/eal-bench.md`
 
 **Memory analysis report:** `kb/reports/state/agentic-system-analysis/AAS-2026-09-25-eal-bench-01/memory-report.md`
-**Memory analysis report SHA-256:** `a5303d3288c19e572fd2df9da78eb345cde8fa3f6b961d0342eb7ad90d5a7725`
+**Memory analysis report SHA-256:** `8b4a37da39516995cf153cf34fce97b018859daf18f6185a1e53fb536063e256`
 
 ## Boundary and evidence
 
@@ -487,7 +487,7 @@ The new-block sequence is core wiring. `visible_source_ids` grows through the cu
 >         raise ValueError(
 >             f"candidate uses {tokens} reference tokens; capacity is {capacity_tokens}"
 >         )
-> --- `experiments/authorization_memory/langmem_writer.py` @ `51648690bc52d7a9c7ac080a2c67a784fe9d56cb`
+> --- `experiments/authorization_memory/langmem_writer.py:1037-1041` @ `51648690bc52d7a9c7ac080a2c67a784fe9d56cb`
 
 Admission checks the set of cited IDs against visibility and enforces a serialized token bound. It does not ask the hidden oracle whether those citations entail the remembered permission. `_validate_underlying_call` also requires exactly one logged model call, exactly one `PatchDoc`, the exact profile ID, a `planned_edits` string, and a returned profile matching application of the logged patch: SRC-1 `experiments/authorization_memory/langmem_writer.py:1507-1569`. This validates protocol fidelity rather than authorization truth.
 
@@ -602,7 +602,7 @@ The checkpoint structures have operational authority beyond the profile payload'
 >         )
 >         for call_id in validation.missing_call_ids
 >     )
-> --- `experiments/authorization_memory/resume.py` @ `51648690bc52d7a9c7ac080a2c67a784fe9d56cb`
+> --- `experiments/authorization_memory/resume.py:952-960` @ `51648690bc52d7a9c7ac080a2c67a784fe9d56cb`
 
 This establishes a later disk-backed consumer independent of the original process lifetime. Resume retains writer trajectories; it does not regenerate them or resume model-side conversational state. The checkpoint's audit material is used for consistency checks and job reconstruction, while ordinary executor messages still carry the selected payload rather than the full writer log. Diagnostic selection uses domain semantics as well as identity and coarse eligibility filters; no stronger complete read-signal vocabulary mapping is asserted.
 
