@@ -63,7 +63,9 @@ missing. If no substantive claim remains after each choice is scoped, move the
 artifact to `kb/reference/` because its intended contribution is what
 Commonplace selected or the state that selection produced. Claims later in the
 body obey the same scoping rule; explicitly scoped local reports and examples
-may support the theory without becoming the artifact's intended contribution.
+may serve as the theory's origin, illustration, or test without becoming the
+artifact's intended contribution; only a test counts as corroboration (see
+"Origin is not corroboration").
 
 **Theory-independence constraint.** The claim must stand if any single cited description is removed — otherwise it's still a description.
 
