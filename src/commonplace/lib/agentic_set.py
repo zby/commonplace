@@ -121,10 +121,19 @@ def load_member_set(overview_path: Path, *, read: Reader | None = None) -> Membe
     manifest = overview.frontmatter.get("members")
     if not isinstance(manifest, list):
         raise ValueError("manifest: members must be a list")  # noqa: TRY004
+    for index, entry in enumerate(manifest, start=1):
+        if not isinstance(entry, Mapping) or set(entry) != {"path", "sha256", "type"}:
+            raise ValueError(
+                f"manifest: entry {index} must have exactly path, sha256 and type"
+            )
+        for field in ("path", "sha256", "type"):
+            if not isinstance(entry[field], str):
+                raise ValueError(  # noqa: TRY004
+                    f"manifest: entry {index} ({entry['path']!r}) needs a string {field}"
+                )
     complete = overview.frontmatter.get("result-disposition") == "complete"
-    names = [entry.get("path") if isinstance(entry, Mapping) else None for entry in manifest]
     if complete:
-        if sorted(name for name in names if isinstance(name, str)) != sorted(MEMBER_TYPES):
+        if sorted(entry["path"] for entry in manifest) != sorted(MEMBER_TYPES):
             raise ValueError(
                 "manifest: a complete overview names exactly "
                 + ", ".join(MEMBER_TYPES)
@@ -134,15 +143,13 @@ def load_member_set(overview_path: Path, *, read: Reader | None = None) -> Membe
 
     members: dict[str, SetDocument] = {}
     for entry in manifest:
-        if not isinstance(entry, Mapping) or set(entry) != {"path", "sha256", "type"}:
-            raise ValueError("manifest: each member entry has path, sha256 and type")
         name = entry["path"]
         expected_type = MEMBER_TYPES.get(name)
         if expected_type is None:
             raise ValueError(f"manifest: unknown member name {name!r}")
         if entry["type"] != expected_type:
             raise ValueError(f"manifest: {name} must have type {expected_type}")
-        if not isinstance(entry["sha256"], str) or not _SHA256.fullmatch(entry["sha256"]):
+        if not _SHA256.fullmatch(entry["sha256"]):
             raise ValueError(f"manifest: {name} needs a lowercase SHA-256 digest")
         path = overview_path.parent / name
         content = _read(path, read)

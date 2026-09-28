@@ -828,6 +828,38 @@ def test_blocked_overview_completes_without_members_or_public_review(tmp_path: P
     assert results.fails == []
 
 
+@pytest.mark.parametrize("field, value", [
+    ("path", ["runtime.md"]), ("sha256", 12345), ("type", {"name": "runtime"}),
+])
+def test_a_non_string_manifest_field_is_a_value_error_naming_the_entry(
+    tmp_path: Path, field: str, value: object
+) -> None:
+    state = valid_run_state(tmp_path)
+    overview = state.parent / "overview.md"
+    values = frontmatter(overview)
+    values["members"][0][field] = value
+    replace_frontmatter(overview, values)
+    with pytest.raises(ValueError, match=f"entry 1 .* needs a string {field}"):
+        agentic_set.load_member_set(overview)
+
+
+def test_member_pass_needs_every_member_named(tmp_path: Path) -> None:
+    """A complete state over a memberless overview never reports members present."""
+    state = valid_run_state(tmp_path)
+    overview = state.parent / "overview.md"
+    replace_frontmatter(overview, {
+        **frontmatter(overview), "result-disposition": "blocked", "members": [],
+    })
+    values = frontmatter(state)
+    values["overview"]["sha256"] = digest(overview)  # type: ignore[index]
+    replace_frontmatter(state, values)
+
+    results = validation.validate_note(state, repo_root=tmp_path)
+
+    assert not any("manifest members present" in item for item in results.passes)
+    assert any("manifest does not name" in item for item in results.fails)
+
+
 @pytest.mark.parametrize("mutation", [
     "stale-finalized-from", "runtime-run-id", "epistemic-boundary", "memory-source",
 ])

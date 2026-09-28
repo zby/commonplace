@@ -799,7 +799,15 @@ def verify_agentic_analysis_run_state(
     failures.extend(projection_failures)
 
     if state.result_disposition == "complete":
-        passes.append("member set: manifest members present, hashed and typed")
+        # load_member_set checked presence, hash and type of every entry; a
+        # manifest that names no members (a non-complete overview) passes
+        # those checks vacuously, so the pass also needs every member named.
+        if set(member_set.members) == set(MEMBER_TYPES):
+            passes.append("member set: manifest members present, hashed and typed")
+        else:
+            failures.append(
+                "member set: the manifest does not name " + ", ".join(MEMBER_TYPES)
+            )
         failures.extend(
             f"member set: {error}"
             for error in set_identity_errors(
