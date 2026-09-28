@@ -44,7 +44,8 @@ published review independently and still present it as a generated review.
 Unmarked per-system and per-feature analyses remain ordinary authored artifacts.
 
 Publication retains the run's set byte for byte under
-`kb/reports/retained/agentic-system-analysis/<run-id>/`: `overview.md`
+`kb/reports/retained/agentic-system-analysis/<run-id>/`: the manifest
+`ARTIFACT.yaml`, `overview.md`
 (identity, boundary, source register, reconciliation, synthesis,
 limitations), `runtime.md` (runtime account, probe evidence, runtime-declared
 records), `memory.md` (memory findings, memory-declared records, comparison
