@@ -26,8 +26,10 @@ inputs and boundaries in that file.
 ## Batch worktree
 
 The batch runs in its own git worktree so that no other session's edits in
-the main checkout can block or contaminate it. From the main checkout, whose
-worktree must be clean:
+the main checkout can block or contaminate it. The worktree starts from
+the main checkout's HEAD commit, so uncommitted edits there are left
+behind; only its `src/commonplace/` must match HEAD (see below). From the
+main checkout:
 
 ```bash
 git worktree add -b refresh-batch-01 ../commonplace-refresh-batch-01 HEAD
