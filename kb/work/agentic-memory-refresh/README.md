@@ -207,3 +207,11 @@ and the agreed refreshed corpus produces validated comparisons and synthesis
 with disclosed coverage. Retain independently useful acceptance evidence and
 publish the final library outputs, then delete this workshop and remove its
 Active Workshops entry. Do not retire historical evidence merely to close it.
+
+The retained corpus and its generated reviews were archived on 2026-09-28
+(`kb/reports/retained/agentic-system-analysis-archive/`,
+`kb/agentic-systems/reviews-archive/`) so that current data holds only sets
+produced under the member-set method. The first refresh batch under that
+producer is prepared in [batch-01-handoff.md](./batch-01-handoff.md):
+Agent-S, MemoryOS and basic-memory, run in parallel where capacity allows.
+Its preflight stops until the member-set producer lands.
