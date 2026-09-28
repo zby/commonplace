@@ -398,3 +398,23 @@ Quote verification migrated the current result format on 2026-09-27, with operat
 ## Cleanup regression execution
 
 The [2026-09-27 cleanup rerun](./cleanup-rerun-20260927.md) records the three pinned analyses, trace audit, baseline comparison and bounded consumer checks.
+
+## Step 3 execution (2026-09-28)
+
+Commits landed on the approved plan: `6f0c5e7b` (run state pins the
+overview), `7ae02a4e` (run-state verification reads the set; publication,
+loader and bundle moved with it because one fixture serves all three),
+`4009cb08` (init treats retained analysis directories as frozen bytes).
+The mid-flight direction to move set checks into the validator was
+implemented as `6d8d9fd0` and reverted the same day; the operator judged
+extending validation from notes to directories an architectural change
+and opened [directory-artifacts](../directory-artifacts/README.md) to plan
+it. Remaining for the transition: the skill's steps 1, 7, 8 and 10, the
+memory and epistemic instructions, the run-state type prose, the collection
+contract, the comparisons README, the two downstream skills, retirement
+of the result type with its schema and docs test, the site config's
+publication patterns, and the redirect map entry. Worker findings for the
+trial: a rejected specialist proposal needs a disposition the mapping
+grammar can carry; the finalization check fails on any coordinator
+paraphrase of the specialist's body by design; the memory type's quote
+minimum is now enforced at set level only.
