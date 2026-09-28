@@ -40,9 +40,9 @@ These types are not tied to their collections by necessity. The sources and
 reports collections are where Commonplace's procedures put these artifacts by
 default. A user may reasonably keep ingested sources, or reports, somewhere
 else (operator, 2026-09-25). The global
-[agentic-system analysis result](../../types/agentic-system-analysis-result.md)
-type is a precedent: a procedure-produced type that already lives in the
-library.
+[agentic-system analysis overview](../../types/agentic-system-analysis-overview.md)
+type (then the single-file analysis result type) is a precedent: a
+procedure-produced type that already lives in the library.
 
 Snapshots add a constraint. A tracked ingest pins the exact bytes of its local
 snapshot, frontmatter included, with `snapshot_sha256`; a derived ingest also

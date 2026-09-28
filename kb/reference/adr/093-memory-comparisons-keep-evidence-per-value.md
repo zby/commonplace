@@ -63,5 +63,6 @@ not establish corpus representativeness, semantic correctness, observed benefit,
 or comparability between different scopes. Partial positives support lower-bound
 counts, not whole-population prevalence estimates.
 
-The [result type](../../types/agentic-system-analysis-result.md#memory-comparison-fields)
-owns the authoring and counting contract.
+The [memory report type](../../types/agent-memory-analysis-report.md#memory-comparison-fields)
+owns the authoring and counting contract; at the time of this decision the
+fields lived in the since-retired single-file analysis result type.

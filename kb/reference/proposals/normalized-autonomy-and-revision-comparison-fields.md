@@ -22,7 +22,7 @@ to justify another classification contract.
 ## Current state (as of 2026-09-05)
 
 - The [producing skill](../../instructions/analyse-agentic-system/SKILL.md)
-  and [result type](../../types/agentic-system-analysis-result.md) require
+  and [runtime report type](../../types/agentic-system-runtime-report.md) require
   evidenced prose for components used by inspected runtime routes and
   materially distinct revision mechanisms. Routine writes sharing a mechanism
   are grouped; memory revisions reuse the specialist's findings.

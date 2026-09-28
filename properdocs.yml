@@ -3,7 +3,11 @@ site_description: Commonplace knowledge base rendered as static HTML.
 docs_dir: kb
 exclude_docs: |
   reports/**
-  !reports/retained/agentic-system-analysis/**/result.md
+  !reports/retained/agentic-system-analysis/**/overview.md
+  !reports/retained/agentic-system-analysis/**/runtime.md
+  !reports/retained/agentic-system-analysis/**/memory.md
+  !reports/retained/agentic-system-analysis/**/epistemic.md
+  !reports/retained/agentic-system-analysis-archive/**/result.md
   sources/**
   !sources/**/*.ingest.md
   !sources/README.md
@@ -391,6 +395,7 @@ plugins:
         'tags/foundations-README.md': 'tags/README.md'
         'tags/methodology-README.md': 'tags/method-guided-action-README.md'
         'tags/tool-loop-README.md': 'tags/computational-model-README.md'
+        'types/agentic-system-analysis-result.md': 'types/agentic-system-analysis-overview.md'
         'work/framework-delivery/adr-draft.md': 'reference/adr/086-projects-read-the-library-from-the-installed-package.md'
         'work/framework-delivery/harness-probe-request.md': 'work/framework-delivery/probe-request.md'
         'work/information-measures/epiplexity-eli5.md': 'notes/epiplexity-by-example-what-entropy-and-complexity-miss.md'

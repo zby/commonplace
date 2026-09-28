@@ -32,14 +32,17 @@ def test_analysis_failure_is_rerun_instead_of_recovered() -> None:
         assert obsolete not in orchestrator
 
 
+def contract(name: str) -> str:
+    return (REPO_ROOT / "kb/types" / f"{name}.md").read_text(encoding="utf-8")
+
+
 def test_set_has_one_fixed_state_location() -> None:
     orchestrator = instruction("analyse-agentic-system")
-    contract = (
-        REPO_ROOT / "kb/types/agentic-system-analysis-result.md"
-    ).read_text(encoding="utf-8")
+    overview = contract("agentic-system-analysis-overview")
 
     assert "entry member is always\n   `<run-id>/overview.md`" in orchestrator
-    assert "Every result is one typed Markdown file" in contract
+    assert "The entry member of one `analyse-agentic-system` run's retained set" in overview
+    assert "the overview's manifest pins every other member" in overview
     assert "response-only" not in orchestrator
     assert "canonical carrier" not in orchestrator
     assert "package has exactly one" not in orchestrator.lower()
@@ -58,12 +61,12 @@ def test_repository_sources_remain_commit_addressed() -> None:
     assert "git --no-replace-objects -C" in source_work
     assert "never read evidence from the worktree" in source_work
     assert "compact source allowlist" in source_work
-    # The anchor grammar is the result type's, stated once under Status fields.
-    contract = (
-        REPO_ROOT / "kb/types/agentic-system-analysis-result.md"
-    ).read_text(encoding="utf-8")
-    assert "one code span containing the full commit-relative path" in contract
-    assert "searched boundary" in contract
+    # The anchor grammar is the overview type's, stated once under Status fields;
+    # the searched boundary of an absence is a runtime-report record field.
+    assert "one code span containing the full commit-relative path" in contract(
+        "agentic-system-analysis-overview"
+    )
+    assert "searched boundary" in contract("agentic-system-runtime-report")
 
 
 def test_runtime_checks_preflight_before_execution() -> None:
@@ -76,14 +79,12 @@ def test_runtime_checks_preflight_before_execution() -> None:
     assert "Before any dynamic" in runtime
     assert "execution-preflight" in runtime
     assert "probe evidence capsule" in runtime
-    # Preflight and capsule semantics live in the result type, not the skill.
-    contract = (
-        REPO_ROOT / "kb/types/agentic-system-analysis-result.md"
-    ).read_text(encoding="utf-8")
-    assert "leaves the target check `not run`" in contract
-    assert "supports no negative finding" in contract
-    assert "actual intervention and comparison" in contract
-    assert "checks considered" in contract
+    # Preflight and capsule semantics live in the runtime report type, not the skill.
+    runtime = contract("agentic-system-runtime-report")
+    assert "leaves the target check `not run`" in runtime
+    assert "supports no negative finding" in runtime
+    assert "actual intervention and comparison" in runtime
+    assert "checks considered" in runtime
 
 
 def test_transfer_scan_runs_after_complete_state() -> None:
@@ -111,7 +112,4 @@ def test_candidate_artifact_does_not_establish_phase_observation() -> None:
     assert "only that a candidate instance is available" in dispose
     assert "observed candidate state" in dispose
     assert "`not determinable`, not `phase evidenced` or `accepted`" in dispose
-    contract = (
-        REPO_ROOT / "kb/types/agentic-system-analysis-result.md"
-    ).read_text(encoding="utf-8")
-    assert "Observed candidate state is one of:" in contract
+    assert "Observed candidate state is one of" in contract("agentic-system-epistemic-report")

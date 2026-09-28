@@ -13,8 +13,9 @@ through the producing method and source regeneration.
 Use the supplied generated main reviews under `kb/agentic-systems/reviews/`.
 Without an explicit selection, inspect all generated main reviews; do not
 silently drop an input that fails. An input must identify its complete retained
-result through `analysis-result` and `analysis-result-sha256`. A legacy review,
-old CSV, transfer scan or compact summary cannot substitute for that result.
+set through `analysis-overview` and `analysis-overview-sha256`; the overview's
+manifest pins the memory member that carries the profile. A legacy review,
+old CSV, transfer scan or compact summary cannot substitute for that set.
 If the request names only a legacy review, report the main-analysis regeneration
 needed rather than treating its prose as classification evidence.
 
@@ -26,10 +27,11 @@ within that request's scope; do not request authorization again.
 
 ## Check and read the inputs
 
-1. **Load the main-result contract.** Read
-   `kb/types/agentic-system-analysis-result.md`, including `memory-comparison`.
+1. **Load the memory report contract.** Read
+   `kb/types/agent-memory-analysis-report.md`, including `memory-comparison`,
+   and `kb/types/agentic-system-analysis-overview.md` for the set's identity.
    Record the procedure, contract, schema and reader identities used for the
-   audit: this instruction, that type and its `.schema.yaml`,
+   audit: this instruction, those types and their `.schema.yaml` files,
    `src/commonplace/lib/systems_matrix.py`, and the producing
    `kb/instructions/analyse-agentic-system/SKILL.md`. Record hashes for any
    additional ontology definition actually used.

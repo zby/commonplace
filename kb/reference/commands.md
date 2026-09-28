@@ -76,16 +76,18 @@ with today's method. Replacement saves `incumbent-review.md` and an
 `incumbent-<member>.md` copy of each retained member in the new run for
 recovery.
 
- `prepare` validates the exact result, specialist memory report, and
-candidate review, and checks the incumbent without changing public artifacts.
-It does not create a semantic-review job; specialist analysis does not establish
-independent semantic clearance. `publish` rechecks the inputs, validates the
-prospective complete run state, replaces the review, retains the exact result bytes at
-`kb/reports/retained/agentic-system-analysis/<run-id>/result.md`, and writes the
-run state last. New publications require the result's `memory-comparison`
-fields and matching retained-result path/hash in the public review. An existing
-retained result requires a new run ID. Ordinary in-process failures roll
-back written files; crash-level partial writes remain an admitted failure mode.
+`prepare` validates the overview and every member its manifest pins as their
+retained paths, the specialist memory report's pins, and the candidate review,
+and checks the incumbent without changing public artifacts. It does not create
+a semantic-review job; specialist analysis does not establish independent
+semantic clearance. `publish` rechecks the inputs, validates the prospective
+complete run state, replaces the review, retains the four members byte for
+byte under `kb/reports/retained/agentic-system-analysis/<run-id>/`, and writes
+the run state last. New publications require `memory-comparison` in the memory
+member and a matching retained overview path and hash in the public review.
+An existing retained set requires a new run ID. Ordinary in-process failures
+roll back written files; crash-level partial writes remain an admitted failure
+mode.
 
 ### commonplace-status
 
