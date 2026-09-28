@@ -17,34 +17,47 @@ This record proves only what later consumers need:
 
 - which run produced the outputs;
 - which frozen source boundary it used;
-- which exact result and published review bytes completed the run; and
-- which typed memory specialist report the exact result integrated.
+- which exact overview and published review bytes completed the run; the
+  overview's manifest pins the other three members of the set; and
+- which typed memory specialist report the set's memory member was finalized
+  from.
 
 It is not a recovery log. A run is `running`, `complete`, or `failed`. Do not
 resume a failed run or preserve phase, packet, correction, validation-receipt,
 or retry state. Start another run with a new run ID. Temporary candidate files
 inside the run directory are disposable and never appear in this record.
 The `## Run` prose records the destination inspection's expected incumbent
-digest (or `absent`). Recovery
-copies `incumbent-review.md` and `incumbent-result.md` are retained with the new
+digest (or `absent`). Recovery copies `incumbent-review.md` and
+`incumbent-<member>.md` for each replaced member are retained with the new
 run when a review is replaced; they are not disposable candidate files.
 
-The exact result always lives at
-`kb/reports/state/agentic-system-analysis/<run-id>/result.md`. A
-`complete` result also publishes one generated review under
-`kb/agentic-systems/reviews/`. A blocked or out-of-scope result has no
-generated review. Publication also retains the exact result bytes at
-`kb/reports/retained/agentic-system-analysis/<run-id>/result.md`. Its identity is
-derived from the run ID and the existing `result.sha256`; no duplicate output
-mapping is needed. Completion verification checks this copy and the public
-review's `analysis-result` path and `analysis-result-sha256`. Durable comparison
-readers follow those public fields without requiring ignored run state or a
-local source checkout. Every complete analysis requires the typed
-`memory-report.md` and frozen `memory-input.md` in its run directory. The exact
-result names the report and its SHA-256 in Run identity. Completion checks the
-report's run, source, reviewed boundary, complete status, and input hash, and
-validates its type and source anchors. These checks establish identity and
-structure; they do not certify the specialist's semantic judgments.
+The set's entry member always lives at
+`kb/reports/state/agentic-system-analysis/<run-id>/overview.md`, with
+`runtime.md`, `memory.md` and `epistemic.md` beside it, pinned by the
+overview's `members` manifest. The overview's `inputs-commit` names the
+commit that supplied the run's method. A `complete` set also publishes one
+generated review under `kb/agentic-systems/reviews/`. A blocked or
+out-of-scope overview has an empty manifest and no generated review.
+Publication retains the four members byte for byte under
+`kb/reports/retained/agentic-system-analysis/<run-id>/`. Their identity is
+derived from the run ID and the existing `overview.sha256`; no duplicate
+output mapping is needed. Completion verification checks the retained copies
+and the public review's `analysis-overview` path and
+`analysis-overview-sha256`. Durable comparison readers follow those public
+fields without requiring ignored run state or a local source checkout.
+
+Every complete analysis requires the typed `memory-report.md` and frozen
+`memory-input.md` in its run directory. The coordinator finalizes that report
+as `memory.md`: proposal IDs mapped to canonical IDs by exact token, seeded
+records the specialist re-declared turned into `On <ID>` annotations, and an
+`## Amendments` section appended; the member's `finalized-from` is the local
+report's SHA-256. Completion verification checks the manifest, run and
+boundary identity across members, the memory member's complete status and
+its `finalized-from` and `canonical-register-sha256` pins against the local
+files, and validates each member's type and its source and quote anchors.
+These checks establish identity and structure; they do not check the
+derivation of the memory member, cross-member record resolution or the set's
+quote minimum, and they do not certify the specialist's semantic judgments.
 
 `source` is either a Git commit or an immutable capture. A Git source records
 the stable repository identity, full commit ID, and absolute checkout path. A

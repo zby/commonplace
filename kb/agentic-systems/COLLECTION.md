@@ -10,9 +10,9 @@ Memory and knowledge are lenses of the whole-system analysis. The separate
 `kb/agent-memory-systems/` collection is the legacy review corpus; new comparison
 procedures consume the main analysis and its memory/context findings directly.
 The `analyse-agent-memory` sub-agent returns a typed specialist report within
-the parent run. The parent resolves its findings into the main result; the
-specialist report does not supply comparison inputs or independent semantic
-clearance.
+the parent run. The parent finalizes it as the set's memory member, which
+carries the comparison profile; the local specialist report does not supply
+comparison inputs or independent semantic clearance.
 
 ## Structure
 
@@ -27,9 +27,9 @@ matrices and tables live under `comparisons/`.
 Every complete `analyse-agentic-system` run publishes one compact review in the
 `reviews/` directory. Each file records `generated-by: analyse-agentic-system`,
 the producing `analysis-run`, a stable `source-identity`, and the
-`reviewed-revision`, and the retained `analysis-result` path and
-`analysis-result-sha256`. They are workflow-owned projections of a frozen analysis,
-not hand-authored notes. Do not substantively hand-edit them. Correct the source
+`reviewed-revision`, and the retained `analysis-overview` path and
+`analysis-overview-sha256`. They are workflow-owned projections of a frozen
+analysis set, not hand-authored notes. Do not substantively hand-edit them. Correct the source
 boundary or the shared review method, then rerun the skill and replace the
 review from those inputs. Git history preserves earlier generated versions.
 Publication cannot be waived per complete analysis. The workflow validates a
@@ -43,15 +43,20 @@ method. A human may change the method and request a new run, but may not tune on
 published review independently and still present it as a generated review.
 Unmarked per-system and per-feature analyses remain ordinary authored artifacts.
 
-Publication retains the exact result bytes under
-`kb/reports/retained/agentic-system-analysis/<run-id>/result.md`. The public
-review pins this immutable copy; comparison readers need neither ignored run
-state nor the legacy corpus to reproduce its fields. Correct or enrich the
-analysis through a new run, never by hand-editing its retained copy.
+Publication retains the run's set byte for byte under
+`kb/reports/retained/agentic-system-analysis/<run-id>/`: `overview.md`
+(identity, boundary, source register, reconciliation, synthesis,
+limitations), `runtime.md` (runtime account, probe evidence, runtime-declared
+records), `memory.md` (memory findings, memory-declared records, comparison
+profile) and `epistemic.md` (the six epistemic blocks). The public review
+pins the overview and the overview's manifest pins the members; comparison
+readers need neither ignored run state nor the legacy corpus to reproduce
+their fields. Correct or enrich the analysis through a new run, never by
+hand-editing a retained member.
 
 ## Evidence basis
 
-Open each analysis with a one-line **evidence basis**: what it is grounded in — docs, source code, papers, or first-hand operation of the system — and when that evidence was captured. Comparison readers use the exact result's `evidence-tier`: `code-grounded` or `doc-grounded`. Keep those populations separate, and preserve each field's evidence basis within its tier.
+Open each analysis with a one-line **evidence basis**: what it is grounded in — docs, source code, papers, or first-hand operation of the system — and when that evidence was captured. Comparison readers use the overview's `evidence-tier`: `code-grounded` or `doc-grounded`. Keep those populations separate, and preserve each field's evidence basis within its tier.
 
 ## Ontology and local transfer
 
@@ -90,7 +95,7 @@ Organised per destination; label semantics in [link-vocabulary.md](../reference/
 - **→ `external`** — cite the source code, documents, papers, or first-hand records already used for the evidence basis; prefer version-pinned targets when available and do not prospect the open web. Labels: `evidenced-by`, `see-also`.
 - **→ `kb/notes/`** — search when an analysis maps a system onto theory. Use `rests-on` when the theory explains the analysed design; use rare `is-evidence-for` when the observed system instead bears on the target claim. Promote a novel transferable claim to `kb/notes/` rather than author theory here. Labels: `rests-on`, `is-evidence-for` (rare), `defined-in`, `see-also`.
 - **→ `kb/agent-memory-systems/`** — when the analysed whole system has a memory, knowledge, or context-engineering subsystem reviewed there. Use `contains` from the whole-system analysis to the subsystem review; use `part-of` only from a subsystem-focused analysis back to the whole system. Labels: `part-of` / `contains`, `compares-with`, `see-also`.
-- **→ `kb/reports/retained/`** — cite the exact main-analysis result when a comparison needs its full records, evidence, or normalized fields. Labels: `see-also`.
+- **→ `kb/reports/retained/`** — cite a retained set's overview or the member that holds the record, evidence, or normalized field a comparison needs. Labels: `see-also`.
 - **→ `kb/reference/`** — scan when a design element has a direct Commonplace analogue. Labels: `see-also`.
 - **→ `kb/instructions/`** — link a Commonplace procedure when the external system analysis directly maps onto an operating rule or workflow. Labels: `procedure`, `see-also`.
 

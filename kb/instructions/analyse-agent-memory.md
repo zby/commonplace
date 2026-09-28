@@ -20,14 +20,21 @@ provisional findings to check against sources, not accepted conclusions.
 
 Write only the commissioned `memory-report.md` under the
 [`agent-memory-analysis-report`](../types/agent-memory-analysis-report.md)
-type. Read that contract and the Memory comparison fields, Status fields,
-Canonical identity and Source register sections of
-[`agentic-system-analysis-result`](../types/agentic-system-analysis-result.md);
-together they fix every section, field and controlled value the report uses.
+type. Read that contract, including its Memory comparison fields, and the
+set-wide conventions of the
+[overview type](../types/agentic-system-analysis-overview.md#the-set):
+canonical identity, the declaration and annotation grammar, status fields
+and the Source register's quotation contract. Together they fix every
+section, field and controlled value the report uses. The parent finalizes
+your report as the set's memory member, `memory.md`: it maps your proposal
+IDs to canonical IDs by exact token, turns a seeded record you re-declared
+into an `On <ID>` annotation, and appends amendments; your report stays in
+the run directory as provenance, pinned by the member's `finalized-from`.
+Write it so those mechanical edits are the only ones needed.
 Do not load the legacy review type, prior system reviews, surveys, matrix
 outputs, or style exemplars. The parent owns canonical IDs, integration,
 publication and completion. Do not publish, modify the parent's input or
-result, delegate, or stage and commit.
+set, delegate, or stage and commit.
 
 Do not call agent listings for status: their payloads may include prior
 analyses, even with a path filter. Return through the final report and
@@ -64,7 +71,7 @@ claims into implemented or observed behavior. Keep current Commonplace
 recommendations outside the report; no comparison to other systems is
 needed. A thin memory boundary warrants short sections with explicit limits.
 
-For each load-bearing finding, generate the quote block the main result's
+For each load-bearing finding, generate the quote block the overview's
 Source register requires with
 [`commonplace-quote`](../reference/commands.md#commonplace-quote):
 `commonplace-quote <sibling-run-state-path> --source-path <commit-relative-path>
@@ -80,7 +87,7 @@ no separate quote check.
 ## Classify and hand back
 
 You own the proposed classifications in `memory-comparison` as well as their
-supporting analysis, under the result type's per-value evidence contract. Do
+supporting analysis, under the report type's per-value evidence contract. Do
 not weaken a wired value because another value is
 merely afforded. Distinguish missing evidence from a negative finding. Use
 local proposal IDs where the parent has not yet registered a discovered

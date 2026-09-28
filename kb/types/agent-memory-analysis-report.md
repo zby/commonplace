@@ -156,9 +156,10 @@ Describe the few mechanisms that distinguish how retained material
 affects later work, including context selection and budget, source trust,
 and material editing/adoption surfaces. Findings carry primary-source
 anchors and evidence status. Load-bearing findings retain minimal verbatim
-source code or prose in quote blocks under the set's quotation contract. A
-complete report contains at least one quote anchor; that minimum does not
-certify every claim's support.
+source code or prose in quote blocks under the set's quotation contract. The
+quote minimum, at least one attributed quote, is enforced on the set as a
+whole, not on this member alone; ordinarily this member supplies it, and the
+minimum does not certify every claim's support.
 
 ### Shared records
 

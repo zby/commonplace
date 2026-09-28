@@ -1,5 +1,5 @@
 ---
-description: Invoked by analyse-agentic-system in every run to trace the analysed system's epistemic routes over the run's canonical records and fill the result's Epistemic lens section as a sparse overlay.
+description: Invoked by analyse-agentic-system in every run to trace the analysed system's epistemic routes over the run's canonical records and write the set's epistemic member as a sparse overlay.
 type: types/instruction.md
 ---
 
@@ -7,20 +7,20 @@ type: types/instruction.md
 
 Goal: an evidence-bounded, route-by-route account of whether and how the analysed system acquires or produces truth-apt content, checks it, grants or withholds reliance on it, retains or integrates it, and lets it affect later behavior, with no system-wide epistemic grade.
 
-`analyse-agentic-system` invokes this procedure in every run, locally or in a worker with the same frozen boundary, after the runtime baseline has produced the canonical `SRC-*`, `OBJ-*`, `RTE-*`, `CLM-*`, `ABS-*` and `BAP-*` records and the epistemic scoping record. The output is the result's `### Epistemic lens` section. The [result type](../types/agentic-system-analysis-result.md#lens-outputs) fixes its six blocks, their fields, the controlled values and the terms they use; read that contract first. This instruction says how to fill it. The analysis informs a review; it does not itself accept the external system's claims.
+`analyse-agentic-system` invokes this procedure in every run, locally or in a worker with the same frozen boundary, after the runtime baseline has produced the canonical `SRC-*`, `OBJ-*`, `RTE-*`, `CLM-*`, `ABS-*` and `BAP-*` records and the epistemic scoping record. The output is the set's epistemic member, `<run-id>/epistemic.md`, under the [epistemic report type](../types/agentic-system-epistemic-report.md); its Required blocks fix the six blocks, their fields, the controlled values and the terms they use, and the [overview type](../types/agentic-system-analysis-overview.md#the-set) fixes the set-wide conventions. Read both contracts first. The member declares no records and holds no evidence passages; it cites the records the runtime and memory members declare and the passages they retain. This instruction says how to fill it. The analysis informs a review; it does not itself accept the external system's claims.
 
 ## Overlay rules
 
-- Annotate canonical IDs within the repetition limit the type's Epistemic lens contract sets; do not build a second inventory or copy generic identity, representational form, storage substrate, common route endpoints or progression, or claimed-operation identity.
+- Annotate canonical IDs within the repetition limit the epistemic report type's Required blocks set; do not build a second inventory or copy generic identity, representational form, storage substrate, common route endpoints or progression, or claimed-operation identity.
 - A newly discovered object, route, claim, absence or authority path takes a local proposal ID with the `EPI-` prefix, such as `EPI-RTE-1`, and supplies the full identity the coordinator needs to register it; never mint a canonical ID. Return a targeted-read request for new source material, and a correction with its evidence anchor for a defective canonical fact.
-- Retain minimum verbatim code or prose for load-bearing findings as quote blocks under the result type's [Source register](../types/agentic-system-analysis-result.md#source-register) contract, generated with [`commonplace-quote`](../reference/commands.md#commonplace-quote) and inserted unchanged. Write every canonical ID or local proposal ID in full in every list, as the type's [Canonical identity](../types/agentic-system-analysis-result.md#canonical-identity) rules require.
+- Cite the member that retains a load-bearing passage rather than repeating it; each passage occurs once across the set under the overview type's [Source register](../types/agentic-system-analysis-overview.md#source-register) contract. When a finding needs a passage no member retains, return it as a targeted-read request for the coordinator to retain in the declaring member, generated with [`commonplace-quote`](../reference/commands.md#commonplace-quote) and inserted unchanged. Write every canonical ID or local proposal ID in full in every list, as the overview type's [Canonical identity](../types/agentic-system-analysis-overview.md#canonical-identity-across-members) rules require.
 - Keep the evidence layers separate and never upgrade one into another. Inspect each representational form appropriately: read natural-language content, test symbolic artifacts within their declared semantics, and use available probes for distributed-parametric state. If the available probes cannot individuate truth-apt content, record the object or lifecycle phase as `not determinable`.
 - Treat an intentionally operational or lab-tracking purpose as a scope boundary, not as product failure. Do not prescribe natural-language claims, proposal comparison, a storage model, or a universal knowledge ontology.
 - If exhaustive whole-system coverage is infeasible, declare the assessed and unassessed route families and make no system-complete conclusion. Name omitted route classes and the conclusions their omission prevents.
 
 ## Steps
 
-1. **Fix the boundary.** Fill block 1 from the scoping record and the Source register.
+1. **Fix the boundary.** Fill block 1 from the overview's scoping record and Source register, citing the register rather than copying it.
 
 2. **Inventory material objects before evaluators.** Fill block 2 for every operative part inside the material-route boundary the type defines. Use system-specific object names and split heterogeneous containers under proposal tags. Name each target object or proposition and its domain before assessing any evaluator.
 

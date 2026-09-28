@@ -32,13 +32,13 @@ def test_analysis_failure_is_rerun_instead_of_recovered() -> None:
         assert obsolete not in orchestrator
 
 
-def test_exact_result_has_one_fixed_state_location() -> None:
+def test_set_has_one_fixed_state_location() -> None:
     orchestrator = instruction("analyse-agentic-system")
     contract = (
         REPO_ROOT / "kb/types/agentic-system-analysis-result.md"
     ).read_text(encoding="utf-8")
 
-    assert "exact result path is always `<run-id>/result.md`" in orchestrator
+    assert "entry member is always\n   `<run-id>/overview.md`" in orchestrator
     assert "Every result is one typed Markdown file" in contract
     assert "response-only" not in orchestrator
     assert "canonical carrier" not in orchestrator

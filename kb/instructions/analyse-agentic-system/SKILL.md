@@ -14,14 +14,15 @@ model: opus
 Analyse one external agentic system at one frozen evidence boundary. Identify
 what the system wires, where its responsibilities end, and what its
 memory/context and epistemic routes support. Run a runtime baseline and both
-mandatory lenses, then write one exact result and publish a compact generated
-review. Delegate memory/context analysis to a fresh specialist and integrate
-its typed report into that result.
+mandatory lenses, then write the run's retained set (overview, runtime,
+memory and epistemic members) and publish a compact generated review. Delegate
+memory/context analysis to a fresh specialist and finalize its typed report as
+the set's memory member.
 
 Invocation authorizes the run directory under
 `kb/reports/state/agentic-system-analysis/`, one generated review under
-`kb/agentic-systems/reviews/`, its identical exact-result copy under
-`kb/reports/retained/agentic-system-analysis/<run-id>/result.md`, and the local
+`kb/agentic-systems/reviews/`, the identical retained copy of the four members
+under `kb/reports/retained/agentic-system-analysis/<run-id>/`, and the local
 memory specialist input and report inside that run directory. It does not authorize
 changes to source worktrees, auxiliary indexes or surveys, transfer scans,
 landscape synthesis, other retained reports, or Git staging and commits.
@@ -29,7 +30,7 @@ landscape synthesis, other retained reports, or Git staging and commits.
 ## Failure rule
 
 Keep a correctable pre-publication failure in `running` state, fix the candidate
-or result, and repeat the failed check. Set `run-status: failed` with one concise
+or member, and repeat the failed check. Set `run-status: failed` with one concise
 reason only when abandoning the run or when a publication error leaves public
 state uncertain. Do not resume a failed run or maintain a phase ledger,
 packet, correction log, retry log, or validation receipt. Use a new run ID.
@@ -49,10 +50,20 @@ hash or later successful command does not clear an earlier failure. Use
 1. Allocate `AAS-<YYYY-MM-DD>-<system-slug>-<nn>`. Create
    `kb/reports/state/agentic-system-analysis/<run-id>/run-state.md` from the
    [run-state template](../../types/agentic-system-analysis-run-state.md)
-   with `run-status: running`. The
-   exact result path is always `<run-id>/result.md`.
+   with `run-status: running`. The set's entry member is always
+   `<run-id>/overview.md`; its manifest pins `runtime.md`, `memory.md` and
+   `epistemic.md` beside it. Record the method commit now: run
+   `git rev-parse HEAD` and keep the full commit for the overview's
+   `inputs-commit`. Publication requires HEAD to still descend from it with
+   the method paths (this skill, the two lens instructions, the set's type
+   specs and schemas, and `src/commonplace/`) unchanged, and requires the
+   worktree to be clean outside the publication outputs: no modified or
+   staged tracked file, and no untracked file under `kb/` except under
+   `kb/agentic-systems/reviews/` and
+   `kb/reports/retained/agentic-system-analysis/`. Commit a pending method
+   change before opening the run, not after.
    Run `commonplace-validate <run-state-path>` immediately. Choose the
-   source-native system name once here and copy it exactly into the result.
+   source-native system name once here and copy it exactly into the overview.
 2. Derive the public review path as
    `kb/agentic-systems/reviews/<system-slug>.md` unless the caller supplied one.
    A caller-supplied path must also be directly under `reviews/`. Before
@@ -70,9 +81,11 @@ hash or later successful command does not clear an earlier failure. Use
    extraction. Hand-authored or different-source collisions need a qualified
    slug. Other inspection failures are publication blockers to report at once;
    analysis may continue, but do not promise publication or bypass the guard.
-   Resolve the blocker and repeat inspection before publication. A verified,
-   unchanged earlier publication can be replaced while uncommitted; arbitrary
-   local edits cannot. No Git commit is required merely to rerun the review.
+   Resolve the blocker and repeat inspection before publication. An
+   incumbent is checked by bytes: a generated review of the same source whose
+   retained set hashes to its pins, whether committed or a sibling run's
+   fresh uncommitted publication. Inspection also applies the worktree rule
+   above; a dirty tree is a blocker to report, not to work around.
 3. Record separately any caller-authorized auxiliary paths and any separately
    commissioned transfer scan. Automatic review publication does not authorize
    those operations.
@@ -81,19 +94,19 @@ hash or later successful command does not clear an earlier failure. Use
    narrower mechanism whose operation depends on model calls it issues or
    serves. An MCP server, tool, or returning computation may qualify without
    owning the enclosing runtime. If the target is outside this boundary, write
-   an `out-of-scope` result, skip steps 2 to 6 with both scoping records
-   stating `not reached`, and continue at step 7.
+   an `out-of-scope` overview with an empty manifest, skip steps 2 to 6 with
+   both scoping records stating `not reached`, and continue at step 7.
 5. Classify the target with one `target-class` and one `boundary-kind` value
-   from the result type's frontmatter table, and state functional inclusions,
+   from the overview type's frontmatter table, and state functional inclusions,
    exclusions, and external dependencies. Do not assign responsibilities
    owned by an excluded host to the selected target.
 
 If no coherent boundary or reachable source can be established, write a
-`blocked` result, skip steps 2 to 6 with both scoping records stating `not
+`blocked` overview with an empty manifest, skip steps 2 to 6 with both scoping records stating `not
 reached`, and continue at step 7.
 
 If a coordinator reads prior-review prose or substantive prior audit findings
-through any tool before freezing the exact result and candidate, disclosure
+through any tool before freezing the set and candidate, disclosure
 does not restore a source-only pass. Stop that analysis, mark the run `failed` for prior-analysis
 exposure, and require a fresh coordinator context with a new run ID and clean
 source-only inputs. Do not publish the exposed draft or try to repair its
@@ -121,14 +134,14 @@ construction. Keep subsequent analytical changes outside that exposed context.
 4. Put the Git commit or capture identity in `run-state.source` while the state
    remains `running`, using the source mapping in the run-state type. Validate
    that state again before inspecting sources or delegating. Build one `SRC-*`
-   register with the columns and evidence layers the type's Source register
-   requires.
+   register with the columns and evidence layers the overview type's Source
+   register requires.
 5. Select files and line ranges before reading content. Budget the aggregate
    output of parallel reads against the tool wrapper's delivery limit; an
    output cap alone does not bound the inspection. Treat truncated output as
    non-evidence. Narrow and repeat the read before citing it. For each
-   load-bearing finding, generate the quote block the type's Source register
-   requires with
+   load-bearing finding, generate the quote block the overview type's Source
+   register requires with
    [`commonplace-quote`](../../reference/commands.md#commonplace-quote):
    `commonplace-quote <run-state-path> --source-path <commit-relative-path>
    --text-file <selection-file>`, omitting `--source-path` for the run's
@@ -151,10 +164,17 @@ or cannot be verified, fail the run and start another one.
 
 ### 3. Use one vocabulary and one record set
 
-Load the [result type](../../types/agentic-system-analysis-result.md) before
-recording findings. It owns the record fields, the conclusion-status values,
-the `memory-comparison` contract, and the meaning of every controlled value
-and theory-builder term used below. Load the
+Load the [overview type](../../types/agentic-system-analysis-overview.md)
+before recording findings: its set-wide sections own the namespace, the
+declaration and annotation grammar, the conclusion-status values, the source
+anchors and the quotation contract for every member. The
+[runtime report type](../../types/agentic-system-runtime-report.md) owns the
+runtime account, probe evidence and record fields written in step 4, and the
+theory-builder terms used below; the
+[memory report type](../../types/agent-memory-analysis-report.md) owns the
+`memory-comparison` contract; the
+[epistemic report type](../../types/agentic-system-epistemic-report.md) owns
+the six epistemic blocks. Load the
 [epistemic instruction](../analyse-external-system-epistemic-architecture.md)
 at the same point: the route records written in step 4 feed its ledger.
 
@@ -188,8 +208,8 @@ original superseded.
 ### 4. Run and challenge the runtime baseline
 
 1. Begin with consequential claimed work and shipped entry paths. Trace one
-   ordinary invocation end to end and record it with the fields the type's
-   Runtime account requires.
+   ordinary invocation end to end and record it with the fields the runtime
+   report type's Runtime account requires.
 2. Enumerate materially equivalent alternate paths before judging a guarantee:
    direct model calls, provider-native tools, host callbacks, shell access,
    extension code, subprocesses or remote workers, manual graph control, and
@@ -201,27 +221,27 @@ original superseded.
    services, credentials, configuration, and authority.
 4. Record an executed check as a `SRC-*` probe evidence capsule.
 5. Record each material route and load-bearing guarantee with the fields the
-   type's Runtime account and Routes records require, then audit every
-   `RTE-*` record for the read-back fields the Routes records list.
+   runtime report type's Runtime account and Routes records require, then
+   audit every `RTE-*` record for the read-back fields the Routes records list.
 6. Distinguish the capability surface, current grant set, and deployed isolation
    envelope. Inspect permissions, approval, delegation, dynamic extension,
    reliability, observability, providers, packaging, and performance only where
    they change claimed work, a control path, evidence strength, or a lens result.
 7. Inventory the distributed-parametric components used by the inspected
    runtime routes — LLMs, embedding models, parametric routers, critics, and
-   adapters — as `CMP-*` records with the fixity fields the type's
-   Components records require.
+   adapters — as `CMP-*` records with the fixity fields the runtime report
+   type's Components records require.
 8. Inspect materially distinct mechanisms that admit changes to the product,
    retained knowledge or instructions, capabilities, or production machinery.
    Record each on its admitting `RTE-*` record with the admission,
-   decision-role, answer-oracle, operating-mode, and guidance fields the type
-   requires. Defer memory revisions to the specialist's report; step 6
-   attaches them.
+   decision-role, answer-oracle, operating-mode, and guidance fields the
+   runtime report type requires. Defer memory revisions to the specialist's
+   report; step 6 attaches them.
 
 ### 5. Run both lenses
 
-For memory/context and epistemic, first write the scoping record the type's
-Lens scoping section requires, choosing `brief` or `full` depth from the
+For memory/context and epistemic, first write the scoping record the
+overview's Lens scoping section requires, choosing `brief` or `full` depth from the
 trigger evidence. Both lenses always run; thin evidence produces a bounded
 brief result, not a skipped lens.
 
@@ -261,8 +281,8 @@ Invoke
 [`analyse-external-system-epistemic-architecture.md`](../analyse-external-system-epistemic-architecture.md)
 for the epistemic lens, locally or in a separate worker with the same frozen
 boundary. Pass the frozen boundary, registers, statuses, and scoping record.
-Its output is the result's `### Epistemic lens` section under the type's
-contract.
+Its output is `<run-id>/epistemic.md` under the epistemic report type; it
+declares no records and cites the set's.
 
 ### 6. Reconcile and synthesize
 
@@ -273,12 +293,13 @@ Attach corrections and amendments to the affected records, preserve anchored
 conflicts, and report independent convergence only when the lenses reached it
 independently. Recheck shared-route ownership. Attach the admission fields
 of memory routes from the specialist's findings rather than tracing those
-mechanisms twice. Integrate the specialist's
-`memory-comparison` profile with its scope, per-value evidence bases and
-records, coverage assessments, uncertainties, and rationale preserved, and
-carry each specialist quote onto the canonical record it supports; the parent
-checks integration and shared-record conflicts and does not draft a second
-memory analysis. Return substantive conflicts to the specialist or retain
+mechanisms twice. The specialist's `memory-comparison` profile stays in the
+memory member with its scope, per-value evidence bases and records, coverage
+assessments, uncertainties, and rationale preserved; check it against the
+records of the whole set. Each specialist quote stays in the memory member
+beside the record it supports; a runtime record cites that record rather
+than repeating the passage. The parent checks integration and shared-record
+conflicts and does not draft a second memory analysis. Return substantive conflicts to the specialist or retain
 explicit uncertainty; do not silently strengthen its findings. If
 reconciliation exposes stale or unsupported lens work, rerun that lens before
 continuing.
@@ -287,75 +308,107 @@ If a specialist correction cannot be delivered, wait for capacity or retain
 the blocker. The coordinator may replace a malformed citation with a generated
 citation only after checking the selected occurrence still supports the same
 finding. Disclose such mechanical edits in the report and Reconciliation and
-bind the new report hash. A substantive change requires specialist reanalysis.
+bind the new report hash through `finalized-from`. A substantive change
+requires specialist reanalysis.
 
-Write the Bounded synthesis the type requires from the reconciled records,
+Write the Bounded synthesis the overview type requires from the reconciled
+records,
 organized around the system's operational progression rather than by lens.
 
-### 7. Write and validate the exact result
+### 7. Write and validate the set
 
-Write `<run-id>/result.md` under the result type, naming the memory report
-path and the SHA-256 of its bytes in Run identity.
+Write the four members in the run directory, each under its type:
 
-After reconciliation, check the integrated result, not just the separate
-lens returns, against the type's Memory comparison fields: scope agreement
-with the canonical records, every scoped trace-fed write including
-compaction, each push signal's consumer and selector, and amendments and
-overlays on the same canonical IDs.
+1. `<run-id>/runtime.md` under the runtime report type: the runtime account,
+   probe evidence, the records the runtime pass declared, and its annotations
+   on records the memory member declares.
+2. `<run-id>/memory.md` under the memory report type, authored from the local
+   `memory-report.md` and nothing else: replace proposal IDs by exact-token
+   mapping from the overview's Reconciliation table, rewrite a seeded record
+   the specialist re-declared under `## Shared records` to an `On <ID>`
+   annotation heading, set `finalized-from` to the SHA-256 of
+   `memory-report.md`, and append `## Amendments`. Code checks the hash
+   pins, not the derivation; keeping the member to those mechanical edits is
+   your responsibility, and a substantive change goes back to the specialist.
+3. `<run-id>/epistemic.md` under the epistemic report type, from step 5.
+4. `<run-id>/overview.md` last, under the overview type, with `inputs-commit`
+   from step 1 and the manifest pinning each member's path, SHA-256 and type.
+   Recompute the manifest after any member edit. Its Reconciliation names the
+   local report by path and SHA-256 and every mechanical edit finalization
+   made.
+
+After reconciliation, check the whole set, not just the separate lens
+returns, against the memory report type's Memory comparison fields: scope
+agreement with the canonical records across members, every scoped trace-fed
+write including compaction, each push signal's consumer and selector, and
+amendments and annotations on the same canonical IDs.
 
 Record the checked routes and material dispositions, and the check of every
-source anchor, canonical ID, evidence status, boundary, lens output,
-limitation and blocker, in the Semantic verification section. A known assessment unsupported by its records blocks
-publication; properly scoped explicit uncertainty does not. Structural
-validation does not perform this check.
+source anchor, canonical ID, evidence status, boundary, member, limitation
+and blocker, in the overview's Semantic verification section. A known
+assessment unsupported by its records blocks publication; properly scoped
+explicit uncertainty does not. Structural validation does not perform this
+check.
 
-Run `commonplace-validate --full <result-path>` for the typed artifact's
-structural requirements. Publication runs the same validator on the complete
-run bundle, including source quotations; do not run a separate quotation
-check. Correct deterministic formatting errors before continuing. An unresolved
-evidence or semantic failure blocks publication. Correct it while the run stays
-`running`, or abandon the run under the failure rule. The result's `complete`
-disposition means its analysis content is complete; it does not claim that the
-review projections have been published.
+Run `commonplace-validate --full` on each member for its type's structural
+requirements. Publication runs the same validator on the complete run bundle
+and verifies the pin chain (run state to overview, manifest to members,
+review to overview), run and boundary identity across members, the memory
+member's `finalized-from` against the local report and
+`canonical-register-sha256` against the frozen input, and source anchors and
+quotations for every member and the review; do not run a separate quotation
+check. Cross-member record resolution, the profile against the set's
+declarations and the set-wide quote minimum are not yet checked by code:
+check them yourself and record the check under Semantic verification.
+Correct deterministic formatting errors before continuing. An
+unresolved evidence or semantic failure blocks publication. Correct it while
+the run stays `running`, or abandon the run under the failure rule. The
+overview's `complete` disposition means the set's analysis content is
+complete; it does not claim that the review projection has been published.
 
 ### 8. Publish validated candidates
 
-For a blocked or out-of-scope result, complete the run without publication:
-set `run-status: complete`, the disposition, and the `result` path and
+For a blocked or out-of-scope overview, complete the run without publication:
+set `run-status: complete`, the disposition, and the `overview` path and
 SHA-256, leave `generated-review: null`, and validate the run state. For a
-complete result:
+complete set:
 
-1. Generate the compact whole-system review solely from the validated result
+1. Generate the compact whole-system review solely from the validated set
    and its primary-source anchors. Write it first as a temporary candidate in
-   the run directory. Use `kb/types/note.md` and exact frontmatter fields
-   `generated-by: analyse-agentic-system`, `analysis-run`, `source-identity`,
-   `reviewed-revision`, `analysis-result`, and `analysis-result-sha256`.
-   The last two fields name
-   `kb/reports/retained/agentic-system-analysis/<run-id>/result.md` and the SHA-256
-   of the validated exact result. Publication retains those identical bytes;
-   do not draft a separate retained report or rewrite the result for the matrix.
+   the run directory under the
+   [generated review type](../../agentic-systems/types/generated-review.md)
+   with exact frontmatter fields `generated-by: analyse-agentic-system`,
+   `analysis-run`, `source-identity`, `reviewed-revision`,
+   `analysis-overview`, and `analysis-overview-sha256`. The last two fields
+   name `kb/reports/retained/agentic-system-analysis/<run-id>/overview.md`
+   and the SHA-256 of the validated overview. Publication retains the four
+   members byte for byte; do not draft a separate retained report or rewrite
+   a member for the matrix.
 2. Run `commonplace-agentic-analysis-publication prepare` with the run state,
    generated candidate, destination, and `--expected-incumbent-sha256` from
-   destination inspection. It validates candidate bytes as their
-   intended public path, source anchors and quote blocks against the frozen
-   source, workflow identity, memory report and input, and incumbents. It
-   changes no public artifact and dispatches no semantic review job.
+   destination inspection. It applies the worktree rule and the method
+   commit check from step 1, validates candidate bytes as their intended
+   public path and every member as its retained path, and checks source
+   anchors and quote blocks against the frozen source, workflow identity,
+   the memory member's finalization, and the incumbent. It changes no public
+   artifact and dispatches no semantic review job.
 3. Run `commonplace-agentic-analysis-publication publish` with the same
    arguments, including the same incumbent digest. It validates the
-   prospective complete run state, replaces the
-   compact review, retains the exact result, and writes the complete run state
-   last. It rolls back ordinary in-process write or validation failures. A
-   crash during replacement may leave partial public writes; inspect them,
-   mark the run `failed`, and use a new run ID. Existing review and retained
-   result bytes are saved as `incumbent-review.md` and `incumbent-result.md`
-   in the new run before replacement. Keep those recovery copies with the run.
+   prospective complete run state, replaces the compact review, retains the
+   four members, and writes the complete run state last. It rolls back
+   ordinary in-process write or validation failures. A crash during
+   replacement may leave partial public writes; inspect them, mark the run
+   `failed`, and use a new run ID. Existing review and retained member bytes
+   are saved as `incumbent-review.md` and `incumbent-<member>.md` in the new
+   run before replacement. Keep those recovery copies with the run.
 
-The run state binds the exact result and compact review hashes; the result
-binds the memory report hash.
-Keep the frozen input and report with the local run while completion checks
-need them. Candidate cleanup after success is best effort. A cleanup warning
-does not undo completion. Never patch generated prose independently of its
-source boundary and method. Never stage or commit unless separately requested.
+The run state binds the overview and compact review hashes; the overview's
+manifest binds the members, and the memory member binds the local report
+hash. Keep the frozen input and report with the local run while completion
+checks need them. Candidate cleanup after success is best effort. A cleanup
+warning does not undo completion. Never patch generated prose independently
+of its source boundary and method. Never stage or commit unless separately
+requested.
 
 After a main review changes, report the comparison outputs under
 `kb/agentic-systems/comparisons/` stale unless rebuilt and validated under
@@ -368,18 +421,20 @@ establish that an operation completed.
 A transfer scan is separate, interest-conditioned state. Run
 [`scan-agentic-system-transfer`](../scan-agentic-system-transfer/SKILL.md) only
 when separately commissioned and only after the complete run state validates.
-Pass `result.md`, its SHA-256, the sibling `run-state.md` path, the interest
-brief, and permitted Commonplace read and output scope. The scan verifies the
-completed run and reads the exact result directly; a legacy review or compact
-public review is not a substitute. The scan never edits the analysis, published reviews,
+Pass the run's `overview.md` path, its SHA-256, the sibling `run-state.md`
+path, the interest brief, and permitted Commonplace read and output scope.
+The scan verifies the completed run and reads the overview and the members
+its manifest pins directly; a legacy review or compact public review is not a
+substitute. The scan never edits the analysis, published reviews,
 or comparison corpus. If it exposes an analysis defect, fail that conclusion
 and rerun the analysis before scanning again.
 
 ### 10. Report
 
 Run `commonplace-agentic-analysis-handoff <run-state-path>` and include its
-Markdown output unchanged in the final response. It validates the run state
-and current output bytes before rendering.
+Markdown output unchanged in the final response. It validates the run state,
+the overview and every member the manifest pins before rendering, and names
+the members.
 
 Append the downstream freshness dispositions required by step 8. For a
 separately commissioned transfer scan, also return its output path and material
@@ -405,9 +460,11 @@ A failed run reports its failure reason and does not use the handoff command.
   brief result, not a skipped lens.
 - Source-native mechanisms remain visible beneath Commonplace mappings, and no
   conclusion status is upgraded.
-- The exact result validates before publication.
+- Every member validates before publication, and the set's checks pass at
+  publication.
 - Each public review has the SHA-256 and workflow identity recorded by the
-  complete run state; the memory report and frozen input match that run.
+  complete run state; the memory member is the local report finalized under
+  the recorded mapping, and the frozen input matches that run.
 - Correctable pre-publication failures keep the run `running`. A failed run was
   abandoned or has uncertain public state; its replacement is a new run.
 
