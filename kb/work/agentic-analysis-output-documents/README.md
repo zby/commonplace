@@ -283,6 +283,20 @@ renamed `analysis-overview`, and the finalized memory member keeps the
 specialist's section order. Step 2 is closed; step 3 opens with a consumer
 inventory against the live code.
 
+## Step 3 progress
+
+The [consumer inventory](./consumer-inventory-20260928.md) (2026-09-28)
+lists every reader of the result, the review pin, the run state and the
+memory report, with the literals, the identifier and quote checks, and
+the tests that pin them. Its decisive finding: only three of forty
+generated reviews load under today's contract, so the matrix build
+already fails on the corpus and historical results are already retained
+bytes rather than loadable inputs. The [transition plan](./transition-plan.md)
+fixes the producer, validator and consumer changes in eight ordered
+commits, proposes no compatibility code and no migration, and leaves
+three items to the operator: that decision, whether init repins by
+cascade or freezes retained directories, and the trial target's class.
+
 ## Work sequence and decision points
 
 1. Clean up the current procedure before drawing any partition. Working from
