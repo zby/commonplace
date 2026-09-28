@@ -8,7 +8,7 @@ from collections import Counter
 _KINDS = r"(?:SRC|CMP|OBJ|RTE|CLM|ABS|BAP)"
 _ID = rf"{_KINDS}-\d+"
 _DECLARATION = re.compile(
-    rf"(?m)^[ \t]*(?:\|[ \t]*|[-*][ \t]+|#{{3,6}}[ \t]+)?[*`]*({_ID})(?![\w-])"
+    rf"(?m)^[ \t]*(?:\|[ \t]*|[-*][ \t]+|#{{3,6}}[ \t]+)?[*`]*((?:MEM-)?{_ID})(?![\w-])"
 )
 _ANNOTATION = re.compile(rf"(?m)^[ \t]*#{{3,6}}[ \t]+On[ \t]+({_ID})(?![\w-])")
 _PROPOSAL = re.compile(rf"\b(?:MEM|EPI)-(?:{_ID}|[OCRSAB]\d+)\b")
@@ -45,12 +45,18 @@ def section(body: str, title: str) -> str:
     return match[1] if match else ""
 
 
-def declared_ids(body: str) -> list[str]:
+def declared_ids(body: str, *, proposals: bool = False) -> list[str]:
     """IDs declared under Shared records, in order, with repeats kept.
 
-    An annotation heading (`#### On OBJ-1 — label`) is not a declaration.
+    ``proposals`` also counts the ``MEM-`` proposal IDs a specialist's local
+    memory report declares. An annotation heading (`#### On OBJ-1 — label`) is
+    not a declaration.
     """
-    return _DECLARATION.findall(section(_analysis_prose(body), "Shared records"))
+    return [
+        identifier
+        for identifier in _DECLARATION.findall(section(_analysis_prose(body), "Shared records"))
+        if proposals or not identifier.startswith("MEM-")
+    ]
 
 
 def annotated_ids(body: str) -> set[str]:
@@ -86,7 +92,7 @@ def record_reference_errors(body: str, *, memory_report: bool = False) -> list[s
             "record references: unintegrated proposal IDs outside Reconciliation: "
             + ", ".join(local_records)
         )
-    declarations = _DECLARATION.findall(section(prose, "Shared records"))
+    declarations = declared_ids(body)
     repeated = sorted(key for key, count in Counter(declarations).items() if count > 1)
     if repeated:
         errors.append("record references: duplicate declarations: " + ", ".join(repeated))

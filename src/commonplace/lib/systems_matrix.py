@@ -13,10 +13,12 @@ from pathlib import Path
 
 import yaml
 
-from commonplace.lib.agentic_records import annotated_ids, declared_ids, section
+from commonplace.lib.agentic_records import annotated_ids, declared_ids
 from commonplace.lib.agentic_set import (
     RETAINED_ROOT,
+    REVIEWS_ROOT,
     RUN_ID,
+    is_review_path,
     load_member_set,
     retained_overview_path,
     set_identity_errors,
@@ -31,10 +33,8 @@ __all__ = [
     "load_results",
     "memory_member_comparison",
     "retained_overview_path",
-    "shared_record_ids",
     "validate_comparison",
 ]
-REVIEWS_ROOT = Path("kb/agentic-systems/reviews")
 AXES = {
     "storage_substrate": {
         "files",
@@ -124,18 +124,6 @@ def _strings(value: object, label: str) -> list[str]:
     if len(value) != len(set(value)):
         raise ValueError(f"{label}: duplicate values")
     return value
-
-
-def shared_record_ids(body: str, *, memory_report: bool = False) -> set[str]:
-    """IDs declared at line start under Shared records; proposals count in a local report."""
-    shared = section(body, "Shared records")
-    record_prefix = r"(?:MEM-)?" if memory_report else ""
-    return set(
-        re.findall(
-            rf"(?m)^\s*(?:\|\s*|[-*]\s+|#{{3,6}}\s+)?[*`]*({record_prefix}(?:CMP|OBJ|RTE|CLM|ABS|BAP)-\d+)\b",
-            shared,
-        )
-    )
 
 
 def validate_comparison(
@@ -262,9 +250,7 @@ def memory_member_comparison(metadata: dict, body: str) -> dict:
     finalized member declares their canonical records.
     """
     finalized = isinstance(metadata.get("finalized-from"), str)
-    known = annotated_ids(body) | (
-        set(declared_ids(body)) if finalized else shared_record_ids(body, memory_report=True)
-    )
+    known = annotated_ids(body) | set(declared_ids(body, proposals=not finalized))
     return validate_comparison(
         metadata.get("memory-comparison"), known_ids=known, memory_report=not finalized
     )
@@ -336,7 +322,7 @@ def load_results(root: Path, review_paths: list[Path] | None = None) -> MatrixIn
     for raw_path in paths:
         path = (root / raw_path).resolve()
         relative = path.relative_to(root)
-        if relative.parent != REVIEWS_ROOT or relative.suffix != ".md":
+        if not is_review_path(relative.as_posix()):
             raise ValueError(f"not a main-review path: {raw_path}")
         review_bytes = path.read_bytes()
         review, error = parse_document(review_bytes.decode("utf-8"))

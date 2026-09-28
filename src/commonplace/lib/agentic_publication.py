@@ -9,7 +9,7 @@ import subprocess
 import tempfile
 from dataclasses import dataclass, field
 from hashlib import sha256
-from pathlib import Path, PurePosixPath
+from pathlib import Path
 
 import yaml
 
@@ -19,8 +19,12 @@ from commonplace.lib.agentic_set import (
     LOCAL_INPUT_NAME,
     LOCAL_REPORT_NAME,
     OVERVIEW_NAME,
+    RETAINED_ROOT,
+    REVIEWS_ROOT,
+    RUN_ID,
     SET_NAMES,
     MemberSet,
+    is_review_path,
     load_member_set,
     retained_overview_path,
 )
@@ -54,10 +58,7 @@ METHOD_PATHS: tuple[str, ...] = (
 
 # Untracked or modified files may sit here while a batch runs: a sibling run's
 # publication that has not been committed yet.
-OUTPUT_LOCATIONS: tuple[str, ...] = (
-    "kb/agentic-systems/reviews/",
-    "kb/reports/retained/agentic-system-analysis/",
-)
+OUTPUT_LOCATIONS: tuple[str, ...] = (f"{REVIEWS_ROOT}/", f"{RETAINED_ROOT.as_posix()}/")
 
 
 def incumbent_copy_name(name: str) -> str:
@@ -129,20 +130,12 @@ def _repo_path(repo_root: Path, raw: Path) -> Path:
 
 
 def _destination_path(repo_root: Path, raw: str) -> Path:
-    pure = PurePosixPath(raw)
-    if (
-        pure.is_absolute()
-        or raw != pure.as_posix()
-        or ".." in pure.parts
-        or pure.suffix != ".md"
-        or len(pure.parts) != 4
-        or pure.parts[:3] != ("kb", "agentic-systems", "reviews")
-    ):
+    if not is_review_path(raw):
         raise ValueError(
             "publication destination must be kb/agentic-systems/reviews/<name>.md: "
             f"{raw}"
         )
-    path = repo_root.joinpath(*pure.parts)
+    path = repo_root / raw
     if path.is_symlink() or path.resolve() != path:
         raise ValueError("publication destination must not traverse symlinks")
     return path
@@ -325,9 +318,7 @@ def _check_incumbent(
             or metadata.get("source-identity") != source_identity):
         raise ValueError("publication destination is not a generated review of the same source")
     run_id = metadata.get("analysis-run")
-    if not isinstance(run_id, str) or not re.fullmatch(
-        r"AAS-\d{4}-\d{2}-\d{2}-[a-z0-9]+(?:-[a-z0-9]+)*-\d{2}", run_id
-    ):
+    if not isinstance(run_id, str) or not RUN_ID.fullmatch(run_id):
         raise ValueError("incumbent has no valid analysis run identity")
     retained = retained_overview_path(run_id)
     if metadata.get("analysis-overview") != retained.as_posix():
@@ -486,7 +477,7 @@ def prepare_publication(spec: PublicationSpec) -> None:
     _check_set(spec)
 
 
-def _atomic_write(path: Path, content: bytes) -> None:
+def atomic_write(path: Path, content: bytes) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     descriptor, temporary = tempfile.mkstemp(prefix=f".{path.name}.", dir=path.parent)
     temporary_path = Path(temporary)
@@ -505,7 +496,7 @@ def _restore(path: Path, content: bytes | None) -> None:
     if content is None:
         path.unlink(missing_ok=True)
     else:
-        _atomic_write(path, content)
+        atomic_write(path, content)
 
 
 def publish_publication(spec: PublicationSpec) -> PublishedPublication:
@@ -552,7 +543,7 @@ def publish_publication(spec: PublicationSpec) -> PublishedPublication:
                 current = path.read_bytes() if path.exists() else None
                 if current != checked.incumbent.review_bytes:
                     raise ValueError("publication destination changed before replacement")
-            _atomic_write(path, content)
+            atomic_write(path, content)
             written.append(path)
     except Exception as publication_error:
         rollback_errors: list[str] = []

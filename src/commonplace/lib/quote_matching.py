@@ -17,11 +17,14 @@ from commonplace.lib.note_parser import blank_fenced_code_blocks
 
 Normalization = Literal["prose", "code"]
 ATTRIBUTION_RE = re.compile(r"^\s*>\s*---\s*(?P<attribution>.*\S)?\s*$")
+_RANGES = r"[0-9]+(?:-[0-9]+)?(?:,[0-9]+(?:-[0-9]+)?)*"
 LOCAL_SOURCE_RE = re.compile(
-    r"`(?P<path>[^`\n]+?)"
-    r"(?::(?P<ranges>[0-9]+(?:-[0-9]+)?(?:,[0-9]+(?:-[0-9]+)?)*)?)?`"
-    r"\s*@\s*`(?P<version>[^`]+)`"
+    rf"`(?P<path>[^`\n]+?)(?::(?P<ranges>{_RANGES}))?`\s*@\s*`(?P<version>[^`]+)`"
 )
+LOCAL_ANCHOR_RE = re.compile(
+    rf"`(?P<path>[A-Za-z0-9._/-]+\.[A-Za-z0-9._-]+):(?P<ranges>{_RANGES})`"
+)
+"""A local source anchor in prose: a code span holding a file path and line ranges."""
 URL_RE = re.compile(r"https?://[^\s<>()`\"']+")
 
 
@@ -44,6 +47,43 @@ def parse_line_ranges(value: str) -> tuple[tuple[int, int], ...]:
     return tuple(ranges)
 
 
+@dataclass(frozen=True)
+class GitHubBlob:
+    repository: str
+    revision: str
+    path: str
+    ranges: tuple[tuple[int, int], ...]
+
+
+def parse_github_blob(url: str) -> GitHubBlob | None:
+    """Parse a GitHub blob URL; None when ``url`` is not one.
+
+    A malformed URL, an incomplete blob path or an invalid line anchor raises
+    ``ValueError``.
+    """
+    try:
+        parsed = urlsplit(url)
+    except ValueError as exc:
+        raise ValueError(f"invalid attribution URL: {exc}") from exc
+    parts = parsed.path.split("/")
+    if parsed.hostname != "github.com" or len(parts) < 4 or parts[3] != "blob":
+        return None
+    if len(parts) < 6 or not parts[5]:
+        raise ValueError("incomplete GitHub blob path")
+    ranges: tuple[tuple[int, int], ...] = ()
+    if parsed.fragment:
+        anchor = re.fullmatch(r"L([0-9]+)(?:-L([0-9]+))?", parsed.fragment)
+        if anchor is None:
+            raise ValueError("invalid GitHub line anchor")
+        ranges = ((int(anchor[1]), int(anchor[2] or anchor[1])),)
+    return GitHubBlob(
+        f"https://github.com/{parts[1]}/{parts[2]}",
+        parts[4],
+        unquote("/".join(parts[5:])),
+        ranges,
+    )
+
+
 def _attributed_citation(quote: str, attribution: str, line: int) -> Citation:
     local = LOCAL_SOURCE_RE.search(attribution)
     if local:
@@ -59,29 +99,11 @@ def _attributed_citation(quote: str, attribution: str, line: int) -> Citation:
     if url_match:
         url = url_match[0].rstrip(".,;")
         try:
-            parsed = urlsplit(url)
+            blob = parse_github_blob(url)
         except ValueError as exc:
-            return Citation(
-                quote, url, line=line, attribution=attribution,
-                error=f"invalid attribution URL: {exc}",
-            )
-        parts = parsed.path.split("/")
-        if parsed.hostname == "github.com" and len(parts) > 3 and parts[3] == "blob":
-            if len(parts) < 6 or not parts[5]:
-                return Citation(
-                    quote, url, line=line, attribution=attribution,
-                    error="incomplete GitHub blob path"
-                )
-            ranges = ()
-            if parsed.fragment:
-                anchor = re.fullmatch(r"L([0-9]+)(?:-L([0-9]+))?", parsed.fragment)
-                if anchor is None:
-                    return Citation(
-                        quote, url, line=line, attribution=attribution,
-                        error="invalid GitHub line anchor"
-                    )
-                ranges = ((int(anchor[1]), int(anchor[2] or anchor[1])),)
-            return Citation(quote, url, parts[4], ranges, line, attribution)
+            return Citation(quote, url, line=line, attribution=attribution, error=str(exc))
+        if blob is not None:
+            return Citation(quote, url, blob.revision, blob.ranges, line, attribution)
         return Citation(quote, url, line=line, attribution=attribution)
     return Citation(
         quote,
@@ -139,11 +161,10 @@ def git_citation_path(citation: Citation) -> tuple[str, str | None]:
     """Return commit-relative path and optional repository from a parsed citation."""
     source = citation.source or ""
     if source.startswith(("http://", "https://")):
-        parsed = urlsplit(source)
-        parts = parsed.path.split("/")
-        if parsed.hostname != "github.com" or len(parts) < 6 or parts[3] != "blob":
+        blob = parse_github_blob(source)
+        if blob is None:
             raise ValueError("expected a commit-pinned GitHub blob URL")
-        return unquote("/".join(parts[5:])), f"https://github.com/{parts[1]}/{parts[2]}"
+        return blob.path, blob.repository
     return source, None
 
 

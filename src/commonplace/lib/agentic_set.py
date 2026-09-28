@@ -13,7 +13,7 @@ import re
 from collections.abc import Callable, Mapping
 from dataclasses import dataclass
 from hashlib import sha256
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 from typing import Any
 
 from commonplace.lib.note_parser import ParsedDocument, parse_document
@@ -35,8 +35,24 @@ LOCAL_REPORT_NAME = "memory-report.md"
 LOCAL_INPUT_NAME = "memory-input.md"
 
 RETAINED_ROOT = Path("kb/reports/retained/agentic-system-analysis")
+REVIEWS_ROOT = PurePosixPath("kb/agentic-systems/reviews")
 RUN_ID = re.compile(r"AAS-\d{4}-\d{2}-\d{2}-[a-z0-9]+(?:-[a-z0-9]+)*-\d{2}")
-_SHA256 = re.compile(r"^[0-9a-f]{64}$")
+SHA256 = re.compile(r"[0-9a-f]{64}")
+"""A lowercase SHA-256 hex digest; use with ``fullmatch``."""
+
+
+def is_normalized_relative(value: str) -> bool:
+    """Whether ``value`` is a nonempty relative POSIX path with no ``..`` or redundancy."""
+    pure = PurePosixPath(value)
+    return bool(pure.parts) and not pure.is_absolute() and value == pure.as_posix() and (
+        ".." not in pure.parts
+    )
+
+
+def is_review_path(value: str) -> bool:
+    """Whether ``value`` names a generated review: ``kb/agentic-systems/reviews/<name>.md``."""
+    pure = PurePosixPath(value)
+    return is_normalized_relative(value) and pure.parent == REVIEWS_ROOT and pure.suffix == ".md"
 
 Reader = Callable[[Path], bytes]
 
@@ -149,7 +165,7 @@ def load_member_set(overview_path: Path, *, read: Reader | None = None) -> Membe
             raise ValueError(f"manifest: unknown member name {name!r}")
         if entry["type"] != expected_type:
             raise ValueError(f"manifest: {name} must have type {expected_type}")
-        if not _SHA256.fullmatch(entry["sha256"]):
+        if not SHA256.fullmatch(entry["sha256"]):
             raise ValueError(f"manifest: {name} needs a lowercase SHA-256 digest")
         path = overview_path.parent / name
         content = _read(path, read)

@@ -1416,14 +1416,14 @@ def test_publish_rolls_back_an_ordinary_multi_file_write_failure(
     prepare_publication(spec)
     original_state = state.read_bytes()
     failure_destination = state
-    real_atomic_write = agentic_publication._atomic_write
+    real_atomic_write = agentic_publication.atomic_write
 
     def fail_on_state(path: Path, content: bytes) -> None:
         if path == failure_destination:
             raise OSError("injected write failure")
         real_atomic_write(path, content)
 
-    monkeypatch.setattr(agentic_publication, "_atomic_write", fail_on_state)
+    monkeypatch.setattr(agentic_publication, "atomic_write", fail_on_state)
 
     try:
         publish_publication(spec)
@@ -1438,7 +1438,7 @@ def test_publish_rolls_back_an_ordinary_multi_file_write_failure(
     assert spec.generated_candidate_path.exists()
 
     # A retry with the same run ID succeeds once the failure is gone.
-    monkeypatch.setattr(agentic_publication, "_atomic_write", real_atomic_write)
+    monkeypatch.setattr(agentic_publication, "atomic_write", real_atomic_write)
     publish_publication(spec)
     assert frontmatter(state)["run-status"] == "complete"
 
@@ -1770,7 +1770,7 @@ def test_publish_requires_inspected_digest_even_for_valid_incumbent(tmp_path: Pa
 def test_rerun_rollback_preserves_concurrent_incumbent_edit(tmp_path: Path, monkeypatch) -> None:
     from commonplace.lib import agentic_publication as publication
     spec, _, _ = rerun_publication_fixture(tmp_path)
-    original_write = publication._atomic_write
+    original_write = publication.atomic_write
     public = tmp_path / spec.generated_destination
     changed = public.read_bytes() + b"\nConcurrent human edit.\n"
 
@@ -1779,7 +1779,7 @@ def test_rerun_rollback_preserves_concurrent_incumbent_edit(tmp_path: Path, monk
         if path.name == "incumbent-review.md":
             public.write_bytes(changed)
 
-    monkeypatch.setattr(publication, "_atomic_write", edit_after_backup)
+    monkeypatch.setattr(publication, "atomic_write", edit_after_backup)
     with pytest.raises(ValueError, match="changed before replacement"):
         publish_publication(spec)
     assert public.read_bytes() == changed
@@ -1789,14 +1789,14 @@ def test_rerun_rollback_preserves_concurrent_incumbent_edit(tmp_path: Path, monk
 
 def test_rerun_failure_restores_uncommitted_publication(tmp_path: Path, monkeypatch) -> None:
     spec, old_review, old_set = rerun_publication_fixture(tmp_path)
-    original_write = agentic_publication._atomic_write
+    original_write = agentic_publication.atomic_write
 
     def fail_completion(path, content):
         if path == spec.run_state_path:
             raise OSError("injected completion failure")
         original_write(path, content)
 
-    monkeypatch.setattr(agentic_publication, "_atomic_write", fail_completion)
+    monkeypatch.setattr(agentic_publication, "atomic_write", fail_completion)
     with pytest.raises(OSError, match="injected completion failure"):
         publish_publication(spec)
     assert (tmp_path / spec.generated_destination).read_bytes() == old_review
@@ -1936,7 +1936,7 @@ def test_git_source_example_can_initialize_running_state(tmp_path: Path) -> None
 
 
 def test_quoted_code_must_occur_inside_the_cited_range(tmp_path: Path) -> None:
-    from commonplace.lib.agentic_analysis import SourceIdentity, _verify_quote_anchors
+    from commonplace.lib.agentic_analysis import SourceIdentity, verify_quote_anchors
 
     root, _ = git_checkout(tmp_path / "source")
     source = write(root / "operation.py", "# Navigation heading\n\ndef apply():\n    rebuild_prompt()\n")
@@ -1944,12 +1944,12 @@ def test_quoted_code_must_occur_inside_the_cited_range(tmp_path: Path) -> None:
     revision = subprocess.check_output(["git", "-C", str(root), "rev-parse", "HEAD"], text=True).strip()
     identity = SourceIdentity("git", "https://github.com/example/system", revision, root, None)
     quote = f"> rebuild_prompt()\n> --- [operation](https://github.com/example/system/blob/{revision}/operation.py#L1)\n"
-    _, errors = _verify_quote_anchors(quote, source=identity)
+    _, errors = verify_quote_anchors(quote, source=identity)
     assert any("cited line range" in error for error in errors)
-    _, errors = _verify_quote_anchors(quote.replace("#L1", "#L4"), source=identity)
+    _, errors = verify_quote_anchors(quote.replace("#L1", "#L4"), source=identity)
     assert errors == []
     source.write_text("rebuild_prompt_WRONG()\n")
-    _, errors = _verify_quote_anchors(quote.replace("rebuild_prompt()", "rebuild_prompt_WRONG()"), source=identity)
+    _, errors = verify_quote_anchors(quote.replace("rebuild_prompt()", "rebuild_prompt_WRONG()"), source=identity)
     assert any("quote does not occur" in error for error in errors)
 
 
@@ -2122,7 +2122,7 @@ def test_source_failure_makes_prepare_exit_nonzero(tmp_path, capsys):
 
 
 def test_adjacent_attributed_quotes_are_checked_independently(tmp_path):
-    from commonplace.lib.agentic_analysis import SourceIdentity, _verify_quote_anchors
+    from commonplace.lib.agentic_analysis import SourceIdentity, verify_quote_anchors
 
     root, revision = git_checkout(tmp_path / "source")
     identity = SourceIdentity("git", "https://github.com/example/system", revision, root, None)
@@ -2132,10 +2132,10 @@ def test_adjacent_attributed_quotes_are_checked_independently(tmp_path):
 > Frozen source
 > --- `README.md` @ `{revision}`
 """
-    checks, errors = _verify_quote_anchors(text, source=identity)
+    checks, errors = verify_quote_anchors(text, source=identity)
     assert len(checks) == 2
     assert errors == []
-    _, errors = _verify_quote_anchors(text.replace("> Frozen source", "> fabricated text"), source=identity)
+    _, errors = verify_quote_anchors(text.replace("> Frozen source", "> fabricated text"), source=identity)
     assert len(errors) == 1
     assert "quote does not occur" in errors[0]
 

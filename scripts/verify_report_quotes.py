@@ -15,7 +15,7 @@ import argparse
 import sys
 from pathlib import Path
 
-from commonplace.lib.agentic_analysis import _verify_quote_anchors, load_run_state
+from commonplace.lib.agentic_analysis import verify_quote_anchors, load_run_state
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -35,7 +35,7 @@ def main(argv: list[str] | None = None) -> int:
     failed = False
     for file in args.files:
         content = (repo_root / file).read_text(encoding="utf-8")
-        passes, failures = _verify_quote_anchors(content, source=state.source)
+        passes, failures = verify_quote_anchors(content, source=state.source)
         print(f"== {file}: {len(passes)} resolved, {len(failures)} failed")
         for line in passes:
             print(f"  ok   {line}")

@@ -7,7 +7,7 @@ import os
 import sys
 from pathlib import Path
 
-from commonplace.lib.agentic_publication import _atomic_write
+from commonplace.lib.agentic_publication import atomic_write
 from commonplace.lib.systems_matrix import load_results
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
@@ -93,7 +93,7 @@ def main(argv: list[str] | None = None) -> int:
     try:
         inputs = load_results(REPO_ROOT, args.review)
         content = render(inputs.rows, args.output.resolve())
-        _atomic_write(args.output, content.encode("utf-8"))
+        atomic_write(args.output, content.encode("utf-8"))
     except (OSError, ValueError, KeyError, UnicodeError) as exc:
         print(f"table not written: {exc}", file=sys.stderr)
         return 1

@@ -7,7 +7,7 @@ from bisect import bisect_right
 from dataclasses import dataclass
 from hashlib import sha256
 
-from commonplace.lib.agentic_analysis import SourceIdentity, _git_blob_text
+from commonplace.lib.agentic_analysis import SourceIdentity, git_blob_text
 from commonplace.lib.quote_matching import ATTRIBUTION_RE, normalize_text
 
 MAX_QUOTE_OCCURRENCES = 10
@@ -112,7 +112,7 @@ def _frozen_source_text(
     if source.kind == "git":
         if not source_path:
             raise ValueError("Git quotation generation requires --source-path")
-        content, error = _git_blob_text(
+        content, error = git_blob_text(
             source_root=source.path,
             revision=source.revision,
             source_path=source_path,

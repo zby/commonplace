@@ -2,7 +2,7 @@ from hashlib import sha256
 
 import pytest
 
-from commonplace.lib.agentic_analysis import SourceIdentity, _verify_quote_anchors
+from commonplace.lib.agentic_analysis import SourceIdentity, verify_quote_anchors
 from commonplace.lib.quote_generation import (
     generate_quote_batch,
     generate_quotes,
@@ -78,13 +78,13 @@ def test_capture_generation_preserves_text_and_uses_frozen_identity(
     with monkeypatch.context() as context:
         context.setattr("commonplace.lib.quote_matching.match_quote", no_validation)
         context.setattr(
-            "commonplace.lib.agentic_analysis._verify_quote_anchors", no_validation
+            "commonplace.lib.agentic_analysis.verify_quote_anchors", no_validation
         )
         result = generate_quotes("* repeated", source=source)
     assert [c["start_line"] for c in result["occurrences"]] == [1, 2]
     for candidate in result["occurrences"]:
         assert "sha256:" + digest in candidate["citation"]
-        assert not _verify_quote_anchors(candidate["citation"], source=source)[1]
+        assert not verify_quote_anchors(candidate["citation"], source=source)[1]
     snapshot.write_text("changed source")
     with pytest.raises(ValueError, match="SHA-256 mismatch"):
         generate_quotes("changed source", source=source)

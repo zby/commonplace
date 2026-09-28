@@ -9,7 +9,6 @@ from dataclasses import dataclass
 from hashlib import sha256
 from pathlib import Path, PurePosixPath
 from typing import Any
-from urllib.parse import unquote, urlsplit
 
 from commonplace.lib.agentic_set import (
     LOCAL_INPUT_NAME,
@@ -17,30 +16,28 @@ from commonplace.lib.agentic_set import (
     MEMBER_TYPES,
     OVERVIEW_NAME,
     REVIEW_TYPE,
+    SHA256,
     MemberSet,
+    is_normalized_relative,
+    is_review_path,
     load_member_set,
     retained_set_paths,
     set_identity_errors,
 )
 from commonplace.lib.note_parser import ParsedDocument, parse_document
 from commonplace.lib.quote_matching import (
+    LOCAL_ANCHOR_RE,
+    URL_RE,
     blank_quote_bodies,
     git_citation_path,
     match_quote,
     parse_blockquotes,
+    parse_github_blob,
     parse_line_ranges,
 )
 
 AGENTIC_ANALYSIS_RUN_TYPE = "types/agentic-system-analysis-run-state.md"
 
-_SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
-_LOCAL_SOURCE_ANCHOR_RE = re.compile(
-    r"`(?P<path>[A-Za-z0-9._/-]+\.[A-Za-z0-9._-]+):"
-    r"(?P<ranges>[0-9]+(?:-[0-9]+)?(?:,[0-9]+(?:-[0-9]+)?)*)`"
-)
-_GITHUB_URL_RE = re.compile(
-    r"https?://github\.com/[^\s<>()`\"']+", re.IGNORECASE
-)
 
 
 @dataclass(frozen=True)
@@ -93,16 +90,9 @@ def _optional_string(values: dict[str, Any], field: str) -> str | None:
 
 
 def _repo_relative_file(value: str, *, repo_root: Path, field: str) -> Path:
-    pure = PurePosixPath(value)
-    if (
-        pure.is_absolute()
-        or value != pure.as_posix()
-        or ".." in pure.parts
-        or not pure.parts
-        or pure.parts[0] != "kb"
-    ):
+    if not is_normalized_relative(value) or PurePosixPath(value).parts[0] != "kb":
         raise ValueError(f"{field}: expected a normalized repository-relative kb/ path")
-    candidate = repo_root.joinpath(*pure.parts)
+    candidate = repo_root / value
     try:
         candidate.resolve(strict=False).relative_to(repo_root.resolve())
     except ValueError as exc:
@@ -203,17 +193,8 @@ def parse_agentic_analysis_run_state(
     expected_overview = (state_root / run_id / OVERVIEW_NAME).resolve()
     if overview is not None and overview.path.resolve() != expected_overview:
         raise ValueError(f"overview.path: expected <run-id>/{OVERVIEW_NAME}")
-    if generated_review is not None:
-        pure = PurePosixPath(generated_review.display_path)
-        if (
-            len(pure.parts) != 4
-            or pure.parts[:3] != ("kb", "agentic-systems", "reviews")
-            or pure.suffix != ".md"
-        ):
-            raise ValueError(
-                "generated-review.path: expected "
-                "kb/agentic-systems/reviews/<name>.md"
-            )
+    if generated_review is not None and not is_review_path(generated_review.display_path):
+        raise ValueError("generated-review.path: expected kb/agentic-systems/reviews/<name>.md")
     return AgenticAnalysisRunState(
         path=state_path,
         run_dir=state_path.parent,
@@ -337,16 +318,10 @@ def _verify_git_source(source: SourceIdentity) -> str | None:
     return None
 
 
-def _git_blob_text(
+def git_blob_text(
     *, source_root: Path, revision: str, source_path: str
 ) -> tuple[str | None, str | None]:
-    pure = PurePosixPath(source_path)
-    if (
-        pure.is_absolute()
-        or source_path != pure.as_posix()
-        or ".." in pure.parts
-        or not pure.parts
-    ):
+    if not is_normalized_relative(source_path):
         return None, "expected a normalized commit-relative path"
     try:
         blob = subprocess.run(
@@ -373,6 +348,11 @@ def _git_blob_text(
     return content, None
 
 
+def _same_repository(repository: str, source_identity: str) -> bool:
+    expected = source_identity.rstrip("/").removesuffix(".git")
+    return repository.casefold() == expected.casefold()
+
+
 def _verify_source_anchors(
     content: str, *, source_root: Path, source_identity: str, source_revision: str
 ) -> tuple[list[str], list[str]]:
@@ -381,47 +361,34 @@ def _verify_source_anchors(
     failures: list[str] = []
     anchors: dict[tuple[str, tuple[tuple[int, int], ...]], set[str]] = {}
 
-    for match in _LOCAL_SOURCE_ANCHOR_RE.finditer(content):
+    for match in LOCAL_ANCHOR_RE.finditer(content):
         key = (match.group("path"), parse_line_ranges(match.group("ranges")))
         anchors.setdefault(key, set()).add("local")
-    for match in _GITHUB_URL_RE.finditer(content):
+    for match in URL_RE.finditer(content):
         url = match.group().rstrip(".,;")
-        parsed = urlsplit(url)
-        parts = parsed.path.split("/")
-        if len(parts) < 4 or parts[3] != "blob":
+        try:
+            blob = parse_github_blob(url)
+        except ValueError as exc:
+            failures.append(f"source citation: {exc}: {url}")
             continue
-        if len(parts) < 6 or not parts[5]:
-            failures.append(f"source citation: incomplete GitHub blob path: {url}")
+        if blob is None:
             continue
-        repository = f"https://github.com/{parts[1]}/{parts[2]}"
-        expected_repository = source_identity.rstrip("/").removesuffix(".git")
-        if repository.casefold() != expected_repository.casefold():
+        if not _same_repository(blob.repository, source_identity):
             failures.append(
                 "source citation: GitHub anchor uses repository "
-                f"{repository}, expected {source_identity}"
+                f"{blob.repository}, expected {source_identity}"
             )
             continue
-        revision = parts[4]
-        source_path = unquote("/".join(parts[5:]))
-        if revision != source_revision:
+        if blob.revision != source_revision:
             failures.append(
                 "source citation: GitHub anchor uses revision "
-                f"{revision}, expected {source_revision}: {source_path}"
+                f"{blob.revision}, expected {source_revision}: {blob.path}"
             )
             continue
-        line_ranges: tuple[tuple[int, int], ...] = ()
-        if parsed.fragment:
-            lines = re.fullmatch(r"L([0-9]+)(?:-L([0-9]+))?", parsed.fragment)
-            if lines is None:
-                failures.append(f"source citation: invalid GitHub line anchor: {url}")
-                continue
-            start = int(lines[1])
-            end = int(lines[2] or start)
-            line_ranges = ((start, end),)
-        anchors.setdefault((source_path, line_ranges), set()).add("GitHub")
+        anchors.setdefault((blob.path, blob.ranges), set()).add("GitHub")
 
     for (source_path, line_ranges), kinds in sorted(anchors.items()):
-        blob, error = _git_blob_text(
+        blob, error = git_blob_text(
             source_root=source_root,
             revision=source_revision,
             source_path=source_path,
@@ -452,7 +419,7 @@ def _verify_source_anchors(
     return passes, failures
 
 
-def _verify_quote_anchors(
+def verify_quote_anchors(
     content: str,
     *,
     source: SourceIdentity,
@@ -506,13 +473,13 @@ def _verify_quote_anchors(
             except ValueError as exc:
                 failures.append(f"{label}: source error: {exc}")
                 continue
-            if repository and repository.casefold() != source.identity.rstrip("/").removesuffix(".git").casefold():
+            if repository and not _same_repository(repository, source.identity):
                 failures.append(f"{label}: source error: attribution uses repository {repository}, expected {source.identity}")
                 continue
             if citation.version != source.revision:
                 failures.append(f"{label}: source error: attribution uses revision {citation.version}, expected {source.revision}")
                 continue
-            source_text, error = _git_blob_text(
+            source_text, error = git_blob_text(
                 source_root=source.path, revision=source.revision, source_path=source_path,
             )
             location = f"{source_path} at the recorded commit"
@@ -659,7 +626,7 @@ def _verify_memory_member(
     if values.get("report-status") != "complete":
         failures.append("memory member: report-status must be complete")
     finalized_from = values.get("finalized-from")
-    if not isinstance(finalized_from, str) or not _SHA256_RE.fullmatch(finalized_from):
+    if not isinstance(finalized_from, str) or not SHA256.fullmatch(finalized_from):
         failures.append("memory member: finalized-from must be the local report's SHA-256")
     for name, field in ((LOCAL_REPORT_NAME, "finalized-from"),
                         (LOCAL_INPUT_NAME, "canonical-register-sha256")):
@@ -847,7 +814,7 @@ def verify_agentic_analysis_run_state(
                 )
                 passes.extend(f"{role} {message}" for message in anchor_passes)
                 failures.extend(f"{role} {message}" for message in anchor_failures)
-            quote_passes, quote_failures = _verify_quote_anchors(
+            quote_passes, quote_failures = verify_quote_anchors(
                 content, source=state.source, capture=capture
             )
             passes.extend(f"{role} {message}" for message in quote_passes)
