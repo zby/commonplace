@@ -244,6 +244,26 @@ hashes reproduced by hand.
   commit its inputs came from instead of preparing a bundle. Retained
   bundles from earlier trials stay as historical records.
 
+## Relaxed run-state verification (2026-09-28, operator decision)
+
+Set-level validation is deferred to [directory-artifacts](../directory-artifacts/README.md);
+until it lands, run-state verification keeps only the cheap checks that
+have caught real errors, and the procedure loses the constraints the
+dropped checks imposed.
+
+Kept: per-member schema validation; the pin chain (run state to overview,
+manifest to members, review to overview); quote and source anchors on
+every member and the review against the frozen source; the committed-inputs
+checks; `run-id` agreement across members.
+
+Dropped: the finalization derivation check (replaced by the `finalized-from`
+hash as recorded provenance); cross-member record resolution and the
+profile-against-union check (members keep their own syntax and duplicate
+checks); the set-level quote minimum. The coordinator finalizes the memory
+member by mapping IDs and appending amendments, with no exactness
+constraint. Accepted cost: a dangling cross-member ID can reach
+publication until the workshop lands.
+
 ## Open items for the operator
 
 - Approval of the move list above.
