@@ -159,11 +159,7 @@ def load_member_set(overview_path: Path, *, read: Reader | None = None) -> Membe
     return MemberSet(overview=overview, members=members)
 
 
-def set_identity_errors(
-    member_set: MemberSet,
-    *,
-    source_identity: str | None = None,
-) -> list[str]:
+def set_identity_errors(member_set: MemberSet) -> list[str]:
     """Check that every member carries the overview's run and boundary identity."""
     overview = member_set.overview.frontmatter
     run_id = overview.get("run-id")
@@ -176,10 +172,6 @@ def set_identity_errors(
             errors.append(f"{name}: {run_field} does not match the overview")
         if values.get("reviewed-boundary") != boundary:
             errors.append(f"{name}: reviewed-boundary does not match the overview")
-        if name == "memory.md" and source_identity is not None and (
-            values.get("source-identity") != source_identity
-        ):
-            errors.append(f"{name}: source-identity does not match the frozen source")
     return errors
 
 

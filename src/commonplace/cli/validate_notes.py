@@ -16,6 +16,7 @@ from pathlib import Path
 from commonplace.lib.library import checks_library
 from commonplace.lib.lifecycle_validation import validate_lifecycle
 from commonplace.lib.project_paths import (
+    analysis_set_overview,
     kb_root,
     list_collection_validation_paths,
     list_notes_collection_paths,
@@ -91,6 +92,10 @@ class ValidationReport:
 
 def _collection_target(collection: Path) -> ResolvedValidationTarget:
     resolved = collection.resolve()
+    overview = analysis_set_overview(resolved)
+    if overview is not None:
+        # A run directory validates as one artifact through its overview.
+        return ResolvedValidationTarget(paths=(overview,))
     return ResolvedValidationTarget(
         paths=tuple(list_collection_validation_paths(resolved)),
         collection=resolved,

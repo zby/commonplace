@@ -217,8 +217,7 @@ def test_identity_errors_are_reported_per_member() -> None:
         },
     )
 
-    assert agentic_set.set_identity_errors(member_set, source_identity="t") == [
+    assert agentic_set.set_identity_errors(member_set) == [
         "runtime.md: reviewed-boundary does not match the overview",
-        "memory.md: source-identity does not match the frozen source",
         "epistemic.md: run-id does not match the overview",
     ]

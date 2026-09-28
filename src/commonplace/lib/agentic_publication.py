@@ -67,6 +67,7 @@ class PreparedPublication:
 class PublishedPublication:
     generated_path: str
     retained_path: str
+    retained_set: tuple[str, ...]
     cleanup_warnings: tuple[str, ...]
 
 
@@ -476,6 +477,9 @@ def publish_publication(spec: PublicationSpec) -> PublishedPublication:
     return PublishedPublication(
         generated_path=bundle.spec.generated_destination,
         retained_path=bundle.retained_paths[OVERVIEW_NAME].relative_to(repo_root).as_posix(),
+        retained_set=tuple(
+            bundle.retained_paths[name].relative_to(repo_root).as_posix() for name in SET_NAMES
+        ),
         cleanup_warnings=tuple(cleanup_warnings),
     )
 

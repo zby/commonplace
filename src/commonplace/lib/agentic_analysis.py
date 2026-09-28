@@ -18,12 +18,10 @@ from commonplace.lib.agentic_set import (
     OVERVIEW_NAME,
     REVIEW_TYPE,
     MemberSet,
-    declared_union,
     finalization_errors,
     load_member_set,
     proposal_mapping,
     retained_set_paths,
-    set_identity_errors,
 )
 from commonplace.lib.note_parser import ParsedDocument, parse_document
 from commonplace.lib.quote_matching import (
@@ -697,11 +695,13 @@ def _validate_document(
 def _verify_memory_member(
     state: AgenticAnalysisRunState, member_set: MemberSet
 ) -> tuple[list[str], list[str]]:
-    """Check the memory member's provenance and its derivation from the local report.
+    """Bind the memory member to the run's local inputs and check its derivation.
 
-    The coordinator authors the finalized member; this verifies that it is
-    the specialist's report with the Reconciliation mapping applied and
-    amendments appended, without certifying either's conclusions.
+    The overview's set rule already validated the member and its profile.
+    This checks what needs the run directory: the frozen input hash, the
+    frozen source identity, and that the member is the specialist's local
+    report with the Reconciliation mapping applied and amendments appended,
+    without certifying either's conclusions.
     """
     member = member_set.memory
     if member is None:
@@ -714,8 +714,8 @@ def _verify_memory_member(
         return [], [f"memory member: cannot read the local report or frozen input: {exc}"]
     failures: list[str] = []
     values = member.frontmatter
-    if values.get("report-status") != "complete":
-        failures.append("memory member: report-status must be complete")
+    if state.source is not None and values.get("source-identity") != state.source.identity:
+        failures.append("memory member: source-identity does not match the frozen source")
     if values.get("canonical-register-sha256") != sha256(input_bytes).hexdigest():
         failures.append("memory member: canonical-register-sha256 does not match memory-input.md")
     if values.get("finalized-from") != sha256(report_bytes).hexdigest():
@@ -734,50 +734,18 @@ def _verify_memory_member(
     return ["memory member: finalized from the local report under the Reconciliation mapping"], []
 
 
-def _verify_set_records(member_set: MemberSet) -> tuple[list[str], list[str]]:
-    """Resolve declarations, references, the profile and the quote minimum across the set."""
-    from commonplace.lib.agentic_records import set_record_errors
-    from commonplace.lib.systems_matrix import validate_comparison
-
-    overview_body = re.sub(
-        r"(?ms)^## Reconciliation[ \t]*\n.*?(?=^## |\Z)", "", member_set.overview.body
-    )
-    bodies = {OVERVIEW_NAME: overview_body}
-    bodies.update({name: member.body for name, member in member_set.members.items()})
-    failures = [
-        f"set {error}"
-        for error in set_record_errors(bodies, register_body=member_set.overview.body)
-    ]
-    memory = member_set.memory
-    if memory is not None:
-        try:
-            validate_comparison(
-                memory.frontmatter.get("memory-comparison"),
-                memory.body,
-                known_ids=declared_union(member_set),
-            )
-        except ValueError as exc:
-            failures.append(f"set memory comparison: {exc}")
-    if not any(
-        citation.quote and citation.attribution
-        for document in member_set.documents
-        for citation in parse_blockquotes(document.body)
-    ):
-        failures.append(
-            "set source evidence: a complete set requires at least one attributed "
-            "quotation; bare file and line citations are insufficient"
-        )
-    if failures:
-        return [], failures
-    return ["set: declarations, references, profile and quotations resolve across members"], []
-
-
 def verify_agentic_analysis_run_state(
     state: AgenticAnalysisRunState,
     *,
     content_overrides: Mapping[Path, str] | None = None,
 ) -> tuple[list[str], list[str]]:
-    """Verify the frozen source and exact bytes named by the state."""
+    """Verify the frozen source and exact bytes named by the state.
+
+    Validating the overview runs the set rule (manifest, member validation,
+    identity, records, profile, quote minimum); this adds what only the run
+    state knows: the source, the pinned bytes, the retained copies, the
+    review's pin, the local memory inputs, and anchor resolution.
+    """
     passes: list[str] = []
     failures: list[str] = []
 
@@ -814,16 +782,11 @@ def verify_agentic_analysis_run_state(
         passes.extend(checked_passes)
         failures.extend(checked_failures)
 
-    def read(path: Path) -> bytes:
-        override = _text_override(path, content_overrides)
-        return override.encode("utf-8") if override is not None else path.read_bytes()
-
-    try:
-        member_set = load_member_set(state.overview.path, read=read)
-    except ValueError as exc:
-        failures.append(f"member set: {exc}")
+    overview_document, error = _parsed_output(state.overview, content_overrides)
+    if error is not None or overview_document is None:
+        failures.append(f"overview: {error}")
         return passes, failures
-    overview_frontmatter = member_set.overview.frontmatter
+    overview_frontmatter = overview_document.frontmatter or {}
     if overview_frontmatter.get("run-id") != state.run_id:
         failures.append("overview: run-id does not match run state")
     if overview_frontmatter.get("system") != state.system:
@@ -837,39 +800,33 @@ def verify_agentic_analysis_run_state(
     if not any(message.startswith("overview:") for message in failures):
         passes.append("overview: workflow identity matches run state")
     projection_passes, projection_failures = _verify_overview_projection_paths(
-        state, member_set.overview.body
+        state, overview_document.body
     )
     passes.extend(projection_passes)
     failures.extend(projection_failures)
 
-    if state.result_disposition == "complete":
-        passes.append("member set: manifest members present, hashed and typed")
-        failures.extend(
-            f"member set: {error}"
-            for error in set_identity_errors(
-                member_set,
-                source_identity=None if state.source is None else state.source.identity,
-            )
-        )
-        for name, member in member_set.members.items():
-            checked_passes, checked_failures = _validate_document(
-                state, role=name, path=member.path, content_overrides=content_overrides
-            )
-            passes.extend(checked_passes)
-            failures.extend(checked_failures)
+    def read(path: Path) -> bytes:
+        override = _text_override(path, content_overrides)
+        return override.encode("utf-8") if override is not None else path.read_bytes()
+
+    # The set rule reported any manifest defect through overview validation;
+    # dereference it here only to reach the member texts.
+    try:
+        member_set: MemberSet | None = load_member_set(state.overview.path, read=read)
+    except ValueError:
+        member_set = None
+    if member_set is not None and state.result_disposition == "complete":
         memory_passes, memory_failures = _verify_memory_member(state, member_set)
         passes.extend(memory_passes)
         failures.extend(memory_failures)
-        records_passes, records_failures = _verify_set_records(member_set)
-        passes.extend(records_passes)
-        failures.extend(records_failures)
 
     if state.generated_review is not None:
         retained_paths = retained_set_paths(state.run_id)
         expected_hashes = {OVERVIEW_NAME: state.overview.expected_sha256}
-        expected_hashes.update(
-            {name: member.sha256 for name, member in member_set.members.items()}
-        )
+        if member_set is not None:
+            expected_hashes.update(
+                {name: member.sha256 for name, member in member_set.members.items()}
+            )
         retained_failures = []
         for name, expected_sha256 in expected_hashes.items():
             retained = OutputIdentity(
@@ -914,7 +871,11 @@ def verify_agentic_analysis_run_state(
                 passes.append("generated review: workflow identity matches run state")
 
     if state.source is not None:
-        contents = [(document.name, document.text) for document in member_set.documents]
+        contents = (
+            [(document.name, document.text) for document in member_set.documents]
+            if member_set is not None
+            else [(OVERVIEW_NAME, _read_output_text(state.overview, content_overrides))]
+        )
         if state.generated_review is not None:
             try:
                 contents.append(

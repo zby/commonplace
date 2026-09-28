@@ -65,6 +65,7 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
                 "published": True,
                 "generated_path": published.generated_path,
                 "retained_path": published.retained_path,
+                "retained_set": list(published.retained_set),
                 "cleanup_warnings": list(published.cleanup_warnings),
             }
     except PublicationUncertainError as exc:

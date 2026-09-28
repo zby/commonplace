@@ -944,6 +944,86 @@ def _agentic_evidence_and_references_rule(
     validate_quote_citations(results, parsed.content)
 
 
+@type_rule("types/agentic-system-analysis-overview.md")
+def _agentic_overview_set_rule(
+    results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
+) -> None:
+    """Check the retained set an overview defines, from its bytes alone.
+
+    Validating an overview dereferences its manifest, validates every member,
+    and checks what only the whole set can establish: identity agreement,
+    unique declarations and resolved references, the memory profile against
+    the set's declarations, and the quote minimum. Source-bound checks
+    (anchor resolution, the finalization derivation from the local report)
+    belong to run-state verification, which has the frozen source.
+    """
+    from commonplace.lib.agentic_records import set_record_errors
+    from commonplace.lib.agentic_set import (
+        declared_union,
+        load_member_set,
+        set_identity_errors,
+    )
+    from commonplace.lib.systems_matrix import validate_comparison
+
+    def read(path: Path) -> bytes:
+        override = run.content_overrides.get(path.resolve())
+        return override.encode("utf-8") if override is not None else path.read_bytes()
+
+    try:
+        member_set = load_member_set(parsed.path, read=read)
+    except ValueError as exc:
+        results.fails.append(f"member set: {exc}")
+        return
+    if not member_set.members:
+        results.passes.append("member set: no members, as the disposition requires")
+        return
+    results.passes.append("member set: manifest members present, hashed and typed")
+    results.fails.extend(f"member set: {error}" for error in set_identity_errors(member_set))
+    for name, member in member_set.members.items():
+        override = run.content_overrides.get(member.path.resolve())
+        checked = (
+            validate_note_text_at_path(
+                override, path=member.path, repo_root=run.repo_root,
+                content_overrides=run.content_overrides,
+            )
+            if override is not None
+            else validate_note(member.path, repo_root=run.repo_root)
+        )
+        results.warns.extend(f"{name} validation: {warn}" for warn in checked.warns)
+        results.fails.extend(f"{name} validation: {fail}" for fail in checked.fails)
+    bodies = {name: member.body for name, member in member_set.members.items()}
+    results.fails.extend(
+        f"set {error}"
+        for error in set_record_errors(bodies, register_body=member_set.overview.body)
+    )
+    memory = member_set.memory
+    if memory is not None:
+        try:
+            validate_comparison(
+                memory.frontmatter.get("memory-comparison"), memory.body,
+                known_ids=declared_union(member_set),
+            )
+        except ValueError as exc:
+            results.fails.append(f"set memory comparison: {exc}")
+        if memory.frontmatter.get("report-status") != "complete":
+            results.fails.append("set: the memory member's report-status must be complete")
+        if not isinstance(memory.frontmatter.get("finalized-from"), str):
+            results.fails.append("set: the memory member must record finalized-from")
+    if not any(
+        citation.quote and citation.attribution
+        for document in member_set.documents
+        for citation in parse_blockquotes(document.body)
+    ):
+        results.fails.append(
+            "set source evidence: a complete set requires at least one attributed "
+            "quotation; bare file and line citations are insufficient"
+        )
+    if not any(message.startswith("set") for message in results.fails):
+        results.passes.append(
+            "set: declarations, references, profile and quotations resolve across members"
+        )
+
+
 @type_rule("types/agent-memory-analysis-report.md")
 def _memory_report_comparison_rule(
     results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
