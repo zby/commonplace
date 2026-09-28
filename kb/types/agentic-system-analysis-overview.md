@@ -67,12 +67,14 @@ any member fails its own validation.
 The run has one namespace: `SRC-*` sources, `CMP-*` components, `OBJ-*`
 operative objects, `RTE-*` routes, `CLM-*` claims, `ABS-*` evidenced
 absences, and `BAP-*` behavioral-authority paths. IDs are unique across
-the set and resolve within it. Write each ID in full, including lists;
-abbreviated suffixes and ranges are invalid. Use commas or words between
-referenced IDs, not a dash that can be read as a range. Source quotations
-and fenced excerpts are excluded from identifier checks.
+the set and resolve within it. Write each ID in full, including lists,
+using commas or words between referenced IDs. The validator resolves
+complete IDs; it does not infer references from abbreviated suffixes or
+ranges. Source quotations and fenced excerpts are excluded from identifier
+checks.
 
-`SRC-*` records are declared only in this overview's Source register.
+`SRC-*` records are declared only in the first cell of a table row in this
+overview's Source register, as `| SRC-1 | ... |`.
 Every other record is declared exactly once, in the member that
 established it: the runtime report for records the coordinator's runtime
 pass registered, the memory report for records registered from the memory
@@ -87,8 +89,10 @@ are local tags.
 
 Within a member's `## Shared records`, records are grouped under the six
 level-three kind headings and declared once each as a level-four heading,
-`#### OBJ-1 — Short label`. Later prose refers to a record as `The object
-OBJ-1 ...` or `Evidence: SRC-1 ...`. A level-four heading of the form
+`#### OBJ-1 — Short label`. The ID precedes the em dash; the rest is the
+title. Prose, lists and table rows never declare these records. The same
+grammar and duplicate checks apply to local `MEM-` proposals and finalized
+records. A level-four heading of the form
 `#### On OBJ-1 — Short label` is an **annotation**: another member's
 lens-specific fields on a record it does not declare. It never redefines
 generic identity, and a member never annotates a record it declares.

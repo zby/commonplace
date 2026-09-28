@@ -5,19 +5,16 @@ from __future__ import annotations
 import re
 from collections import Counter
 
-_KINDS = r"(?:SRC|CMP|OBJ|RTE|CLM|ABS|BAP)"
-_ID = rf"{_KINDS}-\d+"
+_RECORD_ID = r"(?:CMP|OBJ|RTE|CLM|ABS|BAP)-\d+"
+_ID = rf"(?:SRC-\d+|{_RECORD_ID})"
 _DECLARATION = re.compile(
-    rf"(?m)^[ \t]*(?:\|[ \t]*|[-*][ \t]+|#{{3,6}}[ \t]+)?[*`]*((?:MEM-)?{_ID})(?![\w-])"
+    rf"(?m)^####[ \t]+((?:MEM-)?{_RECORD_ID})[ \t]+—[ \t]+\S[^\n]*$"
 )
-_ANNOTATION = re.compile(rf"(?m)^[ \t]*#{{3,6}}[ \t]+On[ \t]+({_ID})(?![\w-])")
-_PROPOSAL = re.compile(rf"\b(?:MEM|EPI)-(?:{_ID}|[OCRSAB]\d+)\b")
-_SHORTHAND = re.compile(
-    rf"(?<![\w-])(?:(?:MEM|EPI)-)?{_ID}[*`]*[ \t]*"
-    rf"(?:[/,][ \t]*[*`]*(?:[OCRSAB]\d+|{_KINDS}\d+|\d+)"
-    rf"|[–—-][ \t]*[*`]*(?:(?:(?:MEM|EPI)-)?{_ID}|[OCRSAB]\d+|\d+))"
-    rf"(?![\w-])"
+_ANNOTATION = re.compile(
+    rf"(?m)^####[ \t]+On[ \t]+({_RECORD_ID})[ \t]+—[ \t]+\S[^\n]*$"
 )
+_SOURCE_DECLARATION = re.compile(r"(?m)^\|[ \t]*(SRC-\d+)[ \t]*\|")
+_PROPOSAL = re.compile(rf"(?<![\w-])(?:MEM|EPI)-{_RECORD_ID}(?![\w-])")
 
 
 def _analysis_prose(body: str) -> str:
@@ -72,28 +69,42 @@ def record_reference_errors(body: str, *, memory_report: bool = False) -> list[s
     validated alone, so references it makes to records other members declare
     are not resolved here.
     """
-    prose = _analysis_prose(body)
     errors = []
-    for match in _SHORTHAND.finditer(prose):
-        errors.append(
-            f"record references: expand shorthand or range {match[0]!r} into complete IDs"
+    if not memory_report:
+        outside_reconciliation = re.sub(
+            r"(?ms)^## Reconciliation[ \t]*\n.*?(?=^## |\Z)", "", _analysis_prose(body)
         )
-    if memory_report:
-        # The parent owns the canonical register; its commissioned IDs need not
-        # all be copied into a specialist report. Comparison references have
-        # their own shared/proposed-register check.
-        return errors
-    outside_reconciliation = re.sub(
-        r"(?ms)^## Reconciliation[ \t]*\n.*?(?=^## |\Z)", "", prose
-    )
-    local_records = sorted(set(_PROPOSAL.findall(outside_reconciliation)))
-    if local_records:
-        errors.append(
-            "record references: unintegrated proposal IDs outside Reconciliation: "
-            + ", ".join(local_records)
-        )
-    declarations = declared_ids(body)
+        local_records = sorted(set(_PROPOSAL.findall(outside_reconciliation)))
+        if local_records:
+            errors.append(
+                "record references: unintegrated proposal IDs outside Reconciliation: "
+                + ", ".join(local_records)
+            )
+    declarations = declared_ids(body, proposals=memory_report)
     repeated = sorted(key for key, count in Counter(declarations).items() if count > 1)
     if repeated:
         errors.append("record references: duplicate declarations: " + ", ".join(repeated))
     return errors
+
+
+def set_record_errors(bodies: dict[str, str]) -> tuple[set[str], list[str]]:
+    """Resolve references against the set's declarations, excluding source excerpts."""
+    declarations = []
+    for body in bodies.values():
+        declarations.extend(declared_ids(body))
+    declarations.extend(
+        _SOURCE_DECLARATION.findall(
+            section(_analysis_prose(bodies["overview.md"]), "Source register")
+        )
+    )
+    known = set(declarations)
+    errors = [
+        f"duplicate set declaration: {identifier}"
+        for identifier, count in Counter(declarations).items() if count > 1
+    ]
+    for name, body in bodies.items():
+        prose = _PROPOSAL.sub("", _analysis_prose(body))
+        references = set(re.findall(rf"(?<![\w-]){_ID}(?![\w-])", prose))
+        for identifier in sorted(references - known):
+            errors.append(f"{name}: unresolved record {identifier}")
+    return known, errors

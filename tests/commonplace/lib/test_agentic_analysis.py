@@ -1765,11 +1765,14 @@ def test_publication_requires_inputs_commit_to_be_an_ancestor_of_head(tmp_path: 
     assert frontmatter(state)["run-status"] == "running"
 
 
-def test_member_validation_catches_shorthand_in_ordinary_prose(tmp_path: Path) -> None:
+def test_member_validation_accepts_s3_title_and_prose_references(tmp_path: Path) -> None:
     runtime = member_fixture(tmp_path) / "runtime.md"
-    runtime.write_text(runtime.read_text() + "\nBroken integration: OBJ-1/O2/O3.\n")
+    runtime.write_text(runtime.read_text().replace(
+        "#### RTE-1 — Fixture route",
+        "#### RTE-1 — S3 invocation\n\nRTE-1 reads the bucket.",
+    ))
     checked = validation.validate_note(runtime, repo_root=tmp_path)
-    assert any("expand shorthand" in error for error in checked.fails)
+    assert checked.fails == []
 
 
 def test_git_source_example_can_initialize_running_state(tmp_path: Path) -> None:
