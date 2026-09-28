@@ -39,6 +39,12 @@ following and stop with a report if any fails:
   `kb/reports/retained/agentic-system-analysis-archive/`.
 - `commonplace-quote --help` shows `--selections`.
 - Each checkout under `related-systems/` has the origin named below.
+- The worktree is publishable: no modified or staged tracked file, and no
+  untracked file under `kb/` outside `kb/agentic-systems/reviews/` and
+  `kb/reports/retained/agentic-system-analysis/`. Publication enforces this
+  and that no method path changed since each run's `inputs-commit`, so
+  commit or set aside unrelated local edits before launching. Sibling runs'
+  uncommitted publications do not block one another.
 
 At startup record HEAD, the SHA-256 of the five governing files (the
 skill, the memory instruction, the epistemic instruction, the overview type
@@ -104,16 +110,20 @@ dependent work only if the defect prevents valid completion.
 ## Evidence and acceptance
 
 After each run, independently run the handoff command and the run-state
-verification, which checks the overview's manifest, every member's hash
-and identity, anchor resolution on every member, and the set-wide
-identifier check. Retain traces, hashes and model identities in a new
+verification, which checks the pin chain (run state, overview manifest,
+member hashes and types, review pin), `run-id` agreement, each member's
+own validation, and anchor resolution on every member and the review.
+Cross-member identifier resolution and the finalization derivation are
+deliberately not checked until `kb/work/directory-artifacts` lands; read
+each set for an ID referenced in one member and declared in none, and
+record any you find. Retain traces, hashes and model identities in a new
 dated cache directory under `kb/reports/cache/agentic-memory-refresh/`.
 Report inaccessible trace portions as audit gaps.
 
 For each run record: the resolved commit; the boundary chosen and any
 exclusion; member word counts and record counts per kind; quote counts
-per member; whether the memory member's `finalized-from` verified against
-the local report; every gap, question or invented value a worker
+per member; whether the memory member's `finalized-from` equals the local
+report's hash; every gap, question or invented value a worker
 produced, with the quoted instruction text; truncation and retries; and
 the fourteen profile assessments.
 
