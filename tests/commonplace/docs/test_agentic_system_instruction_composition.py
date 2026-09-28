@@ -57,9 +57,13 @@ def test_repository_sources_remain_commit_addressed() -> None:
     assert "verify an existing checkout's origin" in source_work
     assert "git --no-replace-objects -C" in source_work
     assert "never read evidence from the worktree" in source_work
-    assert "full commit-relative path" in source_work
     assert "compact source allowlist" in source_work
-    assert "recorded search boundary" in source_work
+    # The anchor grammar is the result type's, stated once under Status fields.
+    contract = (
+        REPO_ROOT / "kb/types/agentic-system-analysis-result.md"
+    ).read_text(encoding="utf-8")
+    assert "one code span containing the full commit-relative path" in contract
+    assert "searched boundary" in contract
 
 
 def test_runtime_checks_preflight_before_execution() -> None:
@@ -71,10 +75,15 @@ def test_runtime_checks_preflight_before_execution() -> None:
 
     assert "Before any dynamic" in runtime
     assert "execution-preflight" in runtime
-    assert "never reaches the target remains `not run`" in runtime
     assert "probe evidence capsule" in runtime
-    assert "actual intervention and comparison" in runtime
-    assert "checks considered" in runtime
+    # Preflight and capsule semantics live in the result type, not the skill.
+    contract = (
+        REPO_ROOT / "kb/types/agentic-system-analysis-result.md"
+    ).read_text(encoding="utf-8")
+    assert "leaves the target check `not run`" in contract
+    assert "supports no negative finding" in contract
+    assert "actual intervention and comparison" in contract
+    assert "checks considered" in contract
 
 
 def test_transfer_scan_runs_after_complete_state() -> None:
@@ -92,12 +101,17 @@ def test_candidate_artifact_does_not_establish_phase_observation() -> None:
         REPO_ROOT
         / "kb/instructions/analyse-external-system-epistemic-architecture.md"
     ).read_text(encoding="utf-8")
-    example = epistemic[
-        epistemic.index("Example: observed-run evidence") :
-        epistemic.index("Use this schema:")
+    dispose = epistemic[
+        epistemic.index("**Dispose every object.**") :
+        epistemic.index("**Bound each check's licenses.**")
     ]
 
-    assert "persisted claim artifact" in example
-    assert "does not establish that any particular production phase ran" in example
-    assert "observed candidate state" in example
-    assert "as `not determinable`, not `phase evidenced` or `accepted`" in example
+    assert "persisted candidate artifact" in dispose
+    assert "no provenance or trace links it" in dispose
+    assert "only that a candidate instance is available" in dispose
+    assert "observed candidate state" in dispose
+    assert "`not determinable`, not `phase evidenced` or `accepted`" in dispose
+    contract = (
+        REPO_ROOT / "kb/types/agentic-system-analysis-result.md"
+    ).read_text(encoding="utf-8")
+    assert "Observed candidate state is one of:" in contract
