@@ -49,6 +49,21 @@ def test_every_occurrence_yields_source_text_with_a_unique_derived_range(
         ).matched
 
 
+def test_rendered_lines_carry_no_trailing_whitespace_and_still_match():
+    source = "intro\nfirst line  \n\nsecond line\t\nend\n"
+    (occurrence,) = quote_occurrences("first line second line", source)
+    rendered = render_quote(occurrence, path="source.md", version="abc")
+
+    lines = rendered.splitlines()
+    assert lines[:3] == ["> first line", ">", "> second line"]
+    assert all(line == line.rstrip() for line in lines)
+    citation = parse_blockquotes(rendered)[0]
+    assert citation.error is None
+    assert match_quote(
+        citation.quote, source, kind="code", ranges=citation.ranges
+    ).matched
+
+
 def test_same_line_alternatives_preserve_each_distinct_occurrence():
     candidates = quote_occurrences("one", "one one")
     assert [candidate.text for candidate in candidates] == ["one o", "e one"]

@@ -94,7 +94,8 @@ def render_quote(occurrence: QuoteOccurrence, *, path: str, version: str) -> str
         raise ValueError(
             "source identity cannot be represented in a citation code span"
         )
-    lines = ["> " + line for line in occurrence.text.splitlines()]
+    # Trailing whitespace would fail whitespace checks; matching ignores it.
+    lines = [("> " + line).rstrip() for line in occurrence.text.splitlines()]
     if any(ATTRIBUTION_RE.fullmatch(line) for line in lines):
         raise ValueError(
             "source passage cannot be represented as one attributed blockquote"
