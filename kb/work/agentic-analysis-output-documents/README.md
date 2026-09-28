@@ -234,6 +234,18 @@ four members (overview, runtime, finalized memory report, epistemic), a
 manifest-chained completion rule with explicit rejection cases, and a
 scripted fixture split of two retained results as the next test.
 
+The [fixture split](./fixture-split-20260928.md) (2026-09-28) ran on the
+Napkin and Dynamic Cheatsheet results: no duplicated declaration, no
+duplicated passage, every reference resolving, the dropped memory lens
+section a verbatim copy of the specialist's paragraphs, and the
+coordinator's versions of specialist records reducible to their deltas. It
+adds three contract rules: finalization appends deltas; amendments attach
+to the declaring member while cross-lens annotations live in the annotating
+member keyed `On <ID>`; the overview holds the only source register. It
+also found that specialists re-declare seeded records with the proposal
+heading form, which the report type must turn into annotation headings.
+Next: draft the four member contracts from the cleaned result type.
+
 ## Work sequence and decision points
 
 1. Clean up the current procedure before drawing any partition. Working from
