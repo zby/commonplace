@@ -418,3 +418,27 @@ trial: a rejected specialist proposal needs a disposition the mapping
 grammar can carry; the finalization check fails on any coordinator
 paraphrase of the specialist's body by design; the memory type's quote
 minimum is now enforced at set level only.
+
+## Batch 01 follow-ups (2026-09-28)
+
+The first refresh batch (`kb/work/agentic-memory-refresh/batch-01-2026-09-28.md`,
+on branch `refresh-batch-01`) published all three sets and recorded the
+friction workers met. Astra is simplifying the identifier grammar. Five
+further fixes were commissioned:
+
+1. Plain source references are path-only; only quote attributions carry
+   line ranges, and a range in a plain reference fails member validation
+   with a clear message. Removes the out-of-bounds range failures and the
+   binary-file range failure.
+2. Drop the overview's `## Run identity` section and its schema patterns;
+   the run state and the review pin already record what it projected.
+3. Library resolution uses the working checkout's `kb/` when the command
+   runs inside a Commonplace source checkout, removing the worktree type
+   collision.
+4. The quote generator emits no trailing whitespace.
+5. Skill step 7 carries one table of member files, types and schemas.
+
+Items 3 to 5 run now in an isolated worktree. Items 1 and 2 edit the same
+files as the directory-artifact implementation currently uncommitted on
+main and wait for it to land. Batch 02 runs two systems at a time with a
+slimmer acceptance record, after all five land.
