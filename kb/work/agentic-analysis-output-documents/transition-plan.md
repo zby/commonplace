@@ -273,15 +273,20 @@ layout, production and consumer changes. Keep the current transition and
 refresh batch independent of this later deployment.
 
 1. **Separate outputs from working files.** Choose a dedicated output
-   directory for `ARTIFACT.yaml`, `overview.md`, `runtime.md`, `memory.md`
-   and `epistemic.md`. Keep `run-state.md`, specialist inputs and local
+   directory for `ARTIFACT.yaml` and the members required by the outcome:
+   all four reports for `complete`, only `overview.md` for `blocked` or
+   `out-of-scope`. Keep `run-state.md`, specialist inputs and local
    reports, and review candidates outside it. Update the analysis skill,
    relevant worker instructions, path helpers and test fixtures together.
    Retained publication likewise contains only the artifact's manifest
    and members. Do not add analysis-specific exclusions to the loader.
 2. **Move the integrity record.** Remove the overview's `members`
-   metadata. Require hashes for all four reports in `ARTIFACT.yaml` and
-   pin the manifest's hash from the workflow and generated review.
+   metadata. The set schema selects membership from the overview's
+   `result-disposition` and requires a hash for every selected member in
+   `ARTIFACT.yaml`. Run state pins the manifest for every finished outcome;
+   a generated review pins it only for a published complete analysis.
+   Blocked and out-of-scope outcomes retain no generated review and are
+   rejected by publication and comparison loading.
    Define the pin fields and update the member schemas, run-state and
    review contracts together. The draft's future simplification TODO does
    not change this deployment's stored-hash representation.
@@ -293,13 +298,36 @@ refresh batch independent of this later deployment.
    Call the shared artifact check and remove equivalent consumer checks;
    preserve source and quote anchors and committed-input checks with their
    workflow owners.
-4. **Verify adoption before rollout.** Run a bounded producer-to-consumer
+4. **Extend method-version checks.** Add the set spec under
+   `kb/reports/types/`, its schema and any referenced schemas to
+   `METHOD_PATHS` in `agentic_publication.py`. A commit changing only one
+   of those files after `inputs-commit` must block publication. Cover each
+   new method input in the publication regression tests.
+5. **Retire overview-pinned inputs before switching readers.** Inventory
+   outputs from refreshes completed before deployment. Archive their
+   generated reviews byte for byte under a dated subdirectory of
+   `kb/agentic-systems/reviews-archive/`, removing them from active review
+   discovery. Keep their retained sets at the recorded paths with unchanged
+   bytes and pins; mark those historical run directories with the existing
+   validation-ignore mechanism. Record the pre-deployment commit for
+   historical verification. Clear derived comparisons until regenerated,
+   and rerun affected systems with new run IDs. The first replacement
+   publishes into an absent active-review destination; subsequent
+   replacements use ordinary new-format incumbent checks. The new readers
+   reject explicitly supplied old-format inputs rather than adapting them.
+   Finish or abandon active old-method runs before switching the workflow;
+   do not repin them to the new method. This cutover does not delay the
+   independent refresh batch before deployment.
+6. **Verify adoption before rollout.** Run a bounded producer-to-consumer
    trial. Check that the published artifact validates from a clean
    checkout, that changed or missing members fail set validation, and
    that a valid member still passes file validation when another member
    makes the set invalid. Validate the output directory for whole-analysis
    checks. Retained analyses remain frozen; do not rewrite existing
-   published bytes as part of this layout change.
+   published bytes as part of this layout change. Include overview-only
+   blocked and out-of-scope completion, rejection of those outcomes by
+   publication and comparison readers, method-schema changes, and the
+   archive-to-first-replacement-to-incumbent sequence above.
 
 ## Open items for the operator
 

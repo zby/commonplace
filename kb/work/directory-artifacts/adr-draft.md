@@ -271,8 +271,16 @@ manifest bytes and all four reports. The artifact directory contains:
   epistemic.md
 ```
 
+The analysis schema makes membership conditional on the overview's
+`result-disposition`: `complete` requires exactly the four members above;
+`blocked` and `out-of-scope` require only `overview.md`. Every member in
+either case has a required manifest hash. A finished blocked or
+out-of-scope run pins its manifest in run state and has no generated
+review. It is a valid record of that outcome, but is ineligible for
+publication and comparison loading, which require `complete`.
+
 The overview is an ordinary member. The manifest does not list or hash
-itself. The analysis schema requires all four stored hashes. A member
+itself. A member
 hash mismatch identifies the changed report. Preparing revised output
 requires updating its manifest entry and the external manifest pin.
 Published analyses remain frozen; a correction produces a new run.
@@ -370,6 +378,13 @@ analysis's historical validation requires the types, schemas and code
 from its recorded `inputs-commit`; validating it under the current method
 answers a different question.
 
+The analysis workflow's method-path check includes the new set type spec,
+its schema and referenced schemas. A committed change to any of those
+inputs after a run starts must prevent publication, just as a change to
+a member schema does. Deployment also retires overview-pinned reviews
+from active discovery before switching readers; the transition plan owns
+that archival and rerun work, preserving historical bytes.
+
 The first version covers local Markdown sets with arbitrary member names
 and counts, required and optional members, open and closed membership,
 and optional hashes. It does not cover nested directory artifacts,
@@ -418,6 +433,8 @@ format before implementation, then enforce these cases with tests.
 | Generality and type resolution | Different filenames and fewer and more than four members work without framework changes. Collection eligibility and workshop staging rules hold. Two instances with different hashes use the same type and shared schema. |
 | Integrity | Permitted hash omissions pass; missing required hashes and malformed or mismatched supplied hashes fail. Content checks run with and without hashes. |
 | Analysis contract | A complete four-member set passes with all four hashes stored in the manifest and its hash pinned externally. Changing a member, its path, the manifest type or other manifest metadata invalidates the recorded version, even if a changed member's stored hash is updated. Missing members, wrong types, invalid content despite a correct type declaration, mixed identities, duplicate IDs and unresolved references fail. |
+| Non-complete outcomes | Both `blocked` and `out-of-scope` pass set and completion validation with only the hashed overview and an externally pinned manifest, without a generated review. Missing overview hashes and extra report members fail. Publication and comparison loading reject these outcomes. |
+| Method and deployment | Changing only the set spec, its schema or a referenced schema after `inputs-commit` blocks publication. Old-format reviews are archived before readers switch; the first replacement publishes with no active incumbent, and its new-format successor uses normal incumbent checks. Historical output bytes remain unchanged. |
 | File and directory scope | A valid member can pass explicit file validation while its directory fails for a missing sibling or an inconsistent set. An invalid member fails both scopes. Non-Markdown files and descendant files are not members; ordinary traversal still checks eligible descendant files. |
 | Consumer agreement | Directory validation, sweeps and workflow consumers agree on set validity. Publication checks candidate bytes; completion and comparison loading check the expected type and version. Workflow guarantees outside the set remain enforced. |
 | Validation call boundaries | Directory and collection validation with a complete run state terminate without repeated member checks. Direct run-state validation reaches the same artifact checks without starting traversal. Invalid members and invalid workflow files remain visible. An actual dependency cycle fails explicitly rather than recursing or silently passing. |
