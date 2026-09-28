@@ -89,7 +89,55 @@ set under `incumbent-<member>.md`, and writes the review with
 **Site.** `properdocs.yml` publishes the four member names instead of
 `result.md`.
 
-## Validator changes
+## Revised layering (2026-09-28, during implementation)
+
+The operator reviewed the size of the analysis code while commits 3 to 7
+were in progress: about 3,700 lines of library, command and script code
+and 3,200 lines of tests exist to produce, verify, publish and compare one
+document kind, a fifth of the package. Much of it re-implements checks
+that a schema states or that another module already performs. The plan
+above ports that shape to the set; the revised layering below replaces
+its "set verification" and "validator changes" paragraphs, and the worker
+was redirected to it mid-flight.
+
+1. **Schema**: one document's structure. Each member's schema, landed in
+   commit `9fdde307`, is the only place single-document structure is
+   checked. Code re-checks nothing a schema states.
+2. **Set rule**: a validator type rule on the overview type. Validating an
+   overview dereferences its manifest (existence, hash, declared type of
+   each member), validates each member by its schema, checks identity
+   agreement, runs the cross-member records check, validates the memory
+   member's profile against the set's declarations, requires at least one
+   attributed quote in the set, and for a complete overview requires the
+   memory member complete and finalized. It needs nothing outside the
+   retained directory, so it runs from a clean checkout.
+3. **Directory as artifact**: `commonplace-validate <run-directory>`
+   validates the set through its overview and reports it once; a
+   collection sweep treats the directory as the unit. One recognition
+   rule, not a manifest framework, since only the analysis set has an
+   entry type.
+4. **Source-bound checks** stay in run-state verification alone, because
+   they need the run directory and the frozen checkout: anchor resolution
+   for every member and the review, and the finalization integrity check
+   against the local specialist report.
+5. **Consumers call validate.** Publication validates the candidate
+   overview as its retained path; the matrix loader validates the overview
+   and reads identity from it and the profile from the memory member; the
+   handoff renders from the run state. None re-implements hashing or
+   identity comparison, and the code those calls make redundant is deleted
+   rather than kept in parallel. Each commit names its removals.
+
+Two follow-ups this exposed, both outside the transition: the verbatim
+quote verifier for notes and the analysis quote-anchor verifier are two
+implementations over one matcher and should converge; and the
+`commonplace-verify-quotes` command is a reporting wrapper over the
+validator's own check, kept only for its corpus-wide counts. Both belong
+to the code review the operator asked for after the batch runs, together
+with the question of which retained-set checks a reader actually relies
+on. The decision recorded here is promoted to an ADR when the workshop
+closes.
+
+## Validator changes (superseded by the revised layering above)
 
 **Types and schemas.** The five draft contracts move to `kb/types/`
 (the review type to `kb/agentic-systems/types/`) with schemas: the
