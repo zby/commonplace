@@ -10,14 +10,6 @@ REPO_ROOT = Path(__file__).resolve().parents[3]
 RUN_ID = "AAS-2026-09-28-example-system-01"
 REVISION = "0123456789abcdef0123456789abcdef01234567"
 INPUTS_COMMIT = "fedcba9876543210fedcba9876543210fedcba98"
-MEMBERS = "\n".join(
-    f"  - path: {name}.md\n    sha256: \"{'a' * 64}\"\n    type: types/{kind}.md"
-    for name, kind in (
-        ("runtime", "agentic-system-runtime-report"),
-        ("memory", "agent-memory-analysis-report"),
-        ("epistemic", "agentic-system-epistemic-report"),
-    )
-)
 
 
 def overview_text(*, disposition: str = "complete") -> str:
@@ -35,7 +27,6 @@ reviewed-boundary: {f'"{REVISION}"' if complete else "null"}
 analysis-cutoff: {'"2026-09-28"' if complete else "null"}
 evidence-tier: {"code-grounded" if complete else "null"}
 inputs-commit: "{INPUTS_COMMIT}"
-members:{chr(10) + MEMBERS if complete else " []"}
 ---
 
 # Example System agentic-system analysis
@@ -185,8 +176,8 @@ generated-by: analyse-agentic-system
 analysis-run: {RUN_ID}
 source-identity: https://example.invalid/example-system
 reviewed-revision: "{REVISION}"
-analysis-overview: kb/reports/retained/agentic-system-analysis/{RUN_ID}/overview.md
-analysis-overview-sha256: "{'b' * 64}"
+analysis-artifact: kb/reports/retained/agentic-system-analysis/{RUN_ID}/ARTIFACT.yaml
+analysis-artifact-sha256: "{'b' * 64}"
 ---
 
 # Example System
@@ -203,30 +194,21 @@ def validate(tmp_path: Path, name: str, content: str) -> validation.CheckResults
     return validation.validate_note(path, repo_root=REPO_ROOT)
 
 
-def test_complete_overview_validates_with_three_members(tmp_path: Path) -> None:
+def test_overview_validates_independently_of_siblings(tmp_path: Path) -> None:
     results = validate(tmp_path, "overview.md", overview_text())
     assert results.fails == []
     assert results.note_type == "agentic-system-analysis-overview"
 
 
-def test_blocked_overview_has_no_members_and_nullable_boundary(tmp_path: Path) -> None:
+def test_blocked_overview_has_nullable_boundary(tmp_path: Path) -> None:
     results = validate(tmp_path, "overview.md", overview_text(disposition="blocked"))
     assert results.fails == []
 
 
-def test_complete_overview_requires_every_member(tmp_path: Path) -> None:
-    content = overview_text().replace(
-        "  - path: epistemic.md\n    sha256: \"" + "a" * 64 + "\"\n    type: types/agentic-system-epistemic-report.md",
-        "",
-    )
+def test_overview_rejects_obsolete_manifest_metadata(tmp_path: Path) -> None:
+    content = overview_text().replace("inputs-commit:", "members: []\ninputs-commit:")
     results = validate(tmp_path, "overview.md", content)
-    assert any("frontmatter" in failure for failure in results.fails)
-
-
-def test_blocked_overview_rejects_members(tmp_path: Path) -> None:
-    content = overview_text(disposition="blocked").replace("members: []", "members:\n" + MEMBERS)
-    results = validate(tmp_path, "overview.md", content)
-    assert any("frontmatter" in failure for failure in results.fails)
+    assert results.fails
 
 
 def test_overview_requires_the_canonical_section_order(tmp_path: Path) -> None:
@@ -281,11 +263,11 @@ def test_epistemic_report_validates_and_orders_blocks(tmp_path: Path) -> None:
     assert validate(tmp_path, "epistemic.md", swapped).fails != []
 
 
-def test_generated_review_validates_and_pins_the_overview(tmp_path: Path) -> None:
+def test_generated_review_validates_and_pins_the_manifest(tmp_path: Path) -> None:
     results = validate(tmp_path, "example-system.md", REVIEW_TEXT)
     assert results.fails == []
     assert results.note_type == "generated-review"
-    broken = REVIEW_TEXT.replace("/overview.md", "/result.md")
+    broken = REVIEW_TEXT.replace("/ARTIFACT.yaml", "/overview.md")
     assert any("frontmatter" in failure for failure in validate(tmp_path, "example-system.md", broken).fails)
     no_basis = REVIEW_TEXT.replace("Evidence basis: ", "Basis: ")
     assert validate(tmp_path, "example-system.md", no_basis).fails != []

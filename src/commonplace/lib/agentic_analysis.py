@@ -13,16 +13,16 @@ from typing import Any
 from commonplace.lib.agentic_set import (
     LOCAL_INPUT_NAME,
     LOCAL_REPORT_NAME,
+    MANIFEST_NAME,
     MEMBER_TYPES,
+    OUTPUT_DIR,
     OVERVIEW_NAME,
     REVIEW_TYPE,
-    SHA256,
     MemberSet,
     is_normalized_relative,
     is_review_path,
     load_member_set,
     retained_set_paths,
-    set_identity_errors,
 )
 from commonplace.lib.note_parser import ParsedDocument, parse_document
 from commonplace.lib.quote_matching import (
@@ -68,7 +68,7 @@ class AgenticAnalysisRunState:
     status: str
     result_disposition: str | None
     source: SourceIdentity | None
-    overview: OutputIdentity | None
+    artifact: OutputIdentity | None
     generated_review: OutputIdentity | None
     failure: str | None
 
@@ -180,8 +180,8 @@ def parse_agentic_analysis_run_state(
 
     result_disposition = _optional_string(frontmatter, "result-disposition")
     source = _source_identity(frontmatter.get("source"))
-    overview = _output_identity(
-        frontmatter.get("overview"), role="overview", repo_root=repo_root
+    artifact = _output_identity(
+        frontmatter.get("artifact"), role="artifact", repo_root=repo_root
     )
     generated_review = _output_identity(
         frontmatter.get("generated-review"),
@@ -190,9 +190,9 @@ def parse_agentic_analysis_run_state(
     )
     failure = _optional_string(frontmatter, "failure")
 
-    expected_overview = (state_root / run_id / OVERVIEW_NAME).resolve()
-    if overview is not None and overview.path.resolve() != expected_overview:
-        raise ValueError(f"overview.path: expected <run-id>/{OVERVIEW_NAME}")
+    expected_artifact = (state_root / run_id / OUTPUT_DIR / MANIFEST_NAME).resolve()
+    if artifact is not None and artifact.path.resolve() != expected_artifact:
+        raise ValueError(f"artifact.path: expected <run-id>/{OUTPUT_DIR}/{MANIFEST_NAME}")
     if generated_review is not None and not is_review_path(generated_review.display_path):
         raise ValueError("generated-review.path: expected kb/agentic-systems/reviews/<name>.md")
     return AgenticAnalysisRunState(
@@ -205,7 +205,7 @@ def parse_agentic_analysis_run_state(
         status=status,
         result_disposition=result_disposition,
         source=source,
-        overview=overview,
+        artifact=artifact,
         generated_review=generated_review,
         failure=failure,
     )
@@ -236,15 +236,16 @@ def load_run_state(path: Path, *, repo_root: Path) -> AgenticAnalysisRunState:
 
 
 def _text_override(
-    path: Path, content_overrides: Mapping[Path, str] | None
+    path: Path, content_overrides: Mapping[Path, str | bytes] | None
 ) -> str | None:
     if content_overrides is None:
         return None
-    return content_overrides.get(path.resolve())
+    value = content_overrides.get(path.resolve())
+    return value.decode("utf-8") if isinstance(value, bytes) else value
 
 
 def _read_output_bytes(
-    identity: OutputIdentity, content_overrides: Mapping[Path, str] | None
+    identity: OutputIdentity, content_overrides: Mapping[Path, str | bytes] | None
 ) -> bytes:
     override = _text_override(identity.path, content_overrides)
     if override is not None:
@@ -253,7 +254,7 @@ def _read_output_bytes(
 
 
 def _read_output_text(
-    identity: OutputIdentity, content_overrides: Mapping[Path, str] | None
+    identity: OutputIdentity, content_overrides: Mapping[Path, str | bytes] | None
 ) -> str:
     override = _text_override(identity.path, content_overrides)
     if override is not None:
@@ -263,7 +264,7 @@ def _read_output_text(
 
 def _verify_output(
     identity: OutputIdentity,
-    content_overrides: Mapping[Path, str] | None,
+    content_overrides: Mapping[Path, str | bytes] | None,
 ) -> str | None:
     try:
         content = _read_output_bytes(identity, content_overrides)
@@ -496,7 +497,7 @@ def verify_quote_anchors(
 
 def _parsed_output(
     identity: OutputIdentity,
-    content_overrides: Mapping[Path, str] | None,
+    content_overrides: Mapping[Path, str | bytes] | None,
 ) -> tuple[ParsedDocument | None, str | None]:
     try:
         content = _read_output_text(identity, content_overrides)
@@ -510,7 +511,7 @@ def _parsed_output(
 
 def render_agentic_analysis_handoff(state: AgenticAnalysisRunState) -> str:
     """Render the operator handoff for one completed run."""
-    if state.status != "complete" or state.overview is None:
+    if state.status != "complete" or state.artifact is None:
         raise ValueError("operator handoff requires a complete run state")
     generated = (
         state.generated_review.display_path
@@ -523,7 +524,7 @@ def render_agentic_analysis_handoff(state: AgenticAnalysisRunState) -> str:
         else f"{state.source.identity} @ {state.source.revision}"
     )
     members = (
-        ", ".join(MEMBER_TYPES) + " (pinned by the overview manifest)"
+        ", ".join(MEMBER_TYPES) + " (pinned by ARTIFACT.yaml)"
         if state.result_disposition == "complete"
         else "none"
     )
@@ -531,7 +532,7 @@ def render_agentic_analysis_handoff(state: AgenticAnalysisRunState) -> str:
         [
             f"# Agentic-system analysis handoff — {state.run_id}",
             "",
-            f"**Overview:** [{state.overview.display_path}](<{state.overview.path.as_posix()}>)",
+            f"**Artifact:** [{state.artifact.display_path}](<{state.artifact.path.as_posix()}>)",
             "",
             f"**Members:** {members}",
             "",
@@ -581,33 +582,6 @@ def _verify_overview_projection_paths(
     return ["overview: intended publication paths match run state"], []
 
 
-def _validate_document(
-    state: AgenticAnalysisRunState,
-    *,
-    role: str,
-    path: Path,
-    content_overrides: Mapping[Path, str] | None,
-) -> tuple[list[str], list[str]]:
-    # Import lazily because validation registers this module's type rule.
-    from commonplace.lib import validation as validation_lib
-
-    override = _text_override(path, content_overrides)
-    checked = (
-        validation_lib.validate_note_text_at_path(
-            override,
-            path=path,
-            repo_root=state.repo_root,
-            content_overrides=dict(content_overrides or {}),
-        )
-        if override is not None
-        else validation_lib.validate_note(path, repo_root=state.repo_root)
-    )
-    diagnostics = [*checked.warns, *checked.fails]
-    if diagnostics:
-        return [], [f"{role} validation: {diagnostic}" for diagnostic in diagnostics]
-    return [f"{role}: direct validation passed"], []
-
-
 def _verify_memory_member(
     state: AgenticAnalysisRunState, member_set: MemberSet
 ) -> tuple[list[str], list[str]]:
@@ -623,11 +597,6 @@ def _verify_memory_member(
         return [], ["memory member: the manifest names no memory report"]
     failures: list[str] = []
     values = member.frontmatter
-    if values.get("report-status") != "complete":
-        failures.append("memory member: report-status must be complete")
-    finalized_from = values.get("finalized-from")
-    if not isinstance(finalized_from, str) or not SHA256.fullmatch(finalized_from):
-        failures.append("memory member: finalized-from must be the local report's SHA-256")
     for name, field in ((LOCAL_REPORT_NAME, "finalized-from"),
                         (LOCAL_INPUT_NAME, "canonical-register-sha256")):
         path = state.run_dir / name
@@ -648,9 +617,16 @@ def _verify_memory_member(
 def verify_agentic_analysis_run_state(
     state: AgenticAnalysisRunState,
     *,
-    content_overrides: Mapping[Path, str] | None = None,
+    content_overrides: Mapping[Path, str | bytes] | None = None,
+    run=None,
 ) -> tuple[list[str], list[str]]:
     """Verify the frozen source and exact bytes named by the state."""
+    from commonplace.lib.validation import ValidationRun
+
+    if run is None:
+        run = ValidationRun(state.repo_root, (), content_overrides=dict(content_overrides or {}))
+    # All workflow reads use the same snapshot as member validation.
+    content_overrides = run._bytes
     passes: list[str] = []
     failures: list[str] = []
 
@@ -670,34 +646,28 @@ def verify_agentic_analysis_run_state(
 
     outputs = tuple(
         item
-        for item in (state.overview, state.generated_review)
+        for item in (state.artifact, state.generated_review)
         if item is not None
     )
     for output in outputs:
+        try:
+            run.read_bytes(output.path)
+        except OSError:
+            pass
         error = _verify_output(output, content_overrides)
         if error is None:
             passes.append(f"{output.role}: byte identity matches {output.display_path}")
         else:
             failures.append(error)
 
-    if state.status != "complete" or state.overview is None:
+    if state.status != "complete" or state.artifact is None:
         return passes, failures
 
-    for output in outputs:
-        if any(message.startswith(f"{output.role}:") for message in failures):
-            continue
-        checked_passes, checked_failures = _validate_document(
-            state, role=output.role, path=output.path, content_overrides=content_overrides
-        )
-        passes.extend(checked_passes)
-        failures.extend(checked_failures)
-
-    def read(path: Path) -> bytes:
-        override = _text_override(path, content_overrides)
-        return override.encode("utf-8") if override is not None else path.read_bytes()
-
+    if state.generated_review is not None:
+        checked = run.validate(state.generated_review.path)
+        failures.extend(f"generated review validation: {error}" for error in [*checked.fails, *checked.warns])
     try:
-        member_set = load_member_set(state.overview.path, read=read)
+        member_set = load_member_set(state.artifact.path.parent, run=run)
     except ValueError as exc:
         failures.append(f"member set: {exc}")
         return passes, failures
@@ -720,36 +690,18 @@ def verify_agentic_analysis_run_state(
     passes.extend(projection_passes)
     failures.extend(projection_failures)
 
-    if state.result_disposition == "complete":
-        # load_member_set checked presence, hash and type of every entry; a
-        # manifest that names no members (a non-complete overview) passes
-        # those checks vacuously, so the pass also needs every member named.
-        if set(member_set.members) == set(MEMBER_TYPES):
-            passes.append("member set: manifest members present, hashed and typed")
-        else:
-            failures.append(
-                "member set: the manifest does not name " + ", ".join(MEMBER_TYPES)
-            )
-        failures.extend(
-            f"member set: {error}"
-            for error in set_identity_errors(
-                member_set,
-                source_identity=None if state.source is None else state.source.identity,
-            )
-        )
-        for name, member in member_set.members.items():
-            checked_passes, checked_failures = _validate_document(
-                state, role=name, path=member.path, content_overrides=content_overrides
-            )
-            passes.extend(checked_passes)
-            failures.extend(checked_failures)
+    if state.result_disposition == "complete" and member_set.memory is not None:
+        passes.append("member set: manifest members present, hashed and typed")
+        if state.source is not None and member_set.memory.frontmatter.get("source-identity") != state.source.identity:
+            failures.append("memory.md: source-identity does not match the frozen source")
         memory_passes, memory_failures = _verify_memory_member(state, member_set)
         passes.extend(memory_passes)
         failures.extend(memory_failures)
 
     if state.generated_review is not None:
         retained_paths = retained_set_paths(state.run_id)
-        expected_hashes = {OVERVIEW_NAME: state.overview.expected_sha256}
+        expected_hashes = {MANIFEST_NAME: state.artifact.expected_sha256,
+                           OVERVIEW_NAME: member_set.overview.sha256}
         expected_hashes.update(
             {name: member.sha256 for name, member in member_set.members.items()}
         )
@@ -761,6 +713,10 @@ def verify_agentic_analysis_run_state(
                 path=state.repo_root / retained_paths[name],
                 expected_sha256=expected_sha256,
             )
+            try:
+                run.read_bytes(retained.path)
+            except OSError:
+                pass
             retained_error = _verify_output(retained, content_overrides)
             if retained_error:
                 retained_failures.append(retained_error)
@@ -768,6 +724,10 @@ def verify_agentic_analysis_run_state(
             failures.extend(retained_failures)
         else:
             passes.append("retained set: exact member bytes preserved")
+            try:
+                load_member_set((state.repo_root / retained_paths[MANIFEST_NAME]).parent, run=run)
+            except ValueError as exc:
+                failures.append(f"retained artifact: {exc}")
         generated, error = _parsed_output(state.generated_review, content_overrides)
         if error is not None or generated is None:
             failures.append(f"generated review: {error}")
@@ -779,8 +739,8 @@ def verify_agentic_analysis_run_state(
                 "analysis-run": state.run_id,
                 "source-identity": None if state.source is None else state.source.identity,
                 "reviewed-revision": None if state.source is None else state.source.revision,
-                "analysis-overview": retained_paths[OVERVIEW_NAME].as_posix(),
-                "analysis-overview-sha256": state.overview.expected_sha256,
+                "analysis-artifact": retained_paths[MANIFEST_NAME].as_posix(),
+                "analysis-artifact-sha256": state.artifact.expected_sha256,
             }
             mismatches = [
                 field

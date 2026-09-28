@@ -16,8 +16,10 @@ from pathlib import Path
 from commonplace.lib.library import checks_library
 from commonplace.lib.lifecycle_validation import validate_lifecycle
 from commonplace.lib.project_paths import (
+    is_collection_dir,
     kb_root,
     list_collection_validation_paths,
+    list_directory_validation_paths,
     list_notes_collection_paths,
     list_type_spec_paths,
     resolve_note,
@@ -32,7 +34,7 @@ from commonplace.lib.validation import (
 )
 
 _TOO_BROAD_MESSAGE = (
-    "Validation scope must be a specific collection or file. "
+    "Validation scope must be a specific directory or file. "
     "Pass a collection name or path, types, landings, redirects, or a note path."
 )
 
@@ -92,7 +94,10 @@ class ValidationReport:
 def _collection_target(collection: Path) -> ResolvedValidationTarget:
     resolved = collection.resolve()
     return ResolvedValidationTarget(
-        paths=tuple(list_collection_validation_paths(resolved)),
+        paths=tuple(
+            list_collection_validation_paths(resolved) if is_collection_dir(resolved)
+            else list_directory_validation_paths(resolved)
+        ),
         collection=resolved,
         ignored_dirs=tuple(validation_ignored_dirs(resolved)),
     )
@@ -217,6 +222,10 @@ def _diagnostic(
     repo_root: Path,
     family: str = "artifact",
 ) -> ValidationDiagnostic:
+    member = re.match(r"^\[member ([^/]+\.md)\]\s*", reason)
+    if member is not None:
+        subject = subject / member[1]
+        reason = reason[member.end():]
     return ValidationDiagnostic(
         diagnostic_id=_diagnostic_id(reason, family=family),
         severity=severity,
@@ -592,7 +601,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument(
         "target",
         help=(
-            "collection directory, note path or name, types, landings, redirects, "
+            "directory, note path or name, types, landings, redirects, "
             "lifecycle, or today/recent (kb/notes modified today)"
         ),
     )

@@ -18,6 +18,8 @@ from commonplace.lib.agentic_analysis import AgenticAnalysisRunState, load_run_s
 from commonplace.lib.agentic_set import (
     LOCAL_INPUT_NAME,
     LOCAL_REPORT_NAME,
+    MANIFEST_NAME,
+    OUTPUT_DIR,
     OVERVIEW_NAME,
     RETAINED_ROOT,
     REVIEWS_ROOT,
@@ -26,7 +28,7 @@ from commonplace.lib.agentic_set import (
     MemberSet,
     is_review_path,
     load_member_set,
-    retained_overview_path,
+    retained_artifact_path,
 )
 from commonplace.lib.note_parser import ParsedDocument, parse_document
 
@@ -39,6 +41,8 @@ METHOD_PATHS: tuple[str, ...] = (
     "kb/instructions/analyse-agentic-system/",
     "kb/instructions/analyse-agent-memory.md",
     "kb/instructions/analyse-external-system-epistemic-architecture.md",
+    "kb/reports/types/agentic-system-analysis-set.md",
+    "kb/reports/types/agentic-system-analysis-set.schema.yaml",
     "kb/types/agentic-system-analysis-overview.md",
     "kb/types/agentic-system-analysis-overview.schema.yaml",
     "kb/types/agentic-system-runtime-report.md",
@@ -306,7 +310,7 @@ def require_running_package_unchanged(inputs_commit: str) -> None:
 def _check_incumbent(
     *, path: Path, repo_root: Path, source_identity: str,
 ) -> _Incumbent:
-    """Check replacement provenance by bytes, not the incumbent's analytical validity."""
+    """Check replacement provenance and the retained artifact contract."""
     if path.exists() and not path.is_file():
         raise ValueError(f"publication destination is not a file: {path}")
     if not path.exists():
@@ -320,16 +324,20 @@ def _check_incumbent(
     run_id = metadata.get("analysis-run")
     if not isinstance(run_id, str) or not RUN_ID.fullmatch(run_id):
         raise ValueError("incumbent has no valid analysis run identity")
-    retained = retained_overview_path(run_id)
-    if metadata.get("analysis-overview") != retained.as_posix():
-        raise ValueError("incumbent must identify its canonical retained overview")
-    overview_path = _repo_path(repo_root, retained)
-    overview_bytes, _ = _read_utf8(overview_path, label="incumbent retained overview")
-    overview_hash = sha256(overview_bytes).hexdigest()
-    if metadata.get("analysis-overview-sha256") != overview_hash:
-        raise ValueError("incumbent retained overview hash mismatch")
+    retained = retained_artifact_path(run_id)
+    if metadata.get("analysis-artifact") != retained.as_posix():
+        raise ValueError("incumbent must identify its canonical retained manifest")
+    manifest_path = _repo_path(repo_root, retained)
+    run = validation.ValidationRun(repo_root, ())
     try:
-        member_set = load_member_set(overview_path)
+        manifest_bytes = run.read_bytes(manifest_path)
+    except OSError as exc:
+        raise ValueError(f"cannot read incumbent retained manifest: {exc}") from exc
+    manifest_hash = sha256(manifest_bytes).hexdigest()
+    if metadata.get("analysis-artifact-sha256") != manifest_hash:
+        raise ValueError("incumbent retained manifest hash mismatch")
+    try:
+        member_set = load_member_set(manifest_path.parent, run=run)
     except ValueError as exc:
         raise ValueError(f"incumbent retained set: {exc}") from exc
     overview_metadata = member_set.overview.frontmatter
@@ -339,8 +347,8 @@ def _check_incumbent(
         raise ValueError("incumbent retained overview identity mismatch")
     return _Incumbent(
         review_bytes,
-        {document.name: document.path for document in member_set.documents},
-        {document.name: document.content for document in member_set.documents},
+        {MANIFEST_NAME: manifest_path, **{document.name: document.path for document in member_set.documents}},
+        {MANIFEST_NAME: member_set.artifact.content, **{document.name: document.content for document in member_set.documents}},
     )
 
 
@@ -362,19 +370,19 @@ def _render_final_state(
     *,
     state: AgenticAnalysisRunState,
     document: ParsedDocument,
-    overview_bytes: bytes,
+    artifact_bytes: bytes,
     generated_bytes: bytes,
     generated_destination: str,
 ) -> str:
     frontmatter = dict(document.frontmatter or {})
-    overview_path = state.run_dir / OVERVIEW_NAME
+    artifact_path = state.run_dir / OUTPUT_DIR / MANIFEST_NAME
     frontmatter.update(
         {
             "run-status": "complete",
             "result-disposition": "complete",
-            "overview": {
-                "path": overview_path.relative_to(state.repo_root).as_posix(),
-                "sha256": sha256(overview_bytes).hexdigest(),
+            "artifact": {
+                "path": artifact_path.relative_to(state.repo_root).as_posix(),
+                "sha256": sha256(artifact_bytes).hexdigest(),
             },
             "generated-review": {
                 "path": generated_destination,
@@ -409,8 +417,9 @@ def _check_set(spec: PublicationSpec) -> _CheckedSet:
     )
     _require_candidate_in_run(generated_candidate, running_state)
     require_publishable_worktree(repo_root)
+    run = validation.ValidationRun(repo_root, ())
     try:
-        member_set = load_member_set(running_state.run_dir / OVERVIEW_NAME)
+        member_set = load_member_set(running_state.run_dir / OUTPUT_DIR, run=run)
     except ValueError as exc:
         raise ValueError(f"exact member set: {exc}") from exc
     if member_set.overview.frontmatter.get("result-disposition") != "complete":
@@ -424,34 +433,35 @@ def _check_set(spec: PublicationSpec) -> _CheckedSet:
     )
     if incumbent.digest != spec.expected_incumbent_sha256:
         raise ValueError("publication destination changed since inspection")
-    memory = member_set.memory
-    if memory is None or "memory-comparison" not in memory.frontmatter:
-        raise ValueError("publication requires memory-comparison in the memory member")
-    retained_dir = repo_root / retained_overview_path(running_state.run_id).parent
+    retained_dir = repo_root / retained_artifact_path(running_state.run_id).parent
     if retained_dir.resolve() != retained_dir:
         raise ValueError("retained set must use its canonical paths")
     if retained_dir.exists():
         raise ValueError(f"retained set already exists; use a new run ID: {retained_dir}")
-    retained_paths = {name: retained_dir / name for name in SET_NAMES}
+    retained_paths = {name: retained_dir / name for name in (MANIFEST_NAME, *SET_NAMES)}
 
-    generated_bytes, generated_text = _read_utf8(
+    generated_bytes, _ = _read_utf8(
         generated_candidate, label="generated candidate"
     )
     final_state_text = _render_final_state(
         state=running_state,
         document=state_document,
-        overview_bytes=member_set.overview.content,
+        artifact_bytes=member_set.artifact.content,
         generated_bytes=generated_bytes,
         generated_destination=spec.generated_destination,
     )
-    overrides = {generated_path: generated_text}
+    overrides = {generated_path: generated_bytes, retained_paths[MANIFEST_NAME]: member_set.artifact.content}
     overrides.update(
-        {retained_paths[document.name]: document.text for document in member_set.documents}
+        {retained_paths[document.name]: document.content for document in member_set.documents}
     )
-    results = validation.validate_note_text_at_path(
-        final_state_text, path=state_path, repo_root=repo_root,
-        content_overrides=overrides,
-    )
+    # Only previously unread destinations are supplied here; the output set
+    # retains its original byte/parse/result snapshot through completion checks.
+    overrides[state_path] = final_state_text
+    for path, content in overrides.items():
+        if path in run._bytes:
+            raise ValueError(f"candidate destination already read during validation: {path}")
+        run.content_overrides[path] = content
+    results = run.validate(state_path)
     diagnostics = [*results.warns, *results.fails]
     if diagnostics:
         raise ValueError("publication set verification failed: " + "; ".join(diagnostics))
@@ -506,6 +516,7 @@ def publish_publication(spec: PublicationSpec) -> PublishedPublication:
     generated_path = repo_root / checked.spec.generated_destination
     state_path = checked.spec.run_state_path
     targets: list[tuple[Path, bytes]] = [
+        (checked.retained_paths[MANIFEST_NAME], checked.member_set.artifact.content),
         *(
             (checked.retained_paths[document.name], document.content)
             for document in checked.member_set.documents
@@ -572,7 +583,7 @@ def publish_publication(spec: PublicationSpec) -> PublishedPublication:
         cleanup_warnings.append(f"could not remove candidate {candidate}: {exc}")
     return PublishedPublication(
         generated_path=checked.spec.generated_destination,
-        retained_path=checked.retained_paths[OVERVIEW_NAME].relative_to(repo_root).as_posix(),
+        retained_path=checked.retained_paths[MANIFEST_NAME].relative_to(repo_root).as_posix(),
         cleanup_warnings=tuple(cleanup_warnings),
     )
 

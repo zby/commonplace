@@ -39,10 +39,46 @@ the per-artifact PASS/WARN/FAIL/INFO transcript for deliberate inspection.
 diagnostic rule IDs, subjects, reasons, the path and detected type of every
 analysed artifact, and the detailed drill-down command. A caller that requires
 one particular typed artifact checks both `summary.files_analysed` and the
-corresponding `analysed_artifacts[].type`; `text_files: 0` means that no
-frontmatter-free text was found, not that no file was analysed.
+corresponding `analysed_artifacts[].type`; `text_files` counts standalone frontmatter-free targets, excluding members
+grouped under directory artifacts. It is not the total number of targets.
 Presentation does not change severities or exit behavior: warnings exit zero;
 failures exit nonzero.
+
+## Directory artifacts
+
+`ARTIFACT.yaml` makes its directory one additional validation unit. Its
+`type` selects a type spec and shared schema. The schema receives
+`{manifest, members}`: parsed manifest metadata and a map from each visible
+direct Markdown filename to its ordinary parsed-document representation.
+It sees actual files, including ones without manifest entries. Descendants
+remain independent traversal targets.
+
+Required members use `required`; optional members appear in `properties`
+without `required`. `additionalProperties: false` gives closed membership;
+omitting it gives open membership. Expected types constrain each member's
+`frontmatter.type`, independently of whether the member is required.
+A type may permit bare Markdown with no type declaration.
+
+The manifest can contain only `type` when no metadata is required. Optional
+`members` entries map filenames to `{sha256: <digest>}`. Each entry asserts
+that its file exists; each supplied digest must match exact bytes. The
+shared schema decides when entries and hashes are mandatory. Metadata
+cannot authorize a member forbidden by the schema.
+
+Explicit directory validation runs set checks alongside ordinary file checks,
+even with a malformed manifest. A collection sweep groups direct members
+under their directory and counts the directory once. In JSON,
+`analysed_artifacts` uses the directory path and full type-spec path; member
+diagnostics use the member's path. The existing `files_analysed` field counts
+these validation units. Explicit member-file validation checks only that
+file. A workflow calls `ValidationRun.validate(directory)` to check the set
+without starting traversal; repeated requests reuse results and active
+cycles fail.
+
+See [ADR 095](./adr/095-directory-artifacts-add-shared-set-validation.md)
+for the boundary and alternatives, and the
+[analysis set type](../reports/types/agentic-system-analysis-set.md) for the
+first production contract.
 
 ## Scope: this is the deterministic half only
 
@@ -76,7 +112,7 @@ The schema is **not** limited to frontmatter. `ParsedDocument.to_validation_obje
 
 What a schema cannot do is **dereference** — it has no way to say *follow this path and look inside the artifact it names*. JSON Schema validates one instance document; the referent is another file. This is an inherited limit of the substrate, not a gap worth closing, and it is the whole reason a second, imperative check mechanism exists at all.
 
-So the dividing line is not frontmatter/body. It is **intra-document** (declarable) versus **referential** (must be executed). A referential check's ground truth lives in a second artifact, which is precondition 3 of [a derived copy of recomputable truth must be checked or absent](../notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) — the rule that makes these checks obligatory rather than optional.
+So the dividing line is not frontmatter/body. It is **inside the supplied schema instance** (declarable) versus **outside that instance** (must be loaded and checked). Directory schemas can compare the member data their loader supplies; they cannot perform filesystem reads themselves. A referential check's ground truth lives in a second artifact, which is precondition 3 of [a derived copy of recomputable truth must be checked or absent](../notes/a-derived-copy-of-recomputable-truth-must-be-checked-or-absent.md) — the rule that makes these checks obligatory rather than optional.
 
 ## The base contract
 

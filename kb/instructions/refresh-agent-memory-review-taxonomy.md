@@ -13,8 +13,7 @@ through the producing method and source regeneration.
 Use the supplied generated main reviews under `kb/agentic-systems/reviews/`.
 Without an explicit selection, inspect all generated main reviews; do not
 silently drop an input that fails. An input must identify its complete retained
-set through `analysis-overview` and `analysis-overview-sha256`; the overview's
-manifest pins the memory member that carries the profile. A legacy review,
+set through `analysis-artifact` and `analysis-artifact-sha256`; the artifact manifest pins the memory member that carries the profile. A legacy review,
 old CSV, transfer scan or compact summary cannot substitute for that set.
 If the request names only a legacy review, report the main-analysis regeneration
 needed rather than treating its prose as classification evidence.
@@ -48,7 +47,7 @@ within that request's scope; do not request authorization again.
 
    root = Path.cwd()
    inputs = load_results(root, [Path(p) for p in sys.argv[1:]] or None)
-   fields = ("review_file", "overview_file", "analysis_run", "source_identity",
+   fields = ("review_file", "artifact_file", "analysis_run", "source_identity",
              "reviewed_revision", "analysis_cutoff", "source_tier", "comparison_scope")
    print(json.dumps({"inputs": inputs.hashes,
                      "population": [{k: row[k] for k in fields} for row in inputs.rows]},

@@ -3,7 +3,7 @@ name: scan-agentic-system-transfer
 description: Use when asked what a completed analyse-agentic-system set currently suggests for Commonplace under a named design question or priority. Produces selective living state, never system characterization or matrix data.
 type: types/instruction.md
 user-invocable: true
-argument-hint: "<analysis overview.md path> plus <current Commonplace question or priority> and optional state output path"
+argument-hint: "<analysis ARTIFACT.yaml path> plus <current Commonplace question or priority> and optional state output path"
 context: fork
 ---
 
@@ -13,10 +13,10 @@ Produce a selective current account of the external mechanisms that matter to a 
 
 ## Prerequisites
 
-- Use the analysis overview and interest brief supplied in `$ARGUMENTS`, the user request, or an invoking worker packet. If either cannot be identified unambiguously, stop and ask for the missing input.
+- Use the analysis manifest and interest brief supplied in `$ARGUMENTS`, the user request, or an invoking worker packet. If either cannot be identified unambiguously, stop and ask for the missing input.
 - One complete `analyse-agentic-system` set, entered through
-  `kb/reports/state/agentic-system-analysis/<run-id>/overview.md`, with its
-  sibling `run-state.md`. Both `run-status` and `result-disposition` must be
+  `kb/reports/state/agentic-system-analysis/<run-id>/output/ARTIFACT.yaml`, with its
+  run’s `../run-state.md`. Both `run-status` and `result-disposition` must be
   `complete`. The set is the authority for what the external system does: the
   overview holds the boundary, source register, reconciliation, synthesis and
   limitations; `runtime.md` the runtime account and the records the runtime
@@ -42,12 +42,12 @@ Use Commonplace ontology to name mechanisms when the external analysis supports 
 ## Steps
 
 0. **Verify the main-review input.** From the repository root, run
-   `commonplace-agentic-analysis-handoff <run-state-path>` on the sibling state.
+   `commonplace-agentic-analysis-handoff <run-state-path>` on the run state.
    Require exit status zero and substantive result disposition `complete`;
    a completed blocked or out-of-scope run is not a transfer input. Require the
-   supplied overview path to match `run-state.overview.path`. If the caller
-   supplied an overview SHA-256, require it to match
-   `run-state.overview.sha256` and the file's bytes. The handoff verifies the
+   supplied manifest path to match `run-state.artifact.path`. If the caller
+   supplied a manifest SHA-256, require it to match
+   `run-state.artifact.sha256` and the file's bytes. The handoff verifies the
    manifest; then read the overview and every member it pins: the evidence
    boundary and limitations in the overview, the relevant shared records in
    the runtime and memory members, and the lens findings in the memory and
@@ -56,8 +56,8 @@ Use Commonplace ontology to name mechanisms when the external analysis supports 
    through the main review workflow.
 1. **Fix the three substantive inputs and production provenance.** Copy the
    current interest brief exactly. Record the run ID, run-state path, source
-   identity and reviewed boundary, and the overview's path, byte length, and
-   SHA-256; its manifest pins the members. Identify only the Commonplace
+   identity and reviewed boundary, and the manifest's path, byte length, and
+   SHA-256; the manifest pins every member. Identify only the Commonplace
    artifacts actually
    consulted and record each path and SHA-256. Also record
    `scan-agentic-system-transfer` as the producing instruction and record model
@@ -76,17 +76,17 @@ Use Commonplace ontology to name mechanisms when the external analysis supports 
    - the smallest consequence worth considering; and
    - a disposition: `promote candidate`, `proposal candidate`, `experiment candidate`, `watch under this brief`, or `no action`.
 5. **Recheck the inputs.** Immediately before returning findings or writing
-   state, repeat step 0 and recompute the overview and consulted-Commonplace
+   state, repeat step 0 and recompute the manifest and consulted-Commonplace
    fingerprints. If validation fails, withhold the findings and report the
    blocker. If any fingerprint or the interest brief changed, discard the
    draft and restart from step 0 against the newly identified inputs.
-6. **Route the living result.** Return response-only unless the caller authorized a state output. Written scans live under `kb/reports/state/agentic-system-transfer/` because their LLM judgments and unresolved candidate dispositions are not reproducible cache. Use a filename that combines the system and an interest-brief slug. A scan becomes stale when the overview digest changes, any consulted Commonplace artifact changes, or the interest brief changes. Do not overwrite or delete an open scan merely because it is stale: first record `no action`, promote each accepted consequence through a separately authorized operation, or receive explicit discard authority. Until then, write the new scan to a collision-safe sibling and mark the prior path as superseded when authorized. After every candidate has a durable disposition elsewhere or `no action`, the owning workflow may replace or delete the state report.
+6. **Route the living result.** Return response-only unless the caller authorized a state output. Written scans live under `kb/reports/state/agentic-system-transfer/` because their LLM judgments and unresolved candidate dispositions are not reproducible cache. Use a filename that combines the system and an interest-brief slug. A scan becomes stale when the manifest digest changes, any consulted Commonplace artifact changes, or the interest brief changes. Do not overwrite or delete an open scan merely because it is stale: first record `no action`, promote each accepted consequence through a separately authorized operation, or receive explicit discard authority. Until then, write the new scan to a collision-safe sibling and mark the prior path as superseded when authorized. After every candidate has a durable disposition elsewhere or `no action`, the owning workflow may replace or delete the state report.
 
 ## Output
 
 Open with:
 
-`subject | analysis run ID and run-state path | source identity and reviewed boundary | overview path, byte length, and SHA-256 | interest brief | consulted Commonplace paths and hashes | producing instruction | harness-supplied model/runner or not supplied | generated date | selective/non-exhaustive: yes`
+`subject | analysis run ID and run-state path | source identity and reviewed boundary | manifest path, byte length, and SHA-256 | interest brief | consulted Commonplace paths and hashes | producing instruction | harness-supplied model/runner or not supplied | generated date | selective/non-exhaustive: yes`
 
 Then give the selected findings and finish with:
 
@@ -99,7 +99,7 @@ Do not add a difference count, coverage percentage, or claim that the scan exhau
 
 ## Verify
 
-- Initial and final completion/identity checks passed for the same overview.
+- Initial and final completion/identity checks passed for the same manifest.
 - Every external-system claim resolves to a member's findings and canonical
   records. No legacy review or compact summary supplied a finding,
   and no conclusion status or absence claim was inferred from omission.
@@ -107,6 +107,6 @@ Do not add a difference count, coverage percentage, or claim that the scan exhau
 - Every ontology mapping includes a reason and preserves partial or uncertain fit.
 - Every selected finding states why it matters under the recorded brief; generic admiration is absent.
 - Omission carries no negative meaning, the result feeds no matrix or public corpus statistic, and no candidate was promoted automatically.
-- A response or written result records the overview fingerprint, all three
+- A response or written result records the manifest fingerprint, all three
   freshness inputs, run and production provenance, and the successful final
   input recheck. A written result also records the cleanup condition.

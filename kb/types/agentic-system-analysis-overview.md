@@ -1,19 +1,18 @@
 ---
 type: types/type-spec.md
 name: agentic-system-analysis-overview
-description: "Entry member of one agentic-system analysis run's retained set: identity, member manifest, boundary, source register, reconciliation, synthesis, limitations and verification"
+description: "Entry member of one agentic-system analysis run's retained set: identity, boundary, source register, reconciliation, synthesis, limitations and verification"
 schema: ./agentic-system-analysis-overview.schema.yaml
 ---
 
 # Agentic system analysis overview
 
-The entry member of one `analyse-agentic-system` run's retained set. It
-holds the run's identity, the manifest that defines the set, the evidence
-boundary and source register, lens scoping, reconciliation, synthesis,
-limitations and verification. It holds no canonical records and no lens
-findings; those live in the members its manifest names. A reader that
-wants the analysis starts here and verifies the manifest before opening
-any member.
+The reading entry point of one `analyse-agentic-system` run's retained set.
+It holds identity, evidence boundary, source register, lens scoping,
+reconciliation, synthesis, limitations and verification. Runtime, memory
+and epistemic findings live in their respective members. The sibling
+`ARTIFACT.yaml` selects the [analysis set type](../reports/types/agentic-system-analysis-set.md)
+and pins every member, including this overview.
 
 ## Frontmatter
 
@@ -30,37 +29,25 @@ any member.
 | `reviewed-boundary` | Yes | Immutable revision or capture identity shared by the run, or `null` before one could be established |
 | `analysis-cutoff` | Yes | Applicability cutoff for the frozen evidence, or `null` before one could be established |
 | `evidence-tier` | Yes | `code-grounded`, `doc-grounded`, or `null` before the runtime baseline could support a tier |
-| `members` | Yes | The manifest: a list of `{path, sha256, type}` entries, one per other member of the set, paths relative to the overview's directory; empty for a `blocked` or `out-of-scope` run |
 | `inputs-commit` | Yes | The full commit of this repository whose tree supplied the run's method: the analysis instructions, the set's type specs and schemas, and the package code. The coordinator writes HEAD here when the run opens; publication requires HEAD to descend from it with the method paths, the `METHOD_PATHS` constant in `src/commonplace/lib/agentic_publication.py`, unchanged |
 
-For a `complete` run, the five boundary fields are non-null and `members`
-names exactly one runtime report, one memory report and one epistemic
-report. `blocked` and `out-of-scope` are dispositions, not a second output
-shape: the overview retains every required section and states what was not
-reached, why, and which conclusion that prevents, with an empty manifest.
+For a `complete` run, the five boundary fields are non-null. A `blocked`
+or `out-of-scope` overview retains every required section and states what
+was not reached, why, and which conclusion that prevents.
 
 ## The set
 
 ### Identity and completion
 
-The set is the overview plus the members its manifest names, all in
-`kb/reports/state/agentic-system-analysis/<run-id>/` while the run is open
-and retained together under
-`kb/reports/retained/agentic-system-analysis/<run-id>/` on publication.
-Completion is a chain of pins: the run state pins the overview's path and
-SHA-256; the overview's manifest pins every other member; the compact
-review pins the overview. `inputs-commit` pins the method: the commit whose
-tree supplied the instructions, types and code the run used, so a reader
-can reproduce the method from Git without a separate bundle. Correct a
-retained set through a new run, never by editing a retained member.
-
-A reader rejects the set, naming the failed check, when a manifest member
-is missing or its bytes do not hash to the manifest; when a member's
-`run-id` or `reviewed-boundary` differs from the overview's; when the
-overview's disposition is not `complete` or the memory report's
-`report-status` is not `complete`; when a canonical ID is declared in two
-members or referenced without a declaration anywhere in the set; or when
-any member fails its own validation.
+Working output lives under
+`kb/reports/state/agentic-system-analysis/<run-id>/output/`; publication
+retains it under `kb/reports/retained/agentic-system-analysis/<run-id>/`.
+Run state and compact reviews pin `ARTIFACT.yaml`. The manifest pins the
+reports, and `inputs-commit` identifies the method's committed inputs.
+The [set type](../reports/types/agentic-system-analysis-set.md) owns membership
+and set checks. File validation checks this overview independently;
+directory validation checks the whole set. Only complete sets may publish
+or supply comparison rows. Correct retained output through a new run.
 
 ### Canonical identity across members
 
@@ -276,16 +263,6 @@ reviewed-boundary: "{immutable revision or capture identity}"
 analysis-cutoff: "YYYY-MM-DD"
 evidence-tier: code-grounded
 inputs-commit: "{full commit of this repository at run start}"
-members:
-  - path: runtime.md
-    sha256: "{sha256}"
-    type: types/agentic-system-runtime-report.md
-  - path: memory.md
-    sha256: "{sha256}"
-    type: types/agent-memory-analysis-report.md
-  - path: epistemic.md
-    sha256: "{sha256}"
-    type: types/agentic-system-epistemic-report.md
 ---
 
 # {System} agentic-system analysis

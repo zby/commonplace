@@ -2,7 +2,7 @@
 
 The matrix builder, table renderer, and analyzer read the retained sets
 produced by `analyse-agentic-system`. Their common input is each generated
-review under `kb/agentic-systems/reviews/`, its `analysis-overview` path and
+review under `kb/agentic-systems/reviews/`, its `analysis-artifact` path and
 SHA-256, and the byte-identical set retained under
 `kb/reports/retained/agentic-system-analysis/<run-id>/`: the readers verify
 the overview's manifest, take identity and the source register from the

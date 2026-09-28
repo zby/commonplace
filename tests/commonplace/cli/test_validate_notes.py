@@ -940,7 +940,7 @@ traits: []
     )
 
 
-def test_directory_without_collection_file_is_not_a_validation_scope(
+def test_directory_without_collection_file_keeps_file_validation_scope(
     tmp_path: Path,
 ) -> None:
     configure_temp_repo(tmp_path)
@@ -956,8 +956,8 @@ traits: []
 """,
     )
 
-    with pytest.raises(ValueError, match="not a KB collection"):
-        validate_notes.resolve_validation_target("kb/tasks", repo_root=tmp_path)
+    target = validate_notes.resolve_validation_target("kb/tasks", repo_root=tmp_path)
+    assert target.paths == (tmp_path / "kb/tasks/report.md",)
 
 
 def test_validate_collection_structure_flags_nested_collection(tmp_path: Path) -> None:

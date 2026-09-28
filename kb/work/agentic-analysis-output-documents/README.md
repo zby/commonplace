@@ -408,7 +408,7 @@ loader and bundle moved with it because one fixture serves all three),
 The mid-flight direction to move set checks into the validator was
 implemented as `6d8d9fd0` and reverted the same day; the operator judged
 extending validation from notes to directories an architectural change
-and opened [directory-artifacts](../directory-artifacts/README.md) to plan
+and opened [directory artifacts](../../reference/adr/095-directory-artifacts-add-shared-set-validation.md) to plan
 it. Remaining for the transition: the skill's steps 1, 7, 8 and 10, the
 memory and epistemic instructions, the run-state type prose, the collection
 contract, the comparisons README, the two downstream skills, retirement
@@ -442,3 +442,12 @@ Items 3 to 5 run now in an isolated worktree. Items 1 and 2 edit the same
 files as the directory-artifact implementation currently uncommitted on
 main and wait for it to land. Batch 02 runs two systems at a time with a
 slimmer acceptance record, after all five land.
+
+
+## Directory artifacts implemented (2026-09-28)
+
+[ADR 095](../../reference/adr/095-directory-artifacts-add-shared-set-validation.md)
+now governs the validator and analysis output layout. The directory-artifacts
+workshop is closed. Its shared checker includes cross-member declarations
+and references; it does not restore exact finalization derivation or a quote
+minimum. The batch-01 follow-ups above remain a separate commission.

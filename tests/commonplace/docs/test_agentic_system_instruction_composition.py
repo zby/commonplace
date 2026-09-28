@@ -32,9 +32,9 @@ def test_set_has_one_fixed_state_location() -> None:
     orchestrator = instruction("analyse-agentic-system")
     overview = contract("agentic-system-analysis-overview")
 
-    assert "entry member is always\n   `<run-id>/overview.md`" in orchestrator
-    assert "The entry member of one `analyse-agentic-system` run's retained set" in overview
-    assert "the overview's manifest pins every other member" in overview
+    assert "`<run-id>/output/ARTIFACT.yaml`" in orchestrator
+    assert "reading entry point" in overview
+    assert "Run state and compact reviews pin `ARTIFACT.yaml`" in overview
 
 
 def test_repository_sources_remain_commit_addressed() -> None:
@@ -106,7 +106,7 @@ def test_candidate_artifact_does_not_establish_phase_observation() -> None:
 
 def test_orchestrator_states_the_set_rules_it_depends_on() -> None:
     orchestrator = instruction("analyse-agentic-system")
-    assert "write the overview only, with an empty\nmanifest" in orchestrator
+    assert "out-of-scope` outcome contains only `overview.md`" in orchestrator
     assert "commission a\nfresh specialist against the same frozen input" in orchestrator
     assert "cites only\ncanonical IDs" in orchestrator
     assert "(../../types/agentic-system-runtime-report.md#shared-records)" in orchestrator

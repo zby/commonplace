@@ -27,8 +27,8 @@ matrices and tables live under `comparisons/`.
 Every complete `analyse-agentic-system` run publishes one compact review in the
 `reviews/` directory. Each file records `generated-by: analyse-agentic-system`,
 the producing `analysis-run`, a stable `source-identity`, and the
-`reviewed-revision`, and the retained `analysis-overview` path and
-`analysis-overview-sha256`. They are workflow-owned projections of a frozen
+`reviewed-revision`, and the retained `analysis-artifact` path and
+`analysis-artifact-sha256`. They are workflow-owned projections of a frozen
 analysis set, not hand-authored notes. Do not substantively hand-edit them. Correct the source
 boundary or the shared review method, then rerun the skill and replace the
 review from those inputs. Git history preserves earlier generated versions.
@@ -49,7 +49,7 @@ Publication retains the run's set byte for byte under
 limitations), `runtime.md` (runtime account, probe evidence, runtime-declared
 records), `memory.md` (memory findings, memory-declared records, comparison
 profile) and `epistemic.md` (the six epistemic blocks). The public review
-pins the overview and the overview's manifest pins the members; comparison
+pins ARTIFACT.yaml, which pins every member; comparison
 readers need neither ignored run state nor the legacy corpus to reproduce
 their fields. Correct or enrich the analysis through a new run, never by
 hand-editing a retained member.

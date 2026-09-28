@@ -73,6 +73,7 @@ def configure_types(tmp_path: Path) -> None:
         REPO_ROOT / "kb/agentic-systems/types",
         tmp_path / "kb/agentic-systems/types",
     )
+    shutil.copytree(REPO_ROOT / "kb/reports/types", tmp_path / "kb/reports/types")
     write(tmp_path / "kb/reports/COLLECTION.md", "# Reports\n")
     shutil.copytree(
         REPO_ROOT / "kb/instructions/review-gates",
@@ -371,10 +372,6 @@ Conclusion.
 def overview_text(
     revision: str, members: dict[str, Path], *, inputs_commit: str = INPUTS_COMMIT
 ) -> str:
-    manifest = "\n".join(
-        f"  - path: {name}\n    sha256: {digest(path)}\n    type: {MEMBER_TYPES[name]}"
-        for name, path in members.items()
-    )
     return f"""---
 type: types/agentic-system-analysis-overview.md
 description: "Complete fixture analysis at one frozen source boundary"
@@ -388,8 +385,6 @@ reviewed-boundary: {revision}
 analysis-cutoff: "2026-09-04"
 evidence-tier: code-grounded
 inputs-commit: {inputs_commit}
-members:
-{manifest}
 ---
 
 # Example System agentic-system analysis
@@ -458,8 +453,8 @@ generated-by: analyse-agentic-system
 analysis-run: {RUN_ID}
 source-identity: {SOURCE}
 reviewed-revision: {revision}
-analysis-overview: {agentic_set.retained_overview_path(RUN_ID).as_posix()}
-analysis-overview-sha256: {digest(overview)}
+analysis-artifact: {agentic_set.retained_artifact_path(RUN_ID).as_posix()}
+analysis-artifact-sha256: {digest(overview.with_name("ARTIFACT.yaml"))}
 ---
 
 # Example System
@@ -472,33 +467,42 @@ def run_dir_of(tmp_path: Path, run_id: str = RUN_ID) -> Path:
     return tmp_path / STATE_DIR / run_id
 
 
+def output_path(run_dir: Path, name: str) -> Path:
+    if name in (*agentic_set.SET_NAMES, "ARTIFACT.yaml"):
+        return run_dir / "output" / name
+    return run_dir / name
+
+
+def repin(directory: Path) -> None:
+    manifest = {"type": agentic_set.SET_TYPE, "members": {
+        path.name: {"sha256": digest(path)} for path in sorted(directory.glob("*.md"))
+    }}
+    write(directory / "ARTIFACT.yaml", yaml.safe_dump(manifest, sort_keys=False))
+
+
 def refinalize(run_dir: Path) -> None:
     """Rebuild memory.md from the local report and re-pin the overview manifest."""
-    write(run_dir / "memory.md", finalized_member_text(run_dir / "memory-report.md"))
-    overview = run_dir / "overview.md"
-    values = frontmatter(overview)
-    values["members"] = [
-        {"path": name, "sha256": digest(run_dir / name), "type": MEMBER_TYPES[name]}
-        for name in MEMBER_TYPES
-    ]
-    replace_frontmatter(overview, values)
+    write(run_dir / "output/memory.md", finalized_member_text(run_dir / "memory-report.md"))
+    repin(run_dir / "output")
 
 
 def retain_set(tmp_path: Path, run_dir: Path, run_id: str = RUN_ID) -> None:
     for name, retained in agentic_set.retained_set_paths(run_id).items():
         (tmp_path / retained).parent.mkdir(parents=True, exist_ok=True)
-        (tmp_path / retained).write_bytes((run_dir / name).read_bytes())
+        (tmp_path / retained).write_bytes((output_path(run_dir, name)).read_bytes())
 
 
 def write_set(run_dir: Path, revision: str) -> Path:
     """Write the local report, the members and the overview pinning them."""
     local = memory_report_fixture(run_dir, revision)
     members = {
-        "runtime.md": write(run_dir / "runtime.md", runtime_text(revision)),
-        "memory.md": write(run_dir / "memory.md", finalized_member_text(local)),
-        "epistemic.md": write(run_dir / "epistemic.md", epistemic_text(revision)),
+        "runtime.md": write(run_dir / "output/runtime.md", runtime_text(revision)),
+        "memory.md": write(run_dir / "output/memory.md", finalized_member_text(local)),
+        "epistemic.md": write(run_dir / "output/epistemic.md", epistemic_text(revision)),
     }
-    return write(run_dir / "overview.md", overview_text(revision, members))
+    overview = write(run_dir / "output/overview.md", overview_text(revision, members))
+    repin(run_dir / "output")
+    return overview
 
 
 def member_fixture(tmp_path: Path) -> Path:
@@ -532,9 +536,9 @@ def valid_run_state(tmp_path: Path) -> Path:
             "path": source_root.as_posix(),
             "sha256": None,
         },
-        "overview": {
-            "path": (STATE_DIR / RUN_ID / "overview.md").as_posix(),
-            "sha256": digest(overview),
+        "artifact": {
+            "path": (STATE_DIR / RUN_ID / "output/ARTIFACT.yaml").as_posix(),
+            "sha256": digest(overview.with_name("ARTIFACT.yaml")),
         },
         "generated-review": {
             "path": REVIEW_PATH,
@@ -551,7 +555,7 @@ def sync_set(tmp_path: Path, values: dict) -> None:
     The local report follows the state's source identity and boundary, as the
     specialist's handoff would; the review's pin follows the overview.
     """
-    run_dir = tmp_path / Path(values["overview"]["path"]).parent
+    run_dir = tmp_path / Path(values["artifact"]["path"]).parent.parent
     report = run_dir / "memory-report.md"
     report_values = frontmatter(report)
     report_values.update({"source-identity": values["source"]["identity"],
@@ -559,17 +563,17 @@ def sync_set(tmp_path: Path, values: dict) -> None:
     replace_frontmatter(report, report_values)
     refinalize(run_dir)
     retain_set(tmp_path, run_dir)
-    values["overview"]["sha256"] = digest(run_dir / "overview.md")
+    values["artifact"]["sha256"] = digest(run_dir / "output/ARTIFACT.yaml")
     generated = tmp_path / values["generated-review"]["path"]
     replace_frontmatter(generated, {
-        **frontmatter(generated), "analysis-overview-sha256": digest(run_dir / "overview.md"),
+        **frontmatter(generated), "analysis-artifact-sha256": digest(run_dir / "output/ARTIFACT.yaml"),
     })
     values["generated-review"]["sha256"] = digest(generated)
 
 
 def rewrite_boundary(tmp_path: Path, run_dir: Path, old: str, new: str) -> None:
     """Move every set document, the local report and the review to another boundary."""
-    for path in (*(run_dir / name for name in ("overview.md", *MEMBER_TYPES)),
+    for path in (*(output_path(run_dir, name) for name in ("overview.md", *MEMBER_TYPES)),
                  run_dir / "memory-report.md", tmp_path / REVIEW_PATH):
         path.write_text(path.read_text(encoding="utf-8").replace(old, new), encoding="utf-8")
 
@@ -606,11 +610,12 @@ def commit_inputs(tmp_path: Path) -> str:
 
 def pin_inputs_commit(run_dir: Path, commit: str, candidate: Path | None = None) -> None:
     """Record the method commit in the overview and re-pin the candidate review to it."""
-    overview = run_dir / "overview.md"
+    overview = run_dir / "output/overview.md"
     replace_frontmatter(overview, {**frontmatter(overview), "inputs-commit": commit})
+    repin(overview.parent)
     if candidate is not None:
         replace_frontmatter(
-            candidate, {**frontmatter(candidate), "analysis-overview-sha256": digest(overview)}
+            candidate, {**frontmatter(candidate), "analysis-artifact-sha256": digest(overview.with_name("ARTIFACT.yaml"))}
         )
 
 
@@ -626,7 +631,7 @@ def publication_fixture(tmp_path: Path) -> tuple[Path, PublicationSpec, bytes]:
     head = commit_inputs(tmp_path)
     pin_inputs_commit(state.parent, head, candidate)
     values.update({"run-status": "running", "result-disposition": None,
-                   "overview": None, "generated-review": None, "failure": None})
+                   "artifact": None, "generated-review": None, "failure": None})
     replace_frontmatter(state, values)
     spec = PublicationSpec(tmp_path, state, candidate, destination, "absent")
     return state, spec, candidate.read_bytes()
@@ -679,7 +684,7 @@ def test_running_state_needs_no_recovery_records(tmp_path: Path) -> None:
         "run-status": "running",
         "result-disposition": None,
         "source": None,
-        "overview": None,
+        "artifact": None,
         "generated-review": None,
         "failure": None,
     }
@@ -701,7 +706,7 @@ def test_failed_state_requires_only_a_reason(tmp_path: Path) -> None:
         "run-status": "failed",
         "result-disposition": None,
         "source": None,
-        "overview": None,
+        "artifact": None,
         "generated-review": None,
         "failure": "Generated review candidate failed validation; rerun required.",
     }
@@ -720,7 +725,7 @@ def test_failed_state_without_reason_is_rejected(tmp_path: Path) -> None:
             "run-status": "failed",
             "result-disposition": None,
             "source": None,
-            "overview": None,
+            "artifact": None,
             "generated-review": None,
             "failure": None,
         }
@@ -734,29 +739,29 @@ def test_failed_state_without_reason_is_rejected(tmp_path: Path) -> None:
 
 def test_complete_state_rejects_changed_overview_bytes(tmp_path: Path) -> None:
     state = valid_run_state(tmp_path)
-    overview = state.parent / "overview.md"
+    overview = state.parent / "output/overview.md"
     overview.write_text(overview.read_text(encoding="utf-8") + "changed\n", encoding="utf-8")
 
     results = validation.validate_note(state, repo_root=tmp_path)
 
-    assert any("overview: SHA-256 mismatch" in item for item in results.fails)
+    assert any("overview.md: SHA-256 mismatch" in item for item in results.fails)
 
 
 def test_complete_state_rejects_a_member_that_drifted_from_the_manifest(tmp_path: Path) -> None:
     state = valid_run_state(tmp_path)
-    path = state.parent / "runtime.md"
+    path = state.parent / "output/runtime.md"
     path.write_text(path.read_text(encoding="utf-8") + "changed\n", encoding="utf-8")
 
     results = validation.validate_note(state, repo_root=tmp_path)
 
-    assert any("member set: manifest: runtime.md bytes hash to" in item for item in results.fails)
+    assert any("manifest member runtime.md: SHA-256 mismatch" in item for item in results.fails)
 
 
 def test_complete_state_rejects_invalid_overview_with_matching_hash(
     tmp_path: Path,
 ) -> None:
     state = valid_run_state(tmp_path)
-    overview = state.parent / "overview.md"
+    overview = state.parent / "output/overview.md"
     overview.write_text(
         overview.read_text(encoding="utf-8").replace("## Limitations\n\nNone.\n\n", ""),
         encoding="utf-8",
@@ -767,12 +772,12 @@ def test_complete_state_rejects_invalid_overview_with_matching_hash(
 
     results = validation.validate_note(state, repo_root=tmp_path)
 
-    assert any("overview validation" in item for item in results.fails)
+    assert any("member overview.md" in item for item in results.fails)
 
 
 def test_complete_state_rejects_an_invalid_member_pinned_by_the_manifest(tmp_path: Path) -> None:
     state = valid_run_state(tmp_path)
-    path = state.parent / "runtime.md"
+    path = state.parent / "output/runtime.md"
     path.write_text(
         path.read_text(encoding="utf-8").replace("## Annotations", "## Renamed"), encoding="utf-8"
     )
@@ -782,7 +787,7 @@ def test_complete_state_rejects_an_invalid_member_pinned_by_the_manifest(tmp_pat
 
     results = validation.validate_note(state, repo_root=tmp_path)
 
-    assert any("runtime.md validation" in item for item in results.fails)
+    assert any("member runtime.md" in item for item in results.fails)
 
 
 def test_complete_state_rejects_generated_review_from_another_source(
@@ -804,10 +809,11 @@ def test_complete_state_rejects_generated_review_from_another_source(
     assert any("source-identity" in item for item in results.fails)
 
 
-def test_blocked_overview_completes_without_members_or_public_review(tmp_path: Path) -> None:
+@pytest.mark.parametrize("disposition", ["blocked", "out-of-scope"])
+def test_blocked_overview_completes_without_members_or_public_review(tmp_path: Path, disposition: str) -> None:
     state = valid_run_state(tmp_path)
     values = frontmatter(state)
-    overview = state.parent / "overview.md"
+    overview = state.parent / "output/overview.md"
     overview.write_text(
         overview.read_text(encoding="utf-8").replace(
             f"**Generated review:** `{REVIEW_PATH}`",
@@ -816,17 +822,19 @@ def test_blocked_overview_completes_without_members_or_public_review(tmp_path: P
         encoding="utf-8",
     )
     replace_frontmatter(overview, {
-        **frontmatter(overview), "result-disposition": "blocked", "target-class": None,
+        **frontmatter(overview), "result-disposition": disposition, "target-class": None,
         "boundary-kind": None, "reviewed-boundary": None, "analysis-cutoff": None,
-        "evidence-tier": None, "members": [],
+        "evidence-tier": None,
     })
     for name in MEMBER_TYPES:
-        (state.parent / name).unlink()
+        (output_path(state.parent, name)).unlink()
+    overview.write_text(re.sub(r"(?:MEM-)?(?:OBJ|RTE|CMP|CLM|ABS|BAP)-\d+", "not evaluated", overview.read_text()))
+    repin(overview.parent)
     values.update(
         {
-            "result-disposition": "blocked",
+            "result-disposition": disposition,
             "source": None,
-            "overview": {"path": values["overview"]["path"], "sha256": digest(overview)},  # type: ignore[index]
+            "artifact": {"path": values["artifact"]["path"], "sha256": digest(overview.with_name("ARTIFACT.yaml"))},  # type: ignore[index]
             "generated-review": None,
         }
     )
@@ -837,35 +845,33 @@ def test_blocked_overview_completes_without_members_or_public_review(tmp_path: P
     assert results.fails == []
 
 
-@pytest.mark.parametrize("field, value", [
-    ("path", ["runtime.md"]), ("sha256", 12345), ("type", {"name": "runtime"}),
-])
-def test_a_non_string_manifest_field_is_a_value_error_naming_the_entry(
-    tmp_path: Path, field: str, value: object
-) -> None:
-    overview = member_fixture(tmp_path) / "overview.md"
-    values = frontmatter(overview)
-    values["members"][0][field] = value
-    replace_frontmatter(overview, values)
-    with pytest.raises(ValueError, match=f"entry 1 .* needs a string {field}"):
-        agentic_set.load_member_set(overview)
+@pytest.mark.parametrize("value", [12345, "bad", None])
+def test_manifest_hash_must_be_a_digest(tmp_path, value):
+    directory = member_fixture(tmp_path) / "output"
+    manifest = directory / "ARTIFACT.yaml"
+    values = yaml.safe_load(manifest.read_text())
+    values["members"]["runtime.md"]["sha256"] = value
+    manifest.write_text(yaml.safe_dump(values))
+    with pytest.raises(ValueError, match="malformed SHA-256"):
+        agentic_set.load_member_set(directory, run=validation.ValidationRun(tmp_path, ()))
 
 
 def test_member_pass_needs_every_member_named(tmp_path: Path) -> None:
     """A complete state over a memberless overview never reports members present."""
     state = valid_run_state(tmp_path)
-    overview = state.parent / "overview.md"
+    overview = state.parent / "output/overview.md"
     replace_frontmatter(overview, {
-        **frontmatter(overview), "result-disposition": "blocked", "members": [],
+        **frontmatter(overview), "result-disposition": "blocked",
     })
     values = frontmatter(state)
-    values["overview"]["sha256"] = digest(overview)  # type: ignore[index]
+    repin(overview.parent)
+    values["artifact"]["sha256"] = digest(overview.with_name("ARTIFACT.yaml"))  # type: ignore[index]
     replace_frontmatter(state, values)
 
     results = validation.validate_note(state, repo_root=tmp_path)
 
     assert not any("manifest members present" in item for item in results.passes)
-    assert any("manifest does not name" in item for item in results.fails)
+    assert any("properties" in item for item in results.fails), results.fails
 
 
 @pytest.mark.parametrize("mutation", ["stale-finalized-from", "runtime-run-id"])
@@ -876,26 +882,21 @@ def test_complete_state_verifies_the_set_beyond_each_member(tmp_path: Path, muta
     sync_set(tmp_path, values)
     expected = {
         "stale-finalized-from": "finalized-from does not match memory-report.md bytes",
-        "runtime-run-id": "member set: runtime.md: run-id does not match the overview",
+        "runtime-run-id": "runtime.md: run-id does not match the overview",
     }[mutation]
     if mutation == "stale-finalized-from":
         report = run_dir / "memory-report.md"
         report.write_text(report.read_text() + "\nLater specialist edit.\n")
     else:
-        path = run_dir / "runtime.md"
+        path = run_dir / "output/runtime.md"
         replace_frontmatter(path, {**frontmatter(path), "run-id": RUN_ID[:-2] + "09"})
     # Re-pin the manifest and copies around the edit without regenerating the member.
-    overview = run_dir / "overview.md"
-    data = frontmatter(overview)
-    data["members"] = [
-        {"path": name, "sha256": digest(run_dir / name), "type": MEMBER_TYPES[name]}
-        for name in MEMBER_TYPES
-    ]
-    replace_frontmatter(overview, data)
+    overview = run_dir / "output/overview.md"
+    repin(overview.parent)
     retain_set(tmp_path, run_dir)
-    values["overview"]["sha256"] = digest(overview)
+    values["artifact"]["sha256"] = digest(overview.with_name("ARTIFACT.yaml"))
     generated = tmp_path / REVIEW_PATH
-    replace_frontmatter(generated, {**frontmatter(generated), "analysis-overview-sha256": digest(overview)})
+    replace_frontmatter(generated, {**frontmatter(generated), "analysis-artifact-sha256": digest(overview.with_name("ARTIFACT.yaml"))})
     values["generated-review"]["sha256"] = digest(generated)
     replace_frontmatter(state, values)
 
@@ -915,7 +916,7 @@ def test_capture_source_is_byte_verified(tmp_path: Path) -> None:
         "path": capture.as_posix(),
         "sha256": digest(capture),
     }
-    old_revision = frontmatter(state.parent / "overview.md")["reviewed-boundary"]
+    old_revision = frontmatter(state.parent / "output/overview.md")["reviewed-boundary"]
     rewrite_boundary(tmp_path, state.parent, old_revision, "capture-2026-09-04")
     report = state.parent / "memory-report.md"
     report.write_text(report.read_text().replace(
@@ -1064,7 +1065,7 @@ def test_operator_handoff_is_rendered_from_complete_state(tmp_path: Path) -> Non
     rendered = render_agentic_analysis_handoff(state)
 
     assert RUN_ID in rendered
-    assert "**Overview:**" in rendered
+    assert "**Artifact:**" in rendered
     assert "**Members:** runtime.md, memory.md, epistemic.md" in rendered
     assert "**Frozen source:**" in rendered
     assert (
@@ -1086,7 +1087,7 @@ def test_handoff_command_refuses_a_running_run(
             "run-status": "running",
             "result-disposition": None,
             "source": None,
-            "overview": None,
+            "artifact": None,
             "generated-review": None,
         }
     )
@@ -1175,7 +1176,7 @@ def test_publication_cannot_consume_specialist_evidence_as_candidate(tmp_path: P
         "overview.md", "runtime.md", "memory.md", "epistemic.md",
         "incumbent-overview.md", "incumbent-memory.md",
     ):
-        candidate = PublicationSpec(tmp_path, state, state.parent / name, spec.generated_destination, "absent")
+        candidate = PublicationSpec(tmp_path, state, output_path(state.parent, name), spec.generated_destination, "absent")
         with pytest.raises(ValueError, match="reserved"):
             prepare_publication(candidate)
 
@@ -1237,10 +1238,10 @@ def test_publish_replaces_the_set_and_completes_run_state(tmp_path: Path) -> Non
     assert not spec.generated_candidate_path.exists()
     values = frontmatter(state)
     assert values["run-status"] == "complete"
-    assert values["overview"]["path"].endswith(f"{RUN_ID}/overview.md")
-    assert (tmp_path / published.retained_path).read_bytes() == (state.parent / "overview.md").read_bytes()
+    assert values["artifact"]["path"].endswith(f"{RUN_ID}/output/ARTIFACT.yaml")
+    assert (tmp_path / published.retained_path).read_bytes() == (state.parent / "output/ARTIFACT.yaml").read_bytes()
     for name, retained in agentic_set.retained_set_paths(RUN_ID).items():
-        assert (tmp_path / retained).read_bytes() == (state.parent / name).read_bytes()
+        assert (tmp_path / retained).read_bytes() == (output_path(state.parent, name)).read_bytes()
     assert published.cleanup_warnings == ()
     assert validation.validate_note(state, repo_root=tmp_path).fails == []
 
@@ -1266,7 +1267,7 @@ def test_publication_resolves_links_to_results_in_the_same_set(tmp_path: Path) -
     candidate.write_text(content)
     prepare_publication(spec)
     publish_publication(spec)
-    assert retained.read_bytes() == (state.parent / "overview.md").read_bytes()
+    assert retained.read_bytes() == (state.parent / "output/overview.md").read_bytes()
     assert (tmp_path / spec.generated_destination).read_text() == content
     checks = validation.validate_note(state, repo_root=tmp_path)
     assert checks.fails == []
@@ -1326,7 +1327,7 @@ def test_comparison_tools_use_retained_results_without_local_or_legacy_inputs(tm
     assert len(inputs.rows) == 1
     assert inputs.rows[0]["storage_substrate"] == ["files", "sqlite"]
     assert inputs.rows[0]["lineage_assessment"] == "uninspected"
-    assert inputs.rows[0]["overview_sha256"] == digest(retained)
+    assert inputs.rows[0]["artifact_sha256"] == digest(retained.with_name("ARTIFACT.yaml"))
     for module in (build_systems_matrix, render_systems_table):
         monkeypatch.setattr(module, "REPO_ROOT", tmp_path)
     matrix = tmp_path / "kb/agentic-systems/comparisons/memory-systems.csv"
@@ -1339,14 +1340,14 @@ def test_comparison_tools_use_retained_results_without_local_or_legacy_inputs(tm
     assert render_systems_table.main(["--output", str(table)]) == 0
     assert "files [wired], sqlite [wired]" in table.read_text()
     assert "## code-grounded (1)" in table.read_text()
-    assert digest(retained) in table.read_text()
+    assert digest(retained.with_name("ARTIFACT.yaml")) in table.read_text()
     assert validation.validate_note(table, repo_root=tmp_path).fails == []
 
 
 @pytest.mark.parametrize("mutation, error", [
     ("bytes", "SHA-256 mismatch"), ("profile", "memory-comparison"),
     ("source", "source-identity does not match"), ("revision", "identity mismatch"),
-    ("missing", "No such file"), ("member", "manifest: memory.md bytes hash to"),
+    ("missing", "no discovered file"), ("member", "manifest member memory.md: SHA-256 mismatch"),
 ])
 def test_comparison_reader_rejects_incomplete_or_mismatched_evidence(tmp_path, mutation, error):
     valid_run_state(tmp_path)
@@ -1355,13 +1356,8 @@ def test_comparison_reader_rejects_incomplete_or_mismatched_evidence(tmp_path, m
     review = tmp_path / "kb/agentic-systems/reviews/example-system.md"
 
     def repin_overview() -> None:
-        data = frontmatter(retained)
-        data["members"] = [
-            {"path": name, "sha256": digest(retained.with_name(name)), "type": MEMBER_TYPES[name]}
-            for name in MEMBER_TYPES
-        ]
-        replace_frontmatter(retained, data)
-        replace_frontmatter(review, {**frontmatter(review), "analysis-overview-sha256": digest(retained)})
+        repin(retained.parent)
+        replace_frontmatter(review, {**frontmatter(review), "analysis-artifact-sha256": digest(retained.with_name("ARTIFACT.yaml"))})
 
     if mutation == "bytes":
         retained.write_bytes(retained.read_bytes() + b"drift\n")
@@ -1389,7 +1385,7 @@ def test_comparison_reader_rejects_incomplete_or_mismatched_evidence(tmp_path, m
 ])
 def test_memory_member_contract(tmp_path: Path, mutation: str, error: str | None) -> None:
     """Amendments close the member; finalized-from is a required field."""
-    memory = member_fixture(tmp_path) / "memory.md"
+    memory = member_fixture(tmp_path) / "output/memory.md"
     values = frontmatter(memory)
     if mutation == "section-after-amendments":
         memory.write_text(memory.read_text() + "\n## Stray\n\nText.\n")
@@ -1404,29 +1400,27 @@ def test_memory_member_contract(tmp_path: Path, mutation: str, error: str | None
 
 
 def test_comparison_reader_loads_what_publication_accepts(tmp_path):
-    """Cross-member ID resolution is not a publication check, so loading skips it too."""
+    """Run-state and comparison readers reject the same duplicate set declaration."""
     state = valid_run_state(tmp_path)
     run_dir = state.parent
-    memory = run_dir / "memory.md"
+    memory = run_dir / "output/memory.md"
     # The memory member re-declares a record the runtime member declares.
     text = memory.read_text()
     assert "#### On RTE-1 — Fixture route" in text
     memory.write_text(text.replace("#### On RTE-1 — Fixture route", "#### RTE-1 — Fixture route"))
-    overview = run_dir / "overview.md"
-    replace_frontmatter(overview, {**frontmatter(overview), "members": [
-        {"path": name, "sha256": digest(run_dir / name), "type": MEMBER_TYPES[name]}
-        for name in MEMBER_TYPES
-    ]})
+    overview = run_dir / "output/overview.md"
+    repin(overview.parent)
     retain_set(tmp_path, run_dir)
     review = tmp_path / REVIEW_PATH
-    replace_frontmatter(review, {**frontmatter(review), "analysis-overview-sha256": digest(overview)})
+    replace_frontmatter(review, {**frontmatter(review), "analysis-artifact-sha256": digest(overview.with_name("ARTIFACT.yaml"))})
     values = frontmatter(state)
-    values["overview"]["sha256"] = digest(overview)
+    values["artifact"]["sha256"] = digest(overview.with_name("ARTIFACT.yaml"))
     values["generated-review"]["sha256"] = digest(review)
     replace_frontmatter(state, values)
-    assert validation.validate_note(state, repo_root=tmp_path).fails == []
-
-    assert len(systems_matrix.load_results(tmp_path).rows) == 1
+    assert any("duplicate set declaration: RTE-1" in error
+               for error in validation.validate_note(state, repo_root=tmp_path).fails)
+    with pytest.raises(ValueError, match="duplicate set declaration: RTE-1"):
+        systems_matrix.load_results(tmp_path)
 
 
 def test_comparison_population_must_select_one_review_per_source(tmp_path):
@@ -1441,24 +1435,20 @@ def test_comparison_population_must_select_one_review_per_source(tmp_path):
 
 def test_publication_requires_comparison_fields_and_preserves_retained_bytes(tmp_path):
     state, spec, _ = publication_fixture(tmp_path)
-    memory = state.parent / "memory.md"
-    old_bytes = {name: (state.parent / name).read_bytes() for name in ("memory.md", "overview.md")}
+    memory = state.parent / "output/memory.md"
+    old_bytes = {name: (output_path(state.parent, name)).read_bytes() for name in ("memory.md", "overview.md")}
     data = frontmatter(memory)
     data.pop("memory-comparison")
     replace_frontmatter(memory, data)
-    with pytest.raises(ValueError, match="manifest: memory.md bytes hash to"):
+    with pytest.raises(ValueError, match="manifest member memory.md: SHA-256 mismatch"):
         prepare_publication(spec)
-    overview = state.parent / "overview.md"
-    values = frontmatter(overview)
-    values["members"] = [
-        {"path": name, "sha256": digest(state.parent / name), "type": MEMBER_TYPES[name]}
-        for name in MEMBER_TYPES
-    ]
-    replace_frontmatter(overview, values)
+    overview = state.parent / "output/overview.md"
+    repin(overview.parent)
     with pytest.raises(ValueError, match="memory-comparison"):
         prepare_publication(spec)
     for name, content in old_bytes.items():
-        (state.parent / name).write_bytes(content)
+        (output_path(state.parent, name)).write_bytes(content)
+    repin(state.parent / "output")
     retained = write(tmp_path / agentic_set.retained_overview_path(RUN_ID), "frozen earlier overview\n")
     with pytest.raises(ValueError, match="already exists"):
         prepare_publication(spec)
@@ -1483,13 +1473,10 @@ def test_statistics_keep_evidence_tiers_and_weaker_bases_separate(tmp_path, monk
     replace_frontmatter(memory, profile)
     data = frontmatter(retained)
     data["evidence-tier"] = tier
-    data["members"] = [
-        {"path": name, "sha256": digest(retained.with_name(name)), "type": MEMBER_TYPES[name]}
-        for name in MEMBER_TYPES
-    ]
     replace_frontmatter(retained, data)
+    repin(retained.parent)
     review = tmp_path / "kb/agentic-systems/reviews/example-system.md"
-    replace_frontmatter(review, {**frontmatter(review), "analysis-overview-sha256": digest(retained)})
+    replace_frontmatter(review, {**frontmatter(review), "analysis-artifact-sha256": digest(retained.with_name("ARTIFACT.yaml"))})
     monkeypatch.setattr(analyze_matrix, "REPO_ROOT", tmp_path)
     assert analyze_matrix.main([]) == 0
     output = capsys.readouterr().out
@@ -1507,11 +1494,11 @@ def rerun_publication_fixture(tmp_path: Path) -> tuple[PublicationSpec, bytes, b
     state, first, _ = publication_fixture(tmp_path)
     publish_publication(first)
     old_review = (tmp_path / first.generated_destination).read_bytes()
-    old_set = {name: (state.parent / name).read_bytes() for name in ("overview.md", *MEMBER_TYPES)}
+    old_set = {name: (output_path(state.parent, name)).read_bytes() for name in ("ARTIFACT.yaml", "overview.md", *MEMBER_TYPES)}
     next_id = RUN_ID[:-2] + "02"
     new_dir = state.parent.with_name(next_id)
     shutil.copytree(state.parent, new_dir)
-    for path in new_dir.glob("*.md"):
+    for path in new_dir.rglob("*.md"):
         path.write_text(path.read_text().replace(RUN_ID, next_id))
     report = new_dir / "memory-report.md"
     replace_frontmatter(report, {**frontmatter(report),
@@ -1520,11 +1507,11 @@ def rerun_publication_fixture(tmp_path: Path) -> tuple[PublicationSpec, bytes, b
     next_state = new_dir / "run-state.md"
     values = frontmatter(next_state)
     values.update({"run-status": "running", "result-disposition": None,
-                   "overview": None, "generated-review": None})
+                   "artifact": None, "generated-review": None})
     replace_frontmatter(next_state, values)
     candidate = new_dir / "review-candidate.md"
     candidate.write_text(old_review.decode().replace(RUN_ID, next_id))
-    replace_frontmatter(candidate, {**frontmatter(candidate), "analysis-overview-sha256": digest(new_dir / "overview.md")})
+    replace_frontmatter(candidate, {**frontmatter(candidate), "analysis-artifact-sha256": digest(new_dir / "output/ARTIFACT.yaml")})
     inspection = inspect_destination(
         repo_root=tmp_path, generated_destination=first.generated_destination,
         source_identity=values["source"]["identity"],
@@ -1568,9 +1555,9 @@ def test_rerun_replaces_unchanged_publication_and_keeps_recovery_copies(tmp_path
 
 
 @pytest.mark.parametrize("mutation, error", [
-    ("missing-overview", "cannot read incumbent retained overview"),
-    ("overview", "overview hash mismatch"),
-    ("member", "manifest: runtime.md bytes hash to"),
+    ("missing-overview", "cannot read incumbent retained manifest"),
+    ("overview", "manifest hash mismatch"),
+    ("member", "manifest member runtime.md: SHA-256 mismatch"),
     ("source", "same source"),
     ("committed-then-staged", "local changes"),
 ])
@@ -1580,7 +1567,7 @@ def test_inspection_rejects_unverified_incumbents(tmp_path: Path, mutation: str,
     spec, _, _ = rerun_publication_fixture(tmp_path)
     review = tmp_path / spec.generated_destination
     metadata = frontmatter(review)
-    retained = tmp_path / metadata["analysis-overview"]
+    retained = tmp_path / metadata["analysis-artifact"]
     if mutation == "missing-overview":
         retained.unlink()
     elif mutation == "overview":
@@ -1716,19 +1703,24 @@ def test_a_modified_tracked_review_does_not_block_a_sibling_publication(tmp_path
     assert frontmatter(state)["run-status"] == "complete"
 
 
-def test_publication_requires_the_method_unchanged_since_inputs_commit(tmp_path: Path) -> None:
+@pytest.mark.parametrize("method_path", [
+    "kb/types/agentic-system-analysis-overview.md",
+    "kb/reports/types/agentic-system-analysis-set.md",
+    "kb/reports/types/agentic-system-analysis-set.schema.yaml",
+])
+def test_publication_requires_the_method_unchanged_since_inputs_commit(tmp_path: Path, method_path: str) -> None:
     state, spec, _ = publication_fixture(tmp_path)
     # Unrelated commits after inputs-commit, such as a sibling's publication, are fine.
     note = write(tmp_path / "kb/notes/unrelated.md", "# Unrelated\n")
     commit_paths(tmp_path, "Unrelated change", note)
     prepare_publication(spec)
     # A method change since inputs-commit is not.
-    method = tmp_path / "kb/types/agentic-system-analysis-overview.md"
+    method = tmp_path / method_path
     method.write_text(method.read_text() + "\nMethod change.\n")
     commit_paths(tmp_path, "Change the method", method)
     with pytest.raises(ValueError, match="method paths changed since inputs-commit") as error:
         publish_publication(spec)
-    assert "kb/types/agentic-system-analysis-overview.md" in str(error.value)
+    assert method_path in str(error.value)
     assert not (tmp_path / spec.generated_destination).exists()
     assert frontmatter(state)["run-status"] == "running"
 
@@ -1766,7 +1758,7 @@ def test_publication_requires_inputs_commit_to_be_an_ancestor_of_head(tmp_path: 
 
 
 def test_member_validation_accepts_s3_title_and_prose_references(tmp_path: Path) -> None:
-    runtime = member_fixture(tmp_path) / "runtime.md"
+    runtime = member_fixture(tmp_path) / "output/runtime.md"
     runtime.write_text(runtime.read_text().replace(
         "#### RTE-1 — Fixture route",
         "#### RTE-1 — S3 invocation\n\nRTE-1 reads the bucket.",
@@ -1807,7 +1799,7 @@ def test_quoted_code_must_occur_inside_the_cited_range(tmp_path: Path) -> None:
 def test_quote_generation_needs_no_report_or_publication(tmp_path, capsys):
     state, spec, _ = publication_fixture(tmp_path)
     for name in ("overview.md", "memory-report.md", *MEMBER_TYPES):
-        (state.parent / name).unlink()
+        (output_path(state.parent, name)).unlink()
     spec.generated_candidate_path.unlink()
     text = write(tmp_path / "selection.txt", "Frozen source")
     before = {p: p.read_bytes() for p in state.parent.iterdir() if p.is_file()}
@@ -1910,7 +1902,7 @@ def test_generated_source_links_publish_through_regular_validator(tmp_path, monk
     identity = SourceIdentity("git", source["identity"], source["revision"], Path(source["path"]), None)
     # The worktree must not supply either the selected text or its locations.
     write(identity.path / "README.md", "uncommitted replacement\n")
-    runtime = state.parent / "runtime.md"
+    runtime = state.parent / "output/runtime.md"
     for text in [*source_text.splitlines()[1:4], "* repeated comment"]:
         payload = generate_quotes(text, source=identity, source_path="README.md")
         if text == "* repeated comment":
@@ -1920,13 +1912,13 @@ def test_generated_source_links_publish_through_regular_validator(tmp_path, monk
     refinalize(state.parent)
     replace_frontmatter(spec.generated_candidate_path, {
         **frontmatter(spec.generated_candidate_path),
-        "analysis-overview-sha256": digest(state.parent / "overview.md"),
+        "analysis-artifact-sha256": digest(state.parent / "output/ARTIFACT.yaml"),
     })
     prepare_publication(spec)
     published = publish_publication(spec)
     checked = validation.validate_note(state, repo_root=tmp_path)
     assert not checked.warns and not checked.fails
-    assert (tmp_path / published.retained_path).read_bytes() == (state.parent / "overview.md").read_bytes()
+    assert (tmp_path / published.retained_path).read_bytes() == (state.parent / "output/ARTIFACT.yaml").read_bytes()
 
 
 @pytest.mark.parametrize("addition,diagnostic", [
@@ -1980,3 +1972,48 @@ def test_adjacent_attributed_quotes_are_checked_independently(tmp_path):
     _, errors = verify_quote_anchors(text.replace("> Frozen source", "> fabricated text"), source=identity)
     assert len(errors) == 1
     assert "quote does not occur" in errors[0]
+
+
+def test_run_directory_traversal_reuses_member_checks(tmp_path, monkeypatch):
+    from collections import Counter
+
+    from commonplace.lib.project_paths import list_directory_validation_paths
+
+    state = valid_run_state(tmp_path)
+    calls = Counter()
+    original = validation._validate_parsed_note
+    def checked(parsed, *, run):
+        calls[parsed.path] += 1
+        return original(parsed, run=run)
+    monkeypatch.setattr(validation, "_validate_parsed_note", checked)
+    paths = tuple(list_directory_validation_paths(state.parent))
+    outcome = validation.ValidationRun(tmp_path, paths).evaluate()
+    assert not [error for result in outcome.results.values() for error in result.fails]
+    assert state.parent / "output" in outcome.results
+    for name in agentic_set.SET_NAMES:
+        member = state.parent / "output" / name
+        assert member not in outcome.results
+        assert calls[member] == 1
+
+
+@pytest.mark.parametrize("disposition", ["blocked", "out-of-scope"])
+def test_noncomplete_artifact_cannot_publish_or_supply_comparison(tmp_path, disposition):
+    state, spec, _ = publication_fixture(tmp_path)
+    directory = state.parent / "output"
+    overview = directory / "overview.md"
+    values = frontmatter(overview)
+    values["result-disposition"] = disposition
+    replace_frontmatter(overview, values)
+    overview.write_text(re.sub(r"(?:MEM-)?(?:OBJ|RTE|CMP|CLM|ABS|BAP)-\d+", "not evaluated", overview.read_text()))
+    for name in MEMBER_TYPES:
+        (directory / name).unlink()
+    repin(directory)
+    assert not validation.ValidationRun(tmp_path, ()).validate(directory).fails
+    with pytest.raises(ValueError, match="requires a complete"):
+        prepare_publication(spec)
+    retained = tmp_path / agentic_set.retained_artifact_path(RUN_ID).parent
+    shutil.copytree(directory, retained)
+    review = tmp_path / REVIEW_PATH
+    write(review, review_text(values["reviewed-boundary"], overview))
+    with pytest.raises(ValueError, match="not a complete"):
+        systems_matrix.load_results(tmp_path)

@@ -159,18 +159,33 @@ def iter_validation_markdown_files(collection: Path) -> Iterator[Path]:
                 yield current / filename
 
 
+def list_directory_validation_paths(directory: Path) -> list[Path]:
+    """Discover files and manifests without pruning artifact descendants."""
+    paths = []
+    for current, dirnames, filenames in walk_visible(directory):
+        if VALIDATION_IGNORE_MARKER in filenames and current != directory:
+            dirnames.clear()
+            continue
+        if "ARTIFACT.yaml" in filenames or "ARTIFACT.yaml" in dirnames:
+            paths.append(current)
+        paths.extend(
+            current / name for name in filenames
+            if name.endswith(".md") and not name.startswith(".")
+            and not is_collection_metadata(current / name)
+            and not is_replaced_archive(current / name)
+        )
+    return sorted(paths)
+
+
 def list_collection_validation_paths(collection: Path) -> list[Path]:
     """Return artifacts included by collection-scoped validation."""
     if not collection.is_dir():
         raise FileNotFoundError(f"Collection directory does not exist: {collection}")
     if not is_collection_dir(collection):
         raise ValueError(f"Directory is not a KB collection: {collection}")
-    return sorted(
-        path
-        for path in iter_validation_markdown_files(collection)
-        if not is_collection_metadata(path)
-        and not is_replaced_archive(path)
-    )
+    if (collection / VALIDATION_IGNORE_MARKER).exists():
+        return []
+    return list_directory_validation_paths(collection)
 
 
 def list_kb_note_paths(root: Path) -> list[Path]:

@@ -20,8 +20,7 @@ from commonplace.lib.agentic_set import (
     RUN_ID,
     is_review_path,
     load_member_set,
-    retained_overview_path,
-    set_identity_errors,
+    retained_artifact_path,
 )
 from commonplace.lib.note_parser import parse_document
 
@@ -32,7 +31,7 @@ __all__ = [
     "csv_text",
     "load_results",
     "memory_member_comparison",
-    "retained_overview_path",
+    "retained_artifact_path",
     "validate_comparison",
 ]
 AXES = {
@@ -98,8 +97,8 @@ METADATA = [
     "system_name",
     "review_file",
     "review_sha256",
-    "overview_file",
-    "overview_sha256",
+    "artifact_file",
+    "artifact_sha256",
     "analysis_run",
     "source_identity",
     "reviewed_revision",
@@ -292,27 +291,16 @@ def _redirected_link(warning: str, source: Path, root: Path) -> bool:
     return target in _redirect_sources(root.resolve())
 
 
-def _validated(root: Path, path: Path, label: str) -> None:
-    from commonplace.lib import validation
-
-    checks = validation.validate_note(path, repo_root=root)
-    # Retained members keep their link bytes; a link to a retired artifact
-    # resolves through the published redirect map instead.
-    warns = [warn for warn in checks.warns if not _redirected_link(warn, path, root)]
-    if checks.fails or warns:
-        raise ValueError(f"invalid retained {label}: " + "; ".join([*checks.fails, *warns]))
-
-
 def load_results(root: Path, review_paths: list[Path] | None = None) -> MatrixInputs:
     """Select explicit main reviews, or all generated main reviews; fail on gaps.
 
-    Each review pins its run's retained overview; the overview's manifest pins
-    the other members. Identity comes from the overview, the profile from the
-    memory member under that member's own validation, and every member is
-    validated alone: cross-member ID resolution is not checked here, as
-    run-state verification does not check it before publication.
+    Each review pins the manifest of a validated retained directory artifact.
+    Identity comes from its overview and the comparison profile from memory.md.
     """
+    from commonplace.lib.validation import ValidationRun
+
     root = root.resolve()
+    run = ValidationRun(root, ())
     paths = (
         review_paths
         if review_paths is not None
@@ -333,20 +321,20 @@ def load_results(root: Path, review_paths: list[Path] | None = None) -> MatrixIn
             if review_paths is not None:
                 raise ValueError(f"not a generated main review: {relative}")
             continue
-        retained = retained_overview_path(meta.get("analysis-run"))
-        if meta.get("analysis-overview") != retained.as_posix():
+        retained = retained_artifact_path(meta.get("analysis-run"))
+        if meta.get("analysis-artifact") != retained.as_posix():
             raise ValueError(
-                f"{relative}: missing or mismatched retained overview; regenerate the main review"
+                f"{relative}: missing or mismatched retained manifest; regenerate the main review"
             )
-        overview_path = (root / retained).resolve()
-        if overview_path.relative_to(root) != retained:
-            raise ValueError(f"retained overview must use its canonical path: {retained}")
-        overview_bytes = overview_path.read_bytes()
-        overview_hash = sha256(overview_bytes).hexdigest()
-        if meta.get("analysis-overview-sha256") != overview_hash:
-            raise ValueError(f"retained overview SHA-256 mismatch: {retained}")
+        manifest_path = (root / retained).resolve()
+        if manifest_path.relative_to(root) != retained:
+            raise ValueError(f"retained manifest must use its canonical path: {retained}")
+        manifest_bytes = run.read_bytes(manifest_path)
+        manifest_hash = sha256(manifest_bytes).hexdigest()
+        if meta.get("analysis-artifact-sha256") != manifest_hash:
+            raise ValueError(f"retained manifest SHA-256 mismatch: {retained}")
         try:
-            member_set = load_member_set(overview_path)
+            member_set = load_member_set(manifest_path.parent, run=run)
         except ValueError as exc:
             raise ValueError(f"{retained}: {exc}") from exc
         data = member_set.overview.frontmatter
@@ -359,11 +347,8 @@ def load_results(root: Path, review_paths: list[Path] | None = None) -> MatrixIn
         source = meta.get("source-identity")
         if not isinstance(source, str) or not source.strip():
             raise ValueError(f"missing source identity: {relative}")
-        errors = set_identity_errors(member_set, source_identity=source)
-        if errors:
-            raise ValueError(f"{retained}: " + "; ".join(errors))
-        for document in member_set.documents:
-            _validated(root, document.path, f"{document.name} of {retained.parent}")
+        if member_set.memory is not None and member_set.memory.frontmatter.get("source-identity") != source:
+            raise ValueError(f"{retained}: source-identity does not match review")
         if source in identities:
             raise ValueError(
                 f"multiple selected reviews of source {source}; choose one boundary explicitly"
@@ -385,7 +370,7 @@ def load_results(root: Path, review_paths: list[Path] | None = None) -> MatrixIn
                     relative.as_posix(),
                     sha256(review_bytes).hexdigest(),
                     retained.as_posix(),
-                    overview_hash,
+                    manifest_hash,
                     meta["analysis-run"],
                     source,
                     str(data["reviewed-boundary"]),
@@ -404,6 +389,7 @@ def load_results(root: Path, review_paths: list[Path] | None = None) -> MatrixIn
             row[name + "_records"] = list(entry["records"])
         rows.append(row)
         hashes[relative.as_posix()] = row["review_sha256"]
+        hashes[retained.as_posix()] = manifest_hash
         for document in member_set.documents:
             hashes[(retained.parent / document.name).as_posix()] = document.sha256
     if not rows:

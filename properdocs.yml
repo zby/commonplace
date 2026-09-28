@@ -3,6 +3,9 @@ site_description: Commonplace knowledge base rendered as static HTML.
 docs_dir: kb
 exclude_docs: |
   reports/**
+  !reports/types/agentic-system-analysis-set.md
+  !reports/types/agentic-system-analysis-set.schema.yaml
+  !reports/retained/agentic-system-analysis/**/ARTIFACT.yaml
   !reports/retained/agentic-system-analysis/**/overview.md
   !reports/retained/agentic-system-analysis/**/runtime.md
   !reports/retained/agentic-system-analysis/**/memory.md

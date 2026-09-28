@@ -7,7 +7,7 @@ schema: ./type-spec.schema.yaml
 
 # Type spec
 
-A type-spec doc is the authoring and validation contract for one Commonplace artifact type. Artifact frontmatter stores this doc's path under a KB root in `type:`, such as `types/note.md` for a global type or `reference/types/adr.md` for a collection-local one ([collections and types](../reference/collections-and-types.md)), and this file serves several consumers differently: an author writing a new instance reads it for what to write, someone unfamiliar with the type reads it for what to expect from an instance before opening one, and the validator and the type-conformance reviewer — specified below — read it to check conformance.
+A type-spec doc is the authoring and validation contract for one Commonplace artifact type. Artifact frontmatter, or a directory’s `ARTIFACT.yaml`, stores this doc's path under a KB root in `type:`, such as `types/note.md` for a global type or `reference/types/adr.md` for a collection-local one ([collections and types](../reference/collections-and-types.md)), and this file serves several consumers differently: an author writing a new instance reads it for what to write, someone unfamiliar with the type reads it for what to expect from an instance before opening one, and the validator and the type-conformance reviewer — specified below — read it to check conformance.
 
 ## Required Frontmatter
 
@@ -26,6 +26,12 @@ Two systems check conformance to a type — split by mechanical vs. judgment, no
 - **The type-conformance review gate** checks the semantic half: everything about an instance that is not mechanically checkable — a `description`'s routing quality, a title's claim-shape, whether the body's claims hold up — judged against this file's body, read as [natural-language](../notes/definitions/representational-form.md) authoring instructions applied by an LLM reviewer ([ADR 038](../reference/adr/038-type-conformance-reviews-use-the-type-spec-as-the-gate.md)). It runs at review time, after the artifact exists, from the finished artifact alone.
 
 Do not restate a schema rule in body text. The validator already enforces it, so the restatement adds no protection — it only spends the reviewer's judgment re-confirming something already guaranteed, instead of on the properties only a reviewer can check.
+
+A directory type's schema receives `{manifest, members}` rather than one
+parsed document. It owns required and optional members and open or closed
+membership; its manifest supplies instance metadata. Every member also
+receives ordinary file validation. See the
+[directory validation contract](../reference/validation-contract.md#directory-artifacts).
 
 ## Writing Shape
 

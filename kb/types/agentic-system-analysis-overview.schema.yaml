@@ -18,7 +18,6 @@ allOf:
           - analysis-cutoff
           - evidence-tier
           - inputs-commit
-          - members
         properties:
           type:
             const: types/agentic-system-analysis-overview.md
@@ -54,24 +53,7 @@ allOf:
           inputs-commit:
             type: string
             pattern: '^[0-9a-f]{40}$'
-          members:
-            type: array
-            items:
-              type: object
-              required: [path, sha256, type]
-              properties:
-                path:
-                  type: string
-                  pattern: '^[a-z0-9-]+\.md$'
-                sha256:
-                  type: string
-                  pattern: '^[0-9a-f]{64}$'
-                type:
-                  enum:
-                    - types/agentic-system-runtime-report.md
-                    - types/agent-memory-analysis-report.md
-                    - types/agentic-system-epistemic-report.md
-              additionalProperties: false
+          members: false
         additionalProperties: true
       headings:
         description: "One H1 followed by the eight ordered overview sections; scoping and verification subheadings remain explicit in every disposition."
@@ -132,9 +114,3 @@ allOf:
             reviewed-boundary: {type: string, minLength: 1}
             analysis-cutoff: {type: string, format: date}
             evidence-tier: {enum: [code-grounded, doc-grounded]}
-            members: {minItems: 3, maxItems: 3}
-    else:
-      properties:
-        frontmatter:
-          properties:
-            members: {maxItems: 0}

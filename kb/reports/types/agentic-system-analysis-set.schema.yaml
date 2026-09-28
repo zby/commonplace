@@ -1,0 +1,128 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+type: object
+required:
+- manifest
+- members
+properties:
+  manifest:
+    type: object
+    required:
+    - type
+    - members
+    properties:
+      type:
+        const: reports/types/agentic-system-analysis-set.md
+      members:
+        type: object
+        required:
+        - overview.md
+        properties:
+          overview.md: &id001
+            type: object
+            required:
+            - sha256
+            properties:
+              sha256:
+                type: string
+                pattern: ^[0-9a-f]{64}$
+            additionalProperties: false
+          runtime.md: *id001
+          memory.md: *id001
+          epistemic.md: *id001
+        additionalProperties: false
+    additionalProperties: false
+  members:
+    type: object
+    required:
+    - overview.md
+    properties:
+      overview.md:
+        type: object
+        required:
+        - frontmatter
+        properties:
+          frontmatter:
+            type: object
+            required:
+            - type
+            properties:
+              type:
+                const: types/agentic-system-analysis-overview.md
+      runtime.md:
+        type: object
+        required:
+        - frontmatter
+        properties:
+          frontmatter:
+            type: object
+            required:
+            - type
+            properties:
+              type:
+                const: types/agentic-system-runtime-report.md
+      memory.md:
+        type: object
+        required:
+        - frontmatter
+        properties:
+          frontmatter:
+            type: object
+            required:
+            - type
+            - report-status
+            - finalized-from
+            properties:
+              type:
+                const: types/agent-memory-analysis-report.md
+              report-status:
+                const: complete
+      epistemic.md:
+        type: object
+        required:
+        - frontmatter
+        properties:
+          frontmatter:
+            type: object
+            required:
+            - type
+            properties:
+              type:
+                const: types/agentic-system-epistemic-report.md
+    additionalProperties: false
+allOf:
+- if:
+    properties:
+      members:
+        properties:
+          overview.md:
+            properties:
+              frontmatter:
+                properties:
+                  result-disposition:
+                    const: complete
+                required:
+                - result-disposition
+  then:
+    properties:
+      members:
+        required:
+        - overview.md
+        - runtime.md
+        - memory.md
+        - epistemic.md
+      manifest:
+        properties:
+          members:
+            required:
+            - overview.md
+            - runtime.md
+            - memory.md
+            - epistemic.md
+  else:
+    properties:
+      members:
+        maxProperties: 1
+      manifest:
+        properties:
+          members:
+            maxProperties: 1

@@ -17,8 +17,8 @@ This record proves only what later consumers need:
 
 - which run produced the outputs;
 - which frozen source boundary it used;
-- which exact overview and published review bytes completed the run; the
-  overview's manifest pins the other three members of the set; and
+- which exact manifest and published review bytes completed the run; the
+  manifest pins every member of the set; and
 - which typed memory specialist report the set's memory member was finalized
   from.
 
@@ -31,20 +31,17 @@ digest (or `absent`). Recovery copies `incumbent-review.md` and
 `incumbent-<member>.md` for each replaced member are retained with the new
 run when a review is replaced; they are not disposable candidate files.
 
-The set's entry member always lives at
-`kb/reports/state/agentic-system-analysis/<run-id>/overview.md`, with
-`runtime.md`, `memory.md` and `epistemic.md` beside it, pinned by the
-overview's `members` manifest. The overview's `inputs-commit` names the
-commit that supplied the run's method. A `complete` set also publishes one
-generated review under `kb/agentic-systems/reviews/`. A blocked or
-out-of-scope overview has an empty manifest and no generated review.
-Publication retains the four members byte for byte under
-`kb/reports/retained/agentic-system-analysis/<run-id>/`. Their identity is
-derived from the run ID and the existing `overview.sha256`; no duplicate
-output mapping is needed. Completion verification checks the retained copies
-and the public review's `analysis-overview` path and
-`analysis-overview-sha256`. Durable comparison readers follow those public
-fields without requiring ignored run state or a local source checkout.
+The artifact manifest lives at
+`kb/reports/state/agentic-system-analysis/<run-id>/output/ARTIFACT.yaml`.
+Its [set type](../reports/types/agentic-system-analysis-set.md) selects
+membership from the overview's disposition. The overview's `inputs-commit`
+names the method commit. A complete set publishes a generated review;
+a blocked or out-of-scope set has only the overview and no generated review.
+Publication retains the manifest and members byte for byte under
+`kb/reports/retained/agentic-system-analysis/<run-id>/`. Completion checks
+those copies and the public review's `analysis-artifact` and
+`analysis-artifact-sha256` against `artifact.sha256`. Comparison readers
+follow those public fields without ignored state or a source checkout.
 
 Every complete analysis requires the typed `memory-report.md` and frozen
 `memory-input.md` in its run directory. The coordinator finalizes that report
@@ -54,10 +51,10 @@ records the specialist re-declared turned into `On <ID>` annotations, and an
 report's SHA-256. Completion verification checks the manifest, run and
 boundary identity across members, the memory member's complete status and
 its `finalized-from` and `canonical-register-sha256` pins against the local
-files, and validates each member's type and its source and quote anchors.
+files, and applies the shared set checks, including cross-member record resolution.
+It also checks every member's source and quote anchors.
 These checks establish identity and structure; they do not check the
-derivation of the memory member, cross-member record resolution or the set's
-quote minimum, and they do not certify the specialist's semantic judgments.
+derivation of the memory member or impose a quote minimum, and they do not certify the specialist's semantic judgments.
 
 `source` is either a Git commit or an immutable capture. A Git source records
 the stable repository identity, full commit ID, and absolute checkout path. A
@@ -103,7 +100,7 @@ system: "Source-native system name"
 run-status: running
 result-disposition: null
 source: null
-overview: null
+artifact: null
 generated-review: null
 failure: null
 ---

@@ -50,9 +50,9 @@ hash or later successful command does not clear an earlier failure. Use
 1. Allocate `AAS-<YYYY-MM-DD>-<system-slug>-<nn>`. Create
    `kb/reports/state/agentic-system-analysis/<run-id>/run-state.md` from the
    [run-state template](../../types/agentic-system-analysis-run-state.md)
-   with `run-status: running`. The set's entry member is always
-   `<run-id>/overview.md`; its manifest pins `runtime.md`, `memory.md` and
-   `epistemic.md` beside it. Record the method commit now: run
+   with `run-status: running`. The artifact manifest is
+   `<run-id>/output/ARTIFACT.yaml`; it pins every report beside it, including
+   `overview.md`. Record the method commit now: run
    `git rev-parse HEAD` and keep the full commit for the overview's
    `inputs-commit`. Publication requires HEAD to still descend from it with
    the method paths unchanged (the list is the `METHOD_PATHS` constant in
@@ -97,7 +97,7 @@ hash or later successful command does not clear an earlier failure. Use
    narrower mechanism whose operation depends on model calls it issues or
    serves. An MCP server, tool, or returning computation may qualify without
    owning the enclosing runtime. If the target is outside this boundary, write
-   an `out-of-scope` overview with an empty manifest, skip steps 2 to 6 with
+   an `out-of-scope` overview with an overview-only artifact, skip steps 2 to 6 with
    both scoping records stating `not reached`, and continue at step 7.
 5. Classify the target with one `target-class` and one `boundary-kind` value
    from the overview type's frontmatter table, and state functional inclusions,
@@ -105,7 +105,7 @@ hash or later successful command does not clear an earlier failure. Use
    owned by an excluded host to the selected target.
 
 If no coherent boundary or reachable source can be established, write a
-`blocked` overview with an empty manifest, skip steps 2 to 6 with both scoping records stating `not
+`blocked` overview with an overview-only artifact, skip steps 2 to 6 with both scoping records stating `not
 reached`, and continue at step 7.
 
 If a coordinator reads prior-review prose or substantive prior audit findings
@@ -288,7 +288,7 @@ Invoke
 [`analyse-external-system-epistemic-architecture.md`](../analyse-external-system-epistemic-architecture.md)
 for the epistemic lens, locally or in a separate worker with the same frozen
 boundary. Pass the frozen boundary, registers, statuses, and scoping record.
-Its output is `<run-id>/epistemic.md` under the epistemic report type; it
+Its output is `<run-id>/output/epistemic.md` under the epistemic report type; it
 declares no records and cites the set's. Write it, or remap its `EPI-`
 proposal IDs, after step 6's reconciliation, so the member cites only
 canonical IDs.
@@ -326,14 +326,15 @@ organized around the system's operational progression rather than by lens.
 
 ### 7. Write and validate the set
 
-For a `blocked` or `out-of-scope` run, write the overview only, with an empty
-manifest, and skip to the validation below. Otherwise write the four members
-in the run directory, each under its type:
+Write reports under `<run-id>/output/`, keeping run state, specialist inputs,
+local reports and review candidates outside that directory. A `blocked` or
+`out-of-scope` outcome contains only `overview.md`; a complete outcome has
+four members, each under its type:
 
-1. `<run-id>/runtime.md` under the runtime report type: the runtime account,
+1. `<run-id>/output/runtime.md` under the runtime report type: the runtime account,
    probe evidence, the records the runtime pass declared, and its annotations
    on records the memory member declares.
-2. `<run-id>/memory.md` under the memory report type, authored from the local
+2. `<run-id>/output/memory.md` under the memory report type, authored from the local
    `memory-report.md` and nothing else: replace proposal IDs by exact-token
    mapping from the overview's Reconciliation table, rewrite a seeded record
    the specialist re-declared under `## Shared records` to an `On <ID>`
@@ -341,12 +342,18 @@ in the run directory, each under its type:
    `memory-report.md`, and append `## Amendments`. Code checks the hash
    pins, not the derivation; keeping the member to those mechanical edits is
    your responsibility, and a substantive change goes back to the specialist.
-3. `<run-id>/epistemic.md` under the epistemic report type, from step 5.
-4. `<run-id>/overview.md` last, under the overview type, with `inputs-commit`
-   from step 1 and the manifest pinning each member's path, SHA-256 and type.
-   Recompute the manifest after any member edit. Its Reconciliation names the
-   local report by path and SHA-256 and every mechanical edit finalization
-   made.
+3. `<run-id>/output/epistemic.md` under the epistemic report type, from step 5.
+4. `<run-id>/output/overview.md` under the overview type, with `inputs-commit`
+   from step 1. Its Reconciliation names the local report by path and SHA-256
+   and every mechanical edit finalization made.
+
+Write `output/ARTIFACT.yaml` last, under the
+[analysis set type](../../reports/types/agentic-system-analysis-set.md).
+Set `type: reports/types/agentic-system-analysis-set.md` and a `members`
+mapping from each actual report filename to `{sha256: <digest>}`, including
+`overview.md`. Recompute hashes after any member edit. The schema owns
+required members and closed membership; the manifest supplies integrity
+metadata only.
 
 After reconciliation, check the whole set, not just the separate lens
 returns, against the memory report type's Memory comparison fields: scope
@@ -361,16 +368,13 @@ assessment unsupported by its records blocks publication; properly scoped
 explicit uncertainty does not. Structural validation does not perform this
 check.
 
-Run `commonplace-validate --full` on each member for its type's structural
-requirements. Publication runs the same validator on the complete run set
-and verifies the pin chain (run state to overview, manifest to members,
-review to overview), run and boundary identity across members, the memory
-member's `finalized-from` against the local report and
-`canonical-register-sha256` against the frozen input, and source anchors and
-quotations for every member and the review; do not run a separate quotation
-check. Cross-member record resolution, the profile against the set's
-declarations and the set-wide quote minimum are not yet checked by code:
-check them yourself and record the check under Semantic verification.
+Run `commonplace-validate <run-id>/output --full` for the whole artifact.
+It validates every member and checks the set's membership, hashes, identity,
+record declarations and references, and comparison-profile references.
+Explicit file validation checks that member alone. Publication additionally
+verifies run-state and review pins, the memory member's `finalized-from`
+against the local report and `canonical-register-sha256` against the frozen
+input, and source anchors and quotations for every member and the review.
 Correct deterministic formatting errors before continuing. An
 unresolved evidence or semantic failure blocks publication. Correct it while
 the run stays `running`, or abandon the run under the failure rule. The
@@ -380,7 +384,7 @@ complete; it does not claim that the review projection has been published.
 ### 8. Publish validated candidates
 
 For a blocked or out-of-scope overview, complete the run without publication:
-set `run-status: complete`, the disposition, and the `overview` path and
+set `run-status: complete`, the disposition, and the `artifact` manifest path and
 SHA-256, leave `generated-review: null`, and validate the run state. For a
 complete set:
 
@@ -390,9 +394,9 @@ complete set:
    [generated review type](../../agentic-systems/types/generated-review.md)
    with exact frontmatter fields `generated-by: analyse-agentic-system`,
    `analysis-run`, `source-identity`, `reviewed-revision`,
-   `analysis-overview`, and `analysis-overview-sha256`. The last two fields
-   name `kb/reports/retained/agentic-system-analysis/<run-id>/overview.md`
-   and the SHA-256 of the validated overview. Publication retains the four
+   `analysis-artifact`, and `analysis-artifact-sha256`. The last two fields
+   name `kb/reports/retained/agentic-system-analysis/<run-id>/ARTIFACT.yaml`
+   and the SHA-256 of the validated manifest. Publication retains the manifest and
    members byte for byte; do not draft a separate retained report or rewrite
    a member for the matrix.
 2. Run `commonplace-agentic-analysis-publication prepare` with the run state,
@@ -413,8 +417,8 @@ complete set:
    are saved as `incumbent-review.md` and `incumbent-<member>.md` in the new
    run before replacement. Keep those recovery copies with the run.
 
-The run state binds the overview and compact review hashes; the overview's
-manifest binds the members, and the memory member binds the local report
+The run state binds the manifest and compact review hashes; the manifest
+binds every report, and the memory member binds the local report
 hash. Keep the frozen input and report with the local run while completion
 checks need them. Candidate cleanup after success is best effort. A cleanup
 warning does not undo completion. Never patch generated prose independently
@@ -432,10 +436,10 @@ establish that an operation completed.
 A transfer scan is separate, interest-conditioned state. Run
 [`scan-agentic-system-transfer`](../scan-agentic-system-transfer/SKILL.md) only
 when separately commissioned and only after the complete run state validates.
-Pass the run's `overview.md` path, its SHA-256, the sibling `run-state.md`
+Pass the run's `output/ARTIFACT.yaml` path, its SHA-256, the `run-state.md`
 path, the interest brief, and permitted Commonplace read and output scope.
 The scan verifies the completed run and reads the overview and the members
-its manifest pins directly; a legacy review or compact public review is not a
+the artifact manifest pins directly; a legacy review or compact public review is not a
 substitute. The scan never edits the analysis, published reviews,
 or comparison corpus. If it exposes an analysis defect, fail that conclusion
 and rerun the analysis before scanning again.
@@ -444,7 +448,7 @@ and rerun the analysis before scanning again.
 
 Run `commonplace-agentic-analysis-handoff <run-state-path>` and include its
 Markdown output unchanged in the final response. It validates the run state,
-the overview and every member the manifest pins before rendering, and names
+the artifact and every member its manifest pins before rendering, and names
 the members.
 
 Append the downstream freshness dispositions required by step 8. For a

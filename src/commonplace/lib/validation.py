@@ -19,6 +19,12 @@ from commonplace.lib.agentic_analysis import (
     parse_agentic_analysis_run_state,
     verify_agentic_analysis_run_state,
 )
+from commonplace.lib.directory_artifact import (
+    MANIFEST_NAME,
+    DirectoryArtifact,
+    load_directory_artifact,
+    member_paths,
+)
 from commonplace.lib.full_pass import (
     FULL_PASS_REPORT_TYPE,
     parse_full_pass_report,
@@ -150,7 +156,11 @@ class ValidationRun:
     repo_root: Path
     paths: tuple[Path, ...]
     collection: Path | None = None
-    content_overrides: dict[Path, str] = field(default_factory=dict)
+    content_overrides: dict[Path, str | bytes] = field(default_factory=dict)
+    _bytes: dict[Path, bytes] = field(default_factory=dict, init=False)
+    _results: dict[Path, CheckResults] = field(default_factory=dict, init=False)
+    _evaluating: list[Path] = field(default_factory=list, init=False)
+    _artifacts: dict[Path, DirectoryArtifact] = field(default_factory=dict, init=False)
     _documents: dict[Path, LoadedDocument] = field(default_factory=dict, init=False)
     _notes: dict[Path, tuple[ParsedNote | None, str | None]] = field(
         default_factory=dict, init=False
@@ -166,21 +176,47 @@ class ValidationRun:
 
     def __post_init__(self) -> None:
         self.repo_root = self.repo_root.resolve()
-        self.paths = tuple(path.resolve() for path in self.paths)
+        self.paths = tuple(
+            path.parent.resolve() if path.name == MANIFEST_NAME else path.resolve()
+            for path in self.paths
+        )
         if self.collection is not None:
             self.collection = self.collection.resolve()
         self.content_overrides = {
             path.resolve(): content for path, content in self.content_overrides.items()
         }
 
+    def read_bytes(self, path: Path) -> bytes:
+        """One exact-byte snapshot shared by hashing, parsing and workflow checks."""
+        key = path.resolve()
+        if key not in self._bytes:
+            content = self.content_overrides.get(key)
+            self._bytes[key] = (
+                content.encode("utf-8") if isinstance(content, str)
+                else content if content is not None else key.read_bytes()
+            )
+        return self._bytes[key]
+
+    def artifact(self, directory: Path) -> DirectoryArtifact:
+        key = directory.resolve()
+        if key not in self._artifacts:
+            self._artifacts[key] = load_directory_artifact(
+                key, read=self.read_bytes, supplied_paths=self.content_overrides, parse=self.require_document,
+            )
+        return self._artifacts[key]
+
+    def require_document(self, path: Path) -> ParsedDocument:
+        loaded = self.load_document(path)
+        if loaded.document is None:
+            raise ValueError(f"{path.name}: {loaded.error}")
+        return loaded.document
+
     def load_document(self, path: Path) -> LoadedDocument:
         """Read and parse one Markdown artifact at most once during this run."""
         key = path.resolve()
         if key in self._documents:
             return self._documents[key]
-        content = self.content_overrides.get(key)
-        if content is None:
-            content = key.read_text(encoding="utf-8")
+        content = self.read_bytes(key).decode("utf-8")
         document, error = parse_document(content)
         loaded = LoadedDocument(content=content, document=document, error=error)
         self._documents[key] = loaded
@@ -315,7 +351,10 @@ class ValidationRun:
         impacted: list[Path] = []
 
         for path in paths:
-            parsed, parse_error = self.parse_note(path)
+            try:
+                parsed, parse_error = self.parse_note(path)
+            except (OSError, UnicodeError, ValueError):
+                continue
             if parse_error or parsed is None or parsed.document.frontmatter is None:
                 continue
             tags = parsed.document.frontmatter.get("tags")
@@ -354,7 +393,10 @@ class ValidationRun:
         inbound: dict[Path, bool] = {path: False for path in keys}
         resolved_index = {path.resolve(): path for path in keys}
         for source in keys:
-            loaded = self.load_document(source)
+            try:
+                loaded = self.load_document(source)
+            except (OSError, UnicodeError, ValueError):
+                continue
             if loaded.document is None:
                 continue
             for link in loaded.document.links:
@@ -370,17 +412,78 @@ class ValidationRun:
         return inbound
 
     def validate(self, path: Path) -> CheckResults:
-        parsed, parse_error = self.parse_note(path)
-        if parse_error:
-            return CheckResults(note_type="unknown", fails=[f"[base] {parse_error}"])
-        assert parsed is not None
-        return _validate_parsed_note(parsed, run=self)
+        key = path.resolve()
+        if key.name == MANIFEST_NAME:
+            key = key.parent
+        if key in self._results:
+            return self._results[key]
+        if key in self._evaluating:
+            cycle = " -> ".join(str(p) for p in [*self._evaluating, key])
+            return CheckResults("unknown", fails=[f"[base] dependency cycle: {cycle}"])
+        self._evaluating.append(key)
+        try:
+            if key.is_dir() or key / MANIFEST_NAME in self.content_overrides:
+                result = self._validate_artifact(key)
+            else:
+                parsed, parse_error = self.parse_note(key)
+                if parse_error:
+                    result = CheckResults("unknown", fails=[f"[base] {parse_error}"])
+                else:
+                    assert parsed is not None
+                    result = _validate_parsed_note(parsed, run=self)
+            self._results[key] = result
+            return result
+        except (OSError, UnicodeError, ValueError, TypeError) as exc:
+            result = CheckResults("unknown", fails=[f"[base] {exc}"])
+            self._results[key] = result
+            return result
+        finally:
+            self._evaluating.pop()
+
+    def _validate_artifact(self, directory: Path) -> CheckResults:
+        results = CheckResults("unknown")
+        # A bad manifest must not suppress the ordinary member checks.
+        for path in member_paths(directory, self.content_overrides):
+            if path.is_symlink():
+                results.fails.append(f"[base] member {path.name}: symlinks are not supported")
+                continue
+            _merge_labelled(results, self.validate(path), f"member {path.name}")
+        try:
+            artifact = self.artifact(directory)
+            profile = resolve_type(
+                directory / MANIFEST_NAME, artifact.manifest,
+                repo_root=self.repo_root, load_frontmatter=self.load_frontmatter,
+            )
+            results.note_type = profile.type_path
+            if profile.schema is None:
+                raise ValueError("directory artifact type must define a shared schema")
+            errors = validate_instance(profile, artifact.validation_object())
+            for error in errors:
+                severity, message = _schema_error_message(error)
+                getattr(results, "fails" if severity == "fail" else "warns").append(
+                    f"[schema] {message}"
+                )
+            if not errors:
+                results.passes.append("[schema] directory artifact requirements satisfied")
+            if not errors and not results.fails:
+                for rule in _DIRECTORY_TYPE_RULES.get(profile.type_path, []):
+                    specific = CheckResults(profile.type_path)
+                    rule(specific, artifact, run=self)
+                    _merge_labelled(results, specific, f"type: {profile.type_name}")
+        except (OSError, UnicodeError, ValueError, TypeError) as exc:
+            results.fails.append(f"[base] artifact: {exc}")
+        return results
 
     def evaluate(self) -> ValidationRunResults:
         """Expand explicit impacts and evaluate every anchor in this run."""
-        paths = self.paths + tuple(self.impacted_marked_tag_readmes(self.paths))
+        notes = tuple(path for path in self.paths if path.suffix == ".md" and not path.is_dir())
+        paths = self.paths + tuple(self.impacted_marked_tag_readmes(notes))
+        directories = {path for path in paths if path.is_dir()}
+        paths = tuple(dict.fromkeys(
+            path for path in paths if path.parent not in directories or path.is_dir()
+        ))
         self.prime_git_ignored(paths)
-        inbound = self.inbound_info(paths) if self.collection is not None else {}
+        inbound = self.inbound_info(notes) if self.collection is not None else {}
         results: dict[Path, CheckResults] = {}
 
         for path in paths:
@@ -427,6 +530,15 @@ class ValidationRun:
 TypeRule = Callable[..., None]
 
 _TYPE_RULES: dict[str, list[TypeRule]] = {}
+_DIRECTORY_TYPE_RULES: dict[str, list[TypeRule]] = {}
+
+
+def directory_type_rule(type_path: str) -> Callable[[TypeRule], TypeRule]:
+    def register(rule: TypeRule) -> TypeRule:
+        _DIRECTORY_TYPE_RULES.setdefault(type_path, []).append(rule)
+        return rule
+    return register
+
 
 
 def type_rule(*type_paths: str) -> Callable[[TypeRule], TypeRule]:
@@ -1210,6 +1322,7 @@ def validate_agentic_analysis_run_state(
     passes, failures = verify_agentic_analysis_run_state(
         state,
         content_overrides=run.content_overrides,
+        run=run,
     )
     results.passes.extend(passes)
     results.fails.extend(failures)
@@ -1244,7 +1357,18 @@ def _schema_error_message(error: ValidationError) -> tuple[str, str]:
         if isinstance(contains, dict) and "const" in contains:
             return severity, f"{location}: missing {contains['const']!r}"
 
-    return severity, f"{location}: {error.message}"
+    if error.validator in {"minProperties", "maxProperties"}:
+        return severity, f"{location}: {error.validator} requires {error.validator_value} properties"
+    if error.validator == "not":
+        fields = error.validator_value.get("required", []) if isinstance(error.validator_value, dict) else []
+        detail = ": " + ", ".join(map(str, fields)) if fields else ""
+        return severity, f"{location}: forbidden combination of fields{detail}"
+    if error.schema is False:
+        return severity, f"{location}: False schema does not allow this value"
+    message = error.message
+    if len(message) > 400:
+        message = f"constraint {error.validator} failed (details omitted)"
+    return severity, f"{location}: {message}"
 
 
 def apply_schema_validation(results: CheckResults, parsed: ParsedNote) -> None:
@@ -1777,3 +1901,20 @@ def run_validation(
         paths=paths,
         collection=collection,
     ).evaluate()
+
+
+@directory_type_rule("reports/types/agentic-system-analysis-set.md")
+def validate_analysis_set(results: CheckResults, artifact: DirectoryArtifact, *, run: ValidationRun) -> None:
+    from commonplace.lib.agentic_records import set_record_errors
+    from commonplace.lib.agentic_set import from_artifact, set_identity_errors
+    from commonplace.lib.systems_matrix import validate_comparison
+
+    member_set = from_artifact(artifact)
+    results.fails.extend(set_identity_errors(member_set))
+    known, errors = set_record_errors({document.name: document.body for document in member_set.documents})
+    results.fails.extend(errors)
+    if member_set.memory is not None:
+        try:
+            validate_comparison(member_set.memory.frontmatter["memory-comparison"], known_ids=known)
+        except ValueError as exc:
+            results.fails.append(str(exc))

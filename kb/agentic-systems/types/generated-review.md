@@ -1,7 +1,7 @@
 ---
 type: types/type-spec.md
 name: generated-review
-description: "Compact public projection of one complete agentic-system analysis run, generated from and pinning the run's retained overview"
+description: "Compact public projection of one complete agentic-system analysis run, generated from and pinning the run's retained manifest"
 schema: ./generated-review.schema.yaml
 ---
 
@@ -9,10 +9,10 @@ schema: ./generated-review.schema.yaml
 
 The compact public projection of one complete run, published under
 `kb/agentic-systems/reviews/<system-slug>.md`. It is generated from the
-run's retained set and pins the set's overview, so a reader can verify
+run's retained set and pins the set’s manifest, so a reader can verify
 and open the exact analysis from a clean checkout. It is not hand-edited:
 a correction goes through the method and a new run. Its frontmatter is
-what publication checks, with the pin on the overview.
+what publication checks, with the pin on the manifest.
 
 ## Frontmatter
 
@@ -24,8 +24,8 @@ what publication checks, with the pin on the overview.
 | `analysis-run` | Yes | The producing run ID |
 | `source-identity` | Yes | The stable source identity the set's Source register declares |
 | `reviewed-revision` | Yes | The set's `reviewed-boundary` |
-| `analysis-overview` | Yes | `kb/reports/retained/agentic-system-analysis/<run-id>/overview.md` |
-| `analysis-overview-sha256` | Yes | SHA-256 of the retained overview's bytes |
+| `analysis-artifact` | Yes | `kb/reports/retained/agentic-system-analysis/<run-id>/ARTIFACT.yaml` |
+| `analysis-artifact-sha256` | Yes | SHA-256 of the retained manifest's bytes |
 
 ## Body
 
@@ -50,8 +50,8 @@ generated-by: analyse-agentic-system
 analysis-run: AAS-YYYY-MM-DD-system-slug-nn
 source-identity: {stable identity}
 reviewed-revision: "{revision or capture label}"
-analysis-overview: kb/reports/retained/agentic-system-analysis/{run-id}/overview.md
-analysis-overview-sha256: "{sha256}"
+analysis-artifact: kb/reports/retained/agentic-system-analysis/{run-id}/ARTIFACT.yaml
+analysis-artifact-sha256: "{sha256}"
 ---
 
 # {System}

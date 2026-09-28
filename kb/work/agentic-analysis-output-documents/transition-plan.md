@@ -7,7 +7,7 @@ Step 3 of the [workshop](./README.md). Built on the
 producer, the validators, the consumers and the tests, the order of the
 work, and the one decision that is the operator's.
 
-The later [directory-artifact deployment](#directory-artifact-deployment-2026-09-28-operator-decision)
+The later [directory-artifact deployment](#directory-artifact-deployment-implemented-2026-09-28)
 is a separate workflow integration after the generic feature is available.
 It replaces this transition's output layout and overview pin when adopted.
 
@@ -244,12 +244,11 @@ hashes reproduced by hand.
   commit its inputs came from instead of preparing a bundle. Retained
   bundles from earlier trials stay as historical records.
 
-## Relaxed run-state verification (2026-09-28, operator decision)
+## Relaxed run-state verification (2026-09-28, superseded interim decision)
 
-Set-level validation is deferred to [directory-artifacts](../directory-artifacts/README.md);
-until it lands, run-state verification keeps only the cheap checks that
-have caught real errors, and the procedure loses the constraints the
-dropped checks imposed.
+Before directory artifacts landed, run-state verification kept only the
+cheap checks that had caught real errors. The deployment below supersedes
+this temporary arrangement.
 
 Kept: per-member schema validation; the pin chain (run state to overview,
 manifest to members, review to overview); quote and source anchors on
@@ -264,70 +263,22 @@ member by mapping IDs and appending amendments, with no exactness
 constraint. Accepted cost: a dangling cross-member ID can reach
 publication until the workshop lands.
 
-## Directory-artifact deployment (2026-09-28, operator decision)
+## Directory-artifact deployment (implemented 2026-09-28)
 
-Adopt the [directory-artifact model](../directory-artifacts/adr-draft.md)
-as a workflow integration after the generic validator is available. The
-feature defines membership and validation; this workflow owns its output
-layout, production and consumer changes. Keep the current transition and
-refresh batch independent of this later deployment.
+[ADR 095](../../reference/adr/095-directory-artifacts-add-shared-set-validation.md) records the implemented model. Working reports now live in
+`<run-id>/output/` beside `ARTIFACT.yaml`; run state and specialist inputs
+remain outside. Run state and reviews pin the manifest, and all consumers
+use shared artifact validation. The schema owns outcome-dependent
+membership and required hashes. The method-version check includes the new
+set spec and schema.
 
-1. **Separate outputs from working files.** Choose a dedicated output
-   directory for `ARTIFACT.yaml` and the members required by the outcome:
-   all four reports for `complete`, only `overview.md` for `blocked` or
-   `out-of-scope`. Keep `run-state.md`, specialist inputs and local
-   reports, and review candidates outside it. Update the analysis skill,
-   relevant worker instructions, path helpers and test fixtures together.
-   Retained publication likewise contains only the artifact's manifest
-   and members. Do not add analysis-specific exclusions to the loader.
-2. **Move the integrity record.** Remove the overview's `members`
-   metadata. The set schema selects membership from the overview's
-   `result-disposition` and requires a hash for every selected member in
-   `ARTIFACT.yaml`. Run state pins the manifest for every finished outcome;
-   a generated review pins it only for a published complete analysis.
-   Blocked and out-of-scope outcomes retain no generated review and are
-   rejected by publication and comparison loading.
-   Define the pin fields and update the member schemas, run-state and
-   review contracts together. The draft's future simplification TODO does
-   not change this deployment's stored-hash representation.
-3. **Update consumers.** Publication validates the candidate artifact at
-   its intended retained paths, then retains the manifest and all members.
-   Completion, handoff, comparison loading and downstream analysis readers
-   use the new locations and manifest pin. Adjust generated comparison
-   fields, links and site publication rules where those paths are exposed.
-   Call the shared artifact check and remove equivalent consumer checks;
-   preserve source and quote anchors and committed-input checks with their
-   workflow owners.
-4. **Extend method-version checks.** Add the set spec under
-   `kb/reports/types/`, its schema and any referenced schemas to
-   `METHOD_PATHS` in `agentic_publication.py`. A commit changing only one
-   of those files after `inputs-commit` must block publication. Cover each
-   new method input in the publication regression tests.
-5. **Retire overview-pinned inputs before switching readers.** Inventory
-   outputs from refreshes completed before deployment. Archive their
-   generated reviews byte for byte under a dated subdirectory of
-   `kb/agentic-systems/reviews-archive/`, removing them from active review
-   discovery. Keep their retained sets at the recorded paths with unchanged
-   bytes and pins; mark those historical run directories with the existing
-   validation-ignore mechanism. Record the pre-deployment commit for
-   historical verification. Clear derived comparisons until regenerated,
-   and rerun affected systems with new run IDs. The first replacement
-   publishes into an absent active-review destination; subsequent
-   replacements use ordinary new-format incumbent checks. The new readers
-   reject explicitly supplied old-format inputs rather than adapting them.
-   Finish or abandon active old-method runs before switching the workflow;
-   do not repin them to the new method. This cutover does not delay the
-   independent refresh batch before deployment.
-6. **Verify adoption before rollout.** Run a bounded producer-to-consumer
-   trial. Check that the published artifact validates from a clean
-   checkout, that changed or missing members fail set validation, and
-   that a valid member still passes file validation when another member
-   makes the set invalid. Validate the output directory for whole-analysis
-   checks. Retained analyses remain frozen; do not rewrite existing
-   published bytes as part of this layout change. Include overview-only
-   blocked and out-of-scope completion, rejection of those outcomes by
-   publication and comparison readers, method-schema changes, and the
-   archive-to-first-replacement-to-incumbent sequence above.
+There are no active generated reviews or retained sets on main to retire.
+The three overview-pinned batch-01 sets remain historical output on
+`refresh-batch-01`; preserve those bytes and their recorded method revision.
+Do not merge them into active discovery under the new contract. Rerun their
+systems with new IDs under the current method before active publication.
+The first publication on main therefore has no incumbent; its successors
+use normal manifest-pinned replacement checks.
 
 ## Open items for the operator
 

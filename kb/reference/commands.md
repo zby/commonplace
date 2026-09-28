@@ -74,14 +74,14 @@ to have no committed, staged, modified or untracked difference under
 offending paths.
 
 An incumbent is checked by bytes: it must be a generated review of the same
-source whose retained overview and members hash to their pins. It may be
+source whose retained manifest and members hash to their pins. It may be
 committed or a sibling's fresh uncommitted publication; no publication receipt
 is read. This checks replacement provenance, not compliance of the old analysis
 with today's method. Replacement saves `incumbent-review.md` and an
 `incumbent-<member>.md` copy of each retained member in the new run for
 recovery.
 
-`prepare` validates the overview and every member its manifest pins as their
+`prepare` validates the directory artifact and its members as their
 retained paths, the specialist memory report's pins, and the candidate review,
 and checks the incumbent without changing public artifacts. It does not create
 a semantic-review job; specialist analysis does not establish independent
@@ -89,7 +89,7 @@ semantic clearance. `publish` rechecks the inputs, validates the prospective
 complete run state, replaces the review, retains the four members byte for
 byte under `kb/reports/retained/agentic-system-analysis/<run-id>/`, and writes
 the run state last. New publications require `memory-comparison` in the memory
-member and a matching retained overview path and hash in the public review.
+member and a matching retained manifest path and hash in the public review.
 An existing retained set requires a new run ID. Ordinary in-process failures
 roll back written files; crash-level partial writes remain an admitted failure
 mode.
@@ -106,6 +106,12 @@ system remains irregular operational state; request them with `--review`.
 model, schedule work, or become an authority for any displayed state.
 
 ### commonplace-validate
+
+Accepts a member file, artifact directory, ordinary subtree, or collection.
+A directory containing `ARTIFACT.yaml` receives set checks and ordinary member
+checks, grouped as one artifact. Explicit file validation stays file-scoped.
+See [directory artifacts](./validation-contract.md#directory-artifacts).
+
 
 Run deterministic validation on one artifact, collection, type surface,
 collection-landing set, redirect map, or the bounded workshop-and-task

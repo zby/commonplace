@@ -13,7 +13,7 @@ allOf:
           - run-status
           - result-disposition
           - source
-          - overview
+          - artifact
           - generated-review
           - failure
         properties:
@@ -37,7 +37,7 @@ allOf:
             anyOf:
               - type: "null"
               - $ref: "#/$defs/source"
-          overview:
+          artifact:
             anyOf:
               - type: "null"
               - $ref: "#/$defs/output"
@@ -73,7 +73,7 @@ allOf:
         frontmatter:
           properties:
             result-disposition: {const: null}
-            overview: {const: null}
+            artifact: {const: null}
             generated-review: {const: null}
             failure: {const: null}
   - if:
@@ -87,7 +87,7 @@ allOf:
         frontmatter:
           properties:
             result-disposition: {const: null}
-            overview: {const: null}
+            artifact: {const: null}
             generated-review: {const: null}
             failure:
               type: string
@@ -104,7 +104,7 @@ allOf:
           properties:
             result-disposition:
               enum: [complete, blocked, out-of-scope]
-            overview:
+            artifact:
               $ref: "#/$defs/output"
             failure: {const: null}
   - if:
