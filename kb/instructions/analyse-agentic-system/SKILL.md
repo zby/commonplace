@@ -394,7 +394,8 @@ assessment unsupported by its records blocks publication; properly scoped
 explicit uncertainty does not. Structural validation does not perform this
 check.
 
-Run `commonplace-validate <run-id>/output --full` for the whole artifact.
+Run `commonplace-validate kb/reports/state/agentic-system-analysis/<run-id>/output --full`
+from the repository root for the whole artifact.
 It validates every member and checks the set's membership, hashes, identity,
 record declarations and references, and comparison-profile references.
 Explicit file validation checks that member alone. Publication additionally

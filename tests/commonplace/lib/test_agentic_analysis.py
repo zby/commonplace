@@ -1463,6 +1463,21 @@ def test_set_member_links_stay_inside_the_set_directory(tmp_path: Path, link: st
         assert any(error in failure for failure in fails), fails
 
 
+def test_validate_cli_checks_a_complete_set_at_the_skill_path(tmp_path: Path, capsys, monkeypatch) -> None:
+    """The skill's step 7 command resolves and validates the set from the repository root."""
+    from commonplace.cli.validate_notes import main
+
+    member_fixture(tmp_path)
+    monkeypatch.chdir(tmp_path)
+    target = f"kb/reports/state/agentic-system-analysis/{RUN_ID}/output"
+
+    assert main([target, "--json"]) == 0
+    report = json.loads(capsys.readouterr().out)
+    assert [artifact["path"] for artifact in report["analysed_artifacts"]] == [target]
+    assert report["analysed_artifacts"][0]["type"] == agentic_set.SET_TYPE
+    assert main([target, "--full"]) == 0
+
+
 def test_comparison_reader_loads_what_publication_accepts(tmp_path):
     """Run-state and comparison readers reject the same duplicate set declaration."""
     state = valid_run_state(tmp_path)
