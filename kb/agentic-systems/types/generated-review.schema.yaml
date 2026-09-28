@@ -1,0 +1,45 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+allOf:
+  - $ref: "../../types/note.schema.yaml"
+  - type: object
+    properties:
+      frontmatter:
+        type: object
+        required:
+          - description
+          - type
+          - generated-by
+          - analysis-run
+          - source-identity
+          - reviewed-revision
+          - analysis-overview
+          - analysis-overview-sha256
+        properties:
+          type:
+            const: agentic-systems/types/generated-review.md
+          generated-by:
+            const: analyse-agentic-system
+          analysis-run:
+            type: string
+            pattern: '^AAS-\d{4}-\d{2}-\d{2}-[a-z0-9]+(?:-[a-z0-9]+)*-\d{2}$'
+          source-identity:
+            type: string
+            minLength: 1
+          reviewed-revision:
+            type: string
+            minLength: 1
+          analysis-overview:
+            type: string
+            pattern: '^kb/reports/retained/agentic-system-analysis/AAS-\d{4}-\d{2}-\d{2}-[a-z0-9]+(?:-[a-z0-9]+)*-\d{2}/overview\.md$'
+          analysis-overview-sha256:
+            type: string
+            pattern: '^[0-9a-f]{64}$'
+        additionalProperties: true
+      headings:
+        type: array
+        minItems: 1
+        prefixItems:
+          - pattern: '^# [^#].+$'
+      body:
+        description: "The body opens with one evidence-basis line."
+        pattern: '(?ms)^# [^\n]+\n\s*Evidence basis:'

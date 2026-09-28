@@ -59,6 +59,10 @@
               "type": "string",
               "pattern": "^[0-9a-f]{64}$"
             },
+            "finalized-from": {
+              "type": ["string", "null"],
+              "pattern": "^[0-9a-f]{64}$"
+            },
             "memory-comparison": {
               "type": "object",
               "required": [

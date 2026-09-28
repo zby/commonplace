@@ -1,0 +1,43 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+allOf:
+  - $ref: "./note.schema.yaml"
+  - type: object
+    properties:
+      frontmatter:
+        type: object
+        required: [description, type, run-id, reviewed-boundary]
+        properties:
+          type:
+            const: types/agentic-system-epistemic-report.md
+          run-id:
+            type: string
+            pattern: '^AAS-\d{4}-\d{2}-\d{2}-[a-z0-9]+(?:-[a-z0-9]+)*-\d{2}$'
+          reviewed-boundary:
+            type: string
+            minLength: 1
+        additionalProperties: true
+      headings:
+        description: "One H1 followed by the six epistemic blocks in order."
+        type: array
+        minItems: 7
+        prefixItems:
+          - pattern: '^# [^#].+$'
+        items:
+          anyOf:
+            - enum:
+                - "## Source-and-claim boundary"
+                - "## Epistemic-object inventory"
+                - "## Authority-route ledger"
+                - "## Per-object lifecycle disposition"
+                - "## System-claim versus route comparison"
+                - "## Bounded conclusion"
+            - pattern: '^#{3,6} .+$'
+        allOf:
+          - {contains: {const: "## Source-and-claim boundary"}, minContains: 1, maxContains: 1}
+          - {contains: {const: "## Epistemic-object inventory"}, minContains: 1, maxContains: 1}
+          - {contains: {const: "## Authority-route ledger"}, minContains: 1, maxContains: 1}
+          - {contains: {const: "## Per-object lifecycle disposition"}, minContains: 1, maxContains: 1}
+          - {contains: {const: "## System-claim versus route comparison"}, minContains: 1, maxContains: 1}
+          - {contains: {const: "## Bounded conclusion"}, minContains: 1, maxContains: 1}
+      body:
+        pattern: '(?ms)^## Source-and-claim boundary\s*$.*?^## Epistemic-object inventory\s*$.*?^## Authority-route ledger\s*$.*?^## Per-object lifecycle disposition\s*$.*?^## System-claim versus route comparison\s*$.*?^## Bounded conclusion\s*$'

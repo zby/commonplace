@@ -1,0 +1,136 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+allOf:
+  - $ref: "./note.schema.yaml"
+  - type: object
+    properties:
+      frontmatter:
+        type: object
+        required:
+          - description
+          - type
+          - run-id
+          - system
+          - run-date
+          - result-disposition
+          - target-class
+          - boundary-kind
+          - reviewed-boundary
+          - analysis-cutoff
+          - evidence-tier
+          - members
+        properties:
+          type:
+            const: types/agentic-system-analysis-overview.md
+          run-id:
+            type: string
+            pattern: '^AAS-\d{4}-\d{2}-\d{2}-[a-z0-9]+(?:-[a-z0-9]+)*-\d{2}$'
+          system:
+            type: string
+            minLength: 1
+            pattern: '\S'
+          run-date:
+            type: string
+            format: date
+          result-disposition:
+            enum: [complete, blocked, out-of-scope]
+          target-class:
+            type: [string, "null"]
+            minLength: 1
+          boundary-kind:
+            enum:
+              - whole-system
+              - subsystem-only
+              - "complete artifact, partial loop"
+              - null
+          reviewed-boundary:
+            type: [string, "null"]
+            minLength: 1
+          analysis-cutoff:
+            type: [string, "null"]
+            format: date
+          evidence-tier:
+            enum: [code-grounded, doc-grounded, null]
+          members:
+            type: array
+            items:
+              type: object
+              required: [path, sha256, type]
+              properties:
+                path:
+                  type: string
+                  pattern: '^[a-z0-9-]+\.md$'
+                sha256:
+                  type: string
+                  pattern: '^[0-9a-f]{64}$'
+                type:
+                  enum:
+                    - types/agentic-system-runtime-report.md
+                    - types/agent-memory-analysis-report.md
+                    - types/agentic-system-epistemic-report.md
+              additionalProperties: false
+        additionalProperties: true
+      headings:
+        description: "One H1 followed by the eight ordered overview sections; scoping and verification subheadings remain explicit in every disposition."
+        type: array
+        minItems: 14
+        prefixItems:
+          - pattern: '^# [^#].+$'
+        items:
+          anyOf:
+            - enum:
+                - "## Run identity"
+                - "## Boundary and evidence"
+                - "## Source register"
+                - "## Lens scoping"
+                - "## Reconciliation"
+                - "## Bounded synthesis"
+                - "## Limitations"
+                - "## Verification and blockers"
+            - pattern: '^#{3,6} .+$'
+        allOf:
+          - {contains: {const: "## Run identity"}, minContains: 1, maxContains: 1}
+          - {contains: {const: "## Boundary and evidence"}, minContains: 1, maxContains: 1}
+          - {contains: {const: "## Source register"}, minContains: 1, maxContains: 1}
+          - {contains: {const: "## Lens scoping"}, minContains: 1, maxContains: 1}
+          - {contains: {const: "## Reconciliation"}, minContains: 1, maxContains: 1}
+          - {contains: {const: "## Bounded synthesis"}, minContains: 1, maxContains: 1}
+          - {contains: {const: "## Limitations"}, minContains: 1, maxContains: 1}
+          - {contains: {const: "## Verification and blockers"}, minContains: 1, maxContains: 1}
+          - {contains: {const: "### Memory/context scope"}, minContains: 1, maxContains: 1}
+          - {contains: {const: "### Epistemic scope"}, minContains: 1, maxContains: 1}
+          - {contains: {const: "### Semantic verification"}, minContains: 1, maxContains: 1}
+          - {contains: {const: "### Deterministic validation"}, minContains: 1, maxContains: 1}
+          - {contains: {const: "### Blockers"}, minContains: 1, maxContains: 1}
+      body:
+        allOf:
+          - description: "The eight overview sections must appear in their canonical reading order."
+            pattern: '(?ms)^## Run identity\s*$.*?^## Boundary and evidence\s*$.*?^## Source register\s*$.*?^## Lens scoping\s*$.*?^## Reconciliation\s*$.*?^## Bounded synthesis\s*$.*?^## Limitations\s*$.*?^## Verification and blockers\s*$'
+          - description: "Run identity must identify the run state."
+            pattern: '(?ms)^## Run identity\s*$.*?^\*\*Run state:\*\*[ \t]+\S[^\r\n]*$.*?(?=^## Boundary and evidence\s*$)'
+          - description: "Run identity must identify the generated review disposition."
+            pattern: '(?ms)^## Run identity\s*$.*?^\*\*Generated review:\*\*[ \t]+\S[^\r\n]*$.*?(?=^## Boundary and evidence\s*$)'
+          - description: "Lens-scoping subheadings must appear under Lens scoping in canonical order."
+            pattern: '(?ms)^## Lens scoping\s*$.*?^### Memory/context scope\s*$.*?^### Epistemic scope\s*$.*?(?=^## Reconciliation\s*$)'
+          - description: "Verification subheadings must appear under Verification and blockers in canonical order."
+            pattern: '(?ms)^## Verification and blockers\s*$.*?^### Semantic verification\s*$.*?^### Deterministic validation\s*$.*?^### Blockers\s*$'
+  - if:
+      properties:
+        frontmatter:
+          properties:
+            result-disposition:
+              const: complete
+    then:
+      properties:
+        frontmatter:
+          properties:
+            target-class: {type: string, minLength: 1}
+            boundary-kind: {enum: [whole-system, subsystem-only, "complete artifact, partial loop"]}
+            reviewed-boundary: {type: string, minLength: 1}
+            analysis-cutoff: {type: string, format: date}
+            evidence-tier: {enum: [code-grounded, doc-grounded]}
+            members: {minItems: 3, maxItems: 3}
+    else:
+      properties:
+        frontmatter:
+          properties:
+            members: {maxItems: 0}
