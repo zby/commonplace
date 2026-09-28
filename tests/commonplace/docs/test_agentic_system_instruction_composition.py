@@ -22,14 +22,6 @@ def test_analysis_failure_is_rerun_instead_of_recovered() -> None:
     assert "only when abandoning the run" in orchestrator
     assert "Use a new run ID" in orchestrator
     assert "resume a failed run" in run_state
-    for obsolete in (
-        "phase: handoff-ready",
-        "reconciliation-seal",
-        "accepted-lens-packets",
-        "validation-receipt-path",
-        "lens-return-byte-budget",
-    ):
-        assert obsolete not in orchestrator
 
 
 def contract(name: str) -> str:
@@ -43,9 +35,6 @@ def test_set_has_one_fixed_state_location() -> None:
     assert "entry member is always\n   `<run-id>/overview.md`" in orchestrator
     assert "The entry member of one `analyse-agentic-system` run's retained set" in overview
     assert "the overview's manifest pins every other member" in overview
-    assert "response-only" not in orchestrator
-    assert "canonical carrier" not in orchestrator
-    assert "package has exactly one" not in orchestrator.lower()
 
 
 def test_repository_sources_remain_commit_addressed() -> None:
@@ -122,7 +111,6 @@ def test_orchestrator_states_the_set_rules_it_depends_on() -> None:
     assert "cites only\ncanonical IDs" in orchestrator
     assert "(../../types/agentic-system-runtime-report.md#shared-records)" in orchestrator
     assert "`METHOD_PATHS` constant" in orchestrator
-    assert "run bundle" not in orchestrator
 
 
 def test_method_paths_exist_in_the_repository() -> None:

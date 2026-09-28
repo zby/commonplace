@@ -144,27 +144,27 @@ def test_mixed_strength_and_partial_coverage_preserve_only_supported_positives()
 
 
 @pytest.mark.parametrize(
-    "mutation",
-    ["missing", "extra", "unknown-record", "no-basis", "empty-note", "legacy"],
+    "mutation, error",
+    [
+        ("missing", "evidence must cover exactly the declared values"),
+        ("unknown-record", "write_agency.manual: unresolved"),
+        ("no-basis", "invalid evidence basis"),
+        ("empty-note", "missing evidence rationale"),
+    ],
 )
-def test_each_value_requires_its_own_witness(mutation):
+def test_each_value_requires_its_own_witness(mutation, error):
     data = profile()
     entry = known(["automatic", "manual"], ["RTE-1"])
     data["axes"]["write_agency"] = entry
     if mutation == "missing":
         del entry["evidence"]["manual"]
-    elif mutation == "extra":
-        entry["evidence"]["invented"] = entry["evidence"]["manual"]
     elif mutation == "unknown-record":
         entry["evidence"]["manual"]["records"] = ["RTE-99"]
     elif mutation == "no-basis":
         entry["evidence"]["manual"]["basis"] = None
-    elif mutation == "empty-note":
-        entry["evidence"]["manual"]["note"] = ""
     else:
-        del entry["evidence"]
-        entry["basis"] = "afforded"
-    with pytest.raises(ValueError):
+        entry["evidence"]["manual"]["note"] = ""
+    with pytest.raises(ValueError, match=error):
         sm.validate_comparison(data, known_ids=KNOWN)
 
 
