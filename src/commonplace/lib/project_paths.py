@@ -9,7 +9,6 @@ gitignore rules do not affect what the tools see.
 from __future__ import annotations
 
 import os
-import re
 from collections.abc import Iterator
 from pathlib import Path
 
@@ -25,30 +24,6 @@ REPO_ARTIFACT_DIR_NAMES = frozenset(
 # collection-scoped validation only; the general visibility walk and explicit
 # file validation deliberately remain unchanged.
 VALIDATION_IGNORE_MARKER = ".commonplace-validation-ignore"
-
-# An agentic-system analysis run directory validates as one artifact: its
-# overview's manifest pins the other members, and validating the overview
-# checks the set. This is the one directory-as-unit rule; it recognizes the
-# overview by its type line, without parsing the frontmatter.
-ANALYSIS_SET_OVERVIEW = "overview.md"
-_ANALYSIS_SET_TYPE_LINE = re.compile(
-    r"(?m)^type:[ \t]*[\"']?types/agentic-system-analysis-overview\.md[\"']?[ \t]*$"
-)
-
-
-def analysis_set_overview(directory: Path) -> Path | None:
-    """Return the overview when ``directory`` is an analysis run's set, else None."""
-    overview = directory / ANALYSIS_SET_OVERVIEW
-    if not overview.is_file():
-        return None
-    try:
-        head = overview.read_text(encoding="utf-8")
-    except (OSError, UnicodeError):
-        return None
-    match = re.match(r"---\r?\n(.*?)\r?\n---", head, re.DOTALL)
-    if match is None or not _ANALYSIS_SET_TYPE_LINE.search(match.group(1)):
-        return None
-    return overview
 
 
 def kb_root(root: Path) -> Path:
@@ -174,19 +149,10 @@ def validation_ignored_dirs(collection: Path) -> list[Path]:
 
 
 def iter_validation_markdown_files(collection: Path) -> Iterator[Path]:
-    """Yield Markdown files in a collection's validation-visible subtrees.
-
-    An analysis run directory is one unit: only its overview is yielded, and
-    the members it pins are reached through the overview's validation.
-    """
+    """Yield Markdown files in a collection's validation-visible subtrees."""
     for current, dirnames, filenames in walk_visible(collection):
         if VALIDATION_IGNORE_MARKER in filenames:
             dirnames.clear()
-            continue
-        overview = analysis_set_overview(current)
-        if overview is not None:
-            dirnames.clear()
-            yield overview
             continue
         for filename in filenames:
             if filename.endswith(".md") and not filename.startswith("."):

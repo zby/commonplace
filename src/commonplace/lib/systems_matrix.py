@@ -13,13 +13,15 @@ from pathlib import Path
 
 import yaml
 
-from commonplace.lib.agentic_records import section
+from commonplace.lib.agentic_records import section, set_record_errors
 from commonplace.lib.agentic_set import (
     OVERVIEW_TYPE,
     RETAINED_ROOT,
     RUN_ID,
+    declared_union,
     load_member_set,
     retained_overview_path,
+    set_identity_errors,
 )
 from commonplace.lib.note_parser import parse_document
 
@@ -301,8 +303,7 @@ def _redirected_link(warning: str, source: Path, root: Path) -> bool:
     return target in _redirect_sources(root.resolve())
 
 
-def _validated_overview(root: Path, path: Path, label: str) -> None:
-    """Validate the retained overview; its set rule covers every member."""
+def _validated(root: Path, path: Path, label: str) -> None:
     from commonplace.lib import validation
 
     checks = validation.validate_note(path, repo_root=root)
@@ -316,9 +317,9 @@ def _validated_overview(root: Path, path: Path, label: str) -> None:
 def load_results(root: Path, review_paths: list[Path] | None = None) -> MatrixInputs:
     """Select explicit main reviews, or all generated main reviews; fail on gaps.
 
-    Each review pins its run's retained overview. Validating the overview
-    checks the whole set; the loader then takes identity and the register
-    from the overview and the profile from the memory member.
+    Each review pins its run's retained overview; the overview's manifest pins
+    the other members. The profile comes from the memory member, the register
+    and identity from the overview, and every member is validated.
     """
     root = root.resolve()
     paths = (
@@ -349,11 +350,14 @@ def load_results(root: Path, review_paths: list[Path] | None = None) -> MatrixIn
         overview_path = (root / retained).resolve()
         if overview_path.relative_to(root) != retained:
             raise ValueError(f"retained overview must use its canonical path: {retained}")
-        overview_hash = sha256(overview_path.read_bytes()).hexdigest()
+        overview_bytes = overview_path.read_bytes()
+        overview_hash = sha256(overview_bytes).hexdigest()
         if meta.get("analysis-overview-sha256") != overview_hash:
             raise ValueError(f"retained overview SHA-256 mismatch: {retained}")
-        _validated_overview(root, overview_path, str(retained))
-        member_set = load_member_set(overview_path)
+        try:
+            member_set = load_member_set(overview_path)
+        except ValueError as exc:
+            raise ValueError(f"{retained}: {exc}") from exc
         data = member_set.overview.frontmatter
         if (
             data.get("type") != OVERVIEW_TYPE
@@ -376,14 +380,27 @@ def load_results(root: Path, review_paths: list[Path] | None = None) -> MatrixIn
             raise ValueError(
                 f"source identity missing from overview register: {relative}"
             )
+        errors = set_identity_errors(member_set, source_identity=source)
+        if errors:
+            raise ValueError(f"{retained}: " + "; ".join(errors))
+        for document in member_set.documents:
+            _validated(root, document.path, f"{document.name} of {retained.parent}")
         if source in identities:
             raise ValueError(
                 f"multiple selected reviews of source {source}; choose one boundary explicitly"
             )
         identities.add(source)
+        bodies = {name: member.body for name, member in member_set.members.items()}
+        errors = set_record_errors(bodies, register_body=member_set.overview.body)
+        if errors:
+            raise ValueError(f"{retained}: " + "; ".join(errors))
         memory = member_set.memory
         assert memory is not None  # a complete manifest names the memory member
-        profile = memory.frontmatter["memory-comparison"]
+        profile = validate_comparison(
+            memory.frontmatter.get("memory-comparison"),
+            memory.body,
+            known_ids=declared_union(member_set),
+        )
         tier = data.get("evidence-tier")
         if tier not in {"code-grounded", "doc-grounded"}:
             raise ValueError(f"invalid evidence tier: {retained}")

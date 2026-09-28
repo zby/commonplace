@@ -788,7 +788,7 @@ def test_complete_state_verifies_the_set_beyond_each_member(tmp_path: Path, muta
         "stale-finalized-from": "finalized-from does not match memory-report.md bytes",
         "runtime-run-id": "member set: runtime.md: run-id does not match the overview",
         "epistemic-boundary": "member set: epistemic.md: reviewed-boundary does not match the overview",
-        "memory-source": "memory member: source-identity does not match the frozen source",
+        "memory-source": "member set: memory.md: source-identity does not match the frozen source",
     }[mutation]
     if mutation == "unmapped-proposal":
         overview = run_dir / "overview.md"
@@ -1210,20 +1210,6 @@ def test_publication_cli_rejects_retired_legacy_arguments(tmp_path: Path) -> Non
             "--legacy-candidate", "retired.md",
         ], cwd=tmp_path)
     assert error.value.code == 2
-
-
-def test_publication_cli_reports_the_retained_set(tmp_path: Path, capsys) -> None:
-    state, spec, _ = publication_fixture(tmp_path)
-    assert agentic_analysis_publication.main([
-        "publish", str(state), "--generated-candidate", str(spec.generated_candidate_path),
-        "--generated-destination", spec.generated_destination,
-        "--expected-incumbent-sha256", "absent",
-    ], cwd=tmp_path) == 0
-    payload = json.loads(capsys.readouterr().out)
-    retained = agentic_set.retained_set_paths(RUN_ID)
-    assert payload["retained_path"] == retained["overview.md"].as_posix()
-    assert payload["retained_set"] == [path.as_posix() for path in retained.values()]
-    assert all((tmp_path / path).is_file() for path in payload["retained_set"])
 
 
 def test_memory_report_quote_is_checked_at_the_frozen_source(tmp_path: Path) -> None:

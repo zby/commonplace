@@ -1,36 +1,25 @@
 from __future__ import annotations
 
-from hashlib import sha256
 from pathlib import Path
 
 import pytest
-import yaml
 
 from commonplace.lib import validation
-from commonplace.lib.systems_matrix import AXES
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
 RUN_ID = "AAS-2026-09-28-example-system-01"
 REVISION = "0123456789abcdef0123456789abcdef01234567"
-MEMBER_TYPES = {
-    "runtime": "agentic-system-runtime-report",
-    "memory": "agent-memory-analysis-report",
-    "epistemic": "agentic-system-epistemic-report",
-}
-PLACEHOLDER_MEMBERS = "\n".join(
+MEMBERS = "\n".join(
     f"  - path: {name}.md\n    sha256: \"{'a' * 64}\"\n    type: types/{kind}.md"
-    for name, kind in MEMBER_TYPES.items()
+    for name, kind in (
+        ("runtime", "agentic-system-runtime-report"),
+        ("memory", "agent-memory-analysis-report"),
+        ("epistemic", "agentic-system-epistemic-report"),
+    )
 )
 
 
-def manifest_for(directory: Path) -> str:
-    return "\n".join(
-        f"  - path: {name}.md\n    sha256: \"{sha256((directory / f'{name}.md').read_bytes()).hexdigest()}\"\n    type: types/{kind}.md"
-        for name, kind in MEMBER_TYPES.items()
-    )
-
-
-def overview_text(*, disposition: str = "complete", members: str = PLACEHOLDER_MEMBERS) -> str:
+def overview_text(*, disposition: str = "complete") -> str:
     complete = disposition == "complete"
     return f'''---
 type: types/agentic-system-analysis-overview.md
@@ -44,7 +33,7 @@ boundary-kind: {"whole-system" if complete else "null"}
 reviewed-boundary: {f'"{REVISION}"' if complete else "null"}
 analysis-cutoff: {'"2026-09-28"' if complete else "null"}
 evidence-tier: {"code-grounded" if complete else "null"}
-members:{chr(10) + members if complete else " []"}
+members:{chr(10) + MEMBERS if complete else " []"}
 ---
 
 # Example System agentic-system analysis
@@ -75,13 +64,11 @@ Scope.
 
 ## Reconciliation
 
-| specialist proposal | canonical record | disposition |
-|---|---|---|
-| MEM-OBJ-1 | OBJ-1 | registered |
+None.
 
 ## Bounded synthesis
 
-Synthesis over CMP-1, OBJ-1 and RTE-1.
+Synthesis.
 
 ## Limitations
 
@@ -136,7 +123,7 @@ none declared in this member.
 
 #### RTE-1 — Ordinary invocation
 
-Record. Evidence: SRC-1. Stores through OBJ-1.
+Record. Evidence: SRC-1.
 
 ### Claims
 
@@ -189,104 +176,6 @@ None found.
 Conclusion.
 '''
 
-def memory_text() -> str:
-    profile = {
-        "scope": "The fixture's accumulated memory",
-        "axes": {
-            axis: {"assessment": "uninspected", "evidence": {}, "values": [],
-                   "records": [], "note": "Not inspected in this fixture."}
-            for axis in AXES
-        },
-    }
-    profile["axes"]["storage_substrate"] = {
-        "assessment": "known", "values": ["files"],
-        "evidence": {"files": {"basis": "wired", "records": ["OBJ-1"], "note": "Fixture witness."}},
-        "records": ["OBJ-1"], "note": "One store within the boundary.",
-    }
-    values = {
-        "type": "types/agent-memory-analysis-report.md",
-        "description": "Memory findings of Example System at the fixture boundary",
-        "analysis-run": RUN_ID,
-        "source-identity": "https://example.invalid/example-system",
-        "reviewed-boundary": REVISION,
-        "report-status": "complete",
-        "canonical-register-sha256": "c" * 64,
-        "worker-model": "fixture-model",
-        "method-sha256": "d" * 64,
-        "finalized-from": "e" * 64,
-        "memory-comparison": profile,
-    }
-    return "---\n" + yaml.safe_dump(values, sort_keys=False) + f'''---
-
-# Example System memory report
-
-## Boundary and evidence
-
-Boundary.
-
-## Core ideas
-
-Finding.
-
-> # Frozen source
-> --- `README.md` @ `{REVISION}`
-
-## Shared records
-
-### Components
-
-none proposed.
-
-### Operative objects
-
-#### OBJ-1 — Memory store
-
-Declared from the specialist's proposal.
-
-### Routes
-
-#### On RTE-1 — Ordinary invocation
-
-Memory fields on the seeded route.
-
-### Claims
-
-none proposed.
-
-### Evidenced absences
-
-none proposed.
-
-### Behavioral-authority paths
-
-none proposed.
-
-## Write side
-
-Writes to OBJ-1.
-
-## Read-back
-
-Reads through RTE-1.
-
-## Comparison rationale
-
-Rationale.
-
-## Integration issues
-
-none
-
-## Limitations and checks
-
-Limits.
-
-## Amendments
-
-none
-'''
-
-
 REVIEW_TEXT = f'''---
 type: agentic-systems/types/generated-review.md
 description: "Example System's mechanism in one sentence."
@@ -312,52 +201,10 @@ def validate(tmp_path: Path, name: str, content: str) -> validation.CheckResults
     return validation.validate_note(path, repo_root=REPO_ROOT)
 
 
-def write_members(tmp_path: Path) -> str:
-    """Write the three members and return the manifest that pins them."""
-    (tmp_path / "runtime.md").write_text(RUNTIME_TEXT, encoding="utf-8")
-    (tmp_path / "memory.md").write_text(memory_text(), encoding="utf-8")
-    (tmp_path / "epistemic.md").write_text(EPISTEMIC_TEXT, encoding="utf-8")
-    return manifest_for(tmp_path)
-
-
 def test_complete_overview_validates_with_three_members(tmp_path: Path) -> None:
-    results = validate(tmp_path, "overview.md", overview_text(members=write_members(tmp_path)))
+    results = validate(tmp_path, "overview.md", overview_text())
     assert results.fails == []
     assert results.note_type == "agentic-system-analysis-overview"
-    assert any("set: declarations, references, profile and quotations resolve" in item
-               for item in results.passes)
-
-
-def test_overview_validation_dereferences_the_manifest(tmp_path: Path) -> None:
-    manifest = write_members(tmp_path)
-    (tmp_path / "epistemic.md").write_text(EPISTEMIC_TEXT + "\nDrift.\n", encoding="utf-8")
-    results = validate(tmp_path, "overview.md", overview_text(members=manifest))
-    assert any("member set: manifest: epistemic.md bytes hash to" in item for item in results.fails)
-
-
-@pytest.mark.parametrize(
-    ("edit", "expected"),
-    [
-        (("runtime.md", "#### RTE-1 — Ordinary invocation", "#### RTE-9 — Ordinary invocation"),
-         "unresolved IDs: RTE-1"),
-        (("memory.md", "#### On RTE-1 — Ordinary invocation", "#### RTE-1 — Ordinary invocation"),
-         "RTE-1 declared in more than one member"),
-        (("memory.md", "> # Frozen source\n", "> \n"), "requires at least one attributed quotation"),
-        (("memory.md", "report-status: complete", "report-status: blocked"), "report-status must be complete"),
-        (("epistemic.md", f"reviewed-boundary: \"{REVISION}\"", "reviewed-boundary: other"),
-         "epistemic.md: reviewed-boundary does not match the overview"),
-        (("memory.md", "- OBJ-1\n", "- OBJ-7\n"), "unresolved canonical records"),
-    ],
-)
-def test_overview_validation_checks_the_set_as_a_whole(tmp_path: Path, edit, expected) -> None:
-    write_members(tmp_path)
-    name, old, new = edit
-    path = tmp_path / name
-    text = path.read_text(encoding="utf-8")
-    assert old in text, old
-    path.write_text(text.replace(old, new), encoding="utf-8")
-    results = validate(tmp_path, "overview.md", overview_text(members=manifest_for(tmp_path)))
-    assert any(expected in item for item in results.fails), results.fails
 
 
 def test_blocked_overview_has_no_members_and_nullable_boundary(tmp_path: Path) -> None:
@@ -375,13 +222,13 @@ def test_complete_overview_requires_every_member(tmp_path: Path) -> None:
 
 
 def test_blocked_overview_rejects_members(tmp_path: Path) -> None:
-    content = overview_text(disposition="blocked").replace("members: []", "members:\n" + PLACEHOLDER_MEMBERS)
+    content = overview_text(disposition="blocked").replace("members: []", "members:\n" + MEMBERS)
     results = validate(tmp_path, "overview.md", content)
     assert any("frontmatter" in failure for failure in results.fails)
 
 
 def test_overview_requires_the_canonical_section_order(tmp_path: Path) -> None:
-    content = overview_text(members=write_members(tmp_path))
+    content = overview_text()
     content = content.replace("## Boundary and evidence", "## TEMP", 1)
     content = content.replace("## Source register", "## Boundary and evidence", 1)
     content = content.replace("## TEMP", "## Source register", 1)
@@ -397,8 +244,7 @@ def test_overview_requires_the_canonical_section_order(tmp_path: Path) -> None:
     ],
 )
 def test_overview_requires_each_run_identity_field(tmp_path: Path, line: str) -> None:
-    members = write_members(tmp_path)
-    results = validate(tmp_path, "overview.md", overview_text(members=members).replace(line, ""))
+    results = validate(tmp_path, "overview.md", overview_text().replace(line, ""))
     assert len(results.fails) == 1
     assert "Run identity" in results.fails[0]
 
