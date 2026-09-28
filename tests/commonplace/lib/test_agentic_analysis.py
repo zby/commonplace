@@ -1393,9 +1393,14 @@ def test_publish_rolls_back_an_ordinary_multi_file_write_failure(
         raise AssertionError("publication unexpectedly survived injected failure")
 
     assert not (tmp_path / spec.generated_destination).exists()
-    assert not (tmp_path / agentic_set.retained_overview_path(RUN_ID)).exists()
+    assert not (tmp_path / agentic_set.retained_overview_path(RUN_ID)).parent.exists()
     assert state.read_bytes() == original_state
     assert spec.generated_candidate_path.exists()
+
+    # A retry with the same run ID succeeds once the failure is gone.
+    monkeypatch.setattr(agentic_publication, "_atomic_write", real_atomic_write)
+    publish_publication(spec)
+    assert frontmatter(state)["run-status"] == "complete"
 
 
 
@@ -1715,7 +1720,7 @@ def test_rerun_failure_restores_uncommitted_publication(tmp_path: Path, monkeypa
         assert (tmp_path / retained).read_bytes() == old_set[name]
     assert frontmatter(spec.run_state_path)["run-status"] == "running"
     assert spec.generated_candidate_path.exists()
-    assert not (tmp_path / agentic_set.retained_overview_path(RUN_ID[:-2] + "02")).exists()
+    assert not (tmp_path / agentic_set.retained_overview_path(RUN_ID[:-2] + "02")).parent.exists()
 
 
 def test_rerun_never_overwrites_a_conflicting_recovery_copy(tmp_path: Path) -> None:

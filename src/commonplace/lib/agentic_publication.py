@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import os
 import re
+import shutil
 import subprocess
 import tempfile
 from dataclasses import dataclass, field
@@ -520,6 +521,9 @@ def publish_publication(spec: PublicationSpec) -> PublishedPublication:
     for name, path in bundle.incumbent.set_paths.items():
         if path.read_bytes() != bundle.incumbent.set_bytes[name]:
             raise ValueError("incumbent retained set changed during validation")
+    # _check_bundle refused an existing retained directory, so any directory
+    # found here on rollback was created by this publication.
+    retained_dir = bundle.retained_paths[OVERVIEW_NAME].parent
     written: list[Path] = []
     try:
         for path, content in targets:
@@ -542,6 +546,11 @@ def publish_publication(spec: PublicationSpec) -> PublishedPublication:
                 _restore(path, old_bytes[path])
             except OSError as exc:
                 rollback_errors.append(f"{path}: {exc}")
+        if retained_dir.exists():
+            try:
+                shutil.rmtree(retained_dir)
+            except OSError as exc:
+                rollback_errors.append(f"{retained_dir}: {exc}")
         if rollback_errors:
             raise PublicationUncertainError(
                 f"publication failed ({publication_error}); rollback also failed: "
