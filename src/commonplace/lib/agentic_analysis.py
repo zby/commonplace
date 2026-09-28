@@ -22,6 +22,7 @@ from commonplace.lib.quote_matching import (
 
 AGENTIC_ANALYSIS_RUN_TYPE = "types/agentic-system-analysis-run-state.md"
 AGENTIC_ANALYSIS_RESULT_TYPE = "types/agentic-system-analysis-result.md"
+OVERVIEW_NAME = "overview.md"
 
 _SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
 _LOCAL_SOURCE_ANCHOR_RE = re.compile(
@@ -61,7 +62,7 @@ class AgenticAnalysisRunState:
     status: str
     result_disposition: str | None
     source: SourceIdentity | None
-    result: OutputIdentity | None
+    overview: OutputIdentity | None
     generated_review: OutputIdentity | None
     failure: str | None
 
@@ -197,8 +198,8 @@ def parse_agentic_analysis_run_state(
 
     result_disposition = _optional_string(frontmatter, "result-disposition")
     source = _source_identity(frontmatter.get("source"))
-    result = _output_identity(
-        frontmatter.get("result"), role="result", repo_root=repo_root
+    overview = _output_identity(
+        frontmatter.get("overview"), role="overview", repo_root=repo_root
     )
     generated_review = _output_identity(
         frontmatter.get("generated-review"),
@@ -207,17 +208,9 @@ def parse_agentic_analysis_run_state(
     )
     failure = _optional_string(frontmatter, "failure")
 
-    expected_result = (
-        repo_root
-        / "kb"
-        / "reports"
-        / "state"
-        / "agentic-system-analysis"
-        / run_id
-        / "result.md"
-    ).resolve()
-    if result is not None and result.path.resolve() != expected_result:
-        raise ValueError("result.path: expected <run-id>/result.md")
+    expected_overview = (state_root / run_id / OVERVIEW_NAME).resolve()
+    if overview is not None and overview.path.resolve() != expected_overview:
+        raise ValueError(f"overview.path: expected <run-id>/{OVERVIEW_NAME}")
     if generated_review is not None:
         pure = PurePosixPath(generated_review.display_path)
         if (
@@ -234,7 +227,7 @@ def parse_agentic_analysis_run_state(
             item is not None
             for item in (
                 result_disposition,
-                result,
+                overview,
                 generated_review,
                 failure,
             )
@@ -247,7 +240,7 @@ def parse_agentic_analysis_run_state(
             item is not None
             for item in (
                 result_disposition,
-                result,
+                overview,
                 generated_review,
             )
         ):
@@ -255,8 +248,8 @@ def parse_agentic_analysis_run_state(
     else:
         if result_disposition not in {"complete", "blocked", "out-of-scope"}:
             raise ValueError("complete state requires a result disposition")
-        if result is None or failure is not None:
-            raise ValueError("complete state requires result and no failure")
+        if overview is None or failure is not None:
+            raise ValueError("complete state requires overview and no failure")
         if result_disposition == "complete":
             if source is None or generated_review is None:
                 raise ValueError(
@@ -276,7 +269,7 @@ def parse_agentic_analysis_run_state(
         status=status,
         result_disposition=result_disposition,
         source=source,
-        result=result,
+        overview=overview,
         generated_review=generated_review,
         failure=failure,
     )
@@ -591,7 +584,7 @@ def _parsed_frontmatter(
 
 def render_agentic_analysis_handoff(state: AgenticAnalysisRunState) -> str:
     """Render the operator handoff for one completed run."""
-    if state.status != "complete" or state.result is None:
+    if state.status != "complete" or state.overview is None:
         raise ValueError("operator handoff requires a complete run state")
     generated = (
         state.generated_review.display_path
@@ -607,7 +600,7 @@ def render_agentic_analysis_handoff(state: AgenticAnalysisRunState) -> str:
         [
             f"# Agentic-system analysis handoff — {state.run_id}",
             "",
-            f"**Result:** [{state.result.display_path}](<{state.result.path.as_posix()}>)",
+            f"**Result:** [{state.overview.display_path}](<{state.overview.path.as_posix()}>)",
             "",
             f"**System and disposition:** {state.system} — {state.result_disposition}",
             "",
@@ -726,7 +719,7 @@ def verify_agentic_analysis_run_state(
 
     outputs = tuple(
         item
-        for item in (state.result, state.generated_review)
+        for item in (state.overview, state.generated_review)
         if item is not None
     )
     for output in outputs:
@@ -736,7 +729,7 @@ def verify_agentic_analysis_run_state(
         else:
             failures.append(error)
 
-    if state.status != "complete" or state.result is None:
+    if state.status != "complete" or state.overview is None:
         return passes, failures
 
     # Import lazily because validation registers this module's type rule.
@@ -765,7 +758,7 @@ def verify_agentic_analysis_run_state(
         else:
             passes.append(f"{output.role}: direct validation passed")
 
-    result_document, error = _parsed_output(state.result, content_overrides)
+    result_document, error = _parsed_output(state.overview, content_overrides)
     if error is not None or result_document is None:
         failures.append(f"result: {error}")
         return passes, failures
@@ -803,7 +796,7 @@ def verify_agentic_analysis_run_state(
             role="retained result",
             display_path=retained_relative.as_posix(),
             path=state.repo_root / retained_relative,
-            expected_sha256=state.result.expected_sha256,
+            expected_sha256=state.overview.expected_sha256,
         )
         retained_error = _verify_output(retained, content_overrides)
         if retained_error:
@@ -823,7 +816,7 @@ def verify_agentic_analysis_run_state(
                 "source-identity": None if state.source is None else state.source.identity,
                 "reviewed-revision": None if state.source is None else state.source.revision,
                 "analysis-result": retained_relative.as_posix(),
-                "analysis-result-sha256": state.result.expected_sha256,
+                "analysis-result-sha256": state.overview.expected_sha256,
             }
             mismatches = [
                 field
