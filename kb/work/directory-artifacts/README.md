@@ -59,8 +59,11 @@ that still run. The transition also drops exact finalization derivation
 and the set-level quote minimum; moving the manifest does not reinstate
 them.
 
-Move the overview's `members` metadata into `ARTIFACT.yaml` and change the
-version pins with this workshop's implementation, not before. The refresh
+Replace the overview's `members` metadata with schema-owned membership
+and the selected `ARTIFACT.yaml` integrity representation. Stored member
+hashes and a computed set digest remain alternatives in the draft; align
+the analysis schema and external version pins with the chosen one. Apply
+that change with this workshop's implementation, not before. The refresh
 batch in `kb/work/agentic-memory-refresh/batch-01-handoff.md` waits on the
 output-documents transition, not on this workshop.
 

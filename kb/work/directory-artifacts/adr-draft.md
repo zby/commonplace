@@ -97,6 +97,105 @@ its file exists, so a missing file named by such an entry fails loading
 even when the schema would otherwise permit its absence. Merely declaring
 an optional member in the schema makes no such assertion.
 
+### Encoding
+
+Both the manifest's `members` and the schema input's `members` are
+mappings keyed by the member's relative path. A manifest entry holds that
+member's instance metadata; the only field defined now is `sha256`, the
+lowercase hexadecimal SHA-256 of the file's bytes:
+
+```yaml
+type: reports/types/<set-type>.md
+members:
+  overview.md:
+    sha256: <64 lowercase hex digits>
+  runtime.md:
+    sha256: <64 lowercase hex digits>
+```
+
+Keying by path makes each file a named property, so the membership rules
+are ordinary JSON Schema keywords over the actual files:
+
+| Constraint | Schema expression |
+|---|---|
+| Required member | `members.required` |
+| Optional member | Listed in `members.properties`, absent from `required` |
+| Closed membership | `members.additionalProperties: false` |
+| Open membership | `members.additionalProperties` omitted or `true` |
+| Expected type | Require an object-valued `frontmatter` and its `type` field, then constrain that field with `const` or `enum` |
+| Required hash | Require the manifest's member map, the member entry and its `sha256` field; conditional requirements use `if`/`then` on actual member presence |
+| Membership depending on content | `if` on one member's fields, `then` require another member |
+
+The table abbreviates nested schema locations. `properties` alone does
+not require a field or reject a non-object value. Required fields need
+`required` at their containing object, and object constraints need
+`type: object`. A presence condition must also require the field it tests.
+
+For example, this fragment requires two members, permits an optional
+third, rejects all others, fixes the runtime report's type, and requires
+both required members' hashes:
+
+```yaml
+$schema: https://json-schema.org/draft/2020-12/schema
+type: object
+required: [manifest, members]
+properties:
+  members:
+    type: object
+    required: [overview.md, runtime.md]
+    properties:
+      overview.md: {}
+      runtime.md:
+        type: object
+        required: [frontmatter]
+        properties:
+          frontmatter:
+            type: object
+            required: [type]
+            properties:
+              type: {const: types/agentic-system-runtime-report.md}
+      appendix.md: {}
+    additionalProperties: false
+  manifest:
+    type: object
+    required: [type, members]
+    properties:
+      type: {type: string}
+      members:
+        type: object
+        required: [overview.md, runtime.md]
+        properties:
+          overview.md: {$ref: '#/$defs/hashedMember'}
+          runtime.md: {$ref: '#/$defs/hashedMember'}
+$defs:
+  hashedMember:
+    type: object
+    required: [sha256]
+    properties:
+      sha256:
+        type: string
+        maxLength: 64
+        pattern: '^[0-9a-f]{64}$'
+```
+
+The example's requiredness checks include missing containing objects,
+null frontmatter, missing type fields and entries without hashes. Schema
+validation establishes hash format and presence; the loader still checks
+the bytes. A manifest entry cannot authorize a forbidden member, because
+`additionalProperties` applies to the discovered files, not to the
+manifest. The local `$defs` entry constrains hash metadata, not a member's
+document schema.
+
+The set schema constrains only which members exist and which type each
+declares. It does not `$ref` member schemas, because ordinary file
+validation already applies them and a reference would validate members
+twice.
+
+JSON Schema cannot compare values across the instance. The loader
+therefore checks that each manifest entry names a discovered file and
+that each supplied hash matches the bytes. Imperative type rules check
+agreement between members, as the next section assigns.
+
 ### ARTIFACT.yaml only adds checks
 
 Directory and collection traversal retain all ordinary file discovery
@@ -119,6 +218,29 @@ counted twice. Files outside the membership scope keep their ordinary
 validation and reporting. The exact CLI and JSON representation remains
 open.
 
+### Traversal and artifact checking have separate call boundaries
+
+Directory and collection traversal discover files and schedule ordinary
+file checks and artifact checks. The shared artifact-checking operation
+loads one artifact's membership, validates its members and applies its
+set rules. It does not start a directory traversal or validate unrelated
+working files. Workflow type rules call this operation directly when
+checking their outputs; they do not call the directory-validation entry
+point.
+
+The analysis membership scope must exclude run state and any other
+workflow control file whose validation checks that same analysis set.
+Those files still receive ordinary checks through the surrounding
+traversal or explicit file validation. The scope or layout must express
+this separation; the generic loader must not hide particular filenames.
+The exact layout remains a discovery choice below.
+
+All these calls share one validation-run context for the same candidate
+bytes. Completed evaluations are reused so that a member reached through
+both traversal and a workflow check is evaluated once. Re-entering an
+evaluation still in progress fails with the dependency cycle identified;
+an in-progress evaluation is never treated as a successful result.
+
 ### Integrity and the analysis instance
 
 Hashes are optional in the generic format. The set schema decides where
@@ -127,7 +249,8 @@ schema permits omission; every supplied hash must be well-formed and
 match the actual bytes. Hashing and parsing use the same bytes. Hash
 presence does not change which membership or content checks run.
 
-For a complete analysis, the manifest records hashes for all four members:
+For a complete analysis, the external version pin must cover the manifest
+bytes and all four members, including the overview. The output layout is:
 
 ```text
 <run-id>/
@@ -139,9 +262,27 @@ For a complete analysis, the manifest records hashes for all four members:
 ```
 
 The overview is an ordinary member. The manifest does not list or hash
-itself. The analysis workflow pins the manifest externally, so replacing
-a member and its recorded hash cannot silently replace a completed
-analysis. The pin fields remain to be designed.
+itself. The byte coverage above is required; its representation is still
+an open choice between these alternatives:
+
+- **Stored member hashes.** The analysis schema requires hashes for all
+  four members in the manifest. An external hash of the manifest binds
+  those declarations and, through verification, the member bytes. A
+  mismatch identifies the changed member. Updating a member requires
+  updating its manifest entry and the external pin.
+- **Computed set digest.** The workflow records a digest computed from
+  the manifest bytes and the sorted member paths and file hashes. The
+  analysis schema need not require stored hashes, so the manifest may
+  contain only `type`. Member edits require one external pin update. A
+  mismatch does not identify the changed member unless the pin record
+  also retains per-member hashes. Including the manifest bytes binds
+  its type and any instance metadata as well as the document contents.
+
+The shared analysis schema and pin fields must follow the selected
+alternative. Neither is selected by this draft. Generic optional hashes
+retain the same semantics under either alternative: a supplied hash must
+still be verified. Replacing a member and any stored hash must change
+the externally checked version.
 
 The first type specs and fixtures are collection-local. The analysis set
 spec and its adjacent schema belong under `kb/reports/types/`, with a
@@ -155,8 +296,8 @@ but no global type or fixture is required for this work.
 |---|---|---|
 | Explicit directory validation | Directory contents and resolved type | Runs ordinary file checks and set checks; reports member diagnostics under the artifact |
 | Collection validation | Continuing file discovery | Adds each recognized set's checks without losing file coverage or counting members twice |
-| Analysis publication | Candidate bytes at intended paths | Rejects an invalid candidate set through the same validation path |
-| Analysis completion and comparison loading | Retained set and recorded workflow identity | Rejects an invalid set, a wrong set type, or a version different from the recorded pin |
+| Analysis publication | Candidate bytes at intended paths | Calls the shared artifact check directly and rejects an invalid candidate set |
+| Analysis completion and comparison loading | Retained set and recorded workflow identity | Calls the artifact check without directory traversal; rejects an invalid set, a wrong set type, or a version different from the recorded pin |
 
 Shared set validation replaces equivalent consumer checks. Guarantees
 requiring evidence outside the set, such as frozen-source identity and
@@ -172,6 +313,14 @@ validation without the set guarantee. A designated member's type rule
 could check its siblings, but recognition would depend on that member.
 The separate manifest provides one recognition convention and lets the
 overview receive the same integrity checks as other members.
+
+This reverses the [revised layering](../agentic-analysis-output-documents/transition-plan.md#revised-layering-2026-09-28-during-implementation)
+recorded earlier on 2026-09-28, which chose "one recognition rule, not a
+manifest framework, since only the analysis set has an entry type." The
+analysis set is still the only production instance. The manifest is
+preferred anyway for the two reasons above. Its generality is also cheap
+([Encoding](#encoding)): membership rules are standard JSON Schema
+keywords, so the added framework cost is the loader, not a rule language.
 
 **Put rules in each manifest.** Instance-local schemas would allow repeated
 analyses to diverge. A shared schema gives one contract per type. The
@@ -227,20 +376,25 @@ and [generalized validation invalidation and imperative extension](../../referen
 
 ## Open choices before implementation
 
-1. **Encoding.** Specify member metadata and hash encoding in the manifest,
-   and demonstrate how the shared schema expresses the membership rules.
-2. **Discovery and paths.** Define the membership scope, subdirectory and
+1. **Discovery and paths.** Define the membership scope, subdirectory and
    non-Markdown handling, duplicate paths, symlinks and containment.
    Discovery must expose undeclared files before the schema decides
-   whether they are allowed. Resolve how the analysis layout accounts for
-   working files such as `run-state.md`.
-3. **Reporting.** Define the CLI and `analysed_artifacts` JSON path/type
+   whether they are allowed. Resolve the scope or layout that keeps
+   workflow control files such as `run-state.md` outside the analysis
+   membership while preserving their ordinary traversal checks.
+2. **Reporting.** Define the CLI and `analysed_artifacts` JSON path/type
    representation, member diagnostics, and direct validation of a single
-   member.
-4. **Analysis integration.** Choose the set type filename and external
-   manifest pin fields; specify their use in publication, completion and
-   comparison loading, including current-method versus historical
-   validation.
+   member. The validator's default messages for `maxProperties`,
+   `minProperties` and object-level `not` print the whole `members` object,
+   including bodies; reporting must shorten them, or such checks move to
+   imperative rules.
+3. **Analysis integration.** Choose the set type filename and one of the
+   [integrity representations](#integrity-and-the-analysis-instance).
+   Define its schema requirements, external pin fields and exact digest
+   encoding. Specify their use in publication, completion and comparison
+   loading, including current-method versus historical validation. Resolve
+   the update cost with the output-documents workshop's open init-repin
+   item; stored member hashes and a computed digest have different costs.
 
 These choices complete the agreed model; they do not reopen its
 allocation of rules to the schema or its preservation of ordinary checks.
@@ -255,10 +409,12 @@ format before implementation, then enforce these cases with tests.
 |---|---|
 | Recognition and coverage | A malformed or invalid manifest fails even when files pass. With either a valid or invalid manifest, failures in a declared member and an undeclared file remain visible through directory validation and collection sweeps. Members are not counted or validated twice. |
 | Required and optional members | Under both membership policies, missing required files fail, absent optional files pass, and present optional files receive their declared checks even without manifest entries. |
+| Required fields in the schema example | Missing or non-object containing values fail. Bare runtime Markdown, null frontmatter, an omitted type field and an incorrect type fail. A missing manifest member map, missing hash entries and entries without `sha256` fail. |
 | Open and closed membership | The same extra file is allowed by an open schema and rejected by a closed one. A manifest entry cannot authorize a forbidden member. An invalid extra note still fails ordinary checks under open membership. |
 | Minimal manifest | For a type requiring no instance metadata, a manifest containing only `type` still enables all membership checks against actual files. |
 | Generality and type resolution | Different filenames and fewer and more than four members work without framework changes. Collection eligibility and workshop staging rules hold. Two instances with different hashes use the same type and shared schema. |
 | Integrity | Permitted hash omissions pass; missing required hashes and malformed or mismatched supplied hashes fail. Content checks run with and without hashes. |
-| Analysis contract | A complete four-member set passes with the overview hashed. Missing members, wrong types, invalid content despite a correct type declaration, mixed identities, duplicate IDs and unresolved references fail. |
+| Analysis contract | A complete four-member set passes under the selected integrity representation. The external pin covers the manifest and all members, including the overview. Changing a member, its path, the manifest type or other manifest metadata changes the checked version. Missing members, wrong types, invalid content despite a correct type declaration, mixed identities, duplicate IDs and unresolved references fail. |
 | Consumer agreement | Directory validation, sweeps and workflow consumers agree on set validity. Publication checks candidate bytes; completion and comparison loading check the expected type and version. Workflow guarantees outside the set remain enforced. |
+| Validation call boundaries | Directory and collection validation with a complete run state terminate without repeated member checks. Direct run-state validation reaches the same artifact checks without starting traversal. Invalid members and invalid workflow files remain visible. An actual dependency cycle fails explicitly rather than recursing or silently passing. |
 | Resolved loading contract | Path and diagnostic fixtures cover the choices above, and equivalent checks have one owner. |
