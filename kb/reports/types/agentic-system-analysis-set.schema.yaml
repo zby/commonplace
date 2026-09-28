@@ -76,6 +76,9 @@ properties:
                 const: types/agent-memory-analysis-report.md
               report-status:
                 const: complete
+              finalized-from:
+                type: string
+                pattern: ^[0-9a-f]{64}$
       epistemic.md:
         type: object
         required:

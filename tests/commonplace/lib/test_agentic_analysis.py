@@ -1434,6 +1434,18 @@ def test_finalization_of_merged_and_rejected_proposals(
                    for error in fails), fails
 
 
+def test_set_validation_requires_a_finalized_memory_member(tmp_path: Path) -> None:
+    """A memory member still carrying the local report's null finalized-from fails the set."""
+    run_dir = member_fixture(tmp_path)
+    memory = run_dir / "output/memory.md"
+    replace_frontmatter(memory, {**frontmatter(memory), "finalized-from": None})
+    repin(memory.parent)
+    run = validation.ValidationRun(tmp_path, ())
+    assert run.validate(memory).fails == []
+    fails = run.validate(memory.parent).fails
+    assert any("finalized-from" in error for error in fails), fails
+
+
 def test_comparison_reader_loads_what_publication_accepts(tmp_path):
     """Run-state and comparison readers reject the same duplicate set declaration."""
     state = valid_run_state(tmp_path)
