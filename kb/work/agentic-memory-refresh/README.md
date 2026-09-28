@@ -215,3 +215,12 @@ produced under the member-set method. The first refresh batch under that
 producer is prepared in [batch-01-handoff.md](./batch-01-handoff.md):
 Agent-S, MemoryOS and basic-memory, run in parallel where capacity allows.
 Its preflight stops until the member-set producer lands.
+
+The first run of batch 01 (branch `refresh-batch-01`, commit `a39ba9be`)
+published all three sets in the layout that preceded the directory-artifact
+output. Its friction record led to the method fixes landed on 2026-09-28;
+its sets are superseded, not migrated, and the branch is not merged. The
+operator chose to rerun the batch: [batch-01-rerun-handoff.md](./batch-01-rerun-handoff.md)
+reruns Agent-S, MemoryOS and Basic Memory two at a time, and
+[batch-02-handoff.md](./batch-02-handoff.md) follows with OS-Copilot,
+A-mem and HippoRAG after the rerun is merged.
