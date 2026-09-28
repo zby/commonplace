@@ -163,9 +163,8 @@ Quotations across the set follow one contract. Members retain minimum
 verbatim source excerpts for load-bearing findings: disputed mechanisms,
 comparison classifications and assessments. Each passage occurs once
 across the set, in the member whose finding it supports; a record in
-another member cites that record instead of repeating the passage. At
-least one quote anchor is required in a complete set. A quotation block
-carries the excerpt, range and attribution that
+another member cites that record instead of repeating the passage. A
+quotation block carries the excerpt, range and attribution that
 [`commonplace-quote`](../reference/commands.md#commonplace-quote)
 emits for the run's frozen source, ending with a `> ---` attribution: for
 Git, a full-commit GitHub blob URL matching the registered repository or
