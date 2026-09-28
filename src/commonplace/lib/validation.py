@@ -948,23 +948,10 @@ def _agentic_evidence_and_references_rule(
 def _memory_report_comparison_rule(
     results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
 ) -> None:
-    from commonplace.lib.agentic_records import annotated_ids, declared_ids
-    from commonplace.lib.systems_matrix import shared_record_ids, validate_comparison
+    from commonplace.lib.systems_matrix import memory_member_comparison
 
-    metadata = parsed.document.frontmatter or {}
-    body = parsed.document.body
-    finalized = isinstance(metadata.get("finalized-from"), str)
-    # Either regime cites seeded records through its `On <ID>` annotations.
-    # The local report also declares proposals; the finalized member declares
-    # their canonical records.
-    known = annotated_ids(body) | (
-        set(declared_ids(body)) if finalized else shared_record_ids(body, memory_report=True)
-    )
     try:
-        validate_comparison(
-            metadata.get("memory-comparison"), body,
-            memory_report=not finalized, known_ids=known,
-        )
+        memory_member_comparison(parsed.document.frontmatter or {}, parsed.document.body)
     except ValueError as exc:
         results.fails.append(f"memory comparison: {exc}")
     else:

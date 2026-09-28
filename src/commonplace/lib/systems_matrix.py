@@ -13,12 +13,11 @@ from pathlib import Path
 
 import yaml
 
-from commonplace.lib.agentic_records import section, set_record_errors
+from commonplace.lib.agentic_records import annotated_ids, declared_ids, section
 from commonplace.lib.agentic_set import (
     OVERVIEW_TYPE,
     RETAINED_ROOT,
     RUN_ID,
-    declared_union,
     load_member_set,
     retained_overview_path,
     set_identity_errors,
@@ -31,6 +30,7 @@ __all__ = [
     "RUN_ID",
     "csv_text",
     "load_results",
+    "memory_member_comparison",
     "retained_overview_path",
     "shared_record_ids",
     "validate_comparison",
@@ -262,6 +262,24 @@ def validate_comparison(
     return profile
 
 
+def memory_member_comparison(metadata: dict, body: str) -> dict:
+    """Validate a memory report's own ``memory-comparison`` and return it.
+
+    The one profile check shared by the memory type's validation rule and
+    the comparison loader. Either regime cites seeded records through its
+    ``On <ID>`` annotations; the local report also declares proposals, the
+    finalized member declares their canonical records.
+    """
+    finalized = isinstance(metadata.get("finalized-from"), str)
+    known = annotated_ids(body) | (
+        set(declared_ids(body)) if finalized else shared_record_ids(body, memory_report=True)
+    )
+    return validate_comparison(
+        metadata.get("memory-comparison"), body,
+        memory_report=not finalized, known_ids=known,
+    )
+
+
 @dataclass(frozen=True)
 class MatrixInputs:
     rows: list[dict[str, str]]
@@ -318,8 +336,10 @@ def load_results(root: Path, review_paths: list[Path] | None = None) -> MatrixIn
     """Select explicit main reviews, or all generated main reviews; fail on gaps.
 
     Each review pins its run's retained overview; the overview's manifest pins
-    the other members. The profile comes from the memory member, the register
-    and identity from the overview, and every member is validated.
+    the other members. Identity comes from the overview, the profile from the
+    memory member under that member's own validation, and every member is
+    validated alone: cross-member ID resolution is not checked here, as
+    run-state verification does not check it before publication.
     """
     root = root.resolve()
     paths = (
@@ -371,15 +391,6 @@ def load_results(root: Path, review_paths: list[Path] | None = None) -> MatrixIn
         source = meta.get("source-identity")
         if not isinstance(source, str) or not source.strip():
             raise ValueError(f"missing source identity: {relative}")
-        register = section(member_set.overview.body, "Source register")
-        source_ids = {
-            s.rstrip(".,;") for s in re.findall(r"https?://[^\s<>()`\"']+", register)
-        }
-        source_ids.update(re.findall(r"`([^`\n]+)`", register))
-        if source not in source_ids:
-            raise ValueError(
-                f"source identity missing from overview register: {relative}"
-            )
         errors = set_identity_errors(member_set, source_identity=source)
         if errors:
             raise ValueError(f"{retained}: " + "; ".join(errors))
@@ -390,17 +401,11 @@ def load_results(root: Path, review_paths: list[Path] | None = None) -> MatrixIn
                 f"multiple selected reviews of source {source}; choose one boundary explicitly"
             )
         identities.add(source)
-        bodies = {name: member.body for name, member in member_set.members.items()}
-        errors = set_record_errors(bodies, register_body=member_set.overview.body)
-        if errors:
-            raise ValueError(f"{retained}: " + "; ".join(errors))
         memory = member_set.memory
         assert memory is not None  # a complete manifest names the memory member
-        profile = validate_comparison(
-            memory.frontmatter.get("memory-comparison"),
-            memory.body,
-            known_ids=declared_union(member_set),
-        )
+        # The memory member's own validation above already accepted this
+        # profile; reading it the same way keeps loading equal to publishing.
+        profile = memory_member_comparison(memory.frontmatter, memory.body)
         tier = data.get("evidence-tier")
         if tier not in {"code-grounded", "doc-grounded"}:
             raise ValueError(f"invalid evidence tier: {retained}")

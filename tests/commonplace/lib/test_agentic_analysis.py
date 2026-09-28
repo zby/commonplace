@@ -1479,9 +1479,8 @@ def test_comparison_tools_use_retained_results_without_local_or_legacy_inputs(tm
 
 @pytest.mark.parametrize("mutation, error", [
     ("bytes", "SHA-256 mismatch"), ("profile", "memory-comparison"),
-    ("source", "source identity missing"), ("revision", "identity mismatch"),
+    ("source", "source-identity does not match"), ("revision", "identity mismatch"),
     ("missing", "No such file"), ("member", "manifest: memory.md bytes hash to"),
-    ("declared-twice", "declared in more than one member"),
 ])
 def test_comparison_reader_rejects_incomplete_or_mismatched_evidence(tmp_path, mutation, error):
     valid_run_state(tmp_path)
@@ -1509,15 +1508,38 @@ def test_comparison_reader_rejects_incomplete_or_mismatched_evidence(tmp_path, m
         data.pop("memory-comparison")
         replace_frontmatter(memory, data)
         repin_overview()
-    elif mutation == "declared-twice":
-        memory.write_text(memory.read_text().replace("#### On RTE-1 — Fixture route", "#### RTE-1 — Fixture route"))
-        repin_overview()
     else:
         key = "source-identity" if mutation == "source" else "reviewed-revision"
         value = "https://example.invalid/example-system-other" if mutation == "source" else "other"
         replace_frontmatter(review, {**frontmatter(review), key: value})
     with pytest.raises((ValueError, OSError), match=error):
         systems_matrix.load_results(tmp_path)
+
+
+def test_comparison_reader_loads_what_publication_accepts(tmp_path):
+    """Cross-member ID resolution is not a publication check, so loading skips it too."""
+    state = valid_run_state(tmp_path)
+    run_dir = state.parent
+    memory = run_dir / "memory.md"
+    # The memory member re-declares a record the runtime member declares.
+    text = memory.read_text()
+    assert "#### On RTE-1 — Fixture route" in text
+    memory.write_text(text.replace("#### On RTE-1 — Fixture route", "#### RTE-1 — Fixture route"))
+    overview = run_dir / "overview.md"
+    replace_frontmatter(overview, {**frontmatter(overview), "members": [
+        {"path": name, "sha256": digest(run_dir / name), "type": MEMBER_TYPES[name]}
+        for name in MEMBER_TYPES
+    ]})
+    retain_set(tmp_path, run_dir)
+    review = tmp_path / REVIEW_PATH
+    replace_frontmatter(review, {**frontmatter(review), "analysis-overview-sha256": digest(overview)})
+    values = frontmatter(state)
+    values["overview"]["sha256"] = digest(overview)
+    values["generated-review"]["sha256"] = digest(review)
+    replace_frontmatter(state, values)
+    assert validation.validate_note(state, repo_root=tmp_path).fails == []
+
+    assert len(systems_matrix.load_results(tmp_path).rows) == 1
 
 
 def test_comparison_population_must_select_one_review_per_source(tmp_path):
