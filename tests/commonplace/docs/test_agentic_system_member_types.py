@@ -2,8 +2,6 @@ from __future__ import annotations
 
 from pathlib import Path
 
-import pytest
-
 from commonplace.lib import validation
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
@@ -30,12 +28,6 @@ inputs-commit: "{INPUTS_COMMIT}"
 ---
 
 # Example System agentic-system analysis
-
-## Run identity
-
-**Run state:** `kb/reports/state/agentic-system-analysis/{RUN_ID}/run-state.md`
-
-**Generated review:** `kb/agentic-systems/reviews/example-system.md`
 
 ## Boundary and evidence
 
@@ -220,17 +212,14 @@ def test_overview_requires_the_canonical_section_order(tmp_path: Path) -> None:
     assert any("canonical reading order" in failure for failure in results.fails)
 
 
-@pytest.mark.parametrize(
-    "line",
-    [
-        f"**Run state:** `kb/reports/state/agentic-system-analysis/{RUN_ID}/run-state.md`\n\n",
-        "**Generated review:** `kb/agentic-systems/reviews/example-system.md`\n\n",
-    ],
-)
-def test_overview_requires_each_run_identity_field(tmp_path: Path, line: str) -> None:
-    results = validate(tmp_path, "overview.md", overview_text().replace(line, ""))
-    assert len(results.fails) == 1
-    assert "Run identity" in results.fails[0]
+def test_overview_has_no_run_identity_section(tmp_path: Path) -> None:
+    content = overview_text().replace(
+        "## Boundary and evidence",
+        "## Run identity\n\nRun-state and review paths.\n\n## Boundary and evidence",
+        1,
+    )
+    results = validate(tmp_path, "overview.md", content)
+    assert results.fails
 
 
 def test_runtime_report_validates(tmp_path: Path) -> None:

@@ -389,12 +389,6 @@ inputs-commit: {inputs_commit}
 
 # Example System agentic-system analysis
 
-## Run identity
-
-**Run state:** `kb/reports/state/agentic-system-analysis/{RUN_ID}/run-state.md`
-
-**Generated review:** `{REVIEW_PATH}`
-
 ## Boundary and evidence
 
 Fixture boundary at `{revision}`.
@@ -814,13 +808,6 @@ def test_blocked_overview_completes_without_members_or_public_review(tmp_path: P
     state = valid_run_state(tmp_path)
     values = frontmatter(state)
     overview = state.parent / "output/overview.md"
-    overview.write_text(
-        overview.read_text(encoding="utf-8").replace(
-            f"**Generated review:** `{REVIEW_PATH}`",
-            "**Generated review:** not applicable",
-        ),
-        encoding="utf-8",
-    )
     replace_frontmatter(overview, {
         **frontmatter(overview), "result-disposition": disposition, "target-class": None,
         "boundary-kind": None, "reviewed-boundary": None, "analysis-cutoff": None,

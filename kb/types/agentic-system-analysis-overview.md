@@ -125,13 +125,6 @@ never replaces the operational account.
 
 ## Required sections
 
-### Run identity
-
-`## Run identity` projects the frontmatter identity for readers and
-states the intended run-state path and the generated review path, or `not
-applicable` for a blocked or out-of-scope run. These name intended
-destinations; only the run state declares that publication completed.
-
 ### Boundary and evidence
 
 `## Boundary and evidence` states the intended use, target classification,
@@ -267,12 +260,6 @@ inputs-commit: "{full commit of this repository at run start}"
 ---
 
 # {System} agentic-system analysis
-
-## Run identity
-
-**Run state:** `kb/reports/state/agentic-system-analysis/{run-id}/run-state.md`
-
-**Generated review:** {`kb/agentic-systems/reviews/<system-slug>.md` | not applicable}
 
 ## Boundary and evidence
 

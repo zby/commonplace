@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import re
 import subprocess
 from collections.abc import Mapping
 from dataclasses import dataclass
@@ -559,41 +558,6 @@ def render_agentic_analysis_handoff(state: AgenticAnalysisRunState) -> str:
     )
 
 
-def _run_identity_value(body: str, label: str) -> str | None:
-    match = re.search(rf"(?m)^\*\*{re.escape(label)}:\*\*\s+(.+?)\s*$", body)
-    if match is None:
-        return None
-    value = match.group(1).strip()
-    if value.startswith("`") and value.endswith("`"):
-        value = value[1:-1]
-    return value
-
-
-def _verify_overview_projection_paths(
-    state: AgenticAnalysisRunState,
-    overview_body: str,
-) -> tuple[list[str], list[str]]:
-    expected = {
-        "Run state": state.path.relative_to(state.repo_root).as_posix(),
-        "Generated review": (
-            state.generated_review.display_path
-            if state.generated_review is not None
-            else "not applicable"
-        ),
-    }
-    failures: list[str] = []
-    for label, expected_value in expected.items():
-        actual = _run_identity_value(overview_body, label)
-        if actual != expected_value:
-            failures.append(
-                f"overview: {label.lower()} projection is {actual!r}, "
-                f"expected {expected_value!r}"
-            )
-    if failures:
-        return [], failures
-    return ["overview: intended publication paths match run state"], []
-
-
 def _verify_memory_member(
     state: AgenticAnalysisRunState, member_set: MemberSet
 ) -> tuple[list[str], list[str]]:
@@ -691,11 +655,6 @@ def verify_agentic_analysis_run_state(
         failures.append("overview: reviewed-boundary does not match frozen source")
     if not any(message.startswith("overview:") for message in failures):
         passes.append("overview: workflow identity matches run state")
-    projection_passes, projection_failures = _verify_overview_projection_paths(
-        state, member_set.overview.body
-    )
-    passes.extend(projection_passes)
-    failures.extend(projection_failures)
 
     if state.result_disposition == "complete" and member_set.memory is not None:
         passes.append("member set: manifest members present, hashed and typed")
