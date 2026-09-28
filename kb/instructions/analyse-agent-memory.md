@@ -67,8 +67,9 @@ Source register requires with
 [`commonplace-quote`](../reference/commands.md#commonplace-quote):
 `commonplace-quote <sibling-run-state-path> --source-path <commit-relative-path>
 --text-file <selection-file>`, omitting `--source-path` for the frozen
-capture. Choose the occurrence whose context supports the finding and insert
-its citation unchanged. Request discontiguous passages separately. A failed
+capture, or `--selections <json-file>` to resolve many selections across
+files in one call. Choose the occurrence whose context supports the finding
+and insert its citation unchanged. Request discontiguous passages separately. A failed
 lookup requires rereading the source and revising the selection; never format
 a citation, strip source characters, or calculate a range by hand. Assess
 semantic support yourself; publication validates the assembled bundle, so run

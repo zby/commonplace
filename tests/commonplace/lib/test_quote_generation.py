@@ -4,6 +4,7 @@ import pytest
 
 from commonplace.lib.agentic_analysis import SourceIdentity, _verify_quote_anchors
 from commonplace.lib.quote_generation import (
+    generate_quote_batch,
     generate_quotes,
     quote_occurrences,
     render_quote,
@@ -140,3 +141,59 @@ def test_generation_output_and_ambiguity_limit(tmp_path, count):
 def test_occurrence_limit_counts_overlapping_matches():
     with pytest.raises(ValueError, match="more than 10 occurrences"):
         quote_occurrences("aa", "a" * 12)
+
+
+def capture_source(tmp_path, text):
+    snapshot = tmp_path / "source.md"
+    snapshot.write_text(text)
+    return SourceIdentity(
+        "capture", "doc", "capture", snapshot, sha256(snapshot.read_bytes()).hexdigest()
+    )
+
+
+def test_batch_resolves_each_key_independently(tmp_path):
+    source = capture_source(tmp_path, "unique line\nrepeated\nrepeated\n")
+    results = generate_quote_batch(
+        [
+            {"key": "one", "text": "unique line"},
+            {"key": "two", "text": "repeated", "source_path": None},
+            {"key": "missing", "text": "absent text"},
+            {"key": "bad", "text": 7},
+        ],
+        source=source,
+    )
+    assert list(results) == ["one", "two", "missing", "bad"]
+    assert results["one"]["status"] == "citation"
+    assert results["one"]["citation"] == generate_quotes("unique line", source=source)
+    assert results["two"]["status"] == "candidates"
+    assert [c["start_line"] for c in results["two"]["occurrences"]] == [2, 3]
+    assert results["missing"] == {
+        "status": "error", "error": "requested text does not occur in the frozen source",
+    }
+    assert results["bad"] == {"status": "error", "error": "text must be a string"}
+
+
+@pytest.mark.parametrize(
+    "selections,message",
+    [
+        ([], "nonempty JSON list"),
+        ({"key": "x", "text": "y"}, "nonempty JSON list"),
+        (["text"], "not a JSON object"),
+        ([{"text": "unique"}], "nonempty string key"),
+        ([{"key": "", "text": "unique"}], "nonempty string key"),
+        ([{"key": "a", "text": "unique"}, {"key": "a", "text": "unique"}], "not unique"),
+    ],
+)
+def test_malformed_batch_is_rejected_as_a_whole(tmp_path, selections, message):
+    source = capture_source(tmp_path, "unique\n")
+    with pytest.raises(ValueError, match=message):
+        generate_quote_batch(selections, source=source)
+
+
+def test_batch_source_path_rules_follow_the_source_kind(tmp_path):
+    source = capture_source(tmp_path, "unique\n")
+    results = generate_quote_batch(
+        [{"key": "a", "text": "unique", "source_path": "README.md"}], source=source
+    )
+    assert results["a"]["status"] == "error"
+    assert "omit --source-path" in results["a"]["error"]

@@ -105,17 +105,10 @@ def render_quote(occurrence: QuoteOccurrence, *, path: str, version: str) -> str
     return "\n".join(lines) + "\n"
 
 
-def generate_quotes(
-    text: str,
-    *,
-    source: SourceIdentity,
-    source_path: str | None = None,
-) -> str | dict[str, object]:
-    """Emit a citation, or selection metadata for two to ten occurrences.
-
-    This constructs citations; it does not validate a document or accept an
-    author-supplied citation. The regular validator owns document verification.
-    """
+def _frozen_source_text(
+    source: SourceIdentity, source_path: str | None
+) -> tuple[str, str, str]:
+    """Return the frozen text plus the path and version its citations carry."""
     if source.kind == "git":
         if not source_path:
             raise ValueError("Git quotation generation requires --source-path")
@@ -126,8 +119,8 @@ def generate_quotes(
         )
         if error or content is None:
             raise ValueError(f"cannot read frozen source: {error}")
-        path, version = source_path, source.revision
-    elif source.kind == "capture":
+        return content, source_path, source.revision
+    if source.kind == "capture":
         if source_path is not None:
             raise ValueError(
                 "capture quotation generation uses the run's capture; omit --source-path"
@@ -135,10 +128,17 @@ def generate_quotes(
         raw = source.path.read_bytes()
         if sha256(raw).hexdigest() != source.expected_sha256:
             raise ValueError("frozen capture SHA-256 mismatch")
-        content = raw.decode("utf-8")
-        path, version = source.path.as_posix(), f"sha256:{source.expected_sha256}"
-    else:
-        raise ValueError(f"unsupported source kind: {source.kind}")
+        return (
+            raw.decode("utf-8"),
+            source.path.as_posix(),
+            f"sha256:{source.expected_sha256}",
+        )
+    raise ValueError(f"unsupported source kind: {source.kind}")
+
+
+def _quote_payload(
+    text: str, *, content: str, path: str, version: str
+) -> str | dict[str, object]:
     occurrences = quote_occurrences(text, content)
     if not occurrences:
         raise ValueError("requested text does not occur in the frozen source")
@@ -157,3 +157,78 @@ def generate_quotes(
             for index, occurrence in enumerate(occurrences, 1)
         ],
     }
+
+
+def generate_quotes(
+    text: str,
+    *,
+    source: SourceIdentity,
+    source_path: str | None = None,
+) -> str | dict[str, object]:
+    """Emit a citation, or selection metadata for two to ten occurrences.
+
+    This constructs citations; it does not validate a document or accept an
+    author-supplied citation. The regular validator owns document verification.
+    """
+    content, path, version = _frozen_source_text(source, source_path)
+    return _quote_payload(text, content=content, path=path, version=version)
+
+
+def generate_quote_batch(
+    selections: object, *, source: SourceIdentity
+) -> dict[str, dict[str, object]]:
+    """Resolve many selections against one frozen source in one call.
+
+    ``selections`` is a JSON list of objects with a unique nonempty ``key``,
+    the selected ``text``, and ``source_path`` (a commit-relative Git path;
+    omitted or null for a capture). Each key maps to one of:
+    ``{"status": "citation", "citation": ...}`` for a unique occurrence,
+    ``{"status": "candidates", "occurrences": [...]}`` for two to ten, or
+    ``{"status": "error", "error": ...}`` when the selection cannot be
+    resolved. A malformed list is rejected as a whole; a bad entry only
+    fails its own key.
+    """
+    if not isinstance(selections, list) or not selections:
+        raise ValueError("selections must be a nonempty JSON list")
+    results: dict[str, dict[str, object]] = {}
+    sources: dict[str | None, tuple[str, str, str] | str] = {}
+    for index, entry in enumerate(selections, 1):
+        if not isinstance(entry, dict):
+            raise ValueError(f"selection {index} is not a JSON object")  # noqa: TRY004
+        key = entry.get("key")
+        if not isinstance(key, str) or not key.strip():
+            raise ValueError(f"selection {index} has no nonempty string key")
+        if key in results:
+            raise ValueError(f"selection key {key!r} is not unique")
+        text = entry.get("text")
+        source_path = entry.get("source_path")
+        if not isinstance(text, str):
+            results[key] = {"status": "error", "error": "text must be a string"}
+            continue
+        if source_path is not None and not isinstance(source_path, str):
+            results[key] = {
+                "status": "error", "error": "source_path must be a string or null",
+            }
+            continue
+        if source_path not in sources:
+            try:
+                sources[source_path] = _frozen_source_text(source, source_path)
+            except (OSError, ValueError, UnicodeDecodeError) as exc:
+                sources[source_path] = str(exc)
+        loaded = sources[source_path]
+        if isinstance(loaded, str):
+            results[key] = {"status": "error", "error": loaded}
+            continue
+        content, path, version = loaded
+        try:
+            payload = _quote_payload(
+                text, content=content, path=path, version=version
+            )
+        except ValueError as exc:
+            results[key] = {"status": "error", "error": str(exc)}
+            continue
+        if isinstance(payload, str):
+            results[key] = {"status": "citation", "citation": payload}
+        else:
+            results[key] = {"status": "candidates", **payload}
+    return results

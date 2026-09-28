@@ -1466,6 +1466,47 @@ def test_quote_cli_emits_candidates_or_requests_longer_selection(tmp_path, capsy
         assert "more than 10 occurrences; choose a longer quote" in output.err
 
 
+def test_quote_cli_resolves_a_selection_list_in_one_call(tmp_path, capsys):
+    state, _, _ = publication_fixture(tmp_path)
+    root = Path(frontmatter(state)["source"]["path"])
+    revision = frontmatter(state)["source"]["revision"]
+    selections = write(tmp_path / "selections.json", json.dumps([
+        {"key": "readme", "source_path": "README.md", "text": "Frozen source"},
+        {"key": "absent", "source_path": "README.md", "text": "not in source"},
+        {"key": "nofile", "source_path": "missing.md", "text": "Frozen source"},
+    ]))
+    status = quote.main([str(state), "--selections", str(selections)], cwd=tmp_path)
+    output = capsys.readouterr()
+    assert status == 2
+    results = json.loads(output.out)
+    assert results["readme"] == {
+        "status": "citation",
+        "citation": f"> Frozen source\n> --- `README.md:1-1` @ `{revision}`\n",
+    }
+    assert results["absent"]["status"] == "error"
+    assert results["nofile"]["status"] == "error"
+    assert "2 of 3 selections need attention: absent (error), nofile (error)" in output.err
+    assert root.exists()
+
+    single = write(tmp_path / "single.json", json.dumps(
+        [{"key": "readme", "source_path": "README.md", "text": "Frozen source"}]
+    ))
+    assert quote.main([str(state), "--selections", str(single)], cwd=tmp_path) == 0
+    output = capsys.readouterr()
+    assert not output.err
+    assert json.loads(output.out)["readme"]["status"] == "citation"
+
+
+def test_quote_cli_rejects_mixed_selection_and_single_arguments(tmp_path):
+    state, _, _ = publication_fixture(tmp_path)
+    selections = write(tmp_path / "selections.json", "[]")
+    with pytest.raises(SystemExit):
+        quote.main(
+            [str(state), "--selections", str(selections), "--source-path", "README.md"],
+            cwd=tmp_path,
+        )
+
+
 def test_generated_source_links_publish_through_regular_validator(tmp_path, monkeypatch):
     original_checkout = git_checkout
     foreign = "https://github.com/other/repo/blob/" + "b" * 40 + "/example.md#L1"

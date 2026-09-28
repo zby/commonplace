@@ -119,6 +119,16 @@ Publication uses the regular validator. Use `--text-file` or stdin for
 selected text to avoid shell quoting, and omit `--source-path` when the run's
 source is a capture rather than a Git blob.
 
+To resolve many selections in one call, pass `--selections <file>` instead: a
+JSON list of objects with a unique `key`, the selected `text`, and
+`source_path` (omitted or null for a capture). The output is a JSON object
+keyed by selection; each value has `status: citation` with the citation to
+insert unchanged, `status: candidates` with the same occurrence list as the
+single-selection case, or `status: error` with the reason. Exit status 0 means
+every key resolved to a citation; 2 means at least one key needs a choice or
+failed, and stderr names them; 1 is a malformed list or an unusable run state.
+Each source file is read once per call.
+
 ### Generated indexes (no command)
 
 Complete `dir-index.md` listings and generated tag tails have no rebuild
