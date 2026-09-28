@@ -178,3 +178,11 @@ def test_partial_negative_does_not_establish_absence():
     data["axes"]["trace_learning"]["assessment"] = "partial"
     with pytest.raises(ValueError, match="partial coverage cannot establish no"):
         sm.validate_comparison(data, BODY)
+
+
+def test_known_ids_replace_the_body_declarations():
+    data = profile()
+    data["axes"]["storage_substrate"] = known(["files"], records=["RTE-7"])
+    with pytest.raises(ValueError, match="unresolved"):
+        sm.validate_comparison(data, BODY)
+    assert sm.validate_comparison(data, BODY, known_ids={"RTE-7"}) == data

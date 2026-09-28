@@ -117,9 +117,18 @@ def _strings(value: object, label: str) -> list[str]:
 
 
 def validate_comparison(
-    profile: object, body: str, *, memory_report: bool = False
+    profile: object,
+    body: str,
+    *,
+    memory_report: bool = False,
+    known_ids: set[str] | None = None,
 ) -> dict:
-    """Validate authored assessments and references, without classifying prose."""
+    """Validate authored assessments and references, without classifying prose.
+
+    ``known_ids`` replaces the IDs parsed from the body's Shared records: a
+    finalized memory member cites records other members declare, and a set
+    verifier supplies the whole set's declarations.
+    """
     if not isinstance(profile, dict) or set(profile) != {"scope", "axes"}:
         raise ValueError("memory-comparison requires exactly scope and axes")
     if not isinstance(profile["scope"], str) or not profile["scope"].strip():
@@ -138,7 +147,7 @@ def validate_comparison(
     )
     shared = shared_match.group(1) if shared_match else ""
     record_prefix = r"(?:MEM-)?" if memory_report else ""
-    ids = set(
+    ids = known_ids if known_ids is not None else set(
         re.findall(
             rf"(?m)^\s*(?:\|\s*|[-*]\s+|#{{3,6}}\s+)?[*`]*({record_prefix}(?:CMP|OBJ|RTE|CLM|ABS|BAP)-\d+)\b",
             shared,

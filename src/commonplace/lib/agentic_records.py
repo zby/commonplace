@@ -11,6 +11,8 @@ _REFERENCE = re.compile(rf"(?<![\w-])({_ID})(?![\w-])")
 _DECLARATION = re.compile(
     rf"(?m)^[ \t]*(?:\|[ \t]*|[-*][ \t]+|#{{3,6}}[ \t]+)?[*`]*({_ID})(?![\w-])"
 )
+_ANNOTATION = re.compile(rf"(?m)^[ \t]*#{{3,6}}[ \t]+On[ \t]+({_ID})(?![\w-])")
+_PROPOSAL = re.compile(rf"\b(?:MEM|EPI)-(?:{_ID}|[OCRSAB]\d+)\b")
 _SHORTHAND = re.compile(
     rf"(?<![\w-])(?:(?:MEM|EPI)-)?{_ID}[*`]*[ \t]*"
     rf"(?:[/,][ \t]*[*`]*(?:[OCRSAB]\d+|{_KINDS}\d+|\d+)"
@@ -43,7 +45,40 @@ def _section(body: str, title: str) -> str:
     return match[1] if match else ""
 
 
-def record_reference_errors(body: str, *, memory_report: bool = False) -> list[str]:
+def declared_ids(body: str) -> list[str]:
+    """IDs declared under Shared records, in order, with repeats kept.
+
+    An annotation heading (`#### On OBJ-1 — label`) is not a declaration.
+    """
+    return _DECLARATION.findall(_section(_analysis_prose(body), "Shared records"))
+
+
+def annotated_ids(body: str) -> set[str]:
+    """IDs a member annotates with `On <ID>` headings without declaring them."""
+    return set(_ANNOTATION.findall(_analysis_prose(body)))
+
+
+def source_ids(body: str) -> set[str]:
+    return {value for value in _REFERENCE.findall(
+        _section(_analysis_prose(body), "Source register")
+    ) if value.startswith("SRC-")}
+
+
+def referenced_ids(body: str) -> set[str]:
+    return set(_REFERENCE.findall(_analysis_prose(body)))
+
+
+def record_reference_errors(
+    body: str, *, memory_report: bool = False, member: bool = False
+) -> list[str]:
+    """Check one document's record syntax.
+
+    ``memory_report`` is the specialist's local report: it may reference
+    commissioned IDs it does not declare. ``member`` is one member of a
+    retained set validated alone: its declarations and syntax are checked,
+    but references are resolved only against the whole set by
+    ``set_record_errors``.
+    """
     prose = _analysis_prose(body)
     errors = []
     for match in _SHORTHAND.finditer(prose):
@@ -58,23 +93,56 @@ def record_reference_errors(body: str, *, memory_report: bool = False) -> list[s
     outside_reconciliation = re.sub(
         r"(?ms)^## Reconciliation[ \t]*\n.*?(?=^## |\Z)", "", prose
     )
-    local_records = sorted(set(re.findall(
-        rf"\b(?:MEM|EPI)-(?:{_ID}|[OCRSAB]\d+)\b", outside_reconciliation
-    )))
+    local_records = sorted(set(_PROPOSAL.findall(outside_reconciliation)))
     if local_records:
         errors.append(
             "record references: unintegrated proposal IDs outside Reconciliation: "
             + ", ".join(local_records)
         )
-    shared = _section(prose, "Shared records")
-    declarations = _DECLARATION.findall(shared)
+    declarations = _DECLARATION.findall(_section(prose, "Shared records"))
     repeated = sorted(key for key, count in Counter(declarations).items() if count > 1)
     if repeated:
         errors.append("record references: duplicate declarations: " + ", ".join(repeated))
-    sources = {value for value in _REFERENCE.findall(_section(prose, "Source register"))
-               if value.startswith("SRC-")}
-    defined = set(declarations) | sources
+    if member:
+        return errors
+    defined = set(declarations) | source_ids(body)
     unresolved = sorted(set(_REFERENCE.findall(prose)) - defined)
     if unresolved:
         errors.append("record references: unresolved IDs: " + ", ".join(unresolved))
+    return errors
+
+
+def set_record_errors(members: dict[str, str], *, register_body: str) -> list[str]:
+    """Check declarations and references across the members of one retained set.
+
+    ``members`` maps a member's display name to its body. ``register_body`` is
+    the overview body whose Source register declares the ``SRC-*`` IDs. Every
+    other ID is declared exactly once across the members; every reference in
+    any member resolves to a declaration in the set; no proposal ID survives
+    finalization in any member.
+    """
+    errors: list[str] = []
+    owners: dict[str, list[str]] = {}
+    for name, body in members.items():
+        for identifier in declared_ids(body):
+            owners.setdefault(identifier, []).append(name)
+    for identifier, names in sorted(owners.items()):
+        if len(names) > 1:
+            errors.append(
+                f"record references: {identifier} declared in more than one member: "
+                + ", ".join(names)
+            )
+    defined = set(owners) | source_ids(register_body)
+    for name, body in members.items():
+        leaked = sorted(set(_PROPOSAL.findall(_analysis_prose(body))))
+        if leaked:
+            errors.append(
+                f"record references: {name}: proposal IDs survive finalization: "
+                + ", ".join(leaked)
+            )
+        unresolved = sorted(referenced_ids(body) - defined)
+        if unresolved:
+            errors.append(
+                f"record references: {name}: unresolved IDs: " + ", ".join(unresolved)
+            )
     return errors

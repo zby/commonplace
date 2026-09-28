@@ -920,16 +920,32 @@ def _quote_citation_rule(
     validate_quote_citations(results, parsed.content)
 
 
+MEMBER_TYPES = frozenset({
+    "types/agentic-system-runtime-report.md",
+    "types/agentic-system-epistemic-report.md",
+})
+
+
 @type_rule("types/agentic-system-analysis-result.md")
 @type_rule("types/agent-memory-analysis-report.md")
+@type_rule("types/agentic-system-runtime-report.md")
+@type_rule("types/agentic-system-epistemic-report.md")
 def _agentic_evidence_and_references_rule(
     results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
 ) -> None:
     from commonplace.lib.agentic_records import record_reference_errors
 
     metadata = parsed.document.frontmatter or {}
-    is_report = metadata.get("type") == "types/agent-memory-analysis-report.md"
-    errors = record_reference_errors(parsed.document.body, memory_report=is_report)
+    note_type = metadata.get("type")
+    is_report = note_type == "types/agent-memory-analysis-report.md"
+    finalized = is_report and isinstance(metadata.get("finalized-from"), str)
+    # A member validated alone cannot resolve references the set declares
+    # elsewhere; the set verifier does that. The single-file result and the
+    # specialist's local report keep their own resolution rules.
+    member = note_type in MEMBER_TYPES or finalized
+    errors = record_reference_errors(
+        parsed.document.body, memory_report=is_report and not finalized, member=member
+    )
     results.fails.extend(errors)
     if not errors:
         results.passes.append("record references: explicit IDs and declarations checked")
@@ -965,13 +981,18 @@ def _agentic_comparison_rule(
 def _memory_report_comparison_rule(
     results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
 ) -> None:
+    from commonplace.lib.agentic_records import annotated_ids, declared_ids
     from commonplace.lib.systems_matrix import validate_comparison
 
     metadata = parsed.document.frontmatter or {}
+    body = parsed.document.body
+    finalized = isinstance(metadata.get("finalized-from"), str)
+    # A finalized member cites seeded records through its annotations.
+    known = set(declared_ids(body)) | annotated_ids(body) if finalized else None
     try:
         validate_comparison(
-            metadata.get("memory-comparison"), parsed.document.body,
-            memory_report=True,
+            metadata.get("memory-comparison"), body,
+            memory_report=not finalized, known_ids=known,
         )
     except ValueError as exc:
         results.fails.append(f"memory comparison: {exc}")

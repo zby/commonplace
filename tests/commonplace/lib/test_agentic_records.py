@@ -2,7 +2,12 @@ from __future__ import annotations
 
 import pytest
 
-from commonplace.lib.agentic_records import record_reference_errors
+from commonplace.lib.agentic_records import (
+    annotated_ids,
+    declared_ids,
+    record_reference_errors,
+    set_record_errors,
+)
 
 BASE = """# Example
 
@@ -73,3 +78,78 @@ def test_result_rejects_unintegrated_proposal_records() -> None:
 
 def test_result_allows_explicit_proposal_mapping_in_reconciliation() -> None:
     assert record_reference_errors(BASE + "## Reconciliation\n\nMEM-OBJ-1 maps to OBJ-1.\n") == []
+
+
+RUNTIME = """# Runtime
+
+## Shared records
+
+### Routes
+
+#### RTE-1 — Ordinary invocation
+
+Record citing SRC-1.
+
+## Annotations
+
+#### On RTE-10 — Benchmark import
+
+Theory-route overlay on the memory route RTE-10.
+"""
+
+MEMORY = """# Memory
+
+## Shared records
+
+### Routes
+
+#### On RTE-1 — Ordinary invocation
+
+Memory fields on the seeded route.
+
+#### RTE-10 — Benchmark import
+
+Record citing SRC-2 and OBJ-1.
+"""
+
+OVERVIEW = """# Overview
+
+## Source register
+
+| SRC-1 | Git | x |
+| SRC-2 | Git | y |
+"""
+
+
+def test_annotation_headings_are_not_declarations() -> None:
+    assert declared_ids(MEMORY) == ["RTE-10"]
+    assert annotated_ids(MEMORY) == {"RTE-1"}
+    assert declared_ids(RUNTIME) == ["RTE-1"]
+
+
+def test_member_mode_checks_syntax_but_leaves_resolution_to_the_set() -> None:
+    assert record_reference_errors(RUNTIME, member=True) == []
+    assert any("unresolved" in error for error in record_reference_errors(RUNTIME))
+
+
+def test_set_resolves_references_across_members() -> None:
+    errors = set_record_errors(
+        {"runtime.md": RUNTIME, "memory.md": MEMORY}, register_body=OVERVIEW
+    )
+    assert errors == ["record references: memory.md: unresolved IDs: OBJ-1"]
+
+
+def test_set_rejects_a_record_declared_in_two_members() -> None:
+    twice = MEMORY.replace("#### RTE-10 — Benchmark import", "#### RTE-1 — Again")
+    errors = set_record_errors(
+        {"runtime.md": RUNTIME, "memory.md": twice}, register_body=OVERVIEW
+    )
+    assert any("RTE-1 declared in more than one member" in error for error in errors)
+
+
+def test_set_rejects_surviving_proposal_ids() -> None:
+    leaked = MEMORY.replace("OBJ-1", "MEM-OBJ-1")
+    errors = set_record_errors(
+        {"runtime.md": RUNTIME, "memory.md": leaked}, register_body=OVERVIEW
+    )
+    assert any("proposal IDs survive finalization: MEM-OBJ-1" in error for error in errors)
