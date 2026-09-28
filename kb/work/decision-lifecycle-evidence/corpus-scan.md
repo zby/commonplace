@@ -44,7 +44,7 @@ selection, not a judgment about their wider value.
 
 ### WikiSkill: intervention history survives candidate rejection
 
-The [paper-based exact analysis](../../reports/retained/agentic-system-analysis/AAS-2026-09-25-wikiskill-01/result.md)
+The [paper-based exact analysis](../../reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-wikiskill-01/result.md)
 describes separate execution traces, wiki explanations, accepted skills,
 `PURPOSE.md` rationale, and `skill-impact.md` intervention history
 (`OBJ-1`–`OBJ-8`). The impact record carries proposal metadata, target, diff,
@@ -57,7 +57,7 @@ doc-grounded, with routes marked claimed and implementation uninspected.
 Later consumption of `PURPOSE.md` is also uninspected. It does not show an ADR
 generated from that history.
 
-The separate [stahl-g WikiSkill implementation analysis](../../reports/retained/agentic-system-analysis/AAS-2026-09-17-wikiskill-stahl-g-01/result.md)
+The separate [stahl-g WikiSkill implementation analysis](../../reports/retained/agentic-system-analysis-archive/AAS-2026-09-17-wikiskill-stahl-g-01/result.md)
 provides a code-grounded comparison. Candidate bytes and a note survive
 independently of adoption (`RTE-3`). Export and installation are distinct from
 loop completion (`RTE-4`–`RTE-5`). Event history preserves earlier content.
@@ -69,7 +69,7 @@ proof that the retained reasons improve later work.
 
 ### Ecdysis: deliberation and outcome records can remain disconnected
 
-The [exact analysis](../../reports/retained/agentic-system-analysis/AAS-2026-09-25-ecdysis-01/result.md)
+The [exact analysis](../../reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-ecdysis-01/result.md)
 records a review dialogue and modification specification (`OBJ-3`), round
 decisions (`OBJ-5`), and optional checkpoint state (`OBJ-7`, `RTE-9`). The
 dialogue contains diagnoses, objections, and disputed edits; rationale is
@@ -85,7 +85,7 @@ candidate's successful causal chain.
 
 ### EvoOntology: a hypothesis precedes candidate evaluation
 
-The [exact analysis](../../reports/retained/agentic-system-analysis/AAS-2026-09-25-evoontology-01/result.md),
+The [exact analysis](../../reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-evoontology-01/result.md),
 the hypothesis route before `RTE-5` and `RTE-5` itself, describes instructions
 to state a limitation, proposed cause, expected change, and possible refuting
 evidence. Hypotheses, rejection notes, and evidence references persist.
@@ -124,7 +124,7 @@ completion, eligibility, deployment, and benefit need different evidence.
 
 Two further leads qualify what “we recorded the experiment” means:
 
-- [oh-my-pi's exact analysis](../../reports/retained/agentic-system-analysis/AAS-2026-09-05-oh-my-pi-02/result.md),
+- [oh-my-pi's exact analysis](../../reports/retained/agentic-system-analysis-archive/AAS-2026-09-05-oh-my-pi-02/result.md),
   `RTE-8`, `RTE-9`, `RTE-31`, and `RTE-32`: measurements, model-supplied
   disposition, Git consequences, iteration notes, and approved-plan reload
   are separate routes. A logged keep is not automatically a verified gain;

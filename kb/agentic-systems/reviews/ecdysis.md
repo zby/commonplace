@@ -5,7 +5,7 @@ generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-25-ecdysis-01
 source-identity: https://github.com/cuiyu-ai/Ecdysis
 reviewed-revision: cf93866d545b0974dbb0bc83b39c31fbbdeeecb8
-analysis-result: kb/reports/retained/agentic-system-analysis/AAS-2026-09-25-ecdysis-01/result.md
+analysis-result: kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-ecdysis-01/result.md
 analysis-result-sha256: fc2ef3c6a009d4d93c1da5b9aa61d3bf112f95bf50a9c88736d4e336f8979533
 ---
 
@@ -13,7 +13,7 @@ analysis-result-sha256: fc2ef3c6a009d4d93c1da5b9aa61d3bf112f95bf50a9c88736d4e336
 
 Evidence basis: source code, repository documentation and prospective tests at commit `cf93866d545b0974dbb0bc83b39c31fbbdeeecb8`, inspected 2026-09-25; no target execution or author experiment was observed.
 
-Ecdysis supplies a training controller that turns scored failures into proposed harness repairs, delegates their implementation, and retains a candidate only when its supplied score improves. Its shipped artifact is a **builder or improvement plane** with a **complete artifact, partial loop** boundary: the task model, collector, editor, scorer and executor are external callbacks. The package wires their coordination, including model-based diagnosis, but cannot establish the behavior of an arbitrary returned harness. See [exact analysis](../../reports/retained/agentic-system-analysis/AAS-2026-09-25-ecdysis-01/result.md) — see-also: source excerpts, canonical records and both mandatory lenses.
+Ecdysis supplies a training controller that turns scored failures into proposed harness repairs, delegates their implementation, and retains a candidate only when its supplied score improves. Its shipped artifact is a **builder or improvement plane** with a **complete artifact, partial loop** boundary: the task model, collector, editor, scorer and executor are external callbacks. The package wires their coordination, including model-based diagnosis, but cannot establish the behavior of an arbitrary returned harness. See [exact analysis](../../reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-ecdysis-01/result.md) — see-also: source excerpts, canonical records and both mandatory lenses.
 
 ## Execution and acceptance
 

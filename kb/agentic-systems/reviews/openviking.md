@@ -6,7 +6,7 @@ generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-25-openviking-01
 source-identity: https://github.com/volcengine/OpenViking
 reviewed-revision: 4edc30b068934893bc94a4e1b8e87bab2100bce5
-analysis-result: kb/reports/retained/agentic-system-analysis/AAS-2026-09-25-openviking-01/result.md
+analysis-result: kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-openviking-01/result.md
 analysis-result-sha256: 1e8ba47630396c1649ccfa715649a31185f4c74fa14446e52226a189993a63af
 ---
 
@@ -14,7 +14,7 @@ analysis-result-sha256: 1e8ba47630396c1649ccfa715649a31185f4c74fa14446e52226a189
 
 Evidence basis: implementation and shipped documentation at [4edc30b068934893bc94a4e1b8e87bab2100bce5](https://github.com/volcengine/OpenViking/tree/4edc30b068934893bc94a4e1b8e87bab2100bce5), inspected 2026-09-25. No system execution or causal experiment was performed.
 
-OpenViking's inspected subsystem converts session traces into retained continuation and user-memory material, then serves it to later model/client consumers. Session commit has two distinct outcomes: it first archives and queues work, then background processing generates summaries and applies memory operations. The returned task handle reports archive acceptance; it does not establish completed extraction. See RTE-2 in the [exact analysis](../../reports/retained/agentic-system-analysis/AAS-2026-09-25-openviking-01/result.md).
+OpenViking's inspected subsystem converts session traces into retained continuation and user-memory material, then serves it to later model/client consumers. Session commit has two distinct outcomes: it first archives and queues work, then background processing generates summaries and applies memory operations. The returned task handle reports archive acceptance; it does not establish completed extraction. See RTE-2 in the [exact analysis](../../reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-openviking-01/result.md).
 
 > "status": "accepted",
 > "task_id": task_id,

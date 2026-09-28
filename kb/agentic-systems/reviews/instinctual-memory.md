@@ -6,7 +6,7 @@ generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-25-instinctual-memory-01
 source-identity: https://github.com/jasonkneen/instinctual-memory
 reviewed-revision: 6acb13dc35765bf5ccfc87e445dd09c480f1c28a
-analysis-result: kb/reports/retained/agentic-system-analysis/AAS-2026-09-25-instinctual-memory-01/result.md
+analysis-result: kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-instinctual-memory-01/result.md
 analysis-result-sha256: bce3cf2b188d9e155481ac02d7711d018598ab6876ced5a8fdca8c81c94dcb06
 ---
 
@@ -24,4 +24,4 @@ Withdrawal differs across these consumers. Suppressing a curated fact does not i
 
 The strongest supported contribution is reusable trace-derived knowledge with explicit admission, provenance and consumer routes. This satisfies the analysis's bounded trace-learning criterion; it does not establish conjectural learning or improved host capacity. Progress/control state supports narrow reflection on processing state. Self-improvement and faithful downstream use remain uninspected: the evaluation command scores retrieval against caller-provided IDs and text conditions, without a retained host dependence experiment.
 
-The [exact result](../../reports/retained/agentic-system-analysis/AAS-2026-09-25-instinctual-memory-01/result.md) retains the canonical records, quotes, full memory comparison and epistemic assessment. Candidate-linked source audits, host recall interventions and fault/concurrency traces would change these limits.
+The [exact result](../../reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-instinctual-memory-01/result.md) retains the canonical records, quotes, full memory comparison and epistemic assessment. Candidate-linked source audits, host recall interventions and fault/concurrency traces would change these limits.

@@ -5,7 +5,7 @@ generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-05-apache-maka-06
 source-identity: https://github.com/apache/maka
 reviewed-revision: "02f97c16d76e644d5b565889701958293ff7b5fb"
-analysis-result: kb/reports/retained/agentic-system-analysis/AAS-2026-09-05-apache-maka-06/result.md
+analysis-result: kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-05-apache-maka-06/result.md
 analysis-result-sha256: "f19ebc73bb527919051b211f43a6ae584d78e2de7aaa1abe195ed9f1ed0ff1a8"
 ---
 
@@ -13,7 +13,7 @@ analysis-result-sha256: "f19ebc73bb527919051b211f43a6ae584d78e2de7aaa1abe195ed9f
 
 Evidence basis: source code and source documentation at commit `02f97c16d76e644d5b565889701958293ff7b5fb`, inspected on 2026-09-05. No target execution or behavioral experiment was performed.
 
-Apache Maka (Incubating) is an enclosing agent runtime organized around hosted execution and a retained event log. Clients submit work to Runtime Host; RuntimeKernel and AgentRun own the turn, the model-step loop selects subsequent calls, and ToolRuntime settles client-executed effects. Agent Graph admits dependent child activations through revision-bound claims. Eval separately executes experiment cells, imports verifier scores and selects authoritative attempt results. This is a whole-system ownership account with bounded feature coverage, not an exhaustive proof of every client or deployment path. See the [exact result](../../reports/retained/agentic-system-analysis/AAS-2026-09-05-apache-maka-06/result.md) for canonical records and retained verbatim evidence.
+Apache Maka (Incubating) is an enclosing agent runtime organized around hosted execution and a retained event log. Clients submit work to Runtime Host; RuntimeKernel and AgentRun own the turn, the model-step loop selects subsequent calls, and ToolRuntime settles client-executed effects. Agent Graph admits dependent child activations through revision-bound claims. Eval separately executes experiment cells, imports verifier scores and selects authoritative attempt results. This is a whole-system ownership account with bounded feature coverage, not an exhaustive proof of every client or deployment path. See the [exact result](../../reports/retained/agentic-system-analysis-archive/AAS-2026-09-05-apache-maka-06/result.md) for canonical records and retained verbatim evidence.
 
 ## Execution and recovery
 

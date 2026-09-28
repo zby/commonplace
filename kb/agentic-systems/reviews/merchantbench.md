@@ -6,7 +6,7 @@ generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-25-merchantbench-01
 source-identity: https://github.com/KhanCold/merchantbench
 reviewed-revision: f44ce969aeccfd65d1eef6afe50f69868e510946
-analysis-result: kb/reports/retained/agentic-system-analysis/AAS-2026-09-25-merchantbench-01/result.md
+analysis-result: kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-merchantbench-01/result.md
 analysis-result-sha256: 87c9575282d4fe2062c634d799e61eb86a1566f2fe32f8100cb97bfb8eea0def
 ---
 
@@ -22,4 +22,4 @@ The pinned default enables read_memory_doc and write_memory_doc: their denylist 
 
 Server controls check step freshness when a header is supplied, scenario permissions, argument shape, hook state and quota. The supplied SDK sends the step header. Mutating-call identities/fingerprints support bounded replay control; sequential batch execution and later trace persistence do not establish an atomic whole-turn transaction. Authentication is configuration-dependent. Local stale-step recovery slices history using an old length, which can be weakened by intervening trimming; it does not undo environment effects. [Admission path](https://github.com/KhanCold/merchantbench/blob/f44ce969aeccfd65d1eef6afe50f69868e510946/env/web/routes_agent.py#L1020-L1135), [optional authentication](https://github.com/KhanCold/merchantbench/blob/f44ce969aeccfd65d1eef6afe50f69868e510946/env/web/auth.py#L70-L95).
 
-The strongest supported contribution is a model-action-feedback loop with optional reusable notes and inspectable protocol controls. Prompt-size and failure-state feedback support narrow reflection on runtime state. Conjectural learning and self-improvement remain uninspected: writable strategy text and simulator feedback do not establish criticism of an operative theory with improved future capacity. The [exact result](../../reports/retained/agentic-system-analysis/AAS-2026-09-25-merchantbench-01/result.md) retains quotes, branch-specific memory comparison and epistemic limits. Controlled note-recall interventions and fault/replay traces would strengthen separate conclusions.
+The strongest supported contribution is a model-action-feedback loop with optional reusable notes and inspectable protocol controls. Prompt-size and failure-state feedback support narrow reflection on runtime state. Conjectural learning and self-improvement remain uninspected: writable strategy text and simulator feedback do not establish criticism of an operative theory with improved future capacity. The [exact result](../../reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-merchantbench-01/result.md) retains quotes, branch-specific memory comparison and epistemic limits. Controlled note-recall interventions and fault/replay traces would strengthen separate conclusions.

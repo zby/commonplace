@@ -6,7 +6,7 @@ generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-25-supermemory-02
 source-identity: https://github.com/supermemoryai/supermemory
 reviewed-revision: 0e12f0b3a65af1cf7b03f48561f20ddf4369bc3f
-analysis-result: kb/reports/retained/agentic-system-analysis/AAS-2026-09-25-supermemory-02/result.md
+analysis-result: kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-supermemory-02/result.md
 analysis-result-sha256: e17dce575e775ef57c49b700dcaf640d3f332a19d5096072d1e8c4b28c05c408
 ---
 
@@ -22,4 +22,4 @@ After generation, or on normal stream flush, the wrapper can upload original con
 
 The strongest supported contribution is a concrete automatic context-delivery and conversation-capture integration. The source does not expose the transformation connecting uploaded traces to later profile facts. Trace learning and its timing/scope/form therefore remain undetermined at this boundary, rather than inferred from product claims. Included image content also prevents a complete natural-language/symbolic representation classification. Conjectural learning, reflection and self-improvement remain uninspected; static prompt/payload tests do not establish answer dependence or capacity gains.
 
-The [exact result](../../reports/retained/agentic-system-analysis/AAS-2026-09-25-supermemory-02/result.md) retains quotes, canonical routes, the full memory comparison and epistemic assessment. Pinned remote-engine evidence, upload-completion traces and controlled host-memory interventions would change separate parts of this assessment.
+The [exact result](../../reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-supermemory-02/result.md) retains quotes, canonical routes, the full memory comparison and epistemic assessment. Pinned remote-engine evidence, upload-completion traces and controlled host-memory interventions would change separate parts of this assessment.

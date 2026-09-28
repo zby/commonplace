@@ -5,7 +5,7 @@ generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-25-modularrsi-01
 source-identity: https://github.com/IQuestLab/ModularRSI
 reviewed-revision: b5c72c36b0d08ff93f00ee202a8fbdebe849dfb9
-analysis-result: kb/reports/retained/agentic-system-analysis/AAS-2026-09-25-modularrsi-01/result.md
+analysis-result: kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-modularrsi-01/result.md
 analysis-result-sha256: 237e71ed1de09a9bde3d6870ff1800794b03e7613f1f462a830646f45b9cd4b3
 ---
 
@@ -13,7 +13,7 @@ analysis-result-sha256: 237e71ed1de09a9bde3d6870ff1800794b03e7613f1f462a830646f4
 
 Evidence basis: pinned implementation, repository documentation, released modules and bounded retained task-run artifacts at `b5c72c36b0d08ff93f00ee202a8fbdebe849dfb9`, inspected 2026-09-25. No target code or model calls were executed for this analysis.
 
-ModularRSI evolves a library of agent-harness modules and selects implementations for later tasks. Its retained proposal backlog connects execution evidence and causal hypotheses to code-producing editors. Promotion combines structural checks, model review and execution checks; later composition decides whether promoted code runs. This review covers the named improvement subsystem and modular solver within the Harbor-derived repository. Other agents, benchmark evaluators, provider internals and deployed infrastructure are outside the boundary. [Exact analysis](../../reports/retained/agentic-system-analysis/AAS-2026-09-25-modularrsi-01/result.md) — see-also: complete records, source excerpts and both lenses.
+ModularRSI evolves a library of agent-harness modules and selects implementations for later tasks. Its retained proposal backlog connects execution evidence and causal hypotheses to code-producing editors. Promotion combines structural checks, model review and execution checks; later composition decides whether promoted code runs. This review covers the named improvement subsystem and modular solver within the Harbor-derived repository. Other agents, benchmark evaluators, provider internals and deployed infrastructure are outside the boundary. [Exact analysis](../../reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-modularrsi-01/result.md) — see-also: complete records, source excerpts and both lenses.
 
 ## Evolution and admission
 

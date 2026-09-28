@@ -5,7 +5,7 @@ generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-25-primescientist-01
 source-identity: https://github.com/Henri-XYu02/PrimeScientist
 reviewed-revision: 29971beac6f4f4b41309b1326762e1b83ceece98
-analysis-result: kb/reports/retained/agentic-system-analysis/AAS-2026-09-25-primescientist-01/result.md
+analysis-result: kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-primescientist-01/result.md
 analysis-result-sha256: b04d0a39fdf389ca522784541573e85905762029469d2d890ea38cd8ba7ee36b
 ---
 
@@ -13,7 +13,7 @@ analysis-result-sha256: b04d0a39fdf389ca522784541573e85905762029469d2d890ea38cd8
 
 **Evidence basis:** source code, embedded prompts and README claims at commit `29971beac6f4f4b41309b1326762e1b83ceece98`, inspected 2026-09-25. No model execution or benchmark reproduction.
 
-PrimeScientist searches over experimental plans. A reflector writes a plan, a coding agent executes it, a benchmark returns a score, and Python selects which branch to execute or expand next. Plans, hypotheses, diagnostics and parent workspaces persist across trials. The reviewed boundary includes tree search, its linear baseline, shipped AutoLab/FIRE-Bench adapters and Codex/evaluator interfaces. External model interiors and comprehensive benchmark validity are excluded: this is a complete artifact and a partial operational loop. See the [exact analysis](../../reports/retained/agentic-system-analysis/AAS-2026-09-25-primescientist-01/result.md) — see-also: source register, route audit and mandatory memory/epistemic lenses.
+PrimeScientist searches over experimental plans. A reflector writes a plan, a coding agent executes it, a benchmark returns a score, and Python selects which branch to execute or expand next. Plans, hypotheses, diagnostics and parent workspaces persist across trials. The reviewed boundary includes tree search, its linear baseline, shipped AutoLab/FIRE-Bench adapters and Codex/evaluator interfaces. External model interiors and comprehensive benchmark validity are excluded: this is a complete artifact and a partial operational loop. See the [exact analysis](../../reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-primescientist-01/result.md) — see-also: source register, route audit and mandatory memory/epistemic lenses.
 
 ## Search and execution
 

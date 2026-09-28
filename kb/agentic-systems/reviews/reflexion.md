@@ -6,7 +6,7 @@ generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-25-reflexion-02
 source-identity: https://github.com/noahshinn/reflexion
 reviewed-revision: 218cf0ef1df84b05ce379dd4a8e47f17766733a0
-analysis-result: kb/reports/retained/agentic-system-analysis/AAS-2026-09-25-reflexion-02/result.md
+analysis-result: kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-reflexion-02/result.md
 analysis-result-sha256: 5997394e8f6eba2e74619b08ac4db69d90d234185f4319ab442e80e270c1e772
 ---
 
@@ -14,7 +14,7 @@ analysis-result-sha256: 5997394e8f6eba2e74619b08ac4db69d90d234185f4319ab442e80e2
 
 Evidence basis: source code, shipped prompts and sampled historical displays at [218cf0ef1df84b05ce379dd4a8e47f17766733a0](https://github.com/noahshinn/reflexion/tree/218cf0ef1df84b05ce379dd4a8e47f17766733a0), inspected 2026-09-25. No provider execution or causal experiment was performed.
 
-Reflexion's HotPotQA workflow retries a question with retained failure-derived guidance. A solver generates an attempt; normalized exact match against the supplied answer key determines whether the experiment retries it. Before retry, a reflection model can produce a diagnosis and plan, which the wrapper places in the next solver prompt. The answer oracle evaluates the final answer, not whether that diagnosis is true. See RTE-1 through RTE-4 in the [exact analysis](../../reports/retained/agentic-system-analysis/AAS-2026-09-25-reflexion-02/result.md).
+Reflexion's HotPotQA workflow retries a question with retained failure-derived guidance. A solver generates an attempt; normalized exact match against the supplied answer key determines whether the experiment retries it. Before retry, a reflection model can produce a diagnosis and plan, which the wrapper places in the next solver prompt. The answer oracle evaluates the final answer, not whether that diagnosis is true. See RTE-1 through RTE-4 in the [exact analysis](../../reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-reflexion-02/result.md).
 
 > def EM(answer, key) -> bool:
 >     return normalize_answer(answer) == normalize_answer(key)

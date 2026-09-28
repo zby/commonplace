@@ -5,7 +5,7 @@ generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-27-napkin-05
 source-identity: https://github.com/Michaelliv/napkin
 reviewed-revision: "7582d6a46f5a11995956e60a59c41a5b242109f1"
-analysis-result: kb/reports/retained/agentic-system-analysis/AAS-2026-09-27-napkin-05/result.md
+analysis-result: kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-27-napkin-05/result.md
 analysis-result-sha256: 548c7be0916b0d9985a139877b699736e3ac2f699a2ceb291e7e1792d525e1b0
 ---
 

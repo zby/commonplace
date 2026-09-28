@@ -6,7 +6,7 @@ generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-27-mem0-04
 source-identity: https://github.com/mem0ai/mem0
 reviewed-revision: 94c3fe9f238f3dbf29c9ce98643bd71eb13077cd
-analysis-result: kb/reports/retained/agentic-system-analysis/AAS-2026-09-27-mem0-04/result.md
+analysis-result: kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-27-mem0-04/result.md
 analysis-result-sha256: 7144b0d8a19d74d7722c7986648a23b7a5977287962a863d7d0d3cdcefb89ca2
 ---
 
@@ -14,7 +14,7 @@ analysis-result-sha256: 7144b0d8a19d74d7722c7986648a23b7a5977287962a863d7d0d3cdc
 
 Evidence basis: code and source-native documentation at commit `94c3fe9f238f3dbf29c9ce98643bd71eb13077cd`, inspected 2026-09-27. This review covers the synchronous Python OSS `Memory` subsystem. It does not establish managed-platform behavior or deployed outcomes.
 
-Mem0 turns caller-supplied conversation into durable factual text, then supplies selected retained material to later extraction or requesting applications. This trace-to-context loop is wired in code. Whether it improves later answers remains unestablished. The full records and comparison profile are in the [exact analysis](../../reports/retained/agentic-system-analysis/AAS-2026-09-27-mem0-04/result.md).
+Mem0 turns caller-supplied conversation into durable factual text, then supplies selected retained material to later extraction or requesting applications. This trace-to-context loop is wired in code. Whether it improves later answers remains unestablished. The full records and comparison profile are in the [exact analysis](../../reports/retained/agentic-system-analysis-archive/AAS-2026-09-27-mem0-04/result.md).
 
 ## From conversation to retained memory
 

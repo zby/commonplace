@@ -6,7 +6,7 @@ generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-26-jaz-01
 source-identity: https://github.com/jaz-lang/jaz
 reviewed-revision: 0803d4971be785e95b80054b02259664d70fa3da
-analysis-result: kb/reports/retained/agentic-system-analysis/AAS-2026-09-26-jaz-01/result.md
+analysis-result: kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-26-jaz-01/result.md
 analysis-result-sha256: 1acb504890b03a78fe1dd17dff9d73a522ee543259631821cec4a65a1d25c932
 ---
 
@@ -48,5 +48,5 @@ This is a static analysis of the framework package, not evidence for the paper's
 
 ---
 
-- [Exact analysis result](../../reports/retained/agentic-system-analysis/AAS-2026-09-26-jaz-01/result.md) — see-also: complete evidence, routes, quotations and memory comparison fields
+- [Exact analysis result](../../reports/retained/agentic-system-analysis-archive/AAS-2026-09-26-jaz-01/result.md) — see-also: complete evidence, routes, quotations and memory comparison fields
 - [Pinned framework source](https://github.com/jaz-lang/jaz/tree/0803d4971be785e95b80054b02259664d70fa3da) — evidenced-by: frozen implementation boundary

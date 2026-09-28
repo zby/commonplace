@@ -22,7 +22,7 @@ Selected run: `AAS-2026-09-05-oh-my-pi-01`; source
 | Input | SHA-256 |
 |---|---|
 | [Public main review](../../agentic-systems/reviews/oh-my-pi.md) | `1aa5330d7b30b5e390db54b53f02832b55f518f10da3b7b6bf3a03d4eee22212` |
-| [Retained exact result](../../reports/retained/agentic-system-analysis/AAS-2026-09-05-oh-my-pi-01/result.md) | `f088fbd407c7a8a9a964d88035e472adc7e23c419522b47c9e7903b877f1b0b7` |
+| [Retained exact result](../../reports/retained/agentic-system-analysis-archive/AAS-2026-09-05-oh-my-pi-01/result.md) | `f088fbd407c7a8a9a964d88035e472adc7e23c419522b47c9e7903b877f1b0b7` |
 | State-side exact result | `f088fbd407c7a8a9a964d88035e472adc7e23c419522b47c9e7903b877f1b0b7` |
 | Complete run state | `fdc96622eb4dcee202acdd7c1c19895427a6496b21ce9eba4817c4df0ae7349c` |
 

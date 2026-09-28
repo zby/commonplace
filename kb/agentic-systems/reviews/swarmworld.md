@@ -6,7 +6,7 @@ generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-25-swarmworld-01
 source-identity: https://github.com/lamm-mit/SwarmWorld
 reviewed-revision: "6af7ae9fa36d98b07b0492cf139658e8af1f6eab"
-analysis-result: kb/reports/retained/agentic-system-analysis/AAS-2026-09-25-swarmworld-01/result.md
+analysis-result: kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-swarmworld-01/result.md
 analysis-result-sha256: "4a9d0bc1dbd7479ace7f980b34a827ff0bb5c22c13cd39cc4388999ef546aaaf"
 ---
 
@@ -40,6 +40,6 @@ Automatic continuation, feedback, measured input/output records and retrieval st
 
 Findings describe implementation at the pinned source boundary. They do not validate the surrogate as real-world science, hidden provider reasoning, external studies or every scenario. Candidate-linked hypothesis/test/revision traces, matched learning comparisons and recalled-content interventions with replanning would support stronger conclusions.
 
-- [Exact analysis result](../../reports/retained/agentic-system-analysis/AAS-2026-09-25-swarmworld-01/result.md) — see-also: canonical records, quotations, both lenses and comparison fields.
+- [Exact analysis result](../../reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-swarmworld-01/result.md) — see-also: canonical records, quotations, both lenses and comparison fields.
 - [Conjectural learning](../../notes/definitions/conjectural-learning.md) — defined-in: the stronger theory-and-criticism claim kept separate from retained feedback.
 - [Reflective system](../../notes/definitions/reflective-system.md) — defined-in: the two-way self-representation route used here.

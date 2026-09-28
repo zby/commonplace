@@ -5,7 +5,7 @@ generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-25-contextpilot-01
 source-identity: https://github.com/Tencent/ContextPilot
 reviewed-revision: 782cbb6611fb610c4cf6fafda6022b7e89cae191
-analysis-result: kb/reports/retained/agentic-system-analysis/AAS-2026-09-25-contextpilot-01/result.md
+analysis-result: kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-contextpilot-01/result.md
 analysis-result-sha256: 8cc0c60126af6b160e9e9496e5b3de7323e61bd6623f178e40d7a35d480ee2c3
 ---
 
@@ -34,7 +34,7 @@ The exact result preserves these route distinctions and the normalized memory pr
 - [Inference state machine](https://github.com/Tencent/ContextPilot/blob/782cbb6611fb610c4cf6fafda6022b7e89cae191/infer/src/contextpilot_fsm.py) — evidenced-by: tool admission and deterministic recovery.
 - [Context and memory implementation](https://github.com/Tencent/ContextPilot/blob/782cbb6611fb610c4cf6fafda6022b7e89cae191/infer/src/contextpilot.py) — evidenced-by: stores, payload edits and alternate base loop.
 - [Training branch coordination](https://github.com/Tencent/ContextPilot/blob/782cbb6611fb610c4cf6fafda6022b7e89cae191/train/verl/experimental/agent_loop/agent_loop.py) — evidenced-by: selection, subtree reward and conditional agent-loop dispatch.
-- [Exact analysis result](../../reports/retained/agentic-system-analysis/AAS-2026-09-25-contextpilot-01/result.md) — see-also: source records, memory profile and epistemic ledger.
+- [Exact analysis result](../../reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-contextpilot-01/result.md) — see-also: source records, memory profile and epistemic ledger.
 - [Conjectural learning](../../notes/definitions/conjectural-learning.md) — defined-in: criticism and improved capacity remain separate claims.
 - [Reflective system](../../notes/definitions/reflective-system.md) — defined-in: self-representation mediates later behavior.
 - [Self-improving system](../../notes/definitions/self-improving-system.md) — defined-in: disposition, occurrence and favorable outcome have distinct evidence requirements.

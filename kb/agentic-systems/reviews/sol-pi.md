@@ -6,7 +6,7 @@ generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-24-sol-pi-01
 source-identity: https://github.com/NVlabs/SoL-Pi
 reviewed-revision: 1559b5cb12c72da4a485bc50fe326586b216fb19
-analysis-result: kb/reports/retained/agentic-system-analysis/AAS-2026-09-24-sol-pi-01/result.md
+analysis-result: kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-24-sol-pi-01/result.md
 analysis-result-sha256: aff4937d35f2287af3204726aef7ea934b134209c987953de3ab8a09ffffaa16
 ---
 
@@ -28,6 +28,6 @@ The strongest supported result is the wiring of recoverable evidence and adaptiv
 
 Compatibility documentation reports deterministic fake-provider checks and explicitly excludes live token-savings claims. Measured savings, preserved task quality and downstream dependence on recalled evidence require additional execution evidence. The extension also supplies no sandbox: it runs with Pi's permissions.
 
-- [Exact analysis and canonical evidence](../../reports/retained/agentic-system-analysis/AAS-2026-09-24-sol-pi-01/result.md) — see-also.
+- [Exact analysis and canonical evidence](../../reports/retained/agentic-system-analysis-archive/AAS-2026-09-24-sol-pi-01/result.md) — see-also.
 - [Reflective system](../../notes/definitions/reflective-system.md) — defined-in: the limited state-to-policy mapping above.
 - [Conjectural learning](../../notes/definitions/conjectural-learning.md) — defined-in: why retained traces alone do not establish criticism-driven improvement.

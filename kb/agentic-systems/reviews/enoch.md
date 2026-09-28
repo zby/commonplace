@@ -5,13 +5,13 @@ generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-25-enoch-01
 source-identity: https://github.com/our-ark/enoch
 reviewed-revision: 81000d502e776a7fd2ff39904f71f14084c9b4a8
-analysis-result: kb/reports/retained/agentic-system-analysis/AAS-2026-09-25-enoch-01/result.md
+analysis-result: kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-enoch-01/result.md
 analysis-result-sha256: 00798b76561a0249d41b723e62d503d7d5464c8c92bf17b8dc6cd36d08807df3
 ---
 
 # Enoch
 
-**Evidence basis:** code-grounded inspection of `our-ark/enoch` at `81000d502e776a7fd2ff39904f71f14084c9b4a8`, frozen 2026-09-25; no target execution or causal experiment. The [exact analysis](../../reports/retained/agentic-system-analysis/AAS-2026-09-25-enoch-01/result.md) retains the source quotations, route records and memory comparison profile.
+**Evidence basis:** code-grounded inspection of `our-ark/enoch` at `81000d502e776a7fd2ff39904f71f14084c9b4a8`, frozen 2026-09-25; no target execution or causal experiment. The [exact analysis](../../reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-enoch-01/result.md) retains the source quotations, route records and memory comparison profile.
 
 Enoch is a persistent personal-agent application around replaceable runtime, chat, repository and review providers. Conversation can invoke the same registered operations as commands; substantial work enters a durable task queue. Its governed-change path separates proposing code, checking it, publishing a review, landing it and updating the running body. The source supports these routes, but does not demonstrate improved capability at this revision. [Application workflow](https://github.com/our-ark/enoch/blob/81000d502e776a7fd2ff39904f71f14084c9b4a8/src/enoch/app/task_workflow.py), [update path](https://github.com/our-ark/enoch/blob/81000d502e776a7fd2ff39904f71f14084c9b4a8/src/enoch/operations/updater.py).
 
@@ -41,6 +41,6 @@ This review covers the repository-owned core and its interfaces. External model/
 
 ---
 
-- [Exact result](../../reports/retained/agentic-system-analysis/AAS-2026-09-25-enoch-01/result.md) — see-also: canonical evidence, limitations and normalized memory fields.
+- [Exact result](../../reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-enoch-01/result.md) — see-also: canonical evidence, limitations and normalized memory fields.
 - [Conjectural learning](../../notes/definitions/conjectural-learning.md) — defined-in: the stronger learning claim distinguished from trace-fed memory writes.
 - [Reflective system](../../notes/definitions/reflective-system.md) — defined-in: the limited representation/action route assessed here.

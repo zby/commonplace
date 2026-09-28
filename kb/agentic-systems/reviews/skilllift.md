@@ -5,7 +5,7 @@ generated-by: analyse-agentic-system
 analysis-run: AAS-2026-09-25-skilllift-01
 source-identity: https://github.com/WalteR-MittY-pro/SkillLift
 reviewed-revision: "599358b4d4c4a27c0e004df8228ab93026600653"
-analysis-result: kb/reports/retained/agentic-system-analysis/AAS-2026-09-25-skilllift-01/result.md
+analysis-result: kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-skilllift-01/result.md
 analysis-result-sha256: 5582d6a34c759515681c476a2cef7a5d7592b3fcb39d5c29f8e56f44f31982b4
 ---
 
@@ -31,7 +31,7 @@ The architecture affords content-directed criticism: hypotheses and rubric expla
 
 The repository's reported performance gains remain attributed reports; this analysis did not inspect candidate-linked raw experiments or causal interventions. Remote model weights are not pinned by the inspected client identifiers. External task graders, expected answers, complete host permissions and deployed isolation remain outside the frozen source boundary. Legacy non-portfolio algorithms, tau2 and adoption after export are excluded. Corrected refinement persistence, linked criticism/test traces and suitable interventions would materially change the assessment.
 
-- [Exact analysis](../../reports/retained/agentic-system-analysis/AAS-2026-09-25-skilllift-01/result.md) — see-also: canonical routes, source excerpts, both lenses and the fourteen-axis memory profile
+- [Exact analysis](../../reports/retained/agentic-system-analysis-archive/AAS-2026-09-25-skilllift-01/result.md) — see-also: canonical routes, source excerpts, both lenses and the fourteen-axis memory profile
 - [Conjectural learning](../../notes/definitions/conjectural-learning.md) — defined-in: distinguishes criticism-linked capacity improvement from a trace-fed write route
 - [Reflective system](../../notes/definitions/reflective-system.md) — defined-in: the narrow causally connected self-representation claim
 - [Self-improving system](../../notes/definitions/self-improving-system.md) — defined-in: the dispositional improvement pathway and its boundary

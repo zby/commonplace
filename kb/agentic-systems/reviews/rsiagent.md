@@ -6,14 +6,14 @@
   "analysis-run": "AAS-2026-09-24-rsiagent-01",
   "source-identity": "https://github.com/AetherLabsAI/RSIAgent",
   "reviewed-revision": "a9e56263f6deaa493496ad6b155fe24bf131bc12",
-  "analysis-result": "kb/reports/retained/agentic-system-analysis/AAS-2026-09-24-rsiagent-01/result.md",
+  "analysis-result": "kb/reports/retained/agentic-system-analysis-archive/AAS-2026-09-24-rsiagent-01/result.md",
   "analysis-result-sha256": "08ec7733d485341e2768725babe475c29aa5f0f33ffa6ac7c41a76532a6cd966"
 }
 ---
 
 # RSIAgent: verified experience, Actor-owned memory and curriculum search
 
-**Evidence basis:** source code and repository documentation at commit `a9e56263f6deaa493496ad6b155fe24bf131bc12`, inspected 2026-09-24. No live benchmark run was performed. [Exact analysis](../../reports/retained/agentic-system-analysis/AAS-2026-09-24-rsiagent-01/result.md).
+**Evidence basis:** source code and repository documentation at commit `a9e56263f6deaa493496ad6b155fe24bf131bc12`, inspected 2026-09-24. No live benchmark run was performed. [Exact analysis](../../reports/retained/agentic-system-analysis-archive/AAS-2026-09-24-rsiagent-01/result.md).
 
 RSIAgent is a computer-use runtime with an improvement loop around it. An Actor executes Python/Bash programs and requests visual observations. A separate Verifier investigates the candidate environment. A Curriculum chooses further practice from outcomes and the Actor's diagnosis. The same Actor that performed a task then distills and reconciles its durable memory. The implementation separates those roles instead of treating a task PASS as approval of every explanation or memory lesson (exact result RTE-1, RTE-3, RTE-4, RTE-8).
 
