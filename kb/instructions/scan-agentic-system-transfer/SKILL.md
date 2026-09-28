@@ -35,7 +35,7 @@ Produce a selective current account of the external mechanisms that matter to a 
 
 This is an interest-conditioned transfer scan, not a complete delta. Omission means only `not selected under this brief`; it never means that the systems are identical on that point or that no other difference exists.
 
-Do not edit the external analysis, its matrix fields, `systems.csv`, a public landscape analysis, or any Commonplace note, proposal, instruction, reference artifact, or implementation. Return promotion candidates to the caller; a later authorized operation decides their disposition.
+Do not edit the external analysis, its matrix fields, `kb/agentic-systems/comparisons/memory-systems.csv`, a public landscape analysis, or any Commonplace note, proposal, instruction, reference artifact, or implementation. Return promotion candidates to the caller; a later authorized operation decides their disposition.
 
 Use Commonplace ontology to name mechanisms when the external analysis supports the mapping. Preserve the external system's native mechanism, the mapping rationale, and any qualification. Do not turn a partial analogy into identity.
 

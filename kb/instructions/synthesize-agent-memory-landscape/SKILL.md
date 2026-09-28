@@ -105,7 +105,7 @@ must remain auditable without ignored local run state.
    members that hold it and the cited canonical records, including their
    source evidence and limitations. Preserve the external mechanism and
    explain why the Commonplace term fits. Trace every qualitative example to a
-   member path, the overview hash, run ID, canonical IDs, and supporting
+   member path, the manifest (`ARTIFACT.yaml`) hash, run ID, canonical IDs, and supporting
    section. Open-ended observations
    support named examples and contrasts, never prevalence from omitted mentions.
    Keep static wiring, observed use, contextual activation, and causal effect

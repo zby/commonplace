@@ -13,10 +13,10 @@ from commonplace.lib.agentic_set import (
     LOCAL_INPUT_NAME,
     LOCAL_REPORT_NAME,
     MANIFEST_NAME,
-    MEMBER_TYPES,
     OUTPUT_DIR,
     OVERVIEW_NAME,
     REVIEW_TYPE,
+    SET_NAMES,
     MemberSet,
     is_normalized_relative,
     is_review_path,
@@ -535,7 +535,7 @@ def render_agentic_analysis_handoff(state: AgenticAnalysisRunState) -> str:
         else f"{state.source.identity} @ {state.source.revision}"
     )
     members = (
-        ", ".join(MEMBER_TYPES) + " (pinned by ARTIFACT.yaml)"
+        ", ".join(SET_NAMES) + " (pinned by ARTIFACT.yaml)"
         if state.result_disposition == "complete"
         else "none"
     )

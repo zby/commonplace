@@ -21,7 +21,7 @@ the set's memory member.
 
 Invocation authorizes the run directory under
 `kb/reports/state/agentic-system-analysis/`, one generated review under
-`kb/agentic-systems/reviews/`, the identical retained copy of the four members
+`kb/agentic-systems/reviews/`, the identical retained copy of `ARTIFACT.yaml` and the four members
 under `kb/reports/retained/agentic-system-analysis/<run-id>/`, and the local
 memory specialist input and report inside that run directory. It does not authorize
 changes to source worktrees, auxiliary indexes or surveys, transfer scans,
@@ -436,8 +436,9 @@ complete set:
    artifact and dispatches no semantic review job.
 3. Run `commonplace-agentic-analysis-publication publish` with the same
    arguments, including the same incumbent digest. It validates the
-   prospective complete run state, replaces the compact review, retains the
-   four members, and writes the complete run state last. It rolls back
+   prospective complete run state, replaces the compact review, retains
+   `ARTIFACT.yaml` and the four members, and writes the complete run state
+   last. It rolls back
    ordinary in-process write or validation failures. A crash during
    replacement may leave partial public writes; inspect them, mark the run
    `failed`, and use a new run ID. Existing review and retained member bytes

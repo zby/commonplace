@@ -87,8 +87,8 @@ retained paths, the specialist memory report's pins, and the candidate review,
 and checks the incumbent without changing public artifacts. It does not create
 a semantic-review job; specialist analysis does not establish independent
 semantic clearance. `publish` rechecks the inputs, validates the prospective
-complete run state, replaces the review, retains the four members byte for
-byte under `kb/reports/retained/agentic-system-analysis/<run-id>/`, and writes
+complete run state, replaces the review, retains `ARTIFACT.yaml` and the four
+members byte for byte under `kb/reports/retained/agentic-system-analysis/<run-id>/`, and writes
 the run state last. New publications require `memory-comparison` in the memory
 member and a matching retained manifest path and hash in the public review.
 An existing retained set requires a new run ID. Ordinary in-process failures

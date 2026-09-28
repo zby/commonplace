@@ -1052,7 +1052,7 @@ def test_operator_handoff_is_rendered_from_complete_state(tmp_path: Path) -> Non
 
     assert RUN_ID in rendered
     assert "**Artifact:**" in rendered
-    assert "**Members:** runtime.md, memory.md, epistemic.md" in rendered
+    assert "**Members:** overview.md, runtime.md, memory.md, epistemic.md (pinned" in rendered
     assert "**Frozen source:**" in rendered
     assert (
         "**Generated system review:** "

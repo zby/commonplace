@@ -5,11 +5,12 @@ produced by `analyse-agentic-system`. Their common input is each generated
 review under `kb/agentic-systems/reviews/`, its `analysis-artifact` path and
 SHA-256, and the byte-identical set retained under
 `kb/reports/retained/agentic-system-analysis/<run-id>/`: the readers verify
-the overview's manifest, take identity and the source register from the
-overview and the comparison profile from `memory.md`, and validate each
-member. Frozen retained snapshots are excluded from collection-wide validation
-because historical contracts differ. Publication and these readers validate
-each selected set explicitly against the current contract. They do not require
+the set's manifest, `ARTIFACT.yaml`, take identity and the source register
+from the overview and the comparison profile from `memory.md`, and validate
+each member. Retained sets take part in collection-wide validation under the
+current contract; only the legacy `agentic-system-analysis-archive/` is
+excluded, because its historical contracts differ. Publication and these
+readers also validate each selected set explicitly. They do not require
 local run state, source checkouts, legacy reviews, or a prior CSV. The
 [memory report contract](../../types/agent-memory-analysis-report.md#memory-comparison-fields)
 defines the scoped comparison fields and evidence assessments.
@@ -31,7 +32,7 @@ review per source identity; repeat runs do not count as distinct systems.
 Builder and renderer accept `--output <path>` for an isolated trial.
 
 Each CSV row records the source, run, boundary, tier, compared scope, and the
-hashes of the review and the overview. Axis values are JSON arrays with
+hashes of the review and the manifest (`artifact_sha256`). Axis values are JSON arrays with
 separate coverage assessment, JSON per-value evidence maps, and
 canonical-record columns. Each evidence entry retains its basis, supporting
 records and rationale. The members carry the source evidence.
