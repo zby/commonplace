@@ -1214,6 +1214,15 @@ def test_publication_requires_exact_completed_memory_handoff(tmp_path: Path, mut
     assert frontmatter(state)["run-status"] == "running"
 
 
+@pytest.mark.parametrize("name", ["memory-report.md", "memory-input.md"])
+def test_publication_fails_when_a_memory_provenance_file_is_missing(tmp_path: Path, name: str) -> None:
+    state, spec, _ = publication_fixture(tmp_path)
+    (state.parent / name).unlink()
+    with pytest.raises(ValueError, match=f"memory member: {name} is missing from the run directory"):
+        prepare_publication(spec)
+    assert frontmatter(state)["run-status"] == "running"
+
+
 def test_publish_replaces_the_set_and_completes_run_state(tmp_path: Path) -> None:
     state, spec, generated_bytes = publication_fixture(tmp_path)
     prepare_publication(spec)

@@ -566,7 +566,7 @@ def _verify_memory_member(
     The coordinator authors the finalized member from the specialist's local
     report; this checks only that it is complete, that ``finalized-from``
     names the local report's bytes and ``canonical-register-sha256`` the
-    frozen input's, each when that file is present in the run directory.
+    frozen input's. Both files must be present in the run directory.
     """
     member = member_set.memory
     if member is None:
@@ -577,6 +577,7 @@ def _verify_memory_member(
                         (LOCAL_INPUT_NAME, "canonical-register-sha256")):
         path = state.run_dir / name
         if not path.exists():
+            failures.append(f"memory member: {name} is missing from the run directory")
             continue
         try:
             actual = sha256(path.read_bytes()).hexdigest()
