@@ -14,19 +14,46 @@ Paste this instruction into a fresh session at the Commonplace repository root:
 ```text
 Run refresh batch 01 described in
 kb/work/agentic-memory-refresh/batch-01-handoff.md. Act as the batch
-coordinator: check the preconditions, launch one fresh source-only analysis
+coordinator: create the batch worktree, check the preconditions inside it,
+launch one fresh source-only analysis
 coordinator per system, each with its mandatory fresh memory specialist,
 in parallel if capacity allows; verify each completed set and review; run
-the bounded downstream checks; update the three inventory rows; and record
-the batch in the workshop. Follow the fixed inputs and boundaries in that
-file.
+the bounded downstream checks; update the three inventory rows; record the
+batch in the workshop; and commit the batch on its branch. Follow the fixed
+inputs and boundaries in that file.
 ```
+
+## Batch worktree
+
+The batch runs in its own git worktree so that no other session's edits in
+the main checkout can block or contaminate it. From the main checkout, whose
+worktree must be clean:
+
+```bash
+git worktree add -b refresh-batch-01 ../commonplace-refresh-batch-01 HEAD
+```
+
+Every analysis, verification and write of this batch happens inside
+`../commonplace-refresh-batch-01`; nothing is written in the main checkout.
+Record the worktree's base commit: it is every run's `inputs-commit`.
+
+The `commonplace-*` commands are an editable install of the main checkout,
+so inside the worktree they execute the main checkout's `src/commonplace/`.
+Publication refuses when that source differs from `inputs-commit`, so the
+main checkout's `src/commonplace/` must stay at the base commit for the
+whole batch; if it moves, stop and report rather than reinstalling.
+
+Source checkouts stay where they are: pass each coordinator the absolute
+path of its checkout under the main checkout's `related-systems/` (below),
+which the run state records by absolute path. Do not create
+`related-systems/` inside the worktree. Run state under
+`kb/reports/state/` is ignored and lives in the worktree.
 
 ## Preconditions
 
 This batch runs under the member-set producer, not the archived
-single-file result. Before launching anything, confirm all of the
-following and stop with a report if any fails:
+single-file result. Inside the batch worktree, before launching anything,
+confirm all of the following and stop with a report if any fails:
 
 - `kb/types/agentic-system-analysis-overview.md` exists and
   `kb/instructions/analyse-agentic-system/SKILL.md` step 7 writes
@@ -38,14 +65,11 @@ following and stop with a report if any fails:
   results; the archived corpus is under
   `kb/reports/retained/agentic-system-analysis-archive/`.
 - `commonplace-quote --help` shows `--selections`.
-- Each checkout under `related-systems/` has the origin named below.
-- The worktree is publishable: no modified or staged tracked file, and no
-  untracked file under `kb/` outside `kb/agentic-systems/reviews/` and
-  `kb/reports/retained/agentic-system-analysis/`. Publication enforces this
-  and that no method path changed since each run's `inputs-commit`. If
-  the tree is not publishable, stop and report the offending paths; the
-  operator clears them, since this commission authorizes no commits.
-  Sibling runs' uncommitted publications do not block one another.
+- Each source checkout named below has the origin named below.
+- The batch worktree is clean, and the main checkout's `src/commonplace/`
+  has no difference from the worktree's base commit. Publication enforces
+  both, together with unchanged method paths since `inputs-commit`; sibling
+  runs' uncommitted publications do not block one another.
 
 At startup record HEAD, the SHA-256 of the five governing files (the
 skill, the memory instruction, the epistemic instruction, the overview type
@@ -59,9 +83,9 @@ inventory so that the runtime member dominates in at least one set:
 
 | System | Repository | Checkout | Legacy artifact | Expected class |
 |---|---|---|---|---|
-| Agent-S | https://github.com/simular-ai/Agent-S | `related-systems/simular-ai--Agent-S` | `kb/agent-memory-systems/reviews/Agent-S.md` (legacy revision `73ea1722…`) | agent harness with experience memory |
-| MemoryOS | https://github.com/BAI-LAB/MemoryOS | `related-systems/BAI-LAB--MemoryOS` | `kb/agent-memory-systems/reviews/MemoryOS.md` (legacy revision `1d717060…`) | memory/knowledge/context-engineering system |
-| basic-memory | https://github.com/basicmachines-co/basic-memory | `related-systems/basicmachines-co--basic-memory` | `kb/agent-memory-systems/reviews/basic-memory.md` (legacy revision `fc2ee070…`) | extension or tool mechanism over local files |
+| Agent-S | https://github.com/simular-ai/Agent-S | `<main checkout>/related-systems/simular-ai--Agent-S` | `kb/agent-memory-systems/reviews/Agent-S.md` (legacy revision `73ea1722…`) | agent harness with experience memory |
+| MemoryOS | https://github.com/BAI-LAB/MemoryOS | `<main checkout>/related-systems/BAI-LAB--MemoryOS` | `kb/agent-memory-systems/reviews/MemoryOS.md` (legacy revision `1d717060…`) | memory/knowledge/context-engineering system |
+| basic-memory | https://github.com/basicmachines-co/basic-memory | `<main checkout>/related-systems/basicmachines-co--basic-memory` | `kb/agent-memory-systems/reviews/basic-memory.md` (legacy revision `fc2ee070…`) | extension or tool mechanism over local files |
 
 Revisions are not fixed in advance: this is a refresh, so each
 coordinator fetches the current default branch of its origin, resolves it
@@ -145,7 +169,15 @@ member dominate for Agent-S; did any worker meet a gap in the member-set
 contracts; and what the batch cost in worker time and retries, as a basis
 for scheduling the remaining 156 entries.
 
+When every run has published, commit the batch on `refresh-batch-01` in
+the worktree, staging by explicit path: the three reviews, the three
+retained sets, the three inventory rows and the batch record, with the
+README link. Do not merge into main, push, or remove the worktree; the
+operator merges the branch and removes the worktree after reviewing it.
+
 This commission covers three analyses, their publication, bounded
-consumer checks, three inventory rows and the batch record. It does not
-touch the archive, migrate any old result, change the method, or authorize
-Git commits. Finish with the evidence-backed answers or concrete blockers.
+consumer checks, three inventory rows, the batch record and the batch
+commit on its branch. It does not touch the archive, migrate any old
+result, change the method, or commit anywhere but the batch branch.
+Finish with the evidence-backed answers, the branch and commit hash, or
+concrete blockers.
