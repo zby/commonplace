@@ -7,24 +7,44 @@ Step 3 of the [workshop](./README.md). Built on the
 producer, the validators, the consumers and the tests, the order of the
 work, and the one decision that is the operator's.
 
-## The finding that reframes historical results
+## Historical results: archive, then rerun
 
-Only three of the forty generated reviews load under today's contract:
-the three 2026-09-27 pilots. The other thirty-seven fail validation on
-the pre-ADR-093 profile shape, so the default matrix build already
-raises and the committed comparison CSV cannot be regenerated. The
-workshop's rule that restructuring preserves historical results is
-already satisfied the only way it can be: the retained bytes stay, and
-the consumers read the current shape only. Sixty retained single-file
-results remain as they are, under the retired type, readable by a person
-and unreadable by the loaders, exactly as thirty-seven of them are now.
+Only three of the forty-one generated reviews load under today's contract:
+the three 2026-09-27 pilots. The other thirty-eight fail validation on the
+pre-ADR-093 profile shape, so the default matrix build already raises and
+the committed comparison CSV cannot be regenerated. Historical results
+are already retained bytes rather than loadable inputs.
 
-Decision proposed: no compatibility code and no migration. The
-corpus-refresh workshop regenerates reviews under the new producer, as
-it was going to. The three current pilots are re-run under the new
-producer in step 4 rather than converted, so every set in the corpus was
-produced by the method. This is the operator's call because it accepts
-that, between the producer change and the next refresh, no review loads.
+The operator's direction (2026-09-28): move the retained corpus into an
+archive so that the retained directory and the public reviews hold only
+data produced under the current method, and rerun the analyses. No
+compatibility code and no migration of old results. The archive keeps
+the exact records for citation; the corpus refresh regenerates each
+review as a fresh run under the new producer.
+
+Proposed move list, held for approval before any file moves:
+
+| What | From | To | Count | Notes |
+|---|---:|---|---:|---|
+| Retained single-file results | `kb/reports/retained/agentic-system-analysis/` | `kb/reports/retained/agentic-system-analysis-archive/` | 60 run directories plus the validation-ignore file | stays under `retained/`, so the retention contract is unchanged; a README states the retired type and that no loader reads them; the source directory is left empty for the new sets |
+| Generated reviews | `kb/agentic-systems/reviews/` | `kb/agentic-systems/reviews-archive/` | 41 files | the 12 hand-authored reviews stay; each archived review's `analysis-result` pin and its body links are rewritten to the archive path, hashes unchanged, so every pinned pair stays verifiable; a README says these are superseded projections awaiting regeneration |
+| Generated comparison outputs | `kb/agentic-systems/comparisons/` | deleted | `memory-systems.csv`, `memory-systems-table.md` | derived from archived inputs and already unregenerable; git history keeps them; the comparisons README says outputs return with the reruns |
+| Site config | `properdocs.yml` | | | publish the archive's results as today's exception does, so archived reviews still resolve their links; the archived reviews directory is published under its own path |
+
+Mechanics: `commonplace-relocate-directory` moves the results directory and
+rewrites the 81 body links in reviews and the links in workshop and
+reference documents. The pin fields are not links and are rewritten by a
+scripted pass with hashes rechecked afterwards. The reviews move one by
+one with `commonplace-relocate-note`, which rewrites the ten library
+documents that cite a review and adds a redirect per file. When a rerun
+republishes a review at its original path, that redirect must be removed;
+publication gains that step, or the redirects are dropped in one cleanup
+after the refresh. Relocation commits are pure: the moves land alone,
+then the README and config edits.
+
+Sequence: archive first, since nothing loads the corpus today except the
+three pilots, which are rerun in step 4; then the eight implementation
+commits; then the reruns under the corpus-refresh workshop.
 
 ## Producer changes
 
@@ -145,7 +165,7 @@ contracts supersede it.
 
 ## Open items for the operator
 
-- The historical-results decision above.
+- Approval of the move list above.
 - Init repin: cascade, or freeze retained analysis directories.
 - Whether the trial target should be a harness-class system, to see the
   runtime member dominate for the first time.
