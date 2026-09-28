@@ -31,6 +31,7 @@ any member.
 | `analysis-cutoff` | Yes | Applicability cutoff for the frozen evidence, or `null` before one could be established |
 | `evidence-tier` | Yes | `code-grounded`, `doc-grounded`, or `null` before the runtime baseline could support a tier |
 | `members` | Yes | The manifest: a list of `{path, sha256, type}` entries, one per other member of the set, paths relative to the overview's directory; empty for a `blocked` or `out-of-scope` run |
+| `inputs-commit` | Yes | The full commit of this repository whose tree supplied the run's method: the analysis instructions, the set's type specs and schemas, and the package code. The coordinator writes HEAD here when the run opens; publication requires HEAD to descend from it with those method paths unchanged |
 
 For a `complete` run, the five boundary fields are non-null and `members`
 names exactly one runtime report, one memory report and one epistemic
@@ -48,8 +49,10 @@ and retained together under
 `kb/reports/retained/agentic-system-analysis/<run-id>/` on publication.
 Completion is a chain of pins: the run state pins the overview's path and
 SHA-256; the overview's manifest pins every other member; the compact
-review pins the overview. Correct a retained set through a new run, never
-by editing a retained member.
+review pins the overview. `inputs-commit` pins the method: the commit whose
+tree supplied the instructions, types and code the run used, so a reader
+can reproduce the method from Git without a separate bundle. Correct a
+retained set through a new run, never by editing a retained member.
 
 A reader rejects the set, naming the failed check, when a manifest member
 is missing or its bytes do not hash to the manifest; when a member's
@@ -261,6 +264,7 @@ boundary-kind: whole-system
 reviewed-boundary: "{immutable revision or capture identity}"
 analysis-cutoff: "YYYY-MM-DD"
 evidence-tier: code-grounded
+inputs-commit: "{full commit of this repository at run start}"
 members:
   - path: runtime.md
     sha256: "{sha256}"

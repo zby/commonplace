@@ -57,13 +57,24 @@ without emitting prior review prose or descriptions. Both `prepare` and
 `publish` require that digest through `--expected-incumbent-sha256` (`absent`
 for a vacant destination). Destination drift requires a new inspection.
 
-An uncommitted incumbent is eligible only when its review and retained-result
-hashes match its completed publication record and source identity. This checks
-replacement provenance, not compliance of the old analysis with today's method.
-Unrecorded local edits, source collisions and missing or mismatched retained
-evidence fail. Replacement saves `incumbent-review.md` and
-`incumbent-result.md` in the new run for recovery. No Git commit is required
-for an unchanged generated incumbent.
+All three operations require a worktree that is clean outside the workflow's
+output locations: no modified or staged tracked file anywhere, and no
+untracked file under `kb/` except under `kb/agentic-systems/reviews/` and
+`kb/reports/retained/agentic-system-analysis/`, where a sibling run's
+uncommitted publication may sit; ignored paths never count. `prepare` and
+`publish` also require the overview's `inputs-commit` to be an ancestor of or
+equal to HEAD with the method paths (the analysis instructions, the set's type
+specs and schemas, and `src/commonplace/`) unchanged between them, so the
+commit identifies the method the run used. Both errors name the offending
+paths.
+
+An incumbent is checked by bytes: it must be a generated review of the same
+source whose retained overview and members hash to their pins. It may be
+committed or a sibling's fresh uncommitted publication; no publication receipt
+is read. This checks replacement provenance, not compliance of the old analysis
+with today's method. Replacement saves `incumbent-review.md` and an
+`incumbent-<member>.md` copy of each retained member in the new run for
+recovery.
 
  `prepare` validates the exact result, specialist memory report, and
 candidate review, and checks the incumbent without changing public artifacts.

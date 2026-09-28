@@ -17,6 +17,7 @@ allOf:
           - reviewed-boundary
           - analysis-cutoff
           - evidence-tier
+          - inputs-commit
           - members
         properties:
           type:
@@ -50,6 +51,9 @@ allOf:
             format: date
           evidence-tier:
             enum: [code-grounded, doc-grounded, null]
+          inputs-commit:
+            type: string
+            pattern: '^[0-9a-f]{40}$'
           members:
             type: array
             items:

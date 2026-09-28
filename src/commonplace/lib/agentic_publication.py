@@ -32,6 +32,34 @@ from commonplace.lib.note_parser import ParsedDocument, parse_document
 
 INCUMBENT_REVIEW_NAME = "incumbent-review.md"
 
+# The files whose tree at ``inputs-commit`` supplied the run's method. A run
+# publishes only while HEAD leaves them unchanged since that commit.
+METHOD_PATHS: tuple[str, ...] = (
+    "src/commonplace/",
+    "kb/instructions/analyse-agentic-system/",
+    "kb/instructions/analyse-agent-memory.md",
+    "kb/instructions/analyse-external-system-epistemic-architecture.md",
+    "kb/types/agentic-system-analysis-overview.md",
+    "kb/types/agentic-system-analysis-overview.schema.yaml",
+    "kb/types/agentic-system-runtime-report.md",
+    "kb/types/agentic-system-runtime-report.schema.yaml",
+    "kb/types/agentic-system-epistemic-report.md",
+    "kb/types/agentic-system-epistemic-report.schema.yaml",
+    "kb/types/agent-memory-analysis-report.md",
+    "kb/types/agent-memory-analysis-report.schema.yaml",
+    "kb/types/agentic-system-analysis-run-state.md",
+    "kb/types/agentic-system-analysis-run-state.schema.yaml",
+    "kb/agentic-systems/types/generated-review.md",
+    "kb/agentic-systems/types/generated-review.schema.yaml",
+)
+
+# Untracked files may sit here while a batch runs: a sibling run's publication
+# that has not been committed yet.
+OUTPUT_LOCATIONS: tuple[str, ...] = (
+    "kb/agentic-systems/reviews/",
+    "kb/reports/retained/agentic-system-analysis/",
+)
+
 
 def incumbent_copy_name(name: str) -> str:
     """The recovery copy of a replaced set document, kept in the new run."""
@@ -167,25 +195,79 @@ def _require_candidate_in_run(candidate: Path, state: AgenticAnalysisRunState) -
         raise ValueError(f"candidate path is reserved: {candidate}")
 
 
+def _git(repo_root: Path, *args: str) -> subprocess.CompletedProcess[str]:
+    try:
+        return subprocess.run(
+            ["git", *args], cwd=repo_root, check=False,
+            capture_output=True, text=True, timeout=30,
+        )
+    except (OSError, subprocess.SubprocessError) as exc:
+        raise ValueError(f"cannot run git {args[0]} in the repository") from exc
+
+
+def require_publishable_worktree(repo_root: Path) -> None:
+    """Require a worktree clean outside the workflow's own output locations.
+
+    No tracked file may be modified or staged anywhere, and no untracked file
+    may sit under ``kb/`` except under an output location, where a sibling
+    run's uncommitted publication is allowed. Ignored paths never count.
+    """
+    status = _git(repo_root, "status", "--porcelain", "--untracked-files=all")
+    if status.returncode != 0:
+        raise ValueError("cannot inspect the repository's Git status")
+    changed: list[str] = []
+    untracked: list[str] = []
+    for line in status.stdout.splitlines():
+        if len(line) < 4:
+            continue
+        code, path = line[:2], line[3:]
+        if code == "??":
+            if path.startswith("kb/") and not path.startswith(OUTPUT_LOCATIONS):
+                untracked.append(path)
+        else:
+            changed.append(path)
+    problems = []
+    if changed:
+        problems.append("tracked files with local changes: " + ", ".join(sorted(changed)))
+    if untracked:
+        problems.append(
+            "untracked files under kb/ outside the publication outputs: "
+            + ", ".join(sorted(untracked))
+        )
+    if problems:
+        raise ValueError(
+            "publication requires a clean worktree outside its output locations; "
+            + "; ".join(problems)
+        )
+
+
+def require_method_unchanged(repo_root: Path, inputs_commit: object) -> None:
+    """Require HEAD to descend from ``inputs-commit`` with the method paths unchanged."""
+    if not isinstance(inputs_commit, str) or not re.fullmatch(r"[0-9a-f]{40}", inputs_commit):
+        raise ValueError("overview inputs-commit must be a full 40-hex commit")
+    ancestry = _git(repo_root, "merge-base", "--is-ancestor", inputs_commit, "HEAD")
+    if ancestry.returncode != 0:
+        raise ValueError(
+            f"overview inputs-commit {inputs_commit} is not a commit in this repository "
+            "or not an ancestor of HEAD"
+        )
+    diff = _git(repo_root, "diff", "--name-only", inputs_commit, "HEAD", "--", *METHOD_PATHS)
+    if diff.returncode != 0:
+        raise ValueError("cannot compare the method paths against inputs-commit")
+    changed = sorted(line for line in diff.stdout.splitlines() if line)
+    if changed:
+        raise ValueError(
+            f"method paths changed since inputs-commit {inputs_commit}: " + ", ".join(changed)
+        )
+
+
 def _check_incumbent(
     *, path: Path, repo_root: Path, source_identity: str,
 ) -> _Incumbent:
-    """Check replacement provenance, not the incumbent's analytical validity."""
+    """Check replacement provenance by bytes, not the incumbent's analytical validity."""
     if path.exists() and not path.is_file():
         raise ValueError(f"publication destination is not a file: {path}")
-    relative = path.relative_to(repo_root).as_posix()
-    try:
-        status = subprocess.run(
-            ["git", "status", "--short", "--untracked-files=all", "--", relative],
-            cwd=repo_root, check=False, capture_output=True, text=True, timeout=10,
-        )
-    except (OSError, subprocess.SubprocessError) as exc:
-        raise ValueError("cannot inspect destination Git status") from exc
-    if status.returncode != 0:
-        raise ValueError("cannot inspect destination Git status")
     if not path.exists():
-        if status.stdout.strip():
-            raise ValueError("publication destination has local changes: deleted incumbent")
         return _Incumbent()
 
     review_bytes, content = _read_utf8(path, label="publication incumbent")
@@ -216,30 +298,6 @@ def _check_incumbent(
             or overview_metadata.get("reviewed-boundary") != metadata.get("reviewed-revision")
             or overview_metadata.get("result-disposition") != "complete"):
         raise ValueError("incumbent retained overview identity mismatch")
-
-    if status.stdout.strip():
-        # A publication writes both this projection hash and the overview hash.
-        # Match that receipt without claiming the old analysis meets today's method.
-        receipt_path = _repo_path(repo_root, Path(
-            "kb/reports/state/agentic-system-analysis"
-        ) / run_id / "run-state.md")
-        _, receipt_text = _read_utf8(receipt_path, label="incumbent publication receipt")
-        receipt = _parse(receipt_text, label="incumbent publication receipt").frontmatter or {}
-        expected_review = {"path": relative, "sha256": sha256(review_bytes).hexdigest()}
-        expected_overview = {
-            "path": f"kb/reports/state/agentic-system-analysis/{run_id}/{OVERVIEW_NAME}",
-            "sha256": overview_hash,
-        }
-        source = receipt.get("source")
-        if (receipt.get("run-id") != run_id
-                or receipt.get("run-status") != "complete"
-                or receipt.get("result-disposition") != "complete"
-                or receipt.get("generated-review") != expected_review
-                or receipt.get("overview") != expected_overview
-                or not isinstance(source, dict)
-                or source.get("identity") != source_identity
-                or source.get("revision") != metadata.get("reviewed-revision")):
-            raise ValueError("publication destination has local changes not matching its publication receipt")
     return _Incumbent(
         review_bytes,
         {document.name: document.path for document in member_set.documents},
@@ -253,6 +311,7 @@ def inspect_destination(
     """Return only a replacement decision and byte identity, never prior prose."""
     repo_root = repo_root.resolve()
     path = _destination_path(repo_root, generated_destination)
+    require_publishable_worktree(repo_root)
     incumbent = _check_incumbent(path=path, repo_root=repo_root, source_identity=source_identity)
     return {
         "replaceable": True,
@@ -311,19 +370,20 @@ def _check_bundle(spec: PublicationSpec) -> _CheckedBundle:
         state_path, repo_root=repo_root
     )
     _require_candidate_in_run(generated_candidate, running_state)
-    incumbent = _check_incumbent(
-        path=generated_path, repo_root=repo_root,
-        source_identity=running_state.source.identity,
-    )
-    if incumbent.digest != spec.expected_incumbent_sha256:
-        raise ValueError("publication destination changed since inspection")
-
+    require_publishable_worktree(repo_root)
     try:
         member_set = load_member_set(running_state.run_dir / OVERVIEW_NAME)
     except ValueError as exc:
         raise ValueError(f"exact member set: {exc}") from exc
     if member_set.overview.frontmatter.get("result-disposition") != "complete":
         raise ValueError("publication requires a complete exact overview")
+    require_method_unchanged(repo_root, member_set.overview.frontmatter.get("inputs-commit"))
+    incumbent = _check_incumbent(
+        path=generated_path, repo_root=repo_root,
+        source_identity=running_state.source.identity,
+    )
+    if incumbent.digest != spec.expected_incumbent_sha256:
+        raise ValueError("publication destination changed since inspection")
     memory = member_set.memory
     if memory is None or "memory-comparison" not in memory.frontmatter:
         raise ValueError("publication requires memory-comparison in the memory member")

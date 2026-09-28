@@ -37,6 +37,9 @@ STATE_DIR = Path("kb/reports/state/agentic-system-analysis")
 REVIEW_PATH = "kb/agentic-systems/reviews/example-system.md"
 # The fixture set's Reconciliation mapping: the specialist's one proposal.
 MAPPING = {"MEM-OBJ-1": "OBJ-2"}
+# A placeholder method commit for fixtures that never publish; publication
+# fixtures pin the fixture repository's real HEAD.
+INPUTS_COMMIT = "f" * 40
 MEMBER_TYPES = {
     "runtime.md": "types/agentic-system-runtime-report.md",
     "memory.md": "types/agent-memory-analysis-report.md",
@@ -359,7 +362,9 @@ Conclusion.
 """
 
 
-def overview_text(revision: str, members: dict[str, Path]) -> str:
+def overview_text(
+    revision: str, members: dict[str, Path], *, inputs_commit: str = INPUTS_COMMIT
+) -> str:
     manifest = "\n".join(
         f"  - path: {name}\n    sha256: {digest(path)}\n    type: {MEMBER_TYPES[name]}"
         for name, path in members.items()
@@ -376,6 +381,7 @@ boundary-kind: whole-system
 reviewed-boundary: {revision}
 analysis-cutoff: "2026-09-04"
 evidence-tier: code-grounded
+inputs-commit: {inputs_commit}
 members:
 {manifest}
 ---
@@ -549,21 +555,71 @@ def rewrite_boundary(tmp_path: Path, run_dir: Path, old: str, new: str) -> None:
         path.write_text(path.read_text(encoding="utf-8").replace(old, new), encoding="utf-8")
 
 
+def run_git(root: Path, *args: str) -> str:
+    return subprocess.run(
+        [
+            "git", "-C", str(root),
+            "-c", "user.name=Commonplace Test",
+            "-c", "user.email=test@example.invalid",
+            *args,
+        ],
+        check=True, capture_output=True, text=True,
+    ).stdout.strip()
+
+
+def commit_paths(root: Path, message: str, *paths: Path | str) -> str:
+    """Stage the given paths, commit them, and return the new HEAD."""
+    run_git(root, "add", "--", *(str(path) for path in paths))
+    run_git(root, "commit", "--quiet", "-m", message)
+    return run_git(root, "rev-parse", "HEAD")
+
+
+def commit_inputs(tmp_path: Path) -> str:
+    """Make the fixture tree a repository whose initial commit holds the run's inputs.
+
+    The run directory and the source checkout are ignored, as in the real
+    repository, so the run's own files never dirty the tree.
+    """
+    write(tmp_path / ".gitignore", "kb/reports/state/\nrelated-systems/\n")
+    run_git(tmp_path, "init", "--quiet")
+    return commit_paths(tmp_path, "Commit the run's inputs", ".")
+
+
+def pin_inputs_commit(run_dir: Path, commit: str, candidate: Path | None = None) -> None:
+    """Record the method commit in the overview and re-pin the candidate review to it."""
+    overview = run_dir / "overview.md"
+    replace_frontmatter(overview, {**frontmatter(overview), "inputs-commit": commit})
+    if candidate is not None:
+        replace_frontmatter(
+            candidate, {**frontmatter(candidate), "analysis-overview-sha256": digest(overview)}
+        )
+
+
 def publication_fixture(tmp_path: Path) -> tuple[Path, PublicationSpec, bytes]:
     state = valid_run_state(tmp_path)
-    subprocess.run(["git", "init", "--quiet", str(tmp_path)], check=True)
     values = frontmatter(state)
     destination = values["generated-review"]["path"]
     public = tmp_path / destination
-    generated_bytes = public.read_bytes()
     candidate = state.parent / "generated-review.candidate.md"
-    candidate.write_bytes(generated_bytes)
+    candidate.write_bytes(public.read_bytes())
     public.unlink()
     shutil.rmtree(tmp_path / agentic_set.retained_overview_path(RUN_ID).parent)
+    head = commit_inputs(tmp_path)
+    pin_inputs_commit(state.parent, head, candidate)
     values.update({"run-status": "running", "result-disposition": None,
                    "overview": None, "generated-review": None, "failure": None})
     replace_frontmatter(state, values)
-    return state, PublicationSpec(tmp_path, state, candidate, destination, "absent"), generated_bytes
+    spec = PublicationSpec(tmp_path, state, candidate, destination, "absent")
+    return state, spec, candidate.read_bytes()
+
+
+def inspect(tmp_path: Path, spec: PublicationSpec) -> dict[str, object]:
+    from commonplace.lib.agentic_publication import inspect_destination
+
+    return inspect_destination(
+        repo_root=tmp_path, generated_destination=spec.generated_destination,
+        source_identity=SOURCE,
+    )
 
 
 def test_complete_run_state_verifies_source_and_outputs(tmp_path: Path) -> None:
@@ -1240,16 +1296,7 @@ def test_prepare_rejects_an_unresolved_quote_in_a_candidate(tmp_path: Path) -> N
 
 
 def commit_incumbent(tmp_path: Path, path: Path) -> None:
-    subprocess.run(["git", "-C", str(tmp_path), "add", str(path)], check=True)
-    subprocess.run(
-        [
-            "git", "-C", str(tmp_path),
-            "-c", "user.name=Commonplace Test",
-            "-c", "user.email=test@example.invalid",
-            "commit", "--quiet", "-m", "Record incumbent",
-        ],
-        check=True,
-    )
+    commit_paths(tmp_path, "Record incumbent", path)
 
 
 @pytest.mark.parametrize("staged", [True, False])
@@ -1267,9 +1314,10 @@ def test_prepare_rejects_a_locally_deleted_review(
     if staged:
         subprocess.run(["git", "-C", str(tmp_path), "add", destination], check=True)
 
-    with pytest.raises(ValueError, match="has local changes"):
+    with pytest.raises(ValueError, match="clean worktree") as error:
         prepare_publication(spec)
 
+    assert destination in str(error.value)
     assert not incumbent.exists()
     assert frontmatter(state)["run-status"] == "running"
 
@@ -1617,19 +1665,21 @@ def test_rerun_replaces_unchanged_publication_and_keeps_recovery_copies(tmp_path
     assert validation.validate_note(spec.run_state_path, repo_root=tmp_path).fails == []
 
 
-@pytest.mark.parametrize("mutation", ["review", "receipt", "missing-overview", "overview", "member", "source", "missing-receipt"])
-def test_inspection_rejects_unverified_incumbents(tmp_path: Path, mutation: str) -> None:
+@pytest.mark.parametrize("mutation, error", [
+    ("missing-overview", "cannot read incumbent retained overview"),
+    ("overview", "overview hash mismatch"),
+    ("member", "manifest: runtime.md bytes hash to"),
+    ("source", "same source"),
+    ("committed-then-edited", "local changes"),
+])
+def test_inspection_rejects_unverified_incumbents(tmp_path: Path, mutation: str, error: str) -> None:
+    """An incumbent is checked by its bytes and pins; no publication receipt is read."""
     from commonplace.lib.agentic_publication import inspect_destination
     spec, _, _ = rerun_publication_fixture(tmp_path)
     review = tmp_path / spec.generated_destination
     metadata = frontmatter(review)
     retained = tmp_path / metadata["analysis-overview"]
-    receipt = spec.run_state_path.parent.with_name(RUN_ID) / "run-state.md"
-    if mutation == "review":
-        review.write_text(review.read_text() + "\nHuman correction.\n")
-    elif mutation == "receipt":
-        replace_frontmatter(receipt, {**frontmatter(receipt), "run-status": "running"})
-    elif mutation == "missing-overview":
+    if mutation == "missing-overview":
         retained.unlink()
     elif mutation == "overview":
         retained.write_text(retained.read_text() + "\nAltered evidence.\n")
@@ -1639,8 +1689,9 @@ def test_inspection_rejects_unverified_incumbents(tmp_path: Path, mutation: str)
     elif mutation == "source":
         replace_frontmatter(review, {**metadata, "source-identity": "other"})
     else:
-        receipt.unlink()
-    with pytest.raises(ValueError):
+        commit_paths(tmp_path, "Record the first publication", review, retained.parent)
+        review.write_text(review.read_text() + "\nHuman correction.\n")
+    with pytest.raises(ValueError, match=error):
         inspect_destination(repo_root=tmp_path, generated_destination=spec.generated_destination,
                             source_identity=metadata["source-identity"])
 
@@ -1651,7 +1702,7 @@ def test_publish_rejects_destination_change_after_prepare(tmp_path: Path) -> Non
     path = tmp_path / spec.generated_destination
     path.write_text(path.read_text() + "\nConcurrent edit.\n")
     changed = path.read_bytes()
-    with pytest.raises(ValueError, match="local changes"):
+    with pytest.raises(ValueError, match="changed since inspection"):
         publish_publication(spec)
     assert path.read_bytes() == changed
     assert frontmatter(spec.run_state_path)["run-status"] == "running"
@@ -1713,6 +1764,69 @@ def test_rerun_never_overwrites_a_conflicting_recovery_copy(tmp_path: Path) -> N
         publish_publication(spec)
     assert backup.read_bytes() == b"Other recovery evidence.\n"
     assert (tmp_path / spec.generated_destination).read_bytes() == old_review
+
+
+@pytest.mark.parametrize("path, accepted", [
+    ("kb/notes/draft.md", False),
+    ("kb/agentic-systems/reviews/sibling.md", True),
+    ("kb/reports/retained/agentic-system-analysis/AAS-2026-09-04-sibling-01/overview.md", True),
+    ("scratch.txt", True),
+])
+def test_untracked_files_block_publication_only_under_kb_outside_its_outputs(
+    tmp_path: Path, path: str, accepted: bool
+) -> None:
+    state, spec, _ = publication_fixture(tmp_path)
+    write(tmp_path / path, "A sibling run's publication, or a stray file.\n")
+    if accepted:
+        assert inspect(tmp_path, spec)["replaceable"]
+        assert prepare_publication(spec).prepared
+        return
+    with pytest.raises(ValueError, match="clean worktree") as error:
+        inspect(tmp_path, spec)
+    assert path in str(error.value)
+    with pytest.raises(ValueError, match=re.escape(path)):
+        prepare_publication(spec)
+    assert frontmatter(state)["run-status"] == "running"
+
+
+@pytest.mark.parametrize("staged", [False, True])
+def test_a_modified_tracked_file_anywhere_blocks_publication(tmp_path: Path, staged: bool) -> None:
+    state, spec, _ = publication_fixture(tmp_path)
+    tracked = tmp_path / ".gitignore"
+    tracked.write_text(tracked.read_text() + "tmp/\n")
+    if staged:
+        run_git(tmp_path, "add", "--", ".gitignore")
+    for operation in (lambda: inspect(tmp_path, spec), lambda: publish_publication(spec)):
+        with pytest.raises(ValueError, match="local changes") as error:
+            operation()
+        assert ".gitignore" in str(error.value)
+    assert not (tmp_path / spec.generated_destination).exists()
+    assert frontmatter(state)["run-status"] == "running"
+
+
+def test_publication_requires_the_method_unchanged_since_inputs_commit(tmp_path: Path) -> None:
+    state, spec, _ = publication_fixture(tmp_path)
+    # Unrelated commits after inputs-commit, such as a sibling's publication, are fine.
+    note = write(tmp_path / "kb/notes/unrelated.md", "# Unrelated\n")
+    commit_paths(tmp_path, "Unrelated change", note)
+    assert prepare_publication(spec).prepared
+    # A method change since inputs-commit is not.
+    method = tmp_path / "kb/types/agentic-system-analysis-overview.md"
+    method.write_text(method.read_text() + "\nMethod change.\n")
+    commit_paths(tmp_path, "Change the method", method)
+    with pytest.raises(ValueError, match="method paths changed since inputs-commit") as error:
+        publish_publication(spec)
+    assert "kb/types/agentic-system-analysis-overview.md" in str(error.value)
+    assert not (tmp_path / spec.generated_destination).exists()
+    assert frontmatter(state)["run-status"] == "running"
+
+
+def test_publication_requires_inputs_commit_to_be_an_ancestor_of_head(tmp_path: Path) -> None:
+    state, spec, _ = publication_fixture(tmp_path)
+    pin_inputs_commit(state.parent, "0" * 40, spec.generated_candidate_path)
+    with pytest.raises(ValueError, match="not an ancestor of HEAD"):
+        prepare_publication(spec)
+    assert frontmatter(state)["run-status"] == "running"
 
 
 def test_complete_set_cannot_omit_quoted_source_evidence(tmp_path: Path) -> None:

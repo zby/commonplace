@@ -9,6 +9,7 @@ from commonplace.lib import validation
 REPO_ROOT = Path(__file__).resolve().parents[3]
 RUN_ID = "AAS-2026-09-28-example-system-01"
 REVISION = "0123456789abcdef0123456789abcdef01234567"
+INPUTS_COMMIT = "fedcba9876543210fedcba9876543210fedcba98"
 MEMBERS = "\n".join(
     f"  - path: {name}.md\n    sha256: \"{'a' * 64}\"\n    type: types/{kind}.md"
     for name, kind in (
@@ -33,6 +34,7 @@ boundary-kind: {"whole-system" if complete else "null"}
 reviewed-boundary: {f'"{REVISION}"' if complete else "null"}
 analysis-cutoff: {'"2026-09-28"' if complete else "null"}
 evidence-tier: {"code-grounded" if complete else "null"}
+inputs-commit: "{INPUTS_COMMIT}"
 members:{chr(10) + MEMBERS if complete else " []"}
 ---
 

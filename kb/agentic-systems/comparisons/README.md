@@ -45,17 +45,10 @@ patch generated findings, reuse an old CSV value, or infer absence from an
 omission. Use an explicit review list to compare only regenerated inputs.
 The old matrix and table under `kb/agent-memory-systems/` remain historical
 snapshots; these commands no longer rebuild them. Public landscape synthesis uses the same inputs through
-`synthesize-agent-memory-landscape`. Its bundle command captures selected main
-results and derives a matching matrix without changing public comparison files:
-
-```bash
-uv run python scripts/bundle_agentic_landscape.py prepare --output <new-bundle-directory> --review <main-review-path>
-uv run python scripts/bundle_agentic_landscape.py verify <bundle-directory> --sha256 <recorded-manifest-hash> --source-root .
-```
-
-Repeat `--review` for a bounded population or omit it to select all generated
-main reviews. Save the returned manifest hash outside the immutable bundle.
-Verification checks captured bytes, matrix/result agreement, and current input
-and population drift. Omit `--source-root` only for historical verification.
+`synthesize-agent-memory-landscape`. It records the commit whose tree holds
+the selected reviews, retained sets, contracts and reader code instead of
+preparing a separate bundle; an analysis publishes only with its method
+committed and the worktree clean outside the publication outputs, so that
+commit identifies the method and inputs.
 Quantitative claims retain their population, evidence filters, and exclusions;
 qualitative claims require reading and citing the full retained result.
