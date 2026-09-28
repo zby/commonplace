@@ -42,9 +42,10 @@ following and stop with a report if any fails:
 - The worktree is publishable: no modified or staged tracked file, and no
   untracked file under `kb/` outside `kb/agentic-systems/reviews/` and
   `kb/reports/retained/agentic-system-analysis/`. Publication enforces this
-  and that no method path changed since each run's `inputs-commit`, so
-  commit or set aside unrelated local edits before launching. Sibling runs'
-  uncommitted publications do not block one another.
+  and that no method path changed since each run's `inputs-commit`. If
+  the tree is not publishable, stop and report the offending paths; the
+  operator clears them, since this commission authorizes no commits.
+  Sibling runs' uncommitted publications do not block one another.
 
 At startup record HEAD, the SHA-256 of the five governing files (the
 skill, the memory instruction, the epistemic instruction, the overview type
@@ -109,21 +110,27 @@ dependent work only if the defect prevents valid completion.
 
 ## Evidence and acceptance
 
+Defer every write of your own outside the run directories until all three
+runs have published: the inventory update, the batch record, the cache
+directory, and any note. An untracked or modified file under `kb/` outside
+the two output locations blocks a later run's publication.
+
 After each run, independently run the handoff command and the run-state
 verification, which checks the pin chain (run state, overview manifest,
-member hashes and types, review pin), `run-id` agreement, each member's
-own validation, and anchor resolution on every member and the review.
-Cross-member identifier resolution and the finalization derivation are
-deliberately not checked until `kb/work/directory-artifacts` lands; read
-each set for an ID referenced in one member and declared in none, and
-record any you find. Retain traces, hashes and model identities in a new
+member hashes and types, review pin), `run-id` and `reviewed-boundary`
+agreement across members, the memory member's `finalized-from` against the
+local report and its input hash, each member's own validation, and anchor
+resolution on every member and the review. Cross-member identifier
+resolution and the finalization derivation are deliberately not checked
+until `kb/work/directory-artifacts` lands; read each set for an ID
+referenced in one member and declared in none, and record any you find.
+Retain traces, hashes and model identities in a new
 dated cache directory under `kb/reports/cache/agentic-memory-refresh/`.
 Report inaccessible trace portions as audit gaps.
 
 For each run record: the resolved commit; the boundary chosen and any
 exclusion; member word counts and record counts per kind; quote counts
-per member; whether the memory member's `finalized-from` equals the local
-report's hash; every gap, question or invented value a worker
+per member; every gap, question or invented value a worker
 produced, with the quoted instruction text; truncation and retries; and
 the fourteen profile assessments.
 
