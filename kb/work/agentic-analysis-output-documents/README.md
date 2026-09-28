@@ -244,7 +244,23 @@ to the declaring member while cross-lens annotations live in the annotating
 member keyed `On <ID>`; the overview holds the only source register. It
 also found that specialists re-declare seeded records with the proposal
 heading form, which the report type must turn into annotation headings.
-Next: draft the four member contracts from the cleaned result type.
+
+The [draft contracts](./contracts/README.md) (2026-09-28) cut the cleaned
+result type into five members. Words: overview 2,018, runtime 1,697, memory
+report 1,767, epistemic 1,472, generated review 343; 7,297 together against
+7,011 in today's result and report types, so the contract text is
+redistributed rather than grown, and the largest contract is a third of
+today's result type. Decisions the drafts embed, to confirm before step 3:
+the overview owns every set-wide convention and the `members` manifest;
+records declare at heading level four under level-three kinds, annotations
+as `#### On <ID>`, amendments as `Amendment:` paragraphs under the
+declaring record; probe capsules move to a `## Probe evidence` section of
+the runtime report; the memory report gains `finalized-from` and a
+finalized-only `## Amendments` section and carries the comparison contract;
+the review gets its own type under `kb/agentic-systems/types/` pinning
+`analysis-overview`. Step 2 closes when the operator confirms these and the
+three open choices in the candidate, after which step 3 plans the code and
+consumer transition.
 
 ## Work sequence and decision points
 
