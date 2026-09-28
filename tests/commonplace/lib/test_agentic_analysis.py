@@ -74,7 +74,8 @@ def configure_types(tmp_path: Path) -> None:
         tmp_path / "kb/agentic-systems/types",
     )
     shutil.copytree(REPO_ROOT / "kb/reports/types", tmp_path / "kb/reports/types")
-    write(tmp_path / "kb/reports/COLLECTION.md", "# Reports\n")
+    for collection in ("kb/reports", "kb/agentic-systems"):
+        shutil.copy2(REPO_ROOT / collection / "COLLECTION.md", tmp_path / collection / "COLLECTION.md")
     shutil.copytree(
         REPO_ROOT / "kb/instructions/review-gates",
         tmp_path / "kb/instructions/review-gates",
@@ -1303,6 +1304,30 @@ def test_publish_rolls_back_an_ordinary_multi_file_write_failure(
     publish_publication(spec)
     assert frontmatter(state)["run-status"] == "complete"
 
+
+
+def test_published_set_feeds_the_comparison_matrix(tmp_path, monkeypatch):
+    """A set published through the workflow loads and builds the matrix without edits."""
+    import csv
+    import io
+
+    from scripts import build_systems_matrix
+
+    state, spec, _ = publication_fixture(tmp_path)
+    prepare_publication(spec)
+    published = publish_publication(spec)
+    assert validation.validate_note(state, repo_root=tmp_path).fails == []
+
+    inputs = systems_matrix.load_results(tmp_path)
+    assert [row["analysis_run"] for row in inputs.rows] == [RUN_ID]
+    assert inputs.rows[0]["artifact_sha256"] == digest(tmp_path / published.retained_path)
+    assert inputs.rows[0]["storage_substrate"] == ["files", "sqlite"]
+    monkeypatch.setattr(build_systems_matrix, "REPO_ROOT", tmp_path)
+    matrix = tmp_path / "kb/agentic-systems/comparisons/memory-systems.csv"
+    assert build_systems_matrix.main(["--output", str(matrix)]) == 0
+    assert list(csv.DictReader(io.StringIO(matrix.read_text()))) == [
+        systems_matrix.csv_row(row) for row in inputs.rows
+    ]
 
 
 def test_comparison_tools_use_retained_results_without_local_or_legacy_inputs(tmp_path, monkeypatch):
