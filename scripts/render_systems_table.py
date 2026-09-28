@@ -1,4 +1,4 @@
-"""Render a memory comparison table directly from retained main-review results."""
+"""Render a memory comparison table directly from retained analysis sets."""
 
 from __future__ import annotations
 
@@ -47,7 +47,7 @@ def render(rows: list[dict[str, str]], output: Path) -> str:
         "",
         "# Memory mechanisms in agentic systems",
         "",
-        "Each row uses one main-review result and its stated memory boundary. Values",
+        "Each row uses one retained analysis set and its stated memory boundary. Values",
         "carry their evidence basis. Absence, inapplicability, uninspected mechanisms,",
         "and indeterminate classifications remain distinct. This is the selected",
         "population, not the historical memory-review corpus.",

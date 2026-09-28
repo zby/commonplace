@@ -1,4 +1,4 @@
-"""Freeze and verify landscape inputs read directly from main-analysis results."""
+"""Freeze and verify landscape inputs read directly from retained analysis sets."""
 
 from __future__ import annotations
 
@@ -197,7 +197,7 @@ def verify(
     with library_at(bundle / "kb"):
         inputs = load_results(bundle, reviews)
     if csv_text(inputs).encode("utf-8") != files[MATRIX]:
-        raise ValueError("matrix differs from bundled main results")
+        raise ValueError("matrix differs from bundled analysis sets")
     if (
         snapshot["matrix_sha256"] != digest(files[MATRIX])
         or snapshot["rows"] != len(inputs.rows)

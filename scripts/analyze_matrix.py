@@ -1,4 +1,4 @@
-"""Analyze memory comparison values directly from retained main-review results.
+"""Analyze memory comparison values directly from retained analysis sets.
 
 Only code-grounded rows with wired, observed, or causally supported values
 enter value statistics. Other assessments and weaker bases are reported apart.
@@ -97,7 +97,7 @@ def main(argv: list[str] | None = None) -> int:
     n = len(rows)
     analytic = list(AXES)
 
-    print(f"rows: {n}  (code-grounded main-review results only)\n")
+    print(f"rows: {n}  (code-grounded analysis sets only)\n")
     print(f"{'column':24} {'fill':>6} {'vals':>5} {'entropy':>8}  top-value (share)")
     print("-" * 72)
     keep, low_fill, low_var = [], [], []

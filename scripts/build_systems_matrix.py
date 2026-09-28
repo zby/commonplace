@@ -1,4 +1,7 @@
-"""Build a memory comparison matrix directly from retained main-review results.
+"""Build a memory comparison matrix directly from retained analysis sets.
+
+Each generated review pins its run's retained overview; the overview's manifest
+pins the memory member that carries the comparison profile.
 
 Run: uv run python scripts/build_systems_matrix.py [--review kb/agentic-systems/reviews/name.md]
 Default: every generated main review. Missing evidence or fields fail the build.

@@ -182,7 +182,7 @@ def test_valid_manifest_cannot_hide_matrix_result_disagreement(
     (output / bundle.MATRIX).write_text("system_name\nlegacy-only\n")
     manifest = bundle.manifest(bundle.payload(output))
     (output / bundle.MANIFEST).write_bytes(manifest)
-    with pytest.raises(ValueError, match="matrix differs from bundled main results"):
+    with pytest.raises(ValueError, match="matrix differs from bundled analysis sets"):
         bundle.verify(output, bundle.digest(manifest))
 
 

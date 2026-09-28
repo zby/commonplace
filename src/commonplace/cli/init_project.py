@@ -10,7 +10,6 @@ the skill set, or after switching between editable and normal installs.
 from __future__ import annotations
 
 import argparse
-import hashlib
 import json
 import os
 import re
@@ -38,7 +37,6 @@ class InitReport:
     retired_baselines: list[str] = field(default_factory=list)
     replaced_skill_copies: list[Path] = field(default_factory=list)
     rewritten_type_pointers: list[Path] = field(default_factory=list)
-    repinned_result_checksums: list[Path] = field(default_factory=list)
     rewritten_snapshots: list[Path] = field(default_factory=list)
     repinned_ingests: list[Path] = field(default_factory=list)
 
@@ -315,12 +313,18 @@ _JSON_TYPE = re.compile(r'("(?:type|requires_type)"\s*:\s*)"([^"]+)"')
 _SCHEMA_TYPE_CONST = re.compile(r'((?:"const"|const)\s*:\s*)(["\']?)(kb/[^"\'\s]+\.md)\2')
 _SCHEMA_REF = re.compile(r'(\$ref"?\s*:\s*["\']?)([^"\'\s]+\.schema\.(?:yaml|json))')
 _BARE_TYPE_NAME = re.compile(r"^[a-z0-9][a-z0-9-]*$")
-_RESULT_PIN = re.compile(r'("?analysis-result-sha256"?\s*:\s*"?)([0-9a-f]{64})')
 # Replaceable outputs are never rewritten. Report state holds live reports, whose
 # type values are migrated, and frozen evidence copies, which keep their values
 # as recorded; captures under .snapshots/ belong to migrate_snapshot_types.
+# A retained analysis directory is frozen bytes: its members are pinned by
+# hash from the overview's manifest and the review, so no line in it is
+# rewritten.
 _MIGRATION_SKIP = "kb/reports/cache/"
 _FROZEN_POINTER_AREA = "kb/reports/state/"
+_FROZEN_RETAINED_AREAS = (
+    "kb/reports/retained/agentic-system-analysis/",
+    "kb/reports/retained/agentic-system-analysis-archive/",
+)
 _LIVE_STATE_TYPES = frozenset(
     {
         "agent-memory-analysis-report",
@@ -342,18 +346,6 @@ def _project_files(project: Path, pattern: str) -> list[Path]:
         and ".snapshots" not in path.parts
         and not path.relative_to(project).as_posix().startswith(_MIGRATION_SKIP)
     ]
-
-
-def _repin_result_checksums(project: Path, rehashed: dict[str, str], report: InitReport) -> None:
-    """Point `analysis-result-sha256` pins at results whose type line init rewrote."""
-    if not rehashed:
-        return
-    for path in _project_files(project, "*.md"):
-        text = library.read_text(path)
-        new = _RESULT_PIN.sub(lambda m: m.group(1) + rehashed.get(m.group(2), m.group(2)), text)
-        if new != text:
-            library.write_text(path, new)
-            report.repinned_result_checksums.append(path.relative_to(project))
 
 
 def _migrate_type_pointers(project: Path, root: Path, report: InitReport) -> None:
@@ -380,9 +372,6 @@ def _migrate_type_pointers(project: Path, root: Path, report: InitReport) -> Non
     }
     kb = (project / "kb").resolve()
     global_names = {p.stem for p in (root / "types").glob("*.md")}
-    # A retained analysis result is pinned by its checksum; rewriting its type line
-    # re-pins it, so record each rewritten file's checksums.
-    rehashed: dict[str, str] = {}
 
     def new_value(value: str, source: Path) -> str | None:
         if _BARE_TYPE_NAME.match(value):
@@ -404,6 +393,8 @@ def _migrate_type_pointers(project: Path, root: Path, report: InitReport) -> Non
         return result
 
     for path in _project_files(project, "*.md"):
+        if path.relative_to(project).as_posix().startswith(_FROZEN_RETAINED_AREAS):
+            continue
         text = library.read_text(path)
         # Only frontmatter binds a type; the body may quote paths as prose.
         match = re.match(r"---\r?\n.*?\r?\n---[ \t]*(?:\r?\n|$)", text, re.DOTALL)
@@ -422,11 +413,8 @@ def _migrate_type_pointers(project: Path, root: Path, report: InitReport) -> Non
         new_head = _JSON_TYPE.sub(json_value, _TYPE_LINE.sub(yaml_value, head))
         new = new_head + text[len(head) :]
         if new != text:
-            old_hash = hashlib.sha256(path.read_bytes()).hexdigest()
             library.write_text(path, new)
-            rehashed[old_hash] = hashlib.sha256(path.read_bytes()).hexdigest()
             report.rewritten_type_pointers.append(path.relative_to(project))
-    _repin_result_checksums(project, rehashed, report)
     for pattern in ("*.schema.yaml", "*.schema.json"):
         for path in _project_files(project, pattern):
             text = library.read_text(path)
@@ -669,10 +657,6 @@ def main(argv: list[str] | None = None) -> int:
     _print_section(
         "Retyped local snapshots to `type: types/snapshot.md` (a one-time migration):",
         report.rewritten_snapshots,
-    )
-    _print_section(
-        "Re-pinned analysis-result checksums to results whose type line changed (commit these):",
-        report.repinned_result_checksums,
     )
     _print_section(
         "Re-pinned ingest checksums to the retyped snapshots (commit these):",

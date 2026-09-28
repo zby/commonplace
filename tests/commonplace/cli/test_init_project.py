@@ -380,27 +380,26 @@ def test_init_project_migrates_copied_source_and_report_types(tmp_path: Path) ->
     assert init_project(tmp_path).created == []
 
 
-def test_init_project_repins_results_whose_type_line_it_rewrites(tmp_path: Path) -> None:
+@pytest.mark.parametrize(
+    "area", ["agentic-system-analysis", "agentic-system-analysis-archive"]
+)
+def test_init_project_leaves_retained_analysis_directories_frozen(tmp_path: Path, area: str) -> None:
     import hashlib
 
-    result = tmp_path / "kb" / "reports" / "retained" / "run" / "result.md"
-    result.parent.mkdir(parents=True)
-    result.write_text("---\ntype: agentic-system-analysis-result\n---\n# R\n", encoding="utf-8")
-    pinned = hashlib.sha256(result.read_bytes()).hexdigest()
-    review = tmp_path / "kb" / "agentic-systems" / "reviews" / "x.md"
-    review.parent.mkdir(parents=True)
-    review.write_text(
-        '---\n{\n  "type": "note",\n  "analysis-result": "../../reports/retained/run/result.md",\n'
-        f'  "analysis-result-sha256": "{pinned}"\n}}\n---\n# X\n',
-        encoding="utf-8",
-    )
+    member = tmp_path / "kb" / "reports" / "retained" / area / "run" / "runtime.md"
+    member.parent.mkdir(parents=True)
+    member.write_text("---\ntype: agentic-system-runtime-report\n---\n# R\n", encoding="utf-8")
+    pinned = hashlib.sha256(member.read_bytes()).hexdigest()
+    live = tmp_path / "kb" / "reports" / "retained" / "other" / "report.md"
+    live.parent.mkdir(parents=True)
+    live.write_text("---\ntype: note\n---\n# Live\n", encoding="utf-8")
 
     report = init_project(tmp_path)
 
-    new_hash = hashlib.sha256(result.read_bytes()).hexdigest()
-    assert "type: types/agentic-system-analysis-result.md" in result.read_text(encoding="utf-8")
-    assert f'"analysis-result-sha256": "{new_hash}"' in review.read_text(encoding="utf-8")
-    assert Path("kb/agentic-systems/reviews/x.md") in report.repinned_result_checksums
+    assert hashlib.sha256(member.read_bytes()).hexdigest() == pinned
+    assert "type: types/note.md\n" in live.read_text(encoding="utf-8")
+    assert Path("kb/reports/retained/other/report.md") in report.rewritten_type_pointers
+    assert not any(str(path).startswith(f"kb/reports/retained/{area}/") for path in report.rewritten_type_pointers)
 
 
 def test_init_project_migrates_local_schema_identity_and_quoted_values(tmp_path: Path) -> None:
