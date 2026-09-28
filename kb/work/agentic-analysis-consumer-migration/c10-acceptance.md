@@ -30,7 +30,7 @@ routing; they did not execute a production correction or source refresh.
 ## Selected input and method identities
 
 The explicit population is one system: [Apache Maka's public main
-review](../../agentic-systems/reviews/apache-maka.md) and its [exact retained
+review](../../agentic-systems/reviews-archive/apache-maka.md) and its [exact retained
 result](../../reports/retained/agentic-system-analysis-archive/AAS-2026-09-05-apache-maka-01/result.md).
 Run: `AAS-2026-09-05-apache-maka-01`. Source: `https://github.com/apache/maka`.
 Recorded revision: `ece69ab3e7a1629a6073831005711d8aa7160ca4`.

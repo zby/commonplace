@@ -10,7 +10,7 @@ historical legacy corpus are excluded pending source regeneration.
 - Main run: `AAS-2026-09-05-apache-maka-01`.
 - Frozen source: `https://github.com/apache/maka` at
   `ece69ab3e7a1629a6073831005711d8aa7160ca4`; analysis cutoff `2026-09-05`.
-- [Public review](../../agentic-systems/reviews/apache-maka.md), SHA-256
+- [Public review](../../agentic-systems/reviews-archive/apache-maka.md), SHA-256
   `cf2f80113c2c21074cdc07e149b9a9cb3a764f0ff5b6fb39728deee633eac76c`.
 - [Exact retained result](../../reports/retained/agentic-system-analysis-archive/AAS-2026-09-05-apache-maka-01/result.md), SHA-256
   `fcd16d145d4ee6730eedab994478c8a320fd98f79123dd2df145c3cb6b8d3c18`.

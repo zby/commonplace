@@ -14,7 +14,7 @@ are evaluation criteria for this trial; they do not claim that any target meets
 them. Write scope is this acceptance record only.
 
 The sole system-characterization input was the generated
-[Pond review](../../agentic-systems/reviews/pond.md), read directly:
+[Pond review](../../agentic-systems/reviews-archive/pond.md), read directly:
 
 - Path: `kb/agentic-systems/reviews/pond.md`.
 - SHA-256: `4f7dff6046723b9b7e11e526293a2f1849e53ad780426e391df4dbc0b24deb35`.
@@ -30,7 +30,7 @@ recorded in C08. This does not claim that a new run completed successfully.
 
 ## Returned paragraph
 
-[Pond](../../agentic-systems/reviews/pond.md) wires session retention and
+[Pond](../../agentic-systems/reviews-archive/pond.md) wires session retention and
 caller-triggered retrieval; its ingestion validator checks canonical event
 structure, identities, and provenance. This places it at implemented storage
 and retrieval mechanisms, while observed model delivery, behavioral activation,
