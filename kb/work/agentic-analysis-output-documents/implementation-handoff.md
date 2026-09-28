@@ -130,3 +130,53 @@ a consumer outside the owned scope must change for the suite to pass.
 Report per commit: hash, what changed, what was chosen where the plan was
 open, and test counts. Report every place a type spec had to be corrected
 and every open issue for the trial in step 4.
+
+## Second packet (2026-09-28): finish the transition on the approved plan
+
+Commits 3, 4 and the init part of 6 landed (`6f0c5e7b`, `7ae02a4e`,
+`4009cb08`); the validator-extension commit was reverted (`597055b5`)
+because that change is planned in `kb/work/directory-artifacts/` first.
+This packet finishes the transition on the plan's original layering, with
+set checks in run-state verification, plus the operator's simplification
+recorded in the plan under "Committed inputs replace the bundle". The
+first packet's fixed choices, write scope and stop conditions stand,
+with these changes: `properdocs.yml` and
+`tests/commonplace/docs/test_site_publication_boundaries.py` are now in
+the worker's scope, and the set rule, directory-as-artifact validation and
+consumers-call-validate items are out of scope.
+
+Deliver, as separate commits in this order:
+
+A. **Committed inputs.** Add `inputs-commit` (required, 40-hex) to the
+   overview type spec, its schema and the fixtures; publication's
+   inspect-destination, prepare and publish require a clean worktree as
+   the plan defines it and `inputs-commit` equal to HEAD, with a clear
+   error naming the offending paths; delete the incumbent dirty-tree
+   receipt branch; delete `scripts/bundle_agentic_landscape.py`,
+   `tests/commonplace/lib/test_landscape_bundle.py`, and the bundle's
+   entry in `kb/reference/commands.md` and `kb/agentic-systems/comparisons/README.md`.
+   Tests must not depend on the test repository being a real clean git
+   worktree in a way that makes them flaky: build the fixture repository
+   with an initial commit of its inputs.
+B. **Instructions and contracts.** The analysis skill's steps 1, 7, 8 and
+   10 write and name the four members, record `inputs-commit` at step 1,
+   and state the clean-worktree requirement; the memory and epistemic
+   instructions, the run-state type prose, `kb/agentic-systems/COLLECTION.md`,
+   the comparisons README, the transfer-scan and landscape-synthesis skills
+   name the members and say which holds what; the landscape-synthesis
+   skill records the inputs commit instead of a bundle. The memory type's
+   quote-minimum sentence says the minimum is enforced on the set.
+C. **Retire the result type.** Delete `kb/types/agentic-system-analysis-result.md`,
+   its schema and `tests/commonplace/docs/test_agentic_system_analysis_result_type.py`;
+   update `tests/commonplace/docs/test_agentic_system_instruction_composition.py`
+   to read the overview and runtime types; fix the links to the result type
+   in ADRs 087, 088 and 093, `kb/reference/commands.md`, and the two
+   instructions and one proposal that link it, pointing at the overview
+   type; add the redirect `types/agentic-system-analysis-result.md` to
+   `types/agentic-system-analysis-overview.md` in `properdocs.yml`;
+   replace the site's `result.md` publication pattern with the four member
+   names and add the archive's `result.md` pattern; update the site test.
+
+Green suite and clean `ruff check src tests scripts` after each commit.
+Report per commit as before, plus the exact clean-worktree rule you
+implemented and every file whose link to the result type you changed.

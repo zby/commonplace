@@ -211,6 +211,27 @@ except between items 6 and 7, which land together.
 The one-off fixture script is deleted with item 1, since the draft
 contracts supersede it.
 
+## Committed inputs replace the bundle (2026-09-28, operator decision)
+
+An analysis runs only from a clean worktree with every input committed,
+and the landscape bundle is removed. The commit hash then identifies the
+method and the inputs, which is what the bundle's manifest and method
+hashes reproduced by hand.
+
+- The overview gains a required `inputs-commit` field: the full commit
+  whose tree supplied the run's method files, types and instructions. The
+  coordinator writes HEAD there at step 1 and publication requires that it
+  still equals HEAD.
+- Publication requires a clean worktree: no modified or staged tracked
+  file, and no untracked file under `kb/` other than ignored paths. The
+  incumbent check's dirty-tree branch, which compared an incumbent with
+  local changes against its publication receipt, is deleted; an incumbent
+  is either committed or absent.
+- `scripts/bundle_agentic_landscape.py`, its tests and its command
+  documentation are deleted. The landscape-synthesis skill records the
+  commit its inputs came from instead of preparing a bundle. Retained
+  bundles from earlier trials stay as historical records.
+
 ## Open items for the operator
 
 - Approval of the move list above.
