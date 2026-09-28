@@ -1631,7 +1631,7 @@ def test_rerun_replaces_unchanged_publication_and_keeps_recovery_copies(tmp_path
     ("overview", "overview hash mismatch"),
     ("member", "manifest: runtime.md bytes hash to"),
     ("source", "same source"),
-    ("committed-then-edited", "local changes"),
+    ("committed-then-staged", "local changes"),
 ])
 def test_inspection_rejects_unverified_incumbents(tmp_path: Path, mutation: str, error: str) -> None:
     """An incumbent is checked by its bytes and pins; no publication receipt is read."""
@@ -1652,6 +1652,7 @@ def test_inspection_rejects_unverified_incumbents(tmp_path: Path, mutation: str,
     else:
         commit_paths(tmp_path, "Record the first publication", review, retained.parent)
         review.write_text(review.read_text() + "\nHuman correction.\n")
+        run_git(tmp_path, "add", "--", str(review))
     with pytest.raises(ValueError, match=error):
         inspect_destination(repo_root=tmp_path, generated_destination=spec.generated_destination,
                             source_identity=metadata["source-identity"])
@@ -1729,6 +1730,7 @@ def test_rerun_never_overwrites_a_conflicting_recovery_copy(tmp_path: Path) -> N
 
 @pytest.mark.parametrize("path, accepted", [
     ("kb/notes/draft.md", False),
+    ("kb/notes/zażółć gęślą.md", False),
     ("kb/agentic-systems/reviews/sibling.md", True),
     ("kb/reports/retained/agentic-system-analysis/AAS-2026-09-04-sibling-01/overview.md", True),
     ("scratch.txt", True),
@@ -1763,6 +1765,17 @@ def test_a_modified_tracked_file_anywhere_blocks_publication(tmp_path: Path, sta
         assert ".gitignore" in str(error.value)
     assert not (tmp_path / spec.generated_destination).exists()
     assert frontmatter(state)["run-status"] == "running"
+
+
+def test_a_modified_tracked_review_does_not_block_a_sibling_publication(tmp_path: Path) -> None:
+    """A sibling run that replaced a committed review leaves it modified, not staged."""
+    state, spec, _ = publication_fixture(tmp_path)
+    sibling = write(tmp_path / "kb/agentic-systems/reviews/sibling.md", "# Sibling\n")
+    commit_paths(tmp_path, "Record the sibling's earlier review", sibling)
+    sibling.write_text("# Sibling, replaced by a later run\n")
+    assert inspect(tmp_path, spec)["replaceable"]
+    publish_publication(spec)
+    assert frontmatter(state)["run-status"] == "complete"
 
 
 def test_publication_requires_the_method_unchanged_since_inputs_commit(tmp_path: Path) -> None:

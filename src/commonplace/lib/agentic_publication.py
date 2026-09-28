@@ -53,8 +53,8 @@ METHOD_PATHS: tuple[str, ...] = (
     "kb/agentic-systems/types/generated-review.schema.yaml",
 )
 
-# Untracked files may sit here while a batch runs: a sibling run's publication
-# that has not been committed yet.
+# Untracked or modified files may sit here while a batch runs: a sibling run's
+# publication that has not been committed yet.
 OUTPUT_LOCATIONS: tuple[str, ...] = (
     "kb/agentic-systems/reviews/",
     "kb/reports/retained/agentic-system-analysis/",
@@ -205,26 +205,48 @@ def _git(repo_root: Path, *args: str) -> subprocess.CompletedProcess[str]:
         raise ValueError(f"cannot run git {args[0]} in the repository") from exc
 
 
+def _status_entries(porcelain: str) -> list[tuple[str, str]]:
+    """Parse ``git status --porcelain -z`` into ``(code, path)`` pairs.
+
+    A rename or copy entry is followed by its origin path, reported as a
+    second entry with the same code so both sides are checked.
+    """
+    fields = porcelain.split("\0")
+    entries: list[tuple[str, str]] = []
+    index = 0
+    while index < len(fields):
+        field_text = fields[index]
+        index += 1
+        if len(field_text) < 4:
+            continue
+        code, path = field_text[:2], field_text[3:]
+        entries.append((code, path))
+        if code[0] in "RC" and index < len(fields):
+            entries.append((code, fields[index]))
+            index += 1
+    return entries
+
+
 def require_publishable_worktree(repo_root: Path) -> None:
     """Require a worktree clean outside the workflow's own output locations.
 
-    No tracked file may be modified or staged anywhere, and no untracked file
-    may sit under ``kb/`` except under an output location, where a sibling
-    run's uncommitted publication is allowed. Ignored paths never count.
+    Under an output location, an untracked file or an unstaged modification
+    of a tracked file is allowed: a sibling run's uncommitted publication, new
+    or replacing an existing review. Anywhere else no tracked file may be
+    modified or staged, and no untracked file may sit under ``kb/``. Ignored
+    paths never count.
     """
-    status = _git(repo_root, "status", "--porcelain", "--untracked-files=all")
+    status = _git(repo_root, "status", "--porcelain", "-z", "--untracked-files=all")
     if status.returncode != 0:
         raise ValueError("cannot inspect the repository's Git status")
     changed: list[str] = []
     untracked: list[str] = []
-    for line in status.stdout.splitlines():
-        if len(line) < 4:
-            continue
-        code, path = line[:2], line[3:]
+    for code, path in _status_entries(status.stdout):
+        in_outputs = path.startswith(OUTPUT_LOCATIONS)
         if code == "??":
-            if path.startswith("kb/") and not path.startswith(OUTPUT_LOCATIONS):
+            if path.startswith("kb/") and not in_outputs:
                 untracked.append(path)
-        else:
+        elif not (code == " M" and in_outputs):
             changed.append(path)
     problems = []
     if changed:
