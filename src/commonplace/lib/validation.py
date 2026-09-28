@@ -1601,23 +1601,6 @@ def validate_note(path: Path, *, repo_root: Path) -> CheckResults:
     return ValidationRun(repo_root=repo_root, paths=(path,)).validate(path)
 
 
-def validate_note_text_at_path(
-    content: str,
-    *,
-    path: Path,
-    repo_root: Path,
-    content_overrides: dict[Path, str] | None = None,
-) -> CheckResults:
-    """Validate supplied bytes as though they occupied their intended path."""
-    overrides = dict(content_overrides or {})
-    overrides[path] = content
-    return ValidationRun(
-        repo_root=repo_root,
-        paths=(path,),
-        content_overrides=overrides,
-    ).validate(path)
-
-
 def validate_collection_structure(
     collection: Path, *, repo_root: Path
 ) -> list[tuple[Path, str]]:

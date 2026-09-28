@@ -10,7 +10,6 @@ from pathlib import Path
 STORE_SCHEMA_VERSION = 3
 SCHEMA_PATH = "store-schema.sql"
 DEFAULT_DB_PATH = Path("kb/reports/state/commonplace-store.sqlite")
-LEGACY_DB_PATH = Path("kb/reports/state/review-store.sqlite")
 DB_ENV_VAR = "COMMONPLACE_STORE"
 
 EXPECTED_TABLES = frozenset(
@@ -58,17 +57,10 @@ def resolve_db_path(repo_root: Path, db_override: str | None = None) -> Path:
 def ensure_db(db_path: Path) -> None:
     if db_path.exists():
         with connect(db_path) as conn:
-            _migrate_store(conn)
             _assert_store_version(conn)
             assert_store_structure(conn)
             conn.commit()
         return
-
-    legacy_hint = db_path.parent / LEGACY_DB_PATH.name
-    if legacy_hint.exists() and db_path.name == DEFAULT_DB_PATH.name:
-        raise _migration_required_error(
-            detail=f"found {legacy_hint} but not {db_path}",
-        )
 
     db_path.parent.mkdir(parents=True, exist_ok=True)
     with connect(db_path) as conn:
@@ -106,89 +98,6 @@ def _assert_store_version(conn: sqlite3.Connection) -> None:
             f"store schema version {current_version} does not match current "
             f"version {STORE_SCHEMA_VERSION}; recreate or migrate the store"
         )
-
-
-_GENERATIONS_TABLE_SQL = """
-CREATE TABLE IF NOT EXISTS freshness_target_generations (
-    target_kind TEXT NOT NULL CHECK (length(target_kind) > 0),
-    target_key_json TEXT NOT NULL CHECK (length(target_key_json) > 0),
-    next_revision INTEGER NOT NULL CHECK (next_revision >= 1),
-    PRIMARY KEY (target_kind, target_key_json)
-);
-"""
-
-
-_LEGACY_REVIEW_STORE_VERSION = 7
-_MIGRATION_SCRIPT = "scripts/migrate-review-db-v7-to-commonplace-store.py"
-
-
-def _migration_required_error(*, detail: str) -> RuntimeError:
-    return RuntimeError(f"migration required: {detail}; run {_MIGRATION_SCRIPT}")
-
-
-_UNGUARDED_QUEUED_CAS_FAILURE = "unguarded-queued-cas"
-
-
-def _fail_unguarded_queued_jobs_after_v3_upgrade(conn: sqlite3.Connection) -> None:
-    """Fail queued jobs whose pairs have no reconstructable CAS guard (both fields NULL)."""
-    conn.execute(
-        """
-        UPDATE review_jobs
-        SET status = 'failed',
-            completed_at = created_at,
-            failure_reason = ?
-        WHERE status = 'queued'
-          AND review_job_id IN (
-            SELECT DISTINCT rp.review_job_id
-            FROM review_pairs AS rp
-            JOIN review_jobs AS j
-              ON j.review_job_id = rp.review_job_id
-            WHERE j.status = 'queued'
-              AND rp.completed_at IS NULL
-              AND rp.expected_baseline_revision IS NULL
-              AND rp.expected_generation_next_revision IS NULL
-          )
-        """,
-        (_UNGUARDED_QUEUED_CAS_FAILURE,),
-    )
-
-
-def _migrate_store(conn: sqlite3.Connection) -> None:
-    current_version = _get_user_version(conn)
-    if current_version == STORE_SCHEMA_VERSION:
-        return
-    if current_version == _LEGACY_REVIEW_STORE_VERSION:
-        raise _migration_required_error(detail="legacy review-store schema v7 detected")
-    if current_version == 1 and STORE_SCHEMA_VERSION >= 2:
-        conn.executescript(_GENERATIONS_TABLE_SQL)
-        conn.execute(
-            """
-            INSERT INTO freshness_target_generations (
-                target_kind, target_key_json, next_revision
-            )
-            SELECT target_kind, target_key_json, revision + 1
-            FROM freshness_baselines
-            """
-        )
-        current_version = 2
-        _set_user_version(conn, current_version)
-    if current_version == 2 and STORE_SCHEMA_VERSION == 3:
-        conn.execute(
-            """
-            ALTER TABLE review_pairs
-            ADD COLUMN expected_generation_next_revision INTEGER CHECK (
-                expected_generation_next_revision IS NULL
-                OR expected_generation_next_revision >= 1
-            )
-            """
-        )
-        _fail_unguarded_queued_jobs_after_v3_upgrade(conn)
-        _set_user_version(conn, STORE_SCHEMA_VERSION)
-        return
-    raise RuntimeError(
-        f"store schema version {current_version} does not match current "
-        f"version {STORE_SCHEMA_VERSION}; recreate or migrate the store"
-    )
 
 
 def _schema_object_names(conn: sqlite3.Connection, object_type: str) -> set[str]:

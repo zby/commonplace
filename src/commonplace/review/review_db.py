@@ -780,7 +780,6 @@ def upsert_freshness_baseline(
     baseline_updated_at: str,
     expected_baseline_revision: int | None = None,
     expected_generation_next_revision: int | None = None,
-    capture_refresh: bool = False,
 ) -> SupersededFreshnessBaseline | None:
     if evidence_review_pair_id is None:
         raise ValueError("evidence_review_pair_id is required")
@@ -818,34 +817,18 @@ def upsert_freshness_baseline(
             model_partition=model_partition,
             target_id=current_target.target_id,
         )
-    if current_target is None or capture_refresh:
-        freshness_baselines.refresh_review_baseline_from_captures(
-            conn,
-            note_path=note_path,
-            criterion_path=criterion_path,
-            model_partition=model_partition,
-            evidence_review_pair_id=evidence_review_pair_id,
-            baseline_note_snapshot_id=baseline_note_snapshot_id,
-            baseline_criterion_snapshot_id=baseline_criterion_snapshot_id,
-            expected_baseline_revision=expected_baseline_revision,
-            accepted_at=baseline_updated_at,
-            expected_generation_next_revision=expected_generation_next_revision,
-        )
-    else:
-        freshness_baselines.refresh_review_baseline_from_observation(
-            conn,
-            note_path=note_path,
-            criterion_path=criterion_path,
-            model_partition=model_partition,
-            evidence_review_pair_id=evidence_review_pair_id,
-            baseline_note_snapshot_id=baseline_note_snapshot_id,
-            baseline_criterion_snapshot_id=baseline_criterion_snapshot_id,
-            expected_baseline_revision=expected_baseline_revision,
-            accepted_at=baseline_updated_at,
-        )
-
-    if previous_superseded is None:
-        return None
+    freshness_baselines.refresh_review_baseline_from_captures(
+        conn,
+        note_path=note_path,
+        criterion_path=criterion_path,
+        model_partition=model_partition,
+        evidence_review_pair_id=evidence_review_pair_id,
+        baseline_note_snapshot_id=baseline_note_snapshot_id,
+        baseline_criterion_snapshot_id=baseline_criterion_snapshot_id,
+        expected_baseline_revision=expected_baseline_revision,
+        accepted_at=baseline_updated_at,
+        expected_generation_next_revision=expected_generation_next_revision,
+    )
     return previous_superseded
 
 

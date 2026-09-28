@@ -157,7 +157,7 @@ def test_ack_rejects_decoy_artifact_path(tmp_path: Path) -> None:
             )
 
 
-def test_upsert_observation_rejects_mismatched_expected_revision(tmp_path: Path) -> None:
+def test_upsert_rejects_mismatched_expected_revision(tmp_path: Path) -> None:
     from commonplace.review import review_db
 
     db_path = _init_store(tmp_path)
@@ -177,7 +177,6 @@ def test_upsert_observation_rejects_mismatched_expected_revision(tmp_path: Path)
                 baseline_criterion_snapshot_id=criterion_snapshot_id,
                 baseline_updated_at="2026-07-13T01:00:00+00:00",
                 expected_baseline_revision=99,
-                capture_refresh=False,
             )
 
 
@@ -254,7 +253,6 @@ def test_finalize_rejects_missing_baseline_after_retire_aba(tmp_path: Path) -> N
                 baseline_updated_at="2026-07-13T02:00:00+00:00",
                 expected_baseline_revision=queued.expected_baseline_revision,
                 expected_generation_next_revision=queued.expected_generation_next_revision,
-                capture_refresh=True,
             )
 
 
@@ -390,5 +388,4 @@ def test_retire_recreate_advances_revision_and_rejects_stale_finalize(tmp_path: 
                 baseline_updated_at="2026-07-13T03:00:00+00:00",
                 expected_baseline_revision=queued.expected_baseline_revision,
                 expected_generation_next_revision=queued.expected_generation_next_revision,
-                capture_refresh=True,
             )

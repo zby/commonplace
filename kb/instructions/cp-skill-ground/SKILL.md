@@ -57,12 +57,8 @@ collection's edit-time rule.
      that holds it and rerun.
    - If it exists but its exact-byte SHA-256 differs from the ingest's
      `snapshot_sha256`, or its frontmatter `source` differs from the ingest's
-     canonical `source`, stop and report both checksums. If the difference is
-     only a retired `type:` line, the local type migration has not run: in an
-     installed project run `commonplace-init`, in the source checkout run
-     `uv run python scripts/migrate-snapshot-types.py`, then rerun. Otherwise
-     the source was observed again or the capture drifted; route the source to
-     re-ingest: `Read and execute the Commonplace library instruction re-ingest
+     canonical `source`, stop and report both checksums. The source was
+     observed again or the capture drifted; route the source to re-ingest: `Read and execute the Commonplace library instruction re-ingest
      with Target: <ingest-path>.`
 5. Read enough of the primary snapshot to determine the source-side
    proposition and its bounds. Stop if the source does not establish it or the

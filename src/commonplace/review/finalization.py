@@ -27,35 +27,6 @@ from commonplace.review.telemetry import (
 ACTIVE_REVIEW_JOB_STATUSES = frozenset({"queued"})
 
 
-def finalize_capture_refresh(
-    conn: sqlite3.Connection,
-    *,
-    note_path: str,
-    criterion_path: str,
-    model_partition: str,
-    evidence_review_pair_id: int,
-    baseline_note_snapshot_id: int,
-    baseline_criterion_snapshot_id: int,
-    expected_baseline_revision: int | None,
-    expected_generation_next_revision: int | None,
-    baseline_updated_at: str,
-) -> review_db.SupersededFreshnessBaseline | None:
-    """Review-owned capture refresh: CAS, replace evidence, no live revalidation."""
-    return review_db.upsert_freshness_baseline(
-        conn,
-        note_path=note_path,
-        criterion_path=criterion_path,
-        model_partition=model_partition,
-        evidence_review_pair_id=evidence_review_pair_id,
-        baseline_note_snapshot_id=baseline_note_snapshot_id,
-        baseline_criterion_snapshot_id=baseline_criterion_snapshot_id,
-        baseline_updated_at=baseline_updated_at,
-        expected_baseline_revision=expected_baseline_revision,
-        expected_generation_next_revision=expected_generation_next_revision,
-        capture_refresh=True,
-    )
-
-
 @dataclass(frozen=True)
 class ExecutionMetadata:
     """Optional, per-harness execution provenance recorded at finalize time.
@@ -313,7 +284,7 @@ def record_and_finalize_job(
     superseded_freshness_baselines: list[review_db.SupersededFreshnessBaseline | None] = []
     for pair in finalized_pairs:
         superseded_freshness_baselines.append(
-            finalize_capture_refresh(
+            review_db.upsert_freshness_baseline(
                 conn,
                 note_path=pair.note_path,
                 criterion_path=pair.criterion_path,

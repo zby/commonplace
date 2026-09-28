@@ -421,7 +421,7 @@ def test_non_path_frontmatter_type_fails_validation(tmp_path: Path) -> None:
     note = write(
         notes_root / "invalid-type.md",
         """---
-description: A bare frontmatter type is a retired form, so it must be rejected with the path to use
+description: A bare frontmatter type is a retired form, so it must be rejected
 type: spec
 ---
 
@@ -433,7 +433,7 @@ type: spec
 
     assert results.note_type == "unknown"
     assert any(
-        "use `type: types/spec.md`" in item
+        "spec's path under a KB root" in item
         for item in results.fails
     )
 

@@ -15,7 +15,6 @@ if TYPE_CHECKING:
 
 from commonplace.lib.note_parser import ParsedDocument
 
-OVERVIEW_TYPE = "types/agentic-system-analysis-overview.md"
 RUNTIME_TYPE = "types/agentic-system-runtime-report.md"
 MEMORY_TYPE = "types/agent-memory-analysis-report.md"
 EPISTEMIC_TYPE = "types/agentic-system-epistemic-report.md"

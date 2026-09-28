@@ -262,18 +262,9 @@ def test_text_without_frontmatter_resolves_to_implicit_text_profile(tmp_path: Pa
     assert profile.schema_path is None
 
 
-@pytest.mark.parametrize(
-    ("value", "suggestion"),
-    [
-        ("note", "types/note.md"),
-        ("kb/types/note.md", "types/note.md"),
-        ("../reference/types/adr.md", "reference/types/adr.md"),
-    ],
-)
-def test_retired_type_values_are_rejected_with_the_new_spelling(
-    tmp_path: Path, value: str, suggestion: str
-) -> None:
-    with pytest.raises(ValueError, match=f"use `type: {suggestion}`"):
+@pytest.mark.parametrize("value", ["note", "kb/types/note.md", "../reference/types/adr.md"])
+def test_retired_type_values_are_rejected(tmp_path: Path, value: str) -> None:
+    with pytest.raises(ValueError, match="spec's path under a KB root"):
         type_resolver.resolve_type(
             tmp_path / "kb" / "notes" / "sample.md",
             {"description": "Sample", "type": value},

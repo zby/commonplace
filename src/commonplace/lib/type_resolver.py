@@ -148,20 +148,6 @@ def kb_root_for(file_path: Path | None, repo_root: Path) -> Path:
     return project_kb
 
 
-def _suggested_type_value(rel: str, repo_root: Path, source_file: Path | None) -> str | None:
-    """The ADR 088 spelling of a retired type value, when it can be derived."""
-    if _BARE_NAME.match(rel):
-        return f"types/{rel}.md"
-    if rel.startswith("kb/"):
-        return rel[len("kb/") :]
-    if rel.startswith(("./", "../")) and source_file is not None:
-        target = (source_file.parent / rel).resolve()
-        for root in (kb_root_for(source_file, repo_root), library_root().resolve()):
-            if target.is_relative_to(root):
-                return target.relative_to(root).as_posix()
-    return None
-
-
 def validate_type_path(
     value: Any,
     *,
@@ -184,11 +170,9 @@ def validate_type_path(
         or rel.startswith(("./", "../", "kb/"))
     )
     if retired:
-        suggestion = _suggested_type_value(rel, repo_root, source_file)
-        hint = f"; use `type: {suggestion}`" if suggestion else ""
         raise ValueError(
             "frontmatter.type: a type value is the spec's path under a KB root, "
-            f"such as types/note.md or reference/types/adr.md, not {rel}{hint}"
+            f"such as types/note.md or reference/types/adr.md, not {rel}"
         )
     if urlparse(rel).scheme or path.is_absolute() or ".." in path.parts:
         raise ValueError(f"frontmatter.type: not a KB-relative path: {rel}")

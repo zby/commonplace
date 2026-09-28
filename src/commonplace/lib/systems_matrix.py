@@ -3,15 +3,11 @@
 from __future__ import annotations
 
 import csv
-import functools
 import io
 import json
-import re
 from dataclasses import dataclass
 from hashlib import sha256
 from pathlib import Path
-
-import yaml
 
 from commonplace.lib.agentic_records import annotated_ids, declared_ids
 from commonplace.lib.agentic_set import (
@@ -259,36 +255,6 @@ def memory_member_comparison(metadata: dict, body: str) -> dict:
 class MatrixInputs:
     rows: list[dict[str, str]]
     hashes: dict[str, str]
-
-
-_MISSING_LINK = re.compile(r"link health: missing target (?P<link>\S+)$")
-
-
-@functools.cache
-def _redirect_sources(root: Path) -> frozenset[Path]:
-    """Paths the published site redirects, as files under its docs_dir."""
-    config_path = root / "properdocs.yml"
-    if not config_path.is_file():
-        return frozenset()
-    config = yaml.safe_load(config_path.read_text(encoding="utf-8")) or {}
-    docs_dir = (root / str(config.get("docs_dir", "kb"))).resolve()
-    maps = next(
-        (
-            plugin["redirects"].get("redirect_maps") or {}
-            for plugin in config.get("plugins") or []
-            if isinstance(plugin, dict) and isinstance(plugin.get("redirects"), dict)
-        ),
-        {},
-    )
-    return frozenset((docs_dir / old).resolve() for old in maps if isinstance(old, str))
-
-
-def _redirected_link(warning: str, source: Path, root: Path) -> bool:
-    match = _MISSING_LINK.search(warning)
-    if match is None:
-        return False
-    target = (source.parent / match.group("link").split("#", 1)[0]).resolve()
-    return target in _redirect_sources(root.resolve())
 
 
 def load_results(root: Path, review_paths: list[Path] | None = None) -> MatrixInputs:

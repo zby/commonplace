@@ -97,7 +97,6 @@ def accept_pair(
             criterion_path=criterion_path,
             model_partition=model_partition,
         ),
-        capture_refresh=True,
     )
 
 
