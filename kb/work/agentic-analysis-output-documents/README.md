@@ -223,6 +223,17 @@ the quote generator in a per-quote loop, so `commonplace-quote` gained a
 `--selections` batch mode (`e984a460`), verified by a specialist-only trial
 in the memory-refresh workshop.
 
+## Step 2 progress
+
+The [partition candidate](./partition-candidate.md) (2026-09-28) settles
+the ownership model first: one run namespace, each record declared once in
+the member that established it, each evidence passage once in the member
+whose finding it supports, amendments attached to the declaring member,
+bare-ID references resolved through the overview's manifest. It proposes
+four members (overview, runtime, finalized memory report, epistemic), a
+manifest-chained completion rule with explicit rejection cases, and a
+scripted fixture split of two retained results as the next test.
+
 ## Work sequence and decision points
 
 1. Clean up the current procedure before drawing any partition. Working from
