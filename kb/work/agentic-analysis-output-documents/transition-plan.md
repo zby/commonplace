@@ -222,11 +222,23 @@ hashes reproduced by hand.
   whose tree supplied the run's method files, types and instructions. The
   coordinator writes HEAD there at step 1 and publication requires that it
   still equals HEAD.
-- Publication requires a clean worktree: no modified or staged tracked
-  file, and no untracked file under `kb/` other than ignored paths. The
+- Publication requires that the inputs are committed, stated as two
+  checks that let several runs publish side by side (operator relaxation,
+  2026-09-28). First, the method paths are unchanged between
+  `inputs-commit` and HEAD: `git diff --quiet <inputs-commit> HEAD --`
+  over the method set, which is the package source, the analysis skill
+  and its two instructions, the five member type specs with their
+  schemas, and the run-state type. Unrelated commits during a batch,
+  including sibling publications, do not invalidate a run. Second, the
+  worktree is clean outside the workflow's own output locations: no
+  modified or staged tracked file, and no untracked file under `kb/`,
+  except under `kb/agentic-systems/reviews/` and
+  `kb/reports/retained/agentic-system-analysis/`, where a sibling run's
+  uncommitted publication may sit, and except ignored paths. The
   incumbent check's dirty-tree branch, which compared an incumbent with
   local changes against its publication receipt, is deleted; an incumbent
-  is either committed or absent.
+  is committed, or it is a sibling run's fresh publication of a different
+  source, and either way the check compares bytes, not receipts.
 - `scripts/bundle_agentic_landscape.py`, its tests and its command
   documentation are deleted. The landscape-synthesis skill records the
   commit its inputs came from instead of preparing a bundle. Retained
