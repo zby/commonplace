@@ -26,14 +26,12 @@ from commonplace.lib.agentic_set import (
 )
 from commonplace.lib.note_parser import ParsedDocument, parse_document
 from commonplace.lib.quote_matching import (
-    LOCAL_ANCHOR_RE,
     URL_RE,
     blank_quote_bodies,
     git_citation_path,
     match_quote,
     parse_blockquotes,
     parse_github_blob,
-    parse_line_ranges,
 )
 
 AGENTIC_ANALYSIS_RUN_TYPE = "types/agentic-system-analysis-run-state.md"
@@ -354,17 +352,48 @@ def _same_repository(repository: str, source_identity: str) -> bool:
     return repository.casefold() == expected.casefold()
 
 
+def _git_blob_exists(
+    *, source_root: Path, revision: str, source_path: str
+) -> str | None:
+    """Check that a path names a blob at the commit, without decoding it."""
+    if not is_normalized_relative(source_path):
+        return "expected a normalized commit-relative path"
+    try:
+        kind = subprocess.run(
+            [
+                "git",
+                "--no-replace-objects",
+                "-C",
+                str(source_root),
+                "cat-file",
+                "-t",
+                f"{revision}:{source_path}",
+            ],
+            check=False,
+            capture_output=True,
+            text=True,
+        )
+    except OSError as exc:
+        return f"could not invoke git: {exc}"
+    if kind.returncode != 0 or kind.stdout.strip() != "blob":
+        return "path does not resolve to a blob at the recorded commit"
+    return None
+
+
 def _verify_source_anchors(
     content: str, *, source_root: Path, source_identity: str, source_revision: str
 ) -> tuple[list[str], list[str]]:
+    """Resolve GitHub source links by path at the recorded commit.
+
+    Line ranges belong to quote attributions, which quote verification
+    resolves; member validation rejects ranged anchors in prose. A cited
+    path only has to exist, so a binary blob can be cited.
+    """
     content = blank_quote_bodies(content)
     passes: list[str] = []
     failures: list[str] = []
-    anchors: dict[tuple[str, tuple[tuple[int, int], ...]], set[str]] = {}
+    paths: set[str] = set()
 
-    for match in LOCAL_ANCHOR_RE.finditer(content):
-        key = (match.group("path"), parse_line_ranges(match.group("ranges")))
-        anchors.setdefault(key, set()).add("local")
     for match in URL_RE.finditer(content):
         url = match.group().rstrip(".,;")
         try:
@@ -386,36 +415,19 @@ def _verify_source_anchors(
                 f"{blob.revision}, expected {source_revision}: {blob.path}"
             )
             continue
-        anchors.setdefault((blob.path, blob.ranges), set()).add("GitHub")
+        paths.add(blob.path)
 
-    for (source_path, line_ranges), kinds in sorted(anchors.items()):
-        blob, error = git_blob_text(
+    for source_path in sorted(paths):
+        error = _git_blob_exists(
             source_root=source_root,
             revision=source_revision,
             source_path=source_path,
         )
-        if error is not None or blob is None:
+        if error is not None:
             failures.append(f"source citation: {source_path}: {error}")
             continue
-        line_count = len(blob.splitlines())
-        invalid_ranges = [
-            (start, end)
-            for start, end in line_ranges
-            if start < 1 or end < start or end > line_count
-        ]
-        if invalid_ranges:
-            rendered = ", ".join(
-                str(start) if start == end else f"{start}-{end}"
-                for start, end in invalid_ranges
-            )
-            failures.append(
-                f"source citation: {source_path}: line range {rendered} is outside "
-                f"the recorded blob's 1-{line_count} lines"
-            )
-            continue
         passes.append(
-            f"source citation: {source_path} and {len(line_ranges)} line range(s) "
-            f"resolve at the recorded commit ({'/'.join(sorted(kinds))})"
+            f"source citation: {source_path} resolves at the recorded commit (GitHub)"
         )
     return passes, failures
 

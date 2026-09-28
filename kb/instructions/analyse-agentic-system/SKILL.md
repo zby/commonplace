@@ -151,6 +151,8 @@ construction. Keep subsequent analytical changes outside that exposed context.
    capture, or `--selections <json-file>` to resolve many selections across
    files in one call. Choose the occurrence whose context supports the
    finding and insert its citation unchanged. Request discontiguous passages separately.
+   Only a quote attribution carries a line range. Cite a source in prose by
+   path only; do not copy a generated range into a prose reference.
    A failed lookup requires rereading the source and revising the selection;
    never format a citation, strip source characters, or calculate a range by
    hand. Assess semantic support yourself: a generated citation proves

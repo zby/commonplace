@@ -59,7 +59,11 @@ from commonplace.lib.project_paths import (
     iter_validation_markdown_files,
     kb_root,
 )
-from commonplace.lib.quote_matching import match_quote, parse_blockquotes
+from commonplace.lib.quote_matching import (
+    match_quote,
+    parse_blockquotes,
+    ranged_prose_anchors,
+)
 from commonplace.lib.quote_verification import (
     INGEST_QUOTES_HEADING_RE,
     NEXT_H2_RE,
@@ -1055,6 +1059,26 @@ def _agentic_evidence_and_references_rule(
     if not errors:
         results.passes.append("record references: explicit IDs and declarations checked")
     validate_quote_citations(results, parsed.content)
+
+
+@type_rule("types/agentic-system-analysis-overview.md")
+@type_rule("types/agentic-system-runtime-report.md")
+@type_rule("types/agent-memory-analysis-report.md")
+@type_rule("types/agentic-system-epistemic-report.md")
+@type_rule("agentic-systems/types/generated-review.md")
+def _agentic_plain_source_anchor_rule(
+    results: CheckResults, parsed: ParsedNote, *, run: ValidationRun
+) -> None:
+    """Only quote attributions carry line ranges; prose anchors cite paths."""
+    del run
+    found = ranged_prose_anchors(parsed.content)
+    for line, anchor in found:
+        results.fails.append(
+            f"source anchor at line {line}: {anchor} carries a line range; "
+            "cite the path without a range, or quote the passage"
+        )
+    if not found:
+        results.passes.append("source anchors: prose anchors cite paths without ranges")
 
 
 @type_rule("types/agent-memory-analysis-report.md")

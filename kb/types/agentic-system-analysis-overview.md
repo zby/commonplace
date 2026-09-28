@@ -115,11 +115,12 @@ fields and are never translated into this vocabulary.
 Every negative, thin, conflicting, or uncertain finding names its
 inspected boundary and the exact conclusion it prevents. Every
 source-dependent record cites a `SRC-*` ID plus a local anchor: for a Git
-source, one code span containing the full commit-relative path, optionally
-followed by line ranges, such as `packages/runtime/src/agent-run.ts` or
-`packages/runtime/src/agent-run.ts:595-641,944-1012`; supplied ranges
-resolve in the reviewed commit, and a basename denotes a repository-root
-file. Commonplace ontology may annotate a source-native mechanism, but it
+source, one code span containing the full commit-relative path, such as
+`packages/runtime/src/agent-run.ts`, or a GitHub blob link at the reviewed
+commit; a basename denotes a repository-root file. A cited path must exist
+at the reviewed commit and may be a binary file. Only quote attributions
+carry line ranges. A ranged anchor or ranged GitHub link in prose fails
+validation: cite the path without a range, or quote the passage. Commonplace ontology may annotate a source-native mechanism, but it
 never replaces the operational account.
 
 ## Required sections

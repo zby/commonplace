@@ -24,7 +24,10 @@ LOCAL_SOURCE_RE = re.compile(
 LOCAL_ANCHOR_RE = re.compile(
     rf"`(?P<path>[A-Za-z0-9._/-]+\.[A-Za-z0-9._-]+):(?P<ranges>{_RANGES})`"
 )
-"""A local source anchor in prose: a code span holding a file path and line ranges."""
+"""A ranged local anchor: a code span holding a file path and line ranges.
+
+Only quote attributions may carry ranges; in prose this shape is an error.
+"""
 URL_RE = re.compile(r"https?://[^\s<>()`\"']+")
 
 
@@ -155,6 +158,32 @@ def blank_quote_bodies(content: str) -> str:
         for index in range(start, end):
             lines[index] = re.sub(r"[^\r\n]", " ", lines[index])
     return "".join(lines)
+
+
+def ranged_prose_anchors(content: str) -> list[tuple[int, str]]:
+    """Return ``(line, anchor)`` for line-ranged source anchors in ordinary prose.
+
+    Quote attributions (``> ---`` lines) carry the generated ranges; quote
+    bodies and fenced blocks are source text or examples. Everywhere else a
+    source anchor names a path only. Malformed GitHub links are left to the
+    source verifier, which reports them against the frozen source.
+    """
+    lines = blank_fenced_code_blocks(blank_quote_bodies(content)).splitlines()
+    found: list[tuple[int, str]] = []
+    for index, line in enumerate(lines, start=1):
+        if ATTRIBUTION_RE.fullmatch(line):
+            continue
+        for match in LOCAL_ANCHOR_RE.finditer(line):
+            found.append((index, match.group()))
+        for match in URL_RE.finditer(line):
+            url = match.group().rstrip(".,;")
+            try:
+                blob = parse_github_blob(url)
+            except ValueError:
+                continue
+            if blob is not None and blob.ranges:
+                found.append((index, url))
+    return found
 
 
 def git_citation_path(citation: Citation) -> tuple[str, str | None]:

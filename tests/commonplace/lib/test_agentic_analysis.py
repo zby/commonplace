@@ -189,7 +189,7 @@ def memory_report_fixture(run_dir: Path, revision: str) -> Path:
 
 ## Boundary and evidence
 
-Fixture evidence at `README.md:1`.
+Fixture evidence at `README.md`.
 
 ## Core ideas
 
@@ -285,7 +285,7 @@ reviewed-boundary: {revision}
 
 ## Runtime account
 
-No dynamic check planned; static evidence at `README.md:1` sufficed.
+No dynamic check planned; static evidence at `README.md` sufficed.
 
 ## Probe evidence
 
@@ -401,7 +401,7 @@ Fixture boundary at `{revision}`.
 
 ## Source register
 
-| SRC-1 | git | `{SOURCE}` | `{revision}` | implementation | README.md | `README.md:1` | none |
+| SRC-1 | git | `{SOURCE}` | `{revision}` | implementation | README.md | `README.md` | none |
 
 ## Lens scoping
 
@@ -459,7 +459,7 @@ analysis-artifact-sha256: {digest(overview.with_name("ARTIFACT.yaml"))}
 
 # Example System
 
-Evidence basis: `README.md:1` at `{revision}`.
+Evidence basis: `README.md` at `{revision}`.
 """
 
 
@@ -945,16 +945,15 @@ def test_capture_source_is_byte_verified(tmp_path: Path) -> None:
 @pytest.mark.parametrize(
     ("citation", "expected_error"),
     [
-        ("example/system/blob/{revision}/README.md#L1", None),
-        ("EXAMPLE/System/blob/{revision}/README.md#L1-L1", None),
+        ("EXAMPLE/System/blob/{revision}/README.md", None),
         ("example/system/blob/{revision}/README.md", None),
-        ("unrelated/other/blob/{revision}/README.md#L1", "uses repository"),
-        ("example/system/blob/main/README.md#L999", "uses revision"),
+        ("unrelated/other/blob/{revision}/README.md", "uses repository"),
         ("example/system/blob/main/README.md", "uses revision"),
-        ("example/system/blob/{short_revision}/README.md#L1", "uses revision"),
-        ("example/system/blob/{wrong_revision}/README.md#L1", "uses revision"),
-        ("example/system/blob/{revision}/missing.md#L1", "does not resolve to a blob"),
-        ("example/system/blob/{revision}/README.md#L999", "outside the recorded blob"),
+        ("example/system/blob/{short_revision}/README.md", "uses revision"),
+        ("example/system/blob/{wrong_revision}/README.md", "uses revision"),
+        ("example/system/blob/{revision}/missing.md", "does not resolve to a blob"),
+        ("example/system/blob/{revision}/README.md#L1", "cite the path without a range"),
+        ("example/system/blob/{revision}/README.md#L1-L1", "cite the path without a range"),
         ("example/system/blob/{revision}/README.md#L1oops", "invalid GitHub line anchor"),
         ("example/system/blob/{revision}", "incomplete GitHub blob path"),
     ],
@@ -1767,6 +1766,54 @@ def test_member_validation_accepts_s3_title_and_prose_references(tmp_path: Path)
     assert checked.fails == []
 
 
+@pytest.mark.parametrize("anchor", [
+    "`src/agent.py:120-140`",
+    "`README.md:1`",
+    "[run](https://github.com/example/system/blob/" + "a" * 40 + "/run.py#L3-L9)",
+])
+def test_member_validation_rejects_ranged_prose_anchors(tmp_path: Path, anchor: str) -> None:
+    runtime = member_fixture(tmp_path) / "output/runtime.md"
+    runtime.write_text(runtime.read_text() + f"\nEvidence: {anchor}.\n")
+    checked = validation.validate_note(runtime, repo_root=tmp_path)
+    assert any(
+        "carries a line range" in item and "cite the path without a range, or quote the passage" in item
+        for item in checked.fails
+    )
+
+
+def test_member_validation_keeps_ranges_in_quote_attributions(tmp_path: Path) -> None:
+    runtime = member_fixture(tmp_path) / "output/runtime.md"
+    revision = frontmatter(runtime)["reviewed-boundary"]
+    runtime.write_text(
+        runtime.read_text()
+        + f"\n> Frozen source\n> --- `README.md:1-1` @ `{revision}`\n"
+        + f"\n> See `other.py:4-8`\n> --- https://github.com/example/system/blob/{revision}/README.md#L1\n"
+        + "\n```text\nexample `fenced.py:1-2`\n```\n"
+    )
+    checked = validation.validate_note(runtime, repo_root=tmp_path)
+    assert checked.fails == []
+
+
+def test_path_only_anchor_to_a_binary_blob_resolves(tmp_path: Path) -> None:
+    from commonplace.lib.agentic_analysis import _verify_source_anchors
+
+    root, _ = git_checkout(tmp_path / "source")
+    (root / "paper.pdf").write_bytes(b"%PDF-1.4\n\xff\xfe\x00binary\n")
+    revision = commit_paths(root, "Add binary paper", "paper.pdf")
+    identity = "https://github.com/example/system"
+    content = f"See [paper]({identity}/blob/{revision}/paper.pdf).\n"
+    passes, failures = _verify_source_anchors(
+        content, source_root=root, source_identity=identity, source_revision=revision
+    )
+    assert failures == []
+    assert any("paper.pdf resolves at the recorded commit" in item for item in passes)
+    _, failures = _verify_source_anchors(
+        content.replace("paper.pdf", "missing.pdf"),
+        source_root=root, source_identity=identity, source_revision=revision,
+    )
+    assert any("does not resolve to a blob" in item for item in failures)
+
+
 def test_git_source_example_can_initialize_running_state(tmp_path: Path) -> None:
     state, _, _ = publication_fixture(tmp_path)
     values = frontmatter(state)
@@ -1922,7 +1969,7 @@ def test_generated_source_links_publish_through_regular_validator(tmp_path, monk
 
 
 @pytest.mark.parametrize("addition,diagnostic", [
-    ("\nBad range: `README.md:999`.\n", "outside the recorded blob"),
+    ("\nBad range: `README.md:999`.\n", "cite the path without a range"),
     ("\n> absent source text\n> --- `README.md` @ `{revision}`\n", "quote does not occur"),
     ("\n> Frozen source\n> --- `README.md` @ `" + "0" * 40 + "`\n", "attribution uses revision"),
     ("\n> --- `README.md` @ `{revision}`\n", "no quoted text"),
@@ -1951,7 +1998,7 @@ def test_source_failure_makes_prepare_exit_nonzero(tmp_path, capsys):
         "--expected-incumbent-sha256", "absent",
     ], cwd=tmp_path)
     assert status == 1
-    assert "outside the recorded blob" in capsys.readouterr().err
+    assert "cite the path without a range" in capsys.readouterr().err
     assert not (tmp_path / spec.generated_destination).exists()
 
 

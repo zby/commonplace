@@ -46,7 +46,8 @@ The command is read-only. It refuses a running, failed, or invalid run.
 ### commonplace-agentic-analysis-publication
 
 Publication invokes the regular validator on the prospective complete run
-set, including quotation occurrence and source ranges. Quotation generation
+set, including quotation occurrence within attribution ranges and the existence
+of path-only source anchors at the frozen commit. Quotation generation
 belongs to `commonplace-quote`; there is no separate authoring-time source-check
 operation in this command.
 
