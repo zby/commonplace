@@ -328,6 +328,16 @@ organized around the system's operational progression rather than by lens.
 
 ### 7. Write and validate the set
 
+| File (relative to `<run-id>/`) | `type:` value | Schema |
+|---|---|---|
+| `output/overview.md` | `types/agentic-system-analysis-overview.md` | `kb/types/agentic-system-analysis-overview.schema.yaml` |
+| `output/runtime.md` | `types/agentic-system-runtime-report.md` | `kb/types/agentic-system-runtime-report.schema.yaml` |
+| `output/memory.md` | `types/agent-memory-analysis-report.md` | `kb/types/agent-memory-analysis-report.schema.yaml` |
+| `output/epistemic.md` | `types/agentic-system-epistemic-report.md` | `kb/types/agentic-system-epistemic-report.schema.yaml` |
+| `output/ARTIFACT.yaml` | `reports/types/agentic-system-analysis-set.md` | `kb/reports/types/agentic-system-analysis-set.schema.yaml` |
+| `run-state.md` | `types/agentic-system-analysis-run-state.md` | `kb/types/agentic-system-analysis-run-state.schema.yaml` |
+| generated review candidate (any non-reserved name, e.g. `review-candidate.md`; published to `kb/agentic-systems/reviews/<system-slug>.md`) | `agentic-systems/types/generated-review.md` | `kb/agentic-systems/types/generated-review.schema.yaml` |
+
 Write reports under `<run-id>/output/`, keeping run state, specialist inputs,
 local reports and review candidates outside that directory. A `blocked` or
 `out-of-scope` outcome contains only `overview.md`; a complete outcome has
