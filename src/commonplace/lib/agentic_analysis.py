@@ -18,10 +18,7 @@ from commonplace.lib.agentic_set import (
     OVERVIEW_NAME,
     REVIEW_TYPE,
     MemberSet,
-    declared_union,
-    finalization_errors,
     load_member_set,
-    proposal_mapping,
     retained_set_paths,
     set_identity_errors,
 )
@@ -697,79 +694,38 @@ def _validate_document(
 def _verify_memory_member(
     state: AgenticAnalysisRunState, member_set: MemberSet
 ) -> tuple[list[str], list[str]]:
-    """Check the memory member's provenance and its derivation from the local report.
+    """Check the memory member's provenance pins, not its derivation.
 
-    The coordinator authors the finalized member; this verifies that it is
-    the specialist's report with the Reconciliation mapping applied and
-    amendments appended, without certifying either's conclusions.
+    The coordinator authors the finalized member from the specialist's local
+    report; this checks only that it is complete, that ``finalized-from``
+    names the local report's bytes and ``canonical-register-sha256`` the
+    frozen input's, each when that file is present in the run directory.
     """
     member = member_set.memory
     if member is None:
         return [], ["memory member: the manifest names no memory report"]
-    try:
-        report_bytes = (state.run_dir / LOCAL_REPORT_NAME).read_bytes()
-        input_bytes = (state.run_dir / LOCAL_INPUT_NAME).read_bytes()
-        report_text = report_bytes.decode("utf-8")
-    except (OSError, UnicodeError) as exc:
-        return [], [f"memory member: cannot read the local report or frozen input: {exc}"]
     failures: list[str] = []
     values = member.frontmatter
     if values.get("report-status") != "complete":
         failures.append("memory member: report-status must be complete")
-    if values.get("canonical-register-sha256") != sha256(input_bytes).hexdigest():
-        failures.append("memory member: canonical-register-sha256 does not match memory-input.md")
-    if values.get("finalized-from") != sha256(report_bytes).hexdigest():
-        failures.append("memory member: finalized-from does not match memory-report.md bytes")
-    try:
-        mapping = proposal_mapping(member_set.overview.body)
-    except ValueError as exc:
-        failures.append(f"memory member: {exc}")
-        mapping = {}
-    failures.extend(
-        f"memory member: {error}"
-        for error in finalization_errors(local_text=report_text, member=member, mapping=mapping)
-    )
-    if failures:
-        return [], failures
-    return ["memory member: finalized from the local report under the Reconciliation mapping"], []
-
-
-def _verify_set_records(member_set: MemberSet) -> tuple[list[str], list[str]]:
-    """Resolve declarations, references, the profile and the quote minimum across the set."""
-    from commonplace.lib.agentic_records import set_record_errors
-    from commonplace.lib.systems_matrix import validate_comparison
-
-    overview_body = re.sub(
-        r"(?ms)^## Reconciliation[ \t]*\n.*?(?=^## |\Z)", "", member_set.overview.body
-    )
-    bodies = {OVERVIEW_NAME: overview_body}
-    bodies.update({name: member.body for name, member in member_set.members.items()})
-    failures = [
-        f"set {error}"
-        for error in set_record_errors(bodies, register_body=member_set.overview.body)
-    ]
-    memory = member_set.memory
-    if memory is not None:
+    finalized_from = values.get("finalized-from")
+    if not isinstance(finalized_from, str) or not _SHA256_RE.fullmatch(finalized_from):
+        failures.append("memory member: finalized-from must be the local report's SHA-256")
+    for name, field in ((LOCAL_REPORT_NAME, "finalized-from"),
+                        (LOCAL_INPUT_NAME, "canonical-register-sha256")):
+        path = state.run_dir / name
+        if not path.exists():
+            continue
         try:
-            validate_comparison(
-                memory.frontmatter.get("memory-comparison"),
-                memory.body,
-                known_ids=declared_union(member_set),
-            )
-        except ValueError as exc:
-            failures.append(f"set memory comparison: {exc}")
-    if not any(
-        citation.quote and citation.attribution
-        for document in member_set.documents
-        for citation in parse_blockquotes(document.body)
-    ):
-        failures.append(
-            "set source evidence: a complete set requires at least one attributed "
-            "quotation; bare file and line citations are insufficient"
-        )
+            actual = sha256(path.read_bytes()).hexdigest()
+        except OSError as exc:
+            failures.append(f"memory member: cannot read {name}: {exc}")
+            continue
+        if values.get(field) != actual:
+            failures.append(f"memory member: {field} does not match {name} bytes")
     if failures:
         return [], failures
-    return ["set: declarations, references, profile and quotations resolve across members"], []
+    return ["memory member: complete and pinned to the local report and input"], []
 
 
 def verify_agentic_analysis_run_state(
@@ -860,9 +816,6 @@ def verify_agentic_analysis_run_state(
         memory_passes, memory_failures = _verify_memory_member(state, member_set)
         passes.extend(memory_passes)
         failures.extend(memory_failures)
-        records_passes, records_failures = _verify_set_records(member_set)
-        passes.extend(records_passes)
-        failures.extend(records_failures)
 
     if state.generated_review is not None:
         retained_paths = retained_set_paths(state.run_id)

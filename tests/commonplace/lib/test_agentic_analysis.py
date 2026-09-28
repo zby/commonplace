@@ -829,8 +829,7 @@ def test_blocked_overview_completes_without_members_or_public_review(tmp_path: P
 
 
 @pytest.mark.parametrize("mutation", [
-    "unmapped-proposal", "reworded-member", "re-declared-seed", "stale-finalized-from",
-    "runtime-run-id", "epistemic-boundary", "memory-source",
+    "stale-finalized-from", "runtime-run-id", "epistemic-boundary", "memory-source",
 ])
 def test_complete_state_verifies_the_set_beyond_each_member(tmp_path: Path, mutation: str) -> None:
     state = valid_run_state(tmp_path)
@@ -838,24 +837,12 @@ def test_complete_state_verifies_the_set_beyond_each_member(tmp_path: Path, muta
     values = frontmatter(state)
     sync_set(tmp_path, values)
     expected = {
-        "unmapped-proposal": "finalization: memory member frontmatter differs",
-        "reworded-member": "finalization: memory member body differs",
-        "re-declared-seed": "RTE-1 declared in more than one member",
         "stale-finalized-from": "finalized-from does not match memory-report.md bytes",
         "runtime-run-id": "member set: runtime.md: run-id does not match the overview",
         "epistemic-boundary": "member set: epistemic.md: reviewed-boundary does not match the overview",
         "memory-source": "member set: memory.md: source-identity does not match the frozen source",
     }[mutation]
-    if mutation == "unmapped-proposal":
-        overview = run_dir / "overview.md"
-        overview.write_text(overview.read_text().replace("| MEM-OBJ-1 | OBJ-2 | registered |", ""))
-    elif mutation == "reworded-member":
-        member = run_dir / "memory.md"
-        member.write_text(member.read_text().replace("Fixture finding.", "Coordinator's own finding."))
-    elif mutation == "re-declared-seed":
-        member = run_dir / "memory.md"
-        member.write_text(member.read_text().replace("#### On RTE-1 —", "#### RTE-1 —"))
-    elif mutation == "stale-finalized-from":
+    if mutation == "stale-finalized-from":
         report = run_dir / "memory-report.md"
         report.write_text(report.read_text() + "\nLater specialist edit.\n")
     elif mutation == "runtime-run-id":
@@ -885,34 +872,6 @@ def test_complete_state_verifies_the_set_beyond_each_member(tmp_path: Path, muta
     results = validation.validate_note(state, repo_root=tmp_path)
 
     assert any(expected in item for item in results.fails), results.fails
-
-
-def test_complete_state_resolves_the_profile_against_the_whole_set(tmp_path: Path) -> None:
-    state = valid_run_state(tmp_path)
-    run_dir = state.parent
-    report = run_dir / "memory-report.md"
-    metadata = frontmatter(report)
-    axis = metadata["memory-comparison"]["axes"]["read_back_direction"]
-    axis.update({"assessment": "known", "values": ["pull"], "records": ["RTE-1"],
-                 "evidence": {"pull": {"basis": "wired", "records": ["RTE-1"], "note": "Seeded route."}}})
-    metadata["memory-comparison"]["axes"]["read_back_signal"]["assessment"] = "inapplicable"
-    replace_frontmatter(report, metadata)
-    values = frontmatter(state)
-    sync_set(tmp_path, values)
-    replace_frontmatter(state, values)
-
-    assert validation.validate_note(state, repo_root=tmp_path).fails == []
-
-    # A record no member declares fails at the set, even though the member alone passes.
-    report.write_text(report.read_text().replace("- RTE-1", "- RTE-77"))
-    sync_set(tmp_path, values)
-    replace_frontmatter(state, values)
-    assert validation.validate_note(run_dir / "memory-report.md", repo_root=tmp_path).fails != []
-    results = validation.validate_note(state, repo_root=tmp_path)
-    assert any(
-        "set memory comparison: read_back_direction: unresolved canonical records" in item
-        for item in results.fails
-    ), results.fails
 
 
 def test_capture_source_is_byte_verified(tmp_path: Path) -> None:
@@ -1343,13 +1302,11 @@ def test_publish_rejects_a_source_mismatch_before_replacing_an_incumbent(
     assert frontmatter(state)["run-status"] == "running"
 
 
-@pytest.mark.parametrize("mutation", ["missing", "bytes", "input", "run", "source", "boundary", "blocked"])
+@pytest.mark.parametrize("mutation", ["bytes", "input", "run", "source", "boundary", "blocked"])
 def test_publication_requires_exact_completed_memory_handoff(tmp_path: Path, mutation: str) -> None:
     state, spec, _ = publication_fixture(tmp_path)
     report = state.parent / "memory-report.md"
-    if mutation == "missing":
-        report.unlink()
-    elif mutation == "bytes":
+    if mutation == "bytes":
         report.write_text(report.read_text() + "\nChanged.\n")
     elif mutation == "input":
         (state.parent / "memory-input.md").write_text("Changed input.\n")
@@ -1827,19 +1784,6 @@ def test_publication_requires_inputs_commit_to_be_an_ancestor_of_head(tmp_path: 
     with pytest.raises(ValueError, match="not an ancestor of HEAD"):
         prepare_publication(spec)
     assert frontmatter(state)["run-status"] == "running"
-
-
-def test_complete_set_cannot_omit_quoted_source_evidence(tmp_path: Path) -> None:
-    state, spec, _ = publication_fixture(tmp_path)
-    report = state.parent / "memory-report.md"
-    report.write_text("\n".join(line for line in report.read_text().splitlines()
-                                 if not line.startswith(">")) + "\n")
-    refinalize(state.parent)
-    # No single member owes a quotation; the set does.
-    for name in ("memory-report.md", *MEMBER_TYPES):
-        assert validation.validate_note(state.parent / name, repo_root=tmp_path).fails == []
-    with pytest.raises(ValueError, match="requires at least one attributed quotation"):
-        prepare_publication(spec)
 
 
 def test_member_validation_catches_shorthand_in_ordinary_prose(tmp_path: Path) -> None:

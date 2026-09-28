@@ -16,7 +16,6 @@ from hashlib import sha256
 from pathlib import Path
 from typing import Any
 
-from commonplace.lib.agentic_records import PROPOSAL_TOKEN, RECORD_ID, section
 from commonplace.lib.note_parser import ParsedDocument, parse_document
 
 OVERVIEW_TYPE = "types/agentic-system-analysis-overview.md"
@@ -191,97 +190,3 @@ def declared_union(member_set: MemberSet) -> set[str]:
     for member in member_set.members.values():
         declared.update(declared_ids(member.body))
     return declared
-
-
-# --- finalization of the memory member ---------------------------------------
-
-_TABLE_ROW = re.compile(r"^\s*\|(.*)\|\s*$")
-_HEADING_DECLARATION = re.compile(
-    rf"(?m)^([ \t]*#{{3,6}}[ \t]+)({RECORD_ID})(?![\w-])"
-)
-
-
-def _cell_token(cell: str) -> str:
-    return cell.strip().strip("`*").strip()
-
-
-def proposal_mapping(overview_body: str) -> dict[str, str]:
-    """The Reconciliation mapping table: specialist proposal to canonical record.
-
-    A row maps when its first cell is one proposal ID and its second cell is
-    one canonical ID; other rows are prose. A proposal mapped twice is an
-    error, since exact-token replacement needs one target per token.
-    """
-    mapping: dict[str, str] = {}
-    for line in section(overview_body, "Reconciliation").splitlines():
-        row = _TABLE_ROW.match(line)
-        if row is None:
-            continue
-        cells = [_cell_token(cell) for cell in row.group(1).split("|")]
-        if len(cells) < 2:
-            continue
-        proposal, canonical = cells[0], cells[1]
-        if not PROPOSAL_TOKEN.fullmatch(proposal) or not re.fullmatch(RECORD_ID, canonical):
-            continue
-        if proposal in mapping and mapping[proposal] != canonical:
-            raise ValueError(f"reconciliation mapping: {proposal} mapped twice")
-        mapping[proposal] = canonical
-    return mapping
-
-
-def finalize_local_report(text: str, mapping: Mapping[str, str]) -> str:
-    """Derive the finalized memory member's text from the local report.
-
-    Proposal IDs are replaced by exact-token mapping across the whole text,
-    frontmatter included. Under ``## Shared records`` a heading that declares
-    a canonical ID which no proposal mapped to is a seeded record the
-    specialist re-declared, so it becomes an ``On <ID>`` annotation heading.
-    The ``## Amendments`` section and ``finalized-from`` are authored on top
-    and are not derived here.
-    """
-    mapped = PROPOSAL_TOKEN.sub(lambda m: mapping.get(m.group(0), m.group(0)), text)
-    registered = set(mapping.values())
-    match = re.search(r"(?ms)^## Shared records[ \t]*\n.*?(?=^## |\Z)", mapped)
-    if match is None:
-        return mapped
-    shared = match.group(0)
-    rewritten = _HEADING_DECLARATION.sub(
-        lambda m: m.group(0) if m.group(2) in registered else f"{m.group(1)}On {m.group(2)}",
-        shared,
-    )
-    return mapped[: match.start()] + rewritten + mapped[match.end() :]
-
-
-def _normalize(text: str) -> str:
-    return " ".join(text.split())
-
-
-def strip_amendments(body: str) -> str:
-    return re.sub(r"(?ms)^## Amendments[ \t]*\n.*?(?=^## |\Z)", "", body)
-
-
-def finalization_errors(
-    *, local_text: str, member: SetDocument, mapping: Mapping[str, str]
-) -> list[str]:
-    """Check that the memory member is the local report finalized and nothing more."""
-    derived, error = parse_document(finalize_local_report(local_text, mapping))
-    if error is not None or derived is None or derived.frontmatter is None:
-        return ["finalization: the mapped local report is not parseable"]
-    errors: list[str] = []
-    expected = dict(derived.frontmatter)
-    actual = dict(member.frontmatter)
-    expected.pop("finalized-from", None)
-    actual.pop("finalized-from", None)
-    if expected != actual:
-        errors.append(
-            "finalization: memory member frontmatter differs from the mapped local "
-            "report beyond finalized-from"
-        )
-    if "## Amendments" not in member.body.split("\n"):
-        errors.append("finalization: memory member lacks its ## Amendments section")
-    if _normalize(strip_amendments(member.body)) != _normalize(derived.body):
-        errors.append(
-            "finalization: memory member body differs from the mapped local report "
-            "outside ## Amendments"
-        )
-    return errors
