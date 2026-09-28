@@ -33,8 +33,9 @@ Required frontmatter:
 | `method-sha256` | SHA-256 of the specialist instruction `kb/instructions/analyse-agent-memory.md` used |
 | `memory-comparison` | Proposed scope and all fourteen axes using the main-result comparison contract |
 
-A blocked report names missing access, changed input, or an unresolved scope
-decision that prevents completing the assigned analysis. It still keeps all
+A blocked report names missing access, changed input, prior-analysis
+exposure, or an unresolved scope decision that prevents completing the
+assigned analysis. It still keeps all
 sections; unreached axes use explicit uninspected assessments rather than
 guessed values.
 
@@ -63,7 +64,7 @@ certify every claim's support.
 
 Use relevant parent canonical IDs with short source-native descriptions,
 evidence anchors and memory-specific fields. Do not copy the entire runtime
-inventory. New records use local IDs such as `MEM-OBJ-1` or `MEM-RTE-1`;
+inventory. New records use local proposal IDs such as `MEM-OBJ-1` or `MEM-RTE-1`;
 these are proposals and never reassign a canonical ID. IDs follow the main
 result's [Canonical identity](./agentic-system-analysis-result.md#canonical-identity)
 rules, written in full in every list. Records distinguish operative parts,
@@ -127,3 +128,43 @@ Name prevented conclusions, source and method identity rechecks, and the
 deterministic validation result. A self-check does not attest independence or
 correctness of the final integrated analysis. Do not omit weaknesses to make
 the report appear ready for integration.
+
+## Template
+
+Each report section is a level-two heading.
+
+```markdown
+---
+type: types/agent-memory-analysis-report.md
+description: "{subject and discriminating memory boundary}"
+analysis-run: AAS-YYYY-MM-DD-system-slug-nn
+source-identity: "{repository or capture identity}"
+reviewed-boundary: "{full commit or capture label}"
+report-status: complete
+canonical-register-sha256: "{sha256 of memory-input.md}"
+worker-model: "{model identifier or unknown}"
+method-sha256: "{sha256 of the instruction used}"
+memory-comparison:
+  scope: "{memory boundary}"
+  axes:
+    {one entry per axis, as the main result's Memory comparison fields require}
+---
+
+# {System} memory analysis
+
+## Boundary and evidence
+
+## Core ideas
+
+## Shared records
+
+## Write side
+
+## Read-back
+
+## Comparison rationale
+
+## Integration issues
+
+## Limitations and checks
+```

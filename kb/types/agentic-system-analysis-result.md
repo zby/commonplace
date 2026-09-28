@@ -35,6 +35,7 @@ a new analysis run, never by editing the retained copy.
 | `reviewed-boundary` | Yes | Immutable revision or capture identity shared by the run, or `null` before one could be established |
 | `analysis-cutoff` | Yes | Applicability cutoff for the frozen evidence, or `null` before one could be established |
 | `evidence-tier` | Yes | `code-grounded`, `doc-grounded`, or `null` before the runtime baseline could support a tier |
+| `memory-comparison` | For `complete` | The normalized memory profile under Memory comparison fields below; absent for a blocked or out-of-scope result |
 
 For a `complete` result, `target-class`, `boundary-kind`, `reviewed-boundary`, `analysis-cutoff`, and `evidence-tier` are non-null. `blocked` and `out-of-scope` are result dispositions, not excuses for a second output shape: retain every required section and state what was not reached, why, and which conclusion that prevents.
 
@@ -44,8 +45,7 @@ For a `complete` result, `target-class`, `boundary-kind`, `reviewed-boundary`, `
 
 Every newly published complete result includes `memory-comparison` in its
 frontmatter. This normalizes findings already established by the main analysis;
-it is not another memory review. A historical result without it cannot enter
-the new matrix.
+it is not another memory review.
 
 The mapping has exactly `scope` and `axes`. `scope` names the memory boundary:
 retained objects accumulated or changed through use, their access structures,
@@ -164,16 +164,8 @@ evidence tests dependence on recalled content; test code or a proposed
 experiment alone cannot support yes. A yes requires observed or causally
 supported basis, with the result's probe or retained evidence records.
 
-CSV readers preserve JSON value arrays, assessments, JSON per-value evidence
-maps (`<axis>_evidence`), and axis-level record references separately. Positive
-implementation counts use code-grounded values at wired, observed, or causally
-supported basis, including partial assessments. The uncounted remainder is
-not absence. Set equality, entropy and redundancy over full profiles require
-known coverage and strong evidence for every value; filtering weaker members
-does not produce a complete profile. Absence is a separate evidenced negative.
-Claimed, afforded, unknown, partial, inapplicable and doc-grounded findings stay
-visible with their dispositions and denominators. The original result retains the rationale and full evidence account.
-No reader recovers missing classifications from a previous CSV, absent tag,
+The result retains the rationale and full evidence account; no reader
+recovers a missing classification from a previous export, an absent tag, a
 legacy review, or compact prose.
 
 ### Canonical identity
@@ -182,7 +174,7 @@ Use the run's canonical namespaces: `SRC-*` sources, `CMP-*` components, `OBJ-*`
 
 Canonical identity applies from allocation and sharing, not only final
 acceptance. A split gives the new parts fresh IDs and marks the combined record
-superseded; its ID does not change referent. Provisional labels are local tags.
+superseded; its ID does not change referent. Provisional labels are local proposal IDs.
 
 For unambiguous authoring, declare a record once as `### OBJ-1 — Short label`
 and write later prose as `The object OBJ-1 ...` or `Evidence: SRC-1 ...`.
@@ -488,6 +480,10 @@ boundary-kind: whole-system
 reviewed-boundary: "{immutable revision or capture identity}"
 analysis-cutoff: "YYYY-MM-DD"
 evidence-tier: code-grounded
+memory-comparison:
+  scope: "{memory boundary}"
+  axes:
+    {one entry per axis, as Memory comparison fields require}
 ---
 
 # {System} agentic-system analysis

@@ -218,6 +218,21 @@ is accepted on that basis (operator, 2026-09-28). Two findings carry over:
   chose narrower boundaries than their baselines and breadth could not be
   compared. Step 4's trial fixes the functional scope alongside the pin.
 
+An independent Opus review of the six governing files on 2026-09-28 found
+no flat contradiction and a dozen line-level defects, applied in one commit:
+step 4 no longer asks for specialist findings before the specialist runs;
+the skill no longer claims the run state binds the memory report hash; the
+result type's table and template carry `memory-comparison`; the report type
+has a template fixing level-two headings and lists prior-analysis exposure
+as a blocked cause; a blocked or out-of-scope run now has a stated completion
+path and skips steps 2 to 6; the curiosity pass has a destination; the
+run-state type stops repeating the skill's failure and incumbent rules; and
+one term, local proposal ID, replaces four. The reviewer's overengineering
+findings (unexercised probe capsules, reader rules for CSV consumers,
+supervisor choreography) are recorded for the partition; the supervisor
+text stays because it encodes tested recovery. Five-file total after the
+review: 12,795 words.
+
 A separate consequence, handled outside this workshop: every worker wrapped
 the quote generator in a per-quote loop, so `commonplace-quote` gained a
 `--selections` batch mode (`e984a460`), verified by a specialist-only trial

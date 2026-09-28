@@ -81,14 +81,16 @@ hash or later successful command does not clear an earlier failure. Use
    narrower mechanism whose operation depends on model calls it issues or
    serves. An MCP server, tool, or returning computation may qualify without
    owning the enclosing runtime. If the target is outside this boundary, write
-   an `out-of-scope` result and continue at step 7.
+   an `out-of-scope` result, skip steps 2 to 6 with both scoping records
+   stating `not reached`, and continue at step 7.
 5. Classify the target with one `target-class` and one `boundary-kind` value
    from the result type's frontmatter table, and state functional inclusions,
    exclusions, and external dependencies. Do not assign responsibilities
    owned by an excluded host to the selected target.
 
 If no coherent boundary or reachable source can be established, write a
-`blocked` result and continue at step 7.
+`blocked` result, skip steps 2 to 6 with both scoping records stating `not
+reached`, and continue at step 7.
 
 If a coordinator reads prior-review prose or substantive prior audit findings
 through any tool before freezing the exact result and candidate, disclosure
@@ -175,8 +177,8 @@ Judging norms:
   absence claim.
 
 Register ownership: the coordinator owns canonical IDs and generic identity. A
-lens annotates existing IDs and proposes new records under local tags that
-disappear when the coordinator registers or merges them. Allocate IDs
+lens annotates existing IDs and proposes new records under local proposal
+IDs that disappear when the coordinator registers or merges them. Allocate IDs
 monotonically and never reuse one after merging or rejecting its record; gaps
 are harmless. An ID shared with a worker is canonical before final
 integration: amend its evidence or status without changing its referent, and
@@ -213,8 +215,8 @@ original superseded.
    retained knowledge or instructions, capabilities, or production machinery.
    Record each on its admitting `RTE-*` record with the admission,
    decision-role, answer-oracle, operating-mode, and guidance fields the type
-   requires. Reuse the memory specialist's findings for memory revisions rather
-   than tracing those mechanisms twice.
+   requires. Defer memory revisions to the specialist's report; step 6
+   attaches them.
 
 ### 5. Run both lenses
 
@@ -269,7 +271,9 @@ proposals for expansion first, map exact identifier tokens rather than
 substrings, and verify that every mapped target is declared and unique.
 Attach corrections and amendments to the affected records, preserve anchored
 conflicts, and report independent convergence only when the lenses reached it
-independently. Recheck shared-route ownership. Integrate the specialist's
+independently. Recheck shared-route ownership. Attach the admission fields
+of memory routes from the specialist's findings rather than tracing those
+mechanisms twice. Integrate the specialist's
 `memory-comparison` profile with its scope, per-value evidence bases and
 records, coverage assessments, uncertainties, and rationale preserved, and
 carry each specialist quote onto the canonical record it supports; the parent
@@ -299,17 +303,16 @@ with the canonical records, every scoped trace-fed write including
 compaction, each push signal's consumer and selector, and amendments and
 overlays on the same canonical IDs.
 
-Record the checked routes and material dispositions in the existing Semantic
-verification section. A known assessment unsupported by its records blocks
+Record the checked routes and material dispositions, and the check of every
+source anchor, canonical ID, evidence status, boundary, lens output,
+limitation and blocker, in the Semantic verification section. A known assessment unsupported by its records blocks
 publication; properly scoped explicit uncertainty does not. Structural
 validation does not perform this check.
 
 Run `commonplace-validate --full <result-path>` for the typed artifact's
 structural requirements. Publication runs the same validator on the complete
 run bundle, including source quotations; do not run a separate quotation
-check. Verify every source anchor,
-canonical ID, evidence status, boundary, lens output, limitation, and blocker.
-Correct deterministic formatting errors before continuing. An unresolved
+check. Correct deterministic formatting errors before continuing. An unresolved
 evidence or semantic failure blocks publication. Correct it while the run stays
 `running`, or abandon the run under the failure rule. The result's `complete`
 disposition means its analysis content is complete; it does not claim that the
@@ -317,7 +320,10 @@ review projections have been published.
 
 ### 8. Publish validated candidates
 
-Skip publication for a blocked or out-of-scope result. For a complete result:
+For a blocked or out-of-scope result, complete the run without publication:
+set `run-status: complete`, the disposition, and the `result` path and
+SHA-256, leave `generated-review: null`, and validate the run state. For a
+complete result:
 
 1. Generate the compact whole-system review solely from the validated result
    and its primary-source anchors. Write it first as a temporary candidate in
@@ -344,7 +350,8 @@ Skip publication for a blocked or out-of-scope result. For a complete result:
    result bytes are saved as `incumbent-review.md` and `incumbent-result.md`
    in the new run before replacement. Keep those recovery copies with the run.
 
-The run state binds the exact result, compact review, and memory report hashes.
+The run state binds the exact result and compact review hashes; the result
+binds the memory report hash.
 Keep the frozen input and report with the local run while completion checks
 need them. Candidate cleanup after success is best effort. A cleanup warning
 does not undo completion. Never patch generated prose independently of its
@@ -352,16 +359,9 @@ source boundary and method. Never stage or commit unless separately requested.
 
 After a main review changes, report the comparison outputs under
 `kb/agentic-systems/comparisons/` stale unless rebuilt and validated under
-separate authority. The matrix, table, and numerical-analysis scripts read the
-retained result directly. Repeated `--review` arguments select a bounded corpus;
-without them every generated main review must meet the input contract.
-The old `kb/agent-memory-systems/systems.csv` and `systems-table.md` are historical
-snapshots and are not rebuilt by these scripts.
-Report a prior current landscape synthesis as historical unless it was refreshed
-under separate authority.
-Authorization alone does not establish that an operation completed. The new
-matrix records both evidence tiers; numerical claims use code-grounded rows,
-with doc-grounded findings kept separate.
+separate authority, and a prior landscape synthesis as historical unless it
+was refreshed under separate authority. Authorization alone does not
+establish that an operation completed.
 
 ### 9. Run an optional transfer scan after completion
 

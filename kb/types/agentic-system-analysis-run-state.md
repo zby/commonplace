@@ -24,13 +24,13 @@ It is not a recovery log. A run is `running`, `complete`, or `failed`. Do not
 resume a failed run or preserve phase, packet, correction, validation-receipt,
 or retry state. Start another run with a new run ID. Temporary candidate files
 inside the run directory are disposable and never appear in this record.
-Keep the destination inspection's expected incumbent digest (or `absent`) in
-`## Run` prose. Publication requires it again at prepare and publish. Recovery
+The `## Run` prose records the destination inspection's expected incumbent
+digest (or `absent`). Recovery
 copies `incumbent-review.md` and `incumbent-result.md` are retained with the new
 run when a review is replaced; they are not disposable candidate files.
 
 The exact result always lives at
-`kb/reports/state/agentic-system-analysis/<run-id>/result.md`. A substantive
+`kb/reports/state/agentic-system-analysis/<run-id>/result.md`. A
 `complete` result also publishes one generated review under
 `kb/agentic-systems/reviews/`. A blocked or out-of-scope result has no
 generated review. Publication also retains the exact result bytes at
@@ -39,7 +39,7 @@ derived from the run ID and the existing `result.sha256`; no duplicate output
 mapping is needed. Completion verification checks this copy and the public
 review's `analysis-result` path and `analysis-result-sha256`. Durable comparison
 readers follow those public fields without requiring ignored run state or a
-local source checkout. Every substantive complete analysis requires the typed
+local source checkout. Every complete analysis requires the typed
 `memory-report.md` and frozen `memory-input.md` in its run directory. The exact
 result names the report and its SHA-256 in Run identity. Completion checks the
 report's run, source, reviewed boundary, complete status, and input hash, and
@@ -74,10 +74,8 @@ destination before publication. The run-state validator rechecks byte,
 workflow, and specialist handoff identity; it does not retain a
 validation receipt.
 
-A publication candidate is validated before it replaces a same-source review.
-A correctable failure before publication leaves the incumbent unchanged and
-the run `running`. Mark a run `failed` only when abandoning it or when a
-publication failure leaves public state uncertain. Git history is the history
+A `failed` run was abandoned or left public state uncertain; it is never
+resumed. Git history is the history
 of successfully published tracked reviews; this workflow does not stage or
 commit.
 

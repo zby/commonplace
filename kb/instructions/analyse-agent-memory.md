@@ -56,7 +56,9 @@ expansion returns a blocked report with the conclusion it prevents.
 
 Work through the report's sections in order: core ideas, shared records,
 write side, read-back, then a curiosity pass that challenges strong source
-claims, misleading labels and partial ontology mappings. Keep each finding
+claims, misleading labels and partial ontology mappings, recording its
+corrections under Core ideas and its open questions under Integration
+issues. Keep each finding
 source-native before giving a Commonplace classification. Do not turn source
 claims into implemented or observed behavior. Keep current Commonplace
 recommendations outside the report; no comparison to other systems is
