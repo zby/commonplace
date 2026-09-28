@@ -15,29 +15,20 @@ if TYPE_CHECKING:
 
 from commonplace.lib.note_parser import ParsedDocument
 
-RUNTIME_TYPE = "types/agentic-system-runtime-report.md"
-MEMORY_TYPE = "types/agent-memory-analysis-report.md"
-EPISTEMIC_TYPE = "types/agentic-system-epistemic-report.md"
 REVIEW_TYPE = "agentic-systems/types/generated-review.md"
 
 SET_TYPE = "reports/types/agentic-system-analysis-set.md"
 OUTPUT_DIR = "output"
 
 OVERVIEW_NAME = "overview.md"
-MEMBER_TYPES: dict[str, str] = {
-    "runtime.md": RUNTIME_TYPE,
-    "memory.md": MEMORY_TYPE,
-    "epistemic.md": EPISTEMIC_TYPE,
-}
-SET_NAMES = (OVERVIEW_NAME, *MEMBER_TYPES)
+MEMBER_NAMES = ("runtime.md", "memory.md", "epistemic.md")
+SET_NAMES = (OVERVIEW_NAME, *MEMBER_NAMES)
 LOCAL_REPORT_NAME = "memory-report.md"
 LOCAL_INPUT_NAME = "memory-input.md"
 
 RETAINED_ROOT = Path("kb/reports/retained/agentic-system-analysis")
 REVIEWS_ROOT = PurePosixPath("kb/agentic-systems/reviews")
 RUN_ID = re.compile(r"AAS-\d{4}-\d{2}-\d{2}-[a-z0-9]+(?:-[a-z0-9]+)*-\d{2}")
-SHA256 = re.compile(r"[0-9a-f]{64}")
-"""A lowercase SHA-256 hex digest; use with ``fullmatch``."""
 
 
 def is_normalized_relative(value: str) -> bool:

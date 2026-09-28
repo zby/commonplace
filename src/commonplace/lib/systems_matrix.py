@@ -11,9 +11,7 @@ from pathlib import Path
 
 from commonplace.lib.agentic_records import annotated_ids, declared_ids
 from commonplace.lib.agentic_set import (
-    RETAINED_ROOT,
     REVIEWS_ROOT,
-    RUN_ID,
     is_review_path,
     load_member_set,
     retained_artifact_path,
@@ -22,12 +20,9 @@ from commonplace.lib.note_parser import parse_document
 
 __all__ = [
     "AXES",
-    "RETAINED_ROOT",
-    "RUN_ID",
     "csv_text",
     "load_results",
     "memory_member_comparison",
-    "retained_artifact_path",
     "validate_comparison",
 ]
 AXES = {
