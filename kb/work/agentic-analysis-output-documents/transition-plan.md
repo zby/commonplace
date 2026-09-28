@@ -7,6 +7,10 @@ Step 3 of the [workshop](./README.md). Built on the
 producer, the validators, the consumers and the tests, the order of the
 work, and the one decision that is the operator's.
 
+The later [directory-artifact deployment](#directory-artifact-deployment-2026-09-28-operator-decision)
+is a separate workflow integration after the generic feature is available.
+It replaces this transition's output layout and overview pin when adopted.
+
 ## Historical results: archive, then rerun
 
 Only three of the forty-one generated reviews load under today's contract:
@@ -173,13 +177,9 @@ follow the loader; the table's link points at the overview.
 **Landscape bundle.** Copies every member; `METHOD_INPUTS` lists the
 member types and schemas.
 
-**Init repin.** The regex matches `analysis-overview-sha256`. Rewriting
-a member's type line changes its hash, so the repin must cascade:
-recompute the manifest entry in the overview, then the overview's hash,
-then the review pin. Alternatively init stops rewriting type lines inside
-retained analysis directories, treating them as frozen bytes. The second
-is simpler and matches the retained-bytes rule; it is the recommended
-choice and an open item for the operator.
+**Init.** Retained analyses remain frozen bytes. The implementation
+handoff selected preserving them and removing the repin path; there is no
+open init-repin decision for directory-artifact deployment.
 
 **Skills and contracts.** The transfer-scan and landscape-synthesis
 skills name the overview and say which member holds what: boundary,
@@ -264,9 +264,45 @@ member by mapping IDs and appending amendments, with no exactness
 constraint. Accepted cost: a dangling cross-member ID can reach
 publication until the workshop lands.
 
+## Directory-artifact deployment (2026-09-28, operator decision)
+
+Adopt the [directory-artifact model](../directory-artifacts/adr-draft.md)
+as a workflow integration after the generic validator is available. The
+feature defines membership and validation; this workflow owns its output
+layout, production and consumer changes. Keep the current transition and
+refresh batch independent of this later deployment.
+
+1. **Separate outputs from working files.** Choose a dedicated output
+   directory for `ARTIFACT.yaml`, `overview.md`, `runtime.md`, `memory.md`
+   and `epistemic.md`. Keep `run-state.md`, specialist inputs and local
+   reports, and review candidates outside it. Update the analysis skill,
+   relevant worker instructions, path helpers and test fixtures together.
+   Retained publication likewise contains only the artifact's manifest
+   and members. Do not add analysis-specific exclusions to the loader.
+2. **Move the integrity record.** Remove the overview's `members`
+   metadata. Require hashes for all four reports in `ARTIFACT.yaml` and
+   pin the manifest's hash from the workflow and generated review.
+   Define the pin fields and update the member schemas, run-state and
+   review contracts together. The draft's future simplification TODO does
+   not change this deployment's stored-hash representation.
+3. **Update consumers.** Publication validates the candidate artifact at
+   its intended retained paths, then retains the manifest and all members.
+   Completion, handoff, comparison loading and downstream analysis readers
+   use the new locations and manifest pin. Adjust generated comparison
+   fields, links and site publication rules where those paths are exposed.
+   Call the shared artifact check and remove equivalent consumer checks;
+   preserve source and quote anchors and committed-input checks with their
+   workflow owners.
+4. **Verify adoption before rollout.** Run a bounded producer-to-consumer
+   trial. Check that the published artifact validates from a clean
+   checkout, that changed or missing members fail set validation, and
+   that a valid member still passes file validation when another member
+   makes the set invalid. Validate the output directory for whole-analysis
+   checks. Retained analyses remain frozen; do not rewrite existing
+   published bytes as part of this layout change.
+
 ## Open items for the operator
 
 - Approval of the move list above.
-- Init repin: cascade, or freeze retained analysis directories.
 - Whether the trial target should be a harness-class system, to see the
   runtime member dominate for the first time.

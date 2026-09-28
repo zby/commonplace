@@ -74,11 +74,12 @@ closed schema.
 
 ### Loading and schema input
 
-The loader discovers actual files within the membership scope: the files
-considered for membership under the directory's path and traversal rules.
-It must include optional and undeclared files, even when they have no
-manifest entry. `ARTIFACT.yaml` itself is excluded. The exact scope and
-path rules remain open below.
+Membership consists of Markdown files directly beside `ARTIFACT.yaml`.
+The loader discovers those files, including optional and undeclared files
+without manifest entries. The manifest, non-Markdown files and files in
+subdirectories are outside membership. Surrounding traversal retains its
+ordinary file coverage. Visibility and path-safety details remain open
+below; the loader has no analysis-specific filename exclusions.
 
 The loader constructs one schema input object:
 
@@ -218,6 +219,12 @@ counted twice. Files outside the membership scope keep their ordinary
 validation and reporting. The exact CLI and JSON representation remains
 open.
 
+Explicit validation of a member checks that file through its ordinary
+base, schema and type rules. It does not implicitly validate the
+containing artifact or its siblings. Validation of the artifact directory
+checks the whole set. Reports must identify which scope was checked; a
+successful member check does not establish set validity.
+
 ### Traversal and artifact checking have separate call boundaries
 
 Directory and collection traversal discover files and schedule ordinary
@@ -228,12 +235,13 @@ working files. Workflow type rules call this operation directly when
 checking their outputs; they do not call the directory-validation entry
 point.
 
-The analysis membership scope must exclude run state and any other
-workflow control file whose validation checks that same analysis set.
-Those files still receive ordinary checks through the surrounding
-traversal or explicit file validation. The scope or layout must express
-this separation; the generic loader must not hide particular filenames.
-The exact layout remains a discovery choice below.
+The analysis workflow puts the manifest and output members in a dedicated
+directory, with run state and other working files outside it. Those files
+still receive ordinary checks through the surrounding traversal or
+explicit file validation. This layout change belongs to the workflow's
+[deployment plan](../agentic-analysis-output-documents/transition-plan.md#directory-artifact-deployment-2026-09-28-operator-decision),
+not to generic loader rules. The feature can be implemented independently;
+the workflow must adopt the layout before using it for analyses.
 
 All these calls share one validation-run context for the same candidate
 bytes. Completed evaluations are reused so that a member reached through
@@ -249,11 +257,13 @@ schema permits omission; every supplied hash must be well-formed and
 match the actual bytes. Hashing and parsing use the same bytes. Hash
 presence does not change which membership or content checks run.
 
-For a complete analysis, the external version pin must cover the manifest
-bytes and all four members, including the overview. The output layout is:
+For a complete analysis, the manifest stores the SHA-256 of all four
+members, including the overview. The workflow records the manifest's
+SHA-256 externally. Checking that pin and each member hash binds the
+manifest bytes and all four reports. The artifact directory contains:
 
 ```text
-<run-id>/
+<artifact-directory>/
   ARTIFACT.yaml
   overview.md
   runtime.md
@@ -262,27 +272,20 @@ bytes and all four members, including the overview. The output layout is:
 ```
 
 The overview is an ordinary member. The manifest does not list or hash
-itself. The byte coverage above is required; its representation is still
-an open choice between these alternatives:
+itself. The analysis schema requires all four stored hashes. A member
+hash mismatch identifies the changed report. Preparing revised output
+requires updating its manifest entry and the external manifest pin.
+Published analyses remain frozen; a correction produces a new run.
+Replacing a member and its stored hash changes the externally checked
+version. Generic types may still omit hashes when their schemas permit it.
 
-- **Stored member hashes.** The analysis schema requires hashes for all
-  four members in the manifest. An external hash of the manifest binds
-  those declarations and, through verification, the member bytes. A
-  mismatch identifies the changed member. Updating a member requires
-  updating its manifest entry and the external pin.
-- **Computed set digest.** The workflow records a digest computed from
-  the manifest bytes and the sorted member paths and file hashes. The
-  analysis schema need not require stored hashes, so the manifest may
-  contain only `type`. Member edits require one external pin update. A
-  mismatch does not identify the changed member unless the pin record
-  also retains per-member hashes. Including the manifest bytes binds
-  its type and any instance metadata as well as the document contents.
-
-The shared analysis schema and pin fields must follow the selected
-alternative. Neither is selected by this draft. Generic optional hashes
-retain the same semantics under either alternative: a supplied hash must
-still be verified. Replacing a member and any stored hash must change
-the externally checked version.
+**TODO — simplify integrity bookkeeping after deployment.** Reconsider a
+single computed digest over the manifest bytes and sorted member paths
+and file hashes if preparing the manifest and external pin proves costly.
+That alternative reduces stored metadata and update steps, but a mismatch
+alone does not identify the changed member. Preserve coverage of the
+manifest and every member when evaluating it. This TODO is deferred work,
+not an alternative to implement alongside the selected stored hashes.
 
 The first type specs and fixtures are collection-local. The analysis set
 spec and its adjacent schema belong under `kb/reports/types/`, with a
@@ -294,6 +297,7 @@ but no global type or fixture is required for this work.
 
 | Consumer | Input | Required behavior |
 |---|---|---|
+| Explicit member validation | One member file | Runs that file's ordinary checks without expanding to the containing artifact |
 | Explicit directory validation | Directory contents and resolved type | Runs ordinary file checks and set checks; reports member diagnostics under the artifact |
 | Collection validation | Continuing file discovery | Adds each recognized set's checks without losing file coverage or counting members twice |
 | Analysis publication | Candidate bytes at intended paths | Calls the shared artifact check directly and rejects an invalid candidate set |
@@ -376,25 +380,24 @@ and [generalized validation invalidation and imperative extension](../../referen
 
 ## Open choices before implementation
 
-1. **Discovery and paths.** Define the membership scope, subdirectory and
-   non-Markdown handling, duplicate paths, symlinks and containment.
-   Discovery must expose undeclared files before the schema decides
-   whether they are allowed. Resolve the scope or layout that keeps
-   workflow control files such as `run-state.md` outside the analysis
-   membership while preserving their ordinary traversal checks.
+1. **Discovery and paths.** Specify visibility, duplicate paths, symlinks
+   and containment within the agreed direct-Markdown membership scope.
+   Define discovery of candidate files supplied in memory before their
+   publication paths exist. Discovery must expose undeclared files before
+   the schema decides whether they are allowed.
 2. **Reporting.** Define the CLI and `analysed_artifacts` JSON path/type
-   representation, member diagnostics, and direct validation of a single
-   member. The validator's default messages for `maxProperties`,
+   representation, member diagnostics and counts. File validation remains
+   scoped to the member; directory validation checks the set. The
+   validator's default messages for `maxProperties`,
    `minProperties` and object-level `not` print the whole `members` object,
    including bodies; reporting must shorten them, or such checks move to
    imperative rules.
-3. **Analysis integration.** Choose the set type filename and one of the
-   [integrity representations](#integrity-and-the-analysis-instance).
-   Define its schema requirements, external pin fields and exact digest
-   encoding. Specify their use in publication, completion and comparison
-   loading, including current-method versus historical validation. Resolve
-   the update cost with the output-documents workshop's open init-repin
-   item; stored member hashes and a computed digest have different costs.
+3. **Analysis integration.** Choose the set type filename and external
+   manifest-pin fields for the agreed stored-hash representation. Specify
+   their use in publication, completion and comparison loading, including
+   current-method versus historical validation. The workflow deployment
+   plan owns the dedicated output location and changes to its producers
+   and consumers; the generic feature does not prescribe analysis paths.
 
 These choices complete the agreed model; they do not reopen its
 allocation of rules to the schema or its preservation of ordinary checks.
@@ -414,7 +417,8 @@ format before implementation, then enforce these cases with tests.
 | Minimal manifest | For a type requiring no instance metadata, a manifest containing only `type` still enables all membership checks against actual files. |
 | Generality and type resolution | Different filenames and fewer and more than four members work without framework changes. Collection eligibility and workshop staging rules hold. Two instances with different hashes use the same type and shared schema. |
 | Integrity | Permitted hash omissions pass; missing required hashes and malformed or mismatched supplied hashes fail. Content checks run with and without hashes. |
-| Analysis contract | A complete four-member set passes under the selected integrity representation. The external pin covers the manifest and all members, including the overview. Changing a member, its path, the manifest type or other manifest metadata changes the checked version. Missing members, wrong types, invalid content despite a correct type declaration, mixed identities, duplicate IDs and unresolved references fail. |
+| Analysis contract | A complete four-member set passes with all four hashes stored in the manifest and its hash pinned externally. Changing a member, its path, the manifest type or other manifest metadata invalidates the recorded version, even if a changed member's stored hash is updated. Missing members, wrong types, invalid content despite a correct type declaration, mixed identities, duplicate IDs and unresolved references fail. |
+| File and directory scope | A valid member can pass explicit file validation while its directory fails for a missing sibling or an inconsistent set. An invalid member fails both scopes. Non-Markdown files and descendant files are not members; ordinary traversal still checks eligible descendant files. |
 | Consumer agreement | Directory validation, sweeps and workflow consumers agree on set validity. Publication checks candidate bytes; completion and comparison loading check the expected type and version. Workflow guarantees outside the set remain enforced. |
 | Validation call boundaries | Directory and collection validation with a complete run state terminate without repeated member checks. Direct run-state validation reaches the same artifact checks without starting traversal. Invalid members and invalid workflow files remain visible. An actual dependency cycle fails explicitly rather than recursing or silently passing. |
 | Resolved loading contract | Path and diagnostic fixtures cover the choices above, and equivalent checks have one owner. |

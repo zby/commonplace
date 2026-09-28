@@ -59,12 +59,21 @@ that still run. The transition also drops exact finalization derivation
 and the set-level quote minimum; moving the manifest does not reinstate
 them.
 
-Replace the overview's `members` metadata with schema-owned membership
-and the selected `ARTIFACT.yaml` integrity representation. Stored member
-hashes and a computed set digest remain alternatives in the draft; align
-the analysis schema and external version pins with the chosen one. Apply
-that change with this workshop's implementation, not before. The refresh
-batch in `kb/work/agentic-memory-refresh/batch-01-handoff.md` waits on the
+The operator confirmed the integration choices on 2026-09-28: membership
+is the Markdown files directly beside `ARTIFACT.yaml`; the analysis
+manifest stores every member's hash and is pinned externally; explicit
+member validation checks the file and directory validation checks the set.
+The draft retains a TODO to reconsider simpler integrity bookkeeping after
+deployment.
+
+The [workflow deployment plan](../agentic-analysis-output-documents/transition-plan.md#directory-artifact-deployment-2026-09-28-operator-decision)
+owns moving analysis output into a dedicated directory and updating the
+producer, publication and readers. That integration replaces the
+overview's `members` metadata with schema-owned membership and the new
+manifest, then changes the external pins. The generic feature does not
+special-case analysis filenames or working files. Apply the workflow
+changes when adopting the feature, not in advance. The refresh batch in
+`kb/work/agentic-memory-refresh/batch-01-handoff.md` waits on the
 output-documents transition, not on this workshop.
 
 ## Closure
