@@ -11,7 +11,7 @@ from typing import Any
 
 import yaml
 
-from commonplace.lib.note_parser import ParsedDocument, parse_document
+from commonplace.lib.note_parser import ParsedDocument
 
 MANIFEST_NAME = "ARTIFACT.yaml"
 SHA256 = re.compile(r"[0-9a-f]{64}\Z")
@@ -74,7 +74,7 @@ def load_directory_artifact(
     *,
     read: Callable[[Path], bytes],
     supplied_paths: Iterable[Path] = (),
-    parse: Callable[[Path], ParsedDocument] | None = None,
+    parse: Callable[[Path], ParsedDocument],
 ) -> DirectoryArtifact:
     """Read the manifest and all members from one caller-owned byte snapshot."""
     manifest_path = directory / MANIFEST_NAME
@@ -95,13 +95,7 @@ def load_directory_artifact(
         if path.is_symlink() or path.resolve().parent != directory.resolve():
             raise ValueError(f"member {path.name}: symlinks are not supported")
         member_content = read(path)
-        if parse is None:
-            document, error = parse_document(member_content.decode("utf-8"))
-            if error or document is None:
-                raise ValueError(f"member {path.name}: {error or 'cannot parse document'}")
-        else:
-            document = parse(path)
-        members[path.name] = ArtifactMember(path, member_content, document)
+        members[path.name] = ArtifactMember(path, member_content, parse(path))
     for name, entry in metadata.items():
         if (not isinstance(name, str) or Path(name).name != name or "\\" in name
                 or name.startswith(".") or not name.endswith(".md")):

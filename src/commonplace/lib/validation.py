@@ -1319,11 +1319,7 @@ def validate_agentic_analysis_run_state(
         results.fails.append(f"agentic-system analysis run state: {exc}")
         return
 
-    passes, failures = verify_agentic_analysis_run_state(
-        state,
-        content_overrides=run.content_overrides,
-        run=run,
-    )
+    passes, failures = verify_agentic_analysis_run_state(state, run=run)
     results.passes.extend(passes)
     results.fails.extend(failures)
     if not failures:

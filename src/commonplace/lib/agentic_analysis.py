@@ -617,14 +617,9 @@ def _verify_memory_member(
 def verify_agentic_analysis_run_state(
     state: AgenticAnalysisRunState,
     *,
-    content_overrides: Mapping[Path, str | bytes] | None = None,
-    run=None,
+    run,
 ) -> tuple[list[str], list[str]]:
     """Verify the frozen source and exact bytes named by the state."""
-    from commonplace.lib.validation import ValidationRun
-
-    if run is None:
-        run = ValidationRun(state.repo_root, (), content_overrides=dict(content_overrides or {}))
     # All workflow reads use the same snapshot as member validation.
     content_overrides = run._bytes
     passes: list[str] = []
