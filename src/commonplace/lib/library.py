@@ -25,6 +25,7 @@ import functools
 import json
 import os
 import sys
+import tomllib
 from collections.abc import Callable
 from dataclasses import dataclass
 from pathlib import Path
@@ -46,22 +47,54 @@ class LibraryMissingError(RuntimeError):
     """The Commonplace library is not available from this installation."""
 
 
+PROJECT_NAME = "llm-commonplace"
+
+
+def _checkout_kb(repo: Path) -> Path | None:
+    """repo/kb when repo is a Commonplace source checkout, else None."""
+    kb = repo / "kb"
+    if (repo / "src" / "commonplace").is_dir() and (kb / "instructions").is_dir():
+        try:
+            project = tomllib.loads(read_text(repo / "pyproject.toml")).get("project", {})
+        except (OSError, tomllib.TOMLDecodeError):
+            return None
+        if project.get("name") == PROJECT_NAME:
+            return kb
+    return None
+
+
 def _source_checkout_kb() -> Path | None:
     """The source repository's kb/ when running from an editable checkout."""
-    repo = Path(__file__).resolve().parents[3]
-    if (repo / "pyproject.toml").is_file() and (repo / "src" / "commonplace").is_dir():
-        kb = repo / "kb"
-        if (kb / "instructions").is_dir():
+    return _checkout_kb(Path(__file__).resolve().parents[3])
+
+
+@functools.cache
+def _working_checkout_kb(cwd: Path) -> Path | None:
+    """kb/ of the Commonplace source checkout the command runs in, if any.
+
+    Commands take the working directory as the repository root. When that
+    repository is itself a Commonplace checkout (a worktree, say) other than the
+    one the tool is installed from, its own kb/ is the library; otherwise every
+    type would be found twice, once in each checkout.
+    """
+    for candidate in (cwd, *cwd.parents):
+        kb = _checkout_kb(candidate)
+        if kb is not None:
             return kb
     return None
 
 
 def library_root() -> Path:
-    """The library root: the source tree's kb/ for an editable install, else shared data.
+    """The library root: the working Commonplace checkout's kb/, the installed source
+    tree's kb/ for an editable install, else shared data.
 
-    ``COMMONPLACE_LIBRARY_ROOT`` overrides both.
+    ``COMMONPLACE_LIBRARY_ROOT`` overrides all three.
     """
-    return _library_root(os.environ.get(LIBRARY_ENV))
+    override = os.environ.get(LIBRARY_ENV)
+    if not override:
+        working = _working_checkout_kb(Path.cwd().resolve())
+        override = str(working) if working is not None else None
+    return _library_root(override)
 
 
 @functools.cache
