@@ -2,7 +2,7 @@
 
 The agent chooses an occurrence and inserts its citation unchanged. This
 command writes no artifacts and performs no document validation. Publication
-uses the regular validator to check the assembled analysis bundle.
+uses the regular validator to check the assembled analysis set.
 One occurrence prints only the Markdown citation. Two to ten occurrences print
 JSON candidates with selection metadata. More than ten asks for a longer quote.
 With --selections, a JSON list of {key, source_path, text} objects is resolved

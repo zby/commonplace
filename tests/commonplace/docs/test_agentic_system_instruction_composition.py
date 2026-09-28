@@ -113,3 +113,19 @@ def test_candidate_artifact_does_not_establish_phase_observation() -> None:
     assert "observed candidate state" in dispose
     assert "`not determinable`, not `phase evidenced` or `accepted`" in dispose
     assert "Observed candidate state is one of" in contract("agentic-system-epistemic-report")
+
+
+def test_orchestrator_states_the_set_rules_it_depends_on() -> None:
+    orchestrator = instruction("analyse-agentic-system")
+    assert "write the overview only, with an empty\nmanifest" in orchestrator
+    assert "commission a\nfresh specialist against the same frozen input" in orchestrator
+    assert "cites only\ncanonical IDs" in orchestrator
+    assert "(../../types/agentic-system-runtime-report.md#shared-records)" in orchestrator
+    assert "`METHOD_PATHS` constant" in orchestrator
+    assert "run bundle" not in orchestrator
+
+
+def test_method_paths_exist_in_the_repository() -> None:
+    from commonplace.lib.agentic_publication import METHOD_PATHS
+
+    assert [path for path in METHOD_PATHS if not (REPO_ROOT / path).exists()] == []

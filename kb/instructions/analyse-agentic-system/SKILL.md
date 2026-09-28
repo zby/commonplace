@@ -184,7 +184,8 @@ Judging norms:
   affordance to wiring, wiring to observation, observation to causality, or
   curation to warrant.
 - Give each theory-builder condition, and learning, reflection and autonomy,
-  its own conclusion status from its own evidence, under the Shared records
+  its own conclusion status from its own evidence, under the
+  [Shared records](../../types/agentic-system-runtime-report.md#shared-records)
   rules for theory routes.
 - When describing revision selection, write that it prefers reach among
   revisions that fit the evidence, not "reach rather than fit". This applies
@@ -274,6 +275,9 @@ supervisor may relay its path, hash and status without analytical prose.
 Off-band messages may carry progress or access problems; all findings and
 integration issues must be retained in the report. Check its run, source,
 boundary, input hash, completion status, and source anchors before integration.
+If the report comes back `blocked` and the block is correctable, commission a
+fresh specialist against the same frozen input; otherwise the run completes as
+`blocked`.
 If the frozen input changes, commission a new report against the new bytes.
 Prior-analysis exposure has the consequence step 1 states.
 
@@ -282,7 +286,9 @@ Invoke
 for the epistemic lens, locally or in a separate worker with the same frozen
 boundary. Pass the frozen boundary, registers, statuses, and scoping record.
 Its output is `<run-id>/epistemic.md` under the epistemic report type; it
-declares no records and cites the set's.
+declares no records and cites the set's. Write it, or remap its `EPI-`
+proposal IDs, after step 6's reconciliation, so the member cites only
+canonical IDs.
 
 ### 6. Reconcile and synthesize
 
@@ -317,7 +323,9 @@ organized around the system's operational progression rather than by lens.
 
 ### 7. Write and validate the set
 
-Write the four members in the run directory, each under its type:
+For a `blocked` or `out-of-scope` run, write the overview only, with an empty
+manifest, and skip to the validation below. Otherwise write the four members
+in the run directory, each under its type:
 
 1. `<run-id>/runtime.md` under the runtime report type: the runtime account,
    probe evidence, the records the runtime pass declared, and its annotations
@@ -351,7 +359,7 @@ explicit uncertainty does not. Structural validation does not perform this
 check.
 
 Run `commonplace-validate --full` on each member for its type's structural
-requirements. Publication runs the same validator on the complete run bundle
+requirements. Publication runs the same validator on the complete run set
 and verifies the pin chain (run state to overview, manifest to members,
 review to overview), run and boundary identity across members, the memory
 member's `finalized-from` against the local report and

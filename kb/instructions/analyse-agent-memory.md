@@ -81,7 +81,7 @@ files in one call. Choose the occurrence whose context supports the finding
 and insert its citation unchanged. Request discontiguous passages separately. A failed
 lookup requires rereading the source and revising the selection; never format
 a citation, strip source characters, or calculate a range by hand. Assess
-semantic support yourself; publication validates the assembled bundle, so run
+semantic support yourself; publication validates the assembled set, so run
 no separate quote check.
 
 ## Classify and hand back

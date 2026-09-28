@@ -1,4 +1,4 @@
-"""Prepare and publish one agentic-analysis projection bundle."""
+"""Prepare and publish one agentic-analysis set and its review projection."""
 
 from __future__ import annotations
 
@@ -115,7 +115,7 @@ class _Incumbent:
 
 
 @dataclass(frozen=True)
-class _CheckedBundle:
+class _CheckedSet:
     spec: PublicationSpec
     final_state_text: str
     generated_bytes: bytes
@@ -385,7 +385,7 @@ def _render_final_state(
     return f"---\n{serialized}---\n{body.lstrip()}"
 
 
-def _check_bundle(spec: PublicationSpec) -> _CheckedBundle:
+def _check_set(spec: PublicationSpec) -> _CheckedSet:
     repo_root = spec.repo_root.resolve()
     state_path = _repo_path(repo_root, spec.run_state_path)
     generated_candidate = _repo_path(repo_root, spec.generated_candidate_path)
@@ -444,9 +444,9 @@ def _check_bundle(spec: PublicationSpec) -> _CheckedBundle:
     )
     diagnostics = [*results.warns, *results.fails]
     if diagnostics:
-        raise ValueError("publication bundle verification failed: " + "; ".join(diagnostics))
+        raise ValueError("publication set verification failed: " + "; ".join(diagnostics))
 
-    return _CheckedBundle(
+    return _CheckedSet(
         spec=PublicationSpec(
             repo_root=repo_root,
             run_state_path=state_path,
@@ -464,7 +464,7 @@ def _check_bundle(spec: PublicationSpec) -> _CheckedBundle:
 
 def prepare_publication(spec: PublicationSpec) -> PreparedPublication:
     """Validate the exact member set, specialist handoff, and compact publication bytes."""
-    _check_bundle(spec)
+    _check_set(spec)
     return PreparedPublication()
 
 
@@ -491,25 +491,25 @@ def _restore(path: Path, content: bytes | None) -> None:
 
 
 def publish_publication(spec: PublicationSpec) -> PublishedPublication:
-    """Publish a verified bundle, rolling back ordinary failures."""
-    bundle = _check_bundle(spec)
-    repo_root = bundle.spec.repo_root
-    generated_path = repo_root / bundle.spec.generated_destination
-    state_path = bundle.spec.run_state_path
+    """Publish a verified set, rolling back ordinary failures."""
+    checked = _check_set(spec)
+    repo_root = checked.spec.repo_root
+    generated_path = repo_root / checked.spec.generated_destination
+    state_path = checked.spec.run_state_path
     targets: list[tuple[Path, bytes]] = [
         *(
-            (bundle.retained_paths[document.name], document.content)
-            for document in bundle.member_set.documents
+            (checked.retained_paths[document.name], document.content)
+            for document in checked.member_set.documents
         ),
-        (generated_path, bundle.generated_bytes),
-        (state_path, bundle.final_state_text.encode("utf-8")),
+        (generated_path, checked.generated_bytes),
+        (state_path, checked.final_state_text.encode("utf-8")),
     ]
-    if bundle.incumbent.review_bytes is not None:
+    if checked.incumbent.review_bytes is not None:
         backups = [
-            (state_path.parent / INCUMBENT_REVIEW_NAME, bundle.incumbent.review_bytes),
+            (state_path.parent / INCUMBENT_REVIEW_NAME, checked.incumbent.review_bytes),
             *(
                 (state_path.parent / incumbent_copy_name(name), content)
-                for name, content in bundle.incumbent.set_bytes.items()
+                for name, content in checked.incumbent.set_bytes.items()
             ),
         ]
         for path, content in backups:
@@ -519,20 +519,20 @@ def publish_publication(spec: PublicationSpec) -> PublishedPublication:
     old_bytes = {
         path: path.read_bytes() if path.exists() else None for path, _ in targets
     }
-    if old_bytes[generated_path] != bundle.incumbent.review_bytes:
+    if old_bytes[generated_path] != checked.incumbent.review_bytes:
         raise ValueError("publication destination changed during validation")
-    for name, path in bundle.incumbent.set_paths.items():
-        if path.read_bytes() != bundle.incumbent.set_bytes[name]:
+    for name, path in checked.incumbent.set_paths.items():
+        if path.read_bytes() != checked.incumbent.set_bytes[name]:
             raise ValueError("incumbent retained set changed during validation")
-    # _check_bundle refused an existing retained directory, so any directory
+    # _check_set refused an existing retained directory, so any directory
     # found here on rollback was created by this publication.
-    retained_dir = bundle.retained_paths[OVERVIEW_NAME].parent
+    retained_dir = checked.retained_paths[OVERVIEW_NAME].parent
     written: list[Path] = []
     try:
         for path, content in targets:
             if path == generated_path:
                 current = path.read_bytes() if path.exists() else None
-                if current != bundle.incumbent.review_bytes:
+                if current != checked.incumbent.review_bytes:
                     raise ValueError("publication destination changed before replacement")
             _atomic_write(path, content)
             written.append(path)
@@ -562,14 +562,14 @@ def publish_publication(spec: PublicationSpec) -> PublishedPublication:
         raise
 
     cleanup_warnings: list[str] = []
-    candidate = bundle.spec.generated_candidate_path
+    candidate = checked.spec.generated_candidate_path
     try:
         candidate.unlink(missing_ok=True)
     except OSError as exc:
         cleanup_warnings.append(f"could not remove candidate {candidate}: {exc}")
     return PublishedPublication(
-        generated_path=bundle.spec.generated_destination,
-        retained_path=bundle.retained_paths[OVERVIEW_NAME].relative_to(repo_root).as_posix(),
+        generated_path=checked.spec.generated_destination,
+        retained_path=checked.retained_paths[OVERVIEW_NAME].relative_to(repo_root).as_posix(),
         cleanup_warnings=tuple(cleanup_warnings),
     )
 

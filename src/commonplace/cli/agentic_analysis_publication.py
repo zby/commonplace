@@ -1,4 +1,4 @@
-"""Prepare or publish one agentic-analysis projection bundle."""
+"""Prepare or publish one agentic-analysis analysis set and its review projection."""
 
 from __future__ import annotations
 

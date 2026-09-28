@@ -932,8 +932,9 @@ def _agentic_evidence_and_references_rule(
     is_report = metadata.get("type") == "types/agent-memory-analysis-report.md"
     finalized = is_report and isinstance(metadata.get("finalized-from"), str)
     # A member validated alone cannot resolve references the set declares
-    # elsewhere; run-state verification resolves them across the set, and
-    # applies the set's quote minimum. The specialist's local report keeps
+    # elsewhere, and no check resolves them across the set or applies a
+    # set-wide quote minimum until set validation lands (transition plan,
+    # "Relaxed run-state verification"). The specialist's local report keeps
     # its own rule: it may cite commissioned IDs it does not declare.
     errors = record_reference_errors(
         parsed.document.body, memory_report=is_report and not finalized, member=True

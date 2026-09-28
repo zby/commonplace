@@ -1162,7 +1162,7 @@ def test_prepare_checks_handoff_without_publishing(tmp_path: Path) -> None:
     assert frontmatter(state)["run-status"] == "running"
 
 
-def test_prepare_validates_each_member_once_through_regular_bundle_validation(tmp_path, monkeypatch):
+def test_prepare_validates_each_member_once_through_regular_set_validation(tmp_path, monkeypatch):
     state, spec, _ = publication_fixture(tmp_path)
     members = {state.parent / name for name in ("overview.md", *MEMBER_TYPES)}
     validate = validation._validate_parsed_note
@@ -1354,7 +1354,7 @@ def test_publication_requires_exact_completed_memory_handoff(tmp_path: Path, mut
     assert frontmatter(state)["run-status"] == "running"
 
 
-def test_publish_replaces_the_bundle_and_completes_run_state(tmp_path: Path) -> None:
+def test_publish_replaces_the_set_and_completes_run_state(tmp_path: Path) -> None:
     state, spec, generated_bytes = publication_fixture(tmp_path)
     prepare_publication(spec)
 
@@ -1372,7 +1372,7 @@ def test_publish_replaces_the_bundle_and_completes_run_state(tmp_path: Path) -> 
     assert validation.validate_note(state, repo_root=tmp_path).fails == []
 
 
-def test_publication_resolves_links_to_results_in_the_same_bundle(tmp_path: Path) -> None:
+def test_publication_resolves_links_to_results_in_the_same_set(tmp_path: Path) -> None:
     state, spec, _ = publication_fixture(tmp_path)
     retained = tmp_path / agentic_set.retained_overview_path(RUN_ID)
     candidate = spec.generated_candidate_path
@@ -1385,8 +1385,8 @@ def test_publication_resolves_links_to_results_in_the_same_bundle(tmp_path: Path
     assert not retained.exists()
     assert not (tmp_path / spec.generated_destination).exists()
 
-    candidate.write_text(content + "\n[Missing](./not-in-the-bundle.md)\n")
-    with pytest.raises(ValueError, match="missing target ./not-in-the-bundle.md"):
+    candidate.write_text(content + "\n[Missing](./not-in-the-set.md)\n")
+    with pytest.raises(ValueError, match="missing target ./not-in-the-set.md"):
         prepare_publication(spec)
     assert not retained.exists()
 
