@@ -159,6 +159,21 @@ commitments, or acceptance evidence; those remain explicit when doctrine
 cannot determine them. A claimed inheritance is also a gap when the runtime
 does not actually deliver the doctrine with binding force.
 
+One omission class is easy to misfile as inherited. When acceptance of the
+work depends on comparison with a baseline the executor is deliberately kept
+from seeing, the dimension of comparison cannot reach the executor through
+doctrine or through the task's own evidence; only the intent can carry it. The
+baseline's content stays withheld, but the dimension along which the result
+will be held to it is a task-specific success criterion. A 2026-09-27
+regression rerun of three agentic-system analyses illustrates the failure: the
+handoff fixed each source revision and withheld the earlier analyses, but did
+not say that breadth of coverage would be compared with them, and two of the
+three fresh coordinators chose narrower functional boundaries than their
+baselines within the method's latitude. The runs were valid, and the
+comparison the trial existed to make was not recoverable. The remedy is to
+state the comparison dimension as intent, here the functional scope, alongside
+the fixed inputs, without disclosing the baseline.
+
 ## A control regime governs consequential surfaces
 
 A handoff is consequential here when the surrounding system cannot treat a
