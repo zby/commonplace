@@ -92,13 +92,6 @@ def _optional_string(values: dict[str, Any], field: str) -> str | None:
     return value
 
 
-def _required_sha256(values: dict[str, Any], field: str) -> str:
-    value = _required_string(values, field)
-    if not _SHA256_RE.fullmatch(value):
-        raise ValueError(f"{field}: expected a lowercase SHA-256 hex digest")
-    return value
-
-
 def _repo_relative_file(value: str, *, repo_root: Path, field: str) -> Path:
     pure = PurePosixPath(value)
     if (
@@ -122,29 +115,15 @@ def _source_identity(value: Any) -> SourceIdentity | None:
         return None
     if not isinstance(value, dict):
         raise ValueError("source: expected null or a mapping")  # noqa: TRY004
-    kind = _required_string(value, "kind")
-    if kind not in {"git", "capture"}:
-        raise ValueError("source.kind: expected git or capture")
-    identity = _required_string(value, "identity")
-    revision = _required_string(value, "revision")
     source_path = Path(_required_string(value, "path"))
     if not source_path.is_absolute():
         raise ValueError("source.path: expected an absolute path")
-    expected_sha256 = _optional_string(value, "sha256")
-    if kind == "git":
-        if not re.fullmatch(r"(?:[0-9a-f]{40}|[0-9a-f]{64})", revision):
-            raise ValueError("source.revision: expected a full Git commit ID")
-        if expected_sha256 is not None:
-            raise ValueError("source.sha256: expected null for a Git source")
-    else:
-        if expected_sha256 is None or not _SHA256_RE.fullmatch(expected_sha256):
-            raise ValueError("source.sha256: expected a capture SHA-256")
     return SourceIdentity(
-        kind=kind,
-        identity=identity,
-        revision=revision,
+        kind=_required_string(value, "kind"),
+        identity=_required_string(value, "identity"),
+        revision=_required_string(value, "revision"),
         path=source_path,
-        expected_sha256=expected_sha256,
+        expected_sha256=_optional_string(value, "sha256"),
     )
 
 
@@ -163,7 +142,7 @@ def _output_identity(
         role=role,
         display_path=display_path,
         path=_repo_relative_file(display_path, repo_root=repo_root, field=f"{role}.path"),
-        expected_sha256=_required_sha256(value, "sha256"),
+        expected_sha256=_required_string(value, "sha256"),
     )
 
 
@@ -173,7 +152,13 @@ def parse_agentic_analysis_run_state(
     *,
     repo_root: Path,
 ) -> AgenticAnalysisRunState:
-    """Build the minimal checked view of one run-state record."""
+    """Extract the fields of one run-state record.
+
+    The run-state schema owns field values and their consistency across
+    statuses; callers validate the record with ``validate_note`` first, or
+    this runs inside that validation. What is checked here is what the schema
+    cannot express: the record's location and the paths it names.
+    """
     repo_root = repo_root.resolve()
     state_path = path.resolve()
     state_root = (
@@ -202,8 +187,6 @@ def parse_agentic_analysis_run_state(
         raise ValueError("run-id: expected the run-state parent directory name")
     system = _required_string(frontmatter, "system")
     status = _required_string(frontmatter, "run-status")
-    if status not in {"running", "complete", "failed"}:
-        raise ValueError("run-status: expected running, complete, or failed")
 
     result_disposition = _optional_string(frontmatter, "result-disposition")
     source = _source_identity(frontmatter.get("source"))
@@ -231,43 +214,6 @@ def parse_agentic_analysis_run_state(
                 "generated-review.path: expected "
                 "kb/agentic-systems/reviews/<name>.md"
             )
-    if status == "running":
-        if any(
-            item is not None
-            for item in (
-                result_disposition,
-                overview,
-                generated_review,
-                failure,
-            )
-        ):
-            raise ValueError("running state cannot record completion or failure fields")
-    elif status == "failed":
-        if failure is None:
-            raise ValueError("failed state requires failure")
-        if any(
-            item is not None
-            for item in (
-                result_disposition,
-                overview,
-                generated_review,
-            )
-        ):
-            raise ValueError("failed state cannot record completed outputs")
-    else:
-        if result_disposition not in {"complete", "blocked", "out-of-scope"}:
-            raise ValueError("complete state requires a result disposition")
-        if overview is None or failure is not None:
-            raise ValueError("complete state requires overview and no failure")
-        if result_disposition == "complete":
-            if source is None or generated_review is None:
-                raise ValueError(
-                    "a complete analysis requires frozen source and generated review"
-                )
-        elif generated_review is not None:
-            raise ValueError(
-                "blocked and out-of-scope results cannot publish generated reviews"
-            )
     return AgenticAnalysisRunState(
         path=state_path,
         run_dir=state_path.parent,
@@ -282,6 +228,30 @@ def parse_agentic_analysis_run_state(
         generated_review=generated_review,
         failure=failure,
     )
+
+
+def load_run_state(path: Path, *, repo_root: Path) -> AgenticAnalysisRunState:
+    """Validate one run-state record, then return its fields.
+
+    Any validation warning or failure raises ``ValueError``.
+    """
+    # Import lazily because validation registers this module's type rule.
+    from commonplace.lib import validation
+
+    if not path.is_file():
+        raise ValueError(f"run state does not exist: {path}")
+    results = validation.validate_note(path, repo_root=repo_root)
+    diagnostics = [*results.warns, *results.fails]
+    if diagnostics:
+        raise ValueError("run-state validation failed: " + "; ".join(diagnostics))
+    try:
+        content = path.read_text(encoding="utf-8")
+    except (OSError, UnicodeError) as exc:
+        raise ValueError(f"cannot read run state {path}: {exc}") from exc
+    document, error = parse_document(content)
+    if error is not None or document is None:
+        raise ValueError("run state is not parseable")
+    return parse_agentic_analysis_run_state(path, document, repo_root=repo_root)
 
 
 def _text_override(
@@ -327,20 +297,22 @@ def _verify_output(
     return None
 
 
-def _verify_source(source: SourceIdentity) -> str | None:
-    if source.kind == "capture":
-        try:
-            content = source.path.read_bytes()
-        except OSError as exc:
-            return f"source capture: cannot read {source.path}: {exc}"
-        actual = sha256(content).hexdigest()
-        if actual != source.expected_sha256:
-            return (
-                f"source capture: SHA-256 mismatch; expected {source.expected_sha256}, "
-                f"got {actual}"
-            )
-        return None
+def _read_capture(source: SourceIdentity) -> tuple[bytes | None, str | None]:
+    """Return the frozen capture's bytes, or an error, after checking their hash."""
+    try:
+        content = source.path.read_bytes()
+    except OSError as exc:
+        return None, f"cannot read frozen capture {source.path}: {exc}"
+    actual = sha256(content).hexdigest()
+    if actual != source.expected_sha256:
+        return None, (
+            f"frozen capture SHA-256 mismatch; expected {source.expected_sha256}, "
+            f"got {actual}"
+        )
+    return content, None
 
+
+def _verify_git_source(source: SourceIdentity) -> str | None:
     if not source.path.is_dir():
         return f"source checkout: directory does not exist: {source.path}"
     try:
@@ -481,9 +453,16 @@ def _verify_source_anchors(
 
 
 def _verify_quote_anchors(
-    content: str, *, source: SourceIdentity
+    content: str,
+    *,
+    source: SourceIdentity,
+    capture: tuple[bytes | None, str | None] | None = None,
 ) -> tuple[list[str], list[str]]:
-    """Resolve quote-anchored citations against one frozen source."""
+    """Resolve quote-anchored citations against one frozen source.
+
+    ``capture`` is a capture source's already verified ``(bytes, error)``, so
+    a caller checking several documents reads and hashes the capture once.
+    """
     passes: list[str] = []
     failures: list[str] = []
     citations = parse_blockquotes(content)
@@ -493,18 +472,12 @@ def _verify_quote_anchors(
     capture_text: str | None = None
     capture_error: str | None = None
     if source.kind == "capture":
-        try:
-            capture_bytes = source.path.read_bytes()
-            actual_sha256 = sha256(capture_bytes).hexdigest()
-            if actual_sha256 != source.expected_sha256:
-                capture_error = (
-                    "frozen capture SHA-256 mismatch; expected "
-                    f"{source.expected_sha256}, got {actual_sha256}"
-                )
-            else:
+        capture_bytes, capture_error = capture or _read_capture(source)
+        if capture_bytes is not None:
+            try:
                 capture_text = capture_bytes.decode("utf-8")
-        except (OSError, UnicodeError) as exc:
-            capture_error = f"cannot read frozen capture as UTF-8 text: {exc}"
+            except UnicodeError as exc:
+                capture_error = f"cannot read frozen capture as UTF-8 text: {exc}"
 
     for citation in citations:
         label = f"quote-anchored citation at output line {citation.line}"
@@ -714,8 +687,13 @@ def verify_agentic_analysis_run_state(
     passes: list[str] = []
     failures: list[str] = []
 
+    capture = None
     if state.source is not None:
-        error = _verify_source(state.source)
+        if state.source.kind == "capture":
+            capture = _read_capture(state.source)
+            error = None if capture[1] is None else f"source capture: {capture[1]}"
+        else:
+            error = _verify_git_source(state.source)
         if error is None:
             passes.append(
                 f"source: {state.source.identity} resolves at {state.source.revision}"
@@ -870,7 +848,7 @@ def verify_agentic_analysis_run_state(
                 passes.extend(f"{role} {message}" for message in anchor_passes)
                 failures.extend(f"{role} {message}" for message in anchor_failures)
             quote_passes, quote_failures = _verify_quote_anchors(
-                content, source=state.source
+                content, source=state.source, capture=capture
             )
             passes.extend(f"{role} {message}" for message in quote_passes)
             failures.extend(f"{role} {message}" for message in quote_failures)

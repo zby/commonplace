@@ -28,7 +28,6 @@ def main(argv: list[str] | None = None) -> int:
     try:
         inputs = load_results(REPO_ROOT, args.review)
         content = csv_text(inputs)
-        inputs.recheck(REPO_ROOT)
         _atomic_write(args.output, content.encode("utf-8"))
     except (OSError, ValueError, KeyError, UnicodeError) as exc:
         print(f"matrix not written: {exc}", file=sys.stderr)

@@ -17,9 +17,8 @@ import json
 import sys
 from pathlib import Path
 
-from commonplace.lib.agentic_analysis import parse_agentic_analysis_run_state
+from commonplace.lib.agentic_analysis import load_run_state
 from commonplace.lib.library import checks_library
-from commonplace.lib.note_parser import parse_document
 from commonplace.lib.quote_generation import generate_quote_batch, generate_quotes
 
 
@@ -49,11 +48,7 @@ def main(argv: list[str] | None = None, *, cwd: Path | None = None) -> int:
         parser.error("--selections replaces --source-path and --text-file")
     repo_root = (cwd or Path.cwd()).resolve()
     try:
-        path = (repo_root / args.run_state).resolve()
-        document, error = parse_document(path.read_text(encoding="utf-8"))
-        if error or document is None:
-            raise ValueError(f"cannot parse run state: {error}")
-        state = parse_agentic_analysis_run_state(path, document, repo_root=repo_root)
+        state = load_run_state((repo_root / args.run_state).resolve(), repo_root=repo_root)
         if state.status != "running" or state.source is None:
             raise ValueError(
                 "quotation generation requires a running run with a frozen source"

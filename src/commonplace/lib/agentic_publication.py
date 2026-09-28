@@ -14,20 +14,15 @@ from pathlib import Path, PurePosixPath
 import yaml
 
 from commonplace.lib import validation
-from commonplace.lib.agentic_analysis import (
-    AgenticAnalysisRunState,
-    parse_agentic_analysis_run_state,
-)
+from commonplace.lib.agentic_analysis import AgenticAnalysisRunState, load_run_state
 from commonplace.lib.agentic_set import (
     LOCAL_INPUT_NAME,
     LOCAL_REPORT_NAME,
     OVERVIEW_NAME,
-    OVERVIEW_TYPE,
     SET_NAMES,
     MemberSet,
     load_member_set,
     retained_overview_path,
-    retained_set_paths,
 )
 from commonplace.lib.note_parser import ParsedDocument, parse_document
 
@@ -169,20 +164,13 @@ def _parse(content: str, *, label: str) -> ParsedDocument:
 
 
 def _load_running_state(path: Path, *, repo_root: Path) -> tuple[AgenticAnalysisRunState, ParsedDocument]:
-    if not path.is_file():
-        raise ValueError(f"run state does not exist: {path}")
-    results = validation.validate_note(path, repo_root=repo_root)
-    diagnostics = [*results.warns, *results.fails]
-    if diagnostics:
-        raise ValueError("running run-state validation failed: " + "; ".join(diagnostics))
-    _, content = _read_utf8(path, label="run state")
-    document = _parse(content, label="run state")
-    state = parse_agentic_analysis_run_state(path, document, repo_root=repo_root)
+    state = load_run_state(path, repo_root=repo_root)
     if state.status != "running":
         raise ValueError("publication requires a running run state")
     if state.source is None:
         raise ValueError("publication requires a frozen source in the run state")
-    return state, document
+    _, content = _read_utf8(path, label="run state")
+    return state, _parse(content, label="run state")
 
 
 def _require_candidate_in_run(candidate: Path, state: AgenticAnalysisRunState) -> None:
@@ -355,7 +343,6 @@ def _check_incumbent(
         raise ValueError(f"incumbent retained set: {exc}") from exc
     overview_metadata = member_set.overview.frontmatter
     if (overview_metadata.get("run-id") != run_id
-            or overview_metadata.get("type") != OVERVIEW_TYPE
             or overview_metadata.get("reviewed-boundary") != metadata.get("reviewed-revision")
             or overview_metadata.get("result-disposition") != "complete"):
         raise ValueError("incumbent retained overview identity mismatch")
@@ -449,16 +436,12 @@ def _check_set(spec: PublicationSpec) -> _CheckedSet:
     memory = member_set.memory
     if memory is None or "memory-comparison" not in memory.frontmatter:
         raise ValueError("publication requires memory-comparison in the memory member")
-    retained_paths = {
-        name: _repo_path(repo_root, path)
-        for name, path in retained_set_paths(running_state.run_id).items()
-    }
-    for name, retained in retained_paths.items():
-        if retained.relative_to(repo_root) != retained_set_paths(running_state.run_id)[name]:
-            raise ValueError("retained set must use its canonical paths")
-    retained_dir = retained_paths[OVERVIEW_NAME].parent
+    retained_dir = repo_root / retained_overview_path(running_state.run_id).parent
+    if retained_dir.resolve() != retained_dir:
+        raise ValueError("retained set must use its canonical paths")
     if retained_dir.exists():
         raise ValueError(f"retained set already exists; use a new run ID: {retained_dir}")
+    retained_paths = {name: retained_dir / name for name in SET_NAMES}
 
     generated_bytes, generated_text = _read_utf8(
         generated_candidate, label="generated candidate"
@@ -571,12 +554,6 @@ def publish_publication(spec: PublicationSpec) -> PublishedPublication:
                     raise ValueError("publication destination changed before replacement")
             _atomic_write(path, content)
             written.append(path)
-        results = validation.validate_note(state_path, repo_root=repo_root)
-        diagnostics = [*results.warns, *results.fails]
-        if diagnostics:
-            raise ValueError(
-                "published run-state validation failed: " + "; ".join(diagnostics)
-            )
     except Exception as publication_error:
         rollback_errors: list[str] = []
         for path in reversed(written):

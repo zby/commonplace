@@ -15,11 +15,7 @@ import argparse
 import sys
 from pathlib import Path
 
-from commonplace.lib.agentic_analysis import (
-    _verify_quote_anchors,
-    parse_agentic_analysis_run_state,
-)
-from commonplace.lib.note_parser import parse_document
+from commonplace.lib.agentic_analysis import _verify_quote_anchors, load_run_state
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -28,12 +24,11 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("files", nargs="+", type=Path)
     args = parser.parse_args(argv)
     repo_root = Path.cwd().resolve()
-    state_path = (repo_root / args.run_state).resolve()
-    document, error = parse_document(state_path.read_text(encoding="utf-8"))
-    if error or document is None:
-        print(f"cannot parse run state: {error}", file=sys.stderr)
+    try:
+        state = load_run_state((repo_root / args.run_state).resolve(), repo_root=repo_root)
+    except ValueError as exc:
+        print(str(exc), file=sys.stderr)
         return 1
-    state = parse_agentic_analysis_run_state(state_path, document, repo_root=repo_root)
     if state.source is None:
         print("run state has no frozen source", file=sys.stderr)
         return 1

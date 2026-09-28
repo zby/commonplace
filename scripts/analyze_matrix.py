@@ -30,7 +30,6 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
     try:
         inputs = load_results(REPO_ROOT, args.review)
-        inputs.recheck(REPO_ROOT)
     except (OSError, ValueError, KeyError, UnicodeError) as exc:
         print(f"analysis not produced: {exc}", file=sys.stderr)
         return 1

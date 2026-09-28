@@ -15,7 +15,6 @@ import yaml
 
 from commonplace.lib.agentic_records import annotated_ids, declared_ids, section
 from commonplace.lib.agentic_set import (
-    OVERVIEW_TYPE,
     RETAINED_ROOT,
     RUN_ID,
     load_member_set,
@@ -276,11 +275,6 @@ class MatrixInputs:
     rows: list[dict[str, str]]
     hashes: dict[str, str]
 
-    def recheck(self, root: Path) -> None:
-        for path, digest in self.hashes.items():
-            if sha256((root / path).read_bytes()).hexdigest() != digest:
-                raise ValueError(f"input changed: {path}")
-
 
 _MISSING_LINK = re.compile(r"link health: missing target (?P<link>\S+)$")
 
@@ -370,10 +364,7 @@ def load_results(root: Path, review_paths: list[Path] | None = None) -> MatrixIn
         except ValueError as exc:
             raise ValueError(f"{retained}: {exc}") from exc
         data = member_set.overview.frontmatter
-        if (
-            data.get("type") != OVERVIEW_TYPE
-            or data.get("result-disposition") != "complete"
-        ):
+        if data.get("result-disposition") != "complete":
             raise ValueError(f"not a complete analysis overview: {retained}")
         if data.get("run-id") != meta["analysis-run"] or data.get(
             "reviewed-boundary"

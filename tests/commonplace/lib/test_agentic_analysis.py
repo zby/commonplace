@@ -1584,10 +1584,6 @@ def test_comparison_population_must_select_one_review_per_source(tmp_path):
     with pytest.raises(ValueError, match="multiple selected reviews"):
         systems_matrix.load_results(tmp_path)
     assert len(systems_matrix.load_results(tmp_path, [review]).rows) == 1
-    inputs = systems_matrix.load_results(tmp_path, [review])
-    review.write_bytes(review.read_bytes() + b"changed\n")
-    with pytest.raises(ValueError, match="input changed"):
-        inputs.recheck(tmp_path)
 
 
 def test_publication_requires_comparison_fields_and_preserves_retained_bytes(tmp_path):

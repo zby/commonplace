@@ -93,7 +93,6 @@ def main(argv: list[str] | None = None) -> int:
     try:
         inputs = load_results(REPO_ROOT, args.review)
         content = render(inputs.rows, args.output.resolve())
-        inputs.recheck(REPO_ROOT)
         _atomic_write(args.output, content.encode("utf-8"))
     except (OSError, ValueError, KeyError, UnicodeError) as exc:
         print(f"table not written: {exc}", file=sys.stderr)
